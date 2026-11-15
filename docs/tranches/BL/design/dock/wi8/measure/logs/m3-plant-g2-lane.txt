@@ -1,0 +1,14 @@
+== g2-lane 10:54:03 (load { 10.85 12.29 11.96 })
+applied g2-lane - G-2 (inside the plate): every lane corner rounded, as before (CSS scales them down)
+build rc=0
+reverted g2-lane
+== p3-region-rm chromium 10:54:09
+{"cell":"1440-fine-light-rm","rows":"p3-region-rm.wi8.chromium.1440-fine-light-rm.rows.json","strips":[],"frames":374,"firstChange":233.9,"lastChange":2700,"screencast":null,"consoleErrors":0}
+chromium rc=0
+== p3-region-rm webkit 10:54:18
+{"cell":"1440-fine-light-rm","rows":"p3-region-rm.wi8.webkit.1440-fine-light-rm.rows.json","strips":[],"frames":192,"firstChange":222,"lastChange":2783,"screencast":null,"consoleErrors":0}
+webkit rc=0
+-- judge
+p3-region-rm | chromium | 1440-fine-light-rm | curve 1.62 | held 0 | FAIL: content 1.62 px outside the plate's curve (seat#1 row 196 (travel))
+p3-region-rm | webkit | 1440-fine-light-rm | curve 1.62 | held 0 | FAIL: content 1.62 px outside the plate's curve (seat#1 row 104 (travel))
+== done 10:54:27

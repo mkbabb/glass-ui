@@ -1,0 +1,24 @@
+== g3-intent 10:50:01 (load { 15.86 13.63 12.17 })
+applied g3-intent - G-3: the intent wait applied to a return mid-fold
+build rc=0
+reverted g3-intent
+== p3-rev-fold-25-ptr chromium 10:50:09
+{"cell":"1440-fine-light","rows":"p3-rev-fold-25-ptr.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":230,"firstChange":230,"lastChange":1420.6,"screencast":null,"consoleErrors":0}
+== p3-rev-fold-50-ptr chromium 10:50:12
+{"cell":"1440-fine-light","rows":"p3-rev-fold-50-ptr.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":231,"firstChange":236.4,"lastChange":1409.4,"screencast":null,"consoleErrors":0}
+chromium rc=0
+== p3-rev-fold-25-ptr webkit 10:50:21
+{"cell":"1440-fine-light","rows":"p3-rev-fold-25-ptr.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":133,"firstChange":211,"lastChange":1678,"screencast":null,"consoleErrors":0}
+== p3-rev-fold-50-ptr webkit 10:50:25
+{"cell":"1440-fine-light","rows":"p3-rev-fold-50-ptr.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":146,"firstChange":213,"lastChange":1911,"screencast":null,"consoleErrors":0}
+webkit rc=0
+-- judge
+p3-rev-fold-25-ptr | wi8 | chromium | 1440-fine-light | f25-f71 382ms | L 76px first 1.2% max 8% last 0.08px; R 76px first 1.2% max 8.1% last 0.08px | op60 0.25 | out 0px | pass
+p3-rev-fold-25-ptr | wi8 | chromium | 1440-fine-light | f123-f169 383ms | L 76.1px first 1.1% max 7.6% last 0.08px; R 76.1px first 1.1% max 7.6% last 0.08px | op60 0.25 | out 0px | pass
+p3-rev-fold-25-ptr | wi8 | webkit | 1440-fine-light | f12-f36 402ms | L 76px first 4.1% max 14.8% last 0.27px; R 76px first 4.1% max 14.8% last 0.26px | op60 0.25 | out 0px | pass
+p3-rev-fold-25-ptr | wi8 | webkit | 1440-fine-light | f61-f86 418ms | L 87.8px first 4.9% max 15.3% last 0.08px; R 87.8px first 5% max 15.3% last 0.08px | op60 0.22 | out 0px | FAIL: L reverses 66 ms after reverse-25 (bound 36 ms); R reverses 66 ms after reverse-25 (bound 36 ms)
+p3-rev-fold-50-ptr | wi8 | chromium | 1440-fine-light | f27-f73 384ms | L 76px first 1.2% max 7.7% last 0.08px; R 76px first 1.2% max 7.7% last 0.08px | op60 0.25 | out 0px | pass
+p3-rev-fold-50-ptr | wi8 | chromium | 1440-fine-light | f123-f169 382ms | L 76px first 2.1% max 7.6% last 0.02px; R 76px first 2.1% max 7.6% last 0.01px | op60 0.26 | out 0px | pass
+p3-rev-fold-50-ptr | wi8 | webkit | 1440-fine-light | f12-f36 401ms | L 76px first 3.6% max 14.8% last 0.28px; R 76px first 3.6% max 14.9% last 0.28px | op60 0.22 | out 0px | pass
+p3-rev-fold-50-ptr | wi8 | webkit | 1440-fine-light | f61-f92 516ms | L 110.4px first 3.2% max 13.5% last 0.28px; R 110.5px first 3.2% max 13.5% last 0.28px | op60 0.21 | out 0px | FAIL: L reverses 57 ms after reverse-50 (bound 27 ms); R reverses 57 ms after reverse-50 (bound 27 ms)
+== done 10:50:34

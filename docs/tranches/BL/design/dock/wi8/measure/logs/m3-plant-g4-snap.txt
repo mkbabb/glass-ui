@@ -1,0 +1,20 @@
+== g4-snap 10:51:26 (load { 12.40 13.24 12.17 })
+applied g4-snap - G-4 (two changes within 90 ms): the rest off the snap positions
+build rc=0
+reverted g4-snap
+== p3-seat-coarse chromium 10:51:33
+{"cell":"390-coarse-light","rows":"p3-seat-coarse.wi8.chromium.390-coarse-light.rows.json","strips":[],"frames":285,"firstChange":110.8,"lastChange":487.6,"screencast":null,"consoleErrors":0}
+== p3-seat-long-coarse chromium 10:51:37
+{"cell":"390-coarse-light","rows":"p3-seat-long-coarse.wi8.chromium.390-coarse-light.rows.json","strips":[],"frames":362,"firstChange":74.2,"lastChange":2492.8,"screencast":null,"consoleErrors":0}
+chromium rc=0
+== p3-seat-coarse webkit 10:51:47
+{"cell":"390-coarse-light","rows":"p3-seat-coarse.wi8.webkit.390-coarse-light.rows.json","strips":[],"frames":140,"firstChange":81,"lastChange":466,"screencast":null,"consoleErrors":0}
+== p3-seat-long-coarse webkit 10:51:51
+{"cell":"390-coarse-light","rows":"p3-seat-long-coarse.wi8.webkit.390-coarse-light.rows.json","strips":[],"frames":183,"firstChange":61,"lastChange":2512,"screencast":null,"consoleErrors":0}
+webkit rc=0
+-- judge
+p3-seat-coarse chromium 390-coarse-light [{"mark":"neighbour","seatsMoved":0,"largestPx":0,"plateMovePx":0,"viol":[]},{"mark":"far","seatsMoved":0,"largestPx":0,"plateMovePx":0,"viol":[]},{"mark":"twice","seatsMoved":0,"largestPx":0,"plateMovePx":0,"viol":[]}]
+p3-seat-coarse webkit 390-coarse-light [{"mark":"neighbour","seatsMoved":0,"largestPx":0,"plateMovePx":0,"viol":[]},{"mark":"far","seatsMoved":0,"largestPx":0,"plateMovePx":0,"viol":[]},{"mark":"twice","seatsMoved":0,"largestPx":0,"plateMovePx":0,"viol":[]}]
+p3-seat-long-coarse chromium 390-coarse-light [{"mark":"neighbour","seatsMoved":0,"largestPx":0,"plateMovePx":0,"viol":[]},{"mark":"far","seatsMoved":10,"largestPx":166.5,"plateMovePx":0,"viol":[]},{"mark":"twice","seatsMoved":10,"largestPx":166.5,"plateMovePx":0,"viol":[]}]
+p3-seat-long-coarse webkit 390-coarse-light [{"mark":"neighbour","seatsMoved":0,"largestPx":0,"plateMovePx":0,"viol":[]},{"mark":"far","seatsMoved":10,"largestPx":166.5,"plateMovePx":0,"viol":[]},{"mark":"twice","seatsMoved":10,"largestPx":166.5,"plateMovePx":0,"viol":[]}]
+== done 10:52:00

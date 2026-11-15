@@ -1,0 +1,15 @@
+== g6-flow 12:55:02 (load { 7.53 7.18 7.48 })
+applied g6-flow - G-6: a name put in flow on hover (the hovered seat 24 px wider)
+build rc=0
+reverted g6-flow
+== p3-hover-fine chromium 12:55:08
+{"cell":"1440-fine-light","rows":"p3-hover-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":1189,"firstChange":224.2,"lastChange":9015,"screencast":null,"consoleErrors":0}
+chromium rc=0
+[guarded] waiting for the 'webkit' lock
+== p3-hover-fine webkit 13:05:30
+{"cell":"1440-fine-light","rows":"p3-hover-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":971,"firstChange":211,"lastChange":9102,"screencast":null,"consoleErrors":0}
+webkit rc=0
+-- judge
+p3-hover-fine | chromium | 1440-fine-light | curve 0.01 | held 72 | still 96 | FAIL: a unit moves 72.00 px in the window's first row (seat#0 row 130); the root or plate moves 96.00 px under a hover
+p3-hover-fine | webkit | 1440-fine-light | curve 0 | held 72 | still 96 | FAIL: a unit moves 72.00 px in the window's first row (seat#0 row 106); the root or plate moves 96.00 px under a hover
+== done 13:05:48

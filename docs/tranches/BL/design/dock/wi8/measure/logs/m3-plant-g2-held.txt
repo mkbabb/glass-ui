@@ -1,0 +1,15 @@
+== g2-held 10:52:56 (load { 12.01 12.83 12.11 })
+applied g2-held - G-2 (from rest): a leaving face sized by its border box as its content box
+build rc=0
+reverted g2-held
+== p3-fold-pill-fine chromium 10:53:03
+{"cell":"1440-fine-light","rows":"p3-fold-pill-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":217,"firstChange":244.2,"lastChange":1402.4,"screencast":null,"consoleErrors":0}
+chromium rc=0
+[guarded] waiting for the 'webkit' lock
+== p3-fold-pill-fine webkit 10:53:21
+{"cell":"1440-fine-light","rows":"p3-fold-pill-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":126,"firstChange":237,"lastChange":1666,"screencast":null,"consoleErrors":0}
+webkit rc=0
+-- judge
+p3-fold-pill-fine | chromium | 1440-fine-light | curve 0.02 | held 4 | FAIL: a unit moves 4.00 px in the window's first row (seat#0 row 123)
+p3-fold-pill-fine | webkit | 1440-fine-light | curve 0.01 | held 4 | FAIL: a unit moves 4.00 px in the window's first row (seat#0 row 77)
+== done 10:53:29

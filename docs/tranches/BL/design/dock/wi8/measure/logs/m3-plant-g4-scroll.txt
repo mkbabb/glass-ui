@@ -1,0 +1,15 @@
+== g4-scroll 10:52:00 (load { 11.61 13.01 12.13 })
+applied g4-scroll - G-4 (the open seat changes in a compact scrolling run): the offset left to the run's reach
+build rc=0
+reverted g4-scroll
+== p3-seat-long-coarse chromium 10:52:23
+{"cell":"390-coarse-light","rows":"p3-seat-long-coarse.wi8.chromium.390-coarse-light.rows.json","strips":[],"frames":299,"firstChange":72.6,"lastChange":1921.8,"screencast":null,"consoleErrors":0}
+chromium rc=0
+[guarded] waiting for the 'webkit' lock
+== p3-seat-long-coarse webkit 10:52:48
+{"cell":"390-coarse-light","rows":"p3-seat-long-coarse.wi8.webkit.390-coarse-light.rows.json","strips":[],"frames":152,"firstChange":75,"lastChange":1968,"screencast":null,"consoleErrors":0}
+webkit rc=0
+-- judge
+p3-seat-long-coarse chromium 390-coarse-light [{"mark":"neighbour","seatsMoved":0,"largestPx":0,"plateMovePx":0,"viol":[]},{"mark":"far","seatsMoved":10,"largestPx":166,"plateMovePx":0,"viol":["seat#0 from rest 15.7% > 1.5%","seat#0 step 15.7% > 7.9%","seat#0 step 31.3% > 6.7%","seat#0 step 31.3% > 7.1%","seat#0 step 21.7% > 7.6%","seat#0 last 36.00 px"]},{"mark":"twice","seatsMoved":10,"largestPx":156.3,"plateMovePx":0,"viol":["seat#0 from rest 23.0% > 1.5%","seat#0 step 23.0% > 7.7%","seat#0 step 33.3% > 6.7%","seat#0 last 52.00 px","seat#1 from rest 23.0% > 1.5%","seat#1 step 23.0% > 7.7%"]}]
+p3-seat-long-coarse webkit 390-coarse-light [{"mark":"neighbour","seatsMoved":0,"largestPx":0,"plateMovePx":0,"viol":[]},{"mark":"far","seatsMoved":10,"largestPx":166,"plateMovePx":0,"viol":["seat#0 from rest 15.7% > 4.7%","seat#0 step 15.7% > 14.4%","seat#0 step 31.3% > 17.2%","seat#0 step 31.3% > 15.3%","seat#0 step 21.7% > 15.3%","seat#0 last 36.00 px"]},{"mark":"twice","seatsMoved":10,"largestPx":157.7,"plateMovePx":0,"viol":["seat#0 from rest 22.8% > 5.3%","seat#0 step 22.8% > 15.3%","seat#0 step 33.0% > 14.4%","seat#0 last 52.00 px","seat#1 from rest 22.8% > 5.3%","seat#1 step 22.8% > 15.3%"]}]
+== done 10:52:56

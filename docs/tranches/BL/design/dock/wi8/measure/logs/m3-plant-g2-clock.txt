@@ -1,0 +1,16 @@
+== g2-clock 10:48:02 (load { 16.75 12.89 11.74 })
+applied g2-clock - G-2: the loop's clock started at the trigger (the first frame advances 33 ms)
+build rc=0
+reverted g2-clock
+== p3-fold-pill-fine chromium 10:48:09
+{"cell":"1440-fine-light","rows":"p3-fold-pill-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":215,"firstChange":250.6,"lastChange":1367.7,"screencast":null,"consoleErrors":0}
+chromium rc=0
+== p3-fold-pill-fine webkit 10:48:17
+{"cell":"1440-fine-light","rows":"p3-fold-pill-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":107,"firstChange":235,"lastChange":1346,"screencast":null,"consoleErrors":0}
+webkit rc=0
+-- judge
+p3-fold-pill-fine | wi8 | chromium | 1440-fine-light | f29-f71 350ms | L 76px first 16% max 16% last 0.02px; R 76px first 16% max 16% last 0.01px | op60 0.44 | out 0px | FAIL: L from rest 16.0% > 1.1% at 6.8 ms; L step 16.0% > 6.5% (f30, 6.8 ms); R from rest 16.0% > 1.1% at 6.8 ms; R step 16.0% > 6.5% (f30, 6.8 ms); opacity 0.44 in 60 Hz at summary f29; summary fade lasts 58 ms
+p3-fold-pill-fine | wi8 | chromium | 1440-fine-light | f122-f164 351ms | L 76px first 16% max 16% last 0.08px; R 76px first 16% max 16% last 0.08px | op60 0.4 | out 0px | FAIL: L from rest 16.0% > 1.9% at 9.1 ms; L step 16.0% > 8.7% (f123, 9.1 ms); R from rest 16.0% > 1.9% at 9.1 ms; R step 16.0% > 8.7% (f123, 9.1 ms); full fade lasts 60 ms; seat#0 fade lasts 60 ms (+3)
+p3-fold-pill-fine | wi8 | webkit | 1440-fine-light | f13-f35 366ms | L 76px first 16% max 16% last 0.08px; R 76px first 16% max 16% last 0.08px | op60 0.26 | out 0px | FAIL: L from rest 16.0% > 9.3% at 22.0 ms; R from rest 16.0% > 9.3% at 22.0 ms
+p3-fold-pill-fine | wi8 | webkit | 1440-fine-light | f59-f81 366ms | L 76px first 16% max 16% last 0.31px; R 76px first 16% max 16% last 0.32px | op60 0.24 | out 0px | FAIL: L from rest 16.0% > 6.6% at 18.0 ms; R from rest 16.0% > 6.6% at 18.0 ms
+== done 10:48:24

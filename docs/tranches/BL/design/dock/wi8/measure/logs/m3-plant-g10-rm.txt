@@ -1,0 +1,21 @@
+== g10-rm 11:00:34 (load { 10.50 10.86 11.36 })
+applied g10-rm - G-10: reduced motion's seat removed (geometry glides on the spring)
+build rc=0
+reverted g10-rm
+== p3-fold-pill-rm chromium 11:02:39
+{"cell":"1440-fine-light-rm","rows":"p3-fold-pill-rm.wi8.chromium.1440-fine-light-rm.rows.json","strips":[],"frames":221,"firstChange":243.1,"lastChange":1417.6,"screencast":null,"consoleErrors":0}
+chromium rc=0
+[guarded] waiting for the 'webkit' lock
+== p3-fold-pill-rm webkit 11:04:09
+{"cell":"1440-fine-light-rm","rows":"p3-fold-pill-rm.wi8.webkit.1440-fine-light-rm.rows.json","strips":[],"frames":112,"firstChange":244,"lastChange":1438,"screencast":null,"consoleErrors":0}
+webkit rc=0
+-- judge
+p3-fold-pill-rm | wi8 | chromium | 1440-fine-light-rm | f28-f29 8ms | L 76px first 100% max 100% last 76px; R 76px first 100% max 100% last 76px | op60 0.01 | out 0px | FAIL: full fade 26 values over 217 ms; summary fade 26 values over 217 ms; seat#0 fade 26 values over 217 ms; seat#1 fade 26 values over 217 ms; seat#2 fade 26 values over 217 ms; seat#3 fade 26 values over 217 ms
+p3-fold-pill-rm | wi8 | chromium | 1440-fine-light-rm | f73-f74 8ms |  | op60 0 | out 0px | pass
+p3-fold-pill-rm | wi8 | chromium | 1440-fine-light-rm | f124-f125 8ms | L 76px first 100% max 100% last 76px; R 76px first 100% max 100% last 76px | op60 0.02 | out 0px | FAIL: full fade 26 values over 218 ms; summary fade 26 values over 218 ms; seat#0 fade 26 values over 218 ms; seat#1 fade 26 values over 218 ms; seat#2 fade 26 values over 218 ms; seat#3 fade 26 values over 218 ms
+p3-fold-pill-rm | wi8 | chromium | 1440-fine-light-rm | f169-f170 9ms |  | op60 0 | out 0px | pass
+p3-fold-pill-rm | wi8 | webkit | 1440-fine-light-rm | f13-f14 24ms | L 76px first 100% max 100% last 76px; R 76px first 100% max 100% last 76px | op60 0.02 | out 0px | FAIL: full fade 15 values over 243 ms; summary fade 15 values over 243 ms; seat#0 fade 15 values over 243 ms; seat#1 fade 15 values over 243 ms; seat#2 fade 15 values over 243 ms; seat#3 fade 15 values over 243 ms
+p3-fold-pill-rm | wi8 | webkit | 1440-fine-light-rm | f36-f37 18ms |  | op60 0 | out 0px | FAIL: full fade 14 values over 219 ms; summary fade 14 values over 219 ms; seat#0 fade 14 values over 219 ms; seat#1 fade 14 values over 219 ms; seat#2 fade 14 values over 219 ms; seat#3 fade 14 values over 219 ms
+p3-fold-pill-rm | wi8 | webkit | 1440-fine-light-rm | f62-f63 15ms | L 76px first 100% max 100% last 76px; R 76px first 100% max 100% last 76px | op60 0 | out 0px | FAIL: full fade 16 values over 252 ms; summary fade 16 values over 252 ms; seat#0 fade 16 values over 252 ms; seat#1 fade 16 values over 252 ms; seat#2 fade 16 values over 252 ms; seat#3 fade 16 values over 252 ms
+p3-fold-pill-rm | wi8 | webkit | 1440-fine-light-rm | f85-f86 17ms |  | op60 0 | out 0px | pass
+== done 11:04:16
