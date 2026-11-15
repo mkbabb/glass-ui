@@ -23,6 +23,10 @@ const MAX_DT = 0.033;
 /** R-3's one window: 1 at 0, 0 from 0.55 on (RU-2). */
 const W_END = 0.55;
 const w = (x: number) => (x <= 0 ? 1 : x >= W_END ? 0 : 1 - x / W_END);
+/** A quantity lands when it is this close and this slow (px, px/s): small enough that the
+ *  landing step is under 2 % of a 3 px travel (G-2's landing bound). */
+const SNAP_PX = 0.04;
+const SNAP_V = 3;
 /** R-5 (RU-11): the entering face's travel along the dock's axis. */
 const ENTER_PX = 8;
 
@@ -462,13 +466,13 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         if (dt > 0) {
             for (const q of Object.values(edge)) {
                 [q.d, q.v] = step(q.d, q.v, dt);
-                if (Math.abs(q.d) < 0.1 && Math.abs(q.v) < 6) (q.d = 0), (q.v = 0);
+                if (Math.abs(q.d) < SNAP_PX && Math.abs(q.v) < SNAP_V) (q.d = 0), (q.v = 0);
             }
             for (const t of [...regions.values(), ...seats.values()]) {
                 [t.x.d, t.x.v] = step(t.x.d, t.x.v, dt);
                 [t.y.d, t.y.v] = step(t.y.d, t.y.v, dt);
-                if (Math.abs(t.x.d) < 0.1 && Math.abs(t.x.v) < 6) (t.x.d = 0), (t.x.v = 0);
-                if (Math.abs(t.y.d) < 0.1 && Math.abs(t.y.v) < 6) (t.y.d = 0), (t.y.v = 0);
+                if (Math.abs(t.x.d) < SNAP_PX && Math.abs(t.x.v) < SNAP_V) (t.x.d = 0), (t.x.v = 0);
+                if (Math.abs(t.y.d) < SNAP_PX && Math.abs(t.y.v) < SNAP_V) (t.y.d = 0), (t.y.v = 0);
             }
             if (reduce) {
                 // R-11: the coordinate runs as a linear clock, whole at 100 ms.
@@ -543,7 +547,9 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         // the painted edges of its neighbours on the main axis.
         const order = ["persistent", "layers", "persistent-end"]
             .map((k) => regions.get(k))
-            .filter((t): t is RegionTrack => !!t && t.w > 0.5 && t.h > 0.5);
+            .filter((t): t is RegionTrack => !!t);
+        // A region with no size still gets its lane: its leaving face is placed out of flow
+        // and paints, and without a lane it painted over its neighbour (keyframes's transport).
         // R-5: each seat whose place changed rides its own translate to 0.
         for (const [el, t] of seats) {
             if (t.x.d !== 0 || t.y.d !== 0) el.style.translate = `${t.x.d.toFixed(3)}px ${t.y.d.toFixed(3)}px`;
