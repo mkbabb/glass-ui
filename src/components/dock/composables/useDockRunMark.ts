@@ -14,6 +14,12 @@
 // a run that scrolls carries the mark with it natively: no scroll listener, no per-scroll
 // write. Script writes only when the destination changes or a seat resizes.
 //
+// THE MARK READS LAYOUT BOXES, NEVER RECTS. Its lengths are laid out in the run's own
+// coordinates and then carried by every transform and zoom above the run, so they are
+// measured in those coordinates too (`layoutBoxOf`). A viewport rect would carry the
+// scale twice: under a zoom or a scaled stage, a pressed seat, or a dialog still
+// blooming in when the mark first lands.
+//
 // WHY IT TRACKS THE ARRIVING SEAT LIVE. The open seat widens as it is reached (run.css,
 // the volume transfer on `--spring-dock`), so the arriving seat's final box does not exist
 // yet when the change lands. Each frame the mark reads the arriving seat's live box L(t)
@@ -86,13 +92,37 @@ const px = (value: string): number => {
 };
 
 /**
+ * The seat's border box in the run's scrolled content coordinates, in the run's own
+ * layout px: offsets summed up the offset-parent chain to the run (the run is always
+ * positioned, layers.css, so the chain reaches it). A layout box carries no transform
+ * and no zoom of any ancestor or of the seat itself, so the plate written from it is
+ * scaled once, by whatever scales the run, and a box read mid-entrance (a dialog that
+ * blooms in) is already the box at rest.
+ */
+function layoutBoxOf(run: HTMLElement, seat: HTMLElement) {
+    let left = 0;
+    let top = 0;
+    for (let node: HTMLElement = seat; node !== run; ) {
+        left += node.offsetLeft;
+        top += node.offsetTop;
+        const parent = node.offsetParent as HTMLElement | null;
+        if (!parent) break;
+        if (parent !== run) {
+            left += parent.clientLeft;
+            top += parent.clientTop;
+        }
+        node = parent;
+    }
+    return { left, top, width: seat.offsetWidth, height: seat.offsetHeight };
+}
+
+/**
  * The seat's PAINTED plate in the run's scrolled content coordinates: the box its own
  * selected background would fill (its `background-clip` box), at the corner that box
  * takes from the seat's radius. `x` is the offset from the run's inline-start edge.
  */
 function plateOf(run: HTMLElement, seat: HTMLElement, rtl: boolean): Box {
-    const port = run.getBoundingClientRect();
-    const rect = seat.getBoundingClientRect();
+    const rect = layoutBoxOf(run, seat);
     const style = getComputedStyle(seat);
     const clip = style.backgroundClip;
     const border = clip === "border-box" ? 0 : 1;
@@ -104,15 +134,14 @@ function plateOf(run: HTMLElement, seat: HTMLElement, rtl: boolean): Box {
     const radius = style.borderTopLeftRadius.endsWith("%")
         ? (px(style.borderTopLeftRadius) / 100) * rect.width
         : px(style.borderTopLeftRadius);
-    // Right to left, the inline-start edge is the padding box's right edge, and
-    // `scrollLeft` runs from 0 at that edge to negative values toward the end.
-    const x =
-        rtl
-            ? port.left + run.clientLeft + run.clientWidth - rect.right - run.scrollLeft + right
-            : rect.left - port.left - run.clientLeft + run.scrollLeft + left;
+    // Offsets ignore scrolling and run from the padding box's left edge at the scroll
+    // origin. Right to left, the inline-start edge is that box's right edge.
+    const x = rtl
+        ? run.clientWidth - (rect.left + rect.width) + right
+        : rect.left + left;
     return {
         x,
-        y: rect.top - port.top - run.clientTop + run.scrollTop + top,
+        y: rect.top + top,
         w: Math.max(0, rect.width - left - right),
         h: Math.max(0, rect.height - top - bottom),
         r: Math.max(0, radius - Math.max(left, top)),

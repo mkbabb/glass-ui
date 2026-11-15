@@ -190,6 +190,46 @@ describe("the run's active mark", () => {
         }
     });
 
+    it("measures layout boxes, so a zoom or a transform above the run scales the plate once", async () => {
+        // The dock sits in a stage scaled by 1.25: every viewport rect is the layout box
+        // times 1.25, and the run lays out and then scales the mark's lengths itself. So
+        // the lengths written on the run are the seat's layout box, not its rect.
+        const K = 1.25;
+        const seatBox = { left: 40, top: 4, width: 100, height: 36 };
+        const proto = HTMLElement.prototype;
+        const saved = new Map<PropertyKey, PropertyDescriptor | undefined>();
+        const stub = (key: string, get: (el: HTMLElement) => unknown) => {
+            saved.set(key, Object.getOwnPropertyDescriptor(proto, key));
+            Object.defineProperty(proto, key, { configurable: true, get() { return get(this); } });
+        };
+        const current = (el: HTMLElement) => el.matches('[aria-current="page"]');
+        stub("offsetParent", (el) => (current(el) ? el.closest(".dock-run") : null));
+        stub("offsetLeft", (el) => (current(el) ? seatBox.left : 0));
+        stub("offsetTop", (el) => (current(el) ? seatBox.top : 0));
+        stub("offsetWidth", (el) => (current(el) ? seatBox.width : 0));
+        stub("offsetHeight", (el) => (current(el) ? seatBox.height : 0));
+        const rect = Element.prototype.getBoundingClientRect;
+        Element.prototype.getBoundingClientRect = function (this: Element) {
+            const b = current(this as HTMLElement) ? seatBox : { left: 0, top: 0, width: 0, height: 0 };
+            return DOMRect.fromRect({ x: b.left * K, y: b.top * K, width: b.width * K, height: b.height * K });
+        };
+        try {
+            const wrapper = navDock(ref<number | null>(1));
+            await settle();
+            await nextTick();
+            const run = wrapper.find(".dock-run").element as HTMLElement;
+            const read = (k: string) => run.style.getPropertyValue(`--dock-run-mark-${k}`);
+            expect([read("x"), read("y"), read("w"), read("h")]).toEqual(["40px", "4px", "100px", "36px"]);
+            wrapper.unmount();
+        } finally {
+            Element.prototype.getBoundingClientRect = rect;
+            for (const [key, desc] of saved) {
+                if (desc) Object.defineProperty(proto, key, desc);
+                else delete (proto as unknown as Record<PropertyKey, unknown>)[key];
+            }
+        }
+    });
+
     it("glides on the dock spring preset, never a literal", () => {
         const src = readFileSync(
             resolve(process.cwd(), "src/components/dock/composables/useDockRunMark.ts"),
