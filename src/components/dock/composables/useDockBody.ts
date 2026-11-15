@@ -20,8 +20,11 @@ const OMEGA = (2 * Math.PI) / DOCK_SPRING.response;
 const ZETA = DOCK_SPRING.dampingFraction;
 const WD = OMEGA * Math.sqrt(Math.max(1e-6, 1 - ZETA * ZETA));
 const MAX_DT = 0.033;
-const OUT_END = 0.35;
-const IN_END = 0.7;
+/** R-3's one window: 1 at 0, 0 from 0.55 on (RU-2). */
+const W_END = 0.55;
+const w = (x: number) => (x <= 0 ? 1 : x >= W_END ? 0 : 1 - x / W_END);
+/** R-5 (RU-11): the entering face's travel along the dock's axis. */
+const ENTER_PX = 8;
 
 /** Closed-form step of the dock spring toward 0 (mass 1). */
 function step(x: number, v: number, dt: number): [number, number] {
@@ -65,6 +68,8 @@ interface FaceTrack {
     from: number;
     role: "enter" | "leave";
     placed: boolean;
+    /** The side an entering face arrives from on the dock's axis (+1 trailing, −1 leading). */
+    dir?: number;
 }
 interface PendingLeave {
     el: HTMLElement;
@@ -217,7 +222,15 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             if (place) for (const p of ["inset", "inset-inline-start", "left", "top", "width", "height"]) enter.style.removeProperty(p);
             const known = faces.find((f) => f.el === enter);
             const from = known ? opOf(enter) : 0;
-            next.push({ el: enter, from, role: "enter", placed: true });
+            // RU-11: a later layer (later in the tree) arrives from the trailing side, an
+            // earlier one from the leading side. A posture exchange has no direction.
+            let dir: number | undefined;
+            if (leave && enter !== openFace && enter !== closedFace) {
+                const later = !!(leave.compareDocumentPosition(enter) & Node.DOCUMENT_POSITION_FOLLOWING);
+                const rtl = getComputedStyle(enter).direction === "rtl" && !o.vertical();
+                dir = (later ? 1 : -1) * (rtl ? -1 : 1);
+            }
+            next.push({ el: enter, from, role: "enter", placed: true, dir });
             enter.style.opacity = String(from);
         }
         for (const f of next) if (f.role === "leave") f.el.style.opacity = String(f.from);
@@ -585,18 +598,28 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             clipTo(b, fis.p > 0 && fis.seat ? { ...fis.seat, l: fis.seat.l - besideGap } : P, Math.min(R, H / 2));
         }
 
-        // Content windows (R-3).
+        // Content (R-3, RU-2): one window, w(x) = clamp(1 − x / 0.55). For a posture change
+        // the summary reads w(e) and the run w(1 − e); for a content change the leaving
+        // face reads w(f) and the entering face w(1 − f). Under reduced motion (R-11) the
+        // coordinate is a linear 100 ms clock and each face fades across the whole of it.
+        const reduce = o.reducedMotion();
+        const win = reduce ? (x: number) => clamp01(1 - x) : w;
+        const posing = postureTravel || held !== null;
         for (const face of faces) {
-            const op =
-                face.el === openFace && (postureTravel || held !== null)
-                    ? clamp01((e - OUT_END) / (IN_END - OUT_END))
-                    : face.el === closedFace && (postureTravel || held !== null)
-                      ? clamp01(1 - e / OUT_END)
-                      : face.el === seatFace && (postureTravel || held !== null)
-                        ? fis.p
-                        : face.role === "leave"
-                    ? face.from * clamp01(1 - f / OUT_END)
-                    : face.from + (1 - face.from) * clamp01((f - OUT_END) / (IN_END - OUT_END));
+            let op: number;
+            if (face.el === openFace && posing) op = win(1 - e);
+            else if (face.el === closedFace && posing) op = win(e);
+            else if (face.el === seatFace && posing) op = fis.p;
+            else if (face.role === "leave") op = face.from * win(f);
+            else {
+                const inW = win(1 - f);
+                op = face.from + (1 - face.from) * inW;
+                // RU-11: the entering face arrives over 8 px from the side it lives on.
+                if (face.dir && !reduce) {
+                    const off = face.dir * ENTER_PX * (1 - inW);
+                    face.el.style.translate = o.vertical() ? `0 ${off.toFixed(3)}px` : `${off.toFixed(3)}px 0`;
+                }
+            }
             face.el.style.opacity = op.toFixed(4);
         }
 
@@ -685,6 +708,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         }
         for (const face of faces) {
             face.el.style.removeProperty("opacity");
+            face.el.style.removeProperty("translate");
             if (face.placed || face.role === "leave") for (const p of ["inset", "inset-inline-start", "left", "top", "width", "height"]) face.el.style.removeProperty(p);
         }
         faces = [];
