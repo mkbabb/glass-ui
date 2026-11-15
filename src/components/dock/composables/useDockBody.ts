@@ -167,6 +167,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
     const settleCbs: Array<() => void> = [];
     let scopeEl: HTMLElement | null | undefined;
     let ro: ResizeObserver | null = null;
+    let mo: MutationObserver | null = null;
 
     const root = () => o.root.value;
 
@@ -690,11 +691,20 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         if (el) ro.observe(el);
         for (const { el: r } of o.regions()) if (r) ro.observe(r);
         for (const seat of seats.keys()) ro.observe(seat);
+        // The content observer (R-1's one trigger per fact): a seat's current mark or the
+        // seat set changes in a task, and its record arrives as a microtask, before the
+        // next frame, so the change is read before any frame paints it.
+        const run = o.run?.value;
+        if (run && typeof MutationObserver !== "undefined") {
+            mo = new MutationObserver(() => sync("content"));
+            mo.observe(run, { attributes: true, attributeFilter: ["aria-current"], childList: true, subtree: true });
+        }
     });
     onBeforeUnmount(() => {
         window.removeEventListener("resize", onWindowResize);
         if (resizeFrame !== null) cancelAnimationFrame(resizeFrame);
         ro?.disconnect();
+        mo?.disconnect();
         if (raf !== null) cancelAnimationFrame(raf);
     });
 
