@@ -10,6 +10,13 @@
 // harness, GREEN on 10.1.3; the click cell is RED in Chromium only (see it).
 import { expect, test, type Page } from "@playwright/test";
 import { PNG } from "pngjs";
+import { installPaintReads } from "./dock-paint";
+
+// W-I.8 (RU-22 (a)): the dock paints on its plate; the root is its layout box, from the
+// first row of a travel the new posture's. Every box read as "the dock" is the plate's, and
+// a seat's visible box is cut by its lane's inset clip as well as by overflow.
+test.beforeEach(({ page }) => installPaintReads(page));
+const PLATE = ".glass-dock > .dock-plate";
 
 type W = {
     __ready?: boolean;
@@ -84,6 +91,7 @@ async function record(page: Page, ms: number): Promise<void> {
             const w = window as unknown as W;
             w.__frames = [];
             const dock = document.querySelector<HTMLElement>(".glass-dock")!;
+            const plate = dock.querySelector<HTMLElement>(":scope > .dock-plate")!;
             const edit = document.querySelector<HTMLElement>(sel)!;
             const summary = document.querySelector<HTMLElement>('[data-witness="summary"]')!;
             const box = (el: Element): Box => {
@@ -94,7 +102,7 @@ async function record(page: Page, ms: number): Promise<void> {
             const tick = () => {
                 w.__frames.push({
                     morphing: dock.hasAttribute("data-morphing"),
-                    dock: box(dock),
+                    dock: box(plate),
                     edit: box(edit),
                     summary: box(summary),
                     collapsed: (w as unknown as { __collapsedAt?: number }).__collapsedAt !== undefined,
@@ -160,7 +168,7 @@ for (const [width, cell] of [
                 page,
             }) => {
                 await open(page, anchor);
-                const rest = await rect(page, ".glass-dock");
+                const rest = await rect(page, PLATE);
                 const seat = await rect(page, EDIT);
                 const x = (seat.left + seat.right) / 2;
                 const y = (seat.top + seat.bottom) / 2;
@@ -324,7 +332,7 @@ for (const anchor of ["right", "left", "bottom", "top"] as const) {
             await page.waitForTimeout(1300);
             await expect(page.locator(".glass-dock")).toHaveClass(/expanded/);
             await expect(page.locator(".glass-dock")).not.toHaveAttribute("data-morphing");
-            const expanded = await rect(page, ".glass-dock");
+            const expanded = await rect(page, PLATE);
             await record(page, 1600);
             // The click-away: a press outside the dock collapses it at once.
             await page.mouse.move(4, 700);
@@ -332,7 +340,7 @@ for (const anchor of ["right", "left", "bottom", "top"] as const) {
             await page.mouse.up();
             await page.waitForTimeout(1700);
             const all = await frames(page);
-            const settled = await rect(page, ".glass-dock");
+            const settled = await rect(page, PLATE);
             const morph = all.filter((f) => f.morphing);
             expect(morph.length, "the click-away armed a morph").toBeGreaterThan(3);
             expect(all.at(-1)!.morphing, "the morph settled").toBe(false);
@@ -436,13 +444,13 @@ test.describe("10.1.3 · 390 · reduced motion", () => {
             await page.evaluate(() => matchMedia("(prefers-reduced-motion: reduce)").matches),
             "the page reads reduce",
         ).toBe(true);
-        const rest = await rect(page, ".glass-dock");
+        const rest = await rect(page, PLATE);
         const { x, y } = mid(await rect(page, EDIT));
         await record(page, 900);
         await page.mouse.move(x, y);
         await page.waitForTimeout(1000);
         const all = await frames(page);
-        const settled = await rect(page, ".glass-dock");
+        const settled = await rect(page, PLATE);
         expect(boxDistance(rest, settled), "the hover expanded the dock").toBeGreaterThan(10);
         const between = all.filter(
             (f) => boxDistance(f.dock, rest) > 0.5 && boxDistance(f.dock, settled) > 0.5,
@@ -548,17 +556,7 @@ async function recordSpill(page: Page, ms: number): Promise<void> {
         const dock = document.querySelector<HTMLElement>(".glass-dock")!;
         const plate = dock.querySelector<HTMLElement>(":scope > .dock-plate")!;
         const seen = [...dock.querySelectorAll<HTMLElement>("[data-witness]")];
-        const visible = (el: HTMLElement) => {
-            const r = el.getBoundingClientRect();
-            let [l, t, rr, b] = [r.left, r.top, r.right, r.bottom];
-            for (let a = el.parentElement; a && a !== document.body; a = a.parentElement) {
-                const cs = getComputedStyle(a);
-                const box = a.getBoundingClientRect();
-                if (cs.overflowX !== "visible") [l, rr] = [Math.max(l, box.left), Math.min(rr, box.right)];
-                if (cs.overflowY !== "visible") [t, b] = [Math.max(t, box.top), Math.min(b, box.bottom)];
-            }
-            return { l, t, r: rr, b };
-        };
+        const visible = (el: HTMLElement) => window.__visibleBox(el);
         const opacity = (el: HTMLElement) => {
             let o = 1;
             for (let q: HTMLElement | null = el; q && q !== dock.parentElement; q = q.parentElement) {

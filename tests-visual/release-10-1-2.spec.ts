@@ -335,6 +335,7 @@ for (const [label, viewport] of [
 // stale reservation there shows as the reserved size, not as document scroll.
 interface Frame {
     morphing: boolean;
+    expanded: boolean;
     changed: boolean;
     reserved: number;
     size: number;
@@ -393,8 +394,12 @@ async function driveStaleEndpoint(
                 const root = document.documentElement;
                 w.__frames.push({
                     morphing: el.hasAttribute("data-morphing"),
+                    expanded: el.classList.contains("expanded"),
                     changed: innerWidth === to,
-                    reserved: Number.parseFloat(el.style.getPropertyValue("--dock-expanded-px")),
+                    // W-I.8 (RU-22 (a)): the reservation was `--dock-expanded-px`; under the
+                    // carrier the root's layout box is the new rest from the first row of a
+                    // travel, and the plate's target is that box.
+                    reserved: vertical ? el.offsetHeight : el.offsetWidth,
                     size: vertical ? el.offsetHeight : el.offsetWidth,
                     scroll: vertical ? root.scrollHeight : root.scrollWidth,
                     client: vertical ? root.clientHeight : root.clientWidth,
@@ -495,6 +500,10 @@ for (const [from, to] of [
                 (f) =>
                     f.morphing &&
                     f.changed &&
+                    // W-I.8 (RU-22 (a)): the root's layout is the expanded endpoint only in the
+                    // expanded posture; a frame still folding before the expand lands reserves
+                    // nothing expanded.
+                    f.expanded &&
                     (sequence !== "collapsed" || f === seq.find((g) => g.morphing)) &&
                     !(Math.abs(f.reserved - rest.size) <= 1),
             );

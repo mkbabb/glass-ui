@@ -44,7 +44,7 @@ const scene = params.get("scene") ?? "";
 const w = window as unknown as Record<string, unknown>;
 
 /** A dock pinned to the bottom of the viewport, the way consumers seat one. */
-function bottomDock(props: Record<string, unknown>, seats: () => unknown[]) {
+function bottomDock(props: Record<string, unknown>, seats: (() => unknown[]) | Record<string, () => unknown>) {
     const dock = ref<InstanceType<typeof GlassDock> | null>(null);
     w.__dock = () => dock.value;
     return h(
@@ -52,8 +52,13 @@ function bottomDock(props: Record<string, unknown>, seats: () => unknown[]) {
         {
             style: "position:fixed;inset-inline:0;bottom:16px;display:flex;justify-content:center;z-index:var(--z-dock)",
         },
-        h(GlassDock, { ref: dock, ...props }, seats),
+        h(GlassDock, { ref: dock, ...props }, seats as never),
     );
+}
+
+/** The default slot, with a `#collapsed` face when `?face=1` asks for one. */
+function faced(seats: () => unknown[]) {
+    return params.get("face") ? { default: seats, collapsed: () => "⋯" } : seats;
 }
 
 const scenes: Record<string, Component> = {
@@ -147,8 +152,10 @@ const scenes: Record<string, Component> = {
     }),
 
     // O-102 (3) — a menu, a popover and a select opened from seats of a collapsible dock.
+    // W-I.8 R-2: a dock with no folded face rests open where nothing can hover, so the
+    // coarse cells give it one (`?face=1`) to have a collapse to read.
     collapse: defineComponent(() => () =>
-        bottomDock({ collapse: "open" }, () => [
+        bottomDock({ collapse: "open" }, faced(() => [
             h(DropdownMenu, { modal: false }, () => [
                 h(DockTrigger, { for: "dropdown", "aria-label": "Menu", "data-witness": "menu-trigger" }, () => "M"),
                 h(DropdownMenuContent, { side: "top" }, () => [
@@ -167,7 +174,7 @@ const scenes: Record<string, Component> = {
                     h(SelectItem, { value: "b" }, () => "2×"),
                 ]),
             ]),
-        ]),
+        ])),
     ),
 
     // O-102 (3), its boundary — a popover opened from the `#persistent` region, whose
@@ -190,6 +197,7 @@ const scenes: Record<string, Component> = {
                             ),
                         ]),
                     default: () => [h(DockControl, { "aria-label": "Play" }, () => "▶")],
+                    ...(params.get("face") ? { collapsed: () => "⋯" } : {}),
                 }),
             );
     }),

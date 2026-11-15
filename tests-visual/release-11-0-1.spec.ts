@@ -15,6 +15,10 @@
 import { mkdirSync } from "node:fs";
 import { join } from "node:path";
 import { expect, test, type Locator, type Page } from "@playwright/test";
+import { installPaintReads } from "./dock-paint";
+
+// W-I.8 (RU-22 (a)): a corner is read as it paints, its used value.
+test.beforeEach(({ page }) => installPaintReads(page));
 
 const OUT = process.env.OWNER_OUT;
 
@@ -42,9 +46,8 @@ type Corners = { radii: string[]; w: number; h: number };
 async function corners(page: Page, sel: string): Promise<Corners> {
     return page.evaluate((s) => {
         const el = document.querySelector<HTMLElement>(s)!;
-        const cs = getComputedStyle(el);
         return {
-            radii: [cs.borderTopLeftRadius, cs.borderTopRightRadius, cs.borderBottomRightRadius, cs.borderBottomLeftRadius],
+            radii: window.__usedRadii(el),
             w: el.offsetWidth,
             h: el.offsetHeight,
         };
@@ -153,11 +156,10 @@ test("o3 every frame of the expand and of the collapse paints a round end", asyn
                         if (root.hasAttribute("data-morphing")) morphing += 1;
                         // In paint: each corner's computed radii times the box's painted
                         // scale on that axis (the morph scales the box on its inline axis).
-                        const cs = getComputedStyle(plate);
                         const box = plate.getBoundingClientRect();
                         const sx = box.width / plate.offsetWidth;
                         const sy = box.height / plate.offsetHeight;
-                        const r = [cs.borderTopLeftRadius, cs.borderTopRightRadius, cs.borderBottomRightRadius, cs.borderBottomLeftRadius];
+                        const r = window.__usedRadii(plate);
                         const half = box.height / 2;
                         const painted = r.map((x) => {
                             const [h, v = h] = x.split(" ");

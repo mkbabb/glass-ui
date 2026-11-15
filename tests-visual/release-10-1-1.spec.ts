@@ -9,6 +9,12 @@
 // `guarded --exclusive webkit`).
 import { expect, test, type Page } from "@playwright/test";
 
+/** W-I.8 R-2 (RU-22 (a)): on a pointer that cannot hover, a dock with no folded face rests
+ *  open, so a collapse cell there reads a dock that has one. */
+function coarseFace(): string {
+    return test.info().project.use.isMobile ? "&face=1" : "";
+}
+
 async function open(page: Page, scene: string): Promise<void> {
     await page.goto(`/tests-visual/release-10-1-1/harness.html?scene=${scene}`);
     await page.waitForFunction(() => (window as unknown as { __ready?: boolean }).__ready);
@@ -131,7 +137,7 @@ test.describe("10.1.1", () => {
         test(`O-102(3) · a ${label} opened from a seat closes when the dock collapses`, async ({
             page,
         }) => {
-            await open(page, "collapse");
+            await open(page, `collapse${coarseFace()}`);
             const t = page.locator(`[data-witness="${trigger}"]`);
             await expect(t).toBeVisible();
             await t.click();
@@ -150,7 +156,7 @@ test.describe("10.1.1", () => {
     test("O-102(3) · a collapse-closed menu hands focus to the summary, not <body>", async ({
         page,
     }) => {
-        await open(page, "collapse");
+        await open(page, `collapse${coarseFace()}`);
         const t = page.locator('[data-witness="menu-trigger"]');
         await expect(t).toBeVisible();
         await t.focus();
@@ -180,7 +186,7 @@ test.describe("10.1.1", () => {
     test("O-102(3) · a popover opened from #persistent outlives the collapse, and the dock stays collapsed", async ({
         page,
     }) => {
-        await open(page, "persistent");
+        await open(page, `persistent${coarseFace()}`);
         const t = page.locator('[data-witness="p-trigger"]');
         await expect(t).toBeVisible();
         await t.click();

@@ -75,6 +75,10 @@
 //   q3  (O-187) exactly one `--dock-run` scroll timeline in the dock, the active run's
 import { expect, test, type Page } from "@playwright/test";
 import { PNG } from "pngjs";
+import { installPaintReads } from "./dock-paint";
+
+// W-I.8 (RU-22 (a)): the corner is read as the plate paints it, its used value.
+test.beforeEach(({ page }) => installPaintReads(page));
 
 async function open(page: Page, query: string): Promise<void> {
     await page.goto(`/tests-visual/release-10-1-5/harness.html?${query}`);
@@ -112,12 +116,7 @@ function readPlate(page: Page): Promise<PlateRead> {
             // Layout border box: the morph's `scale` never reaches it.
             w: plate.getBoundingClientRect().width,
             h: plate.getBoundingClientRect().height,
-            radii: [
-                cs.borderTopLeftRadius,
-                cs.borderTopRightRadius,
-                cs.borderBottomRightRadius,
-                cs.borderBottomLeftRadius,
-            ],
+            radii: window.__usedRadii(plate),
             runs: [...dock.querySelectorAll<HTMLElement>(".dock-run")].map((run) => ({
                 sw: run.scrollWidth,
                 cw: run.clientWidth,
@@ -307,8 +306,10 @@ test("g1 an overflowing run at scroll 0: the leading cap rests at half the block
         expect(r, `leading corner ${r} is one length (${JSON.stringify(read)})`).toMatch(/^[\d.]+px$/);
         expect(Math.abs(Number.parseFloat(r) - read.h / 2), `leading ${r} = h/2`).toBeLessThanOrEqual(0.5);
     }
+    // W-I.8 R-1 (RU-13) deletes the cut cap's writes to the plate: what says the run
+    // scrolls is drawn on the run's port (W-I.1), and the plate stays a stadium.
     for (const r of [tr, br]) {
-        expect(Number.parseFloat(r), `trailing corner ${r} is cut below h/2`).toBeLessThan(read.h / 2 - 4);
+        expect(Math.abs(Number.parseFloat(r) - read.h / 2), `trailing ${r} = h/2: the plate is not cut`).toBeLessThanOrEqual(0.5);
     }
 });
 
@@ -866,7 +867,7 @@ test.describe("h1 at 2x", () => {
                         scroll: run.scrollLeft,
                         range: run.scrollWidth - run.clientWidth,
                         plate: [p.left, p.top, p.right, p.bottom],
-                        radii: [cs.borderTopLeftRadius, cs.borderTopRightRadius, cs.borderBottomRightRadius, cs.borderBottomLeftRadius].map(Number.parseFloat),
+                        radii: window.__usedRadii(plate).map(Number.parseFloat),
                         run: getComputedStyle(run).borderTopRightRadius,
                     };
                 }, target);
@@ -874,7 +875,8 @@ test.describe("h1 at 2x", () => {
                 expect(geo.hovered, `${cell}: the seat is hovered`).toBe(true);
                 expect(geo.scroll, `${cell}: scrolled mid-run`).toBeGreaterThan(0);
                 expect(geo.scroll, `${cell}: scrolled mid-run`).toBeLessThan(geo.range);
-                for (const rad of geo.radii) expect(rad, `${cell}: every corner is cut`).toBeLessThan(20);
+                // W-I.8 R-1 (RU-13): the plate is not cut; every corner is half its cross extent.
+                for (const rad of geo.radii) expect(Math.abs(rad - (geo.plate[3]! - geo.plate[1]!) / 2), `${cell}: every corner is the stadium's`).toBeLessThanOrEqual(0.5);
                 const [l, t, rr, bb] = geo.plate;
                 const clip = { x: Math.floor(l) - 2, y: Math.floor(t) - 2, width: Math.ceil(rr - l) + 4, height: Math.ceil(bb - t) + 4 };
                 const shown = (await page.screenshot({ clip })).toString("base64");
@@ -1356,7 +1358,7 @@ function plateFrames(page: Page, ms: number): Promise<{ w: number; h: number; ra
                     out.push({
                         w: plate.offsetWidth,
                         h: plate.offsetHeight,
-                        radii: [cs.borderTopLeftRadius, cs.borderTopRightRadius, cs.borderBottomRightRadius, cs.borderBottomLeftRadius],
+                        radii: window.__usedRadii(plate),
                     });
                     if (performance.now() - t0 < ms) requestAnimationFrame(step);
                     else res(out);
@@ -1399,7 +1401,8 @@ function m1(): void {
             await settle(page, 1500);
             const read = await readPlate(page);
             const sl = (await runAt(page)).pos;
-            if (sl > 0) expect(read.radii.some((r) => Math.abs(Number.parseFloat(r) - read.h / 2) > 0.5), `re-expanded at ${sl}: the cut returns (${JSON.stringify(read)})`).toBe(true);
+            // W-I.8 R-1 (RU-13): no cut returns to the plate; it rests a stadium scrolled or not.
+            if (sl > 0) expect(read.radii.every((r) => Math.abs(Number.parseFloat(r) - read.h / 2) <= 0.5), `re-expanded at ${sl}: the plate rests round (${JSON.stringify(read)})`).toBe(true);
         });
     }
 }
@@ -1436,7 +1439,7 @@ function m4(): void {
                 const run = document.querySelector<HTMLElement>(".dock-run")!;
                 const plate = document.querySelector<HTMLElement>(".glass-dock > .dock-plate")!;
                 const cs = getComputedStyle(plate);
-                return { sl: run.scrollLeft, sw: run.scrollWidth, cw: run.clientWidth, h: plate.offsetHeight, lead: [cs.borderTopLeftRadius, cs.borderBottomLeftRadius] };
+                return { sl: run.scrollLeft, sw: run.scrollWidth, cw: run.clientWidth, h: plate.offsetHeight, lead: [window.__usedRadii(plate)[0], window.__usedRadii(plate)[3]] };
             });
             expect(r.sw, "the layered run overflows").toBeGreaterThan(r.cw);
             expect(r.sl, `rests at 0 (${JSON.stringify(r)})`).toBe(0);
@@ -1521,7 +1524,7 @@ function m3Summary(): void {
                 collapsed: document.querySelector(".glass-dock")!.classList.contains("collapsed"),
                 outline: s.outlineStyle,
                 radius: [s.borderTopLeftRadius, s.borderTopRightRadius, s.borderBottomRightRadius, s.borderBottomLeftRadius],
-                plate: getComputedStyle(plate).borderTopLeftRadius,
+                plate: window.__usedRadii(plate)[0],
             };
         });
         expect(r.summary && r.fv && r.collapsed, `Escape folds and focus stands on the summary (${JSON.stringify(r)})`).toBe(true);
@@ -1582,17 +1585,26 @@ function m3PressMidExpand(): void {
             if (coarse) await page.touchscreen.tap(sum.x + sum.width / 2, sum.y + sum.height / 2);
             else await page.mouse.click(sum.x + sum.width / 2, sum.y + sum.height / 2);
             await page.waitForTimeout(delay);
+            // W-I.8 R-1 (C-9, RU-22 (a)): hit follows paint, so the press is aimed at the part
+            // of the seat that paints, inside its lane and the plate. A seat with nothing
+            // painted yet is not under the press, and the press activates nothing.
             const at = await page.evaluate(() => {
-                const r = document.querySelector<HTMLElement>('[data-witness="S2"]')!.getBoundingClientRect();
-                return { x: r.left + r.width / 2, y: r.top + r.height / 2, morphing: document.querySelector(".glass-dock")!.hasAttribute("data-morphing") };
+                const el = document.querySelector<HTMLElement>('[data-witness="S2"]')!;
+                const v = window.__visibleBox(el);
+                const p = window.__plateBox();
+                const l = Math.max(v.l, p.left), r = Math.min(v.r, p.right);
+                const t = Math.max(v.t, p.top), b = Math.min(v.b, p.bottom);
+                return { x: (l + r) / 2, y: (t + b) / 2, painted: r - l > 4 && b - t > 4, morphing: document.querySelector(".glass-dock")!.hasAttribute("data-morphing") };
             });
-            if (coarse) await page.touchscreen.tap(at.x, at.y);
-            else await page.mouse.click(at.x, at.y);
+            if (at.painted) {
+                if (coarse) await page.touchscreen.tap(at.x, at.y);
+                else await page.mouse.click(at.x, at.y);
+            }
             await page.waitForTimeout(1500);
-            rows.push({ delay, morphing: at.morphing, clicks: await page.evaluate(() => (window as unknown as { __clicks: Record<string, number> }).__clicks.S2 ?? 0) });
+            rows.push({ delay, morphing: at.morphing, painted: at.painted, clicks: await page.evaluate(() => (window as unknown as { __clicks: Record<string, number> }).__clicks.S2 ?? 0) });
         }
-        expect(rows.some((r) => (r as { morphing: boolean }).morphing), `a press lands mid-morph (${JSON.stringify(rows)})`).toBe(true);
-        for (const r of rows) expect((r as { clicks: number }).clicks, `exactly once (${JSON.stringify(rows)})`).toBe(1);
+        expect(rows.some((r) => (r as { morphing: boolean; painted: boolean }).morphing && (r as { painted: boolean }).painted), `a press lands on the painted seat mid-morph (${JSON.stringify(rows)})`).toBe(true);
+        for (const r of rows) expect((r as { clicks: number }).clicks, `exactly once (${JSON.stringify(rows)})`).toBe((r as { painted: boolean }).painted ? 1 : 0);
     });
 }
 
@@ -2201,7 +2213,7 @@ function runRead(page: Page) {
         const plate = dock.querySelector<HTMLElement>(":scope > .dock-plate")!;
         const cs = getComputedStyle(plate);
         const half = Math.min(plate.offsetWidth, plate.offsetHeight) / 2;
-        const radii = [cs.borderTopLeftRadius, cs.borderTopRightRadius, cs.borderBottomRightRadius, cs.borderBottomLeftRadius];
+        const radii = window.__usedRadii(plate);
         return {
             collapsed: dock.classList.contains("collapsed"),
             fits: dock.hasAttribute("data-run-fits"),
@@ -2273,7 +2285,7 @@ function fitRead(page: Page) {
         const plate = dock.querySelector<HTMLElement>(":scope > .dock-plate")!;
         const cs = getComputedStyle(plate);
         const half = Math.min(plate.offsetWidth, plate.offsetHeight) / 2;
-        const radii = [cs.borderTopLeftRadius, cs.borderTopRightRadius, cs.borderBottomRightRadius, cs.borderBottomLeftRadius];
+        const radii = window.__usedRadii(plate);
         const kids = [...run.children] as HTMLElement[];
         const at = (el: HTMLElement) => (vertical ? el.offsetTop : el.offsetLeft);
         const ext = (el: HTMLElement) => (vertical ? el.offsetHeight : el.offsetWidth);
@@ -2551,7 +2563,10 @@ test("m3 O-160 no cut-cap or clip keyframe carries a percentage radius", async (
     const { readFileSync } = await import("node:fs");
     const css = readFileSync(new URL("../src/components/dock/styles/run.css", import.meta.url), "utf8");
     const frames = [...css.matchAll(/@keyframes (gl-dock-(?:cap|clip)-[\w-]+) \{([\s\S]*?)\n\}/g)];
-    expect(frames.length).toBe(8);
+    // W-I.8 R-1 (RU-13): the cut cap's four keyframes leave with its writes to the plate;
+    // the run's four clip keyframes stay, and none of them carries a percentage.
+    expect(frames.filter(([, n]) => n!.startsWith("gl-dock-cap-")).length, "no cut-cap keyframe").toBe(0);
+    expect(frames.filter(([, n]) => n!.startsWith("gl-dock-clip-")).length, "the run's four clip keyframes").toBe(4);
     for (const [, name, body] of frames) {
         for (const decl of body!.matchAll(/radius:\s*([^;]+);/g)) expect(decl[1], `${name}`).not.toMatch(/%/);
     }
