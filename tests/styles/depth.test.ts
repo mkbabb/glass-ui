@@ -78,4 +78,25 @@ describe("depth.css", () => {
             /\[data-depth="front"\]\s*\{\s*z-index:\s*calc\(var\(--z-content\) \+ 1\);/,
         );
     });
+
+    it("rules three placements, sized in the scene's own width", () => {
+        for (const scene of ["title", "caption", "stage"]) {
+            expect(RULES, scene).toContain(`.depth[data-depth-scene="${scene}"]`);
+        }
+        // No placement sizes anything against the viewport's width or in fixed pixels.
+        const placements = RULES.slice(RULES.indexOf('.depth[data-depth-scene="title"]'), RULES.indexOf("@media"));
+        expect(placements).not.toMatch(/\d(vw|vi|px)\b/);
+    });
+
+    it("halves the travel where the figure crosses letters", () => {
+        expect(RULES).toMatch(
+            /\.depth\[data-depth-scene="title"\]\s*\{\s*--depth-travel:\s*calc\(var\(--depth-lag\) \* min\(50lvb, 25cqi\)\);/,
+        );
+    });
+
+    it("keeps the travel's room inside a scene whose figure trails whole", () => {
+        expect(RULES).toMatch(
+            /\.depth:has\(> \[data-depth-lag\]:not\(\[data-depth-lag="within"\]\)\)\s*\{\s*padding-block:\s*calc\(var\(--depth-lag\) \* 50lvb\);/,
+        );
+    });
 });

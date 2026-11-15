@@ -7,6 +7,11 @@
  * One element per scene may trail the page under scroll: the figure (`data-depth-lag`)
  * or the picture inside its window (`data-depth-lag="within"`). The words never move.
  *
+ * A scene names one of three ruled placements (`data-depth-scene`) and writes no
+ * geometry: a title with the figure at the end of its lines, a figure with its caption
+ * on its lower edge, a stage with its name behind the instrument and its value on it.
+ * Each is sized in the scene's own width, and its cover is read from 360 to 1920.
+ *
  * Scroll is the only driver (a view timeline on `translate`); there is no clock and no
  * script. Under reduced motion, and on an engine without view timelines, the animation
  * never binds and every layer rests where the composition was drawn: the cover stays,
@@ -14,7 +19,7 @@
  */
 
 :root {
-    /* The ratio glass already rules for the route push (1:8). A scene may lower it. */
+    /* The travel's share of half the viewport. A scene may lower it. */
     --depth-lag: 0.125;
 }
 
@@ -29,6 +34,13 @@
         isolation: isolate;
         container-type: inline-size;
         view-timeline: --depth block;
+    }
+
+    /* A figure that trails whole keeps its travel's room inside its scene, above and
+       below, so it never leaves the scene's box and its rate never changes on screen.
+       The viewport term alone: it is never less than the travel. */
+    .depth:has(> [data-depth-lag]:not([data-depth-lag="within"])) {
+        padding-block: calc(var(--depth-lag) * 50lvb);
     }
 
     /* One cell. Each layer places itself in it (place-self, margin). */
@@ -63,6 +75,70 @@
         inline-size: 100%;
         block-size: 100%;
         object-fit: cover;
+    }
+
+    /* ── Placement 1: a title, the figure at the end of its lines ───────────────
+       One run a line, set to the end edge. The figure's centre sits on that edge,
+       below the first line's baseline: it takes the foot of the last letter above and
+       the last letters of the line below stand on its body. */
+    .depth[data-depth-scene="title"] {
+        /* A figure that crosses letters travels half as far: a letter is small. */
+        --depth-travel: calc(var(--depth-lag) * min(50lvb, 25cqi));
+        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+        align-items: center;
+    }
+    :where(.depth[data-depth-scene="title"]) > :where(h1, h2, h3) {
+        grid-column: 2;
+        margin: 0;
+        font-size: 17cqi;
+        line-height: 0.9;
+    }
+    /* Each run is a line, as wide as its word and no wider: the box a run takes
+       from the pointer is its own. */
+    :where(.depth[data-depth-scene="title"]) > :where(h1, h2, h3) > [data-depth] {
+        display: block;
+        inline-size: fit-content;
+        margin-inline-start: auto;
+        white-space: nowrap;
+    }
+    :where(.depth[data-depth-scene="title"]) > [data-depth="figure"] {
+        grid-column: 3;
+        justify-self: start;
+        inline-size: var(--depth-figure, 20cqi);
+        margin-inline-start: calc(-0.5 * var(--depth-figure, 20cqi) - 1cqi);
+        margin-block-start: 16.5cqi;
+    }
+
+    /* ── Placement 2: a figure, its caption on the lower edge ───────────────────
+       The caption's plate laps the frame from inside its lower edge. */
+    :where(.depth[data-depth-scene="caption"]) > [data-depth="figure"] {
+        aspect-ratio: var(--depth-aspect, 4 / 3);
+    }
+    :where(.depth[data-depth-scene="caption"]) > [data-depth="front"] {
+        place-self: end start;
+        margin: 0 0 -1.5rem 1rem;
+        max-inline-size: 70%;
+    }
+
+    /* ── Placement 3: a stage, its name behind the instrument, its value on it ── */
+    .depth[data-depth-scene="stage"] {
+        justify-items: center;
+    }
+    :where(.depth[data-depth-scene="stage"]) > [data-depth="behind"] {
+        align-self: start;
+        margin: 0;
+        font-size: 19cqi;
+        line-height: 1;
+    }
+    :where(.depth[data-depth-scene="stage"]) > [data-depth="figure"] {
+        inline-size: 78cqi;
+        margin-block-start: 11.5cqi;
+    }
+    :where(.depth[data-depth-scene="stage"]) > [data-depth="front"] {
+        align-self: center;
+        margin-block: 11.5cqi 0;
+        font-size: 14cqi;
+        line-height: 1;
     }
 
     @media (prefers-reduced-motion: no-preference) {
