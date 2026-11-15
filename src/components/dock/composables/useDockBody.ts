@@ -507,7 +507,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         const whole = run.hasAttribute("data-run-whole");
         if (whole) {
             run.removeAttribute("data-run-whole");
-            run.style.removeProperty(v ? "max-block-size" : "max-inline-size");
+            run.style.removeProperty("--dock-run-whole-cut");
         }
         if (hasOpen) {
             if (was) run.removeAttribute("data-compact");
@@ -524,8 +524,8 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
 
     /** RU-23: when the seats, compact, still do not fit, the run scrolls, and at rest a seat
      *  is either whole or absent at each end. The run's window for seats (its port less the
-     *  reserve at each end) is cut to a whole number of pitches, `n·P − gap`, by a cap on
-     *  the run's size; under `data-run-whole` the run snaps a seat's start to the reserve
+     *  reserve at each end) is cut to a whole number of pitches, `n·P − gap`, by end padding
+     *  (`--dock-run-whole-cut`); under `data-run-whole` the run snaps a seat's start to the reserve
      *  (run.css), so every snap position, the last included, shows n whole seats. Seats of
      *  unequal size have no pitch, and the run is left as it is. */
     function fitWhole(run: HTMLElement, sp: number): void {
@@ -540,14 +540,20 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         const rs = getComputedStyle(run);
         const reserve = Number.parseFloat(v ? rs.paddingBlockStart : rs.paddingInlineStart) || 0;
         const gap = Number.parseFloat(v ? rs.rowGap : rs.columnGap) || 0;
-        const window = (v ? run.clientHeight : run.clientWidth) - 2 * reserve;
-        if (sp <= window + 0.5) return;
+        // Only a run that does not fit its port, compact (the fit law yields the reserve to
+        // a run that does), is cut.
+        const port = v ? run.clientHeight : run.clientWidth;
+        if (sp <= port + 0.5) return;
+        const window = port - 2 * reserve;
         const pitch = seat + gap;
         const n = Math.floor((window + gap) / pitch);
         const left = window - (n * pitch - gap);
         if (n < 1 || left <= 0.5) return;
+        // The cut is end padding, not a cap on the run's size: a cap would hold the run's
+        // preferred size down, so a dock whose room grows (a cap lifted, a host resized)
+        // would never grow to read it again (10.1.5 l1).
         run.setAttribute("data-run-whole", "");
-        run.style.setProperty(v ? "max-block-size" : "max-inline-size", `${(v ? run.offsetHeight : run.offsetWidth) - left}px`);
+        run.style.setProperty("--dock-run-whole-cut", `${left}px`);
     }
 
     /** The fit law (10.1.5 e4, k3, p2): `data-run-fits` says the seats' span is no longer

@@ -430,12 +430,14 @@
     /* W-I.8 RU-23: a run whose seats, compact, still do not fit is cut to a whole number
        of pitches by the carrier (`data-run-whole`), and snaps a seat's start to its
        reserve, so at rest a seat is whole or absent at each end: no peek. */
-    .glass-dock :where(.dock-layers) > .dock-run[data-run-whole] {
+    .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run[data-run-whole] {
         scroll-padding-inline: var(--dock-run-reserve-inline);
+        padding-inline-end: calc(var(--dock-run-reserve-inline) + var(--dock-run-whole-cut, 0px));
     }
 
     .glass-dock.vertical :where(.dock-layers) > .dock-run[data-run-whole] {
         scroll-padding-block: var(--dock-run-reserve-block);
+        padding-block-end: calc(var(--dock-run-reserve-block) + var(--dock-run-whole-cut, 0px));
     }
 
     /* THE SEATS. Every direct child of the run is a snap target and none of them flex —
