@@ -106,10 +106,12 @@ on the left, the dock with reduced motion turned on, and the timing of HandMark'
 - **A collapsed dock can be just its always-visible controls.** Leave out the
   `#collapsed` slot and put a control in `#persistent` or `#persistent-end`, such as a
   theme toggle, and the collapsed dock is exactly that control, with its own icon, its
-  own name and its own pressed state, and no "Expand dock" button beside it. If your
-  `#collapsed` content only shows some of the time, say a reading that appears once data
-  loads, the collapsed dock follows it: while the content is there it is the "Expand
-  dock" button, and while it is not the always-visible controls stand alone. With
+  own name and its own pressed state, and no "Expand dock" button beside it. If you pass
+  the `#collapsed` slot only some of the time, say with a `v-if` on its template so a
+  reading appears once data loads, the collapsed dock follows the slot: while you pass it
+  the dock shows the "Expand dock" button, and while you don't, the always-visible
+  controls stand alone. The dock looks at whether the slot is passed, not at what it
+  renders, so put the condition on the slot's template rather than inside it. With
   controls in both slots, the leading ones come first and the trailing ones follow. The
   dock still opens the way `expand-on` says: hovering it with a mouse or trackpad opens
   it, and tabbing onto the control opens it from the keyboard, so Tab (or Shift+Tab, for
