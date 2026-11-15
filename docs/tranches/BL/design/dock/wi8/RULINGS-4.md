@@ -164,3 +164,9 @@ What this pass does not contain is the reason it can close: nothing in it is a p
 - The three causes marked as hypotheses (RU-30, RU-32, RU-33). Each has a first reading named.
 - Whether real Safari agrees with any of it. Nothing has read it.
 - The six gates MEASURE-4 calls GREEN were read on docks a seat short. I have no reading that any of them depends on the seat count, and none that it does not.
+
+## Orchestrator's clarification of RU-28 (2026-11-15 17:08), after atlas's reply
+
+RU-28 strikes one thing: the navigation seat that grows to three pitches to show the current page's name (`--dock-open-seat` on the current seat). It does not narrow a control whose content is words by its nature. A Select trigger that shows its value ("View: Contracted bandwidth"), a worded button, a consumer's chip: each keeps its own width in the run, open and folded, as on v11.0.1. A figure dock that states what the figure shows, one worded chip per dial, is therefore unaffected, at rest and open. What RU-24 still asks of such a control is that a change of its width (a new value) is not a one-frame jump of its neighbours; that is the seat carry already built, and the sixth reading should include one cell: a dock of three worded Select triggers, one value changed to a longer word, neighbours carried on the clock.
+
+Recorded for the owner with the question: atlas relies on words in two places, the figure dock's worded dials (unaffected, above) and the rail's current section name beside its mark (affected; atlas can live without it, the section title is on the page). Atlas cites his remark of 12 November on docks, "what do some of these dock buttons even do?", against icons alone.
