@@ -78,7 +78,7 @@ describe("useDockState — the auto FSM floor", () => {
         const { handle } = mountState();
         handle.onMouseEnter();
         // W-I.8 R-2 (RU-3), restated: the dwell counts from the first real move.
-        document.querySelector(".state-root")!.dispatchEvent(new MouseEvent("pointermove", { bubbles: true, clientX: 10, clientY: 10 }));
+        document.querySelector(".state-root")!.dispatchEvent(new MouseEvent("pointermove", { bubbles: true, clientX: 1 + Math.random() * 999, clientY: 10 }));
         vi.advanceTimersByTime(HOVER_INTENT_MS + 20);
         expect(handle.state.value).toBe("hover");
     });

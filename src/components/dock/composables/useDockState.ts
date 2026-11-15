@@ -62,7 +62,7 @@ export interface UseDockStateReturn {
      */
     graspHeld: ComputedRef<boolean>;
     /** Mouseenter handler — transitions `collapsed → hover`. */
-    onMouseEnter: (e?: MouseEvent) => void;
+    onMouseEnter: () => void;
     /** Mouseleave handler — schedules `hover → collapsed` after `collapseDelay`. */
     onMouseLeave: (e?: MouseEvent) => void;
     /** Focusin handler — transitions `collapsed → hover` (keyboard parity with mouse). */
@@ -101,6 +101,24 @@ export interface UseDockStateReturn {
  * are treated as "inside the dock" for mouse/focus/click-away purposes.
  * ```
  */
+/* The page-wide last pointer position for RU-3's move test. The dock's own listeners run
+   before this one (it sits on window, bubbling), so they compare against the previous
+   event's coordinates. */
+const lastPointer = { x: Number.NaN, y: Number.NaN };
+let pointerTracked = false;
+function ensurePointerTracker(): void {
+    if (pointerTracked || typeof window === "undefined") return;
+    pointerTracked = true;
+    window.addEventListener(
+        "pointermove",
+        (e) => {
+            lastPointer.x = e.clientX;
+            lastPointer.y = e.clientY;
+        },
+        { passive: true },
+    );
+}
+
 export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
     // Patient-dwell collapse delay (2500 → 3600ms): a more
     // forgiving hover/interaction window before auto-collapse. The ~60ms HOVER_INTENT_MS
@@ -425,31 +443,33 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
     // --- Mouse handlers ---
 
     /* W-I.8 R-2 (RU-3): a pointer event counts as a move only when its client coordinates
-       differ from the last pointer event this dock saw, an enter and a leave included.
-       Both engines send an enter and a move with unchanged coordinates when a page scrolls
-       a dock under a still pointer; neither opens a collapsed dock. */
-    let lastX = Number.NaN;
-    let lastY = Number.NaN;
+       differ from the last pointer event seen. Both engines send an enter and a move with
+       unchanged coordinates when a page scrolls a dock under a still pointer; neither
+       opens a collapsed dock. The last position is read page-wide (one shared listener),
+       so the move that carries a real pointer onto the dock counts, while the move a
+       scroll synthesises at the pointer's old position does not. */
     function moved(e: MouseEvent): boolean {
-        const m = e.clientX !== lastX || e.clientY !== lastY;
-        lastX = e.clientX;
-        lastY = e.clientY;
-        return m;
+        return e.clientX !== lastPointer.x || e.clientY !== lastPointer.y;
     }
-    let intentArmed = false;
+    ensurePointerTracker();
+    /* A pointermove at the root is a move over a painted descendant (the root takes no
+       pointer events; hit follows paint). The engines dispatch the entering pointermove
+       before the compatibility mouseenter, so the move, not the enter, does the work. */
     function onPointerMoveInside(e: PointerEvent): void {
-        if (e.pointerType === "touch") return;
-        const real = moved(e);
-        if (!real || !intentArmed) return;
-        intentArmed = false;
+        if (e.pointerType === "touch" || isQuiet() || pressOnly()) return;
+        if (!moved(e) || state.value !== "collapsed") return;
         // A return mid-fold reverses it at once, with no intent wait (R-2, RU-6).
-        if (state.value === "collapsed" && isTransitioning?.value) {
+        if (isTransitioning?.value) {
             clearHoverIntent();
+            clearTimer();
+            pointerInside = true;
+            enterInside();
             state.value = "hover";
             syncDerived();
             return;
         }
-        startIntent();
+        // Intent counts from the first real move and is not restarted by later ones.
+        if (!hoverIntentTimer) startIntent();
     }
     watch(
         rootEl,
@@ -460,24 +480,13 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         },
         { immediate: true, flush: "sync" },
     );
-    function onMouseEnter(e?: MouseEvent) {
+    function onMouseEnter() {
         if (isQuiet() || pressOnly()) return;
-        // Any re-entry cancels a running linger, a scrolled one included.
+        // Any re-entry cancels a running linger, a scrolled one included. An enter alone
+        // arms nothing (RU-3): the intent and a reversal start from a real move.
         clearTimer();
         pointerInside = true;
         enterInside();
-        const real = e ? moved(e) : true;
-        if (state.value === "collapsed") {
-            clearHoverIntent();
-            // A return while the fold is travelling reverses it at once (R-2, RU-6).
-            if (real && isTransitioning?.value) {
-                state.value = "hover";
-                syncDerived();
-                return;
-            }
-            // An enter alone arms nothing: intent counts from the first real move (RU-3).
-            intentArmed = true;
-        }
     }
     function startIntent() {
         if (state.value === "collapsed") {
@@ -508,8 +517,6 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
 
     function onMouseLeave(e?: MouseEvent) {
         if (isQuiet() || pressOnly()) return;
-        if (e) moved(e);
-        intentArmed = false;
         pointerInside = false;
         leaveInside();
         // A leave cancels any pending hover-intent dwell: a
