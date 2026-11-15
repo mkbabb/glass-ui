@@ -624,12 +624,11 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
 
     // --- Click-away listener ---
 
+    /* W-I.8 R-2 (RU-1): a press outside is a dismissal whatever is open. The holds answer
+       the linger and nothing else, and a travel in progress does not suppress it (hit
+       follows paint, so a press can no longer land on the root by accident). */
     function onPointerDownOutside(e: PointerEvent) {
         if (isQuiet()) return;
-        if (keepOpenCount.value > 0) return;
-        // During transitions, pointer-events:none on dock-layers causes clicks
-        // to target the parent element — suppress click-away entirely.
-        if (isTransitioning?.value) return;
         const root = rootEl.value;
         if (!root || root.contains(e.target as Node)) return;
         if (isTeleportedTarget(e.target, dockId)) return;
