@@ -317,7 +317,10 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         }
         if (leave && !next.some((f) => f.el === leave)) next.push({ el: leave, from: paintedOp.get(leave) ?? opOf(leave), role: "leave", placed: false });
         if (enter) {
-            if (place) for (const p of ["inset", "inset-inline-start", "left", "top", "width", "height"]) enter.style.removeProperty(p);
+            // A face that was leaving and is now entering (a posture travel turned: collapse()
+            // mid-unfold) gives back the hold translate it was placed with, or it paints that
+            // far from its place for the whole travel (10.1.3 critique-3: 183 px outside the plate).
+            if (place) for (const p of ["inset", "inset-inline-start", "left", "top", "width", "height", "translate"]) enter.style.removeProperty(p);
             const known = faces.find((f) => f.el === enter);
             const from = known ? opOf(enter) : 0;
             // RU-11: a later layer (later in the tree) arrives from the trailing side, an
@@ -460,9 +463,9 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         if (run.offsetParent === null) return;
         // A face with no box (RU-17) keeps the reading it had when it was laid out.
         if (run.offsetParent === null) return;
+        if (run.offsetParent === null) return;
             open &&
             !!run.querySelector(
-                ':scope > [aria-current]:not([aria-current="false"]), :scope > [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"]))',
         const v = o.vertical();
             let last = -Infinity;
         const span = (): number => {
@@ -503,6 +506,35 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         const room = v && fits ? `${Math.floor(((port - span) / 2) * 100) / 100}px` : "";
         const value = `${fits ? 1 : 0} ${room}`;
         if (value === fitPublished) return;
+        fitPublished = value;
+        if (room) el.style.setProperty("--dock-run-room-block", room);
+        else el.style.removeProperty("--dock-run-room-block");
+        el.toggleAttribute("data-run-fits", fits);
+            if (span() > port + 0.5) run.setAttribute("data-compact", "");
+        } else if (was && open) run.removeAttribute("data-compact");
+        publishFit(run, span());
+    }
+
+    /** The fit law (10.1.5 e4, k3, p2): `data-run-fits` says the seats' span is no longer
+     *  than the run's port, and under it the reserve yields to the room left (run.css THE
+     *  RESERVE YIELDS), so a run whose seats all show scrolls nothing it hides. On a vertical
+     *  dock the room is `--dock-run-room-block`, half what the seats leave. Written from the
+     *  open run's layout on the trigger frame, before the new layout is read, and held while
+     *  the run has no box. */
+    let fitPublished = "";
+    function publishFit(run: HTMLElement, span: number): void {
+        const el = root();
+        if (!el) return;
+                if (!(c instanceof HTMLElement) || ghosts.has(c) || c.offsetParent === null) continue;
+        const port = v ? run.clientHeight : run.clientWidth;
+        const fits = span > 0 && span <= port;
+        const room = v && fits ? `${Math.floor(((port - span) / 2) * 100) / 100}px` : "";
+        // The run's own carry (a face the loop moves, a return mid-fold) is a translate on
+        // the run, not layout: it is taken out with the region's, or a carried run reads
+        // its seats that far outside the curve (O-101a: a 200 px inset on a one-row dock).
+        const [fx = 0, fy = 0] = (run.style.translate || "0 0").split(/\s+/).map((v) => Number.parseFloat(v) || 0);
+        const gx = (g ? g.tx : 0) + fx;
+        const gy = (g ? g.ty : 0) + fy;
         fitPublished = value;
         if (room) el.style.setProperty("--dock-run-room-block", room);
         else el.style.removeProperty("--dock-run-room-block");
