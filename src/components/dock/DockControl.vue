@@ -68,8 +68,6 @@ const props = withDefaults(
         /** Merge props onto a slotted child instead of rendering a host tag. */
         asChild?: boolean;
         class?: HTMLAttributes["class"];
-        /** W-I.8 R-7: the seat's name, shown on hover or keyboard focus at its inline start. */
-        label?: string;
     }>(),
     {
         shape: "icon",
@@ -95,7 +93,7 @@ const classes = computed(() =>
     isTab.value
         ? cn("dock-tab-button glass-specular-track", props.class)
         : cn(
-              props.label ? "dock-icon-button" : "dock-icon-button glass-specular-track glass-capsule-hover",
+              "dock-icon-button glass-specular-track glass-capsule-hover",
               { "glass-capsule": props.active },
               { "dock-icon-button--compact": props.compact },
               props.class,
@@ -114,7 +112,6 @@ const classes = computed(() =>
 //     suppresses activation since `aria-disabled` does not block events.
 const stateAttrs = computed(() => ({
     [DOCK_SEAT_ATTR]: "",
-    ...(props.label ? { "data-dock-label": "", "aria-label": props.label } : {}),
     ...(props.active !== undefined
         ? {
               "aria-pressed": String(props.active),
@@ -184,6 +181,5 @@ function blockDisabledActivation(event: MouseEvent): void {
         @click.capture="blockDisabledActivation"
     >
         <slot />
-        <span v-if="label" class="dock-seat-label" aria-hidden="true">{{ label }}</span>
     </Primitive>
 </template>

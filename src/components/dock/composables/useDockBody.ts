@@ -1,14 +1,14 @@
 /**
- * W-I.8 prototype: the dock's one carrier (R-1), its content windows (R-3) and the
- * fission seat's quantities (R-6). One requestAnimationFrame loop per dock steps every
+ * W-I.8 prototype: the dock's one carrier (R-1), and its content window (R-3). One requestAnimationFrame loop per dock steps every
  * moving quantity on `springPreset("dock")` and writes; it parks on the frame its last
  * quantity lands and leaves nothing scheduled or written at rest.
  *
  * The model, in document px:
  *   - the row's painted box (the plate, or the plate plus the fission seat): four edges,
  *     each a delta from its layout edge, carried to 0 with its velocity;
- *   - each region (persistent, layers, persistent-end, beside): a centre delta;
- *   - the content windows: one unit spring `f` per travel, from the painted opacities.
+ *   - each region (persistent, layers, persistent-end): the delta of the edge it is
+ *     carried by;
+ *   - the posture coordinate `e` and the exchange coordinate `f` (R-1, R-3).
  *
  * The spec splits this into useDockBody / useDockScene / useDockContent; the prototype
  * keeps it in one file.
@@ -79,12 +79,10 @@ interface PendingLeave {
     regionCy: number;
 }
 
-export type NeckDesign = "a" | "b";
-
 export interface DockBody {
     /** Names the open face, the collapsed face and the fission seat for a posture travel:
      * their opacities are functions of the posture coordinate, never of a second clock. */
-    postureFaces(open: HTMLElement | null | undefined, closed: HTMLElement | null | undefined, seat?: HTMLElement | null): void;
+    postureFaces(open: HTMLElement | null | undefined, closed: HTMLElement | null | undefined): void;
     /** Called pre-flush, before the DOM changes which faces show. */
     exchange(leave: HTMLElement | null | undefined, enter: HTMLElement | null | undefined, region?: string, place?: boolean): void;
     /** Reads layout and retargets every quantity. */
@@ -105,10 +103,6 @@ export interface UseDockBodyOptions {
     root: Ref<HTMLElement | null>;
     plate: Ref<HTMLElement | null>;
     regions: () => Array<{ key: string; el: HTMLElement | null }>;
-    beside?: Ref<HTMLElement | null>;
-    besidePlate?: Ref<HTMLElement | null>;
-    neck?: Ref<HTMLElement | null>;
-    neckDesign: () => NeckDesign;
     expanded: () => boolean;
     vertical: () => boolean;
     reducedMotion: () => boolean;
@@ -151,14 +145,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
     const eq: Q = { d: 0, v: 0 };
     let openFace: HTMLElement | null = null;
     let closedFace: HTMLElement | null = null;
-    let seatFace: HTMLElement | null = null;
     let held: number | null = null;
-    // Fission geometry (measured at sync).
-    let besideW = 0;
-    let besideGap = 0;
-    let besideLayoutR = 0;
-    let besideLayoutCy = 0;
-    let besideTrack: RegionTrack | null = null;
     // Loop state.
     let raf: number | null = null;
     let last: number | null = null;
@@ -300,7 +287,6 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             layout = next;
             rFrom = rTo = rNext;
             readRegions();
-            readBeside();
             e = posture ? 1 : 0;
             writeExpandT();
             return;
@@ -327,7 +313,6 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
                 postureTravel = true;
             }
             readRegions();
-            readBeside();
             placeLeaves();
             if (reduce) {
                 eq.v = 0;
@@ -345,30 +330,6 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             o.moving.value = true;
             start(reason === "ro");
         }
-    }
-
-    function readBeside(): void {
-        const b = o.beside?.value;
-        if (!b || !b.isConnected) {
-            besideTrack = null;
-            return;
-        }
-        const cs = getComputedStyle(b);
-        const padS = Number.parseFloat(cs.paddingInlineStart) || 0;
-        const padE = Number.parseFloat(cs.paddingInlineEnd) || 0;
-        besideGap = Math.max(0, padS - padE);
-        const r = rectOf(b);
-        const tx = besideTrack?.tx ?? 0;
-        besideW = r.r - r.l - besideGap;
-        besideLayoutR = r.r - tx;
-        besideLayoutCy = (r.t + r.b) / 2 - (besideTrack?.ty ?? 0);
-        besideTrack ??= { el: b, key: "beside", cx: 0, cy: 0, w: 0, h: 0, x: { d: 0, v: 0 }, y: { d: 0, v: 0 }, tx: 0, ty: 0, clipped: false };
-        besideTrack.el = b;
-        besideTrack.w = r.r - r.l;
-        besideTrack.h = r.b - r.t;
-        besideTrack.cx = besideLayoutR - besideTrack.w / 2;
-        besideTrack.cy = besideLayoutCy;
-        ro?.observe(b);
     }
 
     function placeLeaves(): void {
@@ -475,22 +436,6 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         scopeEl?.style.setProperty("--dock-expand-t", v);
     }
 
-    function fission(P: Box): { p: number; main: Box; seat: Box | null; neck: Box | null } {
-        const H = P.b - P.t;
-        // C-4: p = s(clamp((e − a) / (1 − a))), s(x) = 3x² − 2x³: no slope at either end.
-        const a = Number.parseFloat(root()?.getAttribute("data-fission-a") ?? "") || 0.25;
-        const x = clamp01((e - a) / (1 - a));
-        const p = besideTrack ? x * x * (3 - 2 * x) : 0;
-        if (!besideTrack || p <= 0) return { p: 0, main: P, seat: null, neck: null };
-        const seat = { l: P.r - besideW, t: P.t, r: P.r, b: P.b };
-        const mainR = seat.l - besideGap * p;
-        const main = { l: P.l, t: P.t, r: mainR, b: P.b };
-        const cy = (P.t + P.b) / 2;
-        const half = (H * (1 - p)) / 2;
-        const neck = { l: mainR, t: cy - half, r: seat.l, b: cy + half };
-        return { p, main, seat, neck };
-    }
-
     function write(): void {
         const el = root();
         const plate = o.plate.value;
@@ -506,44 +451,8 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         const W = P.r - P.l;
         const H = P.b - P.t;
         const R = currentRadius(W, H);
-        const fis = fission(P);
-        const design = o.neckDesign();
-        const neckEl = o.neck?.value;
-        const seatPlate = o.besidePlate?.value;
-        const inset = (b: Box) =>
-            `${b.t - layout!.t}px ${layout!.r - b.r}px ${layout!.b - b.b}px ${b.l - layout!.l}px`;
-
-        if (!besideTrack || fis.p <= 0) {
-            plate.style.inset = inset(P);
-            plate.style.borderRadius = `${R}px`;
-            plate.style.removeProperty("clip-path");
-            if (seatPlate) seatPlate.style.display = "none";
-            if (neckEl) neckEl.style.display = "none";
-        } else if (design === "a") {
-            const rp = R * fis.p;
-            plate.style.inset = inset(fis.main);
-            plate.style.borderRadius = `${R}px ${rp}px ${rp}px ${R}px`;
-            plate.style.removeProperty("clip-path");
-            if (seatPlate && fis.seat) {
-                seatPlate.style.display = "";
-                seatPlate.style.inset = inset(fis.seat);
-                seatPlate.style.borderRadius = `${rp}px ${R}px ${R}px ${rp}px`;
-            }
-            if (neckEl && fis.neck) {
-                const nw = fis.neck.r - fis.neck.l;
-                if (nw > 0.05 && fis.neck.b - fis.neck.t > 0.05) {
-                    neckEl.style.display = "";
-                    neckEl.style.inset = inset(fis.neck);
-                } else neckEl.style.display = "none";
-            }
-        } else {
-            // B: one leaf over the row, cut to two capsules and a waist.
-            plate.style.inset = inset(P);
-            plate.style.borderRadius = `${R}px`;
-            if (seatPlate) seatPlate.style.display = "none";
-            if (neckEl) neckEl.style.display = "none";
-            plate.style.clipPath = waistPath(P, fis);
-        }
+        plate.style.inset = `${P.t - layout.t}px ${layout.r - P.r}px ${layout.b - P.b}px ${P.l - layout.l}px`;
+        plate.style.borderRadius = `${R}px`;
 
         // Regions ride the plate, clipped to its painted box while travel runs.
         const clipTo = (t: RegionTrack, box: Box, r: number) => {
@@ -578,7 +487,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
                 ? vert ? b.cy - b.h / 2 + b.ty : b.cx - b.w / 2 + b.tx
                 : vert ? a.cy + a.h / 2 + a.ty : a.cx + a.w / 2 + a.tx;
         order.forEach((t, i) => {
-            const lane = { ...fis.main };
+            const lane = { ...P };
             const prev = order[i - 1];
             const next = order[i + 1];
             if (vert) {
@@ -590,14 +499,6 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             }
             clipTo(t, lane, Math.min(R, H / 2));
         });
-        if (besideTrack) {
-            const b = besideTrack;
-            b.tx = P.r - besideLayoutR;
-            b.ty = (P.t + P.b) / 2 - besideLayoutCy;
-            b.el.style.translate = `${b.tx}px ${b.ty}px`;
-            clipTo(b, fis.p > 0 && fis.seat ? { ...fis.seat, l: fis.seat.l - besideGap } : P, Math.min(R, H / 2));
-        }
-
         // Content (R-3, RU-2): one window, w(x) = clamp(1 − x / 0.55). For a posture change
         // the summary reads w(e) and the run w(1 − e); for a content change the leaving
         // face reads w(f) and the entering face w(1 − f). Under reduced motion (R-11) the
@@ -609,7 +510,6 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             let op: number;
             if (face.el === openFace && posing) op = win(1 - e);
             else if (face.el === closedFace && posing) op = win(e);
-            else if (face.el === seatFace && posing) op = fis.p;
             else if (face.role === "leave") op = face.from * win(f);
             else {
                 const inW = win(1 - f);
@@ -636,41 +536,6 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         }
     }
 
-    function waistPath(P: Box, fis: ReturnType<typeof fission>): string {
-        const W = P.r - P.l;
-        const H = P.b - P.t;
-        const r = H / 2;
-        if (!fis.seat) return "none";
-        const mW = fis.main.r - P.l;
-        const sL = fis.seat.l - P.l;
-        const p = fis.p;
-        const cap = (x0: number, x1: number) =>
-            `M ${x0 + r} 0 H ${x1 - r} A ${r} ${r} 0 0 1 ${x1 - r} ${H} H ${x0 + r} A ${r} ${r} 0 0 1 ${x0 + r} 0 Z`;
-        if (p >= 0.999) return `path('${cap(0, mW)} ${cap(sL, W)}')`;
-        const rp = r * p;
-        const half = (H * (1 - p)) / 2;
-        const mid = (mW + sL) / 2;
-        const top = H / 2 - half;
-        const bot = H / 2 + half;
-        // Top: left cap, along the top, into the waist by a curve tangent to the top edge
-        // and to the waist's centre line, out the same way, then the seat's right cap.
-        const d = [
-            `M ${r} 0`,
-            `H ${mW - rp}`,
-            `C ${mW} 0 ${mW} ${top} ${mid} ${top}`,
-            `C ${sL} ${top} ${sL} 0 ${sL + rp} 0`,
-            `H ${W - r}`,
-            `A ${r} ${r} 0 0 1 ${W - r} ${H}`,
-            `H ${sL + rp}`,
-            `C ${sL} ${H} ${sL} ${bot} ${mid} ${bot}`,
-            `C ${mW} ${bot} ${mW} ${H} ${mW - rp} ${H}`,
-            `H ${r}`,
-            `A ${r} ${r} 0 0 1 ${r} 0`,
-            "Z",
-        ].join(" ");
-        return `path('${d}')`;
-    }
-
     function rest(): void {
         const el = root();
         const plate = o.plate.value;
@@ -683,28 +548,14 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         writeExpandT();
         scopeEl = undefined;
         if (plate) {
-            const keepFission = !!besideTrack && lastPosture;
-            if (keepFission) {
-                // The open fission rest: the landed geometry stays written once.
-                write();
-            } else {
-                plate.style.removeProperty("inset");
-                plate.style.removeProperty("border-radius");
-                plate.style.removeProperty("clip-path");
-                o.besidePlate?.value?.style.setProperty("display", "none");
-                o.neck?.value?.style.setProperty("display", "none");
-            }
+            plate.style.removeProperty("inset");
+            plate.style.removeProperty("border-radius");
         }
         for (const t of regions.values()) {
             t.el.style.removeProperty("translate");
             t.el.style.removeProperty("clip-path");
             t.tx = t.ty = 0;
             t.clipped = false;
-        }
-        if (besideTrack) {
-            besideTrack.el.style.removeProperty("translate");
-            besideTrack.el.style.removeProperty("clip-path");
-            besideTrack.tx = besideTrack.ty = 0;
         }
         for (const face of faces) {
             face.el.style.removeProperty("opacity");
@@ -744,17 +595,15 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         const el = root();
         if (el) ro.observe(el);
         for (const { el: r } of o.regions()) if (r) ro.observe(r);
-        if (o.beside?.value) ro.observe(o.beside.value);
     });
     onBeforeUnmount(() => {
         ro?.disconnect();
         if (raf !== null) cancelAnimationFrame(raf);
     });
 
-    function postureFaces(open: HTMLElement | null | undefined, closed: HTMLElement | null | undefined, seat?: HTMLElement | null): void {
+    function postureFaces(open: HTMLElement | null | undefined, closed: HTMLElement | null | undefined): void {
         openFace = open ?? null;
         closedFace = closed ?? null;
-        seatFace = seat ?? null;
     }
 
     const body: DockBody = { postureFaces, exchange, sync, onSettle, hold, moving: o.moving };

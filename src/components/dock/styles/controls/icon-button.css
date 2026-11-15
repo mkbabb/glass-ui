@@ -75,10 +75,9 @@
                `:focus-visible` group in dock.css) + the active-state
                `--dock-active-shadow` — the hover highlight leg
                specular no longer rides it. */
-                box-shadow var(--dock-motion-fast),
-            /* W-I.8: the run's open seat and the labelled seat's room, in the seat's own list. */
-                inline-size var(--spring-dock-duration) var(--spring-dock),
-            translate var(--spring-dock-duration) var(--spring-dock);
+                box-shadow var(--dock-motion-fast);
+            /* W-I.8 R-5 (RU-8): no size and no translate in the seat's list. The open seat
+               changes layout once; the carrier moves each seat whose place changed. */
 
         /* The dock control press couples to
            the ONE interruptible press spring. DockIconButton composes `useLiquidPress`

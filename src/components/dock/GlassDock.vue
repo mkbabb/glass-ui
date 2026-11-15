@@ -33,9 +33,8 @@ import { useGlassBackdropLuminance } from "../../composables/glass/useGlassBackd
 import { OPEN_DISMISSABLE_LAYER_SELECTOR } from "./constants";
 import { DockFace, provideDockContext } from "./composables/dockContext";
 import { useDockState } from "./composables/useDockState";
-import { useDockBody, type NeckDesign } from "./composables/useDockBody";
+import { useDockBody } from "./composables/useDockBody";
 import { dockRegistry, regionWanted } from "./composables/dockRegistry";
-import { useDockLabels } from "./composables/useDockLabels";
 import { useDockShellProps, type DockProps } from "./composables/useDockShellProps";
 import { useDockClickIntegrity } from "./composables/useDockClickIntegrity";
 // [2026-08-24 · BK #47 W3 LATTICE + W6] The run: reach to the seat's snap position via
@@ -113,9 +112,6 @@ const statusEl = useTemplateRef<HTMLElement>("statusEl");
 const plateEl = useTemplateRef<HTMLElement>("plateEl");
 const persistentEl = useTemplateRef<HTMLElement>("persistentEl");
 const persistentEndEl = useTemplateRef<HTMLElement>("persistentEndEl");
-const besideEl = useTemplateRef<HTMLElement>("besideEl");
-const besidePlateEl = useTemplateRef<HTMLElement>("besidePlateEl");
-const neckEl = useTemplateRef<HTMLElement>("neckEl");
 
 /* THE RUN. The full face IS the run — the box whose children are the seats, the box
    the port scrolls, and the common ancestor the cut-cap timeline scopes to. Reach,
@@ -258,10 +254,6 @@ const body = useDockBody({
         { key: "layers", el: layersEl.value },
         { key: "persistent-end", el: persistentEndEl.value },
     ],
-    beside: besideEl,
-    besidePlate: besidePlateEl,
-    neck: neckEl,
-    neckDesign: (): NeckDesign => (dockEl.value?.getAttribute("data-neck") === "b" ? "b" : "a"),
     expanded: () => visualExpanded.value,
     vertical: () => orientation.value === "vertical",
     reducedMotion: () => reducedMotion.value,
@@ -280,10 +272,8 @@ watch(
         dockEl.value?.setAttribute("data-morphing", "");
         const leave = open ? summaryEl.value : fullEl.value;
         const enter = open ? fullEl.value : summaryEl.value;
-        body.postureFaces(fullEl.value, summaryEl.value, besideEl.value);
+        body.postureFaces(fullEl.value, summaryEl.value);
         body.exchange(leave, enter, "layers");
-        // The fission seat is face content too: it fades on the same windows (R-3, R-6).
-        if (besideEl.value) body.exchange(open ? null : besideEl.value, open ? besideEl.value : null, "beside", false);
         outerLeavingLayer.value = outerCurrentLayer.value;
         outerCurrentLayer.value = open ? "full" : "summary";
         body.onSettle(() => {
@@ -298,9 +288,6 @@ if (typeof window !== "undefined") {
     (window as unknown as { __dockHold?: Record<string, (f: number | null) => void> }).__dockHold ??= {};
     (window as unknown as { __dockHold: Record<string, (f: number | null) => void> }).__dockHold[dockId] = body.hold;
 }
-
-/* W-I.8 R-7: the labelled seat. */
-useDockLabels(fullEl, () => orientation.value === "vertical");
 
 const summaryIsDisclosure = computed(() => outerCurrentLayer.value === "summary");
 /** Once the expand has patched the full face live, focus its first seat. The full face
@@ -468,7 +455,7 @@ defineExpose({
         :class="[
             orientation,
             `shape-${shape}`,
-            { expanded: visualExpanded, collapsed: !visualExpanded, pinned: isPinned, 'fit-content': fitContent, 'always-expanded': alwaysExpanded, 'has-beside': !!$slots.beside },
+            { expanded: visualExpanded, collapsed: !visualExpanded, pinned: isPinned, 'fit-content': fitContent, 'always-expanded': alwaysExpanded},
         ]"
         :data-backdrop-mode="props.backdropMode"
         :data-anchor="props.anchor === 'center' ? undefined : props.anchor"
@@ -545,10 +532,6 @@ defineExpose({
             No cartoon box-punch; the morph carries ONE
             deformation-free `--dock-size-scale` box morph on the `scale:` channel.
         -->
-        <template v-if="$slots.beside">
-            <div ref="neckEl" class="dock-plate dock-neck" aria-hidden="true" style="display: none"></div>
-            <div ref="besidePlateEl" class="dock-plate dock-plate--beside" aria-hidden="true" style="display: none"></div>
-        </template>
         <div v-if="$slots.persistent || regionWanted(siteId, 'persistent')" ref="persistentEl" class="dock-persistent">
             <slot name="persistent" />
         </div>
@@ -663,15 +646,6 @@ defineExpose({
             class="dock-persistent dock-persistent-end"
         >
             <slot name="persistent-end" />
-        </div>
-        <!-- W-I.8 R-6: the fission seat. In flow open; out of flow, hidden and inert folded. -->
-        <div
-            v-if="$slots.beside"
-            ref="besideEl"
-            class="dock-beside"
-            :inert="!visualExpanded || undefined"
-        >
-            <DockFace><slot name="beside" /></DockFace>
         </div>
         </div>
         <!-- /L1 .dock-controls -->
