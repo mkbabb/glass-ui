@@ -18,7 +18,7 @@
 // axis-aware expand/collapse transition, and the pointer/focus hold machinery.
 // The fission split facility is DEFINITION-ABSENT (decided-terminal;
 // clean break, no alias — demo-only spectacle + the prime Safari suspect).
-import { computed, nextTick, onBeforeUnmount, ref, useAttrs, useId, useTemplateRef, watch, watchEffect } from "vue";
+import { computed, nextTick, onBeforeUnmount, ref, useAttrs, useId, useSlots, useTemplateRef, watch, watchEffect } from "vue";
 import { useMediaQuery } from "@vueuse/core";
 // The sampled-luminance observer is wired ON for every
 // `backdropMode: "live"` dock (the surface the user reported unreadable over light, and the
@@ -102,8 +102,17 @@ const siteId = computed(() => (typeof attrs.id === "string" ? attrs.id : undefin
    it selected. The class existed to tell `overflow.css` which axis to open a scroll
    track on; under the lattice BOTH axes open one on the same element (`.dock-run`) and
    the orientation that picks between them is already on the root. */
-const { startCollapsed, shape, orientation, alwaysExpanded, fitContent } =
+const { startCollapsed, shape, orientation, alwaysExpanded: declaredOpen, fitContent } =
     useDockShellProps(props);
+
+/* W-I.8 R-2: a dock with no folded face does not fold for a pointer that cannot hover.
+   Nothing could open it by touch: a tap on its persistent seat fires that seat, and in
+   WebKit a tap does not focus a button, so the dock would never open (keyframes's
+   transport). It rests open there; a host that wants it folded on a phone gives it a
+   `#collapsed` face. */
+const slots = useSlots();
+const noHover = useMediaQuery("(hover: none)");
+const alwaysExpanded = computed(() => declaredOpen.value || (noHover.value && !slots.collapsed));
 
 const dockEl = useTemplateRef<HTMLElement>("dockEl");
 const layersEl = useTemplateRef<HTMLElement>("layersEl");
