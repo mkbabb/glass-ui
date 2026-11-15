@@ -286,8 +286,10 @@ watch(
     { flush: "pre" },
 );
 watch(visualExpanded, () => body.sync("posture"), { flush: "post" });
-if (typeof window !== "undefined") {
-    // Test-only hook: hold every travel of this dock at a given f.
+/* The loop's hold, test-only (W-I.8 Files): compiled in only when the build sets
+   VITE_DOCK_HOLD=1, so the published bundle never carries `__dockHold` (G-12). */
+if (import.meta.env.VITE_DOCK_HOLD === "1" && typeof window !== "undefined") {
+    // Test-only hook: hold every travel of this dock at a given e.
     (window as unknown as { __dockHold?: Record<string, (f: number | null) => void> }).__dockHold ??= {};
     (window as unknown as { __dockHold: Record<string, (f: number | null) => void> }).__dockHold[dockId] = body.hold;
 }
