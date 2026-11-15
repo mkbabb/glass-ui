@@ -194,6 +194,10 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
     let mo: MutationObserver | null = null;
 
     const root = () => o.root.value;
+    // A horizontal dock in a right-to-left page: the regions' physical order is reversed,
+    // so the edge each is carried by and its lane are read from where it paints, not from
+    // its name (C2-8). Read once per sync.
+    let flip = false;
 
     function runEl(): HTMLElement | null {
         const r = o.run?.value;
@@ -360,7 +364,9 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             // neighbour, never by its centre: the trailing region by its end edge, the
             // others by their start edge. -1 start, +1 end, on each axis.
             const side = key === "persistent-end" ? 1 : -1;
-            t.x.d = t.cx + t.x.d + (side * t.w) / 2 - (lcx + (side * nw) / 2);
+            // On the inline axis the start edge is the right one in a right-to-left dock.
+            const sx = flip ? -side : side;
+            t.x.d = t.cx + t.x.d + (sx * t.w) / 2 - (lcx + (sx * nw) / 2);
             t.y.d = t.cy + t.y.d + (side * t.h) / 2 - (lcy + (side * nh) / 2);
             t.cx = lcx;
             t.cy = lcy;
@@ -415,6 +421,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         const posture = o.expanded();
         const postureChanged = posture !== lastPosture;
         lastPosture = posture;
+        flip = !o.vertical() && getComputedStyle(el).direction === "rtl";
 
         // The rest corners, read from the root (the plate inherits it).
         const w = next.r - next.l;
@@ -711,6 +718,8 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         const order = ["persistent", "layers", "persistent-end"]
             .map((k) => regions.get(k))
             .filter((t): t is RegionTrack => !!t);
+        // The lanes run in painted order: reversed in a right-to-left dock.
+        if (flip) order.reverse();
         // A region with no size still gets its lane: its leaving face is placed out of flow
         // and paints, and without a lane it painted over its neighbour (keyframes's transport).
         // R-5: each seat whose place changed rides its own translate to 0, and the run's
@@ -729,8 +738,11 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         const vert = o.vertical();
         // The boundary between two neighbours is the painted edge of the one carried by
         // it: the trailing region's start edge, else the leading region's end edge.
+        // a paints before b on the axis. The run yields to its neighbour on either side, so
+        // the boundary is the neighbour's facing edge: b's near edge when a is the run,
+        // a's far edge otherwise.
         const boundary = (a: RegionTrack, b: RegionTrack): number =>
-            b.key === "persistent-end"
+            a.key === "layers"
                 ? vert ? b.cy - b.h / 2 + b.ty : b.cx - b.w / 2 + b.tx
                 : vert ? a.cy + a.h / 2 + a.ty : a.cx + a.w / 2 + a.tx;
         order.forEach((t, i) => {
