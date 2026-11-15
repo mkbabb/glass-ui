@@ -990,3 +990,5 @@ Disk episode, one line: on 2026-11-03 the volume went from 100% (15 GiB free) to
 - 2026-11-15 03:38 — depth and parallax run DONE (`wf_58c7c336-6ef`): record of 12 sites, STUDY, W-B.19 (one stylesheet `depth.css`, three ruled placements, one lagging figure per scene), prototype on `bl/depth/proto` @ e4275ac40 (ten gates green in Chromium; WebKit light only), challenge of twelve folded; one gate RED (WebKit at 360: the title's lines touch). Glass's last-ten pass DONE (O-354, 23 findings). Live: close 11.0.2, fix 9 (11.1.0), dock measuring.
 
 - 2026-11-15 04:07 — dock measuring pass DONE: no gate green in both engines (10 fail, 2 unread, 2 open); three findings recorded in W-I.8; the design needs one more loop before 11.2.0 builds it. O-356 booked (opaque surfaces keep their blur; 11.1.1 seat B first). Live: close 11.0.2, fix 9 (11.1.0).
+
+- 2026-11-15 04:08 — dock design second loop launched (`wf_4ede5549-281`, `driver/bl-design-dock-wi8b.js`: Fable rulings and spec rewrite, Opus prototype and measure, Fable challenge and fold). Live: close 11.0.2 (`wf_fc090cc6-e88`), fix 9 on 11.1.0 (`wf_4cf2d226-a00`), dock loop 2.
