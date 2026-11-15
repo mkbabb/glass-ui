@@ -1,0 +1,124 @@
+{
+ "engine": "webkit",
+ "cell": "390x844:coarse",
+ "variants": [
+  {
+   "name": "built",
+   "animations": [
+    [
+     {
+      "name": "depth-lag",
+      "target": "DIV",
+      "props": [
+       "translate"
+      ],
+      "timeline": "ViewTimeline"
+     }
+    ],
+    [
+     {
+      "name": "depth-lag",
+      "target": "IMG",
+      "props": [
+       "translate"
+      ],
+      "timeline": "ViewTimeline"
+     }
+    ],
+    []
+   ],
+   "styleWrites": 0,
+   "pacing": {
+    "frames": 80,
+    "p50": 17,
+    "p95": 18,
+    "max": 18,
+    "over33": 0
+   }
+  },
+  {
+   "name": "still",
+   "animations": [
+    [],
+    [],
+    []
+   ],
+   "styleWrites": 0,
+   "pacing": {
+    "frames": 80,
+    "p50": 17,
+    "p95": 18,
+    "max": 18,
+    "over33": 0
+   }
+  },
+  {
+   "name": "bite-lag-as-top",
+   "animations": [
+    [
+     {
+      "name": "depth-lag-top",
+      "target": "DIV",
+      "props": [
+       "top"
+      ],
+      "timeline": "ViewTimeline"
+     }
+    ],
+    [
+     {
+      "name": "depth-lag-top",
+      "target": "IMG",
+      "props": [
+       "top"
+      ],
+      "timeline": "ViewTimeline"
+     }
+    ],
+    []
+   ],
+   "styleWrites": 0,
+   "pacing": {
+    "frames": 80,
+    "p50": 17,
+    "p95": 18,
+    "max": 20,
+    "over33": 0
+   }
+  },
+  {
+   "name": "built-live-blob",
+   "animations": [
+    [
+     {
+      "name": "depth-lag",
+      "target": "DIV",
+      "props": [
+       "translate"
+      ],
+      "timeline": "ViewTimeline"
+     }
+    ],
+    [
+     {
+      "name": "depth-lag",
+      "target": "IMG",
+      "props": [
+       "translate"
+      ],
+      "timeline": "ViewTimeline"
+     }
+    ],
+    []
+   ],
+   "styleWrites": 0,
+   "pacing": {
+    "frames": 80,
+    "p50": 17,
+    "p95": 18,
+    "max": 20,
+    "over33": 0
+   }
+  }
+ ]
+}

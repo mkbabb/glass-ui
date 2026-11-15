@@ -1,0 +1,47 @@
+{
+ "url": "https://stripe.com/",
+ "root": ".hero-section-container",
+ "depth": 4,
+ "gate": true,
+ "layers": [
+  {
+   "label": "title background copy",
+   "sel": ".hero-section__title--background",
+   "text": true
+  },
+  {
+   "label": "title foreground copy",
+   "sel": ".hero-section__title--foreground"
+  },
+  {
+   "label": "wave layer",
+   "sel": ".hero-section__background"
+  },
+  {
+   "label": "wave image",
+   "sel": ".single-wave__static"
+  },
+  {
+   "label": "canvas",
+   "sel": ".hero-section__background canvas"
+  }
+ ],
+ "steps": 8,
+ "frames": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  6,
+  8
+ ],
+ "narrowSteps": 8,
+ "after": "(() => { const f = document.querySelector('.hero-section__title--foreground'), b = document.querySelector('.hero-section__title--background'); const fc = getComputedStyle(f), bc = getComputedStyle(b); const em = f.querySelector('em'), emb = b.querySelector('em'); return { fg: { color: fc.color, blend: fc.mixBlendMode, z: fc.zIndex, pos: fc.position, ariaHidden: f.getAttribute('aria-hidden'), emColor: em && getComputedStyle(em).color, userSelect: fc.userSelect, pointer: fc.pointerEvents }, bg: { color: bc.color, emColor: emb && getComputedStyle(emb).color, z: bc.zIndex }, layoutZ: getComputedStyle(document.querySelector('.hero-section__layout')).zIndex, layoutDisplayParent: getComputedStyle(document.querySelector('.hero-section__layout').parentElement).display, canvases: [...document.querySelectorAll('.hero-section__background canvas')].map(c => c.width + 'x' + c.height), waveStaticOp: getComputedStyle(document.querySelector('.single-wave__static')).opacity }; })()",
+ "modes": [
+  "wide",
+  "prm",
+  "narrow"
+ ],
+ "name": "s-stripe"
+}

@@ -1,0 +1,290 @@
+{
+ "engine": "chromium",
+ "cell": "1440x900",
+ "variants": [
+  {
+   "name": "built",
+   "animations": [
+    [
+     {
+      "name": "depth-lag",
+      "target": "DIV",
+      "props": [
+       "translate"
+      ],
+      "timeline": "ViewTimeline"
+     }
+    ],
+    [
+     {
+      "name": "depth-lag",
+      "target": "IMG",
+      "props": [
+       "translate"
+      ],
+      "timeline": "ViewTimeline"
+     }
+    ],
+    []
+   ],
+   "listeners": {
+    "window": [],
+    "document": [],
+    "scenes": []
+   },
+   "trace": {
+    "steps": 36,
+    "layouts": 1,
+    "layoutRoots": {
+     "#document": 1
+    },
+    "recalcs": 24,
+    "recalcElements": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     2,
+     2,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "paints": 2,
+    "paintNodes": {
+     "#document": 1,
+     "DIV.goo-blob-wrapper": 1
+    },
+    "frames": 0,
+    "mainMs": 96.2,
+    "mainMsPerStep": 2.673
+   },
+   "styleWrites": 0,
+   "pacing": {
+    "frames": 143,
+    "p50": 8.3,
+    "p95": 9.7,
+    "max": 10.2,
+    "over33": 0
+   }
+  },
+  {
+   "name": "still",
+   "animations": [
+    [],
+    [],
+    []
+   ],
+   "listeners": {
+    "window": [],
+    "document": [],
+    "scenes": []
+   },
+   "trace": {
+    "steps": 36,
+    "layouts": 1,
+    "layoutRoots": {
+     "#document": 1
+    },
+    "recalcs": 1,
+    "recalcElements": [
+     1
+    ],
+    "paints": 2,
+    "paintNodes": {
+     "#document": 1,
+     "DIV.goo-blob-wrapper": 1
+    },
+    "frames": 0,
+    "mainMs": 87.7,
+    "mainMsPerStep": 2.436
+   },
+   "styleWrites": 0,
+   "pacing": {
+    "frames": 142,
+    "p50": 8.3,
+    "p95": 9.7,
+    "max": 18.4,
+    "over33": 0
+   }
+  },
+  {
+   "name": "bite-lag-as-top",
+   "animations": [
+    [
+     {
+      "name": "depth-lag-top",
+      "target": "DIV",
+      "props": [
+       "top"
+      ],
+      "timeline": "ViewTimeline"
+     }
+    ],
+    [
+     {
+      "name": "depth-lag-top",
+      "target": "IMG",
+      "props": [
+       "top"
+      ],
+      "timeline": "ViewTimeline"
+     }
+    ],
+    []
+   ],
+   "listeners": {
+    "window": [],
+    "document": [],
+    "scenes": []
+   },
+   "trace": {
+    "steps": 36,
+    "layouts": 24,
+    "layoutRoots": {
+     "#document": 24
+    },
+    "recalcs": 24,
+    "recalcElements": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     2,
+     2,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "paints": 34,
+    "paintNodes": {
+     "#document": 17,
+     "IMG": 16,
+     "DIV.goo-blob-wrapper": 1
+    },
+    "frames": 0,
+    "mainMs": 93.7,
+    "mainMsPerStep": 2.602
+   },
+   "styleWrites": 0,
+   "pacing": {
+    "frames": 142,
+    "p50": 8.3,
+    "p95": 9.6,
+    "max": 15.5,
+    "over33": 0
+   }
+  },
+  {
+   "name": "built-live-blob",
+   "animations": [
+    [
+     {
+      "name": "depth-lag",
+      "target": "DIV",
+      "props": [
+       "translate"
+      ],
+      "timeline": "ViewTimeline"
+     }
+    ],
+    [
+     {
+      "name": "depth-lag",
+      "target": "IMG",
+      "props": [
+       "translate"
+      ],
+      "timeline": "ViewTimeline"
+     }
+    ],
+    []
+   ],
+   "listeners": {
+    "window": [],
+    "document": [],
+    "scenes": []
+   },
+   "trace": {
+    "steps": 36,
+    "layouts": 1,
+    "layoutRoots": {
+     "#document": 1
+    },
+    "recalcs": 24,
+    "recalcElements": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     2,
+     2,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "paints": 2,
+    "paintNodes": {
+     "#document": 1,
+     "DIV.goo-blob-wrapper": 1
+    },
+    "frames": 0,
+    "mainMs": 2418.5,
+    "mainMsPerStep": 67.181
+   },
+   "styleWrites": 0,
+   "pacing": {
+    "frames": 132,
+    "p50": 8.3,
+    "p95": 26.8,
+    "max": 33.8,
+    "over33": 1
+   }
+  }
+ ]
+}

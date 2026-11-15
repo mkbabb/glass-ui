@@ -1,0 +1,49 @@
+{
+ "url": "https://rivian.com/r2",
+ "root": "#hero",
+ "depth": 9,
+ "gate": true,
+ "layers": [
+  {
+   "label": "hero",
+   "sel": "#hero"
+  },
+  {
+   "label": "pill window",
+   "sel": "#hero .transform-gpu"
+  },
+  {
+   "label": "lettering layer",
+   "sel": "#hero [aria-hidden=\"true\"].pointer-events-none"
+  },
+  {
+   "label": "media inside window",
+   "sel": "#hero .transform-gpu img, #hero .transform-gpu video"
+  },
+  {
+   "label": "sr-only h1",
+   "sel": "#hero h1",
+   "text": true
+  }
+ ],
+ "steps": 12,
+ "frames": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  6,
+  8,
+  12
+ ],
+ "narrowSteps": 10,
+ "wait": 6000,
+ "after": "(() => { const l = document.querySelector('#hero [aria-hidden=\"true\"].pointer-events-none'); return { letteringHTML: l ? l.innerHTML.slice(0, 600) : null, windowStyle: document.querySelector('#hero .transform-gpu')?.getAttribute('style') }; })()",
+ "modes": [
+  "wide",
+  "prm",
+  "narrow"
+ ],
+ "name": "s-rivian"
+}
