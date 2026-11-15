@@ -456,32 +456,57 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
      *  scrolls. A run with no open seat is never compact. */
     function fitRun(run: HTMLElement, open: boolean): void {
         const was = run.hasAttribute("data-compact");
+        // A face with no box (RU-17) keeps the reading it had when it was laid out.
+        if (run.offsetParent === null) return;
         const hasOpen =
             open &&
-            run.offsetParent !== null &&
             !!run.querySelector(
                 ':scope > [aria-current]:not([aria-current="false"]), :scope > [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"]))',
             );
-        if (!hasOpen) {
-            if (was && open) run.removeAttribute("data-compact");
-            return;
-        }
-        if (was) run.removeAttribute("data-compact");
-        // Layout extents only: the scroll extent counts the seats' carry translates mid-travel.
-        // The run's reserve (its padding, the room a focus ring takes) is not a seat.
         const v = o.vertical();
-        const rs = getComputedStyle(run);
-        const padStart = Number.parseFloat(v ? rs.paddingBlockStart : rs.paddingInlineStart) || 0;
-        let first = Infinity;
-        let last = -Infinity;
-        for (const c of run.children) {
-            if (!(c instanceof HTMLElement) || ghosts.has(c) || c.offsetParent === null) continue;
-            const a0 = v ? c.offsetTop : c.offsetLeft;
-            first = Math.min(first, a0);
-            last = Math.max(last, a0 + (v ? c.offsetHeight : c.offsetWidth));
-        }
-        const port = (v ? run.clientHeight : run.clientWidth) - padStart;
-        if (last - first > port + 0.5) run.setAttribute("data-compact", "");
+        // Layout extents only: the scroll extent counts the seats' carry translates mid-travel.
+        const span = (): number => {
+            let first = Infinity;
+            let last = -Infinity;
+            for (const c of run.children) {
+                if (!(c instanceof HTMLElement) || ghosts.has(c) || c.offsetParent === null) continue;
+                const a0 = v ? c.offsetTop : c.offsetLeft;
+                first = Math.min(first, a0);
+                last = Math.max(last, a0 + (v ? c.offsetHeight : c.offsetWidth));
+            }
+            return last > first ? last - first : 0;
+        };
+        if (hasOpen) {
+            if (was) run.removeAttribute("data-compact");
+            // The run's reserve (its padding, the room a focus ring takes) is not a seat.
+            const rs = getComputedStyle(run);
+            const padStart = Number.parseFloat(v ? rs.paddingBlockStart : rs.paddingInlineStart) || 0;
+            const port = (v ? run.clientHeight : run.clientWidth) - padStart;
+            if (span() > port + 0.5) run.setAttribute("data-compact", "");
+        } else if (was && open) run.removeAttribute("data-compact");
+        publishFit(run, span());
+    }
+
+    /** The fit law (10.1.5 e4, k3, p2): `data-run-fits` says the seats' span is no longer
+     *  than the run's port, and under it the reserve yields to the room left (run.css THE
+     *  RESERVE YIELDS), so a run whose seats all show scrolls nothing it hides. On a vertical
+     *  dock the room is `--dock-run-room-block`, half what the seats leave. Written from the
+     *  open run's layout on the trigger frame, before the new layout is read, and held while
+     *  the run has no box. */
+    let fitPublished = "";
+    function publishFit(run: HTMLElement, span: number): void {
+        const el = root();
+        if (!el) return;
+        const v = o.vertical();
+        const port = v ? run.clientHeight : run.clientWidth;
+        const fits = span > 0 && span <= port;
+        const room = v && fits ? `${Math.floor(((port - span) / 2) * 100) / 100}px` : "";
+        const value = `${fits ? 1 : 0} ${room}`;
+        if (value === fitPublished) return;
+        fitPublished = value;
+        if (room) el.style.setProperty("--dock-run-room-block", room);
+        else el.style.removeProperty("--dock-run-room-block");
+        el.toggleAttribute("data-run-fits", fits);
     }
 
     /** R-1 (C2-6): a pill taller than one row is still a stadium, so the open face's content
