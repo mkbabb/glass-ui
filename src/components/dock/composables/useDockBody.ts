@@ -220,6 +220,10 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
     // so the edge each is carried by and its lane are read from where it paints, not from
     // its name (C2-8). Read once per sync.
     let flip = false;
+    // The root edge a change of layout keeps in place (an edge-anchored dock), per axis:
+    // -1 the start, +1 the end, 0 neither or both. Read once per sync.
+    let anchorX = 0;
+    let anchorY = 0;
 
     function runEl(): HTMLElement | null {
         const r = o.run?.value;
@@ -331,9 +335,6 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             // mid-unfold) gives back the hold translate it was placed with, or it paints that
             // far from its place for the whole travel (10.1.3 critique-3: 183 px outside the plate).
             if (place) for (const p of ["inset", "inset-inline-start", "left", "top", "width", "height", "translate"]) enter.style.removeProperty(p);
-            // mid-unfold) gives back the hold translate it was placed with, or it paints that
-            // far from its place for the whole travel (10.1.3 critique-3: 183 px outside the plate).
-            if (place) for (const p of ["inset", "inset-inline-start", "left", "top", "width", "height", "translate"]) enter.style.removeProperty(p);
             const known = faces.find((f) => f.el === enter);
             const from = known ? opOf(enter) : 0;
             // RU-11: a later layer (later in the tree) arrives from the trailing side, an
@@ -399,9 +400,19 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             // others by their start edge. -1 start, +1 end, on each axis.
             const side = key === "persistent-end" ? 1 : -1;
             // On the inline axis the start edge is the right one in a right-to-left dock.
-            const sx = flip ? -side : side;
+            let sx = flip ? -side : side;
+            let sy = side;
+            // An edge-anchored dock (O-110: pinned by `right` or `bottom`) keeps one edge of
+            // its box where it was; every region but the trailing one is carried by that
+            // edge, so what it holds stays where it paints while the other edge travels
+            // (10.1.3 critique-7: a folded face slid 240 px with the moving edge of a
+            // right-anchored dock).
+            if (key !== "persistent-end") {
+                if (anchorX) sx = anchorX;
+                if (anchorY) sy = anchorY;
+            }
             t.x.d = t.cx + t.x.d + (sx * t.w) / 2 - (lcx + (sx * nw) / 2);
-            t.y.d = t.cy + t.y.d + (side * t.h) / 2 - (lcy + (side * nh) / 2);
+            t.y.d = t.cy + t.y.d + (sy * t.h) / 2 - (lcy + (sy * nh) / 2);
             t.cx = lcx;
             t.cy = lcy;
             t.w = nw;
@@ -414,21 +425,21 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
      *  run is the face on screen. Offsets are layout, so our translate is not in them. */
     function readSeats(carry: boolean): boolean {
         const run = o.run?.value;
-        const rr = bcr(run);
+        if (!run || !run.isConnected) return false;
         let movedAny = false;
         const seen = new Set<HTMLElement>();
+        const rr = bcr(run);
+        // The run's origin without its region's written translate: where it is laid out.
+        const lane = regions.get("layers");
         const ox = rr.left + scrollX / Z - (lane ? lane.tx : 0);
         const oy = rr.top + scrollY / Z - (lane ? lane.ty : 0);
-        const lane = regions.get("layers");
-        const ox = rr.left + scrollX - (lane ? lane.tx : 0);
-        const oy = rr.top + scrollY - (lane ? lane.ty : 0);
         for (const child of run.children) {
             if (!(child instanceof HTMLElement) || child.offsetParent === null || ghosts.has(child)) continue;
             seen.add(child);
-            const cr = bcr(child);
+            const lx = child.offsetLeft;
             const ly = child.offsetTop;
             // The box without the translate the loop wrote, relative to the run.
-            const cr = child.getBoundingClientRect();
+            const cr = bcr(child);
             const tr = seats.get(child);
             const rel = {
                 rx: cr.left - (tr ? tr.x.d : 0) - rr.left,
@@ -469,15 +480,18 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
      *  wider than the room it has: the open seat is then one glyph wide like the rest. It is
      *  measured with the name each time (the attribute is lifted for the read), so going
      *  compact never flips it back. If the glyph-wide seats still do not fit, the run
-        // A face with no box (RU-17) keeps the reading it had when it was laid out.
-        if (run.offsetParent === null) return;
      *  scrolls. A run with no open seat is never compact. */
     function fitRun(run: HTMLElement, open: boolean): void {
+        const was = run.hasAttribute("data-compact");
         // A face with no box (RU-17) keeps the reading it had when it was laid out.
         if (run.offsetParent === null) return;
-        // A face with no box (RU-17) keeps the reading it had when it was laid out.
+        const hasOpen =
+            open &&
+            !!run.querySelector(
+                ':scope > [aria-current]:not([aria-current="false"]), :scope > [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"]))',
+            );
         const v = o.vertical();
-            let last = -Infinity;
+        // Layout extents only: the scroll extent counts the seats' carry translates mid-travel.
         const span = (): number => {
             let first = Infinity;
             let last = -Infinity;
@@ -510,103 +524,12 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
     function publishFit(run: HTMLElement, span: number): void {
         const el = root();
         if (!el) return;
-            let first = Infinity;
+        const v = o.vertical();
         const port = v ? run.clientHeight : run.clientWidth;
         const fits = span > 0 && span <= port;
         const room = v && fits ? `${Math.floor(((port - span) / 2) * 100) / 100}px` : "";
         const value = `${fits ? 1 : 0} ${room}`;
         if (value === fitPublished) return;
-        fitPublished = value;
-        if (room) el.style.setProperty("--dock-run-room-block", room);
-        else el.style.removeProperty("--dock-run-room-block");
-        el.toggleAttribute("data-run-fits", fits);
-            const rs = getComputedStyle(run);
-            const padStart = Number.parseFloat(v ? rs.paddingBlockStart : rs.paddingInlineStart) || 0;
-            const port = (v ? run.clientHeight : run.clientWidth) - padStart;
-            if (span() > port + 0.5) run.setAttribute("data-compact", "");
-        } else if (was && open) run.removeAttribute("data-compact");
-        publishFit(run, span());
-    }
-
-    /** The fit law (10.1.5 e4, k3, p2): `data-run-fits` says the seats' span is no longer
-     *  than the run's port, and under it the reserve yields to the room left (run.css THE
-     *  RESERVE YIELDS), so a run whose seats all show scrolls nothing it hides. On a vertical
-     *  dock the room is `--dock-run-room-block`, half what the seats leave. Written from the
-     *  open run's layout on the trigger frame, before the new layout is read, and held while
-     *  the run has no box. */
-    let fitPublished = "";
-    function publishFit(run: HTMLElement, span: number): void {
-        const R0 = bcr(el);
-        if (!el) return;
-                if (!(c instanceof HTMLElement) || ghosts.has(c) || c.offsetParent === null) continue;
-        // The run's own carry (a face the loop moves, a return mid-fold) is a translate on
-        // the run, not layout: it is taken out with the region's, or a carried run reads
-        // its seats that far outside the curve (O-101a: a 200 px inset on a one-row dock).
-        const [fx = 0, fy = 0] = (run.style.translate || "0 0").split(/\s+/).map((v) => Number.parseFloat(v) || 0);
-        const gx = (g ? g.tx : 0) + fx;
-        const gy = (g ? g.ty : 0) + fy;
-        const room = v && fits ? `${Math.floor(((port - span) / 2) * 100) / 100}px` : "";
-        const rp = bcr(run);
-        if (value === fitPublished) return;
-        fitPublished = value;
-        if (room) el.style.setProperty("--dock-run-room-block", room);
-        else el.style.removeProperty("--dock-run-room-block");
-        el.toggleAttribute("data-run-fits", fits);
-            if (span() > port + 0.5) run.setAttribute("data-compact", "");
-        } else if (was && open) run.removeAttribute("data-compact");
-        publishFit(run, span());
-    }
-            const q = bcr(c);
-    /** The fit law (10.1.5 e4, k3, p2): `data-run-fits` says the seats' span is no longer
-     *  than the run's port, and under it the reserve yields to the room left (run.css THE
-     *  RESERVE YIELDS), so a run whose seats all show scrolls nothing it hides. On a vertical
-     *  dock the room is `--dock-run-room-block`, half what the seats leave. Written from the
-     *  open run's layout on the trigger frame, before the new layout is read, and held while
-     *  the run has no box. */
-    let fitPublished = "";
-    function publishFit(run: HTMLElement, span: number): void {
-        const el = root();
-        if (!el) return;
-                if (!(c instanceof HTMLElement) || ghosts.has(c) || c.offsetParent === null) continue;
-        const port = v ? run.clientHeight : run.clientWidth;
-        const fits = span > 0 && span <= port;
-        const room = v && fits ? `${Math.floor(((port - span) / 2) * 100) / 100}px` : "";
-        // The run's own carry (a face the loop moves, a return mid-fold) is a translate on
-        // the run, not layout: it is taken out with the region's, or a carried run reads
-        // its seats that far outside the curve (O-101a: a 200 px inset on a one-row dock).
-        const [fx = 0, fy = 0] = (run.style.translate || "0 0").split(/\s+/).map((v) => Number.parseFloat(v) || 0);
-        const gx = (g ? g.tx : 0) + fx;
-        const gy = (g ? g.ty : 0) + fy;
-        fitPublished = value;
-        if (room) el.style.setProperty("--dock-run-room-block", room);
-        else el.style.removeProperty("--dock-run-room-block");
-        el.toggleAttribute("data-run-fits", fits);
-            if (span() > port + 0.5) run.setAttribute("data-compact", "");
-        } else if (was && open) run.removeAttribute("data-compact");
-        publishFit(run, span());
-    }
-
-    /** The fit law (10.1.5 e4, k3, p2): `data-run-fits` says the seats' span is no longer
-     *  than the run's port, and under it the reserve yields to the room left (run.css THE
-        Z = (el as HTMLElement & { currentCSSZoom?: number }).currentCSSZoom ?? 1;
-     *  RESERVE YIELDS), so a run whose seats all show scrolls nothing it hides. On a vertical
-     *  dock the room is `--dock-run-room-block`, half what the seats leave. Written from the
-     *  open run's layout on the trigger frame, before the new layout is read, and held while
-     *  the run has no box. */
-    let fitPublished = "";
-    function publishFit(run: HTMLElement, span: number): void {
-        const el = root();
-        if (!el) return;
-        const v = o.vertical();
-        const port = v ? run.clientHeight : run.clientWidth;
-        const fits = span > 0 && span <= port;
-        const room = v && fits ? `${Math.floor(((port - span) / 2) * 100) / 100}px` : "";
-        // The run's own carry (a face the loop moves, a return mid-fold) is a translate on
-        // the run, not layout: it is taken out with the region's, or a carried run reads
-        // its seats that far outside the curve (O-101a: a 200 px inset on a one-row dock).
-        const [fx = 0, fy = 0] = (run.style.translate || "0 0").split(/\s+/).map((v) => Number.parseFloat(v) || 0);
-        const gx = (g ? g.tx : 0) + fx;
-        const gy = (g ? g.ty : 0) + fy;
         fitPublished = value;
         if (room) el.style.setProperty("--dock-run-room-block", room);
         else el.style.removeProperty("--dock-run-room-block");
@@ -627,13 +550,17 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             return;
         }
         const v = o.vertical();
-        const R0 = el.getBoundingClientRect();
+        const R0 = bcr(el);
         const rad = (v ? R0.width : R0.height) / 2;
         const g = regions.get("layers");
-        const gx = g ? g.tx : 0;
-        const gy = g ? g.ty : 0;
+        // The run's own carry (a face the loop moves, a return mid-fold) is a translate on
+        // the run, not layout: it is taken out with the region's, or a carried run reads
+        // its seats that far outside the curve (O-101a: a 200 px inset on a one-row dock).
+        const [fx = 0, fy = 0] = (run.style.translate || "0 0").split(/\s+/).map((v) => Number.parseFloat(v) || 0);
+        const gx = (g ? g.tx : 0) + fx;
+        const gy = (g ? g.ty : 0) + fy;
         // The run's port clips its content, so a child is read only as far as the port.
-        const rp = run.getBoundingClientRect();
+        const rp = bcr(run);
         const port = { l: rp.left - gx, t: rp.top - gy, r: rp.right - gx, b: rp.bottom - gy };
         // In the cross-axis frame: `a` runs along the dock, `c` across it; the caps' centres
         // sit at a0 + rad and a1 − rad, on the cross centre line.
@@ -643,7 +570,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         let short = -Infinity;
         for (const c of run.children) {
             if (!(c instanceof HTMLElement) || ghosts.has(c) || c.offsetParent === null) continue;
-            const q = c.getBoundingClientRect();
+            const q = bcr(c);
             if (q.width <= 0 || q.height <= 0) continue;
             const t = seats.get(c);
             const l = Math.max(port.l, q.left - gx - (t ? t.x.d : 0));
@@ -675,6 +602,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
     function sync(reason: string): void {
         const el = root();
         if (!el || !el.isConnected) return;
+        Z = (el as HTMLElement & { currentCSSZoom?: number }).currentCSSZoom ?? 1;
         const reduce = o.reducedMotion();
         const prevPainted = painted();
         // The trigger frame's writes before its read: the compact run and the curve inset.
@@ -685,6 +613,14 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             fitCurve(el, open, run);
         }
         const next = rectOf(el);
+        if (layout) {
+            const keep = (a0: number, a1: number, b0: number, b1: number) => {
+                const s0 = Math.abs(a0 - b0) <= 0.5, s1 = Math.abs(a1 - b1) <= 0.5;
+                return s1 && !s0 ? 1 : s0 && !s1 ? -1 : 0;
+            };
+            anchorX = keep(layout.l, layout.r, next.l, next.r);
+            anchorY = keep(layout.t, layout.b, next.t, next.b);
+        }
         const posture = o.expanded();
         const postureChanged = posture !== lastPosture;
         lastPosture = posture;
