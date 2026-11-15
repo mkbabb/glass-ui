@@ -1,0 +1,108 @@
+# plants4.py <name> apply|revert|list: MEASURE-4's counter-tests (MEASURE-3's, plus g4-snap2, g1-lift and g13-safe). Each plant is one planted fault
+# (an exact replacement in the worktree's source) that its gate must read RED. `apply` saves
+# the original of each file it touches under m3/.plant-orig/ and refuses if a replacement does
+# not match exactly once; `revert` writes the originals back. Nothing else touches source.
+import json, os, shutil, sys
+W = "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/"
+D = "src/components/dock/"
+HERE = os.path.dirname(os.path.abspath(__file__))
+ORIG = os.path.join(HERE, ".plant-orig")
+P = {
+  # gate: (what the plant is, [(file, old, new)])
+  "g1-linger": ("G-1: the linger token ignored (a fixed 3.6 s, master's literal)",
+    [(D+"composables/useDockState.ts", "        return Math.min(max, base + dwellMs / 2);", "        void max;\n        return 3600;")]),
+  "g2-clock": ("G-2: the loop's clock started at the trigger (the first frame advances 33 ms)",
+    [(D+"composables/useDockBody.ts", "            last = inFrame ? (document.timeline.currentTime as number | null) : null;", "            last = performance.now() - 33;")]),
+  "g2-curve": ("G-2 (inside the curve): the curve inset never written",
+    [(D+"composables/useDockBody.ts", "        const had = el.style.getPropertyValue(\"--dock-curve-inset\") !== \"\";\n        if (!o.pill() || !open", "        if (open) return;\n        const had = el.style.getPropertyValue(\"--dock-curve-inset\") !== \"\";\n        if (!o.pill() || !open")]),
+  "g2-touch": ("G-2 (no folded face under touch): the rule removed",
+    [(D+"GlassDock.vue", "declaredOpen.value || (noHover.value && !slots.collapsed)", "declaredOpen.value || (false && noHover.value && !slots.collapsed)")]),
+  "g2-compact": ("G-2 (the compact run): never compact",
+    [(D+"composables/useDockBody.ts", "            if (span() > port + 0.5) run.setAttribute(\"data-compact\", \"\");", "            void port;")]),
+  "g2-rim": ("G-2 (the rim): the rim drawn on the root, not the plate",
+    [(D+"GlassDock.vue", "            <slot name=\"rim\" />\n", ""),
+     (D+"GlassDock.vue", "        <div class=\"dock-controls\">\n", "        <slot name=\"rim\" />\n        <div class=\"dock-controls\">\n")]),
+  "g3-intent": ("G-3: the intent wait applied to a return mid-fold",
+    [(D+"composables/useDockState.ts", "        if (isTransitioning?.value) {\n            clearHoverIntent();", "        if (false && isTransitioning?.value) {\n            clearHoverIntent();")]),
+  "g4-inline": ("G-4: the seat's inline-size leg restored (210 ms)",
+    [(D+"styles/controls/icon-button.css", "        transition:\n            background-color var(--dock-motion-fast),", "        transition:\n            inline-size 210ms ease,\n            background-color var(--dock-motion-fast),")]),
+  "g4-join": ("G-4 (a control joins or leaves): the records ignored",
+    [(D+"composables/useDockBody.ts", "        const run = runEl();\n        if (!run || !shown || !o.expanded() || run.offsetParent === null) return;\n        const joined", "        return;\n        const run = runEl();\n        if (!run || !shown || !o.expanded() || run.offsetParent === null) return;\n        const joined")]),
+  "g4-snap": ("G-4 (two changes within 90 ms): the rest off the snap positions",
+    [(D+"composables/useDockRun.ts", "        return best;\n    }", "        void best;\n        return clamped;\n    }")]),
+  # MEASURE-4: the snap rest's plant rewritten so it bites. MEASURE-3's (the rest left at the
+  # painted offset) planted nothing, since the carrier hands the port back on a snap position
+  # already; this one rests the run 9 px past the nearest snap position that keeps the open
+  # seat in view, which the mandatory snap then corrects in one frame.
+  "g4-snap2": ("G-4 (the open seat changes in a scrolling run): the rest 9 px off its snap position",
+    [(D+"composables/useDockRun.ts", "        return best;\n    }", "        return Math.min(best + 9, max);\n    }")]),
+  # MEASURE-4: the touch linger's cure undone (the linger scheduled in the pointerup itself).
+  "g1-lift": ("G-1 (f): the linger scheduled in the touch pointerup, before the tap's focus",
+    [(D+"composables/useDockState.ts", "            setTimeout(() => {\n                if (state.value === \"hover\") scheduleCollapse();\n            }, 0);", "            scheduleCollapse();")]),
+  # MEASURE-4: the safe-area cell's bite: the viewport inset not read.
+  "g13-safe": ("G-13 (safe area): a viewport dock ignores the bottom inset",
+    [(D+"styles/density.css", "        --dock-safe-block-end: env(safe-area-inset-bottom, 0px);", "        --dock-safe-block-end: 0px;")]),
+  "g4-scroll": ("G-4 (the open seat changes in a compact scrolling run): the offset left to the run's reach",
+    [(D+"composables/useDockBody.ts", "                scrollOnly = to !== null && Math.abs(to - from) > 0.5;", "                scrollOnly = false && to !== null && Math.abs(to - from) > 0.5;")]),
+  "g2-held": ("G-2 (from rest): a leaving face sized by its border box as its content box",
+    [(D+"composables/useDockBody.ts", "            const cbx = ms.boxSizing === \"border-box\";", "            const cbx = true || ms.boxSizing === \"border-box\";")]),
+  "g4-ghost": ("G-4 (a control leaves): the removed control held inside the run's scroll port",
+    [(D+"composables/useDockBody.ts", "                (run.parentElement ?? run).appendChild(n);", "                run.appendChild(n);")]),
+  "g2-lane": ("G-2 (inside the plate): every lane corner rounded, as before (CSS scales them down)",
+    [(D+"composables/useDockBody.ts", "on(box[x], P[x]) ? rIn : 0);", "on(box[x], P[x]) ? rIn : rIn);")]),
+  "g6-flow": ("G-6: a name put in flow on hover (the hovered seat 24 px wider)",
+    [(D+"styles/controls/icon-button.css", None, "\n.glass-dock .dock-run > .dock-icon-button:hover { width: calc(var(--dock-control-size, var(--size-icon-btn)) + 24px); }\n")]),
+  "g7-provide": ("G-7: the outlet's provide removed",
+    [(D+"DockOutlet.vue", "        provide(DOCK_CONTEXT_KEY, p.context);", "        void p.context;")]),
+  "g8-hold": ("G-8: the hold count consulted on a press outside",
+    [(D+"composables/useDockState.ts", "        if (isTeleportedTarget(e.target, dockId)) return;\n\n        collapse();", "        if (isTeleportedTarget(e.target, dockId)) return;\n        if (isHeld.value) return;\n\n        collapse();")]),
+  "g9-scope": ("G-9: the scope write removed",
+    [(D+"composables/useDockBody.ts", "        scopeEl?.style.setProperty(\"--dock-expand-t\", v);", "        void scopeEl;")]),
+  "g10-rm": ("G-10: reduced motion's seat removed (geometry glides on the spring)",
+    [(D+"composables/useDockBody.ts", "            if (reduce) {\n                // R-11: under reduced motion, the preference set mid-travel included, every", "            if (false) {\n                // R-11: under reduced motion, the preference set mid-travel included, every")]),
+  "g11-rest": ("G-11: a loop left running at rest",
+    [(D+"composables/useDockBody.ts", "        el?.removeAttribute(\"data-morphing\");\n        o.moving.value = false;", "        el?.removeAttribute(\"data-morphing\");\n        const spin = () => requestAnimationFrame(spin);\n        spin();\n        o.moving.value = false;")]),
+  "g12-scale": ("G-12: a scale on .glass-dock",
+    [(D+"styles/shell.css", None, "\n.glass-dock { scale: 1; }\n")]),
+  "g13-box": ("G-13: the hidden posture face keeps its box at rest",
+    [(D+"styles/layers.css", "        display: none;", "        display: flex;")]),
+  "g14-rmclock": ("G-14: reduced motion's clocks 300 ms, not 100 (a restated unit witness)",
+    [(D+"composables/useDockBody.ts", "                eq.d = Math.sign(eq.d) * Math.max(0, Math.abs(eq.d) - dt / 0.1);", "                eq.d = Math.sign(eq.d) * Math.max(0, Math.abs(eq.d) - dt / 0.3);"),
+     (D+"composables/useDockBody.ts", "                u = Math.max(0, u - dt / 0.1);", "                u = Math.max(0, u - dt / 0.3);")]),
+}
+def apply(name):
+    desc, reps = P[name]
+    d = os.path.join(ORIG, name)
+    if os.path.exists(d): sys.exit(f"{name} already applied")
+    texts = {}
+    for f, old, new in reps:
+        texts.setdefault(f, open(W + f).read())
+    staged = dict(texts)
+    for f, old, new in reps:
+        s = staged[f]
+        if old is None: s = s + new
+        else:
+            if s.count(old) != 1: sys.exit(f"{name}: {f}: match count {s.count(old)}")
+            s = s.replace(old, new)
+        staged[f] = s
+    os.makedirs(d)
+    for f, s in texts.items():
+        os.makedirs(os.path.dirname(os.path.join(d, f)), exist_ok=True)
+        open(os.path.join(d, f), "w").write(s)
+    for f, s in staged.items(): open(W + f, "w").write(s)
+    print("applied", name, "-", desc)
+def revert(name):
+    d = os.path.join(ORIG, name)
+    if not os.path.exists(d): sys.exit(f"{name} not applied")
+    for root, _, files in os.walk(d):
+        for fn in files:
+            src = os.path.join(root, fn); rel = os.path.relpath(src, d)
+            shutil.copyfile(src, W + rel)
+    shutil.rmtree(d)
+    print("reverted", name)
+if __name__ == "__main__":
+    name, act = (sys.argv[1], sys.argv[2]) if len(sys.argv) > 2 else (None, "list")
+    if act == "list":
+        print(json.dumps({k: v[0] for k, v in P.items()}, indent=1))
+    elif act == "apply": apply(name)
+    elif act == "revert": revert(name)

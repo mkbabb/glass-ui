@@ -17,8 +17,8 @@ check("no clip-path on a plate at rest", grepRules(dockCss, /\.dock-plate/, /cli
 check("no box-shadow on .glass-dock", grepRules(dockCss, /^\s*\.glass-dock(\.[\w-]+)*\s*$/, /box-shadow\s*:/));
 {
     const plateShadows = grepRules(dockCss, /\.dock-plate\s*$/, /box-shadow\s*:/);
-    const reads = readFileSync(`${W}/src/styles/tokens/shadow.css`, "utf8").includes("var(--dock-halo)");
-    res.push({ clause: "one box-shadow value for the plate across both postures, reading --dock-halo", pass: plateShadows.length === 1 && reads, hits: plateShadows });
+    const reads = readFileSync(`${W}/src/styles/tokens/shadow.css`, "utf8").includes("var(--dock-shadow-color)") && !readFileSync(`${W}/src/styles/tokens/shadow.css`, "utf8").includes("--dock-halo");
+    res.push({ clause: "one box-shadow value for the plate across both postures, reading --dock-shadow-color (and no --dock-halo)", pass: plateShadows.length === 1 && reads, hits: plateShadows });
 }
 check("no filter: url(, <filter or feGaussianBlur under dock", [...dockCss, ...dockTs.map(([f, t]) => [f, decomment(t)])].filter(([, s]) => /filter:\s*url\(|<filter|feGaussianBlur/.test(s)).map(([f]) => f.replace(W + "/", "")));
 check("no size, margin or padding in a dock transition, @keyframes or .animate(", [

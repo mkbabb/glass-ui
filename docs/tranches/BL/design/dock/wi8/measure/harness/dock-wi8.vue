@@ -46,7 +46,7 @@
 //   w-ctl6    a ControlsDock of six controls (the cap), at 360
 //   w-rim     a pill with the reading-progress rim at 40 % in its plate (#rim)
 //   w-long    a site dock of ten seats, so the run scrolls even when compact
-import { computed, defineComponent, h, ref } from "vue";
+import { computed, defineComponent, h, ref, onMounted } from "vue";
 import * as dock from "@glass/components/dock";
 import { Slider } from "@glass/components/slider";
 import { Popover, PopoverContent, PopoverTrigger } from "@glass/components/popover";
@@ -95,6 +95,11 @@ const corner = q.get("corner") ?? "bottom-end";
 const within = q.get("within") === "parent" ? "parent" : "viewport";
 // FOLD-2 (C2-8): &dir=rtl sets the page's direction before anything mounts.
 if (q.get("dir") === "rtl") document.documentElement.dir = "rtl";
+// MEASURE-4: the pill dock's exposed API, so a cell can call collapse() (G-1 (h)).
+const pillDock = ref<{ collapse(): void } | null>(null);
+onMounted(() => {
+    (window as unknown as { __dockApi: typeof pillDock }).__dockApi = pillDock;
+});
 const g8Select = ref("a");
 const g8Pop = ref(false);
 
@@ -236,7 +241,7 @@ const stageStyle = computed(() =>
         </template>
 
         <!-- w-pill -->
-        <GlassDock v-if="cell === 'w-pill'" data-testid="w-pill" aria-label="pill" collapse="closed" v-bind="flags">
+        <GlassDock v-if="cell === 'w-pill'" ref="pillDock" data-testid="w-pill" aria-label="pill" collapse="closed" v-bind="flags">
             <DockControl v-for="p in pages" :key="p.id" :aria-label="p.label" :data-testid="`w-pill-${p.id}`">
                 <component :is="p.icon" />
             </DockControl>
