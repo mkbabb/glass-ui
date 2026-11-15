@@ -857,7 +857,13 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         plate.style.borderRadius = `${R}px`;
 
         // Regions ride the plate, clipped to its painted box while travel runs.
-        const clipTo = (t: RegionTrack, box: Box, r: number) => {
+        // A lane rounds only the corners it shares with the plate: `round r` on all four
+        // corners of a lane narrower than 2r was scaled down by CSS on every corner, so the
+        // plate-side corners were less round than the plate and content painted past its curve.
+        const clipTo = (t: RegionTrack, box: Box, rIn: number) => {
+            const on = (a: number, b: number) => Math.abs(a - b) <= 0.5;
+            const cr = (y: "t" | "b", x: "l" | "r") => (on(box[y], P[y]) && on(box[x], P[x]) ? rIn : 0);
+            const r = `${cr("t", "l")}px ${cr("t", "r")}px ${cr("b", "r")}px ${cr("b", "l")}px`;
             const left = t.cx - t.w / 2 + t.tx;
             const top = t.cy - t.h / 2 + t.ty;
             // C-1: the plate's painted box in the region's own coordinates. Insets may be
@@ -868,7 +874,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
                 r: left + t.w - box.r,
                 b: top + t.h - box.b,
             };
-            t.el.style.clipPath = `inset(${ci.t}px ${ci.r}px ${ci.b}px ${ci.l}px round ${r}px)`;
+            t.el.style.clipPath = `inset(${ci.t}px ${ci.r}px ${ci.b}px ${ci.l}px round ${r})`;
             t.clipped = true;
         };
         // C-2: each region is clipped to its lane: the plate's painted box narrowed to
