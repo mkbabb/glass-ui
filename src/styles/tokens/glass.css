@@ -218,17 +218,18 @@
     --glass-border-wash:     color-mix(in srgb, var(--foreground) 4%, transparent);
     --glass-border-quiet:    color-mix(in srgb, var(--foreground) 4%, transparent);
     --glass-border-resting:  color-mix(in srgb, var(--foreground) 4%, transparent);
-    /* The floating and dock hairlines' ink strengths. The dock plate lerps between
-       them inside one `color-mix()` (dock.css), so its edge never mixes two
-       translucent mixes, which Playwright WebKit cannot compute. */
+    /* The floating and dock hairlines' ink strengths. Both hairlines are relative
+       colours of the ink at that strength, not mixes with `transparent`: the dock
+       plate's edge mixes one into the other (dock.css), and a `color-mix()` whose two
+       arms are both translucent mixes kills the page in Playwright WebKit. */
     --glass-edge-floating:   5%;
     --glass-edge-dock:       8%;
-    --glass-border-floating: color-mix(in srgb, var(--foreground) var(--glass-edge-floating), transparent);
+    --glass-border-floating: rgb(from var(--foreground) r g b / var(--glass-edge-floating));
     --glass-border-overlay:  color-mix(in srgb, var(--foreground) 5%, transparent);
     /* The dock is FLOATING chrome over an UNKNOWN backdrop, unlike a content card on
        the page, so it earns a readable warm-INK hairline. 8% warm ink is still a
        whisper (`--foreground` H≈56° → a WARM rim, never a gray line). */
-    --glass-border-dock:     color-mix(in srgb, var(--foreground) var(--glass-edge-dock), transparent);
+    --glass-border-dock:     rgb(from var(--foreground) r g b / var(--glass-edge-dock));
     --glass-border:          var(--glass-border-quiet);
 
     /* The DEFINED control tier. Glass is the maximal default, but its blur is

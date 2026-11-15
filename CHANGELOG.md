@@ -54,15 +54,15 @@ below.
 - **A page with a GlassDock no longer crashes Playwright's WebKit.** The dock's edge
   mixed two translucent colours that were each a mix themselves, a value the WebKit
   build Playwright ships cannot compute, so every page with a dock died in it (Safari
-  was never affected). The edge's open end is still `--glass-border-dock`, and its
-  folded end is now the dock's `--foreground` at a strength, so only one side of the
-  mix is itself a mix. It computes the same colour as before at rest, open and every
-  step between. Two new tokens hold the strengths, `--glass-edge-floating` (5%) and
-  `--glass-edge-dock` (8%), and `--glass-border-floating` and `--glass-border-dock` are
-  now made from them and keep their values. If you recoloured the dock's edge by
-  setting `--glass-border-dock`, it still colours the open end. If you coloured either
-  end of the edge with `--dock-plate-expanded-border` or
-  `--dock-plate-collapsed-border`, those still apply.
+  was never affected). `--glass-border-floating` and `--glass-border-dock` are now
+  written as `--foreground` at a strength rather than mixed with `transparent`, so the
+  edge no longer mixes two mixes. Two new tokens hold the strengths,
+  `--glass-edge-floating` (5%) and `--glass-edge-dock` (8%), and both hairlines keep
+  their values, so the edge computes the same colour as before at rest, open and every
+  step between. The edge still reads both tokens: if you set `--glass-border-dock`, it
+  colours the open end, and if you set `--glass-border-floating`, it colours the folded
+  end and the whole edge of a held or a static dock. If you coloured either end with
+  `--dock-plate-expanded-border` or `--dock-plate-collapsed-border`, those still apply.
 
 - **A static dock's controls sample no backdrop.** With `backdrop-mode="static"` the
   dock's plate already drew no backdrop blur, but an active control kept the capsule's

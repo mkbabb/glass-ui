@@ -94,13 +94,10 @@
         background:
             linear-gradient(var(--glass-veil), var(--glass-veil)),
             var(--card);
-        /* The EXPANDED endpoint only — the collapsed one already resolves to
-           `--glass-edge-floating` on the shell (shell.css), so re-declaring it here
-           was a byte-identical no-op. */
-        --dock-plate-expanded-edge: var(--glass-edge-floating);
-        --_dock-edge-expanded-ink: rgb(
-            from var(--foreground) r g b / var(--dock-plate-expanded-edge)
-        );
+        /* Both ends of the edge are `--glass-border-floating`, so the edge is that
+           token at every t, unmixed (dock.css). */
+        --_dock-edge-expanded-ink: var(--glass-border-floating);
+        --_dock-edge-lerp: var(--glass-border-floating);
         backdrop-filter: none;
         -webkit-backdrop-filter: none;
     }

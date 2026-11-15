@@ -481,6 +481,86 @@ test("edge · a host's --glass-border-dock colours the expanded edge", async ({ 
     near(rgba(r.mixed.half), half(rgba(r.mixed.ref), rgba(r.library)), "mix, t = 0.5");
 });
 
+// A host that sets `--glass-border-floating` colours the folded end of the plate's edge,
+// and both ends of a held or a static dock's edge, as in 11.0.1: a live dock's edge is
+// the host's colour at t = 0, the library's dock edge at t = 1 and their even mix at
+// t = 0.5; a held or a static dock's edge is the host's colour at t = 0 and t = 1. A
+// translucent `color-mix()` value (the form a preset writes) colours them too, and the
+// page stays alive while the edge mixes it.
+test("edge · a host's --glass-border-floating colours the folded edge and a held or static dock's edge", async ({ page }, info) => {
+    let crashed = false;
+    page.on("crash", () => (crashed = true));
+    await page.goto("/tests-visual/release-11-0-2/press-harness.html");
+    await page.locator(".press-dock .dock-plate").waitFor();
+    await page.waitForTimeout(400);
+    const r = await page.evaluate(() => {
+        const host = document.querySelector<HTMLElement>(".press-dock")!;
+        const plate = host.querySelector<HTMLElement>(".dock-plate")!;
+        const at = (t: number) => {
+            plate.style.setProperty("--dock-expand-t", String(t));
+            return getComputedStyle(plate).borderTopColor;
+        };
+        const reference = (c: string) => {
+            const ref = document.createElement("span");
+            ref.style.borderTopColor = c;
+            host.append(ref);
+            const v = getComputedStyle(ref).borderTopColor;
+            ref.remove();
+            return v;
+        };
+        // A held plate eases its border colour; the reads want the computed value.
+        plate.style.setProperty("transition", "none");
+        // Both ends of a held or a static dock, the attribute set on the root as the
+        // dock sets it.
+        const pinned = (attr: string, value: string) => {
+            host.setAttribute(attr, value);
+            const ends = { collapsed: at(0), expanded: at(1) };
+            host.removeAttribute(attr);
+            return ends;
+        };
+        const library = at(1);
+        const read = (value: string) => {
+            host.style.setProperty("--glass-border-floating", value);
+            const live = { collapsed: at(0), half: at(0.5) };
+            const held = pinned("data-held", "");
+            const statik = pinned("data-backdrop-mode", "static");
+            host.style.removeProperty("--glass-border-floating");
+            return { live, held, statik, ref: reference(value) };
+        };
+        const literal = read("rgb(200 0 0 / 0.5)");
+        const mixed = read("color-mix(in srgb, var(--foreground) 55%, transparent)");
+        plate.style.removeProperty("--dock-expand-t");
+        plate.style.removeProperty("transition");
+        return { library, literal, mixed };
+    });
+    await page.waitForTimeout(300);
+    info.annotations.push({ type: "edge", description: JSON.stringify({ crashed, ...r }) });
+    expect(crashed).toBe(false);
+    const rgba = (c: string) => {
+        const n = (c.match(/-?[\d.]+(e-?\d+)?/g) ?? []).map(Number);
+        const k = c.startsWith("color(") ? 255 : 1;
+        return [n[0]! * k, n[1]! * k, n[2]! * k, n[3] ?? 1];
+    };
+    const near = (a: number[], b: number[], what: string) => {
+        const d = Math.max(...a.slice(0, 3).map((v, i) => Math.abs(v - b[i]!)), Math.abs(a[3]! - b[3]!) * 255);
+        expect(d, `${what}: ${a} against ${b}`).toBeLessThan(1.5);
+    };
+    // The even mix of two colours in srgb, interpolated premultiplied.
+    const half = (x: number[], y: number[]) => {
+        const a = (x[3]! + y[3]!) / 2;
+        return [...[0, 1, 2].map((i) => (x[i]! * x[3]! + y[i]! * y[3]!) / 2 / a), a];
+    };
+    for (const [form, v] of [["literal", r.literal], ["mix", r.mixed]] as const) {
+        const host = rgba(v.ref);
+        near(rgba(v.live.collapsed), host, `${form}, live dock, t = 0`);
+        near(rgba(v.live.half), half(rgba(r.library), host), `${form}, live dock, t = 0.5`);
+        near(rgba(v.held.collapsed), host, `${form}, held dock, t = 0`);
+        near(rgba(v.held.expanded), host, `${form}, held dock, t = 1`);
+        near(rgba(v.statik.collapsed), host, `${form}, static dock, t = 0`);
+        near(rgba(v.statik.expanded), host, `${form}, static dock, t = 1`);
+    }
+});
+
 // Every box a static dock's control paints (the control, its descendants and their
 // pseudo-elements) with a backdrop-filter other than `none`.
 const filtered = (page: Page, label: string) =>
