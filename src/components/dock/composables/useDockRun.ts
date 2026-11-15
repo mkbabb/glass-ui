@@ -264,23 +264,8 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
         const port = vertical() ? run.clientHeight : run.clientWidth;
         const reserve = reserveOf(run);
         const [start, end] = extentOf(run, open);
-        const inView = (pos: number) => start >= pos + reserve - 0.5 && end <= pos + port - reserve + 0.5;
-        if (!inView(clamped)) return anchorFor(run, open);
-        // The offset rests on a snap position. A retarget mid-glide leaves the painted
-        // offset between two, and when the carrier hands the port back to the mandatory snap
-        // WebKit re-snaps it in one frame (a 21.75 px step on two changes within 90 ms);
-        // the nearest snap position that keeps the open seat in view is where it rests.
-        let best = clamped;
-        let gap = Infinity;
-        for (const seat of seatsOf(run)) {
-            const p = anchorFor(run, seat);
-            const dd = Math.abs(p - clamped);
-            if (dd < gap && inView(p)) {
-                best = p;
-                gap = dd;
-            }
-        }
-        return best;
+        const inView = start >= clamped + reserve - 0.5 && end <= clamped + port - reserve + 0.5;
+        return inView ? clamped : anchorFor(run, open);
     }
 
     function announce(seat: HTMLElement): void {
