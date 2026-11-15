@@ -443,11 +443,76 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         return movedAny;
     }
 
+    /** R-1 (C2-6): a pill taller than one row is still a stadium, so the open face's content
+     *  is padded in from the ends until it lies inside the curve. Each child of the run is
+     *  read as the rounded shape it is (its own corner), so a row of round seats needs
+     *  nothing more than the padding it has; a box whose corner is r − √(r² − (r − b)²) short
+     *  of the curve gets that much more inline padding on each side. Read in layout boxes
+     *  (no translate the loop wrote), written once from the rest just read; the read after
+     *  it takes the new width. */
+    function fitCurve(el: HTMLElement, open: boolean, run: HTMLElement | null): void {
+        const had = el.style.getPropertyValue("--dock-curve-inset") !== "";
+        if (!o.pill() || !open || !run || run.offsetParent === null) {
+            if (had) el.style.removeProperty("--dock-curve-inset");
+            return;
+        }
+        const v = o.vertical();
+        const R0 = el.getBoundingClientRect();
+        const rad = (v ? R0.width : R0.height) / 2;
+        const g = regions.get("layers");
+        const gx = g ? g.tx : 0;
+        const gy = g ? g.ty : 0;
+        // The run's port clips its content, so a child is read only as far as the port.
+        const rp = run.getBoundingClientRect();
+        const port = { l: rp.left - gx, t: rp.top - gy, r: rp.right - gx, b: rp.bottom - gy };
+        // In the cross-axis frame: `a` runs along the dock, `c` across it; the caps' centres
+        // sit at a0 + rad and a1 − rad, on the cross centre line.
+        const a0 = v ? R0.top : R0.left;
+        const a1 = v ? R0.bottom : R0.right;
+        const cMid = v ? R0.left + R0.width / 2 : R0.top + R0.height / 2;
+        let short = -Infinity;
+        for (const c of run.children) {
+            if (!(c instanceof HTMLElement) || ghosts.has(c) || c.offsetParent === null) continue;
+            const q = c.getBoundingClientRect();
+            if (q.width <= 0 || q.height <= 0) continue;
+            const t = seats.get(c);
+            const l = Math.max(port.l, q.left - gx - (t ? t.x.d : 0));
+            const tp = Math.max(port.t, q.top - gy - (t ? t.y.d : 0));
+            const r = Math.min(port.r, q.right - gx - (t ? t.x.d : 0));
+            const b = Math.min(port.b, q.bottom - gy - (t ? t.y.d : 0));
+            if (r - l <= 0 || b - tp <= 0) continue;
+            const rho = Math.min(Number.parseFloat(getComputedStyle(c).borderTopLeftRadius) || 0, (r - l) / 2, (b - tp) / 2);
+            const lim = rad - rho;
+            if (lim <= 0) continue;
+            const along = v ? [tp + rho, b - rho] : [l + rho, r - rho];
+            const across = v ? [l + rho, r - rho] : [tp + rho, b - rho];
+            for (const cc of across) {
+                const dc = Math.abs(cc - cMid);
+                if (dc > lim) continue;
+                const reach = Math.sqrt(lim * lim - dc * dc);
+                short = Math.max(short, a0 + rad - reach - along[0], along[1] - (a1 - rad + reach));
+            }
+        }
+        if (short === -Infinity) return;
+        const cs = getComputedStyle(el);
+        const pad = Number.parseFloat(v ? cs.paddingTop : cs.paddingLeft) || 0;
+        if (!had && short <= 0.25) return;
+        const want = Math.ceil((pad + short) * 4) / 4;
+        const now = Number.parseFloat(el.style.getPropertyValue("--dock-curve-inset")) || 0;
+        if (!had || Math.abs(now - want) > 0.25) el.style.setProperty("--dock-curve-inset", `${want}px`);
+    }
+
     function sync(reason: string): void {
         const el = root();
         if (!el || !el.isConnected) return;
         const reduce = o.reducedMotion();
         const prevPainted = painted();
+        // The trigger frame's write before its read: the curve inset.
+        {
+            const open = o.expanded();
+            const run = runEl();
+            fitCurve(el, open, run);
+        }
         const next = rectOf(el);
         const posture = o.expanded();
         const postureChanged = posture !== lastPosture;
