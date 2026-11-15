@@ -398,10 +398,15 @@
 }
 
 /* W-I.8 R-12 (RU-4): the controls dock is this dock with one preset. 44 px seats in a
-   52 px rest, the intent at 120 ms, and a corner inset that defaults to 1rem. */
+   52 px rest at every pointer (C2-2: the seat size is set here too, so a one-seat dock
+   is a circle and an end seat is concentric with the cap), the intent at 120 ms, a
+   linger of its own (C2-14), and a corner inset that defaults to 1rem. */
 @layer components {
     .glass-dock[data-preset="controls"] {
         --dock-intent: 120ms;
+        --dock-linger: 3s;
+        --dock-linger-max: 6s;
+        --dock-control-size: 2.75rem;
         --dock-layer-height: 2.75rem;
         --dock-padding-block: 0.25rem;
         --dock-padding-inline: 0.25rem;
@@ -415,16 +420,35 @@
     .glass-dock[data-preset="controls"][data-within="parent"] {
         position: absolute;
     }
+    /* The corner. Inside a parent the inset is the inset; only a dock fixed to the
+       window adds the safe area (C2-12), and it adds the side its corner is on in the
+       page's direction. */
+    .glass-dock[data-preset="controls"] {
+        --dock-safe-block-end: 0px;
+        --dock-safe-block-start: 0px;
+        --dock-safe-inline-end: 0px;
+        --dock-safe-inline-start: 0px;
+    }
+    .glass-dock[data-preset="controls"][data-within="viewport"] {
+        --dock-safe-block-end: env(safe-area-inset-bottom, 0px);
+        --dock-safe-block-start: env(safe-area-inset-top, 0px);
+        --dock-safe-inline-end: env(safe-area-inset-right, 0px);
+        --dock-safe-inline-start: env(safe-area-inset-left, 0px);
+    }
+    .glass-dock[data-preset="controls"][data-within="viewport"]:dir(rtl) {
+        --dock-safe-inline-end: env(safe-area-inset-left, 0px);
+        --dock-safe-inline-start: env(safe-area-inset-right, 0px);
+    }
     .glass-dock[data-preset="controls"][data-corner^="bottom"] {
-        inset-block-end: calc(var(--dock-corner-inset) + env(safe-area-inset-bottom, 0px));
+        inset-block-end: calc(var(--dock-corner-inset) + var(--dock-safe-block-end));
     }
     .glass-dock[data-preset="controls"][data-corner^="top"] {
-        inset-block-start: calc(var(--dock-corner-inset) + env(safe-area-inset-top, 0px));
+        inset-block-start: calc(var(--dock-corner-inset) + var(--dock-safe-block-start));
     }
     .glass-dock[data-preset="controls"][data-corner$="end"] {
-        inset-inline-end: calc(var(--dock-corner-inset) + env(safe-area-inset-right, 0px));
+        inset-inline-end: calc(var(--dock-corner-inset) + var(--dock-safe-inline-end));
     }
     .glass-dock[data-preset="controls"][data-corner$="start"] {
-        inset-inline-start: calc(var(--dock-corner-inset) + env(safe-area-inset-left, 0px));
+        inset-inline-start: calc(var(--dock-corner-inset) + var(--dock-safe-inline-start));
     }
 }
