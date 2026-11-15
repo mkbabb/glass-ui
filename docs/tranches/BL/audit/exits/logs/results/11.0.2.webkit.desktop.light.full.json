@@ -1,0 +1,6489 @@
+{
+ "tree": "11.0.2",
+ "engine": "webkit",
+ "form": "desktop",
+ "scheme": "light",
+ "rm": false,
+ "mode": "full",
+ "at": "2026-11-15T23:19:07.959Z",
+ "surfaces": {
+  "dock-select": {
+   "routes": {
+    "pick": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 6,
+     "ms": 67,
+     "latency": 35,
+     "inter": 5,
+     "jump": 8.5,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      0.3656,
+      0.2045,
+      0.1509,
+      0.0659,
+      0.0244,
+      0.0016,
+      0
+     ],
+     "anims": [
+      "gl-fade-start-in:NaN gl-fade-end-out:NaN",
+      "translate:120 opacity:300 background-color:180 background-color:60 translate:210 glass-reveal-out:120 gl-fade-start-in:NaN gl-fade-end-out:NaN",
+      "translate:120 opacity:300 background-color:180 translate:210 glass-reveal-out:120 gl-fade-start-in:NaN gl-fade-end-out:NaN"
+     ],
+     "states": [
+      "open",
+      "closed"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 6,
+     "ms": 61,
+     "latency": 10,
+     "inter": 5,
+     "jump": 2.4,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      0.5584,
+      0.3481,
+      0.2166,
+      0.1071,
+      0.0547,
+      0.0085,
+      0
+     ],
+     "anims": [
+      "translate:120 background-color:180 glass-reveal-out:120 gl-fade-start-in:NaN gl-fade-end-out:NaN"
+     ],
+     "states": [
+      "closed"
+     ],
+     "note": "outside at 58,27"
+    },
+    "escape": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 7,
+     "ms": 70,
+     "latency": 9,
+     "inter": 6,
+     "jump": 2.1,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      0.612,
+      0.3656,
+      0.2166,
+      0.1151,
+      0.0447,
+      0.0106,
+      0.0004,
+      0
+     ],
+     "anims": [
+      "translate:120 glass-reveal-out:120 gl-fade-start-in:NaN gl-fade-end-out:NaN"
+     ],
+     "states": [
+      "closed"
+     ]
+    },
+    "trigger": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 8,
+     "ms": 81,
+     "latency": 0,
+     "inter": 7,
+     "jump": 1.5,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "size",
+      "position"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      0.9428,
+      0.7026,
+      0.4429,
+      0.2556,
+      0.1413,
+      0.0659,
+      0.0212,
+      0.0016,
+      0
+     ],
+     "anims": [
+      "translate:120 glass-reveal-out:120 gl-fade-start-in:NaN gl-fade-end-out:NaN"
+     ],
+     "states": [
+      "closed"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "select-content",
+     "surface": null,
+     "form": null,
+     "cls": "glass-reveal glass-floating glass-field-portal",
+     "bf": "blur(20px) saturate(1.5)",
+     "wbf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.22)",
+     "bgi": "linear-gradient(oklab(0.88 0.025882 0.096593 / 0.16), oklab(0.88 0.025882 0.0965",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.16)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(70% 60% at 24% 22%, oklch(0.92 0.08 48 / 0.55), rgba(0, 0, 0, 0)",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "tween",
+    "frames": 21,
+    "ms": 204,
+    "latency": 57,
+    "inter": 20,
+    "jump": 1,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "opacity",
+     "scale",
+     "translate",
+     "filter",
+     "position",
+     "size"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     0,
+     0.268,
+     0.41,
+     0.4744,
+     0.5083,
+     0.5324,
+     0.5918,
+     0.6574,
+     0.7252,
+     0.7694,
+     0.8084,
+     0.8464,
+     0.8852,
+     0.9125,
+     0.9355,
+     0.9545,
+     0.9686,
+     0.983,
+     0.9915,
+     0.997,
+     0.9999,
+     1,
+     1
+    ],
+    "anims": [
+     "filter:200 opacity:200 scale:200 translate:200 background-color:60 gl-fade-start-in:NaN gl-fade-end-out:NaN",
+     "filter:200 opacity:200 scale:200 translate:200 gl-fade-start-in:NaN gl-fade-end-out:NaN",
+     "gl-fade-start-in:NaN gl-fade-end-out:NaN"
+    ],
+    "states": [
+     "absent",
+     "open"
+    ]
+   },
+   "reverse": {
+    "absentMidway": true,
+    "minOp": 0.0106,
+    "endOp": null,
+    "maxFrameStep": 0.415,
+    "verdict": "reopen ignored",
+    "op": [
+     1,
+     0.5846,
+     0.3838,
+     0.2166,
+     0.1071,
+     0.0447,
+     0.0106,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   },
+   "pageErrors": []
+  },
+  "dock-select-collapsible": {
+   "routes": {
+    "pick": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 7,
+     "ms": 67,
+     "latency": 14,
+     "inter": 6,
+     "jump": 8.5,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      0.4641,
+      0.3312,
+      0.2696,
+      0.1509,
+      0.0602,
+      0.0181,
+      0.0009,
+      0
+     ],
+     "anims": [
+      "translate:120 opacity:300 background-color:180 background-color:60 translate:210 glass-reveal-out:120 gl-fade-start-in:NaN gl-fade-end-out:NaN",
+      "translate:120 opacity:300 background-color:180 translate:210 glass-reveal-out:120 gl-fade-start-in:NaN gl-fade-end-out:NaN"
+     ],
+     "states": [
+      "closed"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 7,
+     "ms": 62,
+     "latency": 9,
+     "inter": 6,
+     "jump": 2.1,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      0.612,
+      0.4028,
+      0.2696,
+      0.1711,
+      0.0994,
+      0.0401,
+      0.0085,
+      0
+     ],
+     "anims": [
+      "translate:120 background-color:180 glass-reveal-out:120 gl-fade-start-in:NaN gl-fade-end-out:NaN"
+     ],
+     "states": [
+      "closed"
+     ],
+     "note": "outside at 58,27"
+    },
+    "escape": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 7,
+     "ms": 71,
+     "latency": 10,
+     "inter": 6,
+     "jump": 2.1,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      0.612,
+      0.3656,
+      0.2166,
+      0.1151,
+      0.0401,
+      0.0106,
+      0,
+      0
+     ],
+     "anims": [
+      "translate:120 glass-reveal-out:120 gl-fade-start-in:NaN gl-fade-end-out:NaN"
+     ],
+     "states": [
+      "closed"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "select-content",
+     "surface": null,
+     "form": null,
+     "cls": "glass-reveal glass-floating glass-field-portal",
+     "bf": "blur(20px) saturate(1.5)",
+     "wbf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.22)",
+     "bgi": "linear-gradient(oklab(0.88 0.025882 0.096593 / 0.16), oklab(0.88 0.025882 0.0965",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.16)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(70% 60% at 24% 22%, oklch(0.92 0.08 48 / 0.55), rgba(0, 0, 0, 0)",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "tween",
+    "frames": 21,
+    "ms": 208,
+    "latency": 36,
+    "inter": 20,
+    "jump": 0.9,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "opacity",
+     "scale",
+     "translate",
+     "filter",
+     "size",
+     "position"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     0,
+     0.16,
+     0.2555,
+     0.3486,
+     0.4477,
+     0.5324,
+     0.6124,
+     0.6695,
+     0.72,
+     0.7785,
+     0.8165,
+     0.8568,
+     0.8882,
+     0.9198,
+     0.9396,
+     0.9579,
+     0.9726,
+     0.984,
+     0.9928,
+     0.997,
+     0.9997,
+     1,
+     1
+    ],
+    "anims": [
+     "filter:200 opacity:200 scale:200 translate:200 background-color:60 gl-fade-start-in:NaN gl-fade-end-out:NaN",
+     "filter:200 opacity:200 scale:200 translate:200 gl-fade-start-in:NaN gl-fade-end-out:NaN",
+     "gl-fade-start-in:NaN gl-fade-end-out:NaN"
+    ],
+    "states": [
+     "absent",
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "dock-dropdown": {
+   "routes": {
+    "pick": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 7,
+     "ms": 70,
+     "latency": 8,
+     "inter": 6,
+     "jump": 2.1,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      0.612,
+      0.4224,
+      0.2421,
+      0.1235,
+      0.0547,
+      0.0129,
+      0.0001,
+      0
+     ],
+     "anims": [
+      "translate:120 opacity:300 background-color:60 translate:210 glass-reveal-out:120",
+      "translate:120 opacity:300 translate:210 glass-reveal-out:120"
+     ],
+     "states": [
+      "closed"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 7,
+     "ms": 71,
+     "latency": 9,
+     "inter": 6,
+     "jump": 1.9,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      0.6408,
+      0.3656,
+      0.2291,
+      0.1071,
+      0.0447,
+      0.0106,
+      0,
+      0
+     ],
+     "anims": [
+      "translate:120 glass-reveal-out:120"
+     ],
+     "states": [
+      "closed"
+     ],
+     "note": "outside at 58,27"
+    },
+    "escape": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 7,
+     "ms": 71,
+     "latency": 9,
+     "inter": 6,
+     "jump": 1.9,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      0.6408,
+      0.3838,
+      0.2291,
+      0.1151,
+      0.0496,
+      0.0129,
+      0.0001,
+      0
+     ],
+     "anims": [
+      "translate:120 glass-reveal-out:120"
+     ],
+     "states": [
+      "closed"
+     ]
+    },
+    "trigger": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 6,
+     "ms": 62,
+     "latency": 11,
+     "inter": 5,
+     "jump": 2.4,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      0.5334,
+      0.3312,
+      0.1929,
+      0.0994,
+      0.0447,
+      0.0085,
+      0
+     ],
+     "anims": [
+      "translate:120 glass-reveal-out:120"
+     ],
+     "states": [
+      "closed"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "menu-content",
+     "surface": null,
+     "form": null,
+     "cls": "glass-floating glass-overlay-plate glass-reveal",
+     "bf": "blur(20px) saturate(1.5)",
+     "wbf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947252 0.01436 84.583649 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "tween",
+    "frames": 21,
+    "ms": 204,
+    "latency": 11,
+    "inter": 20,
+    "jump": 0.9,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "opacity",
+     "scale",
+     "translate",
+     "filter",
+     "size",
+     "position"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     0,
+     0.189,
+     0.2921,
+     0.3486,
+     0.41,
+     0.5,
+     0.5847,
+     0.6574,
+     0.7147,
+     0.7647,
+     0.8043,
+     0.8499,
+     0.8852,
+     0.91,
+     0.9334,
+     0.9528,
+     0.9686,
+     0.982,
+     0.99,
+     0.9966,
+     0.9995,
+     1,
+     1
+    ],
+    "anims": [
+     "filter:200 opacity:200 scale:200 translate:200"
+    ],
+    "states": [
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "dock-popover": {
+   "routes": {
+    "outside": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 13,
+     "ms": 133,
+     "latency": 10,
+     "inter": 12,
+     "jump": 1.3,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      0.7615,
+      0.6098,
+      0.5,
+      0.3898,
+      0.2998,
+      0.2322,
+      0.1757,
+      0.1249,
+      0.0909,
+      0.0577,
+      0.0368,
+      0.018,
+      0.007,
+      0.0012
+     ],
+     "anims": [
+      "translate:250 glass-reveal-out:250"
+     ],
+     "states": [
+      "closed"
+     ],
+     "note": "outside at 58,27"
+    },
+    "escape": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 13,
+     "ms": 132,
+     "latency": 10,
+     "inter": 12,
+     "jump": 1.2,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      0.779,
+      0.6234,
+      0.5,
+      0.3989,
+      0.3073,
+      0.2322,
+      0.1862,
+      0.1333,
+      0.0944,
+      0.0604,
+      0.0368,
+      0.0194,
+      0.0078,
+      0.0015
+     ],
+     "anims": [
+      "translate:250 glass-reveal-out:250"
+     ],
+     "states": [
+      "closed"
+     ]
+    },
+    "trigger": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 13,
+     "ms": 132,
+     "latency": 20,
+     "inter": 12,
+     "jump": 1.2,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      0.779,
+      0.6234,
+      0.5,
+      0.3898,
+      0.3149,
+      0.2322,
+      0.1862,
+      0.129,
+      0.0909,
+      0.0604,
+      0.0368,
+      0.0194,
+      0.0078,
+      0.0012
+     ],
+     "anims": [
+      "translate:250 glass-reveal-out:250"
+     ],
+     "states": [
+      "open",
+      "closed"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "popover-content",
+     "surface": null,
+     "form": null,
+     "cls": "glass-floating glass-overlay-plate glass-reveal",
+     "bf": "blur(20px) saturate(1.5)",
+     "wbf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947252 0.01436 84.583649 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "tween",
+    "frames": 44,
+    "ms": 452,
+    "latency": 15,
+    "inter": 43,
+    "jump": 0.7,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence",
+     "opacity",
+     "scale",
+     "translate",
+     "filter",
+     "position",
+     "size"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     0.124,
+     0.1843,
+     0.2385,
+     0.2987,
+     0.3438,
+     0.3946,
+     0.4374,
+     0.4773,
+     0.511,
+     0.5529,
+     0.5824,
+     0.6162,
+     0.6478,
+     0.68,
+     0.7002,
+     0.7241,
+     0.7466,
+     0.7699,
+     0.7878,
+     0.8084,
+     0.826,
+     0.8456,
+     0.8564,
+     0.8738,
+     0.8872,
+     0.9009,
+     0.9114,
+     0.9232,
+     0.9312,
+     0.9423,
+     0.9506,
+     0.9583,
+     0.9652,
+     0.972,
+     0.9776,
+     0.9824,
+     0.987,
+     0.9906,
+     0.9933
+    ],
+    "anims": [
+     "filter:450 opacity:450 scale:450 translate:450"
+    ],
+    "states": [
+     "absent",
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "select": {
+   "routes": {
+    "pick": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 7,
+     "ms": 72,
+     "latency": 20,
+     "inter": 6,
+     "jump": 2.3,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      0.5846,
+      0.3838,
+      0.2166,
+      0.0994,
+      0.0401,
+      0.0129,
+      0,
+      0
+     ],
+     "anims": [
+      "opacity:300 background-color:180 background-color:60 translate:210 gl-fade-start-in:NaN gl-fade-end-out:NaN",
+      "translate:120 opacity:300 background-color:180 background-color:60 translate:210 glass-reveal-out:120 gl-fade-start-in:NaN gl-fade-end-out:NaN",
+      "translate:120 opacity:300 background-color:180 translate:210 glass-reveal-out:120 gl-fade-start-in:NaN gl-fade-end-out:NaN"
+     ],
+     "states": [
+      "open",
+      "closed"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 7,
+     "ms": 71,
+     "latency": 9,
+     "inter": 6,
+     "jump": 1.9,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      0.6408,
+      0.4028,
+      0.2291,
+      0.1235,
+      0.0547,
+      0.0154,
+      0.0001,
+      0
+     ],
+     "anims": [
+      "translate:120 background-color:180 glass-reveal-out:120 gl-fade-start-in:NaN gl-fade-end-out:NaN"
+     ],
+     "states": [
+      "closed"
+     ],
+     "note": "outside at 58,27"
+    },
+    "escape": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 7,
+     "ms": 67,
+     "latency": 5,
+     "inter": 6,
+     "jump": 1.6,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      0.7026,
+      0.4429,
+      0.2696,
+      0.1509,
+      0.072,
+      0.0212,
+      0.0016,
+      0
+     ],
+     "anims": [
+      "translate:120 glass-reveal-out:120 gl-fade-start-in:NaN gl-fade-end-out:NaN"
+     ],
+     "states": [
+      "closed"
+     ]
+    },
+    "trigger": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 6,
+     "ms": 61,
+     "latency": 9,
+     "inter": 5,
+     "jump": 2.3,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      0.5846,
+      0.3656,
+      0.2166,
+      0.1071,
+      0.0547,
+      0.0085,
+      0
+     ],
+     "anims": [
+      "translate:120 background-color:180 glass-reveal-out:120 gl-fade-start-in:NaN gl-fade-end-out:NaN"
+     ],
+     "states": [
+      "closed"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "select-content",
+     "surface": null,
+     "form": null,
+     "cls": "glass-reveal glass-floating glass-field-portal",
+     "bf": "blur(20px) saturate(1.5)",
+     "wbf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.22)",
+     "bgi": "linear-gradient(oklab(0.88 0.025882 0.096593 / 0.16), oklab(0.88 0.025882 0.0965",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.16)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(70% 60% at 24% 22%, oklch(0.92 0.08 48 / 0.55), rgba(0, 0, 0, 0)",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "tween",
+    "frames": 19,
+    "ms": 203,
+    "latency": 26,
+    "inter": 18,
+    "jump": 1.8,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence",
+     "opacity",
+     "scale",
+     "translate",
+     "filter",
+     "position",
+     "size"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     0.3592,
+     0.4291,
+     0.5164,
+     0.5776,
+     0.645,
+     0.7038,
+     0.7553,
+     0.8002,
+     0.8429,
+     0.8762,
+     0.9048,
+     0.929,
+     0.9492,
+     0.9672,
+     0.9798,
+     0.9893,
+     0.9951,
+     0.9994,
+     1,
+     1
+    ],
+    "anims": [
+     "filter:200 opacity:200 scale:200 translate:200 background-color:60 gl-fade-start-in:NaN gl-fade-end-out:NaN",
+     "filter:200 opacity:200 scale:200 translate:200 gl-fade-start-in:NaN gl-fade-end-out:NaN",
+     "gl-fade-start-in:NaN gl-fade-end-out:NaN"
+    ],
+    "states": [
+     "absent",
+     "open"
+    ]
+   },
+   "reverse": {
+    "absentMidway": true,
+    "minOp": 0,
+    "endOp": null,
+    "maxFrameStep": 0.442,
+    "verdict": "reopen ignored",
+    "op": [
+     1,
+     0.5584,
+     0.3656,
+     0.1929,
+     0.1071,
+     0.0447,
+     0.0129,
+     0,
+     0,
+     0,
+     0,
+     0,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   },
+   "pageErrors": [
+    "ResizeObserver loop completed with undelivered notifications.",
+    "ResizeObserver loop completed with undelivered notifications.",
+    "ResizeObserver loop completed with undelivered notifications.",
+    "ResizeObserver loop completed with undelivered notifications.",
+    "ResizeObserver loop completed with undelivered notifications."
+   ]
+  },
+  "dropdown-menu": {
+   "routes": {
+    "pick": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 7,
+     "ms": 71,
+     "latency": 22,
+     "inter": 6,
+     "jump": 2.6,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      0.5334,
+      0.3481,
+      0.2166,
+      0.1071,
+      0.0358,
+      0.0106,
+      0,
+      0
+     ],
+     "anims": [
+      "translate:120 opacity:300 background-color:60 translate:210 glass-reveal-out:120",
+      "translate:120 opacity:300 translate:210 glass-reveal-out:120"
+     ],
+     "states": [
+      "open",
+      "closed"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 7,
+     "ms": 72,
+     "latency": 10,
+     "inter": 6,
+     "jump": 2.3,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      0.5846,
+      0.3481,
+      0.2166,
+      0.1151,
+      0.0401,
+      0.0106,
+      0,
+      0
+     ],
+     "anims": [
+      "translate:120 glass-reveal-out:120"
+     ],
+     "states": [
+      "closed"
+     ],
+     "note": "outside at 58,27"
+    },
+    "escape": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 6,
+     "ms": 63,
+     "latency": 21,
+     "inter": 5,
+     "jump": 2.6,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      0.5334,
+      0.3481,
+      0.1818,
+      0.1151,
+      0.0401,
+      0.0085,
+      0
+     ],
+     "anims": [
+      "translate:120 glass-reveal-out:120"
+     ],
+     "states": [
+      "open",
+      "closed"
+     ]
+    },
+    "trigger": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 7,
+     "ms": 71,
+     "latency": 21,
+     "inter": 6,
+     "jump": 2.3,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      0.5846,
+      0.4028,
+      0.2166,
+      0.1151,
+      0.0496,
+      0.0106,
+      0,
+      0
+     ],
+     "anims": [
+      "translate:120 glass-reveal-out:120"
+     ],
+     "states": [
+      "open",
+      "closed"
+     ]
+    },
+    "focusOut": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 7,
+     "ms": 71,
+     "latency": 10,
+     "inter": 6,
+     "jump": 2.1,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      0.612,
+      0.4028,
+      0.2291,
+      0.1071,
+      0.0547,
+      0.0106,
+      0.0001,
+      0
+     ],
+     "anims": [
+      "translate:120 glass-reveal-out:120"
+     ],
+     "states": [
+      "closed"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "menu-content",
+     "surface": null,
+     "form": null,
+     "cls": "glass-floating glass-overlay-plate glass-reveal",
+     "bf": "blur(20px) saturate(1.5)",
+     "wbf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947252 0.01436 84.583649 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "tween",
+    "frames": 21,
+    "ms": 277,
+    "latency": 0,
+    "inter": 20,
+    "jump": 0.9,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence",
+     "opacity",
+     "scale",
+     "translate",
+     "filter",
+     "size",
+     "position"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     0.0424,
+     0.2298,
+     0.3153,
+     0.4291,
+     0.5164,
+     0.5918,
+     0.6574,
+     0.7147,
+     0.7694,
+     0.8084,
+     0.8534,
+     0.8792,
+     0.91,
+     0.9312,
+     0.9545,
+     0.97,
+     0.982,
+     0.9915,
+     0.997,
+     0.9997,
+     1,
+     1
+    ],
+    "anims": [
+     "filter:200 opacity:200 scale:200 translate:200"
+    ],
+    "states": [
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "dropdown-submenu": {
+   "routes": {
+    "pick": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 6,
+     "ms": 62,
+     "latency": 61,
+     "inter": 5,
+     "jump": 5,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      0.612,
+      0.3481,
+      0.1818,
+      0.0994,
+      0.0496,
+      0.0085,
+      0
+     ],
+     "anims": [
+      "opacity:300",
+      "opacity:300 background-color:60 translate:210",
+      "translate:120 opacity:300 background-color:60 translate:210 glass-reveal-out:120",
+      "translate:120 opacity:300 translate:210 glass-reveal-out:120"
+     ],
+     "states": [
+      "open",
+      "closed"
+     ]
+    },
+    "parentItem": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 7,
+     "ms": 71,
+     "latency": 31,
+     "inter": 6,
+     "jump": 2.1,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      0.612,
+      0.3656,
+      0.2166,
+      0.1151,
+      0.0496,
+      0.0154,
+      0,
+      0
+     ],
+     "anims": [
+      "translate:120 glass-reveal-out:120"
+     ],
+     "states": [
+      "open",
+      "closed"
+     ]
+    },
+    "escape": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 7,
+     "ms": 68,
+     "latency": 7,
+     "inter": 6,
+     "jump": 5,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      0.6408,
+      0.4028,
+      0.2421,
+      0.1235,
+      0.0547,
+      0.0154,
+      0.0004,
+      0
+     ],
+     "anims": [
+      "translate:120 glass-reveal-out:120"
+     ],
+     "states": [
+      "closed"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 7,
+     "ms": 71,
+     "latency": 10,
+     "inter": 6,
+     "jump": 5.5,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      0.612,
+      0.3838,
+      0.2291,
+      0.1235,
+      0.0496,
+      0.0129,
+      0.0001,
+      0
+     ],
+     "anims": [
+      "translate:120 glass-reveal-out:120"
+     ],
+     "states": [
+      "closed"
+     ],
+     "note": "outside at 58,27"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "menu-sub-content",
+     "surface": null,
+     "form": null,
+     "cls": "glass-floating glass-overlay-plate glass-reveal",
+     "bf": "blur(20px) saturate(1.5)",
+     "wbf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947252 0.01436 84.583649 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "tween",
+    "frames": 21,
+    "ms": 207,
+    "latency": 581,
+    "inter": 20,
+    "jump": 0.9,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "opacity",
+     "scale",
+     "translate",
+     "filter",
+     "size",
+     "position"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ],
+    "anims": [
+     "filter:200 opacity:200 scale:200 translate:200"
+    ],
+    "states": [
+     "absent",
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "context-menu": {
+   "routes": {
+    "pick": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 7,
+     "ms": 71,
+     "latency": 10,
+     "inter": 6,
+     "jump": 2.3,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      0.5846,
+      0.3656,
+      0.2166,
+      0.1151,
+      0.0496,
+      0.0106,
+      0,
+      0
+     ],
+     "anims": [
+      "translate:120 opacity:300 background-color:60 translate:210 glass-reveal-out:120",
+      "translate:120 opacity:300 translate:210 glass-reveal-out:120"
+     ],
+     "states": [
+      "closed"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 6,
+     "ms": 63,
+     "latency": 21,
+     "inter": 5,
+     "jump": 2.3,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      0.5846,
+      0.3656,
+      0.2166,
+      0.0994,
+      0.0547,
+      0.0085,
+      0.0001
+     ],
+     "anims": [
+      "translate:120 glass-reveal-out:120"
+     ],
+     "states": [
+      "open",
+      "closed"
+     ],
+     "note": "outside at 58,27"
+    },
+    "escape": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 7,
+     "ms": 73,
+     "latency": 12,
+     "inter": 6,
+     "jump": 2.6,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      0.5334,
+      0.3838,
+      0.1929,
+      0.1071,
+      0.0447,
+      0.0106,
+      0,
+      0
+     ],
+     "anims": [
+      "translate:120 glass-reveal-out:120"
+     ],
+     "states": [
+      "closed"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "menu-content",
+     "surface": null,
+     "form": null,
+     "cls": "glass-floating glass-overlay-plate glass-reveal",
+     "bf": "blur(20px) saturate(1.5)",
+     "wbf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947252 0.01436 84.583649 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "tween",
+    "frames": 17,
+    "ms": 161,
+    "latency": 8,
+    "inter": 16,
+    "jump": 0.7,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "opacity",
+     "scale",
+     "translate",
+     "filter",
+     "size",
+     "position"
+    ],
+    "startVis": true,
+    "endVis": true,
+    "op": [
+     0.5324,
+     0.5847,
+     0.5918,
+     0.6574,
+     0.7147,
+     0.7647,
+     0.8084,
+     0.8464,
+     0.8823,
+     0.91,
+     0.929,
+     0.9528,
+     0.9686,
+     0.982,
+     0.99,
+     0.9966,
+     0.9995,
+     1,
+     1
+    ],
+    "anims": [
+     "filter:200 opacity:200 scale:200 translate:200"
+    ],
+    "states": [
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "popover": {
+   "routes": {
+    "outside": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 13,
+     "ms": 132,
+     "latency": 11,
+     "inter": 12,
+     "jump": 1.3,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      0.7615,
+      0.6098,
+      0.489,
+      0.3898,
+      0.2998,
+      0.2322,
+      0.1757,
+      0.129,
+      0.0909,
+      0.0577,
+      0.0348,
+      0.018,
+      0.0078,
+      0.0008
+     ],
+     "anims": [
+      "translate:250 box-shadow:120 outline-color:120 glass-reveal-out:250",
+      "translate:250 glass-reveal-out:250"
+     ],
+     "states": [
+      "closed"
+     ],
+     "note": "outside at 58,27"
+    },
+    "escape": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 13,
+     "ms": 132,
+     "latency": 10,
+     "inter": 12,
+     "jump": 1.3,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      0.7615,
+      0.6098,
+      0.489,
+      0.3989,
+      0.3073,
+      0.2384,
+      0.1706,
+      0.1333,
+      0.0909,
+      0.0604,
+      0.0348,
+      0.018,
+      0.007,
+      0.0012
+     ],
+     "anims": [
+      "translate:250 glass-reveal-out:250"
+     ],
+     "states": [
+      "closed"
+     ]
+    },
+    "trigger": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 13,
+     "ms": 133,
+     "latency": 11,
+     "inter": 12,
+     "jump": 1.4,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      0.7279,
+      0.6098,
+      0.4676,
+      0.3721,
+      0.2925,
+      0.2141,
+      0.1657,
+      0.1208,
+      0.0842,
+      0.0552,
+      0.0328,
+      0.0167,
+      0.0062,
+      0.0006
+     ],
+     "anims": [
+      "translate:250 box-shadow:120 outline-color:120 glass-reveal-out:250",
+      "translate:250 glass-reveal-out:250"
+     ],
+     "states": [
+      "closed"
+     ]
+    },
+    "focusOut": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 13,
+     "ms": 133,
+     "latency": 10,
+     "inter": 12,
+     "jump": 1.3,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      0.7615,
+      0.6098,
+      0.489,
+      0.3809,
+      0.2998,
+      0.2322,
+      0.1757,
+      0.129,
+      0.0875,
+      0.0577,
+      0.0348,
+      0.018,
+      0.007,
+      0.0012
+     ],
+     "anims": [
+      "translate:250 box-shadow:120 outline-color:120 glass-reveal-out:250",
+      "translate:250 glass-reveal-out:250"
+     ],
+     "states": [
+      "closed"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "popover-content",
+     "surface": null,
+     "form": null,
+     "cls": "glass-floating glass-overlay-plate glass-reveal",
+     "bf": "blur(20px) saturate(1.5)",
+     "wbf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947252 0.01436 84.583649 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "tween",
+    "frames": 46,
+    "ms": 469,
+    "latency": 19,
+    "inter": 45,
+    "jump": 0.7,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence",
+     "opacity",
+     "scale",
+     "translate",
+     "filter",
+     "size",
+     "position"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     0.0103,
+     0.138,
+     0.1714,
+     0.1905,
+     0.2385,
+     0.2934,
+     0.3438,
+     0.3902,
+     0.4291,
+     0.4812,
+     0.5074,
+     0.5496,
+     0.5887,
+     0.6162,
+     0.645,
+     0.6721,
+     0.6977,
+     0.7218,
+     0.7488,
+     0.7678,
+     0.7859,
+     0.8066,
+     0.8277,
+     0.8409,
+     0.8609,
+     0.8724,
+     0.8859,
+     0.8985,
+     0.9114,
+     0.9211,
+     0.9322,
+     0.9414,
+     0.9498,
+     0.9583,
+     0.9652,
+     0.9715,
+     0.977,
+     0.9824,
+     0.9867
+    ],
+    "anims": [
+     "filter:450 opacity:450 scale:450 translate:450 box-shadow:120 outline-color:120",
+     "filter:450 opacity:450 scale:450 translate:450"
+    ],
+    "states": [
+     "absent",
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "hover-popover": {
+   "routes": {
+    "leave": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 13,
+     "ms": 131,
+     "latency": 184,
+     "inter": 12,
+     "jump": 1.9,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      0.7971,
+      0.6514,
+      0.5112,
+      0.3989,
+      0.3149,
+      0.2447,
+      0.1862,
+      0.1377,
+      0.0944,
+      0.0631,
+      0.0389,
+      0.0194,
+      0.0087,
+      0.0019
+     ],
+     "anims": [
+      "opacity:300",
+      "translate:250 glass-reveal-out:250"
+     ],
+     "states": [
+      "open",
+      "closed"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 13,
+     "ms": 133,
+     "latency": 12,
+     "inter": 12,
+     "jump": 2.4,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      0.7279,
+      0.6098,
+      0.4782,
+      0.3809,
+      0.2998,
+      0.2322,
+      0.1809,
+      0.1249,
+      0.0875,
+      0.0577,
+      0.0348,
+      0.018,
+      0.0062,
+      0.0008
+     ],
+     "anims": [
+      "translate:250 glass-reveal-out:250"
+     ],
+     "states": [
+      "closed"
+     ],
+     "note": "outside at 58,27"
+    },
+    "escape": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 13,
+     "ms": 132,
+     "latency": 7,
+     "inter": 12,
+     "jump": 1.9,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      0.8157,
+      0.6234,
+      0.5112,
+      0.3898,
+      0.3149,
+      0.2384,
+      0.1862,
+      0.129,
+      0.0944,
+      0.0631,
+      0.0389,
+      0.0224,
+      0.0078,
+      0.0019
+     ],
+     "anims": [
+      "translate:250 glass-reveal-out:250"
+     ],
+     "states": [
+      "closed"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "popover-content",
+     "surface": null,
+     "form": null,
+     "cls": "glass-floating glass-overlay-plate glass-reveal",
+     "bf": "blur(20px) saturate(1.5)",
+     "wbf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947252 0.01436 84.583649 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "tween",
+    "frames": 45,
+    "ms": 453,
+    "latency": 286,
+    "inter": 44,
+    "jump": 1.2,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "opacity",
+     "scale",
+     "translate",
+     "filter",
+     "position"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     0,
+     0.0467,
+     0.124,
+     0.1905,
+     0.2443,
+     0.309,
+     0.3581,
+     0.4035,
+     0.4416,
+     0.4888,
+     0.5253,
+     0.5596,
+     0.5918
+    ],
+    "anims": [
+     "filter:450 opacity:450 scale:450 translate:450"
+    ],
+    "states": [
+     "absent",
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "tooltip": {
+   "routes": {
+    "leave": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 7,
+     "ms": 72,
+     "latency": 11,
+     "inter": 6,
+     "jump": 0.9,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "scale",
+      "translate",
+      "filter",
+      "opacity",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      0.5846,
+      0.3656,
+      0.2166,
+      0.1151,
+      0.0547,
+      0.0085,
+      0
+     ],
+     "anims": [
+      "opacity:300",
+      "translate:120 glass-reveal-out:120"
+     ],
+     "states": [
+      "delayed-open",
+      "closed"
+     ]
+    },
+    "escape": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 8,
+     "ms": 82,
+     "latency": 0,
+     "inter": 7,
+     "jump": 0.9,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "scale",
+      "translate",
+      "filter",
+      "opacity",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      0.5846,
+      0.4028,
+      0.2166,
+      0.1235,
+      0.0447,
+      0.0106,
+      0,
+      0
+     ],
+     "anims": [
+      "translate:120 glass-reveal-out:120"
+     ],
+     "states": [
+      "closed"
+     ]
+    },
+    "press": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 8,
+     "ms": 83,
+     "latency": 12,
+     "inter": 7,
+     "jump": 0.7,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "scale",
+      "translate",
+      "filter",
+      "opacity",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      0.6408,
+      0.3656,
+      0.2166,
+      0.1151,
+      0.0547,
+      0.0106,
+      0.0001,
+      0
+     ],
+     "anims": [
+      "translate:120 glass-reveal-out:120"
+     ],
+     "states": [
+      "delayed-open",
+      "closed"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "tooltip-content",
+     "surface": null,
+     "form": null,
+     "cls": "glass-floating glass-overlay-plate glass-reveal",
+     "bf": "blur(20px) saturate(1.5)",
+     "wbf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947252 0.01436 84.583649 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 57,
+    "latency": 221,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "absent",
+     "delayed-open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "dialog": {
+   "routes": {
+    "close": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 23,
+     "ms": 235,
+     "latency": 21,
+     "inter": 22,
+     "jump": 1.6,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      0.917,
+      0.8225,
+      0.6974,
+      0.6152,
+      0.5099,
+      0.4246,
+      0.3502,
+      0.2865,
+      0.2329,
+      0.1923,
+      0.1481,
+      0.1185,
+      0.0967,
+      0.0734,
+      0.0582,
+      0.046,
+      0.0354,
+      0.0285,
+      0.0229,
+      0.0175,
+      0.0131,
+      0.0107,
+      0.0081,
+      0.0063
+     ],
+     "anims": [
+      "opacity:300 background-color:120 scale:120",
+      "opacity:300",
+      "background-color:120 scale:120"
+     ],
+     "states": [
+      "open",
+      "closed"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 22,
+     "ms": 225,
+     "latency": 11,
+     "inter": 21,
+     "jump": 1.4,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      0.917,
+      0.8123,
+      0.7079,
+      0.6052,
+      0.5099,
+      0.4246,
+      0.3433,
+      0.2865,
+      0.2233,
+      0.1842,
+      0.1481,
+      0.1159,
+      0.0924,
+      0.0734,
+      0.0582,
+      0.0449,
+      0.0354,
+      0.0278,
+      0.0218,
+      0.0171,
+      0.0134,
+      0.0099,
+      0.0079
+     ],
+     "anims": [],
+     "states": [
+      "closed"
+     ],
+     "note": "outside at 58,27"
+    },
+    "escape": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 23,
+     "ms": 236,
+     "latency": 10,
+     "inter": 22,
+     "jump": 1.5,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      0.917,
+      0.8225,
+      0.7184,
+      0.6152,
+      0.5009,
+      0.4246,
+      0.3571,
+      0.2865,
+      0.2329,
+      0.1882,
+      0.1514,
+      0.1185,
+      0.0945,
+      0.0751,
+      0.0595,
+      0.0471,
+      0.0362,
+      0.0292,
+      0.0224,
+      0.0175,
+      0.0134,
+      0.0104,
+      0.0081,
+      0.006
+     ],
+     "anims": [],
+     "states": [
+      "closed"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "dialog-content",
+     "surface": "glass",
+     "form": null,
+     "cls": "glass-floating",
+     "bf": "blur(20px) saturate(1.5)",
+     "wbf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947252 0.01436 84.583649 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "tween",
+    "frames": 45,
+    "ms": 448,
+    "latency": 31,
+    "inter": 44,
+    "jump": 1.4,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "opacity",
+     "scale",
+     "position",
+     "size"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     0,
+     0.083,
+     0.1877,
+     0.2187,
+     0.2921,
+     0.3948,
+     0.4901,
+     0.5754,
+     0.6498,
+     0.7193,
+     0.7671,
+     0.8158,
+     0.8519,
+     0.8841,
+     0.9055,
+     0.9266,
+     0.9418,
+     0.954,
+     0.9646,
+     0.9708,
+     0.9782,
+     0.9825,
+     0.9859,
+     0.9898,
+     0.9916,
+     0.9938,
+     0.9952,
+     0.9963,
+     0.9971,
+     0.9979,
+     0.9983,
+     0.9987,
+     0.999,
+     0.9992,
+     0.9994,
+     0.9996,
+     0.9996,
+     0.9997,
+     0.9998
+    ],
+    "anims": [],
+    "states": [
+     "absent",
+     "open"
+    ]
+   },
+   "reverse": {
+    "absentMidway": true,
+    "minOp": 0.001,
+    "endOp": null,
+    "maxFrameStep": 0.124,
+    "verdict": "reopen ignored",
+    "op": [
+     1,
+     0.917,
+     0.802,
+     0.7289,
+     0.6052,
+     0.5099,
+     0.4166,
+     0.3502,
+     0.2807,
+     0.228,
+     0.1842,
+     0.1448,
+     0.1133,
+     0.0924,
+     0.0734,
+     0.0582,
+     0.0449,
+     0.0354,
+     0.0285,
+     0.0218,
+     0.0167,
+     0.0131,
+     0.0102,
+     0.0079,
+     0.0062,
+     0.0048,
+     0.0036,
+     0.0028,
+     0.0022,
+     0.0017,
+     0.0013,
+     0.001,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ]
+   },
+   "pageErrors": []
+  },
+  "dialog-opaque": {
+   "routes": {
+    "escape": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 22,
+     "ms": 224,
+     "latency": 10,
+     "inter": 21,
+     "jump": 1.7,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      0.917,
+      0.8225,
+      0.7184,
+      0.5855,
+      0.5099,
+      0.4326,
+      0.3433,
+      0.2865,
+      0.228,
+      0.1842,
+      0.1481,
+      0.1185,
+      0.0945,
+      0.0734,
+      0.0595,
+      0.046,
+      0.0362,
+      0.0285,
+      0.0218,
+      0.018,
+      0.0137,
+      0.0099,
+      0.0081
+     ],
+     "anims": [],
+     "states": [
+      "closed"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "dialog-content",
+     "surface": "opaque",
+     "form": null,
+     "cls": "glass-floating",
+     "bf": "none",
+     "wbf": "none",
+     "bg": "color(srgb 0.992157 0.960784 0.92549)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947252 0.01436 84.583649 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": {
+     "where": "child d2",
+     "tag": "button",
+     "cls": "glass-capsule glass-specular-track glass-capsule-hover",
+     "bf": "blur(14px) saturate(1.5)",
+     "wbf": "blur(14px) saturate(1.5)",
+     "bg": "oklab(0.95888 0.008188 0.027135)",
+     "bgi": "none",
+     "bd": "1px solid rgba(0, 0, 0, 0)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1"
+    },
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "tween",
+    "frames": 44,
+    "ms": 449,
+    "latency": 10,
+    "inter": 43,
+    "jump": 1.5,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "opacity",
+     "scale",
+     "position",
+     "size"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     0,
+     0.083,
+     0.1775,
+     0.2816,
+     0.3948,
+     0.4901,
+     0.5754,
+     0.6498,
+     0.7076,
+     0.772,
+     0.8158,
+     0.8453,
+     0.8815,
+     0.9055,
+     0.9266,
+     0.9418,
+     0.954,
+     0.9638,
+     0.9722,
+     0.9776,
+     0.9829,
+     0.9866,
+     0.9896,
+     0.9916,
+     0.9938,
+     0.9951,
+     0.9964,
+     0.9971,
+     0.9978,
+     0.9983,
+     0.9987,
+     0.999,
+     0.9992,
+     0.9994,
+     0.9995,
+     0.9997,
+     0.9997,
+     0.9998,
+     0.9998,
+     0.9999
+    ],
+    "anims": [],
+    "states": [
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "alert-dialog": {
+   "routes": {
+    "close": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 23,
+     "ms": 235,
+     "latency": 10,
+     "inter": 22,
+     "jump": 1.4,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      0.917,
+      0.8225,
+      0.7184,
+      0.6152,
+      0.5099,
+      0.4246,
+      0.3502,
+      0.2924,
+      0.2329,
+      0.1923,
+      0.1514,
+      0.1185,
+      0.0967,
+      0.0769,
+      0.0582,
+      0.046,
+      0.0362,
+      0.0285,
+      0.0218,
+      0.0171,
+      0.0141,
+      0.0104,
+      0.0081,
+      0.0062
+     ],
+     "anims": [
+      "opacity:300 color:180 background-color:180",
+      "opacity:300",
+      "background-color:180 color:180"
+     ],
+     "states": [
+      "closed"
+     ]
+    },
+    "escape": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 23,
+     "ms": 235,
+     "latency": 10,
+     "inter": 22,
+     "jump": 1.4,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      0.917,
+      0.8225,
+      0.7289,
+      0.6152,
+      0.519,
+      0.4246,
+      0.3502,
+      0.2865,
+      0.2329,
+      0.1882,
+      0.1481,
+      0.124,
+      0.0945,
+      0.0751,
+      0.0595,
+      0.046,
+      0.0371,
+      0.0285,
+      0.0224,
+      0.0171,
+      0.0134,
+      0.0104,
+      0.0084,
+      0.0062
+     ],
+     "anims": [],
+     "states": [
+      "closed"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 22,
+     "ms": 225,
+     "latency": 9,
+     "inter": 21,
+     "jump": 1.5,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      0.917,
+      0.8326,
+      0.7184,
+      0.6052,
+      0.5099,
+      0.4246,
+      0.3642,
+      0.2807,
+      0.228,
+      0.1842,
+      0.1514,
+      0.1212,
+      0.0924,
+      0.0734,
+      0.0582,
+      0.0449,
+      0.0362,
+      0.0285,
+      0.0213,
+      0.0171,
+      0.0134,
+      0.0099,
+      0.0079
+     ],
+     "anims": [],
+     "states": [
+      "closed"
+     ],
+     "note": "outside at 58,27"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "dialog-content",
+     "surface": "glass",
+     "form": null,
+     "cls": "glass-floating",
+     "bf": "blur(20px) saturate(1.5)",
+     "wbf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947252 0.01436 84.583649 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "tween",
+    "frames": 44,
+    "ms": 449,
+    "latency": 21,
+    "inter": 43,
+    "jump": 1.5,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "opacity",
+     "scale",
+     "position",
+     "size"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     0,
+     0.083,
+     0.1674,
+     0.2816,
+     0.3948,
+     0.4901,
+     0.5754,
+     0.6567,
+     0.7135,
+     0.772,
+     0.8158,
+     0.8519,
+     0.8815,
+     0.9055,
+     0.9231,
+     0.9418,
+     0.954,
+     0.9638,
+     0.9708,
+     0.9782,
+     0.9829,
+     0.9866,
+     0.9896,
+     0.9921,
+     0.9937,
+     0.9949,
+     0.9963,
+     0.997,
+     0.9978,
+     0.9983,
+     0.9988,
+     0.999,
+     0.9992,
+     0.9994,
+     0.9995,
+     0.9996,
+     0.9997,
+     0.9998,
+     0.9998
+    ],
+    "anims": [],
+    "states": [
+     "absent",
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "sheet-top": {
+   "routes": {
+    "close": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 21,
+     "ms": 214,
+     "latency": 12,
+     "inter": 20,
+     "jump": 37.6,
+     "matFlip": false,
+     "tail": 0.01,
+     "what": [
+      "translate",
+      "position",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [
+      "background-color:120 scale:120"
+     ],
+     "states": [
+      "closed",
+      "absent"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 21,
+     "ms": 214,
+     "latency": 19,
+     "inter": 20,
+     "jump": 39.8,
+     "matFlip": false,
+     "tail": 0.01,
+     "what": [
+      "translate",
+      "position",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "closed",
+      "absent"
+     ],
+     "note": "outside at 58,873"
+    },
+    "escape": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 20,
+     "ms": 217,
+     "latency": 34,
+     "inter": 19,
+     "jump": 47.7,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "translate",
+      "position",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "open",
+      "closed",
+      "absent"
+     ]
+    },
+    "swipe": {
+     "kind": "leave",
+     "frames": 0,
+     "ms": 0,
+     "verdict": "STAYED",
+     "startVis": true,
+     "note": "swipe by mouse"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "sheet-content",
+     "surface": "glass",
+     "form": null,
+     "cls": "glass-floating",
+     "bf": "blur(20px) saturate(1.5)",
+     "wbf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947252 0.01436 84.583649 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0.1"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "tween",
+    "frames": 81,
+    "ms": 832,
+    "latency": 0,
+    "inter": 80,
+    "jump": 38.2,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence",
+     "translate",
+     "position"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "anims": [
+     "opacity:300",
+     "opacity:300 backdrop-filter:120 box-shadow:120",
+     "backdrop-filter:120 box-shadow:120"
+    ],
+    "states": [
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "sheet-right": {
+   "routes": {
+    "close": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 20,
+     "ms": 214,
+     "latency": 25,
+     "inter": 19,
+     "jump": 48.1,
+     "matFlip": false,
+     "tail": 0.01,
+     "what": [
+      "translate",
+      "position",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [
+      "opacity:300 background-color:120 scale:120",
+      "opacity:300",
+      "background-color:120 scale:120"
+     ],
+     "states": [
+      "closed",
+      "absent"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 21,
+     "ms": 214,
+     "latency": 18,
+     "inter": 20,
+     "jump": 35,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "translate",
+      "position",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "closed",
+      "absent"
+     ],
+     "note": "outside at 58,27"
+    },
+    "escape": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 21,
+     "ms": 215,
+     "latency": 18,
+     "inter": 20,
+     "jump": 32.4,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "translate",
+      "position",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "closed",
+      "absent"
+     ]
+    },
+    "swipe": {
+     "kind": "leave",
+     "frames": 0,
+     "ms": 0,
+     "verdict": "STAYED",
+     "startVis": true,
+     "note": "swipe by mouse"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "sheet-content",
+     "surface": "glass",
+     "form": null,
+     "cls": "glass-floating",
+     "bf": "blur(20px) saturate(1.5)",
+     "wbf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947252 0.01436 84.583649 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "tween",
+    "frames": 81,
+    "ms": 834,
+    "latency": 16,
+    "inter": 80,
+    "jump": 30.1,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence",
+     "translate",
+     "position"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "absent",
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "sheet-bottom": {
+   "routes": {
+    "close": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 20,
+     "ms": 220,
+     "latency": 26,
+     "inter": 19,
+     "jump": 58.7,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "translate",
+      "position",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [
+      "opacity:300 background-color:120 scale:120",
+      "opacity:300",
+      "background-color:120 scale:120"
+     ],
+     "states": [
+      "closed",
+      "absent"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 20,
+     "ms": 214,
+     "latency": 38,
+     "inter": 19,
+     "jump": 55.9,
+     "matFlip": false,
+     "tail": 0.01,
+     "what": [
+      "translate",
+      "position",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "open",
+      "closed",
+      "absent"
+     ],
+     "note": "outside at 58,27"
+    },
+    "escape": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 20,
+     "ms": 217,
+     "latency": 26,
+     "inter": 19,
+     "jump": 58.7,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "translate",
+      "position",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "closed",
+      "absent"
+     ]
+    },
+    "swipe": {
+     "kind": "leave",
+     "frames": 0,
+     "ms": 0,
+     "verdict": "STAYED",
+     "startVis": true,
+     "note": "swipe by mouse"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "sheet-content",
+     "surface": "glass",
+     "form": null,
+     "cls": "glass-floating",
+     "bf": "blur(20px) saturate(1.5)",
+     "wbf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947252 0.01436 84.583649 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "tween",
+    "frames": 82,
+    "ms": 831,
+    "latency": 0,
+    "inter": 81,
+    "jump": 34.7,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence",
+     "translate",
+     "position"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "sheet-left": {
+   "routes": {
+    "close": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 20,
+     "ms": 216,
+     "latency": 24,
+     "inter": 19,
+     "jump": 45.7,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "translate",
+      "position",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [
+      "background-color:120 scale:120 backdrop-filter:120 box-shadow:120",
+      "background-color:120 scale:120"
+     ],
+     "states": [
+      "closed",
+      "absent"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 20,
+     "ms": 213,
+     "latency": 19,
+     "inter": 19,
+     "jump": 34.3,
+     "matFlip": false,
+     "tail": 0.01,
+     "what": [
+      "translate",
+      "position",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [
+      "backdrop-filter:120 box-shadow:120"
+     ],
+     "states": [
+      "closed",
+      "absent"
+     ],
+     "note": "outside at 1382,27"
+    },
+    "escape": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 21,
+     "ms": 216,
+     "latency": 19,
+     "inter": 20,
+     "jump": 34.3,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "translate",
+      "position",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [
+      "backdrop-filter:120 box-shadow:120"
+     ],
+     "states": [
+      "closed",
+      "absent"
+     ]
+    },
+    "swipe": {
+     "kind": "leave",
+     "frames": 0,
+     "ms": 0,
+     "verdict": "STAYED",
+     "startVis": true,
+     "note": "swipe by mouse"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "sheet-content",
+     "surface": "glass",
+     "form": null,
+     "cls": "glass-floating",
+     "bf": "blur(20px) saturate(1.5)",
+     "wbf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947252 0.01436 84.583649 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0.1"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "tween",
+    "frames": 81,
+    "ms": 837,
+    "latency": 22,
+    "inter": 80,
+    "jump": 38.9,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence",
+     "translate",
+     "position"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "anims": [
+     "opacity:300 backdrop-filter:120 box-shadow:120",
+     "opacity:300"
+    ],
+    "states": [
+     "absent",
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "sheet-detented": {
+   "routes": {
+    "close": {
+     "kind": "leave",
+     "verdict": "CUT(tail)",
+     "frames": 43,
+     "ms": 471,
+     "latency": 36,
+     "inter": 42,
+     "jump": 42.5,
+     "matFlip": false,
+     "tail": 0.57,
+     "what": [
+      "background",
+      "position",
+      "size",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+     ],
+     "anims": [
+      "opacity:300 background-color:120 scale:120",
+      "background-color:120 opacity:300 scale:120 opacity:210 width:210",
+      "background-color:120 opacity:300 opacity:210 width:210",
+      "background-color:120 scale:120 opacity:210 width:210",
+      "background-color:120 opacity:210 width:210"
+     ],
+     "states": [
+      "open",
+      "closed",
+      "absent"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "verdict": "CUT(tail)",
+     "frames": 46,
+     "ms": 471,
+     "latency": 19,
+     "inter": 45,
+     "jump": 27.7,
+     "matFlip": false,
+     "tail": 0.57,
+     "what": [
+      "background",
+      "position",
+      "size",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+     ],
+     "anims": [
+      "background-color:120 opacity:210 width:210"
+     ],
+     "states": [
+      "closed",
+      "absent"
+     ],
+     "note": "outside at 58,27"
+    },
+    "escape": {
+     "kind": "leave",
+     "verdict": "CUT(tail)",
+     "frames": 46,
+     "ms": 471,
+     "latency": 21,
+     "inter": 45,
+     "jump": 29.5,
+     "matFlip": false,
+     "tail": 0.57,
+     "what": [
+      "background",
+      "position",
+      "size",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+     ],
+     "anims": [
+      "background-color:120 opacity:210 width:210"
+     ],
+     "states": [
+      "closed",
+      "absent"
+     ]
+    },
+    "swipe": {
+     "kind": "leave",
+     "verdict": "CUT(tail)",
+     "frames": 71,
+     "ms": 745,
+     "latency": 8,
+     "inter": 70,
+     "jump": 143.5,
+     "matFlip": false,
+     "tail": 0.57,
+     "what": [
+      "background",
+      "position",
+      "size",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+     ],
+     "anims": [
+      "opacity:300",
+      "background-color:120 opacity:300 opacity:210 width:210",
+      "background-color:120 opacity:300 width:210",
+      "background-color:120 opacity:300 width:210 opacity:210",
+      "background-color:120 opacity:210 width:210"
+     ],
+     "states": [
+      "open",
+      "closed",
+      "absent"
+     ],
+     "note": "swipe by mouse"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "sheet-content",
+     "surface": "glass",
+     "form": null,
+     "cls": "glass-floating",
+     "bf": "blur(20px) saturate(1.5)",
+     "wbf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.196)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947252 0.01436 84.583649 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "tween",
+    "frames": 50,
+    "ms": 611,
+    "latency": 19,
+    "inter": 49,
+    "jump": 27,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence",
+     "background",
+     "position",
+     "size"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "anims": [
+     "background-color:120 opacity:210 width:210",
+     "opacity:210 width:210"
+    ],
+    "states": [
+     "absent",
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "toast": {
+   "routes": {
+    "close": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 26,
+     "ms": 269,
+     "latency": 0,
+     "inter": 25,
+     "jump": 0,
+     "matFlip": true,
+     "tail": 0,
+     "what": [
+      "scale",
+      "filter",
+      "background",
+      "backdrop-filter",
+      "content opacity",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [
+      "glass-vaporize-saturate:250 glass-vaporize-panel:250 glass-vaporize-blur:250 glass-vaporize-ink:250"
+     ],
+     "states": [
+      "closed",
+      "absent"
+     ]
+    },
+    "swipe": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 49,
+     "ms": 501,
+     "latency": 30,
+     "inter": 48,
+     "jump": 40,
+     "matFlip": true,
+     "tail": 0,
+     "what": [
+      "translate",
+      "position",
+      "scale",
+      "filter",
+      "background",
+      "backdrop-filter",
+      "content opacity",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+     ],
+     "anims": [
+      "opacity:300",
+      "opacity:300 glass-vaporize-saturate:250 glass-vaporize-panel:250 glass-vaporize-blur:250 glass-vaporize-ink:250"
+     ],
+     "states": [
+      "open",
+      "closed",
+      "absent"
+     ],
+     "note": "swipe by mouse"
+    },
+    "timeout": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 26,
+     "ms": 267,
+     "latency": 4093,
+     "inter": 25,
+     "jump": 0,
+     "matFlip": true,
+     "tail": 0,
+     "what": [
+      "scale",
+      "filter",
+      "background",
+      "backdrop-filter",
+      "content opacity",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+     ],
+     "anims": [
+      "glass-vaporize-saturate:250 glass-vaporize-panel:250 glass-vaporize-blur:250 glass-vaporize-ink:250"
+     ],
+     "states": [
+      "open",
+      "closed",
+      "absent"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "li",
+     "slot": "toast",
+     "surface": "glass",
+     "form": null,
+     "cls": "glass-floating glass-reveal glass-vaporize glass-corner-host",
+     "bf": "blur(20px) saturate(1.5)",
+     "wbf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947252 0.01436 84.583649 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "tween",
+    "frames": 44,
+    "ms": 449,
+    "latency": 20,
+    "inter": 43,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "opacity",
+     "scale",
+     "filter",
+     "size"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     0,
+     0.0871,
+     0.1714,
+     0.221,
+     0.2882,
+     0.3291,
+     0.3766,
+     0.4291,
+     0.4696,
+     0.5074,
+     0.5462,
+     0.5727,
+     0.6102,
+     0.6394,
+     0.6668,
+     0.6952,
+     0.7171,
+     0.7444,
+     0.7637,
+     0.7839,
+     0.8048,
+     0.8226,
+     0.8392,
+     0.8549,
+     0.8696,
+     0.8846,
+     0.8973,
+     0.9091,
+     0.9201,
+     0.9302,
+     0.9405,
+     0.949,
+     0.9568,
+     0.9632,
+     0.9709,
+     0.9765,
+     0.9815,
+     0.9859,
+     0.9896
+    ],
+    "anims": [
+     "filter:450 opacity:450 scale:450"
+    ],
+    "states": [
+     "absent",
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "command-dialog": {
+   "routes": {
+    "pick": {
+     "kind": "leave",
+     "verdict": "CUT(teleport)",
+     "frames": 23,
+     "ms": 254,
+     "latency": 19,
+     "inter": 22,
+     "jump": 192,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "position",
+      "size",
+      "opacity",
+      "scale"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      0.917,
+      0.7079,
+      0.6052,
+      0.5099,
+      0.4246,
+      0.3502,
+      0.2807,
+      0.228,
+      0.1842,
+      0.1514,
+      0.1212,
+      0.0924,
+      0.0734,
+      0.0582,
+      0.046,
+      0.0362,
+      0.0278,
+      0.0218,
+      0.0171,
+      0.0134,
+      0.0104,
+      0.0079,
+      0.0062
+     ],
+     "anims": [
+      "opacity:300 translate:210 scale:120 gl-fade-start-in:NaN gl-fade-end-out:NaN",
+      "opacity:300"
+     ],
+     "states": [
+      "open",
+      "closed"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "verdict": "CUT(teleport)",
+     "frames": 23,
+     "ms": 244,
+     "latency": 15,
+     "inter": 22,
+     "jump": 192,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "position",
+      "size",
+      "opacity",
+      "scale"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      0.917,
+      0.7499,
+      0.6559,
+      0.5564,
+      0.4745,
+      0.386,
+      0.317,
+      0.2532,
+      0.2051,
+      0.1689,
+      0.1326,
+      0.1059,
+      0.0824,
+      0.0669,
+      0.0517,
+      0.0408,
+      0.0321,
+      0.0259,
+      0.0193,
+      0.0151,
+      0.0118,
+      0.0088,
+      0.0072
+     ],
+     "anims": [
+      "gl-fade-start-in:NaN gl-fade-end-out:NaN"
+     ],
+     "states": [
+      "open",
+      "closed"
+     ],
+     "note": "outside at 58,27"
+    },
+    "escape": {
+     "kind": "leave",
+     "verdict": "CUT(teleport)",
+     "frames": 23,
+     "ms": 246,
+     "latency": 0,
+     "inter": 22,
+     "jump": 192,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "position",
+      "size",
+      "opacity",
+      "scale"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      0.917,
+      0.7499,
+      0.6766,
+      0.5757,
+      0.4832,
+      0.4166,
+      0.33,
+      0.2694,
+      0.214,
+      0.1726,
+      0.1386,
+      0.1108,
+      0.0883,
+      0.0685,
+      0.0542,
+      0.0428,
+      0.0337,
+      0.0259,
+      0.0203,
+      0.0155,
+      0.0124,
+      0.0097,
+      0.0074
+     ],
+     "anims": [],
+     "states": [
+      "closed"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "dialog-content",
+     "surface": "glass",
+     "form": null,
+     "cls": "glass-floating",
+     "bf": "blur(20px) saturate(1.5)",
+     "wbf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947252 0.01436 84.583649 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "tween",
+    "frames": 42,
+    "ms": 447,
+    "latency": 31,
+    "inter": 41,
+    "jump": 4.1,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "opacity",
+     "scale",
+     "position",
+     "size"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     0,
+     0.083,
+     0.4047,
+     0.5168,
+     0.5912,
+     0.6498,
+     0.6955,
+     0.752,
+     0.7992,
+     0.8383,
+     0.8732,
+     0.8988,
+     0.9195,
+     0.9361,
+     0.9495,
+     0.9601,
+     0.9694,
+     0.9759,
+     0.9816,
+     0.9849,
+     0.9885,
+     0.9912,
+     0.9932,
+     0.9945,
+     0.9959,
+     0.9968,
+     0.9976,
+     0.998,
+     0.9985,
+     0.9989,
+     0.9991,
+     0.9993,
+     0.9995,
+     0.9996,
+     0.9997,
+     0.9998,
+     0.9998,
+     0.9999,
+     0.9999,
+     0.9999
+    ],
+    "anims": [
+     "background-color:60 gl-fade-start-in:NaN gl-fade-end-out:NaN",
+     "gl-fade-start-in:NaN gl-fade-end-out:NaN"
+    ],
+    "states": [
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "expandable-container": {
+   "routes": {
+    "exit": {
+     "kind": "inplace",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 10,
+     "latency": 10,
+     "inter": 0,
+     "jump": 234.8,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "scale",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": true,
+     "op": [
+      1,
+      1,
+      1
+     ],
+     "anims": [],
+     "states": [
+      "-"
+     ]
+    },
+    "escape": {
+     "kind": "inplace",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 11,
+     "latency": 0,
+     "inter": 0,
+     "jump": 234.8,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "scale",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": true,
+     "op": [
+      1,
+      1
+     ],
+     "anims": [],
+     "states": [
+      "-"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": null,
+     "surface": null,
+     "form": null,
+     "cls": "",
+     "bf": "none",
+     "wbf": "none",
+     "bg": "rgba(0, 0, 0, 0)",
+     "bgi": "none",
+     "bd": "0px solid rgb(28, 25, 23)",
+     "sh": "none",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "inplace",
+    "verdict": "tween",
+    "frames": 23,
+    "ms": 228,
+    "latency": 0,
+    "inter": 21,
+    "jump": 14.3,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "opacity",
+     "scale",
+     "position",
+     "size"
+    ],
+    "startVis": true,
+    "endVis": true,
+    "op": [
+     0,
+     0.0161,
+     0.0466,
+     0.1011,
+     0.1913,
+     0.2651,
+     0.3486,
+     0.4301,
+     0.5149,
+     0.5856,
+     0.6497,
+     0.707,
+     0.7618,
+     0.8048,
+     0.8417,
+     0.8729,
+     0.9017,
+     0.9231,
+     0.9407,
+     0.9551,
+     0.9667,
+     0.9937,
+     1,
+     1
+    ],
+    "anims": [
+     "expandable-container-birth:210"
+    ],
+    "states": [
+     "-"
+    ]
+   },
+   "pageErrors": []
+  },
+  "accordion": {
+   "routes": {
+    "trigger": {
+     "kind": "inplace",
+     "verdict": "tween",
+     "frames": 20,
+     "ms": 207,
+     "latency": 22,
+     "inter": 19,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "position",
+      "size"
+     ],
+     "startVis": false,
+     "endVis": true,
+     "op": [
+      0,
+      0,
+      0.0471,
+      0.1316,
+      0.2326,
+      0.3371,
+      0.4467,
+      0.5367,
+      0.6164,
+      0.6911,
+      0.7431,
+      0.7875,
+      0.8394,
+      0.8683,
+      0.8924,
+      0.9163,
+      0.9351,
+      0.9486,
+      0.9575,
+      0.9681,
+      0.982,
+      1,
+      1
+     ],
+     "anims": [
+      "disclosure-open:200"
+     ],
+     "states": [
+      "closed",
+      "open"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "accordion-content",
+     "surface": null,
+     "form": null,
+     "cls": "",
+     "bf": "none",
+     "wbf": "none",
+     "bg": "rgba(0, 0, 0, 0)",
+     "bgi": "none",
+     "bd": "0px solid rgb(91, 70, 51)",
+     "sh": "none",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(91, 70, 51)",
+      "sh": "none",
+      "op": "1"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(91, 70, 51)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": {
+     "where": "ancestor 4",
+     "tag": "div",
+     "cls": "glass-quiet",
+     "bf": "blur(14px) saturate(1.5)",
+     "wbf": "blur(14px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.1)",
+     "bgi": "none",
+     "bd": "0px none rgb(28, 25, 23)",
+     "sh": "none",
+     "op": "1"
+    },
+    "dark": false
+   },
+   "enter": {
+    "kind": "inplace",
+    "verdict": "tween",
+    "frames": 20,
+    "ms": 203,
+    "latency": 22,
+    "inter": 19,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "opacity",
+     "size",
+     "position"
+    ],
+    "startVis": true,
+    "endVis": false,
+    "op": [
+     1,
+     1,
+     0.9774,
+     0.905,
+     0.7986,
+     0.694,
+     0.592,
+     0.4892,
+     0.4221,
+     0.3346,
+     0.2732,
+     0.2219,
+     0.183,
+     0.1408,
+     0.1125,
+     0.0897,
+     0.0729,
+     0.0564,
+     0.0445,
+     0.0343,
+     0.0263,
+     0,
+     0
+    ],
+    "anims": [
+     "disclosure-close:200"
+    ],
+    "states": [
+     "open",
+     "closed"
+    ]
+   },
+   "pageErrors": []
+  },
+  "collapsible": {
+   "routes": {
+    "trigger": {
+     "kind": "inplace",
+     "verdict": "tween",
+     "frames": 20,
+     "ms": 206,
+     "latency": 20,
+     "inter": 19,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "size",
+      "position"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      0.9653,
+      0.8684,
+      0.7882,
+      0.6629,
+      0.5727,
+      0.4717,
+      0.3912,
+      0.3214,
+      0.2678,
+      0.2082,
+      0.1752,
+      0.1346,
+      0.1076,
+      0.0856,
+      0.068,
+      0.0526,
+      0.0415,
+      0.0327,
+      0.0251,
+      0,
+      0
+     ],
+     "anims": [
+      "disclosure-close:200"
+     ],
+     "states": [
+      "open",
+      "closed"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "collapsible-content",
+     "surface": null,
+     "form": null,
+     "cls": "",
+     "bf": "none",
+     "wbf": "none",
+     "bg": "rgba(0, 0, 0, 0)",
+     "bgi": "none",
+     "bd": "0px solid rgb(91, 70, 51)",
+     "sh": "none",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(91, 70, 51)",
+      "sh": "none",
+      "op": "1"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(91, 70, 51)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "inplace",
+    "verdict": "tween",
+    "frames": 20,
+    "ms": 203,
+    "latency": 21,
+    "inter": 19,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "opacity",
+     "size"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     0,
+     0,
+     0.0285,
+     0.1038,
+     0.1912,
+     0.3164,
+     0.408,
+     0.5108,
+     0.5937,
+     0.6654,
+     0.7152,
+     0.7781,
+     0.817,
+     0.8592,
+     0.8849,
+     0.9103,
+     0.9304,
+     0.9449,
+     0.9565,
+     0.964,
+     0.9731,
+     1,
+     1
+    ],
+    "anims": [
+     "disclosure-open:200"
+    ],
+    "states": [
+     "closed",
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "dock-collapse": {
+   "routes": {
+    "outside": {
+     "kind": "inplace",
+     "verdict": "tween",
+     "frames": 55,
+     "ms": 562,
+     "latency": 12,
+     "inter": 54,
+     "jump": 7.8,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "background",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": true,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+     ],
+     "anims": [],
+     "states": [
+      "-"
+     ],
+     "note": "outside at 58,27"
+    },
+    "leave": {
+     "kind": "inplace",
+     "frames": 0,
+     "ms": 0,
+     "verdict": "ALREADY",
+     "startVis": true
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": null,
+     "surface": null,
+     "form": null,
+     "cls": "dock-plate",
+     "bf": "blur(16px) saturate(1.2)",
+     "wbf": "blur(16px) saturate(1.2)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.1)",
+     "bgi": "none",
+     "bd": "1.5px solid color(srgb 0.109804 0.098039 0.090196 / 0.08)",
+     "sh": "none",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "url(\"data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xm",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0.025"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "inplace",
+    "verdict": "tween",
+    "frames": 55,
+    "ms": 560,
+    "latency": 61,
+    "inter": 54,
+    "jump": 9.1,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "background",
+     "position",
+     "size"
+    ],
+    "startVis": true,
+    "endVis": true,
+    "op": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "-"
+    ]
+   },
+   "pageErrors": []
+  },
+  "dock-layer": {
+   "routes": {
+    "back": {
+     "kind": "inplace",
+     "verdict": "CUT",
+     "frames": 2,
+     "ms": 21,
+     "latency": 0,
+     "inter": 1,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "transform"
+     ],
+     "startVis": false,
+     "endVis": false,
+     "op": [
+      1,
+      0,
+      0
+     ],
+     "anims": [],
+     "states": [
+      "-"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": null,
+     "surface": null,
+     "form": null,
+     "cls": "",
+     "bf": "none",
+     "wbf": "none",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.18)",
+     "bgi": "none",
+     "bd": "0px solid rgb(28, 25, 23)",
+     "sh": "none",
+     "op": "0",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "inplace",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 14,
+    "latency": 0,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "opacity"
+    ],
+    "startVis": true,
+    "endVis": false,
+    "op": [
+     0,
+     0
+    ],
+    "anims": [],
+    "states": [
+     "-"
+    ]
+   },
+   "pageErrors": []
+  },
+  "theme-toggle": {
+   "routes": {
+    "back": {
+     "kind": "inplace",
+     "verdict": "tween",
+     "frames": 21,
+     "ms": 224,
+     "latency": 0,
+     "inter": 20,
+     "jump": 1.8,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "transform",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": true,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+     ],
+     "anims": [
+      "transform:210"
+     ],
+     "states": [
+      "-"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "g",
+     "slot": null,
+     "surface": null,
+     "form": null,
+     "cls": "",
+     "bf": "none",
+     "wbf": "none",
+     "bg": "rgba(0, 0, 0, 0)",
+     "bgi": "none",
+     "bd": "0px solid rgb(233, 230, 226)",
+     "sh": "none",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(233, 230, 226)",
+      "sh": "none",
+      "op": "1"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(233, 230, 226)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": true
+   },
+   "enter": {
+    "kind": "inplace",
+    "verdict": "tween",
+    "frames": 22,
+    "ms": 223,
+    "latency": 10,
+    "inter": 21,
+    "jump": 1.8,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "transform",
+     "opacity",
+     "position",
+     "size"
+    ],
+    "startVis": true,
+    "endVis": true,
+    "op": [
+     0.8,
+     0.8012,
+     0.8112,
+     0.8251,
+     0.8383,
+     0.86,
+     0.8789,
+     0.9049,
+     0.9247,
+     0.9424,
+     0.9576,
+     0.9692,
+     0.9775,
+     0.9851,
+     0.989,
+     0.9926,
+     0.9961,
+     0.998,
+     0.9993,
+     0.9999,
+     1,
+     1,
+     1,
+     1
+    ],
+    "anims": [
+     "transform:210"
+    ],
+    "states": [
+     "-"
+    ]
+   },
+   "pageErrors": []
+  }
+ }
+}

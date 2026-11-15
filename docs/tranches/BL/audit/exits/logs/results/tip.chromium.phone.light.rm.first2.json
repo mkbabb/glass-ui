@@ -1,0 +1,3569 @@
+{
+ "tree": "tip",
+ "engine": "chromium",
+ "form": "phone",
+ "scheme": "light",
+ "rm": true,
+ "mode": "first2",
+ "at": "2026-11-15T23:07:02.883Z",
+ "surfaces": {
+  "dock-select": {
+   "routes": {
+    "pick": {
+     "kind": "leave",
+     "verdict": "CUT(teleport)",
+     "frames": 3,
+     "ms": 29.7,
+     "latency": 73,
+     "inter": 2,
+     "jump": 530.3,
+     "matFlip": true,
+     "tail": 0.49,
+     "what": [
+      "scale",
+      "background",
+      "backdrop-filter",
+      "position",
+      "size",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [
+      "gl-fade-start-in:NaN gl-fade-end-out:NaN",
+      "glass-reveal-out-reduced:0 gl-fade-start-in:NaN gl-fade-end-out:NaN"
+     ],
+     "states": [
+      "open",
+      "closed",
+      "absent"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 2,
+     "ms": 20.6,
+     "latency": 66.7,
+     "inter": 1,
+     "jump": 16,
+     "matFlip": true,
+     "tail": 0.49,
+     "what": [
+      "scale",
+      "background",
+      "backdrop-filter",
+      "position",
+      "size",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [
+      "gl-fade-start-in:NaN gl-fade-end-out:NaN",
+      "glass-reveal-out-reduced:0 gl-fade-start-in:NaN gl-fade-end-out:NaN"
+     ],
+     "states": [
+      "open",
+      "closed",
+      "absent"
+     ],
+     "note": "outside at 16,25"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "select-content",
+     "surface": "opaque",
+     "form": "sheet",
+     "cls": "glass-reveal glass-floating glass-field-portal",
+     "bf": "none",
+     "bg": "color(srgb 0.992157 0.960784 0.92549)",
+     "bgi": "linear-gradient(oklab(0.88 0.0258819 0.0965926 / 0.16), oklab(0.88 0.0258819 0.0",
+     "bd": "1px solid oklab(0.216114 0.00343135 0.00508514 / 0.16)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 ",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(70% 60% at 24% 22%, oklch(0.92 0.08 48 / 0.55), rgba(0, 0, 0, 0)",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 15.9,
+    "latency": 82.2,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     1,
+     1
+    ],
+    "anims": [
+     "gl-fade-start-in:NaN gl-fade-end-out:NaN"
+    ],
+    "states": [
+     "absent",
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "dock-select-collapsible": {
+   "routes": {
+    "pick": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 2,
+     "ms": 21.9,
+     "latency": 70,
+     "inter": 1,
+     "jump": 16,
+     "matFlip": true,
+     "tail": 0.49,
+     "what": [
+      "scale",
+      "background",
+      "backdrop-filter",
+      "position",
+      "size",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [
+      "gl-fade-start-in:NaN gl-fade-end-out:NaN",
+      "glass-reveal-out-reduced:0 gl-fade-start-in:NaN gl-fade-end-out:NaN"
+     ],
+     "states": [
+      "open",
+      "closed",
+      "absent"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "verdict": "CUT(teleport)",
+     "frames": 3,
+     "ms": 27.5,
+     "latency": 24.3,
+     "inter": 2,
+     "jump": 438.3,
+     "matFlip": true,
+     "tail": 0.49,
+     "what": [
+      "scale",
+      "background",
+      "backdrop-filter",
+      "position",
+      "size",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [
+      "gl-fade-start-in:NaN gl-fade-end-out:NaN",
+      "glass-reveal-out-reduced:0 gl-fade-start-in:NaN gl-fade-end-out:NaN"
+     ],
+     "states": [
+      "open",
+      "closed",
+      "absent"
+     ],
+     "note": "outside at 16,25"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "select-content",
+     "surface": "opaque",
+     "form": "sheet",
+     "cls": "glass-reveal glass-floating glass-field-portal",
+     "bf": "none",
+     "bg": "color(srgb 0.992157 0.960784 0.92549)",
+     "bgi": "linear-gradient(oklab(0.88 0.0258819 0.0965926 / 0.16), oklab(0.88 0.0258819 0.0",
+     "bd": "1px solid oklab(0.216114 0.00343135 0.00508514 / 0.16)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 ",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(70% 60% at 24% 22%, oklch(0.92 0.08 48 / 0.55), rgba(0, 0, 0, 0)",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 14.1,
+    "latency": 72.1,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     1,
+     1
+    ],
+    "anims": [
+     "gl-fade-start-in:NaN gl-fade-end-out:NaN"
+    ],
+    "states": [
+     "absent",
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "dock-dropdown": {
+   "routes": {
+    "pick": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 2,
+     "ms": 19,
+     "latency": 66.7,
+     "inter": 1,
+     "jump": 0,
+     "matFlip": true,
+     "tail": 1,
+     "what": [
+      "scale",
+      "background",
+      "backdrop-filter",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [
+      "glass-reveal-out-reduced:0"
+     ],
+     "states": [
+      "open",
+      "closed",
+      "absent"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 2,
+     "ms": 17.5,
+     "latency": 67.1,
+     "inter": 1,
+     "jump": 0,
+     "matFlip": true,
+     "tail": 1,
+     "what": [
+      "scale",
+      "background",
+      "backdrop-filter",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [
+      "glass-reveal-out-reduced:0"
+     ],
+     "states": [
+      "open",
+      "closed",
+      "absent"
+     ],
+     "note": "outside at 16,25"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "menu-content",
+     "surface": "opaque",
+     "form": null,
+     "cls": "glass-floating glass-overlay-plate glass-reveal",
+     "bf": "none",
+     "bg": "color(srgb 0.992157 0.960784 0.92549)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216114 0.00343135 0.00508514 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 ",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947247 0.0143829 84.4188 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 20.4,
+    "latency": 20.4,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "absent",
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "dock-popover": {
+   "routes": {
+    "outside": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 2,
+     "ms": 18,
+     "latency": 66.3,
+     "inter": 1,
+     "jump": 8,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "scale",
+      "translate",
+      "position",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [
+      "glass-reveal-out-reduced:0"
+     ],
+     "states": [
+      "open",
+      "closed",
+      "absent"
+     ],
+     "note": "outside at 16,25"
+    },
+    "escape": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 2,
+     "ms": 18,
+     "latency": 0,
+     "inter": 1,
+     "jump": 8,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "scale",
+      "translate",
+      "position",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      null,
+      null
+     ],
+     "anims": [
+      "glass-reveal-out-reduced:0"
+     ],
+     "states": [
+      "closed",
+      "absent"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "popover-content",
+     "surface": null,
+     "form": null,
+     "cls": "glass-floating glass-overlay-plate glass-reveal",
+     "bf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.20397 0.148263 0.0829736 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216114 0.00343135 0.00508514 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 ",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947247 0.0143829 84.4188 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 10.4,
+    "latency": 76.7,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "absent",
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "select": {
+   "routes": {
+    "pick": {
+     "kind": "leave",
+     "verdict": "CUT(teleport)",
+     "frames": 3,
+     "ms": 29.8,
+     "latency": 79.8,
+     "inter": 2,
+     "jump": 291.3,
+     "matFlip": true,
+     "tail": 0.92,
+     "what": [
+      "scale",
+      "background",
+      "backdrop-filter",
+      "position",
+      "size",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [
+      "gl-fade-start-in:NaN gl-fade-end-out:NaN",
+      "glass-reveal-out-reduced:0 gl-fade-start-in:NaN gl-fade-end-out:NaN"
+     ],
+     "states": [
+      "open",
+      "closed",
+      "absent"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 2,
+     "ms": 19.9,
+     "latency": 74.8,
+     "inter": 1,
+     "jump": 16,
+     "matFlip": true,
+     "tail": 0.93,
+     "what": [
+      "scale",
+      "background",
+      "backdrop-filter",
+      "position",
+      "size",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [
+      "gl-fade-start-in:NaN gl-fade-end-out:NaN",
+      "glass-reveal-out-reduced:0 gl-fade-start-in:NaN gl-fade-end-out:NaN"
+     ],
+     "states": [
+      "open",
+      "closed",
+      "absent"
+     ],
+     "note": "outside at 16,26"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "select-content",
+     "surface": "opaque",
+     "form": "sheet",
+     "cls": "glass-reveal glass-floating glass-field-portal",
+     "bf": "none",
+     "bg": "color(srgb 0.992157 0.960784 0.92549)",
+     "bgi": "linear-gradient(oklab(0.88 0.0258819 0.0965926 / 0.16), oklab(0.88 0.0258819 0.0",
+     "bd": "1px solid oklab(0.216114 0.00343135 0.00508514 / 0.16)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 ",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(70% 60% at 24% 22%, oklch(0.92 0.08 48 / 0.55), rgba(0, 0, 0, 0)",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 14.6,
+    "latency": 72.7,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     1,
+     1
+    ],
+    "anims": [
+     "gl-fade-start-in:NaN gl-fade-end-out:NaN"
+    ],
+    "states": [
+     "absent",
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "dropdown-menu": {
+   "routes": {
+    "pick": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 2,
+     "ms": 19.3,
+     "latency": 66.7,
+     "inter": 1,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "scale",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [
+      "glass-reveal-out-reduced:0"
+     ],
+     "states": [
+      "open",
+      "closed",
+      "absent"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 2,
+     "ms": 18,
+     "latency": 73.9,
+     "inter": 1,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "scale",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [
+      "glass-reveal-out-reduced:0"
+     ],
+     "states": [
+      "open",
+      "closed",
+      "absent"
+     ],
+     "note": "outside at 16,26"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "menu-content",
+     "surface": null,
+     "form": null,
+     "cls": "glass-floating glass-overlay-plate glass-reveal",
+     "bf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.20397 0.148263 0.0829736 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216114 0.00343135 0.00508514 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 ",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947247 0.0143829 84.4188 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 25.8,
+    "latency": 85.4,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "absent",
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "dropdown-submenu": {
+   "routes": {
+    "pick": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 2,
+     "ms": 19,
+     "latency": 66.2,
+     "inter": 1,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "scale",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [
+      "glass-reveal-out-reduced:0"
+     ],
+     "states": [
+      "open",
+      "closed",
+      "absent"
+     ]
+    },
+    "parentItem": {
+     "verdict": "n/a",
+     "note": "parent-item hover is a pointer route"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "menu-sub-content",
+     "surface": null,
+     "form": null,
+     "cls": "glass-floating glass-overlay-plate glass-reveal",
+     "bf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.20397 0.148263 0.0829736 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216114 0.00343135 0.00508514 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 ",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947247 0.0143829 84.4188 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "tween",
+    "frames": 20,
+    "ms": 166.7,
+    "latency": 608.4,
+    "inter": 19,
+    "jump": 3.3,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence",
+     "position"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ],
+    "anims": [],
+    "states": [
+     "absent",
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "context-menu": {
+   "routes": {
+    "pick": {
+     "verdict": "ERR",
+     "note": "no [data-reveal=menu][role=menu] [role=menuitem]:not([aria-haspopup])"
+    },
+    "outside": {
+     "kind": "leave",
+     "frames": 0,
+     "ms": 0,
+     "verdict": "ABSENT",
+     "startVis": false,
+     "note": "outside at 16,26"
+    }
+   },
+   "errors": [],
+   "glass": null,
+   "enter": {
+    "kind": "enter",
+    "verdict": "NEVER",
+    "frames": 27,
+    "ms": 227.1,
+    "latency": 722,
+    "inter": 26,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence",
+     "scale"
+    ],
+    "startVis": false,
+    "endVis": false,
+    "op": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ],
+    "anims": [
+     "glass-reveal-out-reduced:0"
+    ],
+    "states": [
+     "absent",
+     "open",
+     "closed"
+    ]
+   },
+   "pageErrors": []
+  },
+  "popover": {
+   "routes": {
+    "outside": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 2,
+     "ms": 18.4,
+     "latency": 66,
+     "inter": 1,
+     "jump": 8,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "scale",
+      "translate",
+      "position",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [
+      "glass-reveal-out-reduced:0"
+     ],
+     "states": [
+      "open",
+      "closed",
+      "absent"
+     ],
+     "note": "outside at 16,26"
+    },
+    "escape": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 2,
+     "ms": 18.6,
+     "latency": 0,
+     "inter": 1,
+     "jump": 8,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "scale",
+      "translate",
+      "position",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      null,
+      null
+     ],
+     "anims": [
+      "glass-reveal-out-reduced:0"
+     ],
+     "states": [
+      "closed",
+      "absent"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "popover-content",
+     "surface": null,
+     "form": null,
+     "cls": "glass-floating glass-overlay-plate glass-reveal",
+     "bf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.20397 0.148263 0.0829736 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216114 0.00343135 0.00508514 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 ",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947247 0.0143829 84.4188 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 12.1,
+    "latency": 71.7,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "absent",
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "hover-popover": {
+   "routes": {
+    "leave": {
+     "verdict": "n/a",
+     "note": "no hover leave on touch"
+    },
+    "outside": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 2,
+     "ms": 17.4,
+     "latency": 66.7,
+     "inter": 1,
+     "jump": 8,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "scale",
+      "translate",
+      "position",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [
+      "glass-reveal-out-reduced:0"
+     ],
+     "states": [
+      "open",
+      "closed",
+      "absent"
+     ],
+     "note": "outside at 386,26"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "popover-content",
+     "surface": null,
+     "form": null,
+     "cls": "glass-floating glass-overlay-plate glass-reveal",
+     "bf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.20397 0.148263 0.0829736 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216114 0.00343135 0.00508514 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 ",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947247 0.0143829 84.4188 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 8.3,
+    "latency": 66.6,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "absent",
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "tooltip": {
+   "routes": {
+    "leave": {
+     "verdict": "n/a",
+     "note": "no hover leave on touch"
+    },
+    "escape": {
+     "kind": "leave",
+     "frames": 0,
+     "ms": 0,
+     "verdict": "ABSENT",
+     "startVis": false
+    }
+   },
+   "errors": [],
+   "glass": null,
+   "enter": {
+    "kind": "enter",
+    "frames": 0,
+    "ms": 0,
+    "verdict": "NEVER",
+    "startVis": false
+   },
+   "pageErrors": []
+  },
+  "dialog": {
+   "routes": {
+    "close": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 9,
+     "latency": 67.3,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "open",
+      "absent"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 9.1,
+     "latency": 68.2,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "open",
+      "absent"
+     ],
+     "note": "outside at 16,26"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "dialog-content",
+     "surface": "glass",
+     "form": null,
+     "cls": "glass-floating",
+     "bf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.20397 0.148263 0.0829736 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216114 0.00343135 0.00508514 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 ",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947247 0.0143829 84.4188 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 11.4,
+    "latency": 70.8,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "absent",
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "dialog-opaque": {
+   "routes": {
+    "escape": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 8.4,
+     "latency": 0,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "absent"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "dialog-content",
+     "surface": "opaque",
+     "form": null,
+     "cls": "glass-floating",
+     "bf": "none",
+     "bg": "color(srgb 0.992157 0.960784 0.92549)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216114 0.00343135 0.00508514 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 ",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947247 0.0143829 84.4188 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": {
+     "where": "child d2",
+     "tag": "button",
+     "cls": "glass-capsule glass-specular-track glass-capsule-hover",
+     "bf": "blur(14px) saturate(1.5)",
+     "bg": "oklab(0.958876 0.00822509 0.0271508)",
+     "bgi": "none",
+     "bd": "1px solid rgba(0, 0, 0, 0)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 ",
+     "op": "1"
+    },
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 8.4,
+    "latency": 66.8,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "absent",
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "alert-dialog": {
+   "routes": {
+    "close": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 9.7,
+     "latency": 76.3,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "open",
+      "absent"
+     ]
+    },
+    "escape": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 8.3,
+     "latency": 0,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "absent"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "dialog-content",
+     "surface": "glass",
+     "form": null,
+     "cls": "glass-floating",
+     "bf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.20397 0.148263 0.0829736 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216114 0.00343135 0.00508514 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 ",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947247 0.0143829 84.4188 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 9.2,
+    "latency": 67.5,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "absent",
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "sheet-top": {
+   "routes": {
+    "close": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 8.3,
+     "latency": 66.6,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "open",
+      "absent"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 8.3,
+     "latency": 66.6,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "open",
+      "absent"
+     ],
+     "note": "outside at 16,844"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "sheet-content",
+     "surface": "glass",
+     "form": null,
+     "cls": "glass-floating",
+     "bf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.20397 0.148263 0.0829736 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216114 0.00343135 0.00508514 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 ",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947247 0.0143829 84.4188 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 12,
+    "latency": 70.3,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "absent",
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "sheet-right": {
+   "routes": {
+    "close": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 10.1,
+     "latency": 67.5,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "open",
+      "absent"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 9.3,
+     "latency": 67.6,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "open",
+      "absent"
+     ],
+     "note": "outside at 16,26"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "sheet-content",
+     "surface": "glass",
+     "form": null,
+     "cls": "glass-floating",
+     "bf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.20397 0.148263 0.0829736 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216114 0.00343135 0.00508514 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 ",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947247 0.0143829 84.4188 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 14.8,
+    "latency": 74.6,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "absent",
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "sheet-bottom": {
+   "routes": {
+    "close": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 8.4,
+     "latency": 66.7,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "open",
+      "absent"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 8.9,
+     "latency": 66.5,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "open",
+      "absent"
+     ],
+     "note": "outside at 16,26"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "sheet-content",
+     "surface": "glass",
+     "form": null,
+     "cls": "glass-floating",
+     "bf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.20397 0.148263 0.0829736 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216114 0.00343135 0.00508514 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 ",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947247 0.0143829 84.4188 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 14,
+    "latency": 72,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "absent",
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "sheet-left": {
+   "routes": {
+    "close": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 10.3,
+     "latency": 68.8,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "open",
+      "absent"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 7.2,
+     "latency": 65.8,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "open",
+      "absent"
+     ],
+     "note": "outside at 386,26"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "sheet-content",
+     "surface": "glass",
+     "form": null,
+     "cls": "glass-floating",
+     "bf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.20397 0.148263 0.0829736 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216114 0.00343135 0.00508514 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 ",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947247 0.0143829 84.4188 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 14,
+    "latency": 72.8,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "absent",
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "sheet-detented": {
+   "routes": {
+    "close": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 8.2,
+     "latency": 67.2,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "open",
+      "absent"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 8.2,
+     "latency": 67,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "open",
+      "absent"
+     ],
+     "note": "outside at 16,26"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "sheet-content",
+     "surface": "glass",
+     "form": null,
+     "cls": "glass-floating",
+     "bf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.20397 0.148263 0.0829736 / 0.196)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216114 0.00343135 0.00508514 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 ",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947247 0.0143829 84.4188 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 11.2,
+    "latency": 70.1,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "absent",
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "toast": {
+   "routes": {
+    "close": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 32,
+     "ms": 265.9,
+     "latency": 0,
+     "inter": 31,
+     "jump": 0,
+     "matFlip": true,
+     "tail": 0,
+     "what": [
+      "scale",
+      "filter",
+      "background",
+      "backdrop-filter",
+      "content opacity",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [
+      "glass-vaporize-saturate:250 glass-vaporize-panel:250 glass-vaporize-blur:250 glass-vaporize-ink-reduced:250"
+     ],
+     "states": [
+      "closed",
+      "absent"
+     ]
+    },
+    "swipe": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 67,
+     "ms": 557.7,
+     "latency": 50.3,
+     "inter": 66,
+     "jump": 40,
+     "matFlip": true,
+     "tail": 0,
+     "what": [
+      "translate",
+      "position",
+      "scale",
+      "filter",
+      "background",
+      "backdrop-filter",
+      "content opacity",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+     ],
+     "anims": [
+      "glass-vaporize-saturate:250 glass-vaporize-panel:250 glass-vaporize-blur:250 glass-vaporize-ink-reduced:250"
+     ],
+     "states": [
+      "open",
+      "closed",
+      "absent"
+     ],
+     "note": "swipe by touch"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "li",
+     "slot": "toast",
+     "surface": "glass",
+     "form": null,
+     "cls": "glass-floating glass-reveal glass-vaporize glass-corner-host",
+     "bf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.20397 0.148263 0.0829736 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216114 0.00343135 0.00508514 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 ",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947247 0.0143829 84.4188 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 6.5,
+    "latency": 65.2,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "absent",
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "command-dialog": {
+   "routes": {
+    "pick": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 20.6,
+     "latency": 79.5,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [
+      "gl-fade-start-in:NaN gl-fade-end-out:NaN"
+     ],
+     "states": [
+      "open",
+      "absent"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 17.5,
+     "latency": 76.1,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [
+      "gl-fade-start-in:NaN gl-fade-end-out:NaN"
+     ],
+     "states": [
+      "open",
+      "absent"
+     ],
+     "note": "outside at 16,26"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "dialog-content",
+     "surface": "glass",
+     "form": null,
+     "cls": "glass-floating",
+     "bf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.20397 0.148263 0.0829736 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216114 0.00343135 0.00508514 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.0980392 0.0901961 ",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947247 0.0143829 84.4188 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 24.2,
+    "latency": 82.4,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     1,
+     1
+    ],
+    "anims": [
+     "gl-fade-start-in:NaN gl-fade-end-out:NaN"
+    ],
+    "states": [
+     "absent",
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "expandable-container": {
+   "routes": {
+    "exit": {
+     "kind": "inplace",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 9,
+     "latency": 65.6,
+     "inter": 0,
+     "jump": 145.6,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": true,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+     ],
+     "anims": [],
+     "states": [
+      "-"
+     ]
+    },
+    "escape": {
+     "kind": "inplace",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 9.4,
+     "latency": 0,
+     "inter": 0,
+     "jump": 145.6,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": true,
+     "op": [
+      1,
+      1
+     ],
+     "anims": [],
+     "states": [
+      "-"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": null,
+     "surface": null,
+     "form": null,
+     "cls": "",
+     "bf": "none",
+     "bg": "rgba(0, 0, 0, 0)",
+     "bgi": "none",
+     "bd": "0px solid rgb(28, 25, 23)",
+     "sh": "none",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     },
+     "after": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "inplace",
+    "verdict": "CUT",
+    "frames": 2,
+    "ms": 16.7,
+    "latency": 68.2,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "opacity",
+     "position",
+     "size"
+    ],
+    "startVis": true,
+    "endVis": true,
+    "op": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     0,
+     1,
+     1
+    ],
+    "anims": [
+     "expandable-container-arrive:0"
+    ],
+    "states": [
+     "-"
+    ]
+   },
+   "pageErrors": []
+  },
+  "accordion": {
+   "routes": {
+    "trigger": {
+     "kind": "inplace",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 8.4,
+     "latency": 75.1,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "position",
+      "size"
+     ],
+     "startVis": false,
+     "endVis": true,
+     "op": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      1
+     ],
+     "anims": [],
+     "states": [
+      "closed",
+      "open"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "accordion-content",
+     "surface": null,
+     "form": null,
+     "cls": "",
+     "bf": "none",
+     "bg": "rgba(0, 0, 0, 0)",
+     "bgi": "none",
+     "bd": "0px solid rgb(91, 70, 51)",
+     "sh": "none",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(91, 70, 51)",
+      "sh": "none",
+      "op": "1"
+     },
+     "after": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(91, 70, 51)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": {
+     "where": "ancestor 4",
+     "tag": "div",
+     "cls": "glass-quiet",
+     "bf": "blur(14px) saturate(1.5)",
+     "bg": "color(srgb 0.20397 0.148263 0.0829736 / 0.1)",
+     "bgi": "none",
+     "bd": "0px none rgb(28, 25, 23)",
+     "sh": "none",
+     "op": "1"
+    },
+    "dark": false
+   },
+   "enter": {
+    "kind": "inplace",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 9.7,
+    "latency": 76.2,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "opacity",
+     "position",
+     "size"
+    ],
+    "startVis": true,
+    "endVis": false,
+    "op": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     0,
+     0
+    ],
+    "anims": [
+     "disclosure-close:0"
+    ],
+    "states": [
+     "open",
+     "closed"
+    ]
+   },
+   "pageErrors": []
+  },
+  "collapsible": {
+   "routes": {
+    "trigger": {
+     "kind": "inplace",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 9,
+     "latency": 75.7,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      0,
+      0
+     ],
+     "anims": [
+      "disclosure-close:0"
+     ],
+     "states": [
+      "open",
+      "closed"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "collapsible-content",
+     "surface": null,
+     "form": null,
+     "cls": "",
+     "bf": "none",
+     "bg": "rgba(0, 0, 0, 0)",
+     "bgi": "none",
+     "bd": "0px solid rgb(91, 70, 51)",
+     "sh": "none",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(91, 70, 51)",
+      "sh": "none",
+      "op": "1"
+     },
+     "after": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(91, 70, 51)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "inplace",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 8.6,
+    "latency": 76.9,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "size"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     1,
+     1
+    ],
+    "anims": [
+     "disclosure-open:0"
+    ],
+    "states": [
+     "closed",
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "dock-collapse": {
+   "routes": {
+    "outside": {
+     "kind": "inplace",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 8.4,
+     "latency": 8.4,
+     "inter": 0,
+     "jump": 92.9,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "background",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": true,
+     "op": [
+      1,
+      1,
+      1
+     ],
+     "anims": [],
+     "states": [
+      "-"
+     ],
+     "note": "outside at 16,25"
+    },
+    "leave": {
+     "verdict": "n/a",
+     "note": "no hover leave on touch"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": null,
+     "surface": null,
+     "form": null,
+     "cls": "dock-plate",
+     "bf": "blur(16px) saturate(1.2)",
+     "bg": "color(srgb 0.20397 0.148263 0.0829736 / 0.1)",
+     "bgi": "none",
+     "bd": "1px solid color(srgb 0.109804 0.0980392 0.0901961 / 0.08)",
+     "sh": "none",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     },
+     "after": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(circle at 30% 40%, rgb(28, 25, 23) 0px, rgb(28, 25, 23) 0.5px, r",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0.025"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "inplace",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 9.9,
+    "latency": 126.4,
+    "inter": 0,
+    "jump": 91.6,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "background",
+     "position",
+     "size"
+    ],
+    "startVis": true,
+    "endVis": true,
+    "op": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "-"
+    ]
+   },
+   "pageErrors": []
+  },
+  "dock-layer": {
+   "routes": {
+    "back": {
+     "kind": "inplace",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 9.8,
+     "latency": 76.5,
+     "inter": 0,
+     "jump": 60,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "translate",
+      "position"
+     ],
+     "startVis": true,
+     "endVis": true,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+     ],
+     "anims": [],
+     "states": [
+      "-"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": null,
+     "surface": null,
+     "form": null,
+     "cls": "",
+     "bf": "none",
+     "bg": "color(srgb 0.20397 0.148263 0.0829736 / 0.18)",
+     "bgi": "none",
+     "bd": "0px solid rgb(28, 25, 23)",
+     "sh": "none",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     },
+     "after": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "inplace",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 8.4,
+    "latency": 66.8,
+    "inter": 0,
+    "jump": 60,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "translate",
+     "position"
+    ],
+    "startVis": true,
+    "endVis": true,
+    "op": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "-"
+    ]
+   },
+   "pageErrors": []
+  },
+  "theme-toggle": {
+   "routes": {
+    "back": {
+     "kind": "inplace",
+     "verdict": "tween",
+     "frames": 8,
+     "ms": 66.6,
+     "latency": 8.3,
+     "inter": 7,
+     "jump": 0.3,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "size",
+      "transform"
+     ],
+     "startVis": true,
+     "endVis": true,
+     "op": [
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8
+     ],
+     "anims": [],
+     "states": [
+      "-"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "g",
+     "slot": null,
+     "surface": null,
+     "form": null,
+     "cls": "",
+     "bf": "none",
+     "bg": "rgba(0, 0, 0, 0)",
+     "bgi": "none",
+     "bd": "0px solid rgb(233, 230, 226)",
+     "sh": "none",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(233, 230, 226)",
+      "sh": "none",
+      "op": "1"
+     },
+     "after": {
+      "bf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(233, 230, 226)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": true
+   },
+   "enter": {
+    "kind": "inplace",
+    "verdict": "tween",
+    "frames": 8,
+    "ms": 67.1,
+    "latency": 8.8,
+    "inter": 7,
+    "jump": 0.3,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "size",
+     "transform"
+    ],
+    "startVis": true,
+    "endVis": true,
+    "op": [
+     0.8,
+     0.8,
+     0.8,
+     0.8,
+     0.8,
+     0.8,
+     0.8,
+     0.8,
+     0.8,
+     0.8
+    ],
+    "anims": [],
+    "states": [
+     "-"
+    ]
+   },
+   "pageErrors": []
+  }
+ }
+}
