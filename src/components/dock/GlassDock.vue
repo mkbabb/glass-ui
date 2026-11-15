@@ -118,7 +118,7 @@ const persistentEndEl = useTemplateRef<HTMLElement>("persistentEndEl");
    the port scrolls, and the common ancestor the cut-cap timeline scopes to. Reach,
    roving tabindex and the announcement all read the SAME seat list, so they live in
    one composable rather than three that must agree. */
-const { toolbar, restingScroll, halt: haltReach } = useDockRun({ runEl: fullEl, statusEl, orientation });
+const { toolbar, controls: controlCount, restingScroll, halt: haltReach } = useDockRun({ runEl: fullEl, statusEl, orientation });
 
 /* Wire the sampled-luminance observer ON for
    the dock by default. It writes `--glass-backdrop-luma` + derives the
@@ -447,6 +447,8 @@ defineExpose({
     collapse,
     keepOpen,
     release,
+    /** How many controls the run holds (W-I.8 R-12; `useDockRun`'s `controls`). */
+    controlCount,
 });
 </script>
 

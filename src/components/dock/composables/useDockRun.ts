@@ -52,6 +52,13 @@ export interface UseDockRunReturn {
      */
     toolbar: Readonly<Ref<boolean>>;
     /**
+     * How many controls the run holds: its direct children, a declared seat or not (a
+     * slider, a consumer's own element), `<DockSeparator>` and reka's form `<select>`
+     * aside. W-I.8 R-12: a controls dock with one control never folds, and it reads the
+     * count here, never off the DOM.
+     */
+    controls: Readonly<Ref<number>>;
+    /**
      * W-I.8 R-5: where the run's scroll offset rests after a content change, read on the
      * new layout from the offset `from`: the open seat's anchor when that seat is not
      * fully in view, else `from` clamped to the run's range. Null when the run does not
@@ -139,6 +146,12 @@ const FORM_SELECT = 'select[aria-hidden="true"][tabindex="-1"]';
  * (`FORM_SELECT`) aside. A run with any other undeclared child claims no role: its declared seats still
  * rove, and the rest keep their own stops.
  */
+function controlsOf(run: HTMLElement): number {
+    return seatsOf(run).filter(
+        (child) => !child.matches(DOCK_SEPARATOR) && !child.matches(FORM_SELECT),
+    ).length;
+}
+
 function isToolbar(run: HTMLElement): boolean {
     const children = seatsOf(run).filter(
         (child) => !child.matches(DOCK_SEPARATOR) && !child.matches(FORM_SELECT),
@@ -154,6 +167,7 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
     // interruptible-physics continuity, and the reason a fast tab-through reads as one
     // continuous travel instead of a stutter of restarts.
     const toolbar = ref(false);
+    const controls = ref(0);
 
     const glide = useDockSpring({
         response: DOCK_SPRING.response,
@@ -363,6 +377,7 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
         if (!run) return;
         for (const row of faceRows(run)) syncRow(row);
         toolbar.value = isToolbar(run);
+        controls.value = controlsOf(run);
         // A child the run wrote into and that has since dropped its declaration gets
         // its authored `tabindex` back: the run writes nothing into an undeclared child,
         // and that includes not leaving its own past write behind.
@@ -548,5 +563,5 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
     // a tab order that now reads across the wrong axis.
     watch(orientation, () => syncRoving());
 
-    return { reach, syncRoving, toolbar, restingScroll, halt: () => glide.dispose() };
+    return { reach, syncRoving, toolbar, controls, restingScroll, halt: () => glide.dispose() };
 }

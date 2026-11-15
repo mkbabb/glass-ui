@@ -3,10 +3,10 @@
 // controls, a figure's filters, a canvas's tools, a code pane's actions, the theme seat.
 // It renders one GlassDock and adds nothing to the DOM. Its run is plain (no scroll, no
 // snap, no scroll timeline) and has no current page, so no open seat and no mark.
-import { computed, onBeforeUnmount, onMounted, ref, useAttrs, useTemplateRef } from "vue";
+import { Comment, Fragment, Text, useAttrs, useTemplateRef, type Slots, type VNode } from "vue";
 import { useMediaQuery } from "@vueuse/core";
 import GlassDock from "./GlassDock.vue";
-import { DOCK_SEAT_ATTR } from "./constants";
+import DockSeparator from "./DockSeparator.vue";
 import type { DockCollapse } from "./composables/useDockShellProps";
 
 defineOptions({ inheritAttrs: false });
@@ -28,27 +28,30 @@ const props = withDefaults(
 const emit = defineEmits<{ "update:pinned": [value: boolean] }>();
 const attrs = useAttrs();
 const phone = useMediaQuery("(max-width: 40rem)");
-/* RU-18: a controls dock whose run holds one seat is that seat, at rest, and never
-   folds: no folded face, no linger, no travel. A second seat (an outlet's, say) grows it
-   by R-5, and from then it folds as `collapse` says. The seats are counted on the run,
-   the dock's own element, so contributed seats count. */
-const dockRef = useTemplateRef<{ $el: HTMLElement }>("dockRef");
-const seats = ref(0);
-let mo: MutationObserver | null = null;
-function countSeats(run: Element): void {
-    seats.value = Array.from(run.children).filter((c) => c.hasAttribute(DOCK_SEAT_ATTR)).length;
+/* RU-18 (C2-11): a controls dock whose run holds one control is that control, at rest,
+   and never folds: no folded face, no linger, no travel. A second control (an outlet's,
+   say) grows it by R-5, and from then it folds as `collapse` says.
+   What counts is a control: any child of the run, a glass seat or not (a slider, a
+   consumer's own element), a DockSeparator aside. Once the dock is mounted the count is
+   the run's own (GlassDock's `controlCount`, which includes contributed controls);
+   before that, on the server included, it is the authored slot's, so a one-control dock
+   never paints its folded glyph first. Nothing is looked up in the DOM. */
+const dockRef = useTemplateRef<{ controlCount?: number }>("dockRef");
+function authored(nodes: VNode[]): number {
+    let n = 0;
+    for (const v of nodes) {
+        if (v.type === Comment || v.type === Text || v.type === DockSeparator) continue;
+        if (v.type === Fragment) n += Array.isArray(v.children) ? authored(v.children as VNode[]) : 0;
+        else n += 1;
+    }
+    return n;
 }
-onMounted(() => {
-    const run = dockRef.value?.$el?.querySelector(":scope > .dock-controls > .dock-layers > .dock-run");
-    if (!run) return;
-    countSeats(run);
-    mo = new MutationObserver(() => countSeats(run));
-    mo.observe(run, { childList: true });
-});
-onBeforeUnmount(() => mo?.disconnect());
-const collapse = computed<DockCollapse>(() =>
-    seats.value === 1 ? false : (props.collapse ?? (phone.value ? "closed" : false)),
-);
+/* Called from the template, so the slot is read inside render. */
+function collapseFor(slots: Slots): DockCollapse {
+    const mounted = dockRef.value?.controlCount;
+    const count = mounted !== undefined && mounted > 0 ? mounted : authored(slots.default?.() ?? []);
+    return count === 1 ? false : (props.collapse ?? (phone.value ? "closed" : false));
+}
 </script>
 
 <template>
@@ -61,7 +64,7 @@ const collapse = computed<DockCollapse>(() =>
         :data-within="within"
         :aria-label="label"
         :collapsed-label="label"
-        :collapse="collapse"
+        :collapse="collapseFor($slots)"
         :pinned="pinned"
         :anchor="corner.endsWith('end') ? 'end' : 'start'"
         run="plain"
