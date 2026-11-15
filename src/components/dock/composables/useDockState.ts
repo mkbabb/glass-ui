@@ -623,7 +623,15 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
     function onTouchLift(e: PointerEvent) {
         lastPointerType = e.pointerType;
         if (e.type === "pointerdown") dismissedUnderPointer = false;
-        if (e.type === "pointerup" && e.pointerType === "touch" && state.value === "hover") scheduleCollapse();
+        // The linger runs from the lift, and starts when the lift's task ends: a tap on a
+        // seat focuses it and clicks it after its `pointerup`, and that focus (not
+        // `:focus-visible`, so no hold) would otherwise cancel the linger with no leave
+        // to restart it, and a touch-opened dock would never fold (G-1 (f), MEASURE-4).
+        if (e.type === "pointerup" && e.pointerType === "touch" && state.value === "hover") {
+            setTimeout(() => {
+                if (state.value === "hover") scheduleCollapse();
+            }, 0);
+        }
     }
     watch(
         rootEl,
