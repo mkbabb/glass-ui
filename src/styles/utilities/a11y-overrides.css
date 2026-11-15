@@ -144,8 +144,14 @@
            surface — see glass.css), so it keeps its WHC edge HERE; the five-rung ladder
            + `.glass-card` get their WHC border from the co-located glass-language skin
            in glass.css (one source per surface family, no double-declaration). */
-        .hairline-accent,
-        .glass-dock {
+        .hairline-accent {
+            border: 1px solid CanvasText;
+        }
+
+        /* W-I.8 R-1 (G-13): the dock's edge is the plate's. The root is structural and
+           paints nothing, so an edge round it outlines a box nobody sees; the plate's
+           one closed outline follows every state and frame of the travel. */
+        .glass-dock > .dock-plate {
             border: 1px solid CanvasText;
         }
     }
