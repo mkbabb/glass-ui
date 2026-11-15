@@ -579,7 +579,20 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             return;
         }
 
-        if (changed || postureChanged || pendingLeaves.length || seatsMoved) {
+        // R-5: the open seat moving in a scrolling run is a content change even when no seat
+        // changes place (a compact run): the offset that brings it in is a quantity of the loop.
+        // Left to the run's own reach it scrolled a mandatory-snap port, which snapped each
+        // written offset to a seat (whole-seat steps in one row).
+        let scrollOnly = false;
+        {
+            const r = runEl();
+            if (r && o.runScroll && posture && !postureChanged && !seatsMoved && reason === "content") {
+                const from = scrollRest !== null ? scrollRest + scrollQ.d : readScroll(r);
+                const to = o.runScroll.resting(from);
+                scrollOnly = to !== null && Math.abs(to - from) > 0.5;
+            }
+        }
+        if (changed || postureChanged || pendingLeaves.length || seatsMoved || scrollOnly) {
             if (prevPainted && changed) {
                 // Each edge holds painted minus layout, with the velocity it had.
                 edge.l.d = prevPainted.l - next.l;
@@ -625,7 +638,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
                     scrollQ.d = scrollQ.v = 0;
                     scrollRest = null;
                     if (to !== null) writeScroll(r, to);
-                } else if (posture && seatsMoved) {
+                } else if (posture && (seatsMoved || scrollOnly)) {
                     const from = scrollRest !== null ? scrollRest + scrollQ.d : readScroll(r);
                     o.runScroll.halt();
                     const to = o.runScroll.resting(from);
