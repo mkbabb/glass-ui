@@ -618,6 +618,27 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         return !had || Math.abs(now - want) > 0.25 ? `${want}px` : null;
     }
 
+    /** RU-35: master's names, kept as outputs through 11.2.0 (deleted in 12.0.0): the root's
+     *  layout extent on the dock's axis in the posture it rests in (`--dock-expanded-px` or
+     *  `--dock-collapsed-px`) and its cross extent (`--dock-plate-cross-px`), in px, from the
+     *  layout this sync has just read. Written on trigger frames only, read by no rule of
+     *  glass. A posture the dock has never rested in has no name: the carrier never measures
+     *  a posture it is not in (RU-17), where master measured both at mount. */
+    const outputs: Record<string, string> = {};
+    function writeOutputs(el: HTMLElement, box: Box, posture: boolean): void {
+        const v = o.vertical();
+        const w = box.r - box.l;
+        const h = box.b - box.t;
+        const put = (k: string, px: number) => {
+            const val = `${Math.round(px * 100) / 100}px`;
+            if (outputs[k] === val) return;
+            outputs[k] = val;
+            el.style.setProperty(k, val);
+        };
+        put(posture ? "--dock-expanded-px" : "--dock-collapsed-px", v ? h : w);
+        put("--dock-plate-cross-px", v ? w : h);
+    }
+
     function sync(reason: string): void {
         const el = root();
         if (!el || !el.isConnected) return;
@@ -677,6 +698,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             readRegions();
             e = posture ? 1 : 0;
             writeExpandT();
+            writeOutputs(el, next, posture);
             return;
         }
 
@@ -788,6 +810,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
                 }
                 travelling = true;
             }
+            writeOutputs(el, next, posture);
             el.setAttribute("data-morphing", "");
             o.moving.value = true;
             start(reason === "ro");

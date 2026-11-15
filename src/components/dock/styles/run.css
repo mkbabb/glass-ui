@@ -533,9 +533,9 @@
        `position: absolute` overlay SIBLING of the port and scroll timelines resolve
        DOWN, never up. `styles/scroll-driven.css` documents that trap already.
 
-       `from` IS A LENGTH: half the plate's cross extent, `--dock-cross / 2`, which
-       `useDockExpandedSize` (dockMorphMeasure.ts) publishes as `--dock-plate-cross-px`
-       from the plate's own ResizeObserver border box. Never a percentage: a percentage radius resolves
+       `from` IS A LENGTH: half the plate's cross extent, `--dock-cross / 2`, from the
+       density tokens the plate is laid out by (W-I.8 RU-35: `--dock-plate-cross-px` is
+       an output the carrier writes on the root, read by no rule of glass). Never a percentage: a percentage radius resolves
        per axis, so on a 188x60 plate `50%` is a 94x30 px ellipse inside the ring. Never
        a length larger than the half extent either: `from: 9999px` is pinned by the
        half-box clamp until t≈0.999 (t=0.999 still reads 25.98px), an animation that
@@ -554,15 +554,9 @@
        against π·28²/2), never the ~700 an earlier draft claimed. */
     .glass-dock {
         timeline-scope: --dock-run;
-        /* THE CROSS EXTENT, `--dock-cross`: the plate's measured cross extent, and
-           before the script has measured it (a server-rendered dock before hydration)
-           the same extent from the density tokens it is laid out by: the layer height
-           and the block padding either side. So the first paint is already the stadium
-           and the measure, when it lands, changes nothing on a dock of plain seats. */
-        --dock-cross: var(
-            --dock-plate-cross-px,
-            calc(var(--dock-layer-height) + 2 * var(--dock-padding-block))
-        );
+        /* THE CROSS EXTENT, `--dock-cross`: the extent from the density tokens the plate is
+           laid out by, the layer height and the block padding either side. */
+        --dock-cross: calc(var(--dock-layer-height) + 2 * var(--dock-padding-block));
         /* The rest corner and its two-rung drop, per shape. The stadium's rest is half
            the plate's cross extent (see above); the finite shapes name their own rest
            so the keyframe never has to guess at a box height. */
@@ -573,10 +567,7 @@
     /* A vertical dock's cross extent is its width: a control and the inline padding
        either side. */
     .glass-dock.vertical {
-        --dock-cross: var(
-            --dock-plate-cross-px,
-            calc(var(--dock-control-size) + 2 * var(--dock-padding-inline))
-        );
+        --dock-cross: calc(var(--dock-control-size) + 2 * var(--dock-padding-inline));
     }
 
     .glass-dock.shape-rounded {
