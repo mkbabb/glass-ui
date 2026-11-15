@@ -343,8 +343,12 @@ function judge(file) {
             // RU-25: the lane as the judge builds it, and the clip as the carrier wrote it.
             let laneBad = 0, laneWorst = 0, laneAt = "";
             const shown = {}, gone = {};
-            const hasVb = rs.some((r) => [...unitKeys].some((k) => r.el[k] && "vb" in r.el[k]));
+            let turned = false;
             const vertical = /\bvertical\b/.test(String(rs[0]?.el.dock?.["a:class"] || ""));
+            // the run does not fit: at the segment's widest the plate fills the room its host gives
+            const segRoom = (rs[0]?.el.stage?.w ?? d.meta.cell.w) - 16;
+            const segFull = !vertical && Math.max(...rs.map((r) => r.el.plate?.w ?? 0)) >= segRoom - 1;
+            const hasVb = rs.some((r) => [...unitKeys].some((k) => r.el[k] && "vb" in r.el[k]));
             // a region takes part when it is laid out, or when the carrier wrote it a lane (a run of no width still has one)
             const occ = (e) => e && e.x != null && e.vis !== 0 && ((e.w > 0.5 && e.h > 0.5) || /^inset\(/.test(String(e.clip || "")));
             for (let i = 0; i < rs.length && hasVb; i++) {
@@ -375,12 +379,20 @@ function judge(file) {
                     if (off > 0.5) { laneBad++; if (off > laneWorst) { laneWorst = off; laneAt = `${g.k} f${sg.a + i}`; } }
                 });
                 const Ln = lanes.layers;
+                // A turn starts a new travel: a seat the fold hid shows again on the way back.
+                if (revMark && !turned && sg.a + i >= revMark.i) { turned = true; for (const k of Object.keys(shown)) { delete gone[k]; delete shown[k]; } }
                 for (const k of unitKeys) {
                     if (!/^seat/.test(k) || !Ln) continue;
                     const e = r.el[k];
                     if (!e || !(e.eop > 0.1) || e.vis === 0 || !e.w || !e.h) continue;
                     const ix = Math.min(e.x + e.w, Ln.R) - Math.max(e.x, Ln.L), iy = Math.min(e.y + e.h, Ln.B) - Math.max(e.y, Ln.T);
-                    const meets = ix > 0.5 && iy > 0.5;
+                    // A seat scrolled out of the run's port is the port's to hide only in a run that
+                    // does not fit (RU-26, RU-27's absent seat): the dock then fills the room its
+                    // host gives (the stage's content box, the cell less 16 px).
+                    const F = r.el.full;
+                    const full = segFull;
+                    const inPort = !full || !F || !F.w || (Math.min(e.x + e.w, F.x + F.w) - Math.max(e.x, F.x) > 0.5);
+                    const meets = ix > 0.5 && iy > 0.5 && inPort;
                     if (meets && e.vb === 0) { hidden++; hiddenAt ||= `${k} f${sg.a + i} meets its lane by ${ix.toFixed(1)} px`; }
                     if (e.vb !== 0 && gone[k]) { hidden++; hiddenAt ||= `${k} f${sg.a + i} shows again`; }
                     if (e.vb !== 0) shown[k] = true; else if (shown[k]) gone[k] = true;
