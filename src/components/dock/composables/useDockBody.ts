@@ -461,12 +461,21 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             return;
         }
         if (was) run.removeAttribute("data-compact");
-        // The run's reserve (its padding on the axis, the room a focus ring takes) is
-        // scrollable by construction and is not a seat that does not fit.
+        // Layout extents only: the scroll extent counts the seats' carry translates mid-travel.
+        // The run's reserve (its padding, the room a focus ring takes) is not a seat.
+        const v = o.vertical();
         const rs = getComputedStyle(run);
-        const reserve = Number.parseFloat(o.vertical() ? rs.paddingBlockStart : rs.paddingInlineStart) || 0;
-        const over = o.vertical() ? run.scrollHeight - run.clientHeight : run.scrollWidth - run.clientWidth;
-        if (over > reserve + 0.5) run.setAttribute("data-compact", "");
+        const padStart = Number.parseFloat(v ? rs.paddingBlockStart : rs.paddingInlineStart) || 0;
+        let first = Infinity;
+        let last = -Infinity;
+        for (const c of run.children) {
+            if (!(c instanceof HTMLElement) || ghosts.has(c) || c.offsetParent === null) continue;
+            const a0 = v ? c.offsetTop : c.offsetLeft;
+            first = Math.min(first, a0);
+            last = Math.max(last, a0 + (v ? c.offsetHeight : c.offsetWidth));
+        }
+        const port = (v ? run.clientHeight : run.clientWidth) - padStart;
+        if (last - first > port + 0.5) run.setAttribute("data-compact", "");
     }
 
     /** R-1 (C2-6): a pill taller than one row is still a stadium, so the open face's content
