@@ -495,8 +495,10 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
      *  box the whole-seat cap does not change, so a host that gives the dock more room is
      *  read again (the root's observer fires) and the flag goes. */
     function fitRun(run: HTMLElement, open: boolean): FitPlan | null {
-        // A face with no box (RU-17) keeps the reading it had when it was laid out.
-        if (run.offsetParent === null) return null;
+        // The fit is the open run's. A face with no box (RU-17), or a run leaving on a fold (its
+        // region already laid out at the folded size), keeps the reading it had when it was
+        // laid out open; it was flipped and read again on every fold (RU-29's second read).
+        if (!open || run.offsetParent === null) return null;
         const v = o.vertical();
         // Layout extents only: the scroll extent counts the seats' carry translates mid-travel.
         let first = Infinity;
@@ -521,7 +523,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         // RU-27: the seats do not fit, so the run scrolls and its window is a whole number of
         // seats (run.css); the carrier sets only the flag. Not on a plain run, a run of
         // seats of more than one size, or a vertical run (12.0.0).
-        const whole = open && !v && !fits && same && n >= 2 && root()?.getAttribute("data-run") !== "plain";
+        const whole = !v && !fits && same && n >= 2 && root()?.getAttribute("data-run") !== "plain";
         const room = v && fits ? `${Math.floor(((port - span) / 2) * 100) / 100}px` : "";
         return { run, fits, whole, room };
     }
@@ -655,13 +657,12 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             const plan = run ? fitRun(run, open) : null;
             const inset = fitCurve(el, open, run, plan ? plan.fits : runFits);
             if (POSE) performance.mark("dock:flags");
-            let moved = plan ? writeFit(plan) : false;
+            const fitMoved = plan ? writeFit(plan) : false;
             if (inset !== null) {
                 if (inset === "") el.style.removeProperty("--dock-curve-inset");
                 else el.style.setProperty("--dock-curve-inset", inset);
-                moved = true;
             }
-            if (POSE && moved) performance.mark("dock:reread");
+            if (POSE && (fitMoved || inset !== null)) performance.mark("dock:reread", { detail: { fit: fitMoved, inset, fits: plan?.fits ?? null, whole: plan?.whole ?? null } });
         }
         const next = rectOf(el);
         if (layout) {
