@@ -1,0 +1,147 @@
+{
+ "name": "fold-w-std-necka-coarse",
+ "url": "/?c=dock-wi8&cell=w-std&neck=a",
+ "cells": [
+  {
+   "tag": "390-coarse-light",
+   "w": 390,
+   "h": 844,
+   "pointer": "coarse",
+   "scheme": "light"
+  }
+ ],
+ "ready": "[data-testid=w-std]",
+ "warmMs": 600,
+ "track": [
+  {
+   "as": "dock",
+   "sel": "[data-testid=w-std]",
+   "attrs": [
+    "class",
+    "data-morphing"
+   ],
+   "props": [
+    "--dock-expand-t",
+    "--dock-morph-t"
+   ],
+   "colors": [
+    "box-shadow"
+   ]
+  },
+  {
+   "as": "plate",
+   "sel": "[data-testid=w-std] .dock-plate",
+   "colors": [
+    "box-shadow",
+    "background-color"
+   ],
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "seatplate",
+   "sel": "[data-testid=w-std] .dock-plate--beside"
+  },
+  {
+   "as": "neck",
+   "sel": "[data-testid=w-std] .dock-neck"
+  },
+  {
+   "as": "shadow",
+   "sel": "[data-testid=w-std] .dock-shadow",
+   "colors": [
+    "box-shadow"
+   ]
+  },
+  {
+   "as": "persistent",
+   "sel": "[data-testid=w-std] > .dock-controls > .dock-persistent:not(.dock-persistent-end)",
+   "chain": true,
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "pend",
+   "sel": "[data-testid=w-std] > .dock-controls > .dock-persistent-end",
+   "chain": true,
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "layers",
+   "sel": "[data-testid=w-std] .dock-layers",
+   "chain": true,
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "beside",
+   "sel": "[data-testid=w-std] .dock-beside",
+   "chain": true,
+   "styles": [
+    "clip-path"
+   ]
+  },
+  {
+   "as": "full",
+   "sel": "[data-testid=w-std] .dock-layer--full",
+   "chain": true
+  },
+  {
+   "as": "summary",
+   "sel": "[data-testid=w-std] .dock-layer--summary",
+   "chain": true
+  },
+  {
+   "as": "seat",
+   "sel": "[data-testid=w-std] .dock-layer--full > [data-glass-dock-seat], [data-testid=w-std] .dock-layer--full > * > [data-glass-dock-seat]",
+   "all": true,
+   "chain": true
+  }
+ ],
+ "cropAs": [
+  "dock",
+  "plate",
+  "seatplate",
+  "beside"
+ ],
+ "cropPad": 24,
+ "gapMs": 250,
+ "steps": [
+  {
+   "do": "mark",
+   "name": "tap"
+  },
+  {
+   "do": "click",
+   "sel": "[data-testid=w-std] .dock-layer--summary"
+  },
+  {
+   "do": "settle",
+   "quietMs": 400,
+   "maxMs": 3000
+  },
+  {
+   "do": "mark",
+   "name": "outside"
+  },
+  {
+   "do": "click",
+   "sel": "[data-testid=anim-root]",
+   "at": [
+    0.005,
+    0.005
+   ]
+  },
+  {
+   "do": "settle",
+   "quietMs": 400,
+   "maxMs": 3000
+  }
+ ],
+ "strips": []
+}
