@@ -6,11 +6,11 @@
 set -u
 H="$(cd "$(dirname "$0")/.." && pwd)"; R="$H/../rows/m3"; L="$H/../logs"; E="$1"
 all=$(ls "$R"/p3-*.wi8.$E.*.rows.json* 2>/dev/null) || { echo "no rows for $E"; exit 1; }
-F=$(echo "$all" | grep -v -- "-seat-\|-overlay-")
+F=$(echo "$all" | grep -vE -- "/p3-seat-|-overlay-")
 node "$H/m3/judge4.mjs" $F > "$L/m3-judge-$E.txt"
 node "$H/m3/judge4.mjs" $F --json > "$L/m3-judge-$E.json"
 node "$H/gates3.mjs" "$L/m3-judge-$E.json" > "$L/m3-gates-$E.txt"
-node "$H/m3/seat4.mjs" $(echo "$all" | grep -- "-seat-\|-seatset-") > "$L/m3-seat-$E.txt"
+node "$H/m3/seat4.mjs" $(echo "$all" | grep -E -- "/p3-(seat|seatset)-") > "$L/m3-seat-$E.txt"
 node "$H/g9b.mjs" $(echo "$all" | grep -- "p3-scope\|p3-swap-xf-fine") > "$L/m3-g9-$E.txt"
 node "$H/read2.mjs" $all > "$L/m3-read2-$E.txt"
 node "$H/m3/read3.mjs" $all > "$L/m3-read3-$E.txt"

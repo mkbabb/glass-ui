@@ -31,16 +31,21 @@ for (const file of files) {
     // its visible box (the sampler's clip through every ancestor, rectangular) and, in travel,
     // by its region's lane (`inset(... round R)`, which the sampler does not round). The
     // shape's boundary is sampled and each point inside all three is read against the plate.
+    // rad: one radius, or four (top-left, top-right, bottom-right, bottom-left) as CSS writes them.
     const sd = (x, y, b, rad) => { // signed distance to a rounded box (negative inside)
-        const cx = (b.l + b.r) / 2, cy = (b.t + b.b) / 2, hx = (b.r - b.l) / 2, hy = (b.b - b.t) / 2;
-        const rr = Math.max(0, Math.min(rad, hx, hy));
-        const qx = Math.abs(x - cx) - hx + rr, qy = Math.abs(y - cy) - hy + rr;
-        return Math.hypot(Math.max(qx, 0), Math.max(qy, 0)) + Math.min(Math.max(qx, qy), 0) - rr;
+        const cl = (r) => Math.max(0, Math.min(r, (b.r - b.l) / 2, (b.b - b.t) / 2));
+        const [tl, tr, br, bl] = (Array.isArray(rad) ? rad : [rad, rad, rad, rad]).map(Array.isArray(rad) ? (r) => Math.max(0, r) : cl);
+        for (const [cx, cy, r, sx, sy] of [[b.l + tl, b.t + tl, tl, -1, -1], [b.r - tr, b.t + tr, tr, 1, -1], [b.r - br, b.b - br, br, 1, 1], [b.l + bl, b.b - bl, bl, -1, 1]])
+            if (r > 0 && (x - cx) * sx > 0 && (y - cy) * sy > 0) return Math.hypot(x - cx, y - cy) - r;
+        const dx = Math.max(b.l - x, x - b.r), dy = Math.max(b.t - y, y - b.b);
+        return dx > 0 || dy > 0 ? Math.hypot(Math.max(dx, 0), Math.max(dy, 0)) : Math.max(dx, dy);
     };
     const ring = (b, rad, n = 48) => { // points on a rounded box's boundary
-        const pts = [], rr = Math.max(0, Math.min(rad, (b.r - b.l) / 2, (b.b - b.t) / 2));
-        const cs = [[b.r - rr, b.b - rr, 0], [b.l + rr, b.b - rr, 90], [b.l + rr, b.t + rr, 180], [b.r - rr, b.t + rr, 270]];
-        for (const [cx, cy, a0] of cs) for (let k = 0; k <= n / 4; k++) { const a = ((a0 + (90 * k) / (n / 4)) * Math.PI) / 180; pts.push([cx + rr * Math.cos(a), cy + rr * Math.sin(a)]); }
+        const pts = [], R4 = Array.isArray(rad) ? rad : [rad, rad, rad, rad];
+        const cl = (r) => Math.max(0, Math.min(r, (b.r - b.l) / 2, (b.b - b.t) / 2));
+        const [tl, tr, br, bl] = R4.map(cl);
+        const cs = [[b.r - br, b.b - br, 0, br], [b.l + bl, b.b - bl, 90, bl], [b.l + tl, b.t + tl, 180, tl], [b.r - tr, b.t + tr, 270, tr]];
+        for (const [cx, cy, a0, rr] of cs) for (let k = 0; k <= n / 4; k++) { const a = ((a0 + (90 * k) / (n / 4)) * Math.PI) / 180; pts.push([cx + rr * Math.cos(a), cy + rr * Math.sin(a)]); }
         for (let k = 1; k < 8; k++) { const fx = b.l + ((b.r - b.l) * k) / 8, fy = b.t + ((b.b - b.t) * k) / 8; pts.push([fx, b.t], [fx, b.b], [b.l, fy], [b.r, fy]); }
         return pts;
     };
@@ -51,12 +56,21 @@ for (const file of files) {
         for (const k of ["persistent", "pend", "layers", "full", "summary"]) {
             const g = r.el[k];
             if (!g || !g.clip || !/^inset\(/.test(g.clip)) continue;
-            const m = g.clip.match(/inset\(([^)]*?)(?: round ([-\d.]+)px)?\)/);
+            const m = g.clip.match(/inset\(([^)]*?)(?: round ([^)]*))?\)/);
             const v = m[1].trim().split(/\s+/).map(parseFloat);
             const [it, ir, ib, il] = [v[0], v[1] ?? v[0], v[2] ?? v[0], v[3] ?? v[1] ?? v[0]];
             const b = { l: g.x + il, t: g.y + it, r: g.x + g.w - ir, b: g.y + g.h - ib };
             if (mx < b.l || mx > b.r || my < b.t || my > b.b) continue;
-            return { b, rad: m[2] ? parseFloat(m[2]) : 0 };
+            // CSS scales every corner by one factor when two on a side exceed it.
+            let rad = 0;
+            if (m[2]) {
+                const q = m[2].trim().split(/\s+/).map(parseFloat);
+                const r4 = [q[0], q[1] ?? q[0], q[2] ?? q[0], q[3] ?? q[1] ?? q[0]];
+                const w = b.r - b.l, h = b.b - b.t;
+                const f = Math.min(1, w / Math.max(1e-9, r4[0] + r4[1]), w / Math.max(1e-9, r4[3] + r4[2]), h / Math.max(1e-9, r4[0] + r4[3]), h / Math.max(1e-9, r4[1] + r4[2]));
+                rad = r4.map((r) => r * f);
+            }
+            return { b, rad };
         }
         return null;
     };

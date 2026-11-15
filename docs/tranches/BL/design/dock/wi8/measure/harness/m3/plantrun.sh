@@ -8,7 +8,7 @@ H="$(cd "$(dirname "$0")/.." && pwd)"; L="$H/../logs"; R="$H/../rows"; W=/Users/
 probe_cells() { case "$1" in
   g2-clock) echo p3-fold-pill-fine;; g2-curve) echo p3-fold-layers-fine;; g2-touch) echo p3-fold-transport-coarse;;
   g2-compact) echo p3-fold-many-coarse;; g2-rim) echo p3-fold-rim-fine;; g3-intent) echo "p3-rev-fold-25-ptr p3-rev-fold-50-ptr";;
-  g4-inline) echo p3-seat-fine;; g2-held) echo p3-fold-pill-fine;; g4-ghost) echo p3-seatset-fine;; g4-join) echo p3-seatset-fine;; g4-snap) echo "p3-seat-coarse p3-seat-long-coarse";; g4-scroll) echo p3-seat-long-coarse;; g6-flow) echo p3-hover-fine;;
+  g4-inline) echo p3-seat-fine;; g2-held) echo p3-fold-pill-fine;; g2-lane) echo p3-region-rm;; g4-ghost) echo p3-seatset-fine;; g4-join) echo p3-seatset-fine;; g4-snap) echo "p3-seat-coarse p3-seat-long-coarse";; g4-scroll) echo p3-seat-long-coarse;; g6-flow) echo p3-hover-fine;;
   g9-scope) echo p3-scope-fine;; g10-rm) echo p3-fold-pill-rm;; *) echo "";; esac; }
 side_cmd() { case "$1" in
   g1-linger) echo "node clock2.mjs 5402 plant-g1 --engine $2 --only c";;
@@ -21,7 +21,7 @@ judge() { local P="$1" F; F=$(ls "$R/plant-$P"/*.rows.json 2>/dev/null); case "$
   g2-clock|g3-intent|g10-rm) node "$H/m3/judge4.mjs" $F;;
   g4-inline|g4-snap|g4-scroll) node "$H/m3/seat4.mjs" $F;;
   g9-scope) node "$H/g9b.mjs" $F;;
-  g2-curve|g2-touch|g2-compact|g2-rim|g4-join|g6-flow|g2-held|g4-ghost) node "$H/m3/read3.mjs" $F;;
+  g2-curve|g2-touch|g2-compact|g2-rim|g4-join|g6-flow|g2-held|g4-ghost|g2-lane) node "$H/m3/read3.mjs" $F;;
   esac; }
 for P in "$@"; do
   log="$L/m3-plant-$P.txt"; echo "== $P $(date '+%H:%M:%S') (load $(sysctl -n vm.loadavg))" > "$log"

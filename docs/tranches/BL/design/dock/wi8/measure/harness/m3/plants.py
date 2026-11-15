@@ -36,6 +36,8 @@ P = {
     [(D+"composables/useDockBody.ts", "            const cbx = ms.boxSizing === \"border-box\";", "            const cbx = true || ms.boxSizing === \"border-box\";")]),
   "g4-ghost": ("G-4 (a control leaves): the removed control held inside the run's scroll port",
     [(D+"composables/useDockBody.ts", "                (run.parentElement ?? run).appendChild(n);", "                run.appendChild(n);")]),
+  "g2-lane": ("G-2 (inside the plate): every lane corner rounded, as before (CSS scales them down)",
+    [(D+"composables/useDockBody.ts", "on(box[x], P[x]) ? rIn : 0);", "on(box[x], P[x]) ? rIn : rIn);")]),
   "g6-flow": ("G-6: a name put in flow on hover (the seat grows 12 px a side)",
     [(D+"styles/controls/icon-button.css", None, "\n.glass-dock .dock-run > .dock-icon-button:hover { padding-inline: 12px; }\n")]),
   "g7-provide": ("G-7: the outlet's provide removed",
