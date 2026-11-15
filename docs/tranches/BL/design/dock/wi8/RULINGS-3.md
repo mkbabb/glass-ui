@@ -1,0 +1,11 @@
+# Dock rulings after the third measure (2026-11-15 13:08)
+
+Orchestrator's rulings on what MEASURE-3.md leaves waiting. Each is the owner's to reverse.
+
+**RU-21. The lane wins over "held visible until covered".** A seat stays inside its lane for the whole travel; where a lane's edge reaches a seat before the plate's edge does, the seat may be hidden early by at most 20 ms (two rows at 120 Hz, one at 60 Hz), and it leaves by the lane's own clip, never by a jump. Reason: the other choice lets a seat paint outside its lane over a neighbour's content, which the eye reads as a double print; a seat gone 8 to 17 ms early under a moving edge is not seen. G-2 and G-4 read it as: no seat is hidden more than 20 ms before it is covered, and no seat ever paints outside its lane.
+
+**RU-22. The shipped line is triaged, not waived.** Each of the 304 release tests that pass on master and fail on the build is put in one of three piles with its reason: (a) it reads a property the new carrier moved or removed on purpose (the corner on the root, the old size variables): the test is restated to read the same promise where it now lives (the painted plate), and the restated test must be RED on a planted fault; (b) it reads behaviour a consumer relies on and the build broke: a fault, cured in the build; (c) it reads a public name a consumer may use in CSS or script (a class, an attribute, a custom property on the root): the name is kept, or the removal is listed as a breaking change for the owner, since 11.2.0 is a minor release. G-14 is green when pile (b) is empty, pile (a) is restated with biting plants, and pile (c) is a written list.
+
+**RU-23. When seven seats do not fit at 360 to 390.** After the current page's name has given way (the compact run), seats shrink their inline padding to the coarse minimum of 44 px per seat; only if seven such seats still do not fit does the run scroll, with the current seat scrolled into view and no sliver at rest (the run snaps so a seat is either whole or absent at each end). No "More" seat.
+
+**RU-24. Names on one clock.** A change of open seat, or the compact switch, never changes two seats' widths in one row: widths travel on the dock's spring like every other size (the built pieces already carry that clock).
