@@ -3,7 +3,178 @@
 Seat: diagnostic, claude-opus-5-5, 2026-11-15. Worktree `.claude/worktrees/bl/ro-loop`,
 branch `bl/ro-loop` from `v11.0.2`. Nothing shipped.
 
-## Verdict
+## Amendment, round 2: reproduced, attributed and cured
+
+value.js ran the probe's wrapper in its o21 spec
+(`~/.dev-logs/owner-1112/LAST-TEN/color/ro-loop/`). The writer was glass's
+`useDockExpandedSize` observer. A morph had just started, and the delivery held the
+root's parent (value.js's dock host div) and the layers' children. Those are outside
+the callback's `own` list, so `capture()` ran inside the callback and wrote
+`--dock-expanded-px`. That grew `.glass-dock`, the host div and the plate from 389 to
+461 px after they were delivered. The trigger is a viewport resize across the
+breakpoint while a morph runs: o21 sets 390x844 and about 230 ms later 1440x900.
+
+### Reproduction (glass alone)
+
+- `ro-harness.html?scene=consumer&responsive=1` follows value.js's desktop predicate.
+  At 1024 px and up the dock is `collapse: "open"` and carries one more worded seat.
+  Below that it is pinned open (`collapse: false`) without that seat, so each crossing
+  changes the posture and the expanded box in one render.
+- The witness is `tests-visual/ro-loop.spec.ts`. Each cell fails on any window
+  `error`, `pageerror` or `console.error`. The four cells:
+  - out-and-back: 1440, then 390x844, then about 230 ms later 1440x900
+  - back-and-out: the reverse
+  - unfold: the same pair while a hover unfold runs
+  - fold: the same pair while the idle fold runs
+- Run it with Vite serving the tree on 5421:
+  `GLASS_UI_DEMO_PORT=5421 guarded -- npx playwright test -c tests-visual/playwright.config.ts ro-loop.spec.ts --project=chromium-headless-new --workers=1`.
+
+### Readings (Chromium headless shell, `--repeat-each=2`)
+
+| tree | out-and-back | back-and-out | unfold | fold | total |
+| --- | --- | --- | --- | --- | --- |
+| v11.0.2 | RED 2/2 | RED 2/2 | RED 2/2 | RED 2/2 | 8 failed: "window error: ResizeObserver loop completed with undelivered notifications." |
+| v11.0.1 (`git archive` tree in `.cache/v1101`) | green | green | green | green | 8 passed |
+| cure, fca26fdbb | green | green | green | green | 8 passed (and 8 more in `coarse-touch`) |
+
+**v11.0.1 does not raise it.**
+
+### Guilty commit and line
+
+I bisected by disabling each 11.0.2 change to `dockMorphMeasure.ts` on the v11.0.2
+tree, one at a time:
+- With the collapse arm's `keepExpanded` off, all 4 cells were green.
+- With the `own` skip off, all 4 were still red.
+
+**The guilty commit is `5afae24e9`** (O-262, "a collapse starts from the open box it
+leaves"), not `f4557c102`. The lines in `src/components/dock/composables/dockMorphMeasure.ts`
+on v11.0.2:
+
+```ts
+249        const keepExpanded = arming && !expanded && lastPostureExpanded && lastExpandedPx !== null;
+...
+254                  ? lastExpandedPx!
+```
+
+After the crossing, the collapse arm reserved the expanded box from before the resize
+(389 px, without the wide seat). The first capture of the morph read the real box
+(461 px). The host had moved, so the band hold let the reading through, and the capture
+wrote it from inside the observer delivery (v11.0.2 line 459, `capture();` in the
+`ResizeObserver` callback). On v11.0.1 the arm read the box fresh, so the in-delivery
+capture wrote an unchanged value. The write inside the delivery was the latent defect,
+and `keepExpanded` made the reading move.
+
+### The cure (worktree commit fca26fdbb, one commit)
+
+A ResizeObserver delivery through a morph never writes a size:
+
+- **ResizeObserver callback.** At rest it captures as before. Through a morph, a
+  delivery of only the morph's own boxes still captures nothing (`f4557c102`). Any
+  other delivery owes a capture, which runs once at the next animation frame, before
+  that frame's layout.
+- **Host style watcher.** When the constraint has moved, it now owes the capture
+  instead of running it. Its record can land in the delivery's microtask checkpoint,
+  since the plate cross observer writes the root's style.
+- **Pane mutation observer.** Through a morph it now captures on the pane's mutation
+  record, before the layout of the frame the patch lands in. So the reservation still
+  follows a pane patched mid-morph in that same frame (O-101), and no delivery has to
+  write it.
+- **Layout cost.** No layout is forced per frame beyond 11.0.2's own. The owed capture
+  runs only when a delivery owes one, and the mutation capture only on a content
+  change mid-morph.
+- **The kept box stays.** `keepExpanded` (`5afae24e9`) is unchanged, so the rail cells
+  it made green stay green. A stale kept box is now corrected at the next frame (or at
+  the patch), outside any delivery.
+
+```diff
++    /* The capture a morph's observer delivery owes, taken at the next animation frame. */
++    let owedFrame = 0;
++
++    function owe(): void {
++        if (owedFrame) return;
++        if (typeof requestAnimationFrame === "undefined") {
++            capture();
++            return;
++        }
++        owedFrame = requestAnimationFrame(() => {
++            owedFrame = 0;
++            if (!disposed) capture();
++        });
++    }
+@@ the ResizeObserver callback
+-                const own = [rootEl.value, contentEl.value, expandedEl.value, collapsedEl.value];
+-                if (
+-                    rootEl.value?.hasAttribute("data-morphing") &&
+-                    entries.every((entry) => own.includes(entry.target as HTMLElement))
+-                ) {
++                if (!rootEl.value?.hasAttribute("data-morphing")) {
++                    capture();
+                     return;
+                 }
+-                capture();
++                const own = [rootEl.value, contentEl.value, expandedEl.value, collapsedEl.value];
++                if (entries.every((entry) => own.includes(entry.target as HTMLElement))) return;
++                owe();
+@@ the pane mutation observer
+-                if (!observer) capture();
++                if (!observer || rootEl.value?.hasAttribute("data-morphing")) capture();
+@@ the host style watcher
+-                if (constraintOf(root, axis.value) !== restConstraint) capture();
++                if (constraintOf(root, axis.value) !== restConstraint) owe();
+@@ dispose
++        if (owedFrame) cancelAnimationFrame(owedFrame);
+```
+
+The same commit also carries a block comment, "THROUGH A MORPH NO CAPTURE RUNS INSIDE
+AN OBSERVER DELIVERY", the witness spec, `tests-visual/ro-loop.config.ts` (the WebKit
+2287 project for it) and the harness's `responsive=1` mode.
+
+The first attempt deferred the mutation path too, and paid for it. The
+`release-10-1-2` O-101 `mid-expand` and `reversal` cells went red (11 of 32: one
+morphing frame reserved the old pane's box, for example 390 for 160). Capturing on the
+mutation record fixed them.
+
+### Regression on the cured tree
+
+- **Dock unit specs** (`tests/components/custom/dock`, `tests/components/dock`,
+  `tests/components/ui/slider/dock-hold-contract.test.ts`, vitest `--maxWorkers=2`):
+  27 files. 223 passed, 1 expected fail and 1 skipped, all marked as such in the
+  specs. No test was changed.
+- **Visual specs** (`release-11-0-2`, `release-10-1-2` and `ro-loop` in
+  `chromium-headless-new` and `coarse-touch`, `--workers=1`): 202 passed, 17 skipped
+  and 1 failed.
+  - The failure was `O-101 · horizontal · collapsed (1440->390)` in
+    `chromium-headless-new`. It is a harness TypeError
+    (`page.waitForFunction: Cannot read properties of undefined (reading 'some')`, the
+    spec's `__frames` read), not a reservation assertion. The same cell passed 10 of 10
+    on a repeat (`--repeat-each=5`, both directions), and passed in the run before
+    this one.
+  - Every other O-101 and O-101a cell was green in both projects.
+  - Green in both projects: the 11.0.2 `fold · an idle fold lays out once per morph
+    frame` (`f4557c102`'s cell), and both `rail ·` cells (`5afae24e9`'s).
+
+### WebKit 2287
+
+This ran under `guarded --exclusive webkit`, with a lock wait of about 7 minutes and the
+run itself from 10:13:41 to 10:15:11 EST. It used
+`tests-visual/ro-loop.config.ts`, project `webkit`, with `RO_LOOP_WEBKIT=1`, one pass
+per tree.
+
+- v11.0.2 (uncured `git archive` tree): **RED 4/4**. Every cell raised the window
+  error "ResizeObserver loop completed with undelivered notifications."
+- v11.0.1: 4/4 green.
+- cure fca26fdbb: **GREEN 4/4**.
+
+Round 1's WebKit-only loop when a Select opens in the dock is separate. It is
+unchanged by this cure and still present on both tags.
+
+### What did not run (round 2)
+
+- value.js: nothing run there. Its probe output was read only.
+- Firefox: not part of this seat.
+- Nothing published or merged. The cure lives on `bl/ro-loop` only.
+
+## Verdict (round 1, superseded by the amendment above)
 
 **Not reproduced in glass alone.** Across three scenes, two tags, two scales, scrolling,
 6x CPU throttling, a Select pick flow and a live field canvas, there was no
