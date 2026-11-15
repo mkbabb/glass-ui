@@ -36,7 +36,7 @@ P = {
     [(D+"styles/run.css", "@keyframes gl-dock-clip-inline-start {", "@keyframes gl-dock-cap-inline-start {\n    from {\n        border-radius: 50%;\n    }\n}\n\n@keyframes gl-dock-clip-inline-start {")]),
   # The fit law (pile (b), cured): the flag never written.
   "fits": ("data-run-fits never written",
-    [(D+"composables/useDockBody.ts", "        el.toggleAttribute(\"data-run-fits\", fits);", "        el.toggleAttribute(\"data-run-fits\", false);")]),
+    [(D+"composables/useDockBody.ts", "        el.toggleAttribute(\"data-run-fits\", plan.fits);", "        el.toggleAttribute(\"data-run-fits\", false);")]),
   # The zoom cure (pile (b)): reads not divided by the ancestor zoom.
   "zoom": ("the carrier's reads not divided by the ancestor zoom",
     [(D+"composables/useDockBody.ts", "        Z = (el as HTMLElement & { currentCSSZoom?: number }).currentCSSZoom ?? 1;", "        Z = 1;")]),
