@@ -19,4 +19,11 @@ export interface ScrollProgressRimProps {
     orientation?: ScrollProgressRimOrientation;
     /** CSS color anchors for the fill's spectrum. */
     stops?: readonly string[];
+    /**
+     * Where the rim draws. `track` (default): a thin pill inset along one edge.
+     * `border`: on the host's border box, with the host's radius inherited, so it has no
+     * geometry of its own and follows the host's outline (the dock's plate, W-I.8 RU-12).
+     * @default "track"
+     */
+    edge?: "track" | "border";
 }

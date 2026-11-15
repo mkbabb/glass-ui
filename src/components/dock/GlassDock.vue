@@ -507,6 +507,9 @@ defineExpose({
             `graspHeld` (a pointer down on a descendant), never the posture count.
         -->
         <div ref="plateEl" class="dock-plate" aria-hidden="true" :data-held="graspHeld || undefined">
+            <!-- W-I.8 R-1 (RU-12): the reading-progress rim is the plate's child, so it has
+                 no geometry of its own and follows the plate's outline in every frame. -->
+            <slot name="rim" />
             <template v-if="grasping">
                 <span class="glass-grasp-carrier" data-grasp="rest"></span>
                 <span

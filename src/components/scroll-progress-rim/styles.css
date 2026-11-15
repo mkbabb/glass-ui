@@ -91,6 +91,37 @@
         );
     }
 
+    /* `edge="border"` (W-I.8 RU-12): the rim is the host's border box, `inset: 0` with the
+       host's radius inherited, so a dock's plate carries it through every frame of its
+       travel with no geometry of its own. The fill is a ring of the rim's width revealed
+       from the leading edge to the fraction of the box; the fraction does not change when
+       the host moves. */
+    .scroll-progress-rim[data-edge="border"] {
+        border-radius: inherit;
+    }
+
+    .scroll-progress-rim[data-edge="border"] .scroll-progress-rim__track {
+        inset: 0;
+        border-radius: inherit;
+        background: none;
+    }
+
+    .scroll-progress-rim[data-edge="border"] .scroll-progress-rim__fill {
+        border-radius: inherit;
+        padding: var(--scroll-progress-rim-width);
+        mask:
+            linear-gradient(#000 0 0) content-box exclude,
+            linear-gradient(#000 0 0);
+    }
+
+    .scroll-progress-rim[data-edge="border"][data-orientation] .scroll-progress-rim__fill {
+        clip-path: inset(0 calc(100% - var(--scroll-progress-rim-fill, 0%)) 0 0);
+    }
+
+    .scroll-progress-rim[data-edge="border"][data-orientation]:dir(rtl) .scroll-progress-rim__fill {
+        clip-path: inset(0 0 0 calc(100% - var(--scroll-progress-rim-fill, 0%)));
+    }
+
     /* The dot recipe is the value-marks register's — the third copy of it in this
        family is DELETED, not maintained. The register's mechanic (a zero-thickness
        positioned line whose `::before` centres the disc) is direction-agnostic and

@@ -26,6 +26,7 @@ const DEFAULT_STOPS = [
 const props = withDefaults(defineProps<ScrollProgressRimProps>(), {
     max: 1,
     orientation: "horizontal",
+    edge: "track",
 });
 
 const clamp = (value: number, min: number, max: number) =>
@@ -81,6 +82,7 @@ const style = computed<CSSProperties>(
     <div
         class="scroll-progress-rim"
         :data-orientation="orientation"
+        :data-edge="edge === 'border' ? 'border' : undefined"
         :style="style"
         role="progressbar"
         aria-label="Scroll progress"

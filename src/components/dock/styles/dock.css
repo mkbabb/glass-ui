@@ -133,12 +133,19 @@
            the 1.625× held optic derives from. */
         --glass-grasp-rest-filter: var(--dock-surface-blur);
         --glass-grasp-radius: var(--glass-blur-resting-radius);
-        border: 1.5px solid
+        --dock-plate-border: 1.5px;
+        border: var(--dock-plate-border) solid
             color-mix(
                 in srgb,
                 var(--dock-plate-expanded-border) calc(var(--dock-expand-t) * 100%),
                 var(--dock-plate-collapsed-border)
             );
+    }
+
+    /* W-I.8 RU-12: the reading-progress rim drawn on the plate's border box, so its outline
+       is the plate's outer edge in every frame (the rim's own `inset: 0` is the padding box). */
+    .dock-plate > .scroll-progress-rim[data-edge="border"] {
+        inset: calc(-1 * var(--dock-plate-border));
     }
 
     /* ── THE GRASP PRECONDITION — the plate stands down its two backdrop roots ──────
