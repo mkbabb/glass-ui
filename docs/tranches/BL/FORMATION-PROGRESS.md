@@ -980,3 +980,5 @@ Disk episode, one line: on 2026-11-03 the volume went from 100% (15 GiB free) to
 - 2026-11-14 22:22 — O-345 (owner, direct): depth and parallax study launched (`driver/bl-design-depth.js`, brief `design/depth/BRIEF.md`, spec to be W-B.19, build in 11.2.0). O-344: the Metric voice moves to 11.2.0. Live: critic 4 (11.0.2), critic 8 (11.1.0).
 
 - 2026-11-15 00:19 — 11.0.2: critique 4 measured to the end, five items green, one standing defect that is 11.0.1's own (the vertical dock's first WebKit expand frame; moved to 11.1.1 by `orchestrator-note-after-critique-4.md`); the run goes to its close (`closeAfter: 4`, args `resume/glass-11.0.2-close.json`).
+
+- 2026-11-15 00:41 — O-346 (owner, all sites: the last-ten audit): glass's own pass launched as one Opus seat (`audit/last-ten/`). Live: close 11.0.2, critic 8 (11.1.0), depth prototype, dock measuring, last-ten audit (five seats).
