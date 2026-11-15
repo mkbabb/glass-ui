@@ -62,7 +62,7 @@ export interface UseDockStateReturn {
      */
     graspHeld: ComputedRef<boolean>;
     /** Mouseenter handler — transitions `collapsed → hover`. */
-    onMouseEnter: () => void;
+    onMouseEnter: (e?: MouseEvent) => void;
     /** Mouseleave handler — schedules `hover → collapsed` after `collapseDelay`. */
     onMouseLeave: (e?: MouseEvent) => void;
     /** Focusin handler — transitions `collapsed → hover` (keyboard parity with mouse). */
@@ -424,10 +424,31 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
 
     // --- Mouse handlers ---
 
+    /* W-I.8 R-2 (RU-3): a pointer event counts as a move only when its client coordinates
+       differ from the last pointer event this dock saw, an enter and a leave included.
+       Both engines send an enter and a move with unchanged coordinates when a page scrolls
+       a dock under a still pointer; neither opens a collapsed dock. */
+    let lastX = Number.NaN;
+    let lastY = Number.NaN;
+    function moved(e: MouseEvent): boolean {
+        const m = e.clientX !== lastX || e.clientY !== lastY;
+        lastX = e.clientX;
+        lastY = e.clientY;
+        return m;
+    }
     let intentArmed = false;
     function onPointerMoveInside(e: PointerEvent): void {
-        if (e.pointerType === "touch" || !intentArmed) return;
+        if (e.pointerType === "touch") return;
+        const real = moved(e);
+        if (!real || !intentArmed) return;
         intentArmed = false;
+        // A return mid-fold reverses it at once, with no intent wait (R-2, RU-6).
+        if (state.value === "collapsed" && isTransitioning?.value) {
+            clearHoverIntent();
+            state.value = "hover";
+            syncDerived();
+            return;
+        }
         startIntent();
     }
     watch(
@@ -439,20 +460,22 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         },
         { immediate: true, flush: "sync" },
     );
-    function onMouseEnter() {
+    function onMouseEnter(e?: MouseEvent) {
         if (isQuiet() || pressOnly()) return;
+        // Any re-entry cancels a running linger, a scrolled one included.
         clearTimer();
         pointerInside = true;
         enterInside();
+        const real = e ? moved(e) : true;
         if (state.value === "collapsed") {
             clearHoverIntent();
-            // A return while the fold is travelling reverses it at once (R-2).
-            if (isTransitioning?.value) {
+            // A return while the fold is travelling reverses it at once (R-2, RU-6).
+            if (real && isTransitioning?.value) {
                 state.value = "hover";
                 syncDerived();
                 return;
             }
-            // Intent counts from the pointer's first movement inside (R-2).
+            // An enter alone arms nothing: intent counts from the first real move (RU-3).
             intentArmed = true;
         }
     }
@@ -485,6 +508,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
 
     function onMouseLeave(e?: MouseEvent) {
         if (isQuiet() || pressOnly()) return;
+        if (e) moved(e);
         intentArmed = false;
         pointerInside = false;
         leaveInside();
