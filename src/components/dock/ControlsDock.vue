@@ -47,5 +47,7 @@ const collapse = computed<DockCollapse>(() => props.collapse ?? (phone.value ? "
     >
         <slot />
         <template v-if="$slots.collapsed" #collapsed><slot name="collapsed" /></template>
+        <template v-if="$slots.persistent" #persistent><slot name="persistent" /></template>
+        <template v-if="$slots['persistent-end']" #persistent-end><slot name="persistent-end" /></template>
     </GlassDock>
 </template>

@@ -366,7 +366,12 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             }
             readRegions();
             placeLeaves();
-            if (reduce) {
+            // R-1: a window resize seats every quantity at layout with no travel.
+            if (reduce || resized) {
+                if (resized) {
+                    eq.d = eq.v = 0;
+                    u = uv = 0;
+                }
                 eq.v = 0;
                 for (const q of Object.values(edge)) (q.d = 0), (q.v = 0);
                 for (const t of regions.values()) (t.x.d = t.y.d = t.x.v = t.y.v = 0);
@@ -662,7 +667,20 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         }
     }
 
+    let resized = false;
+    let resizeFrame: number | null = null;
+    function onWindowResize(): void {
+        resized = true;
+        if (resizeFrame !== null) cancelAnimationFrame(resizeFrame);
+        resizeFrame = requestAnimationFrame(() => {
+            resizeFrame = requestAnimationFrame(() => {
+                resized = false;
+                resizeFrame = null;
+            });
+        });
+    }
     onMounted(() => {
+        window.addEventListener("resize", onWindowResize);
         sync("mount");
         if (typeof ResizeObserver === "undefined") return;
         ro = new ResizeObserver(() => sync("ro"));
@@ -672,6 +690,8 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         for (const seat of seats.keys()) ro.observe(seat);
     });
     onBeforeUnmount(() => {
+        window.removeEventListener("resize", onWindowResize);
+        if (resizeFrame !== null) cancelAnimationFrame(resizeFrame);
         ro?.disconnect();
         if (raf !== null) cancelAnimationFrame(raf);
     });
