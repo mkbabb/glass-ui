@@ -70,6 +70,11 @@ interface FaceTrack {
     placed: boolean;
     /** The side an entering face arrives from on the dock's axis (+1 trailing, −1 leading). */
     dir?: number;
+    /** A placed leaving face: its region and that region's carried delta at placement, so
+     *  it is held where it painted while the region rides its edge (R-4, C-1). */
+    region?: string;
+    d0x?: number;
+    d0y?: number;
 }
 interface PendingLeave {
     el: HTMLElement;
@@ -401,7 +406,12 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             el.style.width = `${p.rect.r - p.rect.l}px`;
             el.style.height = `${p.rect.b - p.rect.t}px`;
             const ft = faces.find((f) => f.el === el);
-            if (ft) ft.placed = true;
+            if (ft) {
+                ft.placed = true;
+                ft.region = p.region;
+                ft.d0x = g.x.d;
+                ft.d0y = g.y.d;
+            }
         }
     }
 
@@ -569,6 +579,12 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
                     const off = face.dir * ENTER_PX * (1 - inW);
                     face.el.style.translate = o.vertical() ? `0 ${off.toFixed(3)}px` : `${off.toFixed(3)}px 0`;
                 }
+            }
+            // The leaving face does not move: it is held where it painted against its
+            // region's carry, and only the plate's moving edge cuts it (R-4, C-1).
+            if (face.role === "leave" && face.region !== undefined) {
+                const t = regions.get(face.region);
+                if (t) face.el.style.translate = `${(-(t.tx - (face.d0x ?? 0))).toFixed(3)}px ${(-(t.ty - (face.d0y ?? 0))).toFixed(3)}px`;
             }
             face.el.style.opacity = op.toFixed(4);
         }
