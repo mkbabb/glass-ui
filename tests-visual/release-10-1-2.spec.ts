@@ -480,6 +480,44 @@ for (const axis of ["horizontal", "vertical"] as const) {
     }
 }
 
+/*
+ * W-I.8 RU-35: master's names stay through 11.2.0 as outputs the carrier writes on the root on a
+ * trigger frame: after an unfold `--dock-expanded-px` is the root's layout extent on the dock's
+ * axis and `--dock-plate-cross-px` its cross extent; after a fold `--dock-collapsed-px` is the
+ * folded extent; each within 0.5 px.
+ */
+for (const axis of ["horizontal", "vertical"] as const) {
+    test(`RU-35 · ${axis} · the outputs read the root's extents after an unfold and after a fold`, async ({ page }) => {
+        await page.setViewportSize(viewport(1440));
+        await page.goto(`/tests-visual/release-10-1-2/harness.html?scene=stale-endpoint&pin=&axis=${axis}`);
+        await page.waitForFunction(() => (window as unknown as { __ready?: boolean }).__ready);
+        const settled = (p: string) =>
+            page.waitForFunction((q) => {
+                const el = document.querySelector(".glass-dock");
+                return !!el && el.classList.contains(q) && !el.hasAttribute("data-morphing");
+            }, p);
+        const read = () =>
+            page.evaluate((vertical) => {
+                const el = document.querySelector<HTMLElement>(".glass-dock")!;
+                const v = (k: string) => Number.parseFloat(el.style.getPropertyValue(k));
+                const r = el.getBoundingClientRect();
+                return { along: vertical ? r.height : r.width, cross: vertical ? r.width : r.height, expanded: v("--dock-expanded-px"), collapsed: v("--dock-collapsed-px"), plateCross: v("--dock-plate-cross-px") };
+            }, axis === "vertical");
+        const call = (name: string) => page.evaluate((n) => (window as unknown as Record<string, () => void>)[n](), name);
+        await settled("collapsed");
+        await call("__expand");
+        await settled("expanded");
+        const open = await read();
+        expect(Math.abs(open.expanded - open.along), JSON.stringify(open)).toBeLessThanOrEqual(0.5);
+        expect(Math.abs(open.plateCross - open.cross), JSON.stringify(open)).toBeLessThanOrEqual(0.5);
+        await call("__collapse");
+        await settled("collapsed");
+        const folded = await read();
+        expect(Math.abs(folded.collapsed - folded.along), JSON.stringify(folded)).toBeLessThanOrEqual(0.5);
+        expect(Math.abs(folded.plateCross - folded.cross), JSON.stringify(folded)).toBeLessThanOrEqual(0.5);
+    });
+}
+
 // O-101a, 10.1.2 critique b2 D-2. A constant pane wider than the narrow host (scene
 // `overflow`: 20 seats, natural span 960, so the run scrolls at 390 and fits at 1440),
 // with the HOST changing during the morph rather than the pane. No observed box but the
