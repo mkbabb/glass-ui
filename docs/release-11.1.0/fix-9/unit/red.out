@@ -1,0 +1,62 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/f9-pre
+
+ ❯ tests/components/custom/dock/GlassDock.run-mark.test.ts (9 tests | 1 failed) 136ms
+     × measures layout boxes, so a zoom or a transform above the run scales the plate once 15ms
+ ❯ tests/components/custom/dock/GlassDock.persistent-face.test.ts (13 tests | 1 failed) 4096ms
+     × follows a #collapsed slot that comes or goes after mount 10ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/custom/dock/GlassDock.persistent-face.test.ts > the persistent face > follows a #collapsed slot that comes or goes after mount
+AssertionError: expected undefined to be 'button' // Object.is equality
+
+- Expected:
+"button"
+
++ Received:
+undefined
+
+ ❯ tests/components/custom/dock/GlassDock.persistent-face.test.ts:104:46
+    102|         reading.value = true;
+    103|         await nextTick();
+    104|         expect(summary().attributes("role")).toBe("button");
+       |                                              ^
+    105|         expect(summary().attributes("tabindex")).toBe("0");
+    106|         expect(summary().attributes("aria-label")).toBe("Expand dock");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/components/custom/dock/GlassDock.run-mark.test.ts > the run's active mark > measures layout boxes, so a zoom or a transform above the run scales the plate once
+AssertionError: expected [ '50px', '5px', '125px', '45px' ] to deeply equal [ '40px', '4px', '100px', '36px' ]
+
+- Expected
++ Received
+
+  [
+-   "40px",
+-   "4px",
+-   "100px",
+-   "36px",
++   "50px",
++   "5px",
++   "125px",
++   "45px",
+  ]
+
+ ❯ tests/components/custom/dock/GlassDock.run-mark.test.ts:222:66
+    220|             const run = wrapper.find(".dock-run").element as HTMLEleme…
+    221|             const read = (k: string) => run.style.getPropertyValue(`--…
+    222|             expect([read("x"), read("y"), read("w"), read("h")]).toEqu…
+       |                                                                  ^
+    223|             wrapper.unmount();
+    224|         } finally {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  2 failed | 20 passed (22)
+   Start at  01:22:08
+   Duration  5.40s (transform 1.04s, setup 151ms, import 1.66s, tests 4.23s, environment 930ms)
+
