@@ -29,6 +29,7 @@ for (const g of GROUPS) {
 let crit = null
 const last = (args && args.lastRound) || 4
 for (let round = 1; round <= last; round++) {
+  if (args && args.closeAfter && round > args.closeAfter) break
   if (crit && (crit.defects || []).length) {
     phase('Fix')
     const f = await agent(OID + '\n' + LAW + '\n' + SCOPE + '\nYou are the FIX seat (before critic ' + round + '). Read ' + REL + '/ in full. Cure every defect below at its root, witness RED before and GREEN after, record in ' + REL + '/fix-' + round + '.md and commit. Add nothing the list does not name.' + RES('fix-1102-' + round) + ' Defects:\n' + JSON.stringify(crit.defects, null, 1), { label: 'fix-1102-' + round, phase: 'Fix', model: 'opus', schema: SCHEMA })
@@ -38,6 +39,7 @@ for (let round = 1; round <= last; round++) {
   crit = await agent(FID + '\n' + LAW + '\n' + SCOPE + '\nYou are a FRESH ADVERSARIAL CRITIC (round ' + round + ') of release/11.0.2. You built nothing on it. Read git -C ' + WT + ' log v11.0.1..release/11.0.2 and ' + REL + '/ in full. You gate on a FINITE list and nothing else, each item read twice (run it, then re-read your reading against the capture or the source line): (1) every landed row\'s witness is RED on a git-archive tree of v11.0.1 and GREEN on the tip, in Chromium and Playwright WebKit (coarse-touch where touch is the claim), and reads paint where paint is the claim; (2) the release-10-1-5 spec is 107/107 in both engines and release-10-1-2, -3 and -4 show no title failing that passes on v11.0.1; (3) the release-11-0-1 specs (owner cells, fix-2, critic-2\'s pixel reader) stay GREEN in both engines: the dock end round on every frame, the script-free prerendered cell; (4) nothing is removed or renamed: the built package\'s exports, file list and declarations against the published 11.0.1, and no custom property deleted; (5) typecheck, build, demo:dist:build, vitest --maxWorkers=2 and verify:package exit 0 on the committed tree; (6) the CHANGELOG 11.0.2 entry is true, names every moved value, and is outward prose. Anything outside the list goes in open_gaps under "for INBOUND", not in defects. Write ' + REL + '/critique-' + round + '.md and commit.' + RES('critic-1102-' + round), { label: 'critic-1102-' + round, phase: 'Verify', model: 'fable', schema: SCHEMA })
   if (!crit) return { stopped: 'critic-null', round }
   if (!(crit.defects || []).length) break
+  if (args && args.closeAfter === round) break
   if (round === last) return { stopped: 'not-converged', round, crit: crit.summary && crit.summary.slice(0, 1500) }
 }
 phase('Close')
