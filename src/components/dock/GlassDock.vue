@@ -274,16 +274,18 @@ const body = useDockBody({
 });
 const outerCurrentLayer = ref<string>(visualExpanded.value ? "full" : "summary");
 const outerLeavingLayer = ref<string | null>(null);
-/* `[data-morphing]` is set before the posture class changes; the faces swap pre-flush so
-   the carrier reads where the leaving face painted. */
+/* The faces swap pre-flush so the carrier reads where the leaving face painted, and
+   `[data-morphing]` is set after that read and before the posture class changes (RU-29):
+   the attribute gives the hidden face its box, so a read after it ran on a layout the
+   attribute had just dirtied, and the leaving face's rectangle does not depend on it. */
 watch(
     visualExpanded,
     (open) => {
-        dockEl.value?.setAttribute("data-morphing", "");
         const leave = open ? summaryEl.value : fullEl.value;
         const enter = open ? fullEl.value : summaryEl.value;
         body.postureFaces(fullEl.value, summaryEl.value);
         body.exchange(leave, enter, "layers");
+        dockEl.value?.setAttribute("data-morphing", "");
         outerLeavingLayer.value = outerCurrentLayer.value;
         outerCurrentLayer.value = open ? "full" : "summary";
         body.onSettle(() => {

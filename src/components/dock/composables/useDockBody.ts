@@ -62,6 +62,12 @@ interface Q {
     d: number;
     v: number;
 }
+interface FitPlan {
+    run: HTMLElement;
+    fits: boolean;
+    whole: boolean;
+    room: string;
+}
 interface RegionTrack {
     el: HTMLElement;
     key: string;
@@ -488,9 +494,9 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
      *  sized by script. A horizontal run reads its port from the layers region it fills, a
      *  box the whole-seat cap does not change, so a host that gives the dock more room is
      *  read again (the root's observer fires) and the flag goes. */
-    function fitRun(run: HTMLElement, open: boolean): void {
+    function fitRun(run: HTMLElement, open: boolean): FitPlan | null {
         // A face with no box (RU-17) keeps the reading it had when it was laid out.
-        if (run.offsetParent === null) return;
+        if (run.offsetParent === null) return null;
         const v = o.vertical();
         // Layout extents only: the scroll extent counts the seats' carry translates mid-travel.
         let first = Infinity;
@@ -511,13 +517,13 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         const span = last > first ? last - first : 0;
         const host = run.parentElement;
         const port = v || !host ? (v ? run.clientHeight : run.clientWidth) : host.clientWidth;
-        const fits = publishFit(span, port);
-        runFits = fits;
+        const fits = span > 0 && span <= port;
         // RU-27: the seats do not fit, so the run scrolls and its window is a whole number of
         // seats (run.css); the carrier sets only the flag. Not on a plain run, a run of
         // seats of more than one size, or a vertical run (12.0.0).
         const whole = open && !v && !fits && same && n >= 2 && root()?.getAttribute("data-run") !== "plain";
-        if (run.hasAttribute("data-run-whole") !== whole) run.toggleAttribute("data-run-whole", whole);
+        const room = v && fits ? `${Math.floor(((port - span) / 2) * 100) / 100}px` : "";
+        return { run, fits, whole, room };
     }
 
     /** The fit law (10.1.5 e4, k3, p2): `data-run-fits` says the seats' span is no longer
@@ -529,19 +535,22 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
     let fitPublished = "";
     /** The open run's last fit reading (RU-30 reads it). */
     let runFits = true;
-    function publishFit(span: number, port: number): boolean {
+    /** Writes the fit law and RU-27's flag from one reading; true when a box may move. */
+    function writeFit(plan: FitPlan): boolean {
         const el = root();
-        const fits = span > 0 && span <= port;
-        if (!el) return fits;
-        const v = o.vertical();
-        const room = v && fits ? `${Math.floor(((port - span) / 2) * 100) / 100}px` : "";
-        const value = `${fits ? 1 : 0} ${room}`;
-        if (value === fitPublished) return fits;
+        runFits = plan.fits;
+        let moved = false;
+        if (plan.run.hasAttribute("data-run-whole") !== plan.whole) {
+            plan.run.toggleAttribute("data-run-whole", plan.whole);
+            moved = true;
+        }
+        const value = `${plan.fits ? 1 : 0} ${plan.room}`;
+        if (!el || value === fitPublished) return moved;
         fitPublished = value;
-        if (room) el.style.setProperty("--dock-run-room-block", room);
+        if (plan.room) el.style.setProperty("--dock-run-room-block", plan.room);
         else el.style.removeProperty("--dock-run-room-block");
-        el.toggleAttribute("data-run-fits", fits);
-        return fits;
+        el.toggleAttribute("data-run-fits", plan.fits);
+        return true;
     }
 
     /** R-1 (C2-6): a pill taller than one row is still a stadium, so the open face's content
@@ -551,17 +560,14 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
      *  of the curve gets that much more inline padding on each side. Read in layout boxes
      *  (no translate the loop wrote), written once from the rest just read; the read after
      *  it takes the new width. */
-    function fitCurve(el: HTMLElement, open: boolean, run: HTMLElement | null): void {
+    function fitCurve(el: HTMLElement, open: boolean, run: HTMLElement | null, fits: boolean): string | null {
         const had = el.style.getPropertyValue("--dock-curve-inset") !== "";
         // RU-30: the curve inset is for a run whose content all shows. A run that overflows
         // its axis is clipped square by its own port at a flush edge (10.1.5 k2), and its
         // child cut by the port's far edge read a corner that changed with the inset, so
         // each pass wrote a different one and the dock never rested (a cycle of five
         // insets in WebKit, of two in Chromium, a sync on every frame).
-        if (!o.pill() || !open || !run || run.offsetParent === null || !runFits) {
-            if (had) el.style.removeProperty("--dock-curve-inset");
-            return;
-        }
+        if (!o.pill() || !open || !run || run.offsetParent === null || !fits) return had ? "" : null;
         const v = o.vertical();
         const R0 = bcr(el);
         const rad = (v ? R0.width : R0.height) / 2;
@@ -603,13 +609,13 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
                 short = Math.max(short, a0 + rad - reach - along[0], along[1] - (a1 - rad + reach));
             }
         }
-        if (short === -Infinity) return;
+        if (short === -Infinity) return null;
         const cs = getComputedStyle(el);
         const pad = Number.parseFloat(v ? cs.paddingTop : cs.paddingLeft) || 0;
-        if (!had && short <= 0.25) return;
+        if (!had && short <= 0.25) return null;
         const want = Math.ceil((pad + short) * 4) / 4;
         const now = Number.parseFloat(el.style.getPropertyValue("--dock-curve-inset")) || 0;
-        if (!had || Math.abs(now - want) > 0.25) el.style.setProperty("--dock-curve-inset", `${want}px`);
+        return !had || Math.abs(now - want) > 0.25 ? `${want}px` : null;
     }
 
     function sync(reason: string): void {
@@ -618,12 +624,23 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         Z = (el as HTMLElement & { currentCSSZoom?: number }).currentCSSZoom ?? 1;
         const reduce = o.reducedMotion();
         const prevPainted = painted();
-        // The trigger frame's writes before its read: the fit flag and the curve inset.
+        // RU-29: the trigger frame reads the new layout once. The flags that change layout
+        // (the fit law, RU-27's whole-seat window, the curve inset) are decided from that one
+        // read and written together; only when one changed is the layout read once more.
+        if (POSE) performance.mark("dock:read");
         {
             const open = o.expanded();
             const run = runEl();
-            if (run) fitRun(run, open);
-            fitCurve(el, open, run);
+            const plan = run ? fitRun(run, open) : null;
+            const inset = fitCurve(el, open, run, plan ? plan.fits : runFits);
+            if (POSE) performance.mark("dock:flags");
+            let moved = plan ? writeFit(plan) : false;
+            if (inset !== null) {
+                if (inset === "") el.style.removeProperty("--dock-curve-inset");
+                else el.style.setProperty("--dock-curve-inset", inset);
+                moved = true;
+            }
+            if (POSE && moved) performance.mark("dock:reread");
         }
         const next = rectOf(el);
         if (layout) {
@@ -697,14 +714,32 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
                 postureTravel = true;
             }
             readRegions();
-            placeLeaves();
+            // RU-29: every read of this sync before its first write. The returned faces'
+            // rectangles, the run's resting offset and the leaving faces' containing blocks
+            // are read here; placeLeaves, the offset and write() come after.
+            const retRects = new Map<HTMLElement, Box>();
+            for (const f of faces) if (f.ret) retRects.set(f.el, rectOf(f.el));
+            const r = runEl();
+            let restTo: number | null | undefined;
+            let restFrom = 0;
+            if (r && o.runScroll) {
+                if (postureChanged && posture) restTo = o.runScroll.resting(savedScroll ?? readScroll(r));
+                else if (posture && (seatsMoved || scrollOnly)) {
+                    restFrom = scrollRest !== null ? scrollRest + scrollQ.d : readScroll(r);
+                    o.runScroll.halt();
+                    restTo = o.runScroll.resting(restFrom);
+                }
+            }
+            const leaves = readLeaves();
+            if (POSE) performance.mark("dock:write");
+            placeLeaves(leaves);
             // R-3: a face returned to is carried from where it painted to its place in the
             // new layout: painted minus what the layout and its region's carry would paint,
             // with the velocity that keeps it still against that carry.
             for (const f of faces) {
                 if (!f.ret) continue;
                 const g = regions.get(f.home ?? "layers");
-                const r = rectOf(f.el);
+                const r = retRects.get(f.el)!;
                 const gx = g ? g.x : { d: 0, v: 0 };
                 const gy = g ? g.y : { d: 0, v: 0 };
                 f.q = {
@@ -716,19 +751,15 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             // R-5: the run's offset. On an unfold it is restored on this frame, with the
             // open seat brought in (RU-17); on a content change in the open run it is one
             // more quantity, from where it painted to where it rests.
-            const r = runEl();
             if (r && o.runScroll) {
                 if (postureChanged && posture) {
-                    const to = o.runScroll.resting(savedScroll ?? readScroll(r));
                     scrollQ.d = scrollQ.v = 0;
                     scrollRest = null;
-                    if (to !== null) writeScroll(r, to);
+                    if (restTo != null) writeScroll(r, restTo);
                 } else if (posture && (seatsMoved || scrollOnly)) {
-                    const from = scrollRest !== null ? scrollRest + scrollQ.d : readScroll(r);
-                    o.runScroll.halt();
-                    const to = o.runScroll.resting(from);
-                    if (to !== null && (scrollRest !== null || Math.abs(from - to) > 0.01)) {
-                        scrollQ.d = from - to;
+                    const to = restTo ?? null;
+                    if (to !== null && (scrollRest !== null || Math.abs(restFrom - to) > 0.01)) {
+                        scrollQ.d = restFrom - to;
                         scrollRest = to;
                     }
                 }
@@ -763,7 +794,18 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         }
     }
 
-    function placeLeaves(): void {
+    /** The leaving faces' placements, all read before any is written (RU-29: with two faces
+     *  leaving at once, a containing block read between two writes was a layout of its own). */
+    interface LeavePlan {
+        p: (typeof pendingLeaves)[number];
+        g: RegionTrack;
+        x: number;
+        y: number;
+        w: number;
+        h: number;
+    }
+    function readLeaves(): LeavePlan[] {
+        const out: LeavePlan[] = [];
         while (pendingLeaves.length) {
             const p = pendingLeaves.shift()!;
             const g = regions.get(p.region);
@@ -782,18 +824,26 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             // An absolute box in a scroll container is placed in its scrolled content.
             const x = p.rect.l - cbl - g.x.d - (Number.parseFloat(ms.marginLeft) || 0) + cb.scrollLeft;
             const y = p.rect.t - cbt - g.y.d - (Number.parseFloat(ms.marginTop) || 0) + cb.scrollTop;
-            el.style.inset = "auto";
-            el.style.insetInlineStart = "auto";
-            el.style.left = `${x}px`;
-            el.style.top = `${y}px`;
             // The rect is the border box; a content-box face (the run, padded on both axes)
             // given it as `height` grew by its padding and centred its seats 4 px lower.
             const px = (k: string) => Number.parseFloat(ms.getPropertyValue(k)) || 0;
             const cbx = ms.boxSizing === "border-box";
             const padW = cbx ? 0 : px("padding-left") + px("padding-right") + px("border-left-width") + px("border-right-width");
             const padH = cbx ? 0 : px("padding-top") + px("padding-bottom") + px("border-top-width") + px("border-bottom-width");
-            el.style.width = `${p.rect.r - p.rect.l - padW}px`;
-            el.style.height = `${p.rect.b - p.rect.t - padH}px`;
+            out.push({ p, g, x, y, w: p.rect.r - p.rect.l - padW, h: p.rect.b - p.rect.t - padH });
+        }
+        return out;
+    }
+
+    function placeLeaves(plans: LeavePlan[]): void {
+        for (const { p, g, x, y, w, h } of plans) {
+            const el = p.el;
+            el.style.inset = "auto";
+            el.style.insetInlineStart = "auto";
+            el.style.left = `${x}px`;
+            el.style.top = `${y}px`;
+            el.style.width = `${w}px`;
+            el.style.height = `${h}px`;
             const ft = faces.find((f) => f.el === el);
             if (ft) {
                 ft.placed = true;
