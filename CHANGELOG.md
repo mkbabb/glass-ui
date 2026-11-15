@@ -1,6 +1,6 @@
 # Changelog
 
-## 11.0.2 — unreleased
+## 11.0.2 — 2026-11-15
 
 A patch on 11.0.1. Nothing is removed or renamed. The Slider's thumb takes a new
 default colour, and its magnifying lens during a drag is now opt-in, both described
