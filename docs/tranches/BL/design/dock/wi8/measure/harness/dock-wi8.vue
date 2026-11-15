@@ -45,6 +45,8 @@ import { computed, defineComponent, h, ref } from "vue";
 import * as dock from "@glass/components/dock";
 import { Slider } from "@glass/components/slider";
 import { Popover, PopoverContent, PopoverTrigger } from "@glass/components/popover";
+import { Select, SelectContent, SelectItem, SelectValue } from "@glass/components/select";
+import { DockTrigger } from "@glass/components/dock/trigger";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@glass/components/menu";
 import { Dialog, DialogClose, DialogContent, DialogTitle, DialogTrigger } from "@glass/components/dialog";
 import { SheetContent } from "@glass/components/sheet";
@@ -85,6 +87,10 @@ const ground = q.get("ground") ?? "";
 const flags = { "data-neck": neck, "data-label-enter": labelEnter };
 const corner = q.get("corner") ?? "bottom-end";
 const within = q.get("within") === "parent" ? "parent" : "viewport";
+// FOLD-2 (C2-8): &dir=rtl sets the page's direction before anything mounts.
+if (q.get("dir") === "rtl") document.documentElement.dir = "rtl";
+const g8Select = ref("a");
+const g8Pop = ref(false);
 
 const dark = ref(document.documentElement.classList.contains("dark"));
 function toggleTheme(): void {
@@ -279,7 +285,7 @@ const stageStyle = computed(() =>
                 <p>A page that contributes its tools to the dock.</p>
                 <component :is="DockOutlet" v-if="proto" to="wi8-reader">
                     <DockControl aria-label="Bookmark" data-testid="w-outlet-mark"><Bookmark /></DockControl>
-                    <Popover v-model:open="popOpen" keep-dock-open>
+                    <Popover v-model:open="popOpen">
                         <PopoverTrigger as-child>
                             <DockControl aria-label="Options" data-testid="w-outlet-options"><Settings /></DockControl>
                         </PopoverTrigger>
@@ -295,7 +301,7 @@ const stageStyle = computed(() =>
                 </component>
                 <Teleport v-if="!proto" defer to="#wi8-dock-page">
                     <DockControl aria-label="Bookmark" data-testid="w-outlet-mark"><Bookmark /></DockControl>
-                    <Popover v-model:open="popOpen" keep-dock-open>
+                    <Popover v-model:open="popOpen">
                         <PopoverTrigger as-child>
                             <DockControl aria-label="Options" data-testid="w-outlet-options"><Settings /></DockControl>
                         </PopoverTrigger>
@@ -417,6 +423,14 @@ const stageStyle = computed(() =>
         <component :is="ControlsDock" v-if="ControlsDock && cell === 'w-ctl1'" data-testid="w-ctl1" label="Theme" :corner="corner">
             <DockControl aria-label="Theme" @click="toggleTheme"><Moon v-if="dark" /><Sun v-else /></DockControl>
         </component>
+        <!-- FOLD-2 (C2-11): one control that is the consumer's own element; a button and a slider -->
+        <component :is="ControlsDock" v-if="ControlsDock && cell === 'w-ctl-own'" data-testid="w-ctl-own" label="Zoom">
+            <button type="button" aria-label="Zoom" style="inline-size: 44px; block-size: 44px">+</button>
+        </component>
+        <component :is="ControlsDock" v-if="ControlsDock && cell === 'w-ctl-mix'" data-testid="w-ctl-mix" label="Volume">
+            <DockControl aria-label="Mute"><Volume2 /></DockControl>
+            <Slider v-model="volume" :min="0" :max="100" aria-label="Volume" style="inline-size: 120px" />
+        </component>
         <template v-if="ControlsDock && cell === 'w-ctlout'">
             <component :is="ControlsDock" id="wi8-controls" data-testid="w-ctlout" label="Page controls" collapse="closed">
                 <DockControl aria-label="Theme" @click="toggleTheme"><Moon v-if="dark" /><Sun v-else /></DockControl>
@@ -483,7 +497,7 @@ const stageStyle = computed(() =>
                     <DockControl aria-label="Picker" data-testid="w-daraksha-picker"><Palette /></DockControl>
                     <DockControl aria-label="Grid"><Table2 /></DockControl>
                     <DockControl aria-label="Gallery"><Image /></DockControl>
-                    <Popover v-model:open="popOpen" keep-dock-open>
+                    <Popover v-model:open="popOpen">
                         <PopoverTrigger as-child>
                             <DockControl aria-label="Info" data-testid="w-daraksha-info"><BookOpen /></DockControl>
                         </PopoverTrigger>
@@ -499,7 +513,7 @@ const stageStyle = computed(() =>
             <DockControl aria-label="Filter"><Filter /></DockControl>
             <DockControl aria-label="Group"><Layers /></DockControl>
             <template #collapsed>
-                <span class="px-2 text-small">Filters · 3</span>
+                <span>Filters · 3</span>
             </template>
         </component>
 
@@ -516,7 +530,7 @@ const stageStyle = computed(() =>
                         <DropdownMenuItem>Second</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
-                <Popover v-model:open="hoverOpen" trigger="hover" keep-dock-open>
+                <Popover v-model:open="hoverOpen" trigger="hover">
                     <PopoverTrigger as-child>
                         <DockControl aria-label="Info" data-testid="w-g8-hover"><BookOpen /></DockControl>
                     </PopoverTrigger>
@@ -540,6 +554,20 @@ const stageStyle = computed(() =>
                         <DialogClose as-child><button type="button" data-testid="w-g8-sheet-close">Done</button></DialogClose>
                     </SheetContent>
                 </Dialog>
+                <!-- FOLD-2 (C2-10): a Select and a click Popover with no prop -->
+                <Select v-model="g8Select">
+                    <DockTrigger for="select" aria-label="View" data-testid="w-g8-select"><SelectValue /></DockTrigger>
+                    <SelectContent data-testid="w-g8-select-content">
+                        <SelectItem value="a">Alpha</SelectItem>
+                        <SelectItem value="b">Beta</SelectItem>
+                    </SelectContent>
+                </Select>
+                <Popover v-model:open="g8Pop">
+                    <PopoverTrigger as-child>
+                        <DockControl aria-label="Options" data-testid="w-g8-pop"><Settings /></DockControl>
+                    </PopoverTrigger>
+                    <PopoverContent data-testid="w-g8-pop-content" class="w-56 p-3"><p class="text-small">By click.</p></PopoverContent>
+                </Popover>
                 <template #collapsed>
                     <BookOpen class="h-4 w-4" aria-hidden="true" />
                 </template>
@@ -599,11 +627,11 @@ const stageStyle = computed(() =>
                     <BookOpen class="h-4 w-4" aria-hidden="true" />
                 </template>
             </GlassDock>
-            <component :is="ControlsDock" data-testid="w-two-a" label="Page controls" corner="bottom-end">
+            <component :is="ControlsDock" data-testid="w-two-a" label="Page controls" corner="bottom-end" :collapse="q.get('closed') ? 'closed' : undefined">
                 <DockControl aria-label="Grid"><Table2 /></DockControl>
                 <DockControl aria-label="Theme" @click="toggleTheme"><Moon v-if="dark" /><Sun v-else /></DockControl>
             </component>
-            <component :is="ControlsDock" data-testid="w-two-b" label="Filters" corner="top-end">
+            <component :is="ControlsDock" data-testid="w-two-b" label="Filters" corner="top-end" :collapse="q.get('closed') ? 'closed' : undefined">
                 <DockControl aria-label="Filter"><Filter /></DockControl>
                 <DockControl aria-label="Sort"><BarChart3 /></DockControl>
             </component>

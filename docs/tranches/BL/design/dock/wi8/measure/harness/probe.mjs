@@ -397,6 +397,12 @@ function driver(page, cdp, coarse) {
                 if (useTouch) {
                     await d.press(p.x, p.y);
                     await d.release();
+                } else if (coarse) {
+                    // FOLD-2 (C2-9): a coarse cell taps. Without CDP (WebKit) the tap is
+                    // Playwright's touchscreen; a mouse click here pinned the dock and the
+                    // cell read a mouse press in a narrow window.
+                    await page.touchscreen.tap(p.x, p.y);
+                    d.pos = p;
                 } else {
                     await page.mouse.click(p.x, p.y);
                     d.pos = p;
