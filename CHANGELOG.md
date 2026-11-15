@@ -46,8 +46,10 @@ on the left, the dock with reduced motion turned on, and the timing of HandMark'
   where you are with `aria-current` (a `RouterLink` does this for you, or set
   `aria-current="page"` on the current `DockControl`), the dock draws one selected
   plate and moves it from the old tab to the new one on the dock's spring, instead of
-  switching instantly. It scrolls with the dock's controls, and with reduced motion
-  turned on it moves in a single step. Controls that sit inside their own scrolling strip
+  switching instantly. It scrolls with the dock's controls, it stays on its tab when the
+  dock sits inside something zoomed or scaled (a preview pane, a slide scaled to fit, a
+  dialog that grows in as it opens), and with reduced motion turned on it moves in a
+  single step. Controls that sit inside their own scrolling strip
   keep their own selected look. Glyph controls take part too: a glyph `DockControl` that
   carries `aria-current` now shows the selected plate, where before it showed one only
   with `active`, so a row of glyph `RouterLink`s gains one after upgrading. If you set
@@ -104,7 +106,10 @@ on the left, the dock with reduced motion turned on, and the timing of HandMark'
 - **A collapsed dock can be just its always-visible controls.** Leave out the
   `#collapsed` slot and put a control in `#persistent` or `#persistent-end`, such as a
   theme toggle, and the collapsed dock is exactly that control, with its own icon, its
-  own name and its own pressed state, and no "Expand dock" button beside it. With
+  own name and its own pressed state, and no "Expand dock" button beside it. If your
+  `#collapsed` content only shows some of the time, say a reading that appears once data
+  loads, the collapsed dock follows it: while the content is there it is the "Expand
+  dock" button, and while it is not the always-visible controls stand alone. With
   controls in both slots, the leading ones come first and the trailing ones follow. The
   dock still opens the way `expand-on` says: hovering it with a mouse or trackpad opens
   it, and tabbing onto the control opens it from the keyboard, so Tab (or Shift+Tab, for
