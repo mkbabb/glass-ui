@@ -362,6 +362,10 @@ function onFullKeydown(event: KeyboardEvent): void {
         OPEN_DISMISSABLE_LAYER_SELECTOR,
     );
     if (layer && fullEl.value?.contains(layer)) return;
+    // W-I.8 R-2 (RU-7): an overlay opened from the dock holds it, and while one is open
+    // Escape is that overlay's (it closes and focus returns to its trigger). Only with
+    // nothing open does Escape fold the dock.
+    if (isHeld.value) return;
     collapse();
 }
 
