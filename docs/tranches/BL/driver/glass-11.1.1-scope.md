@@ -1,3 +1,5 @@
+> **2026-11-15: this file is now the scope of 11.1.2.** The owner's order on exits (O-365) made 11.1.1 the exits patch: `glass-11.1.1-exits-scope.md`. The exits rows below (O-313, O-319, O-321, O-350, O-351, O-361's L1, L2, L4, L8) are built there; everything else here follows as 11.1.2.
+
 # glass-ui 11.1.1: scope
 
 11.1.1 is the patch after 11.1.0. The release that cuts it reads this file. It carries five defect cures that the restraint audit found and that break nothing: no export or token is removed and no default a consumer chose is changed. They were booked to 12.0.0 with the deletions; holding them there would leave consumers on local overrides for five releases, which the precept forbids (C-16). The ruling is `review/fable-2026-11-10/plans.md` item 3.
