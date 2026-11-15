@@ -701,8 +701,14 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             el.style.insetInlineStart = "auto";
             el.style.left = `${x}px`;
             el.style.top = `${y}px`;
-            el.style.width = `${p.rect.r - p.rect.l}px`;
-            el.style.height = `${p.rect.b - p.rect.t}px`;
+            // The rect is the border box; a content-box face (the run, padded on both axes)
+            // given it as `height` grew by its padding and centred its seats 4 px lower.
+            const px = (k: string) => Number.parseFloat(ms.getPropertyValue(k)) || 0;
+            const cbx = ms.boxSizing === "border-box";
+            const padW = cbx ? 0 : px("padding-left") + px("padding-right") + px("border-left-width") + px("border-right-width");
+            const padH = cbx ? 0 : px("padding-top") + px("padding-bottom") + px("border-top-width") + px("border-bottom-width");
+            el.style.width = `${p.rect.r - p.rect.l - padW}px`;
+            el.style.height = `${p.rect.b - p.rect.t - padH}px`;
             const ft = faces.find((f) => f.el === el);
             if (ft) {
                 ft.placed = true;
