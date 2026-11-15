@@ -22,12 +22,14 @@ export interface SelectEmits {
 <script setup lang="ts">
 import { SelectRoot as RekaSelectRoot, useForwardProps } from "reka-ui";
 import { isSelectionValue } from "../_shared/selection";
+import { provideSelectOpenInput } from "./openInput";
 
 defineOptions({ name: "Select", inheritAttrs: false });
 
 const props = defineProps<SelectProps>();
 const emit = defineEmits<SelectEmits>();
 const forwarded = useForwardProps(props);
+provideSelectOpenInput();
 
 function updateModelValue(value: unknown): void {
     if (!isSelectionValue(value)) {

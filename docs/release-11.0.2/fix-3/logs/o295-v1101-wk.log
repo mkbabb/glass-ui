@@ -1,0 +1,29 @@
+[guarded] waiting for the 'webkit' lock
+
+Running 1 test using 1 worker
+
+  ✘  1 [webkit] › tests-visual/release-11-0-2.spec.ts:857:1 › pager · on the default token a hop of 1, 3 or 7 paints a neck no wider than the hop plus a dot (4.6s)
+
+
+  1) [webkit] › tests-visual/release-11-0-2.spec.ts:857:1 › pager · on the default token a hop of 1, 3 or 7 paints a neck no wider than the hop plus a dot 
+
+    Error: 0 to 1
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 40.5
+    Received:    300.24359130859375
+
+      894 |         const span = Math.abs(hop.to - hop.from) * geo.pitch;
+      895 |         expect(hop.frames, `the neck bridged ${hop.from} to ${hop.to}`).toBeGreaterThan(0);
+    > 896 |         expect(hop.widest, `${hop.from} to ${hop.to}`).toBeLessThanOrEqual(span + geo.dot + 0.5);
+          |                                                        ^
+      897 |     }
+      898 | });
+      899 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:896:56
+
+    Error Context: tests-visual/test-results/release-11-0-2-pager-·-on--2b059-der-than-the-hop-plus-a-dot-webkit/error-context.md
+
+  1 failed
+    [webkit] › tests-visual/release-11-0-2.spec.ts:857:1 › pager · on the default token a hop of 1, 3 or 7 paints a neck no wider than the hop plus a dot 

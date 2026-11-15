@@ -1,0 +1,98 @@
+
+Running 6 tests using 1 worker
+
+  ✘  1 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:332:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (static) (2.1s)
+  ✘  2 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:332:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (live) (2.1s)
+  ✓  3 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:368:1 › fill · the light scheme's seat fills are the plate rungs (1.5s)
+  ✘  4 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:332:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (static) (2.1s)
+  ✘  5 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:332:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (live) (2.1s)
+  -  6 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:368:1 › fill · the light scheme's seat fills are the plate rungs
+
+
+  1) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:332:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (static) 
+
+    Error: hover
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0.006
+    Received:   -0.004382926609306392
+
+      359 |         const lift = 0.006;
+      360 |         expect(Math.abs(r.restingTab - r.plate), "a resting tab is the plate").toBeLessThan(0.002);
+    > 361 |         if (!touch) expect(r.hover - r.plate, "hover").toBeGreaterThan(lift);
+          |                                                        ^
+      362 |         expect(r.press - r.plate, "press").toBeGreaterThan(lift);
+      363 |         expect(r.selected - r.plate, "selected").toBeGreaterThan(lift);
+      364 |         expect(r.selectedTab - r.plate, "selected tab").toBeGreaterThan(lift);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:361:56
+
+    Error Context: tests-visual/test-results/release-11-0-2-fill-·-in-d-b5af1-eat-lifts-the-plate-static--chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:332:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (live) 
+
+    Error: hover
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0.006
+    Received:   -0.007797706973320384
+
+      359 |         const lift = 0.006;
+      360 |         expect(Math.abs(r.restingTab - r.plate), "a resting tab is the plate").toBeLessThan(0.002);
+    > 361 |         if (!touch) expect(r.hover - r.plate, "hover").toBeGreaterThan(lift);
+          |                                                        ^
+      362 |         expect(r.press - r.plate, "press").toBeGreaterThan(lift);
+      363 |         expect(r.selected - r.plate, "selected").toBeGreaterThan(lift);
+      364 |         expect(r.selectedTab - r.plate, "selected tab").toBeGreaterThan(lift);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:361:56
+
+    Error Context: tests-visual/test-results/release-11-0-2-fill-·-in-d-c0870--seat-lifts-the-plate-live--chromium-headless-new/error-context.md
+
+  3) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:332:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (static) 
+
+    Error: selected
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0.006
+    Received:   -0.004118783886190417
+
+      361 |         if (!touch) expect(r.hover - r.plate, "hover").toBeGreaterThan(lift);
+      362 |         expect(r.press - r.plate, "press").toBeGreaterThan(lift);
+    > 363 |         expect(r.selected - r.plate, "selected").toBeGreaterThan(lift);
+          |                                                  ^
+      364 |         expect(r.selectedTab - r.plate, "selected tab").toBeGreaterThan(lift);
+      365 |     });
+      366 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:363:50
+
+    Error Context: tests-visual/test-results/release-11-0-2-fill-·-in-d-b5af1-eat-lifts-the-plate-static--coarse-touch/error-context.md
+
+  4) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:332:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (live) 
+
+    Error: press
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0.006
+    Received:   0.004613922222018389
+
+      360 |         expect(Math.abs(r.restingTab - r.plate), "a resting tab is the plate").toBeLessThan(0.002);
+      361 |         if (!touch) expect(r.hover - r.plate, "hover").toBeGreaterThan(lift);
+    > 362 |         expect(r.press - r.plate, "press").toBeGreaterThan(lift);
+          |                                            ^
+      363 |         expect(r.selected - r.plate, "selected").toBeGreaterThan(lift);
+      364 |         expect(r.selectedTab - r.plate, "selected tab").toBeGreaterThan(lift);
+      365 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:362:44
+
+    Error Context: tests-visual/test-results/release-11-0-2-fill-·-in-d-c0870--seat-lifts-the-plate-live--coarse-touch/error-context.md
+
+  4 failed
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:332:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (static) 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:332:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (live) 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:332:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (static) 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:332:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (live) 
+  1 skipped
+  1 passed (12.5s)

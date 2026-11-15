@@ -1,0 +1,583 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/playwright.config.ts",
+      "release-11-0-2.spec.ts",
+      "--project=chromium-headless-new",
+      "--project=coarse-touch",
+      "--workers=1",
+      "-g",
+      "slider ·"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/docs/release-11.0.2/logs/o219-v1100-chromium.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5343",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/",
+      "url": "http://localhost:5343",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-0-2.spec.ts",
+      "file": "release-11-0-2.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "slider · a scrubber at its minimum draws its value (sm)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "slider",
+                  "description": "{\"value\":\"50\",\"thumb\":{\"w\":0,\"h\":12,\"opacity\":0},\"range\":{\"left\":0,\"w\":0},\"track\":{\"x\":48,\"y\":48,\"w\":224,\"h\":12},\"diff\":4.101851851851852}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 612,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:178:27",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                      "column": 27,
+                      "line": 178
+                    },
+                    "snippet": "  176 |         info.annotations.push({ type: \"slider\", description: JSON.stringify({ ...r, diff }) });\n  177 |         expect(r.value).toBe(\"50\");\n> 178 |         expect(r.thumb.w).toBeGreaterThan(0);\n      |                           ^\n  179 |         expect(r.thumb.opacity).toBeGreaterThan(0);\n  180 |         expect(r.range.w).toBeGreaterThanOrEqual(r.thumb.w - 0.5);\n  181 |         expect(diff).toBeGreaterThan(8);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                        "column": 27,
+                        "line": 178
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  176 |         info.annotations.push({ type: \"slider\", description: JSON.stringify({ ...r, diff }) });\n  177 |         expect(r.value).toBe(\"50\");\n> 178 |         expect(r.thumb.w).toBeGreaterThan(0);\n      |                           ^\n  179 |         expect(r.thumb.opacity).toBeGreaterThan(0);\n  180 |         expect(r.range.w).toBeGreaterThanOrEqual(r.thumb.w - 0.5);\n  181 |         expect(diff).toBeGreaterThan(8);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:178:27"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T13:56:42.733Z",
+                  "annotations": [
+                    {
+                      "type": "slider",
+                      "description": "{\"value\":\"50\",\"thumb\":{\"w\":0,\"h\":12,\"opacity\":0},\"range\":{\"left\":0,\"w\":0},\"track\":{\"x\":48,\"y\":48,\"w\":224,\"h\":12},\"diff\":4.101851851851852}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/test-results/release-11-0-2-slider-·-a--77229-minimum-draws-its-value-sm--chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                    "column": 27,
+                    "line": 178
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-c8606838443573edee55",
+          "file": "release-11-0-2.spec.ts",
+          "line": 154,
+          "column": 5
+        },
+        {
+          "title": "slider · a scrubber at its minimum draws its value (md)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "slider",
+                  "description": "{\"value\":\"50\",\"thumb\":{\"w\":0,\"h\":20,\"opacity\":0},\"range\":{\"left\":0,\"w\":0},\"track\":{\"x\":48,\"y\":100,\"w\":224,\"h\":20},\"diff\":3.055}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 496,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:178:27",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                      "column": 27,
+                      "line": 178
+                    },
+                    "snippet": "  176 |         info.annotations.push({ type: \"slider\", description: JSON.stringify({ ...r, diff }) });\n  177 |         expect(r.value).toBe(\"50\");\n> 178 |         expect(r.thumb.w).toBeGreaterThan(0);\n      |                           ^\n  179 |         expect(r.thumb.opacity).toBeGreaterThan(0);\n  180 |         expect(r.range.w).toBeGreaterThanOrEqual(r.thumb.w - 0.5);\n  181 |         expect(diff).toBeGreaterThan(8);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                        "column": 27,
+                        "line": 178
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  176 |         info.annotations.push({ type: \"slider\", description: JSON.stringify({ ...r, diff }) });\n  177 |         expect(r.value).toBe(\"50\");\n> 178 |         expect(r.thumb.w).toBeGreaterThan(0);\n      |                           ^\n  179 |         expect(r.thumb.opacity).toBeGreaterThan(0);\n  180 |         expect(r.range.w).toBeGreaterThanOrEqual(r.thumb.w - 0.5);\n  181 |         expect(diff).toBeGreaterThan(8);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:178:27"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T13:56:43.748Z",
+                  "annotations": [
+                    {
+                      "type": "slider",
+                      "description": "{\"value\":\"50\",\"thumb\":{\"w\":0,\"h\":20,\"opacity\":0},\"range\":{\"left\":0,\"w\":0},\"track\":{\"x\":48,\"y\":100,\"w\":224,\"h\":20},\"diff\":3.055}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/test-results/release-11-0-2-slider-·-a--8e7cc-minimum-draws-its-value-md--chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                    "column": 27,
+                    "line": 178
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-06208db22fb23e15f857",
+          "file": "release-11-0-2.spec.ts",
+          "line": 154,
+          "column": 5
+        },
+        {
+          "title": "slider · a scrubber at its minimum draws its value (lg)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "slider",
+                  "description": "{\"value\":\"50\",\"thumb\":{\"w\":0,\"h\":28,\"opacity\":0},\"range\":{\"left\":0,\"w\":0},\"track\":{\"x\":48,\"y\":160,\"w\":224,\"h\":28},\"diff\":2.4766156462585034}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 495,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:178:27",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                      "column": 27,
+                      "line": 178
+                    },
+                    "snippet": "  176 |         info.annotations.push({ type: \"slider\", description: JSON.stringify({ ...r, diff }) });\n  177 |         expect(r.value).toBe(\"50\");\n> 178 |         expect(r.thumb.w).toBeGreaterThan(0);\n      |                           ^\n  179 |         expect(r.thumb.opacity).toBeGreaterThan(0);\n  180 |         expect(r.range.w).toBeGreaterThanOrEqual(r.thumb.w - 0.5);\n  181 |         expect(diff).toBeGreaterThan(8);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                        "column": 27,
+                        "line": 178
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  176 |         info.annotations.push({ type: \"slider\", description: JSON.stringify({ ...r, diff }) });\n  177 |         expect(r.value).toBe(\"50\");\n> 178 |         expect(r.thumb.w).toBeGreaterThan(0);\n      |                           ^\n  179 |         expect(r.thumb.opacity).toBeGreaterThan(0);\n  180 |         expect(r.range.w).toBeGreaterThanOrEqual(r.thumb.w - 0.5);\n  181 |         expect(diff).toBeGreaterThan(8);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:178:27"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T13:56:44.578Z",
+                  "annotations": [
+                    {
+                      "type": "slider",
+                      "description": "{\"value\":\"50\",\"thumb\":{\"w\":0,\"h\":28,\"opacity\":0},\"range\":{\"left\":0,\"w\":0},\"track\":{\"x\":48,\"y\":160,\"w\":224,\"h\":28},\"diff\":2.4766156462585034}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/test-results/release-11-0-2-slider-·-a--3c583-minimum-draws-its-value-lg--chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                    "column": 27,
+                    "line": 178
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-e21ecbc7399d12bfae47",
+          "file": "release-11-0-2.spec.ts",
+          "line": 154,
+          "column": 5
+        },
+        {
+          "title": "slider · a scrubber at its minimum draws its value (sm)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "slider",
+                  "description": "{\"value\":\"50\",\"thumb\":{\"w\":0,\"h\":12,\"opacity\":0},\"range\":{\"left\":0,\"w\":0},\"track\":{\"x\":48,\"y\":54,\"w\":224,\"h\":12},\"diff\":4.101851851851852}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 517,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:178:27",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                      "column": 27,
+                      "line": 178
+                    },
+                    "snippet": "  176 |         info.annotations.push({ type: \"slider\", description: JSON.stringify({ ...r, diff }) });\n  177 |         expect(r.value).toBe(\"50\");\n> 178 |         expect(r.thumb.w).toBeGreaterThan(0);\n      |                           ^\n  179 |         expect(r.thumb.opacity).toBeGreaterThan(0);\n  180 |         expect(r.range.w).toBeGreaterThanOrEqual(r.thumb.w - 0.5);\n  181 |         expect(diff).toBeGreaterThan(8);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                        "column": 27,
+                        "line": 178
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  176 |         info.annotations.push({ type: \"slider\", description: JSON.stringify({ ...r, diff }) });\n  177 |         expect(r.value).toBe(\"50\");\n> 178 |         expect(r.thumb.w).toBeGreaterThan(0);\n      |                           ^\n  179 |         expect(r.thumb.opacity).toBeGreaterThan(0);\n  180 |         expect(r.range.w).toBeGreaterThanOrEqual(r.thumb.w - 0.5);\n  181 |         expect(diff).toBeGreaterThan(8);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:178:27"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T13:56:45.420Z",
+                  "annotations": [
+                    {
+                      "type": "slider",
+                      "description": "{\"value\":\"50\",\"thumb\":{\"w\":0,\"h\":12,\"opacity\":0},\"range\":{\"left\":0,\"w\":0},\"track\":{\"x\":48,\"y\":54,\"w\":224,\"h\":12},\"diff\":4.101851851851852}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/test-results/release-11-0-2-slider-·-a--77229-minimum-draws-its-value-sm--coarse-touch/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                    "column": 27,
+                    "line": 178
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-74f6f10051e7d4dd5132",
+          "file": "release-11-0-2.spec.ts",
+          "line": 154,
+          "column": 5
+        },
+        {
+          "title": "slider · a scrubber at its minimum draws its value (md)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "slider",
+                  "description": "{\"value\":\"50\",\"thumb\":{\"w\":0,\"h\":20,\"opacity\":0},\"range\":{\"left\":0,\"w\":0},\"track\":{\"x\":48,\"y\":114,\"w\":224,\"h\":20},\"diff\":3.055}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 502,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:178:27",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                      "column": 27,
+                      "line": 178
+                    },
+                    "snippet": "  176 |         info.annotations.push({ type: \"slider\", description: JSON.stringify({ ...r, diff }) });\n  177 |         expect(r.value).toBe(\"50\");\n> 178 |         expect(r.thumb.w).toBeGreaterThan(0);\n      |                           ^\n  179 |         expect(r.thumb.opacity).toBeGreaterThan(0);\n  180 |         expect(r.range.w).toBeGreaterThanOrEqual(r.thumb.w - 0.5);\n  181 |         expect(diff).toBeGreaterThan(8);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                        "column": 27,
+                        "line": 178
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  176 |         info.annotations.push({ type: \"slider\", description: JSON.stringify({ ...r, diff }) });\n  177 |         expect(r.value).toBe(\"50\");\n> 178 |         expect(r.thumb.w).toBeGreaterThan(0);\n      |                           ^\n  179 |         expect(r.thumb.opacity).toBeGreaterThan(0);\n  180 |         expect(r.range.w).toBeGreaterThanOrEqual(r.thumb.w - 0.5);\n  181 |         expect(diff).toBeGreaterThan(8);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:178:27"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T13:56:46.296Z",
+                  "annotations": [
+                    {
+                      "type": "slider",
+                      "description": "{\"value\":\"50\",\"thumb\":{\"w\":0,\"h\":20,\"opacity\":0},\"range\":{\"left\":0,\"w\":0},\"track\":{\"x\":48,\"y\":114,\"w\":224,\"h\":20},\"diff\":3.055}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/test-results/release-11-0-2-slider-·-a--8e7cc-minimum-draws-its-value-md--coarse-touch/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                    "column": 27,
+                    "line": 178
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-fda0e4d144a72b8abdc9",
+          "file": "release-11-0-2.spec.ts",
+          "line": 154,
+          "column": 5
+        },
+        {
+          "title": "slider · a scrubber at its minimum draws its value (lg)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "slider",
+                  "description": "{\"value\":\"50\",\"thumb\":{\"w\":0,\"h\":28,\"opacity\":0},\"range\":{\"left\":0,\"w\":0},\"track\":{\"x\":48,\"y\":176,\"w\":224,\"h\":28},\"diff\":2.4766156462585034}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 513,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:178:27",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                      "column": 27,
+                      "line": 178
+                    },
+                    "snippet": "  176 |         info.annotations.push({ type: \"slider\", description: JSON.stringify({ ...r, diff }) });\n  177 |         expect(r.value).toBe(\"50\");\n> 178 |         expect(r.thumb.w).toBeGreaterThan(0);\n      |                           ^\n  179 |         expect(r.thumb.opacity).toBeGreaterThan(0);\n  180 |         expect(r.range.w).toBeGreaterThanOrEqual(r.thumb.w - 0.5);\n  181 |         expect(diff).toBeGreaterThan(8);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                        "column": 27,
+                        "line": 178
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  176 |         info.annotations.push({ type: \"slider\", description: JSON.stringify({ ...r, diff }) });\n  177 |         expect(r.value).toBe(\"50\");\n> 178 |         expect(r.thumb.w).toBeGreaterThan(0);\n      |                           ^\n  179 |         expect(r.thumb.opacity).toBeGreaterThan(0);\n  180 |         expect(r.range.w).toBeGreaterThanOrEqual(r.thumb.w - 0.5);\n  181 |         expect(diff).toBeGreaterThan(8);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:178:27"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T13:56:47.156Z",
+                  "annotations": [
+                    {
+                      "type": "slider",
+                      "description": "{\"value\":\"50\",\"thumb\":{\"w\":0,\"h\":28,\"opacity\":0},\"range\":{\"left\":0,\"w\":0},\"track\":{\"x\":48,\"y\":176,\"w\":224,\"h\":28},\"diff\":2.4766156462585034}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/test-results/release-11-0-2-slider-·-a--3c583-minimum-draws-its-value-lg--coarse-touch/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                    "column": 27,
+                    "line": 178
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-b94dcde3e6af09620c4b",
+          "file": "release-11-0-2.spec.ts",
+          "line": 154,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-12T13:56:42.354Z",
+    "duration": 5434.6230000000005,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 6,
+    "flaky": 0
+  }
+}

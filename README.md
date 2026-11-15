@@ -61,6 +61,10 @@ import { DEFAULT_AURORA_CONFIG, MAX_NUCLEI } from "@mkbabb/glass-ui/aurora";
 }
 ```
 
+A Slider's colours have tokens of their own: `--slider-range-bg` paints the fill and
+`--slider-thumb-bg` the scrubber's thumb (`--foreground` when unset). Set either on the Slider
+or on any ancestor.
+
 The optional `styles/fonts` entry carries the packaged Plus Jakarta Sans and
 Fira Code faces as self-contained WOFF2 data URLs. Consumers that need raw font
 files can address the same built assets through `@mkbabb/glass-ui/fonts/*`.
@@ -221,7 +225,7 @@ All runtime deps are peer — glass-ui declares them in `peerDependencies` and s
 | Package                             | Role                                                              |
 | ----------------------------------- | ----------------------------------------------------------------- |
 | `vue` ^3.5                          | Framework                                                         |
-| `reka-ui` ^2.0                      | Headless UI primitives                                            |
+| `reka-ui` ^2.10.1                   | Headless UI primitives                                            |
 | `tailwindcss` ^4.0                  | Utility CSS                                                       |
 | `@lucide/vue` ^1.16.0               | Icon set (the renamed v1 package; was `lucide-vue-next` pre-v1.0) |
 | `@mkbabb/keyframes.js` ^6.0.0       | Spring/keyframe runtime                                           |

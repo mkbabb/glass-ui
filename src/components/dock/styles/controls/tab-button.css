@@ -36,7 +36,15 @@
            `--dock-control-safe-inset`. The text + min-height keep the box at the row;
            only the painted fill insets (no box growth, no glyph reflow). */
         background-clip: content-box;
-        border-radius: var(--dock-control-radius, var(--radius-pill));
+        /* The dock seat's corner, one value with the icon control's: half the dock's
+           control cell, which the engine clamps to half the seat's own block size (no
+           seat is taller than the cell), so the corner is half the seat's height at
+           rest, on hover, open and active. `--radius-pill` (1rem) left a flat side on
+           every seat taller than 32px. */
+        border-radius: var(
+            --dock-control-radius,
+            calc(var(--dock-control-size, var(--size-icon-btn)) / 2)
+        );
         /* Default font-size carries through to text-only tab content; consumers
            wrapping content in an explicit type utility (e.g. `text-hero`,
            `text-display`) on an inner <span> win because Tailwind v4 ships
@@ -55,7 +63,11 @@
             background-color var(--dock-motion-fast),
             color var(--dock-motion-fast),
             /* Press micro-feedback spring (transform-scoped). */ scale
-                var(--dock-press-spring);
+                var(--dock-press-spring),
+            /* The extent legs take part in a dock run's seat exchange (run.css), whose
+               own transition is a default this list replaces. */
+                inline-size var(--spring-dock-duration) var(--spring-dock),
+            block-size var(--spring-dock-duration) var(--spring-dock);
 
         /* Uses the FAMILY hover/active token pair (glass-translucent
            foreground-over-transparent — the same intent as a surface-tint-8/10 ladder).

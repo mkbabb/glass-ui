@@ -1,0 +1,69 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree
+
+stderr | tests/components/custom/blob/blob-breath.test.ts > Blob body reach > a 600 ms sweep across the body kicks once and stays inside the box
+[Vue warn]: onUnmounted is called when there is no active component instance to be associated with. Lifecycle injection APIs can only be used during execution of setup(). If you are using async setup(), make sure to register lifecycle hooks before the first await statement.
+
+stderr | tests/components/custom/blob/blob-breath.test.ts > Blob body reach > a drag of three strokes, then its release, stays inside the box
+[Vue warn]: onUnmounted is called when there is no active component instance to be associated with. Lifecycle injection APIs can only be used during execution of setup(). If you are using async setup(), make sure to register lifecycle hooks before the first await statement.
+
+ ❯ tests/components/custom/blob/blob-breath.test.ts (3 tests | 2 failed) 17ms
+     × a 600 ms sweep across the body kicks once and stays inside the box 11ms
+     × a drag of three strokes, then its release, stays inside the box 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/custom/blob/blob-breath.test.ts > Blob body reach > a 600 ms sweep across the body kicks once and stays inside the box
+AssertionError: expected 38 to be less than or equal to 2
+ ❯ tests/components/custom/blob/blob-breath.test.ts:109:32
+    107|         for (let i = 0; i <= n; i++) e.step(-0.9 + 1.8 * ease(i / n), …
+    108|         e.rest(400);
+    109|         expect.soft(e.kicks()).toBeLessThanOrEqual(2);
+       |                                ^
+    110|         expect(e.peak()).toBeLessThanOrEqual(BOX + 1e-6);
+    111|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  tests/components/custom/blob/blob-breath.test.ts > Blob body reach > a 600 ms sweep across the body kicks once and stays inside the box
+AssertionError: expected 0.7252985946834087 to be less than or equal to 0.312501
+ ❯ tests/components/custom/blob/blob-breath.test.ts:110:26
+    108|         e.rest(400);
+    109|         expect.soft(e.kicks()).toBeLessThanOrEqual(2);
+    110|         expect(e.peak()).toBeLessThanOrEqual(BOX + 1e-6);
+       |                          ^
+    111|     });
+    112|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  tests/components/custom/blob/blob-breath.test.ts > Blob body reach > a drag of three strokes, then its release, stays inside the box
+AssertionError: expected 10 to be less than or equal to 6
+ ❯ tests/components/custom/blob/blob-breath.test.ts:119:32
+    117|             for (let i = 0; i <= n; i++) e.step(a + (b - a) * ease(i /…
+    118|         }
+    119|         expect.soft(e.kicks()).toBeLessThanOrEqual(6);
+       |                                ^
+    120|         e.release();
+    121|         e.rest(400);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  tests/components/custom/blob/blob-breath.test.ts > Blob body reach > a drag of three strokes, then its release, stays inside the box
+AssertionError: expected 0.7025929567391652 to be less than or equal to 0.312501
+ ❯ tests/components/custom/blob/blob-breath.test.ts:122:26
+    120|         e.release();
+    121|         e.rest(400);
+    122|         expect(e.peak()).toBeLessThanOrEqual(BOX + 1e-6);
+       |                          ^
+    123|     });
+    124|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 1 passed (3)
+   Start at  09:31:35
+   Duration  370ms (transform 70ms, setup 41ms, import 75ms, tests 17ms, environment 133ms)
+

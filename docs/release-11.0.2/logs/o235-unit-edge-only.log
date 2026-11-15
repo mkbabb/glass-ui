@@ -1,0 +1,29 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2
+
+stderr | tests/components/custom/blob/blob-breath.test.ts > Blob body reach > a drag of three strokes, then its release, stays inside the box
+[Vue warn]: onUnmounted is called when there is no active component instance to be associated with. Lifecycle injection APIs can only be used during execution of setup(). If you are using async setup(), make sure to register lifecycle hooks before the first await statement.
+
+ ❯ tests/components/custom/blob/blob-breath.test.ts (3 tests | 1 failed) 23ms
+     × a drag of three strokes, then its release, stays inside the box 7ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/custom/blob/blob-breath.test.ts > Blob body reach > a drag of three strokes, then its release, stays inside the box
+AssertionError: expected 0.3281574882566929 to be less than or equal to 0.312501
+ ❯ tests/components/custom/blob/blob-breath.test.ts:122:26
+    120|         e.release();
+    121|         e.rest(400);
+    122|         expect(e.peak()).toBeLessThanOrEqual(BOX + 1e-6);
+       |                          ^
+    123|     });
+    124|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  09:31:39
+   Duration  366ms (transform 79ms, setup 42ms, import 85ms, tests 23ms, environment 101ms)
+

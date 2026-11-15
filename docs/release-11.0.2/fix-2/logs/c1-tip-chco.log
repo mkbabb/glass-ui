@@ -1,0 +1,264 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794521931 slope=31.8/s inuse=25856 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for headroom (load 40 > 36)
+
+Running 22 tests using 1 worker
+
+  ✓   1 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:214:5 › slider · a scrubber's thumb reads on its track and its fill at 0, 50 and 100 (sm) (4.1s)
+  ✓   2 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:214:5 › slider · a scrubber's thumb reads on its track and its fill at 0, 50 and 100 (md) (4.1s)
+  ✓   3 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:214:5 › slider · a scrubber's thumb reads on its track and its fill at 0, 50 and 100 (lg) (4.1s)
+  ✓   4 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:235:1 › slider · the thumb paints --foreground by default and --slider-thumb-bg when set (473ms)
+  ✓   5 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:308:1 › edge · a host's --dock-plate-expanded-border and --dock-plate-collapsed-border still colour the plate edge (574ms)
+  ✓   6 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:553:1 › blob · through a sweep, a drag and a release the body's drawn reach stays inside its box (3.6s)
+  ✓   7 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1125:1 › transition · a control slotted into a dock's run keeps its own transition (3.2s)
+  ✘   8 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1211:9 › fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 1440 (11.1s)
+  ✘   9 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1211:9 › fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 390 (11.2s)
+  ✘  10 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1211:9 › fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 1440 (11.1s)
+  ✘  11 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1211:9 › fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 390 (11.2s)
+  ✓  12 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:214:5 › slider · a scrubber's thumb reads on its track and its fill at 0, 50 and 100 (sm) (4.1s)
+  ✓  13 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:214:5 › slider · a scrubber's thumb reads on its track and its fill at 0, 50 and 100 (md) (4.1s)
+  ✓  14 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:214:5 › slider · a scrubber's thumb reads on its track and its fill at 0, 50 and 100 (lg) (4.0s)
+  ✓  15 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:235:1 › slider · the thumb paints --foreground by default and --slider-thumb-bg when set (468ms)
+  ✓  16 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:308:1 › edge · a host's --dock-plate-expanded-border and --dock-plate-collapsed-border still colour the plate edge (617ms)
+  ✓  17 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:553:1 › blob · through a sweep, a drag and a release the body's drawn reach stays inside its box (3.6s)
+  -  18 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1125:1 › transition · a control slotted into a dock's run keeps its own transition
+  ✘  19 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1211:9 › fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 1440 (11.2s)
+  ✘  20 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1211:9 › fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 390 (11.2s)
+  ✘  21 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1211:9 › fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 1440 (11.2s)
+  ✘  22 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1211:9 › fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 390 (11.2s)
+
+
+  1) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1211:9 › fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 1440 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 8
+
+    - Array []
+    + Array [
+    +   "light expand frame 1: Home opacity moved 1.00",
+    +   "light expand frame 1: Search opacity moved 1.00",
+    +   "light expand frame 1: Settings opacity moved 1.00",
+    +   "dark expand frame 1: Home opacity moved 1.00",
+    +   "dark expand frame 1: Search opacity moved 1.00",
+    +   "dark expand frame 1: Settings opacity moved 1.00",
+    + ]
+
+      1232 |             }
+      1233 |             info.annotations.push({ type: "fold", description: JSON.stringify({ worst, fails: fails.slice(0, 20) }) });
+    > 1234 |             expect(fails).toEqual([]);
+           |                           ^
+      1235 |         });
+      1236 |     }
+      1237 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:1234:27
+
+    Error Context: tests-visual/test-results/release-11-0-2-fold-·-a-ho-0d7ee-the-fold-and-unfold-at-1440-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1211:9 › fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 390 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 8
+
+    - Array []
+    + Array [
+    +   "light expand frame 1: Home opacity moved 1.00",
+    +   "light expand frame 1: Search opacity moved 1.00",
+    +   "light expand frame 1: Settings opacity moved 1.00",
+    +   "dark expand frame 1: Home opacity moved 1.00",
+    +   "dark expand frame 1: Search opacity moved 1.00",
+    +   "dark expand frame 1: Settings opacity moved 1.00",
+    + ]
+
+      1232 |             }
+      1233 |             info.annotations.push({ type: "fold", description: JSON.stringify({ worst, fails: fails.slice(0, 20) }) });
+    > 1234 |             expect(fails).toEqual([]);
+           |                           ^
+      1235 |         });
+      1236 |     }
+      1237 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:1234:27
+
+    Error Context: tests-visual/test-results/release-11-0-2-fold-·-a-ho-7d265--the-fold-and-unfold-at-390-chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1211:9 › fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 1440 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 8
+
+    - Array []
+    + Array [
+    +   "light expand frame 1: Home opacity moved 1.00",
+    +   "light expand frame 1: Search opacity moved 1.00",
+    +   "light expand frame 1: Settings opacity moved 1.00",
+    +   "dark expand frame 1: Home opacity moved 1.00",
+    +   "dark expand frame 1: Search opacity moved 1.00",
+    +   "dark expand frame 1: Settings opacity moved 1.00",
+    + ]
+
+      1232 |             }
+      1233 |             info.annotations.push({ type: "fold", description: JSON.stringify({ worst, fails: fails.slice(0, 20) }) });
+    > 1234 |             expect(fails).toEqual([]);
+           |                           ^
+      1235 |         });
+      1236 |     }
+      1237 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:1234:27
+
+    Error Context: tests-visual/test-results/release-11-0-2-fold-·-a-ve-ac079-the-fold-and-unfold-at-1440-chromium-headless-new/error-context.md
+
+  4) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1211:9 › fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 390 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 8
+
+    - Array []
+    + Array [
+    +   "light expand frame 1: Home opacity moved 1.00",
+    +   "light expand frame 1: Search opacity moved 1.00",
+    +   "light expand frame 1: Settings opacity moved 1.00",
+    +   "dark expand frame 1: Home opacity moved 1.00",
+    +   "dark expand frame 1: Search opacity moved 1.00",
+    +   "dark expand frame 1: Settings opacity moved 1.00",
+    + ]
+
+      1232 |             }
+      1233 |             info.annotations.push({ type: "fold", description: JSON.stringify({ worst, fails: fails.slice(0, 20) }) });
+    > 1234 |             expect(fails).toEqual([]);
+           |                           ^
+      1235 |         });
+      1236 |     }
+      1237 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:1234:27
+
+    Error Context: tests-visual/test-results/release-11-0-2-fold-·-a-ve-9814d--the-fold-and-unfold-at-390-chromium-headless-new/error-context.md
+
+  5) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1211:9 › fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 1440 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 8
+
+    - Array []
+    + Array [
+    +   "light expand frame 1: Home opacity moved 1.00",
+    +   "light expand frame 1: Search opacity moved 1.00",
+    +   "light expand frame 1: Settings opacity moved 1.00",
+    +   "dark expand frame 1: Home opacity moved 1.00",
+    +   "dark expand frame 1: Search opacity moved 1.00",
+    +   "dark expand frame 1: Settings opacity moved 1.00",
+    + ]
+
+      1232 |             }
+      1233 |             info.annotations.push({ type: "fold", description: JSON.stringify({ worst, fails: fails.slice(0, 20) }) });
+    > 1234 |             expect(fails).toEqual([]);
+           |                           ^
+      1235 |         });
+      1236 |     }
+      1237 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:1234:27
+
+    Error Context: tests-visual/test-results/release-11-0-2-fold-·-a-ho-0d7ee-the-fold-and-unfold-at-1440-coarse-touch/error-context.md
+
+  6) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1211:9 › fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 390 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 8
+
+    - Array []
+    + Array [
+    +   "light expand frame 1: Home opacity moved 1.00",
+    +   "light expand frame 1: Search opacity moved 1.00",
+    +   "light expand frame 1: Settings opacity moved 1.00",
+    +   "dark expand frame 1: Home opacity moved 1.00",
+    +   "dark expand frame 1: Search opacity moved 1.00",
+    +   "dark expand frame 1: Settings opacity moved 1.00",
+    + ]
+
+      1232 |             }
+      1233 |             info.annotations.push({ type: "fold", description: JSON.stringify({ worst, fails: fails.slice(0, 20) }) });
+    > 1234 |             expect(fails).toEqual([]);
+           |                           ^
+      1235 |         });
+      1236 |     }
+      1237 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:1234:27
+
+    Error Context: tests-visual/test-results/release-11-0-2-fold-·-a-ho-7d265--the-fold-and-unfold-at-390-coarse-touch/error-context.md
+
+  7) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1211:9 › fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 1440 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 8
+
+    - Array []
+    + Array [
+    +   "light expand frame 1: Home opacity moved 1.00",
+    +   "light expand frame 1: Search opacity moved 1.00",
+    +   "light expand frame 1: Settings opacity moved 1.00",
+    +   "dark expand frame 1: Home opacity moved 1.00",
+    +   "dark expand frame 1: Search opacity moved 1.00",
+    +   "dark expand frame 1: Settings opacity moved 1.00",
+    + ]
+
+      1232 |             }
+      1233 |             info.annotations.push({ type: "fold", description: JSON.stringify({ worst, fails: fails.slice(0, 20) }) });
+    > 1234 |             expect(fails).toEqual([]);
+           |                           ^
+      1235 |         });
+      1236 |     }
+      1237 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:1234:27
+
+    Error Context: tests-visual/test-results/release-11-0-2-fold-·-a-ve-ac079-the-fold-and-unfold-at-1440-coarse-touch/error-context.md
+
+  8) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1211:9 › fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 390 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 8
+
+    - Array []
+    + Array [
+    +   "light expand frame 1: Home opacity moved 1.00",
+    +   "light expand frame 1: Search opacity moved 1.00",
+    +   "light expand frame 1: Settings opacity moved 1.00",
+    +   "dark expand frame 1: Home opacity moved 1.00",
+    +   "dark expand frame 1: Search opacity moved 1.00",
+    +   "dark expand frame 1: Settings opacity moved 1.00",
+    + ]
+
+      1232 |             }
+      1233 |             info.annotations.push({ type: "fold", description: JSON.stringify({ worst, fails: fails.slice(0, 20) }) });
+    > 1234 |             expect(fails).toEqual([]);
+           |                           ^
+      1235 |         });
+      1236 |     }
+      1237 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:1234:27
+
+    Error Context: tests-visual/test-results/release-11-0-2-fold-·-a-ve-9814d--the-fold-and-unfold-at-390-coarse-touch/error-context.md
+
+  8 failed
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1211:9 › fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 1440 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1211:9 › fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 390 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1211:9 › fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 1440 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1211:9 › fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 390 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1211:9 › fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 1440 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1211:9 › fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 390 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1211:9 › fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 1440 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1211:9 › fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 390 
+  1 skipped
+  13 passed (2.2m)

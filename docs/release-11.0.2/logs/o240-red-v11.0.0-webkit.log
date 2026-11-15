@@ -1,0 +1,47 @@
+[guarded] waiting for the 'webkit' lock
+
+Running 2 tests using 1 worker
+
+  ✘  1 [webkit] › tests-visual/release-11-0-2.spec.ts:105:5 › press · a quick press on Again lands under reduced motion at 1440 (2.8s)
+  ✘  2 [webkit] › tests-visual/release-11-0-2.spec.ts:105:5 › press · a quick press on Again lands under reduced motion at 390 (2.7s)
+
+
+  1) [webkit] › tests-visual/release-11-0-2.spec.ts:105:5 › press · a quick press on Again lands under reduced motion at 1440 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0
+    Received:    178
+
+      122 |         // scrolls it during the press.
+      123 |         expect(rest).not.toBeNull();
+    > 124 |         expect(rest!.scrollWidth - rest!.clientWidth).toBeLessThanOrEqual(0);
+          |                                                       ^
+      125 |         expect(rest!.scrollLeft).toBe(0);
+      126 |         expect(after.scrolls).toEqual([0, 0, 0]);
+      127 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:124:55
+
+    Error Context: tests-visual/test-results/release-11-0-2-press-·-a-q-8b08d-nder-reduced-motion-at-1440-webkit/error-context.md
+
+  2) [webkit] › tests-visual/release-11-0-2.spec.ts:105:5 › press · a quick press on Again lands under reduced motion at 390 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0
+    Received:    165
+
+      122 |         // scrolls it during the press.
+      123 |         expect(rest).not.toBeNull();
+    > 124 |         expect(rest!.scrollWidth - rest!.clientWidth).toBeLessThanOrEqual(0);
+          |                                                       ^
+      125 |         expect(rest!.scrollLeft).toBe(0);
+      126 |         expect(after.scrolls).toEqual([0, 0, 0]);
+      127 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:124:55
+
+    Error Context: tests-visual/test-results/release-11-0-2-press-·-a-q-8caeb-under-reduced-motion-at-390-webkit/error-context.md
+
+  2 failed
+    [webkit] › tests-visual/release-11-0-2.spec.ts:105:5 › press · a quick press on Again lands under reduced motion at 1440 
+    [webkit] › tests-visual/release-11-0-2.spec.ts:105:5 › press · a quick press on Again lands under reduced motion at 390 

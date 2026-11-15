@@ -128,11 +128,15 @@ export function usePagerWorm(refs: UsePagerWormRefs): void {
         if (second) geometry.pitch = centreOf(second) - geometry.origin;
         if (!geometry.pitch) geometry.pitch = DEFAULT_PITCH_PX;
 
-        // The pip diameter and the cap are the rail's two token-borne numbers, and
-        // they are resolved HERE — once — rather than inside the paint.
+        // The pip diameter is measured in px off a worm body's own box, which
+        // `--pager-dot-size` sizes. The token is an unregistered custom property, so it
+        // computes to its token text (`.75rem`), and parsing that text read 0.75 as px:
+        // the neck then spanned gap / 0.75, a bar many cells long on a one-cell hop.
+        // `offsetWidth` is transform-free, so the squash never reaches it.
+        const bodyPx = bodyAEl.value?.offsetWidth ?? 0;
+        geometry.dot = bodyPx > 0 ? bodyPx : DEFAULT_DOT_PX;
+        // The cap is a unitless token, so its text is its value.
         const style = getComputedStyle(rootEl.value ?? layer);
-        const dot = parseFloat(style.getPropertyValue("--pager-dot-size"));
-        if (Number.isFinite(dot) && dot > 0) geometry.dot = dot;
         const cap = parseFloat(style.getPropertyValue("--pager-worm-max-stretch"));
         geometry.maxStretch =
             Number.isFinite(cap) && cap > 1 ? cap : DEFAULT_MAX_STRETCH;

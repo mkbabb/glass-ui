@@ -1,0 +1,30 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794521931 slope=31.8/s inuse=25856 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2
+
+(node:24830) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:24854) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/gates/boot-graph.test.ts (14 tests | 1 failed) 108ms
+     × the dist-demo it measures is NEWER than every source it is built from 16ms
+(node:25568) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:26031) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the dist-demo it measures is NEWER than every source it is built from
+AssertionError: dist-demo/index.html is STALE (built 2026-11-13T01:12:50.451Z, newest source 2026-11-13T01:25:56.801Z) — run `npm run demo:dist:build`; a stale build greens a regressed graph: expected 1794532370451.5474 to be greater than 1794533156801.6409
+ ❯ tests/gates/boot-graph.test.ts:576:11
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 275 passed (276)
+      Tests  1 failed | 2532 passed | 10 expected fail | 1 skipped (2544)
+   Start at  20:27:02
+   Duration  79.25s (transform 3.97s, setup 11.81s, import 29.99s, tests 41.08s, environment 41.75s)
+

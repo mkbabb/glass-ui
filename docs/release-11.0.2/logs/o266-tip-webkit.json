@@ -1,0 +1,647 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-0-2.config.ts",
+      "release-10-1-2.spec.ts",
+      "--project=webkit",
+      "--workers=1",
+      "-g",
+      "O-101 · .* · (reversal|mid-expand) ·"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-0-2.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-5.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/docs/release-11.0.2/logs/o266-tip-webkit.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5341",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/",
+      "url": "http://localhost:5341",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-10-1-2.spec.ts",
+      "file": "release-10-1-2.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2125,
+                  "error": {
+                    "message": "Error: morphing frames after the change reserving other than the settled 160px (390)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m",
+                    "stack": "Error: morphing frames after the change reserving other than the settled 160px (390)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts:464:23",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts",
+                      "column": 23,
+                      "line": 464
+                    },
+                    "snippet": "  462 |                         stale.length,\n  463 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(\", \")})`,\n> 464 |                     ).toBe(0);\n      |                       ^\n  465 |                 }\n  466 |                 const over = seq.filter((f) => f.scroll > f.client);\n  467 |                 expect"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts",
+                        "column": 23,
+                        "line": 464
+                      },
+                      "message": "Error: morphing frames after the change reserving other than the settled 160px (390)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n\n  462 |                         stale.length,\n  463 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(\", \")})`,\n> 464 |                     ).toBe(0);\n      |                       ^\n  465 |                 }\n  466 |                 const over = seq.filter((f) => f.scroll > f.client);\n  467 |                 expect\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts:464:23"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T12:37:38.277Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results/release-10-1-2-O-101-·-hor-45391-follows-the-pane-1440--390--webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts",
+                    "column": 23,
+                    "line": 464
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "937780014813259fe606-ca4ebdef165389c71ebb",
+          "file": "release-10-1-2.spec.ts",
+          "line": 441,
+          "column": 13
+        },
+        {
+          "title": "O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (1440->390)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1307,
+                  "error": {
+                    "message": "Error: morphing frames after the change reserving other than the settled 160px (390)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m",
+                    "stack": "Error: morphing frames after the change reserving other than the settled 160px (390)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts:464:23",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts",
+                      "column": 23,
+                      "line": 464
+                    },
+                    "snippet": "  462 |                         stale.length,\n  463 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(\", \")})`,\n> 464 |                     ).toBe(0);\n      |                       ^\n  465 |                 }\n  466 |                 const over = seq.filter((f) => f.scroll > f.client);\n  467 |                 expect"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts",
+                        "column": 23,
+                        "line": 464
+                      },
+                      "message": "Error: morphing frames after the change reserving other than the settled 160px (390)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n\n  462 |                         stale.length,\n  463 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(\", \")})`,\n> 464 |                     ).toBe(0);\n      |                       ^\n  465 |                 }\n  466 |                 const over = seq.filter((f) => f.scroll > f.client);\n  467 |                 expect\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts:464:23"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T12:37:40.887Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results/release-10-1-2-O-101-·-hor-5598b-follows-the-pane-1440--390--webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts",
+                    "column": 23,
+                    "line": 464
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "937780014813259fe606-1339d4ee59a7e73d6ff2",
+          "file": "release-10-1-2.spec.ts",
+          "line": 441,
+          "column": 13
+        },
+        {
+          "title": "O-101 · horizontal · reversal · the expanded endpoint follows the pane (390->1440)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2147,
+                  "error": {
+                    "message": "Error: morphing frames after the change reserving other than the settled 592px (160)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m",
+                    "stack": "Error: morphing frames after the change reserving other than the settled 592px (160)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts:464:23",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts",
+                      "column": 23,
+                      "line": 464
+                    },
+                    "snippet": "  462 |                         stale.length,\n  463 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(\", \")})`,\n> 464 |                     ).toBe(0);\n      |                       ^\n  465 |                 }\n  466 |                 const over = seq.filter((f) => f.scroll > f.client);\n  467 |                 expect"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts",
+                        "column": 23,
+                        "line": 464
+                      },
+                      "message": "Error: morphing frames after the change reserving other than the settled 592px (160)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n\n  462 |                         stale.length,\n  463 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(\", \")})`,\n> 464 |                     ).toBe(0);\n      |                       ^\n  465 |                 }\n  466 |                 const over = seq.filter((f) => f.scroll > f.client);\n  467 |                 expect\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts:464:23"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T12:37:42.675Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results/release-10-1-2-O-101-·-hor-ea1b6-follows-the-pane-390--1440--webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts",
+                    "column": 23,
+                    "line": 464
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "937780014813259fe606-ac8c5783e0528bd5b03e",
+          "file": "release-10-1-2.spec.ts",
+          "line": 441,
+          "column": 13
+        },
+        {
+          "title": "O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (390->1440)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1363,
+                  "error": {
+                    "message": "Error: morphing frames after the change reserving other than the settled 592px (160)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m",
+                    "stack": "Error: morphing frames after the change reserving other than the settled 592px (160)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts:464:23",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts",
+                      "column": 23,
+                      "line": 464
+                    },
+                    "snippet": "  462 |                         stale.length,\n  463 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(\", \")})`,\n> 464 |                     ).toBe(0);\n      |                       ^\n  465 |                 }\n  466 |                 const over = seq.filter((f) => f.scroll > f.client);\n  467 |                 expect"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts",
+                        "column": 23,
+                        "line": 464
+                      },
+                      "message": "Error: morphing frames after the change reserving other than the settled 592px (160)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n\n  462 |                         stale.length,\n  463 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(\", \")})`,\n> 464 |                     ).toBe(0);\n      |                       ^\n  465 |                 }\n  466 |                 const over = seq.filter((f) => f.scroll > f.client);\n  467 |                 expect\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts:464:23"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T12:37:45.336Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results/release-10-1-2-O-101-·-hor-c79bf-follows-the-pane-390--1440--webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts",
+                    "column": 23,
+                    "line": 464
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "937780014813259fe606-32b1f3265dad4e84fe5e",
+          "file": "release-10-1-2.spec.ts",
+          "line": 441,
+          "column": 13
+        },
+        {
+          "title": "O-101 · vertical · reversal · the expanded endpoint follows the pane (1440->390)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2254,
+                  "error": {
+                    "message": "Error: morphing frames after the change reserving other than the settled 152px (584)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m",
+                    "stack": "Error: morphing frames after the change reserving other than the settled 152px (584)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts:464:23",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts",
+                      "column": 23,
+                      "line": 464
+                    },
+                    "snippet": "  462 |                         stale.length,\n  463 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(\", \")})`,\n> 464 |                     ).toBe(0);\n      |                       ^\n  465 |                 }\n  466 |                 const over = seq.filter((f) => f.scroll > f.client);\n  467 |                 expect"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts",
+                        "column": 23,
+                        "line": 464
+                      },
+                      "message": "Error: morphing frames after the change reserving other than the settled 152px (584)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n\n  462 |                         stale.length,\n  463 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(\", \")})`,\n> 464 |                     ).toBe(0);\n      |                       ^\n  465 |                 }\n  466 |                 const over = seq.filter((f) => f.scroll > f.client);\n  467 |                 expect\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts:464:23"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T12:37:47.233Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results/release-10-1-2-O-101-·-ver-cc1e1-follows-the-pane-1440--390--webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts",
+                    "column": 23,
+                    "line": 464
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "937780014813259fe606-e8a30b598742c112604c",
+          "file": "release-10-1-2.spec.ts",
+          "line": 441,
+          "column": 13
+        },
+        {
+          "title": "O-101 · vertical · mid-expand · the expanded endpoint follows the pane (1440->390)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1344,
+                  "error": {
+                    "message": "Error: morphing frames after the change reserving other than the settled 152px (584)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m",
+                    "stack": "Error: morphing frames after the change reserving other than the settled 152px (584)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts:464:23",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts",
+                      "column": 23,
+                      "line": 464
+                    },
+                    "snippet": "  462 |                         stale.length,\n  463 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(\", \")})`,\n> 464 |                     ).toBe(0);\n      |                       ^\n  465 |                 }\n  466 |                 const over = seq.filter((f) => f.scroll > f.client);\n  467 |                 expect"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts",
+                        "column": 23,
+                        "line": 464
+                      },
+                      "message": "Error: morphing frames after the change reserving other than the settled 152px (584)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n\n  462 |                         stale.length,\n  463 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(\", \")})`,\n> 464 |                     ).toBe(0);\n      |                       ^\n  465 |                 }\n  466 |                 const over = seq.filter((f) => f.scroll > f.client);\n  467 |                 expect\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts:464:23"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T12:37:49.966Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results/release-10-1-2-O-101-·-ver-cedb8-follows-the-pane-1440--390--webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts",
+                    "column": 23,
+                    "line": 464
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "937780014813259fe606-15f8d6345eeb3521a20a",
+          "file": "release-10-1-2.spec.ts",
+          "line": 441,
+          "column": 13
+        },
+        {
+          "title": "O-101 · vertical · reversal · the expanded endpoint follows the pane (390->1440)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2166,
+                  "error": {
+                    "message": "Error: morphing frames after the change reserving other than the settled 584px (152)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m",
+                    "stack": "Error: morphing frames after the change reserving other than the settled 584px (152)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts:464:23",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts",
+                      "column": 23,
+                      "line": 464
+                    },
+                    "snippet": "  462 |                         stale.length,\n  463 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(\", \")})`,\n> 464 |                     ).toBe(0);\n      |                       ^\n  465 |                 }\n  466 |                 const over = seq.filter((f) => f.scroll > f.client);\n  467 |                 expect"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts",
+                        "column": 23,
+                        "line": 464
+                      },
+                      "message": "Error: morphing frames after the change reserving other than the settled 584px (152)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n\n  462 |                         stale.length,\n  463 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(\", \")})`,\n> 464 |                     ).toBe(0);\n      |                       ^\n  465 |                 }\n  466 |                 const over = seq.filter((f) => f.scroll > f.client);\n  467 |                 expect\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts:464:23"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T12:37:51.757Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results/release-10-1-2-O-101-·-ver-8cda2-follows-the-pane-390--1440--webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts",
+                    "column": 23,
+                    "line": 464
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "937780014813259fe606-e99e626f316beba9a29b",
+          "file": "release-10-1-2.spec.ts",
+          "line": 441,
+          "column": 13
+        },
+        {
+          "title": "O-101 · vertical · mid-expand · the expanded endpoint follows the pane (390->1440)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1333,
+                  "error": {
+                    "message": "Error: morphing frames after the change reserving other than the settled 584px (152)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m",
+                    "stack": "Error: morphing frames after the change reserving other than the settled 584px (152)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts:464:23",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts",
+                      "column": 23,
+                      "line": 464
+                    },
+                    "snippet": "  462 |                         stale.length,\n  463 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(\", \")})`,\n> 464 |                     ).toBe(0);\n      |                       ^\n  465 |                 }\n  466 |                 const over = seq.filter((f) => f.scroll > f.client);\n  467 |                 expect"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts",
+                        "column": 23,
+                        "line": 464
+                      },
+                      "message": "Error: morphing frames after the change reserving other than the settled 584px (152)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n\n  462 |                         stale.length,\n  463 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(\", \")})`,\n> 464 |                     ).toBe(0);\n      |                       ^\n  465 |                 }\n  466 |                 const over = seq.filter((f) => f.scroll > f.client);\n  467 |                 expect\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts:464:23"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T12:37:54.391Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results/release-10-1-2-O-101-·-ver-a49ab-follows-the-pane-390--1440--webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts",
+                    "column": 23,
+                    "line": 464
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "937780014813259fe606-86dd1cd3b8a773ad53da",
+          "file": "release-10-1-2.spec.ts",
+          "line": 441,
+          "column": 13
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-12T12:37:37.975Z",
+    "duration": 17928.735,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 8,
+    "flaky": 0
+  }
+}

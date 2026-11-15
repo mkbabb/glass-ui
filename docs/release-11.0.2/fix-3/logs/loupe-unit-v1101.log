@@ -1,0 +1,33 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree
+
+ ❯ tests/components/ui/slider/Slider.loupe.test.ts (3 tests | 1 failed) 61ms
+     × a default Slider mounts no lens and no frost on a grasp, and is not raised 43ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/ui/slider/Slider.loupe.test.ts > Slider · loupe > a default Slider mounts no lens and no frost on a grasp, and is not raised
+AssertionError: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ tests/components/ui/slider/Slider.loupe.test.ts:35:39
+     33|         const { wrapper, root } = await grasp({});
+     34|         expect(root.getAttribute("data-held")).toBe("true");
+     35|         expect(count(".glass-loupe")).toBe(0);
+       |                                       ^
+     36|         expect(count(".glass-focus-veil")).toBe(0);
+     37|         expect(root.hasAttribute("data-focus-veil")).toBe(false);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  17:00:23
+   Duration  1.66s (transform 528ms, setup 94ms, import 966ms, tests 61ms, environment 355ms)
+

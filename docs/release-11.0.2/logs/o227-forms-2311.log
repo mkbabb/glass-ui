@@ -1,0 +1,39 @@
+[guarded] waiting for the 'webkit' lock
+26.5 {
+ "one translucent arm": {
+  "crashed": false,
+  "color": "color(srgb 0.109804 0.098039 0.090196 / 0.065)"
+ },
+ "two literal translucent arms": {
+  "crashed": false,
+  "color": "color(srgb 0.109804 0.098039 0.090196 / 0.065)"
+ },
+ "two nested translucent arms": {
+  "crashed": true,
+  "error": "Error: page.addStyleTag: Target page, context or browser has been closed"
+ },
+ "nested arm over an opaque arm": {
+  "crashed": false,
+  "color": "color(srgb 0.93406 0.933188 0.932607 / 0.54)"
+ },
+ "nested arms via var at t=0.5": {
+  "crashed": true,
+  "error": "Error: page.addStyleTag: Target page, context or browser has been closed"
+ },
+ "registered <color> vars at t=0.5": {
+  "crashed": true,
+  "error": "Error: page.addStyleTag: Target page, context or browser has been closed"
+ },
+ "relative-colour arms": {
+  "crashed": true,
+  "error": "Error: page.addStyleTag: Target page, context or browser has been closed"
+ },
+ "one nested arm over transparent": {
+  "crashed": false,
+  "color": "color(srgb 0.109804 0.098039 0.090196 / 0.04)"
+ },
+ "two nested arms in oklab": {
+  "crashed": true,
+  "error": "Error: page.addStyleTag: Target page, context or browser has been closed"
+ }
+}

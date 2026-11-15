@@ -25,6 +25,7 @@ import {
 import SelectScrollButton from "./SelectScrollButton.vue";
 import { cn } from "../_shared/class-names";
 import { useDockParticipation, useSheetWidth } from "../_shared/overlay";
+import { injectSelectOpenInput } from "./openInput";
 
 defineOptions({
     name: "SelectContent",
@@ -98,6 +99,10 @@ const rootAttrs = computed(() => ({
    inject is not the guard against a rootless part: reka's own content injects the
    same context strictly and throws, so a rootless SelectContent still fails loud;
    only a part rendered with reka stubbed out (the contract tests) reaches null. */
+/* A pointer open shows the highlight alone; the first key pressed in the list hands the
+   ring back (`openInput.ts`). */
+const openInput = injectSelectOpenInput();
+
 const dock = useDockParticipation({
     close: () => {
         if (selectRoot?.open.value) selectRoot.onOpenChange(false);
@@ -125,9 +130,10 @@ const dock = useDockParticipation({
             data-slot="select-content"
             :data-form="sheet ? 'sheet' : undefined"
             :data-surface="sheet ? 'opaque' : undefined"
+            :data-open-input="openInput?.input.value"
             :class="
                 cn(
-                    'relative z-popover min-w-(--overlay-min-width) overflow-hidden text-popover-foreground glass-reveal',
+                    'relative z-popover overflow-hidden text-popover-foreground glass-reveal',
                     sheet ? 'rounded-t-card' : 'rounded-card',
                     'glass-floating glass-field-portal',
                     props.class,
@@ -136,6 +142,7 @@ const dock = useDockParticipation({
             @close-auto-focus="emit('closeAutoFocus', $event)"
             @escape-key-down="emit('escapeKeyDown', $event)"
             @pointer-down-outside="emit('pointerDownOutside', $event)"
+            @keydown="openInput?.mark('keyboard')"
         >
             <SelectScrollButton direction="up" />
             <!-- The viewport is the scroll port AND the fade port: one element, so the
@@ -149,7 +156,7 @@ const dock = useDockParticipation({
                 data-fade-end
                 :class="
                     cn(
-                        'fading-scroll fading-scroll--y w-full min-w-(--reka-select-trigger-width)',
+                        'fading-scroll fading-scroll--y w-full',
                     )
                 "
             >

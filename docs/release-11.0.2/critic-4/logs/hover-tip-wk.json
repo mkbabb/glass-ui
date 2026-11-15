@@ -1,0 +1,373 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-0-2.config.ts",
+      "release-11-0-2.spec.ts",
+      "--project=webkit",
+      "--workers=1",
+      "--repeat-each=5",
+      "-g",
+      "hover · a horizontal pill dock, expanded"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 5,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-0-2.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-5.spec.ts",
+          "slider-forced-colors.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-2311",
+        "name": "webkit-2311",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-0-2.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/docs/release-11.0.2/critic-4/logs/hover-tip-wk.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5341",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/",
+      "url": "http://localhost:5341",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-0-2.spec.ts",
+      "file": "release-11-0-2.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "hover · a horizontal pill dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":111,\"moved\":[]},{\"seat\":\"icon\",\"frames\":110,\"moved\":[]},{\"seat\":\"label\",\"frames\":110,\"moved\":[]},{\"seat\":\"compact\",\"frames\":110,\"moved\":[]},{\"seat\":\"tab\",\"frames\":110,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":110,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":110,\"moved\":[]},{\"seat\":\"background\",\"frames\":110,\"moved\":[]},{\"seat\":\"button\",\"frames\":111,\"moved\":[]},{\"seat\":\"link\",\"frames\":110,\"moved\":[]},{\"seat\":\"popover\",\"frames\":111,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":110,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":110,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 25437,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T04:33:30.554Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":111,\"moved\":[]},{\"seat\":\"icon\",\"frames\":110,\"moved\":[]},{\"seat\":\"label\",\"frames\":110,\"moved\":[]},{\"seat\":\"compact\",\"frames\":110,\"moved\":[]},{\"seat\":\"tab\",\"frames\":110,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":110,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":110,\"moved\":[]},{\"seat\":\"background\",\"frames\":110,\"moved\":[]},{\"seat\":\"button\",\"frames\":111,\"moved\":[]},{\"seat\":\"link\",\"frames\":110,\"moved\":[]},{\"seat\":\"popover\",\"frames\":111,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":110,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":110,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-84c06aaeea8f03589953",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1220,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal pill dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":112,\"moved\":[]},{\"seat\":\"icon\",\"frames\":111,\"moved\":[]},{\"seat\":\"label\",\"frames\":110,\"moved\":[]},{\"seat\":\"compact\",\"frames\":110,\"moved\":[]},{\"seat\":\"tab\",\"frames\":110,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":111,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":110,\"moved\":[]},{\"seat\":\"background\",\"frames\":110,\"moved\":[]},{\"seat\":\"button\",\"frames\":110,\"moved\":[]},{\"seat\":\"link\",\"frames\":110,\"moved\":[]},{\"seat\":\"popover\",\"frames\":110,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":110,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":110,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 25464,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T04:33:56.867Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":112,\"moved\":[]},{\"seat\":\"icon\",\"frames\":111,\"moved\":[]},{\"seat\":\"label\",\"frames\":110,\"moved\":[]},{\"seat\":\"compact\",\"frames\":110,\"moved\":[]},{\"seat\":\"tab\",\"frames\":110,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":111,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":110,\"moved\":[]},{\"seat\":\"background\",\"frames\":110,\"moved\":[]},{\"seat\":\"button\",\"frames\":110,\"moved\":[]},{\"seat\":\"link\",\"frames\":110,\"moved\":[]},{\"seat\":\"popover\",\"frames\":110,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":110,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":110,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-3169ea29b41543295cc3",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1220,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal pill dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":112,\"moved\":[]},{\"seat\":\"icon\",\"frames\":110,\"moved\":[]},{\"seat\":\"label\",\"frames\":110,\"moved\":[]},{\"seat\":\"compact\",\"frames\":110,\"moved\":[]},{\"seat\":\"tab\",\"frames\":110,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":110,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":110,\"moved\":[]},{\"seat\":\"background\",\"frames\":110,\"moved\":[]},{\"seat\":\"button\",\"frames\":110,\"moved\":[]},{\"seat\":\"link\",\"frames\":110,\"moved\":[]},{\"seat\":\"popover\",\"frames\":110,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":110,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":110,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 25257,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T04:34:22.967Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":112,\"moved\":[]},{\"seat\":\"icon\",\"frames\":110,\"moved\":[]},{\"seat\":\"label\",\"frames\":110,\"moved\":[]},{\"seat\":\"compact\",\"frames\":110,\"moved\":[]},{\"seat\":\"tab\",\"frames\":110,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":110,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":110,\"moved\":[]},{\"seat\":\"background\",\"frames\":110,\"moved\":[]},{\"seat\":\"button\",\"frames\":110,\"moved\":[]},{\"seat\":\"link\",\"frames\":110,\"moved\":[]},{\"seat\":\"popover\",\"frames\":110,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":110,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":110,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-a6d32f5799d6cbb36a2a",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1220,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal pill dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":111,\"moved\":[]},{\"seat\":\"icon\",\"frames\":110,\"moved\":[]},{\"seat\":\"label\",\"frames\":110,\"moved\":[]},{\"seat\":\"compact\",\"frames\":110,\"moved\":[]},{\"seat\":\"tab\",\"frames\":110,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":110,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":110,\"moved\":[]},{\"seat\":\"background\",\"frames\":110,\"moved\":[]},{\"seat\":\"button\",\"frames\":110,\"moved\":[]},{\"seat\":\"link\",\"frames\":110,\"moved\":[]},{\"seat\":\"popover\",\"frames\":110,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":110,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":110,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 25249,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T04:34:48.669Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":111,\"moved\":[]},{\"seat\":\"icon\",\"frames\":110,\"moved\":[]},{\"seat\":\"label\",\"frames\":110,\"moved\":[]},{\"seat\":\"compact\",\"frames\":110,\"moved\":[]},{\"seat\":\"tab\",\"frames\":110,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":110,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":110,\"moved\":[]},{\"seat\":\"background\",\"frames\":110,\"moved\":[]},{\"seat\":\"button\",\"frames\":110,\"moved\":[]},{\"seat\":\"link\",\"frames\":110,\"moved\":[]},{\"seat\":\"popover\",\"frames\":110,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":110,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":110,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-10625417e0f872ad9257",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1220,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal pill dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":112,\"moved\":[]},{\"seat\":\"icon\",\"frames\":110,\"moved\":[]},{\"seat\":\"label\",\"frames\":110,\"moved\":[]},{\"seat\":\"compact\",\"frames\":110,\"moved\":[]},{\"seat\":\"tab\",\"frames\":110,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":110,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":112,\"moved\":[]},{\"seat\":\"background\",\"frames\":110,\"moved\":[]},{\"seat\":\"button\",\"frames\":110,\"moved\":[]},{\"seat\":\"link\",\"frames\":110,\"moved\":[]},{\"seat\":\"popover\",\"frames\":110,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":110,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":110,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 25282,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T04:35:14.377Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":112,\"moved\":[]},{\"seat\":\"icon\",\"frames\":110,\"moved\":[]},{\"seat\":\"label\",\"frames\":110,\"moved\":[]},{\"seat\":\"compact\",\"frames\":110,\"moved\":[]},{\"seat\":\"tab\",\"frames\":110,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":110,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":112,\"moved\":[]},{\"seat\":\"background\",\"frames\":110,\"moved\":[]},{\"seat\":\"button\",\"frames\":110,\"moved\":[]},{\"seat\":\"link\",\"frames\":110,\"moved\":[]},{\"seat\":\"popover\",\"frames\":110,\"moved\":[]},{\"seat\":\"dark-mode\",\"frames\":110,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":110,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-7ebc8840686c6e0eab38",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1220,
+          "column": 13
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-15T04:33:28.982Z",
+    "duration": 130865.49600000001,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

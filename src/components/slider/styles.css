@@ -63,29 +63,43 @@
     --slider-range-origin: left center;
 }
 
-/* The SIZE axis. `--slider-track-height` is the capsule thickness; `--slider-thumb-size`
-   sizes the spectrum's visible handle and the scrubber's inscribed disc.
-   thumb ≤ track at every rung — the inscription law.
+/* The SIZE axis. ONE HEIGHT: `--slider-track-height` (H) is the height of the track, of
+   the fill and of the scrubber's thumb, a disc of diameter H, so the thumb fills the band
+   and its centre travels the line between the two end caps' centres. `--slider-thumb-size`
+   has one job left, the spectrum's taller track (below).
    [2026-09-22 · O-23 L-3] The rungs read `--slider-track-height-{sm,md,lg}` and
    `--slider-thumb-size-{sm,md,lg}` from the token :root (`tokens/sizing.css`), so a
    consumer retunes a rung on a wrapper or on the slider instead of restating this
-   attribute selector; `min()` holds the inscription law by construction. */
+   attribute selector. */
 .glass-slider[data-size="sm"] {
     --slider-track-height: var(--slider-track-height-sm);
-    --slider-thumb-size: min(var(--slider-thumb-size-sm), var(--slider-track-height-sm));
+    --slider-thumb-size: var(--slider-thumb-size-sm);
 }
 .glass-slider[data-size="md"] {
     --slider-track-height: var(--slider-track-height-md);
-    --slider-thumb-size: min(var(--slider-thumb-size-md), var(--slider-track-height-md));
+    --slider-thumb-size: var(--slider-thumb-size-md);
 }
 .glass-slider[data-size="lg"] {
     --slider-track-height: var(--slider-track-height-lg);
-    --slider-thumb-size: min(var(--slider-thumb-size-lg), var(--slider-track-height-lg));
+    --slider-thumb-size: var(--slider-thumb-size-lg);
+}
+
+/* ONE RADIUS, derived: half the band's height, read by the track, the fill and the thumb,
+   so every end is a circle of the band's own height. `--radius-pill` (1rem) cannot draw
+   a capsule above 32px and reshapes a fill narrower than it is tall. */
+.glass-slider {
+    --slider-radius: calc(var(--slider-track-height, 0.375rem) / 2);
+}
+
+.glass-slider .slider-track,
+.glass-slider .slider-range,
+.glass-slider .slider-thumb {
+    border-radius: var(--slider-radius);
 }
 
 /* THE INSCRIPTION (S1). The spectrum recipe is a TALLER capsule, and it says so by
    retuning the ONE height token every leg already reads — track, thumb, vertical root,
-   vertical track — instead of overriding each leg with its own percentage. This rule
+   vertical track, radius — instead of overriding each leg with its own percentage. This rule
    and the `[data-size]` rules above are both (0,2,0), so SOURCE ORDER decides: it must
    stay below them.
    THE INVARIANT THIS EXISTS TO KEEP: no track or thumb declaration may use a
@@ -181,7 +195,11 @@
 }
 
 .glass-slider:not([data-variant="spectrum"]) {
-    --slider-lane-cut: var(--slider-thumb-size, 1rem);
+    --slider-lane-cut: var(--slider-track-height, 0.375rem);
+    /* THE FILL ENDS AS THE THUMB: its end cap is the thumb's circle, drawn 0.25px short
+       along the line, inside the thumb, so the two antialiased edges never coincide and
+       the fill's colour shows no line round a thumb of another colour. */
+    --slider-cap-reach: calc(var(--slider-lane-cut) - 0.25px);
     --value-mark-inset: calc(var(--slider-lane-cut) / 2);
 }
 
@@ -190,13 +208,13 @@
         inset-inline-end: var(--slider-lane-cut);
     }
     & .slider-range {
-        margin-inline-end: calc(-1 * var(--slider-lane-cut));
+        margin-inline-end: calc(-1 * var(--slider-cap-reach));
     }
     &[data-inverted] .slider-lane {
         inset-inline: var(--slider-lane-cut) 0;
     }
     &[data-inverted] .slider-range {
-        margin-inline: calc(-1 * var(--slider-lane-cut)) 0;
+        margin-inline: calc(-1 * var(--slider-cap-reach)) 0;
     }
 }
 
@@ -205,31 +223,34 @@
         inset-block-start: var(--slider-lane-cut);
     }
     & .slider-range {
-        margin-block-start: calc(-1 * var(--slider-lane-cut));
+        margin-block-start: calc(-1 * var(--slider-cap-reach));
     }
     &[data-inverted] .slider-lane {
         inset-block: 0 var(--slider-lane-cut);
     }
     &[data-inverted] .slider-range {
-        margin-block: 0 calc(-1 * var(--slider-lane-cut));
+        margin-block: 0 calc(-1 * var(--slider-cap-reach));
     }
 }
 
 /* THE INTEGRATED THUMB. The scrubber is ONE continuous glass segment and its handle is
-   a disc INSCRIBED in the fill's leading end: `--slider-thumb-size` on both axes, which
-   the size rungs above hold at or under the track height (the inscription law), centred
-   on the cross axis by the root's own `align-items: center`. It is the same object at
-   min, mid and max, so the value's end is visible at both extremes. Its paint is the
-   switch thumb's (`--card` over `--shadow-sm`), the house's one knob. Keyboard focus does
-   not ring it — it ribbons the TRACK, below. The thumb is always painted: without it,
-   both extremes lose the handle. */
+   the fill's leading end: a disc of the band's height on both axes, concentric with the
+   fill's end cap and, at 0 and at 100, with the track's end, centred on the cross axis
+   by the root's own `align-items: center`. It is the same object at
+   min, mid and max, so the value's end is visible at both extremes. It paints the page's
+   ink, `--foreground`, over `--shadow-sm`: a disc of the band's height covers the fill
+   whole at the minimum, so the thumb itself is the value's mark there, and the ink is
+   the one tone that stands apart from the light fill and the track in light and from
+   the quiet fill and the track in dark. A site recolours it with `--slider-thumb-bg`, as
+   it recolours the fill with `--slider-range-bg`. Keyboard
+   focus does not ring it — it ribbons the TRACK, below. The thumb is always painted:
+   without it, both extremes lose the handle. */
 .slider-thumb {
     display: block;
-    width: var(--slider-thumb-size, 1rem);
-    height: var(--slider-thumb-size, 1rem);
+    width: var(--slider-track-height, 0.375rem);
+    height: var(--slider-track-height, 0.375rem);
     border: none;
-    border-radius: var(--radius-pill);
-    background: var(--card);
+    background: var(--slider-thumb-bg, var(--foreground));
     box-shadow: var(--shadow-sm);
     transition: transform var(--spring-press-duration) var(--spring-press);
 }
@@ -335,7 +356,8 @@
 /* ── The gradient-track colour slider (spectrum) ──
    The track's background is a consumer-supplied ramp, the range is transparent — the
    gradient itself IS the fill — and the thumb is a slim squircle spanning the full
-   track height. Its fallback is `--secondary`, not the scrubber's `--muted-medium`.
+   track height, a ring of the band's height under the same law as the scrubber's disc.
+   Its fallback is `--secondary`, not the scrubber's `--muted-medium`.
    The range carries NO fill class at all (bound conditionally in the template): it has
    no glass to reset, so there is no `backdrop-filter` to cancel and no prefixed-only
    reset the build can drop while the unprefixed one is emitted away. */
@@ -344,26 +366,14 @@
 }
 
 .glass-slider[data-variant="spectrum"] .slider-thumb {
-    /* The visible colour-picker handle: it re-establishes the geometry the scrubber
-       base collapses and spans the full track height, but THIN — a width of
-       `--slider-thumb-size * 0.75` over a `* 1.5` track is the 0.5×-track bar. */
-    width: calc(var(--slider-thumb-size, 1rem) * 0.75);
-    height: var(--slider-track-height, 0.375rem);
+    /* The visible colour-picker handle: a ring of the band's height (the scrubber base
+       sizes it, the root's radius rounds it), centred on the line between the end caps'
+       centres, so it sits in the track's round end at 0 and at 100. Its centre is clear,
+       so the ramp shows through. */
     opacity: 1;
     background: transparent;
     border: 2px solid var(--background);
-    /* A GENEROUS radius proportional to the box reads squircle-adjacent on the engines
-       without `corner-shape`; the superellipse below REFINES this curve, never
-       replaces it. */
-    border-radius: calc(var(--slider-thumb-size, 1rem) * 0.4);
     box-shadow: var(--shadow-sm);
-}
-
-/* `var()` is not @supports-evaluable, so the gate tests the LITERAL feature. */
-@supports (corner-shape: superellipse(2)) {
-    .glass-slider[data-variant="spectrum"] .slider-thumb {
-        corner-shape: var(--corner-shape-thumb);
-    }
 }
 
 .glass-slider[data-variant="spectrum"]:hover .slider-thumb {
@@ -410,13 +420,6 @@
     transform-origin: center top;
 }
 
-/* The vertical spectrum thumb's cross axis is INLINE, and the same percentage trap
-   applies: `width: 100%` would resolve against the coarse-inflated root. */
-.glass-slider[data-orientation="vertical"][data-variant="spectrum"] .slider-thumb {
-    width: var(--slider-track-height, 0.375rem);
-    height: calc(var(--slider-thumb-size, 1rem) * 0.75);
-}
-
 @media (prefers-reduced-motion: reduce) {
     .glass-slider[data-orientation="vertical"]:active .slider-range,
     .glass-slider[data-orientation="vertical"][data-held] .slider-range {
@@ -444,6 +447,14 @@
         border-color: CanvasText;
         forced-color-adjust: none;
         background: Highlight;
+    }
+    /* Forced colours drop every box-shadow, the focus ring with them, so the focused
+       track (the valid and invalid arms) and the focused spectrum thumb draw a
+       system-colour outline instead. */
+    .glass-slider:not([data-variant="spectrum"]):has(:focus-visible) .slider-track,
+    .glass-slider[data-variant="spectrum"] .slider-thumb:focus-visible {
+        outline: var(--focus-ring-width) solid Highlight;
+        outline-offset: 2px;
     }
     .glass-loupe {
         background: Canvas;

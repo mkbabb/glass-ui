@@ -17,6 +17,7 @@ import {
 } from "../constants";
 import type { UniformName } from "../constants";
 import { resolveBlobSurface } from "./resolveBlobSurface";
+import { resolveBodyBreath } from "./bodyBreath";
 import type { BlobFrameState } from "./blobSimulation";
 
 /** The cached uniform-location set the GL setup builds once per context. */
@@ -195,22 +196,14 @@ export function uploadBlobUniforms(
         U.uPulsePhase,
         timeSec * cMem.pulseFreq * params.pulseFreq * Math.PI * 2,
     );
-    // normalize to idle baseline + the one-shot click impulse.
-    // The pulse rings ± so it transiently fattens/thins the throb
+    // The idle baseline plus the one-shot click impulse, held inside the box
+    // (bodyBreath.ts). The pulse rings ± so it transiently fattens/thins the throb
     // amplitude — the click is FELT through the EXISTING uPulseAmp
-    // channel (no parallel pulse path).
-    const clickPulse = pointer.pulse.value * cInt.clickImpulse;
-    gl.uniform1f(
-        U.uPulseAmp,
-        (((cMem.pulseAmp * params.pulseAmp) / 0.015) + clickPulse) *
-            POS_SCALE,
-    );
-
-    // Surface noise — config controls shape, mood scales amplitude.
-    gl.uniform1f(
-        U.uNoiseAmp,
-        ((cMem.noiseAmp * params.noiseAmp) / 0.025) * POS_SCALE,
-    );
+    // channel (no parallel pulse path). Surface noise: config controls shape, mood
+    // scales amplitude.
+    const breath = resolveBodyBreath(config, params, pointer.pulse.value);
+    gl.uniform1f(U.uPulseAmp, breath.pulseAmp);
+    gl.uniform1f(U.uNoiseAmp, breath.noiseAmp);
     gl.uniform1f(U.uNoiseFreq, cMem.noiseFreq);
     gl.uniform1f(U.uNoiseSpeed, cMem.noiseSpeed);
     gl.uniform1f(U.uWarpAmp, cMem.warpAmp);

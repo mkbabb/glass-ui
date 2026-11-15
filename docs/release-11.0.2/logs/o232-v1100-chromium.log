@@ -1,0 +1,165 @@
+
+Running 6 tests using 1 worker
+
+  ✘  1 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:253:5 › static · a static dock's controls draw no backdrop-filter (light) (4.6s)
+  ✘  2 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:253:5 › static · a static dock's controls draw no backdrop-filter (dark) (4.5s)
+  ✓  3 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:284:1 › static · a live dock's active control keeps its capsule lens (769ms)
+  ✘  4 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:253:5 › static · a static dock's controls draw no backdrop-filter (light) (3.2s)
+  ✘  5 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:253:5 › static · a static dock's controls draw no backdrop-filter (dark) (3.3s)
+  ✓  6 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:284:1 › static · a live dock's active control keeps its capsule lens (860ms)
+
+
+  1) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:253:5 › static · a static dock's controls draw no backdrop-filter (light) 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 20
+
+    - Array []
+    + Array [
+    +   Array [
+    +     "Home rest",
+    +     Array [
+    +       "dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)",
+    +     ],
+    +   ],
+    +   Array [
+    +     "Home hover",
+    +     Array [
+    +       "dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)",
+    +     ],
+    +   ],
+    +   Array [
+    +     "Home press",
+    +     Array [
+    +       "dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)",
+    +     ],
+    +   ],
+    + ]
+
+      278 |         info.annotations.push({ type: "static", description: JSON.stringify({ mode, hits }) });
+      279 |         expect(mode).toBe("static");
+    > 280 |         expect(hits).toEqual([]);
+          |                      ^
+      281 |     });
+      282 | }
+      283 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:280:22
+
+    Error Context: tests-visual/test-results/release-11-0-2-static-·-a--9ec38-w-no-backdrop-filter-light--chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:253:5 › static · a static dock's controls draw no backdrop-filter (dark) 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 20
+
+    - Array []
+    + Array [
+    +   Array [
+    +     "Home rest",
+    +     Array [
+    +       "dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)",
+    +     ],
+    +   ],
+    +   Array [
+    +     "Home hover",
+    +     Array [
+    +       "dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)",
+    +     ],
+    +   ],
+    +   Array [
+    +     "Home press",
+    +     Array [
+    +       "dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)",
+    +     ],
+    +   ],
+    + ]
+
+      278 |         info.annotations.push({ type: "static", description: JSON.stringify({ mode, hits }) });
+      279 |         expect(mode).toBe("static");
+    > 280 |         expect(hits).toEqual([]);
+          |                      ^
+      281 |     });
+      282 | }
+      283 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:280:22
+
+    Error Context: tests-visual/test-results/release-11-0-2-static-·-a--21ec7-aw-no-backdrop-filter-dark--chromium-headless-new/error-context.md
+
+  3) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:253:5 › static · a static dock's controls draw no backdrop-filter (light) 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 14
+
+    - Array []
+    + Array [
+    +   Array [
+    +     "Home rest",
+    +     Array [
+    +       "dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)",
+    +     ],
+    +   ],
+    +   Array [
+    +     "Home press",
+    +     Array [
+    +       "dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)",
+    +     ],
+    +   ],
+    + ]
+
+      278 |         info.annotations.push({ type: "static", description: JSON.stringify({ mode, hits }) });
+      279 |         expect(mode).toBe("static");
+    > 280 |         expect(hits).toEqual([]);
+          |                      ^
+      281 |     });
+      282 | }
+      283 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:280:22
+
+    Error Context: tests-visual/test-results/release-11-0-2-static-·-a--9ec38-w-no-backdrop-filter-light--coarse-touch/error-context.md
+
+  4) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:253:5 › static · a static dock's controls draw no backdrop-filter (dark) 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 14
+
+    - Array []
+    + Array [
+    +   Array [
+    +     "Home rest",
+    +     Array [
+    +       "dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)",
+    +     ],
+    +   ],
+    +   Array [
+    +     "Home press",
+    +     Array [
+    +       "dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)",
+    +     ],
+    +   ],
+    + ]
+
+      278 |         info.annotations.push({ type: "static", description: JSON.stringify({ mode, hits }) });
+      279 |         expect(mode).toBe("static");
+    > 280 |         expect(hits).toEqual([]);
+          |                      ^
+      281 |     });
+      282 | }
+      283 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:280:22
+
+    Error Context: tests-visual/test-results/release-11-0-2-static-·-a--21ec7-aw-no-backdrop-filter-dark--coarse-touch/error-context.md
+
+  4 failed
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:253:5 › static · a static dock's controls draw no backdrop-filter (light) 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:253:5 › static · a static dock's controls draw no backdrop-filter (dark) 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:253:5 › static · a static dock's controls draw no backdrop-filter (light) 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:253:5 › static · a static dock's controls draw no backdrop-filter (dark) 
+  2 passed (20.1s)

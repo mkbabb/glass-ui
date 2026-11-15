@@ -75,7 +75,11 @@
                `:focus-visible` group in dock.css) + the active-state
                `--dock-active-shadow` — the hover highlight leg
                specular no longer rides it. */
-                box-shadow var(--dock-motion-fast);
+                box-shadow var(--dock-motion-fast),
+            /* The extent legs take part in a dock run's seat exchange (run.css), whose
+               own transition is a default this list replaces. */
+                inline-size var(--spring-dock-duration) var(--spring-dock),
+            block-size var(--spring-dock-duration) var(--spring-dock);
 
         /* The dock control press couples to
            the ONE interruptible press spring. DockIconButton composes `useLiquidPress`

@@ -1,0 +1,159 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794521931 slope=31.8/s inuse=25856 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 4 tests using 1 worker
+
+  ✘  1 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:971:5 › geometry · the Slider's thumb fills the band and its ends are concentric (light) (3.0s)
+  ✘  2 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:971:5 › geometry · the Slider's thumb fills the band and its ends are concentric (dark) (2.9s)
+  ✘  3 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:971:5 › geometry · the Slider's thumb fills the band and its ends are concentric (light) (3.0s)
+  ✘  4 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:971:5 › geometry · the Slider's thumb fills the band and its ends are concentric (dark) (3.0s)
+
+
+  1) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:971:5 › geometry · the Slider's thumb fills the band and its ends are concentric (light) 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 16
+
+    - Array []
+    + Array [
+    +   "scrubber-md-horizontal-rtl @0: on the line between the end centres off by 300.00",
+    +   "scrubber-md-horizontal-rtl @1: on the line between the end centres off by 294.00",
+    +   "scrubber-md-horizontal-rtl @1: concentric with the fill's cap off by -3.00",
+    +   "scrubber-md-horizontal-rtl @5: on the line between the end centres off by 270.00",
+    +   "scrubber-md-horizontal-rtl @5: concentric with the fill's cap off by -15.00",
+    +   "scrubber-md-horizontal-rtl @25: on the line between the end centres off by 150.00",
+    +   "scrubber-md-horizontal-rtl @25: concentric with the fill's cap off by -75.00",
+    +   "scrubber-md-horizontal-rtl @50: concentric with the fill's cap off by -150.00",
+    +   "scrubber-md-horizontal-rtl @95: on the line between the end centres off by -270.00",
+    +   "scrubber-md-horizontal-rtl @95: concentric with the fill's cap off by -285.00",
+    +   "scrubber-md-horizontal-rtl @99: on the line between the end centres off by -294.00",
+    +   "scrubber-md-horizontal-rtl @99: concentric with the fill's cap off by -297.00",
+    +   "scrubber-md-horizontal-rtl @100: on the line between the end centres off by -300.00",
+    +   "scrubber-md-horizontal-rtl @100: concentric with the fill's cap off by -300.00",
+    + ]
+
+      1022 |         }
+      1023 |         info.annotations.push({ type: "geometry", description: JSON.stringify({ worst, fails: fails.slice(0, 40), count: fails.length }) });
+    > 1024 |         expect(fails).toEqual([]);
+           |                       ^
+      1025 |     });
+      1026 | }
+      1027 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:1024:23
+
+    Error Context: tests-visual/test-results/release-11-0-2-geometry-·--b1e41--ends-are-concentric-light--chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:971:5 › geometry · the Slider's thumb fills the band and its ends are concentric (dark) 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 16
+
+    - Array []
+    + Array [
+    +   "scrubber-md-horizontal-rtl @0: on the line between the end centres off by 300.00",
+    +   "scrubber-md-horizontal-rtl @1: on the line between the end centres off by 294.00",
+    +   "scrubber-md-horizontal-rtl @1: concentric with the fill's cap off by -3.00",
+    +   "scrubber-md-horizontal-rtl @5: on the line between the end centres off by 270.00",
+    +   "scrubber-md-horizontal-rtl @5: concentric with the fill's cap off by -15.00",
+    +   "scrubber-md-horizontal-rtl @25: on the line between the end centres off by 150.00",
+    +   "scrubber-md-horizontal-rtl @25: concentric with the fill's cap off by -75.00",
+    +   "scrubber-md-horizontal-rtl @50: concentric with the fill's cap off by -150.00",
+    +   "scrubber-md-horizontal-rtl @95: on the line between the end centres off by -270.00",
+    +   "scrubber-md-horizontal-rtl @95: concentric with the fill's cap off by -285.00",
+    +   "scrubber-md-horizontal-rtl @99: on the line between the end centres off by -294.00",
+    +   "scrubber-md-horizontal-rtl @99: concentric with the fill's cap off by -297.00",
+    +   "scrubber-md-horizontal-rtl @100: on the line between the end centres off by -300.00",
+    +   "scrubber-md-horizontal-rtl @100: concentric with the fill's cap off by -300.00",
+    + ]
+
+      1022 |         }
+      1023 |         info.annotations.push({ type: "geometry", description: JSON.stringify({ worst, fails: fails.slice(0, 40), count: fails.length }) });
+    > 1024 |         expect(fails).toEqual([]);
+           |                       ^
+      1025 |     });
+      1026 | }
+      1027 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:1024:23
+
+    Error Context: tests-visual/test-results/release-11-0-2-geometry-·--a1fba-s-ends-are-concentric-dark--chromium-headless-new/error-context.md
+
+  3) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:971:5 › geometry · the Slider's thumb fills the band and its ends are concentric (light) 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 16
+
+    - Array []
+    + Array [
+    +   "scrubber-md-horizontal-rtl @0: on the line between the end centres off by 300.00",
+    +   "scrubber-md-horizontal-rtl @1: on the line between the end centres off by 294.00",
+    +   "scrubber-md-horizontal-rtl @1: concentric with the fill's cap off by -3.00",
+    +   "scrubber-md-horizontal-rtl @5: on the line between the end centres off by 270.00",
+    +   "scrubber-md-horizontal-rtl @5: concentric with the fill's cap off by -15.00",
+    +   "scrubber-md-horizontal-rtl @25: on the line between the end centres off by 150.00",
+    +   "scrubber-md-horizontal-rtl @25: concentric with the fill's cap off by -75.00",
+    +   "scrubber-md-horizontal-rtl @50: concentric with the fill's cap off by -150.00",
+    +   "scrubber-md-horizontal-rtl @95: on the line between the end centres off by -270.00",
+    +   "scrubber-md-horizontal-rtl @95: concentric with the fill's cap off by -285.00",
+    +   "scrubber-md-horizontal-rtl @99: on the line between the end centres off by -294.00",
+    +   "scrubber-md-horizontal-rtl @99: concentric with the fill's cap off by -297.00",
+    +   "scrubber-md-horizontal-rtl @100: on the line between the end centres off by -300.00",
+    +   "scrubber-md-horizontal-rtl @100: concentric with the fill's cap off by -300.00",
+    + ]
+
+      1022 |         }
+      1023 |         info.annotations.push({ type: "geometry", description: JSON.stringify({ worst, fails: fails.slice(0, 40), count: fails.length }) });
+    > 1024 |         expect(fails).toEqual([]);
+           |                       ^
+      1025 |     });
+      1026 | }
+      1027 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:1024:23
+
+    Error Context: tests-visual/test-results/release-11-0-2-geometry-·--b1e41--ends-are-concentric-light--coarse-touch/error-context.md
+
+  4) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:971:5 › geometry · the Slider's thumb fills the band and its ends are concentric (dark) 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 16
+
+    - Array []
+    + Array [
+    +   "scrubber-md-horizontal-rtl @0: on the line between the end centres off by 300.00",
+    +   "scrubber-md-horizontal-rtl @1: on the line between the end centres off by 294.00",
+    +   "scrubber-md-horizontal-rtl @1: concentric with the fill's cap off by -3.00",
+    +   "scrubber-md-horizontal-rtl @5: on the line between the end centres off by 270.00",
+    +   "scrubber-md-horizontal-rtl @5: concentric with the fill's cap off by -15.00",
+    +   "scrubber-md-horizontal-rtl @25: on the line between the end centres off by 150.00",
+    +   "scrubber-md-horizontal-rtl @25: concentric with the fill's cap off by -75.00",
+    +   "scrubber-md-horizontal-rtl @50: concentric with the fill's cap off by -150.00",
+    +   "scrubber-md-horizontal-rtl @95: on the line between the end centres off by -270.00",
+    +   "scrubber-md-horizontal-rtl @95: concentric with the fill's cap off by -285.00",
+    +   "scrubber-md-horizontal-rtl @99: on the line between the end centres off by -294.00",
+    +   "scrubber-md-horizontal-rtl @99: concentric with the fill's cap off by -297.00",
+    +   "scrubber-md-horizontal-rtl @100: on the line between the end centres off by -300.00",
+    +   "scrubber-md-horizontal-rtl @100: concentric with the fill's cap off by -300.00",
+    + ]
+
+      1022 |         }
+      1023 |         info.annotations.push({ type: "geometry", description: JSON.stringify({ worst, fails: fails.slice(0, 40), count: fails.length }) });
+    > 1024 |         expect(fails).toEqual([]);
+           |                       ^
+      1025 |     });
+      1026 | }
+      1027 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:1024:23
+
+    Error Context: tests-visual/test-results/release-11-0-2-geometry-·--a1fba-s-ends-are-concentric-dark--coarse-touch/error-context.md
+
+  4 failed
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:971:5 › geometry · the Slider's thumb fills the band and its ends are concentric (light) 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:971:5 › geometry · the Slider's thumb fills the band and its ends are concentric (dark) 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:971:5 › geometry · the Slider's thumb fills the band and its ends are concentric (light) 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:971:5 › geometry · the Slider's thumb fills the band and its ends are concentric (dark) 

@@ -1,0 +1,36 @@
+[guarded] waiting for headroom (load 38 > 36)
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:614:1 › hold · a keep-dock-open Popover in the dock's slot holds it past the idle window and closes with it (10.6s)
+
+
+  1) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:614:1 › hold · a keep-dock-open Popover in the dock's slot holds it past the idle window and closes with it 
+
+    Error: 7.5 s after the pointer left
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 2
+    + Received  + 2
+
+      Object {
+    -   "expanded": true,
+    -   "open": true,
+    +   "expanded": false,
+    +   "open": false,
+      }
+
+      641 |     info.annotations.push({ type: "hold", description: JSON.stringify({ opened, held, folded }) });
+      642 |     expect(opened).toEqual({ expanded: true, open: true });
+    > 643 |     expect(held, "7.5 s after the pointer left").toEqual({ expanded: true, open: true });
+          |                                                  ^
+      644 |     expect(folded, "after collapse()").toEqual({ expanded: false, open: false });
+      645 | });
+      646 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:643:50
+
+    Error Context: tests-visual/test-results/release-11-0-2-hold-·-a-ke-bc884-e-window-and-closes-with-it-chromium-headless-new/error-context.md
+
+  1 failed
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:614:1 › hold · a keep-dock-open Popover in the dock's slot holds it past the idle window and closes with it 

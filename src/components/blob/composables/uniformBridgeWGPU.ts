@@ -48,6 +48,7 @@ import type { BlobPointer } from "./useBlobPointer";
 import type { BlobSatelliteSystem } from "./useBlobSatellites";
 import type { BlobFrameState } from "./blobSimulation";
 import { resolveBlobSurface } from "./resolveBlobSurface";
+import { resolveBodyBreath } from "./bodyBreath";
 
 /** The total uniform-buffer byte size (16-aligned). */
 export const BLOB_WGPU_UNIFORM_BYTES = 352 + TRAIL_N * 16; // 592
@@ -125,11 +126,8 @@ export function packBlobWGPUUniforms(
     const vel = pointer.velocity.value;
 
     // ── Pulse / noise ──
-    const clickPulse = pointer.pulse.value * cInt.clickImpulse;
-    const pulseAmp =
-        ((cMem.pulseAmp * params.pulseAmp) / 0.015 + clickPulse) * POS_SCALE;
+    const { pulseAmp, noiseAmp } = resolveBodyBreath(config, params, pointer.pulse.value);
     const pulsePhase = timeSec * cMem.pulseFreq * params.pulseFreq * Math.PI * 2;
-    const noiseAmp = ((cMem.noiseAmp * params.noiseAmp) / 0.025) * POS_SCALE;
 
     // ── Worst-case-orbit smin band widen ─────────────────────────
     const MAX_BRIDGE_WIDEN = 1.25;

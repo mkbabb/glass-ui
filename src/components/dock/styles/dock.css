@@ -128,12 +128,39 @@
            the 1.625× held optic derives from. */
         --glass-grasp-rest-filter: var(--dock-surface-blur);
         --glass-grasp-radius: var(--glass-blur-resting-radius);
+        /* The edge mixes the expanded end's colour (`--_dock-edge-expanded-ink`,
+           shell.css: `--glass-border-dock` at rest) toward the collapsed end's,
+           `--glass-border-floating`, by t (`--_dock-edge-lerp`). The library writes
+           both tokens as relative colours of `--foreground` (tokens/glass.css), since
+           a mix whose two arms are both translucent mixes kills the page in
+           Playwright WebKit. A held or static dock paints both ends in
+           `--glass-border-floating` (morph.css, adaptive-legibility.css) and sets the
+           lerp to that token alone, so a host's translucent mix there is never mixed
+           with itself.
+
+           A host colours either end with `--dock-plate-expanded-border` or
+           `--dock-plate-collapsed-border`. The library declares neither, so with
+           neither set both `--_dock-edge-by-*` below hold an unset reference, are
+           invalid at computed-value time, and the edge is the lerp of the two library
+           ends. With one set, the edge mixes the host's colour toward the other end's
+           library colour by t. */
+        --_dock-edge-lerp: color-mix(
+            in srgb,
+            var(--_dock-edge-expanded-ink) calc(var(--dock-expand-t) * 100%),
+            var(--glass-border-floating)
+        );
+        --_dock-edge-by-expanded: color-mix(
+            in srgb,
+            var(--dock-plate-expanded-border) calc(var(--dock-expand-t) * 100%),
+            var(--dock-plate-collapsed-border, var(--glass-border-floating))
+        );
+        --_dock-edge-by-collapsed: color-mix(
+            in srgb,
+            var(--_dock-edge-expanded-ink) calc(var(--dock-expand-t) * 100%),
+            var(--dock-plate-collapsed-border)
+        );
         border: 1.5px solid
-            color-mix(
-                in srgb,
-                var(--dock-plate-expanded-border) calc(var(--dock-expand-t) * 100%),
-                var(--dock-plate-collapsed-border)
-            );
+            var(--_dock-edge-by-expanded, var(--_dock-edge-by-collapsed, var(--_dock-edge-lerp)));
     }
 
     /* ── THE GRASP PRECONDITION — the plate stands down its two backdrop roots ──────
