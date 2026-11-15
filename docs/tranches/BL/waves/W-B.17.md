@@ -737,3 +737,7 @@ At the fold, each by a reading:
 ## Input received after the fold, 2026-11-13 (O-308): consumers under reduced motion
 
 Gregg's census (`design/intent-motion/inbound/GREGG-P0-CENSUS.md`) measures that the reduced-motion fallback zeroes a CONSUMER's own opacity and colour transitions too: chart hover dims, label ink and tip fades cut in one frame, and Gregg drives its tips on WAAPI to get round it. R-9 authorizes fades by glass's own selectors, so it does not reach these. Owed before the 11.2.0 build, as one ruling: how a consumer's fade joins the authorized set (a published class or attribute, or the fallback narrowed so opacity and colour keep a short clock and only transform and size are zeroed). The no-snap check must read a consumer page under reduced motion, so this is testable from their side.
+
+## Post-fold input: the stacked swap (O-343, O-351)
+
+A one-cell keyed swap joins this wave's presence pieces for 11.2.0. Its rules, from speedtest's measurements: the leaving face is mostly gone before the entering one is legible (ordered, a short overlap, never an even cross-fade of two values); each showing is keyed, or a returning face reverses the leaving one in place (Vue removes a leaving node at once when its key re-enters); the cell's size is pinned before the leaving face leaves flow and tweens to the entering face's size; a page leaving a scroller keeps its scroll offset as its own translate so the arriving page starts at its top. Source: `audit/inbound-critiques/speedtest-p6-asks/ASK-GU-STACKED-SWAP.md`.
