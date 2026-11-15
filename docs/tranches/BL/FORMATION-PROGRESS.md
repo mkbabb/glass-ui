@@ -996,3 +996,5 @@ Disk episode, one line: on 2026-11-03 the volume went from 100% (15 GiB free) to
 - 2026-11-15 05:54 — O-357 booked (daraksha's controls seat). The dock loop was restarted a few minutes in so every seat reads late inputs (`design/dock/wi8/INPUT-*.md`): the live run is now `wf_83b55598-945` (the earlier `wf_4ede5549-281` is stopped and not to be resumed).
 
 - 2026-11-15 06:42 — **11.0.2 tagged and published by CI** (tag v11.0.2 @ c0f09570d, run 43709817030, provenance; dist-tag latest); merged to master as 58c778ff5 and pushed; tarball still processing at the registry (polling before consumers are told). Booked since: O-351a, O-357, O-358 (shadow roots; the modal accessibility fault), O-359. Live: critic 9 on 11.1.0 (`wf_4cf2d226-a00`), dock loop 2 prototype (`wf_83b55598-945`). Next: 11.1.0 close merges master before its tag.
+
+- 2026-11-15 06:46 — 11.0.2 tarball 200, `latest` = 11.0.2; master CI and demo deploy green; value.js, atlas, Gregg, speedtest and gaggle told.
