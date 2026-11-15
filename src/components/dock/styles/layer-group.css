@@ -353,10 +353,10 @@
            glass tier — NOT the saturated `--primary 15%` warm-red mix. This token
            rule is the sole paint (no baked plate utility to inherit). */
         background: var(--dock-layer-switcher-active, var(--glass-plate-floating));
-        transition:
-            width var(--spring-dock-duration) var(--spring-dock),
-            height var(--spring-dock-duration) var(--spring-dock),
-            translate var(--spring-dock-duration) var(--spring-dock);
+        /* W-I.8 G-12: no size property in a dock transition. Every tab is one size
+           (`--dock-layer-tab-size` on both axes, below), so the indicator's width and
+           height never change from tab to tab; it travels by `translate` alone. */
+        transition: translate var(--spring-dock-duration) var(--spring-dock);
         pointer-events: none;
     }
 
