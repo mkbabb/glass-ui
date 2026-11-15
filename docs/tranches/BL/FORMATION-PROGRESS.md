@@ -998,3 +998,5 @@ Disk episode, one line: on 2026-11-03 the volume went from 100% (15 GiB free) to
 - 2026-11-15 06:42 — **11.0.2 tagged and published by CI** (tag v11.0.2 @ c0f09570d, run 43709817030, provenance; dist-tag latest); merged to master as 58c778ff5 and pushed; tarball still processing at the registry (polling before consumers are told). Booked since: O-351a, O-357, O-358 (shadow roots; the modal accessibility fault), O-359. Live: critic 9 on 11.1.0 (`wf_4cf2d226-a00`), dock loop 2 prototype (`wf_83b55598-945`). Next: 11.1.0 close merges master before its tag.
 
 - 2026-11-15 06:46 — 11.0.2 tarball 200, `latest` = 11.0.2; master CI and demo deploy green; value.js, atlas, Gregg, speedtest and gaggle told.
+
+- 2026-11-15 08:28 — dock loop 2 DONE (`wf_83b55598-945`): rulings RU-1 to RU-20, third build measured in both engines (110/114 travels Chromium, 109/114 WebKit), challenge of nineteen folded, amended build `bl/dock/wi8` @ 62da68e53 read on thirty cells. NOT ready to close: no gate green with its counter-test; five ruled behaviours unbuilt; seven owner questions in `design/dock/wi8/OWNER-READ.md`. O-360 booked (color on 11.0.2). Live: critic 9 on 11.1.0.
