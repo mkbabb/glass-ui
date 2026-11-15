@@ -433,3 +433,7 @@ The second fold wrote this file, `../design/dock/wi8/fold-2.md`, `../design/dock
 - `W-R.1.md`: the 12.0.0 rows; the labelled seat no longer rides its plate.
 - `docs/precepts/motion-canon.md`: P5's sentence for a leaf's insets and P6's for the dock, still owed. P0a's check is in frames at 60 Hz; this text's bounds are its statement in time.
 - The ledger found that `constants.ts:61` reads 3600 on both release branches, though O-306 placed 6000 in 11.0.2. This text takes 6 s as the token's default either way.
+
+## After the fourth measure (2026-11-15 16:33)
+
+`design/dock/wi8/MEASURE-4.md` (build 5883827f6): six gates green in both engines with their plants (G-1, G-3, G-6, G-7, G-9, G-12). `design/dock/wi8/RULINGS-4.md` (Fable, RU-25 to RU-35) is BINDING over this text where they differ, and replaces RU-21 and RU-23 of RULINGS-3. Its finding: on that build every horizontal dock with seats of one size rests one seat short when open (`fitWhole`, `useDockBody.ts:531-551`), which is what the "lane-hidden seat", the six-seat controls dock at 360 and thirteen shipped tests were all reading; G-2, G-4, G-8 and G-13 are to be reread. Struck: the scripted cap, the compact run, the named open seat (names leave the run: every seat is one seat wide, a name shows by Tooltip above it; an owner question), the curve inset on an overflowing run. Moved to 12.0.0: the open-seat mark as a gliding plate, whole seats on a vertical run. Kept as outputs until 12.0.0: `--dock-expanded-px`, `--dock-collapsed-px`, `--dock-plate-cross-px`.
