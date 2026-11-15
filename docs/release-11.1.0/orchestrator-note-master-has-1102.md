@@ -1,0 +1,3 @@
+# Orchestrator note: master now carries 11.0.2 (BINDING for the close seat)
+
+v11.0.2 was tagged at c0f09570d and published on 2026-11-15; master carries it as merge 58c778ff5. The close merges master before anything else: expect conflicts in the dock (the idle window, the border, the hover fill), the Slider (the `loupe` prop, default false, and its geometry) and the CHANGELOG. Keep both lines' behaviour: 11.0.2's cures stand on 11.1.0, and 11.1.0's own work stands on top. After the merge, rerun every 11.0.2 spec (release-11-0-2) on the merged tree in Chromium and WebKit beside 11.1.0's own, rebind the ratchet last, and write the CHANGELOG so 11.1.0 sits above 11.0.2's entry.
