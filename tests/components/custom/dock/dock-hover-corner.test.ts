@@ -68,7 +68,8 @@ describe("U/B8r I-3: the two-cell collapsed dock is not drawn as a circle", () =
     });
 
     it("the stadium's corner is half its cross extent in every posture: a circle on one cell, a capsule on two", () => {
-        expect(run).toMatch(/\.glass-dock\.shape-pill\s*\{\s*border-radius:\s*var\(--dock-cap-rest\);/);
+        // W-I.8 R-1 (RU-13), restated: a pill rests at half its cross extent at any height.
+        expect(run).toMatch(/\.glass-dock\.shape-pill\s*\{\s*border-radius:\s*9999px;/);
         expect(run).toMatch(/--dock-cap-rest:\s*calc\(var\(--dock-cross\) \/ 2\)/);
         // The cross extent is the measure, and before the script runs the same extent
         // from the density tokens: the first paint is already a stadium.

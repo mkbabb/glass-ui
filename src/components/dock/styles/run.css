@@ -770,8 +770,11 @@
        when a persistent seat sits beside the summary) and every frame of a morph paint
        one corner, half the cross extent, and the box's inset rim follows the plate's
        arc. The finite shapes keep the corner the shell gives them. */
+    /* W-I.8 R-1 (RU-13): a pill rests at half its cross extent whatever its height, a
+       two-row open dock as a one-seat circle; the used value of an oversized radius is
+       exactly that, and with the cap off the plate no keyframe interpolates it. */
     .glass-dock.shape-pill {
-        border-radius: var(--dock-cap-rest);
+        border-radius: 9999px;
     }
 
     /* MID-MORPH THE CORNER IS COUNTER-SCALED ON THE MORPH AXIS. The morph scales the
