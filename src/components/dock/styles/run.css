@@ -815,6 +815,16 @@
         animation: none;
     }
 
+    /* W-I.8 R-12: the plain run. It clips on both axes and has no scroll, no snap and no
+       scroll timeline in any posture. Seats that do not fit are the host's to move. */
+    .glass-dock[data-run="plain"] :where(.dock-layers) > .dock-run,
+    .glass-dock[data-run="plain"] :where(.dock-layers) > .dock-run.is-active {
+        overflow: clip;
+        scroll-snap-type: none;
+        scroll-timeline: none;
+        animation: none;
+    }
+
     /* ── THE LIVE REGION ─────────────────────────────────────────────────────────
        Reach announces to this node (useDockRun). Visually hidden by the canonical
        one-pixel clip rather than `display: none` or `visibility: hidden`, both of which

@@ -81,13 +81,14 @@ defineOptions({ inheritAttrs: false });
    stayed green) but NEVER the rendered component. Declaring the default here is what
    defeats the cast: `hasDefault` short-circuits the absent-branch, and `"closed"` is
    neither `""` nor `"collapse"`, so the cast-true branch cannot fire either. */
-const props = withDefaults(defineProps<DockProps & { pinned?: boolean }>(), {
+const props = withDefaults(defineProps<DockProps & { pinned?: boolean; run?: "scroll" | "plain" }>(), {
     backdropMode: "live",
     collapse: "closed",
     expandOn: "hover",
     anchor: "center",
     collapsedLabel: "Expand dock",
     pinned: undefined,
+    run: "scroll",
 });
 const emit = defineEmits<{ "update:pinned": [value: boolean] }>();
 const attrs = useAttrs();
@@ -460,6 +461,7 @@ defineExpose({
             { expanded: visualExpanded, collapsed: !visualExpanded, pinned: isPinned, 'fit-content': fitContent, 'always-expanded': alwaysExpanded},
         ]"
         :data-backdrop-mode="props.backdropMode"
+        :data-run="props.run === 'plain' ? 'plain' : undefined"
         :data-anchor="props.anchor === 'center' ? undefined : props.anchor"
         :data-held="graspHeld || undefined"
         @mouseenter="onMouseEnter"
@@ -582,6 +584,7 @@ defineExpose({
                 :id="`${dockId}-full`"
                 :role="toolbar ? 'toolbar' : undefined"
                 :aria-orientation="toolbar ? orientation : undefined"
+                :aria-label="toolbar && typeof attrs['aria-label'] === 'string' ? attrs['aria-label'] : undefined"
                 :class="['dock-layer dock-layer--full dock-run', {
                     'is-active': outerCurrentLayer === 'full',
                     'is-leaving': outerLeavingLayer === 'full' || (pressKeepaliveLayer === 'full' && outerCurrentLayer !== 'full'),

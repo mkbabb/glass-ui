@@ -397,15 +397,34 @@
     }
 }
 
-/* W-I.8 R-12: the figure dock is this dock with a preset. */
+/* W-I.8 R-12 (RU-4): the controls dock is this dock with one preset. 44 px seats in a
+   52 px rest, the intent at 120 ms, and a corner inset that defaults to 1rem. */
 @layer components {
-    .glass-dock[data-preset="figure"] {
+    .glass-dock[data-preset="controls"] {
         --dock-intent: 120ms;
         --dock-layer-height: 2.75rem;
+        --dock-padding-block: 0.25rem;
+        --dock-padding-inline: 0.25rem;
+        --dock-corner-inset: 1rem;
+        margin: 0;
+        z-index: 40;
     }
-    .glass-dock[data-preset="figure"] .dock-run {
-        overflow: clip;
-        scroll-snap-type: none;
+    .glass-dock[data-preset="controls"][data-within="viewport"] {
+        position: fixed;
+    }
+    .glass-dock[data-preset="controls"][data-within="parent"] {
+        position: absolute;
+    }
+    .glass-dock[data-preset="controls"][data-corner^="bottom"] {
+        inset-block-end: calc(var(--dock-corner-inset) + env(safe-area-inset-bottom, 0px));
+    }
+    .glass-dock[data-preset="controls"][data-corner^="top"] {
+        inset-block-start: calc(var(--dock-corner-inset) + env(safe-area-inset-top, 0px));
+    }
+    .glass-dock[data-preset="controls"][data-corner$="end"] {
+        inset-inline-end: calc(var(--dock-corner-inset) + env(safe-area-inset-right, 0px));
+    }
+    .glass-dock[data-preset="controls"][data-corner$="start"] {
+        inset-inline-start: calc(var(--dock-corner-inset) + env(safe-area-inset-left, 0px));
     }
 }
-

@@ -18,6 +18,7 @@ export { default as DockLayer } from "./DockLayer.vue";
 // component + its discovery types publish on `/dock` (the dockLayerContext precedent).
 export { default as DockCrossfade } from "./DockCrossfade.vue";
 export { default as DockOutlet } from "./DockOutlet.vue";
+export { default as ControlsDock } from "./ControlsDock.vue";
 export type {
     DockFaceDescriptor,
     DockFaceRegistration,
