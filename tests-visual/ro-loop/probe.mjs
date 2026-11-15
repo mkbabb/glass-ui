@@ -122,6 +122,22 @@ const init = ({ instrument }) => {
                             changed,
                         });
                     }
+                    // What the callback scheduled for its microtask checkpoint (a Vue
+                    // flush, a resolved promise) lands before the next callback: read the
+                    // boxes again once those microtasks have run.
+                    const delivered = entries.map((e) => name(e.target));
+                    queueMicrotask(() =>
+                        queueMicrotask(() =>
+                            Promise.resolve().then(() => {
+                                const later = snapshot();
+                                const moved = [];
+                                for (const [el, v] of later) {
+                                    if (after.has(el) && after.get(el) !== v) moved.push(`${name(el)} ${after.get(el)} -> ${v}`);
+                                }
+                                if (moved.length) ro.writes.push({ t: now(), site: "microtask after " + site, delivered, changed: moved });
+                            }),
+                        ),
+                    );
                 }
             });
             rec.self = this;
