@@ -75,6 +75,16 @@ function judge(file) {
             if (!steps.length) continue;
             let span = Math.max(travel, Math.max(...v) - Math.min(...v));
             if (revMark && fullTravel[k]) span = fullTravel[k];
+            // PROTOTYPE-2 (build step 2): a reversed travel with no earlier segment takes its
+            // span from the posture it was heading to, the root's layout box at the mark. The
+            // first judge took the reversal segment's own extent, so a reversed unfold read
+            // its steps against about 57 % of the travel and reported 7 to 23 % steps.
+            else if (revMark) {
+                for (let q = sg.a; q <= revMark.i; q++) {
+                    const dk = edges(rows[q]?.el.dock)?.[k];
+                    if (dk != null && Math.abs(dk - v[0]) > span) span = Math.abs(dk - v[0]);
+                }
+            }
             if (!revMark) fullTravel[k] = Math.max(fullTravel[k] || 0, travel);
             const f = steps[0];
             firstStep = Math.abs(f.s) / span;
