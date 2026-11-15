@@ -196,6 +196,8 @@ for (const ck of ["coarse"]) {
     s.steps = [{ do: "click", sel: `${T("w-seat")} .dock-layer--summary` }, SETTLE(), { do: "eval", js: "const r=document.querySelector('[data-testid=w-seat] .dock-run'); r.scrollLeft=(r.scrollWidth-r.clientWidth)/2" }, SETTLE(), { do: "mark", name: "outside" }, OUTSIDE, SETTLE(), { do: "mark", name: "tap" }, { do: "click", sel: `${T("w-seat")} .dock-layer--summary` }, SETTLE()];
     add(s);
 }
+// The page's buttons are pressed by element.click(): a pointer press outside the dock is a
+// dismissal (RU-1), and these cells read a content change in the open dock.
 // G-4: a return to the face still on screen at 30 and 60 %; a fold during a swap; a seat
 // added and removed by v-if; a route that changes the seat set; a persistent region
 // mounting and leaving (the outlet's route); value.js's Tools to Tool swap.
@@ -215,17 +217,17 @@ for (const f of [0.3, 0.6]) {
 for (const ck of ["fine", "rm"]) {
     const s = base(`p3-seatset-${ck}`, "w-seatset", ck);
     s.steps = [{ do: "leave", to: [8, 8] }, { do: "hover", sel: T("w-seatset"), ms: 100, hz: 60 }, SETTLE(), { do: "leave", to: [8, 120] },
-        { do: "mark", name: "add" }, { do: "click", sel: T("w-seatset-add") }, SETTLE(),
-        { do: "mark", name: "remove" }, { do: "click", sel: T("w-seatset-add") }, SETTLE(),
-        { do: "mark", name: "route" }, { do: "click", sel: T("w-seatset-route") }, SETTLE()];
+        { do: "mark", name: "add" }, { do: "eval", js: "document.querySelector('[data-testid=w-seatset-add]').click()" }, SETTLE(),
+        { do: "mark", name: "remove" }, { do: "eval", js: "document.querySelector('[data-testid=w-seatset-add]').click()" }, SETTLE(),
+        { do: "mark", name: "route" }, { do: "eval", js: "document.querySelector('[data-testid=w-seatset-route]').click()" }, SETTLE()];
     add(s);
     const r = base(`p3-region-${ck}`, "w-g7", ck);
     r.steps = [{ do: "leave", to: [8, 8] }, { do: "hover", sel: T("w-g7"), ms: 100, hz: 60 }, SETTLE(), { do: "leave", to: [8, 120] },
-        { do: "mark", name: "leave-open" }, { do: "click", sel: T("w-g7-toggle-route") }, SETTLE(),
-        { do: "mark", name: "mount-open" }, { do: "click", sel: T("w-g7-toggle-route") }, SETTLE(),
+        { do: "mark", name: "leave-open" }, { do: "eval", js: "document.querySelector('[data-testid=w-g7-toggle-route]').click()" }, SETTLE(),
+        { do: "mark", name: "mount-open" }, { do: "eval", js: "document.querySelector('[data-testid=w-g7-toggle-route]').click()" }, SETTLE(),
         { do: "mark", name: "outside" }, OUTSIDE, SETTLE(500, 9000),
-        { do: "mark", name: "leave-folded" }, { do: "click", sel: T("w-g7-toggle-route") }, SETTLE(),
-        { do: "mark", name: "mount-folded" }, { do: "click", sel: T("w-g7-toggle-route") }, SETTLE()];
+        { do: "mark", name: "leave-folded" }, { do: "eval", js: "document.querySelector('[data-testid=w-g7-toggle-route]').click()" }, SETTLE(),
+        { do: "mark", name: "mount-folded" }, { do: "eval", js: "document.querySelector('[data-testid=w-g7-toggle-route]').click()" }, SETTLE()];
     add(r);
 }
 for (const ck of ["fine", "coarse", "rm"]) {
