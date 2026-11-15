@@ -535,6 +535,14 @@
            the seat carries inline-size and translate in its own list. */
     }
 
+    /* W-I.8 R-5 (O-358): when the seats with the open seat's name do not fit, the run is
+       compact and the open seat is one glyph wide like the rest; the mark alone says which
+       page is current. The carrier decides it (`data-compact`), at rest and on a resize. */
+    .glass-dock :where(.dock-layers) > .dock-run[data-compact] > [aria-current]:not([aria-current="false"]),
+    .glass-dock :where(.dock-layers) > .dock-run[data-compact] > [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"])) {
+        inline-size: var(--dock-seat);
+    }
+
     /* Rotated for a vertical dock: m=2 there, so the open seat is 2·P − gap of BLOCK
        extent (96px at the default rungs) rather than the 148px a block-axis m=3 would
        impose around a 24px glyph — a proportion violation with no affordance bought. */
@@ -542,6 +550,11 @@
     .glass-dock.vertical :where(.dock-layers) > .dock-run > [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"])) {
         inline-size: auto;
         block-size: var(--dock-open-seat);
+    }
+
+    .glass-dock.vertical :where(.dock-layers) > .dock-run[data-compact] > [aria-current]:not([aria-current="false"]),
+    .glass-dock.vertical :where(.dock-layers) > .dock-run[data-compact] > [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"])) {
+        block-size: var(--dock-seat);
     }
 
     .glass-dock.vertical

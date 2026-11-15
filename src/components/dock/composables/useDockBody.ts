@@ -443,6 +443,32 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         return movedAny;
     }
 
+    /** R-5 (O-358): the open run is compact when its seats, with the open seat's name, are
+     *  wider than the room it has: the open seat is then one glyph wide like the rest. It is
+     *  measured with the name each time (the attribute is lifted for the read), so going
+     *  compact never flips it back. If the glyph-wide seats still do not fit, the run
+     *  scrolls. A run with no open seat is never compact. */
+    function fitRun(run: HTMLElement, open: boolean): void {
+        const was = run.hasAttribute("data-compact");
+        const hasOpen =
+            open &&
+            run.offsetParent !== null &&
+            !!run.querySelector(
+                ':scope > [aria-current]:not([aria-current="false"]), :scope > [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"]))',
+            );
+        if (!hasOpen) {
+            if (was && open) run.removeAttribute("data-compact");
+            return;
+        }
+        if (was) run.removeAttribute("data-compact");
+        // The run's reserve (its padding on the axis, the room a focus ring takes) is
+        // scrollable by construction and is not a seat that does not fit.
+        const rs = getComputedStyle(run);
+        const reserve = Number.parseFloat(o.vertical() ? rs.paddingBlockStart : rs.paddingInlineStart) || 0;
+        const over = o.vertical() ? run.scrollHeight - run.clientHeight : run.scrollWidth - run.clientWidth;
+        if (over > reserve + 0.5) run.setAttribute("data-compact", "");
+    }
+
     /** R-1 (C2-6): a pill taller than one row is still a stadium, so the open face's content
      *  is padded in from the ends until it lies inside the curve. Each child of the run is
      *  read as the rounded shape it is (its own corner), so a row of round seats needs
@@ -507,10 +533,11 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         if (!el || !el.isConnected) return;
         const reduce = o.reducedMotion();
         const prevPainted = painted();
-        // The trigger frame's write before its read: the curve inset.
+        // The trigger frame's writes before its read: the compact run and the curve inset.
         {
             const open = o.expanded();
             const run = runEl();
+            if (run) fitRun(run, open);
             fitCurve(el, open, run);
         }
         const next = rectOf(el);

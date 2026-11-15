@@ -3,7 +3,7 @@
 // controls, a figure's filters, a canvas's tools, a code pane's actions, the theme seat.
 // It renders one GlassDock and adds nothing to the DOM. Its run is plain (no scroll, no
 // snap, no scroll timeline) and has no current page, so no open seat and no mark.
-import { Comment, Fragment, Text, useAttrs, useTemplateRef, type Slots, type VNode } from "vue";
+import { Comment, Fragment, Text, useAttrs, useTemplateRef, watchEffect, type Slots, type VNode } from "vue";
 import { useMediaQuery } from "@vueuse/core";
 import GlassDock from "./GlassDock.vue";
 import DockSeparator from "./DockSeparator.vue";
@@ -45,6 +45,16 @@ function authored(nodes: VNode[]): number {
         else n += 1;
     }
     return n;
+}
+/* R-12 (O-358, C2-15): a plain run does not scroll or wrap, so what fits is a number:
+   six 44 px seats with the preset's gaps and padding are 312 px, inside a 360 px window
+   less its corner insets. A seventh is a development warning; a page with more groups
+   them behind one seat's menu. */
+if (import.meta.env.DEV) {
+    watchEffect(() => {
+        const n = dockRef.value?.controlCount ?? 0;
+        if (n > 6) console.warn(`[glass-ui] ControlsDock "${props.label}" holds ${n} controls; it holds six. Group the rest behind one seat's menu.`);
+    });
 }
 /* Called from the template, so the slot is read inside render. */
 function collapseFor(slots: Slots): DockCollapse {
