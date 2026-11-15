@@ -476,78 +476,24 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         return movedAny;
     }
 
-    /** R-5 (O-358): the open run is compact when its seats, with the open seat's name, are
-     *  wider than the room it has: the open seat is then one glyph wide like the rest. It is
-     *  measured with the name each time (the attribute is lifted for the read), so going
-     *  compact never flips it back. If the glyph-wide seats still do not fit, the run
-     *  scrolls. A run with no open seat is never compact. */
+    /** The open run's one fit reading (RU-26, RU-28): the seats' span in layout boxes, then
+     *  the fit law. Every seat is one seat wide, the current one included, so nothing is
+     *  lifted for the read and nothing in the run is sized by script. */
     function fitRun(run: HTMLElement, open: boolean): void {
-        const was = run.hasAttribute("data-compact");
         // A face with no box (RU-17) keeps the reading it had when it was laid out.
         if (run.offsetParent === null) return;
-        const hasOpen =
-            open &&
-            !!run.querySelector(
-                ':scope > [aria-current]:not([aria-current="false"]), :scope > [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"]))',
-            );
+        void open;
         const v = o.vertical();
         // Layout extents only: the scroll extent counts the seats' carry translates mid-travel.
-        const span = (): number => {
-            let first = Infinity;
-            let last = -Infinity;
-            for (const c of run.children) {
-                if (!(c instanceof HTMLElement) || ghosts.has(c) || c.offsetParent === null) continue;
-                const a0 = v ? c.offsetTop : c.offsetLeft;
-                first = Math.min(first, a0);
-                last = Math.max(last, a0 + (v ? c.offsetHeight : c.offsetWidth));
-            }
-            return last > first ? last - first : 0;
-        };
-        // RU-23: the whole-seat cap is lifted for the read, as the compact run is.
-        const whole = run.hasAttribute("data-run-whole");
-        if (whole) {
-            run.removeAttribute("data-run-whole");
-            run.style.removeProperty(v ? "max-block-size" : "max-inline-size");
+        let first = Infinity;
+        let last = -Infinity;
+        for (const c of run.children) {
+            if (!(c instanceof HTMLElement) || ghosts.has(c) || c.offsetParent === null) continue;
+            const a0 = v ? c.offsetTop : c.offsetLeft;
+            first = Math.min(first, a0);
+            last = Math.max(last, a0 + (v ? c.offsetHeight : c.offsetWidth));
         }
-        if (hasOpen) {
-            if (was) run.removeAttribute("data-compact");
-            // The run's reserve (its padding, the room a focus ring takes) is not a seat.
-            const rs = getComputedStyle(run);
-            const padStart = Number.parseFloat(v ? rs.paddingBlockStart : rs.paddingInlineStart) || 0;
-            const port = (v ? run.clientHeight : run.clientWidth) - padStart;
-            if (span() > port + 0.5) run.setAttribute("data-compact", "");
-        } else if (was && open) run.removeAttribute("data-compact");
-        const sp = span();
-        fitWhole(run, sp);
-        publishFit(run, sp);
-    }
-
-    /** RU-23: when the seats, compact, still do not fit, the run scrolls, and at rest a seat
-     *  is either whole or absent at each end. The run's window for seats (its port less the
-     *  reserve at each end) is cut to a whole number of pitches, `n·P − gap`, by a cap on
-     *  the run's size; under `data-run-whole` the run snaps a seat's start to the reserve
-     *  (run.css), so every snap position, the last included, shows n whole seats. Seats of
-     *  unequal size have no pitch, and the run is left as it is. */
-    function fitWhole(run: HTMLElement, sp: number): void {
-        const v = o.vertical();
-        const kids = [...run.children].filter(
-            (c): c is HTMLElement => c instanceof HTMLElement && !ghosts.has(c) && c.offsetParent !== null,
-        );
-        if (kids.length < 2) return;
-        const size = (c: HTMLElement) => (v ? c.offsetHeight : c.offsetWidth);
-        const seat = size(kids[0]!);
-        if (kids.some((c) => Math.abs(size(c) - seat) > 0.5)) return;
-        const rs = getComputedStyle(run);
-        const reserve = Number.parseFloat(v ? rs.paddingBlockStart : rs.paddingInlineStart) || 0;
-        const gap = Number.parseFloat(v ? rs.rowGap : rs.columnGap) || 0;
-        const window = (v ? run.clientHeight : run.clientWidth) - 2 * reserve;
-        if (sp <= window + 0.5) return;
-        const pitch = seat + gap;
-        const n = Math.floor((window + gap) / pitch);
-        const left = window - (n * pitch - gap);
-        if (n < 1 || left <= 0.5) return;
-        run.setAttribute("data-run-whole", "");
-        run.style.setProperty(v ? "max-block-size" : "max-inline-size", `${(v ? run.offsetHeight : run.offsetWidth) - left}px`);
+        publishFit(run, last > first ? last - first : 0);
     }
 
     /** The fit law (10.1.5 e4, k3, p2): `data-run-fits` says the seats' span is no longer
@@ -641,7 +587,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         Z = (el as HTMLElement & { currentCSSZoom?: number }).currentCSSZoom ?? 1;
         const reduce = o.reducedMotion();
         const prevPainted = painted();
-        // The trigger frame's writes before its read: the compact run and the curve inset.
+        // The trigger frame's writes before its read: the fit flag and the curve inset.
         {
             const open = o.expanded();
             const run = runEl();
@@ -687,7 +633,8 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         }
 
         // R-5: the open seat moving in a scrolling run is a content change even when no seat
-        // changes place (a compact run): the offset that brings it in is a quantity of the loop.
+        // changes place (every seat is one seat wide, RU-28): the offset that brings it in is a
+        // quantity of the loop.
         // Left to the run's own reach it scrolled a mandatory-snap port, which snapped each
         // written offset to a seat (whole-seat steps in one row).
         let scrollOnly = false;

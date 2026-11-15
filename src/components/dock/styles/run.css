@@ -113,13 +113,8 @@
            it — P is exact at whatever `--dock-control-size` resolves to. */
         --dock-run-gap: 0.5rem;
         --dock-pitch: calc(var(--dock-seat) + var(--dock-run-gap));
-        /* The open seat's width in PITCHES — authored, never measured. This integer is
-           the specific mechanism that keeps a seat census from re-entering by the back
-           door: the open seat is `m·P − gap` wide BY DECLARATION, so its extent is
-           known before layout and every downstream seat's offset stays a multiple of P.
-           Per-orientation: 3 inline. A vertical dock takes 2 (below) — at m=3 a block-axis
-           open seat is 148px tall around a 24px glyph and an 11.5px label, which is a
-           proportion violation with no affordance bought. */
+        /* W-I.8 RU-28: declared and unread through 11.2.0 (no rule widens the current seat
+           any more), deleted in 12.0.0 with a MIGRATION row. */
         --dock-open-pitches: 3;
         --dock-open-seat: calc(
             var(--dock-open-pitches) * var(--dock-pitch) - var(--dock-run-gap)
@@ -427,17 +422,6 @@
         margin-inline-start: calc(-1 * var(--dock-run-gap));
     }
 
-    /* W-I.8 RU-23: a run whose seats, compact, still do not fit is cut to a whole number
-       of pitches by the carrier (`data-run-whole`), and snaps a seat's start to its
-       reserve, so at rest a seat is whole or absent at each end: no peek. */
-    .glass-dock :where(.dock-layers) > .dock-run[data-run-whole] {
-        scroll-padding-inline: var(--dock-run-reserve-inline);
-    }
-
-    .glass-dock.vertical :where(.dock-layers) > .dock-run[data-run-whole] {
-        scroll-padding-block: var(--dock-run-reserve-block);
-    }
-
     /* THE SEATS. Every direct child of the run is a snap target and none of them flex —
        a seat that grows is a seat that is no longer an integer number of pitches, and
        the lattice dies quietly the moment one does. `start` alignment is what the
@@ -491,120 +475,14 @@
            zero, and the whole 8px overflow the re-capture measured was here. */
     }
 
-    /* ══ W4 · THE OPEN SEAT ══════════════════════════════════════════════════════
-       [2026-08-24 · BK #47 W4 SEAT]
-
-       The open seat is `m·P − gap` wide, so every seat after it sits `(m−1)·P` further
-       along the run, still a multiple of P.
-
-       WHICH CHILD IS THE OPEN SEAT — the SAME predicate `useDockRun.openIndexOf` reads,
-       expressed in the selector language, because two owners of "which seat is open"
-       that can disagree is the class of defect this whole rewrite exists to delete.
-       `aria-current` is the one expression of selection every arm of this tree agrees
-       on (GF-DOCK ratifies it over `role="tab"` for a dock whose seats are routes), and
-       it is read as a NEGATION of the false pole so any truthy token — `page`, `true`,
-       `step` — counts. The `:has()` arm catches the common shape where the seat is a
-       wrapper and `RouterLink` stamps the attribute on the anchor inside it, and like
-       `openIndexOf` it reads only a DECLARED seat (`data-glass-dock-seat`,
-       `DOCK_SEAT_ATTR`): a consumer's group of seats that holds the current one (a nested
-       `.dock-run` of tabs) is plain markup, sized by its own content, never one
-       open seat whose tabs then paint over the seats beside it.
-
-       WHY `m·P − gap` AND NOT A MEASURED WIDTH. `--dock-open-pitches` is AUTHORED, so
-       the open seat's extent is known before layout: it is the specific mechanism that
-       keeps a seat census from re-entering by the back door. Every seat then sits at
-       `(i−1)·P + [openIdx<i]·(m−1)·P` — a multiple of P in every case, the open seat
-       included — which is what lets the detent table, the bias filter, the flick
-       projector and the rubber band all stay unwritten. The rejected alternative (the
-       label sizes the seat) measured labels at 36.7–213.6px, i.e. a "fixed" pitch of
-       92.7–213.6px: no lattice, no detents, no closed-form reach.
-
-       THE EXCHANGE IS A VOLUME TRANSFER, and it needs no JavaScript. The departing seat
-       runs `m·P → P` while the arriving one runs `P → m·P` on the SAME clock and the
-       SAME curve, so the two deltas are equal and opposite at every instant and the
-       run's total width is invariant by construction — the seats strictly between the
-       pair translate exactly `(m−1)·P` and nothing else moves. That IS the liquid
-       weight, stated as motion rather than asserted: constant Σwidth carrying one fill
-       rung is constant lit mass. `--spring-dock` / `--spring-dock-duration` are the
-       DOCK spring's own emitted `linear()` and clock (tokens/scheme-spring.css) — the
-       token is read, never a remembered literal, so a re-tune of the preset re-tunes
-       the exchange with it. The "free bulge" is struck: a total width that grows
-       mid-exchange is a lattice that stops being one for the duration of the motion. */
-    .glass-dock :where(.dock-layers) > .dock-run > [aria-current]:not([aria-current="false"]),
-    .glass-dock :where(.dock-layers) > .dock-run > [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"])) {
-        inline-size: var(--dock-open-seat);
-        /* The cross axis is untouched: the open seat is WIDER, never taller. */
-    }
-
-    /* Every OTHER seat is exactly one pitch minus the gap. Stating it is what makes the
-       transfer complementary — the departing seat has a rule to run BACK to, so the two
-       animations are one exchange rather than one growth and one snap. */
-    .glass-dock :where(.dock-layers) > .dock-run > :not([aria-current]:not([aria-current="false"])):not(
-            [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"]))
-        ) {
-        /* W-I.8: the shorthand that erased the seat's own list is gone (AUDIT rule C);
-           the seat carries inline-size and translate in its own list. */
-    }
-
-    /* W-I.8 R-5 (O-358): when the seats with the open seat's name do not fit, the run is
-       compact and the open seat is one glyph wide like the rest; the mark alone says which
-       page is current. The carrier decides it (`data-compact`), at rest and on a resize. */
-    .glass-dock :where(.dock-layers) > .dock-run[data-compact] > [aria-current]:not([aria-current="false"]),
-    .glass-dock :where(.dock-layers) > .dock-run[data-compact] > [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"])) {
-        inline-size: var(--dock-seat);
-    }
-
-    /* Rotated for a vertical dock: m=2 there, so the open seat is 2·P − gap of BLOCK
-       extent (96px at the default rungs) rather than the 148px a block-axis m=3 would
-       impose around a 24px glyph — a proportion violation with no affordance bought. */
-    .glass-dock.vertical :where(.dock-layers) > .dock-run > [aria-current]:not([aria-current="false"]),
-    .glass-dock.vertical :where(.dock-layers) > .dock-run > [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"])) {
-        inline-size: auto;
-        block-size: var(--dock-open-seat);
-    }
-
-    .glass-dock.vertical :where(.dock-layers) > .dock-run[data-compact] > [aria-current]:not([aria-current="false"]),
-    .glass-dock.vertical :where(.dock-layers) > .dock-run[data-compact] > [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"])) {
-        block-size: var(--dock-seat);
-    }
-
-    .glass-dock.vertical
-        :where(.dock-layers) > .dock-run
-        > :not([aria-current]:not([aria-current="false"])):not(
-            [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"]))
-        ) {
-    }
-
-    /* THE LABEL BUDGET — and why it is a CLIP, not a token.
-       The open seat is the only labelled one, and its label budget is what the pitch
-       leaves over: `open − 2·pad − glyph − gap` = 148 − 24 − 24 − 8 = 92px, about
-       twelve characters at the label rung. That number is the design's sharpest
-       self-inflicted wound and it is named here rather than hidden — a consumer with
-       long destination names raises `--dock-open-pitches` to 4 and pays one
-       destination of capacity for it.
-
-       The budget is ENFORCED by the seat box itself rather than published as a
-       `--dock-open-label-budget` token with a `.dock-seat-label` consumer, because
-       neither would have a producer: the library authors no label element (the seat's
-       content is the consumer's markup), so both would ship as a rule and a token
-       nobody writes — the dead-by-construction class W1 spent its whole wave striking.
-       The seat is already exactly `m·P − gap`; clipping its own overflow makes the
-       budget bite on whatever the consumer actually put inside it, including a plain
-       text node, with no naming contract to honour. A CLOSED seat inherits the same
-       clip at one pitch, which is what stops a label on a closed seat from voiding the
-       lattice — the unquantised-open-seat defect wearing a different hat.
-
-       AND THE CLIP ITSELF IS REFUSED HERE, with its ground measured rather than
-       asserted. The obvious authoring — `overflow: hidden; text-overflow: ellipsis` on
-       `.dock-run > *` — buys the ellipsis by breaking a contract the seat already
-       carries: `<DockControl>`'s face is a painted plate INSET inside the full hit
-       cell (`--dock-control-safe-inset`), and its own docblock states `overflow:
-       visible` is what keeps that inset paint, its hover lift and its specular gleam
-       unclipped. Clipping every seat to buy an ellipsis for a label the library does
-       not author would trade a real, shipped, photometered surface for a hypothetical
-       one. The seat's WIDTH is the enforcement — it is exactly `m·P − gap` and cannot
-       grow — and the ellipsis is the consumer's, on the consumer's own label element,
-       against the budget stated above. */
+    /* W-I.8 RU-28: every seat of a run is one seat wide, the current one included, at
+       every width. The rules that widened the current seat to `--dock-open-seat` (and its
+       vertical pair) and the compact form that undid them are deleted: a named open seat
+       moved every seat between the old page and the new by 96 px on each page change, and
+       a box cannot be painted wider than it is laid out, so that width could never travel
+       on the dock's one clock. The mark says which page is current; a name shows above the
+       seat by Tooltip (R-7). `--dock-open-pitches` and `--dock-open-seat` stay declared
+       and unread through 11.2.0 and are deleted in 12.0.0. */
 
     /* ══ W5 · THE CUT CAP ════════════════════════════════════════════════════════
        [2026-08-24 · BK #47 W5 CUT]
