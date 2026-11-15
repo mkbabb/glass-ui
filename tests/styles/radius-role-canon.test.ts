@@ -664,17 +664,17 @@ describe("8. O-7 — a role utility that cannot conflict is a silent no-op", () 
 
 describe("9. U-29 — the squircle fork register (the Safari floor, accepted)", () => {
     // ACCEPTANCE, recorded executably: the superellipse is a PROGRESSIVE tier over a
-    // `border-radius` round CONTRACT, it exists at exactly three registered sites, and
+    // `border-radius` round CONTRACT, it exists at exactly two registered sites, and
     // every one states its round fallback. Safari/Firefox paint the round contract —
-    // that IS the sanctioned floor, not a masked failure. A FOURTH unregistered fork,
-    // or a fork without a round arm underneath it, fails here.
+    // that IS the sanctioned floor, not a masked failure. A THIRD unregistered fork,
+    // or a fork without a round arm underneath it, fails here. The Slider's spectrum
+    // handle is a ring of the band's height, a circle, so it carries no squircle.
     const FORKS = [
         "src/styles/glass/squircle.css",
-        "src/components/slider/styles.css",
         "src/components/dock/styles/shell.css",
     ] as const;
 
-    it("registers exactly three corner-shape forks across the whole of src", () => {
+    it("registers exactly two corner-shape forks across the whole of src", () => {
         const found = srcFiles().filter((rel) =>
             /@supports\s*\(\s*corner-shape:\s*superellipse\(2\)\s*\)/.test(strip(read(rel))),
         );
@@ -696,7 +696,7 @@ describe("9. U-29 — the squircle fork register (the Safari floor, accepted)", 
         }
     });
 
-    it("keeps ONE squircle exponent vocabulary across all three", () => {
+    it("keeps ONE squircle exponent vocabulary across both", () => {
         for (const rel of FORKS) {
             const src = read(rel);
             if (!/corner-shape:\s*var\(/.test(src)) continue;

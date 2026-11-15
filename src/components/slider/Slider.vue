@@ -27,6 +27,7 @@ const props = withDefaults(defineProps<SliderProps>(), {
     variant: "scrubber",
     size: "md",
     invalid: false,
+    loupe: false,
 });
 const emits = defineEmits<{
     "update:modelValue": [value: number[] | undefined];
@@ -54,6 +55,7 @@ const delegatedProps = computed(() => {
         valueText: _______,
         modelValue: ________,
         defaultValue: _________,
+        loupe: __________,
         ...delegated
     } = props;
     // The containment law: reka's `contain` alignment clamps the thumb's value-follow
@@ -211,7 +213,8 @@ function onGraspReleaseEnd(event: TransitionEvent): void {
 }
 
 // ── The FOCUS VEIL mount (glass/focus-veil.css) ──────────────────────────────────
-// While this slider is held the world behind it frosts and the slider stays crisp. The
+// With `loupe` set, while this slider is held the world behind it frosts and the
+// slider stays crisp. Without it nothing outside the control changes on a grasp. The
 // centre is VIEWPORT-space, so it is written whenever the control moves against the
 // viewport — never per frame. A slider does not move under its OWN drag, so the drag
 // loop stays layout-read-free; a PAGE SCROLL during a live hold does move it, and a
@@ -220,6 +223,7 @@ function onGraspReleaseEnd(event: TransitionEvent): void {
 // not bubble from a scroller, capture still reaches it, so one listener covers every
 // scroller.
 const focusVeilRef = useTemplateRef<HTMLElement>("focusVeilRef");
+const veiled = computed(() => grasping.value && graspable.value && props.loupe);
 
 function writeVeilCentre(): void {
     const host = getRootEl();
@@ -248,13 +252,14 @@ function writeVeilCentre(): void {
 // transformed down by k/3, so
 // `LENS/2 − k·x` puts that point dead centre at every k (the two scales cancel).
 // Horizontal only: a vertical scrubber's finger does not occlude its own value point.
-// THE ONE PREDICATE. Scrubber-only comes free — `grasping` opens only for a graspable
-// variant — so the spectrum is excluded here and nowhere else; horizontal-only is the
-// stated occlusion rule. Nothing downstream re-tests either.
+// THE ONE PREDICATE. It opens only when the host sets `loupe`. Scrubber-only comes
+// free, because `veiled` reads `grasping`, which opens only for a graspable variant, so
+// the spectrum is excluded here and nowhere else; horizontal-only is the stated
+// occlusion rule. Nothing downstream re-tests either.
 const loupeTrackW = ref(0);
 let loupeThumbD = 0;
 const loupeShown = computed(
-    () => grasping.value && props.orientation !== "vertical",
+    () => veiled.value && props.orientation !== "vertical",
 );
 
 function valueFraction(): number {
@@ -334,8 +339,7 @@ onBeforeUnmount(() => trackViewport(false));
 // descendant rule a host writes over its own children, and source order then decides
 // the raise away silently. Inline has no tie to lose.
 const hostStyle = computed<Record<string, string> | undefined>(() => {
-    const raised = grasping.value && graspable.value;
-    if (!raised) return motionAxis.hostStyle.value;
+    if (!veiled.value) return motionAxis.hostStyle.value;
     return { ...(motionAxis.hostStyle.value ?? {}), zIndex: "var(--z-overlay)" };
 });
 
@@ -374,7 +378,7 @@ onMounted(() => {
         :data-invalid="props.invalid || undefined"
         :data-held="isHeld || undefined"
         :data-inverted="props.inverted || undefined"
-        :data-focus-veil="(grasping && graspable) || undefined"
+        :data-focus-veil="veiled || undefined"
         :data-motion="motionAxis.dataMotion.value"
         :style="hostStyle"
         v-bind="forwarded"
@@ -397,7 +401,7 @@ onMounted(() => {
         -->
         <Teleport to="body">
             <span
-                v-if="grasping && graspable"
+                v-if="veiled"
                 ref="focusVeilRef"
                 class="glass-focus-veil"
                 :data-engaged="isHeld || undefined"
@@ -408,8 +412,8 @@ onMounted(() => {
             The loupe, teleported for the same reason and clipped by its own housing so
             the lens sits outside every glass stack. The clone is a SECOND RENDER of the
             track at `--s: 3`, laid out once; only its transform moves per value.
-            SCRUBBER-ONLY, and unconditionally so: `loupeShown` reads `grasping`, which
-            opens only for a graspable variant, so neither a variant hook nor a
+            Mounted only with `loupe` set, and SCRUBBER-ONLY: `loupeShown` reads `veiled`,
+            which opens only for a graspable variant, so neither a variant hook nor a
             `graspable` guard on the fill can discriminate anything here — both would be
             branches that never take. The one place that decides is `loupeShown`.
         -->

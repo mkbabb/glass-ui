@@ -1,0 +1,1913 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794521931 slope=31.8/s inuse=25856 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree
+
+ ❯ tests/components/slider.size-tokens.test.ts (3 tests | 3 failed) 239ms
+     × keeps the default md rung at a 20px band with a 20px disc (spectrum 24px band, 24px ring) 11ms
+     × follows a wrapper override set inside @layer glass-overrides, the disc with it 4ms
+     × sizes every thumb by the band's one height (the track height), never by the thumb size 4ms
+ ❯ tests/components/custom/dock/g-dock-lattice.test.ts (34 tests | 2 failed) 245ms
+     × the horizontal run is a snapped, contained, single-owner scroller 12ms
+     × the vertical run is a snapped, contained, single-owner scroller 5ms
+ ❯ tests/components/custom/dock/dockMorphMeasure.test.ts (28 tests | 3 failed) 99ms
+     × a collapse arm keeps the expanded box it is leaving 8ms
+     × a region that differs between postures holds its anchored edge 2ms
+     × a region that painted nothing in the first frame rests where it lays out 2ms
+ ❯ tests/composables/dark/useGlobalDark.test.ts (6 tests | 3 failed) 46ms
+     × reads and writes the given key, not the default one 32ms
+     × throws on a conflicting second key and accepts a matching one 5ms
+     × stores the concrete mode when a toggle lands on the system scheme 4ms
+stderr | tests/components/custom/blob/blob-breath.test.ts > Blob body reach > a 600 ms sweep across the body kicks once and stays inside the box
+[Vue warn]: onUnmounted is called when there is no active component instance to be associated with. Lifecycle injection APIs can only be used during execution of setup(). If you are using async setup(), make sure to register lifecycle hooks before the first await statement.
+
+stderr | tests/components/custom/blob/blob-breath.test.ts > Blob body reach > a drag of three strokes, then its release, stays inside the box
+[Vue warn]: onUnmounted is called when there is no active component instance to be associated with. Lifecycle injection APIs can only be used during execution of setup(). If you are using async setup(), make sure to register lifecycle hooks before the first await statement.
+
+ ❯ tests/components/custom/blob/blob-breath.test.ts (3 tests | 2 failed) 32ms
+     × a 600 ms sweep across the body kicks once and stays inside the box 18ms
+     × a drag of three strokes, then its release, stays inside the box 10ms
+ ❯ tests/components/pager-dots/worm-dot-px.test.ts (1 test | 1 failed) 42ms
+     × a neighbour hop never paints a neck wider than pitch + D under a rem token 41ms
+ ❯ tests/styles/overlay-plate-inline-bound.test.ts (3 tests | 3 failed) 22ms
+     × states the bound once: anchor up to 22rem, inside reka's measured room 15ms
+     × reads it on every anchored arm and never measures room in vw 2ms
+     × lets the Select viewport follow its plate 4ms
+ ❯ tests/styles/slider-thumb-bg.test.ts (3 tests | 2 failed) 9ms
+     × the base thumb reads --slider-thumb-bg over --foreground 6ms
+     × no other thumb rule paints a bare --card 2ms
+ ❯ tests/components/select/open-input.test.ts (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/select/open-input.test.ts [ tests/components/select/open-input.test.ts ]
+Error: Failed to resolve import "@glass/components/select/openInput" from "tests/components/select/open-input.test.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests/components/select/open-input.test.ts:15:62
+  12 |  import { defineComponent, h, nextTick } from "vue";
+  13 |  import { mount } from "@vue/test-utils";
+  14 |  import { injectSelectOpenInput, provideSelectOpenInput } from "@glass/components/select/openInput";
+     |                                                                 ^
+  15 |  describe("Select open input", () => {
+  16 |  	it("defaults to keyboard and records the input that opens the list", async () => {
+ ❯ TransformPluginContext._formatLog ../../../node_modules/vite/dist/node/chunks/node.js:30416:39
+ ❯ TransformPluginContext.error ../../../node_modules/vite/dist/node/chunks/node.js:30413:14
+ ❯ normalizeUrl ../../../node_modules/vite/dist/node/chunks/node.js:27438:18
+ ❯ ../../../node_modules/vite/dist/node/chunks/node.js:27506:30
+ ❯ TransformPluginContext.transform ../../../node_modules/vite/dist/node/chunks/node.js:27474:4
+ ❯ EnvironmentPluginContainer.transform ../../../node_modules/vite/dist/node/chunks/node.js:30201:14
+ ❯ loadAndTransform ../../../node_modules/vite/dist/node/chunks/node.js:20124:26
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/22]⎯
+
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 19 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/slider.size-tokens.test.ts > Slider size rungs read the token root > keeps the default md rung at a 20px band with a 20px disc (spectrum 24px band, 24px ring)
+AssertionError: expected { track: 20, thumbWidth: 16 } to deeply equal { track: 20, thumbWidth: 20 }
+
+- Expected
++ Received
+
+  {
+-   "thumbWidth": 20,
++   "thumbWidth": 16,
+    "track": 20,
+  }
+
+ ❯ tests/components/slider.size-tokens.test.ts:73:39
+     71| describe("Slider size rungs read the token root", () => {
+     72|     it("keeps the default md rung at a 20px band with a 20px disc (spe…
+     73|         expect(await measure("base")).toEqual({ track: 20, thumbWidth:…
+       |                                       ^
+     74|         // spectrum: track = thumb size × 1.5, and the ring is the ban…
+     75|         expect(await measure("base-spectrum")).toEqual({ track: 24, th…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/22]⎯
+
+ FAIL  tests/components/slider.size-tokens.test.ts > Slider size rungs read the token root > follows a wrapper override set inside @layer glass-overrides, the disc with it
+AssertionError: expected { track: 32, thumbWidth: 16 } to deeply equal { track: 32, thumbWidth: 32 }
+
+- Expected
++ Received
+
+  {
+-   "thumbWidth": 32,
++   "thumbWidth": 16,
+    "track": 32,
+  }
+
+ ❯ tests/components/slider.size-tokens.test.ts:79:39
+     77|
+     78|     it("follows a wrapper override set inside @layer glass-overrides, …
+     79|         expect(await measure("tall")).toEqual({ track: 32, thumbWidth:…
+       |                                       ^
+     80|     });
+     81|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/22]⎯
+
+ FAIL  tests/components/slider.size-tokens.test.ts > Slider size rungs read the token root > sizes every thumb by the band's one height (the track height), never by the thumb size
+AssertionError: expected { track: 18, thumbWidth: 9 } to deeply equal { track: 24, thumbWidth: 24 }
+
+- Expected
++ Received
+
+  {
+-   "thumbWidth": 24,
+-   "track": 24,
++   "thumbWidth": 9,
++   "track": 18,
+  }
+
+ ❯ tests/components/slider.size-tokens.test.ts:84:48
+     82|     it("sizes every thumb by the band's one height (the track height),…
+     83|         // the track rung moves the scrubber's band and disc, not the …
+     84|         expect(await measure("thin-spectrum")).toEqual({ track: 24, th…
+       |                                                ^
+     85|         // the thumb size sets only the spectrum's band: 32px → 48px b…
+     86|         expect(await measure("fat-thumb-spectrum")).toEqual({ track: 4…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/22]⎯
+
+ FAIL  tests/styles/overlay-plate-inline-bound.test.ts > overlay plate — one inline bound > states the bound once: anchor up to 22rem, inside reka's measured room
+AssertionError: expected ' @layer components { .glass-overlay-p…' to contain '--overlay-inline-cap: min( max(22rem,…'
+
+Expected: "--overlay-inline-cap: min( max(22rem, var(--reka-popper-anchor-width)), var(--reka-popper-available-width) );"
+Received: " @layer components { .glass-overlay-plate { --radius-ctx: var(--radius-card); --radius-inset: var(--overlay-pad); padding: var(--overlay-pad); color: var(--popover-foreground); overflow: hidden; } .glass-overlay-plate[data-reveal="menu"], .glass-overlay-plate[data-reveal="overlay"] { max-inline-size: min(22rem, 100vw - 2rem); max-block-size: var(--reka-popper-available-height, 100dvh); overflow-y: auto; overscroll-behavior: contain; } .glass-overlay-plate[data-reveal="menu"] { min-inline-size: var(--overlay-min-width); } .glass-overlay-plate[data-reveal="overlay"] { inline-size: min(21rem, calc(100dvw - 2 * var(--overlay-pad))); } .glass-overlay-plate[data-reveal="tooltip"] { --radius-ctx: var(--radius-panel); --radius-inset: var(--overlay-pad-hint); padding: var(--overlay-pad-hint); font-size: var(--tooltip-text); line-height: var(--type-leading-caption); max-block-size: min( var(--overlay-max-block), var(--reka-popper-available-height, var(--overlay-max-block)) ); overflow-y: auto; } .menu__trigger:focus-visible { outline: var(--focus-ring-width) solid color-mix( in oklab, var(--foreground) calc(var(--ink-perimeter) * 100%), transparent ); outline-offset: var(--focus-ring-width); border-radius: var(--radius-control); } .menu__item, .menu__sub-trigger { position: relative; display: flex; width: 100%; align-items: center; gap: var(--icon-label-gap); padding-block: 0.375rem; padding-inline: 0.5rem; cursor: default; outline: none; color: inherit; font-size: var(--dropdown-text); user-select: none; } .menu__item[data-inset], .menu__item[data-indicator="wide"] { padding-inline-start: 2rem; } .menu__item[data-indicator="start"] { padding-inline-start: 1.75rem; } .menu__item[data-disabled], .menu__sub-trigger[data-disabled] { pointer-events: none; cursor: not-allowed; opacity: var(--opacity-disabled); } .menu__indicator { position: absolute; inset-inline-start: 0.5rem; display: inline-flex; width: 0.875rem; height: 0.875rem; align-items: center; justify-content: center; } .menu__indicator > svg { width: 1rem; height: 1rem; } .menu__radio-dot { display: inline-block; width: 0.5rem; height: 0.5rem; border-radius: var(--radius-circle); background: currentColor; } .menu__label { padding: 0.375rem 0.5rem; color: var(--muted-foreground); font-size: var(--dropdown-text-secondary); font-weight: 600; } .menu__label[data-inset] { padding-inline-start: 2rem; } .menu__shortcut { margin-inline-start: auto; font-size: var(--dropdown-text-secondary); letter-spacing: var(--type-tracking-caps); opacity: 0.6; } .menu__sub-chevron { width: 1rem; height: 1rem; margin-inline-start: auto; } [data-slot="select-content"] { --glass-veil-tier: var(--glass-veil-overlay); --overlay-viewport-inset: 4px; --overlay-option-radius: calc( var(--radius-card) - var(--overlay-viewport-inset) ); background-image: linear-gradient( color-mix( in oklab, oklch(0.9 0.05 75 / 0), var(--glass-capsule-warm) var(--glass-capsule-warm-floor) ), color-mix( in oklab, oklch(0.9 0.05 75 / 0), var(--glass-capsule-warm) var(--glass-capsule-warm-floor) ) ); border: 1px solid color-mix( in oklab, var(--foreground) calc(var(--ink-edge) * 100%), transparent ); box-shadow: var(--glass-material-rim), var(--glass-under-shadow-vivid), var(--glass-shadow-floating), var(--shadow-cartoon-lg); max-inline-size: min(22rem, 100vw - 2rem); max-block-size: var(--reka-select-content-available-height, 100dvh); overflow: hidden; transform-origin: var(--reka-select-content-transform-origin); } [data-slot="select-viewport"] { padding: var(--overlay-viewport-inset); overscroll-behavior: contain; } [data-slot="select-content"][data-form="sheet"] { inline-size: 100vw; max-inline-size: none; border-end-start-radius: 0; border-end-end-radius: 0; border-block-end: 0; transform-origin: bottom center; } [data-slot="select-viewport"] [role="option"] { border-radius: var(--overlay-option-radius); } .glass-field-portal { position: relative; } .glass-field-portal::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; border-radius: inherit; background: radial-gradient( 70% 60% at 24% 22%, oklch(0.92 0.08 var(--field-h, 48) / 0.55), transparent 72% ), radial-gradient( 64% 58% at 82% 80%, oklch(0.88 0.07 calc(var(--field-h, 48) + 18) / 0.5), transparent 70% ), radial-gradient( 60% 62% at 60% 40%, oklch(0.9 0.06 calc(var(--field-h, 48) - 14) / 0.48), transparent 74% ); } .dark .glass-field-portal::before { background: radial-gradient( 70% 60% at 24% 22%, oklch(0.3 0.1 var(--field-h, 48) / 0.55), transparent 72% ), radial-gradient( 64% 58% at 82% 80%, oklch(0.26 0.09 calc(var(--field-h, 48) + 18) / 0.5), transparent 70% ), radial-gradient( 60% 62% at 60% 40%, oklch(0.28 0.08 calc(var(--field-h, 48) - 14) / 0.48), transparent 74% ); } @supports not (color: oklch(0.9 0.08 48)) { .glass-field-portal::before { background: radial-gradient( 70% 60% at 24% 22%, hsl(var(--field-h, 48) 60% 88% / 0.5), transparent 72% ); } .dark .glass-field-portal::before { background: radial-gradient( 70% 60% at 24% 22%, hsl(var(--field-h, 48) 45% 26% / 0.55), transparent 72% ); } } } "
+
+ ❯ tests/styles/overlay-plate-inline-bound.test.ts:24:29
+     22| describe("overlay plate — one inline bound", () => {
+     23|     it("states the bound once: anchor up to 22rem, inside reka's measu…
+     24|         expect(flat(plate)).toContain(
+       |                             ^
+     25|             "--overlay-inline-cap: min( max(22rem, var(--reka-popper-a…
+     26|         );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/22]⎯
+
+ FAIL  tests/styles/overlay-plate-inline-bound.test.ts > overlay plate — one inline bound > reads it on every anchored arm and never measures room in vw
+AssertionError: expected 'max-inline-size: min(22rem, 100vw - 2…' to be 'max-inline-size: var(--overlay-inline…' // Object.is equality
+
+Expected: "max-inline-size: var(--overlay-inline-cap);"
+Received: "max-inline-size: min(22rem, 100vw - 2rem);"
+
+ ❯ tests/styles/overlay-plate-inline-bound.test.ts:33:45
+     31|         const caps = (plate.match(/max-inline-size:\s*[^;]+;/g) ?? [])…
+     32|         expect(caps.length).toBe(2);
+     33|         for (const cap of caps) expect(cap).toBe("max-inline-size: var…
+       |                                             ^
+     34|         expect(plate).not.toMatch(/100vw\s*-/);
+     35|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/22]⎯
+
+ FAIL  tests/styles/overlay-plate-inline-bound.test.ts > overlay plate — one inline bound > lets the Select viewport follow its plate
+AssertionError: expected '<script lang="ts">\nimport type { HTM…' not to contain 'min-w-(--reka-select-trigger-width)'
+
+- Expected
++ Received
+
+- min-w-(--reka-select-trigger-width)
++ <script lang="ts">
++ import type { HTMLAttributes } from "vue";
++ import type { PointerDownOutsideEvent } from "../_shared/interaction";
++ import type { FloatingPlacementProps } from "../_shared/overlay";
++
++ export interface SelectContentProps extends FloatingPlacementProps {
++     class?: HTMLAttributes["class"];
++ }
++
++ export interface SelectContentEmits {
++     closeAutoFocus: [event: Event];
++     escapeKeyDown: [event: KeyboardEvent];
++     pointerDownOutside: [event: PointerDownOutsideEvent];
++ }
++ </script>
++
++ <script setup lang="ts">
++ import { computed, useAttrs } from "vue";
++ import {
++     injectSelectRootContext,
++     SelectContent as RekaSelectContent,
++     SelectPortal as RekaSelectPortal,
++     SelectViewport as RekaSelectViewport,
++ } from "reka-ui";
++ import SelectScrollButton from "./SelectScrollButton.vue";
++ import { cn } from "../_shared/class-names";
++ import { useDockParticipation, useSheetWidth } from "../_shared/overlay";
++
++ defineOptions({
++     name: "SelectContent",
++     inheritAttrs: false,
++ });
++
++ const props = withDefaults(defineProps<SelectContentProps>(), {
++     side: "bottom",
++     
++     sideOffset: 4,
++     align: "start",
++     alignOffset: 0,
++ });
++ const emit = defineEmits<SelectContentEmits>();
++ const attrs = useAttrs();
++
++
++ const selectRoot = injectSelectRootContext(null);
++
++
++ const sheet = useSheetWidth(() => selectRoot?.open.value ?? false);
++ const viewportFoot = {
++     getBoundingClientRect: () =>
++         new DOMRect(0, window.innerHeight, document.documentElement.clientWidth, 0),
++ };
++
++
++ const rootAttrs = computed(() => ({
++     ...attrs,
++     position: "popper" as const,
++     bodyLock: false,
++     collisionPadding: 16,
++     ...(sheet.value
++         ? {
++               reference: viewportFoot,
++               side: "top" as const,
++               sideOffset: 0,
++               align: "start" as const,
++               alignOffset: 0,
++               avoidCollisions: false,
++           }
++         : {
++               side: props.side,
++               sideOffset: props.sideOffset,
++               align: props.align,
++               alignOffset: props.alignOffset,
++               avoidCollisions: true,
++           }),
++ }));
++
++ const dock = useDockParticipation({
++     close: () => {
++         if (selectRoot?.open.value) selectRoot.onOpenChange(false);
++     },
++ });
++ </script>
++
++ <template>
++     <RekaSelectPortal>
++         <!--
++       THE PLATE IS PRECOMPILED, and it has to be. Every rule that decides how this
++       listbox looks and how tall it may grow — the collision bound, the overlay
++       veil, the 1px perimeter ink, the warm portal field, the scale origin — lives
++       in `styles/glass/overlay-plate.css` as plain attribute-selector CSS keyed on
++       `[data-slot="select-content"]`. A Tailwind utility here would compile only
++       into a `dist/*.js` render chunk that no consumer content-scan reaches; a
++       precompiled rule ships in the `/styles` cascade whatever the consumer's JIT
++       does. SelectContent clips at the bound and SelectViewport is the only
++       vertical scroll owner, which is what keeps reka's active-option scrolling
++       correct (one scroll port, never nested).
++     -->
++         <RekaSelectContent
++             v-bind="{ ...rootAttrs, ...dock.portalAttrs.value }"
++             data-reveal="menu"
++             data-slot="select-content"
++             :data-form="sheet ? 'sheet' : undefined"
++             :data-surface="sheet ? 'opaque' : undefined"
++             :class="
++                 cn(
++                     'relative z-popover min-w-(--overlay-min-width) overflow-hidden text-popover-foreground glass-reveal',
++                     sheet ? 'rounded-t-card' : 'rounded-card',
++                     'glass-floating glass-field-portal',
++                     props.class,
++                 )
++             "
++             @close-auto-focus="emit('closeAutoFocus', $event)"
++             @escape-key-down="emit('escapeKeyDown', $event)"
++             @pointer-down-outside="emit('pointerDownOutside', $event)"
++         >
++             <SelectScrollButton direction="up" />
++             <!-- The viewport is the scroll port AND the fade port: one element, so the
++                  edge feather reads the SAME scroll state reka scrolls. Its inset and
++                  the option corner derived from it are precompiled together in
++                  glass/overlay-plate.css — the law lives beside the plate it measures
++                  against, not in a utility here. -->
++             <RekaSelectViewport
++                 data-slot="select-viewport"
++                 data-fade-start
++                 data-fade-end
++                 :class="
++                     cn(
++                         'fading-scroll fading-scroll--y w-full min-w-(--reka-select-trigger-width)',
++                     )
++                 "
++             >
++                 <slot />
++             </RekaSelectViewport>
++             <SelectScrollButton direction="down" />
++         </RekaSelectContent>
++     </RekaSelectPortal>
++ </template>
++
+
+ ❯ tests/styles/overlay-plate-inline-bound.test.ts:38:28
+     36|
+     37|     it("lets the Select viewport follow its plate", () => {
+     38|         expect(select).not.toContain("min-w-(--reka-select-trigger-wid…
+       |                            ^
+     39|     });
+     40| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/22]⎯
+
+ FAIL  tests/styles/slider-thumb-bg.test.ts > slider thumb colour token > the base thumb reads --slider-thumb-bg over --foreground
+AssertionError: expected '\n    display: block;\n    width: var…' to match /background:\s*var\(--slider-thumb-bg,…/
+
+- Expected:
+/background:\s*var\(--slider-thumb-bg,\s*var\(--foreground\)\);/
+
++ Received:
+"
+    display: block;
+    width: var(--slider-thumb-size, 1rem);
+    height: var(--slider-thumb-size, 1rem);
+    border: none;
+    border-radius: var(--radius-pill);
+    background: var(--card);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--spring-press-duration) var(--spring-press);
+"
+
+ ❯ tests/styles/slider-thumb-bg.test.ts:23:39
+     21| describe("slider thumb colour token", () => {
+     22|     it("the base thumb reads --slider-thumb-bg over --foreground", () …
+     23|         expect(body(".slider-thumb")).toMatch(/background:\s*var\(--sl…
+       |                                       ^
+     24|     });
+     25|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/22]⎯
+
+ FAIL  tests/styles/slider-thumb-bg.test.ts > slider thumb colour token > no other thumb rule paints a bare --card
+AssertionError: expected '\n\n\n@property --glass-slider-track-…' not to match /background:\s*var\(--card\)\s*;/
+
+- Expected:
+/background:\s*var\(--card\)\s*;/
+
++ Received:
+"
+
+
+@property --glass-slider-track-background {
+    syntax: \"*\";
+    inherits: true;
+}
+
+.glass-slider {
+    --slider-range-origin: left center;
+    position: relative;
+    display: flex;
+    inline-size: 100%;
+    align-items: center;
+    touch-action: none;
+    user-select: none;
+    transition: color var(--duration-fast) var(--ease-standard);
+}
+
+
+.glass-slider {
+    cursor: grab;
+}
+
+.glass-slider[data-held],
+.glass-slider:active {
+    cursor: grabbing;
+}
+
+.glass-slider[data-disabled] {
+    cursor: not-allowed;
+}
+
+.glass-slider[data-inverted],
+.glass-slider:dir(rtl) {
+    --slider-range-origin: right center;
+}
+
+.glass-slider:dir(rtl)[data-inverted] {
+    --slider-range-origin: left center;
+}
+
+
+.glass-slider[data-size=\"sm\"] {
+    --slider-track-height: var(--slider-track-height-sm);
+    --slider-thumb-size: min(var(--slider-thumb-size-sm), var(--slider-track-height-sm));
+}
+.glass-slider[data-size=\"md\"] {
+    --slider-track-height: var(--slider-track-height-md);
+    --slider-thumb-size: min(var(--slider-thumb-size-md), var(--slider-track-height-md));
+}
+.glass-slider[data-size=\"lg\"] {
+    --slider-track-height: var(--slider-track-height-lg);
+    --slider-thumb-size: min(var(--slider-thumb-size-lg), var(--slider-track-height-lg));
+}
+
+
+.glass-slider[data-variant=\"spectrum\"] {
+    --slider-track-height: calc(var(--slider-thumb-size, 1rem) * 1.5);
+}
+
+
+@media (pointer: coarse) {
+    .glass-slider {
+        --slider-target-floor: max(
+            var(--slider-track-height, 0.375rem),
+            var(--slider-touch-target, 1.5rem)
+        );
+        min-block-size: var(--slider-target-floor);
+        min-inline-size: var(--slider-target-floor);
+    }
+}
+
+
+.slider-track {
+    width: 100%;
+    flex-grow: 1;
+    height: var(--slider-track-height, 0.375rem);
+    background: var(--glass-slider-track-background, var(--muted-medium));
+    transition:
+        background var(--duration-fast) var(--ease-standard),
+        border-color var(--duration-fast) var(--ease-standard);
+}
+
+
+.glass-slider,
+.glass-loupe {
+    --slider-fill-ink: var(--glass-capsule-warm);
+}
+
+.dark .glass-slider,
+.dark .glass-loupe {
+    --slider-fill-ink: color-mix(in oklab, var(--foreground) 22%, transparent);
+}
+
+.slider-range {
+    position: absolute;
+    height: 100%;
+    --liquid-fill-tint: var(--slider-range-bg, var(--slider-fill-ink));
+}
+
+
+.slider-lane {
+    position: absolute;
+    inset: 0;
+}
+
+.glass-slider:not([data-variant=\"spectrum\"]) {
+    --slider-lane-cut: var(--slider-thumb-size, 1rem);
+    --value-mark-inset: calc(var(--slider-lane-cut) / 2);
+}
+
+.glass-slider:not([data-variant=\"spectrum\"]):not([data-orientation=\"vertical\"]) {
+    & .slider-lane {
+        inset-inline-end: var(--slider-lane-cut);
+    }
+    & .slider-range {
+        margin-inline-end: calc(-1 * var(--slider-lane-cut));
+    }
+    &[data-inverted] .slider-lane {
+        inset-inline: var(--slider-lane-cut) 0;
+    }
+    &[data-inverted] .slider-range {
+        margin-inline: calc(-1 * var(--slider-lane-cut)) 0;
+    }
+}
+
+.glass-slider[data-orientation=\"vertical\"]:not([data-variant=\"spectrum\"]) {
+    & .slider-lane {
+        inset-block-start: var(--slider-lane-cut);
+    }
+    & .slider-range {
+        margin-block-start: calc(-1 * var(--slider-lane-cut));
+    }
+    &[data-inverted] .slider-lane {
+        inset-block: 0 var(--slider-lane-cut);
+    }
+    &[data-inverted] .slider-range {
+        margin-block: 0 calc(-1 * var(--slider-lane-cut));
+    }
+}
+
+
+.slider-thumb {
+    display: block;
+    width: var(--slider-thumb-size, 1rem);
+    height: var(--slider-thumb-size, 1rem);
+    border: none;
+    border-radius: var(--radius-pill);
+    background: var(--card);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--spring-press-duration) var(--spring-press);
+}
+
+
+.glass-slider:not([data-variant=\"spectrum\"]) .slider-thumb:focus-visible {
+    outline: none;
+}
+
+
+.glass-slider:not([data-variant=\"spectrum\"]):hover .slider-range {
+    --liquid-fill-strength: 100%;
+}
+
+
+.glass-slider:not([data-variant=\"spectrum\"]):has(:focus-visible) .slider-track {
+    box-shadow: var(--focus-ring-shadow);
+}
+
+
+.glass-slider[data-held] .slider-range,
+.glass-slider:active .slider-range {
+    --smear: calc(var(--atom-drag-v, 0) * var(--motion-weight, 0.618));
+    transform: scale(
+        calc(1.02 + 0.16 * var(--smear)),
+        calc(0.94 - 0.06 * var(--smear))
+    );
+    transform-origin: var(--slider-range-origin);
+    transition: transform var(--spring-press-duration) var(--spring-press);
+}
+
+
+.glass-slider:not(:active):not([data-held]) .slider-range {
+    transition:
+        transform var(--duration-normal) var(--ease-cartoon-punch),
+        --glass-veil-rung var(--spring-dock-duration) var(--ease-standard),
+        box-shadow var(--duration-fast) var(--ease-standard);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .glass-slider:active .slider-range,
+    .glass-slider[data-held] .slider-range {
+        --motion-weight: 0;
+        transform: scale(1, 0.97);
+    }
+}
+
+
+.glass-slider[data-disabled] .slider-range,
+.glass-slider[data-disabled]:not([data-variant=\"spectrum\"]) .slider-thumb {
+    opacity: var(--opacity-disabled);
+}
+
+.glass-slider[data-invalid] .slider-track {
+    box-shadow: inset 0 0 0 1px var(--destructive);
+}
+
+
+.glass-slider[data-invalid]:has(:focus-visible) .slider-track {
+    box-shadow:
+        var(--focus-ring-shadow),
+        inset 0 0 0 1px var(--destructive);
+}
+
+.glass-slider[data-variant=\"spectrum\"][data-held] .slider-thumb {
+    box-shadow:
+        0 0 0 6px var(--surface-tint-15),
+        var(--shadow-sm);
+}
+
+
+.glass-slider[data-variant=\"spectrum\"] .slider-track {
+    background: var(--glass-slider-track-background, var(--secondary));
+}
+
+.glass-slider[data-variant=\"spectrum\"] .slider-thumb {
+    
+    width: calc(var(--slider-thumb-size, 1rem) * 0.75);
+    height: var(--slider-track-height, 0.375rem);
+    opacity: 1;
+    background: transparent;
+    border: 2px solid var(--background);
+    
+    border-radius: calc(var(--slider-thumb-size, 1rem) * 0.4);
+    box-shadow: var(--shadow-sm);
+}
+
+
+@supports (corner-shape: superellipse(2)) {
+    .glass-slider[data-variant=\"spectrum\"] .slider-thumb {
+        corner-shape: var(--corner-shape-thumb);
+    }
+}
+
+.glass-slider[data-variant=\"spectrum\"]:hover .slider-thumb {
+    box-shadow:
+        0 0 0 4px var(--surface-tint-8),
+        var(--shadow-sm);
+}
+
+
+.glass-slider[data-variant=\"spectrum\"] .slider-thumb:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring-shadow), var(--shadow-sm);
+}
+
+.glass-slider[data-orientation=\"vertical\"] {
+    flex-direction: column;
+    width: var(--slider-track-height, 0.375rem);
+    height: 12rem;
+}
+
+.glass-slider[data-orientation=\"vertical\"] .slider-track {
+    width: var(--slider-track-height, 0.375rem);
+    height: 100%;
+}
+
+.glass-slider[data-orientation=\"vertical\"] .slider-range {
+    width: 100%;
+    height: auto;
+}
+
+.glass-slider[data-orientation=\"vertical\"]:active .slider-range,
+.glass-slider[data-orientation=\"vertical\"][data-held] .slider-range {
+    --smear: calc(var(--atom-drag-v, 0) * var(--motion-weight, 0.618));
+    transform: scale(
+        calc(0.94 - 0.06 * var(--smear)),
+        calc(1.02 + 0.16 * var(--smear))
+    );
+    transform-origin: center bottom;
+}
+
+.glass-slider[data-orientation=\"vertical\"][data-inverted] .slider-range {
+    transform-origin: center top;
+}
+
+
+.glass-slider[data-orientation=\"vertical\"][data-variant=\"spectrum\"] .slider-thumb {
+    width: var(--slider-track-height, 0.375rem);
+    height: calc(var(--slider-thumb-size, 1rem) * 0.75);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .glass-slider[data-orientation=\"vertical\"]:active .slider-range,
+    .glass-slider[data-orientation=\"vertical\"][data-held] .slider-range {
+        transform: scale(0.97, 1);
+    }
+}
+
+
+@media (forced-colors: active) {
+    .slider-track {
+        background: Canvas;
+        border: 1px solid CanvasText;
+    }
+    .slider-range {
+        background: Highlight;
+    }
+    .glass-slider:not([data-variant=\"spectrum\"]) .slider-thumb {
+        forced-color-adjust: none;
+        background: Canvas;
+        border: 1px solid CanvasText;
+    }
+    .glass-slider[data-variant=\"spectrum\"] .slider-thumb {
+        border-color: CanvasText;
+        forced-color-adjust: none;
+        background: Highlight;
+    }
+    .glass-loupe {
+        background: Canvas;
+        border: 1px solid CanvasText;
+    }
+}
+
+
+
+.glass-loupe {
+    
+    --loupe-k-max: 2.6;
+    --loupe-k-min: 1.15;
+    --loupe-k: calc(
+        var(--loupe-k-max) - (var(--loupe-k-max) - var(--loupe-k-min)) *
+            var(--flex-vel, 0)
+    );
+    
+    --loupe-vel: var(--flex-vel, 0);
+    --loupe-span: calc(var(--slider-track-height, 1.25rem) * 6);
+    position: fixed;
+    z-index: calc(var(--z-overlay) - 1);
+    inline-size: var(--loupe-span);
+    block-size: calc(var(--slider-track-height, 1.25rem) * var(--loupe-k-max));
+    inset-block-start: var(--loupe-top, 0);
+    inset-inline-start: var(--loupe-left, 0);
+    
+    translate: -50% -100%;
+    scale: 0.13;
+    transform-origin: 50% 100%;
+    transition:
+        scale var(--spring-present-duration) var(--spring-present),
+        opacity var(--spring-present-duration) var(--ease-standard);
+    opacity: 0;
+    overflow: hidden;
+    border-radius: var(--radius-pill);
+    pointer-events: none;
+    
+    box-shadow:
+        var(--glass-material-rim),
+        var(--glass-under-shadow-quiet);
+}
+
+.glass-loupe[data-engaged] {
+    scale: 1;
+    opacity: 1;
+}
+
+
+.glass-loupe:not([data-engaged]) {
+    transition:
+        scale var(--spring-present-exit-duration) var(--ease-standard),
+        opacity var(--spring-present-exit-duration) var(--ease-standard);
+}
+
+.glass-loupe-clone {
+    --s: 3;
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: 0;
+    inline-size: calc(var(--loupe-track-w, 0px) * var(--s));
+    block-size: calc(var(--slider-track-height, 1.25rem) * var(--s));
+    border-radius: calc(var(--radius-pill) * var(--s));
+    overflow: hidden;
+    background: var(--glass-slider-track-background, var(--muted-medium));
+    transform: translate(
+            calc(var(--loupe-span) / 2 - var(--loupe-k) * var(--loupe-x, 0px)),
+            -50%
+        )
+        scale(calc(var(--loupe-k) / var(--s)));
+    transform-origin: 0 50%;
+    
+    filter: blur(calc(var(--loupe-vel, 0) * 0.75px));
+    transition: filter var(--duration-normal) var(--ease-standard);
+}
+
+
+
+.glass-loupe-fill {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    inline-size: var(--loupe-fill-w, 0px);
+    background: var(--slider-range-bg, var(--slider-fill-ink));
+}
+
+
+.glass-loupe-mark {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 50%;
+    inline-size: 2px;
+    translate: -50% 0;
+    background: var(--foreground);
+    opacity: 0.24;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .glass-loupe {
+        transition-duration: 0.01ms;
+    }
+    .glass-loupe-clone {
+        filter: none;
+    }
+}
+"
+
+ ❯ tests/styles/slider-thumb-bg.test.ts:27:25
+     25|
+     26|     it("no other thumb rule paints a bare --card", () => {
+     27|         expect(css).not.toMatch(/background:\s*var\(--card\)\s*;/);
+       |                         ^
+     28|     });
+     29|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/22]⎯
+
+ FAIL  tests/composables/dark/useGlobalDark.test.ts > useGlobalDark({ storageKey }) > reads and writes the given key, not the default one
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/composables/dark/useGlobalDark.test.ts:59:30
+     57|         const { isDark } = useGlobalDark({ storageKey: "site-theme", i…
+     58|         await nextTick();
+     59|         expect(isDark.value).toBe(true);
+       |                              ^
+     60|         expect(localStorage.getItem("site-theme")).toBe("dark");
+     61|         expect(localStorage.getItem("vueuse-color-scheme")).toBe("auto…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/22]⎯
+
+ FAIL  tests/composables/dark/useGlobalDark.test.ts > useGlobalDark({ storageKey }) > throws on a conflicting second key and accepts a matching one
+AssertionError: expected [Function] to throw an error
+
+- Expected:
+null
+
++ Received:
+undefined
+
+ ❯ tests/composables/dark/useGlobalDark.test.ts:68:68
+     66|         useGlobalDark({ storageKey: "site-theme" });
+     67|         expect(() => useGlobalDark({ storageKey: "site-theme" })).not.…
+     68|         expect(() => useGlobalDark({ storageKey: "other-theme" })).toT…
+       |                                                                    ^
+     69|     });
+     70|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/22]⎯
+
+ FAIL  tests/composables/dark/useGlobalDark.test.ts > useGlobalDark toggles with an initialValue > stores the concrete mode when a toggle lands on the system scheme
+AssertionError: expected 'auto' to be 'dark' // Object.is equality
+
+Expected: "dark"
+Received: "auto"
+
+ ❯ tests/composables/dark/useGlobalDark.test.ts:91:61
+     89|         await nextTick();
+     90|         expect(isDark.value).toBe(true);
+     91|         expect(localStorage.getItem("vueuse-color-scheme")).toBe("dark…
+       |                                                             ^
+     92|     });
+     93|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/22]⎯
+
+ FAIL  tests/components/pager-dots/worm-dot-px.test.ts > pager worm: D resolves in px > a neighbour hop never paints a neck wider than pitch + D under a rem token
+AssertionError: expected 302.1828 to be less than or equal to 40
+ ❯ tests/components/pager-dots/worm-dot-px.test.ts:74:24
+     72|
+     73|         expect(painted).toBeGreaterThan(0); // the bridge did paint
+     74|         expect(widest).toBeLessThanOrEqual(PITCH + DOT);
+       |                        ^
+     75|     });
+     76| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/22]⎯
+
+ FAIL  tests/components/custom/blob/blob-breath.test.ts > Blob body reach > a 600 ms sweep across the body kicks once and stays inside the box
+AssertionError: expected 38 to be less than or equal to 2
+ ❯ tests/components/custom/blob/blob-breath.test.ts:109:32
+    107|         for (let i = 0; i <= n; i++) e.step(-0.9 + 1.8 * ease(i / n), …
+    108|         e.rest(400);
+    109|         expect.soft(e.kicks()).toBeLessThanOrEqual(2);
+       |                                ^
+    110|         expect(e.peak()).toBeLessThanOrEqual(BOX + 1e-6);
+    111|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/22]⎯
+
+ FAIL  tests/components/custom/blob/blob-breath.test.ts > Blob body reach > a 600 ms sweep across the body kicks once and stays inside the box
+AssertionError: expected 0.7252985946834087 to be less than or equal to 0.312501
+ ❯ tests/components/custom/blob/blob-breath.test.ts:110:26
+    108|         e.rest(400);
+    109|         expect.soft(e.kicks()).toBeLessThanOrEqual(2);
+    110|         expect(e.peak()).toBeLessThanOrEqual(BOX + 1e-6);
+       |                          ^
+    111|     });
+    112|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/22]⎯
+
+ FAIL  tests/components/custom/blob/blob-breath.test.ts > Blob body reach > a drag of three strokes, then its release, stays inside the box
+AssertionError: expected 10 to be less than or equal to 6
+ ❯ tests/components/custom/blob/blob-breath.test.ts:119:32
+    117|             for (let i = 0; i <= n; i++) e.step(a + (b - a) * ease(i /…
+    118|         }
+    119|         expect.soft(e.kicks()).toBeLessThanOrEqual(6);
+       |                                ^
+    120|         e.release();
+    121|         e.rest(400);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/22]⎯
+
+ FAIL  tests/components/custom/blob/blob-breath.test.ts > Blob body reach > a drag of three strokes, then its release, stays inside the box
+AssertionError: expected 0.7025929567391652 to be less than or equal to 0.312501
+ ❯ tests/components/custom/blob/blob-breath.test.ts:122:26
+    120|         e.release();
+    121|         e.rest(400);
+    122|         expect(e.peak()).toBeLessThanOrEqual(BOX + 1e-6);
+       |                          ^
+    123|     });
+    124|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/22]⎯
+
+ FAIL  tests/components/custom/dock/dockMorphMeasure.test.ts > the start-anchored rail > a collapse arm keeps the expanded box it is leaving
+AssertionError: expected '56px' to be '592px' // Object.is equality
+
+Expected: "592px"
+Received: "56px"
+
+ ❯ tests/components/custom/dock/dockMorphMeasure.test.ts:878:37
+    876|         dock.posture("collapsed");
+    877|         result.measure();
+    878|         expect(dock.px("expanded")).toBe("592px");
+       |                                     ^
+    879|         expect(dock.px("collapsed")).toBe("56px");
+    880|         unmount();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/22]⎯
+
+ FAIL  tests/components/custom/dock/dockMorphMeasure.test.ts > the start-anchored rail > a region that differs between postures holds its anchored edge
+AssertionError: expected -64.5 to be close to +0, received difference is 64.5, but expected 5e-7
+ ❯ tests/components/custom/dock/dockMorphMeasure.test.ts:912:23
+    910|             local: 72,
+    911|         });
+    912|         expect(start).toBeCloseTo(0, 6);
+       |                       ^
+    913|         dock.unmount();
+    914|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/22]⎯
+
+ FAIL  tests/components/custom/dock/dockMorphMeasure.test.ts > the start-anchored rail > a region that painted nothing in the first frame rests where it lays out
+AssertionError: expected '277.5%' to be '-60%' // Object.is equality
+
+Expected: "-60%"
+Received: "277.5%"
+
+ ❯ tests/components/custom/dock/dockMorphMeasure.test.ts:937:40
+    935|         expect(dock.origin(dock.root)).toBe("0%");
+    936|         // The root's origin (0 root-local) in the seat's own box (sta…
+    937|         expect(dock.origin(dock.seat)).toBe(`${((0 - 24) / 40) * 100}%…
+       |                                        ^
+    938|         dock.unmount();
+    939|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/22]⎯
+
+ FAIL  tests/components/custom/dock/g-dock-lattice.test.ts > G-DOCK-RUN — the platform is the detent engine > the horizontal run is a snapped, contained, single-owner scroller
+AssertionError: expected '\n\n@layer components {\n    \n    .g…' to contain 'overscroll-behavior-x: contain'
+
+- Expected
++ Received
+
+- overscroll-behavior-x: contain
++
++
++ @layer components {
++     
++     .glass-dock {
++         --dock-seat: var(--dock-control-size);
++         
++         --dock-run-gap: 0.5rem;
++         --dock-pitch: calc(var(--dock-seat) + var(--dock-run-gap));
++         
++         --dock-open-pitches: 3;
++         --dock-open-seat: calc(
++             var(--dock-open-pitches) * var(--dock-pitch) - var(--dock-run-gap)
++         );
++         
++         --dock-run-reserve-inline: round(up, var(--dock-ring-reserve), 1px);
++         --dock-run-reserve-block: round(up, var(--dock-ring-reserve), 1px);
++     }
++
++     .glass-dock.vertical {
++         --dock-open-pitches: 2;
++     }
++
++     
++     .glass-dock > .dock-controls > .dock-layers {
++         flex: 1 1 auto;
++         min-inline-size: 0;
++         min-block-size: 0;
++     }
++
++     
++     .glass-dock:not(.vertical):not(.collapsed) > .dock-controls > .dock-layers {
++         margin-inline: max(
++             0px,
++             var(--dock-run-reserve-inline) - var(--dock-padding-inline, 0.5rem)
++         );
++     }
++
++     .glass-dock:not(.vertical) > .dock-controls > .dock-persistent + .dock-layers {
++         margin-inline-start: var(--dock-layer-gap, 0.375rem);
++     }
++
++     .glass-dock:not(.vertical):not(.collapsed) > .dock-controls > .dock-persistent + .dock-layers {
++         margin-inline-start: calc(var(--dock-layer-gap, 0.375rem) + var(--dock-run-reserve-inline));
++     }
++
++     .glass-dock:not(.vertical):not(.collapsed)
++         > .dock-controls
++         > .dock-layers:has(+ .dock-persistent-end) {
++         margin-inline-end: var(--dock-run-reserve-inline);
++     }
++
++     .glass-dock.vertical:not(.collapsed) > .dock-controls > .dock-layers {
++         margin-block: max(
++             0px,
++             var(--dock-run-reserve-block) - var(--dock-padding-block, 0.375rem)
++         );
++     }
++
++     .glass-dock.vertical > .dock-controls > .dock-persistent + .dock-layers {
++         margin-block-start: var(--dock-layer-gap, 0.375rem);
++     }
++
++     .glass-dock.vertical:not(.collapsed) > .dock-controls > .dock-persistent + .dock-layers {
++         margin-block-start: calc(var(--dock-layer-gap, 0.375rem) + var(--dock-run-reserve-block));
++     }
++
++     .glass-dock.vertical:not(.collapsed)
++         > .dock-controls
++         > .dock-layers:has(+ .dock-persistent-end) {
++         margin-block-end: var(--dock-run-reserve-block);
++     }
++
++     
++     .glass-dock > .dock-controls > .dock-persistent + .dock-layers {
++         --dock-run-edge-start: 0;
++     }
++
++     .glass-dock > .dock-controls > .dock-layers:has(+ .dock-persistent-end) {
++         --dock-run-edge-end: 0;
++     }
++
++     
++     .glass-dock > .dock-controls > .dock-persistent {
++         flex: 0 0 auto;
++     }
++
++     
++     .glass-dock :where(.dock-layers) > .dock-run {
++         
++         overflow-x: auto;
++         overflow-y: hidden;
++         
++         scroll-snap-type: x mandatory;
++         
++         scroll-padding-inline: calc(var(--dock-pitch) / 2 + var(--dock-run-reserve-inline));
++         
++         touch-action: pan-x;
++         overscroll-behavior: contain;
++         scrollbar-width: none;
++         
++         min-inline-size: 0;
++         
++         
++         
++         box-sizing: content-box;
++         padding: var(--dock-run-reserve-block) var(--dock-run-reserve-inline);
++         margin: calc(-1 * var(--dock-run-reserve-block)) calc(-1 * var(--dock-run-reserve-inline));
++         
++         gap: var(--dock-run-gap);
++     }
++
++     .glass-dock :where(.dock-layers) > .dock-run::-webkit-scrollbar {
++         display: none;
++     }
++
++     
++     .glass-dock {
++         --dock-run-yield: 0;
++     }
++
++     .glass-dock[data-run-fits] {
++         --dock-run-yield: 1;
++     }
++
++     
++     .glass-dock.vertical[data-run-fits] :where(.dock-layers) > .dock-run {
++         padding-block: min(var(--dock-run-reserve-block), var(--dock-run-room-block, 0px));
++     }
++
++     .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> *) {
++         padding-inline-end: 0;
++     }
++
++     .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> *)::before,
++     .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> *)::after {
++         content: "";
++         flex: 0 var(--dock-run-yield) auto;
++         inline-size: var(--dock-run-reserve-inline);
++         min-inline-size: var(--dock-ring-reserve);
++     }
++
++     .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> *)::before {
++         margin-inline: calc(-1 * var(--dock-run-reserve-inline)) calc(-1 * var(--dock-run-gap));
++     }
++
++     .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> *)::after {
++         margin-inline-start: calc(-1 * var(--dock-run-gap));
++     }
++
++     
++     .glass-dock :where(.dock-layers) > .dock-run > * {
++         scroll-snap-align: start;
++         flex: 0 0 auto;
++     }
++
++     
++     .glass-dock :where(.dock-layers) > .dock-run > .dock-layer-group {
++         scroll-snap-align: none;
++     }
++
++     .glass-dock :where(.dock-layers) > .dock-run > .dock-layer-group .dock-face.is-active > .dock-face-content > * {
++         scroll-snap-align: start;
++     }
++
++     
++     .glass-dock.vertical :where(.dock-layers) > .dock-run {
++         overflow-x: hidden;
++         overflow-y: auto;
++         scroll-snap-type: y mandatory;
++         scroll-padding-block: calc(var(--dock-pitch) / 2 + var(--dock-run-reserve-block));
++         touch-action: pan-y;
++         min-block-size: 0;
++         
++     }
++
++     
++     .glass-dock :where(.dock-layers) > .dock-run > [aria-current]:not([aria-current="false"]),
++     .glass-dock :where(.dock-layers) > .dock-run > [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"])) {
++         inline-size: var(--dock-open-seat);
++         
++         transition: inline-size var(--spring-dock-duration) var(--spring-dock);
++     }
++
++     
++     .glass-dock :where(.dock-layers) > .dock-run > :not([aria-current]:not([aria-current="false"])):not(
++             [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"]))
++         ) {
++         transition: inline-size var(--spring-dock-duration) var(--spring-dock);
++     }
++
++     
++     .glass-dock.vertical :where(.dock-layers) > .dock-run > [aria-current]:not([aria-current="false"]),
++     .glass-dock.vertical :where(.dock-layers) > .dock-run > [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"])) {
++         inline-size: auto;
++         block-size: var(--dock-open-seat);
++         transition: block-size var(--spring-dock-duration) var(--spring-dock);
++     }
++
++     .glass-dock.vertical
++         :where(.dock-layers) > .dock-run
++         > :not([aria-current]:not([aria-current="false"])):not(
++             [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"]))
++         ) {
++         transition: block-size var(--spring-dock-duration) var(--spring-dock);
++     }
++
++     
++
++     
++     .glass-dock {
++         timeline-scope: --dock-run;
++         
++         --dock-cross: var(
++             --dock-plate-cross-px,
++             calc(var(--dock-layer-height) + 2 * var(--dock-padding-block))
++         );
++         
++         --dock-cap-rest: calc(var(--dock-cross) / 2);
++         --dock-cap-cut: var(--radius-card);
++     }
++
++     
++     .glass-dock.vertical {
++         --dock-cross: var(
++             --dock-plate-cross-px,
++             calc(var(--dock-control-size) + 2 * var(--dock-padding-inline))
++         );
++     }
++
++     .glass-dock.shape-rounded {
++         --dock-cap-rest: var(--radius-card);
++         --dock-cap-cut: var(--radius-xs);
++     }
++
++     .glass-dock.shape-card {
++         --dock-cap-rest: var(--dock-card-radius, var(--radius-dock-card));
++         --dock-cap-cut: var(--radius-lg);
++     }
++
++     
++     .glass-dock :where(.dock-layers) > .dock-run:not(.is-active):not(.is-leaving) {
++         overflow: clip;
++     }
++
++     
++     .glass-dock {
++         --dock-run-edge-start: 1;
++         --dock-run-edge-end: 1;
++         --dock-run-inset: max(
++             0px,
++             var(--dock-padding-inline, 0.5rem) - var(--dock-run-reserve-inline)
++         );
++     }
++
++     .glass-dock.vertical {
++         --dock-run-inset: max(
++             0px,
++             var(--dock-vertical-padding, var(--dock-padding-inline, 0.5rem)) +
++                 max(0px, var(--dock-run-reserve-block) - var(--dock-padding-block, 0.375rem)) -
++                 var(--dock-run-reserve-block)
++         );
++     }
++
++     
++     .glass-dock {
++         --dock-run-cross-half: calc(
++             var(--dock-cross) / 2 + var(--dock-run-reserve-block) -
++                 var(--dock-padding-block, 0.375rem)
++         );
++     }
++
++     .glass-dock.vertical {
++         --dock-run-cross-half: calc(
++             var(--dock-cross) / 2 + var(--dock-run-reserve-inline) -
++                 var(--dock-vertical-padding, var(--dock-padding-inline, 0.5rem))
++         );
++     }
++
++     .glass-dock :where(.dock-layers) > .dock-run.is-active {
++         scroll-timeline: --dock-run inline;
++         --dock-run-corner-rest: max(0px, var(--dock-cap-rest) - var(--dock-run-inset));
++         --dock-run-corner-cut: max(0px, var(--dock-cap-cut) - var(--dock-run-inset));
++         animation:
++             gl-dock-clip-inline-start linear both,
++             gl-dock-clip-inline-end linear both;
++         animation-timeline: --dock-run, --dock-run;
++         animation-range:
++             0 var(--dock-pitch),
++             calc(100% - var(--dock-pitch)) 100%;
++         animation-direction: normal, reverse;
++     }
++
++     .glass-dock.vertical :where(.dock-layers) > .dock-run.is-active {
++         scroll-timeline: --dock-run block;
++         animation-name: gl-dock-clip-block-start, gl-dock-clip-block-end;
++     }
++
++     
++     .glass-dock.shape-pill {
++         border-radius: var(--dock-cap-rest);
++     }
++
++     
++     .glass-dock.shape-pill[data-morphing]:not(.vertical) {
++         border-radius: calc(var(--dock-cap-rest) / max(var(--dock-size-scale, 1), 0.06)) /
++             var(--dock-cap-rest);
++     }
++     .glass-dock.shape-pill[data-morphing].vertical {
++         border-radius: var(--dock-cap-rest) /
++             calc(var(--dock-cap-rest) / max(var(--dock-size-scale, 1), 0.06));
++     }
++
++     
++     .glass-dock .dock-plate {
++         animation:
++             gl-dock-cap-inline-start linear both,
++             gl-dock-cap-inline-end linear both;
++         animation-timeline: --dock-run, --dock-run;
++         animation-range:
++             0 var(--dock-pitch),
++             calc(100% - var(--dock-pitch)) 100%;
++         animation-direction: normal, reverse;
++     }
++
++     .glass-dock.vertical .dock-plate {
++         animation:
++             gl-dock-cap-block-start linear both,
++             gl-dock-cap-block-end linear both;
++         animation-timeline: --dock-run, --dock-run;
++         animation-range:
++             0 var(--dock-pitch),
++             calc(100% - var(--dock-pitch)) 100%;
++         animation-direction: normal, reverse;
++     }
++
++     
++     .glass-dock:is([data-run-fits], .collapsed) .dock-plate,
++     .glass-dock:is([data-run-fits], .collapsed) :where(.dock-layers) > .dock-run {
++         animation: none;
++     }
++
++     
++     .glass-dock .dock-run-status {
++         position: absolute;
++         inline-size: 1px;
++         block-size: 1px;
++         margin: -1px;
++         padding: 0;
++         overflow: hidden;
++         clip-path: inset(50%);
++         white-space: nowrap;
++         border: 0;
++     }
++ }
++
++
++ @keyframes gl-dock-cap-inline-start {
++     from {
++         border-start-start-radius: var(--dock-cap-rest);
++         border-end-start-radius: var(--dock-cap-rest);
++     }
++     to {
++         border-start-start-radius: var(--dock-cap-cut);
++         border-end-start-radius: var(--dock-cap-cut);
++     }
++ }
++
++ @keyframes gl-dock-cap-inline-end {
++     from {
++         border-start-end-radius: var(--dock-cap-rest);
++         border-end-end-radius: var(--dock-cap-rest);
++     }
++     to {
++         border-start-end-radius: var(--dock-cap-cut);
++         border-end-end-radius: var(--dock-cap-cut);
++     }
++ }
++
++ @keyframes gl-dock-cap-block-start {
++     from {
++         border-start-start-radius: var(--dock-cap-rest);
++         border-start-end-radius: var(--dock-cap-rest);
++     }
++     to {
++         border-start-start-radius: var(--dock-cap-cut);
++         border-start-end-radius: var(--dock-cap-cut);
++     }
++ }
++
++ @keyframes gl-dock-cap-block-end {
++     from {
++         border-end-start-radius: var(--dock-cap-rest);
++         border-end-end-radius: var(--dock-cap-rest);
++     }
++     to {
++         border-end-start-radius: var(--dock-cap-cut);
++         border-end-end-radius: var(--dock-cap-cut);
++     }
++ }
++
++
++ @keyframes gl-dock-clip-inline-start {
++     from {
++         border-start-start-radius: 0;
++         border-end-start-radius: 0;
++     }
++     1% {
++         border-start-start-radius: calc(var(--dock-run-edge-start) * var(--dock-run-corner-rest)) var(--dock-run-cross-half);
++         border-end-start-radius: calc(var(--dock-run-edge-start) * var(--dock-run-corner-rest)) var(--dock-run-cross-half);
++     }
++     to {
++         border-start-start-radius: calc(var(--dock-run-edge-start) * var(--dock-run-corner-cut)) var(--dock-run-cross-half);
++         border-end-start-radius: calc(var(--dock-run-edge-start) * var(--dock-run-corner-cut)) var(--dock-run-cross-half);
++     }
++ }
++
++ @keyframes gl-dock-clip-inline-end {
++     from {
++         border-start-end-radius: 0;
++         border-end-end-radius: 0;
++     }
++     1% {
++         border-start-end-radius: calc(var(--dock-run-edge-end) * var(--dock-run-corner-rest)) var(--dock-run-cross-half);
++         border-end-end-radius: calc(var(--dock-run-edge-end) * var(--dock-run-corner-rest)) var(--dock-run-cross-half);
++     }
++     to {
++         border-start-end-radius: calc(var(--dock-run-edge-end) * var(--dock-run-corner-cut)) var(--dock-run-cross-half);
++         border-end-end-radius: calc(var(--dock-run-edge-end) * var(--dock-run-corner-cut)) var(--dock-run-cross-half);
++     }
++ }
++
++ @keyframes gl-dock-clip-block-start {
++     from {
++         border-start-start-radius: 0;
++         border-start-end-radius: 0;
++     }
++     1% {
++         border-start-start-radius: var(--dock-run-cross-half) calc(var(--dock-run-edge-start) * var(--dock-run-corner-rest));
++         border-start-end-radius: var(--dock-run-cross-half) calc(var(--dock-run-edge-start) * var(--dock-run-corner-rest));
++     }
++     to {
++         border-start-start-radius: var(--dock-run-cross-half) calc(var(--dock-run-edge-start) * var(--dock-run-corner-cut));
++         border-start-end-radius: var(--dock-run-cross-half) calc(var(--dock-run-edge-start) * var(--dock-run-corner-cut));
++     }
++ }
++
++ @keyframes gl-dock-clip-block-end {
++     from {
++         border-end-start-radius: 0;
++         border-end-end-radius: 0;
++     }
++     1% {
++         border-end-start-radius: var(--dock-run-cross-half) calc(var(--dock-run-edge-end) * var(--dock-run-corner-rest));
++         border-end-end-radius: var(--dock-run-cross-half) calc(var(--dock-run-edge-end) * var(--dock-run-corner-rest));
++     }
++     to {
++         border-end-start-radius: var(--dock-run-cross-half) calc(var(--dock-run-edge-end) * var(--dock-run-corner-cut));
++         border-end-end-radius: var(--dock-run-cross-half) calc(var(--dock-run-edge-end) * var(--dock-run-corner-cut));
++     }
++ }
++
+
+ ❯ tests/components/custom/dock/g-dock-lattice.test.ts:310:21
+    308|         // Contained on the scroll axis only; the cross axis chains to…
+    309|         // wheel on that axis over the dock moves the page 0 px.
+    310|         expect(run).toContain(`overscroll-behavior-${axis}: contain`);
+       |                     ^
+    311|         expect(run).toContain(`overscroll-behavior-${axis === "x" ? "y…
+    312|         expect(run).not.toMatch(/overscroll-behavior:\s*contain/);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/22]⎯
+
+ FAIL  tests/components/custom/dock/g-dock-lattice.test.ts > G-DOCK-RUN — the platform is the detent engine > the vertical run is a snapped, contained, single-owner scroller
+AssertionError: expected '\n\n@layer components {\n    \n    .g…' to contain 'overscroll-behavior-y: contain'
+
+- Expected
++ Received
+
+- overscroll-behavior-y: contain
++
++
++ @layer components {
++     
++     .glass-dock {
++         --dock-seat: var(--dock-control-size);
++         
++         --dock-run-gap: 0.5rem;
++         --dock-pitch: calc(var(--dock-seat) + var(--dock-run-gap));
++         
++         --dock-open-pitches: 3;
++         --dock-open-seat: calc(
++             var(--dock-open-pitches) * var(--dock-pitch) - var(--dock-run-gap)
++         );
++         
++         --dock-run-reserve-inline: round(up, var(--dock-ring-reserve), 1px);
++         --dock-run-reserve-block: round(up, var(--dock-ring-reserve), 1px);
++     }
++
++     .glass-dock.vertical {
++         --dock-open-pitches: 2;
++     }
++
++     
++     .glass-dock > .dock-controls > .dock-layers {
++         flex: 1 1 auto;
++         min-inline-size: 0;
++         min-block-size: 0;
++     }
++
++     
++     .glass-dock:not(.vertical):not(.collapsed) > .dock-controls > .dock-layers {
++         margin-inline: max(
++             0px,
++             var(--dock-run-reserve-inline) - var(--dock-padding-inline, 0.5rem)
++         );
++     }
++
++     .glass-dock:not(.vertical) > .dock-controls > .dock-persistent + .dock-layers {
++         margin-inline-start: var(--dock-layer-gap, 0.375rem);
++     }
++
++     .glass-dock:not(.vertical):not(.collapsed) > .dock-controls > .dock-persistent + .dock-layers {
++         margin-inline-start: calc(var(--dock-layer-gap, 0.375rem) + var(--dock-run-reserve-inline));
++     }
++
++     .glass-dock:not(.vertical):not(.collapsed)
++         > .dock-controls
++         > .dock-layers:has(+ .dock-persistent-end) {
++         margin-inline-end: var(--dock-run-reserve-inline);
++     }
++
++     .glass-dock.vertical:not(.collapsed) > .dock-controls > .dock-layers {
++         margin-block: max(
++             0px,
++             var(--dock-run-reserve-block) - var(--dock-padding-block, 0.375rem)
++         );
++     }
++
++     .glass-dock.vertical > .dock-controls > .dock-persistent + .dock-layers {
++         margin-block-start: var(--dock-layer-gap, 0.375rem);
++     }
++
++     .glass-dock.vertical:not(.collapsed) > .dock-controls > .dock-persistent + .dock-layers {
++         margin-block-start: calc(var(--dock-layer-gap, 0.375rem) + var(--dock-run-reserve-block));
++     }
++
++     .glass-dock.vertical:not(.collapsed)
++         > .dock-controls
++         > .dock-layers:has(+ .dock-persistent-end) {
++         margin-block-end: var(--dock-run-reserve-block);
++     }
++
++     
++     .glass-dock > .dock-controls > .dock-persistent + .dock-layers {
++         --dock-run-edge-start: 0;
++     }
++
++     .glass-dock > .dock-controls > .dock-layers:has(+ .dock-persistent-end) {
++         --dock-run-edge-end: 0;
++     }
++
++     
++     .glass-dock > .dock-controls > .dock-persistent {
++         flex: 0 0 auto;
++     }
++
++     
++     .glass-dock :where(.dock-layers) > .dock-run {
++         
++         overflow-x: auto;
++         overflow-y: hidden;
++         
++         scroll-snap-type: x mandatory;
++         
++         scroll-padding-inline: calc(var(--dock-pitch) / 2 + var(--dock-run-reserve-inline));
++         
++         touch-action: pan-x;
++         overscroll-behavior: contain;
++         scrollbar-width: none;
++         
++         min-inline-size: 0;
++         
++         
++         
++         box-sizing: content-box;
++         padding: var(--dock-run-reserve-block) var(--dock-run-reserve-inline);
++         margin: calc(-1 * var(--dock-run-reserve-block)) calc(-1 * var(--dock-run-reserve-inline));
++         
++         gap: var(--dock-run-gap);
++     }
++
++     .glass-dock :where(.dock-layers) > .dock-run::-webkit-scrollbar {
++         display: none;
++     }
++
++     
++     .glass-dock {
++         --dock-run-yield: 0;
++     }
++
++     .glass-dock[data-run-fits] {
++         --dock-run-yield: 1;
++     }
++
++     
++     .glass-dock.vertical[data-run-fits] :where(.dock-layers) > .dock-run {
++         padding-block: min(var(--dock-run-reserve-block), var(--dock-run-room-block, 0px));
++     }
++
++     .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> *) {
++         padding-inline-end: 0;
++     }
++
++     .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> *)::before,
++     .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> *)::after {
++         content: "";
++         flex: 0 var(--dock-run-yield) auto;
++         inline-size: var(--dock-run-reserve-inline);
++         min-inline-size: var(--dock-ring-reserve);
++     }
++
++     .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> *)::before {
++         margin-inline: calc(-1 * var(--dock-run-reserve-inline)) calc(-1 * var(--dock-run-gap));
++     }
++
++     .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> *)::after {
++         margin-inline-start: calc(-1 * var(--dock-run-gap));
++     }
++
++     
++     .glass-dock :where(.dock-layers) > .dock-run > * {
++         scroll-snap-align: start;
++         flex: 0 0 auto;
++     }
++
++     
++     .glass-dock :where(.dock-layers) > .dock-run > .dock-layer-group {
++         scroll-snap-align: none;
++     }
++
++     .glass-dock :where(.dock-layers) > .dock-run > .dock-layer-group .dock-face.is-active > .dock-face-content > * {
++         scroll-snap-align: start;
++     }
++
++     
++     .glass-dock.vertical :where(.dock-layers) > .dock-run {
++         overflow-x: hidden;
++         overflow-y: auto;
++         scroll-snap-type: y mandatory;
++         scroll-padding-block: calc(var(--dock-pitch) / 2 + var(--dock-run-reserve-block));
++         touch-action: pan-y;
++         min-block-size: 0;
++         
++     }
++
++     
++     .glass-dock :where(.dock-layers) > .dock-run > [aria-current]:not([aria-current="false"]),
++     .glass-dock :where(.dock-layers) > .dock-run > [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"])) {
++         inline-size: var(--dock-open-seat);
++         
++         transition: inline-size var(--spring-dock-duration) var(--spring-dock);
++     }
++
++     
++     .glass-dock :where(.dock-layers) > .dock-run > :not([aria-current]:not([aria-current="false"])):not(
++             [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"]))
++         ) {
++         transition: inline-size var(--spring-dock-duration) var(--spring-dock);
++     }
++
++     
++     .glass-dock.vertical :where(.dock-layers) > .dock-run > [aria-current]:not([aria-current="false"]),
++     .glass-dock.vertical :where(.dock-layers) > .dock-run > [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"])) {
++         inline-size: auto;
++         block-size: var(--dock-open-seat);
++         transition: block-size var(--spring-dock-duration) var(--spring-dock);
++     }
++
++     .glass-dock.vertical
++         :where(.dock-layers) > .dock-run
++         > :not([aria-current]:not([aria-current="false"])):not(
++             [data-glass-dock-seat]:has([aria-current]:not([aria-current="false"]))
++         ) {
++         transition: block-size var(--spring-dock-duration) var(--spring-dock);
++     }
++
++     
++
++     
++     .glass-dock {
++         timeline-scope: --dock-run;
++         
++         --dock-cross: var(
++             --dock-plate-cross-px,
++             calc(var(--dock-layer-height) + 2 * var(--dock-padding-block))
++         );
++         
++         --dock-cap-rest: calc(var(--dock-cross) / 2);
++         --dock-cap-cut: var(--radius-card);
++     }
++
++     
++     .glass-dock.vertical {
++         --dock-cross: var(
++             --dock-plate-cross-px,
++             calc(var(--dock-control-size) + 2 * var(--dock-padding-inline))
++         );
++     }
++
++     .glass-dock.shape-rounded {
++         --dock-cap-rest: var(--radius-card);
++         --dock-cap-cut: var(--radius-xs);
++     }
++
++     .glass-dock.shape-card {
++         --dock-cap-rest: var(--dock-card-radius, var(--radius-dock-card));
++         --dock-cap-cut: var(--radius-lg);
++     }
++
++     
++     .glass-dock :where(.dock-layers) > .dock-run:not(.is-active):not(.is-leaving) {
++         overflow: clip;
++     }
++
++     
++     .glass-dock {
++         --dock-run-edge-start: 1;
++         --dock-run-edge-end: 1;
++         --dock-run-inset: max(
++             0px,
++             var(--dock-padding-inline, 0.5rem) - var(--dock-run-reserve-inline)
++         );
++     }
++
++     .glass-dock.vertical {
++         --dock-run-inset: max(
++             0px,
++             var(--dock-vertical-padding, var(--dock-padding-inline, 0.5rem)) +
++                 max(0px, var(--dock-run-reserve-block) - var(--dock-padding-block, 0.375rem)) -
++                 var(--dock-run-reserve-block)
++         );
++     }
++
++     
++     .glass-dock {
++         --dock-run-cross-half: calc(
++             var(--dock-cross) / 2 + var(--dock-run-reserve-block) -
++                 var(--dock-padding-block, 0.375rem)
++         );
++     }
++
++     .glass-dock.vertical {
++         --dock-run-cross-half: calc(
++             var(--dock-cross) / 2 + var(--dock-run-reserve-inline) -
++                 var(--dock-vertical-padding, var(--dock-padding-inline, 0.5rem))
++         );
++     }
++
++     .glass-dock :where(.dock-layers) > .dock-run.is-active {
++         scroll-timeline: --dock-run inline;
++         --dock-run-corner-rest: max(0px, var(--dock-cap-rest) - var(--dock-run-inset));
++         --dock-run-corner-cut: max(0px, var(--dock-cap-cut) - var(--dock-run-inset));
++         animation:
++             gl-dock-clip-inline-start linear both,
++             gl-dock-clip-inline-end linear both;
++         animation-timeline: --dock-run, --dock-run;
++         animation-range:
++             0 var(--dock-pitch),
++             calc(100% - var(--dock-pitch)) 100%;
++         animation-direction: normal, reverse;
++     }
++
++     .glass-dock.vertical :where(.dock-layers) > .dock-run.is-active {
++         scroll-timeline: --dock-run block;
++         animation-name: gl-dock-clip-block-start, gl-dock-clip-block-end;
++     }
++
++     
++     .glass-dock.shape-pill {
++         border-radius: var(--dock-cap-rest);
++     }
++
++     
++     .glass-dock.shape-pill[data-morphing]:not(.vertical) {
++         border-radius: calc(var(--dock-cap-rest) / max(var(--dock-size-scale, 1), 0.06)) /
++             var(--dock-cap-rest);
++     }
++     .glass-dock.shape-pill[data-morphing].vertical {
++         border-radius: var(--dock-cap-rest) /
++             calc(var(--dock-cap-rest) / max(var(--dock-size-scale, 1), 0.06));
++     }
++
++     
++     .glass-dock .dock-plate {
++         animation:
++             gl-dock-cap-inline-start linear both,
++             gl-dock-cap-inline-end linear both;
++         animation-timeline: --dock-run, --dock-run;
++         animation-range:
++             0 var(--dock-pitch),
++             calc(100% - var(--dock-pitch)) 100%;
++         animation-direction: normal, reverse;
++     }
++
++     .glass-dock.vertical .dock-plate {
++         animation:
++             gl-dock-cap-block-start linear both,
++             gl-dock-cap-block-end linear both;
++         animation-timeline: --dock-run, --dock-run;
++         animation-range:
++             0 var(--dock-pitch),
++             calc(100% - var(--dock-pitch)) 100%;
++         animation-direction: normal, reverse;
++     }
++
++     
++     .glass-dock:is([data-run-fits], .collapsed) .dock-plate,
++     .glass-dock:is([data-run-fits], .collapsed) :where(.dock-layers) > .dock-run {
++         animation: none;
++     }
++
++     
++     .glass-dock .dock-run-status {
++         position: absolute;
++         inline-size: 1px;
++         block-size: 1px;
++         margin: -1px;
++         padding: 0;
++         overflow: hidden;
++         clip-path: inset(50%);
++         white-space: nowrap;
++         border: 0;
++     }
++ }
++
++
++ @keyframes gl-dock-cap-inline-start {
++     from {
++         border-start-start-radius: var(--dock-cap-rest);
++         border-end-start-radius: var(--dock-cap-rest);
++     }
++     to {
++         border-start-start-radius: var(--dock-cap-cut);
++         border-end-start-radius: var(--dock-cap-cut);
++     }
++ }
++
++ @keyframes gl-dock-cap-inline-end {
++     from {
++         border-start-end-radius: var(--dock-cap-rest);
++         border-end-end-radius: var(--dock-cap-rest);
++     }
++     to {
++         border-start-end-radius: var(--dock-cap-cut);
++         border-end-end-radius: var(--dock-cap-cut);
++     }
++ }
++
++ @keyframes gl-dock-cap-block-start {
++     from {
++         border-start-start-radius: var(--dock-cap-rest);
++         border-start-end-radius: var(--dock-cap-rest);
++     }
++     to {
++         border-start-start-radius: var(--dock-cap-cut);
++         border-start-end-radius: var(--dock-cap-cut);
++     }
++ }
++
++ @keyframes gl-dock-cap-block-end {
++     from {
++         border-end-start-radius: var(--dock-cap-rest);
++         border-end-end-radius: var(--dock-cap-rest);
++     }
++     to {
++         border-end-start-radius: var(--dock-cap-cut);
++         border-end-end-radius: var(--dock-cap-cut);
++     }
++ }
++
++
++ @keyframes gl-dock-clip-inline-start {
++     from {
++         border-start-start-radius: 0;
++         border-end-start-radius: 0;
++     }
++     1% {
++         border-start-start-radius: calc(var(--dock-run-edge-start) * var(--dock-run-corner-rest)) var(--dock-run-cross-half);
++         border-end-start-radius: calc(var(--dock-run-edge-start) * var(--dock-run-corner-rest)) var(--dock-run-cross-half);
++     }
++     to {
++         border-start-start-radius: calc(var(--dock-run-edge-start) * var(--dock-run-corner-cut)) var(--dock-run-cross-half);
++         border-end-start-radius: calc(var(--dock-run-edge-start) * var(--dock-run-corner-cut)) var(--dock-run-cross-half);
++     }
++ }
++
++ @keyframes gl-dock-clip-inline-end {
++     from {
++         border-start-end-radius: 0;
++         border-end-end-radius: 0;
++     }
++     1% {
++         border-start-end-radius: calc(var(--dock-run-edge-end) * var(--dock-run-corner-rest)) var(--dock-run-cross-half);
++         border-end-end-radius: calc(var(--dock-run-edge-end) * var(--dock-run-corner-rest)) var(--dock-run-cross-half);
++     }
++     to {
++         border-start-end-radius: calc(var(--dock-run-edge-end) * var(--dock-run-corner-cut)) var(--dock-run-cross-half);
++         border-end-end-radius: calc(var(--dock-run-edge-end) * var(--dock-run-corner-cut)) var(--dock-run-cross-half);
++     }
++ }
++
++ @keyframes gl-dock-clip-block-start {
++     from {
++         border-start-start-radius: 0;
++         border-start-end-radius: 0;
++     }
++     1% {
++         border-start-start-radius: var(--dock-run-cross-half) calc(var(--dock-run-edge-start) * var(--dock-run-corner-rest));
++         border-start-end-radius: var(--dock-run-cross-half) calc(var(--dock-run-edge-start) * var(--dock-run-corner-rest));
++     }
++     to {
++         border-start-start-radius: var(--dock-run-cross-half) calc(var(--dock-run-edge-start) * var(--dock-run-corner-cut));
++         border-start-end-radius: var(--dock-run-cross-half) calc(var(--dock-run-edge-start) * var(--dock-run-corner-cut));
++     }
++ }
++
++ @keyframes gl-dock-clip-block-end {
++     from {
++         border-end-start-radius: 0;
++         border-end-end-radius: 0;
++     }
++     1% {
++         border-end-start-radius: var(--dock-run-cross-half) calc(var(--dock-run-edge-end) * var(--dock-run-corner-rest));
++         border-end-end-radius: var(--dock-run-cross-half) calc(var(--dock-run-edge-end) * var(--dock-run-corner-rest));
++     }
++     to {
++         border-end-start-radius: var(--dock-run-cross-half) calc(var(--dock-run-edge-end) * var(--dock-run-corner-cut));
++         border-end-end-radius: var(--dock-run-cross-half) calc(var(--dock-run-edge-end) * var(--dock-run-corner-cut));
++     }
++ }
++
+
+ ❯ tests/components/custom/dock/g-dock-lattice.test.ts:310:21
+    308|         // Contained on the scroll axis only; the cross axis chains to…
+    309|         // wheel on that axis over the dock moves the page 0 px.
+    310|         expect(run).toContain(`overscroll-behavior-${axis}: contain`);
+       |                     ^
+    311|         expect(run).toContain(`overscroll-behavior-${axis === "x" ? "y…
+    312|         expect(run).not.toMatch(/overscroll-behavior:\s*contain/);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/22]⎯
+
+
+ Test Files  9 failed (9)
+      Tests  19 failed | 61 passed | 1 expected fail (81)
+   Start at  03:03:50
+   Duration  3.85s (transform 1.10s, setup 574ms, import 1.52s, tests 735ms, environment 2.67s)
+

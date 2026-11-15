@@ -1558,12 +1558,12 @@ function m3OpenIdle(): void {
         await open7(page, "scene=dock&collapse=open&kinds=tab:Home,icon,icon");
         const collapsed = () => page.evaluate(() => document.querySelector(".glass-dock")!.classList.contains("collapsed"));
         expect(await collapsed(), "mounts open").toBe(false);
-        await page.waitForTimeout(6000);
+        await page.waitForTimeout(8000);
         expect(await collapsed(), "idles shut after DOCK_COLLAPSE_DELAY_MS and the settle").toBe(true);
         await page.evaluate(() => ((window as unknown as { __key: { value: number } }).__key.value += 1));
         await settle(page, 300);
         expect(await collapsed(), "remounts open").toBe(false);
-        await page.waitForTimeout(6000);
+        await page.waitForTimeout(8000);
         expect(await collapsed(), "the remount idles shut").toBe(true);
     });
 }

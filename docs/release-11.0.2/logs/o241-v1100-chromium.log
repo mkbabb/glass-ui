@@ -1,0 +1,86 @@
+
+Running 4 tests using 1 worker
+
+  ✘  1 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:355:5 › cutcap · the open narrow face with an end seat has four equal plate corners at 1440 (2.3s)
+  ✘  2 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:355:5 › cutcap · the open narrow face with an end seat has four equal plate corners at 390 (2.3s)
+  ✘  3 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:355:5 › cutcap · the open narrow face with an end seat has four equal plate corners at 1440 (2.3s)
+  ✘  4 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:355:5 › cutcap · the open narrow face with an end seat has four equal plate corners at 390 (2.2s)
+
+
+  1) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:355:5 › cutcap · the open narrow face with an end seat has four equal plate corners at 1440 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    26
+
+      380 |         expect(r.collapsed).toBe(false);
+      381 |         expect(Math.min(...r.corners)).toBeGreaterThan(0);
+    > 382 |         expect(Math.max(...r.corners) - Math.min(...r.corners)).toBeLessThanOrEqual(0.5);
+          |                                                                 ^
+      383 |         // A cut cap is drawn by the clip: its rounded inset, if any, is equal on all four.
+      384 |         const round = /round\s+([^)]*)/.exec(r.clip)?.[1]?.split(/\s+/).map(parseFloat) ?? [];
+      385 |         if (round.length) expect(Math.max(...round) - Math.min(...round)).toBeLessThanOrEqual(0.5);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:382:65
+
+    Error Context: tests-visual/test-results/release-11-0-2-cutcap-·-th-d8b7a-equal-plate-corners-at-1440-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:355:5 › cutcap · the open narrow face with an end seat has four equal plate corners at 390 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    26
+
+      380 |         expect(r.collapsed).toBe(false);
+      381 |         expect(Math.min(...r.corners)).toBeGreaterThan(0);
+    > 382 |         expect(Math.max(...r.corners) - Math.min(...r.corners)).toBeLessThanOrEqual(0.5);
+          |                                                                 ^
+      383 |         // A cut cap is drawn by the clip: its rounded inset, if any, is equal on all four.
+      384 |         const round = /round\s+([^)]*)/.exec(r.clip)?.[1]?.split(/\s+/).map(parseFloat) ?? [];
+      385 |         if (round.length) expect(Math.max(...round) - Math.min(...round)).toBeLessThanOrEqual(0.5);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:382:65
+
+    Error Context: tests-visual/test-results/release-11-0-2-cutcap-·-th-f41fd--equal-plate-corners-at-390-chromium-headless-new/error-context.md
+
+  3) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:355:5 › cutcap · the open narrow face with an end seat has four equal plate corners at 1440 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    26
+
+      380 |         expect(r.collapsed).toBe(false);
+      381 |         expect(Math.min(...r.corners)).toBeGreaterThan(0);
+    > 382 |         expect(Math.max(...r.corners) - Math.min(...r.corners)).toBeLessThanOrEqual(0.5);
+          |                                                                 ^
+      383 |         // A cut cap is drawn by the clip: its rounded inset, if any, is equal on all four.
+      384 |         const round = /round\s+([^)]*)/.exec(r.clip)?.[1]?.split(/\s+/).map(parseFloat) ?? [];
+      385 |         if (round.length) expect(Math.max(...round) - Math.min(...round)).toBeLessThanOrEqual(0.5);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:382:65
+
+    Error Context: tests-visual/test-results/release-11-0-2-cutcap-·-th-d8b7a-equal-plate-corners-at-1440-coarse-touch/error-context.md
+
+  4) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:355:5 › cutcap · the open narrow face with an end seat has four equal plate corners at 390 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    26
+
+      380 |         expect(r.collapsed).toBe(false);
+      381 |         expect(Math.min(...r.corners)).toBeGreaterThan(0);
+    > 382 |         expect(Math.max(...r.corners) - Math.min(...r.corners)).toBeLessThanOrEqual(0.5);
+          |                                                                 ^
+      383 |         // A cut cap is drawn by the clip: its rounded inset, if any, is equal on all four.
+      384 |         const round = /round\s+([^)]*)/.exec(r.clip)?.[1]?.split(/\s+/).map(parseFloat) ?? [];
+      385 |         if (round.length) expect(Math.max(...round) - Math.min(...round)).toBeLessThanOrEqual(0.5);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:382:65
+
+    Error Context: tests-visual/test-results/release-11-0-2-cutcap-·-th-f41fd--equal-plate-corners-at-390-coarse-touch/error-context.md
+
+  4 failed
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:355:5 › cutcap · the open narrow face with an end seat has four equal plate corners at 1440 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:355:5 › cutcap · the open narrow face with an end seat has four equal plate corners at 390 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:355:5 › cutcap · the open narrow face with an end seat has four equal plate corners at 1440 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:355:5 › cutcap · the open narrow face with an end seat has four equal plate corners at 390 

@@ -391,10 +391,10 @@
        survives here is the RIM half, which is a different axis: the border quiets to
        the floating ring so the held-cursor cue reads on the edge while the body opens. */
     .glass-dock[data-held] .dock-plate {
-        /* The EXPANDED endpoint only. The collapsed one is `--glass-border-floating`
-           already (shell.css) and is unread at `--dock-expand-t: 0` besides — a held
-           dock is held OPEN — so declaring it here was a no-op twice over. */
-        --dock-plate-expanded-border: var(--glass-border-floating);
+        /* Both ends of the edge are `--glass-border-floating`, so the edge is that
+           token at every t, unmixed (dock.css). */
+        --_dock-edge-expanded-ink: var(--glass-border-floating);
+        --_dock-edge-lerp: var(--glass-border-floating);
         transition: border-color var(--duration-fast) var(--ease-standard);
     }
 

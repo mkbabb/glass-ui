@@ -50,7 +50,7 @@ the existing Reka-backed menu, select, or popover families.
 - `false` never collapses: hover, focus, the idle window and outside clicks leave it
   open.
 
-A collapsible dock folds after one idle window, `DOCK_COLLAPSE_DELAY_MS` (3600 ms),
+A collapsible dock folds after one idle window, `DOCK_COLLAPSE_DELAY_MS` (6000 ms),
 once the pointer and focus have left it. A dock mounted `"open"` arms that window at
 mount. The exposed `expand()`, `collapse()`, `keepOpen()` and `release()` drive the
 posture from outside.
@@ -109,3 +109,26 @@ region keeps `--dock-layer-gap` toward the run, in both orientations.
   transitions immediately.
 - Interactive controls preserve a 44px coarse-pointer target floor and a complete
   focus-visible ring.
+
+## Controls contributed from outside the dock's tree
+
+The dock reaches its overlays through a context it provides to the components rendered
+in its own slots. That context follows the component tree, not the DOM, so it does not
+cross a `Teleport` from another component. A control that a page or a route renders and
+teleports into an element inside the dock sits in the dock on screen but outside it in
+the component tree: a `Popover keep-dock-open` there does not hold the dock, and the
+dock does not close it when it folds.
+
+Until such controls have an outlet of their own, drive the dock from the component that
+renders them. Take a template ref to the `GlassDock`, call its exposed `keepOpen()`
+while your overlay is open and `release()` when it closes, and watch its exposed
+`expanded` to close the overlay when the dock folds:
+
+```vue
+<script setup lang="ts">
+const dock = ref<InstanceType<typeof GlassDock>>();
+const open = ref(false);
+watch(open, (o) => (o ? dock.value?.keepOpen() : dock.value?.release()));
+watch(() => dock.value?.expanded, (e) => { if (!e) open.value = false; });
+</script>
+```

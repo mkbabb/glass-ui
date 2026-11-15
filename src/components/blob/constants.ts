@@ -27,6 +27,13 @@ export const MAX_BLOB_STOPS = 4;
  */
 export const POS_SCALE = 1 / 1.6;
 
+/**
+ * The layout wrapper's half-width in body space, `0.5 * POS_SCALE` (0.3125) in canvas
+ * UV. The body's painted reach (its radius, the breath amplitude and the edge noise)
+ * stays inside it, so a stacked pulse never fills the canvas box.
+ */
+export const BODY_BOX_HALF = 0.5;
+
 /** The full ordered scalar/vector uniform-name list the program builder caches a location per. */
 // ── mood model constants (consumed by composables/useBlobMood.ts) ─────────────
 // The mood model is a 2-axis {valence, arousal} circumplex. Each named mood

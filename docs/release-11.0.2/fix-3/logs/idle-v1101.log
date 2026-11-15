@@ -1,0 +1,15 @@
+     39|     vi.advanceTimersByTime(5900);
+     40|     await nextTick();
+     41|     expect(expanded(), "open at 5.9 s").toBe(true);
+       |                                         ^
+     42|     vi.advanceTimersByTime(200);
+     43|     await nextTick();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  13:40:33
+   Duration  1.62s (transform 491ms, setup 68ms, import 898ms, tests 46ms, environment 437ms)
+

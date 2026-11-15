@@ -1,0 +1,1384 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-0-2.config.ts",
+      "release-11-0-2.spec.ts",
+      "--project=webkit",
+      "--workers=1",
+      "-g",
+      "pager ·|wheel ·|rail ·|rows ·|radius ·|hover ·"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-0-2.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-5.spec.ts",
+          "slider-forced-colors.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-2311",
+        "name": "webkit-2311",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-0-2.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/docs/release-11.0.2/logs/c-cells-branch-webkit.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5341",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/",
+      "url": "http://localhost:5341",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-0-2.spec.ts",
+      "file": "release-11-0-2.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "pager · a neighbour hop paints a neck no wider than the pitch plus a dot",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "pager",
+                  "description": "{\"geo\":{\"pitch\":28,\"dot\":12,\"token\":\"0.75rem\"},\"hops\":[{\"to\":1,\"frames\":23,\"widest\":18.79199981689453},{\"to\":2,\"frames\":24,\"widest\":18.812408447265625},{\"to\":1,\"frames\":24,\"widest\":18.818405151367188},{\"to\":0,\"frames\":24,\"widest\":18.770401000976562}]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3887,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:14:46.796Z",
+                  "annotations": [
+                    {
+                      "type": "pager",
+                      "description": "{\"geo\":{\"pitch\":28,\"dot\":12,\"token\":\"0.75rem\"},\"hops\":[{\"to\":1,\"frames\":23,\"widest\":18.79199981689453},{\"to\":2,\"frames\":24,\"widest\":18.812408447265625},{\"to\":1,\"frames\":24,\"widest\":18.818405151367188},{\"to\":0,\"frames\":24,\"widest\":18.770401000976562}]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-fbf5e7548917873684e0",
+          "file": "release-11-0-2.spec.ts",
+          "line": 561,
+          "column": 1
+        },
+        {
+          "title": "wheel · a vertical wheel over a horizontal dock's run scrolls the page",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "wheel",
+                  "description": "{\"css\":{\"overflow\":448,\"x\":\"contain\",\"y\":\"auto\"},\"moved\":300}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1452,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:14:52.491Z",
+                  "annotations": [
+                    {
+                      "type": "wheel",
+                      "description": "{\"css\":{\"overflow\":448,\"x\":\"contain\",\"y\":\"auto\"},\"moved\":300}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-ee9c7796c5c9add10d9a",
+          "file": "release-11-0-2.spec.ts",
+          "line": 600,
+          "column": 1
+        },
+        {
+          "title": "wheel · a vertical dock's run contains its own axis and passes the other",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "wheel",
+                  "description": "{\"x\":\"auto\",\"y\":\"contain\"}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 427,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:14:53.950Z",
+                  "annotations": [
+                    {
+                      "type": "wheel",
+                      "description": "{\"x\":\"auto\",\"y\":\"contain\"}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-ffe339024a51a42a10fe",
+          "file": "release-11-0-2.spec.ts",
+          "line": 626,
+          "column": 1
+        },
+        {
+          "title": "rail · a start-anchored rail's close holds its top edge and crest, and ends on the disc",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rail",
+                  "description": "{\"rest\":[20,20,96,444],\"frames\":[[1,20,20,68,444,28],[1,20,20,68,425,28],[1,20,20,68,394,29],[1,20,20,68,364,30],[1,20,20,68,326,30],[1,20,20,68,302,31],[1,20,20,68,266,31],[1,20,20,68,240,32],[1,20,20,68,210,32],[1,20,20,68,189,32],[1,20,20,68,171,32],[1,20,20,68,148,33],[1,20,20,68,136,33],[1,20,20,68,123,33],[1,20,20,68,110,33],[1,20,20,68,100,33],[1,20,20,68,93,33],[1,20,20,68,88,33],[1,20,20,68,83,33],[1,20,20,68,78,33],[1,20,20,68,76,33],[1,20,20,68,73,33],[1,20,20,68,71,33],[1,20,20,68,70,33],[1,20,20,68,69,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32]]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2685,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:14:54.383Z",
+                  "annotations": [
+                    {
+                      "type": "rail",
+                      "description": "{\"rest\":[20,20,96,444],\"frames\":[[1,20,20,68,444,28],[1,20,20,68,425,28],[1,20,20,68,394,29],[1,20,20,68,364,30],[1,20,20,68,326,30],[1,20,20,68,302,31],[1,20,20,68,266,31],[1,20,20,68,240,32],[1,20,20,68,210,32],[1,20,20,68,189,32],[1,20,20,68,171,32],[1,20,20,68,148,33],[1,20,20,68,136,33],[1,20,20,68,123,33],[1,20,20,68,110,33],[1,20,20,68,100,33],[1,20,20,68,93,33],[1,20,20,68,88,33],[1,20,20,68,83,33],[1,20,20,68,78,33],[1,20,20,68,76,33],[1,20,20,68,73,33],[1,20,20,68,71,33],[1,20,20,68,70,33],[1,20,20,68,69,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[1,20,20,68,68,33],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32],[0,20,20,68,68,32]]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-64c667474ebfb1869311",
+          "file": "release-11-0-2.spec.ts",
+          "line": 673,
+          "column": 1
+        },
+        {
+          "title": "rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rail",
+                  "description": "{\"disc\":[32,32],\"frames\":[[20,20,96,68,32,[32,364,72,88]],[20,20,96,87,32,[32,364,72,88]],[20,20,96,124,32,[32,364,72,88]],[20,20,96,157,32,[32,364,72,88]],[20,20,96,186,31,[32,365,72,88]],[20,20,96,217,31,[32,365,72,88]],[20,20,96,246,31,[32,365,72,88]],[20,20,96,274,31,[32,365,72,88]],[20,20,96,305,30,[32,366,72,88]],[20,20,96,325,30,[32,366,72,88]],[20,20,96,343,30,[32,366,72,88]],[20,20,96,362,29,[32,367,72,88]],[20,20,96,380,29,[32,367,72,88]],[20,20,96,391,29,[32,367,72,88]],[20,20,96,401,29,[32,367,72,88]],[20,20,96,412,29,[32,367,72,88]],[20,20,96,418,28,[32,368,72,88]],[20,20,96,425,28,[32,368,72,88]],[20,20,96,430,28,[32,368,72,88]],[20,20,96,433,28,[32,368,72,88]],[20,20,96,437,28,[32,368,72,88]],[20,20,96,439,28,[32,368,72,88]],[20,20,96,441,28,[32,368,72,88]],[20,20,96,442,28,[32,368,72,88]],[20,20,96,443,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]]]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1818,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:14:57.075Z",
+                  "annotations": [
+                    {
+                      "type": "rail",
+                      "description": "{\"disc\":[32,32],\"frames\":[[20,20,96,68,32,[32,364,72,88]],[20,20,96,87,32,[32,364,72,88]],[20,20,96,124,32,[32,364,72,88]],[20,20,96,157,32,[32,364,72,88]],[20,20,96,186,31,[32,365,72,88]],[20,20,96,217,31,[32,365,72,88]],[20,20,96,246,31,[32,365,72,88]],[20,20,96,274,31,[32,365,72,88]],[20,20,96,305,30,[32,366,72,88]],[20,20,96,325,30,[32,366,72,88]],[20,20,96,343,30,[32,366,72,88]],[20,20,96,362,29,[32,367,72,88]],[20,20,96,380,29,[32,367,72,88]],[20,20,96,391,29,[32,367,72,88]],[20,20,96,401,29,[32,367,72,88]],[20,20,96,412,29,[32,367,72,88]],[20,20,96,418,28,[32,368,72,88]],[20,20,96,425,28,[32,368,72,88]],[20,20,96,430,28,[32,368,72,88]],[20,20,96,433,28,[32,368,72,88]],[20,20,96,437,28,[32,368,72,88]],[20,20,96,439,28,[32,368,72,88]],[20,20,96,441,28,[32,368,72,88]],[20,20,96,442,28,[32,368,72,88]],[20,20,96,443,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]],[20,20,96,444,28,[32,368,72,88]]]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-65cf8fce8b12f9e5149f",
+          "file": "release-11-0-2.spec.ts",
+          "line": 699,
+          "column": 1
+        },
+        {
+          "title": "rows · the transport dock's rows fit with a persistent region beside the layers at 360",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[348,348,348,\"348px\"],\"run\":[286,286],\"layers\":[\"6px\",\"0px\",[64,278]],\"persistent\":[18,40],\"face\":[64,278],\"page\":[360,360],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1953,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:14:58.900Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[348,348,348,\"348px\"],\"run\":[286,286],\"layers\":[\"6px\",\"0px\",[64,278]],\"persistent\":[18,40],\"face\":[64,278],\"page\":[360,360],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-b440e00b564e53997c38",
+          "file": "release-11-0-2.spec.ts",
+          "line": 733,
+          "column": 9
+        },
+        {
+          "title": "rows · the transport dock's rows fit with a persistent region beside the layers at 390",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[378,378,378,\"378px\"],\"run\":[316,316],\"layers\":[\"6px\",\"0px\",[64,308]],\"persistent\":[18,40],\"face\":[64,308],\"page\":[390,390],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1948,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:15:00.860Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[378,378,378,\"378px\"],\"run\":[316,316],\"layers\":[\"6px\",\"0px\",[64,308]],\"persistent\":[18,40],\"face\":[64,308],\"page\":[390,390],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-0b94c291bd66df0d2d03",
+          "file": "release-11-0-2.spec.ts",
+          "line": 733,
+          "column": 9
+        },
+        {
+          "title": "rows · the transport dock's rows fit with a persistent region beside the layers at 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[960,960,960,\"960px\"],\"run\":[898,898],\"layers\":[\"6px\",\"0px\",[298,890]],\"persistent\":[252,40],\"face\":[298,890],\"page\":[1440,1440],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1928,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:15:02.813Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[960,960,960,\"960px\"],\"run\":[898,898],\"layers\":[\"6px\",\"0px\",[298,890]],\"persistent\":[252,40],\"face\":[298,890],\"page\":[1440,1440],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-b3e6ca3aedd452579099",
+          "file": "release-11-0-2.spec.ts",
+          "line": 733,
+          "column": 9
+        },
+        {
+          "title": "rows · the editor dock's rows fit with a persistent region beside the layers at 360",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[288,288,288,\"288px\"],\"run\":[168,168],\"layers\":[\"6px\",\"0px\",[151.86,160]],\"persistent\":[48.14,97.72],\"face\":[151.86,160],\"page\":[360,360],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1903,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:15:04.745Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[288,288,288,\"288px\"],\"run\":[168,168],\"layers\":[\"6px\",\"0px\",[151.86,160]],\"persistent\":[48.14,97.72],\"face\":[151.86,160],\"page\":[360,360],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-569125c9cb5c24707861",
+          "file": "release-11-0-2.spec.ts",
+          "line": 733,
+          "column": 9
+        },
+        {
+          "title": "rows · the editor dock's rows fit with a persistent region beside the layers at 390",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[288,288,288,\"288px\"],\"run\":[168,168],\"layers\":[\"6px\",\"0px\",[166.86,160]],\"persistent\":[63.14,97.72],\"face\":[166.86,160],\"page\":[390,390],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1900,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:15:06.653Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[288,288,288,\"288px\"],\"run\":[168,168],\"layers\":[\"6px\",\"0px\",[166.86,160]],\"persistent\":[63.14,97.72],\"face\":[166.86,160],\"page\":[390,390],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-680c32e4a2247ee179bd",
+          "file": "release-11-0-2.spec.ts",
+          "line": 733,
+          "column": 9
+        },
+        {
+          "title": "rows · the editor dock's rows fit with a persistent region beside the layers at 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[288,288,288,\"288px\"],\"run\":[168,168],\"layers\":[\"6px\",\"0px\",[691.86,160]],\"persistent\":[588.14,97.72],\"face\":[691.86,160],\"page\":[1440,1440],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1895,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:15:08.558Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[288,288,288,\"288px\"],\"run\":[168,168],\"layers\":[\"6px\",\"0px\",[691.86,160]],\"persistent\":[588.14,97.72],\"face\":[691.86,160],\"page\":[1440,1440],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-8247efd9d38fe018777f",
+          "file": "release-11-0-2.spec.ts",
+          "line": 733,
+          "column": 9
+        },
+        {
+          "title": "rows · the stretched dock's rows fit with a persistent region beside the layers at 360",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[328,328,328,\"328px\"],\"run\":[266,266],\"layers\":[\"6px\",\"0px\",[74,258]],\"persistent\":[28,40],\"face\":[74,40],\"page\":[360,360],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1964,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:15:10.458Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[328,328,328,\"328px\"],\"run\":[266,266],\"layers\":[\"6px\",\"0px\",[74,258]],\"persistent\":[28,40],\"face\":[74,40],\"page\":[360,360],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-cb313cce2078e85f5f4f",
+          "file": "release-11-0-2.spec.ts",
+          "line": 733,
+          "column": 9
+        },
+        {
+          "title": "rows · the stretched dock's rows fit with a persistent region beside the layers at 390",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[358,358,358,\"358px\"],\"run\":[296,296],\"layers\":[\"6px\",\"0px\",[74,288]],\"persistent\":[28,40],\"face\":[74,40],\"page\":[390,390],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1982,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:15:12.426Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[358,358,358,\"358px\"],\"run\":[296,296],\"layers\":[\"6px\",\"0px\",[74,288]],\"persistent\":[28,40],\"face\":[74,40],\"page\":[390,390],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-22b2760f062fffe6253f",
+          "file": "release-11-0-2.spec.ts",
+          "line": 733,
+          "column": 9
+        },
+        {
+          "title": "rows · the stretched dock's rows fit with a persistent region beside the layers at 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[1408,1408,1408,\"1408px\"],\"run\":[1346,1346],\"layers\":[\"6px\",\"0px\",[74,1338]],\"persistent\":[28,40],\"face\":[74,40],\"page\":[1440,1440],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1880,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:15:14.413Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[1408,1408,1408,\"1408px\"],\"run\":[1346,1346],\"layers\":[\"6px\",\"0px\",[74,1338]],\"persistent\":[28,40],\"face\":[74,40],\"page\":[1440,1440],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-de3e2d5c47339819173e",
+          "file": "release-11-0-2.spec.ts",
+          "line": 733,
+          "column": 9
+        },
+        {
+          "title": "hover · a horizontal pill dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":103,\"moved\":[]},{\"seat\":\"icon\",\"frames\":102,\"moved\":[]},{\"seat\":\"label\",\"frames\":103,\"moved\":[]},{\"seat\":\"compact\",\"frames\":102,\"moved\":[]},{\"seat\":\"tab\",\"frames\":103,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":102,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":102,\"moved\":[]},{\"seat\":\"background\",\"frames\":102,\"moved\":[]},{\"seat\":\"button\",\"frames\":102,\"moved\":[]},{\"seat\":\"link\",\"frames\":103,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":102,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13037,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:15:16.299Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":103,\"moved\":[]},{\"seat\":\"icon\",\"frames\":102,\"moved\":[]},{\"seat\":\"label\",\"frames\":103,\"moved\":[]},{\"seat\":\"compact\",\"frames\":102,\"moved\":[]},{\"seat\":\"tab\",\"frames\":103,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":102,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":102,\"moved\":[]},{\"seat\":\"background\",\"frames\":102,\"moved\":[]},{\"seat\":\"button\",\"frames\":102,\"moved\":[]},{\"seat\":\"link\",\"frames\":103,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":102,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-84c06aaeea8f03589953",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal pill dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":103,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":102,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3923,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:15:29.341Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":103,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":102,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-80a01891b069f428e4cd",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal rounded dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":104,\"moved\":[]},{\"seat\":\"icon\",\"frames\":103,\"moved\":[]},{\"seat\":\"label\",\"frames\":103,\"moved\":[]},{\"seat\":\"compact\",\"frames\":102,\"moved\":[]},{\"seat\":\"tab\",\"frames\":102,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":102,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":103,\"moved\":[]},{\"seat\":\"background\",\"frames\":102,\"moved\":[]},{\"seat\":\"button\",\"frames\":102,\"moved\":[]},{\"seat\":\"link\",\"frames\":103,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":102,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12916,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:15:33.270Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":104,\"moved\":[]},{\"seat\":\"icon\",\"frames\":103,\"moved\":[]},{\"seat\":\"label\",\"frames\":103,\"moved\":[]},{\"seat\":\"compact\",\"frames\":102,\"moved\":[]},{\"seat\":\"tab\",\"frames\":102,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":102,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":103,\"moved\":[]},{\"seat\":\"background\",\"frames\":102,\"moved\":[]},{\"seat\":\"button\",\"frames\":102,\"moved\":[]},{\"seat\":\"link\",\"frames\":103,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":102,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-5c73b756ad5f75d48e2e",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal rounded dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":103,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":102,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3820,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:15:46.191Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":103,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":102,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-81cc0c4d3678ce1e80a6",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal card dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":103,\"moved\":[]},{\"seat\":\"icon\",\"frames\":103,\"moved\":[]},{\"seat\":\"label\",\"frames\":103,\"moved\":[]},{\"seat\":\"compact\",\"frames\":102,\"moved\":[]},{\"seat\":\"tab\",\"frames\":102,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":102,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":103,\"moved\":[]},{\"seat\":\"background\",\"frames\":103,\"moved\":[]},{\"seat\":\"button\",\"frames\":103,\"moved\":[]},{\"seat\":\"link\",\"frames\":103,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":102,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12962,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:15:50.015Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":103,\"moved\":[]},{\"seat\":\"icon\",\"frames\":103,\"moved\":[]},{\"seat\":\"label\",\"frames\":103,\"moved\":[]},{\"seat\":\"compact\",\"frames\":102,\"moved\":[]},{\"seat\":\"tab\",\"frames\":102,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":102,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":103,\"moved\":[]},{\"seat\":\"background\",\"frames\":103,\"moved\":[]},{\"seat\":\"button\",\"frames\":103,\"moved\":[]},{\"seat\":\"link\",\"frames\":103,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":102,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-4f86b8481380272a7b39",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal card dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":103,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":102,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3832,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:16:02.981Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":103,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":102,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-8b35f8c028aac748d1c6",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical pill dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":103,\"moved\":[]},{\"seat\":\"icon\",\"frames\":103,\"moved\":[]},{\"seat\":\"label\",\"frames\":102,\"moved\":[]},{\"seat\":\"compact\",\"frames\":103,\"moved\":[]},{\"seat\":\"tab\",\"frames\":102,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":102,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":102,\"moved\":[]},{\"seat\":\"background\",\"frames\":102,\"moved\":[]},{\"seat\":\"button\",\"frames\":102,\"moved\":[]},{\"seat\":\"link\",\"frames\":102,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":102,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12997,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:16:06.817Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":103,\"moved\":[]},{\"seat\":\"icon\",\"frames\":103,\"moved\":[]},{\"seat\":\"label\",\"frames\":102,\"moved\":[]},{\"seat\":\"compact\",\"frames\":103,\"moved\":[]},{\"seat\":\"tab\",\"frames\":102,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":102,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":102,\"moved\":[]},{\"seat\":\"background\",\"frames\":102,\"moved\":[]},{\"seat\":\"button\",\"frames\":102,\"moved\":[]},{\"seat\":\"link\",\"frames\":102,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":102,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-76c0cba91dac92ce9b41",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical pill dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":103,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":102,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3823,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:16:19.819Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":103,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":102,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-b2f66760cdf32fc4c7b1",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical rounded dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":104,\"moved\":[]},{\"seat\":\"icon\",\"frames\":102,\"moved\":[]},{\"seat\":\"label\",\"frames\":103,\"moved\":[]},{\"seat\":\"compact\",\"frames\":102,\"moved\":[]},{\"seat\":\"tab\",\"frames\":103,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":102,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":103,\"moved\":[]},{\"seat\":\"background\",\"frames\":102,\"moved\":[]},{\"seat\":\"button\",\"frames\":103,\"moved\":[]},{\"seat\":\"link\",\"frames\":102,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":102,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13142,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:16:23.646Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":104,\"moved\":[]},{\"seat\":\"icon\",\"frames\":102,\"moved\":[]},{\"seat\":\"label\",\"frames\":103,\"moved\":[]},{\"seat\":\"compact\",\"frames\":102,\"moved\":[]},{\"seat\":\"tab\",\"frames\":103,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":102,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":103,\"moved\":[]},{\"seat\":\"background\",\"frames\":102,\"moved\":[]},{\"seat\":\"button\",\"frames\":103,\"moved\":[]},{\"seat\":\"link\",\"frames\":102,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":102,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-1da522602e95ebee5378",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical rounded dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":103,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":102,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3905,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:16:36.793Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":103,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":102,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-11ebe8c83d35077184a4",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical card dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":103,\"moved\":[]},{\"seat\":\"icon\",\"frames\":103,\"moved\":[]},{\"seat\":\"label\",\"frames\":103,\"moved\":[]},{\"seat\":\"compact\",\"frames\":103,\"moved\":[]},{\"seat\":\"tab\",\"frames\":103,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":102,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":102,\"moved\":[]},{\"seat\":\"background\",\"frames\":103,\"moved\":[]},{\"seat\":\"button\",\"frames\":102,\"moved\":[]},{\"seat\":\"link\",\"frames\":103,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":102,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13087,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:16:40.702Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":103,\"moved\":[]},{\"seat\":\"icon\",\"frames\":103,\"moved\":[]},{\"seat\":\"label\",\"frames\":103,\"moved\":[]},{\"seat\":\"compact\",\"frames\":103,\"moved\":[]},{\"seat\":\"tab\",\"frames\":103,\"moved\":[]},{\"seat\":\"tooltip\",\"frames\":102,\"moved\":[]},{\"seat\":\"trigger\",\"frames\":102,\"moved\":[]},{\"seat\":\"background\",\"frames\":103,\"moved\":[]},{\"seat\":\"button\",\"frames\":102,\"moved\":[]},{\"seat\":\"link\",\"frames\":103,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":102,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-f162b36e3e1f5a39df2a",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical card dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "hover",
+                  "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":103,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":103,\"moved\":[]}],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3875,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:16:53.795Z",
+                  "annotations": [
+                    {
+                      "type": "hover",
+                      "description": "{\"shifts\":[{\"seat\":\"persistent\",\"frames\":103,\"moved\":[]},{\"seat\":\"persistent-end\",\"frames\":103,\"moved\":[]}],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-3f90fd5707206f1d591b",
+          "file": "release-11-0-2.spec.ts",
+          "line": 783,
+          "column": 13
+        },
+        {
+          "title": "radius · every dock seat's corner is half its block size, at 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "radius",
+                  "description": "{\"ground\":[233,224,215],\"cells\":{\"trigger\":{\"state\":\"hover\",\"geo\":{\"x\":505.453125,\"y\":730.046875,\"w\":70.234375,\"h\":35.890625,\"pi\":8,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":81,\"areas\":[76.3703703703704,60.222222222222236,63.098765432098766,47.13580246913582],\"measured\":61.706790123456805,\"expected\":69.10913950799028,\"flat\":69.10913950799028},\"tab\":{\"state\":\"hover\",\"geo\":{\"x\":659.703125,\"y\":729,\"w\":68.65625,\"h\":38,\"pi\":12,\"pb\":7,\"clip\":\"border-box\",\"radius\":20},\"span\":82,\"areas\":[88.80487804878103,58.43902439024451,88.14634146341513,57.804878048781035],\"measured\":73.29878048780543,\"expected\":77.47126301352117,\"flat\":77.47126301352117},\"label\":{\"state\":\"hover\",\"geo\":{\"x\":798.546875,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":82,\"areas\":[96.85365853658591,78.87804878048846,96.23170731707367,78.25609756097617],\"measured\":87.55487804878106,\"expected\":85.84073464102069,\"flat\":85.84073464102069},\"trigger-active\":{\"state\":\"active\",\"geo\":{\"x\":583.6875,\"y\":730.046875,\"w\":68.015625,\"h\":35.890625,\"pi\":8,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":102,\"areas\":[76.86274509803916,60.66666666666665,63.48039215686272,47.470588235294116],\"measured\":62.120098039215655,\"expected\":69.10913950799028,\"flat\":69.10913950799028},\"tab-active\":{\"state\":\"active\",\"geo\":{\"x\":736.359375,\"y\":729,\"w\":54.1875,\"h\":38,\"pi\":12,\"pb\":7,\"clip\":\"border-box\",\"radius\":20},\"span\":102,\"areas\":[86.10784313725478,68.16666666666663,85.85294117647051,67.93137254901958],\"measured\":77.01470588235287,\"expected\":77.47126301352117,\"flat\":77.47126301352117},\"label-active\":{\"state\":\"active\",\"geo\":{\"x\":846.546875,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":102,\"areas\":[94.392156862745,76.16666666666659,94.18627450980377,75.99019607843127],\"measured\":85.18382352941165,\"expected\":85.84073464102069,\"flat\":85.84073464102069},\"icon-active\":{\"state\":\"active\",\"geo\":{\"x\":894.546875,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":102,\"areas\":[95.1078431372548,76.16666666666659,94.90196078431359,75.99019607843127],\"measured\":85.54166666666656,\"expected\":85.84073464102069,\"flat\":85.84073464102069}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8645,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:16:57.674Z",
+                  "annotations": [
+                    {
+                      "type": "radius",
+                      "description": "{\"ground\":[233,224,215],\"cells\":{\"trigger\":{\"state\":\"hover\",\"geo\":{\"x\":505.453125,\"y\":730.046875,\"w\":70.234375,\"h\":35.890625,\"pi\":8,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":81,\"areas\":[76.3703703703704,60.222222222222236,63.098765432098766,47.13580246913582],\"measured\":61.706790123456805,\"expected\":69.10913950799028,\"flat\":69.10913950799028},\"tab\":{\"state\":\"hover\",\"geo\":{\"x\":659.703125,\"y\":729,\"w\":68.65625,\"h\":38,\"pi\":12,\"pb\":7,\"clip\":\"border-box\",\"radius\":20},\"span\":82,\"areas\":[88.80487804878103,58.43902439024451,88.14634146341513,57.804878048781035],\"measured\":73.29878048780543,\"expected\":77.47126301352117,\"flat\":77.47126301352117},\"label\":{\"state\":\"hover\",\"geo\":{\"x\":798.546875,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":82,\"areas\":[96.85365853658591,78.87804878048846,96.23170731707367,78.25609756097617],\"measured\":87.55487804878106,\"expected\":85.84073464102069,\"flat\":85.84073464102069},\"trigger-active\":{\"state\":\"active\",\"geo\":{\"x\":583.6875,\"y\":730.046875,\"w\":68.015625,\"h\":35.890625,\"pi\":8,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":102,\"areas\":[76.86274509803916,60.66666666666665,63.48039215686272,47.470588235294116],\"measured\":62.120098039215655,\"expected\":69.10913950799028,\"flat\":69.10913950799028},\"tab-active\":{\"state\":\"active\",\"geo\":{\"x\":736.359375,\"y\":729,\"w\":54.1875,\"h\":38,\"pi\":12,\"pb\":7,\"clip\":\"border-box\",\"radius\":20},\"span\":102,\"areas\":[86.10784313725478,68.16666666666663,85.85294117647051,67.93137254901958],\"measured\":77.01470588235287,\"expected\":77.47126301352117,\"flat\":77.47126301352117},\"label-active\":{\"state\":\"active\",\"geo\":{\"x\":846.546875,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":102,\"areas\":[94.392156862745,76.16666666666659,94.18627450980377,75.99019607843127],\"measured\":85.18382352941165,\"expected\":85.84073464102069,\"flat\":85.84073464102069},\"icon-active\":{\"state\":\"active\",\"geo\":{\"x\":894.546875,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":102,\"areas\":[95.1078431372548,76.16666666666659,94.90196078431359,75.99019607843127],\"measured\":85.54166666666656,\"expected\":85.84073464102069,\"flat\":85.84073464102069}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-9bf7ca6c979d45267740",
+          "file": "release-11-0-2.spec.ts",
+          "line": 906,
+          "column": 5
+        },
+        {
+          "title": "radius · every dock seat's corner is half its block size, at 390",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "radius",
+                  "description": "{\"ground\":[233,224,214],\"cells\":{\"trigger\":{\"state\":\"hover\",\"geo\":{\"x\":12,\"y\":732,\"w\":62.625,\"h\":32,\"pi\":8,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":81,\"areas\":[56.23456790123492,49.66666666666705,56.25925925925956,49.71604938271636],\"measured\":52.969135802469474,\"expected\":54.93807017025324,\"flat\":54.93807017025324},\"tab\":{\"state\":\"hover\",\"geo\":{\"x\":151.359375,\"y\":729,\"w\":62.109375,\"h\":38,\"pi\":12,\"pb\":7,\"clip\":\"border-box\",\"radius\":20},\"span\":81,\"areas\":[89.44444444444376,71.54320987654269,88.80246913580196,70.85185185185156],\"measured\":80.16049382716,\"expected\":77.47126301352117,\"flat\":77.47126301352117},\"label\":{\"state\":\"hover\",\"geo\":{\"x\":279.234375,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":81,\"areas\":[88.27160493827078,88.27160493827078,87.62962962962897,87.62962962962897],\"measured\":87.95061728394987,\"expected\":85.84073464102069,\"flat\":85.84073464102069},\"trigger-active\":{\"state\":\"active\",\"geo\":{\"x\":82.625,\"y\":732,\"w\":60.734375,\"h\":32,\"pi\":8,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":101,\"areas\":[63.25742574257427,37.60396039603961,63.504950495049506,37.83168316831684],\"measured\":50.54950495049506,\"expected\":54.93807017025324,\"flat\":54.93807017025324},\"tab-active\":{\"state\":\"active\",\"geo\":{\"x\":221.46875,\"y\":729,\"w\":49.765625,\"h\":38,\"pi\":12,\"pb\":7,\"clip\":\"border-box\",\"radius\":20},\"span\":101,\"areas\":[86.85148514851483,61.871287128712865,86.5544554455445,61.64356435643565],\"measured\":74.23019801980196,\"expected\":77.47126301352117,\"flat\":77.47126301352117},\"label-active\":{\"state\":\"active\",\"geo\":{\"x\":327.234375,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":101,\"areas\":[85.33663366336631,85.33663366336631,85.08910891089106,85.08910891089106],\"measured\":85.21287128712869,\"expected\":85.84073464102069,\"flat\":85.84073464102069},\"icon-active\":{\"state\":\"active\",\"geo\":{\"x\":338.234375,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":101,\"areas\":[85.33663366336631,85.33663366336631,85.08910891089106,85.08910891089106],\"measured\":85.21287128712869,\"expected\":85.84073464102069,\"flat\":85.84073464102069}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8820,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T23:17:06.323Z",
+                  "annotations": [
+                    {
+                      "type": "radius",
+                      "description": "{\"ground\":[233,224,214],\"cells\":{\"trigger\":{\"state\":\"hover\",\"geo\":{\"x\":12,\"y\":732,\"w\":62.625,\"h\":32,\"pi\":8,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":81,\"areas\":[56.23456790123492,49.66666666666705,56.25925925925956,49.71604938271636],\"measured\":52.969135802469474,\"expected\":54.93807017025324,\"flat\":54.93807017025324},\"tab\":{\"state\":\"hover\",\"geo\":{\"x\":151.359375,\"y\":729,\"w\":62.109375,\"h\":38,\"pi\":12,\"pb\":7,\"clip\":\"border-box\",\"radius\":20},\"span\":81,\"areas\":[89.44444444444376,71.54320987654269,88.80246913580196,70.85185185185156],\"measured\":80.16049382716,\"expected\":77.47126301352117,\"flat\":77.47126301352117},\"label\":{\"state\":\"hover\",\"geo\":{\"x\":279.234375,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":81,\"areas\":[88.27160493827078,88.27160493827078,87.62962962962897,87.62962962962897],\"measured\":87.95061728394987,\"expected\":85.84073464102069,\"flat\":85.84073464102069},\"trigger-active\":{\"state\":\"active\",\"geo\":{\"x\":82.625,\"y\":732,\"w\":60.734375,\"h\":32,\"pi\":8,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":101,\"areas\":[63.25742574257427,37.60396039603961,63.504950495049506,37.83168316831684],\"measured\":50.54950495049506,\"expected\":54.93807017025324,\"flat\":54.93807017025324},\"tab-active\":{\"state\":\"active\",\"geo\":{\"x\":221.46875,\"y\":729,\"w\":49.765625,\"h\":38,\"pi\":12,\"pb\":7,\"clip\":\"border-box\",\"radius\":20},\"span\":101,\"areas\":[86.85148514851483,61.871287128712865,86.5544554455445,61.64356435643565],\"measured\":74.23019801980196,\"expected\":77.47126301352117,\"flat\":77.47126301352117},\"label-active\":{\"state\":\"active\",\"geo\":{\"x\":327.234375,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":101,\"areas\":[85.33663366336631,85.33663366336631,85.08910891089106,85.08910891089106],\"measured\":85.21287128712869,\"expected\":85.84073464102069,\"flat\":85.84073464102069},\"icon-active\":{\"state\":\"active\",\"geo\":{\"x\":338.234375,\"y\":728,\"w\":40,\"h\":40,\"pi\":4,\"pb\":4,\"clip\":\"border-box\",\"radius\":20},\"span\":101,\"areas\":[85.33663366336631,85.33663366336631,85.08910891089106,85.08910891089106],\"measured\":85.21287128712869,\"expected\":85.84073464102069,\"flat\":85.84073464102069}}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-a168624c090d756b4b1e",
+          "file": "release-11-0-2.spec.ts",
+          "line": 906,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-12T23:14:45.198Z",
+    "duration": 150023.223,
+    "expected": 28,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

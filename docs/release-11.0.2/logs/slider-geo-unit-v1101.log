@@ -1,0 +1,84 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794521931 slope=31.8/s inuse=25856 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree
+
+ ❯ tests/components/slider.size-tokens.test.ts (3 tests | 3 failed) 359ms
+     × keeps the default md rung at a 20px band with a 20px disc (spectrum 24px band, 24px ring) 10ms
+     × follows a wrapper override set inside @layer glass-overrides, the disc with it 2ms
+     × sizes every thumb by the band's one height (the track height), never by the thumb size 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/slider.size-tokens.test.ts > Slider size rungs read the token root > keeps the default md rung at a 20px band with a 20px disc (spectrum 24px band, 24px ring)
+AssertionError: expected { track: 20, thumbWidth: 16 } to deeply equal { track: 20, thumbWidth: 20 }
+
+- Expected
++ Received
+
+  {
+-   "thumbWidth": 20,
++   "thumbWidth": 16,
+    "track": 20,
+  }
+
+ ❯ tests/components/slider.size-tokens.test.ts:73:39
+     71| describe("Slider size rungs read the token root", () => {
+     72|     it("keeps the default md rung at a 20px band with a 20px disc (spe…
+     73|         expect(await measure("base")).toEqual({ track: 20, thumbWidth:…
+       |                                       ^
+     74|         // spectrum: track = thumb size × 1.5, and the ring is the ban…
+     75|         expect(await measure("base-spectrum")).toEqual({ track: 24, th…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  tests/components/slider.size-tokens.test.ts > Slider size rungs read the token root > follows a wrapper override set inside @layer glass-overrides, the disc with it
+AssertionError: expected { track: 32, thumbWidth: 16 } to deeply equal { track: 32, thumbWidth: 32 }
+
+- Expected
++ Received
+
+  {
+-   "thumbWidth": 32,
++   "thumbWidth": 16,
+    "track": 32,
+  }
+
+ ❯ tests/components/slider.size-tokens.test.ts:79:39
+     77|
+     78|     it("follows a wrapper override set inside @layer glass-overrides, …
+     79|         expect(await measure("tall")).toEqual({ track: 32, thumbWidth:…
+       |                                       ^
+     80|     });
+     81|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  tests/components/slider.size-tokens.test.ts > Slider size rungs read the token root > sizes every thumb by the band's one height (the track height), never by the thumb size
+AssertionError: expected { track: 18, thumbWidth: 9 } to deeply equal { track: 24, thumbWidth: 24 }
+
+- Expected
++ Received
+
+  {
+-   "thumbWidth": 24,
+-   "track": 24,
++   "thumbWidth": 9,
++   "track": 18,
+  }
+
+ ❯ tests/components/slider.size-tokens.test.ts:84:48
+     82|     it("sizes every thumb by the band's one height (the track height),…
+     83|         // the track rung moves the scrubber's band and disc, not the …
+     84|         expect(await measure("thin-spectrum")).toEqual({ track: 24, th…
+       |                                                ^
+     85|         // the thumb size sets only the spectrum's band: 32px → 48px b…
+     86|         expect(await measure("fat-thumb-spectrum")).toEqual({ track: 4…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed (3)
+   Start at  18:58:52
+   Duration  993ms (transform 25ms, setup 56ms, import 164ms, tests 359ms, environment 272ms)
+

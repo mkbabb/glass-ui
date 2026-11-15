@@ -5,17 +5,17 @@
 // apply a vueuse manualChunk can do so without the root barrel forcing
 // vueuse into the eager critical path.
 //
-// `initialValue` seed: `createGlobalState` memoizes the factory
-// closure, so the SINGLE shared instance is built exactly once on first call. A
-// per-call `initialValue` therefore CANNOT re-seed after construction: the seed
-// is a ONE-SHOT honored only by the first `useGlobalDark()` invocation. We
-// capture the first-call options in a module-level ref the factory reads on
-// construction, and THROW if a later call passes a CONFLICTING `initialValue`
-// (the misconfiguration is loud, not silently swallowed). This pairs with
+// `initialValue` and `storageKey` seeds: `createGlobalState` memoizes the
+// factory closure, so the SINGLE shared instance is built exactly once on first
+// call. A per-call seed therefore CANNOT re-seed after construction: each seed is
+// a ONE-SHOT honored only by the first `useGlobalDark()` invocation that passes
+// it. We capture the first-call options in module-level slots the factory reads
+// on construction, and THROW if a later call passes a CONFLICTING value (the
+// misconfiguration is loud, not silently swallowed). This pairs with
 // `darkModeSyncScript()` — the parse-time `<head>` script that sets the theme
-// before first paint so the seed and the FOUC eliminator agree.
-import { createGlobalState, useDark, useToggle } from "@vueuse/core";
-import { ref, watch, type Ref, type WritableComputedRef } from "vue";
+// before first paint — so the seed, the key and the FOUC eliminator agree.
+import { createGlobalState, useColorMode, useToggle } from "@vueuse/core";
+import { computed, ref, watch, type Ref, type WritableComputedRef } from "vue";
 
 /** Stable color-scheme seed accepted by the shared dark-mode controller. */
 export type GlobalColorSchema = "auto" | "light" | "dark";
@@ -33,7 +33,7 @@ export type DarkFlipSettledCallback = (isDark: boolean) => void;
  * the post-flip settle hook.
  */
 export interface UseGlobalDarkReturn {
-    /** Reactive dark-mode flag (vueuse `useDark` ref — writable). */
+    /** Reactive dark-mode flag (writable; reads the resolved scheme). */
     isDark: WritableComputedRef<boolean>;
     /** Toggle dark mode (suppresses transitions when configured). */
     toggleDark: () => void;
@@ -68,18 +68,50 @@ export interface UseGlobalDarkOptions {
      * re-seed is a no-op. Defaults to vueuse's `"auto"` (prefers-color-scheme).
      * Pair with `darkModeSyncScript()` so the parse-time `<head>` script and this
      * runtime seed agree.
+     *
+     * With an `initialValue` set, a toggle stores the concrete mode it lands on
+     * (`"dark"` or `"light"`), never `"auto"`, so a choice made on one system
+     * scheme still holds after the system scheme changes. A stored `"auto"` (the
+     * reader's own choice, or a store written by another page) still resolves to
+     * the system scheme.
      */
     initialValue?: GlobalColorSchema;
+    /**
+     * The localStorage key the mode is read from and written to, threaded to
+     * `useColorMode({ storageKey })`. Defaults to `vueuse-color-scheme`
+     * (`DARK_MODE_STORAGE_KEY`). ONE-SHOT like `initialValue`: a later call
+     * passing a CONFLICTING key THROWS. Pass the same key to
+     * `darkModeSyncScript({ storageKey })` so the `<head>` script reads what this
+     * composable writes.
+     */
+    storageKey?: string;
 }
 
-// The first-call seed the memoized factory reads at construction time.
+// The first-call seeds the memoized factory reads at construction time.
 let seededInitialValue: GlobalColorSchema | undefined;
+let seededStorageKey: string | undefined;
 
 /** Single shared dark mode instance — avoids multiple useDark() watchers racing on classList. */
 const createGlobalDark = createGlobalState(() => {
-    const isDark = useDark({
+    // The color mode `useDark` builds on, with `useDark`'s own modes: `.dark` on
+    // `<html>` for dark, no class for light.
+    const mode = useColorMode({
         initialValue: seededInitialValue,
+        storageKey: seededStorageKey,
         disableTransition: false,
+        modes: { dark: "dark", light: "" },
+    });
+    // Reads the resolved scheme (a stored `"auto"` follows the system). A write
+    // stores the concrete mode when the consumer seeded an `initialValue`; without
+    // one, a write that lands on the system scheme stores `"auto"`, as `useDark`
+    // does.
+    const concreteWrites = seededInitialValue !== undefined;
+    const isDark = computed<boolean>({
+        get: () => mode.state.value === "dark",
+        set: (dark) => {
+            const next = dark ? "dark" : "light";
+            mode.value = !concreteWrites && mode.system.value === next ? "auto" : next;
+        },
     });
     const _toggle = useToggle(isDark);
     const disableTransitions = ref(false);
@@ -192,10 +224,22 @@ const createGlobalDark = createGlobalState(() => {
 
 /**
  * The single shared dark-mode instance. The first call may pass an
- * `initialValue` seed (one-shot — see `UseGlobalDarkOptions`); subsequent calls
- * receive the already-constructed singleton and their `initialValue` is ignored.
+ * `initialValue` seed and a `storageKey` (each one-shot — see
+ * `UseGlobalDarkOptions`); subsequent calls receive the already-constructed
+ * singleton, and a conflicting seed throws.
  */
 export function useGlobalDark(options?: UseGlobalDarkOptions): UseGlobalDarkReturn {
+    if (options?.storageKey !== undefined) {
+        if (seededStorageKey === undefined) {
+            seededStorageKey = options.storageKey;
+        } else if (seededStorageKey !== options.storageKey) {
+            throw new Error(
+                `[glass-ui] useGlobalDark({ storageKey: "${options.storageKey}" }) conflicts: ` +
+                    `the singleton was already constructed with storageKey "${seededStorageKey}". ` +
+                    `The key is ONE-SHOT — set it on the FIRST useGlobalDark() call only.`,
+            );
+        }
+    }
     if (options?.initialValue !== undefined) {
         if (seededInitialValue === undefined) {
             seededInitialValue = options.initialValue;

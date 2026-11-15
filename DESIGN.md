@@ -1262,19 +1262,22 @@ compose the ONE shared `.glass-track-well` groove register and the ONE shared
 
 | Variant         | Track                      | Thumb                               | Use                                                                                                 |
 | --------------- | -------------------------- | ----------------------------------- | --------------------------------------------------------------------------------------------------- |
-| `standard`      | thick recessed capsule     | fill edge; semantic thumb is unpainted | General numeric binding |
-| `spectrum`      | consumer-supplied gradient | thin visible bar                       | Color-ramp selection      |
+| `standard`      | thick recessed capsule     | a disc the track's height, the fill's end | General numeric binding |
+| `spectrum`      | consumer-supplied gradient | a ring the track's height                 | Color-ramp selection      |
 
-| Size | Track height | Thumb size | Use               |
-| ---- | ------------ | ---------- | ----------------- |
-| `sm` | 12 px        | 8 px       | Density-tight UIs |
-| `md` | 20 px        | 16 px      | Default           |
-| `lg` | 28 px        | 24 px      | Hero / featured   |
+| Size | Track height | Thumb diameter | Use               |
+| ---- | ------------ | -------------- | ----------------- |
+| `sm` | 12 px        | 12 px          | Density-tight UIs |
+| `md` | 20 px        | 20 px          | Default           |
+| `lg` | 28 px        | 28 px          | Hero / featured   |
 
 Each rung reads two tokens from the token `:root`: `--slider-track-height-{sm,md,lg}`
 (0.75 / 1.25 / 1.75rem) and `--slider-thumb-size-{sm,md,lg}` (0.5 / 1 / 1.5rem). The rung
-sets `--slider-track-height` to its track token and `--slider-thumb-size` to
-`min(thumb, track)`, so the thumb never exceeds the track whichever token moves. The
+sets `--slider-track-height` to its track token and `--slider-thumb-size` to its thumb
+token. The track height is the band's one height: the track, the fill and the thumb
+(the scrubber's disc and the spectrum's ring) are all that tall, with a radius of half
+of it, so a thumb is resized by its track token. The thumb token sets only the
+spectrum's taller track (1.5 times it). The
 token `:root` is unlayered and beats every layered consumer `:root`, so override a rung
 token on a wrapper or on the slider in any layer, or on an unlayered `:root`; a `:root`
 override inside `@theme` or `@layer glass-overrides` loses. The table above is the

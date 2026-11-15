@@ -1,0 +1,59 @@
+{
+ "url": "https://www.apple.com/apple-vision-pro/",
+ "root": ".section-hero",
+ "layers": [
+  {
+   "label": "sticky container",
+   "sel": ".section-hero .sticky-container"
+  },
+  {
+   "label": "hero image",
+   "sel": ".hero-img"
+  },
+  {
+   "label": "hero gradient",
+   "sel": ".hero-gradient"
+  },
+  {
+   "label": "hero copy",
+   "sel": ".hero-copy"
+  },
+  {
+   "label": "foundation section",
+   "sel": ".section-foundation"
+  },
+  {
+   "label": "foundation copy",
+   "sel": ".foundations-copy-container"
+  },
+  {
+   "label": "foundation line 1",
+   "sel": ".foundation-headline.headline-1",
+   "text": true
+  },
+  {
+   "label": "foundation line 3",
+   "sel": ".foundation-headline.headline-3",
+   "text": true
+  }
+ ],
+ "steps": 22,
+ "frames": [
+  0,
+  3,
+  6,
+  9,
+  12,
+  15,
+  18,
+  21
+ ],
+ "narrowSteps": 20,
+ "after": "(() => { const s = document.querySelector('.section-foundation'); const ps = {}; for (const el of [s, ...s.querySelectorAll('*')].slice(0, 30)) for (const p of ['::before', '::after']) { const c = getComputedStyle(el, p); if (c.content && c.content !== 'none') ps[(el.className || el.tagName) + p] = { bdf: c.backdropFilter || c.webkitBackdropFilter, op: c.opacity, bg: c.backgroundColor, bgi: c.backgroundImage.slice(0, 120), pos: c.position, inset: [c.top, c.bottom, c.height].join(' '), mask: (c.maskImage || c.webkitMaskImage || '').slice(0, 120), z: c.zIndex }; } return { foundationStyle: s.getAttribute('style'), pseudo: ps }; })()",
+ "modes": [
+  "wide",
+  "prm",
+  "narrow"
+ ],
+ "name": "a-visionpro"
+}

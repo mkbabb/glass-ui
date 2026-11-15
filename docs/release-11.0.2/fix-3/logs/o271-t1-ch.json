@@ -1,0 +1,698 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/playwright.config.ts",
+      "release-10-1-5.spec.ts",
+      "release-11-0-2.spec.ts",
+      "--grep",
+      "rows ·|k3 at 320|s2 O-201",
+      "--project=chromium-headless-new",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-5.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/docs/release-11.0.2/fix-3/logs/o271-t1-ch.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5341",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/",
+      "url": "http://localhost:5341",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-10-1-5.spec.ts",
+      "file": "release-10-1-5.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "k3 at 320: a capped dock whose seats all show holds the fit law and rests round",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2026,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T18:55:50.053Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-a5ce856ee6f51988059b",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1187,
+          "column": 5
+        },
+        {
+          "title": "s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 420000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 44504,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T18:55:52.084Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-937a1a847e6a6bf5237b",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2331,
+          "column": 5
+        }
+      ],
+      "suites": [
+        {
+          "title": "critique 5, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1218,
+          "column": 6,
+          "specs": [
+            {
+              "title": "k3 at 320: a capped dock whose seats all show holds the fit law and rests round",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2206,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-14T18:55:47.734Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-3addb312898c1b461c78",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1187,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "fix 11, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2410,
+          "column": 6,
+          "specs": [
+            {
+              "title": "s2 O-201 at 390: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 420000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 44362,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-14T18:56:36.595Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-4bacda187aaca3dc78b9",
+              "file": "release-10-1-5.spec.ts",
+              "line": 2331,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "release-11-0-2.spec.ts",
+      "file": "release-11-0-2.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "rows · the transport dock's rows fit with a persistent region beside the layers at 360",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[348,348,348,\"348px\"],\"run\":[286,286],\"layers\":[\"6px\",\"0px\",[64,278]],\"persistent\":[18,40],\"face\":[64,278],\"page\":[360,360],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1682,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T18:57:20.978Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[348,348,348,\"348px\"],\"run\":[286,286],\"layers\":[\"6px\",\"0px\",[64,278]],\"persistent\":[18,40],\"face\":[64,278],\"page\":[360,360],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-c98791b30f1458d55f07",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1363,
+          "column": 9
+        },
+        {
+          "title": "rows · the transport dock's rows fit with a persistent region beside the layers at 390",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[378,378,378,\"378px\"],\"run\":[316,316],\"layers\":[\"6px\",\"0px\",[64,308]],\"persistent\":[18,40],\"face\":[64,308],\"page\":[390,390],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1670,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T18:57:22.664Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[378,378,378,\"378px\"],\"run\":[316,316],\"layers\":[\"6px\",\"0px\",[64,308]],\"persistent\":[18,40],\"face\":[64,308],\"page\":[390,390],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-638ea38cbcad3d297a07",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1363,
+          "column": 9
+        },
+        {
+          "title": "rows · the transport dock's rows fit with a persistent region beside the layers at 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[960,960,960,\"960px\"],\"run\":[898,898],\"layers\":[\"6px\",\"0px\",[298,890]],\"persistent\":[252,40],\"face\":[298,890],\"page\":[1440,1440],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1682,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T18:57:24.338Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[960,960,960,\"960px\"],\"run\":[898,898],\"layers\":[\"6px\",\"0px\",[298,890]],\"persistent\":[252,40],\"face\":[298,890],\"page\":[1440,1440],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-bd574ec30f427c317c45",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1363,
+          "column": 9
+        },
+        {
+          "title": "rows · the editor dock's rows fit with a persistent region beside the layers at 360",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[288,288,288,\"288px\"],\"run\":[168,168],\"layers\":[\"6px\",\"0px\",[151.86,160]],\"persistent\":[48.14,97.72],\"face\":[151.86,160],\"page\":[360,360],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1663,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T18:57:26.024Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[288,288,288,\"288px\"],\"run\":[168,168],\"layers\":[\"6px\",\"0px\",[151.86,160]],\"persistent\":[48.14,97.72],\"face\":[151.86,160],\"page\":[360,360],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-4a88ae90eb3ebbeb22e7",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1363,
+          "column": 9
+        },
+        {
+          "title": "rows · the editor dock's rows fit with a persistent region beside the layers at 390",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[288,288,288,\"288px\"],\"run\":[168,168],\"layers\":[\"6px\",\"0px\",[166.86,160]],\"persistent\":[63.14,97.72],\"face\":[166.86,160],\"page\":[390,390],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1663,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T18:57:27.690Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[288,288,288,\"288px\"],\"run\":[168,168],\"layers\":[\"6px\",\"0px\",[166.86,160]],\"persistent\":[63.14,97.72],\"face\":[166.86,160],\"page\":[390,390],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-1aba098490d12c1adfc8",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1363,
+          "column": 9
+        },
+        {
+          "title": "rows · the editor dock's rows fit with a persistent region beside the layers at 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[288,288,288,\"288px\"],\"run\":[168,168],\"layers\":[\"6px\",\"0px\",[691.86,160]],\"persistent\":[588.14,97.72],\"face\":[691.86,160],\"page\":[1440,1440],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1651,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T18:57:29.357Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[288,288,288,\"288px\"],\"run\":[168,168],\"layers\":[\"6px\",\"0px\",[691.86,160]],\"persistent\":[588.14,97.72],\"face\":[691.86,160],\"page\":[1440,1440],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-ef971ca04b6d80cede6c",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1363,
+          "column": 9
+        },
+        {
+          "title": "rows · the stretched dock's rows fit with a persistent region beside the layers at 360",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[328,328,328,\"328px\"],\"run\":[266,266],\"layers\":[\"6px\",\"0px\",[74,258]],\"persistent\":[28,40],\"face\":[74,40],\"page\":[360,360],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1673,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T18:57:31.011Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[328,328,328,\"328px\"],\"run\":[266,266],\"layers\":[\"6px\",\"0px\",[74,258]],\"persistent\":[28,40],\"face\":[74,40],\"page\":[360,360],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-3095ca0a6f9db014eb26",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1363,
+          "column": 9
+        },
+        {
+          "title": "rows · the stretched dock's rows fit with a persistent region beside the layers at 390",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[358,358,358,\"358px\"],\"run\":[296,296],\"layers\":[\"6px\",\"0px\",[74,288]],\"persistent\":[28,40],\"face\":[74,40],\"page\":[390,390],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1677,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T18:57:32.689Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[358,358,358,\"358px\"],\"run\":[296,296],\"layers\":[\"6px\",\"0px\",[74,288]],\"persistent\":[28,40],\"face\":[74,40],\"page\":[390,390],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-846417748a891983b9cc",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1363,
+          "column": 9
+        },
+        {
+          "title": "rows · the stretched dock's rows fit with a persistent region beside the layers at 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[1408,1408,1408,\"1408px\"],\"run\":[1346,1346],\"layers\":[\"6px\",\"0px\",[74,1338]],\"persistent\":[28,40],\"face\":[74,40],\"page\":[1440,1440],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1668,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T18:57:34.370Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[1408,1408,1408,\"1408px\"],\"run\":[1346,1346],\"layers\":[\"6px\",\"0px\",[74,1338]],\"persistent\":[28,40],\"face\":[74,40],\"page\":[1440,1440],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-b2fce06b22a991df6c7b",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1363,
+          "column": 9
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-14T18:55:45.983Z",
+    "duration": 110099.981,
+    "expected": 13,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

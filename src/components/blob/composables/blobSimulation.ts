@@ -69,6 +69,7 @@ export function createBlobSimulation(deps: BlobSimulationDeps) {
     let lastDrawnFrame: BlobFrameState | null = null;
     let backingSize: BackingSize | null = null;
     let wakeTimer: ReturnType<typeof setTimeout> | null = null;
+    let wasDecelerating = false;
 
     deps.satellites.onPinch((impulse) => deps.pointer.click(impulse));
 
@@ -129,11 +130,15 @@ export function createBlobSimulation(deps: BlobSimulationDeps) {
             acceleration.x * velocity.x +
             acceleration.y * velocity.y
         );
-        if (deceleration > 0 && tempo > 0) {
+        // One kick per deceleration episode, on its first frame: a kick on every
+        // decelerating frame stacks the pulse until the body fills its box.
+        const decelerating = deceleration > 0 && tempo > 0;
+        if (decelerating && !wasDecelerating) {
             deps.pointer.click(
                 Math.min(0.5, deceleration * 4 + pointerField.burst.value * 0.2),
             );
         }
+        wasDecelerating = decelerating;
 
         if (!reduced) {
             deps.mood.update({

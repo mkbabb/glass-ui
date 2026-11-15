@@ -855,3 +855,86 @@ describe("the morph's origins (O-110)", () => {
         unmount();
     });
 });
+
+/*
+ * The start-anchored rail (atlas's dashboard rail at 1440). Its close shrank toward its
+ * middle with the crest riding down the page, and its open drew the crest above the
+ * plate and the foot at the page's corner.
+ */
+describe("the start-anchored rail", () => {
+    // The arm runs after `.collapsed` lands and before `[data-morphing]`; atlas yields its
+    // run on `.collapsed:not([data-morphing])`, so a re-read there laid the expanded pane
+    // out empty. RED on v11.0.1.
+    it("a collapse arm keeps the expanded box it is leaving", () => {
+        const dock = dockModel("vertical");
+        const consumerYields = () =>
+            dock.root.classList.contains("collapsed") && !dock.root.hasAttribute("data-morphing");
+        Object.defineProperty(dock.model, "span", { get: () => (consumerYields() ? 0 : 568) });
+        const { result, unmount } = mountMeasure(dock, "vertical");
+        expect(dock.px("expanded")).toBe("592px");
+
+        dock.posture("collapsed");
+        result.measure();
+        expect(dock.px("expanded")).toBe("592px");
+        expect(dock.px("collapsed")).toBe("56px");
+        unmount();
+    });
+
+    /** The painted start of `seat` at the scale `anchor` targeted (root-local px). */
+    function paintedStart(o: { root0: number; s: number; origin: string; seatOrigin: string; seatStart: number; seatSize: number; local: number }) {
+        const O = (Number.parseFloat(o.origin) / 100) * o.local;
+        const Or = o.seatStart - o.root0 + (Number.parseFloat(o.seatOrigin) / 100) * o.seatSize;
+        return o.seatStart - o.root0 + (O - Or) * (1 - o.s);
+    }
+
+    // The crest region is the crest alone on the disc (16-56) and the crest plus the site
+    // layer open (24-193). Its anchored START holds the disc's start in the first frame;
+    // the centre hold put it 64 px before the plate. RED on v11.0.1.
+    it("a region that differs between postures holds its anchored edge", () => {
+        const dock = anchoredDock({
+            collapsed: [16, 56],
+            reserved: [16, 88],
+            seat: { before: [16, 56], after: [24, 193] },
+            layers: [24, 80],
+            summary: { before: [16, 56], after: [24, 48] },
+        });
+        dock.expand();
+        expect(dock.origin(dock.root)).toBe("0%");
+        const start = paintedStart({
+            root0: 16,
+            s: 40 / 72,
+            origin: dock.origin(dock.root),
+            seatOrigin: dock.origin(dock.seat),
+            seatStart: 24,
+            seatSize: 169,
+            local: 72,
+        });
+        expect(start).toBeCloseTo(0, 6);
+        dock.unmount();
+    });
+
+    // A foot the consumer yields on the disc paints nothing in the first frame: a zero
+    // rect at the viewport origin. It rests where it lays out (the root's fixed point,
+    // so the two scales cancel) and the clip uncovers it. RED on v11.0.1: it was held at
+    // x 0, outside the plate.
+    it("a region that painted nothing in the first frame rests where it lays out", () => {
+        const dock = anchoredDock({
+            collapsed: [16, 56],
+            reserved: [16, 88],
+            seat: { before: [0, 0], after: [40, 80] },
+            layers: [24, 80],
+            summary: { before: [16, 56], after: [24, 48] },
+        });
+        // The zero box has no extent on either axis.
+        const rect = dock.seat.getBoundingClientRect.bind(dock.seat);
+        dock.seat.getBoundingClientRect = () => {
+            const r = rect();
+            return r.width === 0 ? ({ ...r, top: 0, bottom: 0, height: 0 } as DOMRect) : r;
+        };
+        dock.expand();
+        expect(dock.origin(dock.root)).toBe("0%");
+        // The root's origin (0 root-local) in the seat's own box (start 24 root-local).
+        expect(dock.origin(dock.seat)).toBe(`${((0 - 24) / 40) * 100}%`);
+        dock.unmount();
+    });
+});

@@ -1,0 +1,826 @@
+diff --git a/src/components/labeled-field/LabeledField.vue b/src/components/labeled-field/LabeledField.vue
+--- a/src/components/labeled-field/LabeledField.vue
++++ b/src/components/labeled-field/LabeledField.vue
+@@ -1,5 +1,6 @@
+ <script setup lang="ts">
+-import { computed, useId } from "vue";
++import { computed, ref, useId, watch } from "vue";
++import { follow } from "../../composables/motion/presence";
+ import { Label } from "../label";
+ import type { LabeledFieldProps, LabeledFieldSlotProps } from "./types";
+ 
+@@ -28,6 +29,8 @@
+     errorMessageId.value,
+ ].filter(Boolean).join(" ") || undefined);
+ const required = computed(() => props.requirement === "required");
++const errorEl = ref<HTMLElement | null>(null);
++watch(() => props.invalid, () => follow(errorEl.value), { flush: "pre" });
+ </script>
+ 
+ <template>
+@@ -62,9 +65,12 @@
+                 :required="required"
+             />
+             <p
+-                v-if="errorMessageId"
++                v-if="slots.error"
++                ref="errorEl"
+                 :id="errorId"
+                 class="labeled-field-error"
++                data-presence="reclaim"
++                :data-absent="!invalid || undefined"
+                 :aria-live="errorLive === 'off' ? undefined : errorLive"
+             >
+                 <slot name="error" />
+@@ -112,6 +118,12 @@
+ 
+     .labeled-field-error {
+         color: var(--destructive);
++    }
++
++    /* Absent, the line gives back its room and the gap before it. This rule is the
++       component's own because its `margin: 0` above outranks the shared one. */
++    .labeled-field-error[data-absent] {
++        margin-block-start: calc(-1 * var(--space-residue));
+     }
+ 
+     /* Side-by-side, the two columns are still ONE object, so they sit on the within-field
+diff --git a/src/composables/motion/engage/press.ts b/src/composables/motion/engage/press.ts
+new file mode 100644
+--- /dev/null
++++ b/src/composables/motion/engage/press.ts
+@@ -0,0 +1,44 @@
++// The press floor (W-B.17 R-11): the one writer of `data-press` on a `.plate`.
++//
++// `:active` lasts exactly as long as the button is down, so a trackpad tap shows no
++// press, and WebKit applies `:active` to a touch only where a touch listener exists.
++// One passive listener on the document stamps `data-press` on the innermost `.plate`
++// under the pointer and holds it until the later of the release and the press clock.
++// No listener per control, nothing at rest but the one handler.
++let installed = false;
++
++/** Install once per document. Safe to call again. */
++export function installPress(doc: Document = document): void {
++    if (installed) return;
++    installed = true;
++    doc.addEventListener(
++        "pointerdown",
++        (e) => {
++            const el = (e.target as Element | null)?.closest?.(".plate");
++            if (!el || el.matches(':disabled, [aria-disabled="true"]')) return;
++            const cs = getComputedStyle(doc.documentElement);
++            const settle = Number.parseFloat(cs.getPropertyValue("--spring-press-settle"));
++            const tempo = Number.parseFloat(cs.getPropertyValue("--motion-tempo"));
++            let up = false;
++            let floored = false;
++            const end = new AbortController();
++            const done = (): void => {
++                if (!up || !floored) return;
++                el.removeAttribute("data-press");
++                end.abort();
++            };
++            const release = (): void => {
++                up = true;
++                done();
++            };
++            el.setAttribute("data-press", "");
++            doc.addEventListener("pointerup", release, { capture: true, signal: end.signal });
++            doc.addEventListener("pointercancel", release, { capture: true, signal: end.signal });
++            setTimeout(() => {
++                floored = true;
++                done();
++            }, settle * tempo * 1000);
++        },
++        { capture: true, passive: true },
++    );
++}
+diff --git a/src/composables/motion/presence/Presence.ts b/src/composables/motion/presence/Presence.ts
+--- a/src/composables/motion/presence/Presence.ts
++++ b/src/composables/motion/presence/Presence.ts
+@@ -1,14 +1,12 @@
+ // <Presence> (W-B.17 R-7): Vue's <Transition> under one of two names. It renders no
+-// element and stamps nothing on its child. Two boolean props and no others.
++// element and stamps nothing on its child. One boolean prop and no other.
+ import { Transition, h, type FunctionalComponent } from "vue";
+ import { readReducedMotion } from "../core/useReducedMotion";
+-import { reclaimHooks } from "./follow";
++import { swapHooks } from "./follow";
+ 
+ export interface PresenceProps {
+     /** The node is replaced in its seat: out, then in. */
+     swap?: boolean;
+-    /** The node's arrival pushes what follows it: its block size follows. */
+-    reclaim?: boolean;
+ }
+ 
+ export const Presence: FunctionalComponent<PresenceProps> = (props, { slots }) =>
+@@ -17,10 +15,10 @@
+         {
+             name: props.swap ? "presence-swap" : "presence",
+             mode: props.swap ? "out-in" : undefined,
+-            ...(props.reclaim && !readReducedMotion() ? reclaimHooks : {}),
++            ...(props.swap && !readReducedMotion() ? { onBeforeLeave: swapHooks.onBeforeLeave, onEnter: swapHooks.onEnter } : {}),
+         },
+         slots,
+     );
+ 
+-Presence.props = { swap: Boolean, reclaim: Boolean };
++Presence.props = { swap: Boolean };
+ Presence.displayName = "Presence";
+diff --git a/src/composables/motion/presence/follow.ts b/src/composables/motion/presence/follow.ts
+--- a/src/composables/motion/presence/follow.ts
++++ b/src/composables/motion/presence/follow.ts
+@@ -11,59 +11,93 @@
+ interface Box {
+     w: number;
+     h: number;
++    /** The block-start margin, which a line that gives its room back also changes. */
++    m: number;
+ }
+-const box = (el: HTMLElement): Box => ({ w: el.offsetWidth, h: el.offsetHeight });
++const box = (el: HTMLElement): Box => ({
++    w: el.offsetWidth,
++    h: el.offsetHeight,
++    m: Number.parseFloat(getComputedStyle(el).marginBlockStart) || 0,
++});
+ 
+-/** The `present` clock: `--spring-present` over `--spring-present-settle` x tempo. */
+-function presentClock(el: HTMLElement): { duration: number; easing: string } {
++/** The clock grows with the distance: the `present` clock up to 40 px, rising to
++ *  `--duration-slow` at 320 px. The curve is `--ease-standard`, which leaves rest at no
++ *  speed and reaches its end exactly, so the last frame is under half a pixel. */
++function clock(el: HTMLElement, px: number): { duration: number; easing: string } {
+     const cs = getComputedStyle(el);
+-    const settle = Number.parseFloat(cs.getPropertyValue("--spring-present-settle")) || 0.2;
+-    const tempo = Number.parseFloat(cs.getPropertyValue("--motion-tempo")) || 1;
+-    const easing = cs.getPropertyValue("--spring-present").trim() || "ease-out";
+-    return { duration: settle * 1000 * tempo, easing };
++    const lo = Number.parseFloat(cs.getPropertyValue("--spring-present-settle"));
++    const hi = Number.parseFloat(cs.getPropertyValue("--duration-slow"));
++    const tempo = Number.parseFloat(cs.getPropertyValue("--motion-tempo"));
++    const k = Math.min(1, Math.max(0, (px - 40) / 280));
++    return {
++        duration: (lo + (hi - lo) * k) * tempo * 1000,
++        easing: cs.getPropertyValue("--ease-standard").trim(),
++    };
+ }
+ 
++/** Width is tweened only on a box whose text cannot wrap; lines never re-break. */
++const fixedLines = (el: HTMLElement): boolean => getComputedStyle(el).whiteSpace.includes("nowrap");
++
+ function size(el: HTMLElement, from: Box, to: Box, extra?: PropertyIndexedKeyframes): Animation {
++    const wide = from.w !== to.w && fixedLines(el);
++    const px = Math.max(wide ? Math.abs(to.w - from.w) : 0, Math.abs(to.h - from.h));
+     return el.animate(
+         {
+             overflow: ["clip", "clip"],
+-            ...(from.w !== to.w && { inlineSize: [`${from.w}px`, `${to.w}px`] }),
++            ...(wide && { inlineSize: [`${from.w}px`, `${to.w}px`] }),
+             ...(from.h !== to.h && { blockSize: [`${from.h}px`, `${to.h}px`] }),
++            ...(from.m !== to.m && { marginBlockStart: [`${from.m}px`, `${to.m}px`] }),
+             ...extra,
+         },
+-        { id: ID, ...presentClock(el) },
++        { id: ID, ...clock(el, px) },
+     );
+ }
+ 
++const same = (a: Box, b: Box): boolean =>
++    Math.abs(a.w - b.w) < 0.5 && Math.abs(a.h - b.h) < 0.5 && Math.abs(a.m - b.m) < 0.5;
++const live = new WeakMap<HTMLElement, { from: Box; to: Box; anim: Animation }>();
++
++function run(el: HTMLElement, from: Box, to: Box): Animation {
++    const anim = size(el, from, to);
++    live.set(el, { from, to, anim });
++    return anim;
++}
++
+ /** Call BEFORE the change. Resolves when the box has settled. */
+ export async function follow(el: HTMLElement | null): Promise<void> {
+     if (!el || readReducedMotion()) return;
+     const from = box(el);
+     await nextTick();
++    const prev = live.get(el);
++    const at = prev?.anim.playState === "running" ? Number(prev.anim.currentTime) : null;
+     for (const a of el.getAnimations()) if (a.id === ID) a.cancel();
+     const to = box(el);
+-    if (from.w === to.w && from.h === to.h) return;
+-    await size(el, from, to).finished.catch(() => {});
++    if (same(from, to)) return;
++    let anim: Animation;
++    if (prev && at !== null && same(to, prev.from)) {
++        // Sent back to where it came from: the same tween, played backward from here.
++        anim = run(el, prev.from, prev.to);
++        anim.currentTime = at;
++        anim.reverse();
++    } else anim = run(el, from, to);
++    await anim.finished.catch(() => {});
+ }
+ 
+-const gapOf = (el: HTMLElement): number =>
+-    Number.parseFloat(getComputedStyle(el.parentElement ?? el).rowGap) || 0;
+-
+-/** `<Presence reclaim>`: a node that arrives or leaves in flow. It carries no block
+- *  padding, border or margin of its own. */
+-export const reclaimHooks = {
+-    onEnter(el: Element, done: () => void): void {
+-        const node = el as HTMLElement;
+-        const gap = gapOf(node);
+-        size(node, { w: node.offsetWidth, h: 0 }, box(node), {
+-            marginBlockStart: [`${-gap}px`, "0px"],
+-        }).finished.then(done, done);
++/** `<Presence swap>`: the seat (the parent) follows when the two contents differ in
++ *  size. Its size is read as the old content starts to leave and again as the new one
++ *  is inserted. */
++const seats = new WeakMap<HTMLElement, Box>();
++export const swapHooks = {
++    onBeforeLeave(el: Element): void {
++        const seat = el.parentElement;
++        if (seat) seats.set(seat, box(seat));
+     },
+-    onLeave(el: Element, done: () => void): void {
+-        const node = el as HTMLElement;
+-        const gap = gapOf(node);
+-        size(node, box(node), { w: node.offsetWidth, h: 0 }, {
+-            marginBlockStart: ["0px", `${-gap}px`],
+-        }).finished.then(done, done);
++    onEnter(el: Element): void {
++        const seat = el.parentElement;
++        const from = seat && seats.get(seat);
++        if (!seat || !from) return;
++        seats.delete(seat);
++        const to = box(seat);
++        if (!same(from, to)) run(seat, from, to);
+     },
+ };
+diff --git a/src/composables/motion/presence/index.ts b/src/composables/motion/presence/index.ts
+--- a/src/composables/motion/presence/index.ts
++++ b/src/composables/motion/presence/index.ts
+@@ -1,2 +1,3 @@
+ export { Presence, type PresenceProps } from "./Presence";
+ export { follow } from "./follow";
++export { installPress } from "../engage/press";
+diff --git a/src/styles/glass/glyph.css b/src/styles/glass/glyph.css
+--- a/src/styles/glass/glyph.css
++++ b/src/styles/glass/glyph.css
+@@ -1,28 +1,33 @@
+ /* The glyph (W-B.17 R-6).
+ 
+-   Two inherited numbers on every control: `--intent` (a pointer is over THIS control)
+-   and `--intent-set` (this control is on, open or current). Every control resets both,
+-   so a control nested in another answers for itself. The glyph computes its own
+-   `scale`, `translate` or `rotate` from them; the transition runs on the glyph. Every
+-   rule is `:where()`, zero specificity. */
++   Two inherited numbers on a `.plate` and on a control that holds a glyph: `--intent` (a pointer is over THIS control and
++   over no control inside it) and `--intent-set` (this control is on, open or current).
++   A glyph that carries a verb computes ONE `transform` from them, turn outermost, so a
++   nudge turns with a flipped glyph. One transition leg. Every rule is `:where()`. */
+ @layer components {
+     :where(
+             .plate,
+-            button,
+-            a[href],
+-            summary,
+-            [role="button"],
+-            [role="tab"],
+-            [role="option"],
+-            [role="menuitem"],
+-            [role="menuitemcheckbox"],
+-            [role="menuitemradio"]
++            :is(
++                    button,
++                    a[href],
++                    summary,
++                    [role="button"],
++                    [role="tab"],
++                    [role="option"],
++                    [role="menuitem"],
++                    [role="menuitemcheckbox"],
++                    [role="menuitemradio"]
++                ):has([data-glyph])
+         ) {
+         --intent: 0;
+         --intent-set: 0;
+ 
+         @media (hover: hover) {
+-            &:hover:not(:disabled, [aria-disabled="true"]) {
++            &:hover:not(
++                    :disabled,
++                    [aria-disabled="true"],
++                    :has(:is(.plate, button, a[href], [role="button"]):hover)
++                ) {
+                 --intent: 1;
+             }
+         }
+@@ -40,31 +45,41 @@
+         }
+     }
+ 
+-    :where([data-glyph], .plate > svg) {
++    :where([data-glyph]) {
++        --glyph-g: 0;
++        --glyph-x: 0px;
++        --glyph-y: 0px;
++        --glyph-r: 0deg;
+         transform-box: fill-box;
+         transform-origin: center;
+-        rotate: calc(var(--glyph-flip, 0deg) * var(--intent-set, 0));
+-        transition:
+-            scale var(--spring-present-duration) var(--spring-present),
+-            translate var(--spring-present-duration) var(--spring-present),
+-            rotate var(--spring-present-duration) var(--spring-present);
++        transform: rotate(
++                calc(
++                    var(--glyph-flip, 0deg) * var(--intent-set, 0) + var(--glyph-r) *
++                        var(--motion-weight, 1) * var(--intent, 0)
++                )
++            )
++            translate(
++                calc(var(--glyph-x) * var(--motion-weight, 1) * var(--intent, 0)),
++                calc(var(--glyph-y) * var(--motion-weight, 1) * var(--intent, 0))
++            )
++            scale(calc(1 + var(--glyph-g) * var(--motion-weight, 1) * var(--intent, 0)));
++        transition: transform var(--spring-present-duration) var(--ease-out);
+     }
+-    :where([data-glyph=""], [data-glyph="grow"], .plate > svg:not([data-glyph])) {
+-        scale: calc(1 + var(--glyph-grow, 0.08) * var(--motion-weight, 1) * var(--intent, 0));
++    :where([data-glyph="grow"]) {
++        --glyph-g: var(--glyph-grow, 0.13);
+     }
+     :where([data-glyph="nudge"]) {
+-        translate: calc(var(--glyph-dx, 2px) * var(--motion-weight, 1) * var(--intent, 0))
+-            calc(var(--glyph-dy, 0px) * var(--motion-weight, 1) * var(--intent, 0));
++        --glyph-x: var(--glyph-dx, 2px);
++        --glyph-y: var(--glyph-dy, 0px);
+     }
+     :where([data-glyph="turn"]) {
+-        rotate: calc(
+-            var(--glyph-turn, 15deg) * var(--motion-weight, 1) * var(--intent, 0) +
+-                var(--glyph-flip, 0deg) * var(--intent-set, 0)
+-        );
++        --glyph-r: var(--glyph-turn, 15deg);
+     }
+     :where([data-glyph="draw"][pathLength="1"], [data-glyph="draw"] [pathLength="1"]) {
+-        stroke-dasharray: 1 0.3;
+-        stroke-dashoffset: calc(-1.3 * max(var(--intent, 0), var(--intent-set, 0)));
++        stroke-dasharray: 1 var(--glyph-gap, 0.12);
++        stroke-dashoffset: calc(
++            -1 * (1 + var(--glyph-gap, 0.12)) * (var(--intent, 0) + var(--intent-set, 0))
++        );
+         transition: stroke-dashoffset var(--duration-fast) var(--ease-standard);
+     }
+ }
+diff --git a/src/styles/glass/plate.css b/src/styles/glass/plate.css
+--- a/src/styles/glass/plate.css
++++ b/src/styles/glass/plate.css
+@@ -1,9 +1,10 @@
+-/* The plate (W-B.17 R-1 to R-4, R-10, R-11).
++/* The plate (W-B.17 R-1 to R-4, R-11).
+ 
+    One flat fill on the control's own `::before`, at the "on" strength. `opacity` carries
+    every lighter state; `scale` grows it from `--plate-from` on a control about as wide
+-   as it is tall. Hover, focus, pressed, on and busy come from this one rule. No node,
+-   no script, no listener; two compositor properties. */
++   as it is tall. Hover, focus, pressed and on come from this one rule. No node; two
++   compositor properties. A control that holds a hovered or pressed control stands down,
++   so a nested control answers alone. */
+ @layer components {
+     :where(.plate) {
+         position: relative;
+@@ -13,7 +14,8 @@
+     .plate::before {
+         content: "";
+         position: absolute;
+-        inset: 0;
++        /* A bordered control names its border width, so the two corners are concentric. */
++        inset: calc(-1 * var(--plate-edge, 0px));
+         z-index: -1;
+         border-radius: inherit;
+         pointer-events: none;
+@@ -26,16 +28,31 @@
+         scale: calc(1 - (1 - var(--plate-from, 0.8)) * var(--motion-weight, 1));
+         transition:
+             opacity var(--duration-control) var(--ease-standard),
+-            scale var(--spring-present-duration) var(--spring-present);
++            scale var(--spring-present-duration) var(--ease-out);
+     }
+ 
+-    /* R-3: a glyph with a named verb takes the plate as a fill alone. */
+-    .plate:has(> [data-glyph]:not([data-glyph=""], [data-glyph="grow"])) {
++    /* R-3: a glyph with a verb takes the plate as a fill alone. */
++    .plate:has(
++            [data-glyph="grow"],
++            [data-glyph="nudge"],
++            [data-glyph="turn"],
++            [data-glyph="draw"]
++        ) {
+         --plate-from: 1;
+     }
+ 
++    /* Declared idle (R-10): the plate rests at the light strength. A state, not a loop. */
++    .plate[data-idle]::before {
++        opacity: calc(var(--fill-hover) / var(--fill-selected));
++        scale: 1;
++    }
++
+     @media (hover: hover) {
+-        .plate:hover:not(:disabled, [aria-disabled="true"])::before {
++        .plate:hover:not(
++                :disabled,
++                [aria-disabled="true"],
++                :has(:is(.plate, button, a[href], [role="button"]):hover)
++            )::before {
+             opacity: calc(var(--fill-hover) / var(--fill-selected));
+             scale: 1;
+         }
+@@ -45,39 +62,40 @@
+         scale: 1;
+     }
+ 
++    /* On, held: only where the control has no other on-mark. A tab under an indicator
++       and a disclosure row beside its chevron are not in this list. */
+     .plate:is(
+             [aria-pressed="true"],
+-            [aria-expanded="true"],
+-            [aria-current]:not([aria-current="false"]),
+             [data-state="on"],
+-            [data-state="open"],
+-            [data-state="active"],
+-            [aria-busy="true"]
++            [aria-current]:not([aria-current="false"]),
++            :is([aria-haspopup], [role="combobox"]):is([aria-expanded="true"], [data-state="open"])
+         )::before,
+-    .plate:is(:active, [data-press]):not(:disabled, [aria-disabled="true"])::before {
++    .plate:is(:active, [data-press]):not(
++            :disabled,
++            [aria-disabled="true"],
++            :has(:is(.plate, button, a[href], [role="button"]):is(:active, [data-press]))
++        )::before {
+         opacity: 1;
+         scale: 1;
+     }
+ 
+-    @media (prefers-reduced-motion: no-preference) {
+-        .plate[data-idle]:not(:hover, :focus-visible, :active)::before,
+-        .plate[aria-busy="true"]::before {
+-            animation: plate-breathe var(--skeleton-breathe-duration) var(--ease-standard)
+-                infinite alternate;
+-        }
+-    }
+-
+-    /* The press (R-11, 12.0.0, on the owner's answer). Uniform, no bounce to see. */
+-    .plate {
++    /* The press (R-11, 12.0.0, on the owner's answer). Uniform, no bounce to see.
++       `:where()` so a control's own transition list always outranks this one leg. */
++    :where(.plate) {
++        /* A value at rest, so the return never ends by dropping a transform. */
++        scale: 1;
+         transition: scale var(--spring-press-duration) var(--spring-press);
+     }
+-    .plate:is(:active, [data-press]):not(:disabled, [aria-disabled="true"]) {
++    .plate:is(:active, [data-press]):not(
++            :disabled,
++            [aria-disabled="true"],
++            :has(:is(.plate, button, a[href], [role="button"]):is(:active, [data-press]))
++        ) {
+         scale: var(--scale-press-sm);
+     }
+-}
+-
+-@keyframes plate-breathe {
+-    to {
+-        opacity: calc(var(--fill-hover) / var(--fill-selected));
++    @media (prefers-reduced-motion: reduce) {
++        .plate:is(:active, [data-press]) {
++            scale: none;
++        }
+     }
+ }
+diff --git a/src/styles/glass/presence.css b/src/styles/glass/presence.css
+--- a/src/styles/glass/presence.css
++++ b/src/styles/glass/presence.css
+@@ -11,9 +11,11 @@
+     }
+     .presence-leave-active,
+     .presence-swap-leave-active {
++        /* The travel still in flight is held until the fade has ended. */
+         transition:
+             opacity var(--spring-present-exit-duration) var(--ease-out),
+-            scale var(--spring-present-exit-duration) var(--spring-present);
++            scale var(--spring-present-exit-duration) var(--spring-present),
++            translate 0s var(--spring-present-exit-duration);
+     }
+     .presence-enter-from {
+         opacity: 0;
+@@ -49,5 +51,25 @@
+     [data-presence="swap"]:is([data-absent], [data-state="unchecked"]) {
+         translate: none;
+         scale: calc(1 - 0.2 * var(--motion-weight, 1));
++    }
++    /* Two marks in one seat: both stay, stacked. The one arriving waits a quarter of
++       the exit clock, so the two never both show above a third and the seat never
++       goes dark. */
++    [data-presence="swap"] {
++        grid-area: 1 / 1;
++        /* A value at rest too, so the change never ends by dropping a transform. */
++        scale: 1;
++    }
++    [data-presence="swap"]:not([data-absent], [data-state="unchecked"]) {
++        transition-delay: calc(var(--spring-present-exit-duration) / 4), 0s, 0s, 0s;
++    }
++
++    /* A line that stays and gives its room back. `follow()` tweens the block size (and
++       a margin, where the line's own rule cancels a gap) between these two states; the
++       line carries no padding or border. */
++    [data-presence="reclaim"]:is([data-absent]) {
++        translate: none;
++        block-size: 0;
++        overflow: clip;
+     }
+ }
+diff --git a/src/testing/no-snap/index.ts b/src/testing/no-snap/index.ts
+--- a/src/testing/no-snap/index.ts
++++ b/src/testing/no-snap/index.ts
+@@ -81,6 +81,7 @@
+     "scale",
+     "translate",
+     "rotate",
++    "transform",
+     "clip-path",
+     "color",
+     "background-color",
+@@ -323,6 +324,7 @@
+     if (prop === "translate" && (v === "none" || v === "")) return [0, 0];
+     if (prop === "rotate" && (v === "none" || v === "")) return [0];
+     if (prop === "clip-path" && v === "none") return [];
++    if (prop === "transform" && (v === "none" || v === "")) return [1, 0, 0, 1, 0, 0];
+     const nums = (v.match(/-?\d*\.?\d+(?:e-?\d+)?/gi) ?? []).map(Number);
+     if (prop === "scale" && nums.length === 1) return [nums[0], nums[0]];
+     if (prop === "translate" && nums.length === 1) return [nums[0], 0];
+@@ -343,7 +345,7 @@
+ }
+ function tol(prop: string, sample: number[]): number {
+     if (prop === "opacity") return 0.01;
+-    if (prop === "scale") return 0.002;
++    if (prop === "scale" || prop === "transform") return 0.002;
+     if (COLOR.test(prop)) return 0.005;
+     return 0.5;
+ }
+@@ -445,6 +447,19 @@
+             legs.push({ target, property: prop, travel: full, maxStep, easedMaxStep: eased, ratio });
+             if (eased !== null && maxStep > slack * eased + 1e-6)
+                 findings.push({ clause: "step", target, property: prop, detail: `max step ${maxStep.toFixed(3)} of travel vs eased ${eased.toFixed(3)}` });
++            // The absolute clause: whatever its own curve says, no leg lands more than
++            // two fifths of its travel between two samples, and a leg is at least five
++            // samples long. A cut given two frames (`transition: all 20ms`) fails here.
++            const own = Math.max(
++                0,
++                ...covering.map(
++                    ({ i }) => new Set(frames.map((f) => f.progress[i]).filter((v) => v != null)).size,
++                ),
++            );
++            if (eased !== null && maxStep > 0.4 + 1e-6)
++                findings.push({ clause: "step", target, property: prop, detail: `max step ${maxStep.toFixed(3)} of travel, over 0.4` });
++            if (eased !== null && own < 5)
++                findings.push({ clause: "step", target, property: prop, detail: `${own} samples, under 5` });
+             if (eased === null && maxStep > 1 / 3)
+                 findings.push({ clause: "step", target, property: prop, detail: `max step ${maxStep.toFixed(3)} of travel, no animation object` });
+         }
+diff --git a/tests-visual/intent-motion/api/ApiProbe.vue b/tests-visual/intent-motion/api/ApiProbe.vue
+--- a/tests-visual/intent-motion/api/ApiProbe.vue
++++ b/tests-visual/intent-motion/api/ApiProbe.vue
+@@ -11,6 +11,7 @@
+ <template>
+     <Presence><p v-if="on">a</p></Presence>
+     <Presence swap><p v-if="on">a</p><p v-else>b</p></Presence>
++    <!-- @vue-expect-error reclaim is not a prop -->
+     <Presence reclaim><p v-if="on">a</p></Presence>
+     <!-- @vue-expect-error duration is not a prop -->
+     <Presence :duration="100"><p v-if="on">a</p></Presence>
+diff --git a/tests-visual/intent-motion/api/ssr.mjs b/tests-visual/intent-motion/api/ssr.mjs
+--- a/tests-visual/intent-motion/api/ssr.mjs
++++ b/tests-visual/intent-motion/api/ssr.mjs
+@@ -10,7 +10,6 @@
+     const forms = {
+         plain: () => h(Presence, null, { default: () => h("p", { id: "x" }, "a") }),
+         swap: () => h(Presence, { swap: true }, { default: () => h("p", { id: "x" }, "a") }),
+-        reclaim: () => h(Presence, { reclaim: true }, { default: () => h("p", { id: "x" }, "a") }),
+         plainBite_tag: () => h(vue.TransitionGroup, { tag: "div", name: "presence" }, { default: () => [h("p", { id: "x", key: 1 }, "a")] }),
+     };
+     for (const [k, f] of Object.entries(forms)) out[k] = await renderToString(vue.createSSRApp({ render: f }));
+diff --git a/tests-visual/intent-motion/harness/App.vue b/tests-visual/intent-motion/harness/App.vue
+--- a/tests-visual/intent-motion/harness/App.vue
++++ b/tests-visual/intent-motion/harness/App.vue
+@@ -2,6 +2,8 @@
+ import { reactive, ref, watch, computed } from "vue";
+ import { Video, Folder, Spool, Pin, ArrowRight, ChevronDown, Play, Pause, Check, Pencil, Save, Sun } from "@lucide/vue";
+ import { Presence, follow } from "@glass/composables/motion/presence";
++import { breathe } from "./breathe-candidate";
++import LabeledField from "@glass/components/labeled-field/LabeledField.vue";
+ 
+ const q = new URLSearchParams(location.search);
+ const page = q.get("page") ?? "main";
+@@ -17,18 +19,24 @@
+     stay: false,
+     mark: false,
+     error: false,
++    pair: false,
++    lferr: false,
+     query: "",
+     value: "Linear",
+     hits: 0,
+ });
+ (window as unknown as { __h: typeof s }).__h = s;
++let stopBreath: (() => void) | null = null;
++Object.assign(window, {
++    __breathe: () => { stopBreath = breathe(document.querySelector<HTMLElement>("#idle2")); },
++    __breatheStop: () => stopBreath?.(),
++});
+ 
+ const cmd = ref<HTMLElement | null>(null);
+ const sel = ref<HTMLElement | null>(null);
+ const rows = Array.from({ length: 50 }, (_, i) => `Command ${i + 1}`);
+ const shown = computed(() => rows.filter((r) => r.toLowerCase().includes(s.query.toLowerCase())));
+ watch(() => s.query, () => follow(cmd.value), { flush: "pre" });
+-watch(() => s.value, () => follow(sel.value), { flush: "pre" });
+ </script>
+ 
+ <template>
+@@ -54,7 +62,7 @@
+         </section>
+ 
+         <section id="cell-row" class="cell">
+-            <button id="row" class="row plate" style="--plate-from: 1"><Pin :size="16" data-glyph="none" /><span>Open board</span></button>
++            <button id="row" class="row plate" style="--plate-from: 1"><Pin :size="16" /><span>Open board</span></button>
+         </section>
+ 
+         <section id="cell-verbs" class="cell">
+@@ -81,7 +89,7 @@
+             <button id="focus" class="seat plate focus-ring" aria-label="Focus"><Folder :size="20" /></button>
+             <button id="press" class="seat plate" aria-label="Press"><Folder :size="20" /></button>
+             <button id="on" class="seat plate" aria-label="On" :aria-pressed="s.on" @click="s.on = !s.on"><Pin :size="20" /></button>
+-            <button id="busy" class="textbtn plate" :aria-busy="s.busy || undefined"><Save :size="16" data-glyph="none" /><span>Save</span></button>
++            <button id="busy" class="textbtn plate" :aria-busy="s.busy || undefined"><Save :size="16" /><span>Save</span></button>
+         </section>
+ 
+         <section id="cell-idle" class="cell">
+@@ -96,7 +104,7 @@
+                 <Presence swap><Pause v-if="s.playing" id="sw-pause" key="pause" :size="20" /><Play v-else id="sw-play" key="play" :size="20" /></Presence>
+             </button>
+             <button id="bare" class="seat plate" aria-label="Bare" @click="s.bare = !s.bare">
+-                <Pause v-if="s.bare" id="bare-pause" :size="20" data-glyph="none" /><Play v-else id="bare-play" :size="20" data-glyph="none" />
++                <Pause v-if="s.bare" id="bare-pause" :size="20" /><Play v-else id="bare-play" :size="20" />
+             </button>
+             <span class="stayseat"><Check id="stay-mark" :size="18" data-presence="swap" :data-absent="!s.mark || undefined" /></span>
+             <span id="stay-line" class="note" data-presence :data-absent="!s.stay || undefined">Copied</span>
+@@ -107,7 +115,7 @@
+                 <label v-for="n in 12" :key="n" :id="`f${n}`" class="field">
+                     <span>Field {{ n }}</span>
+                     <input class="input" />
+-                    <Presence v-if="n === 6" reclaim><p v-if="s.error" id="err" class="err">This field needs a value</p></Presence>
++                    <Presence v-if="n === 6"><p v-if="s.error" id="err" class="err">This field needs a value</p></Presence>
+                 </label>
+             </form>
+         </section>
+@@ -122,7 +130,7 @@
+         <section id="cell-sel" class="cell">
+             <button id="sel" ref="sel" class="textbtn plate" style="--plate-from: 1">
+                 <Presence swap><span :key="s.value" id="sel-t">{{ s.value }}</span></Presence>
+-                <ChevronDown :size="16" data-glyph="none" />
++                <ChevronDown :size="16" />
+             </button>
+             <span id="sel-next" class="note">after</span>
+         </section>
+@@ -141,6 +149,70 @@
+             </div>
+         </section>
+ 
++        <!-- Fold: the owner image variants. b: the selected strength, the seat's tone, the glyph in it. c: a static shape. -->
++        <section id="cell-bar-b" class="cell">
++            <div class="bar">
++                <div class="bar-l"><button class="seat plate tone" aria-label="Video" style="--plate-tone: oklch(0.6 0.13 250)"><Video :size="20" /></button></div>
++                <div class="bar-r">
++                    <button class="seat plate tone" aria-label="Shared" style="--plate-tone: oklch(0.55 0.2 300)"><Folder :size="20" /></button>
++                    <button class="seat plate tone" aria-label="Thread" style="--plate-tone: oklch(0.6 0.13 230)"><Spool :size="20" /></button>
++                    <button id="b-pin-b" class="seat plate tone" aria-label="Board" style="--plate-tone: oklch(0.65 0.16 55)"><Pin :size="20" /></button>
++                </div>
++            </div>
++        </section>
++        <section id="cell-bar-c" class="cell">
++            <div class="bar">
++                <div class="bar-l"><button class="seat plate tone shaped" aria-label="Video" style="--plate-tone: oklch(0.6 0.13 250)"><Video :size="20" /></button></div>
++                <div class="bar-r">
++                    <button class="seat plate tone shaped" aria-label="Shared" style="--plate-tone: oklch(0.55 0.2 300)"><Folder :size="20" /></button>
++                    <button class="seat plate tone shaped" aria-label="Thread" style="--plate-tone: oklch(0.6 0.13 230)"><Spool :size="20" /></button>
++                    <button id="b-pin-c" class="seat plate tone shaped" aria-label="Board" style="--plate-tone: oklch(0.65 0.16 55)"><Pin :size="20" /></button>
++                </div>
++            </div>
++        </section>
++
++        <!-- Fold: a glyph that grows by name; the draw at two gaps; a click on an open trigger. -->
++        <section id="cell-fold-glyph" class="cell">
++            <button id="grow" class="seat plate" aria-label="Grow"><Folder id="grow-g" :size="20" data-glyph="grow" /></button>
++            <button id="draw30" class="seat plate" aria-label="Easing 0.3" style="--glyph-gap: 0.3">
++                <svg data-glyph="draw" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path id="draw30-p" pathLength="1" d="M3 20 C 10 20, 12 4, 21 4" /></svg>
++            </button>
++            <button id="drawx" class="seat plate" aria-label="Easing menu" aria-haspopup="menu" :aria-expanded="s.expanded" @click="s.expanded = !s.expanded">
++                <svg data-glyph="draw" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path id="drawx-p" pathLength="1" d="M3 20 C 10 20, 12 4, 21 4" /></svg>
++            </button>
++        </section>
++
++        <!-- Fold: a control with its own transition list (C-6); a bordered control (C-16). -->
++        <section id="cell-own" class="cell">
++            <button id="own" class="textbtn plate ownt"><span>Own list</span></button>
++            <button id="own2" class="textbtn plate ownt2"><span>Own list with scale</span></button>
++            <button id="bord" class="seat plate bord" aria-label="Bordered" aria-pressed="true"><Folder :size="20" /></button>
++            <button id="bord2" class="seat plate bord bord-in" aria-label="Bordered, inset" aria-pressed="true"><Folder :size="20" /></button>
++        </section>
++
++        <!-- Fold: a pair of marks that both stay, stacked in one seat (C-7). -->
++        <section id="cell-pair" class="cell">
++            <button id="pair" class="seat plate" aria-label="Play pair" @click="s.pair = !s.pair">
++                <Pause id="pair-pause" :size="20" data-presence="swap" :data-absent="!s.pair || undefined" />
++                <Play id="pair-play" :size="20" data-presence="swap" :data-absent="s.pair || undefined" />
++            </button>
++        </section>
++
++        <!-- Fold: the breath as one added Web Animation (C-1). -->
++        <section id="cell-idle2" class="cell">
++            <div id="idle2" class="card plate" style="--plate-from: 1">Start</div>
++        </section>
++
++        <!-- Fold: the real LabeledField, twelve of them, on a blurred surface; the error line stays (C-3, C-19). -->
++        <section id="cell-lf" class="cell bg">
++            <div id="lf-host" class="glass-floating lfhost">
++                <LabeledField v-for="n in 12" :key="n" :id="`lf${n}`" :label="`Field ${n}`" :invalid="n === 6 && s.lferr">
++                    <template #default="{ controlId }"><input :id="controlId" class="input" /></template>
++                    <template #error>This field needs a value</template>
++                </LabeledField>
++            </div>
++        </section>
++
+         <section id="cell-hit" class="cell">
+             <button id="hit40" class="seat plate" aria-label="Hit 40" @click="s.hits++"><Check :size="20" /></button>
+             <button id="hit24" class="seat small plate" aria-label="Hit 24" @click="s.hits++"><Check :size="14" /></button>
+@@ -180,6 +252,15 @@
+ .list { list-style: none; margin: 0; padding: 0; max-block-size: 320px; overflow: auto; }
+ .li { block-size: 32px; line-height: 32px; padding: 0 8px; font-size: 14px; }
+ .blurhost { display: grid; grid-template-columns: repeat(6, 40px); gap: 6px; padding: 10px; }
++.tone.plate:hover::before { opacity: 1; }
++.tone svg { transition: color var(--duration-control) var(--ease-standard); }
++.tone:hover svg { color: var(--plate-tone); }
++.shaped.plate::before { clip-path: path("M14.35 5.63 Q20 1.5 25.65 5.63 L32.85 10.87 Q38.5 15 36.46 21.70 L33.54 31.30 Q31.5 38 24.50 38.00 L15.50 38.00 Q8.5 38 6.46 31.30 L3.54 21.70 Q1.5 15 7.15 10.87 Z"); }
++.ownt { transition: color var(--duration-fast) var(--ease-standard), background-color var(--duration-fast) var(--ease-standard); }
++.ownt2 { transition: color var(--duration-fast) var(--ease-standard), background-color var(--duration-fast) var(--ease-standard), scale var(--spring-press-duration) var(--spring-press); }
++.bord { border: 2px solid color-mix(in oklab, var(--foreground) 45%, transparent); border-radius: 12px; }
++.bord-in { --plate-edge: 2px; }
++.lfhost { display: grid; gap: 10px; inline-size: 320px; padding: 14px; }
+ .rest { flex-direction: row; flex-wrap: wrap; }
+ .tail { block-size: 100vh; }
+ </style>
+diff --git a/tests-visual/intent-motion/harness/breathe-candidate.ts b/tests-visual/intent-motion/harness/breathe-candidate.ts
+new file mode 100644
+--- /dev/null
++++ b/tests-visual/intent-motion/harness/breathe-candidate.ts
+@@ -0,0 +1,29 @@
++// breathe (W-B.17 R-10, a candidate that FAILED its reading; kept for the record, not in src): the declared idle breath as ONE Web
++// Animation on the plate's `::before`, added to whatever the plate's own rule paints.
++// Hover, focus and press transition underneath it, so no edge is a cut; standing down
++// lets the breath in flight finish at its trough instead of removing it.
++import { readReducedMotion } from "@glass/composables/motion/core/useReducedMotion";
++
++/** Start the breath on a `.plate`. Returns the stand-down. */
++export function breathe(el: HTMLElement | null): () => void {
++    if (!el || readReducedMotion()) return () => {};
++    const cs = getComputedStyle(el);
++    const amount =
++        Number.parseFloat(cs.getPropertyValue("--fill-hover")) /
++        Number.parseFloat(cs.getPropertyValue("--fill-selected"));
++    const a = el.animate(
++        { opacity: [0, amount] },
++        {
++            pseudoElement: "::before",
++            composite: "add",
++            duration: Number.parseFloat(cs.getPropertyValue("--skeleton-breathe-duration")) * 1000,
++            easing: cs.getPropertyValue("--ease-standard").trim() || "ease-in-out",
++            direction: "alternate",
++            iterations: Number.POSITIVE_INFINITY,
++        },
++    );
++    return () => {
++        const at = a.effect?.getComputedTiming().currentIteration ?? 0;
++        a.effect?.updateTiming({ iterations: Math.floor(at / 2) * 2 + 2 });
++    };
++}
+diff --git a/tests-visual/intent-motion/harness/main.ts b/tests-visual/intent-motion/harness/main.ts
+--- a/tests-visual/intent-motion/harness/main.ts
++++ b/tests-visual/intent-motion/harness/main.ts
+@@ -1,6 +1,8 @@
+ import "./harness.css";
+ import { createApp } from "vue";
+ import App from "./App.vue";
++import { installPress } from "@glass/composables/motion/presence";
+ const q = new URLSearchParams(location.search);
+ if (q.get("mode") === "dark") document.documentElement.classList.add("dark");
++if (q.get("press") === "1") installPress();
+ createApp(App).mount("#app");

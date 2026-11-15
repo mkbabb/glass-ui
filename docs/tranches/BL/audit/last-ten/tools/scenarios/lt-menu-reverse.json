@@ -1,0 +1,93 @@
+{
+ "name": "lt-menu-reverse",
+ "component": "menu",
+ "about": "DropdownMenu: Escape at 25 % of the open (clip grow), and reopen at 50 % of the close.",
+ "cells": [
+  {
+   "tag": "1440-fine-light",
+   "w": 1440,
+   "h": 900,
+   "pointer": "fine",
+   "scheme": "light"
+  }
+ ],
+ "ready": "[data-testid=menu-0]",
+ "track": [
+  {
+   "as": "plate",
+   "sel": "[data-reveal=menu]",
+   "attrs": [
+    "data-state"
+   ]
+  }
+ ],
+ "cropAs": [
+  "plate"
+ ],
+ "cropPad": 40,
+ "steps": [
+  {
+   "do": "click",
+   "sel": "[data-testid=menu-0]"
+  },
+  {
+   "do": "wait",
+   "ms": 60
+  },
+  {
+   "do": "mark",
+   "name": "reverse-open"
+  },
+  {
+   "do": "key",
+   "key": "Escape"
+  },
+  {
+   "do": "settle",
+   "quietMs": 400,
+   "maxMs": 3000
+  },
+  {
+   "do": "click",
+   "sel": "[data-testid=menu-0]"
+  },
+  {
+   "do": "settle",
+   "quietMs": 400,
+   "maxMs": 3000
+  },
+  {
+   "do": "key",
+   "key": "Escape"
+  },
+  {
+   "do": "wait",
+   "ms": 60
+  },
+  {
+   "do": "mark",
+   "name": "reverse-close"
+  },
+  {
+   "do": "click",
+   "sel": "[data-testid=menu-0]"
+  },
+  {
+   "do": "settle",
+   "quietMs": 400,
+   "maxMs": 3000
+  }
+ ],
+ "strips": [
+  {
+   "name": "reverse-open",
+   "fromMark": "reverse-open",
+   "n": 10
+  },
+  {
+   "name": "reverse-close",
+   "fromMark": "reverse-close",
+   "n": 10
+  }
+ ]
+}

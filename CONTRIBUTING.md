@@ -29,9 +29,10 @@ npm run verify:package         # subpath dts publication probe
 npm run profile:bundle         # bundle-budget gate (hard mode: `-- --enforce`; run locally — CI does not run it)
 ```
 
-CI runs `typecheck` + `demo:dist:build` + `test` + `build` on every PR + push to
-`master`, plus the visual pixel-floor gate in its own job
-(`.github/workflows/ci.yml`).
+CI runs `typecheck` + `demo:dist:build` + `build` + `test` on every PR + push to
+`master` (`.github/workflows/ci.yml`), with no browser. The browser gates run locally:
+`npm run test:browser` (the unit tests that need a real engine) and the visual
+pixel floor both run in `scripts/release.sh` before a tag.
 
 ## Version bumps + releasing
 
@@ -85,4 +86,4 @@ half is `design-idioms.md` §7.
 2. Make the change + add/update tests.
 3. Ensure `npm run build` + `npm run typecheck` + `npm test` + `npm run verify:package`
    all exit 0.
-4. Open the PR — CI runs the same gates.
+4. Open the PR — CI runs typecheck, build and test (not `verify:package`).

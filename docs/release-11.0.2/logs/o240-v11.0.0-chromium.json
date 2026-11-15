@@ -1,0 +1,435 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/playwright.config.ts",
+      "release-11-0-2.spec.ts",
+      "--project=chromium-headless-new",
+      "--project=coarse-touch",
+      "--workers=1",
+      "-g",
+      "press ·"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/docs/release-11.0.2/logs/o240-v11.0.0-chromium.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5343",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/",
+      "url": "http://localhost:5343",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-0-2.spec.ts",
+      "file": "release-11-0-2.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "press · a quick press on Again lands under reduced motion at 1440",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "press",
+                  "description": "{\"rest\":{\"scrollLeft\":0,\"scrollWidth\":287,\"clientWidth\":105},\"presses\":{},\"events\":[\"pointerdown:Again\",\"pointerup:dock-face-content\",\"click:dock-face-content\"]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2225,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: \u001b[32m\"click:Again\"\u001b[39m\nReceived array: \u001b[31m[\"pointerdown:Again\", \"pointerup:dock-face-content\", \"click:dock-face-content\"]\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: \u001b[32m\"click:Again\"\u001b[39m\nReceived array: \u001b[31m[\"pointerdown:Again\", \"pointerup:dock-face-content\", \"click:dock-face-content\"]\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:116:30",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                      "column": 30,
+                      "line": 116
+                    },
+                    "snippet": "  114 |         }));\n  115 |         info.annotations.push({ type: \"press\", description: JSON.stringify({ rest, ...after }) });\n> 116 |         expect(after.events).toContain(\"click:Again\");\n      |                              ^\n  117 |         expect(after.presses.Again ?? 0).toBe(1);\n  118 |         expect(rest?.scrollLeft ?? 0).toBe(0);\n  119 |     });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                        "column": 30,
+                        "line": 116
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: \u001b[32m\"click:Again\"\u001b[39m\nReceived array: \u001b[31m[\"pointerdown:Again\", \"pointerup:dock-face-content\", \"click:dock-face-content\"]\u001b[39m\n\n  114 |         }));\n  115 |         info.annotations.push({ type: \"press\", description: JSON.stringify({ rest, ...after }) });\n> 116 |         expect(after.events).toContain(\"click:Again\");\n      |                              ^\n  117 |         expect(after.presses.Again ?? 0).toBe(1);\n  118 |         expect(rest?.scrollLeft ?? 0).toBe(0);\n  119 |     });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:116:30"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T12:04:12.711Z",
+                  "annotations": [
+                    {
+                      "type": "press",
+                      "description": "{\"rest\":{\"scrollLeft\":0,\"scrollWidth\":287,\"clientWidth\":105},\"presses\":{},\"events\":[\"pointerdown:Again\",\"pointerup:dock-face-content\",\"click:dock-face-content\"]}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/test-results/release-11-0-2-press-·-a-q-8b08d-nder-reduced-motion-at-1440-chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                    "column": 30,
+                    "line": 116
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-da57adf175d744ec188b",
+          "file": "release-11-0-2.spec.ts",
+          "line": 103,
+          "column": 5
+        },
+        {
+          "title": "press · a quick press on Again lands under reduced motion at 390",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "press",
+                  "description": "{\"rest\":{\"scrollLeft\":0,\"scrollWidth\":273,\"clientWidth\":105},\"presses\":{},\"events\":[\"pointerdown:Again\",\"pointerup:dock-face-content\",\"click:dock-face-content\"]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2237,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: \u001b[32m\"click:Again\"\u001b[39m\nReceived array: \u001b[31m[\"pointerdown:Again\", \"pointerup:dock-face-content\", \"click:dock-face-content\"]\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: \u001b[32m\"click:Again\"\u001b[39m\nReceived array: \u001b[31m[\"pointerdown:Again\", \"pointerup:dock-face-content\", \"click:dock-face-content\"]\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:116:30",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                      "column": 30,
+                      "line": 116
+                    },
+                    "snippet": "  114 |         }));\n  115 |         info.annotations.push({ type: \"press\", description: JSON.stringify({ rest, ...after }) });\n> 116 |         expect(after.events).toContain(\"click:Again\");\n      |                              ^\n  117 |         expect(after.presses.Again ?? 0).toBe(1);\n  118 |         expect(rest?.scrollLeft ?? 0).toBe(0);\n  119 |     });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                        "column": 30,
+                        "line": 116
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: \u001b[32m\"click:Again\"\u001b[39m\nReceived array: \u001b[31m[\"pointerdown:Again\", \"pointerup:dock-face-content\", \"click:dock-face-content\"]\u001b[39m\n\n  114 |         }));\n  115 |         info.annotations.push({ type: \"press\", description: JSON.stringify({ rest, ...after }) });\n> 116 |         expect(after.events).toContain(\"click:Again\");\n      |                              ^\n  117 |         expect(after.presses.Again ?? 0).toBe(1);\n  118 |         expect(rest?.scrollLeft ?? 0).toBe(0);\n  119 |     });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:116:30"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T12:04:15.323Z",
+                  "annotations": [
+                    {
+                      "type": "press",
+                      "description": "{\"rest\":{\"scrollLeft\":0,\"scrollWidth\":273,\"clientWidth\":105},\"presses\":{},\"events\":[\"pointerdown:Again\",\"pointerup:dock-face-content\",\"click:dock-face-content\"]}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/test-results/release-11-0-2-press-·-a-q-8caeb-under-reduced-motion-at-390-chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                    "column": 30,
+                    "line": 116
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-c7cd367d0d621f16a2df",
+          "file": "release-11-0-2.spec.ts",
+          "line": 103,
+          "column": 5
+        },
+        {
+          "title": "press · a quick press on Again lands under reduced motion at 1440",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "press",
+                  "description": "{\"rest\":{\"scrollLeft\":0,\"scrollWidth\":303,\"clientWidth\":113},\"presses\":{},\"events\":[\"pointerdown:Again\",\"pointerup:Again\",\"click:dock-face-content\"]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2253,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: \u001b[32m\"click:Again\"\u001b[39m\nReceived array: \u001b[31m[\"pointerdown:Again\", \"pointerup:Again\", \"click:dock-face-content\"]\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: \u001b[32m\"click:Again\"\u001b[39m\nReceived array: \u001b[31m[\"pointerdown:Again\", \"pointerup:Again\", \"click:dock-face-content\"]\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:116:30",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                      "column": 30,
+                      "line": 116
+                    },
+                    "snippet": "  114 |         }));\n  115 |         info.annotations.push({ type: \"press\", description: JSON.stringify({ rest, ...after }) });\n> 116 |         expect(after.events).toContain(\"click:Again\");\n      |                              ^\n  117 |         expect(after.presses.Again ?? 0).toBe(1);\n  118 |         expect(rest?.scrollLeft ?? 0).toBe(0);\n  119 |     });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                        "column": 30,
+                        "line": 116
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: \u001b[32m\"click:Again\"\u001b[39m\nReceived array: \u001b[31m[\"pointerdown:Again\", \"pointerup:Again\", \"click:dock-face-content\"]\u001b[39m\n\n  114 |         }));\n  115 |         info.annotations.push({ type: \"press\", description: JSON.stringify({ rest, ...after }) });\n> 116 |         expect(after.events).toContain(\"click:Again\");\n      |                              ^\n  117 |         expect(after.presses.Again ?? 0).toBe(1);\n  118 |         expect(rest?.scrollLeft ?? 0).toBe(0);\n  119 |     });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:116:30"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T12:04:17.920Z",
+                  "annotations": [
+                    {
+                      "type": "press",
+                      "description": "{\"rest\":{\"scrollLeft\":0,\"scrollWidth\":303,\"clientWidth\":113},\"presses\":{},\"events\":[\"pointerdown:Again\",\"pointerup:Again\",\"click:dock-face-content\"]}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/test-results/release-11-0-2-press-·-a-q-8b08d-nder-reduced-motion-at-1440-coarse-touch/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                    "column": 30,
+                    "line": 116
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-3c42a0b74fc5fdc3e1c6",
+          "file": "release-11-0-2.spec.ts",
+          "line": 103,
+          "column": 5
+        },
+        {
+          "title": "press · a quick press on Again lands under reduced motion at 390",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "press",
+                  "description": "{\"rest\":{\"scrollLeft\":0,\"scrollWidth\":290,\"clientWidth\":113},\"presses\":{},\"events\":[\"pointerdown:Again\",\"pointerup:Again\",\"click:dock-face-content\"]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2264,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: \u001b[32m\"click:Again\"\u001b[39m\nReceived array: \u001b[31m[\"pointerdown:Again\", \"pointerup:Again\", \"click:dock-face-content\"]\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: \u001b[32m\"click:Again\"\u001b[39m\nReceived array: \u001b[31m[\"pointerdown:Again\", \"pointerup:Again\", \"click:dock-face-content\"]\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:116:30",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                      "column": 30,
+                      "line": 116
+                    },
+                    "snippet": "  114 |         }));\n  115 |         info.annotations.push({ type: \"press\", description: JSON.stringify({ rest, ...after }) });\n> 116 |         expect(after.events).toContain(\"click:Again\");\n      |                              ^\n  117 |         expect(after.presses.Again ?? 0).toBe(1);\n  118 |         expect(rest?.scrollLeft ?? 0).toBe(0);\n  119 |     });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                        "column": 30,
+                        "line": 116
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoContain\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // indexOf\u001b[22m\n\nExpected value: \u001b[32m\"click:Again\"\u001b[39m\nReceived array: \u001b[31m[\"pointerdown:Again\", \"pointerup:Again\", \"click:dock-face-content\"]\u001b[39m\n\n  114 |         }));\n  115 |         info.annotations.push({ type: \"press\", description: JSON.stringify({ rest, ...after }) });\n> 116 |         expect(after.events).toContain(\"click:Again\");\n      |                              ^\n  117 |         expect(after.presses.Again ?? 0).toBe(1);\n  118 |         expect(rest?.scrollLeft ?? 0).toBe(0);\n  119 |     });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:116:30"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T12:04:20.539Z",
+                  "annotations": [
+                    {
+                      "type": "press",
+                      "description": "{\"rest\":{\"scrollLeft\":0,\"scrollWidth\":290,\"clientWidth\":113},\"presses\":{},\"events\":[\"pointerdown:Again\",\"pointerup:Again\",\"click:dock-face-content\"]}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/test-results/release-11-0-2-press-·-a-q-8caeb-under-reduced-motion-at-390-coarse-touch/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts",
+                    "column": 30,
+                    "line": 116
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-42a562a770d30265075c",
+          "file": "release-11-0-2.spec.ts",
+          "line": 103,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-12T12:04:12.461Z",
+    "duration": 10461.107999999998,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 4,
+    "flaky": 0
+  }
+}

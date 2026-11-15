@@ -1,0 +1,63 @@
+[guarded] waiting for the 'webkit' lock
+
+Running 10 tests using 1 worker
+
+  ✓   1 [webkit] › tests-visual/release-11-0-2.spec.ts:318:1 › edge · a GlassDock page opens and stays alive (2.4s)
+  -   2 [webkit] › tests-visual/release-11-0-2.spec.ts:337:1 › edge · the plate edge computes 11.0.0's colour at t = 0, 0.5 and 1
+  ✓   3 [webkit] › tests-visual/release-11-0-2.spec.ts:368:1 › edge · a host's --dock-plate-expanded-border and --dock-plate-collapsed-border still colour the plate edge (827ms)
+  ✓   4 [webkit] › tests-visual/release-11-0-2.spec.ts:428:1 › edge · a host's --glass-border-dock colours the expanded edge (1.2s)
+  ✘   5 [webkit] › tests-visual/release-11-0-2.spec.ts:490:1 › edge · a host's --glass-border-floating colours the folded edge and a held or static dock's edge (1.1s)
+  ✓   6 [webkit-2311] › tests-visual/release-11-0-2.spec.ts:318:1 › edge · a GlassDock page opens and stays alive (2.6s)
+  -   7 [webkit-2311] › tests-visual/release-11-0-2.spec.ts:337:1 › edge · the plate edge computes 11.0.0's colour at t = 0, 0.5 and 1
+  ✓   8 [webkit-2311] › tests-visual/release-11-0-2.spec.ts:368:1 › edge · a host's --dock-plate-expanded-border and --dock-plate-collapsed-border still colour the plate edge (795ms)
+  ✓   9 [webkit-2311] › tests-visual/release-11-0-2.spec.ts:428:1 › edge · a host's --glass-border-dock colours the expanded edge (1.1s)
+  ✘  10 [webkit-2311] › tests-visual/release-11-0-2.spec.ts:490:1 › edge · a host's --glass-border-floating colours the folded edge and a held or static dock's edge (1.1s)
+
+
+  1) [webkit] › tests-visual/release-11-0-2.spec.ts:490:1 › edge · a host's --glass-border-floating colours the folded edge and a held or static dock's edge 
+
+    Error: literal, live dock, t = 0: 28.05,24.990000000000002,22.95,0.05 against 200,0,0,0.5
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 1.5
+    Received:   171.95
+
+      544 |     const near = (a: number[], b: number[], what: string) => {
+      545 |         const d = Math.max(...a.slice(0, 3).map((v, i) => Math.abs(v - b[i]!)), Math.abs(a[3]! - b[3]!) * 255);
+    > 546 |         expect(d, `${what}: ${a} against ${b}`).toBeLessThan(1.5);
+          |                                                 ^
+      547 |     };
+      548 |     // The even mix of two colours in srgb, interpolated premultiplied.
+      549 |     const half = (x: number[], y: number[]) => {
+        at near (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:546:49)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:555:9
+
+    Error Context: tests-visual/test-results/release-11-0-2-edge-·-a-ho-92859--held-or-static-dock-s-edge-webkit/error-context.md
+
+  2) [webkit-2311] › tests-visual/release-11-0-2.spec.ts:490:1 › edge · a host's --glass-border-floating colours the folded edge and a held or static dock's edge 
+
+    Error: literal, live dock, t = 0: 28.05,24.990000000000002,22.95,0.05 against 200,0,0,0.5
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 1.5
+    Received:   171.95
+
+      544 |     const near = (a: number[], b: number[], what: string) => {
+      545 |         const d = Math.max(...a.slice(0, 3).map((v, i) => Math.abs(v - b[i]!)), Math.abs(a[3]! - b[3]!) * 255);
+    > 546 |         expect(d, `${what}: ${a} against ${b}`).toBeLessThan(1.5);
+          |                                                 ^
+      547 |     };
+      548 |     // The even mix of two colours in srgb, interpolated premultiplied.
+      549 |     const half = (x: number[], y: number[]) => {
+        at near (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:546:49)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:555:9
+
+    Error Context: tests-visual/test-results/release-11-0-2-edge-·-a-ho-92859--held-or-static-dock-s-edge-webkit-2311/error-context.md
+
+  2 failed
+    [webkit] › tests-visual/release-11-0-2.spec.ts:490:1 › edge · a host's --glass-border-floating colours the folded edge and a held or static dock's edge 
+    [webkit-2311] › tests-visual/release-11-0-2.spec.ts:490:1 › edge · a host's --glass-border-floating colours the folded edge and a held or static dock's edge 
+  2 skipped
+  6 passed (14.1s)

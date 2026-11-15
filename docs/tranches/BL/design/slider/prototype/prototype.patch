@@ -1,0 +1,1478 @@
+From 87b3d259cc70164789a6be69edee158301648b47 Mon Sep 17 00:00:00 2001
+From: Mike Babb <mike7400@gmail.com>
+Date: Thu, 12 Nov 2026 12:48:17 -0500
+Subject: [PATCH 1/3] =?UTF-8?q?proto(slider):=2011.1.1=20geometry=20cure?=
+ =?UTF-8?q?=20=E2=80=94=20one=20height,=20one=20radius,=20no=20press=20def?=
+ =?UTF-8?q?orm,=20ink=20paint?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+---
+ src/components/slider/styles.css | 156 +++++++++++--------------------
+ src/styles/tokens/sizing.css     |   7 +-
+ 2 files changed, 55 insertions(+), 108 deletions(-)
+
+diff --git a/src/components/slider/styles.css b/src/components/slider/styles.css
+index be2382ccc..ff9d621d1 100644
+--- a/src/components/slider/styles.css
++++ b/src/components/slider/styles.css
+@@ -1,6 +1,6 @@
+ /* slider/styles.css — THE ONE SLIDER LANE.
+  *
+- * The scrubber's geometry, its affordance, the weight-train and the loupe. The SFC
++ * The scrubber's geometry, its affordance and the loupe. The SFC
+  * ships no <style> block: one file authors every slider pixel.
+  *
+  * UNLAYERED ON PURPOSE. `track-well.css` and `liquid-fill.css` are `@layer
+@@ -23,7 +23,6 @@
+ }
+ 
+ .glass-slider {
+-    --slider-range-origin: left center;
+     position: relative;
+     display: flex;
+     inline-size: 100%;
+@@ -54,33 +53,26 @@
+     cursor: not-allowed;
+ }
+ 
+-.glass-slider[data-inverted],
+-.glass-slider:dir(rtl) {
+-    --slider-range-origin: right center;
+-}
+-
+-.glass-slider:dir(rtl)[data-inverted] {
+-    --slider-range-origin: left center;
++/* The SIZE axis: one height. `--slider-track-height` (H) is the height of the track,
++   of the fill and of the scrubber's thumb, and every curve on the control is a circle
++   of radius H/2 whose centre is on the line: `--slider-radius`, read by the track, the
++   fill and the thumb. `--slider-thumb-size` has one job left, the spectrum's taller
++   track below. The rungs read `--slider-track-height-{sm,md,lg}` and
++   `--slider-thumb-size-{sm,md,lg}` from the token :root (`tokens/sizing.css`). */
++.glass-slider {
++    --slider-radius: calc(var(--slider-track-height, 0.375rem) / 2);
+ }
+-
+-/* The SIZE axis. `--slider-track-height` is the capsule thickness; `--slider-thumb-size`
+-   sizes the spectrum's visible handle and the scrubber's inscribed disc.
+-   thumb ≤ track at every rung — the inscription law.
+-   [2026-09-22 · O-23 L-3] The rungs read `--slider-track-height-{sm,md,lg}` and
+-   `--slider-thumb-size-{sm,md,lg}` from the token :root (`tokens/sizing.css`), so a
+-   consumer retunes a rung on a wrapper or on the slider instead of restating this
+-   attribute selector; `min()` holds the inscription law by construction. */
+ .glass-slider[data-size="sm"] {
+     --slider-track-height: var(--slider-track-height-sm);
+-    --slider-thumb-size: min(var(--slider-thumb-size-sm), var(--slider-track-height-sm));
++    --slider-thumb-size: var(--slider-thumb-size-sm);
+ }
+ .glass-slider[data-size="md"] {
+     --slider-track-height: var(--slider-track-height-md);
+-    --slider-thumb-size: min(var(--slider-thumb-size-md), var(--slider-track-height-md));
++    --slider-thumb-size: var(--slider-thumb-size-md);
+ }
+ .glass-slider[data-size="lg"] {
+     --slider-track-height: var(--slider-track-height-lg);
+-    --slider-thumb-size: min(var(--slider-thumb-size-lg), var(--slider-track-height-lg));
++    --slider-thumb-size: var(--slider-thumb-size-lg);
+ }
+ 
+ /* THE INSCRIPTION (S1). The spectrum recipe is a TALLER capsule, and it says so by
+@@ -127,7 +119,16 @@
+     width: 100%;
+     flex-grow: 1;
+     height: var(--slider-track-height, 0.375rem);
+-    background: var(--glass-slider-track-background, var(--muted-medium));
++    border-radius: var(--slider-radius);
++    /* The ground is the control's own ink at a low strength, so it keeps its edge on
++       a plate of any colour. No inset line: the groove's lit lip made the band read
++       thinner than the fill laid in it. */
++    --slider-track-ink: 16%;
++    background: var(
++        --glass-slider-track-background,
++        color-mix(in oklab, currentColor var(--slider-track-ink), oklch(0 0 0 / 0))
++    );
++    box-shadow: none;
+     transition:
+         background var(--duration-fast) var(--ease-standard),
+         border-color var(--duration-fast) var(--ease-standard);
+@@ -148,13 +149,19 @@
+ 
+ .dark .glass-slider,
+ .dark .glass-loupe {
+-    --slider-fill-ink: color-mix(in oklab, var(--foreground) 22%, transparent);
++    --slider-fill-ink: currentColor;
+ }
+ 
++/* The fill is the band itself: one height, one radius, the ink at full strength, and
++   no rim (the rim's lit top line and lighter bottom line made a 12px fill read taller
++   than its 12px track). */
+ .slider-range {
+     position: absolute;
+     height: 100%;
++    border-radius: var(--slider-radius);
+     --liquid-fill-tint: var(--slider-range-bg, var(--slider-fill-ink));
++    --liquid-fill-strength: 100%;
++    box-shadow: none;
+ }
+ 
+ /* THE LANE — the range's containing block (Slider.vue). On the scrubber it is the track
+@@ -181,7 +188,7 @@
+ }
+ 
+ .glass-slider:not([data-variant="spectrum"]) {
+-    --slider-lane-cut: var(--slider-thumb-size, 1rem);
++    --slider-lane-cut: var(--slider-track-height, 0.375rem);
+     --value-mark-inset: calc(var(--slider-lane-cut) / 2);
+ }
+ 
+@@ -215,23 +222,28 @@
+     }
+ }
+ 
+-/* THE INTEGRATED THUMB. The scrubber is ONE continuous glass segment and its handle is
+-   a disc INSCRIBED in the fill's leading end: `--slider-thumb-size` on both axes, which
+-   the size rungs above hold at or under the track height (the inscription law), centred
+-   on the cross axis by the root's own `align-items: center`. It is the same object at
+-   min, mid and max, so the value's end is visible at both extremes. Its paint is the
+-   switch thumb's (`--card` over `--shadow-sm`), the house's one knob. Keyboard focus does
+-   not ring it — it ribbons the TRACK, below. The thumb is always painted: without it,
+-   both extremes lose the handle. */
++/* THE THUMB IS THE FILL'S END. A disc of the band's own height, H, whose centre
++   travels `H/2 + p·(W − H)` (reka's `contain` alignment for a thumb of width H), so it
++   is concentric with the track's start cap at 0, with the end cap at 100, and with the
++   fill's end cap at every value between. `--slider-thumb-bg` is its colour (O-273):
++   light in both themes, so a full-height knob never reads as a bite out of the fill.
++   Its one shadow is what separates it from a fill of its own colour. Keyboard focus
++   rings the TRACK, below. */
++.glass-slider {
++    --slider-thumb-default: var(--card);
++}
++.dark .glass-slider {
++    --slider-thumb-default: var(--foreground);
++}
++
+ .slider-thumb {
+     display: block;
+-    width: var(--slider-thumb-size, 1rem);
+-    height: var(--slider-thumb-size, 1rem);
++    width: var(--slider-track-height, 0.375rem);
++    height: var(--slider-track-height, 0.375rem);
+     border: none;
+-    border-radius: var(--radius-pill);
+-    background: var(--card);
++    border-radius: var(--slider-radius);
++    background: var(--slider-thumb-bg, var(--slider-thumb-default));
+     box-shadow: var(--shadow-sm);
+-    transition: transform var(--spring-press-duration) var(--spring-press);
+ }
+ 
+ /* The track carries the keyboard ring (below), so the UA outline is suppressed in the
+@@ -251,8 +263,8 @@
+    authorities on one channel would multiply (100% × 0.6 = 60%) and the grab would
+    read LIGHTER than rest. Touch has no approach, and needs none — the grasp optic is
+    its answer. */
+-.glass-slider:not([data-variant="spectrum"]):hover .slider-range {
+-    --liquid-fill-strength: 100%;
++.glass-slider:not([data-variant="spectrum"]):is(:hover, [data-held], :has(:focus-visible)) .slider-track {
++    --slider-track-ink: 24%;
+ }
+ 
+ /* Keyboard focus rings the TRACK, not the thumb. `:focus-visible` and not
+@@ -263,49 +275,6 @@
+     box-shadow: var(--focus-ring-shadow);
+ }
+ 
+-/* THE WEIGHT-TRAIN. The fill is a column of warm glass you PULL: it compresses Y and
+-   widens X on the grab, smears toward the drag by the live `--atom-drag-v`, and
+-   overshoots on release. The track never moves — only the fill deforms, on the
+-   compositor. The smear SATURATES (`useDragVelocity` bounds the var at 0.7), so a
+-   faster pull does not rubber-band. `--motion-weight` couples the amplitude; PRM
+-   zeroes it to the plain squish floor. One `:active` rule, not two — an earlier pair
+-   re-declared `transform`/`transform-origin` at equal specificity and only the
+-   transition survived. */
+-.glass-slider[data-held] .slider-range,
+-.glass-slider:active .slider-range {
+-    --smear: calc(var(--atom-drag-v, 0) * var(--motion-weight, 0.618));
+-    transform: scale(
+-        calc(1.02 + 0.16 * var(--smear)),
+-        calc(0.94 - 0.06 * var(--smear))
+-    );
+-    transform-origin: var(--slider-range-origin);
+-    transition: transform var(--spring-press-duration) var(--spring-press);
+-}
+-
+-/* FOLLOW-THROUGH. The punch curve carries the >1.0 overshoot-and-settle knot home; a
+-   monotone settle would be a dead spring.
+-   IT ALSO CARRIES THE GRASP REGISTER'S INK CHANNEL, and must. This rule governs the
+-   release window on the element the register releases on, and an unlayered rule
+-   outranks the register's own `transition: --glass-veil-rung`. A shorthand that
+-   omitted the channel would strand the ink at 0.6 → 1 in one frame under a blur still
+-   fading. The clock is READ from the register, never re-typed.
+-   `background` is deliberately NOT in this list: the fill's background is a function
+-   of that same rung, so transitioning both would chase one change down two clocks. */
+-.glass-slider:not(:active):not([data-held]) .slider-range {
+-    transition:
+-        transform var(--duration-normal) var(--ease-cartoon-punch),
+-        --glass-veil-rung var(--spring-dock-duration) var(--ease-standard),
+-        box-shadow var(--duration-fast) var(--ease-standard);
+-}
+-
+-@media (prefers-reduced-motion: reduce) {
+-    .glass-slider:active .slider-range,
+-    .glass-slider[data-held] .slider-range {
+-        --motion-weight: 0;
+-        transform: scale(1, 0.97);
+-    }
+-}
+-
+ /* The disabled register dims the scrubber's whole value: the fill and the disc
+    inscribed in it, so the thumb never paints at full strength on a half-strength
+    fill. */
+@@ -396,20 +365,6 @@
+     height: auto;
+ }
+ 
+-.glass-slider[data-orientation="vertical"]:active .slider-range,
+-.glass-slider[data-orientation="vertical"][data-held] .slider-range {
+-    --smear: calc(var(--atom-drag-v, 0) * var(--motion-weight, 0.618));
+-    transform: scale(
+-        calc(0.94 - 0.06 * var(--smear)),
+-        calc(1.02 + 0.16 * var(--smear))
+-    );
+-    transform-origin: center bottom;
+-}
+-
+-.glass-slider[data-orientation="vertical"][data-inverted] .slider-range {
+-    transform-origin: center top;
+-}
+-
+ /* The vertical spectrum thumb's cross axis is INLINE, and the same percentage trap
+    applies: `width: 100%` would resolve against the coarse-inflated root. */
+ .glass-slider[data-orientation="vertical"][data-variant="spectrum"] .slider-thumb {
+@@ -417,13 +372,6 @@
+     height: calc(var(--slider-thumb-size, 1rem) * 0.75);
+ }
+ 
+-@media (prefers-reduced-motion: reduce) {
+-    .glass-slider[data-orientation="vertical"]:active .slider-range,
+-    .glass-slider[data-orientation="vertical"][data-held] .slider-range {
+-        transform: scale(0.97, 1);
+-    }
+-}
+-
+ /* Forced colours: the material band flattens, so the value must survive in system ink
+    alone. The track becomes the system field, the fill the system highlight, and the
+    spectrum handle keeps a CanvasText edge — the binary-triad form. */
+@@ -513,7 +461,7 @@
+         opacity var(--spring-present-duration) var(--ease-standard);
+     opacity: 0;
+     overflow: hidden;
+-    border-radius: var(--radius-pill);
++    border-radius: calc(var(--slider-track-height, 1.25rem) * var(--loupe-k-max) / 2);
+     pointer-events: none;
+     /* The HOUSING is the only material here, and it is the ONE plate recipe composed
+        at the element (`glass-plate`, on the template) — this rule authors geometry
+@@ -543,7 +491,7 @@
+     inset-inline-start: 0;
+     inline-size: calc(var(--loupe-track-w, 0px) * var(--s));
+     block-size: calc(var(--slider-track-height, 1.25rem) * var(--s));
+-    border-radius: calc(var(--radius-pill) * var(--s));
++    border-radius: calc(var(--slider-track-height, 1.25rem) / 2 * var(--s));
+     overflow: hidden;
+     background: var(--glass-slider-track-background, var(--muted-medium));
+     transform: translate(
+diff --git a/src/styles/tokens/sizing.css b/src/styles/tokens/sizing.css
+index fd08a2cdb..2728f15bd 100644
+--- a/src/styles/tokens/sizing.css
++++ b/src/styles/tokens/sizing.css
+@@ -304,10 +304,9 @@
+        `--slider-track-height`, so this knob can only RAISE a rung, never shrink one. */
+     --slider-touch-target: 1.5rem; /* 24px */
+ 
+-    /* The Slider's size rungs—track (the capsule thickness) and thumb (the spectrum
+-       handle, the scrubber's inscribed disc) per `data-size`.
+-       `slider/styles.css` reads them and takes the thumb as `min(thumb, track)`, so the
+-       inscription law (thumb ≤ track) holds whatever a consumer sets. This root is
++    /* The Slider's size rungs per `data-size`. The track height is the height of the
++       track, the fill and the scrubber's thumb (one height, one radius of half of it).
++       The thumb size has one job: the spectrum's taller track is 1.5× it. This root is
+        unlayered and beats a layered `:root`: override on an element below it (a
+        wrapper, the slider) in any layer, or in an unlayered `:root`. */
+     --slider-track-height-sm: 0.75rem; /* 12px */
+-- 
+2.50.1 (Apple Git-155)
+
+
+From fcea8de259280e14c39c601e27baa7fe58e60342 Mon Sep 17 00:00:00 2001
+From: Mike Babb <mike7400@gmail.com>
+Date: Thu, 12 Nov 2026 13:02:25 -0500
+Subject: [PATCH 2/3] =?UTF-8?q?proto(slider):=2011.2.0=20=E2=80=94=20trans?=
+ =?UTF-8?q?form=20mechanism,=20step=20travel,=20keyboard-focus=20mark,=20s?=
+ =?UTF-8?q?pectrum=20ring,=20expand=20(shell,=20grown=20thumb,=20top-layer?=
+ =?UTF-8?q?=20readout)?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+---
+ src/components/slider/Slider.vue          | 229 +++++++++++-
+ src/components/slider/styles.css          | 423 ++++++++++++++++------
+ src/components/slider/types.ts            |   7 +
+ tests/components/ui/slider/expand.test.ts | 116 ++++++
+ 4 files changed, 656 insertions(+), 119 deletions(-)
+ create mode 100644 tests/components/ui/slider/expand.test.ts
+
+diff --git a/src/components/slider/Slider.vue b/src/components/slider/Slider.vue
+index 293f26a33..6e7a0afac 100644
+--- a/src/components/slider/Slider.vue
++++ b/src/components/slider/Slider.vue
+@@ -6,11 +6,11 @@ import {
+     onMounted,
+     ref,
+     useAttrs,
++    useId,
+     useTemplateRef,
+     watch,
+ } from "vue";
+ import {
+-    SliderRange,
+     SliderRoot,
+     SliderThumb,
+     SliderTrack,
+@@ -26,6 +26,7 @@ const props = withDefaults(defineProps<SliderProps>(), {
+     variant: "scrubber",
+     size: "md",
+     invalid: false,
++    expand: false,
+ });
+ const emits = defineEmits<{
+     "update:modelValue": [value: number[] | undefined];
+@@ -47,6 +48,7 @@ const delegatedProps = computed(() => {
+         invalid: _____,
+         motion: ______,
+         valueText: _______,
++        expand: ________,
+         ...delegated
+     } = props;
+     // The containment law: reka's `contain` alignment clamps the thumb's value-follow
+@@ -103,6 +105,173 @@ function onPointerDown(event: PointerEvent): void {
+     );
+ }
+ 
++// ── THE VALUE AS ONE NUMBER ──────────────────────────────────────────────────────
++// The template writes each value as a fraction `p` and the stylesheet moves the thumb,
++// the fill and the lane by transforms of it, so a value change never reaches layout.
++// reka still owns the pointer, the keys, the aria values and the hidden form input.
++// Controlled: the model value. Uncontrolled: reka's own value, mirrored from its emit.
++const uncontrolled = ref<number[]>([...(props.defaultValue ?? [props.min ?? 0])]);
++const live = computed<number[]>(() => props.modelValue ?? uncontrolled.value);
++function onModel(next: number[] | undefined): void {
++    if (next && props.modelValue == null) uncontrolled.value = [...next];
++}
++function fraction(value: number | undefined): number {
++    const min = props.min ?? 0;
++    const max = props.max ?? 100;
++    if (value === undefined || max === min) return 0;
++    return Math.min(1, Math.max(0, (value - min) / (max - min)));
++}
++// The thumb being changed: the readout and the shell's origin follow it.
++const activeIndex = ref(0);
++const valueStyle = computed<Record<string, string>>(() => {
++    const values = live.value;
++    const last = values.length - 1;
++    return {
++        "--slider-p": String(fraction(values[last])),
++        "--slider-p0": String(values.length > 1 ? fraction(values[0]) : 0),
++        "--slider-pa": String(fraction(values[Math.min(activeIndex.value, last)])),
++    };
++});
++
++// ── KEYBOARD FOCUS AND STEP TRAVEL ──────────────────────────────────────────────
++// reka focuses the thumb from script on a press, and both engines match that focus as
++// `:focus-visible`, so a mouse press painted the keyboard ring. The mark is set only for
++// focus that arrives outside a press, or once a key is used.
++// A value the slider changes in one step (a key, a press on the track away from the
++// thumb) travels; a dragged or external value lands on the frame it arrives. The travel
++// mark is written straight to the DOM so it is present in the same style pass as the
++// value it animates.
++const focusKey = ref(false);
++let pressing = false;
++const STEP_KEYS = new Set([
++    "ArrowLeft",
++    "ArrowRight",
++    "ArrowUp",
++    "ArrowDown",
++    "PageUp",
++    "PageDown",
++    "Home",
++    "End",
++]);
++
++function travelRunning(root: HTMLElement): boolean {
++    const thumb = root.querySelector(".slider-thumb");
++    return !!thumb
++        ?.getAnimations()
++        .some((a) => (a as CSSTransition).transitionProperty === "translate");
++}
++function markTravel(root: HTMLElement): void {
++    root.setAttribute("data-travel", "");
++    // A step that moves nothing (a key at an end) starts no travel; drop the mark.
++    requestAnimationFrame(() =>
++        requestAnimationFrame(() => {
++            if (!travelRunning(root)) root.removeAttribute("data-travel");
++        }),
++    );
++}
++function onRootPointerDownCapture(event: PointerEvent): void {
++    const root = getRootEl();
++    if (!root) return;
++    pressing = true;
++    focusKey.value = false;
++    if (!(event.target as Element | null)?.closest?.(".slider-thumb")) markTravel(root);
++}
++function onRootPointerMoveCapture(): void {
++    const root = getRootEl();
++    if (pressing && root?.hasAttribute("data-travel")) root.removeAttribute("data-travel");
++}
++function onWindowPointerUp(): void {
++    pressing = false;
++}
++function onRootKeyDownCapture(event: KeyboardEvent): void {
++    const root = getRootEl();
++    if (!root || !STEP_KEYS.has(event.key)) return;
++    focusKey.value = true;
++    markTravel(root);
++}
++function onRootFocusIn(event: FocusEvent): void {
++    const root = getRootEl();
++    const thumb = (event.target as Element | null)?.closest?.(".slider-thumb");
++    if (root && thumb) {
++        const index = [...root.querySelectorAll(".slider-thumb")].indexOf(thumb);
++        if (index >= 0) activeIndex.value = index;
++    }
++    if (!pressing) focusKey.value = true;
++}
++function onRootFocusOut(event: FocusEvent): void {
++    const root = getRootEl();
++    if (!root?.contains(event.relatedTarget as Node | null)) focusKey.value = false;
++}
++function onRootTransitionEnd(event: TransitionEvent): void {
++    const root = getRootEl();
++    if (
++        root &&
++        event.propertyName === "translate" &&
++        (event.target as Element).classList.contains("slider-thumb")
++    )
++        root.removeAttribute("data-travel");
++}
++
++onMounted(() => {
++    const root = getRootEl();
++    if (!root) return;
++    root.addEventListener("pointerdown", onRootPointerDownCapture, { capture: true });
++    root.addEventListener("pointermove", onRootPointerMoveCapture, {
++        capture: true,
++        passive: true,
++    });
++    root.addEventListener("keydown", onRootKeyDownCapture, { capture: true });
++    root.addEventListener("focusin", onRootFocusIn);
++    root.addEventListener("focusout", onRootFocusOut);
++    root.addEventListener("transitionend", onRootTransitionEnd);
++    window.addEventListener("pointerup", onWindowPointerUp, { capture: true });
++    window.addEventListener("pointercancel", onWindowPointerUp, { capture: true });
++});
++onBeforeUnmount(() => {
++    const root = getRootEl();
++    root?.removeEventListener("pointerdown", onRootPointerDownCapture, { capture: true });
++    root?.removeEventListener("pointermove", onRootPointerMoveCapture, { capture: true });
++    root?.removeEventListener("keydown", onRootKeyDownCapture, { capture: true });
++    root?.removeEventListener("focusin", onRootFocusIn);
++    root?.removeEventListener("focusout", onRootFocusOut);
++    root?.removeEventListener("transitionend", onRootTransitionEnd);
++    window.removeEventListener("pointerup", onWindowPointerUp, { capture: true });
++    window.removeEventListener("pointercancel", onWindowPointerUp, { capture: true });
++});
++
++// ── THE EXPANDED VIEW'S READOUT ─────────────────────────────────────────────────
++// The one thing that must be read above a finger. A glass plate clips its children,
++// so the readout alone is shown in the top layer, anchored to the root in CSS and moved
++// along by the same `--slider-pa`. Shown when a hold or a keyboard focus begins, hidden
++// on its own exit tween's `transitionend`.
++const anchorName = `--glass-slider-${useId().replace(/[^A-Za-z0-9_-]/g, "-")}`;
++const readoutRef = useTemplateRef<HTMLElement>("readoutRef");
++const reading = computed(
++    () => props.expand && !!props.valueText && (isHeld.value || focusKey.value),
++);
++const readoutText = computed(() => {
++    const index = Math.min(activeIndex.value, live.value.length - 1);
++    const value = live.value[index];
++    return value === undefined ? "" : (props.valueText?.(value, index) ?? "");
++});
++watch(
++    reading,
++    (on) => {
++        const el = readoutRef.value;
++        if (!el) return;
++        const open = el.matches(":popover-open");
++        if (on && !open) el.showPopover?.();
++        else if (!on && open && getComputedStyle(el).opacity === "0") el.hidePopover();
++    },
++    { flush: "post" },
++);
++function onReadoutEnd(event: TransitionEvent): void {
++    if (event.propertyName === "opacity" && !reading.value) {
++        const el = readoutRef.value;
++        if (el?.matches(":popover-open")) el.hidePopover();
++    }
++}
++
+ const loupeRef = useTemplateRef<HTMLElement>("loupeRef");
+ 
+ /* The weight-train velocity bridge. Writes the bounded `--atom-drag-v` and the ONE
+@@ -111,7 +280,7 @@ const loupeRef = useTemplateRef<HTMLElement>("loupeRef");
+    out of the host's inheritance. */
+ const motionAxis = useMotionAxis(() => props.motion);
+ useDragVelocity({
+-    host: () => (motionAxis.armed.value ? getRootEl() : null),
++    host: () => (motionAxis.armed.value && !props.expand ? getRootEl() : null),
+     mirror: () => loupeRef.value,
+     axis: () => (props.orientation === "vertical" ? "y" : "x"),
+ });
+@@ -125,7 +294,7 @@ useDragVelocity({
+ // NOT ON THE SPECTRUM VARIANT. That recipe de-glasses its range on purpose, so
+ // mounting the carriers there would frost a surface deliberately made not-glass. The
+ // spectrum's held read is its thumb halo, which it already carries.
+-const graspable = computed(() => v.value !== "spectrum");
++const graspable = computed(() => v.value !== "spectrum" && !props.expand);
+ const grasping = ref(false);
+ watch(isHeld, (held) => {
+     if (held && graspable.value) grasping.value = true;
+@@ -257,10 +426,14 @@ onBeforeUnmount(() => trackViewport(false));
+ // because a scoped attribute selector ties on specificity with any single-class
+ // descendant rule a host writes over its own children, and source order then decides
+ // the raise away silently. Inline has no tie to lose.
+-const hostStyle = computed<Record<string, string> | undefined>(() => {
++const hostStyle = computed<Record<string, string>>(() => {
+     const raised = grasping.value && graspable.value;
+-    if (!raised) return motionAxis.hostStyle.value;
+-    return { ...(motionAxis.hostStyle.value ?? {}), zIndex: "var(--z-overlay)" };
++    return {
++        ...(motionAxis.hostStyle.value ?? {}),
++        ...valueStyle.value,
++        ...(props.expand ? { anchorName } : {}),
++        ...(raised ? { zIndex: "var(--z-overlay)" } : {}),
++    };
+ });
+ 
+ /* The never-nameless floor's DX signal. reka's SliderThumbImpl names the thumb
+@@ -298,11 +471,14 @@ onMounted(() => {
+         :data-invalid="props.invalid || undefined"
+         :data-held="isHeld || undefined"
+         :data-inverted="props.inverted || undefined"
++        :data-expand="props.expand || undefined"
++        :data-focus-key="focusKey || undefined"
+         :data-focus-veil="(grasping && graspable) || undefined"
+         :data-motion="motionAxis.dataMotion.value"
+         :style="hostStyle"
+         v-bind="forwarded"
+         @pointerdown="onPointerDown"
++        @update:model-value="onModel"
+     >
+         <!--
+             The focus veil — the world's half of the grasp, TELEPORTED to `<body>`.
+@@ -312,7 +488,7 @@ onMounted(() => {
+             nested, the plate collapses to that ancestor's box and frosts the slider's
+             own siblings instead of the world.
+         -->
+-        <Teleport to="body">
++        <Teleport v-if="!props.expand" to="body">
+             <span
+                 v-if="grasping && graspable"
+                 ref="focusVeilRef"
+@@ -330,7 +506,7 @@ onMounted(() => {
+             `graspable` guard on the fill can discriminate anything here — both would be
+             branches that never take. The one place that decides is `loupeShown`.
+         -->
+-        <Teleport to="body">
++        <Teleport v-if="!props.expand" to="body">
+             <span
+                 v-if="loupeShown"
+                 ref="loupeRef"
+@@ -344,6 +520,13 @@ onMounted(() => {
+                 <span class="glass-loupe-mark"></span>
+             </span>
+         </Teleport>
++        <!--
++            The expanded view's shell: one capsule outset from the track by
++            `--slider-expand-outset` on every side, so its ends share the track's cap
++            centres. It is in the tree at rest, at the track's own thickness and
++            transparent, so its grow and its shrink both start from the true rest.
++        -->
++        <span v-if="props.expand" class="slider-shell" aria-hidden="true" />
+         <SliderTrack class="slider-track track-well">
+             <span
+                 v-if="marks.length"
+@@ -371,18 +554,17 @@ onMounted(() => {
+                 handle. A class that is never applied cannot be un-applied wrongly.
+             -->
+             <!--
+-                THE LANE. reka places the range by percentages of its
+-                containing block and the thumb by `contain` alignment, whose leading edge
+-                travels `p·(track − thumb)`. The lane is the track less one thumb
+-                diameter, so the range's percentages land on the thumb's travel, and the
+-                range reaches one diameter past it (styles.css): the fill is exactly
+-                `thumb + p·(track − thumb)` wide, never narrower than the thumb at min,
+-                and the thumb sits inside its leading end at every value.
++                THE LANE AND THE FILL. The fill is a capsule as long as the track, moved
++                by `(p − p0 − 1)·(W − H)` inside the lane and clipped by its round end,
++                so its end cap lands on the thumb's centre at every value. With two
++                thumbs the lane moves by `p0·(W − H)` and cuts the fill's start to a cap
++                on the lower thumb's centre. A plain span: reka's range only wrote two
++                layout offsets.
+             -->
+             <span class="slider-lane">
+-                <SliderRange
++                <span
+                     class="slider-range"
+-                    :class="v !== 'spectrum' && 'glass-liquid-fill'"
++                    :class="!props.expand && v !== 'spectrum' && 'glass-liquid-fill'"
+                     :data-held="isHeld || undefined"
+                 >
+                     <template v-if="grasping && graspable">
+@@ -393,7 +575,7 @@ onMounted(() => {
+                             @transitionend="onGraspReleaseEnd"
+                         ></span>
+                     </template>
+-                </SliderRange>
++                </span>
+             </span>
+         </SliderTrack>
+         <!--
+@@ -415,6 +597,17 @@ onMounted(() => {
+             :aria-invalid="props.invalid || undefined"
+             :aria-valuetext="props.valueText?.(value as number, key) ?? undefined"
+             class="slider-thumb glass-specular-track"
++            :style="{ '--slider-p': String(fraction(value as number)) }"
+         />
++        <span
++            v-if="props.expand && props.valueText"
++            ref="readoutRef"
++            popover="manual"
++            class="slider-readout"
++            aria-hidden="true"
++            :style="{ positionAnchor: anchorName }"
++            @transitionend="onReadoutEnd"
++            >{{ readoutText }}</span
++        >
+     </SliderRoot>
+ </template>
+diff --git a/src/components/slider/styles.css b/src/components/slider/styles.css
+index ff9d621d1..baf146002 100644
+--- a/src/components/slider/styles.css
++++ b/src/components/slider/styles.css
+@@ -144,11 +144,6 @@
+    over-lit colour. A consumer's `--slider-range-bg` still wins in both themes. */
+ .glass-slider,
+ .glass-loupe {
+-    --slider-fill-ink: var(--glass-capsule-warm);
+-}
+-
+-.dark .glass-slider,
+-.dark .glass-loupe {
+     --slider-fill-ink: currentColor;
+ }
+ 
+@@ -164,62 +159,112 @@
+     box-shadow: none;
+ }
+ 
+-/* THE LANE — the range's containing block (Slider.vue). On the scrubber it is the track
+-   less one thumb diameter, anchored at the edge the fill grows from, and the range
+-   reaches one diameter past its far end with a negative margin on its leading edge. reka
+-   writes the range's two offsets as percentages of this box, so the fill is
+-   `d + p·(track − d)`: one thumb diameter at min, the whole track at max, and its
+-   leading end always the thumb's trailing edge (`contain` alignment puts the thumb at
+-   `p·(track − d)`). A fill of `p·track` with no thumb would paint a bare track at the
+-   minimum and an inert full bar at the maximum. The spectrum's range paints no fill,
+-   so its lane is the whole track.
+-   THE MARKS RIDE THE SAME LANE. A value mark is the thumb's CENTRE at that value,
+-   `d/2 + p·(track − d)`, so the marks register (`glass/value-marks.css`, `inset: 0`)
+-   is inset by half a diameter at both ends of the main axis: its `p·box` lands on that
+-   centre, inverted and RTL included (the inset is symmetric). The inset is the
+-   register's own `--value-mark-inset`, set here on the slider's own selector: a rule
+-   naming `.glass-value-marks` in this sheet would enrol the whole stylesheet into the
+-   component-only `./styles.css` entry (`scripts/gen-component-styles.mjs`). At
+-   `inset: 0` a mark would sit at `p·track`, up to half a diameter off the thumb, and a
+-   mark near min would already lie under the fill at min. */
++/* THE MECHANISM: two transforms and one number. The template writes each value as a
++   fraction, `--slider-p` (the upper thumb, and each thumb its own), `--slider-p0` (the
++   lower thumb, 0 with one) and `--slider-pa` (the thumb being changed). The root is a
++   size container on its travel axis, so `100cqi` (`100cqb` vertical) is the track's
++   length W, and `--slider-travel` is W − H, the distance between the two end-cap
++   centres. Every moving part rides `translate`, so a value change never reaches layout.
++   - The thumb sits at the start and moves by `p·(W − H)`: its centre travels
++     `H/2 … W − H/2`, the two end-cap centres. reka writes the thumb's position as an
++     inline offset; one rule holds it at the start, so the value never reaches layout,
++     and reka's own centring transform is set to `none` through its variable.
++   - The fill is a capsule as long as the track, moved by `(p − p0 − 1)·(W − H)` and
++     clipped by the lane's round end: its end cap lands on the thumb's centre.
++   - The lane is the fill's window; it moves by `p0·(W − H)`, so with two thumbs the
++     fill's start is a cap on the lower thumb's centre.
++   - `--slider-sign` mirrors the start (inverted, RTL, and vertical from the bottom);
++     `--slider-axis-x/-y` pick the axis. No orientation has a number of its own.
++   THE MARKS. A mark is the thumb's centre at that value, so the marks register
++   (`glass/value-marks.css`) is inset by H/2 at both ends; the inset is the register's
++   own `--value-mark-inset`, set on the slider's own selector. */
++.glass-slider {
++    container-type: inline-size;
++    --slider-sign: 1;
++    --slider-axis-x: 1;
++    --slider-axis-y: 0;
++    --slider-travel: calc(100cqi - var(--slider-track-height, 0.375rem));
++    --value-mark-inset: var(--slider-radius);
++    /* The step travel's clock; 0s unless a key or a track press marked the root. */
++    --slider-step-duration: 0s;
++}
++
++.glass-slider[data-inverted]:not(:dir(rtl)),
++.glass-slider:dir(rtl):not([data-inverted]) {
++    --slider-sign: -1;
++}
++
++.glass-slider[data-orientation="vertical"] {
++    container-type: size;
++    --slider-sign: -1;
++    --slider-axis-x: 0;
++    --slider-axis-y: 1;
++    --slider-travel: calc(100cqb - var(--slider-track-height, 0.375rem));
++}
++
++.glass-slider[data-orientation="vertical"][data-inverted] {
++    --slider-sign: 1;
++}
++
++.glass-slider[data-travel] {
++    --slider-step-duration: var(--spring-press-duration);
++}
++
++.slider-thumb {
++    --reka-slider-thumb-transform: none;
++    --slider-shift: calc(var(--slider-sign) * var(--slider-p, 0) * var(--slider-travel));
++    translate: calc(var(--slider-axis-x) * var(--slider-shift))
++        calc(var(--slider-axis-y) * var(--slider-shift));
++    transition: translate var(--slider-step-duration) var(--spring-press);
++}
++
++.glass-slider:not([data-orientation="vertical"]) .slider-thumb {
++    left: 0 !important;
++    right: auto !important;
++}
++.glass-slider:not([data-orientation="vertical"]):is([data-inverted]:not(:dir(rtl)), :dir(rtl):not([data-inverted])) .slider-thumb {
++    left: auto !important;
++    right: 0 !important;
++}
++.glass-slider[data-orientation="vertical"] .slider-thumb {
++    top: auto !important;
++    bottom: 0 !important;
++}
++.glass-slider[data-orientation="vertical"][data-inverted] .slider-thumb {
++    top: 0 !important;
++    bottom: auto !important;
++}
++
+ .slider-lane {
+     position: absolute;
+     inset: 0;
++    overflow: hidden;
++    border-radius: var(--slider-radius);
++    --slider-shift: calc(var(--slider-sign) * var(--slider-p0, 0) * var(--slider-travel));
++    translate: calc(var(--slider-axis-x) * var(--slider-shift))
++        calc(var(--slider-axis-y) * var(--slider-shift));
++    transition: translate var(--slider-step-duration) var(--spring-press);
+ }
+ 
+-.glass-slider:not([data-variant="spectrum"]) {
+-    --slider-lane-cut: var(--slider-track-height, 0.375rem);
+-    --value-mark-inset: calc(var(--slider-lane-cut) / 2);
+-}
+-
+-.glass-slider:not([data-variant="spectrum"]):not([data-orientation="vertical"]) {
+-    & .slider-lane {
+-        inset-inline-end: var(--slider-lane-cut);
+-    }
+-    & .slider-range {
+-        margin-inline-end: calc(-1 * var(--slider-lane-cut));
+-    }
+-    &[data-inverted] .slider-lane {
+-        inset-inline: var(--slider-lane-cut) 0;
+-    }
+-    &[data-inverted] .slider-range {
+-        margin-inline: calc(-1 * var(--slider-lane-cut)) 0;
+-    }
++.glass-slider:not([data-variant="spectrum"]) .slider-range {
++    inset: 0;
++    width: 100%;
++    height: 100%;
++    --slider-shift: calc(
++        var(--slider-sign) * (var(--slider-p, 0) - var(--slider-p0, 0) - 1) *
++            var(--slider-travel)
++    );
++    translate: calc(var(--slider-axis-x) * var(--slider-shift))
++        calc(var(--slider-axis-y) * var(--slider-shift));
++    /* The grasp register's ink channel rides this element's transition list too, or
++       an unlayered `transition` here would strand it (glass/grasp.css). */
++    transition:
++        translate var(--slider-step-duration) var(--spring-press),
++        --glass-veil-rung var(--spring-dock-duration) var(--ease-standard);
+ }
+ 
+-.glass-slider[data-orientation="vertical"]:not([data-variant="spectrum"]) {
+-    & .slider-lane {
+-        inset-block-start: var(--slider-lane-cut);
+-    }
+-    & .slider-range {
+-        margin-block-start: calc(-1 * var(--slider-lane-cut));
+-    }
+-    &[data-inverted] .slider-lane {
+-        inset-block: 0 var(--slider-lane-cut);
+-    }
+-    &[data-inverted] .slider-range {
+-        margin-block: 0 calc(-1 * var(--slider-lane-cut));
+-    }
++.glass-slider[data-expand]:not([data-variant="spectrum"]) .slider-range {
++    background: var(--slider-range-bg, var(--slider-fill-ink));
+ }
+ 
+ /* THE THUMB IS THE FILL'S END. A disc of the band's own height, H, whose centre
+@@ -248,7 +293,7 @@
+ 
+ /* The track carries the keyboard ring (below), so the UA outline is suppressed in the
+    same breath — the ring is beside it, on the track. */
+-.glass-slider:not([data-variant="spectrum"]) .slider-thumb:focus-visible {
++.glass-slider .slider-thumb:focus-visible {
+     outline: none;
+ }
+ 
+@@ -263,15 +308,14 @@
+    authorities on one channel would multiply (100% × 0.6 = 60%) and the grab would
+    read LIGHTER than rest. Touch has no approach, and needs none — the grasp optic is
+    its answer. */
+-.glass-slider:not([data-variant="spectrum"]):is(:hover, [data-held], :has(:focus-visible)) .slider-track {
++.glass-slider:not([data-variant="spectrum"]):is(:hover, [data-held], [data-focus-key]) .slider-track {
+     --slider-track-ink: 24%;
+ }
+ 
+-/* Keyboard focus rings the TRACK, not the thumb. `:focus-visible` and not
+-   `:focus-within`: the latter matches pointer focus too, so grabbing the track with a
+-   mouse painted the keyboard ring. No `:focus-within` fallback pairs with it — that
+-   would paint back the very ring this predicate removes. */
+-.glass-slider:not([data-variant="spectrum"]):has(:focus-visible) .slider-track {
++/* Keyboard focus rings the TRACK, not the thumb. The predicate is the component's
++   `data-focus-key` mark (Slider.vue), not `:focus-visible`: reka focuses the thumb from
++   script on a press, and both engines match that as `:focus-visible`. */
++.glass-slider:not([data-variant="spectrum"])[data-focus-key] .slider-track {
+     box-shadow: var(--focus-ring-shadow);
+ }
+ 
+@@ -289,7 +333,7 @@
+ 
+ /* The invalid arm rides the SAME focus predicate as the valid one — two registers of
+    one ring cannot disagree about when the ring is owed. */
+-.glass-slider[data-invalid]:has(:focus-visible) .slider-track {
++.glass-slider[data-invalid][data-focus-key] .slider-track {
+     box-shadow:
+         var(--focus-ring-shadow),
+         inset 0 0 0 1px var(--destructive);
+@@ -302,37 +346,18 @@
+ }
+ 
+ /* ── The gradient-track colour slider (spectrum) ──
+-   The track's background is a consumer-supplied ramp, the range is transparent — the
+-   gradient itself IS the fill — and the thumb is a slim squircle spanning the full
+-   track height. Its fallback is `--secondary`, not the scrubber's `--muted-medium`.
+-   The range carries NO fill class at all (bound conditionally in the template): it has
+-   no glass to reset, so there is no `backdrop-filter` to cancel and no prefixed-only
+-   reset the build can drop while the unprefixed one is emitted away. */
++   The track's background is a consumer-supplied ramp, the range is transparent (the
++   gradient itself is the fill), and the handle is a ring of the track's own height,
++   centred as the scrubber's thumb is: a 2px edge and a clear centre that shows the
++   ramp under it. Its track fallback is `--secondary`. The range carries no fill class
++   (bound conditionally in the template). */
+ .glass-slider[data-variant="spectrum"] .slider-track {
+     background: var(--glass-slider-track-background, var(--secondary));
+ }
+ 
+ .glass-slider[data-variant="spectrum"] .slider-thumb {
+-    /* The visible colour-picker handle: it re-establishes the geometry the scrubber
+-       base collapses and spans the full track height, but THIN — a width of
+-       `--slider-thumb-size * 0.75` over a `* 1.5` track is the 0.5×-track bar. */
+-    width: calc(var(--slider-thumb-size, 1rem) * 0.75);
+-    height: var(--slider-track-height, 0.375rem);
+-    opacity: 1;
+     background: transparent;
+     border: 2px solid var(--background);
+-    /* A GENEROUS radius proportional to the box reads squircle-adjacent on the engines
+-       without `corner-shape`; the superellipse below REFINES this curve, never
+-       replaces it. */
+-    border-radius: calc(var(--slider-thumb-size, 1rem) * 0.4);
+-    box-shadow: var(--shadow-sm);
+-}
+-
+-/* `var()` is not @supports-evaluable, so the gate tests the LITERAL feature. */
+-@supports (corner-shape: superellipse(2)) {
+-    .glass-slider[data-variant="spectrum"] .slider-thumb {
+-        corner-shape: var(--corner-shape-thumb);
+-    }
+ }
+ 
+ .glass-slider[data-variant="spectrum"]:hover .slider-thumb {
+@@ -344,8 +369,7 @@
+ /* The house ring is the ONE focus mark, so the UA outline must be suppressed IN THE
+    SAME RULE — Chromium otherwise paints its accent over the accent-aware ring. Never a
+    bare `outline: none` without the ring beside it. */
+-.glass-slider[data-variant="spectrum"] .slider-thumb:focus-visible {
+-    outline: none;
++.glass-slider[data-variant="spectrum"][data-focus-key] .slider-thumb {
+     box-shadow: var(--focus-ring-shadow), var(--shadow-sm);
+ }
+ 
+@@ -360,18 +384,6 @@
+     height: 100%;
+ }
+ 
+-.glass-slider[data-orientation="vertical"] .slider-range {
+-    width: 100%;
+-    height: auto;
+-}
+-
+-/* The vertical spectrum thumb's cross axis is INLINE, and the same percentage trap
+-   applies: `width: 100%` would resolve against the coarse-inflated root. */
+-.glass-slider[data-orientation="vertical"][data-variant="spectrum"] .slider-thumb {
+-    width: var(--slider-track-height, 0.375rem);
+-    height: calc(var(--slider-thumb-size, 1rem) * 0.75);
+-}
+-
+ /* Forced colours: the material band flattens, so the value must survive in system ink
+    alone. The track becomes the system field, the fill the system highlight, and the
+    spectrum handle keeps a CanvasText edge — the binary-triad form. */
+@@ -393,10 +405,219 @@
+         forced-color-adjust: none;
+         background: Highlight;
+     }
+-    .glass-loupe {
++    .glass-loupe,
++    .slider-shell,
++    .slider-readout {
++        forced-color-adjust: none;
+         background: Canvas;
++        color: CanvasText;
+         border: 1px solid CanvasText;
+     }
++    .glass-slider[data-focus-key] {
++        outline: 2px solid CanvasText;
++        outline-offset: 2px;
++    }
++}
++
++/* ════════════════════════════════════════════════════════════════════════
++   THE EXPANDED VIEW (`expand`). The track and the fill do not change; a shell grows
++   out of the track and the thumb grows in it, both about the thumb's centre.
++   · THE SHELL is one capsule behind the track, outset from it by g
++     (`--slider-expand-outset`) on every side: height H + 2g, radius H/2 + g. An outset
++     capsule has the track's own cap centres, so its ends are concentric with the
++     track's. Its surface is `--card`, a hairline `--border` and one shadow; no blur, no
++     rim, no gradient.
++   · AT REST it is the same capsule scaled by H / (H + 2g) about the thumb's centre and
++     transparent: exactly as thick as the track and inside it at every value. It is in
++     the tree at rest, so the grow and the shrink both start from the true rest values.
++   · THE THUMB grows to H + g about its own centre, so it sits in the shell with g/2
++     clear on every side, at every value: shell, thumb and band on one centre line.
++   · It grows on press, on keyboard focus, and on hover after a dwell (fine pointers
++     only); it shrinks when none holds. Spatial legs ride `--spring-present` on its own
++     clock, opacity `--ease-standard` on the same clocks. Only scale, translate and
++     opacity animate, and the root's box never changes.
++   ════════════════════════════════════════════════════════════════════════ */
++.glass-slider[data-expand] {
++    --slider-g: var(--slider-expand-outset, 0.5rem);
++    --slider-shell-rest: calc(
++        var(--slider-track-height) / (var(--slider-track-height) + 2 * var(--slider-g))
++    );
++    --slider-thumb-grown: calc(
++        (var(--slider-track-height) + var(--slider-g)) / var(--slider-track-height)
++    );
++    --slider-grow-duration: var(--spring-present-exit-duration);
++    --slider-grow-delay: 0s;
++    /* Raised one step for exactly as long as the shell is off its rest: the drop waits
++       out the shrink, so the shell never passes under a neighbour. */
++    z-index: 0;
++    transition:
++        color var(--duration-fast) var(--ease-standard),
++        z-index 0s linear var(--spring-present-exit-duration);
++}
++
++.glass-slider[data-expand]:is([data-held], [data-focus-key]) {
++    --slider-grow-duration: var(--spring-present-duration);
++    --slider-grow-delay: 0s;
++    z-index: 1;
++    transition:
++        color var(--duration-fast) var(--ease-standard),
++        z-index 0s;
++}
++
++@media (hover: hover) and (pointer: fine) {
++    .glass-slider[data-expand]:hover:not([data-held], [data-focus-key]) {
++        --slider-grow-duration: var(--spring-present-duration);
++        --slider-grow-delay: var(--spring-press-duration);
++        z-index: 1;
++        transition:
++            color var(--duration-fast) var(--ease-standard),
++            z-index 0s linear var(--spring-press-duration);
++    }
++}
++
++.slider-shell {
++    position: absolute;
++    inset-inline: calc(-1 * var(--slider-g));
++    inset-block: calc(50% - var(--slider-radius) - var(--slider-g));
++    border: 1px solid var(--border);
++    border-radius: calc(var(--slider-radius) + var(--slider-g));
++    background: var(--card);
++    box-shadow: var(--shadow-md);
++    pointer-events: none;
++    /* The thumb's centre in the shell's own box. */
++    --slider-origin: calc(var(--slider-g) + var(--slider-radius) + var(--slider-pa, 0) * var(--slider-travel));
++    transform-origin: var(--slider-origin) 50%;
++    scale: var(--slider-shell-rest);
++    opacity: 0;
++    transition:
++        scale var(--slider-grow-duration) var(--spring-present) var(--slider-grow-delay),
++        opacity var(--slider-grow-duration) var(--ease-standard) var(--slider-grow-delay);
++}
++
++.glass-slider[data-expand][data-orientation="vertical"] .slider-shell {
++    inset-inline: calc(50% - var(--slider-radius) - var(--slider-g));
++    inset-block: calc(-1 * var(--slider-g));
++    transform-origin: 50% calc(100% - var(--slider-origin));
++}
++.glass-slider[data-expand][data-orientation="vertical"][data-inverted] .slider-shell {
++    transform-origin: 50% var(--slider-origin);
++}
++.glass-slider[data-expand]:not([data-orientation="vertical"]):is([data-inverted]:not(:dir(rtl)), :dir(rtl):not([data-inverted])) .slider-shell {
++    transform-origin: calc(100% - var(--slider-origin)) 50%;
++}
++
++.glass-slider[data-expand] .slider-thumb {
++    scale: 1;
++    transition:
++        translate var(--slider-step-duration) var(--spring-press),
++        scale var(--slider-grow-duration) var(--spring-present) var(--slider-grow-delay);
++}
++
++.glass-slider[data-expand]:is([data-held], [data-focus-key]) .slider-shell {
++    scale: 1;
++    opacity: 1;
++}
++.glass-slider[data-expand]:is([data-held], [data-focus-key]) .slider-thumb {
++    scale: var(--slider-thumb-grown);
++}
++@media (hover: hover) and (pointer: fine) {
++    .glass-slider[data-expand]:hover .slider-shell {
++        scale: 1;
++        opacity: 1;
++    }
++    .glass-slider[data-expand]:hover .slider-thumb {
++        scale: var(--slider-thumb-grown);
++    }
++}
++
++/* With `expand` the focus indicator is the shell's own edge. */
++.glass-slider[data-expand][data-focus-key] .slider-track {
++    box-shadow: none;
++}
++.glass-slider[data-expand][data-focus-key] .slider-shell {
++    border-color: var(--focus-ring-color, var(--ring));
++}
++
++/* THE READOUT: a small capsule above the thumb that rides it, shown in the top layer
++   (`popover="manual"`) so a plate's clip cannot cut it, anchored to the root by CSS
++   anchor positioning and moved by the same `--slider-pa`. Same surface as the shell, no
++   shadow, tabular figures, its radius half its own height. It shows while the value is
++   being changed (held, or keyboard-focused), not on hover. */
++.slider-readout {
++    position: fixed;
++    inset: auto;
++    margin: 0;
++    left: anchor(left);
++    top: anchor(center);
++    padding: 0.125rem 0.5rem;
++    border: 1px solid var(--border);
++    border-radius: 999px;
++    background: var(--card);
++    color: var(--foreground);
++    font: 500 0.75rem / 1.25rem var(--font-sans, system-ui);
++    font-variant-numeric: tabular-nums;
++    white-space: nowrap;
++    pointer-events: none;
++    overflow: visible;
++    --slider-shift: calc(var(--slider-radius) + var(--slider-pa, 0) * var(--slider-travel));
++    --slider-lift: calc(var(--slider-radius) + var(--slider-g) + var(--slider-g) / 2);
++    translate: calc(var(--slider-shift) - 50%)
++        calc(-100% - var(--slider-lift));
++    transform-origin: 50% 100%;
++    scale: var(--slider-shell-rest);
++    opacity: 0;
++    transition:
++        scale var(--slider-grow-duration) var(--spring-present),
++        opacity var(--slider-grow-duration) var(--ease-standard),
++        translate var(--slider-step-duration) var(--spring-press);
++}
++.glass-slider:is([data-inverted]:not(:dir(rtl)), :dir(rtl):not([data-inverted])):not([data-orientation="vertical"]) .slider-readout {
++    left: auto;
++    right: anchor(right);
++    translate: calc(50% - var(--slider-shift)) calc(-100% - var(--slider-lift));
++}
++.glass-slider[data-orientation="vertical"] .slider-readout {
++    top: auto;
++    bottom: anchor(bottom);
++    left: anchor(center);
++    transform-origin: 0 50%;
++    translate: var(--slider-lift) calc(50% - var(--slider-shift));
++}
++.glass-slider:is([data-held], [data-focus-key]) .slider-readout:popover-open {
++    scale: 1;
++    opacity: 1;
++}
++@starting-style {
++    .glass-slider:is([data-held], [data-focus-key]) .slider-readout:popover-open {
++        scale: var(--slider-shell-rest);
++        opacity: 0;
++    }
++}
++
++/* Reduced motion: nothing scales. The shell and the readout fade in at full size and
++   fade out; the thumb keeps its rest size. A fade, never a cut. */
++@media (prefers-reduced-motion: reduce) {
++    .glass-slider[data-expand] .slider-shell,
++    .glass-slider[data-expand] .slider-readout {
++        scale: 1;
++    }
++    .glass-slider[data-expand] .slider-thumb {
++        scale: 1 !important;
++    }
++}
++.glass-slider[data-expand][data-motion="reduced"] .slider-shell,
++.glass-slider[data-expand][data-motion="reduced"] .slider-readout {
++    scale: 1;
++}
++.glass-slider[data-expand][data-motion="reduced"] .slider-thumb {
++    scale: 1 !important;
++}
++@starting-style {
++    @media (prefers-reduced-motion: reduce) {
++        .glass-slider:is([data-held], [data-focus-key]) .slider-readout:popover-open {
++            scale: 1;
++        }
++    }
+ }
+ 
+ /* ════════════════════════════════════════════════════════════════════════
+diff --git a/src/components/slider/types.ts b/src/components/slider/types.ts
+index a9aaf3ed4..85eae5c79 100644
+--- a/src/components/slider/types.ts
++++ b/src/components/slider/types.ts
+@@ -33,4 +33,11 @@ export interface SliderProps extends FormFieldProps {
+      * the raw number. Authored per thumb onto `aria-valuetext`; reka mints none.
+      */
+     valueText?: (value: number, index: number) => string;
++    /**
++     * The expanded view: a rounded shell grows out of the track and the thumb grows in
++     * it while the slider is pressed, keyboard-focused or hovered after a dwell, and
++     * both shrink back when none holds. With `valueText`, the readout rides above the
++     * thumb while the value is being changed.
++     */
++    expand?: boolean;
+ }
+diff --git a/tests/components/ui/slider/expand.test.ts b/tests/components/ui/slider/expand.test.ts
+new file mode 100644
+index 000000000..3e439b760
+--- /dev/null
++++ b/tests/components/ui/slider/expand.test.ts
+@@ -0,0 +1,116 @@
++// W-B.18 G-NODES and G-FORM: the expanded view adds one node at rest (the shell) and
++// one more with `valueText` (the readout), mounts nothing in <body>, and keeps reka's
++// hidden form input.
++import { mount } from "@vue/test-utils";
++import { afterEach, describe, expect, it } from "vitest";
++import { defineComponent, h, nextTick, ref } from "vue";
++
++import { Slider } from "@glass/components/slider";
++
++/** Element nodes under the slider root, the root included; marks and the form input aside. */
++function count(root: Element): number {
++    let n = 1;
++    const walk = (el: Element) => {
++        for (const child of el.children) {
++            if (child.classList.contains("glass-value-marks")) continue;
++            if (child.tagName === "INPUT") continue;
++            n++;
++            walk(child);
++        }
++    };
++    walk(root);
++    return n;
++}
++
++/** Element nodes the slider placed in <body> outside its own mount. */
++function bodyExtras(mountEl: Element): number {
++    return [...document.body.children]
++        .filter((el) => el !== mountEl)
++        .reduce((n, el) => n + 1 + el.querySelectorAll("*").length, 0);
++}
++
++async function press(root: HTMLElement): Promise<void> {
++    root.dispatchEvent(new PointerEvent("pointerdown", { bubbles: true, pointerId: 1 }));
++    for (let i = 0; i < 4; i++) await nextTick();
++}
++
++async function release(): Promise<void> {
++    window.dispatchEvent(new PointerEvent("pointerup", { bubbles: true, pointerId: 1 }));
++    await nextTick();
++}
++
++const hosts: HTMLElement[] = [];
++function host(): HTMLElement {
++    const el = document.createElement("div");
++    document.body.append(el);
++    hosts.push(el);
++    return el;
++}
++afterEach(() => {
++    for (const el of hosts.splice(0)) el.remove();
++});
++
++describe("Slider expand: node counts (G-NODES)", () => {
++    it.each([
++        ["expand off", {}, 5, 12],
++        ["expand on", { expand: true }, 6, 6],
++        ["expand on with valueText", { expand: true, valueText: (n: number) => `${n} s` }, 7, 7],
++    ])("%s: rest and held", async (_, extra, rest, held) => {
++        const mountEl = host();
++        const wrapper = mount(Slider, {
++            attachTo: mountEl,
++            global: { stubs: { teleport: false } },
++            props: { modelValue: [40], "aria-label": "Level", ...extra },
++        });
++        await nextTick();
++        const root = wrapper.element as HTMLElement;
++        expect(count(root)).toBe(rest);
++        expect(bodyExtras(mountEl)).toBe(0);
++
++        await press(root);
++        expect(root.hasAttribute("data-held")).toBe(true);
++        // Teleported organs (veil, loupe) are counted with the slider's own nodes.
++        expect(count(root) + bodyExtras(mountEl)).toBe(held);
++        await release();
++        wrapper.unmount();
++    });
++
++    it("expand on: the readout is a manual popover and aria-hidden", async () => {
++        const wrapper = mount(Slider, {
++            attachTo: host(),
++            props: { modelValue: [40], expand: true, valueText: (n: number) => `${n} s`, "aria-label": "Level" },
++        });
++        const readout = wrapper.get(".slider-readout");
++        expect(readout.attributes("popover")).toBe("manual");
++        expect(readout.attributes("aria-hidden")).toBe("true");
++        expect(wrapper.get('[role="slider"]').attributes("aria-valuetext")).toBe("40 s");
++        wrapper.unmount();
++    });
++});
++
++describe("Slider expand: the form value (G-FORM)", () => {
++    it.each([[false], [true]])("expand %s: a named Slider submits its value after a key press", async (expand) => {
++        const model = ref([40]);
++        const Host = defineComponent({
++            setup: () => () =>
++                h("form", { id: "f" }, [
++                    h(Slider, {
++                        name: "level",
++                        expand,
++                        modelValue: model.value,
++                        "onUpdate:modelValue": (v: number[] | undefined) => v && (model.value = v),
++                        "aria-label": "Level",
++                    }),
++                ]),
++        });
++        const wrapper = mount(Host, { attachTo: host() });
++        await nextTick();
++        const form = wrapper.get("form").element as HTMLFormElement;
++        expect(form.querySelector("input")).not.toBeNull();
++        await wrapper.get('[role="slider"]').trigger("keydown", { key: "ArrowRight" });
++        await nextTick();
++        expect(model.value).toEqual([41]);
++        expect(new FormData(form).getAll(form.querySelector("input")!.name)).toContain("41");
++        wrapper.unmount();
++    });
++});
+-- 
+2.50.1 (Apple Git-155)
+
+
+From 576c9b99adb4e27f7f6ddce913449b7b7c3b599a Mon Sep 17 00:00:00 2001
+From: Mike Babb <mike7400@gmail.com>
+Date: Thu, 12 Nov 2026 13:46:57 -0500
+Subject: [PATCH 3/3] proto(slider): spectrum ring as inset outline (reka maps
+ by clientWidth); forced colours last; a press or focus skips the hover dwell
+
+---
+ src/components/slider/Slider.vue | 13 ++++++
+ src/components/slider/styles.css | 78 +++++++++++++++++---------------
+ 2 files changed, 54 insertions(+), 37 deletions(-)
+
+diff --git a/src/components/slider/Slider.vue b/src/components/slider/Slider.vue
+index 6e7a0afac..aeda1372d 100644
+--- a/src/components/slider/Slider.vue
++++ b/src/components/slider/Slider.vue
+@@ -169,11 +169,23 @@ function markTravel(root: HTMLElement): void {
+         }),
+     );
+ }
++// The hover dwell is a transition delay. A press or a keyboard focus that lands inside
++// it leaves the target unchanged, so the running transition would keep its delay; the
++// grow skips what is left of it instead.
++function skipDwell(root: HTMLElement): void {
++    if (!props.expand) return;
++    for (const el of root.querySelectorAll(".slider-shell, .slider-thumb"))
++        for (const a of el.getAnimations()) {
++            const delay = Number(a.effect?.getTiming().delay ?? 0);
++            if (typeof a.currentTime === "number" && a.currentTime < delay) a.currentTime = delay;
++        }
++}
+ function onRootPointerDownCapture(event: PointerEvent): void {
+     const root = getRootEl();
+     if (!root) return;
+     pressing = true;
+     focusKey.value = false;
++    skipDwell(root);
+     if (!(event.target as Element | null)?.closest?.(".slider-thumb")) markTravel(root);
+ }
+ function onRootPointerMoveCapture(): void {
+@@ -197,6 +209,7 @@ function onRootFocusIn(event: FocusEvent): void {
+         if (index >= 0) activeIndex.value = index;
+     }
+     if (!pressing) focusKey.value = true;
++    if (root) skipDwell(root);
+ }
+ function onRootFocusOut(event: FocusEvent): void {
+     const root = getRootEl();
+diff --git a/src/components/slider/styles.css b/src/components/slider/styles.css
+index baf146002..3f83bf8ae 100644
+--- a/src/components/slider/styles.css
++++ b/src/components/slider/styles.css
+@@ -293,7 +293,7 @@
+ 
+ /* The track carries the keyboard ring (below), so the UA outline is suppressed in the
+    same breath — the ring is beside it, on the track. */
+-.glass-slider .slider-thumb:focus-visible {
++.glass-slider:not([data-variant="spectrum"]) .slider-thumb:focus-visible {
+     outline: none;
+ }
+ 
+@@ -357,7 +357,10 @@
+ 
+ .glass-slider[data-variant="spectrum"] .slider-thumb {
+     background: transparent;
+-    border: 2px solid var(--background);
++    /* An inset outline, not a border: reka maps the pointer by the thumb's
++       `clientWidth`, which a border would shrink. */
++    outline: 2px solid var(--background);
++    outline-offset: -2px;
+ }
+ 
+ .glass-slider[data-variant="spectrum"]:hover .slider-thumb {
+@@ -384,41 +387,6 @@
+     height: 100%;
+ }
+ 
+-/* Forced colours: the material band flattens, so the value must survive in system ink
+-   alone. The track becomes the system field, the fill the system highlight, and the
+-   spectrum handle keeps a CanvasText edge — the binary-triad form. */
+-@media (forced-colors: active) {
+-    .slider-track {
+-        background: Canvas;
+-        border: 1px solid CanvasText;
+-    }
+-    .slider-range {
+-        background: Highlight;
+-    }
+-    .glass-slider:not([data-variant="spectrum"]) .slider-thumb {
+-        forced-color-adjust: none;
+-        background: Canvas;
+-        border: 1px solid CanvasText;
+-    }
+-    .glass-slider[data-variant="spectrum"] .slider-thumb {
+-        border-color: CanvasText;
+-        forced-color-adjust: none;
+-        background: Highlight;
+-    }
+-    .glass-loupe,
+-    .slider-shell,
+-    .slider-readout {
+-        forced-color-adjust: none;
+-        background: Canvas;
+-        color: CanvasText;
+-        border: 1px solid CanvasText;
+-    }
+-    .glass-slider[data-focus-key] {
+-        outline: 2px solid CanvasText;
+-        outline-offset: 2px;
+-    }
+-}
+-
+ /* ════════════════════════════════════════════════════════════════════════
+    THE EXPANDED VIEW (`expand`). The track and the fill do not change; a shell grows
+    out of the track and the thumb grows in it, both about the thumb's centre.
+@@ -766,3 +734,39 @@
+         filter: none;
+     }
+ }
++
++/* Forced colours (last, so source order cannot undo it): the material band flattens, so the value must survive in system ink
++   alone. The track becomes the system field, the fill the system highlight, and the
++   spectrum handle keeps a CanvasText edge — the binary-triad form. */
++@media (forced-colors: active) {
++    .glass-slider .slider-track {
++        background: Canvas;
++        border: 1px solid CanvasText;
++    }
++    .glass-slider .slider-range,
++    .glass-slider[data-expand]:not([data-variant="spectrum"]) .slider-range {
++        background: Highlight;
++    }
++    .glass-slider:not([data-variant="spectrum"]) .slider-thumb {
++        forced-color-adjust: none;
++        background: Canvas;
++        border: 1px solid CanvasText;
++    }
++    .glass-slider[data-variant="spectrum"] .slider-thumb {
++        outline-color: CanvasText;
++        forced-color-adjust: none;
++        background: Highlight;
++    }
++    .glass-loupe,
++    .glass-slider .slider-shell,
++    .glass-slider .slider-readout {
++        forced-color-adjust: none;
++        background: Canvas;
++        color: CanvasText;
++        border: 1px solid CanvasText;
++    }
++    .glass-slider[data-focus-key] {
++        outline: 2px solid CanvasText;
++        outline-offset: 2px;
++    }
++}
+-- 
+2.50.1 (Apple Git-155)
+

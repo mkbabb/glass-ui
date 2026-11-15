@@ -1,0 +1,66 @@
+
+Running 3 tests using 1 worker
+
+  ✘  1 [webkit] › tests-visual/release-11-0-2.spec.ts:157:5 › slider · a scrubber at its minimum draws its value (sm) (1.0s)
+  ✘  2 [webkit] › tests-visual/release-11-0-2.spec.ts:157:5 › slider · a scrubber at its minimum draws its value (md) (894ms)
+  ✘  3 [webkit] › tests-visual/release-11-0-2.spec.ts:157:5 › slider · a scrubber at its minimum draws its value (lg) (838ms)
+
+
+  1) [webkit] › tests-visual/release-11-0-2.spec.ts:157:5 › slider · a scrubber at its minimum draws its value (sm) 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      179 |         info.annotations.push({ type: "slider", description: JSON.stringify({ ...r, diff }) });
+      180 |         expect(r.value).toBe("50");
+    > 181 |         expect(r.thumb.w).toBeGreaterThan(0);
+          |                           ^
+      182 |         expect(r.thumb.opacity).toBeGreaterThan(0);
+      183 |         expect(r.range.w).toBeGreaterThanOrEqual(r.thumb.w - 0.5);
+      184 |         expect(diff).toBeGreaterThan(8);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:181:27
+
+    Error Context: tests-visual/test-results/release-11-0-2-slider-·-a--77229-minimum-draws-its-value-sm--webkit/error-context.md
+
+  2) [webkit] › tests-visual/release-11-0-2.spec.ts:157:5 › slider · a scrubber at its minimum draws its value (md) 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      179 |         info.annotations.push({ type: "slider", description: JSON.stringify({ ...r, diff }) });
+      180 |         expect(r.value).toBe("50");
+    > 181 |         expect(r.thumb.w).toBeGreaterThan(0);
+          |                           ^
+      182 |         expect(r.thumb.opacity).toBeGreaterThan(0);
+      183 |         expect(r.range.w).toBeGreaterThanOrEqual(r.thumb.w - 0.5);
+      184 |         expect(diff).toBeGreaterThan(8);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:181:27
+
+    Error Context: tests-visual/test-results/release-11-0-2-slider-·-a--8e7cc-minimum-draws-its-value-md--webkit/error-context.md
+
+  3) [webkit] › tests-visual/release-11-0-2.spec.ts:157:5 › slider · a scrubber at its minimum draws its value (lg) 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      179 |         info.annotations.push({ type: "slider", description: JSON.stringify({ ...r, diff }) });
+      180 |         expect(r.value).toBe("50");
+    > 181 |         expect(r.thumb.w).toBeGreaterThan(0);
+          |                           ^
+      182 |         expect(r.thumb.opacity).toBeGreaterThan(0);
+      183 |         expect(r.range.w).toBeGreaterThanOrEqual(r.thumb.w - 0.5);
+      184 |         expect(diff).toBeGreaterThan(8);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:181:27
+
+    Error Context: tests-visual/test-results/release-11-0-2-slider-·-a--3c583-minimum-draws-its-value-lg--webkit/error-context.md
+
+  3 failed
+    [webkit] › tests-visual/release-11-0-2.spec.ts:157:5 › slider · a scrubber at its minimum draws its value (sm) 
+    [webkit] › tests-visual/release-11-0-2.spec.ts:157:5 › slider · a scrubber at its minimum draws its value (md) 
+    [webkit] › tests-visual/release-11-0-2.spec.ts:157:5 › slider · a scrubber at its minimum draws its value (lg) 

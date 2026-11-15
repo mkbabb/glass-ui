@@ -1,0 +1,1756 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/playwright.config.ts",
+      "release-11-0-2.spec.ts",
+      "--project=chromium-headless-new",
+      "--project=coarse-touch",
+      "--workers=1",
+      "-g",
+      "radius ·|hover ·"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-5.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/docs/release-11.0.2/logs/o270-o282-branch-chromium.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5341",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/",
+      "url": "http://localhost:5341",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-0-2.spec.ts",
+      "file": "release-11-0-2.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "hover · a horizontal pill dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 60008,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "column": 94,
+                        "line": 785
+                      },
+                      "message": "Error: locator.waitFor: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('body[data-ready=\\'1\\'] [data-witness=\\'dock\\'] .dock-plate') to be visible\u001b[22m\n\n\n  783 |                 await countRoLoops(page);\n  784 |                 await page.goto(`/tests-visual/release-11-0-2/hover-harness.html?orientation=${orientation}&shape=${shape}&posture=${posture}`);\n> 785 |                 await page.locator(\"body[data-ready='1'] [data-witness='dock'] .dock-plate\").waitFor();\n      |                                                                                              ^\n  786 |                 await page.evaluate(() => document.fonts.ready);\n  787 |                 await page.mouse.move(8, 8);\n  788 |                 await page.waitForTimeout(1200);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:785:94"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:40:43.350Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results/release-11-0-2-hover-·-a-h-62d21--through-every-seat-s-hover-chromium-headless-new/error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-0348081b755996f1ee3b",
+          "file": "release-11-0-2.spec.ts",
+          "line": 780,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal pill dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 60010,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "column": 94,
+                        "line": 785
+                      },
+                      "message": "Error: locator.waitFor: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('body[data-ready=\\'1\\'] [data-witness=\\'dock\\'] .dock-plate') to be visible\u001b[22m\n\n\n  783 |                 await countRoLoops(page);\n  784 |                 await page.goto(`/tests-visual/release-11-0-2/hover-harness.html?orientation=${orientation}&shape=${shape}&posture=${posture}`);\n> 785 |                 await page.locator(\"body[data-ready='1'] [data-witness='dock'] .dock-plate\").waitFor();\n      |                                                                                              ^\n  786 |                 await page.evaluate(() => document.fonts.ready);\n  787 |                 await page.mouse.move(8, 8);\n  788 |                 await page.waitForTimeout(1200);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:785:94"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:41:43.828Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results/release-11-0-2-hover-·-a-h-8287c--through-every-seat-s-hover-chromium-headless-new/error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-944dfc93d0367dc0f5fd",
+          "file": "release-11-0-2.spec.ts",
+          "line": 780,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal rounded dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 60010,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "column": 94,
+                        "line": 785
+                      },
+                      "message": "Error: locator.waitFor: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('body[data-ready=\\'1\\'] [data-witness=\\'dock\\'] .dock-plate') to be visible\u001b[22m\n\n\n  783 |             test(`hover · a ${orientation} ${shape} dock, ${posture}, keeps its box to 0 px through every seat's hover`, async ({ page }, info) => {\n  784 |                 test.skip(info.project.name === \"coarse-touch\", \"hover is a fine-pointer state\");\n> 785 |                 await page.setViewportSize({ width: 1440, height: 900 });\n      |                                                                          ^\n  786 |                 await countRoLoops(page);\n  787 |                 await page.goto(`/tests-visual/release-11-0-2/hover-harness.html?orientation=${orientation}&shape=${shape}&posture=${posture}`);\n  788 |                 await page.locator(\"body[data-ready='1'] [data-witness='dock'] .dock-plate\").waitFor();\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:785:94"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:42:44.369Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results/release-11-0-2-hover-·-a-h-391a0--through-every-seat-s-hover-chromium-headless-new/error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-d91885d60abc8f0107a3",
+          "file": "release-11-0-2.spec.ts",
+          "line": 780,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal rounded dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 60011,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "column": 94,
+                        "line": 785
+                      },
+                      "message": "Error: locator.waitFor: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('body[data-ready=\\'1\\'] [data-witness=\\'dock\\'] .dock-plate') to be visible\u001b[22m\n\n\n  783 |             test(`hover · a ${orientation} ${shape} dock, ${posture}, keeps its box to 0 px through every seat's hover`, async ({ page }, info) => {\n  784 |                 test.skip(info.project.name === \"coarse-touch\", \"hover is a fine-pointer state\");\n> 785 |                 await page.setViewportSize({ width: 1440, height: 900 });\n      |                                                                          ^\n  786 |                 await countRoLoops(page);\n  787 |                 await page.goto(`/tests-visual/release-11-0-2/hover-harness.html?orientation=${orientation}&shape=${shape}&posture=${posture}`);\n  788 |                 await page.locator(\"body[data-ready='1'] [data-witness='dock'] .dock-plate\").waitFor();\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:785:94"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:43:44.926Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results/release-11-0-2-hover-·-a-h-68c58--through-every-seat-s-hover-chromium-headless-new/error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-7b917bc513af312f2d14",
+          "file": "release-11-0-2.spec.ts",
+          "line": 780,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal card dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 60009,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "column": 94,
+                        "line": 785
+                      },
+                      "message": "Error: locator.waitFor: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('body[data-ready=\\'1\\'] [data-witness=\\'dock\\'] .dock-plate') to be visible\u001b[22m\n\n\n  783 |             test(`hover · a ${orientation} ${shape} dock, ${posture}, keeps its box to 0 px through every seat's hover`, async ({ page }, info) => {\n  784 |                 test.skip(info.project.name === \"coarse-touch\", \"hover is a fine-pointer state\");\n> 785 |                 await page.setViewportSize({ width: 1440, height: 900 });\n      |                                                                          ^\n  786 |                 await countRoLoops(page);\n  787 |                 await page.goto(`/tests-visual/release-11-0-2/hover-harness.html?orientation=${orientation}&shape=${shape}&posture=${posture}`);\n  788 |                 await page.locator(\"body[data-ready='1'] [data-witness='dock'] .dock-plate\").waitFor();\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:785:94"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:44:45.395Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results/release-11-0-2-hover-·-a-h-a6e64--through-every-seat-s-hover-chromium-headless-new/error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-18a7264785af3514d5a2",
+          "file": "release-11-0-2.spec.ts",
+          "line": 780,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal card dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 60012,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "column": 94,
+                        "line": 785
+                      },
+                      "message": "Error: locator.waitFor: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('body[data-ready=\\'1\\'] [data-witness=\\'dock\\'] .dock-plate') to be visible\u001b[22m\n\n\n  783 |             test(`hover · a ${orientation} ${shape} dock, ${posture}, keeps its box to 0 px through every seat's hover`, async ({ page }, info) => {\n  784 |                 test.skip(info.project.name === \"coarse-touch\", \"hover is a fine-pointer state\");\n> 785 |                 await page.setViewportSize({ width: 1440, height: 900 });\n      |                                                                          ^\n  786 |                 await countRoLoops(page);\n  787 |                 await page.goto(`/tests-visual/release-11-0-2/hover-harness.html?orientation=${orientation}&shape=${shape}&posture=${posture}`);\n  788 |                 await page.locator(\"body[data-ready='1'] [data-witness='dock'] .dock-plate\").waitFor();\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:785:94"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:45:45.833Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results/release-11-0-2-hover-·-a-h-2e7ed--through-every-seat-s-hover-chromium-headless-new/error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-ea7dec7005c672570cdd",
+          "file": "release-11-0-2.spec.ts",
+          "line": 780,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical pill dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 60007,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "column": 94,
+                        "line": 785
+                      },
+                      "message": "Error: locator.waitFor: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('body[data-ready=\\'1\\'] [data-witness=\\'dock\\'] .dock-plate') to be visible\u001b[22m\n\n\n  783 |             test(`hover · a ${orientation} ${shape} dock, ${posture}, keeps its box to 0 px through every seat's hover`, async ({ page }, info) => {\n  784 |                 test.skip(info.project.name === \"coarse-touch\", \"hover is a fine-pointer state\");\n> 785 |                 await page.setViewportSize({ width: 1440, height: 900 });\n      |                                                                          ^\n  786 |                 await countRoLoops(page);\n  787 |                 await page.goto(`/tests-visual/release-11-0-2/hover-harness.html?orientation=${orientation}&shape=${shape}&posture=${posture}`);\n  788 |                 await page.locator(\"body[data-ready='1'] [data-witness='dock'] .dock-plate\").waitFor();\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:785:94"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:46:46.501Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results/release-11-0-2-hover-·-a-v-3bdd1--through-every-seat-s-hover-chromium-headless-new/error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-8e1a8d8881f5ca4ec5c3",
+          "file": "release-11-0-2.spec.ts",
+          "line": 780,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical pill dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 60009,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "column": 94,
+                        "line": 785
+                      },
+                      "message": "Error: locator.waitFor: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('body[data-ready=\\'1\\'] [data-witness=\\'dock\\'] .dock-plate') to be visible\u001b[22m\n\n\n  783 |             test(`hover · a ${orientation} ${shape} dock, ${posture}, keeps its box to 0 px through every seat's hover`, async ({ page }, info) => {\n  784 |                 test.skip(info.project.name === \"coarse-touch\", \"hover is a fine-pointer state\");\n> 785 |                 await page.setViewportSize({ width: 1440, height: 900 });\n      |                                                                          ^\n  786 |                 await countRoLoops(page);\n  787 |                 await page.goto(`/tests-visual/release-11-0-2/hover-harness.html?orientation=${orientation}&shape=${shape}&posture=${posture}`);\n  788 |                 await page.locator(\"body[data-ready='1'] [data-witness='dock'] .dock-plate\").waitFor();\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:785:94"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:47:47.061Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results/release-11-0-2-hover-·-a-v-c580a--through-every-seat-s-hover-chromium-headless-new/error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-aa04962e2a8fcd045cac",
+          "file": "release-11-0-2.spec.ts",
+          "line": 780,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical rounded dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 60012,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "column": 94,
+                        "line": 785
+                      },
+                      "message": "Error: locator.waitFor: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('body[data-ready=\\'1\\'] [data-witness=\\'dock\\'] .dock-plate') to be visible\u001b[22m\n\n\n  783 |             test(`hover · a ${orientation} ${shape} dock, ${posture}, keeps its box to 0 px through every seat's hover`, async ({ page }, info) => {\n  784 |                 test.skip(info.project.name === \"coarse-touch\", \"hover is a fine-pointer state\");\n> 785 |                 await page.setViewportSize({ width: 1440, height: 900 });\n      |                                                                          ^\n  786 |                 await countRoLoops(page);\n  787 |                 await page.goto(`/tests-visual/release-11-0-2/hover-harness.html?orientation=${orientation}&shape=${shape}&posture=${posture}`);\n  788 |                 await page.locator(\"body[data-ready='1'] [data-witness='dock'] .dock-plate\").waitFor();\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:785:94"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:48:47.536Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results/release-11-0-2-hover-·-a-v-f7503--through-every-seat-s-hover-chromium-headless-new/error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-c005b1ee78107f1f4580",
+          "file": "release-11-0-2.spec.ts",
+          "line": 780,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical rounded dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 60012,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "column": 94,
+                        "line": 785
+                      },
+                      "message": "Error: locator.waitFor: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('body[data-ready=\\'1\\'] [data-witness=\\'dock\\'] .dock-plate') to be visible\u001b[22m\n\n\n  783 |             test(`hover · a ${orientation} ${shape} dock, ${posture}, keeps its box to 0 px through every seat's hover`, async ({ page }, info) => {\n  784 |                 test.skip(info.project.name === \"coarse-touch\", \"hover is a fine-pointer state\");\n> 785 |                 await page.setViewportSize({ width: 1440, height: 900 });\n      |                                                                          ^\n  786 |                 await countRoLoops(page);\n  787 |                 await page.goto(`/tests-visual/release-11-0-2/hover-harness.html?orientation=${orientation}&shape=${shape}&posture=${posture}`);\n  788 |                 await page.locator(\"body[data-ready='1'] [data-witness='dock'] .dock-plate\").waitFor();\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:785:94"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:49:48.060Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results/release-11-0-2-hover-·-a-v-d599b--through-every-seat-s-hover-chromium-headless-new/error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-034238194e1fc7d91b16",
+          "file": "release-11-0-2.spec.ts",
+          "line": 780,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical card dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 60018,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "column": 94,
+                        "line": 785
+                      },
+                      "message": "Error: locator.waitFor: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('body[data-ready=\\'1\\'] [data-witness=\\'dock\\'] .dock-plate') to be visible\u001b[22m\n\n\n  783 |             test(`hover · a ${orientation} ${shape} dock, ${posture}, keeps its box to 0 px through every seat's hover`, async ({ page }, info) => {\n  784 |                 test.skip(info.project.name === \"coarse-touch\", \"hover is a fine-pointer state\");\n> 785 |                 await page.setViewportSize({ width: 1440, height: 900 });\n      |                                                                          ^\n  786 |                 await countRoLoops(page);\n  787 |                 await page.goto(`/tests-visual/release-11-0-2/hover-harness.html?orientation=${orientation}&shape=${shape}&posture=${posture}`);\n  788 |                 await page.locator(\"body[data-ready='1'] [data-witness='dock'] .dock-plate\").waitFor();\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:785:94"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:50:48.523Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results/release-11-0-2-hover-·-a-v-1df55--through-every-seat-s-hover-chromium-headless-new/error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-7ce3b3c406186445c99c",
+          "file": "release-11-0-2.spec.ts",
+          "line": 780,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical card dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 60009,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "column": 94,
+                        "line": 785
+                      },
+                      "message": "Error: locator.waitFor: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('body[data-ready=\\'1\\'] [data-witness=\\'dock\\'] .dock-plate') to be visible\u001b[22m\n\n\n  783 |             test(`hover · a ${orientation} ${shape} dock, ${posture}, keeps its box to 0 px through every seat's hover`, async ({ page }, info) => {\n  784 |                 test.skip(info.project.name === \"coarse-touch\", \"hover is a fine-pointer state\");\n> 785 |                 await page.setViewportSize({ width: 1440, height: 900 });\n      |                                                                          ^\n  786 |                 await countRoLoops(page);\n  787 |                 await page.goto(`/tests-visual/release-11-0-2/hover-harness.html?orientation=${orientation}&shape=${shape}&posture=${posture}`);\n  788 |                 await page.locator(\"body[data-ready='1'] [data-witness='dock'] .dock-plate\").waitFor();\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:785:94"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:51:48.985Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results/release-11-0-2-hover-·-a-v-d3103--through-every-seat-s-hover-chromium-headless-new/error-context.md"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-b13dfe137a9fe3face5a",
+          "file": "release-11-0-2.spec.ts",
+          "line": 780,
+          "column": 13
+        },
+        {
+          "title": "radius · every dock seat's plate is a capsule, half its block size, at 1440",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "radius",
+                  "description": "{\"ground\":[232,224,214],\"cells\":{\"trigger\":{\"state\":\"hover\",\"radius\":\"16px\",\"block\":36,\"expanded\":\"false\",\"ends\":{\"h\":42,\"w\":72,\"insetStart\":11,\"insetEnd\":7,\"capsule\":6.831372684695246}},\"tab\":{\"state\":\"hover\",\"radius\":\"16px\",\"block\":38,\"expanded\":null,\"ends\":{\"h\":38,\"w\":68,\"insetStart\":3,\"insetEnd\":3,\"capsule\":5.630258042879062}},\"label\":{\"state\":\"hover\",\"radius\":\"20px\",\"block\":40,\"expanded\":null,\"ends\":{\"h\":40,\"w\":40,\"insetStart\":6,\"insetEnd\":6,\"capsule\":6.22502268604409}},\"trigger-active\":{\"state\":\"active\",\"radius\":\"16px\",\"block\":36,\"expanded\":\"false\",\"ends\":{\"h\":36,\"w\":68,\"insetStart\":3,\"insetEnd\":3,\"capsule\":5.0481661530113815}},\"tab-active\":{\"state\":\"active\",\"radius\":\"16px\",\"block\":38,\"expanded\":null,\"ends\":{\"h\":38,\"w\":55,\"insetStart\":3,\"insetEnd\":3,\"capsule\":5.630258042879062}},\"label-active\":{\"state\":\"active\",\"radius\":\"20px\",\"block\":40,\"expanded\":null,\"ends\":{\"h\":40,\"w\":40,\"insetStart\":6,\"insetEnd\":6,\"capsule\":6.22502268604409}},\"icon-active\":{\"state\":\"active\",\"radius\":\"20px\",\"block\":40,\"expanded\":null,\"ends\":{\"h\":46,\"w\":42,\"insetStart\":8,\"insetEnd\":10,\"capsule\":6.976579641037933}}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 4737,
+                  "error": {
+                    "message": "Error: tab start end\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m4.222693532159296\u001b[39m\nReceived:    \u001b[31m3\u001b[39m",
+                    "stack": "Error: tab start end\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m4.222693532159296\u001b[39m\nReceived:    \u001b[31m3\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:939:64",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                      "column": 64,
+                      "line": 939
+                    },
+                    "snippet": "  937 |             await page.waitForTimeout(300);\n  938 |         }\n> 939 |         info.annotations.push({ type: \"radius\", description: JSON.stringify({ ground, cells }) });\n      |                                                                ^\n  940 |         for (const [kind, cell] of Object.entries(cells) as [string, { ends: { insetStart: number; insetEnd: number; capsule: number } | null }][]) {\n  941 |             expect(cell.ends, `${kind} painted a plate`).not.toBeNull();\n  942 |             expect(cell.ends!.insetStart, `${kind} start end`).toBeGreaterThanOrEqual(cell.ends!.capsule * 0.75);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "column": 64,
+                        "line": 939
+                      },
+                      "message": "Error: tab start end\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m4.222693532159296\u001b[39m\nReceived:    \u001b[31m3\u001b[39m\n\n  937 |             await page.waitForTimeout(300);\n  938 |         }\n> 939 |         info.annotations.push({ type: \"radius\", description: JSON.stringify({ ground, cells }) });\n      |                                                                ^\n  940 |         for (const [kind, cell] of Object.entries(cells) as [string, { ends: { insetStart: number; insetEnd: number; capsule: number } | null }][]) {\n  941 |             expect(cell.ends, `${kind} painted a plate`).not.toBeNull();\n  942 |             expect(cell.ends!.insetStart, `${kind} start end`).toBeGreaterThanOrEqual(cell.ends!.capsule * 0.75);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:939:64"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:52:49.487Z",
+                  "annotations": [
+                    {
+                      "type": "radius",
+                      "description": "{\"ground\":[232,224,214],\"cells\":{\"trigger\":{\"state\":\"hover\",\"radius\":\"16px\",\"block\":36,\"expanded\":\"false\",\"ends\":{\"h\":42,\"w\":72,\"insetStart\":11,\"insetEnd\":7,\"capsule\":6.831372684695246}},\"tab\":{\"state\":\"hover\",\"radius\":\"16px\",\"block\":38,\"expanded\":null,\"ends\":{\"h\":38,\"w\":68,\"insetStart\":3,\"insetEnd\":3,\"capsule\":5.630258042879062}},\"label\":{\"state\":\"hover\",\"radius\":\"20px\",\"block\":40,\"expanded\":null,\"ends\":{\"h\":40,\"w\":40,\"insetStart\":6,\"insetEnd\":6,\"capsule\":6.22502268604409}},\"trigger-active\":{\"state\":\"active\",\"radius\":\"16px\",\"block\":36,\"expanded\":\"false\",\"ends\":{\"h\":36,\"w\":68,\"insetStart\":3,\"insetEnd\":3,\"capsule\":5.0481661530113815}},\"tab-active\":{\"state\":\"active\",\"radius\":\"16px\",\"block\":38,\"expanded\":null,\"ends\":{\"h\":38,\"w\":55,\"insetStart\":3,\"insetEnd\":3,\"capsule\":5.630258042879062}},\"label-active\":{\"state\":\"active\",\"radius\":\"20px\",\"block\":40,\"expanded\":null,\"ends\":{\"h\":40,\"w\":40,\"insetStart\":6,\"insetEnd\":6,\"capsule\":6.22502268604409}},\"icon-active\":{\"state\":\"active\",\"radius\":\"20px\",\"block\":40,\"expanded\":null,\"ends\":{\"h\":46,\"w\":42,\"insetStart\":8,\"insetEnd\":10,\"capsule\":6.976579641037933}}}}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results/release-11-0-2-radius-·-ev-f328b-half-its-block-size-at-1440-chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "column": 64,
+                    "line": 939
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-8158ac579e8c4ed6b083",
+          "file": "release-11-0-2.spec.ts",
+          "line": 888,
+          "column": 5
+        },
+        {
+          "title": "radius · every dock seat's plate is a capsule, half its block size, at 390",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "radius",
+                  "description": "{\"ground\":[232,224,214],\"cells\":{\"trigger\":{\"state\":\"hover\",\"radius\":\"16px\",\"block\":32,\"expanded\":\"false\",\"ends\":{\"h\":32,\"w\":61,\"insetStart\":4,\"insetEnd\":4,\"capsule\":4.8757022693565055}},\"tab\":{\"state\":\"hover\",\"radius\":\"16px\",\"block\":38,\"expanded\":null,\"ends\":{\"h\":38,\"w\":61,\"insetStart\":3,\"insetEnd\":3,\"capsule\":5.630258042879062}},\"label\":{\"state\":\"hover\",\"radius\":\"20px\",\"block\":40,\"expanded\":null,\"ends\":{\"h\":40,\"w\":40,\"insetStart\":6,\"insetEnd\":6,\"capsule\":6.22502268604409}},\"trigger-active\":{\"state\":\"active\",\"radius\":\"16px\",\"block\":32,\"expanded\":\"false\",\"ends\":{\"h\":32,\"w\":61,\"insetStart\":4,\"insetEnd\":4,\"capsule\":4.8757022693565055}},\"tab-active\":{\"state\":\"active\",\"radius\":\"16px\",\"block\":38,\"expanded\":null,\"ends\":{\"h\":38,\"w\":50,\"insetStart\":3,\"insetEnd\":3,\"capsule\":5.630258042879062}},\"label-active\":{\"state\":\"active\",\"radius\":\"20px\",\"block\":40,\"expanded\":null,\"ends\":{\"h\":40,\"w\":40,\"insetStart\":6,\"insetEnd\":6,\"capsule\":6.22502268604409}},\"icon-active\":{\"state\":\"active\",\"radius\":\"20px\",\"block\":40,\"expanded\":null,\"ends\":{\"h\":46,\"w\":17,\"insetStart\":14,\"insetEnd\":0,\"capsule\":6.976579641037933}}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 13,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 4676,
+                  "error": {
+                    "message": "Error: tab start end\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m4.222693532159296\u001b[39m\nReceived:    \u001b[31m3\u001b[39m",
+                    "stack": "Error: tab start end\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m4.222693532159296\u001b[39m\nReceived:    \u001b[31m3\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:939:64",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                      "column": 64,
+                      "line": 939
+                    },
+                    "snippet": "  937 |             await page.waitForTimeout(300);\n  938 |         }\n> 939 |         info.annotations.push({ type: \"radius\", description: JSON.stringify({ ground, cells }) });\n      |                                                                ^\n  940 |         for (const [kind, cell] of Object.entries(cells) as [string, { ends: { insetStart: number; insetEnd: number; capsule: number } | null }][]) {\n  941 |             expect(cell.ends, `${kind} painted a plate`).not.toBeNull();\n  942 |             expect(cell.ends!.insetStart, `${kind} start end`).toBeGreaterThanOrEqual(cell.ends!.capsule * 0.75);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "column": 64,
+                        "line": 939
+                      },
+                      "message": "Error: tab start end\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m4.222693532159296\u001b[39m\nReceived:    \u001b[31m3\u001b[39m\n\n  937 |             await page.waitForTimeout(300);\n  938 |         }\n> 939 |         info.annotations.push({ type: \"radius\", description: JSON.stringify({ ground, cells }) });\n      |                                                                ^\n  940 |         for (const [kind, cell] of Object.entries(cells) as [string, { ends: { insetStart: number; insetEnd: number; capsule: number } | null }][]) {\n  941 |             expect(cell.ends, `${kind} painted a plate`).not.toBeNull();\n  942 |             expect(cell.ends!.insetStart, `${kind} start end`).toBeGreaterThanOrEqual(cell.ends!.capsule * 0.75);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:939:64"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:52:54.618Z",
+                  "annotations": [
+                    {
+                      "type": "radius",
+                      "description": "{\"ground\":[232,224,214],\"cells\":{\"trigger\":{\"state\":\"hover\",\"radius\":\"16px\",\"block\":32,\"expanded\":\"false\",\"ends\":{\"h\":32,\"w\":61,\"insetStart\":4,\"insetEnd\":4,\"capsule\":4.8757022693565055}},\"tab\":{\"state\":\"hover\",\"radius\":\"16px\",\"block\":38,\"expanded\":null,\"ends\":{\"h\":38,\"w\":61,\"insetStart\":3,\"insetEnd\":3,\"capsule\":5.630258042879062}},\"label\":{\"state\":\"hover\",\"radius\":\"20px\",\"block\":40,\"expanded\":null,\"ends\":{\"h\":40,\"w\":40,\"insetStart\":6,\"insetEnd\":6,\"capsule\":6.22502268604409}},\"trigger-active\":{\"state\":\"active\",\"radius\":\"16px\",\"block\":32,\"expanded\":\"false\",\"ends\":{\"h\":32,\"w\":61,\"insetStart\":4,\"insetEnd\":4,\"capsule\":4.8757022693565055}},\"tab-active\":{\"state\":\"active\",\"radius\":\"16px\",\"block\":38,\"expanded\":null,\"ends\":{\"h\":38,\"w\":50,\"insetStart\":3,\"insetEnd\":3,\"capsule\":5.630258042879062}},\"label-active\":{\"state\":\"active\",\"radius\":\"20px\",\"block\":40,\"expanded\":null,\"ends\":{\"h\":40,\"w\":40,\"insetStart\":6,\"insetEnd\":6,\"capsule\":6.22502268604409}},\"icon-active\":{\"state\":\"active\",\"radius\":\"20px\",\"block\":40,\"expanded\":null,\"ends\":{\"h\":46,\"w\":17,\"insetStart\":14,\"insetEnd\":0,\"capsule\":6.976579641037933}}}}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results/release-11-0-2-radius-·-ev-99e84--half-its-block-size-at-390-chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "column": 64,
+                    "line": 939
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-8c0d9774574f4bceeee5",
+          "file": "release-11-0-2.spec.ts",
+          "line": 888,
+          "column": 5
+        },
+        {
+          "title": "hover · a horizontal pill dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "line": 781,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 14,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 53,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:52:59.705Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "line": 781,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-a26949374becb8ca5954",
+          "file": "release-11-0-2.spec.ts",
+          "line": 780,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal pill dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "line": 781,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 14,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 43,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:52:59.847Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "line": 781,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-b2f95a9c9f169a9585cb",
+          "file": "release-11-0-2.spec.ts",
+          "line": 780,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal rounded dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "line": 781,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 14,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 42,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:52:59.897Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "line": 781,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-1654a7e17d593a81fae7",
+          "file": "release-11-0-2.spec.ts",
+          "line": 780,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal rounded dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "line": 781,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 14,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 43,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:52:59.946Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "line": 781,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-e82521cc834fee99696d",
+          "file": "release-11-0-2.spec.ts",
+          "line": 780,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal card dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "line": 781,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 14,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 40,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:52:59.996Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "line": 781,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-249bcd111ec52b4052d4",
+          "file": "release-11-0-2.spec.ts",
+          "line": 780,
+          "column": 13
+        },
+        {
+          "title": "hover · a horizontal card dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "line": 781,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 14,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 40,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:53:00.045Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "line": 781,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-943b214e544a30646c00",
+          "file": "release-11-0-2.spec.ts",
+          "line": 780,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical pill dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "line": 781,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 14,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 42,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:53:00.091Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "line": 781,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-918fc6cbd0de40f1a036",
+          "file": "release-11-0-2.spec.ts",
+          "line": 780,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical pill dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "line": 781,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 14,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 40,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:53:00.139Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "line": 781,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-b3f76d008ef1f965112b",
+          "file": "release-11-0-2.spec.ts",
+          "line": 780,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical rounded dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "line": 781,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 14,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 41,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:53:00.184Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "line": 781,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-ae8b8caf24034cb06f83",
+          "file": "release-11-0-2.spec.ts",
+          "line": 780,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical rounded dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "line": 781,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 14,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 40,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:53:00.231Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "line": 781,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-35780f80d502f54ff2bc",
+          "file": "release-11-0-2.spec.ts",
+          "line": 780,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical card dock, expanded, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "line": 781,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 14,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 35,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:53:00.277Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "line": 781,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-a1801188553837f9d0a5",
+          "file": "release-11-0-2.spec.ts",
+          "line": 780,
+          "column": 13
+        },
+        {
+          "title": "hover · a vertical card dock, collapsed, keeps its box to 0 px through every seat's hover",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "line": 781,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 14,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 31,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:53:00.319Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "line": 781,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-ae254abed33aa2ab75d0",
+          "file": "release-11-0-2.spec.ts",
+          "line": 780,
+          "column": 13
+        },
+        {
+          "title": "radius · every dock seat's plate is a capsule, half its block size, at 1440",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "radius",
+                  "description": "{\"ground\":[232,224,214],\"cells\":{\"trigger-active\":{\"state\":\"active\",\"radius\":\"16px\",\"block\":36,\"expanded\":\"false\",\"ends\":{\"h\":36,\"w\":68,\"insetStart\":3,\"insetEnd\":3,\"capsule\":5.0481661530113815}},\"tab-active\":{\"state\":\"active\",\"radius\":\"16px\",\"block\":38,\"expanded\":null,\"ends\":{\"h\":38,\"w\":55,\"insetStart\":3,\"insetEnd\":3,\"capsule\":5.630258042879062}},\"label-active\":{\"state\":\"active\",\"radius\":\"22px\",\"block\":44,\"expanded\":null,\"ends\":{\"h\":44,\"w\":44,\"insetStart\":6,\"insetEnd\":6,\"capsule\":6.387505004004005}},\"icon-active\":{\"state\":\"active\",\"radius\":\"22px\",\"block\":44,\"expanded\":null,\"ends\":{\"h\":50,\"w\":46,\"insetStart\":9,\"insetEnd\":11,\"capsule\":8.184828279199763}},\"trigger\":{\"state\":\"open\",\"radius\":\"16px\",\"block\":36,\"expanded\":\"true\",\"ends\":{\"h\":42,\"w\":72,\"insetStart\":11,\"insetEnd\":7,\"capsule\":6.831372684695246}}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 14,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3181,
+                  "error": {
+                    "message": "Error: trigger-active start end\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3.786124614758536\u001b[39m\nReceived:    \u001b[31m3\u001b[39m",
+                    "stack": "Error: trigger-active start end\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3.786124614758536\u001b[39m\nReceived:    \u001b[31m3\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:939:64",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                      "column": 64,
+                      "line": 939
+                    },
+                    "snippet": "  937 |             await page.waitForTimeout(300);\n  938 |         }\n> 939 |         info.annotations.push({ type: \"radius\", description: JSON.stringify({ ground, cells }) });\n      |                                                                ^\n  940 |         for (const [kind, cell] of Object.entries(cells) as [string, { ends: { insetStart: number; insetEnd: number; capsule: number } | null }][]) {\n  941 |             expect(cell.ends, `${kind} painted a plate`).not.toBeNull();\n  942 |             expect(cell.ends!.insetStart, `${kind} start end`).toBeGreaterThanOrEqual(cell.ends!.capsule * 0.75);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "column": 64,
+                        "line": 939
+                      },
+                      "message": "Error: trigger-active start end\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3.786124614758536\u001b[39m\nReceived:    \u001b[31m3\u001b[39m\n\n  937 |             await page.waitForTimeout(300);\n  938 |         }\n> 939 |         info.annotations.push({ type: \"radius\", description: JSON.stringify({ ground, cells }) });\n      |                                                                ^\n  940 |         for (const [kind, cell] of Object.entries(cells) as [string, { ends: { insetStart: number; insetEnd: number; capsule: number } | null }][]) {\n  941 |             expect(cell.ends, `${kind} painted a plate`).not.toBeNull();\n  942 |             expect(cell.ends!.insetStart, `${kind} start end`).toBeGreaterThanOrEqual(cell.ends!.capsule * 0.75);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:939:64"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:53:00.357Z",
+                  "annotations": [
+                    {
+                      "type": "radius",
+                      "description": "{\"ground\":[232,224,214],\"cells\":{\"trigger-active\":{\"state\":\"active\",\"radius\":\"16px\",\"block\":36,\"expanded\":\"false\",\"ends\":{\"h\":36,\"w\":68,\"insetStart\":3,\"insetEnd\":3,\"capsule\":5.0481661530113815}},\"tab-active\":{\"state\":\"active\",\"radius\":\"16px\",\"block\":38,\"expanded\":null,\"ends\":{\"h\":38,\"w\":55,\"insetStart\":3,\"insetEnd\":3,\"capsule\":5.630258042879062}},\"label-active\":{\"state\":\"active\",\"radius\":\"22px\",\"block\":44,\"expanded\":null,\"ends\":{\"h\":44,\"w\":44,\"insetStart\":6,\"insetEnd\":6,\"capsule\":6.387505004004005}},\"icon-active\":{\"state\":\"active\",\"radius\":\"22px\",\"block\":44,\"expanded\":null,\"ends\":{\"h\":50,\"w\":46,\"insetStart\":9,\"insetEnd\":11,\"capsule\":8.184828279199763}},\"trigger\":{\"state\":\"open\",\"radius\":\"16px\",\"block\":36,\"expanded\":\"true\",\"ends\":{\"h\":42,\"w\":72,\"insetStart\":11,\"insetEnd\":7,\"capsule\":6.831372684695246}}}}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results/release-11-0-2-radius-·-ev-f328b-half-its-block-size-at-1440-coarse-touch/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "column": 64,
+                    "line": 939
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-591500774f626d60e4b5",
+          "file": "release-11-0-2.spec.ts",
+          "line": 888,
+          "column": 5
+        },
+        {
+          "title": "radius · every dock seat's plate is a capsule, half its block size, at 390",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "radius",
+                  "description": "{\"ground\":[232,224,214],\"cells\":{\"trigger-active\":{\"state\":\"active\",\"radius\":\"16px\",\"block\":32,\"expanded\":\"false\",\"ends\":{\"h\":32,\"w\":61,\"insetStart\":4,\"insetEnd\":4,\"capsule\":4.8757022693565055}},\"tab-active\":{\"state\":\"active\",\"radius\":\"16px\",\"block\":38,\"expanded\":null,\"ends\":{\"h\":38,\"w\":50,\"insetStart\":3,\"insetEnd\":3,\"capsule\":5.630258042879062}},\"label-active\":{\"state\":\"active\",\"radius\":\"22px\",\"block\":44,\"expanded\":null,\"ends\":{\"h\":44,\"w\":44,\"insetStart\":6,\"insetEnd\":6,\"capsule\":6.387505004004005}},\"icon-active\":{\"state\":\"active\",\"radius\":\"22px\",\"block\":44,\"expanded\":null,\"ends\":{\"h\":50,\"w\":9,\"insetStart\":6,\"insetEnd\":0,\"capsule\":8.184828279199763}},\"trigger\":{\"state\":\"open\",\"radius\":\"16px\",\"block\":32,\"expanded\":\"true\",\"ends\":{\"h\":32,\"w\":61,\"insetStart\":4,\"insetEnd\":4,\"capsule\":4.8757022693565055}}}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 15,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3235,
+                  "error": {
+                    "message": "Error: tab-active start end\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m4.222693532159296\u001b[39m\nReceived:    \u001b[31m3\u001b[39m",
+                    "stack": "Error: tab-active start end\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m4.222693532159296\u001b[39m\nReceived:    \u001b[31m3\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:939:64",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                      "column": 64,
+                      "line": 939
+                    },
+                    "snippet": "  937 |             await page.waitForTimeout(300);\n  938 |         }\n> 939 |         info.annotations.push({ type: \"radius\", description: JSON.stringify({ ground, cells }) });\n      |                                                                ^\n  940 |         for (const [kind, cell] of Object.entries(cells) as [string, { ends: { insetStart: number; insetEnd: number; capsule: number } | null }][]) {\n  941 |             expect(cell.ends, `${kind} painted a plate`).not.toBeNull();\n  942 |             expect(cell.ends!.insetStart, `${kind} start end`).toBeGreaterThanOrEqual(cell.ends!.capsule * 0.75);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "column": 64,
+                        "line": 939
+                      },
+                      "message": "Error: tab-active start end\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m4.222693532159296\u001b[39m\nReceived:    \u001b[31m3\u001b[39m\n\n  937 |             await page.waitForTimeout(300);\n  938 |         }\n> 939 |         info.annotations.push({ type: \"radius\", description: JSON.stringify({ ground, cells }) });\n      |                                                                ^\n  940 |         for (const [kind, cell] of Object.entries(cells) as [string, { ends: { insetStart: number; insetEnd: number; capsule: number } | null }][]) {\n  941 |             expect(cell.ends, `${kind} painted a plate`).not.toBeNull();\n  942 |             expect(cell.ends!.insetStart, `${kind} start end`).toBeGreaterThanOrEqual(cell.ends!.capsule * 0.75);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:939:64"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T22:53:03.882Z",
+                  "annotations": [
+                    {
+                      "type": "radius",
+                      "description": "{\"ground\":[232,224,214],\"cells\":{\"trigger-active\":{\"state\":\"active\",\"radius\":\"16px\",\"block\":32,\"expanded\":\"false\",\"ends\":{\"h\":32,\"w\":61,\"insetStart\":4,\"insetEnd\":4,\"capsule\":4.8757022693565055}},\"tab-active\":{\"state\":\"active\",\"radius\":\"16px\",\"block\":38,\"expanded\":null,\"ends\":{\"h\":38,\"w\":50,\"insetStart\":3,\"insetEnd\":3,\"capsule\":5.630258042879062}},\"label-active\":{\"state\":\"active\",\"radius\":\"22px\",\"block\":44,\"expanded\":null,\"ends\":{\"h\":44,\"w\":44,\"insetStart\":6,\"insetEnd\":6,\"capsule\":6.387505004004005}},\"icon-active\":{\"state\":\"active\",\"radius\":\"22px\",\"block\":44,\"expanded\":null,\"ends\":{\"h\":50,\"w\":9,\"insetStart\":6,\"insetEnd\":0,\"capsule\":8.184828279199763}},\"trigger\":{\"state\":\"open\",\"radius\":\"16px\",\"block\":32,\"expanded\":\"true\",\"ends\":{\"h\":32,\"w\":61,\"insetStart\":4,\"insetEnd\":4,\"capsule\":4.8757022693565055}}}}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results/release-11-0-2-radius-·-ev-99e84--half-its-block-size-at-390-coarse-touch/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "column": 64,
+                    "line": 939
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-3b2b35c34ea29743c923",
+          "file": "release-11-0-2.spec.ts",
+          "line": 888,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-12T22:40:41.638Z",
+    "duration": 745666.4180000001,
+    "expected": 0,
+    "skipped": 12,
+    "unexpected": 16,
+    "flaky": 0
+  }
+}

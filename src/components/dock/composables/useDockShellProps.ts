@@ -10,7 +10,7 @@
 //   `overflow`   — the over-cap strategy is closed-form under the lattice (W3); the
 //                  `wrap` reflow register and its `.dock-overflow-wrap` recipe go.
 //   `collapseDelay` — one idle window for every dock (`DOCK_COLLAPSE_DELAY_MS`);
-//                  a per-dock delay is a knob no dock in this tree ever moved off 3600.
+//                  a per-dock delay is a knob no dock in this tree ever moved off the constant.
 //   `search`     — the `#search` slot IS the opt-in; a boolean gating a named slot is
 //                  a second switch for one fact. `useDockSearch` stays exported.
 //   `position`   — zero call sites; `.dock-inline`'s centring folds onto `.glass-dock`.

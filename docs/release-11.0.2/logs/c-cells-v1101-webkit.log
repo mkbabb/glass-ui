@@ -1,0 +1,243 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794521931 slope=31.8/s inuse=25856 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for the 'webkit' lock
+
+Running 25 tests using 1 worker
+
+[WebServer] 6:21:52 PM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../../@vite/client:531:59
+[WebServer] 
+  ✘   1 [webkit] › tests-visual/release-11-0-2.spec.ts:673:1 › rail · a start-anchored rail's close holds its top edge and crest, and ends on the disc (3.2s)
+  ✘   2 [webkit] › tests-visual/release-11-0-2.spec.ts:699:1 › rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate (2.0s)
+  ✘   3 [webkit] › tests-visual/release-11-0-2.spec.ts:733:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 360 (2.3s)
+  ✘   4 [webkit] › tests-visual/release-11-0-2.spec.ts:733:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 390 (2.3s)
+  ✘   5 [webkit] › tests-visual/release-11-0-2.spec.ts:733:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 1440 (2.2s)
+  ✘   6 [webkit] › tests-visual/release-11-0-2.spec.ts:733:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 360 (2.2s)
+  ✘   7 [webkit] › tests-visual/release-11-0-2.spec.ts:733:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 390 (2.2s)
+  ✘   8 [webkit] › tests-visual/release-11-0-2.spec.ts:733:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 1440 (2.2s)
+  ✓   9 [webkit] › tests-visual/release-11-0-2.spec.ts:733:9 › rows · the stretched dock's rows fit with a persistent region beside the layers at 360 (2.1s)
+  ✓  10 [webkit] › tests-visual/release-11-0-2.spec.ts:733:9 › rows · the stretched dock's rows fit with a persistent region beside the layers at 390 (1.9s)
+  ✓  11 [webkit] › tests-visual/release-11-0-2.spec.ts:733:9 › rows · the stretched dock's rows fit with a persistent region beside the layers at 1440 (1.9s)
+  ✓  12 [webkit] › tests-visual/release-11-0-2.spec.ts:783:13 › hover · a horizontal pill dock, expanded, keeps its box to 0 px through every seat's hover (13.0s)
+  ✓  13 [webkit] › tests-visual/release-11-0-2.spec.ts:783:13 › hover · a horizontal pill dock, collapsed, keeps its box to 0 px through every seat's hover (4.0s)
+  ✓  14 [webkit] › tests-visual/release-11-0-2.spec.ts:783:13 › hover · a horizontal rounded dock, expanded, keeps its box to 0 px through every seat's hover (13.2s)
+  ✓  15 [webkit] › tests-visual/release-11-0-2.spec.ts:783:13 › hover · a horizontal rounded dock, collapsed, keeps its box to 0 px through every seat's hover (3.8s)
+  ✓  16 [webkit] › tests-visual/release-11-0-2.spec.ts:783:13 › hover · a horizontal card dock, expanded, keeps its box to 0 px through every seat's hover (12.9s)
+  ✓  17 [webkit] › tests-visual/release-11-0-2.spec.ts:783:13 › hover · a horizontal card dock, collapsed, keeps its box to 0 px through every seat's hover (3.8s)
+  ✓  18 [webkit] › tests-visual/release-11-0-2.spec.ts:783:13 › hover · a vertical pill dock, expanded, keeps its box to 0 px through every seat's hover (13.1s)
+  ✓  19 [webkit] › tests-visual/release-11-0-2.spec.ts:783:13 › hover · a vertical pill dock, collapsed, keeps its box to 0 px through every seat's hover (3.8s)
+  ✓  20 [webkit] › tests-visual/release-11-0-2.spec.ts:783:13 › hover · a vertical rounded dock, expanded, keeps its box to 0 px through every seat's hover (13.1s)
+  ✓  21 [webkit] › tests-visual/release-11-0-2.spec.ts:783:13 › hover · a vertical rounded dock, collapsed, keeps its box to 0 px through every seat's hover (4.0s)
+  ✓  22 [webkit] › tests-visual/release-11-0-2.spec.ts:783:13 › hover · a vertical card dock, expanded, keeps its box to 0 px through every seat's hover (13.2s)
+  ✓  23 [webkit] › tests-visual/release-11-0-2.spec.ts:783:13 › hover · a vertical card dock, collapsed, keeps its box to 0 px through every seat's hover (3.9s)
+  ✘  24 [webkit] › tests-visual/release-11-0-2.spec.ts:906:5 › radius · every dock seat's corner is half its block size, at 1440 (8.9s)
+  ✘  25 [webkit] › tests-visual/release-11-0-2.spec.ts:906:5 › radius · every dock seat's corner is half its block size, at 390 (9.3s)
+
+
+  1) [webkit] › tests-visual/release-11-0-2.spec.ts:673:1 › rail · a start-anchored rail's close holds its top edge and crest, and ends on the disc 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 89
+    Received:    454.6169128417969
+
+      689 |     }
+      690 |     const bottoms = moving.map((f) => f.root[1] + f.root[3]);
+    > 691 |     for (let i = 1; i < bottoms.length; i++) expect(bottoms[i]!).toBeLessThanOrEqual(bottoms[i - 1]! + 1);
+          |                                                                  ^
+      692 |     const last = moving.at(-1)!;
+      693 |     const settled = frames.at(-1)!;
+      694 |     expect(settled.morphing).toBe(false);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:691:66
+
+    Error Context: tests-visual/test-results/release-11-0-2-rail-·-a-st-c6ee6--crest-and-ends-on-the-disc-webkit/error-context.md
+
+  2) [webkit] › tests-visual/release-11-0-2.spec.ts:699:1 › rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 2
+    Received:   46.99999809265137
+
+      707 |     info.annotations.push({ type: "rail", description: JSON.stringify({ disc, frames: moving.map((f) => [...f.root.map(Math.round), Math.round(f.crest[1]), f.foot ? f.foot.map(Math.round) : null]) }) });
+      708 |     expect(moving.length, "the open is a morph").toBeGreaterThan(6);
+    > 709 |     expect(Math.abs(moving[0]!.crest[1] - disc[1]!)).toBeLessThan(2);
+          |                                                      ^
+      710 |     for (const f of moving) {
+      711 |         expect(f.crest[1], "crest never above the plate").toBeGreaterThanOrEqual(f.root[1] - 1.5);
+      712 |         if (f.foot) {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:709:54
+
+    Error Context: tests-visual/test-results/release-11-0-2-rail-·-a-st-96ce3-e-the-foot-inside-the-plate-webkit/error-context.md
+
+  3) [webkit] › tests-visual/release-11-0-2.spec.ts:733:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 360 
+
+    Error: the run's scrollWidth is its clientWidth
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 278
+    Received: 286
+
+      771 |             expect(r.collapsed).toBe(false);
+      772 |             expect(r.root[0], "the root's scrollWidth is its clientWidth").toBe(r.root[1]);
+    > 773 |             expect(r.run[0], "the run's scrollWidth is its clientWidth").toBe(r.run[1]);
+          |                                                                          ^
+      774 |             expect(r.scrollers, "no element is a horizontal scroller at rest").toEqual([]);
+      775 |             expect(r.page[0], "the page does not scroll sideways").toBe(r.page[1]);
+      776 |         });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:773:74
+
+    Error Context: tests-visual/test-results/release-11-0-2-rows-·-the--4db32-on-beside-the-layers-at-360-webkit/error-context.md
+
+  4) [webkit] › tests-visual/release-11-0-2.spec.ts:733:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 390 
+
+    Error: the run's scrollWidth is its clientWidth
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 308
+    Received: 316
+
+      771 |             expect(r.collapsed).toBe(false);
+      772 |             expect(r.root[0], "the root's scrollWidth is its clientWidth").toBe(r.root[1]);
+    > 773 |             expect(r.run[0], "the run's scrollWidth is its clientWidth").toBe(r.run[1]);
+          |                                                                          ^
+      774 |             expect(r.scrollers, "no element is a horizontal scroller at rest").toEqual([]);
+      775 |             expect(r.page[0], "the page does not scroll sideways").toBe(r.page[1]);
+      776 |         });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:773:74
+
+    Error Context: tests-visual/test-results/release-11-0-2-rows-·-the--be387-on-beside-the-layers-at-390-webkit/error-context.md
+
+  5) [webkit] › tests-visual/release-11-0-2.spec.ts:733:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 1440 
+
+    Error: the run's scrollWidth is its clientWidth
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 894
+    Received: 898
+
+      771 |             expect(r.collapsed).toBe(false);
+      772 |             expect(r.root[0], "the root's scrollWidth is its clientWidth").toBe(r.root[1]);
+    > 773 |             expect(r.run[0], "the run's scrollWidth is its clientWidth").toBe(r.run[1]);
+          |                                                                          ^
+      774 |             expect(r.scrollers, "no element is a horizontal scroller at rest").toEqual([]);
+      775 |             expect(r.page[0], "the page does not scroll sideways").toBe(r.page[1]);
+      776 |         });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:773:74
+
+    Error Context: tests-visual/test-results/release-11-0-2-rows-·-the--7c554-n-beside-the-layers-at-1440-webkit/error-context.md
+
+  6) [webkit] › tests-visual/release-11-0-2.spec.ts:733:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 360 
+
+    Error: the run's scrollWidth is its clientWidth
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 168
+    Received: 172
+
+      771 |             expect(r.collapsed).toBe(false);
+      772 |             expect(r.root[0], "the root's scrollWidth is its clientWidth").toBe(r.root[1]);
+    > 773 |             expect(r.run[0], "the run's scrollWidth is its clientWidth").toBe(r.run[1]);
+          |                                                                          ^
+      774 |             expect(r.scrollers, "no element is a horizontal scroller at rest").toEqual([]);
+      775 |             expect(r.page[0], "the page does not scroll sideways").toBe(r.page[1]);
+      776 |         });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:773:74
+
+    Error Context: tests-visual/test-results/release-11-0-2-rows-·-the--f00d1-on-beside-the-layers-at-360-webkit/error-context.md
+
+  7) [webkit] › tests-visual/release-11-0-2.spec.ts:733:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 390 
+
+    Error: the run's scrollWidth is its clientWidth
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 168
+    Received: 172
+
+      771 |             expect(r.collapsed).toBe(false);
+      772 |             expect(r.root[0], "the root's scrollWidth is its clientWidth").toBe(r.root[1]);
+    > 773 |             expect(r.run[0], "the run's scrollWidth is its clientWidth").toBe(r.run[1]);
+          |                                                                          ^
+      774 |             expect(r.scrollers, "no element is a horizontal scroller at rest").toEqual([]);
+      775 |             expect(r.page[0], "the page does not scroll sideways").toBe(r.page[1]);
+      776 |         });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:773:74
+
+    Error Context: tests-visual/test-results/release-11-0-2-rows-·-the--4767f-on-beside-the-layers-at-390-webkit/error-context.md
+
+  8) [webkit] › tests-visual/release-11-0-2.spec.ts:733:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 1440 
+
+    Error: the run's scrollWidth is its clientWidth
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 168
+    Received: 172
+
+      771 |             expect(r.collapsed).toBe(false);
+      772 |             expect(r.root[0], "the root's scrollWidth is its clientWidth").toBe(r.root[1]);
+    > 773 |             expect(r.run[0], "the run's scrollWidth is its clientWidth").toBe(r.run[1]);
+          |                                                                          ^
+      774 |             expect(r.scrollers, "no element is a horizontal scroller at rest").toEqual([]);
+      775 |             expect(r.page[0], "the page does not scroll sideways").toBe(r.page[1]);
+      776 |         });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:773:74
+
+    Error Context: tests-visual/test-results/release-11-0-2-rows-·-the--a7f21-n-beside-the-layers-at-1440-webkit/error-context.md
+
+  9) [webkit] › tests-visual/release-11-0-2.spec.ts:906:5 › radius · every dock seat's corner is half its block size, at 1440 
+
+    Error: trigger: the unpainted corner area
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 55.28731160639222
+    Received:    49.41975308641976
+
+      945 |         for (const [kind, cell] of Object.entries(cells)) {
+      946 |             expect(cell.span, `${kind} paints a plate`).toBeGreaterThan(12);
+    > 947 |             expect(cell.measured, `${kind}: the unpainted corner area`).toBeGreaterThanOrEqual(cell.expected * 0.8);
+          |                                                                         ^
+      948 |         }
+      949 |     });
+      950 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:947:73
+
+    Error Context: tests-visual/test-results/release-11-0-2-radius-·-ev-2f393-half-its-block-size-at-1440-webkit/error-context.md
+
+  10) [webkit] › tests-visual/release-11-0-2.spec.ts:906:5 › radius · every dock seat's corner is half its block size, at 390 
+
+    Error: tab: the unpainted corner area
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 61.97701041081694
+    Received:    59.16358024691387
+
+      945 |         for (const [kind, cell] of Object.entries(cells)) {
+      946 |             expect(cell.span, `${kind} paints a plate`).toBeGreaterThan(12);
+    > 947 |             expect(cell.measured, `${kind}: the unpainted corner area`).toBeGreaterThanOrEqual(cell.expected * 0.8);
+          |                                                                         ^
+      948 |         }
+      949 |     });
+      950 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:947:73
+
+    Error Context: tests-visual/test-results/release-11-0-2-radius-·-ev-ae7a4--half-its-block-size-at-390-webkit/error-context.md
+
+  10 failed
+    [webkit] › tests-visual/release-11-0-2.spec.ts:673:1 › rail · a start-anchored rail's close holds its top edge and crest, and ends on the disc 
+    [webkit] › tests-visual/release-11-0-2.spec.ts:699:1 › rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate 
+    [webkit] › tests-visual/release-11-0-2.spec.ts:733:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 360 
+    [webkit] › tests-visual/release-11-0-2.spec.ts:733:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 390 
+    [webkit] › tests-visual/release-11-0-2.spec.ts:733:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 1440 
+    [webkit] › tests-visual/release-11-0-2.spec.ts:733:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 360 
+    [webkit] › tests-visual/release-11-0-2.spec.ts:733:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 390 
+    [webkit] › tests-visual/release-11-0-2.spec.ts:733:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 1440 
+    [webkit] › tests-visual/release-11-0-2.spec.ts:906:5 › radius · every dock seat's corner is half its block size, at 1440 
+    [webkit] › tests-visual/release-11-0-2.spec.ts:906:5 › radius · every dock seat's corner is half its block size, at 390 
+  15 passed (2.6m)

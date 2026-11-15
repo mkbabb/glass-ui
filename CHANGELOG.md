@@ -426,6 +426,158 @@ on the left, the dock with reduced motion turned on, and the timing of HandMark'
   </h1>
   ```
 
+## 11.0.2 — 2026-11-15
+
+A patch on 11.0.1. Nothing is removed or renamed. The Slider's thumb takes a new
+default colour, and its magnifying lens during a drag is now opt-in, both described
+below.
+
+- **`useGlobalDark` takes a `storageKey`.** `darkModeSyncScript({ storageKey })` could
+  read a key of your choosing in the page head, but the composable always read and
+  wrote `vueuse-color-scheme`, so the two halves disagreed as soon as you changed it.
+  `useGlobalDark({ storageKey })` now reads and writes the key you give it. Like
+  `initialValue`, it is honoured on the first call only, and a later call that passes a
+  different key throws.
+
+- **With an `initialValue`, a toggle remembers the mode you chose.** A toggle that
+  landed on the system's own scheme stored `auto`, so a reader who chose dark twice on a
+  dark Mac opened the site in light the next morning on a light one. When you pass an
+  `initialValue`, a toggle now stores `dark` or `light`. A stored `auto` still follows
+  the system, and without an `initialValue` the toggle behaves as before.
+
+- **A focused Slider shows its focus under forced colours.** Forced-colour modes, such
+  as Windows High Contrast, drop every shadow, and the Slider's focus ring was a shadow
+  on its track, so in 11.0.1 a focused Slider showed nothing there. Under
+  `(forced-colors: active)` the focused track, and the focused thumb of a spectrum
+  Slider, now draw a `Highlight` outline 2px out.
+
+- **The Slider's magnifying lens during a drag is opt-in with `loupe`.** In 11.0.1
+  every horizontal Slider raised a lens above the thumb while it was held and frosted
+  the page around it. Inside a card that has its own backdrop blur, the frost covered
+  the Slider's own row and the lens floated away from the value. A Slider now raises
+  the lens, and frosts the page, only when you set `loupe`. Without it, holding a
+  Slider changes nothing outside the control.
+
+- **reka-ui 2.10.1 or later is required.** The peer range was `^2.0`, but the Dialog's
+  overlay reads the dialog's `unmountOnHide`, which reka-ui added in 2.10.0, and a
+  Popover's dismissal and focus return need 2.10.1. On an older reka-ui a modal Dialog
+  threw as its overlay rendered. The peer range is now `^2.10.1`.
+
+- **A Select keeps every row inside its plate.** With a trigger wider than 22rem, the
+  list was forced to the trigger's width while its plate stopped at 22rem, so each row
+  lost its right edge and the highlighted row ran square into the plate. Every anchored
+  plate (Select, DropdownMenu and Popover) now follows one width rule: at least as wide
+  as its trigger or anchor, up to 22rem for its own content, and never wider than the
+  room the page lays out in, less the 16px edge. A reserved scrollbar gutter is no
+  longer counted as room, and an anchored panel that fits is no longer narrower than
+  its anchor on a phone.
+
+- **Opening a Select with the mouse shows the highlight alone.** In 11.0 the selected
+  row also drew the keyboard focus ring after a pointer open. Now the ring appears after
+  a keyboard open, or as soon as a key is pressed in the list. The list's content
+  carries `data-open-input` (`pointer` or `keyboard`) while it is open.
+
+- **A page with a GlassDock no longer crashes Playwright's WebKit.** The dock's edge
+  mixed two translucent colours that were each a mix themselves, a value the WebKit
+  build Playwright ships cannot compute, so every page with a dock died in it (Safari
+  was never affected). `--glass-border-floating` and `--glass-border-dock` are now
+  written as `--foreground` at a strength rather than mixed with `transparent`, so the
+  edge no longer mixes two mixes. Two new tokens hold the strengths,
+  `--glass-edge-floating` (5%) and `--glass-edge-dock` (8%), and both hairlines keep
+  their values, so the edge computes the same colour as before at rest, open and every
+  step between. The edge still reads both tokens: if you set `--glass-border-dock`, it
+  colours the open end, and if you set `--glass-border-floating`, it colours the folded
+  end and the whole edge of a held or a static dock. If you coloured either end with
+  `--dock-plate-expanded-border` or `--dock-plate-collapsed-border`, those still apply.
+
+- **A static dock's controls sample no backdrop.** With `backdrop-mode="static"` the
+  dock's plate already drew no backdrop blur, but an active control kept the capsule's
+  own blur, which read as a lit disc in dark. The controls of a static dock now carry no
+  `backdrop-filter` at rest, on hover, on press or when active. A live dock is unchanged.
+
+- **The Blob stays a bead after a fast sweep.** A sweep, a drag or a release over a
+  `Blob` could flash a flat square that filled its canvas for a moment, because the
+  bounce fired again on every frame the pointer slowed and the kicks piled up. The
+  bounce now fires once each time the pointer slows, and the body's swell is held
+  inside its box. A still click looks as it did.
+
+- **A dock's fold or expand lays out once a frame.** While it moved, the dock measured
+  both of its resting sizes again on every frame, each time forcing the page through
+  extra layouts, because the boxes the motion resizes also told it to look for a change
+  in its host. The fold of an untouched `collapse="open"` dock cost about 245 layouts
+  over 67 frames; it now costs one a frame. A host or content change during the motion
+  is still measured on the frame it lands.
+
+- **The dock waits six seconds before it folds.** After the pointer and focus leave a
+  collapsible dock, it now stays open for six seconds instead of 3.6, so a reader who
+  moves to the page for a moment finds it still open. A dock mounted `"open"` folds six
+  seconds after mount. `DOCK_COLLAPSE_DELAY_MS` holds the new value.
+
+- **In dark, a hovered, pressed or selected dock seat is lighter than the dock.** Its
+  fill was the dark scheme's veil ink, which is deeper than the plate, so a seat you
+  hovered or selected drew darker than the dock around it. In dark,
+  `--dock-control-hover-bg`, `--dock-control-press-bg` and `--dock-control-active-bg`
+  now lift toward `--foreground` (8%, 11% and 14%), on a live or a static dock. The light
+  scheme is unchanged.
+
+- **The Slider thumb takes a colour token.** The scrubber's thumb paints
+  `var(--slider-thumb-bg, var(--foreground))`, so you can colour it the way
+  `--slider-range-bg` colours the fill. Under forced colours it still paints `Canvas`.
+
+- **PagerDots no longer stretches a bar across the rail on a one-dot step.** The worm
+  read its dot size from the `--pager-dot-size` token's text, so `.75rem` counted as
+  0.75 px and the bridge between two dots drew many cells long, reading as a jump. The
+  worm now measures the dot from its own box, so a step to a neighbour draws a bridge
+  no longer than the gap plus one dot, whatever unit the token is written in.
+
+- **A vertical wheel over a horizontal dock scrolls the page.** A dock's run contained
+  overscroll on both axes, so a vertical wheel over a horizontal dock whose seats
+  overflow stopped at the dock and the page did not move. The run now contains
+  overscroll on its own scroll axis only (`overscroll-behavior-x: contain` on a
+  horizontal run, `-y` on a vertical one), and the other axis passes to the page.
+
+- **A dock pinned to an edge opens and closes from that edge.** A vertical dock with
+  `anchor="start"` whose page hides its open content on the closed face
+  (`.collapsed:not([data-morphing])`) shrank toward its middle as it closed, and as it
+  opened its crest drew above the plate and its foot flashed at the page's corner. A
+  close now starts from the open size it leaves, so the top edge and the crest hold
+  and the bottom edge travels. A region that differs in size between the two faces
+  holds the dock's own anchored edge rather than its centre, and a region that was
+  hidden on the closed face appears where it rests. Centred docks move as before.
+
+- **Every dock seat is a capsule.** 11.0.1 gave the icon control a corner of half its
+  size; dropdown and select triggers and tab-shaped seats still rounded to
+  `--radius-pill` (1rem), so on a 36 to 40px seat their hover, open and selected plate
+  had flat sides. Their corner is now the icon control's,
+  `calc(var(--dock-control-size) / 2)`, which the browser clamps to half each seat's
+  own height. `--dock-control-radius` still sets the corner for all of them.
+
+- **A control you place in a dock keeps its own transitions.** The dock gave every
+  control placed directly in its run a transition for the seat's width, and that
+  replaced the control's own list, so its hover and press tweens snapped. The seat's
+  transition is now a default under the control's: a control that declares a
+  `transition` keeps it. To have such a control tween its width when it becomes the
+  open seat, add `inline-size` (`block-size` in a vertical dock) to its list, as the
+  dock's own controls now do. While the dock folds or unfolds it sets its controls'
+  opacity and scale on every frame, and their own transitions resume once it settles.
+
+- **The Slider's thumb fills the track.** The thumb was a smaller disc inside the fill's
+  round end, off its centre, and the spectrum's handle was a thin bar whose corners
+  stood outside the track's round ends. Now the track, the fill and the thumb share one
+  height and one radius, half that height: the thumb is a circle as tall as the track,
+  centred on the fill's round end at every value and on the track's round end at the
+  minimum and maximum, in both orientations, inverted and right to left, at every
+  size. The spectrum's handle is a ring of the same height with the gradient showing
+  through. `--slider-thumb-size-sm`, `-md` and `-lg` no longer resize a scrubber's
+  thumb: set `--slider-track-height-sm`, `-md` or `-lg` instead. The thumb size still
+  sets the spectrum's taller track.
+
+  Because the thumb now fills the track, at the minimum it covers the fill entirely and
+  the fill no longer shows as a rim around it: the thumb itself marks the value there.
+  So that it reads against both the fill and the empty track, its default colour moves
+  from `--card` to `--foreground`: a dark thumb in the light scheme and a light one in
+  dark. Set `--slider-thumb-bg` to choose another.
+
 ## 11.0.1 — 2026-11-12
 
 A patch that brings the 10.1.5 fixes forward onto 11.0. If you saw the dock's hover

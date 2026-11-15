@@ -105,8 +105,8 @@ export interface UseDockStateReturn {
  * ```
  */
 export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
-    // Patient-dwell collapse delay (2500 → 3600ms): a more
-    // forgiving hover/interaction window before auto-collapse. The ~60ms HOVER_INTENT_MS
+    // The collapse delay is the one idle window, `DOCK_COLLAPSE_DELAY_MS` (six
+    // seconds), a forgiving window before auto-collapse. The ~60ms HOVER_INTENT_MS
     // enter dwell is kept as a sweep-past guard. The stationary, state-sized hit frame
     // removes the moving-edge recheck because it never sweeps the cursor.
     const {

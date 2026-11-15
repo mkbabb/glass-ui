@@ -1,0 +1,38 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794521931 slope=31.8/s inuse=25856 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2
+
+(node:5159) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/styles/dock-name-canon.test.ts (7 tests | 1 failed) 211ms
+     × 2. the identifier detector reaches 0 across the whole dock band 11ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/styles/dock-name-canon.test.ts > G-ONE-NAME · rail arm — the rail-as-vertical-dock vocabulary is struck > 2. the identifier detector reaches 0 across the whole dock band
+AssertionError: expected [ Array(1) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "src/components/dock/composables/dockMorphMeasure.ts",
++ ]
+
+ ❯ tests/styles/dock-name-canon.test.ts:118:25
+    116|     it("2. the identifier detector reaches 0 across the whole dock ban…
+    117|         const c = census(DOCK_BAND, D2);
+    118|         expect(c.files).toEqual([]);
+       |                         ^
+    119|     });
+    120|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 57 passed (58)
+      Tests  1 failed | 707 passed | 6 expected fail (714)
+   Start at  17:41:25
+   Duration  18.79s (transform 1.56s, setup 2.28s, import 7.44s, tests 9.25s, environment 10.40s)
+

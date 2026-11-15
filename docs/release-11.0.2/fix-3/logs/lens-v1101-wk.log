@@ -1,0 +1,29 @@
+[guarded] waiting for the 'webkit' lock
+
+Running 1 test using 1 worker
+
+  ✘  1 [webkit] › tests-visual/release-11-0-2.spec.ts:276:1 › lens · a slow held drag on a default Slider mounts no lens, keeps the row at opacity 1 and the track painted (2.2s)
+
+
+  1) [webkit] › tests-visual/release-11-0-2.spec.ts:276:1 › lens · a slow held drag on a default Slider mounts no lens, keeps the row at opacity 1 and the track painted 
+
+    Error: no lens on a default Slider ({"held":true,"lens":1,"veil":1,"opacity":1,"rest":0.5734244287052824,"grasped":0.467188911573773,"change":0.1852650703622365})
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      310 |     info.annotations.push({ type: "lens", description: JSON.stringify(read) });
+      311 |     expect(r.held, `the drag holds the slider (${JSON.stringify(read)})`).toBe(true);
+    > 312 |     expect(r.lens, `no lens on a default Slider (${JSON.stringify(read)})`).toBe(0);
+          |                                                                             ^
+      313 |     expect(r.veil, `no frost on a default Slider (${JSON.stringify(read)})`).toBe(0);
+      314 |     expect(r.opacity, `the row's opacity (${JSON.stringify(read)})`).toBe(1);
+      315 |     expect(read.change, `the track's unfilled end paints as at rest (${JSON.stringify(read)})`).toBeLessThanOrEqual(0.02);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:312:77
+
+    Error Context: tests-visual/test-results/release-11-0-2-lens-·-a-sl-6bbb6-ity-1-and-the-track-painted-webkit/error-context.md
+
+  1 failed
+    [webkit] › tests-visual/release-11-0-2.spec.ts:276:1 › lens · a slow held drag on a default Slider mounts no lens, keeps the row at opacity 1 and the track painted 

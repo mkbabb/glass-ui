@@ -145,9 +145,10 @@
            the paint. A `--glass-plate-*` colour endpoint bakes `:root`'s luma and
            cannot. */
         --dock-plate-collapsed-tier: var(--glass-veil-wash);
-        --dock-plate-collapsed-border: var(--glass-border-floating);
         --dock-plate-expanded-tier: var(--glass-veil-dock);
-        --dock-plate-expanded-border: var(--glass-border-dock);
+        /* The colour at the edge's expanded end (dock/dock.css): the dock hairline
+           token, so a host's `--glass-border-dock` colours it. */
+        --_dock-edge-expanded-ink: var(--glass-border-dock);
         /* The plate's border width, named once: the plate draws it (dock/dock.css) and a
            `ScrollProgressRim edge="border"` seated in this dock strokes over it at the
            same width. */

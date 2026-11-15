@@ -1,0 +1,2156 @@
+diff --git a/src/components/skeleton/Skeleton.vue b/src/components/skeleton/Skeleton.vue
+index 74dd153a9..4623d1478 100644
+--- a/src/components/skeleton/Skeleton.vue
++++ b/src/components/skeleton/Skeleton.vue
+@@ -144,7 +144,7 @@ watch(
+ @layer components {
+     @media (prefers-reduced-motion: no-preference) {
+         .skeleton:not([data-shimmer]) {
+-            animation: skeleton-breathe 1.1s var(--ease-standard) infinite alternate;
++            animation: skeleton-breathe var(--skeleton-breathe-duration) var(--ease-standard) infinite alternate;
+         }
+     }
+ }
+diff --git a/src/composables/motion/index.ts b/src/composables/motion/index.ts
+index fc0f4b570..a7f8ed858 100644
+--- a/src/composables/motion/index.ts
++++ b/src/composables/motion/index.ts
+@@ -104,3 +104,6 @@ export {
+     type EngageRungName,
+     type EngageChannel,
+ } from "./engage/engageLadder";
++
++// W-B.17: presence and follow.
++export * from "./presence";
+diff --git a/src/styles/glass.css b/src/styles/glass.css
+index f4af6c1ec..b897b7ba0 100644
+--- a/src/styles/glass.css
++++ b/src/styles/glass.css
+@@ -173,6 +173,10 @@
+    role leg. The rung owns elevation; the card composes its own cast in
+    `card/styles.css`.) */
+ @import "./glass/reveal.css";
++/* W-B.17: the plate, the glyph and presence. */
++@import "./glass/plate.css";
++@import "./glass/glyph.css";
++@import "./glass/presence.css";
+ /* The UNIVERSAL `.liquid-enter` mount recipe
+    (the four coupled channels as @keyframes-on-mount + the `.is-cel` cel-slam + the
+    lagging cartoon cast). @import-ed AFTER reveal.css (it extends the same
+diff --git a/src/styles/tokens/scheme-motion.css b/src/styles/tokens/scheme-motion.css
+index 2d834c7ac..373fe2da8 100644
+--- a/src/styles/tokens/scheme-motion.css
++++ b/src/styles/tokens/scheme-motion.css
+@@ -94,6 +94,8 @@
+        The CALM card register keeps `--duration-fast`/`--duration-normal` — a `<Card>` is
+        not an interactive control. */
+     --duration-control: 0.12s;
++    /* One breath clock: the Skeleton and the plate's idle and busy breath (W-B.17 R-10). */
++    --skeleton-breathe-duration: 1.1s;
+     /* Base clocks stay independently tunable. The canonical `sheet-animate` reader
+        multiplies its panel/fast legs by `--motion-tempo`; unrelated color and ambient
+        effects may continue to consume these bases without claiming global co-scale. */
+diff --git a/src/styles/utilities/a11y-overrides.css b/src/styles/utilities/a11y-overrides.css
+index 55840cc1c..b5fb2fab1 100644
+--- a/src/styles/utilities/a11y-overrides.css
++++ b/src/styles/utilities/a11y-overrides.css
+@@ -53,6 +53,34 @@
+         }
+     }
+ 
++    /* W-B.17 R-9: the authorized fades of the intent pieces. Each row is a class or
++       attribute selector, so it outranks the `*` fallback above by specificity. Travel
++       needs no row: every amount multiplies `--motion-weight`, 0 under reduce. */
++    @media (prefers-reduced-motion: reduce) {
++        .plate::before {
++            transition: opacity var(--duration-instant) var(--ease-standard) !important;
++        }
++        .presence-enter-active,
++        .presence-leave-active,
++        .presence-swap-enter-active,
++        .presence-swap-leave-active {
++            transition: opacity var(--duration-instant) var(--ease-out) !important;
++        }
++        [data-presence] {
++            transition:
++                opacity var(--duration-instant) var(--ease-out),
++                visibility 0s !important;
++        }
++        [data-presence]:is([data-absent], [data-state="unchecked"]) {
++            transition:
++                opacity var(--duration-instant) var(--ease-out),
++                visibility 0s var(--duration-instant) !important;
++        }
++        .focus-ring {
++            transition: outline-color var(--duration-instant) var(--ease-standard) !important;
++        }
++    }
++
+     /* ── No-transition class (for theme switches, etc.) ──────────────────────────
+        The theme-flip transition-suppression storm: `useGlobalDark.toggleDark()` adds
+        `.no-transition` to `<html>` for the flip's single style recalc so the page's
+diff --git a/src/styles/utilities/base.css b/src/styles/utilities/base.css
+index dc12f8c17..525756c3e 100644
+--- a/src/styles/utilities/base.css
++++ b/src/styles/utilities/base.css
+@@ -141,14 +141,19 @@
+        thing it was rescuing, and its own mass spread over 8px was sub-edge (1.17:1)
+        anyway. `--focus-ring-shadow` itself SURVIVES for its component-lane readers;
+        retiring it is each lane's own act, not this one's. */
+-    .focus-ring:focus-visible {
+-        outline: var(--focus-ring-width) solid
+-            color-mix(
+-                in oklab,
+-                var(--foreground) calc(var(--ink-perimeter) * 100%),
+-                transparent
+-            );
++    /* W-B.17 R-12: the ring is always declared, transparent at rest, and its colour
++       fades in and out. No width or offset animates. */
++    .focus-ring {
++        outline: var(--focus-ring-width) solid transparent;
+         outline-offset: 2px;
++        transition: outline-color var(--duration-instant) var(--ease-standard);
++    }
++    .focus-ring:focus-visible {
++        outline-color: color-mix(
++            in oklab,
++            var(--foreground) calc(var(--ink-perimeter) * 100%),
++            transparent
++        );
+     }
+ 
+     /* ── Hairline-accent — 0.5px catch-light + under-shadow pair ──
+diff --git a/src/composables/motion/presence/Presence.ts b/src/composables/motion/presence/Presence.ts
+new file mode 100644
+index 000000000..4d3a751a8
+--- /dev/null
++++ b/src/composables/motion/presence/Presence.ts
+@@ -0,0 +1,26 @@
++// <Presence> (W-B.17 R-7): Vue's <Transition> under one of two names. It renders no
++// element and stamps nothing on its child. Two boolean props and no others.
++import { Transition, h, type FunctionalComponent } from "vue";
++import { readReducedMotion } from "../core/useReducedMotion";
++import { reclaimHooks } from "./follow";
++
++export interface PresenceProps {
++    /** The node is replaced in its seat: out, then in. */
++    swap?: boolean;
++    /** The node's arrival pushes what follows it: its block size follows. */
++    reclaim?: boolean;
++}
++
++export const Presence: FunctionalComponent<PresenceProps> = (props, { slots }) =>
++    h(
++        Transition,
++        {
++            name: props.swap ? "presence-swap" : "presence",
++            mode: props.swap ? "out-in" : undefined,
++            ...(props.reclaim && !readReducedMotion() ? reclaimHooks : {}),
++        },
++        slots,
++    );
++
++Presence.props = { swap: Boolean, reclaim: Boolean };
++Presence.displayName = "Presence";
+diff --git a/src/composables/motion/presence/follow.ts b/src/composables/motion/presence/follow.ts
+new file mode 100644
+index 000000000..b2eb78a05
+--- /dev/null
++++ b/src/composables/motion/presence/follow.ts
+@@ -0,0 +1,69 @@
++// follow (W-B.17 R-8): a box whose content changed reaches its new size by one tween.
++//
++// The one writer in glass that animates a size. One shot per change, on the smallest
++// box, on the `present` clock read from the same tokens the CSS legs read. Under
++// reduced motion it does not run: the box lands in one frame and what arrived fades.
++import { nextTick } from "vue";
++import { readReducedMotion } from "../core/useReducedMotion";
++
++const ID = "follow";
++
++interface Box {
++    w: number;
++    h: number;
++}
++const box = (el: HTMLElement): Box => ({ w: el.offsetWidth, h: el.offsetHeight });
++
++/** The `present` clock: `--spring-present` over `--spring-present-settle` x tempo. */
++function presentClock(el: HTMLElement): { duration: number; easing: string } {
++    const cs = getComputedStyle(el);
++    const settle = Number.parseFloat(cs.getPropertyValue("--spring-present-settle")) || 0.2;
++    const tempo = Number.parseFloat(cs.getPropertyValue("--motion-tempo")) || 1;
++    const easing = cs.getPropertyValue("--spring-present").trim() || "ease-out";
++    return { duration: settle * 1000 * tempo, easing };
++}
++
++function size(el: HTMLElement, from: Box, to: Box, extra?: PropertyIndexedKeyframes): Animation {
++    return el.animate(
++        {
++            overflow: ["clip", "clip"],
++            ...(from.w !== to.w && { inlineSize: [`${from.w}px`, `${to.w}px`] }),
++            ...(from.h !== to.h && { blockSize: [`${from.h}px`, `${to.h}px`] }),
++            ...extra,
++        },
++        { id: ID, ...presentClock(el) },
++    );
++}
++
++/** Call BEFORE the change. Resolves when the box has settled. */
++export async function follow(el: HTMLElement | null): Promise<void> {
++    if (!el || readReducedMotion()) return;
++    const from = box(el);
++    await nextTick();
++    for (const a of el.getAnimations()) if (a.id === ID) a.cancel();
++    const to = box(el);
++    if (from.w === to.w && from.h === to.h) return;
++    await size(el, from, to).finished.catch(() => {});
++}
++
++const gapOf = (el: HTMLElement): number =>
++    Number.parseFloat(getComputedStyle(el.parentElement ?? el).rowGap) || 0;
++
++/** `<Presence reclaim>`: a node that arrives or leaves in flow. It carries no block
++ *  padding, border or margin of its own. */
++export const reclaimHooks = {
++    onEnter(el: Element, done: () => void): void {
++        const node = el as HTMLElement;
++        const gap = gapOf(node);
++        size(node, { w: node.offsetWidth, h: 0 }, box(node), {
++            marginBlockStart: [`${-gap}px`, "0px"],
++        }).finished.then(done, done);
++    },
++    onLeave(el: Element, done: () => void): void {
++        const node = el as HTMLElement;
++        const gap = gapOf(node);
++        size(node, box(node), { w: node.offsetWidth, h: 0 }, {
++            marginBlockStart: ["0px", `${-gap}px`],
++        }).finished.then(done, done);
++    },
++};
+diff --git a/src/composables/motion/presence/index.ts b/src/composables/motion/presence/index.ts
+new file mode 100644
+index 000000000..40d8884f7
+--- /dev/null
++++ b/src/composables/motion/presence/index.ts
+@@ -0,0 +1,2 @@
++export { Presence, type PresenceProps } from "./Presence";
++export { follow } from "./follow";
+diff --git a/src/styles/glass/glyph.css b/src/styles/glass/glyph.css
+new file mode 100644
+index 000000000..ce4731880
+--- /dev/null
++++ b/src/styles/glass/glyph.css
+@@ -0,0 +1,70 @@
++/* The glyph (W-B.17 R-6).
++
++   Two inherited numbers on every control: `--intent` (a pointer is over THIS control)
++   and `--intent-set` (this control is on, open or current). Every control resets both,
++   so a control nested in another answers for itself. The glyph computes its own
++   `scale`, `translate` or `rotate` from them; the transition runs on the glyph. Every
++   rule is `:where()`, zero specificity. */
++@layer components {
++    :where(
++            .plate,
++            button,
++            a[href],
++            summary,
++            [role="button"],
++            [role="tab"],
++            [role="option"],
++            [role="menuitem"],
++            [role="menuitemcheckbox"],
++            [role="menuitemradio"]
++        ) {
++        --intent: 0;
++        --intent-set: 0;
++
++        @media (hover: hover) {
++            &:hover:not(:disabled, [aria-disabled="true"]) {
++                --intent: 1;
++            }
++        }
++        &:is(
++                [aria-pressed="true"],
++                [aria-expanded="true"],
++                [aria-checked="true"],
++                [aria-current]:not([aria-current="false"]),
++                [data-state="open"],
++                [data-state="on"],
++                [data-state="active"],
++                [data-state="checked"]
++            ) {
++            --intent-set: 1;
++        }
++    }
++
++    :where([data-glyph], .plate > svg) {
++        transform-box: fill-box;
++        transform-origin: center;
++        rotate: calc(var(--glyph-flip, 0deg) * var(--intent-set, 0));
++        transition:
++            scale var(--spring-present-duration) var(--spring-present),
++            translate var(--spring-present-duration) var(--spring-present),
++            rotate var(--spring-present-duration) var(--spring-present);
++    }
++    :where([data-glyph=""], [data-glyph="grow"], .plate > svg:not([data-glyph])) {
++        scale: calc(1 + var(--glyph-grow, 0.08) * var(--motion-weight, 1) * var(--intent, 0));
++    }
++    :where([data-glyph="nudge"]) {
++        translate: calc(var(--glyph-dx, 2px) * var(--motion-weight, 1) * var(--intent, 0))
++            calc(var(--glyph-dy, 0px) * var(--motion-weight, 1) * var(--intent, 0));
++    }
++    :where([data-glyph="turn"]) {
++        rotate: calc(
++            var(--glyph-turn, 15deg) * var(--motion-weight, 1) * var(--intent, 0) +
++                var(--glyph-flip, 0deg) * var(--intent-set, 0)
++        );
++    }
++    :where([data-glyph="draw"][pathLength="1"], [data-glyph="draw"] [pathLength="1"]) {
++        stroke-dasharray: 1 0.3;
++        stroke-dashoffset: calc(-1.3 * max(var(--intent, 0), var(--intent-set, 0)));
++        transition: stroke-dashoffset var(--duration-fast) var(--ease-standard);
++    }
++}
+diff --git a/src/styles/glass/plate.css b/src/styles/glass/plate.css
+new file mode 100644
+index 000000000..6166cd006
+--- /dev/null
++++ b/src/styles/glass/plate.css
+@@ -0,0 +1,83 @@
++/* The plate (W-B.17 R-1 to R-4, R-10, R-11).
++
++   One flat fill on the control's own `::before`, at the "on" strength. `opacity` carries
++   every lighter state; `scale` grows it from `--plate-from` on a control about as wide
++   as it is tall. Hover, focus, pressed, on and busy come from this one rule. No node,
++   no script, no listener; two compositor properties. */
++@layer components {
++    :where(.plate) {
++        position: relative;
++        isolation: isolate;
++    }
++
++    .plate::before {
++        content: "";
++        position: absolute;
++        inset: 0;
++        z-index: -1;
++        border-radius: inherit;
++        pointer-events: none;
++        background: color-mix(
++            in oklab,
++            var(--plate-tone, currentColor) calc(var(--fill-selected) * 100%),
++            transparent
++        );
++        opacity: 0;
++        scale: calc(1 - (1 - var(--plate-from, 0.8)) * var(--motion-weight, 1));
++        transition:
++            opacity var(--duration-control) var(--ease-standard),
++            scale var(--spring-present-duration) var(--spring-present);
++    }
++
++    /* R-3: a glyph with a named verb takes the plate as a fill alone. */
++    .plate:has(> [data-glyph]:not([data-glyph=""], [data-glyph="grow"])) {
++        --plate-from: 1;
++    }
++
++    @media (hover: hover) {
++        .plate:hover:not(:disabled, [aria-disabled="true"])::before {
++            opacity: calc(var(--fill-hover) / var(--fill-selected));
++            scale: 1;
++        }
++    }
++    .plate:is(:focus-visible, [data-highlighted])::before {
++        opacity: calc(var(--fill-hover) / var(--fill-selected));
++        scale: 1;
++    }
++
++    .plate:is(
++            [aria-pressed="true"],
++            [aria-expanded="true"],
++            [aria-current]:not([aria-current="false"]),
++            [data-state="on"],
++            [data-state="open"],
++            [data-state="active"],
++            [aria-busy="true"]
++        )::before,
++    .plate:is(:active, [data-press]):not(:disabled, [aria-disabled="true"])::before {
++        opacity: 1;
++        scale: 1;
++    }
++
++    @media (prefers-reduced-motion: no-preference) {
++        .plate[data-idle]:not(:hover, :focus-visible, :active)::before,
++        .plate[aria-busy="true"]::before {
++            animation: plate-breathe var(--skeleton-breathe-duration) var(--ease-standard)
++                infinite alternate;
++        }
++    }
++
++    /* The press (R-11, 12.0.0, on the owner's answer). Uniform, no bounce to see. */
++    .plate {
++        transition: scale var(--spring-press-duration) var(--spring-press);
++    }
++    .plate:is(:active, [data-press]):not(:disabled, [aria-disabled="true"]) {
++        scale: var(--scale-press-sm);
++    }
++}
++
++@keyframes plate-breathe {
++    to {
++        opacity: calc(var(--fill-hover) / var(--fill-selected));
++    }
++}
+diff --git a/src/styles/glass/presence.css b/src/styles/glass/presence.css
+new file mode 100644
+index 000000000..13bde1489
+--- /dev/null
++++ b/src/styles/glass/presence.css
+@@ -0,0 +1,53 @@
++/* Presence (W-B.17 R-7). A node arrives by a fade with one small travel, leaves by a
++   fade alone, and a swap is out then in. One recipe, one clock. */
++@layer components {
++    /* A node Vue inserts or removes. */
++    .presence-enter-active,
++    .presence-swap-enter-active {
++        transition:
++            opacity var(--duration-control) var(--ease-out),
++            translate var(--spring-present-duration) var(--spring-present),
++            scale var(--spring-present-duration) var(--spring-present);
++    }
++    .presence-leave-active,
++    .presence-swap-leave-active {
++        transition:
++            opacity var(--spring-present-exit-duration) var(--ease-out),
++            scale var(--spring-present-exit-duration) var(--spring-present);
++    }
++    .presence-enter-from {
++        opacity: 0;
++        translate: 0 calc(4px * var(--motion-weight, 1));
++    }
++    .presence-leave-to {
++        opacity: 0;
++    }
++    .presence-swap-enter-from,
++    .presence-swap-leave-to {
++        opacity: 0;
++        scale: calc(1 - 0.2 * var(--motion-weight, 1));
++    }
++
++    /* A node that stays. Absent, it keeps its seat and takes no pointer. */
++    [data-presence] {
++        transition:
++            opacity var(--duration-control) var(--ease-out),
++            translate var(--spring-present-duration) var(--spring-present),
++            scale var(--spring-present-duration) var(--spring-present),
++            visibility 0s;
++    }
++    [data-presence]:is([data-absent], [data-state="unchecked"]) {
++        opacity: 0;
++        visibility: hidden;
++        translate: 0 calc(4px * var(--motion-weight, 1));
++        transition:
++            opacity var(--spring-present-exit-duration) var(--ease-out),
++            scale var(--spring-present-exit-duration) var(--spring-present),
++            translate 0s var(--spring-present-exit-duration),
++            visibility 0s var(--spring-present-exit-duration);
++    }
++    [data-presence="swap"]:is([data-absent], [data-state="unchecked"]) {
++        translate: none;
++        scale: calc(1 - 0.2 * var(--motion-weight, 1));
++    }
++}
+diff --git a/src/testing/no-snap/index.ts b/src/testing/no-snap/index.ts
+new file mode 100644
+index 000000000..f0021d3b3
+--- /dev/null
++++ b/src/testing/no-snap/index.ts
+@@ -0,0 +1,459 @@
++// The no-snap check (W-B.17 R-13): run one state change, sample every running animation
++// by pausing and seeking it, and judge the samples against the law (motion-canon P0).
++//
++// It imports nothing from any test runner. It takes any page object with an
++// `evaluate(fn, arg)` method (a Playwright page, a Puppeteer page, a CDP wrapper).
++
++export interface PageLike {
++    // eslint-disable-next-line @typescript-eslint/no-explicit-any
++    evaluate(fn: (arg: any) => unknown, arg?: unknown): Promise<any>;
++}
++
++export interface Change {
++    /** Hover, click, key, a store write. */
++    trigger: () => Promise<void>;
++    /** Selectors to read; `sel::before` reads the pseudo-element. */
++    targets: string[];
++    /** Default: the box, opacity, scale, translate, rotate, clip-path, colours,
++     *  radius, stroke-dashoffset. */
++    properties?: string[];
++    /** Selectors whose box must not change at any sample (neighbours). */
++    still?: string[];
++    /** ms between samples; default 1000 / 60. */
++    step?: number;
++}
++
++export type Reading = { present: boolean; values: Record<string, string> };
++export interface Frame {
++    t: number;
++    phase: number;
++    read: Record<string, Reading>;
++    /** Eased progress of each sampled animation, by index into `animations`. */
++    progress: (number | null)[];
++}
++export interface AnimationMeta {
++    target: string;
++    /** The `targets` selectors this animation's element (and pseudo-element) is. */
++    matches: string[];
++    properties: string[];
++    duration: number;
++    delay: number;
++    easing: string;
++    kind: string;
++    phase: number;
++    infinite: boolean;
++}
++export interface Samples {
++    rest: Record<string, Reading>;
++    end: Record<string, Reading>;
++    frames: Frame[];
++    animations: AnimationMeta[];
++    stillRects: Record<string, string[]>;
++    properties: string[];
++    step: number;
++    /** What the sampler had to work around in this engine. */
++    notes?: string[];
++}
++
++export interface Finding {
++    clause: "cut" | "first" | "last" | "step" | "removed" | "neighbour";
++    target: string;
++    property: string;
++    detail: string;
++}
++export interface LegReading {
++    target: string;
++    property: string;
++    travel: number;
++    maxStep: number;
++    easedMaxStep: number | null;
++    ratio: number | null;
++}
++export interface Verdict {
++    pass: boolean;
++    findings: Finding[];
++    legs: LegReading[];
++}
++
++export const DEFAULT_PROPERTIES = [
++    "box",
++    "opacity",
++    "scale",
++    "translate",
++    "rotate",
++    "clip-path",
++    "color",
++    "background-color",
++    "outline-color",
++    "border-top-left-radius",
++    "stroke-dashoffset",
++];
++
++/* ── In-page functions. Self-contained: they are serialized into the page. ── */
++
++function pageRead(arg: { targets: string[]; properties: string[] }) {
++    const out: Record<string, { present: boolean; values: Record<string, string> }> = {};
++    for (const sel of arg.targets) {
++        const m = sel.match(/^(.*?)(::(?:before|after))?$/);
++        const el = document.querySelector(m![1]);
++        if (!el) {
++            out[sel] = { present: false, values: {} };
++            continue;
++        }
++        const cs = getComputedStyle(el, m![2] ?? null);
++        const values: Record<string, string> = {};
++        for (const p of arg.properties) {
++            if (p === "box") {
++                const r = (el as HTMLElement).getBoundingClientRect();
++                values.box = `${r.x} ${r.y} ${r.width} ${r.height}`;
++            } else values[p] = cs.getPropertyValue(p);
++        }
++        out[sel] = { present: el.isConnected, values };
++    }
++    return out;
++}
++
++async function pageCollect(arg: { phase: number; frames: number; targets: string[] }) {
++    const w = window as unknown as { __noSnap?: { all: Set<Animation>; list: Animation[] } };
++    const raf = () => new Promise((r) => requestAnimationFrame(() => r(null)));
++    const state = (w.__noSnap ??= { all: new Set(), list: [] });
++    let fresh: Animation[] = [];
++    for (let i = 0; i < arg.frames && fresh.length === 0; i++) {
++        await raf();
++        fresh = document
++            .getAnimations()
++            .filter((a) => !state.all.has(a) && a.playState !== "finished" && a.playState !== "idle");
++    }
++    // One more frame for siblings that start a frame later (Vue's enter-to swap).
++    if (fresh.length) {
++        await raf();
++        fresh = document
++            .getAnimations()
++            .filter((a) => !state.all.has(a) && a.playState !== "finished" && a.playState !== "idle");
++    }
++    const describe = (a: Animation) => {
++        const e = a.effect as KeyframeEffect;
++        const t = e?.target as Element | null;
++        const matches = arg.targets.filter((sel) => {
++            const m = sel.match(/^(.*?)(::(?:before|after))?$/)!;
++            return document.querySelector(m[1]) === t && (e.pseudoElement ?? null) === (m[2] ?? null);
++        });
++        const name = t
++            ? `${t.tagName.toLowerCase()}${t.id ? "#" + t.id : ""}${e.pseudoElement ?? ""}`
++            : "?";
++        let props: string[] = [];
++        if ((a as CSSTransition).transitionProperty) props = [(a as CSSTransition).transitionProperty];
++        else
++            props = [
++                ...new Set(
++                    (e?.getKeyframes() ?? []).flatMap((k) =>
++                        Object.keys(k).filter(
++                            (p) => !["offset", "computedOffset", "easing", "composite"].includes(p),
++                        ),
++                    ),
++                ),
++            ].map((p) => p.replace(/[A-Z]/g, (c) => "-" + c.toLowerCase()));
++        const tm = e?.getTiming() ?? {};
++        return {
++            target: name,
++            matches,
++            properties: props,
++            duration: Number(tm.duration) || 0,
++            delay: Number(tm.delay) || 0,
++            easing: String(tm.easing ?? ""),
++            kind: a.constructor.name,
++            phase: arg.phase,
++            infinite: tm.iterations === Infinity,
++        };
++    };
++    // A probe per animation carries the same timing (effect easing and the first
++    // keyframe's easing) on a 0-to-1 opacity, so its value IS the leg's eased progress.
++    const probes = fresh.map((a): Animation | null => {
++        const e = a.effect as KeyframeEffect;
++        const kf = e.getKeyframes();
++        const div = document.createElement("div");
++        div.setAttribute("data-no-snap-probe", "");
++        div.style.cssText = "position:fixed;inset:0 auto auto 0;inline-size:1px;block-size:1px;visibility:hidden;pointer-events:none";
++        document.body.append(div);
++        const tm = e.getTiming();
++        const note = (m: string) => {
++            const st = state as unknown as { notes?: string[] };
++            st.notes = [...(st.notes ?? []), m];
++        };
++        const attempts: [Keyframe[], KeyframeAnimationOptions][] = [
++            [[{ opacity: 0, easing: kf[0]?.easing ?? "linear" }, { opacity: 1 }], { duration: tm.duration as number, delay: tm.delay, easing: tm.easing, iterations: tm.iterations, direction: tm.direction, fill: "both" }],
++            [[{ opacity: 0 }, { opacity: 1 }], { duration: Number(tm.duration) || 1, easing: tm.easing, fill: "both" }],
++        ];
++        let p: Animation | null = null;
++        for (const [k, o] of attempts) {
++            try {
++                p = div.animate(k, o);
++                break;
++            } catch (err) {
++                note(`probe refused: ${String(err)}; keyframe easing ${JSON.stringify(kf[0]?.easing)}, timing ${JSON.stringify({ d: tm.duration, e: tm.easing, i: String(tm.iterations), dir: tm.direction })}`);
++            }
++        }
++        if (!p) return null;
++        p.pause();
++        state.all.add(p);
++        return p;
++    });
++    const metas = fresh.map(describe);
++    for (const a of fresh) {
++        a.pause();
++        state.all.add(a);
++        state.list.push(a);
++    }
++    (state as unknown as { probes: (Animation | null)[] }).probes = [
++        ...((state as unknown as { probes?: (Animation | null)[] }).probes ?? []),
++        ...probes,
++    ];
++    return { count: fresh.length, metas, base: state.list.length - fresh.length, notes: (state as unknown as { notes?: string[] }).notes ?? [] };
++}
++
++function pageSeek(arg: { t: number; base: number; targets: string[]; properties: string[] }) {
++    const w = window as unknown as { __noSnap: { list: Animation[] } };
++    const list = w.__noSnap.list;
++    for (let i = arg.base; i < list.length; i++) {
++        const a = list[i];
++        const tm = (a.effect as KeyframeEffect).getComputedTiming();
++        const end = Number(tm.endTime);
++        // Just inside the end: an unfilled animation's last frame, not its after phase.
++        if (a.playState === "idle") continue; // cancelled under the sampler (a transition an animation replaced)
++        a.currentTime = Number.isFinite(end) ? Math.min(arg.t, end - 0.01) : arg.t;
++    }
++    const probes = (w.__noSnap as unknown as { probes: (Animation | null)[] }).probes;
++    for (let i = arg.base; i < list.length; i++) if (probes[i] && list[i].currentTime !== null) probes[i]!.currentTime = list[i].currentTime;
++    const progress = list.map((_, i) =>
++        i < arg.base || !probes[i] ? null : Number(getComputedStyle((probes[i]!.effect as KeyframeEffect).target!).opacity),
++    );
++    return { progress };
++}
++
++async function pageFinish(arg: { base: number }) {
++    const w = window as unknown as { __noSnap: { list: Animation[] } };
++    const list = w.__noSnap.list;
++    for (let i = arg.base; i < list.length; i++) {
++        const a = list[i];
++        const tm = (a.effect as KeyframeEffect).getTiming();
++        if (tm.iterations === Infinity) a.play();
++        else a.finish();
++    }
++}
++
++async function pageSettle() {
++    const raf = () => new Promise((r) => requestAnimationFrame(() => r(null)));
++    for (let i = 0; i < 60; i++) {
++        const live = document
++            .getAnimations()
++            .filter((a) => a.playState === "running" && (a.effect as KeyframeEffect).getTiming().iterations !== Infinity);
++        if (!live.length) break;
++        await Promise.all(live.map((a) => a.finished.catch(() => null)));
++    }
++    await raf();
++    await raf();
++    for (const d of document.querySelectorAll("[data-no-snap-probe]")) d.remove();
++    delete (window as unknown as { __noSnap?: unknown }).__noSnap;
++}
++
++/** Run one state change and sample it. */
++export async function sampleChange(page: PageLike, change: Change): Promise<Samples> {
++    const properties = change.properties ?? DEFAULT_PROPERTIES;
++    const step = change.step ?? 1000 / 60;
++    const targets = change.targets;
++    const still = change.still ?? [];
++    const readArg = { targets, properties };
++    const stillArg = { targets: still, properties: ["box"] };
++    const stillRects: Record<string, string[]> = {};
++    const noteStill = async () => {
++        if (!still.length) return;
++        const r = await page.evaluate(pageRead, stillArg);
++        for (const s of still) (stillRects[s] ??= []).push(r[s]?.values.box ?? "absent");
++    };
++
++    await page.evaluate(() => {
++        delete (window as unknown as { __noSnap?: unknown }).__noSnap;
++        (window as unknown as { __noSnap: unknown }).__noSnap = {
++            all: new Set(document.getAnimations()),
++            list: [],
++        };
++    });
++    const rest = await page.evaluate(pageRead, readArg);
++    await noteStill();
++    await change.trigger();
++
++    const frames: Frame[] = [];
++    const animations: AnimationMeta[] = [];
++    const notes: string[] = [];
++    let offset = 0;
++    for (let phase = 0; phase < 4; phase++) {
++        const got = await page.evaluate(pageCollect, { phase, frames: phase === 0 ? 4 : 12, targets });
++        if (!got.count) break;
++        animations.push(...got.metas);
++        if (got.notes?.length) notes.push(...got.notes);
++        const finite = got.metas.filter((m: AnimationMeta) => !m.infinite);
++        const span = finite.length
++            ? Math.max(...finite.map((m: AnimationMeta) => m.delay + m.duration))
++            : 1000;
++        const n = Math.ceil(span / step);
++        for (let k = 0; k <= n; k++) {
++            const t = Math.min(k * step, span);
++            const { progress } = await page.evaluate(pageSeek, { t, base: got.base, ...readArg });
++            const read = await page.evaluate(pageRead, readArg);
++            await noteStill();
++            frames.push({ t: offset + t, phase, read, progress });
++        }
++        offset += span;
++        await page.evaluate(pageFinish, { base: got.base });
++        if (!finite.length) break;
++    }
++    await page.evaluate(pageSettle);
++    const end = await page.evaluate(pageRead, readArg);
++    await noteStill();
++    return { rest, end, frames, animations, stillRects, properties, step, notes };
++}
++
++/* ── Judging ── */
++
++const COLOR = /color/;
++function parse(prop: string, s: string | undefined): number[] {
++    if (s === undefined) return [];
++    const v = s.trim();
++    if (prop === "scale" && (v === "none" || v === "")) return [1, 1];
++    if (prop === "translate" && (v === "none" || v === "")) return [0, 0];
++    if (prop === "rotate" && (v === "none" || v === "")) return [0];
++    if (prop === "clip-path" && v === "none") return [];
++    const nums = (v.match(/-?\d*\.?\d+(?:e-?\d+)?/gi) ?? []).map(Number);
++    if (prop === "scale" && nums.length === 1) return [nums[0], nums[0]];
++    if (prop === "translate" && nums.length === 1) return [nums[0], 0];
++    if (prop === "box") return nums.slice(2, 4).concat(nums.slice(0, 2));
++    // A colour is compared premultiplied, in whatever space the engine serialized it:
++    // a fade from transparent is a fade, whatever the channels say at alpha 0.
++    if (COLOR.test(prop) && nums.length >= 3) {
++        const alpha = nums.length >= 4 ? nums[nums.length - 1] : 1;
++        const ch = nums.slice(0, 3);
++        const unit = ch.some((x) => Math.abs(x) > 1) ? 255 : 1;
++        return [...ch.map((x) => (x / unit) * alpha), alpha];
++    }
++    return nums;
++}
++function dist(a: number[], b: number[]): number {
++    if (a.length !== b.length) return Infinity;
++    return Math.sqrt(a.reduce((s, x, i) => s + (x - b[i]) ** 2, 0));
++}
++function tol(prop: string, sample: number[]): number {
++    if (prop === "opacity") return 0.01;
++    if (prop === "scale") return 0.002;
++    if (COLOR.test(prop)) return 0.005;
++    return 0.5;
++}
++const reading = (r: Reading | undefined, prop: string): number[] =>
++    !r || !r.present ? (prop === "opacity" ? [0] : []) : parse(prop, r.values[prop]);
++
++const PROP_ALIASES: Record<string, string[]> = {
++    box: ["inline-size", "block-size", "width", "height", "translate", "transform", "scale", "rotate", "all"],
++    "border-top-left-radius": ["border-radius", "border-top-left-radius", "all"],
++    "background-color": ["background-color", "background", "all"],
++};
++const SIZE = ["inline-size", "block-size", "width", "height"];
++function covers(meta: AnimationMeta, target: string, prop: string): boolean {
++    // A box moved by a size tween anywhere in the change is that tween's (follow).
++    if (prop === "box" && meta.properties.some((p) => SIZE.includes(p))) return true;
++    if (!meta.matches.includes(target)) return false;
++    const names = PROP_ALIASES[prop] ?? [prop, "all"];
++    return meta.properties.some((p) => names.includes(p) || p === prop);
++}
++
++const invisible = (r: Reading | undefined): boolean =>
++    !r || !r.present || r.values.visibility === "hidden" || (r.values.opacity !== undefined && Number(r.values.opacity) <= 0.01);
++
++/** Judge the samples against the law. */
++export function judgeChange(samples: Samples, bound: { slack?: number } = {}): Verdict {
++    const slack = bound.slack ?? 1.15;
++    const findings: Finding[] = [];
++    const legs: LegReading[] = [];
++    const { rest, end, frames, animations, properties } = samples;
++    const sizeTween = animations.some((m) => m.properties.some((p) => SIZE.includes(p)));
++
++    for (const target of Object.keys(rest)) {
++        const mine = animations.filter((m) => m.matches.includes(target));
++        // The removed clause: a node is in the document at every sample of every phase
++        // in which it animates.
++        if (mine.length) {
++            const lastPhase = Math.max(...mine.map((m) => m.phase));
++            const gone = frames.findIndex((f) => f.phase <= lastPhase && !f.read[target]?.present);
++            const firstOwn = frames.findIndex((f) => mine.some((m) => m.phase === f.phase));
++            if (gone !== -1 && gone >= firstOwn)
++                findings.push({ clause: "removed", target, property: "-", detail: `absent at sample ${gone}, inside its own phase` });
++        }
++        const presentBoth = !!rest[target]?.present && !!end[target]?.present;
++        for (const prop of properties) {
++            // A node that arrives or leaves is judged on its opacity alone at the end it is absent.
++            if (!presentBoth && prop !== "opacity") {
++                if (!rest[target]?.present && !end[target]?.present) continue;
++            }
++            const r = reading(rest[target], prop);
++            const e = reading(end[target], prop);
++            const comparable = presentBoth || prop === "opacity";
++            const t0 = tol(prop, r.length ? r : e);
++            const changed = comparable && (r.length !== e.length || dist(r, e) > t0);
++            const covering = animations
++                .map((m, i) => ({ m, i }))
++                .filter(({ m }) => covers(m, target, prop));
++            if (changed && !covering.length) {
++                findings.push({ clause: "cut", target, property: prop, detail: `rest ${r.join(",")} end ${e.join(",")}, no animation` });
++                continue;
++            }
++            if (!frames.length) continue;
++            const series = frames.map((f) => reading(f.read[target], prop));
++            const first = series[0];
++            const last = series[series.length - 1];
++            const spatial = prop !== "opacity" && !COLOR.test(prop);
++            if (changed && first.length && r.length && dist(first, r) > t0 && !(spatial && invisible(rest[target])))
++                findings.push({ clause: "first", target, property: prop, detail: `first ${first.join(",")} rest ${r.join(",")}` });
++            if (changed && last.length && e.length && dist(last, e) > t0 && !(spatial && invisible(end[target])))
++                findings.push({ clause: "last", target, property: prop, detail: `last ${last.join(",")} end ${e.join(",")}` });
++            // Box steps are judged only under a size tween; a transformed box is judged
++            // by its own transform leg.
++            if (prop === "box" && !sizeTween) continue;
++            const travel = series.reduce(
++                (m, v) => (v.length && first.length ? Math.max(m, dist(v, first)) : m),
++                0,
++            );
++            const full = Math.max(travel, first.length && last.length ? dist(first, last) : 0);
++            if (!(full > t0) || !Number.isFinite(full)) continue;
++            let maxStep = 0;
++            let eased: number | null = null;
++            for (let k = 0; k + 1 < frames.length; k++) {
++                if (frames[k].phase !== frames[k + 1].phase) continue;
++                const a = series[k];
++                const b = series[k + 1];
++                if (!a.length || !b.length) continue;
++                // A spatial reset while invisible is not seen.
++                if (prop !== "opacity" && invisible(frames[k].read[target]) && invisible(frames[k + 1].read[target])) continue;
++                const d = dist(a, b) / full;
++                if (Number.isFinite(d)) maxStep = Math.max(maxStep, d);
++                for (const { i } of covering) {
++                    if (animations[i].phase !== frames[k].phase) continue;
++                    const pa = frames[k].progress[i];
++                    const pb = frames[k + 1].progress[i];
++                    if (pa == null || pb == null) continue;
++                    eased = Math.max(eased ?? 0, Math.abs(pb - pa));
++                }
++            }
++            const ratio = eased ? maxStep / eased : null;
++            legs.push({ target, property: prop, travel: full, maxStep, easedMaxStep: eased, ratio });
++            if (eased !== null && maxStep > slack * eased + 1e-6)
++                findings.push({ clause: "step", target, property: prop, detail: `max step ${maxStep.toFixed(3)} of travel vs eased ${eased.toFixed(3)}` });
++            if (eased === null && maxStep > 1 / 3)
++                findings.push({ clause: "step", target, property: prop, detail: `max step ${maxStep.toFixed(3)} of travel, no animation object` });
++        }
++    }
++    for (const [sel, rects] of Object.entries(samples.stillRects)) {
++        const first = rects[0];
++        const moved = rects.findIndex((r) => r !== first);
++        if (moved !== -1)
++            findings.push({ clause: "neighbour", target: sel, property: "box", detail: `moved at sample ${moved}: ${first} -> ${rects[moved]}` });
++    }
++    return { pass: findings.length === 0, findings, legs };
++}
+diff --git a/tests-visual/intent-motion/api/ApiProbe.vue b/tests-visual/intent-motion/api/ApiProbe.vue
+new file mode 100644
+index 000000000..195ba88bc
+--- /dev/null
++++ b/tests-visual/intent-motion/api/ApiProbe.vue
+@@ -0,0 +1,23 @@
++<script setup lang="ts">
++import { ref } from "vue";
++import { Presence, follow } from "@glass/composables/motion/presence";
++const on = ref(false);
++const el = ref<HTMLElement | null>(null);
++void follow(el.value);
++// @ts-expect-error follow takes one argument
++void follow(el.value, 1);
++</script>
++
++<template>
++    <Presence><p v-if="on">a</p></Presence>
++    <Presence swap><p v-if="on">a</p><p v-else>b</p></Presence>
++    <Presence reclaim><p v-if="on">a</p></Presence>
++    <!-- @vue-expect-error duration is not a prop -->
++    <Presence :duration="100"><p v-if="on">a</p></Presence>
++    <!-- @vue-expect-error easing is not a prop -->
++    <Presence easing="ease"><p v-if="on">a</p></Presence>
++    <!-- @vue-expect-error name is not a prop -->
++    <Presence name="fade"><p v-if="on">a</p></Presence>
++    <!-- @vue-expect-error group is not a prop -->
++    <Presence group><p v-if="on">a</p></Presence>
++</template>
+diff --git a/tests-visual/intent-motion/api/ssr.mjs b/tests-visual/intent-motion/api/ssr.mjs
+new file mode 100644
+index 000000000..d1add0a1e
+--- /dev/null
++++ b/tests-visual/intent-motion/api/ssr.mjs
+@@ -0,0 +1,35 @@
++// G-API's render half and G-EXPORT's planted series, without a browser.
++import { createServer } from "vite";
++const server = await createServer({ configFile: false, server: { middlewareMode: true, hmr: false, ws: false }, appType: "custom", logLevel: "error", root: new URL("../../..", import.meta.url).pathname });
++const out = {};
++try {
++    const vue = await import("vue");
++    const { renderToString } = await import("vue/server-renderer");
++    const { Presence } = await server.ssrLoadModule("/src/composables/motion/presence/index.ts");
++    const { h } = vue;
++    const forms = {
++        plain: () => h(Presence, null, { default: () => h("p", { id: "x" }, "a") }),
++        swap: () => h(Presence, { swap: true }, { default: () => h("p", { id: "x" }, "a") }),
++        reclaim: () => h(Presence, { reclaim: true }, { default: () => h("p", { id: "x" }, "a") }),
++        plainBite_tag: () => h(vue.TransitionGroup, { tag: "div", name: "presence" }, { default: () => [h("p", { id: "x", key: 1 }, "a")] }),
++    };
++    for (const [k, f] of Object.entries(forms)) out[k] = await renderToString(vue.createSSRApp({ render: f }));
++    const ns = await server.ssrLoadModule("/src/testing/no-snap/index.ts");
++    const mk = (vals, opts = {}) => {
++        const n = vals.length;
++        const frames = vals.map((v, k) => ({ t: k * 16.7, phase: 0, progress: [opts.progress ? opts.progress[k] : k / (n - 1)], read: { "#a": { present: opts.goneAt == null || k < opts.goneAt, values: { opacity: String(v) } } } }));
++        return { rest: { "#a": { present: true, values: { opacity: String(opts.rest ?? vals[0]) } } }, end: { "#a": { present: opts.endPresent ?? true, values: { opacity: String(opts.end ?? vals[n - 1]) } } },
++            frames: opts.noAnim ? [] : frames, animations: opts.noAnim ? [] : [{ target: "p", matches: ["#a"], properties: ["opacity"], duration: 200, delay: 0, easing: "linear", kind: "CSSTransition", phase: 0, infinite: false }], stillRects: {}, properties: ["opacity"], step: 16.7 };
++    };
++    const lin = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1];
++    out.plants = {
++        control: ns.judgeChange(mk(lin)).pass,
++        cut: ns.judgeChange(mk([], { noAnim: true, rest: 0, end: 1 })).pass,
++        firstOffRest: ns.judgeChange(mk([0.75, 0.8, 0.85, 0.9, 1], { rest: 0 })).pass,
++        halfStep: ns.judgeChange(mk([0, 0.05, 0.1, 0.6, 0.7, 0.8, 0.9, 1], { progress: [0, 1 / 7, 2 / 7, 3 / 7, 4 / 7, 5 / 7, 6 / 7, 1] })).pass,
++        removedEarly: ns.judgeChange(mk([1, 0.8, 0.6, 0.4, 0.2, 0], { goneAt: 2, endPresent: false })).pass,
++    };
++} finally {
++    await server.close();
++}
++console.log(JSON.stringify(out, null, 1));
+diff --git a/tests-visual/intent-motion/api/tsconfig.json b/tests-visual/intent-motion/api/tsconfig.json
+new file mode 100644
+index 000000000..5044416cd
+--- /dev/null
++++ b/tests-visual/intent-motion/api/tsconfig.json
+@@ -0,0 +1,6 @@
++{
++    "extends": "../../../tsconfig.json",
++    "compilerOptions": { "paths": { "@glass/*": ["../../../src/*"] } },
++    "vueCompilerOptions": { "checkUnknownProps": true },
++    "include": ["./ApiProbe.vue", "../../../src/composables/motion/presence/", "../../../src/testing/no-snap/", "../../../src/composables/motion/core/useReducedMotion.ts"]
++}
+diff --git a/tests-visual/intent-motion/harness/App.vue b/tests-visual/intent-motion/harness/App.vue
+new file mode 100644
+index 000000000..30719a991
+--- /dev/null
++++ b/tests-visual/intent-motion/harness/App.vue
+@@ -0,0 +1,185 @@
++<script setup lang="ts">
++import { reactive, ref, watch, computed } from "vue";
++import { Video, Folder, Spool, Pin, ArrowRight, ChevronDown, Play, Pause, Check, Pencil, Save, Sun } from "@lucide/vue";
++import { Presence, follow } from "@glass/composables/motion/presence";
++
++const q = new URLSearchParams(location.search);
++const page = q.get("page") ?? "main";
++
++const s = reactive({
++    on: false,
++    expanded: false,
++    busy: false,
++    idle: false,
++    note: false,
++    playing: false,
++    bare: false,
++    stay: false,
++    mark: false,
++    error: false,
++    query: "",
++    value: "Linear",
++    hits: 0,
++});
++(window as unknown as { __h: typeof s }).__h = s;
++
++const cmd = ref<HTMLElement | null>(null);
++const sel = ref<HTMLElement | null>(null);
++const rows = Array.from({ length: 50 }, (_, i) => `Command ${i + 1}`);
++const shown = computed(() => rows.filter((r) => r.toLowerCase().includes(s.query.toLowerCase())));
++watch(() => s.query, () => follow(cmd.value), { flush: "pre" });
++watch(() => s.value, () => follow(sel.value), { flush: "pre" });
++</script>
++
++<template>
++    <main v-if="page === 'main'" class="wrap">
++        <!-- The owner's frame, rebuilt: four icons on two grey plates. -->
++        <section id="cell-bar" class="cell">
++            <div class="bar">
++                <div class="bar-l">
++                    <button id="b-video" class="seat plate" aria-label="Video" style="--plate-tone: oklch(0.6 0.13 250)"><Video :size="20" /></button>
++                </div>
++                <div class="bar-r">
++                    <button id="b-folder" class="seat plate" aria-label="Shared" style="--plate-tone: oklch(0.55 0.2 300)"><Folder :size="20" /></button>
++                    <button id="b-spool" class="seat plate" aria-label="Thread" style="--plate-tone: oklch(0.6 0.13 230)"><Spool :size="20" /></button>
++                    <button id="b-pin" class="seat plate" aria-label="Board" style="--plate-tone: oklch(0.65 0.16 55)"><Pin :size="20" /></button>
++                </div>
++            </div>
++        </section>
++
++        <section id="cell-seat" class="cell">
++            <button id="seat44" class="seat seat44 plate" aria-label="Folder"><Folder id="seat44-g" :size="24" /></button>
++            <button id="g16" class="seat plate" aria-label="Folder 16"><Folder id="g16-g" :size="16" /></button>
++            <button id="g24" class="seat seat44 plate" aria-label="Folder 24"><Folder id="g24-g" :size="24" /></button>
++        </section>
++
++        <section id="cell-row" class="cell">
++            <button id="row" class="row plate" style="--plate-from: 1"><Pin :size="16" data-glyph="none" /><span>Open board</span></button>
++        </section>
++
++        <section id="cell-verbs" class="cell">
++            <button id="nudge" class="seat plate" aria-label="Next"><ArrowRight id="nudge-g" :size="20" data-glyph="nudge" /></button>
++            <button id="turn" class="seat plate" aria-label="Theme"><Sun id="turn-g" :size="20" data-glyph="turn" /></button>
++            <button id="chev" class="seat plate" aria-label="More" :aria-expanded="s.expanded" style="--glyph-dx: 0px; --glyph-dy: 2px; --glyph-flip: 0.5turn" @click="s.expanded = !s.expanded"><ChevronDown id="chev-g" :size="20" data-glyph="nudge" /></button>
++            <button id="draw" class="seat plate" aria-label="Easing">
++                <svg id="draw-g" data-glyph="draw" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
++                    <path id="draw-p" pathLength="1" d="M3 20 C 10 20, 12 4, 21 4" />
++                </svg>
++            </button>
++            <!-- Item 5: an inner group turns about its own box (no plate: the button resets the numbers). -->
++            <button id="sun" class="seat" aria-label="Sun group">
++                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
++                    <circle cx="12" cy="12" r="4" />
++                    <g id="sun-g" data-glyph="turn" style="--glyph-turn: 45deg">
++                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
++                    </g>
++                </svg>
++            </button>
++        </section>
++
++        <section id="cell-state" class="cell">
++            <button id="focus" class="seat plate focus-ring" aria-label="Focus"><Folder :size="20" /></button>
++            <button id="press" class="seat plate" aria-label="Press"><Folder :size="20" /></button>
++            <button id="on" class="seat plate" aria-label="On" :aria-pressed="s.on" @click="s.on = !s.on"><Pin :size="20" /></button>
++            <button id="busy" class="textbtn plate" :aria-busy="s.busy || undefined"><Save :size="16" data-glyph="none" /><span>Save</span></button>
++        </section>
++
++        <section id="cell-idle" class="cell">
++            <div id="idle" class="card plate" :data-idle="s.idle || undefined">Start</div>
++        </section>
++
++        <section id="cell-presence" class="cell">
++            <div class="stack" id="pres-host">
++                <Presence><p v-if="s.note" id="pres-p" class="note">Saved to drafts</p></Presence>
++            </div>
++            <button id="swap" class="seat plate" aria-label="Play" @click="s.playing = !s.playing">
++                <Presence swap><Pause v-if="s.playing" id="sw-pause" key="pause" :size="20" /><Play v-else id="sw-play" key="play" :size="20" /></Presence>
++            </button>
++            <button id="bare" class="seat plate" aria-label="Bare" @click="s.bare = !s.bare">
++                <Pause v-if="s.bare" id="bare-pause" :size="20" data-glyph="none" /><Play v-else id="bare-play" :size="20" data-glyph="none" />
++            </button>
++            <span class="stayseat"><Check id="stay-mark" :size="18" data-presence="swap" :data-absent="!s.mark || undefined" /></span>
++            <span id="stay-line" class="note" data-presence :data-absent="!s.stay || undefined">Copied</span>
++        </section>
++
++        <section id="cell-form" class="cell">
++            <form class="form" @submit.prevent>
++                <label v-for="n in 12" :key="n" :id="`f${n}`" class="field">
++                    <span>Field {{ n }}</span>
++                    <input class="input" />
++                    <Presence v-if="n === 6" reclaim><p v-if="s.error" id="err" class="err">This field needs a value</p></Presence>
++                </label>
++            </form>
++        </section>
++
++        <section id="cell-cmd" class="cell bg">
++            <div id="cmd" ref="cmd" class="cmd glass-floating">
++                <input id="cmd-q" class="input" :value="s.query" @input="s.query = ($event.target as HTMLInputElement).value" />
++                <ul class="list"><li v-for="r in shown" :key="r" class="li">{{ r }}</li></ul>
++            </div>
++        </section>
++
++        <section id="cell-sel" class="cell">
++            <button id="sel" ref="sel" class="textbtn plate" style="--plate-from: 1">
++                <Presence swap><span :key="s.value" id="sel-t">{{ s.value }}</span></Presence>
++                <ChevronDown :size="16" data-glyph="none" />
++            </button>
++            <span id="sel-next" class="note">after</span>
++        </section>
++
++        <section id="cell-blur" class="cell bg">
++            <div id="blur-host" class="glass-floating blurhost">
++                <button v-for="n in 12" :key="n" :id="`bl${n}`" class="seat plate" :aria-label="`b${n}`"><Folder :size="20" /></button>
++            </div>
++        </section>
++
++        <section id="cell-nest" class="cell">
++            <div id="nest-outer" class="row plate" role="button" tabindex="0" style="--plate-from: 1">
++                <ChevronDown id="nest-outer-g" :size="16" data-glyph="nudge" style="--glyph-dx: 0px; --glyph-dy: 2px" />
++                <span>Ease out</span>
++                <button id="nest-inner" class="seat small plate" aria-label="Edit"><Pencil id="nest-inner-g" :size="14" /></button>
++            </div>
++        </section>
++
++        <section id="cell-hit" class="cell">
++            <button id="hit40" class="seat plate" aria-label="Hit 40" @click="s.hits++"><Check :size="20" /></button>
++            <button id="hit24" class="seat small plate" aria-label="Hit 24" @click="s.hits++"><Check :size="14" /></button>
++        </section>
++        <div class="tail" aria-hidden="true"></div>
++    </main>
++
++    <main v-else class="wrap rest">
++        <button v-for="n in 40" :key="'p' + n" class="seat plate" :aria-label="`p${n}`"><Folder :size="20" /></button>
++        <button v-for="n in 40" :key="'g' + n" class="seat" :aria-label="`g${n}`"><ArrowRight :size="20" data-glyph="nudge" /></button>
++        <span v-for="n in 10" :key="'s' + n" class="note" data-presence>Kept {{ n }}</span>
++    </main>
++</template>
++
++<style>
++.wrap { display: flex; flex-direction: column; gap: 20px; padding: 16px; max-width: 760px; }
++.cell { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 12px; border-radius: 16px; }
++.cell.bg { background: linear-gradient(120deg, oklch(0.75 0.15 30), oklch(0.75 0.15 200)); }
++.seat { display: inline-grid; place-items: center; inline-size: 40px; block-size: 40px; border: 0; border-radius: 12px; background: transparent; color: var(--foreground); padding: 0; cursor: pointer; }
++.seat44 { inline-size: 44px; block-size: 44px; border-radius: 14px; }
++.small { inline-size: 24px; block-size: 24px; border-radius: 8px; }
++.bar { display: flex; gap: 2px; }
++.bar-l, .bar-r { display: flex; gap: 4px; padding: 4px; background: color-mix(in oklab, var(--foreground) 6%, transparent); }
++.bar-l { border-radius: 16px 4px 4px 16px; }
++.bar-r { border-radius: 4px 16px 16px 4px; }
++.row { display: inline-flex; align-items: center; gap: 10px; inline-size: 240px; block-size: 36px; padding: 0 12px; border: 0; border-radius: 10px; background: transparent; color: var(--foreground); font: inherit; cursor: pointer; }
++.textbtn { display: inline-flex; align-items: center; gap: 8px; block-size: 36px; padding: 0 14px; border: 0; border-radius: 12px; background: transparent; color: var(--foreground); font: inherit; cursor: pointer; white-space: nowrap; }
++.card { display: grid; place-items: center; inline-size: 280px; block-size: 120px; border-radius: 20px; font-size: 20px; }
++.stack { display: flex; flex-direction: column; min-block-size: 24px; inline-size: 200px; }
++.note { margin: 0; font-size: 14px; }
++.stayseat { display: inline-grid; place-items: center; inline-size: 24px; block-size: 24px; }
++.form { display: flex; flex-direction: column; row-gap: 10px; inline-size: 300px; }
++.field { display: flex; flex-direction: column; row-gap: 4px; font-size: 13px; }
++.input { block-size: 28px; border: 1px solid color-mix(in oklab, var(--foreground) 20%, transparent); border-radius: 8px; background: transparent; color: inherit; padding: 0 8px; }
++.err { margin: 0; font-size: 12px; color: oklch(0.55 0.2 25); }
++.cmd { display: flex; flex-direction: column; gap: 6px; inline-size: 300px; padding: 8px; }
++.list { list-style: none; margin: 0; padding: 0; max-block-size: 320px; overflow: auto; }
++.li { block-size: 32px; line-height: 32px; padding: 0 8px; font-size: 14px; }
++.blurhost { display: grid; grid-template-columns: repeat(6, 40px); gap: 6px; padding: 10px; }
++.rest { flex-direction: row; flex-wrap: wrap; }
++.tail { block-size: 100vh; }
++</style>
+diff --git a/tests-visual/intent-motion/harness/bytes.mjs b/tests-visual/intent-motion/harness/bytes.mjs
+new file mode 100644
+index 000000000..6e17821bb
+--- /dev/null
++++ b/tests-visual/intent-motion/harness/bytes.mjs
+@@ -0,0 +1,22 @@
++import { transform } from "lightningcss";
++import { build } from "vite";
++import { readFileSync } from "node:fs";
++import { gzipSync } from "node:zlib";
++const root = process.argv[2];
++const out = {};
++let all = "";
++for (const f of ["plate", "glyph", "presence"]) {
++  const src = readFileSync(`${root}/src/styles/glass/${f}.css`);
++  const { code } = transform({ filename: `${f}.css`, code: src, minify: true, targets: { safari: (17 << 16) | (5 << 8) } });
++  all += code.toString();
++  out[f] = { raw: code.length, gzip: gzipSync(code, { level: 9 }).length };
++}
++out.threePartials = { raw: Buffer.byteLength(all), gzip: gzipSync(Buffer.from(all), { level: 9 }).length };
++const extra = `@media (prefers-reduced-motion:reduce){.plate:before{transition:opacity var(--duration-instant) var(--ease-standard)!important}.presence-enter-active,.presence-leave-active,.presence-swap-enter-active,.presence-swap-leave-active{transition:opacity var(--duration-instant) var(--ease-out)!important}[data-presence]{transition:opacity var(--duration-instant) var(--ease-out),visibility 0s!important}[data-presence]:is([data-absent],[data-state=unchecked]){transition:opacity var(--duration-instant) var(--ease-out),visibility 0s var(--duration-instant)!important}.focus-ring{transition:outline-color var(--duration-instant) var(--ease-standard)!important}}`;
++out.reducedRows = { raw: extra.length, gzip: gzipSync(extra, { level: 9 }).length };
++for (const [name, entry] of [["presence+follow", "src/composables/motion/presence/index.ts"], ["no-snap", "src/testing/no-snap/index.ts"]]) {
++  const r = await build({ configFile: false, logLevel: "silent", build: { write: false, minify: true, target: "safari17", lib: { entry: `${root}/${entry}`, formats: ["es"], fileName: "x" }, rollupOptions: { external: ["vue"] } } });
++  const code = Buffer.from(r[0].output[0].code);
++  out[name] = { raw: code.length, gzip: gzipSync(code, { level: 9 }).length };
++}
++console.log(JSON.stringify(out, null, 1));
+diff --git a/tests-visual/intent-motion/harness/compose.py b/tests-visual/intent-motion/harness/compose.py
+new file mode 100644
+index 000000000..641402b39
+--- /dev/null
++++ b/tests-visual/intent-motion/harness/compose.py
+@@ -0,0 +1,100 @@
++# Compose film strips: one PNG per cell, the "in" row over the "out" row, frames evenly
++# spaced in animation time, at most 1200 px wide.
++# usage: python3 compose.py <runDir> <engine> <outDir> <owner.png>
++import json, os, sys
++from PIL import Image, ImageDraw, ImageFont
++
++run, engine, out, owner = sys.argv[1:5]
++MAXW = 1200
++FULL = None  # every cell at l1440
++SUBSET = {"plate-hover-seat44", "plate-hover-row", "plate-hover-g16", "plate-hover-g24", "glyph-nudge", "glyph-draw",
++          "glyph-flip", "plate-press", "plate-focus", "plate-busy", "presence-swap", "presence-reclaim", "follow-cmd", "presence-stay-mark"}
++font = ImageFont.load_default()
++
++def label_row(files, title):
++    ims = [Image.open(f["path"]).convert("RGB") for f in files]
++    h = max(i.height for i in ims)
++    gap = 4
++    w = sum(i.width for i in ims) + gap * (len(ims) - 1)
++    row = Image.new("RGB", (w, h + 14), (255, 255, 255))
++    d = ImageDraw.Draw(row)
++    x = 0
++    for f, im in zip(files, ims):
++        row.paste(im, (x, 14))
++        t = f["t"] if isinstance(f["t"], str) else f'{f["t"]} ms'
++        d.text((x + 2, 1), t, fill=(90, 90, 90), font=font)
++        x += im.width + gap
++    return row
++
++def compose(cell, res, path):
++    rows = []
++    for k in ("in", "out"):
++        r = res.get(k) or {}
++        if not r.get("film"):
++            continue
++        rows.append(label_row(r["film"], k))
++    if not rows:
++        return False
++    w = max(r.width for r in rows)
++    h = sum(r.height for r in rows) + 18 + 6 * (len(rows) - 1)
++    sheet = Image.new("RGB", (w, h), (255, 255, 255))
++    d = ImageDraw.Draw(sheet)
++    d.text((2, 2), cell, fill=(0, 0, 0), font=font)
++    y = 18
++    for r in rows:
++        sheet.paste(r, (0, y))
++        y += r.height + 6
++    if sheet.width > MAXW:
++        s = MAXW / sheet.width
++        sheet = sheet.resize((MAXW, max(1, int(sheet.height * s))), Image.LANCZOS)
++    sheet.save(path, optimize=True)
++    return True
++
++made = 0
++for fn in sorted(os.listdir(run)):
++    if not fn.startswith("results-") or not fn.endswith(".json"):
++        continue
++    d = json.load(open(os.path.join(run, fn)))
++    for cfg, c in d.get("configs", {}).items():
++        dst = os.path.join(out, engine, cfg)
++        os.makedirs(dst, exist_ok=True)
++        for cell, res in c["cells"].items():
++            if cfg != "l1440" and cell not in SUBSET:
++                continue
++            if compose(cell, res, os.path.join(dst, f"{cell}.png")):
++                made += 1
++
++# The owner's frame beside this icon bar: rest and the pin hovered, light and dark.
++def bar_frame(cfg, which):
++    for fn in os.listdir(run):
++        if fn.startswith("results-") and fn.endswith(".json"):
++            d = json.load(open(os.path.join(run, fn)))
++            c = d.get("configs", {}).get(cfg)
++            if c:
++                film = c["cells"]["plate-hover-b-pin"]["in"]["film"]
++                return Image.open(film[0 if which == "rest" else -1]["path"]).convert("RGB")
++    return None
++
++tiles = [("owner, Google Chat (hover on Board)", Image.open(owner).convert("RGB"))]
++for cfg in ("l1440", "d1440"):
++    for which in ("rest", "hover"):
++        im = bar_frame(cfg, which)
++        if im is not None:
++            tiles.append((f"glass plate, {cfg[0] == 'l' and 'light' or 'dark'}, {which}", im))
++th = 110
++scaled = [(t, im.resize((int(im.width * th / im.height), th), Image.LANCZOS)) for t, im in tiles]
++cols = 2
++cw = max(im.width for _, im in scaled)
++rows_n = (len(scaled) + cols - 1) // cols
++sheet = Image.new("RGB", (cols * cw + (cols + 1) * 10, rows_n * (th + 26) + 10), (255, 255, 255))
++d = ImageDraw.Draw(sheet)
++for i, (t, im) in enumerate(scaled):
++    x = 10 + (i % cols) * (cw + 10)
++    y = 10 + (i // cols) * (th + 26)
++    d.text((x, y), t, fill=(0, 0, 0), font=font)
++    sheet.paste(im, (x, y + 14))
++if sheet.width > MAXW:
++    s = MAXW / sheet.width
++    sheet = sheet.resize((MAXW, int(sheet.height * s)), Image.LANCZOS)
++sheet.save(os.path.join(os.path.dirname(out.rstrip("/")), f"icon-bar-vs-owner-{engine}.png"), optimize=True)
++print("strips", made)
+diff --git a/tests-visual/intent-motion/harness/harness.css b/tests-visual/intent-motion/harness/harness.css
+new file mode 100644
+index 000000000..7ee7481c2
+--- /dev/null
++++ b/tests-visual/intent-motion/harness/harness.css
+@@ -0,0 +1,4 @@
++@import "tailwindcss" source(".");
++@import "tw-animate-css";
++@import "../../../src/styles/index.css";
++body { margin: 0; background: var(--background); color: var(--foreground); font-family: system-ui; }
+diff --git a/tests-visual/intent-motion/harness/index.html b/tests-visual/intent-motion/harness/index.html
+new file mode 100644
+index 000000000..bfb8efaab
+--- /dev/null
++++ b/tests-visual/intent-motion/harness/index.html
+@@ -0,0 +1,3 @@
++<!doctype html>
++<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Intent motion</title></head>
++<body><div id="app"></div><script type="module" src="./main.ts"></script></body></html>
+diff --git a/tests-visual/intent-motion/harness/main.ts b/tests-visual/intent-motion/harness/main.ts
+new file mode 100644
+index 000000000..56d3dde73
+--- /dev/null
++++ b/tests-visual/intent-motion/harness/main.ts
+@@ -0,0 +1,6 @@
++import "./harness.css";
++import { createApp } from "vue";
++import App from "./App.vue";
++const q = new URLSearchParams(location.search);
++if (q.get("mode") === "dark") document.documentElement.classList.add("dark");
++createApp(App).mount("#app");
+diff --git a/tests-visual/intent-motion/harness/probe.mjs b/tests-visual/intent-motion/harness/probe.mjs
+new file mode 100644
+index 000000000..e84697f44
+--- /dev/null
++++ b/tests-visual/intent-motion/harness/probe.mjs
+@@ -0,0 +1,632 @@
++// W-B.17 prototype probe. One browser per run, a new context per configuration,
++// everything closed in finally. The run serves its own harness and stops it.
++// usage: node probe.mjs <chromium|webkit> <outDir> [config...]
++// configs: l1440 d1440 l390 d390 rm1440 (default all) ; extra phases: owed cost rest bare
++import { chromium, webkit } from "playwright";
++import { createServer } from "vite";
++import { mkdirSync, writeFileSync } from "node:fs";
++import { join } from "node:path";
++import { sampleChange, judgeChange } from "../../../src/testing/no-snap/index.ts";
++
++const [engineName, outDir, ...args] = process.argv.slice(2);
++const ENGINE = engineName === "webkit" ? webkit : chromium;
++const PORT = engineName === "webkit" ? 5372 : 5371;
++const ALL = ["l1440", "d1440", "l390", "d390", "rm1440"];
++const configs = args.filter((a) => ALL.includes(a));
++const extras = new Set(args.filter((a) => !ALL.includes(a)));
++const runConfigs = configs.length ? configs : extras.size ? [] : ALL;
++mkdirSync(join(outDir, "frames"), { recursive: true });
++
++const CONF = {
++    l1440: { mode: "light", vw: 1440, vh: 900, coarse: false, rm: false },
++    d1440: { mode: "dark", vw: 1440, vh: 900, coarse: false, rm: false },
++    l390: { mode: "light", vw: 390, vh: 844, coarse: true, rm: false },
++    d390: { mode: "dark", vw: 390, vh: 844, coarse: true, rm: false },
++    rm1440: { mode: "light", vw: 1440, vh: 900, coarse: false, rm: true },
++};
++
++const setH = (page, patch) => page.evaluate((p) => Object.assign(window.__h, p), patch);
++const away = (page, c) => page.mouse.move(c.vw - 10, 5);
++const hover = (sel) => async (page) => {
++    const b = await page.locator(sel).boundingBox();
++    await page.mouse.move(b.x + b.width / 2, b.y + b.height / 2);
++};
++const hoverAt = (sel, fx, fy) => async (page) => {
++    const b = await page.locator(sel).boundingBox();
++    await page.mouse.move(b.x + b.width * fx, b.y + b.height * fy);
++};
++
++// Each cell: a clip, targets, a set-up, and an in and an out trigger.
++const P = ["box", "opacity", "scale", "translate", "rotate", "background-color", "outline-color", "stroke-dashoffset"];
++function cells(c) {
++    const fine = !c.coarse;
++    const plateHover = (id, extra = []) => ({
++        name: `plate-hover-${id}`, clip: `#${id}`, targets: [`#${id}::before`, `#${id} > svg`, ...extra],
++        in: fine ? hover(`#${id}`) : (p) => p.tap(`#${id}`),
++        out: fine ? (p) => away(p, c) : async () => {},
++    });
++    const list = [
++        { ...plateHover("b-pin"), clip: ".bar", still: ["#b-spool", "#b-folder"] },
++        { ...plateHover("seat44") },
++        { ...plateHover("g16") },
++        { ...plateHover("g24") },
++        { ...plateHover("row"), targets: ["#row::before", "#row > svg"] },
++        { name: "glyph-nudge", clip: "#nudge", targets: ["#nudge::before", "#nudge-g"], in: fine ? hover("#nudge") : (p) => p.tap("#nudge"), out: (p) => away(p, c) },
++        { name: "glyph-turn", clip: "#turn", targets: ["#turn::before", "#turn-g"], in: fine ? hover("#turn") : (p) => p.tap("#turn"), out: (p) => away(p, c) },
++        { name: "glyph-draw", clip: "#draw", targets: ["#draw::before", "#draw-p"], in: fine ? hover("#draw") : (p) => p.tap("#draw"), out: (p) => away(p, c) },
++        { name: "glyph-sun-group", clip: "#sun", targets: ["#sun-g"], in: fine ? hover("#sun") : (p) => p.tap("#sun"), out: (p) => away(p, c) },
++        { name: "glyph-flip", clip: "#chev", targets: ["#chev::before", "#chev-g"], setup: (p) => away(p, c), in: (p) => setH(p, { expanded: true }), out: (p) => setH(p, { expanded: false }) },
++        { name: "plate-focus", clip: "#focus", targets: ["#focus::before", "#focus"], props: ["opacity", "scale", "outline-color"],
++          setup: async (p) => { await p.keyboard.press("Shift"); },
++          in: async (p) => { await p.keyboard.press("Tab"); await p.evaluate(() => document.querySelector("#focus").focus()); },
++          out: (p) => p.evaluate(() => document.activeElement?.blur()) },
++        { name: "plate-press", clip: "#press", targets: ["#press::before", "#press"], props: ["opacity", "scale"],
++          setup: fine ? hover("#press") : async () => {}, in: (p) => p.mouse.down(), out: (p) => p.mouse.up(),
++          pre: fine ? null : hover("#press") },
++        { name: "plate-on", clip: "#on", targets: ["#on::before", "#on > svg"], setup: (p) => away(p, c), in: (p) => setH(p, { on: true }), out: (p) => setH(p, { on: false }) },
++        { name: "plate-busy", clip: "#busy", targets: ["#busy::before", "#busy"], props: ["opacity", "scale", "box"], in: (p) => setH(p, { busy: true }), out: (p) => setH(p, { busy: false }), soak: 700 },
++        { name: "plate-idle", clip: "#idle", targets: ["#idle::before"], props: ["opacity", "scale"], in: (p) => setH(p, { idle: true }), out: (p) => setH(p, { idle: false }), soak: 700 },
++        { name: "presence-plain", clip: "#pres-host", targets: ["#pres-p"], props: ["opacity", "translate", "box"], in: (p) => setH(p, { note: true }), out: (p) => setH(p, { note: false }) },
++        { name: "presence-swap", clip: "#swap", targets: ["#sw-play", "#sw-pause"], props: ["opacity", "scale"], setup: (p) => away(p, c), in: (p) => setH(p, { playing: true }), out: (p) => setH(p, { playing: false }) },
++        { name: "bite-bare-swap", clip: "#bare", targets: ["#bare-play", "#bare-pause"], props: ["opacity", "scale"], setup: (p) => away(p, c), in: (p) => setH(p, { bare: true }), out: (p) => setH(p, { bare: false }) },
++        { name: "presence-stay-mark", clip: ".stayseat", targets: ["#stay-mark"], props: ["opacity", "scale", "translate", "visibility"], in: (p) => setH(p, { mark: true }), out: (p) => setH(p, { mark: false }) },
++        { name: "presence-stay-line", clip: "#stay-line", targets: ["#stay-line"], props: ["opacity", "translate", "visibility"], in: (p) => setH(p, { stay: true }), out: (p) => setH(p, { stay: false }) },
++        { name: "presence-reclaim", clip: "#cell-form", targets: ["#err", "#f7"], props: ["opacity", "translate", "box"], in: (p) => setH(p, { error: true }), out: (p) => setH(p, { error: false }) },
++        { name: "follow-cmd", clip: "#cmd", targets: ["#cmd"], props: ["box"], in: (p) => setH(p, { query: "command 50" }), out: (p) => setH(p, { query: "" }) },
++        { name: "follow-sel", clip: "#cell-sel", targets: ["#sel", "#sel-t", "#sel-next"], props: ["box", "opacity", "scale"], setup: (p) => away(p, c), in: (p) => setH(p, { value: "Ease in out cubic" }), out: (p) => setH(p, { value: "Linear" }) },
++    ];
++    return list;
++}
++
++// In-page film helpers (the same pause-and-seek clock as the helper).
++async function collect(page, frames = 4) {
++    return page.evaluate(async (frames) => {
++        const raf = () => new Promise((r) => requestAnimationFrame(r));
++        const st = (window.__film ??= { all: new Set(document.getAnimations()), list: [] });
++        let fresh = [];
++        for (let i = 0; i < frames && !fresh.length; i++) {
++            await raf();
++            fresh = document.getAnimations().filter((a) => !st.all.has(a) && a.playState !== "finished");
++        }
++        if (fresh.length) { await raf(); fresh = document.getAnimations().filter((a) => !st.all.has(a) && a.playState !== "finished"); }
++        const base = st.list.length;
++        let span = 0, infinite = false;
++        for (const a of fresh) {
++            a.pause(); st.all.add(a); st.list.push(a);
++            const t = a.effect.getComputedTiming();
++            if (Number.isFinite(t.endTime)) span = Math.max(span, t.endTime); else infinite = true;
++        }
++        return { base, n: fresh.length, span: span || (infinite ? 1100 : 0), infinite };
++    }, frames);
++}
++const seek = (page, base, t) => page.evaluate(([base, t]) => {
++    const l = window.__film.list;
++    for (let i = base; i < l.length; i++) {
++        const e = l[i].effect.getComputedTiming().endTime;
++        l[i].currentTime = Number.isFinite(e) ? Math.min(t, e - 0.01) : t;
++    }
++}, [base, t]);
++const finish = (page, base) => page.evaluate((base) => {
++    const l = window.__film.list;
++    for (let i = base; i < l.length; i++) l[i].effect.getTiming().iterations === Infinity ? l[i].play() : l[i].finish();
++}, base);
++const settle = (page) => page.evaluate(async () => {
++    const raf = () => new Promise((r) => requestAnimationFrame(r));
++    for (let i = 0; i < 40; i++) {
++        const live = document.getAnimations().filter((a) => a.playState === "running" && a.effect.getTiming().iterations !== Infinity);
++        if (!live.length) break;
++        await Promise.all(live.map((a) => a.finished.catch(() => null)));
++    }
++    await raf(); await raf();
++    delete window.__film;
++});
++const nodes = (page, sel) => page.evaluate((sel) => {
++    const el = document.querySelector(sel);
++    return el ? el.querySelectorAll("*").length + 1 : 0;
++}, sel);
++
++async function clipOf(page, sel) {
++    await page.locator(sel).first().scrollIntoViewIfNeeded();
++    const b = await page.locator(sel).first().boundingBox();
++    const pad = 8;
++    return { x: Math.max(0, b.x - pad), y: Math.max(0, b.y - pad), width: b.width + 2 * pad, height: b.height + 2 * pad };
++}
++
++async function film(page, cell, trigger, prefix, clip, N = 8) {
++    const files = [];
++    const nodeCounts = {};
++    nodeCounts.rest = await nodes(page, cell.nodeSel ?? cell.clip);
++    const restPath = `${prefix}-rest.png`;
++    await page.screenshot({ path: restPath, clip });
++    files.push({ path: restPath, t: "rest" });
++    await page.evaluate(() => { window.__film = { all: new Set(document.getAnimations()), list: [] }; });
++    await trigger(page);
++    let offset = 0;
++    for (let phase = 0; phase < 3; phase++) {
++        const got = await collect(page, phase === 0 ? 4 : 12);
++        if (!got.n) break;
++        for (let k = 0; k < N; k++) {
++            const t = (got.span * k) / (N - 1);
++            await seek(page, got.base, t);
++            if (k === Math.floor(N / 2)) nodeCounts[`mid${phase}`] = await nodes(page, cell.nodeSel ?? cell.clip);
++            const f = `${prefix}-p${phase}-${k}.png`;
++            await page.screenshot({ path: f, clip });
++            files.push({ path: f, t: Math.round(offset + t) });
++        }
++        offset += got.span;
++        await finish(page, got.base);
++        if (got.infinite) break;
++    }
++    await settle(page);
++    nodeCounts.end = await nodes(page, cell.nodeSel ?? cell.clip);
++    const endPath = `${prefix}-end.png`;
++    await page.screenshot({ path: endPath, clip });
++    files.push({ path: endPath, t: "end" });
++    return { files, nodeCounts };
++}
++
++async function reset(page, c) {
++    await page.mouse.up().catch(() => {});
++    await away(page, c);
++    await page.evaluate(() => { document.activeElement?.blur?.(); Object.assign(window.__h, { on: false, expanded: false, busy: false, idle: false, note: false, playing: false, bare: false, stay: false, mark: false, error: false, query: "", value: "Linear" }); });
++    await page.waitForTimeout(450);
++    await settle(page);
++}
++
++async function openPage(browser, c, url) {
++    const ctx = await browser.newContext({
++        viewport: { width: c.vw, height: c.vh }, deviceScaleFactor: 2,
++        hasTouch: c.coarse, isMobile: c.coarse, reducedMotion: c.rm ? "reduce" : "no-preference",
++        colorScheme: c.mode,
++    });
++    const page = await ctx.newPage();
++    const errors = [];
++    page.on("pageerror", (e) => errors.push(String(e)));
++    await page.goto(url, { waitUntil: "networkidle" });
++    await page.waitForSelector("#app > *");
++    await page.evaluate(() => document.fonts.ready);
++    return { ctx, page, errors };
++}
++
++const out = { engine: engineName, configs: {}, extras: {} };
++let browser, server;
++try {
++    server = await createServer({ configFile: new URL("./vite.config.ts", import.meta.url).pathname, server: { port: PORT, strictPort: true }, logLevel: "error" });
++    await server.listen();
++    const BASE = `http://localhost:${PORT}/`;
++    browser = await ENGINE.launch({ headless: true });
++
++    for (const key of runConfigs) {
++        const c = CONF[key];
++        const { ctx, page, errors } = await openPage(browser, c, `${BASE}?mode=${c.mode}`);
++        try {
++            const res = (out.configs[key] = { cells: {}, errors });
++            const only = process.env.CELLS ? new Set(process.env.CELLS.split(",")) : null;
++            for (const cell of cells(c).filter((x) => !only || only.has(x.name))) {
++                const r = (res.cells[cell.name] = {});
++                for (const dir of ["in", "out"]) {
++                    try {
++                        await reset(page, c);
++                        if (cell.setup) await cell.setup(page);
++                        if (cell.pre) await cell.pre(page);
++                        await page.waitForTimeout(400); await settle(page);
++                        if (dir === "out") {
++                            await cell.in(page);
++                            await page.waitForTimeout(cell.soak ?? 450);
++                            if (!cell.soak) await settle(page);
++                        }
++                        await page.locator(cell.clip).first().scrollIntoViewIfNeeded();
++                        const samples = await sampleChange(page, { trigger: () => cell[dir](page), targets: cell.targets, properties: cell.props ?? P, still: cell.still, step: 1000 / 60 });
++                        const verdict = judgeChange(samples);
++                        const props = [...new Set(samples.animations.map((a) => `${a.target}:${a.properties.join("+")}`))];
++                        // Film strip of the same change, from the same rest.
++                        await reset(page, c);
++                        if (cell.setup) await cell.setup(page);
++                        if (cell.pre) await cell.pre(page);
++                        await page.waitForTimeout(400); await settle(page);
++                        if (dir === "out") {
++                            await cell.in(page);
++                            await page.waitForTimeout(cell.soak ?? 450);
++                            if (!cell.soak) await settle(page);
++                        }
++                        const clip = await clipOf(page, cell.clip);
++                        const f = await film(page, cell, cell[dir], join(outDir, "frames", `${key}-${cell.name}-${dir}`), clip);
++                        r[dir] = {
++                            pass: verdict.pass, findings: verdict.findings, legs: verdict.legs,
++                            animations: samples.animations, props, frames: samples.frames.length,
++                            series: samples.frames.map((fr) => ({ t: +fr.t.toFixed(1), read: fr.read })), rest: samples.rest, end: samples.end,
++                            film: f.files, nodeCounts: f.nodeCounts, samples,
++                        };
++                    } catch (e) {
++                        r[dir] = { error: String(e).slice(0, 400) };
++                    }
++                }
++                process.stdout.write(`${key} ${cell.name} in:${r.in?.pass ?? r.in?.error?.slice(0, 40)} out:${r.out?.pass ?? r.out?.error?.slice(0, 40)}\n`);
++            }
++        } finally {
++            await ctx.close();
++        }
++    }
++
++    if (extras.has("owed")) out.extras.owed = await owed(browser, BASE);
++    if (extras.has("cost") && engineName === "chromium") out.extras.cost = await cost(browser, BASE);
++    if (extras.has("rest")) out.extras.rest = await rest(browser, BASE);
++    if (extras.has("bare")) out.extras.bare = await bare(browser, BASE);
++    if (extras.has("bites")) out.extras.bites = await bites(browser, BASE);
++} finally {
++    writeFileSync(join(outDir, `results-${engineName}-${[...runConfigs, ...extras].join("+")}.json`), JSON.stringify(out, null, 1));
++    await browser?.close();
++    await server?.close();
++}
++
++// ── Owed readings that need wall-clock frames (rAF recorders), both engines. ──
++async function owed(browser, BASE) {
++    const c = CONF.l1440;
++    const { ctx, page } = await openPage(browser, c, `${BASE}?mode=light`);
++    const o = {};
++    try {
++        const recorder = (fnBody) => page.evaluate(fnBody);
++        // Item 3: leaving a breath. Per frame opacity of the ::before across the drop.
++        for (const [name, on, off] of [["idle", { idle: true }, { idle: false }], ["busy", { busy: true }, { busy: false }]]) {
++            await reset(page, c);
++            o[`breath-${name}`] = await page.evaluate(async ([name, on, off]) => {
++                const raf = () => new Promise((r) => requestAnimationFrame(r));
++                const el = document.querySelector(`#${name}`);
++                const read = () => +getComputedStyle(el, "::before").opacity;
++                Object.assign(window.__h, on);
++                const before = [];
++                const t0 = performance.now();
++                while (performance.now() - t0 < 650) { await raf(); before.push(read()); }
++                Object.assign(window.__h, off);
++                const after = [];
++                for (let i = 0; i < 16; i++) { await raf(); after.push(read()); }
++                return { before: before.slice(-6), after };
++            }, [name, on, off]);
++        }
++        // Item 4: a swap's hand-over, and a second toggle at 60 ms.
++        for (const second of [null, 60]) {
++            await reset(page, c);
++            o[`swap-${second ?? "single"}`] = await page.evaluate(async (second) => {
++                const raf = () => new Promise((r) => requestAnimationFrame(r));
++                const log = [];
++                const t0 = performance.now();
++                const read = () => {
++                    const a = document.querySelector("#sw-play"), b = document.querySelector("#sw-pause");
++                    return { t: +(performance.now() - t0).toFixed(1), play: a ? +getComputedStyle(a).opacity : null, pause: b ? +getComputedStyle(b).opacity : null };
++                };
++                window.__h.playing = true;
++                let toggled = false;
++                while (performance.now() - t0 < 600) {
++                    await raf();
++                    if (second && !toggled && performance.now() - t0 >= second) { window.__h.playing = false; toggled = true; }
++                    log.push(read());
++                }
++                return log;
++            }, second);
++        }
++        // Item 7: follow, interrupted at 80 ms (the command panel, and the select trigger).
++        for (const [name, sel, a, b] of [["cmd", "#cmd", { query: "command 50" }, { query: "" }], ["sel", "#sel", { value: "Ease in out cubic" }, { value: "Linear" }]]) {
++            await reset(page, c);
++            await page.locator(sel).scrollIntoViewIfNeeded();
++            o[`follow-interrupt-${name}`] = await page.evaluate(async ([sel, a, b]) => {
++                const raf = () => new Promise((r) => requestAnimationFrame(r));
++                const el = document.querySelector(sel);
++                const log = [];
++                const t0 = performance.now();
++                Object.assign(window.__h, a);
++                let done = false;
++                while (performance.now() - t0 < 600) {
++                    await raf();
++                    if (!done && performance.now() - t0 >= 80) { Object.assign(window.__h, b); done = true; }
++                    const r = el.getBoundingClientRect();
++                    log.push({ t: +(performance.now() - t0).toFixed(1), w: +r.width.toFixed(2), h: +r.height.toFixed(2) });
++                }
++                return log;
++            }, [sel, a, b]);
++        }
++        // Reclaim, wall clock: the field below the error line, per frame, in and out.
++        for (const [name, v] of [["in", true], ["out", false]]) {
++            await reset(page, c);
++            if (!v) { await setH(page, { error: true }); await page.waitForTimeout(400); }
++            await page.locator("#f7").scrollIntoViewIfNeeded();
++            o[`reclaim-wall-${name}`] = await page.evaluate(async (v) => {
++                const raf = () => new Promise((r) => requestAnimationFrame(r));
++                const el = document.querySelector("#f7"); const host = document.querySelector("#cell-form");
++                const log = []; const t0 = performance.now();
++                window.__h.error = v;
++                while (performance.now() - t0 < 400) { await raf(); log.push({ t: +(performance.now() - t0).toFixed(1), y: +(el.getBoundingClientRect().y - host.getBoundingClientRect().y).toFixed(2), err: !!document.querySelector("#err") }); }
++                return log;
++            }, v);
++        }
++        // Single follow, wall clock, for the strip of sizes.
++        for (const [name, sel, a] of [["cmd", "#cmd", { query: "command 50" }], ["sel", "#sel", { value: "Ease in out cubic" }]]) {
++            await reset(page, c);
++            o[`follow-wall-${name}`] = await page.evaluate(async ([sel, a]) => {
++                const raf = () => new Promise((r) => requestAnimationFrame(r));
++                const el = document.querySelector(sel);
++                const log = [];
++                const t0 = performance.now();
++                Object.assign(window.__h, a);
++                while (performance.now() - t0 < 500) { await raf(); const r = el.getBoundingClientRect(); log.push({ t: +(performance.now() - t0).toFixed(1), w: +r.width.toFixed(2), h: +r.height.toFixed(2) }); }
++                return log;
++            }, [sel, a]);
++        }
++        // Item 5: the inner group's centre while it turns (seeked).
++        await reset(page, c);
++        await page.locator("#sun").scrollIntoViewIfNeeded();
++        await page.evaluate(() => { window.__film = { all: new Set(document.getAnimations()), list: [] }; });
++        await hover("#sun")(page);
++        const g = await collect(page);
++        const centres = [];
++        for (let k = 0; k <= 8; k++) {
++            await seek(page, g.base, (g.span * k) / 8);
++            centres.push(await page.evaluate(() => { const r = document.querySelector("#sun-g").getBoundingClientRect(); const cs = getComputedStyle(document.querySelector("#sun-g")); return { cx: +(r.x + r.width / 2).toFixed(2), cy: +(r.y + r.height / 2).toFixed(2), rotate: cs.rotate, origin: cs.transformOrigin, box: cs.transformBox }; }));
++        }
++        await finish(page, g.base); await settle(page);
++        o["sun-group"] = { animations: g.n, centres };
++        // G-NEST.
++        await reset(page, c);
++        const readNest = () => page.evaluate(() => ({
++            outerGlyph: getComputedStyle(document.querySelector("#nest-outer-g")).translate,
++            outerPlate: getComputedStyle(document.querySelector("#nest-outer"), "::before").opacity,
++            innerGlyph: getComputedStyle(document.querySelector("#nest-inner-g")).scale,
++            innerPlate: getComputedStyle(document.querySelector("#nest-inner"), "::before").opacity,
++        }));
++        await page.locator("#nest-outer").scrollIntoViewIfNeeded();
++        await hover("#nest-inner")(page); await page.waitForTimeout(400);
++        const overInner = await readNest();
++        await hoverAt("#nest-outer", 0.35, 0.5)(page); await page.waitForTimeout(400);
++        const overOuter = await readNest();
++        o.nest = { overInner, overOuter };
++        // A .plate that also carries .focus-ring: whose transition wins on the control.
++        o.focusRingTransition = await page.evaluate(() => { const cs = getComputedStyle(document.querySelector("#focus")); return { property: cs.transitionProperty, duration: cs.transitionDuration }; });
++        // G-HIT: a press 1 px inside each edge; scale on the way back.
++        await reset(page, c);
++        const hit = {};
++        for (const id of ["hit40", "hit24"]) {
++            await page.locator(`#${id}`).scrollIntoViewIfNeeded();
++            const b = await page.locator(`#${id}`).boundingBox();
++            const pts = { left: [b.x + 1, b.y + b.height / 2], right: [b.x + b.width - 1, b.y + b.height / 2], top: [b.x + b.width / 2, b.y + 1], bottom: [b.x + b.width / 2, b.y + b.height - 1] };
++            const r = {};
++            for (const [edge, [x, y]] of Object.entries(pts)) {
++                const before = await page.evaluate(() => window.__h.hits);
++                await page.mouse.move(x, y); await page.mouse.down(); await page.waitForTimeout(200);
++                const pressed = await page.evaluate((id) => getComputedStyle(document.querySelector(`#${id}`)).scale, id);
++                const maxBack = page.evaluate(async (id) => {
++                    const raf = () => new Promise((r) => requestAnimationFrame(r));
++                    let m = 0; const el = document.querySelector(`#${id}`);
++                    for (let i = 0; i < 24; i++) { await raf(); const s = parseFloat(getComputedStyle(el).scale) || 1; m = Math.max(m, s); }
++                    return m;
++                }, id);
++                await page.mouse.up();
++                const mb = await maxBack;
++                const after = await page.evaluate(() => window.__h.hits);
++                r[edge] = { fired: after > before, pressed, maxScaleBack: mb };
++                await away(page, c); await page.waitForTimeout(250);
++            }
++            hit[id] = r;
++        }
++        o.hit = hit;
++    } finally {
++        await ctx.close();
++    }
++    // Coarse press: a tap, and (Chromium) a held touch.
++    const cc = CONF.l390;
++    const m = await openPage(browser, cc, `${BASE}?mode=light`);
++    try {
++        await m.page.locator("#press").scrollIntoViewIfNeeded();
++        const rec = m.page.evaluate(async () => {
++            const raf = () => new Promise((r) => requestAnimationFrame(r));
++            const el = document.querySelector("#press"); const log = [];
++            const t0 = performance.now();
++            while (performance.now() - t0 < 700) { await raf(); const cs = getComputedStyle(el, "::before"); log.push({ t: +(performance.now() - t0).toFixed(0), o: +cs.opacity, s: getComputedStyle(el).scale }); }
++            return log;
++        });
++        await m.page.waitForTimeout(50);
++        await m.page.tap("#press");
++        o.coarseTap = await rec;
++        if (engineName === "chromium") {
++            const cdp = await m.ctx.newCDPSession(m.page);
++            const b = await m.page.locator("#press").boundingBox();
++            const pt = { x: b.x + b.width / 2, y: b.y + b.height / 2 };
++            const rec2 = m.page.evaluate(async () => {
++                const raf = () => new Promise((r) => requestAnimationFrame(r));
++                const el = document.querySelector("#press"); const log = [];
++                const t0 = performance.now();
++                while (performance.now() - t0 < 900) { await raf(); log.push({ t: +(performance.now() - t0).toFixed(0), o: +getComputedStyle(el, "::before").opacity, s: getComputedStyle(el).scale }); }
++                return log;
++            });
++            await m.page.waitForTimeout(50);
++            await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [pt] });
++            await m.page.waitForTimeout(300);
++            await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
++            o.coarseHold = await rec2;
++        }
++    } finally {
++        await m.ctx.close();
++    }
++    return o;
++}
++
++// ── Chromium cost: traces of layout, style and paint in each change, at 1x and 4x CPU. ──
++async function cost(browser, BASE) {
++    const c = CONF.l1440;
++    const res = {};
++    for (const rate of [1, 4]) {
++        const { ctx, page } = await openPage(browser, c, `${BASE}?mode=light`);
++        try {
++            const cdp = await ctx.newCDPSession(page);
++            await cdp.send("Emulation.setCPUThrottlingRate", { rate });
++            const runs = [
++                ["plate-hover-in", "#seat44", hover("#seat44"), null],
++                ["plate-hover-out", "#seat44", (p) => away(p, c), hover("#seat44")],
++                ["glyph-nudge-in", "#nudge", hover("#nudge"), null],
++                ["glyph-draw-in", "#draw", hover("#draw"), null],
++                ["plate-press-in", "#press", (p) => p.mouse.down(), hover("#press")],
++                ["plate-press-out", "#press", (p) => p.mouse.up(), async (p) => { await hover("#press")(p); await p.mouse.down(); }],
++                ["focus-in", "#focus", async (p) => { await p.keyboard.press("Tab"); await p.evaluate(() => document.querySelector("#focus").focus()); }, null],
++                ["breath-idle-1s", "#idle", (p) => setH(p, { idle: true }), null, 1100],
++                ["presence-plain-in", "#pres-host", (p) => setH(p, { note: true }), null],
++                ["presence-swap-in", "#swap", (p) => setH(p, { playing: true }), null, 450],
++                ["presence-stay-in", "#stay-line", (p) => setH(p, { stay: true }), null],
++                ["follow-cmd-shrink", "#cmd", (p) => setH(p, { query: "command 50" }), null],
++                ["follow-cmd-grow", "#cmd", (p) => setH(p, { query: "" }), (p) => setH(p, { query: "command 50" })],
++                ["follow-sel", "#sel", (p) => setH(p, { value: "Ease in out cubic" }), null, 450],
++                ["reclaim-in", "#cell-form", (p) => setH(p, { error: true }), null],
++                ["reclaim-out", "#cell-form", (p) => setH(p, { error: false }), (p) => setH(p, { error: true })],
++                ["blur-sweep-12", "#blur-host", async (p) => { const b = await p.locator("#blur-host").boundingBox(); await p.mouse.move(b.x + 10, b.y + 30); await p.mouse.move(b.x + b.width - 10, b.y + 30, { steps: 24 }); await p.mouse.move(b.x + 10, b.y + b.height - 28, { steps: 24 }); await away(p, c); }, null, 300],
++            ];
++            for (const [name, sel, trig, pre, wait] of runs) {
++                await reset(page, c);
++                await page.locator(sel).scrollIntoViewIfNeeded();
++                if (pre) { await pre(page); await page.waitForTimeout(450); await settle(page); }
++                await browser.startTracing(page, { categories: ["devtools.timeline", "disabled-by-default-devtools.timeline", "disabled-by-default-devtools.timeline.frame", "blink.animations", "cc"] });
++                await page.evaluate(() => console.timeStamp("probe-A"));
++                await trig(page);
++                await page.waitForTimeout(wait ?? 350);
++                await page.evaluate(() => console.timeStamp("probe-B"));
++                const buf = await browser.stopTracing();
++                res[`${name}@${rate}x`] = parseTrace(JSON.parse(buf.toString()));
++                await page.mouse.up().catch(() => {});
++            }
++        } finally {
++            await ctx.close();
++        }
++    }
++    return res;
++}
++
++function parseTrace(t) {
++    const ev = t.traceEvents ?? t;
++    const stamp = (n) => ev.find((e) => e.name === "TimeStamp" && e.args?.data?.message === n);
++    const A = stamp("probe-A"), B = stamp("probe-B");
++    if (!A || !B) return { error: "no stamps" };
++    const pid = A.pid, tid = A.tid;
++    const inWin = (e) => e.ts >= A.ts && e.ts <= B.ts && e.pid === pid;
++    const main = ev.filter((e) => inWin(e) && e.tid === tid && e.ph === "X");
++    const named = (n) => main.filter((e) => e.name === n);
++    const layouts = named("Layout").map((e) => ({ at: +((e.ts - A.ts) / 1000).toFixed(1), ms: +((e.dur ?? 0) / 1000).toFixed(3) }));
++    const tasks = main.filter((e) => e.name === "RunTask" || e.name === "ThreadControllerImpl::RunTask").map((e) => (e.dur ?? 0) / 1000);
++    const frames = ev.filter((e) => inWin(e) && (e.name === "BeginMainThreadFrame" || e.name === "BeginFrame") && e.tid === tid).length;
++    const compAnims = ev.filter((e) => inWin(e) && /Animation/.test(e.name) && /cc|compositor/i.test(e.cat ?? "")).map((e) => e.name);
++    return {
++        windowMs: +((B.ts - A.ts) / 1000).toFixed(1),
++        layouts,
++        layoutCount: layouts.length,
++        layoutMaxMs: layouts.reduce((m, l) => Math.max(m, l.ms), 0),
++        layoutSumMs: +layouts.reduce((s, l) => s + l.ms, 0).toFixed(3),
++        styleRecalcs: named("UpdateLayoutTree").length + named("RecalculateStyles").length,
++        paints: named("Paint").length,
++        mainFrames: frames,
++        longestTaskMs: +Math.max(0, ...tasks).toFixed(2),
++        compositorAnimationEvents: [...new Set(compAnims)].slice(0, 8),
++    };
++}
++
++// ── G-REST: the 40/40/10 page. ──
++async function rest(browser, BASE) {
++    const c = CONF.l1440;
++    const ctx = await browser.newContext({ viewport: { width: c.vw, height: c.vh } });
++    const r = {};
++    try {
++        await ctx.addInitScript(() => {
++            window.__restLog = [];
++            const t0 = performance.now();
++            const tick = () => {
++                window.__restLog.push({ t: Math.round(performance.now() - t0), n: document.getAnimations ? document.getAnimations().length : -1 });
++                if (performance.now() - t0 < 800) requestAnimationFrame(tick);
++            };
++            requestAnimationFrame(tick);
++        });
++        const page = await ctx.newPage();
++        await page.goto(`${BASE}?page=rest`, { waitUntil: "load" });
++        await page.waitForTimeout(900);
++        r.load = await page.evaluate(() => window.__restLog);
++        r.counts = await page.evaluate(() => ({ plates: document.querySelectorAll(".plate").length, glyphs: document.querySelectorAll("[data-glyph]").length, stays: document.querySelectorAll("[data-presence]").length }));
++        const btn = page.locator(".plate").first();
++        await btn.hover(); await page.waitForTimeout(400);
++        await page.mouse.move(c.vw - 10, 5); await page.waitForTimeout(500);
++        r.afterHover = await page.evaluate(() => document.getAnimations().length);
++        await page.evaluate(() => document.querySelector(".plate").setAttribute("data-idle", ""));
++        await page.waitForTimeout(200);
++        r.idleOne = await page.evaluate(() => document.getAnimations().map((a) => ({ kind: a.constructor.name, target: a.effect.target?.className?.baseVal ?? a.effect.target?.className, pseudo: a.effect.pseudoElement, props: Object.keys(a.effect.getKeyframes()[0] ?? {}).filter((k) => !["offset", "computedOffset", "easing", "composite"].includes(k)) })));
++        await btn.hover(); await page.waitForTimeout(150);
++        r.idleUnderPointer = await page.evaluate(() => document.getAnimations().filter((a) => a.effect.getTiming().iterations === Infinity).length);
++        r.idleUnderPointerAll = await page.evaluate(() => document.getAnimations().map((a) => a.constructor.name + ":" + (a.transitionProperty ?? a.animationName)));
++    } finally {
++        await ctx.close();
++    }
++    return r;
++}
++
++// ── G-BARE: scripts off, static markup with the built CSS. ──
++async function bare(browser, BASE) {
++    const c = CONF.l1440;
++    const r = {};
++    let css = "";
++    {
++        const { ctx, page } = await openPage(browser, c, `${BASE}?mode=light`);
++        try {
++            css = await page.evaluate(() => [...document.styleSheets].map((s) => { try { return [...s.cssRules].map((x) => x.cssText).join("\n"); } catch { return ""; } }).join("\n"));
++        } finally { await ctx.close(); }
++    }
++    const svg = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>`;
++    const curve = (on) => `<svg ${on ? 'data-glyph="draw"' : ""} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path pathLength="1" d="M3 20 C 10 20, 12 4, 21 4"/></svg>`;
++    const st = `.seat{display:inline-grid;place-items:center;inline-size:40px;block-size:40px;border:0;border-radius:12px;background:transparent;color:var(--foreground);padding:0}.blk{display:flex;gap:12px;padding:12px;align-items:center}body{margin:0;background:var(--background);color:var(--foreground)}`;
++    const html = `<!doctype html><html><head><meta charset="utf-8"><style>${css}</style><style>${st}</style></head><body>
++<div class="blk" id="with"><button id="w1" class="seat plate">${svg}</button><button id="w2" class="seat plate" aria-pressed="true">${svg}</button><button id="w3" class="seat plate">${curve(true)}</button><span id="w4" data-presence data-absent style="display:inline-block;inline-size:60px;block-size:20px;background:red">x</span><span id="after">after</span></div>
++<div class="blk" id="without"><button class="seat">${svg}</button><button class="seat" aria-pressed="true">${svg}</button><button class="seat">${curve(false)}</button></div>
++</body></html>`;
++    const file = join(outDir, "bare.html");
++    writeFileSync(file, html);
++    const ctx = await browser.newContext({ viewport: { width: 600, height: 200 }, javaScriptEnabled: false, deviceScaleFactor: 1 });
++    try {
++        const page = await ctx.newPage();
++        await page.goto("file://" + file);
++        await page.screenshot({ path: join(outDir, `bare-${engineName}-with.png`), clip: await page.locator("#w1").boundingBox().then((b) => ({ x: b.x, y: b.y, width: 132, height: 40 })) });
++        await page.screenshot({ path: join(outDir, `bare-${engineName}-without.png`), clip: await page.locator("#without button").first().boundingBox().then((b) => ({ x: b.x, y: b.y, width: 132, height: 40 })) });
++        r.read = await page.evaluate(() => ({
++            w2plate: getComputedStyle(document.querySelector("#w2"), "::before").opacity,
++            w1plate: getComputedStyle(document.querySelector("#w1"), "::before").opacity,
++            w3dash: getComputedStyle(document.querySelector("#w3 path")).strokeDashoffset,
++            w4: (() => { const e = document.querySelector("#w4"); const b = e.getBoundingClientRect(); const cs = getComputedStyle(e); return { w: b.width, h: b.height, opacity: cs.opacity, visibility: cs.visibility }; })(),
++        }));
++        // Hover with scripts off: the transition is CSS alone. Read mid-way and at rest.
++        const b = await page.locator("#w1").boundingBox();
++        await page.mouse.move(b.x + 20, b.y + 20);
++        await page.waitForTimeout(50);
++        const mid = await page.evaluate(() => ({ o: getComputedStyle(document.querySelector("#w1"), "::before").opacity, s: getComputedStyle(document.querySelector("#w1 > svg")).scale }));
++        await page.waitForTimeout(400);
++        const end = await page.evaluate(() => ({ o: getComputedStyle(document.querySelector("#w1"), "::before").opacity, s: getComputedStyle(document.querySelector("#w1 > svg")).scale }));
++        r.hover = { mid, end };
++    } catch (e) {
++        r.error = String(e).slice(0, 300);
++    } finally { await ctx.close(); }
++    return r;
++}
++
++// ── Bites: each plant must fail the check. ──
++async function bites(browser, BASE) {
++    const c = CONF.l1440;
++    const plants = {
++        "no-plate-fade": ".plate::before{transition: scale var(--spring-present-duration) var(--spring-present) !important}",
++        "plate-starts-at-0.75": "@keyframes plant{from{opacity:.75}} @media (hover:hover){.plate:hover::before{animation: plant var(--duration-control) linear}}",
++        "glyph-width-leg": ".plate > svg{transition: width var(--duration-fast) linear !important} .plate:hover > svg{width: 24px}",
++    };
++    const res = {};
++    for (const [name, css] of Object.entries(plants)) {
++        const { ctx, page } = await openPage(browser, c, `${BASE}?mode=light`);
++        try {
++            await page.addStyleTag({ content: css });
++            for (const dir of ["in", "out"]) {
++                await reset(page, c);
++                await page.locator("#seat44").scrollIntoViewIfNeeded();
++                if (dir === "out") { await hover("#seat44")(page); await page.waitForTimeout(400); await settle(page); }
++                const smp = await sampleChange(page, { trigger: dir === "in" ? () => hover("#seat44")(page) : () => away(page, c), targets: ["#seat44::before", "#seat44 > svg"], properties: P });
++                const v = judgeChange(smp);
++                res[`${name}-${dir}`] = { pass: v.pass, findings: v.findings, props: smp.animations.map((a) => a.properties.join("+")) };
++            }
++        } finally { await ctx.close(); }
++    }
++    return res;
++}
+diff --git a/tests-visual/intent-motion/harness/rejudge.mjs b/tests-visual/intent-motion/harness/rejudge.mjs
+new file mode 100644
+index 000000000..7ba6ea93e
+--- /dev/null
++++ b/tests-visual/intent-motion/harness/rejudge.mjs
+@@ -0,0 +1,15 @@
++// Recompute every verdict from the raw samples a probe run kept.
++import { readFileSync, writeFileSync } from "node:fs";
++import { judgeChange } from "../../../src/testing/no-snap/index.ts";
++for (const f of process.argv.slice(2)) {
++    const d = JSON.parse(readFileSync(f, "utf8"));
++    for (const c of Object.values(d.configs ?? {}))
++        for (const cell of Object.values(c.cells))
++            for (const k of ["in", "out"]) {
++                const r = cell[k];
++                if (!r?.samples) continue;
++                const v = judgeChange(r.samples);
++                Object.assign(r, { pass: v.pass, findings: v.findings, legs: v.legs });
++            }
++    writeFileSync(f, JSON.stringify(d));
++}
+diff --git a/tests-visual/intent-motion/harness/summarize.py b/tests-visual/intent-motion/harness/summarize.py
+new file mode 100644
+index 000000000..a81881129
+--- /dev/null
++++ b/tests-visual/intent-motion/harness/summarize.py
+@@ -0,0 +1,108 @@
++# Print the PROTOTYPE.md tables from the probe results of both engines.
++# usage: python3 summarize.py <chromium.json> <webkit.json> [extras-chromium.json] [extras-webkit.json]
++import json, sys
++
++def load(p):
++    try:
++        return json.load(open(p))
++    except Exception:
++        return None
++
++C = load(sys.argv[1]); W = load(sys.argv[2])
++EC = load(sys.argv[3]) if len(sys.argv) > 3 else None
++EW = load(sys.argv[4]) if len(sys.argv) > 4 else None
++ENG = [("Chromium", C), ("WebKit", W)]
++CFGS = ["l1440", "d1440", "l390", "d390", "rm1440"]
++
++def verdict(r):
++    if r is None: return "not run"
++    if r.get("error"): return "error"
++    if r.get("pass"): return "pass"
++    cl = sorted({f["clause"] for f in r["findings"]})
++    return "FAIL " + "+".join(cl)
++
++cells = list(C["configs"]["l1440"]["cells"].keys())
++
++print("### G-TWEEN, every cell, in / out\n")
++print("| cell | " + " | ".join(f"{e} {c}" for e, _ in ENG for c in CFGS) + " |")
++print("|---|" + "---|" * (len(ENG) * len(CFGS)))
++for cell in cells:
++    row = []
++    for _, d in ENG:
++        for c in CFGS:
++            cc = (d or {}).get("configs", {}).get(c, {}).get("cells", {}).get(cell)
++            if not cc: row.append("not run"); continue
++            a, b = verdict(cc.get("in")), verdict(cc.get("out"))
++            row.append("pass" if a == b == "pass" else f"{a} / {b}")
++    print(f"| {cell} | " + " | ".join(row) + " |")
++
++print("\n### Findings behind each FAIL at 1440 light\n")
++for e, d in ENG:
++    if not d: continue
++    for cell in cells:
++        cc = d["configs"].get("l1440", {}).get("cells", {}).get(cell, {})
++        for k in ("in", "out"):
++            r = cc.get(k) or {}
++            for f in (r.get("findings") or [])[:3]:
++                print(f"- {e}, {cell}, {k}: {f['clause']} on `{f['target']}` {f['property']}: {f['detail'][:110]}")
++
++print("\n### Frame-delta table (G-TWEEN step clause), 1440 light, 60 Hz samples\n")
++print("Largest step between two samples as a share of the leg's travel, against the largest step of the leg's own easing at the same spacing. The bound is 1.15.\n")
++print("| cell | dir | target | property | Chromium step / eased / ratio | WebKit step / eased / ratio |")
++print("|---|---|---|---|---|---|")
++def legs(d, cell, k):
++    r = (d or {}).get("configs", {}).get("l1440", {}).get("cells", {}).get(cell, {}).get(k) or {}
++    return {(l["target"], l["property"]): l for l in (r.get("legs") or [])}
++def fmt(l):
++    if not l: return "-"
++    e = l["easedMaxStep"]; r = l["ratio"]
++    return f"{l['maxStep']:.3f} / {e:.3f} / {r:.2f}" if e else f"{l['maxStep']:.3f} / none / -"
++for cell in cells:
++    for k in ("in", "out"):
++        lc, lw = legs(C, cell, k), legs(W, cell, k)
++        for key in sorted(set(lc) | set(lw)):
++            if key[1] == "box" and not ("follow" in cell or "reclaim" in cell): continue
++            print(f"| {cell} | {k} | `{key[0]}` | {key[1]} | {fmt(lc.get(key))} | {fmt(lw.get(key))} |")
++
++print("\n### G-COST: DOM nodes in the cell at rest, mid-change and after; properties animated (1440 light)\n")
++print("| cell | Chromium nodes in (rest/mid/end), out | WebKit nodes in, out | properties animated (Chromium) | properties animated (WebKit) |")
++print("|---|---|---|---|---|")
++def nodes(d, cell):
++    out = []
++    cc = (d or {}).get("configs", {}).get("l1440", {}).get("cells", {}).get(cell, {})
++    for k in ("in", "out"):
++        n = (cc.get(k) or {}).get("nodeCounts") or {}
++        out.append("/".join(str(n.get(x, "-")) for x in ("rest", "mid0", "end")) + (f" (+phase 2 mid {n['mid1']})" if "mid1" in n else ""))
++    return ", ".join(out)
++def props(d, cell):
++    cc = (d or {}).get("configs", {}).get("l1440", {}).get("cells", {}).get(cell, {})
++    s = set()
++    for k in ("in", "out"):
++        for p in (cc.get(k) or {}).get("props") or []: s.add(p)
++    return "; ".join(sorted(s)) or "none"
++for cell in cells:
++    print(f"| {cell} | {nodes(C, cell)} | {nodes(W, cell)} | {props(C, cell)} | {props(W, cell)} |")
++
++print("\n### G-PRM (reduced motion, 1440 light): spatial values, fade values, loops\n")
++print("| cell | dir | Chromium: spatial legs with more than 2 values; fade values; loops | WebKit: same |")
++print("|---|---|---|---|")
++SPATIAL = ("scale", "translate", "rotate")
++FADE = ("opacity", "background-color", "outline-color")
++def prm(d, cell, k):
++    r = (d or {}).get("configs", {}).get("rm1440", {}).get("cells", {}).get(cell, {}).get(k)
++    if not r or r.get("error"): return "not run"
++    sp, fa = [], []
++    for t in (r.get("rest") or {}):
++        for p in SPATIAL:
++            vals = {round(float(x), 3) if x.replace('.','',1).replace('-','',1).isdigit() else x for x in [ (s["read"].get(t) or {}).get("values", {}).get(p) for s in r["series"]] + [(r["rest"].get(t) or {}).get("values", {}).get(p), (r["end"].get(t) or {}).get("values", {}).get(p)] if x is not None}
++            if len(vals) > 2: sp.append(f"{t} {p} {len(vals)}")
++        for p in FADE:
++            vals = {(s["read"].get(t) or {}).get("values", {}).get(p) for s in r["series"]}
++            vals.discard(None)
++            if len(vals) >= 2: fa.append(f"{t} {p} {len(vals)}")
++    loops = sum(1 for a in r.get("animations") or [] if a.get("infinite"))
++    durs = sorted({round(a["duration"]) for a in r.get("animations") or []})
++    return f"spatial>2: {', '.join(sp) or 'none'}; fades: {', '.join(fa) or 'none'} (clocks {durs or '-'} ms); loops {loops}"
++for cell in cells:
++    for k in ("in", "out"):
++        print(f"| {cell} | {k} | {prm(C, cell, k)} | {prm(W, cell, k)} |")
+diff --git a/tests-visual/intent-motion/harness/vite.config.ts b/tests-visual/intent-motion/harness/vite.config.ts
+new file mode 100644
+index 000000000..a856f5616
+--- /dev/null
++++ b/tests-visual/intent-motion/harness/vite.config.ts
+@@ -0,0 +1,13 @@
++import { resolve } from "node:path";
++import tailwindcss from "@tailwindcss/vite";
++import vue from "@vitejs/plugin-vue";
++import { defineConfig } from "vite";
++
++const repo = resolve(__dirname, "../../..");
++export default defineConfig({
++    root: __dirname,
++    resolve: { alias: { "@glass": resolve(repo, "src") } },
++    plugins: [tailwindcss(), vue()],
++    server: { port: 5371, strictPort: true, fs: { allow: [repo, resolve(repo, "node_modules")] } },
++    logLevel: "error",
++});

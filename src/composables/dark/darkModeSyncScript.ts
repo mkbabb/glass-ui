@@ -29,8 +29,8 @@
 //   - sets `document.documentElement.style.colorScheme` (`useGlobalDark.ts`'s
 //     Safari recalc watch — `dark ? "dark" : "light"`).
 
-/** The localStorage key vueuse `useColorMode`/`useDark` defaults to. The
- * `useGlobalDark` factory passes no `storageKey`, so this default is canonical. */
+/** The localStorage key vueuse `useColorMode`/`useDark` defaults to, and the key
+ * `useGlobalDark` reads when it is given no `storageKey`. */
 export const DARK_MODE_STORAGE_KEY = "vueuse-color-scheme";
 
 /** The class vueuse adds to `<html>` for the dark mode (`valueDark = "dark"`). */
@@ -39,8 +39,8 @@ const DARK_CLASS = "dark";
 export interface DarkModeSyncScriptOptions {
     /**
      * Override the localStorage key the emitted script reads. Defaults to
-     * `vueuse-color-scheme` — the key `useGlobalDark`'s underlying `useDark`
-     * uses. Override ONLY if a consumer reconfigured the vueuse storage key.
+     * `vueuse-color-scheme`, the key `useGlobalDark` uses by default. Pass the
+     * same key to `useGlobalDark({ storageKey })`.
      */
     storageKey?: string;
     /**

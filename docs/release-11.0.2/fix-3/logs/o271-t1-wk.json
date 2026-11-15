@@ -1,0 +1,801 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-0-2.config.ts",
+      "release-10-1-5.spec.ts",
+      "release-11-0-2.spec.ts",
+      "--grep",
+      "k3 at 320|s2 O-201|rows ·",
+      "--project=webkit",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-0-2.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-5.spec.ts",
+          "slider-forced-colors.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-2311",
+        "name": "webkit-2311",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-0-2.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/docs/release-11.0.2/fix-3/logs/o271-t1-wk.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5341",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/",
+      "url": "http://localhost:5341",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-10-1-5.spec.ts",
+      "file": "release-10-1-5.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "k3 at 320: a capped dock whose seats all show holds the fit law and rests round",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2340,
+                  "error": {
+                    "message": "Error: 320 focus S4 ({\"focusVisible\":true,\"outline\":\"solid\",\"ink\":4,\"past\":{\"l\":-192.8,\"r\":0.94,\"t\":-1,\"b\":-1},\"seat\":[204.8,308.94,25,63]}): ring inside the run (r)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m0.94\u001b[39m",
+                    "stack": "Error: 320 focus S4 ({\"focusVisible\":true,\"outline\":\"solid\",\"ink\":4,\"past\":{\"l\":-192.8,\"r\":0.94,\"t\":-1,\"b\":-1},\"seat\":[204.8,308.94,25,63]}): ring inside the run (r)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m0.94\u001b[39m\n    at expectRingInsideRun (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-5.spec.ts:1044:62)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-5.spec.ts:1210:13",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-5.spec.ts",
+                      "column": 62,
+                      "line": 1044
+                    },
+                    "snippet": "  1042 |     expect(read.outline, `${at}: the ring paints`).not.toBe(\"none\");\n  1043 |     for (const [side, past] of Object.entries(read.past)) {\n> 1044 |         expect(past, `${at}: ring inside the run (${side})`).toBeLessThanOrEqual(0.5);\n       |                                                              ^\n  1045 |     }\n  1046 | }\n  1047 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-5.spec.ts",
+                        "column": 62,
+                        "line": 1044
+                      },
+                      "message": "Error: 320 focus S4 ({\"focusVisible\":true,\"outline\":\"solid\",\"ink\":4,\"past\":{\"l\":-192.8,\"r\":0.94,\"t\":-1,\"b\":-1},\"seat\":[204.8,308.94,25,63]}): ring inside the run (r)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.5\u001b[39m\nReceived:    \u001b[31m0.94\u001b[39m\n\n  1042 |     expect(read.outline, `${at}: the ring paints`).not.toBe(\"none\");\n  1043 |     for (const [side, past] of Object.entries(read.past)) {\n> 1044 |         expect(past, `${at}: ring inside the run (${side})`).toBeLessThanOrEqual(0.5);\n       |                                                              ^\n  1045 |     }\n  1046 | }\n  1047 |\n    at expectRingInsideRun (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-5.spec.ts:1044:62)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-5.spec.ts:1210:13"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T18:58:46.560Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results/release-10-1-5-k3-at-320-a-13047-the-fit-law-and-rests-round-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-5.spec.ts",
+                    "column": 62,
+                    "line": 1044
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-5e392602c6680209ca67",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1187,
+          "column": 5
+        },
+        {
+          "title": "s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 420000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 44967,
+                  "error": {
+                    "message": "Error: a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 35\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 275,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 1.23\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"ink\": 4,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 1.23,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 274,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 2.23\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"ink\": 4,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 2.23,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 273,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 3.23\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"ink\": 4,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 3.23,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 35\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 275,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 1.23\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"ink\": 4,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 1.23,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 274,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 2.23\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"ink\": 4,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 2.23,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 273,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 3.23\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"ink\": 4,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 3.23,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-5.spec.ts:2358:144",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-5.spec.ts",
+                      "column": 144,
+                      "line": 2358
+                    },
+                    "snippet": "  2356 |         }\n  2357 |         expect(unfit, `the sweep under ${natural} crosses the fit edge`).toBeGreaterThan(2);\n> 2358 |         expect(bad, \"a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round\").toEqual([]);\n       |                                                                                                                                                ^\n  2359 |     });\n  2360 | }\n  2361 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-5.spec.ts",
+                        "column": 144,
+                        "line": 2358
+                      },
+                      "message": "Error: a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 35\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 275,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 1.23\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"ink\": 4,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 1.23,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 274,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 2.23\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"ink\": 4,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 2.23,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 273,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 3.23\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"ink\": 4,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 3.23,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  2356 |         }\n  2357 |         expect(unfit, `the sweep under ${natural} crosses the fit edge`).toBeGreaterThan(2);\n> 2358 |         expect(bad, \"a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round\").toEqual([]);\n       |                                                                                                                                                ^\n  2359 |     });\n  2360 | }\n  2361 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-5.spec.ts:2358:144"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T18:58:49.312Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results/release-10-1-5-s2-O-201-at-f97e1-t-hides-nothing-rests-round-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-5.spec.ts",
+                    "column": 144,
+                    "line": 2358
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ba3de8f038291be5029b-1b85b51326fe8760fc07",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2331,
+          "column": 5
+        }
+      ],
+      "suites": [
+        {
+          "title": "critique 5, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 1218,
+          "column": 6,
+          "specs": [
+            {
+              "title": "k3 at 320: a capped dock whose seats all show holds the fit law and rests round",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2135,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-14T18:58:44.243Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-bb7cc4ff746dbdfcb9e7",
+              "file": "release-10-1-5.spec.ts",
+              "line": 1187,
+              "column": 5
+            }
+          ]
+        },
+        {
+          "title": "fix 11, coarse phone",
+          "file": "release-10-1-5.spec.ts",
+          "line": 2410,
+          "column": 6,
+          "specs": [
+            {
+              "title": "s2 O-201 at 390: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 420000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 44913,
+                      "error": {
+                        "message": "Error: a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 46\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 280,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 0.63\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"ink\": 4,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 0.63,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 279,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 1.63\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"ink\": 4,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 1.63,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 278,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 2.63\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"ink\": 4,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 2.63,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 277,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 3.63\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"ink\": 4,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 3.63,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                        "stack": "Error: a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 46\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 280,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 0.63\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"ink\": 4,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 0.63,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 279,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 1.63\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"ink\": 4,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 1.63,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 278,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 2.63\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"ink\": 4,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 2.63,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 277,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 3.63\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"ink\": 4,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 3.63,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-5.spec.ts:2358:144",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-5.spec.ts",
+                          "column": 144,
+                          "line": 2358
+                        },
+                        "snippet": "  2356 |         }\n  2357 |         expect(unfit, `the sweep under ${natural} crosses the fit edge`).toBeGreaterThan(2);\n> 2358 |         expect(bad, \"a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round\").toEqual([]);\n       |                                                                                                                                                ^\n  2359 |     });\n  2360 | }\n  2361 |"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-5.spec.ts",
+                            "column": 144,
+                            "line": 2358
+                          },
+                          "message": "Error: a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 46\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 280,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 0.63\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"ink\": 4,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 0.63,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 279,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 1.63\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"ink\": 4,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 1.63,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 278,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 2.63\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"ink\": 4,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 2.63,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+   Object {\u001b[39m\n\u001b[31m+     \"cap\": 277,\u001b[39m\n\u001b[31m+     \"cuts\": Array [\u001b[39m\n\u001b[31m+       \"dock-layer 3.63\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+     \"focusVisible\": true,\u001b[39m\n\u001b[31m+     \"ink\": 4,\u001b[39m\n\u001b[31m+     \"outline\": \"solid\",\u001b[39m\n\u001b[31m+     \"seat\": \"home\",\u001b[39m\n\u001b[31m+     \"worst\": 3.63,\u001b[39m\n\u001b[31m+   },\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  2356 |         }\n  2357 |         expect(unfit, `the sweep under ${natural} crosses the fit edge`).toBeGreaterThan(2);\n> 2358 |         expect(bad, \"a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round\").toEqual([]);\n       |                                                                                                                                                ^\n  2359 |     });\n  2360 | }\n  2361 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-5.spec.ts:2358:144"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-14T18:59:34.853Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results/release-10-1-5-fix-11-coar-b6824-t-hides-nothing-rests-round-webkit/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-5.spec.ts",
+                        "column": 144,
+                        "line": 2358
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "ba3de8f038291be5029b-44f524f1c410752981c0",
+              "file": "release-10-1-5.spec.ts",
+              "line": 2331,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "release-11-0-2.spec.ts",
+      "file": "release-11-0-2.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "rows · the transport dock's rows fit with a persistent region beside the layers at 360",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[348,348,348,\"348px\"],\"run\":[286,286],\"layers\":[\"6px\",\"0px\",[64,278]],\"persistent\":[18,40],\"face\":[64,278],\"page\":[360,360],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2097,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T19:00:20.319Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[348,348,348,\"348px\"],\"run\":[286,286],\"layers\":[\"6px\",\"0px\",[64,278]],\"persistent\":[18,40],\"face\":[64,278],\"page\":[360,360],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-b440e00b564e53997c38",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1363,
+          "column": 9
+        },
+        {
+          "title": "rows · the transport dock's rows fit with a persistent region beside the layers at 390",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[378,378,378,\"378px\"],\"run\":[316,316],\"layers\":[\"6px\",\"0px\",[64,308]],\"persistent\":[18,40],\"face\":[64,308],\"page\":[390,390],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1929,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T19:00:22.582Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[378,378,378,\"378px\"],\"run\":[316,316],\"layers\":[\"6px\",\"0px\",[64,308]],\"persistent\":[18,40],\"face\":[64,308],\"page\":[390,390],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-0b94c291bd66df0d2d03",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1363,
+          "column": 9
+        },
+        {
+          "title": "rows · the transport dock's rows fit with a persistent region beside the layers at 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[960,960,960,\"960px\"],\"run\":[898,898],\"layers\":[\"6px\",\"0px\",[298,890]],\"persistent\":[252,40],\"face\":[298,890],\"page\":[1440,1440],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1917,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T19:00:24.522Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[960,960,960,\"960px\"],\"run\":[898,898],\"layers\":[\"6px\",\"0px\",[298,890]],\"persistent\":[252,40],\"face\":[298,890],\"page\":[1440,1440],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-b3e6ca3aedd452579099",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1363,
+          "column": 9
+        },
+        {
+          "title": "rows · the editor dock's rows fit with a persistent region beside the layers at 360",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[288,288,288,\"288px\"],\"run\":[168,168],\"layers\":[\"6px\",\"0px\",[151.86,160]],\"persistent\":[48.14,97.72],\"face\":[151.86,160],\"page\":[360,360],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1895,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T19:00:26.445Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[288,288,288,\"288px\"],\"run\":[168,168],\"layers\":[\"6px\",\"0px\",[151.86,160]],\"persistent\":[48.14,97.72],\"face\":[151.86,160],\"page\":[360,360],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-569125c9cb5c24707861",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1363,
+          "column": 9
+        },
+        {
+          "title": "rows · the editor dock's rows fit with a persistent region beside the layers at 390",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[288,288,288,\"288px\"],\"run\":[168,168],\"layers\":[\"6px\",\"0px\",[166.86,160]],\"persistent\":[63.14,97.72],\"face\":[166.86,160],\"page\":[390,390],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1893,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T19:00:28.346Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[288,288,288,\"288px\"],\"run\":[168,168],\"layers\":[\"6px\",\"0px\",[166.86,160]],\"persistent\":[63.14,97.72],\"face\":[166.86,160],\"page\":[390,390],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-680c32e4a2247ee179bd",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1363,
+          "column": 9
+        },
+        {
+          "title": "rows · the editor dock's rows fit with a persistent region beside the layers at 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[288,288,288,\"288px\"],\"run\":[168,168],\"layers\":[\"6px\",\"0px\",[691.86,160]],\"persistent\":[588.14,97.72],\"face\":[691.86,160],\"page\":[1440,1440],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1916,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T19:00:30.245Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[288,288,288,\"288px\"],\"run\":[168,168],\"layers\":[\"6px\",\"0px\",[691.86,160]],\"persistent\":[588.14,97.72],\"face\":[691.86,160],\"page\":[1440,1440],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-8247efd9d38fe018777f",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1363,
+          "column": 9
+        },
+        {
+          "title": "rows · the stretched dock's rows fit with a persistent region beside the layers at 360",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[328,328,328,\"328px\"],\"run\":[266,266],\"layers\":[\"6px\",\"0px\",[74,258]],\"persistent\":[28,40],\"face\":[74,40],\"page\":[360,360],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1930,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T19:00:32.167Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[328,328,328,\"328px\"],\"run\":[266,266],\"layers\":[\"6px\",\"0px\",[74,258]],\"persistent\":[28,40],\"face\":[74,40],\"page\":[360,360],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-cb313cce2078e85f5f4f",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1363,
+          "column": 9
+        },
+        {
+          "title": "rows · the stretched dock's rows fit with a persistent region beside the layers at 390",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[358,358,358,\"358px\"],\"run\":[296,296],\"layers\":[\"6px\",\"0px\",[74,288]],\"persistent\":[28,40],\"face\":[74,40],\"page\":[390,390],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1913,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T19:00:34.102Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[358,358,358,\"358px\"],\"run\":[296,296],\"layers\":[\"6px\",\"0px\",[74,288]],\"persistent\":[28,40],\"face\":[74,40],\"page\":[390,390],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-22b2760f062fffe6253f",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1363,
+          "column": 9
+        },
+        {
+          "title": "rows · the stretched dock's rows fit with a persistent region beside the layers at 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "rows",
+                  "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[1408,1408,1408,\"1408px\"],\"run\":[1346,1346],\"layers\":[\"6px\",\"0px\",[74,1338]],\"persistent\":[28,40],\"face\":[74,40],\"page\":[1440,1440],\"scrollers\":[],\"roLoops\":0}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1887,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-14T19:00:36.023Z",
+                  "annotations": [
+                    {
+                      "type": "rows",
+                      "description": "{\"collapsed\":false,\"morphing\":false,\"root\":[1408,1408,1408,\"1408px\"],\"run\":[1346,1346],\"layers\":[\"6px\",\"0px\",[74,1338]],\"persistent\":[28,40],\"face\":[74,40],\"page\":[1440,1440],\"scrollers\":[],\"roLoops\":0}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-de3e2d5c47339819173e",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1363,
+          "column": 9
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-14T18:58:42.505Z",
+    "duration": 115452.873,
+    "expected": 10,
+    "skipped": 0,
+    "unexpected": 3,
+    "flaky": 0
+  }
+}

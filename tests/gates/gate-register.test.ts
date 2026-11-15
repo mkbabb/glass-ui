@@ -13,7 +13,8 @@
 // CURE ROUND (verdict CURE-REQUIRED). The adjudicating probe proved four blindnesses that
 // all scored ABSENT registrations as BOUND — `it.skip(`, `it.todo(`, `// it(`, `/* it( */`
 // — and one that scored an UNENROLLED gate as enrolled (every pixel-floor run step deleted
-// from `ci.yml`, the word surviving in the prose comment at `:57`). Under the ⊕²⁵ status
+// from `ci.yml`, the word surviving in the prose comment at `:57`; the floor has since
+// left CI, and that bite holds its release.sh anchors). Under the ⊕²⁵ status
 // vocabulary each of those is ABSENT, and ABSENT is never GREEN. The bites below are the
 // severances that hold the cures: revert `CALL_FORM` to admit `skip|todo`, or drop the
 // comment strip, or put the substring anchor back, and one of them REDs.
@@ -352,24 +353,45 @@ describe("the gate register binds (G-GATE-BUDGET)", () => {
         for (const sibling of siblings) expect(drifted).toContain(sibling.id);
     });
 
-    it("BITE — gutting every pixel-floor run step from ci.yml REDs, comment or no comment", () => {
-        // The challenger's exact probe: delete the four pixel-floor step lines and the
-        // word still survives in the prose comment at ci.yml:57. Pre-cure this yielded
-        // `badAnchors: [] violations: []` — C-13's own class ("an unwired gate cannot
-        // fail") reproduced inside the detector that scopes C-13.
-        const ci = realIo.read(".github/workflows/ci.yml");
-        const gutted = ci
+    it("BITE — `#`-commenting release.sh's pixel-floor commands REDs both floor rows", () => {
+        // The challenger's probe, re-homed. It once deleted ci.yml's pixel-floor steps and
+        // the word survived in a prose comment, so the anchor resolved — C-13's own class
+        // ("an unwired gate cannot fail") inside the detector that scopes C-13. CI no
+        // longer runs the floor [2026-11-13 · ci/no-playwright]; the floor's only anchor
+        // is release.sh, so the same cure is held there: a commented command is prose.
+        const sh = realIo.read("scripts/release.sh");
+        const commented = sh
             .split("\n")
-            .filter((line) => !/^\s*(- name:.*pixel floor|run:.*pixel-floor)/.test(line))
+            .map((line) => (/^\s*npm .*gate:pixel-floor/.test(line) ? `# ${line}` : line))
             .join("\n");
-        expect(gutted).toContain("pixel-floor"); // survives in the comment
-        expect(gutted).not.toMatch(/run:.*pixel-floor/);
-        const report = verifyGateRegister(ioWith(".github/workflows/ci.yml", gutted));
+        expect(commented).not.toBe(sh);
+        expect(commented).toContain("gate:pixel-floor"); // survives, commented
+        const report = verifyGateRegister(ioWith("scripts/release.sh", commented));
+        for (const id of ["aurora-floor", "blob-floor"]) {
+            expect(
+                report.violations.some((v: string) =>
+                    v.includes(`external external.browser.${id}: enrollment anchor unresolved — scripts/release.sh#`),
+                ),
+                id,
+            ).toBe(true);
+        }
+    });
+
+    it("BITE — dropping only the flood leg from release.sh REDs the blob row alone", () => {
+        // The blob row anchors the leg only it needs; the aurora row must not answer for it.
+        const sh = realIo.read("scripts/release.sh");
+        const gutted = sh
+            .split("\n")
+            .filter((line) => !/^\s*npm .*gate:pixel-floor:planted:flood/.test(line))
+            .join("\n");
+        expect(gutted).not.toBe(sh);
+        const report = verifyGateRegister(ioWith("scripts/release.sh", gutted));
+        expect(report.badAnchors).toContain(
+            "external.browser.blob-floor -> scripts/release.sh#gate:pixel-floor:planted:flood",
+        );
         expect(
-            report.badAnchors.some((a: string) =>
-                a.includes(".github/workflows/ci.yml#pixel-floor"),
-            ),
-        ).toBe(true);
+            report.badAnchors.some((a: string) => a.startsWith("external.browser.aurora-floor")),
+        ).toBe(false);
     });
 
     it("BITE — gutting release.sh's pixel-floor commands REDs the FOLDED anchor", () => {
@@ -396,11 +418,14 @@ describe("the gate register binds (G-GATE-BUDGET)", () => {
                 a.includes("scripts/release.sh#gate:pixel-floor"),
             ),
         ).toBe(true);
-        expect(
-            report.violations.some((v: string) =>
-                v.includes("external external.browser.aurora-floor"),
-            ),
-        ).toBe(true);
+        for (const id of ["aurora-floor", "blob-floor"]) {
+            expect(
+                report.violations.some((v: string) =>
+                    v.includes(`external external.browser.${id}`),
+                ),
+                id,
+            ).toBe(true);
+        }
         // and the array it moved OUT of is empty, so the old home cannot claim the bite
         expect(
             JSON.parse(realIo.read(SEAT_BINDING_PATH)).supplementalAnchors,
@@ -431,26 +456,26 @@ describe("the gate register binds (G-GATE-BUDGET)", () => {
         // C-13's class simply relocated into the standard multi-line Actions idiom: pre-cure
         // (probe at HEAD `e2b7a0b5`) both pixel-floor commands moved into `run: |` with a
         // single `# npm -w tests-visual run gate:pixel-floor:ci` body line still resolved —
-        // `badAnchors: [] violations: 0`.
+        // `badAnchors: [] violations: 0`. [2026-11-13 · ci/no-playwright] CI no longer runs
+        // the floor, so the bite moved to ci.yml's surviving anchor, `typecheck`, which
+        // the eight `.test-d.ts` rows enroll at.
         const ci = realIo.read(".github/workflows/ci.yml");
         const relocated = ci
             .split("\n")
             .map((line) => {
-                const match = line.match(/^(\s*)(- )?run: (.*pixel-floor.*)$/);
+                const match = line.match(/^(\s*)(- )?run: (.*typecheck.*)$/);
                 if (!match) return line;
                 const indent = match[1] + (match[2] ? "  " : "");
                 return `${match[1]}${match[2] ?? ""}run: |\n${indent}  # ${match[3]}`;
             })
             .join("\n");
-        expect(relocated).toContain("pixel-floor"); // survives, commented, inside the scalar
-        expect(relocated).toMatch(/run: \|\n\s+# npm .*pixel-floor/);
-        expect(relocated).not.toMatch(/run: [^|\n]*pixel-floor/);
+        expect(relocated).toMatch(/run: \|\n\s+# npm run typecheck/);
+        expect(relocated).not.toMatch(/run: [^|\n]*typecheck/);
         const report = verifyGateRegister(ioWith(".github/workflows/ci.yml", relocated));
-        expect(
-            report.badAnchors.some((a: string) =>
-                a.includes(".github/workflows/ci.yml#pixel-floor"),
-            ),
-        ).toBe(true);
+        const hits = report.badAnchors.filter((a: string) =>
+            a.endsWith(".github/workflows/ci.yml#typecheck"),
+        );
+        expect(hits).toHaveLength(8);
     });
 
     it("BITE — an EMBEDDING seat rename (`XX-…-RETIRED`) REDs instead of binding", () => {

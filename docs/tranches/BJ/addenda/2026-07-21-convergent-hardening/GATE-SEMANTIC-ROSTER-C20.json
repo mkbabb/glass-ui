@@ -1123,12 +1123,13 @@
     },
     {
       "id": "external.browser.blob-floor",
-      "predicate": "Blob paints a contained non-flood droplet in CI and the planted blank/flood mutation fails.",
+      "predicate": "Blob paints a contained non-flood droplet on the real release-hardware path and the planted blank/flood mutations fail.",
       "sourcePath": "tests-visual/substrate-paints-color.spec.ts",
       "enrollment": [
-        ".github/workflows/ci.yml#pixel-floor",
-        "tests-visual/package.json#scripts.gate:pixel-floor:ci",
-        "tests-visual/package.json#scripts.gate:pixel-floor:ci:planted"
+        "scripts/release.sh#gate:pixel-floor:planted:flood",
+        "tests-visual/package.json#scripts.gate:pixel-floor",
+        "tests-visual/package.json#scripts.gate:pixel-floor:planted",
+        "tests-visual/package.json#scripts.gate:pixel-floor:planted:flood"
       ]
     }
   ],

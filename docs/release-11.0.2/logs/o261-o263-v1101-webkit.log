@@ -1,0 +1,77 @@
+[guarded] waiting for the 'webkit' lock
+
+Running 3 tests using 1 worker
+
+  ✘  1 [webkit] › tests-visual/release-11-0-2.spec.ts:553:1 › pager · a neighbour hop paints a neck no wider than the pitch plus a dot (4.0s)
+  ✘  2 [webkit] › tests-visual/release-11-0-2.spec.ts:592:1 › wheel · a vertical wheel over a horizontal dock's run scrolls the page (1.6s)
+  ✘  3 [webkit] › tests-visual/release-11-0-2.spec.ts:618:1 › wheel · a vertical dock's run contains its own axis and passes the other (762ms)
+
+
+  1) [webkit] › tests-visual/release-11-0-2.spec.ts:553:1 › pager · a neighbour hop paints a neck no wider than the pitch plus a dot 
+
+    Error: token 0.75rem
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 40.5
+    Received:    302.1851806640625
+
+      586 |     for (const hop of hops) {
+      587 |         expect(hop.frames, `the neck bridged the hop to ${hop.to}`).toBeGreaterThan(0);
+    > 588 |         expect(hop.widest, `token ${geo.token}`).toBeLessThanOrEqual(geo.pitch + geo.dot + 0.5);
+          |                                                  ^
+      589 |     }
+      590 | });
+      591 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:588:50
+
+    Error Context: tests-visual/test-results/release-11-0-2-pager-·-a-n-ef66e-r-than-the-pitch-plus-a-dot-webkit/error-context.md
+
+  2) [webkit] › tests-visual/release-11-0-2.spec.ts:592:1 › wheel · a vertical wheel over a horizontal dock's run scrolls the page 
+
+    Error: the page moved under the dock
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 150
+    Received:   0
+
+      612 |     info.annotations.push({ type: "wheel", description: JSON.stringify({ css, moved }) });
+      613 |     expect(css.overflow, "the run is a real scroller").toBeGreaterThan(0);
+    > 614 |     expect(moved, "the page moved under the dock").toBeGreaterThan(150);
+          |                                                    ^
+      615 |     expect(css).toMatchObject({ x: "contain", y: "auto" });
+      616 | });
+      617 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:614:52
+
+    Error Context: tests-visual/test-results/release-11-0-2-wheel-·-a-v-aad4b-dock-s-run-scrolls-the-page-webkit/error-context.md
+
+  3) [webkit] › tests-visual/release-11-0-2.spec.ts:618:1 › wheel · a vertical dock's run contains its own axis and passes the other 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+    -   "x": "auto",
+    +   "x": "contain",
+        "y": "contain",
+      }
+
+      625 |     });
+      626 |     info.annotations.push({ type: "wheel", description: JSON.stringify(css) });
+    > 627 |     expect(css).toEqual({ x: "auto", y: "contain" });
+          |                 ^
+      628 | });
+      629 |
+      630 | type Box = [number, number, number, number];
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:627:17
+
+    Error Context: tests-visual/test-results/release-11-0-2-wheel-·-a-v-18436-n-axis-and-passes-the-other-webkit/error-context.md
+
+  3 failed
+    [webkit] › tests-visual/release-11-0-2.spec.ts:553:1 › pager · a neighbour hop paints a neck no wider than the pitch plus a dot 
+    [webkit] › tests-visual/release-11-0-2.spec.ts:592:1 › wheel · a vertical wheel over a horizontal dock's run scrolls the page 
+    [webkit] › tests-visual/release-11-0-2.spec.ts:618:1 › wheel · a vertical dock's run contains its own axis and passes the other 

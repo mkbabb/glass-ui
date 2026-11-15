@@ -1,6 +1,11 @@
 import { fileURLToPath } from "node:url";
 import vue from "@vitejs/plugin-vue";
-import { defineConfig } from "vitest/config";
+import { configDefaults, defineConfig } from "vitest/config";
+
+// `*.browser.test.ts` launches Playwright's Chromium for a cascade-layer fact happy-dom
+// cannot see. `npm test` (and so CI) never runs it; `npm run test:browser`
+// (vitest.browser.config.ts) does, and `scripts/release.sh` runs that before a tag.
+export const BROWSER_TESTS = "tests/**/*.browser.test.ts";
 
 export default defineConfig({
     plugins: [vue()],
@@ -33,6 +38,7 @@ export default defineConfig({
             "tests/**/*.{test,spec}.vue",
             "scripts/**/*.{test,spec}.{ts,tsx}",
         ],
+        exclude: [...configDefaults.exclude, BROWSER_TESTS],
         setupFiles: ["./tests/setup.ts"],
     },
 });

@@ -34,14 +34,15 @@ fi
 npm run prepublishOnly
 npm run verify:package
 
-# The AURORA pixel floor runs HERE, on real hardware, not in CI. On the software
-# rasterizer the aurora never arms (measured: 180s timeout on SwiftShader vs 22.8s
-# green on Metal), so a CI job would gate on the runner's GPU rather than on our
-# paint; CI carries the blob floor, which does run there. Both arms are required:
-# the real render must be GREEN and the planted defect must be RED, or the floor is
-# not biting. The paired machine reports are the captured DELTA — bank them with the
-# candidate.
-echo "== aurora pixel floor (real GPU) =="
+# The unit tests that need a real engine (cascade layers happy-dom drops). CI installs
+# no browser, so they run here and nowhere else automated.
+npm run test:browser
+
+# The pixel floor runs HERE, on real hardware, and nowhere else: CI installs no browser.
+# Both floors, aurora and blob, run in each leg. The real render must be GREEN and the
+# planted defect must be RED, or the floor is not biting. The paired machine reports are
+# the captured DELTA — bank them with the candidate.
+echo "== pixel floor (real GPU) =="
 npm -w tests-visual run gate:pixel-floor
 npm -w tests-visual run gate:pixel-floor:planted
 # The blob floor's CEILING arm: `blob-blank` bites only the lower bound, so the

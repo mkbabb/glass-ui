@@ -305,7 +305,11 @@ describe("G-DOCK-RUN — the platform is the detent engine", () => {
             ),
         );
         expect(run).toContain(`touch-action: ${pan}`);
-        expect(run).toContain("overscroll-behavior: contain");
+        // Contained on the scroll axis only; the cross axis chains to the page, or a
+        // wheel on that axis over the dock moves the page 0 px.
+        expect(run).toContain(`overscroll-behavior-${axis}: contain`);
+        expect(run).toContain(`overscroll-behavior-${axis === "x" ? "y" : "x"}: auto`);
+        expect(run).not.toMatch(/overscroll-behavior:\s*contain/);
         // Every child but the run's mark is a seat, and a snap target.
         expect(run).toMatch(/\.dock-run > :not\(\.dock-run-mark\)\s*\{[^{}]*scroll-snap-align:\s*start/);
     });
