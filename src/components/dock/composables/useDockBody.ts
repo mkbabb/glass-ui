@@ -250,10 +250,12 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             let t = regions.get(key);
             if (!t || t.el !== el) {
                 t = { el, key, cx: 0, cy: 0, w: 0, h: 0, x: { d: 0, v: 0 }, y: { d: 0, v: 0 }, tx: 0, ty: 0, clipped: false };
-                const lcx = (r.l + r.r) / 2;
-                const lcy = (r.t + r.b) / 2;
-                t.cx = lcx;
-                t.cy = lcy;
+                t.cx = (r.l + r.r) / 2;
+                t.cy = (r.t + r.b) / 2;
+                // The size too: the edge carry reads the old box's edges, so a region first
+                // read with no size was carried by its centre on its first change.
+                t.w = r.r - r.l;
+                t.h = r.b - r.t;
                 regions.set(key, t);
             }
             // Layout = what the box would be without our translate.
