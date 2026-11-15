@@ -77,8 +77,10 @@ export interface UseDockRunReturn {
  * aligns.
  */
 function seatsOf(run: HTMLElement): HTMLElement[] {
+    // A control the host removed that the carrier holds while it fades (W-I.8 R-3) is not
+    // a seat: it is inert, out of flow and gone at the landing.
     return Array.from(run.children).filter(
-        (child): child is HTMLElement => child instanceof HTMLElement,
+        (child): child is HTMLElement => child instanceof HTMLElement && !child.hasAttribute("data-dock-leaving"),
     );
 }
 

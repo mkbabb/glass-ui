@@ -95,6 +95,9 @@ interface FaceTrack {
     /** An entering face that starts its rise at once: no other face of its group was
      *  above half strength when it entered (a third change on weak faces). */
     early?: boolean;
+    /** A control the host removed from the open run: glass holds it where it painted,
+     *  inert, and it fades on the leaving window; it leaves the DOM at the landing (R-3). */
+    ghost?: boolean;
 }
 interface PendingLeave {
     el: HTMLElement;
@@ -166,7 +169,11 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
     const regions = new Map<string, RegionTrack>();
     // R-5 (RU-8): each seat of the run, by its layout offset in the run; a seat whose place
     // changes carries a translate from where it painted to 0.
-    const seats = new Map<HTMLElement, { lx: number; ly: number; x: Q; y: Q }>();
+    // Each seat's layout box relative to the run's border box at scroll (sx, sy), so a
+    // seat the host removes can be held where it painted (R-3, a control that leaves).
+    const seats = new Map<HTMLElement, { lx: number; ly: number; x: Q; y: Q; rx: number; ry: number; sx: number; sy: number; w: number; h: number }>();
+    // Controls the host removed from the open run, held by glass until the landing.
+    const ghosts = new Set<HTMLElement>();
     let faces: FaceTrack[] = [];
     const pendingLeaves: PendingLeave[] = [];
     // Content windows and the posture coordinate.
@@ -337,8 +344,14 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
 
     /** A face that leaves the travel keeps none of the styles the loop wrote on it. */
     function clearFace(f: FaceTrack): void {
+        if (f.ghost) {
+            ghosts.delete(f.el);
+            f.el.remove();
+            return;
+        }
         f.el.style.removeProperty("opacity");
         f.el.style.removeProperty("translate");
+        if (f.el.style.transition === "none") f.el.style.removeProperty("transition");
         if (f.placed || f.role === "leave") for (const p of ["inset", "inset-inline-start", "left", "top", "width", "height"]) f.el.style.removeProperty(p);
     }
 
@@ -388,17 +401,30 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         if (!run || !run.isConnected) return false;
         let movedAny = false;
         const seen = new Set<HTMLElement>();
+        const rr = run.getBoundingClientRect();
         for (const child of run.children) {
-            if (!(child instanceof HTMLElement) || child.offsetParent === null) continue;
+            if (!(child instanceof HTMLElement) || child.offsetParent === null || ghosts.has(child)) continue;
             seen.add(child);
             const lx = child.offsetLeft;
             const ly = child.offsetTop;
-            const t = seats.get(child);
+            // The box without the translate the loop wrote, relative to the run.
+            const cr = child.getBoundingClientRect();
+            const tr = seats.get(child);
+            const rel = {
+                rx: cr.left - (tr ? tr.x.d : 0) - rr.left,
+                ry: cr.top - (tr ? tr.y.d : 0) - rr.top,
+                sx: run.scrollLeft,
+                sy: run.scrollTop,
+                w: cr.width,
+                h: cr.height,
+            };
+            const t = tr;
             if (!t) {
-                seats.set(child, { lx, ly, x: { d: 0, v: 0 }, y: { d: 0, v: 0 } });
+                seats.set(child, { lx, ly, x: { d: 0, v: 0 }, y: { d: 0, v: 0 }, ...rel });
                 ro?.observe(child);
                 continue;
             }
+            Object.assign(t, rel);
             if (carry && (Math.abs(t.lx - lx) > 0.01 || Math.abs(t.ly - ly) > 0.01)) {
                 // Painted minus layout, with the velocity it had (a second change retargets).
                 t.x.d += t.lx - lx;
@@ -554,8 +580,9 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             const ms = getComputedStyle(el);
             // The region's next written translate is its carried delta, so the face paints
             // where it painted: cb's layout edge + this offset + that delta.
-            const x = p.rect.l - cbl - g.x.d - (Number.parseFloat(ms.marginLeft) || 0);
-            const y = p.rect.t - cbt - g.y.d - (Number.parseFloat(ms.marginTop) || 0);
+            // An absolute box in a scroll container is placed in its scrolled content.
+            const x = p.rect.l - cbl - g.x.d - (Number.parseFloat(ms.marginLeft) || 0) + cb.scrollLeft;
+            const y = p.rect.t - cbt - g.y.d - (Number.parseFloat(ms.marginTop) || 0) + cb.scrollTop;
             el.style.inset = "auto";
             el.style.insetInlineStart = "auto";
             el.style.left = `${x}px`;
@@ -910,7 +937,10 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         // next frame, so the change is read before any frame paints it.
         const run = o.run?.value;
         if (run && typeof MutationObserver !== "undefined") {
-            mo = new MutationObserver(() => sync("content"));
+            mo = new MutationObserver((recs) => {
+                onRunRecords(recs);
+                sync("content");
+            });
             mo.observe(run, { attributes: true, attributeFilter: ["aria-current"], childList: true, subtree: true });
         }
     });
@@ -921,6 +951,64 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         mo?.disconnect();
         if (raf !== null) cancelAnimationFrame(raf);
     });
+
+    /** R-3 (C-5): a control that joins the open run enters on the entering window, and one
+     *  the host removes is held where it painted, inert and out of flow, and leaves on the
+     *  leaving window; it goes from the DOM with the landing. The records arrive as a
+     *  microtask after the host's patch, before any frame paints the change. A move (the
+     *  same node removed and added) is neither. A folded dock's run has no box: nothing. */
+    function onRunRecords(recs: MutationRecord[]): void {
+        const run = runEl();
+        if (!run || !shown || !o.expanded() || run.offsetParent === null) return;
+        const joined: HTMLElement[] = [];
+        let any = false;
+        for (const rec of recs) {
+            if (rec.type !== "childList" || rec.target !== run) continue;
+            for (const n of rec.removedNodes) {
+                if (!(n instanceof HTMLElement) || ghosts.has(n) || n.parentNode === run) continue;
+                const t = seats.get(n);
+                if (!t) continue;
+                const rr = run.getBoundingClientRect();
+                const l = rr.left + scrollX + t.rx - (run.scrollLeft - t.sx) + t.x.d;
+                const tp = rr.top + scrollY + t.ry - (run.scrollTop - t.sy) + t.y.d;
+                const inline = Number.parseFloat(n.style.opacity);
+                const from = Number.isFinite(inline) ? inline : 1;
+                ghosts.add(n);
+                n.setAttribute("data-dock-leaving", "");
+                n.setAttribute("aria-hidden", "true");
+                n.inert = true;
+                n.style.position = "absolute";
+                n.style.margin = "0";
+                n.style.pointerEvents = "none";
+                n.style.opacity = String(from);
+                n.style.transition = "none";
+                const at = rec.nextSibling && rec.nextSibling.parentNode === run ? rec.nextSibling : null;
+                run.insertBefore(n, at);
+                pendingLeaves.push({ el: n, region: "layers", rect: { l, t: tp, r: l + t.w, b: tp + t.h }, regionCx: 0, regionCy: 0 });
+                faces.push({ el: n, from, role: "leave", placed: false, ghost: true });
+                any = true;
+            }
+            for (const n of rec.addedNodes) {
+                if (!(n instanceof HTMLElement) || ghosts.has(n) || seats.has(n) || n.parentNode !== run) continue;
+                joined.push(n);
+            }
+        }
+        for (const n of joined) {
+            // The loop owns its opacity for the travel; a seat's own opacity transition
+            // would lag every write.
+            n.style.transition = "none";
+            n.style.opacity = "0";
+            faces.push({ el: n, from: 0, role: "enter", placed: false, early: travelling });
+            any = true;
+        }
+        if (any) {
+            if (!travelling) {
+                u = 1;
+                uv = 0;
+            }
+            travelling = true;
+        }
+    }
 
     function postureFaces(open: HTMLElement | null | undefined, closed: HTMLElement | null | undefined): void {
         openFace = open ?? null;
