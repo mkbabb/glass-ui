@@ -264,9 +264,19 @@ async function stallCell(browser, width, theme, shape) {
             // layers settle, on the ring as on the strokes, so a stable pixel count is not the test.
             const settled = c0 > 0 && seq.slice(c0).every((s) => s.p >= 0.99);
             const wholeBefore = c0 > 0 ? seq[c0 - 1].p : null;
-            const ok = drawn.length === 1 && drawnInfo && drawnInfo.running === 0 && drawnInfo.final === true
-                && c0 > 0 && settled;
-            verdict("drawn: once, after the last stroke frame", cell, ok, {
+            // The page's own record is read first: `drawn` fired once, with no stroke
+            // running and every window home. Only then does the screencast judge the paint,
+            // and a screencast that holds no frame after the event cannot (orchestrator
+            // ruling after critique 8): that cell is unmeasurable, recorded and not gated,
+            // as the stall cells are. A wrong record fails whatever the screencast holds.
+            const record = drawn.length === 1 && !!drawnInfo && drawnInfo.running === 0 && drawnInfo.final === true;
+            const paintMeasurable = c0 >= 0;
+            const ok = record && (!paintMeasurable || (c0 > 0 && settled));
+            const drawnItem = record && !paintMeasurable
+                ? "drawn: unmeasurable in paint, the screencast held no frame after the event; the page's record is right (recorded, not gated)"
+                : "drawn: once, after the last stroke frame";
+            verdict(drawnItem, cell, ok, {
+                record,
                 count: drawn.length,
                 running: drawnInfo?.running ?? null,
                 finalAtDrawn: drawnInfo?.final ?? null,
