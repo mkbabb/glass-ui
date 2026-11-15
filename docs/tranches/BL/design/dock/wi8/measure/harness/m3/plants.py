@@ -38,8 +38,8 @@ P = {
     [(D+"composables/useDockBody.ts", "                (run.parentElement ?? run).appendChild(n);", "                run.appendChild(n);")]),
   "g2-lane": ("G-2 (inside the plate): every lane corner rounded, as before (CSS scales them down)",
     [(D+"composables/useDockBody.ts", "on(box[x], P[x]) ? rIn : 0);", "on(box[x], P[x]) ? rIn : rIn);")]),
-  "g6-flow": ("G-6: a name put in flow on hover (the seat grows 12 px a side)",
-    [(D+"styles/controls/icon-button.css", None, "\n.glass-dock .dock-run > .dock-icon-button:hover { padding-inline: 12px; }\n")]),
+  "g6-flow": ("G-6: a name put in flow on hover (the hovered seat 24 px wider)",
+    [(D+"styles/controls/icon-button.css", None, "\n.glass-dock .dock-run > .dock-icon-button:hover { width: calc(var(--dock-control-size, var(--size-icon-btn)) + 24px); }\n")]),
   "g7-provide": ("G-7: the outlet's provide removed",
     [(D+"DockOutlet.vue", "        provide(DOCK_CONTEXT_KEY, p.context);", "        void p.context;")]),
   "g8-hold": ("G-8: the hold count consulted on a press outside",
@@ -54,8 +54,9 @@ P = {
     [(D+"styles/shell.css", None, "\n.glass-dock { scale: 1; }\n")]),
   "g13-box": ("G-13: the hidden posture face keeps its box at rest",
     [(D+"styles/layers.css", "        display: none;", "        display: flex;")]),
-  "g14-rmclock": ("G-14: reduced motion's content clock 300 ms, not 100 (a restated unit witness)",
-    [(D+"composables/useDockBody.ts", "                u = Math.max(0, u - dt / 0.1);", "                u = Math.max(0, u - dt / 0.3);")]),
+  "g14-rmclock": ("G-14: reduced motion's clocks 300 ms, not 100 (a restated unit witness)",
+    [(D+"composables/useDockBody.ts", "                eq.d = Math.sign(eq.d) * Math.max(0, Math.abs(eq.d) - dt / 0.1);", "                eq.d = Math.sign(eq.d) * Math.max(0, Math.abs(eq.d) - dt / 0.3);"),
+     (D+"composables/useDockBody.ts", "                u = Math.max(0, u - dt / 0.1);", "                u = Math.max(0, u - dt / 0.3);")]),
 }
 def apply(name):
     desc, reps = P[name]
