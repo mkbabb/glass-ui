@@ -359,6 +359,11 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
     let dwellMs = 0;
     let insideSince: number | null = null;
     let pointerInside = false;
+    /* W-I.8 R-2 (C2-13): a dismissal (Escape, `collapse()`) made while the pointer was
+       inside is not undone by that pointer's next move. It opens the dock again only
+       after it leaves and returns, or presses, or focus arrives. A fold the linger
+       started is not a dismissal, and a return reverses it at once (RU-6). */
+    let dismissedUnderPointer = false;
     function enterInside(): void {
         insideSince ??= performance.now();
     }
@@ -423,6 +428,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         isCollapsing = true;
         clearTimer();
         clearHoverIntent();
+        dismissedUnderPointer = pointerInside && state.value !== "collapsed";
         state.value = "collapsed";
         syncDerived();
         isCollapsing = false;
@@ -458,6 +464,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
     function onPointerMoveInside(e: PointerEvent): void {
         if (e.pointerType === "touch" || isQuiet() || pressOnly()) return;
         if (!moved(e) || state.value !== "collapsed") return;
+        if (dismissedUnderPointer) return;
         // A return mid-fold reverses it at once, with no intent wait (R-2, RU-6).
         if (isTransitioning?.value) {
             clearHoverIntent();
@@ -518,6 +525,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
     function onMouseLeave(e?: MouseEvent) {
         if (isQuiet() || pressOnly()) return;
         pointerInside = false;
+        dismissedUnderPointer = false;
         leaveInside();
         // A leave cancels any pending hover-intent dwell: a
         // sweeping-edge enter immediately chased by a leave never commits the expand.
@@ -546,6 +554,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
 
     function onFocusIn() {
         if (isQuiet() || pressOnly()) return;
+        dismissedUnderPointer = false;
         clearTimer();
         enterInside();
         if (state.value === "collapsed") {
@@ -613,6 +622,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
     }
     function onTouchLift(e: PointerEvent) {
         lastPointerType = e.pointerType;
+        if (e.type === "pointerdown") dismissedUnderPointer = false;
         if (e.type === "pointerup" && e.pointerType === "touch" && state.value === "hover") scheduleCollapse();
     }
     watch(
