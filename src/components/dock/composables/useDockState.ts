@@ -1,6 +1,5 @@
 import { computed, ref, watch, onUnmounted } from "vue";
-import type { ComponentPublicInstance, ComputedRef, Ref } from "vue";
-import { asElement } from "../../../composables/motion/core/asElement";
+import type { ComputedRef, Ref } from "vue";
 import { isTeleportedTarget } from "../../_shared/overlay/isTeleportedTarget";
 import type { DockHoldKind } from "./dockContext";
 import {
@@ -15,9 +14,8 @@ export interface UseDockStateOptions {
     /** Delay before auto-collapse after mouse leaves (ms). Defaults to
      * `DOCK_COLLAPSE_DELAY_MS`, the one idle window every GlassDock reads. */
     collapseDelay?: number;
-    /** The dock's root: an element, or a template ref on a `<GlassDock>` (its root
-     *  element is resolved). Presses inside it are the dock's; contains() checks read it. */
-    rootEl: Ref<HTMLElement | ComponentPublicInstance | null>;
+    /** Root element ref — used for contains() checks */
+    rootEl: Ref<HTMLElement | null>;
     /** Disable collapse behavior and keep the dock expanded. */
     alwaysExpanded?: Ref<boolean> | boolean;
     /** What opens the dock: a hover dwell (default) or a press. Under `"press"` the
@@ -121,10 +119,6 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         dockId,
         onStateChange,
     } = options;
-    // A ref on a component holds its public instance, not an element: resolve it once
-    // (`asElement`, the library's one resolver) so every listener and contains() check
-    // reads the dock's root element.
-    const rootElement = computed(() => asElement(rootEl.value));
 
     const getAlwaysExpanded = () =>
         typeof alwaysExpanded === "boolean" ? alwaysExpanded : alwaysExpanded.value;
@@ -234,7 +228,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
     let longPressFired = false;
 
     const onSeat = (target: EventTarget | null) => {
-        const root = rootElement.value;
+        const root = rootEl.value;
         const seat = target instanceof Element ? target.closest(".dock-persistent") : null;
         return !!seat && !!root?.contains(seat);
     };
@@ -403,11 +397,11 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
        own capture listener has already set it for a press on a seat). */
     function onAnyPressStart(e: PointerEvent) {
         if (longPressFired) disarmSwallow();
-        if (!rootElement.value?.contains(e.target as Node)) seatAct = false;
+        if (!rootEl.value?.contains(e.target as Node)) seatAct = false;
     }
 
     watch(
-        rootElement,
+        rootEl,
         (root, _, onCleanup) => {
             if (!root) return;
             root.addEventListener("pointerdown", onPressStart, true);
@@ -549,7 +543,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
             if (keepOpenCount.value > 0) return;
             // Mouse moved to a descendant or teleported child (dropdown, popover)
             if (e) {
-                const root = rootElement.value;
+                const root = rootEl.value;
                 if (
                     root &&
                     e.relatedTarget instanceof Node &&
@@ -654,7 +648,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         // During transitions, pointer-events:none on dock-layers causes clicks
         // to target the parent element — suppress click-away entirely.
         if (isTransitioning?.value) return;
-        const root = rootElement.value;
+        const root = rootEl.value;
         if (!root || root.contains(e.target as Node)) return;
         if (isTeleportedTarget(e.target, dockId)) return;
 
