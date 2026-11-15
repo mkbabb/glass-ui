@@ -120,6 +120,8 @@ export interface UseDockBodyOptions {
     /** `shape="pill"`: the corner is half the painted cross extent (R-1, RU-13). */
     pill: () => boolean;
     moving: Ref<boolean>;
+    /** R-5: the run's scroll offset as one more quantity (the run composable's reads). */
+    runScroll?: { resting: (from: number) => number | null; halt: () => void };
 }
 
 function rectOf(el: Element): Box {
@@ -161,6 +163,12 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
     let e = lastPosture ? 1 : 0;
     const eq: Q = { d: 0, v: 0 };
     let openFace: HTMLElement | null = null;
+    // R-5: the run's scroll offset, a quantity of the loop: it rests at `scrollRest` and
+    // paints at `scrollRest + scrollQ.d`. `savedScroll` is the offset the open face had
+    // when it folded, restored when it opens (RU-17: a face with no box loses its offset).
+    const scrollQ: Q = { d: 0, v: 0 };
+    let scrollRest: number | null = null;
+    let savedScroll: number | null = null;
     let closedFace: HTMLElement | null = null;
     let held: number | null = null;
     // Loop state.
@@ -174,6 +182,18 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
     let mo: MutationObserver | null = null;
 
     const root = () => o.root.value;
+
+    function runEl(): HTMLElement | null {
+        const r = o.run?.value;
+        return r && r.isConnected ? r : null;
+    }
+    function readScroll(r: HTMLElement): number {
+        return o.vertical() ? r.scrollTop : r.scrollLeft;
+    }
+    function writeScroll(r: HTMLElement, v: number): void {
+        if (o.vertical()) r.scrollTop = v;
+        else r.scrollLeft = v;
+    }
 
     function painted(): Box | null {
         if (!layout) return null;
@@ -205,24 +225,34 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         }
         const opOf = (el: HTMLElement) => {
             const inline = el.style.opacity;
-            if (inline !== "") return Number.parseFloat(inline);
-            return Number.parseFloat(getComputedStyle(el).opacity);
+            const v = Number.parseFloat(inline !== "" ? inline : getComputedStyle(el).opacity);
+            // An element with no computed opacity (no style sheet applies) paints at 1.
+            return Number.isFinite(v) ? v : 1;
         };
         const next: FaceTrack[] = [];
-        // Every face still showing leaves from its painted opacity (R-5).
+        // RU-17: the open face's run offset, kept for the unfold (its box goes at rest).
+        if (leave && leave === openFace) {
+            const r = runEl();
+            if (r) savedScroll = scrollRest !== null ? scrollRest + scrollQ.d : readScroll(r);
+        }
+        // Every face still showing leaves from its painted opacity (R-5). The opacities
+        // are read before any face's style is touched: a tracked face's painted value is
+        // its inline one, and the class it still carries pre-flush says nothing of it.
+        const paintedOp = new Map<HTMLElement, number>();
+        for (const f of faces) paintedOp.set(f.el, opOf(f.el));
         const group = (enter ?? leave)?.parentElement ?? null;
         for (const f of faces) {
             if (f.el === enter) continue;
-            const op = opOf(f.el);
+            const op = paintedOp.get(f.el) ?? 0;
             if (f.el.parentElement !== group) {
                 // Another group's faces keep their direction from where they paint.
                 next.push({ el: f.el, from: op, role: f.role, placed: f.placed });
                 continue;
             }
-            if (op > 0.001) next.push({ el: f.el, from: op, role: "leave", placed: f.placed });
-            else f.el.style.removeProperty("opacity");
+            if (op > 0.001 || f.el === leave) next.push({ el: f.el, from: op, role: "leave", placed: f.placed });
+            else clearFace(f);
         }
-        if (leave && !next.some((f) => f.el === leave)) next.push({ el: leave, from: opOf(leave), role: "leave", placed: false });
+        if (leave && !next.some((f) => f.el === leave)) next.push({ el: leave, from: paintedOp.get(leave) ?? opOf(leave), role: "leave", placed: false });
         if (enter) {
             if (place) for (const p of ["inset", "inset-inline-start", "left", "top", "width", "height"]) enter.style.removeProperty(p);
             const known = faces.find((f) => f.el === enter);
@@ -243,6 +273,13 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         u = 1;
         uv = 0;
         travelling = true;
+    }
+
+    /** A face that leaves the travel keeps none of the styles the loop wrote on it. */
+    function clearFace(f: FaceTrack): void {
+        f.el.style.removeProperty("opacity");
+        f.el.style.removeProperty("translate");
+        if (f.placed || f.role === "leave") for (const p of ["inset", "inset-inline-start", "left", "top", "width", "height"]) f.el.style.removeProperty(p);
     }
 
     function readRegions(): void {
@@ -373,9 +410,30 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             }
             readRegions();
             placeLeaves();
-            // R-1: a window resize seats every quantity at layout with no travel.
-            if (reduce || resized) {
-                if (resized) {
+            // R-5: the run's offset. On an unfold it is restored on this frame, with the
+            // open seat brought in (RU-17); on a content change in the open run it is one
+            // more quantity, from where it painted to where it rests.
+            const r = runEl();
+            if (r && o.runScroll) {
+                if (postureChanged && posture) {
+                    const to = o.runScroll.resting(savedScroll ?? readScroll(r));
+                    scrollQ.d = scrollQ.v = 0;
+                    scrollRest = null;
+                    if (to !== null) writeScroll(r, to);
+                } else if (posture && seatsMoved) {
+                    const from = scrollRest !== null ? scrollRest + scrollQ.d : readScroll(r);
+                    o.runScroll.halt();
+                    const to = o.runScroll.resting(from);
+                    if (to !== null && (scrollRest !== null || Math.abs(from - to) > 0.01)) {
+                        scrollQ.d = from - to;
+                        scrollRest = to;
+                    }
+                }
+            }
+            // R-1: a window resize seats every quantity at layout with no travel, and so
+            // does a change before the dock's first frame: nothing has painted to glide from.
+            if (reduce || resized || !shown) {
+                if (resized || !shown) {
                     eq.d = eq.v = 0;
                     u = uv = 0;
                 }
@@ -383,6 +441,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
                 for (const q of Object.values(edge)) (q.d = 0), (q.v = 0);
                 for (const t of regions.values()) (t.x.d = t.y.d = t.x.v = t.y.v = 0);
                 for (const t of seats.values()) (t.x.d = t.y.d = t.x.v = t.y.v = 0);
+                scrollQ.d = scrollQ.v = 0;
             }
             if (postureChanged || changed) {
                 if (!travelling) {
@@ -449,12 +508,33 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             const parent = el.parentElement ? getComputedStyle(el.parentElement).display : "";
             inFlow = (pos === "static" || pos === "relative") && /^(block|flow-root|list-item)$/.test(parent);
         }
+        if (!isLive()) {
+            // A retarget that leaves nothing to move (a reversal before any frame painted)
+            // is no travel: no busy window is made up for it.
+            if (raf !== null) cancelAnimationFrame(raf);
+            raf = null;
+            rest();
+            return;
+        }
         if (raf === null) {
             scopeEl = undefined;
             last = inFrame ? (document.timeline.currentTime as number | null) : null;
-            write();
             raf = requestAnimationFrame(frame);
         }
+        // The trigger's write: the painted state with its new targets (the same paint, so
+        // no step), and the published values that read the new travel.
+        write();
+    }
+
+    function isLive(): boolean {
+        for (const q of Object.values(edge)) if (q.d !== 0) return true;
+        for (const t of regions.values()) if (t.x.d !== 0 || t.y.d !== 0) return true;
+        for (const t of seats.values()) if (t.x.d !== 0 || t.y.d !== 0) return true;
+        if (scrollQ.d !== 0 || eq.d !== 0) return true;
+        // The exchange coordinate moves only a face that is not a posture face in a
+        // posture travel (those read e).
+        if (u !== 0 && faces.some((f) => !(postureTravel && (f.el === openFace || f.el === closedFace)))) return true;
+        return false;
     }
 
     function frame(now: number): void {
@@ -468,6 +548,8 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
                 [q.d, q.v] = step(q.d, q.v, dt);
                 if (Math.abs(q.d) < SNAP_PX && Math.abs(q.v) < SNAP_V) (q.d = 0), (q.v = 0);
             }
+            [scrollQ.d, scrollQ.v] = step(scrollQ.d, scrollQ.v, dt);
+            if (Math.abs(scrollQ.d) < SNAP_PX && Math.abs(scrollQ.v) < SNAP_V) (scrollQ.d = 0), (scrollQ.v = 0);
             for (const t of [...regions.values(), ...seats.values()]) {
                 [t.x.d, t.x.v] = step(t.x.d, t.x.v, dt);
                 [t.y.d, t.y.v] = step(t.y.d, t.y.v, dt);
@@ -475,6 +557,11 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
                 if (Math.abs(t.y.d) < SNAP_PX && Math.abs(t.y.v) < SNAP_V) (t.y.d = 0), (t.y.v = 0);
             }
             if (reduce) {
+                // R-11: under reduced motion, the preference set mid-travel included, every
+                // geometric quantity is at its rest in this frame.
+                for (const q of Object.values(edge)) (q.d = 0), (q.v = 0);
+                for (const t of [...regions.values(), ...seats.values()]) (t.x.d = t.y.d = t.x.v = t.y.v = 0);
+                scrollQ.d = scrollQ.v = 0;
                 // R-11: the coordinate runs as a linear clock, whole at 100 ms.
                 eq.d = Math.sign(eq.d) * Math.max(0, Math.abs(eq.d) - dt / 0.1);
                 u = Math.max(0, u - dt / 0.1);
@@ -487,11 +574,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
                 if (Math.abs(u) < 0.002 && Math.abs(uv) < 0.05) (u = 0), (uv = 0);
             }
         }
-        for (const q of Object.values(edge)) if (q.d !== 0) live = true;
-        for (const t of regions.values()) if (t.x.d !== 0 || t.y.d !== 0) live = true;
-        for (const t of seats.values()) if (t.x.d !== 0 || t.y.d !== 0) live = true;
-        if (u !== 0) live = true;
-        if (eq.d !== 0) live = true;
+        live = isLive();
         if (live) {
             write();
             raf = requestAnimationFrame(frame);
@@ -520,7 +603,9 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         e = clamp01((lastPosture ? 1 : 0) + eq.d);
         if (held !== null) e = held;
         writeExpandT();
-        if (postureTravel) el.style.setProperty("--dock-morph-t", f.toFixed(4));
+        // `--dock-morph-t` keeps master's meaning through 11.2.0 (R-10): the progress of the
+        // current posture travel, 0 to 1, so a reversal reads 1 − t where it turns.
+        if (postureTravel) el.style.setProperty("--dock-morph-t", (lastPosture ? e : 1 - e).toFixed(4));
 
         const W = P.r - P.l;
         const H = P.b - P.t;
@@ -550,7 +635,10 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             .filter((t): t is RegionTrack => !!t);
         // A region with no size still gets its lane: its leaving face is placed out of flow
         // and paints, and without a lane it painted over its neighbour (keyframes's transport).
-        // R-5: each seat whose place changed rides its own translate to 0.
+        // R-5: each seat whose place changed rides its own translate to 0, and the run's
+        // offset rides its quantity, so a seat's painted place is one curve.
+        const rr = runEl();
+        if (rr && scrollRest !== null) writeScroll(rr, scrollRest + scrollQ.d);
         for (const [el, t] of seats) {
             if (t.x.d !== 0 || t.y.d !== 0) el.style.translate = `${t.x.d.toFixed(3)}px ${t.y.d.toFixed(3)}px`;
             else if (el.style.translate) el.style.removeProperty("translate");
@@ -639,17 +727,17 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             plate.style.removeProperty("border-radius");
         }
         for (const el of seats.keys()) el.style.removeProperty("translate");
+        const rr = runEl();
+        if (rr && scrollRest !== null) writeScroll(rr, scrollRest);
+        scrollRest = null;
+        scrollQ.d = scrollQ.v = 0;
         for (const t of regions.values()) {
             t.el.style.removeProperty("translate");
             t.el.style.removeProperty("clip-path");
             t.tx = t.ty = 0;
             t.clipped = false;
         }
-        for (const face of faces) {
-            face.el.style.removeProperty("opacity");
-            face.el.style.removeProperty("translate");
-            if (face.placed || face.role === "leave") for (const p of ["inset", "inset-inline-start", "left", "top", "width", "height"]) face.el.style.removeProperty(p);
-        }
+        for (const face of faces) clearFace(face);
         faces = [];
         if (wroteMargin) {
             el?.style.removeProperty("margin-block-end");
@@ -677,11 +765,16 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
     }
 
     let resized = false;
+    let shown = false;
     let resizeFrame: number | null = null;
     function onWindowResize(): void {
         resized = true;
         if (resizeFrame !== null) cancelAnimationFrame(resizeFrame);
         resizeFrame = requestAnimationFrame(() => {
+            // R-1: the resize is read once, at layout, with no travel: a dock whose size
+            // did not change (so no ResizeObserver record) still moved, and a model left at
+            // the old place would start the next travel from it.
+            sync("resize");
             resizeFrame = requestAnimationFrame(() => {
                 resized = false;
                 resizeFrame = null;
@@ -691,6 +784,9 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
     onMounted(() => {
         window.addEventListener("resize", onWindowResize);
         sync("mount");
+        requestAnimationFrame(() => {
+            shown = true;
+        });
         if (typeof ResizeObserver === "undefined") return;
         ro = new ResizeObserver(() => sync("ro"));
         const el = root();

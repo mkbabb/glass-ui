@@ -118,7 +118,7 @@ const persistentEndEl = useTemplateRef<HTMLElement>("persistentEndEl");
    the port scrolls, and the common ancestor the cut-cap timeline scopes to. Reach,
    roving tabindex and the announcement all read the SAME seat list, so they live in
    one composable rather than three that must agree. */
-const { toolbar } = useDockRun({ runEl: fullEl, statusEl, orientation });
+const { toolbar, restingScroll, halt: haltReach } = useDockRun({ runEl: fullEl, statusEl, orientation });
 
 /* Wire the sampled-luminance observer ON for
    the dock by default. It writes `--glass-backdrop-luma` + derives the
@@ -246,7 +246,6 @@ onBeforeUnmount(() => {
    edge-anchored dock grows from its anchored edge from the first frame. */
 /* W-I.8 R-1: one carrier moves every size the dock has. */
 const reducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
-const moving = ref(false);
 const body = useDockBody({
     root: dockEl,
     plate: plateEl,
@@ -260,10 +259,9 @@ const body = useDockBody({
     vertical: () => orientation.value === "vertical",
     reducedMotion: () => reducedMotion.value,
     pill: () => shape.value === "pill",
-    moving,
-});
-watch(moving, (m) => {
-    isTransitioning.value = m;
+    // The settle flag is the loop's own: true from the trigger to the landing frame.
+    moving: isTransitioning,
+    runScroll: { resting: restingScroll, halt: haltReach },
 });
 const outerCurrentLayer = ref<string>(visualExpanded.value ? "full" : "summary");
 const outerLeavingLayer = ref<string | null>(null);

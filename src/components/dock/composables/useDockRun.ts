@@ -51,6 +51,15 @@ export interface UseDockRunReturn {
      * `<DockSeparator>` and reka's form `<select>` aside: the run's `role="toolbar"`.
      */
     toolbar: Readonly<Ref<boolean>>;
+    /**
+     * W-I.8 R-5: where the run's scroll offset rests after a content change, read on the
+     * new layout from the offset `from`: the open seat's anchor when that seat is not
+     * fully in view, else `from` clamped to the run's range. Null when the run does not
+     * scroll on its axis.
+     */
+    restingScroll: (from: number) => number | null;
+    /** Stops a reach's glide (the carrier owns the offset while it travels). */
+    halt: () => void;
 }
 
 /**
@@ -225,6 +234,22 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
         // ring cut by that pixel.
         const slack = 0.5;
         return start < pos + reserve - slack || end > pos + port - reserve + slack;
+    }
+
+    function restingScroll(from: number): number | null {
+        const run = runEl.value;
+        if (!run) return null;
+        const max = scrollMax(run);
+        if (max <= 0.5) return null;
+        const clamped = Math.min(Math.max(from, 0), max);
+        const seats = declaredSeatsOf(run);
+        const open = seats[openIndexOf(seats)];
+        if (!open) return clamped;
+        const port = vertical() ? run.clientHeight : run.clientWidth;
+        const reserve = reserveOf(run);
+        const [start, end] = extentOf(run, open);
+        const inView = start >= clamped + reserve - 0.5 && end <= clamped + port - reserve + 0.5;
+        return inView ? clamped : anchorFor(run, open);
     }
 
     function announce(seat: HTMLElement): void {
@@ -483,5 +508,5 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
     // a tab order that now reads across the wrong axis.
     watch(orientation, () => syncRoving());
 
-    return { reach, syncRoving, toolbar };
+    return { reach, syncRoving, toolbar, restingScroll, halt: () => glide.dispose() };
 }

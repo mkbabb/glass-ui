@@ -209,6 +209,14 @@
         inset: 0;
     }
 
+    /* W-I.8 R-1 (RU-17): at rest the posture face that is not showing has no box, so a
+       folded dock's hidden seats report no rectangle and add no overflow. It is laid out
+       only while the window is open: the carrier sets `[data-morphing]` before the class
+       changes and reads the new layout after it. */
+    .glass-dock:not([data-morphing]) > .dock-controls > .dock-layers > .dock-layer:not(.is-active):not(.is-press-keepalive) {
+        display: none;
+    }
+
     /* The spring-keyed child stagger, now off the SINGLE morph scalar.
        The driver writes `--dock-morph-t` to the `.glass-dock` root and arms
        `[data-morphing]` while the spring runs; `--dock-expand-t` (the inheriting

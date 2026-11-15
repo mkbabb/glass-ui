@@ -828,6 +828,13 @@
         animation: none;
     }
 
+    /* W-I.8 R-5: while the window is open the carrier writes the run's offset as one of
+       its quantities; a mandatory snap would pull each written offset to a snap position.
+       The offset it rests at is the open seat's anchor, a snap position. */
+    .glass-dock[data-morphing] :where(.dock-layers) > .dock-run {
+        scroll-snap-type: none;
+    }
+
     /* ── THE LIVE REGION ─────────────────────────────────────────────────────────
        Reach announces to this node (useDockRun). Visually hidden by the canonical
        one-pixel clip rather than `display: none` or `visibility: hidden`, both of which
