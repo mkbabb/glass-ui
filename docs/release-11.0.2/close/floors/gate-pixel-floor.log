@@ -1,0 +1,37 @@
+
+> @mkbabb/glass-ui-tests-visual@0.0.0 gate:pixel-floor
+> rm -f .cache/pi-report-green.json; PI_REPORT=.cache/pi-report-green.json playwright test substrate-paints-color.spec.ts --project=chromium-headless-new; node pi-gate-verify.mjs --expect=green --report=./.cache/pi-report-green.json
+
+
+Running 3 tests using 1 worker
+
+PI aurora DEFAULT meanChannel=230.7 floor=8
+PI aurora SETTING_SUN meanChannel=231.3 floor=8
+PI aurora DUSK meanChannel=230.1 floor=8
+PI aurora VIVID_SETTING_SUN meanChannel=233.0 floor=8
+PI aurora OPENAI_SKY meanChannel=231.4 floor=8
+PI aurora OPENAI_DAWN meanChannel=229.4 floor=8
+PI aurora OPENAI_MEADOW meanChannel=206.0 floor=8
+PI aurora DELIBERATIVE meanChannel=235.1 floor=8
+PI aurora DAY9_YELLOW meanChannel=229.3 floor=8
+PI aurora OIL_IMPASTO meanChannel=194.0 floor=8
+PI aurora OIL_GESTURAL meanChannel=217.7 floor=8
+PI aurora VANGOGH meanChannel=101.5 floor=8
+PI aurora OILPASTEL_SUNSET meanChannel=199.9 floor=8
+PI aurora OILPASTEL_RAINBOW meanChannel=217.4 floor=8
+PI aurora OILPASTEL_OCEAN meanChannel=148.3 floor=8
+PI aurora CRAYON meanChannel=166.0 floor=8
+PI aurora METAL meanChannel=206.6 floor=8
+PI aurora SPEEDTEST meanChannel=177.5 floor=8
+  ✓  1 [chromium-headless-new] › substrate-paints-color.spec.ts:575:5 › substrate-paints-color (π lane — fail-CLOSED) › aurora paints a non-black interior on DEFAULT + every preset at t=1 (25.0s)
+PI blob paintable=[0.188,0.188]-[0.813,0.702] paintableShareOfInterior=0.557
+PI blob baseline groundMotion=0.000
+PI blob coverage=0.161 floor=0.1 · paintedShare=0.289 ceil=0.7
+  ✓  2 [chromium-headless-new] › substrate-paints-color.spec.ts:758:5 › substrate-paints-color (π lane — fail-CLOSED) › blob paints a non-blank droplet on BLOB_CONFIG_DEFAULTS (7.7s)
+PI blob paintable=[0.188,0.188]-[0.813,0.702] paintableShareOfInterior=0.557
+PI blob baseline groundMotion=0.000
+PI blob coverage=0.161 floor=0.1 · paintedShare=0.289 ceil=0.7
+  ✓  3 [chromium-headless-new] › substrate-paints-color.spec.ts:766:5 › substrate-paints-color (π lane — fail-CLOSED) › blob keeps a transparent margin (non-flood ceiling) on BLOB_CONFIG_DEFAULTS (8.4s)
+
+  3 passed (43.0s)
+pixel-floor gate: GREEN — 3 floors ran on the live paint path and passed.
