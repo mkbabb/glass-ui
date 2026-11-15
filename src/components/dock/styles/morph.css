@@ -195,9 +195,9 @@
        and the root's symmetric collapsed padding keeps the pill a circle. The glyph
        sits centred on both axes.
        W-I.8 (C2-1): a folded face that holds words is a stadium as wide as its words.
-       The face is 1:1 from its block size, and its inline floor is its content's own
-       width (it was the size token, which cut a worded face to a 44 px circle), and the
-       inline padding keeps the words clear of the caps. A glyph of 24 px or less still
+       The face is as wide as its content with a floor of its own height (the forced
+       1:1 cut a worded face to a 44 px circle), and the inline padding keeps the words
+       clear of the caps. A glyph of 24 px or less still
        fits inside the floor with the padding, so its face stays a circle. */
     .glass-dock .dock-layer--summary {
         min-width: var(
@@ -216,11 +216,13 @@
             --dock-collapsed-summary-min-size,
             var(--dock-layer-height, 2.5rem)
         );
-        /* 1:1 from the block size, unless the content is wider: the inline floor is the
-           content's own width (words and their padding), so one glyph is a circle and
-           words are a stadium. */
-        aspect-ratio: 1;
-        min-inline-size: max-content;
+        /* As wide as its content, and never narrower than it is tall: one glyph is a
+           circle and words are a stadium. The floor is the layer height, which is the
+           block size this face computes to in every density (the base `.dock-layer`
+           rule's height wins over the size token above). `aspect-ratio` cannot do this:
+           with a definite block size a box's max-content width is the ratio's. */
+        inline-size: max-content;
+        min-inline-size: var(--dock-layer-height, 2.5rem);
         padding-inline: 0.5rem;
         white-space: nowrap;
         justify-content: center;
