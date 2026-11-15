@@ -83,6 +83,14 @@ interface FaceTrack {
     region?: string;
     d0x?: number;
     d0y?: number;
+    /** A face returned to (R-3): where it painted before the return, its region, and the
+     *  carry that takes it from there to its place in the new layout with no step. */
+    ret?: Box;
+    home?: string;
+    q?: { x: Q; y: Q };
+    /** An entering face that starts its rise at once: no other face of its group was
+     *  above half strength when it entered (a third change on weak faces). */
+    early?: boolean;
 }
 interface PendingLeave {
     el: HTMLElement;
@@ -245,6 +253,41 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         const paintedOp = new Map<HTMLElement, number>();
         for (const f of faces) paintedOp.set(f.el, opOf(f.el));
         const group = (enter ?? leave)?.parentElement ?? null;
+        // R-3: a return to a face still tracked inverts the exchange where it is. The two
+        // roles trade, the coordinate becomes 1 − f with its velocity negated, and nothing
+        // restarts: the face returned to takes no entering offset and keeps its painted
+        // place (it is carried from there to its layout place like any other quantity),
+        // and each opacity continues from the value on screen.
+        const back = enter ? faces.find((f) => f.el === enter) : undefined;
+        const fwd = leave ? faces.find((f) => f.el === leave) : undefined;
+        const posture = (el: HTMLElement | null | undefined) => !!el && (el === openFace || el === closedFace);
+        if (
+            travelling && back && fwd && enter && leave &&
+            back.role === "leave" && fwd.role === "enter" &&
+            !posture(enter) && !posture(leave) &&
+            faces.filter((f) => f.el.parentElement === group).length === 2
+        ) {
+            const f0 = clamp01(1 - u);
+            const a = paintedOp.get(enter) ?? 0;
+            const b = paintedOp.get(leave) ?? 0;
+            const win = o.reducedMotion() ? (x: number) => clamp01(1 - x) : w;
+            const k = win(f0); // the returned-to face's window after the inversion
+            const m = win(1 - f0); // the other's
+            if ((k < 0.999 || a > 0.999) && (m > 0.001 || b < 0.001)) {
+                const ret = place ? rectOf(enter) : undefined;
+                if (place) for (const p of ["inset", "inset-inline-start", "left", "top", "width", "height", "translate"]) enter.style.removeProperty(p);
+                faces = faces.map((f) =>
+                    f.el === enter
+                        ? { el: f.el, from: k < 0.999 ? (a - k) / (1 - k) : 0, role: "enter" as const, placed: true, ret, home: region }
+                        : f.el === leave
+                          ? { el: f.el, from: m > 0.001 ? b / m : 0, role: "leave" as const, placed: false }
+                          : f,
+                );
+                u = 1 - u;
+                uv = -uv;
+                return;
+            }
+        }
         for (const f of faces) {
             if (f.el === enter) continue;
             const op = paintedOp.get(f.el) ?? 0;
@@ -269,7 +312,11 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
                 const rtl = getComputedStyle(enter).direction === "rtl" && !o.vertical();
                 dir = (later ? 1 : -1) * (rtl ? -1 : 1);
             }
-            next.push({ el: enter, from, role: "enter", placed: true, dir });
+            // A retarget onto weak faces: when nothing else in the group is above half
+            // strength the entering face rises from the first frame, so the plate is not
+            // left with nothing readable while a fresh window runs (C2-4).
+            const early = travelling && !next.some((f) => f.el.parentElement === group && f.from > 0.5);
+            next.push({ el: enter, from, role: "enter", placed: true, dir, early });
             enter.style.opacity = String(from);
         }
         for (const f of next) if (f.role === "leave") f.el.style.opacity = String(f.from);
@@ -414,6 +461,21 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             }
             readRegions();
             placeLeaves();
+            // R-3: a face returned to is carried from where it painted to its place in the
+            // new layout: painted minus what the layout and its region's carry would paint,
+            // with the velocity that keeps it still against that carry.
+            for (const f of faces) {
+                if (!f.ret) continue;
+                const g = regions.get(f.home ?? "layers");
+                const r = rectOf(f.el);
+                const gx = g ? g.x : { d: 0, v: 0 };
+                const gy = g ? g.y : { d: 0, v: 0 };
+                f.q = {
+                    x: { d: f.ret.l - (r.l - (g?.tx ?? 0) + gx.d), v: -gx.v },
+                    y: { d: f.ret.t - (r.t - (g?.ty ?? 0) + gy.d), v: -gy.v },
+                };
+                f.ret = undefined;
+            }
             // R-5: the run's offset. On an unfold it is restored on this frame, with the
             // open seat brought in (RU-17); on a content change in the open run it is one
             // more quantity, from where it painted to where it rests.
@@ -445,6 +507,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
                 for (const q of Object.values(edge)) (q.d = 0), (q.v = 0);
                 for (const t of regions.values()) (t.x.d = t.y.d = t.x.v = t.y.v = 0);
                 for (const t of seats.values()) (t.x.d = t.y.d = t.x.v = t.y.v = 0);
+                for (const f of faces) if (f.q) f.q.x.d = f.q.y.d = f.q.x.v = f.q.y.v = 0;
                 scrollQ.d = scrollQ.v = 0;
             }
             if (postureChanged || changed) {
@@ -535,6 +598,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         for (const t of regions.values()) if (t.x.d !== 0 || t.y.d !== 0) return true;
         for (const t of seats.values()) if (t.x.d !== 0 || t.y.d !== 0) return true;
         if (scrollQ.d !== 0 || eq.d !== 0) return true;
+        for (const f of faces) if (f.q && (f.q.x.d !== 0 || f.q.y.d !== 0)) return true;
         // The exchange coordinate moves only a face that is not a posture face in a
         // posture travel (those read e).
         if (u !== 0 && faces.some((f) => !(postureTravel && (f.el === openFace || f.el === closedFace)))) return true;
@@ -559,6 +623,13 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
                 [t.y.d, t.y.v] = step(t.y.d, t.y.v, dt);
                 if (Math.abs(t.x.d) < SNAP_PX && Math.abs(t.x.v) < SNAP_V) (t.x.d = 0), (t.x.v = 0);
                 if (Math.abs(t.y.d) < SNAP_PX && Math.abs(t.y.v) < SNAP_V) (t.y.d = 0), (t.y.v = 0);
+            }
+            for (const f of faces) {
+                if (!f.q) continue;
+                [f.q.x.d, f.q.x.v] = step(f.q.x.d, f.q.x.v, dt);
+                [f.q.y.d, f.q.y.v] = step(f.q.y.d, f.q.y.v, dt);
+                if (reduce || (Math.abs(f.q.x.d) < SNAP_PX && Math.abs(f.q.x.v) < SNAP_V)) (f.q.x.d = 0), (f.q.x.v = 0);
+                if (reduce || (Math.abs(f.q.y.d) < SNAP_PX && Math.abs(f.q.y.v) < SNAP_V)) (f.q.y.d = 0), (f.q.y.v = 0);
             }
             if (reduce) {
                 // R-11: under reduced motion, the preference set mid-travel included, every
@@ -672,7 +743,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             }
             clipTo(t, lane, Math.min(R, H / 2));
         });
-        // Content (R-3, RU-2): one window, w(x) = clamp(1 − x / 0.55). For a posture change
+        // Content (R-3, RU-2): one window, w(x) = clamp(1 − x / 0.7). For a posture change
         // the summary reads w(e) and the run w(1 − e); for a content change the leaving
         // face reads w(f) and the entering face w(1 − f). Under reduced motion (R-11) the
         // coordinate is a linear 100 ms clock and each face fades across the whole of it.
@@ -685,8 +756,11 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             else if (face.el === closedFace && posing) op = win(e);
             else if (face.role === "leave") op = face.from * win(f);
             else {
-                const inW = win(1 - f);
-                op = face.from + (1 - face.from) * inW;
+                // The entering window; an early face reads the same window from the start
+                // of the exchange (1 at f = 0.7) instead of from 0.3 on.
+                const inW = face.early && !reduce ? clamp01(f / W_END) : win(1 - f);
+                op = clamp01(face.from + (1 - face.from) * inW);
+                if (face.q) face.el.style.translate = `${face.q.x.d.toFixed(3)}px ${face.q.y.d.toFixed(3)}px`;
                 // RU-11: the entering face arrives over 8 px from the side it lives on.
                 if (face.dir && !reduce) {
                     const off = face.dir * ENTER_PX * (1 - inW);
