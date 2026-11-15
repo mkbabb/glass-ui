@@ -1,0 +1,53 @@
+{
+ "name": "lt-collapsible-reverse",
+ "component": "collapsible",
+ "about": "Collapsible reversed at about 50 % of its open.",
+ "cells": [
+  {
+   "tag": "1440-fine-light",
+   "w": 1440,
+   "h": 900,
+   "pointer": "fine",
+   "scheme": "light"
+  }
+ ],
+ "ready": "[data-testid=collapsible-0] > .disclosure-trigger",
+ "track": [
+  {
+   "as": "c0",
+   "sel": "[data-testid=collapsible-0] > .disclosure-content"
+  }
+ ],
+ "crop": "[data-testid=collapsible-0]",
+ "cropPad": 16,
+ "steps": [
+  {
+   "do": "click",
+   "sel": "[data-testid=collapsible-0] > .disclosure-trigger"
+  },
+  {
+   "do": "wait",
+   "ms": 90
+  },
+  {
+   "do": "mark",
+   "name": "reverse-open"
+  },
+  {
+   "do": "click",
+   "sel": "[data-testid=collapsible-0] > .disclosure-trigger"
+  },
+  {
+   "do": "settle",
+   "quietMs": 400,
+   "maxMs": 3000
+  }
+ ],
+ "strips": [
+  {
+   "name": "reverse-open",
+   "fromMark": "reverse-open",
+   "n": 10
+  }
+ ]
+}

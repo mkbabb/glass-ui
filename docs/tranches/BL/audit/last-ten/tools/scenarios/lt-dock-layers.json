@@ -1,0 +1,64 @@
+{
+ "name": "lt-dock-layers",
+ "component": "dock-full",
+ "about": "The layer-group dock expanded by hover; a tap on its third tab.",
+ "cells": [
+  {
+   "tag": "1440-fine-light",
+   "w": 1440,
+   "h": 900,
+   "pointer": "fine",
+   "scheme": "light"
+  }
+ ],
+ "ready": "[data-testid=df-layers]",
+ "track": [
+  {
+   "as": "ind",
+   "sel": "[data-testid=df-layers] .dock-layer-tab-indicator"
+  },
+  {
+   "as": "tab",
+   "sel": "[data-testid=df-layers] .dock-layer-tab",
+   "all": true
+  },
+  {
+   "as": "plate",
+   "sel": "[data-testid=df-layers] .dock-plate"
+  }
+ ],
+ "crop": "[data-testid=df-layers]",
+ "cropPad": 30,
+ "steps": [
+  {
+   "do": "hover",
+   "sel": "[data-testid=df-layers]"
+  },
+  {
+   "do": "settle",
+   "quietMs": 400,
+   "maxMs": 3000
+  },
+  {
+   "do": "mark",
+   "name": "tap3"
+  },
+  {
+   "do": "click",
+   "sel": "[data-testid=df-layers] .dock-layer-tab:nth-of-type(3)"
+  },
+  {
+   "do": "settle",
+   "quietMs": 400,
+   "maxMs": 3000,
+   "afterChange": false
+  }
+ ],
+ "strips": [
+  {
+   "name": "tap3",
+   "fromMark": "tap3",
+   "n": 8
+  }
+ ]
+}
