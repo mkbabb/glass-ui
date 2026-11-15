@@ -6,7 +6,8 @@
 //   - the open-seat cells mark the second change ("retarget") so its two legs are judged apart;
 //   - w-many (O-358: five tabs and two avatar seats) at 360 and 390 by touch and at 1440;
 //     w-ctl6 (six controls) at 360 by touch; w-rim (the rim at 40 %) fine, dark, coarse, rm;
-//     the seat set (a seat joining and leaving) at 390 by touch, with the joining seat tracked.
+//     the seat set (a seat joining and leaving) at 390 by touch, with the joining seat tracked;
+//   - seats and run children keyed by element, not by index.
 import { mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 const IN = new URL("../scenarios-p3/", import.meta.url);
 const OUT = new URL("../scenarios-m3/", import.meta.url);
@@ -20,12 +21,25 @@ const CELLS = {
 };
 const T = (id) => `[data-testid=${id}]`;
 const kid = (testid) => ({ as: "kid", sel: `${T(testid)} .dock-layer--full > *:not([data-dock-leaving])`, all: true, chain: true });
+// A control the host removed, held by glass in the run's region until the landing.
+const ghost = (testid) => ({ as: "ghost", sel: `${T(testid)} .dock-layers > [data-dock-leaving]`, all: true, chain: true, stable: true });
 const names = [];
-const write = (s) => { writeFileSync(new URL(`${s.name}.json`, OUT), JSON.stringify(s, null, 1)); names.push(s.name); };
+// Seats and run children are keyed by element (sampler `stable`), so a seat that leaves or
+// is re-inserted keeps its key and does not lend it to a neighbour.
+const write = (s) => {
+    for (const t of s.track) {
+        if (t.all && /^(seat|kid)$/.test(t.as)) t.stable = true;
+        // A seat the host removes moves to the run's region as glass holds it: the seat track
+        // follows it there under the same key.
+        const root = /^(\[data-testid=[^\]]+\])/.exec(t.sel)?.[1];
+        if (t.as === "seat" && root && !t.sel.includes("data-dock-leaving")) t.sel += `, ${root} .dock-layers > [data-dock-leaving]`;
+    }
+    writeFileSync(new URL(`${s.name}.json`, OUT), JSON.stringify(s, null, 1)); names.push(s.name); };
 for (const f of readdirSync(IN).filter((x) => x.endsWith(".json")).sort()) {
     const s = JSON.parse(readFileSync(new URL(f, IN), "utf8"));
     const testid = /\[data-testid=([^\]]+)\]/.exec(s.ready)?.[1];
     if (testid && !s.track.some((t) => t.as === "kid")) s.track.push(kid(testid));
+    if (testid && !s.track.some((t) => t.as === "ghost")) s.track.push(ghost(testid));
     if (/^p3-seat-/.test(s.name)) {
         for (const x of s.steps) if (x.do === "settle") x.afterChange = false;
         const i = s.steps.findIndex((x) => x.do === "mark" && x.name === "twice");
@@ -50,6 +64,7 @@ function base(name, cell, ck, testid = cell) {
             { as: "summary", sel: `${t} .dock-layer--summary`, chain: true },
             { as: "seat", sel: `${t} .dock-layer--full > [data-glass-dock-seat]`, all: true, chain: true, styles: ["translate"] },
             kid(testid),
+            ghost(testid),
         ],
         cropAs: ["dock", "plate"], cropPad: 24, gapMs: 250, strips: [],
     };

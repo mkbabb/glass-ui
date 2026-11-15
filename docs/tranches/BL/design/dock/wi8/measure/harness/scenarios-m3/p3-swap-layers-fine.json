@@ -75,12 +75,13 @@
   },
   {
    "as": "seat",
-   "sel": "[data-testid=w-layers] .dock-layer--full > [data-glass-dock-seat], [data-testid=w-layers] .dock-layer--full > * > [data-glass-dock-seat]",
+   "sel": "[data-testid=w-layers] .dock-layer--full > [data-glass-dock-seat], [data-testid=w-layers] .dock-layer--full > * > [data-glass-dock-seat], [data-testid=w-layers] .dock-layers > [data-dock-leaving]",
    "all": true,
    "chain": true,
    "styles": [
     "translate"
-   ]
+   ],
+   "stable": true
   },
   {
    "as": "face",
@@ -95,7 +96,15 @@
    "as": "kid",
    "sel": "[data-testid=w-layers] .dock-layer--full > *:not([data-dock-leaving])",
    "all": true,
-   "chain": true
+   "chain": true,
+   "stable": true
+  },
+  {
+   "as": "ghost",
+   "sel": "[data-testid=w-layers] .dock-layers > [data-dock-leaving]",
+   "all": true,
+   "chain": true,
+   "stable": true
   }
  ],
  "cropAs": [

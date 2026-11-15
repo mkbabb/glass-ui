@@ -178,7 +178,15 @@
                 el[spec.as] = null;
                 continue;
             }
-            if (spec.all) list.forEach((n, k) => (el[spec.as + "#" + k] = read(n, spec)));
+            // `stable`: an element keeps its key for its life (ids in first-seen order), so a
+            // seat removed or re-inserted does not hand its key to its neighbour.
+            if (spec.all && spec.stable) {
+                const ids = (S.ids ||= {})[spec.as] ||= { map: new WeakMap(), next: 0 };
+                for (const n of list) {
+                    if (!ids.map.has(n)) ids.map.set(n, ids.next++);
+                    el[spec.as + "#" + ids.map.get(n)] = read(n, spec);
+                }
+            } else if (spec.all) list.forEach((n, k) => (el[spec.as + "#" + k] = read(n, spec)));
             else el[spec.as] = read(list[0], spec);
         }
         return el;
@@ -241,6 +249,7 @@
             as: t.as,
             sel: t.sel,
             all: !!t.all,
+            stable: !!t.stable,
             chain: !!t.chain,
             colors: t.colors || ["color", "background-color", "border-top-color", "box-shadow"],
             props: t.props || [],
