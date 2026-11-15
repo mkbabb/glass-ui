@@ -15,8 +15,8 @@ P = {
     [(D+"styles/run.css", "    .glass-dock.shape-pill {\n        border-radius: 9999px;\n    }", "    .glass-dock.shape-pill {\n        border-radius: 16px;\n    }")]),
   # The painted box (10.1.3 O-110, D-1 critique-3/4/7): the loop's clock started at the
   # trigger, so the first frame of a travel already moves.
-  "clock": ("the loop's clock started at the trigger (the first frame advances 33 ms)",
-    [(D+"composables/useDockBody.ts", "            last = inFrame ? (document.timeline.currentTime as number | null) : null;", "            last = performance.now() - 33;")]),
+  "clock": ("the plate jumps to the new layout on the trigger frame (no edge carries the painted box)",
+    [(D+"composables/useDockBody.ts", "                edge.l.d = prevPainted.l - next.l;\n                edge.t.d = prevPainted.t - next.t;\n                edge.r.d = prevPainted.r - next.r;\n                edge.b.d = prevPainted.b - next.b;", "                edge.l.d = 0;\n                edge.t.d = 0;\n                edge.r.d = 0;\n                edge.b.d = 0;")]),
   # The lane clip read by the spill witnesses (10.1.3 critique-4): no lane clips while a travel runs.
   "lane": ("no region is clipped to its lane while a travel runs",
     [(D+"composables/useDockBody.ts", "        const clipTo = (t: RegionTrack, box: Box, rIn: number) => {", "        const clipTo = (t: RegionTrack, box: Box, rIn: number) => {\n            if (t) return;")]),

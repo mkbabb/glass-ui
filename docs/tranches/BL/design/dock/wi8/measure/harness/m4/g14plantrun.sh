@@ -10,7 +10,7 @@ sites() { case "$1" in
   corner) echo "release-10-1-5.spec.ts:217 release-10-1-5.spec.ts:294 release-10-1-5.spec.ts:318 release-10-1-5.spec.ts:336 release-10-1-5.spec.ts:990 release-11-0-1.spec.ts:105 release-11-0-1.spec.ts:115 release-11-0-1.spec.ts:126 release-11-0-1.spec.ts:142";;
   clock) echo "release-10-1-3.spec.ts:167 release-10-1-3.spec.ts:385 release-10-1-3.spec.ts:931";;
   lane) echo "release-10-1-3.spec.ts:601 release-10-1-3.spec.ts:637";;
-  reserve) echo "release-10-1-2.spec.ts:444 release-10-1-2.spec.ts:493";;
+  reserve) echo "release-10-1-2.spec.ts:446 release-10-1-2.spec.ts:495";;
   touch) echo "release-10-1-1.spec.ts:137 release-10-1-1.spec.ts:156 release-10-1-1.spec.ts:186";;
   press) echo "release-10-1-5.spec.ts:1576";;
   cap) echo "release-10-1-5.spec.ts:2562 release-10-1-5.spec.ts:1383";;
@@ -21,7 +21,7 @@ P="${*:-$(python3 "$H/m4/g14plants.py" x list | python3 -c 'import json,sys;prin
 for p in $P; do
   log="$L/m4-g14plant-$p.log"; echo "== $p $(date '+%H:%M:%S')" > "$log"
   python3 "$H/m4/g14plants.py" "$p" apply >> "$log" 2>&1 || { echo "apply failed" >> "$log"; continue; }
-  (cd "$W" && GLASS_UI_DEMO_PORT=5414 $G --timeout 40 -- npx playwright test -c tests-visual/playwright.config.ts $(sites "$p") --project=chromium-headless-new --workers=1 --reporter=list) >> "$log" 2>&1
+  (cd "$W" && GLASS_UI_DEMO_PORT=5414 $G --timeout 40 -- npx playwright test -c tests-visual/playwright.config.ts $(sites "$p") $( [ "$p" = touch ] && echo --project=coarse-touch || echo --project=chromium-headless-new ) --workers=1 --reporter=list) >> "$log" 2>&1
   echo "rc=$?" >> "$log"
   python3 "$H/m4/g14plants.py" "$p" revert >> "$log" 2>&1
   (cd "$W" && git diff --quiet -- src) || { echo "SOURCE NOT CLEAN after $p" >> "$log"; exit 3; }

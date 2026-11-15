@@ -6,7 +6,7 @@ import { gunzipSync } from "node:zlib";
 for (const f of process.argv.slice(2)) {
     const raw = readFileSync(f);
     const d = JSON.parse((f.endsWith(".gz") ? gunzipSync(raw) : raw).toString());
-    const m0 = d.marks?.[0]?.t ?? 0;
+    const m0 = (d.marks?.find((m) => m.name === "right0") ?? d.marks?.[0])?.t ?? 0;
     const rows = d.rows.filter((r) => r.t >= m0);
     const worst = { dock: 0, plate: 0 };
     let collapsedRows = 0;

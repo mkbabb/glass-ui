@@ -193,11 +193,14 @@ for (const file of files) {
             if (morph(r) || !String(r.el.dock?.["a:class"] || "").includes("expanded")) continue;
             const seats = Object.keys(r.el).filter((k) => /^seat#/.test(k)).map((k) => r.el[k]).filter(Boolean);
             const whole = seats.filter((e) => Array.isArray(e.vb) && e.vb[2] - e.vb[0] >= e.w - 0.5 && e.vb[3] - e.vb[1] >= e.h - 0.5).length;
-            best = { whole, of: seats.length, compact: r.el.full?.["a:data-compact"] != null };
+            // RU-23: a seat is whole or absent at each end; a partial seat (a sliver) fails. A
+            // controls dock (ctl6) is unclipped at 360: every seat whole (G-13).
+            const partial = seats.filter((e) => Array.isArray(e.vb) && !(e.vb[2] - e.vb[0] >= e.w - 0.5 && e.vb[3] - e.vb[1] >= e.h - 0.5)).map((e) => +Math.min(e.vb[2] - e.vb[0], e.vb[3] - e.vb[1]).toFixed(2));
+            best = { whole, partial, absent: seats.length - whole - partial.length, of: seats.length, compact: r.el.full?.["a:data-compact"] != null };
         }
         res.whole = best;
         if (!best) res.viol.push("no open rest read");
-        else if (best.whole < best.of) res.viol.push(`${best.whole} of ${best.of} seats whole at open rest (compact ${best.compact})`);
+        else if (/-ctl6-/.test(scen) ? best.whole < best.of : best.partial.length) res.viol.push(`${best.whole} of ${best.of} seats whole at open rest, partial ${JSON.stringify(best.partial)} (compact ${best.compact})`);
     }
     // G-6: after the first hover of a seat the root and the plate do not move (0 px)
     if (/-hover-/.test(scen)) {
