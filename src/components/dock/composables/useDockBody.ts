@@ -512,6 +512,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         const host = run.parentElement;
         const port = v || !host ? (v ? run.clientHeight : run.clientWidth) : host.clientWidth;
         const fits = publishFit(span, port);
+        runFits = fits;
         // RU-27: the seats do not fit, so the run scrolls and its window is a whole number of
         // seats (run.css); the carrier sets only the flag. Not on a plain run, a run of
         // seats of more than one size, or a vertical run (12.0.0).
@@ -526,6 +527,8 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
      *  open run's layout on the trigger frame, before the new layout is read, and held while
      *  the run has no box. */
     let fitPublished = "";
+    /** The open run's last fit reading (RU-30 reads it). */
+    let runFits = true;
     function publishFit(span: number, port: number): boolean {
         const el = root();
         const fits = span > 0 && span <= port;
@@ -550,7 +553,12 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
      *  it takes the new width. */
     function fitCurve(el: HTMLElement, open: boolean, run: HTMLElement | null): void {
         const had = el.style.getPropertyValue("--dock-curve-inset") !== "";
-        if (!o.pill() || !open || !run || run.offsetParent === null) {
+        // RU-30: the curve inset is for a run whose content all shows. A run that overflows
+        // its axis is clipped square by its own port at a flush edge (10.1.5 k2), and its
+        // child cut by the port's far edge read a corner that changed with the inset, so
+        // each pass wrote a different one and the dock never rested (a cycle of five
+        // insets in WebKit, of two in Chromium, a sync on every frame).
+        if (!o.pill() || !open || !run || run.offsetParent === null || !runFits) {
             if (had) el.style.removeProperty("--dock-curve-inset");
             return;
         }
