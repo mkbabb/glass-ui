@@ -933,7 +933,20 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         // plate-side corners were less round than the plate and content painted past its curve.
         const clipTo = (t: RegionTrack, box: Box, rIn: number) => {
             const on = (a: number, b: number) => Math.abs(a - b) <= 0.5;
-            const cr = (y: "t" | "b", x: "l" | "r") => (on(box[y], P[y]) && on(box[x], P[x]) ? rIn : 0);
+            // RU-31: a lane that shares an end with the plate and is narrower on the dock's
+            // axis than the radius it would round that end with is closed. CSS scales a
+            // rounded inset narrower than its radius down on every corner, so such a band
+            // paints up to 4.39 px outside the plate's curve (keyframes's transport under
+            // reduced motion), and nothing whole fits in a band inside a cap.
+            const vAxis = o.vertical();
+            const shares = vAxis ? on(box.t, P.t) || on(box.b, P.b) : on(box.l, P.l) || on(box.r, P.r);
+            const along = vAxis ? box.b - box.t : box.r - box.l;
+            if (shares && rIn > 0 && along < rIn) {
+                t.el.style.clipPath = "inset(50%)";
+                t.clipped = true;
+                return;
+            }
+            const cr =(y: "t" | "b", x: "l" | "r") => (on(box[y], P[y]) && on(box[x], P[x]) ? rIn : 0);
             const r = `${cr("t", "l")}px ${cr("t", "r")}px ${cr("b", "r")}px ${cr("b", "l")}px`;
             const left = t.cx - t.w / 2 + t.tx;
             const top = t.cy - t.h / 2 + t.ty;
