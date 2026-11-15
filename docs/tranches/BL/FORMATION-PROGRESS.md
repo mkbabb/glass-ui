@@ -992,3 +992,5 @@ Disk episode, one line: on 2026-11-03 the volume went from 100% (15 GiB free) to
 - 2026-11-15 04:07 — dock measuring pass DONE: no gate green in both engines (10 fail, 2 unread, 2 open); three findings recorded in W-I.8; the design needs one more loop before 11.2.0 builds it. O-356 booked (opaque surfaces keep their blur; 11.1.1 seat B first). Live: close 11.0.2, fix 9 (11.1.0).
 
 - 2026-11-15 04:08 — dock design second loop launched (`wf_4ede5549-281`, `driver/bl-design-dock-wi8b.js`: Fable rulings and spec rewrite, Opus prototype and measure, Fable challenge and fold). Live: close 11.0.2 (`wf_fc090cc6-e88`), fix 9 on 11.1.0 (`wf_4cf2d226-a00`), dock loop 2.
+
+- 2026-11-15 05:54 — O-357 booked (daraksha's controls seat). The dock loop was restarted a few minutes in so every seat reads late inputs (`design/dock/wi8/INPUT-*.md`): the live run is now `wf_83b55598-945` (the earlier `wf_4ede5549-281` is stopped and not to be resumed).
