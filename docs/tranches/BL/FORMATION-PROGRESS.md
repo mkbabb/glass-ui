@@ -982,3 +982,5 @@ Disk episode, one line: on 2026-11-03 the volume went from 100% (15 GiB free) to
 - 2026-11-15 00:19 — 11.0.2: critique 4 measured to the end, five items green, one standing defect that is 11.0.1's own (the vertical dock's first WebKit expand frame; moved to 11.1.1 by `orchestrator-note-after-critique-4.md`); the run goes to its close (`closeAfter: 4`, args `resume/glass-11.0.2-close.json`).
 
 - 2026-11-15 00:41 — O-346 (owner, all sites: the last-ten audit): glass's own pass launched as one Opus seat (`audit/last-ten/`). Live: close 11.0.2, critic 8 (11.1.0), depth prototype, dock measuring, last-ten audit (five seats).
+
+- 2026-11-15 01:16 — 11.1.0: critique 8 measured, two dock regressions (the gliding plate under a transform or zoom; a late `#collapsed` slot losing its role). Rulings in `orchestrator-note-after-critique-8.md`; round 9 runs as a fix then a finite gate, one clean round to the close (`lastRound: 10`, `cleanNeeded: 1`; args `resume/glass-11.1.0-round9.json`, with the critic-9 note as launched).
