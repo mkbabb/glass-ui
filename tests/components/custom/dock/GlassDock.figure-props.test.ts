@@ -45,6 +45,9 @@ describe("GlassDock expandOn", () => {
         const w = mountDock();
         expect(isExpanded(w)).toBe(false);
         await w.trigger("mouseenter");
+        // W-I.8 R-2 (RU-3), restated: intent counts from the first move whose
+        // coordinates differ from the enter's; an enter alone arms nothing.
+        w.element.dispatchEvent(new MouseEvent("pointermove", { bubbles: true, clientX: 10, clientY: 10 }));
         vi.advanceTimersByTime(HOVER_INTENT_MS + 20);
         await nextTick();
         expect(isExpanded(w)).toBe(true);

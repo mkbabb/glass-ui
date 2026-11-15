@@ -347,15 +347,13 @@ describe("G-DOCK-RUN — the platform is the detent engine", () => {
      * extent (O-129 r1, O-123 OD-5): `50%` resolved per axis and painted an ellipse on
      * any plate wider than tall.
      */
+    // W-I.8 R-1 (RU-13), restated: the cut cap's writes to the plate are deleted, so no
+    // cap keyframes exist and the plate carries no scroll-timeline animation.
     it("the cap keyframes only through the rest/cut token pair", () => {
         const run = read(`${STYLES}/run.css`);
         const frames = [...run.matchAll(/@keyframes gl-dock-cap-[\w-]+ \{([\s\S]*?)\n\}/g)];
-        expect(frames).toHaveLength(4);
-        for (const [, body] of frames) {
-            for (const [, value] of body!.matchAll(/border-[\w-]+-radius:\s*([^;]+);/g)) {
-                expect(value!.trim()).toMatch(/^var\(--dock-cap-(rest|cut)\)$/);
-            }
-        }
+        expect(frames).toHaveLength(0);
+        expect(declarations(`${STYLES}/run.css`)).not.toMatch(/\.dock-plate\s*\{[^}]*animation-timeline/);
         const decls = declarations(`${STYLES}/run.css`);
         expect(decls).toMatch(/--dock-cap-rest:\s*calc\(var\(--dock-cross\) \/ 2\)/);
         expect(decls).not.toMatch(/--dock-cap-rest:\s*[\d.]+%/);
@@ -841,11 +839,8 @@ describe("G-DOCK-MATERIAL — the focus ring composes instead of competing", () 
                 })),
             )
             .filter(({ body }) => /border-[\w-]*radius/.test(body));
+        // W-I.8 R-1 (RU-13), restated: the plate's cap is struck; the run's clip stays.
         expect(keyframed.map(({ name }) => name).sort()).toEqual([
-            "gl-dock-cap-block-end",
-            "gl-dock-cap-block-start",
-            "gl-dock-cap-inline-end",
-            "gl-dock-cap-inline-start",
             "gl-dock-clip-block-end",
             "gl-dock-clip-block-start",
             "gl-dock-clip-inline-end",

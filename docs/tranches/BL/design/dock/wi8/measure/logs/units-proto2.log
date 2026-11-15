@@ -1,0 +1,135 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8
+
+ ❯ tests/components/custom/dock/DockLayerSwitcher.a11y.test.ts (14 tests | 2 failed) 266ms
+     × keeps entering and leaving faces co-present until the spring settles 12ms
+     × preserves the partially entered face across a distinct third switch 57ms
+ ❯ tests/components/custom/dock/GlassDock.motion-parity.test.ts (5 tests | 5 failed) 84ms
+     × a stray transitionend is INERT — only the spring's own settle clears the flag 47ms
+     × rapid A→B→A never stale-clears: the flag stays true across the chain, false at settle 11ms
+     × an exact-origin reversal does not fabricate a busy window 8ms
+     × reverses from the live plate position without reseating its expandedness 12ms
+     × settles an active morph immediately when reduced motion becomes preferred 5ms
+(node:20152) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 7 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/custom/dock/DockLayerSwitcher.a11y.test.ts > dock switcher a11y contract (APG tabs) > keeps entering and leaving faces co-present until the spring settles
+AssertionError: expected NaN to be greater than 0
+ ❯ tests/components/custom/dock/DockLayerSwitcher.a11y.test.ts:253:58
+    251|         expect(entering.style.opacity).not.toBe("");
+    252|         expect(leaving.style.opacity).not.toBe("");
+    253|         expect(Number.parseFloat(leaving.style.opacity)).toBeGreaterTh…
+       |                                                          ^
+    254|
+    255|         await vi.advanceTimersByTimeAsync(1200);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/7]⎯
+
+ FAIL  tests/components/custom/dock/DockLayerSwitcher.a11y.test.ts > dock switcher a11y contract (APG tabs) > preserves the partially entered face across a distinct third switch
+AssertionError: expected NaN to be close to +0, received difference is NaN, but expected 0.0005
+ ❯ tests/components/custom/dock/DockLayerSwitcher.a11y.test.ts:285:56
+    283|         expect(paneB.classList).toContain("is-leaving");
+    284|         expect(paneC.classList).toContain("is-active");
+    285|         expect(Number.parseFloat(paneB.style.opacity)).toBeCloseTo(bef…
+       |                                                        ^
+    286|         expect(paneC.style.opacity).toBe("0");
+    287|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/7]⎯
+
+ FAIL  tests/components/custom/dock/GlassDock.motion-parity.test.ts > GlassDock isTransitioning — spring-settle source > a stray transitionend is INERT — only the spring's own settle clears the flag
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/components/custom/dock/GlassDock.motion-parity.test.ts:76:36
+     74|         // honest source, no legacy timer, no plausibly-settled transi…
+     75|         vi.runAllTimers();
+     76|         expect(vm.isTransitioning).toBe(false);
+       |                                    ^
+     77|     });
+     78|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/7]⎯
+
+ FAIL  tests/components/custom/dock/GlassDock.motion-parity.test.ts > GlassDock isTransitioning — spring-settle source > rapid A→B→A never stale-clears: the flag stays true across the chain, false at settle
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/components/custom/dock/GlassDock.motion-parity.test.ts:104:36
+    102|         // The final morph spring settles → the flag resolves exactly …
+    103|         vi.runAllTimers();
+    104|         expect(vm.isTransitioning).toBe(false);
+       |                                    ^
+    105|     });
+    106|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/7]⎯
+
+ FAIL  tests/components/custom/dock/GlassDock.motion-parity.test.ts > GlassDock isTransitioning — spring-settle source > an exact-origin reversal does not fabricate a busy window
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/components/custom/dock/GlassDock.motion-parity.test.ts:119:36
+    117|         (vm.collapse as () => void)();
+    118|         await wrapper.vm.$nextTick();
+    119|         expect(vm.isTransitioning).toBe(false);
+       |                                    ^
+    120|
+    121|         // No spring frame painted between the two commands, so the re…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/7]⎯
+
+ FAIL  tests/components/custom/dock/GlassDock.motion-parity.test.ts > GlassDock isTransitioning — spring-settle source > reverses from the live plate position without reseating its expandedness
+AssertionError: expected 0.2818 to be close to 0.7182, received difference is 0.43639999999999995, but expected 5e-9
+ ❯ tests/components/custom/dock/GlassDock.motion-parity.test.ts:151:30
+    149|             root.element.style.getPropertyValue("--dock-morph-t"),
+    150|         );
+    151|         expect(afterReverse).toBeCloseTo(1 - beforeReverse, 8);
+       |                              ^
+    152|         expect(1 - afterReverse).toBeCloseTo(beforeReverse, 8);
+    153|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/7]⎯
+
+ FAIL  tests/components/custom/dock/GlassDock.motion-parity.test.ts > GlassDock isTransitioning — spring-settle source > settles an active morph immediately when reduced motion becomes preferred
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/components/custom/dock/GlassDock.motion-parity.test.ts:208:40
+    206|             await wrapper.vm.$nextTick();
+    207|
+    208|             expect(vm.isTransitioning).toBe(false);
+       |                                        ^
+    209|             expect(root.hasAttribute("data-morphing")).toBe(false);
+    210|             expect((root as HTMLElement).style.getPropertyValue("--doc…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/7]⎯
+
+
+ Test Files  2 failed | 22 passed (24)
+      Tests  7 failed | 206 passed | 1 expected fail | 1 skipped (215)
+   Start at  04:38:58
+   Duration  12.36s (transform 2.56s, setup 1.39s, import 8.49s, tests 3.38s, environment 6.60s)
+

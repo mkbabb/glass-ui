@@ -55,13 +55,15 @@ describe("U/B8r I-3: the two-cell collapsed dock is not drawn as a circle", () =
 
     it("the circle stays for the square collapsed dock of a finite shape", () => {
         expect(morph).toMatch(
-            /\.glass-dock\.collapsed:not\(\[data-morphing\]\):not\(\.vertical\):not\(\.shape-pill\)\s*\{\s*border-radius:\s*var\(--radius-circle\);/,
+            // W-I.8 R-1 (RU-9), restated: the rest corner is keyed on the posture class alone;
+            // the carrier reads it after the class changes and writes the plate in travel.
+            /\.glass-dock\.collapsed:not\(\.vertical\):not\(\.shape-pill\)\s*\{\s*border-radius:\s*var\(--radius-circle\);/,
         );
     });
 
     it("a finite-shape collapsed dock with a persistent control beside a summary keeps --radius-dock", () => {
         expect(morph).toMatch(
-            /\.glass-dock\.collapsed:not\(\[data-morphing\]\):not\(\.vertical\):not\(\.shape-pill\):has\(\.dock-persistent\):has\(\s*\.dock-layer--summary:not\(:empty\)\s*\)\s*\{\s*border-radius:\s*var\(--radius-dock\);/,
+            /\.glass-dock\.collapsed:not\(\.vertical\):not\(\.shape-pill\):has\(\.dock-persistent\):has\(\s*\.dock-layer--summary:not\(:empty\)\s*\)\s*\{\s*border-radius:\s*var\(--radius-dock\);/,
         );
     });
 
@@ -72,7 +74,8 @@ describe("U/B8r I-3: the two-cell collapsed dock is not drawn as a circle", () =
         // from the density tokens: the first paint is already a stadium.
         expect(run).toMatch(/--dock-cross:\s*var\(\s*--dock-plate-cross-px,\s*calc\(var\(--dock-layer-height\) \+ 2 \* var\(--dock-padding-block\)\)\s*\)/);
         expect(run).toMatch(/\.glass-dock\.vertical\s*\{\s*--dock-cross:\s*var\(\s*--dock-plate-cross-px,\s*calc\(var\(--dock-control-size\) \+ 2 \* var\(--dock-padding-inline\)\)\s*\)/);
-        // Mid-morph the corner's morph-axis radius is divided by the box's scale.
-        expect(run).toMatch(/\.glass-dock\.shape-pill\[data-morphing\]:not\(\.vertical\)\s*\{\s*border-radius:\s*calc\(var\(--dock-cap-rest\) \/ max\(var\(--dock-size-scale, 1\), 0\.06\)\) \/\s*var\(--dock-cap-rest\);/);
+        // W-I.8 R-1 (RU-13), restated: mid-travel nothing is scaled, so no counter-scaled
+        // corner exists; the carrier writes half the plate's painted cross extent.
+        expect(run).not.toMatch(/--dock-size-scale/);
     });
 });

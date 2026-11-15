@@ -291,7 +291,9 @@ describe("GlassDock touch-gate behavioural contract", () => {
         wrapper.unmount();
     });
 
-    it("keep-open: outside pointerdown waits for the active hold to release", async () => {
+    // W-I.8 R-2 (RU-1), restated: a press outside is a dismissal whatever is open; the
+    // hold answers the linger only. The witness read the old veto (the hold count).
+    it("keep-open: an outside pointerdown folds the dock even while a hold is active", async () => {
         const addListener = vi.spyOn(document, "addEventListener");
         const removeListener = vi.spyOn(document, "removeEventListener");
         const { wrapper } = mountDockWithCollapsedControl();
@@ -317,7 +319,7 @@ describe("GlassDock touch-gate behavioural contract", () => {
             new Event("pointerdown", { bubbles: true, cancelable: true }),
         );
         await wrapper.vm.$nextTick();
-        expect(root.classList.contains("expanded")).toBe(true);
+        expect(root.classList.contains("collapsed")).toBe(true);
 
         (vm.release as () => void)();
         document.body.dispatchEvent(

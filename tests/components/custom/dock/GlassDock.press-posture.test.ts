@@ -94,6 +94,8 @@ describe("GlassDock — a press holds the posture until it resolves", () => {
         await seat.trigger("pointerdown", { button: 0, pointerType: "touch" });
         await seat.trigger("pointerup", { button: 0, pointerType: "touch" });
         await root.trigger("mouseenter");
+        // W-I.8 R-2 (RU-3), restated: the dwell counts from the first real move.
+        root.element.dispatchEvent(new MouseEvent("pointermove", { bubbles: true, clientX: 10, clientY: 10 }));
         await new Promise((resolve) => setTimeout(resolve, HOVER_INTENT_MS + 20));
         await wrapper.vm.$nextTick();
         expect(root.classes()).toContain("expanded");

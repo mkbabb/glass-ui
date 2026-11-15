@@ -50,6 +50,8 @@ describe("GlassDock isTransitioning — spring-settle source", () => {
 
     it("a stray transitionend is INERT — only the spring's own settle clears the flag", async () => {
         const wrapper = mount(GlassDock, {
+            // W-I.8 R-1, restated: the carrier measures only a connected root.
+            attachTo: document.body,
             props: { collapse: "closed", backdropMode: "static" },
         });
         const vm = wrapper.vm as unknown as Record<string, unknown>;
@@ -76,6 +78,8 @@ describe("GlassDock isTransitioning — spring-settle source", () => {
 
     it("rapid A→B→A never stale-clears: the flag stays true across the chain, false at settle", async () => {
         const wrapper = mount(GlassDock, {
+            // W-I.8 R-1, restated: the carrier measures only a connected root.
+            attachTo: document.body,
             props: { collapse: "closed", backdropMode: "static" },
         });
         const vm = wrapper.vm as unknown as Record<string, unknown>;
@@ -102,6 +106,8 @@ describe("GlassDock isTransitioning — spring-settle source", () => {
 
     it("an exact-origin reversal does not fabricate a busy window", async () => {
         const wrapper = mount(GlassDock, {
+            // W-I.8 R-1, restated: the carrier measures only a connected root.
+            attachTo: document.body,
             props: { collapse: "closed", backdropMode: "static" },
         });
         const vm = wrapper.vm as unknown as Record<string, unknown>;
@@ -121,6 +127,8 @@ describe("GlassDock isTransitioning — spring-settle source", () => {
 
     it("reverses from the live plate position without reseating its expandedness", async () => {
         const wrapper = mount(GlassDock, {
+            // W-I.8 R-1, restated: the carrier measures only a connected root.
+            attachTo: document.body,
             props: { collapse: "closed", backdropMode: "static" },
         });
         const vm = wrapper.vm as unknown as Record<string, unknown>;
@@ -180,7 +188,9 @@ describe("GlassDock isTransitioning — spring-settle source", () => {
 
         try {
             const wrapper = mount(GlassDock, {
-                props: { collapse: "closed", backdropMode: "static" },
+                // W-I.8 R-1, restated: the carrier measures only a connected root.
+            attachTo: document.body,
+            props: { collapse: "closed", backdropMode: "static" },
             });
             const vm = wrapper.vm as unknown as Record<string, unknown>;
             const root = wrapper.get(".glass-dock").element;

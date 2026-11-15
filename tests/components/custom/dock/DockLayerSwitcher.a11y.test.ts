@@ -241,27 +241,21 @@ describe("dock switcher a11y contract (APG tabs)", () => {
             .get(".pane-a-btn")
             .element.closest<HTMLElement>(".dock-face")!;
 
-        expect(crossfade.attributes("data-crossfading")).toBe("");
+        // W-I.8 R-5, restated: inside a dock the crossfade's own spring is deleted; both
+        // faces fade on the carrier's exchange coordinate, written as inline opacity.
+        void crossfade;
         expect(entering.classList).toContain("is-active");
         expect(entering.hasAttribute("inert")).toBe(false);
         expect(leaving.classList).toContain("is-leaving");
         expect(leaving.hasAttribute("inert")).toBe(true);
-
-        await vi.advanceTimersByTimeAsync(24);
-        const progress = Number.parseFloat(
-            entering.style.getPropertyValue("--dock-t"),
-        );
-        expect(progress).toBeGreaterThan(0);
-        expect(progress).toBeLessThan(1);
-        expect(leaving.style.getPropertyValue("--dock-t")).toBe(
-            entering.style.getPropertyValue("--dock-t"),
-        );
+        expect(entering.style.opacity).not.toBe("");
+        expect(leaving.style.opacity).not.toBe("");
+        expect(Number.parseFloat(leaving.style.opacity)).toBeGreaterThan(0);
 
         await vi.advanceTimersByTimeAsync(1200);
-        expect(crossfade.attributes("data-crossfading")).toBeUndefined();
         expect(wrapper.find(".dock-face.is-leaving").exists()).toBe(false);
-        expect(entering.style.getPropertyValue("--dock-t")).toBe("");
-        expect(leaving.style.getPropertyValue("--dock-t")).toBe("");
+        expect(entering.style.opacity).toBe("");
+        expect(leaving.style.opacity).toBe("");
         wrapper.unmount();
     });
 
@@ -274,8 +268,10 @@ describe("dock switcher a11y contract (APG tabs)", () => {
         const paneB = wrapper
             .get(".pane-b-btn")
             .element.closest<HTMLElement>(".dock-face")!;
-        const before = Number.parseFloat(paneB.style.getPropertyValue("--dock-t"));
-        expect(before).toBeGreaterThan(0);
+        // W-I.8 R-3, restated: a third face starts from what is painted; the partly
+        // entered face leaves from its painted opacity, never from 1.
+        const before = Number.parseFloat(paneB.style.opacity);
+        expect(before).toBeGreaterThanOrEqual(0);
         expect(before).toBeLessThan(1);
 
         active.value = "c";
@@ -283,14 +279,11 @@ describe("dock switcher a11y contract (APG tabs)", () => {
         const paneC = wrapper
             .get(".pane-c-btn")
             .element.closest<HTMLElement>(".dock-face")!;
-        const leavingT = Number.parseFloat(
-            paneB.style.getPropertyValue("--dock-t"),
-        );
 
         expect(paneB.classList).toContain("is-leaving");
         expect(paneC.classList).toContain("is-active");
-        expect(1 - leavingT).toBeCloseTo(before, 8);
-        expect(paneC.style.getPropertyValue("--dock-t")).toBe("0");
+        expect(Number.parseFloat(paneB.style.opacity)).toBeCloseTo(before, 3);
+        expect(paneC.style.opacity).toBe("0");
 
         await vi.advanceTimersByTimeAsync(1200);
         expect(wrapper.find(".dock-face.is-leaving").exists()).toBe(false);
