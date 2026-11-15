@@ -20,8 +20,11 @@ const OMEGA = (2 * Math.PI) / DOCK_SPRING.response;
 const ZETA = DOCK_SPRING.dampingFraction;
 const WD = OMEGA * Math.sqrt(Math.max(1e-6, 1 - ZETA * ZETA));
 const MAX_DT = 0.033;
-/** R-3's one window: 1 at 0, 0 from 0.55 on (RU-2). */
-const W_END = 0.55;
+/** R-3's one window: 1 at 0, 0 from 0.7 on. At the middle of a travel each face reads
+ *  0.29, so the plate is never empty and neither face passes half strength while the
+ *  other shows (P0a rule 4). At 0.55 each read 0.09 there: two 60 Hz frames of a fold
+ *  with nothing in the dock (C2-5). */
+const W_END = 0.7;
 const w = (x: number) => (x <= 0 ? 1 : x >= W_END ? 0 : 1 - x / W_END);
 /** A quantity lands when it is this close and this slow (px, px/s): small enough that the
  *  landing step is under 2 % of a 3 px travel (G-2's landing bound). */
