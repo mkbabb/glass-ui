@@ -31,6 +31,14 @@ const q = new URLSearchParams(location.search);
 const scene = q.get("scene") ?? "base";
 document.body.style.cssText = "margin:0;background:var(--background)";
 
+// value.js's desktop predicate: at 1024 and up the dock folds when idle (`collapse:
+// "open"`) and a seat shows its words; below, it is pinned open (`collapse: false`) and
+// the words go, so the expanded box differs across the breakpoint.
+const wideQuery = matchMedia("(min-width: 1024px)");
+const wide = ref(wideQuery.matches);
+wideQuery.addEventListener("change", () => (wide.value = wideQuery.matches));
+const responsive = q.get("responsive") === "1";
+
 const view = ref("palette");
 const select = () =>
     h(
@@ -62,7 +70,14 @@ const main = () => {
         ];
     }
     if (scene === "consumer") {
-        return [select(), h(DockSeparator), ...seats()];
+        return [
+            select(),
+            h(DockSeparator),
+            ...seats(),
+            ...(responsive && wide.value
+                ? [h(DockControl, { shape: "tab", "aria-label": "Tools" }, () => "Tools and settings")]
+                : []),
+        ];
     }
     return seats();
 };
@@ -121,7 +136,8 @@ createApp({
                 h(
                     GlassDock,
                     {
-                        collapse: scene === "consumer" ? "open" : "closed",
+                        collapse:
+                            scene === "consumer" ? (responsive && !wide.value ? false : "open") : "closed",
                         expandOn: "hover",
                         collapsedLabel: "open the dock",
                         class: "ro-dock",
