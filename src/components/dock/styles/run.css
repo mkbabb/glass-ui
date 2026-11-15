@@ -422,6 +422,25 @@
         margin-inline-start: calc(-1 * var(--dock-run-gap));
     }
 
+    /* W-I.8 RU-27: when the seats do not fit, the run's window is a whole number of seats,
+       by a rule the layout applies itself. The carrier sets only `data-run-whole` (an open,
+       scrolling, horizontal run of seats of one size whose fit law fails). The run is
+       content-box, so the cap holds n seats, n − 1 gaps and the one reserve its client box
+       holds; the next seat starts a gap past the last whole one, and the house gap is
+       larger than the reserve, so it is absent at offset 0 and at the end alike. What is
+       left over, under one pitch, is room at the run's two ends inside the plate. A
+       percentage cap is not counted in the run's own preferred size, so the dock still
+       takes all the room its host gives, and the rounding is redone by layout whenever that
+       room changes. */
+    .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run[data-run-whole] {
+        max-inline-size: calc(
+            round(down, 100% - var(--dock-run-reserve-inline) + var(--dock-run-gap), var(--dock-pitch)) -
+                var(--dock-run-gap) + var(--dock-run-reserve-inline)
+        );
+        justify-self: center;
+        scroll-padding-inline: var(--dock-run-reserve-inline);
+    }
+
     /* THE SEATS. Every direct child of the run is a snap target and none of them flex —
        a seat that grows is a seat that is no longer an integer number of pitches, and
        the lattice dies quietly the moment one does. `start` alignment is what the

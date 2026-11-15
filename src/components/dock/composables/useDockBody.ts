@@ -433,11 +433,17 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         const lane = regions.get("layers");
         const ox = rr.left + scrollX / Z - (lane ? lane.tx : 0);
         const oy = rr.top + scrollY / Z - (lane ? lane.ty : 0);
+        // A seat's place is in its region, not in the run: RU-27's whole-seat window centres
+        // the run in the region, so when the flag comes or goes the run's own box moves and
+        // every seat with it; that move is carried like any other change of place.
+        const host = run.parentElement;
+        const inX = !host ? 0 : run.offsetParent === host ? run.offsetLeft : run.offsetParent === host.offsetParent ? run.offsetLeft - host.offsetLeft : 0;
+        const inY = !host ? 0 : run.offsetParent === host ? run.offsetTop : run.offsetParent === host.offsetParent ? run.offsetTop - host.offsetTop : 0;
         for (const child of run.children) {
             if (!(child instanceof HTMLElement) || child.offsetParent === null || ghosts.has(child)) continue;
             seen.add(child);
-            const lx = child.offsetLeft;
-            const ly = child.offsetTop;
+            const lx = child.offsetLeft + inX;
+            const ly = child.offsetTop + inY;
             // The box without the translate the loop wrote, relative to the run.
             const cr = bcr(child);
             const tr = seats.get(child);
@@ -476,24 +482,41 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         return movedAny;
     }
 
-    /** The open run's one fit reading (RU-26, RU-28): the seats' span in layout boxes, then
-     *  the fit law. Every seat is one seat wide, the current one included, so nothing is
-     *  lifted for the read and nothing in the run is sized by script. */
+    /** The open run's one fit reading (RU-26, RU-27, RU-28): the seats' span in layout
+     *  boxes, then the fit law, then the whole-seat flag. Every seat is one seat wide, the
+     *  current one included, so nothing is lifted for the read and nothing in the run is
+     *  sized by script. A horizontal run reads its port from the layers region it fills, a
+     *  box the whole-seat cap does not change, so a host that gives the dock more room is
+     *  read again (the root's observer fires) and the flag goes. */
     function fitRun(run: HTMLElement, open: boolean): void {
         // A face with no box (RU-17) keeps the reading it had when it was laid out.
         if (run.offsetParent === null) return;
-        void open;
         const v = o.vertical();
         // Layout extents only: the scroll extent counts the seats' carry translates mid-travel.
         let first = Infinity;
         let last = -Infinity;
+        let size = -1;
+        let same = true;
+        let n = 0;
         for (const c of run.children) {
             if (!(c instanceof HTMLElement) || ghosts.has(c) || c.offsetParent === null) continue;
             const a0 = v ? c.offsetTop : c.offsetLeft;
+            const sz = v ? c.offsetHeight : c.offsetWidth;
             first = Math.min(first, a0);
-            last = Math.max(last, a0 + (v ? c.offsetHeight : c.offsetWidth));
+            last = Math.max(last, a0 + sz);
+            if (size < 0) size = sz;
+            else if (Math.abs(sz - size) > 0.5) same = false;
+            n++;
         }
-        publishFit(run, last > first ? last - first : 0);
+        const span = last > first ? last - first : 0;
+        const host = run.parentElement;
+        const port = v || !host ? (v ? run.clientHeight : run.clientWidth) : host.clientWidth;
+        const fits = publishFit(span, port);
+        // RU-27: the seats do not fit, so the run scrolls and its window is a whole number of
+        // seats (run.css); the carrier sets only the flag. Not on a plain run, a run of
+        // seats of more than one size, or a vertical run (12.0.0).
+        const whole = open && !v && !fits && same && n >= 2 && root()?.getAttribute("data-run") !== "plain";
+        if (run.hasAttribute("data-run-whole") !== whole) run.toggleAttribute("data-run-whole", whole);
     }
 
     /** The fit law (10.1.5 e4, k3, p2): `data-run-fits` says the seats' span is no longer
@@ -503,19 +526,19 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
      *  open run's layout on the trigger frame, before the new layout is read, and held while
      *  the run has no box. */
     let fitPublished = "";
-    function publishFit(run: HTMLElement, span: number): void {
+    function publishFit(span: number, port: number): boolean {
         const el = root();
-        if (!el) return;
-        const v = o.vertical();
-        const port = v ? run.clientHeight : run.clientWidth;
         const fits = span > 0 && span <= port;
+        if (!el) return fits;
+        const v = o.vertical();
         const room = v && fits ? `${Math.floor(((port - span) / 2) * 100) / 100}px` : "";
         const value = `${fits ? 1 : 0} ${room}`;
-        if (value === fitPublished) return;
+        if (value === fitPublished) return fits;
         fitPublished = value;
         if (room) el.style.setProperty("--dock-run-room-block", room);
         else el.style.removeProperty("--dock-run-room-block");
         el.toggleAttribute("data-run-fits", fits);
+        return fits;
     }
 
     /** R-1 (C2-6): a pill taller than one row is still a stadium, so the open face's content
