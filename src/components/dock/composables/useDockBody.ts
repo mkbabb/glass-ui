@@ -23,11 +23,12 @@ const MAX_DT = 0.033;
 /** The test-only pose (`__dockPose`): a build constant, so every branch that reads it is
  *  dropped from the published bundle, and G-12 scans the built script for the name. */
 const POSE = import.meta.env.VITE_DOCK_HOLD === "1";
-/** R-3's one window: 1 at 0, 0 from 0.7 on. At the middle of a travel each face reads
- *  0.29, so the plate is never empty and neither face passes half strength while the
- *  other shows (P0a rule 4). At 0.55 each read 0.09 there: two 60 Hz frames of a fold
- *  with nothing in the dock (C2-5). */
-const W_END = 0.7;
+/** R-3's one window: 1 at 0, 0 from 0.55 on (RU-2). Content of two sizes goes out, then
+ *  in (P0a rule 4): at the middle each face reads 0.09. 0.7 was built and read (C2-5): it
+ *  closes the dip (each face 0.29 at the middle) and prints the two faces over each
+ *  other for about three 60 Hz frames, which is v11.0.1's look and the fault the owner
+ *  named (`fold-2.md`, the crop). 0.55 stands. */
+const W_END = 0.55;
 const w = (x: number) => (x <= 0 ? 1 : x >= W_END ? 0 : 1 - x / W_END);
 /** A quantity lands when it is this close and this slow (px, px/s). 0.25 px is the floor
  *  RU-19 already uses for what an eye resolves in a moving edge; at 0.04 px the window
@@ -776,7 +777,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             }
             clipTo(t, lane, Math.min(R, H / 2));
         });
-        // Content (R-3, RU-2): one window, w(x) = clamp(1 − x / 0.7). For a posture change
+        // Content (R-3, RU-2): one window, w(x) = clamp(1 − x / 0.55). For a posture change
         // the summary reads w(e) and the run w(1 − e); for a content change the leaving
         // face reads w(f) and the entering face w(1 − f). Under reduced motion (R-11) the
         // coordinate is a linear 100 ms clock and each face fades across the whole of it.
@@ -790,7 +791,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             else if (face.role === "leave") op = face.from * win(f);
             else {
                 // The entering window; an early face reads the same window from the start
-                // of the exchange (1 at f = 0.7) instead of from 0.3 on.
+                // of the exchange (1 at f = 0.55) instead of from 0.45 on.
                 const inW = face.early && !reduce ? clamp01(f / W_END) : win(1 - f);
                 op = clamp01(face.from + (1 - face.from) * inW);
                 if (face.q) face.el.style.translate = `${face.q.x.d.toFixed(3)}px ${face.q.y.d.toFixed(3)}px`;
