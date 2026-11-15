@@ -200,7 +200,8 @@ for (const file of files) {
         }
         res.whole = best;
         if (!best) res.viol.push("no open rest read");
-        else if (/-ctl6-/.test(scen) ? best.whole < best.of : best.partial.length) res.viol.push(`${best.whole} of ${best.of} seats whole at open rest, partial ${JSON.stringify(best.partial)} (compact ${best.compact})`);
+        // MEASURE-5: ebd546e7f's "whole or absent" is undone (RULINGS-4, RU-26): an absent seat fails here again; m5/read5.mjs reads the rest by the fit law.
+        else if (best.whole < best.of) res.viol.push(`${best.whole} of ${best.of} seats whole at open rest, partial ${JSON.stringify(best.partial)} (compact ${best.compact})`);
     }
     // G-6: after the first hover of a seat the root and the plate do not move (0 px)
     if (/-hover-/.test(scen)) {
