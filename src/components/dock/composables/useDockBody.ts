@@ -26,10 +26,11 @@ const MAX_DT = 0.033;
  *  with nothing in the dock (C2-5). */
 const W_END = 0.7;
 const w = (x: number) => (x <= 0 ? 1 : x >= W_END ? 0 : 1 - x / W_END);
-/** A quantity lands when it is this close and this slow (px, px/s): small enough that the
- *  landing step is under 2 % of a 3 px travel (G-2's landing bound). */
-const SNAP_PX = 0.04;
-const SNAP_V = 3;
+/** A quantity lands when it is this close and this slow (px, px/s). 0.25 px is the floor
+ *  RU-19 already uses for what an eye resolves in a moving edge; at 0.04 px the window
+ *  stayed open about 200 ms after the plate was within half a pixel of its rest (C2-18). */
+const SNAP_PX = 0.25;
+const SNAP_V = 8;
 /** R-5 (RU-11): the entering face's travel along the dock's axis. */
 const ENTER_PX = 8;
 
@@ -571,7 +572,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
                 uv = 0;
             } else {
                 [eq.d, eq.v] = step(eq.d, eq.v, dt);
-                if (Math.abs(eq.d) < 0.0005 && Math.abs(eq.v) < 0.01) (eq.d = 0), (eq.v = 0);
+                if (Math.abs(eq.d) < 0.002 && Math.abs(eq.v) < 0.05) (eq.d = 0), (eq.v = 0);
                 [u, uv] = step(u, uv, dt);
                 if (u < 0) u = 0;
                 if (Math.abs(u) < 0.002 && Math.abs(uv) < 0.05) (u = 0), (uv = 0);
