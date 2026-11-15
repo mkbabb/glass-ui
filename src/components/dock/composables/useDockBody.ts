@@ -558,16 +558,22 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             t.el.style.translate = `${t.tx}px ${t.ty}px`;
         }
         const vert = o.vertical();
+        // The boundary between two neighbours is the painted edge of the one carried by
+        // it: the trailing region's start edge, else the leading region's end edge.
+        const boundary = (a: RegionTrack, b: RegionTrack): number =>
+            b.key === "persistent-end"
+                ? vert ? b.cy - b.h / 2 + b.ty : b.cx - b.w / 2 + b.tx
+                : vert ? a.cy + a.h / 2 + a.ty : a.cx + a.w / 2 + a.tx;
         order.forEach((t, i) => {
             const lane = { ...fis.main };
             const prev = order[i - 1];
             const next = order[i + 1];
             if (vert) {
-                if (prev) lane.t = Math.max(lane.t, prev.cy + prev.h / 2 + prev.ty);
-                if (next) lane.b = Math.min(lane.b, next.cy - next.h / 2 + next.ty);
+                if (prev) lane.t = Math.max(lane.t, boundary(prev, t));
+                if (next) lane.b = Math.min(lane.b, boundary(t, next));
             } else {
-                if (prev) lane.l = Math.max(lane.l, prev.cx + prev.w / 2 + prev.tx);
-                if (next) lane.r = Math.min(lane.r, next.cx - next.w / 2 + next.tx);
+                if (prev) lane.l = Math.max(lane.l, boundary(prev, t));
+                if (next) lane.r = Math.min(lane.r, boundary(t, next));
             }
             clipTo(t, lane, Math.min(R, H / 2));
         });
