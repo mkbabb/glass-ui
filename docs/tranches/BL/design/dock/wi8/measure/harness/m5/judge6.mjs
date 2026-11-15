@@ -12,6 +12,7 @@
 //     no later than one row after that mark's cause; a fade a later change interrupts is not
 //     judged for its length; after the last mark every opacity is at rest within 144 ms of its
 //     cause and each fade it ends with shows three values or more.
+//   - RU-32: the leaving face's first-row move reads its start edge (the right edge right to left).
 // judge5.mjs: MEASURE-4. judge4.mjs with RU-21: a unit hidden by its lane before the plate covers it
 // passes when it is covered within 20 ms of the first hidden row; one that shows again is a fault.
 // judge4.mjs <rows.json[.gz]> [...]: MEASURE-3. judge3.mjs with two corrections and nothing else:
@@ -412,7 +413,11 @@ function judge(file) {
                 for (const k of ["summary", "full"]) {
                     const a0 = rs[0].el[k], a1 = rs[1].el[k];
                     if (!a0 || !a1 || !(a0.eop > 0.1)) continue;
-                    const mv = Math.max(Math.abs(a1.x - a0.x), Math.abs(a1.y - a0.y));
+                    // RU-32, read on rows/m4: a face's place is its start edge. Right to left that
+                    // is its right edge; the left edge of a run that grows moves by the growth
+                    // while nothing in it paints elsewhere (the leaving face holds 0.00 px).
+                    const sx = /-rtl-/.test(scen) ? (e) => e.x + e.w : (e) => e.x;
+                    const mv = Math.max(Math.abs(sx(a1) - sx(a0)), Math.abs(a1.y - a0.y));
                     if (mv > faceMove) (faceMove = mv), (faceK = k);
                 }
                 res.firstRowFaceMove = +faceMove.toFixed(2);

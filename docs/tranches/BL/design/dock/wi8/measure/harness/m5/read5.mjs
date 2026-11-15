@@ -199,7 +199,6 @@ for (const file of files) {
     }
     // whole (RU-26, RU-27): every open rest, its last row.
     {
-        const room = d.meta.cell.w - 16;
         let worst = null, bad = [];
         const rest = (r) => !morph(r) && String(r.el.dock?.["a:class"] || "").includes("expanded");
         for (let i = 0; i < rows.length; i++) {
@@ -207,6 +206,8 @@ for (const file of files) {
             if (!rest(r) || (i + 1 < rows.length && rest(rows[i + 1]))) continue; // the last row of each open rest
             const vert = /\bvertical\b/.test(String(r.el.dock?.["a:class"] || ""));
             const D = r.el.dock, Lr = r.el.layers;
+            // the room: the stage's content box where the cell tracks it, else the cell less the stage's padding
+            const room = r.el.stage?.w ? r.el.stage.w - 16 : d.meta.cell.w - 16;
             const seats = Object.keys(r.el).filter((k) => /^seat#/.test(k)).map((k) => r.el[k]).filter((e) => e && e.vis !== 0 && e.w > 0.5 && e.h > 0.5);
             if (!seats.length || !D || !Lr || !Lr.w) continue;
             const s0 = Math.min(...seats.map((e) => (vert ? e.y : e.x))), s1 = Math.max(...seats.map((e) => (vert ? e.y + e.h : e.x + e.w)));
@@ -226,6 +227,21 @@ for (const file of files) {
         if (worst) res.whole = worst;
         if (/-(many|ctl6)-/.test(scen) && !worst) res.viol.push("no open rest read");
         if (bad.length) res.viol.push(`at open rest: ${bad[0]}${bad.length > 1 ? ` (+${bad.length - 1} rests)` : ""}`);
+    }
+    // RU-27: the host's cap lifted on an open dock: every seat shows (a non-empty visible box) within two rows
+    // of the change; whole at the rest it lands in (the open-rest clause above).
+    {
+        const lift = (d.marks || []).find((m) => m.name === "lift");
+        if (lift) {
+            const i0 = lift.row ?? lift.i ?? lift.frame;
+            let at = null;
+            for (let i = i0; i < rows.length; i++) {
+                const seats = Object.keys(rows[i].el).filter((k) => /^seat#/.test(k)).map((k) => rows[i].el[k]).filter((e) => e && e.vis !== 0 && e.w > 0.5);
+                if (seats.length && seats.every((e) => Array.isArray(e.vb))) { at = i - i0; break; }
+            }
+            res.lift = at;
+            if (at == null || at > 2) res.viol.push(`the host's cap lifted: every seat shows ${at == null ? "never" : `${at} rows`} after the change (bound 2)`);
+        }
     }
     // G-6: after the first hover of a seat the root and the plate do not move (0 px)
     if (/-hover-/.test(scen)) {
@@ -252,4 +268,4 @@ for (const file of files) {
     out.push(res);
 }
 if (json) console.log(JSON.stringify(out, null, 1));
-else for (const r of out) console.log(`${r.scen} | ${r.eng} | ${r.cell} | curve ${r.curve}${r.held != null ? ` | held ${r.held}` : ""}${r.ghost ? ` | ghost ${JSON.stringify(r.ghost)}` : ""}${r.join ? ` | join ${JSON.stringify(r.join)}` : ""}${r.rim ? ` | rim ${JSON.stringify(r.rim)}` : ""}${r.whole ? ` | whole ${JSON.stringify(r.whole)}` : ""}${r.touch != null ? ` | touch ${r.touch}` : ""}${r.still != null ? ` | still ${r.still}` : ""}${r.restsOpen != null ? ` | restsOpen ${r.restsOpen}` : ""} | ${r.viol.length ? "FAIL: " + r.viol.join("; ") : "pass"}`);
+else for (const r of out) console.log(`${r.scen} | ${r.eng} | ${r.cell} | curve ${r.curve}${r.held != null ? ` | held ${r.held}` : ""}${r.ghost ? ` | ghost ${JSON.stringify(r.ghost)}` : ""}${r.join ? ` | join ${JSON.stringify(r.join)}` : ""}${r.rim ? ` | rim ${JSON.stringify(r.rim)}` : ""}${r.whole ? ` | whole ${JSON.stringify(r.whole)}` : ""}${r.touch != null ? ` | touch ${r.touch}` : ""}${r.still != null ? ` | still ${r.still}` : ""}${r.lift !== undefined ? ` | lift ${r.lift}` : ""}${r.restsOpen != null ? ` | restsOpen ${r.restsOpen}` : ""} | ${r.viol.length ? "FAIL: " + r.viol.join("; ") : "pass"}`);
