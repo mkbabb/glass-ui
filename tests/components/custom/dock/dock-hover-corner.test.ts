@@ -71,10 +71,12 @@ describe("U/B8r I-3: the two-cell collapsed dock is not drawn as a circle", () =
         // W-I.8 R-1 (RU-13), restated: a pill rests at half its cross extent at any height.
         expect(run).toMatch(/\.glass-dock\.shape-pill\s*\{\s*border-radius:\s*9999px;/);
         expect(run).toMatch(/--dock-cap-rest:\s*calc\(var\(--dock-cross\) \/ 2\)/);
-        // The cross extent is the measure, and before the script runs the same extent
-        // from the density tokens: the first paint is already a stadium.
-        expect(run).toMatch(/--dock-cross:\s*var\(\s*--dock-plate-cross-px,\s*calc\(var\(--dock-layer-height\) \+ 2 \* var\(--dock-padding-block\)\)\s*\)/);
-        expect(run).toMatch(/\.glass-dock\.vertical\s*\{\s*--dock-cross:\s*var\(\s*--dock-plate-cross-px,\s*calc\(var\(--dock-control-size\) \+ 2 \* var\(--dock-padding-inline\)\)\s*\)/);
+        // W-I.8 RU-35, restated: the cross extent is the density tokens' (the first paint is
+        // already a stadium); `--dock-plate-cross-px` is an output the carrier writes on the
+        // root, read by no rule of glass.
+        expect(run).toMatch(/--dock-cross:\s*calc\(var\(--dock-layer-height\) \+ 2 \* var\(--dock-padding-block\)\);/);
+        expect(run).toMatch(/\.glass-dock\.vertical\s*\{\s*--dock-cross:\s*calc\(var\(--dock-control-size\) \+ 2 \* var\(--dock-padding-inline\)\);/);
+        expect(run).not.toMatch(/var\(\s*--dock-plate-cross-px/);
         // W-I.8 R-1 (RU-13), restated: mid-travel nothing is scaled, so no counter-scaled
         // corner exists; the carrier writes half the plate's painted cross extent.
         expect(run).not.toMatch(/--dock-size-scale/);

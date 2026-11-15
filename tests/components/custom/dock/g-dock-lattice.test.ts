@@ -402,9 +402,14 @@ describe("G-DOCK-REACH — the anchor is the seat's snap position, read from its
      * The open seat is `m·P − gap` wide by declaration, so every seat after it sits
      * `(m−1)·P` further along the run.
      */
-    it("the open seat's width is authored from the pitch", () => {
+    /*
+     * W-I.8 RU-28, restated (a behaviour change listed for the owner in MEASURE-5): every
+     * seat of a run is one seat wide, the current one included, so no rule reads
+     * `--dock-open-seat`. The two tokens stay declared and unread through 11.2.0.
+     */
+    it("every seat is one seat wide; the open seat's tokens stay declared and unread", () => {
         const css = declarations(`${STYLES}/run.css`);
-        expect(css).toMatch(/inline-size:\s*var\(--dock-open-seat\)/);
+        expect(css).not.toMatch(/(inline|block)-size:\s*var\(--dock-open-seat\)/);
         expect(css).toMatch(
             /--dock-open-seat:\s*calc\(\s*var\(--dock-open-pitches\) \* var\(--dock-pitch\) - var\(--dock-run-gap\)\s*\)/,
         );
@@ -572,14 +577,20 @@ describe("G-DOCK-MORPH — a morph never starts against an unmeasured target", (
             /watch\(visualExpanded, \(\) => body\.sync\("posture"\), \{ flush: "post" \}\)/,
         );
         const body = read(`${DOCK}/composables/useDockBody.ts`);
-        expect(body, "no endpoint is published for a later travel").not.toMatch(/--dock-expanded-px/);
+        // W-I.8 RU-35: the expanded extent is an output again, written from `next`, the layout
+        // this sync read after the class changed, in the posture the dock is in; never read.
+        expect(body, "the output is written from the layout just read").toMatch(/writeOutputs\(el, next, posture\)/);
+        expect(body).toMatch(/put\(posture \? "--dock-expanded-px" : "--dock-collapsed-px"/);
+        expect(body, "no endpoint is read back for a later travel").not.toMatch(/getPropertyValue\("--dock-(expanded|collapsed)-px"\)/);
     });
 
     /** The source half: the posture is the DOM's at the read, and no flip is captured. */
     it("the measure reads the posture from the DOM and chrome only at rest", () => {
         const body = read(`${DOCK}/composables/useDockBody.ts`);
-        // The one read of the new layout follows the trigger frame's writes, in sync.
-        expect(body).toMatch(/fitCurve\(el, open, run\);\s*\}\s*const next = rectOf\(el\);/);
+        // W-I.8 RU-29, restated: the fit and the curve are read from one layout, written
+        // together, and the root's new layout is read after them, in sync.
+        expect(body).toMatch(/const plan = run \? fitRun\(run, open\) : null;\s*const inset = fitCurve\(el, open, run, [^)]*\);/);
+        expect(body).toMatch(/performance\.mark\("dock:reread"[\s\S]*?\}\s*const next = rectOf\(el\);/);
         expect(body).not.toMatch(/watch\(expanded/);
     });
 
@@ -742,6 +753,10 @@ describe("G-DOCK-MATERIAL — the focus ring composes instead of competing", () 
             `${STYLES}/layers.css: .glass-dock.expanded:not(.fit-content) .dock-layer--full { width: 100% }`,
             /* FLOOR · releases the flex/grid min-content floor on the scroll axis */
             `${STYLES}/run.css: .glass-dock :where(.dock-layers) > .dock-run { min-inline-size: 0 }`,
+            /* CAP   · W-I.8 RU-27's whole-seat window, on the scroll axis. It caps the CONTENT
+                       box (the run is content-box), so the leading reserve stays in the padding
+                       and the trailing one is inside the cap: the ring keeps its room. */
+            `${STYLES}/run.css: .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run[data-run-whole] { max-inline-size: calc( round(down, 100% - var(--dock-run-reserve-inline) + var(--dock-run-gap), var(--dock-pitch)) - var(--dock-run-gap) + var(--dock-run-reserve-inline) ) }`,
             /* FLOOR · the same release, rotated */
             `${STYLES}/run.css: .glass-dock.vertical :where(.dock-layers) > .dock-run { min-block-size: 0 }`,
             /* FLOOR · vertical layer stack */
@@ -864,7 +879,13 @@ describe("G-DOCK-STATE — one selected seat, carried on at least two channels",
      * at m=1 the open seat is `1·P − gap` = exactly a closed seat, the geometric carrier
      * vanishes, and the count drops to one.
      */
-    it("the geometric carrier is real on both orientations", () => {
+    /*
+     * W-I.8 RU-28: STRUCK, listed for the owner (MEASURE-5, pile (c)). The open seat's width
+     * was the geometric carrier; every seat is now one seat wide and the mark says which page
+     * is current (the mark as a gliding plate is 12.0.0's, W-R.1). Kept as a known failure
+     * so the promise is not dropped silently.
+     */
+    it.fails("the geometric carrier is real on both orientations", () => {
         const css = declarations(`${STYLES}/run.css`);
         const inline = Number(css.match(/\.glass-dock \{[\s\S]*?--dock-open-pitches:\s*(\d+)/)![1]);
         const block = Number(
@@ -885,7 +906,9 @@ describe("G-DOCK-STATE — one selected seat, carried on at least two channels",
      * readers negate the false pole so any truthy token — `page`, `true`, `step` — counts.
      */
     it("selection is aria-current, negated the same way in CSS and JS", () => {
-        expect(declarations(`${STYLES}/run.css`)).toContain(
+        // W-I.8 RU-28: run.css no longer selects the open seat (no rule widens it); the
+        // predicate is JS's alone, and no stylesheet of the dock reads a negated form.
+        expect(declarations(`${STYLES}/run.css`)).not.toContain(
             '[aria-current]:not([aria-current="false"])',
         );
         expect(read(`${DOCK}/composables/useDockRun.ts`)).toMatch(
