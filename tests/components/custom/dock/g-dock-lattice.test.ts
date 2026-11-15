@@ -2,13 +2,10 @@ import { readFileSync, readdirSync } from "node:fs";
 import { join, sep } from "node:path";
 import { mount } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
-import { nextTick, ref } from "vue";
+import { nextTick } from "vue";
 
 import GlassDock from "@glass/components/dock/GlassDock.vue";
-import { useDockExpandedSize } from "@glass/components/dock/composables/dockMorphMeasure";
-import { TestResizeObserver } from "../../../setup";
 
-import { mountComposable } from "../../../utils/mountComposable";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // BK #47 GF-DOCK — THE FOUR DOCK SEATS (G-DOCK-BUDGET · G-DOCK-RUN · G-DOCK-REACH ·
@@ -538,17 +535,6 @@ describe("G-DOCK-REACH — the anchor is the seat's snap position, read from its
 // ═════════════════════════════════════════════════════════════════════════════
 
 describe("G-DOCK-MORPH — a morph never starts against an unmeasured target", () => {
-    function sized(size: () => number): HTMLElement {
-        const el = document.createElement("div");
-        Object.defineProperties(el, {
-            offsetWidth: { get: size },
-            offsetHeight: { get: () => 48 },
-        });
-        el.getBoundingClientRect = () =>
-            ({ width: size(), height: 48, top: 0, left: 0, right: size(), bottom: 48 }) as DOMRect;
-        return el;
-    }
-
     /**
      * THE FALSIFIER. GF-DOCK calls the defect this guards "the largest motion defect in
      * the component" and it shipped, in the cure's first draft, with no test that could
@@ -572,50 +558,29 @@ describe("G-DOCK-MORPH — a morph never starts against an unmeasured target", (
      * full pane, and it publishes 64px, identical to `--dock-collapsed-px`: a dock whose
      * expand travels nowhere and then jumps.
      */
-    it("the expanded endpoint is never read from the collapsed box", async () => {
-        const COLLAPSED_SPAN = 64;
-        const CHROME = 20;
-        const full = sized(() => 220);
-        const summary = sized(() => 44);
-        const fullInFlow = () =>
-            full.classList.contains("is-active") || full.style.getPropertyValue("position") === "relative";
-        const root = sized(() => (fullInFlow() ? CHROME + 220 : COLLAPSED_SPAN));
-        const content = sized(() => 44);
-        summary.classList.add("is-active");
-        root.append(content);
-
-        const { unmount } = mountComposable(() =>
-            useDockExpandedSize({
-                rootEl: ref(root),
-                contentEl: ref(content),
-                expandedEl: ref(full),
-                collapsedEl: ref(summary),
-                axis: ref("horizontal" as const),
-            }),
+    /*
+     * W-I.8 R-1 (RU-22 (a)): restated to the carrier. `dockMorphMeasure` and its expanded
+     * endpoint are deleted with the wave; the carrier keeps no endpoint at all. It reads
+     * the new layout once, after the posture class has changed (the post-flush watch),
+     * from the root laid out in that posture, so the target can never be the collapsed
+     * box. The in-engine half is release-10-1-2's O-101 and O-101a, restated to the root's
+     * layout in the expanded posture.
+     */
+    it("the expanded endpoint is never read from the collapsed box", () => {
+        const sfc = read(`${DOCK}/GlassDock.vue`);
+        expect(sfc, "the posture is read after the class changes").toMatch(
+            /watch\(visualExpanded, \(\) => body\.sync\("posture"\), \{ flush: "post" \}\)/,
         );
-        await nextTick();
-        TestResizeObserver.deliverInitial(); // the frame: the first capture (G-M1-6)
-        expect(root.style.getPropertyValue("--dock-collapsed-px")).toBe(`${COLLAPSED_SPAN}px`);
-
-        const expandedPx = Number.parseFloat(root.style.getPropertyValue("--dock-expanded-px"));
-        expect(
-            expandedPx,
-            "the expanded endpoint was read from the collapsed root — the morph will run to the wrong target and then jump",
-        ).not.toBe(COLLAPSED_SPAN);
-        expect(expandedPx).toBe(CHROME + 220);
-        unmount();
+        const body = read(`${DOCK}/composables/useDockBody.ts`);
+        expect(body, "no endpoint is published for a later travel").not.toMatch(/--dock-expanded-px/);
     });
 
-    /** The source half: the posture is the DOM's, and chrome is read only at rest. */
+    /** The source half: the posture is the DOM's at the read, and no flip is captured. */
     it("the measure reads the posture from the DOM and chrome only at rest", () => {
-        const src = read(`${DOCK}/composables/dockMorphMeasure.ts`);
-        expect(src).toMatch(/const expanded = full\.classList\.contains\("is-active"\)/);
-        // The rest test is named once, gates the chrome latch, and at rest the root's
-        // own box is the posture's endpoint.
-        expect(src).toMatch(
-            /const morphing = root\.hasAttribute\("data-morphing"\);\s*const rootNow = morphing \? 0 : getSize\(root, a\);\s*if \(!morphing\) \{\s*const chrome = /,
-        );
-        expect(src).not.toMatch(/watch\(expanded/);
+        const body = read(`${DOCK}/composables/useDockBody.ts`);
+        // The one read of the new layout follows the trigger frame's writes, in sync.
+        expect(body).toMatch(/fitCurve\(el, open, run\);\s*\}\s*const next = rectOf\(el\);/);
+        expect(body).not.toMatch(/watch\(expanded/);
     });
 
     /**

@@ -33,11 +33,6 @@ export {
     type DockFaceRegistration,
     type DockCrossfadeContext,
 } from "./dockCrossfadeContext";
-export {
-    useDockMorphOrchestrator,
-    type UseDockMorphOrchestratorOptions,
-    type UseDockMorphOrchestratorReturn,
-} from "./useDockMorph";
 
 // The V↔H orientation morph (`useDockOrientationMorph`), the fission
 // facility (`useDockFission` + `dockFissionSignatures`), and the Siri island (`useSiriDock`)
