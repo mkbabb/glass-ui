@@ -171,7 +171,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
     // changes carries a translate from where it painted to 0.
     // Each seat's layout box relative to the run's border box at scroll (sx, sy), so a
     // seat the host removes can be held where it painted (R-3, a control that leaves).
-    const seats = new Map<HTMLElement, { lx: number; ly: number; x: Q; y: Q; rx: number; ry: number; sx: number; sy: number; w: number; h: number }>();
+    const seats = new Map<HTMLElement, { lx: number; ly: number; x: Q; y: Q; rx: number; ry: number; sx: number; sy: number; w: number; h: number; ox: number; oy: number }>();
     // Controls the host removed from the open run, held by glass until the landing.
     const ghosts = new Set<HTMLElement>();
     let faces: FaceTrack[] = [];
@@ -402,6 +402,10 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         let movedAny = false;
         const seen = new Set<HTMLElement>();
         const rr = run.getBoundingClientRect();
+        // The run's origin without its region's written translate: where it is laid out.
+        const lane = regions.get("layers");
+        const ox = rr.left + scrollX - (lane ? lane.tx : 0);
+        const oy = rr.top + scrollY - (lane ? lane.ty : 0);
         for (const child of run.children) {
             if (!(child instanceof HTMLElement) || child.offsetParent === null || ghosts.has(child)) continue;
             seen.add(child);
@@ -417,6 +421,8 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
                 sy: run.scrollTop,
                 w: cr.width,
                 h: cr.height,
+                ox,
+                oy,
             };
             const t = tr;
             if (!t) {
@@ -1088,9 +1094,11 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
                 if (!(n instanceof HTMLElement) || ghosts.has(n) || n.parentNode === run) continue;
                 const t = seats.get(n);
                 if (!t) continue;
-                const rr = run.getBoundingClientRect();
-                const l = rr.left + scrollX + t.rx - (run.scrollLeft - t.sx) + t.x.d;
-                const tp = rr.top + scrollY + t.ry - (run.scrollTop - t.sy) + t.y.d;
+                // Where it painted: the run's origin at the last read (read now, the run is
+                // already laid out for the new set) plus its region's translate as written.
+                const lane = regions.get("layers");
+                const l = t.ox + (lane ? lane.tx : 0) + t.rx - (run.scrollLeft - t.sx) + t.x.d;
+                const tp = t.oy + (lane ? lane.ty : 0) + t.ry - (run.scrollTop - t.sy) + t.y.d;
                 const inline = Number.parseFloat(n.style.opacity);
                 const from = Number.isFinite(inline) ? inline : 1;
                 ghosts.add(n);
@@ -1102,8 +1110,9 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
                 n.style.pointerEvents = "none";
                 n.style.opacity = String(from);
                 n.style.transition = "none";
-                const at = rec.nextSibling && rec.nextSibling.parentNode === run ? rec.nextSibling : null;
-                run.insertBefore(n, at);
+                // Out of the run: the run's scroll port is laid out for the new set already and
+                // cut a seat removed at its end in the first row. Its lane is the run's region.
+                (run.parentElement ?? run).appendChild(n);
                 pendingLeaves.push({ el: n, region: "layers", rect: { l, t: tp, r: l + t.w, b: tp + t.h }, regionCx: 0, regionCy: 0 });
                 faces.push({ el: n, from, role: "leave", placed: false, ghost: true });
                 any = true;
