@@ -31,9 +31,11 @@ A patch on 11.1.0 about how surfaces leave. Nothing is removed or renamed.
   `--exit-curve` token carries the new curve: it was `var(--ease-out)`, that is
   `cubic-bezier(0, 0, 0.2, 1)`, and is now `cubic-bezier(0.3, 0.2, 0.7, 0.8)`.
 
-- **A popover leaves by fading and a short slide.** A `Popover` and a hover card used to
-  shrink, squash and blur as they faded out, and a tooltip shrank. They now leave on
-  opacity and their few pixels of slide alone. Their entrance is unchanged.
+- **A popover moves by fading and a short slide.** A `Popover` and a hover card grew,
+  unsquashed and sharpened from a blur as they arrived, and shrank, squashed and blurred
+  again as they left. They now enter and leave on opacity and
+  their few pixels of slide alone. A tooltip no longer shrinks as it leaves; it still
+  grows slightly as it arrives.
 
 - **A closing surface leaves the same way however you close it.** A `Sheet` with
   detents stopped shrinking at its smallest honest height and then vanished with half
