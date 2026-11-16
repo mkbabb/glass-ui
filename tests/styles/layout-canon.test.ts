@@ -115,14 +115,16 @@ describe("G1 no-H-overflow — the `viewport-fit` arm (BK #59)", () => {
 
 // ── G1's G2 occlusion arm (the structural half; the rects are π) ─────────────
 describe("G1 → G2 occlusion arm — the shell grid (BK #59)", () => {
-    it("the shell is a two-by-two grid measured in `dvh`, not a `100vh` flex stack", () => {
+    it("the shell is a `rail main` grid measured in `dvh`, not a `100vh` flex stack", () => {
         const rule = strip(dockNav).match(/\.demo-app-shell\s*\{([\s\S]*?)\n\}/)?.[1];
         expect(rule, "dock-nav.css declares .demo-app-shell").toBeDefined();
         expect(rule).toContain("display: grid");
         expect(rule).toContain("block-size: 100dvh");
-        expect(rule).toMatch(/grid-template-areas:\s*\n?\s*"rail main"\s*\n?\s*"rail dock"/);
+        // The pager dock is laid over main's end (FORM.md section 3), so there is no
+        // dock row: content passes under its glass.
+        expect(rule).toMatch(/grid-template-areas:\s*"rail main";/);
         // `vh` measures the LARGEST viewport: with a dynamic mobile toolbar showing,
-        // a `100vh` shell is taller than the screen and the dock row falls off it.
+        // a `100vh` shell is taller than the screen.
         expect(rule).not.toContain("100vh");
     });
 
@@ -131,11 +133,11 @@ describe("G1 → G2 occlusion arm — the shell grid (BK #59)", () => {
         expect(strip(shell)).not.toContain("flex-1 flex-col");
     });
 
-    it("the three shell regions are seated by grid area — no region is positioned twice", () => {
+    it("the three shell regions are seated by grid area — the pager shares main's cell", () => {
         for (const [selector, area] of [
             [".demo-sidebar-rail", "rail"],
             [".demo-main-scroller", "main"],
-            [".demo-bottom-dock", "dock"],
+            [".demo-bottom-dock", "main"],
         ] as const) {
             const rule = strip(dockNav).match(
                 new RegExp(`^\\${selector}\\s*\\{([\\s\\S]*?)\\n\\}`, "m"),
@@ -145,11 +147,11 @@ describe("G1 → G2 occlusion arm — the shell grid (BK #59)", () => {
         }
     });
 
-    it("`scroll-padding-block-start` is gone — an in-flow dock row has nothing to reserve against", () => {
+    it("main keeps the pager's clearance at its end, as padding and as scroll padding", () => {
+        const rule = strip(dockNav).match(/^\.demo-main-scroller\s*\{([\s\S]*?)\n\}/m)?.[1];
+        expect(rule).toContain("var(--demo-nav-dock-clearance)");
+        expect(rule).toContain("scroll-padding-block-end: var(--demo-nav-dock-clearance)");
         expect(strip(dockNav)).not.toContain("scroll-padding-block-start");
-        // The INLINE reserve survives: its doc-record ties it to the rail's transient
-        // hover fan, and the §9 fan-open probe that would retire it is OWED (#10).
-        expect(strip(dockNav)).toContain("scroll-padding-inline-start");
     });
 });
 
@@ -387,24 +389,14 @@ describe("BK #59 routed residue — RED until its owner lands", () => {
         },
     );
 
-    it.fails("kill #10: no width-keyed `matchMedia` survives in the demo", () => {
-        // ONE site: `demo/stories/containers/configurator.vue` — the studio fork's
-        // `matchMedia("(max-width: 720px)")` → prop plumbing, which the container
-        // must replace by SETTING `--configurator-size` for the shipped
-        // `@container style(--configurator-size)` contract to consume. The file
-        // carries another lane's uncommitted bytes at this cut, so it is not this
-        // seat's to touch. Owner: #59 kill #10/#14, behind that lane's commit.
+    it("kill #10: no width-keyed `matchMedia` survives in the demo", () => {
         const offenders = DEMO_FILES.filter((f) =>
             /matchMedia\(\s*["'`]\([^"'`]*width/.test(strip(read(f))),
         );
         expect(offenders).toEqual([]);
     });
 
-    it.fails("kill #15: no raw `vh` envelope survives in the demo", () => {
-        // FOUR of seven landed on `--stage-block` in this cut (VizStudio's default,
-        // aurora, springs, NotFound). The three left — blob, fourier-field,
-        // configurator — sit in files carrying another lane's uncommitted bytes.
-        // Owner: #59 kill #15, behind those lanes' commits.
+    it("kill #15: no raw `vh` envelope survives in the demo", () => {
         const offenders = DEMO_FILES.filter((f) => /\d+vh\b/.test(strip(read(f))));
         expect(offenders).toEqual([]);
     });
