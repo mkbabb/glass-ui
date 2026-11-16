@@ -71,7 +71,7 @@ describe("W1-F — no composition skips a heading level", () => {
     // discharged RT-18C by deleting the story it duplicated the dismissal grammar in);
     // a name kept here after its file is deleted reds this gate on an ENOENT, which
     // says nothing about heading outlines.
-    const COMPOSITIONS = ["auth-shell", "empty-states", "form-validation", "settings"];
+    const COMPOSITIONS = ["auth-shell", "empty-states", "settings"];
 
     /** A page and its stage, read as one outline: the stage holds the page's headings. */
     const readComposition = (name: string): string => {
@@ -92,10 +92,8 @@ describe("W1-F — no composition skips a heading level", () => {
             const levels = [...body.matchAll(/<h([1-6])\b/g)].map((m) => Number(m[1]));
             if (levels.length === 0) return;
 
-            // The StoryPage chassis renders the page h1 unless the story opts out with
-            // `hero-title="false"`, in which case the story authors its own.
-            const chassisH1 = !/hero-title="false"/.test(body);
-            const outline = chassisH1 ? [1, ...levels] : levels;
+            // StoryPage renders the page h1; the stage's headings follow it.
+            const outline = [1, ...levels];
 
             let deepest = outline[0];
             for (const level of outline) {

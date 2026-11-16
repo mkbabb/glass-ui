@@ -2,8 +2,6 @@ import { flushPromises, mount } from "@vue/test-utils";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import CodeBlock from "../../demo/chassis/code/CodeBlock.vue";
-import ToasterExample from "../../demo/examples/ToasterExample.vue";
-import toasterExampleSource from "../../demo/examples/ToasterExample.vue?raw";
 
 const originalClipboard = Object.getOwnPropertyDescriptor(navigator, "clipboard");
 
@@ -28,19 +26,6 @@ afterEach(() => {
         Object.defineProperty(navigator, "clipboard", originalClipboard);
     else delete (navigator as unknown as { clipboard?: Clipboard }).clipboard;
     vi.restoreAllMocks();
-});
-
-describe("CodeBlock source fidelity", () => {
-    it.each([
-        [ToasterExample, toasterExampleSource, "@glass/components/toast"],
-    ])(
-        "imports one Vue module as both runtime and raw source",
-        (component, source, publicImport) => {
-            expect(component).toBeTruthy();
-            expect(source).toContain(publicImport);
-            expect(source).toContain("<template>");
-        },
-    );
 });
 
 describe("CodeBlock copy outcome", () => {

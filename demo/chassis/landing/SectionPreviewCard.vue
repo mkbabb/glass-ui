@@ -1,21 +1,18 @@
 <script setup lang="ts">
 // A card: the preview plate across its top, then the title. The plate shows the page's
-// own stage (or its tile), mounted inert and scaled down to fit whole; a section with
-// neither shows the empty plate at the same height, so every card is the same size.
-// A card has no blurb.
+// own stage (or its tile), mounted inert and scaled down to fit whole. A card has no
+// blurb.
 import { computed, defineAsyncComponent, onBeforeUnmount, onMounted, ref } from "vue";
 import TransitionRouteLink from "../TransitionRouteLink.vue";
-import type { TileResolution } from "./storyTile";
+import type { StoryPreview } from "./storyTile";
 
 const props = defineProps<{
     to: string;
     title: string;
-    tile: TileResolution;
+    tile: StoryPreview;
 }>();
 
-const preview = computed(() =>
-    props.tile.kind === "live" ? defineAsyncComponent(props.tile.loader) : null,
-);
+const preview = computed(() => defineAsyncComponent(props.tile));
 
 // The specimen lays out at the plate's width; when its natural box is larger than the
 // plate it is scaled down about its centre until the whole of it fits.
@@ -54,10 +51,9 @@ onBeforeUnmount(() => observer?.disconnect());
             class="section-preview-card-preview"
             inert
             aria-hidden="true"
-            :data-card-preview="preview ? 'live' : 'empty'"
+            data-card-preview="live"
         >
             <div
-                v-if="preview"
                 ref="specimen"
                 class="section-preview-card-specimen"
                 :style="{ scale: fit }"
@@ -89,7 +85,7 @@ onBeforeUnmount(() => observer?.disconnect());
     translate: 0 -2px;
 }
 
-/* The plate runs edge to edge at 16:10 on every card, specimen or not. */
+/* The plate runs edge to edge at 16:10 on every card. */
 .section-preview-card-preview {
     position: relative;
     overflow: clip;

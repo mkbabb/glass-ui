@@ -148,7 +148,7 @@ export function sectionColorToHeroPalette(n: number): HeroStop[] {
 }
 
 /** The per-category section hue index → the hero palette KEY. The 11 categories
- *  each get a DISTINCT section hue (the `CATEGORY_HERO` map in category-hero.ts
+ *  each get a DISTINCT section hue (the `SECTION_HUE` map in category-hero.ts
  *  is the single source; this mirror is keyed by the same index so the palette
  *  catalogue carries one entry per category). The `as const` keeps the literal
  *  keys so `HeroPaletteKey` carries the 11 `cat-<id>` entries. */
@@ -202,44 +202,6 @@ const HERO_PALETTES = {
 } satisfies Record<string, HeroStop[]>;
 
 export type HeroPaletteKey = keyof typeof HERO_PALETTES;
-
-/**
- * The per-page background descriptor a story row declares. The string shorthand
- * names one of the five substrates; the object form tunes the Aurora palette or
- * the recede-behind-content opacity ceiling.
- *
- *   "paper"         — a quiet warm-cream grain wash.
- *   "grid"          — a token-driven blueprint ruled grid (static CSS, the zero-GL default).
- *   "aurora"        — a live painterly drift on the brand hues. The recessive
- *                     shell field (`shellAuroraConfig`, AppShell) is the SUFFUSION
- *                     register — a near-invisible full-bleed ambient wash behind
- *                     page content; a hero opts into a fuller drift via this kind.
- *   "constellation" — a drifting proximity-graph lattice.
- *
- * A GooBlob is a CONTAINED creature (fixed aspect-ratio), NOT a full-bleed
- * page-field — so it is deliberately NOT a background kind.
- *
- * A full-bleed live Fourier SDF is too heavy for an ambient page wash. The teaching
- * <FourierField> lives
- * ONLY on its own /substrates/fourier-field studio route (a contained field over a
- * calm paper wash), never as a StoryHero background. No route declares a live
- * fourier wash.
- */
-export type StoryBackgroundKind =
-    | "paper"
-    | "grid"
-    | "aurora"
-    | "constellation";
-
-export type StoryBackground =
-    | StoryBackgroundKind
-    | {
-          kind: StoryBackgroundKind;
-          /** Aurora palette (the "aurora" kind only). */
-          palette?: HeroPaletteKey;
-          /** Opacity ceiling — how far the live substrate recedes (0..1). */
-          intensity?: number;
-      };
 
 /**
  * Build an `AuroraConfig` for a demo hero from a named brand palette. The

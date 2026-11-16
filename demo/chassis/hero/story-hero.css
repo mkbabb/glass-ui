@@ -34,29 +34,3 @@
     font-size: var(--type-size-body, 1rem);
     max-inline-size: var(--measure-prose);
 }
-
-/* A ruled grid wash some specimens still draw inside their own frames. */
-.grid-bg {
-    background-image:
-        repeating-linear-gradient(
-            to right,
-            var(--grid-line-major) 0 1px,
-            transparent 1px var(--grid-major)
-        ),
-        repeating-linear-gradient(
-            to bottom,
-            var(--grid-line-major) 0 1px,
-            transparent 1px var(--grid-major)
-        ),
-        repeating-linear-gradient(
-            to right,
-            var(--grid-line) 0 1px,
-            transparent 1px var(--grid-pitch)
-        ),
-        repeating-linear-gradient(
-            to bottom,
-            var(--grid-line) 0 1px,
-            transparent 1px var(--grid-pitch)
-        );
-    background-position: 0 0;
-}

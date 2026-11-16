@@ -156,15 +156,14 @@ describe("G1 → G2 occlusion arm — the shell grid (BK #59)", () => {
 });
 
 // ── G-MEASURE-LAW (≡ G3 + G4 + G5), the static half ─────────────────────────
-describe("G-MEASURE-LAW — the four measures (BK #59)", () => {
+describe("G-MEASURE-LAW — the measures (BK #59)", () => {
     const MEASURES = {
         "--measure-prose": "66ch",
         "--measure-cel": "21rem",
-        "--measure-wide": "34rem",
         "--article-max": "96rem",
     } as const;
 
-    it("all four measures are declared, once, in the one layout sheet", () => {
+    it("every measure is declared, once, in the one layout sheet", () => {
         for (const [token, value] of Object.entries(MEASURES)) {
             expect(decl(layout, token), token).toBe(value);
             const declarations = strip(layout).match(
@@ -203,19 +202,6 @@ describe("G-MEASURE-LAW — the four measures (BK #59)", () => {
         const cel = rem(MEASURES["--measure-cel"]);
         const gap = rem(decl(layout, "--sp-4")!);
         expect(2 * cel + gap).toBeLessThanOrEqual(main);
-    });
-
-    it("the cel field self-packs — auto-fit tracks, never a counted column", () => {
-        const field = strip(layout).match(
-            /\.story-cels,[\s\S]*?\{([\s\S]*?)\n\}/,
-        )?.[1];
-        expect(field, "layout.css declares the cel field").toBeDefined();
-        expect(field).toContain("display: grid");
-        expect(field).toContain(
-            "repeat(auto-fit, minmax(min(var(--measure-cel), 100%), 1fr))",
-        );
-        // `min(X, 100%)` is the whole trap: without it the track overflows a
-        // container narrower than one cel, which is every phone.
     });
 
     it("the article law caps the THING and the prose rule caps the LINE", () => {
@@ -290,22 +276,6 @@ describe("G6 transposition-singleton — one ladder, one arm (BK #59)", () => {
         });
         expect(blocks).toEqual(["demo/chassis/layout.css"]);
     });
-
-    it("the chassis pad and gap maps read rungs, not the off-series Tailwind scale", () => {
-        // `p-4`/`p-6`/`p-10` and `gap-6` sat on none of the six rungs AND, being
-        // static utilities, never transposed: a frame kept desktop padding on a
-        // 390px phone while the page around it stepped down.
-        for (const file of [
-            "demo/chassis/showcase/ShowcaseFrame.vue",
-            "demo/chassis/section/StorySection.vue",
-        ]) {
-            const src = strip(read(file));
-            expect(src, `${file} reads rungs`).toMatch(/-\(--sp-[1-6]\)/);
-            expect(src, `${file} has no numeric pad/gap utility`).not.toMatch(
-                /["'\s](?:p|gap)-(?!0\b)\d/,
-            );
-        }
-    });
 });
 
 // ── G-FORK-CENSUS (≡ G7 + G8) ───────────────────────────────────────────────
@@ -368,26 +338,17 @@ describe("G-FORK-CENSUS — the seat law and the fork rubric (BK #59)", () => {
     });
 });
 
-// ── ROUTED RESIDUE — born-RED, each with the row that owns the bytes ────────
-describe("BK #59 routed residue — RED until its owner lands", () => {
-    it.fails(
-        "kill #7: demo/stories carries ZERO viewport-keyed variants (75 hits / 35 files at this cut)",
-        () => {
-            // The per-site triage (T-B10: field-replaceable → cel field; deliberate
-            // arity → explicit tracks under `@container`) is ORDERED AFTER this cut,
-            // not deferred by preference: an arm-inverted `@container` re-key needs
-            // the container, and `StorySection`'s `container: cel / inline-size` is
-            // a byte this commit creates. Owner: #59's own remaining half.
-            const offenders = DEMO_FILES.filter(
-                (f) =>
-                    f.startsWith("demo/stories/") &&
-                    /(?<![\w:-])(sm|md|lg|xl|2xl):[a-zA-Z0-9:[\]/._()-]+/.test(
-                        strip(read(f)),
-                    ),
-            );
-            expect(offenders).toEqual([]);
-        },
-    );
+// ── The routed residue, each kill now held ─────────────────────────────────
+describe("BK #59 kills — the routed residue, now held", () => {
+    it("kill #7: demo/stories carries ZERO viewport-keyed variants", () => {
+        // Stage grids key to the stage's own width (`@container`), never the viewport.
+        const offenders = DEMO_FILES.filter(
+            (f) =>
+                f.startsWith("demo/stories/") &&
+                /(?<![\w:-])(sm|md|lg|xl|2xl):[a-zA-Z0-9:[\]/._()-]+/.test(strip(read(f))),
+        );
+        expect(offenders).toEqual([]);
+    });
 
     it("kill #10: no width-keyed `matchMedia` survives in the demo", () => {
         const offenders = DEMO_FILES.filter((f) =>

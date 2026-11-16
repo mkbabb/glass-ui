@@ -28,11 +28,9 @@ const stub = {
 };
 
 describe("the card's preview", () => {
-    it("is the story's tile where one exists, else its stage, else none", () => {
+    it("is the story's tile where one exists, else its stage; every row has one", () => {
         for (const { story } of ROWS) {
-            const r = resolveStoryTile(story);
-            if (story.tile || story.stage) expect(r.kind).toBe("live");
-            else expect(r.kind).toBe("none");
+            expect(resolveStoryTile(story)).toBe(story.tile ?? story.stage);
         }
     });
 
@@ -60,9 +58,11 @@ describe("the card's preview", () => {
 });
 
 describe("the card", () => {
+    const live = async () => ({ template: "<div />" });
+
     it("prints its title once, carries no paragraph and no image", () => {
         const wrapper = mount(SectionPreviewCard, {
-            props: { to: "/forms", title: "Forms", tile: { kind: "none" } },
+            props: { to: "/forms", title: "Forms", tile: live },
             ...stub,
         });
         expect(wrapper.findAll("p")).toHaveLength(0);
@@ -70,28 +70,16 @@ describe("the card", () => {
         expect(wrapper.text()).toBe("Forms");
     });
 
-    it("shows the empty plate when its section has no stage yet, so every card is one size", () => {
+    it("mounts its live preview inert and out of the accessibility tree", () => {
         const wrapper = mount(SectionPreviewCard, {
-            props: { to: "/forms", title: "Forms", tile: { kind: "none" } },
-            ...stub,
-        });
-        expect(wrapper.get("[data-card-preview]").attributes("data-card-preview")).toBe("empty");
-        expect(wrapper.find("[data-card-specimen]").exists()).toBe(false);
-    });
-
-    it("mounts a live preview inert and out of the accessibility tree", () => {
-        const wrapper = mount(SectionPreviewCard, {
-            props: {
-                to: "/display",
-                title: "Display",
-                tile: { kind: "live", loader: async () => ({ template: "<div />" }) },
-            },
+            props: { to: "/display", title: "Display", tile: live },
             ...stub,
         });
         const preview = wrapper.get("[data-card-preview]");
         expect(preview.attributes("data-card-preview")).toBe("live");
         expect(preview.attributes("inert")).toBeDefined();
         expect(preview.attributes("aria-hidden")).toBe("true");
+        expect(wrapper.find("[data-card-specimen]").exists()).toBe(true);
     });
 
     it("is rounded on the 24 px rung, with no inner well", () => {

@@ -1,21 +1,20 @@
 // A card's preview: the story's own tile where it has one (its stage cannot run small
-// and inert), else its stage. A story with neither shows its title alone.
+// and inert), else its stage. Every row has one or the other; a row with neither fails
+// here, loudly, rather than showing a card without a component.
 import type { Component } from "vue";
 import type { Category, Story } from "../../stories/manifest";
 
-export type TileResolution =
-    | { kind: "live"; loader: () => Promise<Component> }
-    | { kind: "none" };
+export type StoryPreview = () => Promise<Component>;
 
-const NO_PREVIEW: TileResolution = { kind: "none" };
-
-export function resolveStoryTile(story: Story): TileResolution {
+export function resolveStoryTile(story: Story): StoryPreview {
     const loader = story.tile ?? story.stage;
-    return loader ? { kind: "live", loader } : NO_PREVIEW;
+    if (!loader) throw new Error(`"${story.id}" has neither a stage nor a tile`);
+    return loader;
 }
 
 /** A section's card on `/` shows its first page's preview. */
-export function resolveCategoryTile(category: Category): TileResolution {
+export function resolveCategoryTile(category: Category): StoryPreview {
     const first = category.stories[0];
-    return first ? resolveStoryTile(first) : NO_PREVIEW;
+    if (!first) throw new Error(`"${category.id}" has no pages`);
+    return resolveStoryTile(first);
 }
