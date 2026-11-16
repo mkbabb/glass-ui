@@ -26,4 +26,10 @@ import { Metric } from "@glass/components/metric";
         grid-template-columns: repeat(2, max-content);
     }
 }
+
+@container (inline-size < 20rem) {
+    .metric-stage {
+        grid-template-columns: max-content;
+    }
+}
 </style>
