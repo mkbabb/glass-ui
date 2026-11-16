@@ -27,13 +27,15 @@
 }
 
 /* The rail column. Hidden by default: portrait, at any width, has no rail. Its width
-   is the dock's open width, which the folded dock keeps, so content never shifts. */
+   is fixed at the open dock's, so content never shifts when the dock folds. */
 .demo-sidebar-rail {
     grid-area: rail;
     display: none;
     flex-direction: column;
     align-items: center;
     min-height: 0;
+    /* The open rail's width (a 64 px dock and its gutter), held while it is folded. */
+    inline-size: calc(4rem + 2 * var(--sp-2));
     padding: var(--sp-4) var(--sp-2);
 }
 
@@ -96,6 +98,14 @@
     /* Reserves the scrollbar's gutter so a scroll lock on an open picker does not
        reflow the page. */
     scrollbar-gutter: stable;
+}
+
+/* A phone's side gutter is 16 px, so a 390 viewport gives the article 358. */
+@media (width <= 48rem) {
+    .demo-main-scroller {
+        padding-inline: max(1rem, env(safe-area-inset-left, 0px))
+            max(1rem, env(safe-area-inset-right, 0px));
+    }
 }
 
 .demo-main-scroller:focus {
