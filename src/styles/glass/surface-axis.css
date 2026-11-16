@@ -88,6 +88,31 @@
         backdrop-filter: none;
     }
 
+    /* ── firm — the glass of a popup at sheet width ─────────────────────────────
+       Below 30rem a Select's sheet and a dock's menu cover much of the page, so they
+       wear the overlay rung's ink and blur on a plate firmed toward the card: still
+       glass, tinted by what is behind it, with its rows at 4.5:1 over a busy ground in
+       both schemes. Its level is 0.35 of glass's, and the a11y brackets firm it the
+       way they firm every plate: more contrast to a third of the more-contrast level, and
+       reduced transparency or forced colours to the solid card with no backdrop. The
+       plate's children carry no backdrop of their own. */
+    [data-plate="firm"] {
+        --glass-veil-tier: var(--glass-veil-overlay);
+        --glass-level: 0.35;
+        backdrop-filter: var(--glass-blur-overlay);
+    }
+    @media (prefers-contrast: more) {
+        [data-plate="firm"] {
+            --glass-level: 0.1;
+        }
+    }
+    @media (prefers-reduced-transparency: reduce), (forced-colors: active) {
+        [data-plate="firm"] {
+            --glass-level: 0;
+            backdrop-filter: none;
+        }
+    }
+
     /* ── static — the plate that samples no backdrop (the `backdropMode` axis) ──
        A plate in the page flow over a still field: nothing passes behind it but the
        field, so a live lens re-filters the whole plate on every scroll frame and

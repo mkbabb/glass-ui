@@ -1,13 +1,9 @@
-// U/B7b M1 · D-6 — a sheet hides the page. Below 30rem the Select listbox rises from the
-// viewport foot at full width (the sheet form); it must take the opaque rung of the surface
-// axis (`data-surface="opaque"`: the solid `--card` plate, no backdrop), or the page behind
-// it reads through the rows. The anchored popover form above 30rem keeps the glass rung.
-// A DropdownMenu a dock opened is the same sheet below 30rem (the atlas dock's More on a
-// phone), so the register stamps the opaque rung from the dock stamp and the width. The
-// content carries no `surface` prop (BK #66, public-contracts.test-d.ts).
-//
-// RED on u/b7-glass 1dc80a3d6: the sheet form stamped no surface. RED on d44311a30: a dock
-// menu below 30rem stamped no surface unless the consumer passed a re-minted `surface` prop.
+// Below 30rem the Select listbox rises from the viewport foot at full width (the sheet
+// form) and takes the firm plate (`data-plate="firm"`: the overlay rung's glass, firmed
+// toward the card); the anchored popover form above 30rem keeps the floating plate. A
+// DropdownMenu a dock opened covers the page the same way below 30rem, so the register
+// stamps the firm plate from the dock stamp and the width. Neither is the opaque surface
+// rung, and the content carries no `surface` prop (public-contracts.test-d.ts).
 import { mount } from "@vue/test-utils";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { defineComponent, h, nextTick, ref } from "vue";
@@ -61,13 +57,14 @@ async function openSelect() {
     return document.querySelector<HTMLElement>("[data-slot='select-content']");
 }
 
-describe("Select sheet form takes the opaque rung (D-6)", () => {
-    it("below 30rem the sheet-form plate is data-surface=opaque", async () => {
+describe("Select sheet form takes the firm plate", () => {
+    it("below 30rem the sheet-form plate is the firm plate", async () => {
         narrow(true);
         const plate = await openSelect();
         expect(plate).not.toBeNull();
         expect(plate!.getAttribute("data-form")).toBe("sheet");
-        expect(plate!.getAttribute("data-surface")).toBe("opaque");
+        expect(plate!.getAttribute("data-plate")).toBe("firm");
+        expect(plate!.hasAttribute("data-surface")).toBe(false);
     });
 
     it("above 30rem the anchored plate keeps the glass rung (no surface stamp)", async () => {
@@ -75,6 +72,7 @@ describe("Select sheet form takes the opaque rung (D-6)", () => {
         const plate = await openSelect();
         expect(plate).not.toBeNull();
         expect(plate!.hasAttribute("data-form")).toBe(false);
+        expect(plate!.hasAttribute("data-plate")).toBe(false);
         expect(plate!.hasAttribute("data-surface")).toBe(false);
     });
 });
@@ -96,26 +94,27 @@ async function openMenu(inDock: boolean) {
     return document.querySelector<HTMLElement>("[data-slot='menu-content']");
 }
 
-describe("a dock menu at sheet width takes the opaque rung", () => {
-    it("below 30rem a menu a dock opened is data-surface=opaque", async () => {
+describe("a dock menu at sheet width takes the firm plate", () => {
+    it("below 30rem a menu a dock opened is the firm plate", async () => {
         narrow(true);
         const plate = await openMenu(true);
         expect(plate).not.toBeNull();
         expect(plate!.hasAttribute("data-glass-dock-portal")).toBe(true);
-        expect(plate!.getAttribute("data-surface")).toBe("opaque");
+        expect(plate!.getAttribute("data-plate")).toBe("firm");
+        expect(plate!.hasAttribute("data-surface")).toBe(false);
     });
 
     it("above 30rem a dock menu keeps the glass rung", async () => {
         narrow(false);
         const plate = await openMenu(true);
         expect(plate).not.toBeNull();
-        expect(plate!.hasAttribute("data-surface")).toBe(false);
+        expect(plate!.hasAttribute("data-plate")).toBe(false);
     });
 
     it("below 30rem a menu outside a dock keeps the glass rung", async () => {
         narrow(true);
         const plate = await openMenu(false);
         expect(plate).not.toBeNull();
-        expect(plate!.hasAttribute("data-surface")).toBe(false);
+        expect(plate!.hasAttribute("data-plate")).toBe(false);
     });
 });

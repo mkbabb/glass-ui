@@ -55,7 +55,8 @@ const selectRoot = injectSelectRootContext(null);
 /* THE SHEET FORM (U/B7 D-6). Below 30rem (`useSheetWidth`) a listbox anchored to a
  * trigger has no width to grow into and covers what the reader was choosing for, so
  * it opens as a bottom sheet: anchored to a virtual edge at the foot of the viewport,
- * opening upward, at full width, on the opaque rung; the anchored form keeps glass.
+ * opening upward, at full width, on the firm plate; the anchored form keeps the
+ * floating plate.
  * The reference reads the viewport on every call, so a resize or a URL-bar retraction
  * re-anchors it through floating-ui's own update. */
 const sheet = useSheetWidth(() => selectRoot?.open.value ?? false);
@@ -129,7 +130,7 @@ const dock = useDockParticipation({
             data-reveal="menu"
             data-slot="select-content"
             :data-form="sheet ? 'sheet' : undefined"
-            :data-surface="sheet ? 'opaque' : undefined"
+            :data-plate="sheet ? 'firm' : undefined"
             :data-open-input="openInput?.input.value"
             :class="
                 cn(

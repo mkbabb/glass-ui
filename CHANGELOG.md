@@ -11,6 +11,14 @@ A patch on 11.1.0 about how surfaces leave. Nothing is removed or renamed.
   and leaves by sliding down past the edge of the screen as it fades. A `DropdownMenu`
   seated in a `GlassDock` keeps its material through its exit the same way.
 
+- **On a narrow screen a `Select` and a dock's `DropdownMenu` are glass.** Below 30rem
+  they were a solid plate. They now wear the overlay glass, firmed toward the card so
+  every row, the highlighted one included, reads at 4.5:1 over a busy page in light and
+  dark. With reduced transparency turned on they are solid, as before. The plate's
+  attribute changes with it: the narrow form carries `data-plate="firm"` where it
+  carried `data-surface="opaque"`, so a stylesheet that targeted the old attribute on
+  these two surfaces should target the new one.
+
 ## 11.1.0 — 2026-11-15
 
 A minor release. No API changes shape, so your code keeps working as it is. Two

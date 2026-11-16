@@ -77,12 +77,12 @@ const dock = useDockParticipation({
     },
 });
 /* A DOCK MENU AT SHEET WIDTH (U/B7 D-6). Below 30rem a menu a dock opened covers the
-   page it sits over, as the Select's sheet form does, so it wears the opaque rung. The
+   page it sits over, as the Select's sheet form does, so it wears the firm plate. The
    register decides from two facts it already holds (the dock stamp and the viewport);
    the content carries no material prop (BK #66). An anchored menu outside a dock, or
-   any menu above 30rem, keeps glass. */
+   any menu above 30rem, keeps the floating plate. */
 const sheetWidth = useSheetWidth(() => menuRoot?.open.value ?? false);
-const opaque = computed(() => sheetWidth.value && "data-glass-dock-portal" in dock.portalAttrs.value);
+const firm = computed(() => sheetWidth.value && "data-glass-dock-portal" in dock.portalAttrs.value);
 /* ONE CLASS SPELLING. The root used to carry BOTH `dropdown-menu-content` and
    `menu__content` — two names for one element, feeding two different
    unlayered sheets. Both are gone; the register is `.glass-overlay-plate`, which
@@ -102,7 +102,7 @@ const contentAttrs = computed(() =>
         <component
             :is="ContentComp"
             v-bind="{ ...placementProps, ...forwardedAttrs, ...contentAttrs }"
-            :data-surface="opaque ? 'opaque' : undefined"
+            :data-plate="firm ? 'firm' : undefined"
             @escape-key-down="emit('escapeKeyDown', $event)"
             @pointer-down-outside="emit('pointerDownOutside', $event)"
             @focus-outside="emit('focusOutside', $event)"

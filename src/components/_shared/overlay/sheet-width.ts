@@ -2,10 +2,12 @@ import { onBeforeUnmount, shallowRef, watch, type ShallowRef } from "vue";
 
 /**
  * THE SHEET WIDTH (U/B7 D-6). Below 30rem an overlay has no width to sit beside
- * what the reader was choosing for, so it covers the page as a sheet. A sheet hides
- * the page, so it wears the surface axis's opaque rung (the solid `--card` plate, no
- * backdrop). The width is a fact of the viewport, read here once for every overlay
- * that has a sheet form; no content component carries a material prop for it.
+ * what the reader was choosing for, so it covers the page as a sheet. A sheet covers
+ * more of the page than an anchored popup, so it wears the firm plate (`data-plate=
+ * "firm"`, glass/surface-axis.css): the overlay rung's glass, firmed toward the card so
+ * its rows read over any ground. The width is a fact of the viewport, read here once for
+ * every overlay that has a sheet form; no content component carries a material prop
+ * for it.
  *
  * The query is held only while the overlay is open, so a closed overlay keeps no
  * listener; it is read synchronously on open, before the content renders. On close the
