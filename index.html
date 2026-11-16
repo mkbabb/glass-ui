@@ -27,6 +27,16 @@
              ships). No external font-host preconnect/stylesheet wiring is
              needed; the demo dogfoods exactly what a consumer of
              `@mkbabb/glass-ui/styles/fonts` receives. -->
+        <!-- The faces are `font-display: optional`: a face is used only if it has
+             arrived by the first text layout, so the Latin text face is fetched
+             with the document rather than after the stylesheet. -->
+        <link
+            rel="preload"
+            as="font"
+            type="font/woff2"
+            crossorigin
+            href="/src/fonts/plus-jakarta-sans/plus-jakarta-sans-latin.woff2"
+        />
 
         <!-- The /styles cascade is the one byte-complete union entry
              `@mkbabb/glass-ui/styles` (the minified cascade). The earlier
