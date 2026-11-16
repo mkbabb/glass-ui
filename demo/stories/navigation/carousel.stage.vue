@@ -1,7 +1,7 @@
 <script setup lang="ts">
-// Carousel's stage: five colour slides; the next one peeks in, and the dots below
-// follow the scroll.
-import { ref } from "vue";
+// Carousel's stage: five colour slides, centred, with their neighbours peeking in at
+// both edges. The dots follow the scroll and step the strip through the carousel's
+// own `deck`, since a write to `v-model:active` after mount does not reach the strip.
 import { Carousel, CarouselContent, CarouselItem } from "@glass/components/carousel";
 import { PagerDots } from "@glass/components/pager-dots";
 
@@ -12,14 +12,16 @@ const SLIDES = [
     { hue: 210, name: "Slate" },
     { hue: 42, name: "Saffron" },
 ];
-
-const active = ref(0);
 </script>
 
 <template>
     <div class="carousel-stage">
-        <Carousel v-model:active="active" projection="travel" aria-label="Colours">
-            <CarouselContent>
+        <Carousel
+            v-slot="{ deck, index }"
+            projection="travel"
+            aria-label="Colours"
+        >
+            <CarouselContent class="carousel-stage-strip">
                 <CarouselItem
                     v-for="(s, i) in SLIDES"
                     :key="s.name"
@@ -35,10 +37,11 @@ const active = ref(0);
             </CarouselContent>
             <div class="carousel-stage-dots">
                 <PagerDots
-                    v-model:active="active"
+                    :active="index"
                     :count="SLIDES.length"
                     :slide-label="(i: number) => SLIDES[i]?.name ?? ''"
                     aria-label="Slides"
+                    @update:active="deck.go"
                 />
             </div>
         </Carousel>
@@ -48,25 +51,32 @@ const active = ref(0);
 <style scoped>
 .carousel-stage {
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     align-content: center;
     block-size: 100%;
-    padding: var(--sp-6) var(--sp-5);
+    padding-block: var(--sp-6);
 }
 
-/* One slide and a peek of the next; a little more of the next where the stage is
-   wide. */
-.carousel-stage-item {
-    flex-basis: 82%;
+/* The strip spans the stage. Each slide is centred, and the strip's inline padding
+   is half of what a slide leaves, so slide i rests at i slide pitches of scroll. */
+.carousel-stage-strip {
+    --slide: 82cqi;
+    padding-inline: calc((100cqi - var(--slide)) / 2);
 }
 
 @container (inline-size >= 40rem) {
-    .carousel-stage-item {
-        flex-basis: 64%;
+    .carousel-stage-strip {
+        --slide: 64cqi;
     }
 }
 
+.carousel-stage-item {
+    flex: 0 0 var(--slide);
+    scroll-snap-align: center;
+}
+
 .carousel-stage-slide {
-    block-size: clamp(12rem, 60cqi, 20rem);
+    block-size: clamp(12rem, 80cqi, 20rem);
     border-radius: var(--radius-3xl);
 }
 
