@@ -129,8 +129,7 @@ So no exported directive, composable, type, class or manifest token is removed. 
 
 All are at 2x, under `strips/` beside this file. Rows are "today", "no pointer light" and "no pointer light, rim arc". Columns are at rest, hover at the centre, hover near the upper-right edge, press, and keyboard focus. Each strip has four blocks: dark and light, warm ground and plain ground.
 
-- `strips/icon.png`: the glass icon Button
-- `strips/primary.png` and `strips/quiet.png`
+- `strips/icon.png`, `strips/primary.png`, `strips/quiet.png`: since the ruling these have two rows, "today" and "no pointer light, plain hover" (see "After the ruling")
 - `strips/dock.png`: four seats, the second selected; the pointer is on the first
 - `strips/chip.png`, `strips/slider.png`, `strips/toggle.png`, `strips/card.png`
 - `strips/webkit/icon.png` and `strips/webkit/dock.png`: the WebKit confirming cell (dark, warm ground, V-A and V-B only)
@@ -155,3 +154,72 @@ That is a gap in the spec, not in the build: SPEC assumed the plate had its own 
 The **slider thumb** stays legible and pressable without its dot, because the slider's range answers hover. Crop: `strips/slider.png`.
 
 **V-B's arc** reads as a thin line around the seat's cell, not around the fill. In dark on the plain ground it looks like a second, outer ring, and in light it is barely there. That matches the geometry failure in G-9. Crop: `strips/dock.png`, rows 2 and 3 of the dark, plain-ground block, "hover, centre".
+
+## After the ruling
+
+`RULING.md` item 3, built on `bl/specular/proto` as one commit. `bl/specular/proto-b` was not touched.
+
+**Tip:** `f6fe1efb39ec6739efb4c4fc5d4f587b34ad5b0f` ("proto(specular): the glass Button answers hover with its plate"), pushed.
+
+### What was built
+
+One rule in `src/components/button/styles.css`: 13 lines added, none removed, no token added.
+
+- **Where it applies:** inside the Button's existing `@media (hover: hover)` block, on a primary or secondary Button (the icon button included) that is not disabled or loading.
+- **What it sets:** `--glass-veil-rung: calc(var(--glass-veil-rest) + var(--glass-veil-resting))`.
+- **Which token it reuses:** the dock seat's hover rule (`controls/icon-button.css`) paints `--dock-control-hover-bg`. In light that is `--glass-plate-resting`, the veil ink at alpha `--glass-veil-resting` (0.14) over no fill. The Button's plate already has a fill, so the same step is that alpha added to the plate's own rung. The earned darken, the warm floor and a tone tint all still compose on top.
+- **How it moves:** it rides the Button's existing `background-color` leg (`--engage-control-engage-release`, `--ease-standard`). Nothing follows the pointer, and there is no new rule for press or focus.
+
+### Readings
+
+Chromium headless shell at 2x, on the page described above.
+
+**Hover minus rest, in levels** (mean luma of the plate face, label and glyph excluded):
+
+| Ground | Icon button | Primary Button | Dock seat (the bar) | Gate |
+|---|---|---|---|---|
+| dark, warm busy | **−9.4** | **−9.9** | +12.3 | fails: smaller, and the opposite direction |
+| dark, plain | **0.0** | **+0.2** | +17.0 | fails: no visible hover |
+| light, warm busy | −12.2 | −13.4 | −13.6 | short by 1.4 and 0.2 levels |
+| light, plain | −25.3 | −25.2 | −26.7 | short by 1.4 and 1.5 levels |
+
+Today's icon and primary Buttons read 0.0 on every ground, which is the defect the ruling cures.
+
+**Why dark fails.** The dock seat's hover token has two arms (`tokens/dark-arm.css:294-299`). In dark it is `color-mix(in oklab, var(--foreground) 8%, transparent)`: it lifts toward the foreground, because, as the comment there says, the deeper veil ink "would draw the seat darker than the plate it sits on". I reused the light arm's step (veil ink), which in dark deepens an already dark ink, `oklch(0.17 0.03 70)`. On the plain dark ground the alpha rises (0.28 to 0.43) while the composite stays the same (0 levels). On the busy ground it darkens.
+
+The dark arm's lift cannot reach the Button in one leg, because the Button already paints a plate fill. A tint on top of a fill is either a second `color-mix` around the plate, or a second paint layer (an image layer, which does not tween, or an inset shadow, which breaks the one-shadow ceiling). Neither is "the plate's fill steps one tint" with no new mechanism, so I did not build either. Which one, if any, is a design call.
+
+**Per frame, hover in and out** (computed `background-color` per animation frame, not screenshots):
+
+| | Frames in | Largest step, in | Frames out | Largest step, out |
+|---|---|---|---|---|
+| icon button, all four grounds | 22 | 0.133 to 0.148 of the change | 22 | 0.116 to 0.152 |
+| primary Button, all four grounds | 22 | 0.127 to 0.129 | 22 | 0.120 to 0.130 |
+
+Every frame carries less than a fifth of the change: **passes**. The rung moves 0.14 → 0.32 on the icon button in dark (0.10 → 0.24 in light) and 0.22 → 0.40 on the primary in dark (0.18 → 0.32 in light).
+
+**Other checks:**
+
+- **Shift gate:** on this tree, dark and light, no box moves on hover or focus. The same two slider-press shifts appear as in every tree.
+- **Typecheck:** `src` is clean. The test project shows the same two `dist/`-dependent errors as before.
+- **vitest:** 7 files that read the Button and its styles, `--maxWorkers=2`: 247 pass, 1 expected fail.
+
+### The strips
+
+`strips/icon.png`, `strips/primary.png` and `strips/quiet.png` are replaced, with two rows each: "today" and "no pointer light, plain hover". The columns and the four grounds are the same as before. The cells are from the committed tip.
+
+- **Light:** hovering the icon button and the primary Button now shows a plain, even step in the plate, with no spot.
+- **Press:** pressing keeps the hover fill, because the pointer is still over the button, as on a dock seat.
+- **Dark, warm ground:** the plate goes a shade darker.
+- **Dark, plain ground:** hover looks like rest. Crop: `strips/primary.png`, the dark, plain-ground block, "at rest" against "hover, centre".
+- **Quiet Button:** unchanged; it had its own hover already.
+
+### Gate summary for item 3
+
+| Part of the gate | Result |
+|---|---|
+| Light | Fails by up to 1.5 levels, a near miss, not a visible gap: the step is the same alpha as the seat's, laid over a plate that already has a fill rather than over none. |
+| Dark | Fails outright for the reason above. |
+| Frames | Pass. |
+| Box movement | Passes. |
+| Press and focus | Unchanged. |
