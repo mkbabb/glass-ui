@@ -1,0 +1,385 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/close-ab/v1102/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/playwright.config.ts",
+      "--project=chromium-headless-new",
+      "--workers=1",
+      "tests-visual/dockmorph-cta.spec.ts",
+      "tests-visual/viz-fourier-ribbon.spec.ts"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/close-ab/v1102/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/close-ab/v1102/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/close-ab/v1102/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/close-ab/v1102/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/close-ab/v1102/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/close-ab/v1102/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/close-ab/v1102/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/close-ab/v1102/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-5.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/docs/release-11.1.0/close/suite/ab/v1102.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5761",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/close-ab/v1102/",
+      "url": "http://localhost:5761",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "dockmorph-cta.spec.ts",
+      "file": "dockmorph-cta.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "dockmorph-cta — the CTA-receive landing SEAT (π lane, LOCAL)",
+          "file": "dockmorph-cta.spec.ts",
+          "line": 38,
+          "column": 6,
+          "specs": [
+            {
+              "title": "the seat reserves its box (no jump) and reveals with an opacity FLIP",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2092,
+                      "error": {
+                        "message": "Error: the pending ghost opacity (1) is not dimmed (< 1) — the [data-cta-pending] placeholder is not showing the dim ghost\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1\u001b[39m\nReceived:   \u001b[31m1\u001b[39m",
+                        "stack": "Error: the pending ghost opacity (1) is not dimmed (< 1) — the [data-cta-pending] placeholder is not showing the dim ghost\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1\u001b[39m\nReceived:   \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/close-ab/v1102/tests-visual/dockmorph-cta.spec.ts:72:11",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/close-ab/v1102/tests-visual/dockmorph-cta.spec.ts",
+                          "column": 11,
+                          "line": 72
+                        },
+                        "snippet": "  70 |             pending!.ghostOpacity,\n  71 |             `the pending ghost opacity (${pending!.ghostOpacity}) is not dimmed (< 1) — the [data-cta-pending] placeholder is not showing the dim ghost`,\n> 72 |         ).toBeLessThan(1);\n     |           ^\n  73 |         // The static resting-geometry reserve — a non-zero min-*-size (the no-box-jump).\n  74 |         const reserveInline = parseFloat(pending!.minInline) || 0;\n  75 |         const reserveBlock = parseFloat(pending!.minBlock) || 0;"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/close-ab/v1102/tests-visual/dockmorph-cta.spec.ts",
+                            "column": 11,
+                            "line": 72
+                          },
+                          "message": "Error: the pending ghost opacity (1) is not dimmed (< 1) — the [data-cta-pending] placeholder is not showing the dim ghost\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1\u001b[39m\nReceived:   \u001b[31m1\u001b[39m\n\n  70 |             pending!.ghostOpacity,\n  71 |             `the pending ghost opacity (${pending!.ghostOpacity}) is not dimmed (< 1) — the [data-cta-pending] placeholder is not showing the dim ghost`,\n> 72 |         ).toBeLessThan(1);\n     |           ^\n  73 |         // The static resting-geometry reserve — a non-zero min-*-size (the no-box-jump).\n  74 |         const reserveInline = parseFloat(pending!.minInline) || 0;\n  75 |         const reserveBlock = parseFloat(pending!.minBlock) || 0;\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/close-ab/v1102/tests-visual/dockmorph-cta.spec.ts:72:11"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-15T23:17:30.632Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/close-ab/v1102/tests-visual/test-results/dockmorph-cta-dockmorph-ct-c2a59-eveals-with-an-opacity-FLIP-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/close-ab/v1102/tests-visual/dockmorph-cta.spec.ts",
+                        "column": 11,
+                        "line": 72
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "12f994e6d0a4936e2f2a-69edbcaeb7ebbf3420ec",
+              "file": "dockmorph-cta.spec.ts",
+              "line": 39,
+              "column": 5
+            },
+            {
+              "title": "PRM — the seat reveal is an INSTANT opacity swap (transition off)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 450,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-15T23:17:33.319Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "12f994e6d0a4936e2f2a-4df977ee02335a02ce86",
+              "file": "dockmorph-cta.spec.ts",
+              "line": 132,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "viz-fourier-ribbon.spec.ts",
+      "file": "viz-fourier-ribbon.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "fourier ribbon paints as a chromatic stroke — light",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2127,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T23:17:33.894Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "14d6a142889f02a2c7a6-8d33dbb0311e7c7cc25b",
+          "file": "viz-fourier-ribbon.spec.ts",
+          "line": 104,
+          "column": 5
+        },
+        {
+          "title": "fourier ribbon paints as a chromatic stroke — dark",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2044,
+                  "error": {
+                    "message": "Error: the ribbon must carry a wide luminance spread — a bright comet head over the darker body (dark)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m60\u001b[39m\nReceived:   \u001b[31m59.9526\u001b[39m",
+                    "stack": "Error: the ribbon must carry a wide luminance spread — a bright comet head over the darker body (dark)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m60\u001b[39m\nReceived:   \u001b[31m59.9526\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/close-ab/v1102/tests-visual/viz-fourier-ribbon.spec.ts:118:11",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/close-ab/v1102/tests-visual/viz-fourier-ribbon.spec.ts",
+                      "column": 11,
+                      "line": 118
+                    },
+                    "snippet": "  116 |             stats.spread,\n  117 |             `the ribbon must carry a wide luminance spread — a bright comet head over the darker body (${scheme})`,\n> 118 |         ).toBeGreaterThan(60);\n      |           ^\n  119 |\n  120 |         // (b) CHROMATIC INK, A MINORITY — the warm comet + rings paint chroma the near-neutral\n  121 |         //     backdrop lacks, over a small fraction of the canvas (a curve, never a full plate)."
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/close-ab/v1102/tests-visual/viz-fourier-ribbon.spec.ts",
+                        "column": 11,
+                        "line": 118
+                      },
+                      "message": "Error: the ribbon must carry a wide luminance spread — a bright comet head over the darker body (dark)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m60\u001b[39m\nReceived:   \u001b[31m59.9526\u001b[39m\n\n  116 |             stats.spread,\n  117 |             `the ribbon must carry a wide luminance spread — a bright comet head over the darker body (${scheme})`,\n> 118 |         ).toBeGreaterThan(60);\n      |           ^\n  119 |\n  120 |         // (b) CHROMATIC INK, A MINORITY — the warm comet + rings paint chroma the near-neutral\n  121 |         //     backdrop lacks, over a small fraction of the canvas (a curve, never a full plate).\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/close-ab/v1102/tests-visual/viz-fourier-ribbon.spec.ts:118:11"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T23:17:36.035Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/close-ab/v1102/tests-visual/test-results/viz-fourier-ribbon-fourier-6d177-s-a-chromatic-stroke-—-dark-chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/close-ab/v1102/tests-visual/viz-fourier-ribbon.spec.ts",
+                    "column": 11,
+                    "line": 118
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "14d6a142889f02a2c7a6-261ac26f5f81ffc42028",
+          "file": "viz-fourier-ribbon.spec.ts",
+          "line": 104,
+          "column": 5
+        },
+        {
+          "title": "PRM freezes the ribbon to one static frame",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2625,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T23:17:38.490Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "14d6a142889f02a2c7a6-a99c4906bbbf205445e7",
+          "file": "viz-fourier-ribbon.spec.ts",
+          "line": 133,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-15T23:17:28.782Z",
+    "duration": 12544.404,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}
