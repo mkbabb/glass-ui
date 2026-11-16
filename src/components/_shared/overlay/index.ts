@@ -9,7 +9,6 @@
 export { overlayContentAttrs, type OverlayAttrs, type OverlayRole } from "./content";
 export { useExitPress } from "./exit-press";
 export {
-    LEAVE_FINISHED,
     useLeaveFinished,
     type LeaveFinishedDetail,
     type LeaveKind,

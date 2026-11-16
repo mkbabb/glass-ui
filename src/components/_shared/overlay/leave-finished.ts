@@ -12,7 +12,7 @@ export type LeaveKind =
     | "hover-card";
 
 /** The name of the event, the same on every surface: the Vue emit and the DOM event. */
-export const LEAVE_FINISHED = "leave-finished";
+const LEAVE_FINISHED = "leave-finished";
 
 export type LeaveFinishedDetail = { kind: LeaveKind };
 
