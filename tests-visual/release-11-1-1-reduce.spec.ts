@@ -42,10 +42,7 @@ type Leg = {
 
 /** One leg of a fade, from the film's mark: how many frames sit between its two ends,
  *  whether its opacity is monotone, how long it ran and how many painted frames hold a
- *  box that is neither end's. A surface anchored to a trigger may also ride its anchor:
- *  a press moves the trigger a pixel or two and the surface follows it, which is the
- *  anchor's move, not travel, so a frame at an end's place relative to the anchor is at
- *  that end. */
+ *  box that is neither end's. */
 function judgeLeg(film: Film, dir: "in" | "out", channel: (f: Frame) => number, box: (f: Frame) => number[] | null): Leg {
     const before = film.frames.filter((f) => f.t < film.mark);
     const after = film.frames.filter((f) => f.t >= film.mark);
@@ -73,11 +70,7 @@ function judgeLeg(film: Film, dir: "in" | "out", channel: (f: Frame) => number, 
     // The box at each end: the rest box for the exit, the final box for the entrance.
     const ends = [box(start), box(after[after.length - 1])].filter((b): b is number[] => b !== null);
     const same = (a: number[], b: number[]) => a.every((v, i) => Math.abs(v - b[i]) <= 1.5);
-    const rel = (f: Frame) => (f.ax === undefined || !box(f) ? null : [box(f)![0] - f.ax!, box(f)![1] - f.ay!, box(f)![2], box(f)![3]]);
-    const relEnds = [rel(start), rel(after[after.length - 1])].filter((b): b is number[] => b !== null);
-    const stepped = after.filter(
-        (f) => channel(f) > 0.01 && box(f) && !ends.some((e) => same(box(f)!, e)) && !(rel(f) && relEnds.some((e) => same(rel(f)!, e))),
-    );
+    const stepped = after.filter((f) => channel(f) > 0.01 && box(f) && !ends.some((e) => same(box(f)!, e)));
     return {
         fading: moving.length,
         rises: dir === "in" ? rises : true,
@@ -119,8 +112,6 @@ type Surface = {
     name: string;
     content: string;
     film?: string;
-    /** The trigger the surface is anchored to. */
-    anchor?: string;
     enter: (page: Page, project: string) => Promise<void>;
     leave: (page: Page, project: string) => Promise<void>;
     desktopOnly?: boolean;
@@ -132,14 +123,13 @@ const tap = (sel: string) => (page: Page, project: string) => pressOn(page, proj
 const escape = async (page: Page) => page.keyboard.press("Escape");
 
 const surfaces: Surface[] = [
-    { name: "Popover", says: true, anchor: '[data-testid="x-popover"]', content: '[data-testid="x-popover-content"]', enter: tap('[data-testid="x-popover"]'), leave: escape },
-    { name: "DropdownMenu", says: true, anchor: '[data-testid="x-menu"]', content: '[data-testid="x-menu-content"]', enter: tap('[data-testid="x-menu"]'), leave: escape },
-    { name: "dock Select", says: true, anchor: '[data-testid="x-select"]', content: '[data-testid="x-select-content"]', enter: tap('[data-testid="x-select"]'), leave: escape },
-    { name: "plain Select", says: true, anchor: '[data-testid="x-plain-select"]', content: '[data-testid="x-plain-select-content"]', enter: tap('[data-testid="x-plain-select"]'), leave: escape },
+    { name: "Popover", says: true, content: '[data-testid="x-popover-content"]', enter: tap('[data-testid="x-popover"]'), leave: escape },
+    { name: "DropdownMenu", says: true, content: '[data-testid="x-menu-content"]', enter: tap('[data-testid="x-menu"]'), leave: escape },
+    { name: "dock Select", says: true, content: '[data-testid="x-select-content"]', enter: tap('[data-testid="x-select"]'), leave: escape },
+    { name: "plain Select", says: true, content: '[data-testid="x-plain-select-content"]', enter: tap('[data-testid="x-plain-select"]'), leave: escape },
     {
         name: "Tooltip",
         content: '[data-testid="x-tooltip-content"]',
-        anchor: '[data-testid="x-tooltip"]',
         enter: async (page) => page.locator('[data-testid="x-tooltip"]').hover(),
         leave: async (page) => page.mouse.move(8, 880),
         desktopOnly: true,
@@ -172,7 +162,7 @@ for (const s of surfaces) {
         test.skip(Boolean(s.desktopOnly) && isPhone(project), "a Tooltip does not open on touch");
         await open(page, EXITS);
         const sel = s.film ?? s.content;
-        await startFilm(page, sel, "", s.anchor);
+        await startFilm(page, sel);
         await markFilm(page);
         await s.enter(page, project);
         const inFilm = await stopFilm(page, 700);
@@ -183,7 +173,7 @@ for (const s of surfaces) {
             w.__said = [];
             window.addEventListener("leave-finished", () => w.__said.push(performance.now()));
         });
-        await startFilm(page, sel, "", s.anchor);
+        await startFilm(page, sel);
         await markFilm(page);
         await s.leave(page, project);
         const outFilm = await stopFilm(page, 900);
