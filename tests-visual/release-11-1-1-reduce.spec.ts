@@ -232,11 +232,14 @@ test("mark · a run's selected plate moves to a new seat by a cross-fade", async
     await page.evaluate(() => {
         const w = window as unknown as { __run: { mark: number; frames: unknown[]; stop: boolean } };
         const run = document.querySelector<HTMLElement>(".r-run .dock-run")!;
+        // A computed colour's alpha, in any of the forms an engine returns: rgb(a), or a
+        // colour function (oklab, color()) with a slash alpha.
         const alpha = (c: string) => {
-            const m = /rgba?\(([^)]+)\)/.exec(c);
-            if (!m) return c === "transparent" ? 0 : 1;
-            const parts = m[1].split(/[ ,/]+/).filter(Boolean);
-            return parts.length > 3 ? parseFloat(parts[3]) : 1;
+            if (c === "transparent") return 0;
+            const slash = /\/\s*([\d.]+)(%?)\s*\)$/.exec(c);
+            if (slash) return parseFloat(slash[1]) / (slash[2] ? 100 : 1);
+            const m = /^rgba\(([^)]+)\)$/.exec(c);
+            return m ? parseFloat(m[1].split(",")[3]) : 1;
         };
         const seat = (i: number) => document.querySelector<HTMLElement>(`[data-testid="r-seat-${i}"]`)!;
         const film = { mark: -1, frames: [] as unknown[], stop: false };

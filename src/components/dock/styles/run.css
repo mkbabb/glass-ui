@@ -601,6 +601,24 @@
         backdrop-filter: none;
     }
 
+    /* Under reduced motion the mark does not travel: it is not drawn, and the selected
+       seat paints the same plate itself. A change of destination cross-fades the two
+       seats' plates over `--duration-fast` on `--exit-curve`, in place. */
+    @media (prefers-reduced-motion: reduce) {
+        .glass-dock :where(.dock-layers) > .dock-run > .dock-run-mark {
+            display: none;
+        }
+
+        .glass-dock :where(.dock-layers) > .dock-run:has(> .dock-run-mark) > *,
+        .glass-dock :where(.dock-layers) > .dock-run:has(> .dock-run-mark) [data-glass-dock-seat] * {
+            transition: background-color var(--duration-fast) var(--exit-curve) !important;
+        }
+
+        .glass-dock :where(.dock-layers) > .dock-run:has(> .dock-run-mark) [aria-current]:not([aria-current="false"]) {
+            background-color: var(--dock-control-active-bg);
+        }
+    }
+
     /* THE LABEL BUDGET — and why it is a CLIP, not a token.
        The open seat is the only labelled one, and its label budget is what the pitch
        leaves over: `open − 2·pad − glyph − gap` = 148 − 24 − 24 − 8 = 92px, about
