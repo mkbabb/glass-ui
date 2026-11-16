@@ -120,3 +120,7 @@ Branch `bl/specular/proto` @ 3795843de (three commits on master @ 610e598d4): th
 2. Slider thumb ring: the thumb transitions transform only, so the hover ring cuts in (`slider/styles.css:379-382`).
 3. Select triggers and toggle tiles: hover swaps a gradient background, which cannot interpolate (`control-surfaces.css:85-87`): a colour-only change, or a cross-faded layer.
 Witness for each: per-frame computed values on hover in and out, no frame over a fifth of the change, both engines.
+
+## Added 2026-11-16: the dock separator's square caps (O-389, value.js's rounding census)
+
+A 211-cell rounding census of one site (both themes, 1440 and 390) found one square corner that is glass's: `.dock-separator` draws a 1 px bar with square ends in every open dock. Cure: round caps (`border-radius: var(--radius-pill)` or the stadium token). Witness: computed border-radius on the separator is not 0, both engines. Read with the dock redesign first: if W-I.8 has already removed or redrawn the separator, close this as answered there.
