@@ -508,6 +508,74 @@ for (const route of ["escape", "outside"] as const) {
     });
 }
 
+// A detented Sheet dragged down by its grip and let go below its first rung is closed by
+// the drag. From the release on, what is seen of the plate (its opacity times the share
+// of its resting height on screen) never rises above what the drag left, never rises
+// from one frame to the next, and is nearly gone by its last painted frame. A thrown
+// sheet carries on at the finger's speed, so no bound is set on how much one frame takes.
+test("routes · a detented Sheet dragged off leaves from where the drag left it", async ({ page }, info) => {
+    const project = info.project.name;
+    test.skip(project === "webkit-phone", "Playwright WebKit's touchscreen can tap but not drag");
+    await openHarness(page);
+    await pressOn(page, project, '[data-testid="x-detent"]');
+    const content = '[data-testid="x-detent-content"]';
+    await page.locator(`${content}[data-state="open"]`).waitFor();
+    await page.waitForTimeout(1200);
+    const vw = page.viewportSize()!;
+    const shownPx = (f: Frame) => (f.present && f.h ? (f.op ?? 0) * Math.max(0, Math.min(f.y! + f.h, vw.height) - Math.max(f.y!, 0)) : 0);
+    const grip = (await page.locator(`${content} [data-slot="sheet-detent-handle"]`).boundingBox())!;
+    const x = grip.x + grip.width / 2;
+    const y0 = grip.y + grip.height / 2;
+    await startFilm(page, content);
+    // A finger on the phone form (Chromium's touch input through CDP), the mouse on the
+    // desktop form: twelve steps of 30 px, one a frame.
+    const cdp = isPhone(project) ? await page.context().newCDPSession(page) : null;
+    const touch = (type: string, y?: number) =>
+        cdp!.send("Input.dispatchTouchEvent", { type, touchPoints: y === undefined ? [] : [{ x, y, id: 1 }] } as never);
+    if (cdp) await touch("touchStart", y0);
+    else {
+        await page.mouse.move(x, y0);
+        await page.mouse.down();
+    }
+    for (let i = 1; i <= 12; i++) {
+        if (cdp) await touch("touchMove", y0 + i * 30);
+        else await page.mouse.move(x, y0 + i * 30);
+        await page.waitForTimeout(16);
+    }
+    await markFilm(page);
+    if (cdp) await touch("touchEnd");
+    else await page.mouse.up();
+    const film = await stopFilm(page, 1600);
+    const rest = film.frames.find((f) => f.present)!;
+    const seen = (f: Frame) => shownPx(f) / shownPx(rest);
+    const before = film.frames.filter((f) => f.t < film.mark);
+    const left = seen(before[before.length - 1]);
+    const after = film.frames.filter((f) => f.t >= film.mark);
+    const goneIdx = after.findIndex((f) => seen(f) <= 0.01);
+    const leaving = after.slice(0, goneIdx < 0 ? after.length : goneIdx);
+    let rise = 0;
+    let prev = left;
+    for (const f of leaving) {
+        rise = Math.max(rise, seen(f) - prev);
+        prev = seen(f);
+    }
+    const read = {
+        left: +left.toFixed(3),
+        highest: +Math.max(left, ...leaving.map(seen)).toFixed(3),
+        rise: +rise.toFixed(3),
+        lastSeen: leaving.length ? +seen(leaving[leaving.length - 1]).toFixed(3) : null,
+        gone: goneIdx >= 0,
+        frames: [...before.slice(-4), ...after.slice(0, 24)].map((f) => [Math.round(f.t - film.mark), +seen(f).toFixed(3)]),
+    };
+    const at = JSON.stringify(read);
+    await info.attach("routes", { body: at, contentType: "application/json" });
+    expect(read.left, `the drag carried the sheet down ${at}`).toBeLessThan(0.6);
+    expect(read.gone, `the sheet leaves ${at}`).toBe(true);
+    expect(read.highest - read.left, `no frame shows more than the drag left ${at}`).toBeLessThanOrEqual(0.02);
+    expect(read.rise, `no frame rises from the one before ${at}`).toBeLessThanOrEqual(0.02);
+    expect(read.lastSeen ?? 0, `nearly gone by its last painted frame ${at}`).toBeLessThanOrEqual(0.05);
+});
+
 for (const route of ["pick", "escape", "outside"] as const) {
     test(`routes · a CommandDialog keeps its list through its exit by ${route}`, async ({ page }, info) => {
         const project = info.project.name;

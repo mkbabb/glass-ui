@@ -217,6 +217,10 @@ export function useSheetDetents(
             dampingFraction: row.dampingFraction,
             settleBand: row.settleBand,
         });
+        // The drag wrote the scalar past the spring, so the spring is seated where the
+        // finger left the sheet, moving as the finger moved: the settle, or the close,
+        // runs on from there instead of from the rung the drag started at.
+        seatSpring(target === 0 ? "travel" : "rung", t.value, velocity);
         if (target === 0) {
             requestClose();
             settle(0, "travel");
