@@ -135,6 +135,9 @@ useClickDelegate({
     grid-template-columns: minmax(0, min(14rem, 30%)) minmax(0, 1fr);
     gap: var(--sp-4);
     block-size: 100%;
+    /* A card gives the stage no height; the tall stage's height keeps both panes
+       scrolling there too. */
+    max-block-size: var(--story-stage-tall);
     padding: var(--sp-4);
 }
 
