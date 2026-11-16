@@ -1,14 +1,6 @@
 export { useDockState } from "./useDockState";
 export type { UseDockStateOptions, UseDockStateReturn, DockState } from "./useDockState";
 
-// The dock-as-native-dynamic-search-bar seam. Composes useDockState +
-// the SHIPPED /search fuzzy pipeline (useFuzzySearch, the VSCode scorer — no re-fork) +
-// the dock's own --dock-morph-t metaball morph + the optional useScrollChrome shrink +
-// the ToC ensureTargetWindow/scrollTo subsume. A consuming seam BESIDE the morph engine
-// (useDockMorph/DOCK_SPRING byte-untouched — the box-inviolate fence).
-export { useDockSearch } from "./useDockSearch";
-export type { UseDockSearchOptions, UseDockSearchReturn } from "./useDockSearch";
-
 export { useDockHold } from "./useDockHold";
 export type { UseDockHoldOptions, UseDockHoldReturn } from "./useDockHold";
 

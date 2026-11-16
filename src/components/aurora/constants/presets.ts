@@ -139,8 +139,8 @@ export type WarpMode = "fbm" | "cellular" | "hybrid" | "curl";
  * - `scroll` — palette/breath progress couples to scroll (via `useScrollProgress`).
  * - `swirl`  — cursor-local warp and luminance lean on both engines.
  * - `amplitude` — sizes the transient burst folded into cursor strength on the CPU.
- * Every axis is suppressed under `prefers-reduced-motion` + the DockBackgroundToggle
- * pause (the master tempo scalar is the single suppression seam).
+ * Every axis is suppressed under `prefers-reduced-motion` + a site's pause
+ * control (any button on pause()) (the master tempo scalar is the single suppression seam).
  *
  * `swirl` is ON by default — a config opts OUT with `swirl: false`. Every aurora is
  * pointer-shapeable, and a capability parked behind an opt-in flag is a capability the

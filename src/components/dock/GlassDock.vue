@@ -632,23 +632,6 @@ defineExpose({
                 <slot name="collapsed" />
             </div>
 
-            <!--
-                The dock-as-native-dynamic-search-bar field region.
-                [2026-08-12 · BK #47 W1 SURFACE] Rendered when the `#search` slot is
-                AUTHORED — the slot IS the opt-in. ~~Rendered ONLY when `search` is
-                set~~: a boolean prop gating a named slot was a second switch for one
-                fact, and no dock could ever set one without the other.
-                It seats INSIDE the `.dock-layers` morph aperture so the pill→field
-                reveal rides the dock's OWN `--dock-morph-t` glide (the box
-                shrink-wraps; no second engine). The consumer composes `useDockSearch`
-                and slots its search field + the fuzzy dropdown here; the
-                `.dock-search-field` surface reads the tint seam (dock/search.css) so
-                the active field reads ≥4.5:1 over the backdrop (the no-pale-fade
-                legibility floor).
-            -->
-            <div v-if="$slots.search" class="dock-search-field">
-                <slot name="search" />
-            </div>
         </div>
 
         <!--

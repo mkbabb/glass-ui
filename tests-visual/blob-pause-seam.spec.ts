@@ -2,16 +2,16 @@
 //
 // The structural antidote to the static-defineExpose-string class that let a DEAD
 // pause seam ship GREEN: Blob.vue DISCARDED the renderer return, so the documented
-// WCAG-2.2.2 DockBackgroundToggle pause()/resume() seam was `undefined` at every
+// WCAG-2.2.2 pause()/resume() seam was `undefined` at every
 // consumer — and EVERY static blob gate passed over it (typecheck green, the methods
 // exist on the discarded return TYPE). Only a LIVE rAF-park observation catches the
-// class. This spec mounts the REAL <Blob> + a wired <DockBackgroundToggle> on a real
+// class. This spec mounts the REAL <Blob> + a wired pause control (a DockControl) on a real
 // device, clicks pause, and asserts the render loop ACTUALLY PARKS (the displayed
 // frames stop changing) — NOT a `defineExpose`-string regex.
 //
 // THREE assertions (all born-RED at the pre-wave HEAD eaba94f):
 //   1. PAUSE PARKS THE LOOP — a running blob's composited frames DIFFER frame-to-frame
-//      (the membrane warps, satellites orbit); clicking the DockBackgroundToggle parks
+//      (the membrane warps, satellites orbit); clicking the pause control parks
 //      the substrate rAF, so the frames stop changing (inter-frame diff → ~0); clicking
 //      again RESUMES (the frames change again). Born-RED: the dead seam never parked.
 //   2. MULTI-INSTANCE CONTEXT BOUND — the re-cast blob stories hold a BOUNDED number of
@@ -43,11 +43,14 @@ test.setTimeout(180_000);
 
 const LIBRARY_ROOT = fileURLToPath(new URL("..", import.meta.url));
 
-// The interactive-hero story carries the wired DockBackgroundToggle (the fixture).
+// [W-I.8, RULINGS-6, restated because the component is deleted] The fixture's pause control
+// was a <DockBackgroundToggle>; it is now a <DockControl> wired to the same paused model, so
+// the clicks below press a DockControl. What the gate reads (the loop parks and resumes) is
+// unchanged. The interactive-hero story carries the wired control (the fixture).
 // AY.W-BLOB2 — the AX IA consolidation folded the interaction/mood stories into the ONE
 // `substrates/blob` page (the prior dedicated `blob-interaction`/`blob-mood` routes are
 // gone — the stale paths timed this gate out). The interaction hero + its wired
-// DockBackgroundToggle live on that page.
+// pause control live on that page.
 const BLOB_INTERACTION_PATH = PI_TARGETS.blob.path;
 
 /** Composited element screenshot → decoded RGBA. */
@@ -86,7 +89,7 @@ async function motionOverWindow(canvas: Locator, page: Page, frames = 5): Promis
 }
 
 test.describe("blob-integration (π lane — the WCAG-2.2.2 pause seam + context bound + README consistency)", () => {
-    test("the DockBackgroundToggle pause seam PARKS the render loop (live rAF-park observation)", async ({
+    test("the pause seam (a DockControl wired to paused) PARKS the render loop (live rAF-park observation)", async ({
         page,
     }) => {
         await page.goto(BLOB_INTERACTION_PATH);
@@ -106,7 +109,7 @@ test.describe("blob-integration (π lane — the WCAG-2.2.2 pause seam + context
             `the running blob shows almost no inter-frame motion (${runningMotion.toFixed(3)}) — the loop is not animating, so the pause-park assertion would be vacuous`,
         ).toBeGreaterThan(0.05);
 
-        // 2. PAUSE — click the DockBackgroundToggle (the WCAG-2.2.2 control). The
+        // 2. PAUSE — click the pause control (a DockControl, the WCAG-2.2.2 control). The
         // v-model:paused → renderer.pause() → substrate suspend('manual') chain parks
         // the rAF, so the displayed frames STOP changing.
         const toggle = page
@@ -119,7 +122,7 @@ test.describe("blob-integration (π lane — the WCAG-2.2.2 pause seam + context
         const pausedMotion = await motionOverWindow(blobCanvas, page);
         expect(
             pausedMotion,
-            `after clicking the DockBackgroundToggle the blob STILL animates (inter-frame motion ${pausedMotion.toFixed(3)}) — the pause seam did not park the render loop (the dead-seam class: a discarded renderer return / unexposed pause)`,
+            `after clicking the pause control the blob STILL animates (inter-frame motion ${pausedMotion.toFixed(3)}) — the pause seam did not park the render loop (the dead-seam class: a discarded renderer return / unexposed pause)`,
         ).toBeLessThan(runningMotion * 0.25 + 0.01);
 
         // 3. RESUME — click again; the loop re-arms and the frames change once more.
@@ -128,7 +131,7 @@ test.describe("blob-integration (π lane — the WCAG-2.2.2 pause seam + context
         const resumedMotion = await motionOverWindow(blobCanvas, page);
         expect(
             resumedMotion,
-            `after a second DockBackgroundToggle click the blob did NOT resume animating (inter-frame motion ${resumedMotion.toFixed(3)}) — resume() did not re-arm the loop`,
+            `after a second pause-control click the blob did NOT resume animating (inter-frame motion ${resumedMotion.toFixed(3)}) — resume() did not re-arm the loop`,
         ).toBeGreaterThan(0.05);
     });
 

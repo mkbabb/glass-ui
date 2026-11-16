@@ -19,13 +19,11 @@ const props = withDefaults(
         /** `viewport`: fixed to the window, inside the safe area. `parent`: absolute in its
          *  containing block (a figure, a pane). */
         within?: "viewport" | "parent";
-        /** As GlassDock's. Unset: folds on a phone, never folds wider. */
-        collapse?: DockCollapse;
-        pinned?: boolean;
     }>(),
-    { corner: "bottom-end", within: "viewport", collapse: undefined, pinned: undefined },
+    { corner: "bottom-end", within: "viewport" },
 );
-const emit = defineEmits<{ "update:pinned": [value: boolean] }>();
+// [W-I.8, RULINGS-6] `collapse`, `pinned` and `update:pinned` are deleted: no site passed
+// them. The preset decides its own fold: never with one control, on a phone with more.
 const attrs = useAttrs();
 const phone = useMediaQuery("(max-width: 40rem)");
 /* RU-18 (C2-11): a controls dock whose run holds one control is that control, at rest,
@@ -60,7 +58,7 @@ if (import.meta.env.DEV) {
 function collapseFor(slots: Slots): DockCollapse {
     const mounted = dockRef.value?.controlCount;
     const count = mounted !== undefined && mounted > 0 ? mounted : authored(slots.default?.() ?? []);
-    return count === 1 ? false : (props.collapse ?? (phone.value ? "closed" : false));
+    return count === 1 ? false : phone.value ? "closed" : false;
 }
 </script>
 
@@ -75,10 +73,8 @@ function collapseFor(slots: Slots): DockCollapse {
         :aria-label="label"
         :collapsed-label="label"
         :collapse="collapseFor($slots)"
-        :pinned="pinned"
         :anchor="corner.endsWith('end') ? 'end' : 'start'"
         run="plain"
-        @update:pinned="(v: boolean) => emit('update:pinned', v)"
     >
         <slot />
         <template v-if="$slots.collapsed" #collapsed><slot name="collapsed" /></template>

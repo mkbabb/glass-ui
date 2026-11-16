@@ -54,7 +54,7 @@ const props = withDefaults(
 // SUBSUMED the per-dock binding: the stage now runs the ONE shared observer below and the
 // staged docks INHERIT `--glass-backdrop-luma` (they stand down their own readback), so a
 // dock no longer needs the canvas. The scoped `backgroundCanvas` is RETAINED for the
-// sibling dock stories (layers, sections, cta-receive, dock-search) that still bind
+// sibling dock stories (layers, sections, cta-receive) that still bind
 // `:background-canvas` — a now-harmless no-op there (those docks stand down under the same
 // shared marker). <Aurora> exposes its `canvasRef`.
 const auroraRef = useTemplateRef<{

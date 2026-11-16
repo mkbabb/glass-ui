@@ -55,13 +55,11 @@ import DockStage from "./_frame/DockStage.vue";
                 </div>
             </StorySection>
 
-            <StorySection heading="The hairline" gap="md">
+            <StorySection heading="The separator on either axis" gap="md">
                 <p class="text-small text-muted-foreground">
-                    <code class="rounded bg-muted px-1">anchor</code> promotes a separator to
-                    the dock <em>hairline</em> — the same 1px rule and the same
-                    <code class="rounded bg-muted px-1">--dock-hairline</code> colour, but
-                    spanning the dock's cross extent instead of floating at half-height.
-                    One line across the dock, inside a horizontal or a vertical dock.
+                    A separator is a short 1px rule in the
+                    <code class="rounded bg-muted px-1">--dock-hairline</code> colour, across
+                    the dock's axis, in a horizontal or a vertical dock.
                 </p>
                 <div
                     class="dock-stage-tile flex flex-wrap items-start justify-center gap-8 rounded-[var(--radius-card)] border border-border/30 p-8"
@@ -76,7 +74,7 @@ import DockStage from "./_frame/DockStage.vue";
                             <DockControl aria-label="Home"><Home /></DockControl>
                             <DockControl aria-label="Search"><Search /></DockControl>
                         </div>
-                        <DockSeparator anchor />
+                        <DockSeparator />
                         <div class="contents" role="group" aria-label="System">
                             <DockControl aria-label="Notifications"><Bell /></DockControl>
                             <DockControl aria-label="Settings"><Settings /></DockControl>
@@ -94,7 +92,7 @@ import DockStage from "./_frame/DockStage.vue";
                             <DockControl aria-label="Home"><Home /></DockControl>
                             <DockControl aria-label="Search"><Search /></DockControl>
                         </div>
-                        <DockSeparator anchor />
+                        <DockSeparator />
                         <div class="contents" role="group" aria-label="System">
                             <DockControl aria-label="Notifications"><Bell /></DockControl>
                             <DockControl aria-label="Settings"><Settings /></DockControl>

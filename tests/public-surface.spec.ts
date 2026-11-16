@@ -512,9 +512,12 @@ const exactSubpathRuntimeSurfaces = [
         // (useDockOrientationMorph), and the Siri island (SIRI_* / SiriDockCapability /
         // useSiriDock) are DEFINITION-ABSENT. This list is EXACT to
         // the `@mkbabb/glass-ui/dock` runtime barrel.
+        // [W-I.8, RULINGS-6] DockBackgroundToggle, useDockSearch, the useDockCtaReceive
+        // re-export (it stays on /motion), useDockContext, provideDockContext and
+        // DOCK_CONTEXT_KEY leave the barrel (no app imported them); ControlsDock and
+        // DockOutlet join it (W-I.8 R-12, R-13).
         names: [
-            "DOCK_CONTEXT_KEY",
-            "DockBackgroundToggle",
+            "ControlsDock",
             // The ONE dock control (folds the
             // retired DockIconButton + DockTabButton onto a shape axis).
             "DockControl",
@@ -522,18 +525,12 @@ const exactSubpathRuntimeSurfaces = [
             "DockCrossfade",
             "DockLayer",
             "DockLayerGroup",
+            "DockOutlet",
             // The orientation+layout-aware divider primitive.
             "DockSeparator",
             // `DockTrigger` is OFF this barrel (U/B8 PF, G-M1-3b): it publishes on
             // `./dock-trigger`, so its reka triggers leave every entry that renders a dock.
             "GlassDock",
-            // The external-CTA-morphs-into-dock receive seam
-            // (the /motion export STAYS — a re-export, not a move).
-            "useDockCtaReceive",
-            // The dock-as-native-dynamic-search-bar seam.
-            "useDockSearch",
-            "provideDockContext",
-            "useDockContext",
             "useOptionalDockContext",
         ],
     },

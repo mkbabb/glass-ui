@@ -100,7 +100,8 @@ colored droplet.
   or a dock corner. Slow, calm, on-palette. The idle blob **quiesces** (parks its render loop between
   satellite phase transitions), so an ambient mark is nearly free at rest.
 - **AV background** — a larger continuously-running backdrop. When used this way it MUST carry a
-  `DockBackgroundToggle` (or equivalent) pause control per WCAG 2.2.2 (see [Accessibility](#accessibility)).
+  user-reachable pause control per WCAG 2.2.2 (see [Accessibility](#accessibility)): any button wired
+  to `v-model:paused`, in a dock a `DockControl` with `aria-pressed`.
 - **Interactive toy / mascot** — a pointer-reactive creature that leans toward the cursor, squishes on
   click, and shifts mood (idle → curious on hover → excited on click → sleepy after inactivity), the
   conversational-state affordance register (idle → listening → thinking → responding) modern assistant
@@ -120,7 +121,7 @@ It is **not** a data visualization and conveys no information — the canvas is 
 | `color`         | `string` (CSS color)  | —       | REQUIRED. Any CSS color string — hex, `oklch(...)`, `var(--token)`. A `var(--token)` is un-wrapped to a concrete `rgb(...)` then resolved INTERNALLY through the `/color` leaf to a gamma-sRGB triple (re-resolved on a dark-mode flip). |
 | `config`        | `BlobConfig`          | —       | The metaball tuning. REQUIRED unless an ancestor `provide(BLOB_CONFIG_KEY, …)` supplies it. Pass `BLOB_CONFIG_DEFAULTS` for the stock look. |
 | `seed`          | `string`              | `""`    | Extra seed mixed into the satellite PRNG for a unique-but-reproducible system. |
-| `paused`        | `boolean`             | `false` | `v-model:paused` — the declarative WCAG-2.2.2 pause seam. `true` parks the render loop, `false` restarts it. Wire a `<DockBackgroundToggle>`'s `v-model:paused` straight to it. |
+| `paused`        | `boolean`             | `false` | `v-model:paused` — the declarative WCAG-2.2.2 pause seam. `true` parks the render loop, `false` restarts it. Wire a pause button (a `DockControl` with `aria-pressed`) straight to it. |
 | `pressLabel`    | `string`              | —       | Opts into the SDF-shaped native button and supplies its accessible name. Omit it for a decorative, listener-free Blob. |
 | `disabled`      | `boolean`             | `false` | Disables the optional press surface and pointer response. A paused Blob is disabled for the same reason: it cannot paint the promised response. |
 
@@ -279,7 +280,8 @@ impulse resolves to the substrate's static rest pose. See [Accessibility](#acces
 - **Keep it calm by default** — the blob is an ambient accent. Hold `pulseAmp` small, `orbitRadius`
   modest, and animation cycles slow. Fast motion reads cheap and is a vestibular trigger.
 - **Pause continuously-running backgrounds** — if the blob auto-runs > 5s as a non-essential
-  background, wire `v-model:paused` (or `pause()`/`resume()`) to a `DockBackgroundToggle` (WCAG 2.2.2).
+  background, wire `v-model:paused` (or `pause()`/`resume()`) to a button: in a dock a `DockControl`
+  with `aria-pressed` (WCAG 2.2.2).
   This is binding, not optional.
 - **Reserve `Blob` for the interactive/lit hero** — each Blob owns GPU resources, and a page has a
   hard per-page context cap. A grid of ambient thumbnails is painted CSS, never a grid of live
@@ -365,14 +367,16 @@ impulse resolves to the substrate's static rest pose. See [Accessibility](#acces
   motion path).
 - **WCAG 2.2.2 (Pause, Stop, Hide)** — a continuously-running, auto-starting, > 5s, non-essential blob
   background MUST carry a user-reachable pause control, available to **all** users (not gated behind
-  PRM). Wire `v-model:paused` (or `pause()`/`resume()`) to a `DockBackgroundToggle`. This is distinct
+  PRM). Wire `v-model:paused` (or `pause()`/`resume()`) to a button: in a dock a `DockControl` with
+  `aria-pressed`. This is distinct
   from WCAG 2.3.3 (Animation from Interactions), which the PRM freeze covers.
 
 ```vue
 <script setup lang="ts">
 import { ref } from "vue";
 import { Blob, BLOB_CONFIG_DEFAULTS } from "@mkbabb/glass-ui/blob";
-import { DockBackgroundToggle } from "@mkbabb/glass-ui/dock";
+import { DockControl } from "@mkbabb/glass-ui/dock";
+import { Pause, Play } from "@lucide/vue";
 
 const paused = ref(false);
 </script>
@@ -385,7 +389,15 @@ const paused = ref(false);
     press-label="Pulse blob"
     class="w-80"
   />
-  <DockBackgroundToggle v-model:paused="paused" />
+  <DockControl
+    :active="paused"
+    :aria-pressed="paused"
+    :aria-label="paused ? 'Resume background animation' : 'Pause background animation'"
+    @click="paused = !paused"
+  >
+    <Play v-if="paused" aria-hidden="true" />
+    <Pause v-else aria-hidden="true" />
+  </DockControl>
 </template>
 ```
 

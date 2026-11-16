@@ -52,7 +52,6 @@ export const SELF_STAGES_GL: ReadonlySet<string> = new Set([
     "dock/overview",
     "dock/layers",
     "dock/sections",
-    "dock/dock-search",
     "dock/cta-receive",
     // Controls and overflow wrap DockStage to demonstrate a dock over a live field.
     "dock/controls",

@@ -20,7 +20,8 @@ import { Blob } from "@glass/components/blob";
 import type { BlobConfig, BlobMood, BlobMerge } from "@glass/components/blob";
 import { BLOB_CONFIG_DEFAULTS } from "@glass/components/blob/types";
 import { MAX_SATS } from "@glass/components/blob/constants";
-import { DockBackgroundToggle } from "@glass/components/dock";
+import { DockControl } from "@glass/components/dock";
+import { Pause, Play } from "@lucide/vue";
 import { FadingScroll } from "@glass/components/fading-scroll";
 import {
     Configurator,
@@ -751,14 +752,22 @@ watch(studioPaused, () => {
 
         <StorySection
             label="Pause seam"
-            blurb="A DockBackgroundToggle wired to the studio hero via v-model:paused parks the
+            blurb="A DockControl wired to the studio hero's paused model parks the
                 render loop (the membrane stops warping, the satellites stop orbiting) and resumes
                 it — a pause control any user can reach, not gated behind a motion preference. The
                 resume is CLEAN (the canvas paints the live bead intact, never a wrecked slab)."
         >
             <ShowcaseFrame class="flex flex-wrap items-center gap-4">
                 <span class="flex items-center gap-3 text-small" data-testid="blob-pause-toggle">
-                    <DockBackgroundToggle v-model:paused="studioPaused" />
+<DockControl
+                        :active="studioPaused"
+                        :aria-pressed="studioPaused"
+                        :aria-label="studioPaused ? 'Resume background animation' : 'Pause background animation'"
+                        @click="studioPaused = !studioPaused"
+                    >
+                        <Play v-if="studioPaused" aria-hidden="true" />
+                        <Pause v-else aria-hidden="true" />
+                    </DockControl>
                     <span class="tabular-nums opacity-70">
                         studio: {{ studioPaused ? "paused" : "running" }}
                     </span>

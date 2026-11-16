@@ -2,8 +2,8 @@
 // cursorModel onto the shared `usePointerVelocityField`, the aurora cursor's successor).
 //
 // Every cursor-field axis routes
-// through the MASTER TEMPO SCALAR — the single suppression seam PRM + the DockBackgroundToggle
-// pause converge on. In the field era the tempo gates the field TICK: `pointerField.tick(0)`
+// through the MASTER TEMPO SCALAR — the single suppression seam PRM + a site's
+// pause control converge on. In the field era the tempo gates the field TICK: `pointerField.tick(0)`
 // (the deterministic FREEZE) zeroes the velocity + burst; a live tick retains them. This suite
 // asserts the tempo-scalar contract on the FIELD (the CPU cursor now IS the field):
 //

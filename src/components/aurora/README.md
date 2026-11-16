@@ -44,7 +44,8 @@ The shared lifecycle owns:
 Aurora therefore does not expose a setter for reduced motion. The live
 `prefers-reduced-motion` query is the sole authority. Under reduce, the field
 paints a stable frame and interaction motion remains suppressed. Long-running
-background consumers should also expose the public `pause()` / `resume()` seam.
+background consumers should also expose the public `pause()` / `resume()` seam: wire any
+button to it (in a dock, a `DockControl` with `aria-pressed`).
 
 Initialization is deferred by default so device/context setup and shader work do
 not occupy first paint. Capture consumers use `armAsync()` before `renderAt()`;

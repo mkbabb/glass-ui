@@ -127,19 +127,16 @@ function back() {
             </div>
         </StorySection>
 
-        <StorySection heading="Layer switcher — pull-to-switch" gap="md">
+        <StorySection heading="Layer switcher" gap="md">
             <p class="text-small text-muted-foreground">
                 Pass <code class="rounded bg-muted px-1">show-switcher</code> to render the built-in switcher.
                 Each <code class="rounded bg-muted px-1">DockLayer</code>'s icon + label populates the switcher.
-                With <code class="rounded bg-muted px-1">motion="full"</code> the switcher is pull-to-switch:
-                drag along the switcher axis and fling to the nearest layer; click and Arrow-key
-                navigation remain available at every motion setting.
+                Click a tab or move with the Arrow keys to change layer.
             </p>
             <div class="dock-stage-tile flex justify-center rounded-card border border-border/30 p-10">
                 <GlassDock :background-canvas="backgroundCanvas" :collapse="false" fit-content>
                     <DockLayerGroup
                         v-model:active="switcherLayer"
-                        motion="full"
                         data-testid="dock-layer-switcher-group"
                     >
                         <DockLayer
@@ -248,7 +245,6 @@ function back() {
                 >
                     <DockLayerGroup
                         v-model:active="overflowLayer"
-                        orientation="vertical"
                         data-testid="dock-vertical-overflow-group"
                     >
                         <DockLayer

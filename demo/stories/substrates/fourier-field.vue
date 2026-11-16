@@ -26,7 +26,8 @@ import { FOURIER_STROKE_RUNGS } from "@glass/components/fourier-field/constants"
 import { mulberry32, hashString } from "@glass/composables/glass/procedural/prng";
 import { cssToOklch, type OklchStop } from "@glass/composables/color";
 import { useGlobalDark } from "@glass/composables/dark";
-import { DockBackgroundToggle } from "@glass/components/dock";
+import { DockControl } from "@glass/components/dock";
+import { Pause, Play } from "@lucide/vue";
 import { Slider } from "@glass/components/slider";
 import {
     Configurator,
@@ -377,7 +378,15 @@ const rendererStatus = ref<RendererStatus>(pendingRenderer("webgpu"));
                     class="flex flex-wrap items-center gap-3 border-t border-border/30 px-3 py-2"
                     data-testid="fourier-field-transport"
                 >
-                    <DockBackgroundToggle v-model:paused="paused" />
+<DockControl
+                        :active="paused"
+                        :aria-pressed="paused"
+                        :aria-label="paused ? 'Resume background animation' : 'Pause background animation'"
+                        @click="paused = !paused"
+                    >
+                        <Play v-if="paused" aria-hidden="true" />
+                        <Pause v-else aria-hidden="true" />
+                    </DockControl>
                     <span
                         class="shrink-0 font-mono text-micro text-muted-foreground"
                         data-testid="fourier-field-readout"

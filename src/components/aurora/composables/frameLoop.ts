@@ -136,7 +136,7 @@ export function createFrameLoop(deps: FrameLoopDeps): FrameLoop {
 
     // The master tempo scalar is the single suppression seam the whole interactive
     // stack routes through: 0 under reduced-motion (the substrate's live PRM ref) so every
-    // interactive axis freezes; 1 otherwise. The DockBackgroundToggle pause stops the loop
+    // interactive axis freezes; 1 otherwise. A site's pause control (any button on pause()) stops the loop
     // entirely (the substrate suspend), so it converges here too. tempo scales the
     // integrated field tick (`tick(0)` freezes it), NEVER uTime (scaling the clock makes
     // the flow jump; the integration step scales, the clock keeps marching).

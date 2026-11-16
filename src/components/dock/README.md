@@ -23,7 +23,9 @@ state machine, and one motion spine. Import the family from `@mkbabb/glass-ui/do
 - `DockSeparator` follows the dock's orientation and layout.
 - `DockLayerGroup` and `DockLayer` compose consumer-owned selectable panes.
 - `DockCrossfade` is the thin controlled face-swap primitive.
-- `DockBackgroundToggle` is the pause/resume control for animated backgrounds.
+- An animated background's pause control is any button wired to its `pause()` and
+  `resume()`: in a dock, a `DockControl` with `aria-pressed` (the old
+  `DockBackgroundToggle` is deleted; no app used it).
 
 Group related controls with ordinary DOM (`role="group"` and an accessible name) and
 place `DockSeparator` between groups. Menus and other transient surfaces should compose

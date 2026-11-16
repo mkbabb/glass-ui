@@ -26,36 +26,8 @@ import { useOptionalDockContext } from "./composables/dockContext";
  * landmark without it being interactive (it has no four-state contract — a flex
  * gap rule, not a control).
  *
- * `anchor` promotes this separator to THE HAIRLINE — the line ARCHAEOLOGY E29
- * records the owner asking for ≥2×: a hairline that sits INSIDE the horizontal or
- * vertical dock. It is the same primitive and
- * the same one `--dock-hairline` colour; what changes is the SPAN — the anchored
- * form stretches across the cross extent of its LAYOUT ROOT instead of floating at
- * `--dock-separator-height` with a gap either side. The layout root is a `.glass-dock`
- * or a `<DockLayerGroup>` on its own (both arms are in layer-group.css, and the group
- * is a root here exactly as it is for every other rule in that partial). With neither
- * ancestor there is no cross extent to span and the anchored form paints as the plain
- * divider — the same befitting-silent standalone render, stated rather than promised.
- *
- * [BK #72] Until this cut `anchor` stamped a marker attribute and a modifier class
- * for a slot that existed in no file, and both
- * markers were read by exactly zero selectors and zero code — a prop that did
- * nothing. It does something now. A dock takes at most one hairline (one line across
- * a dock is the point of it); nothing enforces that but nothing needs to.
+ * [W-I.8, RULINGS-6] `anchor` (the spanning hairline register) is deleted: no app passed it.
  */
-const props = withDefaults(
-    defineProps<{
-        /**
-         * Promote this separator to the dock hairline: one 1px rule spanning the
-         * cross extent of its layout root — a `.glass-dock` or a standalone
-         * `<DockLayerGroup>` — in a row OR a column. Off by default: the plain
-         * separator is the short group divider.
-         */
-        anchor?: boolean;
-    }>(),
-    { anchor: false },
-);
-
 const dock = useOptionalDockContext();
 
 const orientation = computed(() => dock?.orientation.value ?? "horizontal");
@@ -75,10 +47,8 @@ const ariaOrientation = computed(() =>
 <template>
     <div
         class="dock-separator"
-        :class="{ 'dock-hairline': anchor }"
         role="separator"
         :data-orientation="dataOrientation"
-        :data-dock-hairline="anchor || undefined"
         :aria-orientation="ariaOrientation"
     />
 </template>

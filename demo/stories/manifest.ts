@@ -817,12 +817,6 @@ export const CATEGORIES: Category[] = [
                 "CTA → Dock Morph",
                 "An external CTA flies and reshapes onto a target dock control, fades into the glass, then hands off so the dock owns the final spot. Reduced motion skips directly to the handoff.",
             ),
-            s(
-                "dock",
-                "dock-search",
-                "Dock Search",
-                "The dock IS the search bar — tap the collapsed pill and it morphs continuously into a search field (not a hard swap); type and the fuzzy dropdown ranks live with subsequence-match highlighting plus a ghost-text completion of the top match; arrow keys walk the results, Enter routes, a selection scrolls to and warms the section below. The dock owns the gesture; the consumer plugs in the data source.",
-            ),
             // the "Siri Island" story is DEFINITION-ABSENT (the Siri dock
             // capability is not part of the public dock surface).
             // Clean break, no alias.

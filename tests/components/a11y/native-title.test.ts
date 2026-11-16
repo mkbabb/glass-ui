@@ -8,8 +8,8 @@
 // library's `<Tooltip side="right">` (recorded at
 // `dock/styles/controls/touch-floor.css`):
 //   · `DockLayerGroup.vue` switcher tabs — the switcher story wraps every entry in a Tooltip;
-//   · `DockBackgroundToggle.vue` — `demo/shell/SidebarDock.vue` wraps the whole dock
-//     control set in one.
+//   · `DockBackgroundToggle.vue` — [W-I.8, RULINGS-6] deleted with its rendered-attr test:
+//     no app used it.
 // Both carried `:title` AND `:aria-label`, so the native rect painted over the styled
 // one on the browser's own delay, and the browser's delay is not ours to tune.
 //
@@ -17,32 +17,15 @@
 // `inheritAttrs`/`v-bind` plumbing (or the reverse) is caught only in the rendered DOM
 // — the binding-verification discipline.
 
-import { mount } from "@vue/test-utils";
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-
-import { DockBackgroundToggle } from "@glass/components/dock";
 
 const read = (path: string): string => readFileSync(path, "utf8");
 
 describe("O-8 — a control that carries a <Tooltip> renders no native title", () => {
-    it("DockBackgroundToggle renders aria-label and NO title", () => {
-        const wrapper = mount(DockBackgroundToggle, {
-            props: { paused: false, pauseLabel: "Pause background" },
-        });
-        const control = wrapper.find("button");
-        expect(control.exists()).toBe(true);
-        expect(control.attributes("aria-label")).toBe("Pause background");
-        expect(
-            control.attributes("title"),
-            "the accessible name is aria-label; title only added a second, unstyled tooltip",
-        ).toBeUndefined();
-    });
-
     it("the switcher tab template stamps no title either", () => {
         // Rendering the switcher needs the whole dock layer context; the assertion that
-        // matters is that the attribute is not authored, and the sibling site above
-        // proves the rendered form of the same strike.
+        // matters is that the attribute is not authored.
         const template = read("src/components/dock/DockLayerGroup.vue").replace(
             /<!--[\s\S]*?-->/g,
             "",
@@ -58,7 +41,6 @@ describe("O-8 — a control that carries a <Tooltip> renders no native title", (
             "src/components/dock/DockControl.vue",
             "src/components/dock/DockLayerGroup.vue",
             "src/components/dock/DockLayer.vue",
-            "src/components/dock/DockBackgroundToggle.vue",
             "src/components/dock/GlassDock.vue",
         ]) {
             const template = read(file).replace(/<!--[\s\S]*?-->/g, "");

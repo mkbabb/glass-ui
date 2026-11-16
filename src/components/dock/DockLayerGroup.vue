@@ -1,14 +1,5 @@
 <script setup lang="ts">
-import {
-    computed,
-    nextTick,
-    onBeforeUnmount,
-    onMounted,
-    ref,
-    useId,
-    useTemplateRef,
-    watch,
-} from "vue";
+import { computed, ref, useId, useTemplateRef } from "vue";
 import type { Component } from "vue";
 import { useSelectionGroup } from "../../composables/motion/morph/useSelectionGroup";
 import { useHoldToken } from "../_shared/overlay";
@@ -16,13 +7,6 @@ import { useOptionalDockContext } from "./composables/dockContext";
 import { provideDockSwitcherContext } from "./composables/dockSwitcherContext";
 import DockCrossfade from "./DockCrossfade.vue";
 import type { DockFaceDescriptor } from "./composables/dockCrossfadeContext";
-import {
-    useDragMorph,
-    type DragMorphSnapTarget,
-} from "../../composables/motion/morph/useDragMorph";
-// the `draggable` boolean dies onto the ONE `motion` axis.
-import type { Motion } from "../_shared/axes";
-import { useMotionAxis } from "../_shared/useMotionAxis";
 
 /**
  * <DockLayerGroup> — a stack of <DockLayer> faces with an optional Figma-style
@@ -49,37 +33,23 @@ import { useMotionAxis } from "../_shared/useMotionAxis";
  *   </DockLayerGroup>
  */
 
+// [W-I.8, RULINGS-6] `orientation` (the group takes its dock's), `switcherPosition` (the
+// switcher leads) and `motion` with the switcher's drag arm (click and keys select) are
+// deleted: no app passed them, and both apps hide the switcher.
 const props = withDefaults(
     defineProps<{
-        /** Layout axis; matches `GlassDock.orientation`. Drives the switcher + face axis. */
-        orientation?: "horizontal" | "vertical";
         /** Render the embedded switcher. Hidden when there is 0 or 1 face. */
         showSwitcher?: boolean;
-        /** Switcher placement relative to the face stack. */
-        switcherPosition?: "start" | "end";
-        /**
-         * the ONE motion-weight axis. `full` (default) arms
-         * pull-to-switch: the switcher indicator is draggable — pull along the switcher
-         * axis to the next face chip, the fling-to-nearest on release writes `active`
-         * (`useDragMorph`, consumer #2). `reduced`/`off` opt DOWN to click/keyboard-only
-         * (the roving tabindex + Arrow keys stay). PRM forces `full → reduced`.
-         */
-        motion?: Motion;
     }>(),
     {
         showSwitcher: true,
-        switcherPosition: "start",
     },
 );
-
-const motionAxis = useMotionAxis(() => props.motion);
 
 const activeLayer = defineModel<string>("active", { required: true });
 const dock = useOptionalDockContext();
 
-const axis = computed(
-    () => props.orientation ?? dock?.orientation.value ?? "horizontal",
-);
+const axis = computed(() => dock?.orientation.value ?? "horizontal");
 
 // The crossfade slot owns the face registry; the switcher reads its exposed descriptors.
 const crossfade = useTemplateRef<{ faces: DockFaceDescriptor[] } | null>("crossfade");
@@ -128,56 +98,6 @@ provideDockSwitcherContext({
     panelId: switcherPanelId,
 });
 
-/* pull-to-switch (consumer #2). The switcher is draggable: pull
-   along the switcher axis to the adjacent face chip, the fling-to-nearest writes the
-   consumer-owned `active` model (no shadow state — the one-registry discipline). This
-   adds the pull GESTURE on the switcher; the face-swap crossfade is `<DockCrossfade>`'s. */
-const switcherDragAxis = computed<"x" | "y">(() =>
-    switcherVertical.value ? "y" : "x",
-);
-
-function resolveSwitcherSnapTargets(): DragMorphSnapTarget<string>[] {
-    const list = switcherListEl.value;
-    if (!list) return [];
-    const tabs = Array.from(list.querySelectorAll<HTMLElement>(".dock-layer-tab"));
-    return layers.value.map((layer, idx) => {
-        const r = tabs[idx]?.getBoundingClientRect();
-        const center = r
-            ? switcherDragAxis.value === "y"
-                ? r.top + r.height / 2
-                : r.left + r.width / 2
-            : 0;
-        return { value: layer.id, center };
-    });
-}
-
-const switcherDrag = useDragMorph<string>({
-    handle: switcherListEl,
-    surface: switcherIndicatorEl,
-    axis: () => switcherDragAxis.value,
-    snapTargets: resolveSwitcherSnapTargets,
-    onSnap: (id) => {
-        if (motionAxis.armed.value && activeLayer.value !== id)
-            activeLayer.value = id;
-    },
-});
-
-watch(
-    () =>
-        [
-            layers.value.length,
-            switcherOrientation.value,
-            motionAxis.armed.value,
-        ] as const,
-    () => {
-        if (motionAxis.armed.value) nextTick(() => switcherDrag.refresh());
-    },
-);
-
-onMounted(() => {
-    if (motionAxis.armed.value) nextTick(() => switcherDrag.refresh());
-});
-
 /*  B6 — a Vue component icon can be an OBJECT (SFC) OR a FUNCTION
    (a `@lucide/vue` v1 functional render component); a non-empty string is the explicit
    text-glyph case. Accept both component forms so lucide icons render (not the
@@ -209,9 +129,7 @@ function onSwitcherFocusOut(e: FocusEvent) {
 <template>
     <div
         class="dock-layer-group"
-        :class="[axis, `switcher-${switcherPosition}`]"
-        :data-motion="motionAxis.dataMotion.value"
-        :style="motionAxis.hostStyle.value"
+        :class="[axis, 'switcher-start']"
     >
         <!-- the layer switcher is a plain APG tablist driven by
              `useSelectionGroup` (role=tablist/tab + aria-selected, roving tabindex,
@@ -224,11 +142,7 @@ function onSwitcherFocusOut(e: FocusEvent) {
             v-if="switcherIsTablist"
             ref="switcherListEl"
             role="tablist"
-            class="dock-layer-switcher"
-            :class="[
-                switcherPosition,
-                motionAxis.armed.value && 'glass-drag-grabbable',
-            ]"
+            class="dock-layer-switcher start"
             :aria-orientation="switcherOrientation"
             @keydown="selection.onKeydown"
             @focusin="onSwitcherFocusIn"
@@ -265,10 +179,7 @@ function onSwitcherFocusOut(e: FocusEvent) {
             </button>
             <div
                 ref="switcherIndicatorEl"
-                :class="[
-                    'dock-layer-tab-indicator',
-                    motionAxis.armed.value && switcherDrag.dragging.value && 'glass-drag-lift',
-                ]"
+                class="dock-layer-tab-indicator"
                 :style="selection.singleSliderStyle.value"
                 aria-hidden="true"
             />

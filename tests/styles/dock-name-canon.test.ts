@@ -1,9 +1,7 @@
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
-import { mount } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
 
-import DockSeparator from "@glass/components/dock/DockSeparator.vue";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // BK #72 W-RAIL-RENAME-THEN-BUILD — the G-ONE-NAME **rail arm** (seats +0; the arm
@@ -148,47 +146,9 @@ describe("G-ONE-NAME · rail arm — the rail-as-vertical-dock vocabulary is str
 describe("the hairline INSIDE the dock is BUILT (E29's actual referent)", () => {
     const layerGroup = read("src/components/dock/styles/layer-group.css");
 
-    it("5. an anchored <DockSeparator> stamps the hairline; a plain one does not", () => {
-        const anchored = mount(DockSeparator, { props: { anchor: true } });
-        expect(anchored.classes()).toContain("dock-hairline");
-        expect(anchored.attributes("data-dock-hairline")).toBe("true");
-
-        const plain = mount(DockSeparator);
-        expect(plain.classes()).not.toContain("dock-hairline");
-        expect(plain.attributes("data-dock-hairline")).toBeUndefined();
-        // Both are still the same separator primitive — the hairline is a REGISTER of
-        // the separator, never a second component (the five-builds lesson).
-        expect(plain.classes()).toContain("dock-separator");
-        expect(anchored.classes()).toContain("dock-separator");
-    });
-
-    it("6. the hairline spans the CROSS EXTENT of its layout root in both layouts", () => {
-        // A row dock's hairline is a FULL-HEIGHT vertical rule (the plain separator is a
-        // half-height sliver); a column dock's is a full-WIDTH horizontal rule.
-        // [2026-08-12 · BK #47 W1 SURFACE] ~~and the grid dock's already spanned and
-        // keeps doing so~~ — the `layout` prop went at W1, so there is no `.layout-grid`
-        // root left to span, to exclude from the row arm, or to assert about here.
-        //
-        // BOTH arms root at `:is(.glass-dock, .dock-layer-group)`: the layer group is a
-        // layout root in its own right everywhere else in that partial, and an arm that
-        // named only `.glass-dock` made a standalone `<DockLayerGroup>` + `anchor` a
-        // paint no-op. `:is()` and not `:where()` — the arms must keep their specificity
-        // over the `.dock-separator` layout rules they override.
-        const ROOT = String.raw`:is\(\.glass-dock, \.dock-layer-group\)`;
-        const rowRule = layerGroup.match(
-            new RegExp(`${ROOT}:not\\(\\.vertical\\) \\.dock-hairline\\s*\\{([^}]*)\\}`),
-        )?.[1];
-        expect(rowRule).toBeDefined();
-        expect(rowRule).toMatch(/align-self:\s*stretch/);
-        expect(rowRule).toMatch(/height:\s*100%/);
-
-        const colRule = layerGroup.match(
-            new RegExp(`${ROOT}\\.vertical \\.dock-hairline\\s*\\{([^}]*)\\}`),
-        )?.[1];
-        expect(colRule).toBeDefined();
-        expect(colRule).toMatch(/align-self:\s*stretch/);
-        expect(colRule).toMatch(/width:\s*100%/);
-    });
+    // [W-I.8, RULINGS-6] Tests 5 and 6 (the anchored separator stamps the spanning hairline,
+    // and its two arms span the layout root) are deleted with `DockSeparator`'s `anchor`:
+    // no app passed it.
 
     it("7. ONE hairline name — `--dock-hairline` declared once, read by both painters", () => {
         const decls = TOKEN_FILES.flatMap((p) =>
@@ -204,11 +164,13 @@ describe("the hairline INSIDE the dock is BUILT (E29's actual referent)", () => 
         expect(sep).toMatch(/background:\s*var\(--dock-hairline\)/);
 
         // EVERY 1px rule in the partial reads the one name — no rival literal, no
-        // second token, on any of the four `switcher-{start,end} × {row,column}` arms.
+        // second token, on either `{row,column}` arm of the leading switcher. [W-I.8,
+        // RULINGS-6] Three rules, was seven: the `switcher-end` arms went with
+        // `DockLayerGroup`'s `switcherPosition` (no app passed it).
         const rules = [
             ...layerGroup.matchAll(/border-(?:right|left|top|bottom):\s*([^;]+);/g),
         ].map((m) => m[1].replace(/\s+/g, " ").trim());
-        expect(rules.length).toBe(7);
+        expect(rules.length).toBe(3);
         expect(
             rules.filter((v) => v !== "none" && v !== "1px solid var(--dock-hairline)"),
         ).toEqual([]);

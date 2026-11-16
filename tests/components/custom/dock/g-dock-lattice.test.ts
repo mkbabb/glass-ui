@@ -590,7 +590,8 @@ describe("G-DOCK-MORPH — a morph never starts against an unmeasured target", (
         // W-I.8 RU-29, restated: the fit and the curve are read from one layout, written
         // together, and the root's new layout is read after them, in sync.
         expect(body).toMatch(/const plan = run \? fitRun\(run, open\) : null;\s*const inset = fitCurve\(el, open, run, [^)]*\);/);
-        expect(body).toMatch(/performance\.mark\("dock:reread"[\s\S]*?\}\s*const next = rectOf\(el\);/);
+        // MEASURE-7 (RU-53): the hold build's `dock:rect` mark names the root's read; it writes nothing.
+        expect(body).toMatch(/performance\.mark\("dock:reread"[\s\S]*?\}\s*(?:\/\/[^\n]*\n\s*)?(?:if \(POSE\) performance\.mark\("dock:rect"\);\s*)?const next = rectOf\(el\);/);
         expect(body).not.toMatch(/watch\(expanded/);
     });
 

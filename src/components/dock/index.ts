@@ -33,9 +33,8 @@ export { default as DockControl } from "./DockControl.vue";
 // `DockTrigger` publishes on its own `./dock-trigger` subpath (U/B8 PF, G-M1-3b): it carries
 // reka's Select, Popover and DropdownMenu triggers, and a dock that renders no trigger at first
 // paint should not pull them into its consumer's entry. Clean break, no alias.
-// WCAG 2.2.2 pause/play toggle for animated backgrounds
-// (Aurora/Blob), bound by the consumer to the renderer's pause()/resume().
-export { default as DockBackgroundToggle } from "./DockBackgroundToggle.vue";
+// [W-I.8, RULINGS-6] `DockBackgroundToggle` is deleted: no app used it. A site wires any
+// button to an animated background's pause()/resume(): a DockControl, in a dock.
 // Orientation-aware dock divider primitive (component-over-class: the raw
 // `.dock-separator` was axis-blind). Reads the dock orientation via
 // useOptionalDockContext and paints perpendicular to the layout axis (vertical
@@ -52,23 +51,13 @@ export { default as DockSeparator } from "./DockSeparator.vue";
 // composable-return shape paralleling `UseClipboardReturn` / `UseAuroraReturn`.
 export type { UseDockStateOptions, UseDockStateReturn, DockState } from "./composables";
 
-// Re-export the dock-context
-// canonical DI primitives so consumers can migrate from the retired
-// old string keys (`"dockKeepOpen"` / `"dockRelease"`) to the typed-key
-// helpers without reaching for the deep-import path. fourier-analysis's 2
-// silent `inject<...>("dockKeepOpen", null)` sites at SliderControl.vue + its own
-// timeline surface (which silently no-op without it; a functional regression on scrub
-// gestures — the library-side `GlassTimeline.vue` that once shared the defect is gone)
-// migrate via `useOptionalDockContext()` once this re-export ships.
+// The dock context a seat under an overlay reads (value.js, keyframes.js, fourier). [W-I.8,
+// RULINGS-6] `useDockContext`, `provideDockContext` and `DOCK_CONTEXT_KEY` leave the
+// barrel: no app imported them; the dock's own files import them from the composable.
 export {
-    DOCK_CONTEXT_KEY,
-    useDockContext,
     useOptionalDockContext,
-    provideDockContext,
     type DockContext,
     type DockOrientation,
-    /* ~~`DockLayout`~~ — [2026-08-12 · BK #47 W1 SURFACE] STRUCK with the `layout`
-       prop; the context member it typed had zero readers. */
 } from "./composables/dockContext";
 
 // `useDockOrientationMorph` is definition-absent.
@@ -77,35 +66,10 @@ export {
 // `morph-bridge.css` retire with it. A consumer needing a V↔H transition composes the
 // crossfade.
 
-// The CTA-receive seat lives beside
-// GlassDock/useDockState/DockControl. `useDockCtaReceive` (the external-CTA-morphs-
-// into-dock seam + the `setPending`/`clearPending` landing seat) is ALSO published on
-// the /dock subpath so a dock consumer imports it from `@mkbabb/glass-ui/dock`. ADDITIVE
-// — the /motion export (the keyframes-bearing motion primitive's home) STAYS; this is a
-// re-export, not a move, so no clean break and no migration row.
-export {
-    useDockCtaReceive,
-    type UseDockCtaReceiveOptions,
-    type UseDockCtaReceiveReturn,
-    type DockCtaReceivePreset,
-} from "../../composables/motion/morph/useDockCtaReceive";
-
-// Dock-as-native-dynamic-search-bar seam. `useDockSearch`
-// composes `useDockState` + the ~~SHIPPED /search~~ fuzzy pipeline (`useFuzzySearch`, the
-// VSCode subsequence scorer — NO re-fork) + the dock's OWN `--dock-morph-t` metaball
-// morph (the byte-untouched `morph-bridge.css` — box-inviolate, no second engine) + the
-// optional `useScrollChrome` shrink + the ToC `ensureTargetWindow`/`scrollTo` subsume.
-// A consuming seam BESIDE the morph engine; a dock opts in by AUTHORING the
-// `#search` slot ([2026-08-12 · BK #47 W1 SURFACE] ~~`<GlassDock search>`~~).
-// [2026-08-25 · BK #42 W-SEARCH] ~~`SearchBar` KEEPS (a live standalone surface)~~ — it
-// is DELETED with its relay, and the pipeline is no longer SHIPPED: it is INTERNAL at
-// `src/composables/search/` and the `./search` subpath is CUT. Nothing about THIS seam
-// moves — `useDockSearch` is still the exported door, and the dock is now the engine's
-// only public expression, which is what ⊕⁵ SE-4 ruled it should be. The
-// `FuzzySearch.vue` demo component retired onto this register at REDUCTION W3.
-// The network source plugs via `onSearch`.
-export { useDockSearch } from "./composables";
-export type { UseDockSearchOptions, UseDockSearchReturn } from "./composables";
+// [W-I.8, RULINGS-6] `useDockCtaReceive` is no longer re-exported here (no app imported it
+// from `/dock`); it stays in the motion entry, and `cta-seat.css` with it. `useDockSearch`,
+// the `#search` slot and `search.css` are deleted: no app used them (gaggle and atlas built
+// search in their own slots).
 
 // The fission facility (`useDockFission` + `DOCK_SPLIT_SIGNATURES` +
 // `fission-bridge.css`/`fission-island.css`) and the Siri island (`<SiriDockCapability>` +

@@ -22,7 +22,6 @@ import {
     GlassDock,
     DockControl,
     DockSeparator,
-    DockBackgroundToggle,
 } from "@glass/components/dock";
 import { DockTrigger } from "@glass/components/dock/trigger";
 import { Slider } from "@glass/components/slider";
@@ -610,12 +609,11 @@ function togglePlay() {
 
         <StorySection heading="Background pause/play toggle" gap="md">
             <p class="text-micro text-muted-foreground">
-                <code class="rounded bg-muted px-1">&lt;DockBackgroundToggle&gt;</code>
-                lets the user pause a running Aurora/GooBlob background — wire it to the
+                A <code class="rounded bg-muted px-1">&lt;DockControl&gt;</code> wired to the
                 renderer's <code class="rounded bg-muted px-1">pause()</code>/<code
                     class="rounded bg-muted px-1"
                     >resume()</code
-                >. It reflects state via
+                > lets the user pause a running Aurora/GooBlob background. It reflects state via
                 <code class="rounded bg-muted px-1">aria-pressed</code>
                 and a Pause↔Play glyph swap, available to all users.
             </p>
@@ -625,7 +623,15 @@ function togglePlay() {
                 class="dock-stage-tile relative flex justify-center rounded-[var(--radius-card)] border border-border/40 p-8"
             >
                 <GlassDock class="relative z-10">
-                    <DockBackgroundToggle v-model:paused="bgPaused" />
+<DockControl
+                        :active="bgPaused"
+                        :aria-pressed="bgPaused"
+                        :aria-label="bgPaused ? 'Resume background animation' : 'Pause background animation'"
+                        @click="bgPaused = !bgPaused"
+                    >
+                        <Play v-if="bgPaused" aria-hidden="true" />
+                        <Pause v-else aria-hidden="true" />
+                    </DockControl>
                     <DockControl aria-label="Home"><Home /></DockControl>
                     <DockControl aria-label="Settings"><Settings /></DockControl>
                     <!-- The collapsed pill mirrors the toggle's live state — Play when

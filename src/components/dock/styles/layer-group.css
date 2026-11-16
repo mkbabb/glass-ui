@@ -11,12 +11,8 @@
  * THE THREE NOUNS, one thing each (the E29 correction — a vertical dock is a
  * `.glass-dock.vertical`, and the noun it was wrongly given is gone from the band):
  *   · `.dock-layer-switcher` — the in-dock tab strip that picks a `<DockLayer>` face.
- *   · `.dock-separator`      — the short group divider between item groups.
- *   · `.dock-hairline`       — the SPANNING rule, the anchored separator's register:
- *                              one line across the dock's cross extent, inside a
- *                              horizontal OR vertical dock.
- * Both painted rules read the ONE `--dock-hairline` colour; there is no second
- * hairline name in the band.
+ *   · `.dock-separator`      — the short group divider between item groups, painted in
+ *                              the ONE `--dock-hairline` colour.
  *
  * @import-ed by dock.css in cascade order, in the SAME `@layer components` — the
  * carve is isomorphic (same layer, same source order → ZERO visual delta). */
@@ -29,8 +25,7 @@
        paint is PERPENDICULAR to the layout axis:
          - row dock (horizontal, the default)   → a VERTICAL 1px rule
          - column dock (vertical)               → a HORIZONTAL 1px rule
-       …each `--dock-separator-height` long. `anchor` promotes the same element to
-       `.dock-hairline`, which spans the dock's cross extent instead (below).
+       …each `--dock-separator-height` long.
        The component sets `data-orientation` from `useOptionalDockContext`; the
        dock-root ancestor class (`.glass-dock.vertical`) drives the perpendicular
        paint so the same primitive reads correctly on either axis.
@@ -46,8 +41,7 @@
 
     /* Column (vertical) dock — a HORIZONTAL rule (a 1px-WIDE vertical sliver does
        not divide a stack). [BK #72] It is `--dock-separator-height` LONG; the comment
-       here used to call it "cross-extent", which it has never been — `.dock-hairline`
-       below is the form that actually spans. */
+       here used to call it "cross-extent", which it has never been. */
     .glass-dock.vertical .dock-separator,
     .dock-layer-group.vertical .dock-separator,
     .dock-separator[data-orientation="vertical"] {
@@ -61,72 +55,8 @@
        [2026-08-12 · BK #47 W1 SURFACE] STRUCK: no `.layout-grid` root exists to
        select, so no separator can be in one. */
 
-    /* ── THE HAIRLINE INSIDE THE DOCK. A hairline that sits INSIDE the horizontal
-       or vertical dock — the construct ARCHAEOLOGY E29 records the owner asking for
-       ≥2× (his sentence is quoted in BK #72's RECORD, not repeated here: this file is
-       where a reader learned the REJECTED meaning, and quoting it back would re-teach
-       it). BUILT at this cut. Before it, `<DockSeparator anchor>` stamped a marker
-       attribute and a modifier class for a slot that existed in no file, and BOTH
-       were read by exactly zero selectors and zero code — a prop with no effect,
-       which is the five-builds-zero-components history this row closes.
-
-       The hairline is a REGISTER of the separator, never a second component: same
-       1px rule, same one `--dock-hairline` colour, but it SPANS the dock's cross
-       extent instead of floating at `--dock-separator-height` (half the dock, in a
-       row dock) with a gap either side. That span is the whole difference between "a
-       divider between two items" and "a line across the dock", and it is the thing
-       the owner named. `align-self: stretch` is stated with the size on each arm because
-       the flex parents that CENTRE — `.glass-dock` (shell.css) and `.dock-layer`
-       (layers.css) — would otherwise resolve `100%` against a centred, content-sized
-       box. `.dock-layer-group` already stretches its children, so there the keyword is
-       a no-op belt and the size declaration is what carries the span.
-
-       No motion is introduced: the hairline is static chrome that inherits the dock's
-       own padding/radius morph through its parent — it never animates on its own
-       clock (the ONE-clock discipline).
-
-       BOTH ARMS ARE NOW (0,3,0) AND BOTH WIN ON SOURCE ORDER.
-       ~~The row arm is (0,4,0) — two `:not()` classes on top of the root and the
-       target — and beats every `.dock-separator` layout rule on SPECIFICITY, unlike
-       the column arm which TIES and wins only because it is declared after~~ —
-       [2026-08-12 · BK #47 W1 SURFACE] the second `:not()` was `:not(.layout-grid)`
-       and it went with the `layout` prop, so the row arm drops to the column arm's
-       (0,3,0). Nothing moves: the only `.dock-separator` rules at (0,3,0) are
-       `.vertical`-gated and therefore MUTUALLY EXCLUSIVE with a `:not(.vertical)` row
-       arm; the rules that can co-apply are (0,1,0)/(0,2,0) and still lose; and both
-       arms are declared AFTER every separator rule, so a tie resolves the same way it
-       already did for the column arm. Declared BEFORE (the first draft) either arm
-       would silently lose — the order is the load-bearing part, and now it is the
-       only part.
-       ~~The grid dock is excluded from the row arm: its section break already spans
-       (`grid-column: 1 / -1`), and `height: 100%` there would stretch a full-row rule
-       to the row's height~~ — no grid dock exists to exclude.
-
-       THE ROOT IS EITHER BOX. `<DockLayerGroup>` is a layout root in its own right —
-       every internal rule in this partial anchors at `:where(.glass-dock,
-       .dock-layer-group)`, the separator's own column arm already names
-       `.dock-layer-group.vertical`, and the component always stamps its axis class — so a
-       group used OUTSIDE a dock spans its hairline exactly as one inside a dock does.
-       `:is()` and not `:where()`: the arms must keep the (0,3,0) above, and a
-       zero-specificity anchor loses to the very separator rules they exist to override.
-       When a group's axis disagrees with its dock's the row arm's (0,3,0) is what
-       resolves; the library ships no cross-axis group.
-       [2026-08-12 · BK #47 W1 SURFACE] the `:not(.layout-grid)` arm goes with the
-       `layout` prop — one less negation, and the arm drops (0,4,0) → (0,3,0) against
-       a `.vertical` sibling that was already (0,3,0), so the axis split is decided by
-       the same `:not(.vertical)` it always was. */
-    :is(.glass-dock, .dock-layer-group):not(.vertical) .dock-hairline {
-        align-self: stretch;
-        height: 100%;
-        margin-block: 0;
-    }
-
-    :is(.glass-dock, .dock-layer-group).vertical .dock-hairline {
-        align-self: stretch;
-        width: 100%;
-        margin-inline: 0;
-    }
-
+    /* [W-I.8, RULINGS-6] The spanning hairline (`<DockSeparator anchor>`) is deleted with
+       its prop: no app passed it. */
     .dock-spacer {
         @apply flex-1;
     }
@@ -143,17 +73,9 @@
         align-items: stretch;
     }
 
-    .dock-layer-group.horizontal.switcher-end {
-        flex-direction: row-reverse;
-    }
-
     .dock-layer-group.vertical {
         flex-direction: column;
         align-items: stretch;
-    }
-
-    .dock-layer-group.vertical.switcher-end {
-        flex-direction: column-reverse;
     }
 
     /* The switcher edge is a HAIRLINE register, not a fused plate. The
@@ -201,16 +123,6 @@
         flex-direction: row;
         border-right: none;
         border-bottom: 1px solid var(--dock-hairline);
-    }
-
-    .dock-layer-group.horizontal.switcher-end .dock-layer-switcher {
-        border-right: none;
-        border-left: 1px solid var(--dock-hairline);
-    }
-
-    .dock-layer-group.vertical.switcher-end .dock-layer-switcher {
-        border-bottom: none;
-        border-top: 1px solid var(--dock-hairline);
     }
 
     /* The switcher is a reka-ui Tabs contract. The travelling

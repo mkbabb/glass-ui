@@ -7,7 +7,6 @@ import {
     useDockState,
     type UseDockStateReturn,
 } from "@glass/components/dock/composables/useDockState";
-import { useDockSearch } from "@glass/components/dock/composables/useDockSearch";
 import { useDockShellProps } from "@glass/components/dock/composables/useDockShellProps";
 import { HOVER_INTENT_MS } from "@glass/components/dock/constants";
 
@@ -277,15 +276,7 @@ describe("GlassDock — the W1 six-prop surface is what the root emits", () => {
         expect(bare.classes()).not.toContain("pinned");
     });
 
-    it("the `#search` aperture IS the opt-in — authored renders it, absent does not", () => {
-        expect(mountDock({}).find(".dock-search-field").exists()).toBe(false);
-        const withSlot = mountDock(
-            { collapse: false },
-            { search: () => h("input", { "data-testid": "field" }) },
-        );
-        expect(withSlot.find(".dock-search-field").exists()).toBe(true);
-        expect(withSlot.find("[data-testid='field']").exists()).toBe(true);
-    });
+    // [W-I.8, RULINGS-6] The `#search` aperture's test is deleted with the slot: no app used it.
 });
 
 describe("GlassDock — collapsed-face disclosure contract", () => {
@@ -506,39 +497,4 @@ describe("GlassDock — collapsed-face disclosure contract", () => {
     });
 });
 
-// ── useDockSearch: the armSearch reroute ───────────────────────────────────────
-function mountSearch() {
-    let dock!: UseDockStateReturn;
-    let search!: ReturnType<typeof useDockSearch>;
-    const Host = defineComponent({
-        setup() {
-            const rootEl = ref<HTMLElement | null>(null);
-            dock = useDockState({ rootEl });
-            search = useDockSearch({ dockState: dock, items: () => [] });
-            return () => h("div", { ref: rootEl });
-        },
-    });
-    const wrapper = mount(Host, { attachTo: document.body });
-    mounted.push({ unmount: () => wrapper.unmount() });
-    return { dock, search };
-}
-
-describe("useDockSearch — armSearch opens via the imperative expand() (H5)", () => {
-    it("armSearch writes the FREE hover pole, not the pinned collapsed-tap pole", () => {
-        const { dock, search } = mountSearch();
-        search.armSearch();
-        expect(dock.expanded.value).toBe(true);
-        expect(dock.state.value).toBe("hover");
-    });
-
-    it("disarmSearch grace-collapses back to the pill (the latent-bug fix)", () => {
-        const { dock, search } = mountSearch();
-        search.armSearch();
-        expect(dock.state.value).toBe("hover");
-        search.disarmSearch();
-        // The grace-collapse guards state==="hover"; expand() (not onClickCollapsed→
-        // "pinned") makes the documented "returns to a compact PERSISTENT bar" fire.
-        vi.runAllTimers();
-        expect(dock.expanded.value).toBe(false);
-    });
-});
+// [W-I.8, RULINGS-6] useDockSearch's armSearch tests are deleted with the composable: no app used it.

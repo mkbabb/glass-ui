@@ -2,7 +2,6 @@
 import {
     computed,
     type ButtonHTMLAttributes,
-    type Component,
     type CSSProperties,
     type HTMLAttributes,
 } from "vue";
@@ -63,10 +62,8 @@ const props = withDefaults(
          * suppressed — so the row geometry holds and AT can still discover it.
          */
         disabled?: boolean;
-        /** Host tag/component (reka-ui Primitive `as`; default "button"). */
-        as?: string | Component;
-        /** Merge props onto a slotted child instead of rendering a host tag. */
-        asChild?: boolean;
+        // [W-I.8, RULINGS-6] `as` and `asChild` are deleted: no app passed them. The host
+        // is a button. `type` stays: value.js passes `type="submit"` (SlugEditLayer.vue).
         class?: HTMLAttributes["class"];
     }>(),
     {
@@ -78,8 +75,6 @@ const props = withDefaults(
         active: undefined,
         type: "button",
         disabled: false,
-        as: "button",
-        asChild: false,
     },
 );
 
@@ -121,10 +116,7 @@ const stateAttrs = computed(() => ({
     ...(props.disabled ? { "aria-disabled": "true" } : {}),
 }));
 
-// `type` is a <button>-only attribute; emit it only when the host is a button.
-const hostAttrs = computed(() =>
-    !props.asChild && props.as === "button" ? { type: props.type } : {},
-);
+const hostAttrs = computed(() => ({ type: props.type }));
 
 // The ONE interruptible spring-press (the icon shape). `useLiquidPress` composes
 // its private spring driver reaches kf `SpringProgress`, so a rapid re-press
@@ -164,8 +156,7 @@ function blockDisabledActivation(event: MouseEvent): void {
 <template>
     <Primitive
         v-specular
-        :as="as"
-        :as-child="asChild"
+        as="button"
         v-bind="{ ...hostAttrs, ...stateAttrs }"
         :class="classes"
         :style="hostStyle"

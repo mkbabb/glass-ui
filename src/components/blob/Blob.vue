@@ -52,9 +52,8 @@ const {
     /**
      * Declarative WCAG 2.2.2 pause seam. `v-model:paused` parks the
      * render loop (the substrate's `manual` suspend) when `true` and restarts it when
-     * `false`. This is the EXACT shape `<DockBackgroundToggle>` wears — wire its
-     * `@update:paused` to this `v-model` and the blob's animation stops/starts for ALL
-     * users. The imperative `pause()`/`resume()` defineExpose handles bind the SAME
+     * `false`. Wire any button to this `v-model` (in a dock, a `DockControl` with
+     * `aria-pressed`) and the blob's animation stops/starts for ALL users. The imperative `pause()`/`resume()` defineExpose handles bind the SAME
      * renderer seam (no parallel pause path); the prop owns the default.
      */
     paused?: boolean;
