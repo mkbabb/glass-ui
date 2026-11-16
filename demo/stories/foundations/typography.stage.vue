@@ -68,16 +68,20 @@ const LINES: Record<TypeFace, readonly { cls: string; text: string }[]> = {
 
 .type-stage[data-face="display"] {
     font-family: var(--font-display);
-    gap: var(--sp-2);
+    gap: 0;
 }
 
 .type-line {
     margin: 0;
 }
 
-/* A display word never breaks; the smaller registers wrap at the stage's edge. */
+/* A display word never breaks; the smaller registers wrap at the stage's edge. The
+   display leading is tighter than the face, so each line keeps its own clearance. */
 .type-stage[data-face="display"] .type-line {
     white-space: nowrap;
+}
+.type-stage[data-face="display"] .type-line + .type-line {
+    margin-block-start: 0.3em;
 }
 
 @container (inline-size < 30rem) {
