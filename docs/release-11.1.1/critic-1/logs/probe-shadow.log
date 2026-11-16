@@ -1,0 +1,54 @@
+{
+ "light": {
+  "content": {
+   "transition": "0.45s, 0.45s, 0.45s, 0.45s, 0.45s, 0.45s",
+   "backdrop": "blur(20px) saturate(1.5)",
+   "inShadow": false
+  },
+  "mounted": 0,
+  "window": [
+   "popover"
+  ],
+  "host": [],
+  "emits": {
+   "light": 1
+  }
+ },
+ "shadow": {
+  "content": {
+   "transition": "0.45s, 0.45s, 0.45s, 0.45s, 0.45s, 0.45s",
+   "backdrop": "blur(20px) saturate(1.5)",
+   "inShadow": true
+  },
+  "mounted": 0,
+  "window": [
+   "popover"
+  ],
+  "host": [],
+  "emits": {
+   "light": 1
+  }
+ },
+ "unmountMidExit": {
+  "before": {
+   "window": [
+    "popover"
+   ],
+   "host": [],
+   "emits": {
+    "light": 1
+   }
+  },
+  "after": {
+   "window": [
+    "popover",
+    "dialog"
+   ],
+   "host": [],
+   "emits": {
+    "light": 1,
+    "dlg": 1
+   }
+  }
+ }
+}

@@ -1,0 +1,65 @@
+23:45:37 server 5351 up pid 30638
+23:51:34 probe-shadow exit 0
+23:51:34 PHASE-probe-DONE
+23:58:08 wit-branch-chromium-phone exit 0 load=10.62 12.33 14.86  11 skipped  89 passed (4.4m) 
+00:01:10 server 5352 DID NOT START
+00:07:54 wit-red-chromium-phone exit 1 load=17.74 14.72 14.60  68 failed  11 skipped  21 passed (5.1m) 
+00:12:34 wit-branch-chromium-desktop exit 0 load=10.70 12.40 13.63  7 skipped  93 passed (4.6m) 
+00:24:32 wit-red-chromium-desktop exit 1 load=12.65 12.18 12.62  69 failed  7 skipped  24 passed (5.2m) 
+00:24:32 PHASE-wch-DONE
+00:29:00 wit-branch-webkit-phone exit 1 load=11.39 11.64 12.25  1 failed  31 skipped  68 passed (3.9m) 
+00:36:53 wit-red-webkit-phone exit 1 load=9.42 10.53 11.47  50 failed  31 skipped  19 passed (4.4m) 
+00:43:10 wit-branch-webkit-desktop exit 1 load=10.81 10.36 10.96  1 failed  7 skipped  92 passed (6.1m) 
+00:51:46 wit-red-webkit-desktop exit 1 load=15.31 14.19 12.80  63 failed  7 skipped  30 passed (6.0m) 
+00:51:46 PHASE-wwk-DONE
+00:51:47 reg-branch-partA-ch exit 143 load=15.31 14.19 12.80 
+00:51:47 branch failed partA ch: reading v11.1.0
+00:51:47 handoff: first chain stopped after its witness phases
+00:52:34 resheet-webkit-phone-1 exit 0  2 passed (9.6s) 
+00:52:50 resheet-webkit-phone-2 exit 0  2 passed (9.6s) 
+00:53:04 resheet-webkit-phone-3 exit 0  2 passed (9.4s) 
+00:53:22 recell-webkit-desktop-1 exit 0  3 passed (12.0s) 
+00:53:41 recell-webkit-desktop-2 exit 0  3 passed (12.2s) 
+00:53:59 recell-webkit-desktop-3 exit 0  3 passed (12.2s) 
+00:53:59 PHASE2-resheet-DONE
+00:58:56 server 5351 up
+01:01:28 server 5352 up
+01:01:56 paint tip chromium exit 0
+01:02:23 paint v1110 chromium exit 0
+01:03:36 paint tip webkit exit 0
+01:07:32 paint v1110 webkit exit 0
+01:07:32 PHASE2-paint-DONE
+01:07:50 probe-leave chromium exit 0
+01:08:09 probe-leave webkit exit 0
+01:08:09 PHASE2-leave-DONE
+01:08:09 server 5351 stopped
+01:08:09 handoff 2: second chain stopped after its leave probes
+01:10:37 clip tip chromium exit 0
+01:11:18 clip tip webkit exit 0
+01:11:19 server 5351 stopped
+01:21:25 server 5351 DID NOT START
+01:28:54 reg-branch-partA-ch exit 0 load=9.40 10.08 11.06  84 passed (5.4m) 
+01:36:33 reg-branch-partB-ch exit 0 load=7.15 8.57 9.90  23 passed (7.6m) 
+01:36:43 reg-branch-owner-ch exit 0 load=7.43 8.59 9.89  9 passed (9.4s) 
+01:36:57 reg-branch-fix2-ch exit 0 load=7.49 8.55 9.85  14 passed (13.4s) 
+01:37:21 reg-branch-c2-ch exit 0 load=7.53 8.46 9.78  9 passed (23.8s) 
+01:42:54 reg-branch-r1102-ch exit 0 load=7.97 8.29 9.29  57 passed (5.5m) 
+01:45:10 reg-branch-r1102b-ch exit 0 load=7.10 7.82 8.95  17 skipped  37 passed (2.3m) 
+01:45:38 reg-branch-roloop-ch exit 0 load=7.44 7.82 8.92  4 passed (27.4s) 
+01:45:43 reg branch ch exit 0
+01:45:43 PHASE2-rch-DONE
+01:45:43 server 5351 stopped
+01:46:26 server 5351 up
+01:59:09 reg-branch-partA-wk exit 0 load=14.80 16.07 13.38  84 passed (5.8m) 
+02:07:10 reg-branch-partB-wk exit 0 load=12.54 13.41 13.05  23 passed (8.0m) 
+02:07:23 reg-branch-owner-wk exit 0 load=11.84 13.23 12.99  9 passed (11.8s) 
+02:07:41 reg-branch-fix2-wk exit 0 load=12.78 13.35 13.04  14 passed (17.8s) 
+02:08:06 reg-branch-c2-wk exit 0 load=11.11 12.90 12.89  9 passed (24.6s) 
+02:13:55 reg-branch-r1102-wk exit 0 load=14.41 14.58 13.68  3 skipped  54 passed (5.8m) 
+02:19:36 reg-branch-r1102b-wk exit 0 load=8.52 10.63 12.08  3 skipped  51 passed (5.7m) 
+02:20:05 reg-branch-roloop-wk exit 0 load=8.83 10.53 12.00  4 passed (28.5s) 
+02:20:11 reg branch wk exit 0
+02:20:11 PHASE2-rwk-DONE
+02:20:11 server 5351 stopped
+02:20:11 server 5352 stopped
+02:20:11 CHAIN2-DONE rch rwk

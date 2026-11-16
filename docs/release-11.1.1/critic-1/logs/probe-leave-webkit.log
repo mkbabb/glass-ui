@@ -1,0 +1,134 @@
+{
+ "engine": "webkit",
+ "version": "26.5",
+ "context-escape": {
+  "lastSeen": 2431,
+  "events": [
+   {
+    "at": 2450,
+    "kind": "menu",
+    "bubbles": true,
+    "composed": true
+   }
+  ],
+  "stop": true,
+  "emits": 1
+ },
+ "context-pick": {
+  "lastSeen": 4232,
+  "events": [
+   {
+    "at": 2450,
+    "kind": "menu",
+    "bubbles": true,
+    "composed": true
+   },
+   {
+    "at": 4248,
+    "kind": "menu",
+    "bubbles": true,
+    "composed": true
+   }
+  ],
+  "stop": true,
+  "emits": 2
+ },
+ "hover-card-away": {
+  "lastSeen": 6048,
+  "events": [
+   {
+    "at": 2450,
+    "kind": "menu",
+    "bubbles": true,
+    "composed": true
+   },
+   {
+    "at": 4248,
+    "kind": "menu",
+    "bubbles": true,
+    "composed": true
+   },
+   {
+    "at": 6065,
+    "kind": "hover-card",
+    "bubbles": true,
+    "composed": true
+   }
+  ],
+  "stop": true,
+  "emits": 1,
+  "mounted": 0
+ },
+ "light": {
+  "content": {
+   "transition": "0.45s, 0.45s, 0.45s, 0.45s, 0.45s, 0.45s",
+   "backdrop": "blur(20px) saturate(1.5)",
+   "inShadow": false
+  },
+  "mounted": 0,
+  "window": [
+   "menu",
+   "menu",
+   "hover-card",
+   "popover"
+  ],
+  "host": [],
+  "emits": {
+   "ctx": 2,
+   "hover": 1,
+   "light": 1
+  }
+ },
+ "shadow": {
+  "content": {
+   "transition": "0.45s, 0.45s, 0.45s, 0.45s, 0.45s, 0.45s",
+   "backdrop": "blur(20px) saturate(1.5)",
+   "inShadow": true
+  },
+  "mounted": 0,
+  "window": [
+   "menu",
+   "menu",
+   "hover-card",
+   "popover"
+  ],
+  "host": [],
+  "emits": {
+   "ctx": 2,
+   "hover": 1,
+   "light": 1
+  }
+ },
+ "unmountMidExit": {
+  "before": {
+   "window": [
+    "menu",
+    "menu",
+    "hover-card",
+    "popover"
+   ],
+   "host": [],
+   "emits": {
+    "ctx": 2,
+    "hover": 1,
+    "light": 1
+   }
+  },
+  "after": {
+   "window": [
+    "menu",
+    "menu",
+    "hover-card",
+    "popover",
+    "dialog"
+   ],
+   "host": [],
+   "emits": {
+    "ctx": 2,
+    "hover": 1,
+    "light": 1,
+    "dlg": 1
+   }
+  }
+ }
+}
