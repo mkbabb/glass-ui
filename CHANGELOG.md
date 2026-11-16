@@ -1,5 +1,9 @@
 # Changelog
 
+## 11.1.1 — unreleased
+
+A patch on 11.1.0 about how surfaces leave. Nothing is removed or renamed.
+
 ## 11.1.0 — 2026-11-15
 
 A minor release. No API changes shape, so your code keeps working as it is. Two
