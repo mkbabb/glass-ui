@@ -9,7 +9,7 @@ export const section: SectionRoutes = {
     routes: [
         { id: "nav", title: "Navigation", lede: "Page tabs with a few tools at the end, fixed to an edge." },
         { id: "chrome", title: "App Chrome", lede: "The app's top bar, folded to a seal when idle." },
-        { id: "rail", title: "Section Rail", lede: "Sections in a column at the start edge, folding to its crest and foot." },
+        { id: "rail", title: "Section Rail", lede: "Sections down the start edge, folding to its crest and foot." },
         { id: "figure-tools", title: "Figure Tools", lede: "Each figure's tools open on a press, so a passing pointer opens none." },
         { id: "dials", title: "Dial Bar", lede: "A figure's filters in one capsule: two dials and a period stepper." },
         { id: "canvas-tools", title: "Canvas Tools", lede: "Tools floating over a canvas, the primary one in reach when folded." },
