@@ -21,8 +21,12 @@
     scale: 1;
     transition: scale var(--spring-press-duration) var(--spring-press);
 
-    &:hover {
-        scale: var(--scale-hover);
+    /* Only a pointer that hovers lifts it: on touch a tap leaves `:hover` set, and
+       the lift would stay after the finger is gone. */
+    @media (hover: hover) {
+        &:hover {
+            scale: var(--scale-hover);
+        }
     }
 }
 
