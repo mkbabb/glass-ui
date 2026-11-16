@@ -67,6 +67,9 @@ interface FitPlan {
     fits: boolean;
     whole: boolean;
     room: string;
+    /** RU-36: the seats' span and count, so a change of room can be told from a change of seats. */
+    span: number;
+    n: number;
 }
 interface RegionTrack {
     el: HTMLElement;
@@ -523,7 +526,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         const span = last > first ? last - first : 0;
         const region = run.parentElement?.clientWidth ?? 0;
         if (!v && run.hasAttribute("data-run-whole")) {
-            if (capOn && capOn.span === span && capOn.n === n && capOn.region === region) return { run, fits: false, whole: true, room: "" };
+            if (capOn && capOn.span === span && capOn.n === n && capOn.region === region) return { run, fits: false, whole: true, room: "", span, n };
             run.removeAttribute("data-run-whole");
         }
         // The port is the shipped one, the run's client box, uncapped.
@@ -535,7 +538,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         const whole = !v && !fits && same && n >= 2 && root()?.getAttribute("data-run") !== "plain";
         capOn = whole ? { span, n, region } : null;
         const room = v && fits ? `${Math.floor(((port - span) / 2) * 100) / 100}px` : "";
-        return { run, fits, whole, room };
+        return { run, fits, whole, room, span, n };
     }
 
     /** The fit law (10.1.5 e4, k3, p2): `data-run-fits` says the seats' span is no longer
@@ -651,6 +654,9 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         put("--dock-plate-cross-px", v ? w : h);
     }
 
+    /** RU-36: the open run's seats at the last reading, and whether this reading is a change of room. */
+    let lastSeats: { span: number; n: number } | null = null;
+    let roomChange = false;
     function sync(reason: string): void {
         const el = root();
         if (!el || !el.isConnected) return;
@@ -667,6 +673,13 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             const plan = run ? fitRun(run, open) : null;
             const inset = fitCurve(el, open, run, plan ? plan.fits : runFits);
             if (POSE) performance.mark("dock:flags");
+            // RU-36: a change of room made by the host: the observer's reading, the seats as they
+            // were, and the run not fitting before or after. Read before the fit is written.
+            if (plan) {
+                const sameSeats = lastSeats !== null && lastSeats.span === plan.span && lastSeats.n === plan.n;
+                roomChange = reason === "ro" && sameSeats && (!runFits || !plan.fits);
+                lastSeats = { span: plan.span, n: plan.n };
+            } else roomChange = false;
             const fitMoved = plan ? writeFit(plan) : false;
             if (inset !== null) {
                 if (inset === "") el.style.removeProperty("--dock-curve-inset");
@@ -802,7 +815,11 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             // does a change before the dock's first frame: nothing has painted to glide from.
             // A resize that arrives while a travel runs is a retarget like any other: each
             // quantity already holds painted minus the new layout and glides on (C2-17).
-            const seated = (resized && raf === null && !travelling) || !shown;
+            // RU-36: a room the host changes is followed at layout, as a window resize is: no posture
+            // change, no pending leave, the seats as they were, the run not fitting before or after.
+            // One that arrives while a travel runs is a retarget and glides on (C2-17).
+            const room = roomChange && !postureChanged && !pendingLeaves.length;
+            const seated = ((resized || room) && raf === null && !travelling) || !shown;
             if (reduce || seated) {
                 if (seated) {
                     eq.d = eq.v = 0;

@@ -567,7 +567,8 @@ function judge(file) {
         }
         // RU-19 (d): a window resize lands in one frame by R-1; its segment is read by that
         // clause (every edge moves on one row), never by the travel bounds.
-        const resizeMark = marks.find((mk) => /^resize/.test(mk.name) && mk.i <= sg.a + 1 && rows[sg.a].t - (rows[mk.i]?.t ?? -1e9) < 300);
+        // RU-36: a room the host changes (the lifted-cap cell's lift and cap) is read as a resize is.
+        const resizeMark = marks.find((mk) => /^(resize|lift|cap)$|^resize/.test(mk.name) && mk.i <= sg.a + 1 && rows[sg.a].t - (rows[mk.i]?.t ?? -1e9) < 300);
         if (resizeMark && !d.meta.cell.reducedMotion) {
             let moving = 0;
             for (let i = 1; i < rs.length; i++) { const p0 = edges(rs[i - 1].el.plate), p1 = edges(rs[i].el.plate); if (p0 && p1 && ["L", "R", "T", "B"].some((k) => Math.abs(p1[k] - p0[k]) > 0.05)) moving++; }
