@@ -56,7 +56,7 @@ const ICONS: readonly { icon: Component; name: string }[] = [
     flex-wrap: wrap;
     justify-content: center;
     gap: var(--sp-5);
-    max-inline-size: min(48rem, calc(100cqi - 3rem));
+    max-inline-size: min(60rem, calc(100cqi - 3rem));
 }
 
 @container (inline-size < 26rem) {
