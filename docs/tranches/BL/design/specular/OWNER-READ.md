@@ -31,7 +31,7 @@ There is no third. A smaller dot, an arc that chases the pointer round the rim, 
 
 **V-A**, in a patch release. It is nearly all deletion: about 160 lines of CSS and two tokens out, nothing added, no public name removed. It also fixes the pane, and four smaller faults that came with the dot (it faded on a slower clock than the fill, slid across the icon on entry, stayed lit on a selected seat, and stuck after a tap on a phone).
 
-V-B is small and honest, but it is one more thing changing on every hover, and in light mode the rim may be too faint to see.
+V-B is small and draws its light from the rim the plate already has, but it is one more thing changing on every hover, and in light mode the rim may be too faint to see.
 
 ## Questions
 

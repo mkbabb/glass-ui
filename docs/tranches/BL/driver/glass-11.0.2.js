@@ -22,7 +22,7 @@ phase('Build')
 const built = []
 for (const g of GROUPS) {
   if (args && args.only && !args.only.includes(g.k)) continue
-  const b = await agent(OID + '\n' + LAW + '\n' + SCOPE + '\nYou are BUILD seat ' + g.k + '. ' + g.first + 'Read the records of the seats before you in ' + REL + '/ (git log first). Build these rows, in order, one commit each: ' + g.rows + '. A row that cannot reach its witness in one honest attempt at the root is reverted whole and listed under rows_moved with what you learned; do not ship a partial. Write the CHANGELOG clause for each row you land. Run typecheck and vitest after your last row. Record in ' + REL + '/build-' + g.k + '.md and commit.' + RES('build-1102-' + g.k), { label: 'build-1102-' + g.k, phase: 'Build', model: 'opus', schema: SCHEMA })
+  const b = await agent(OID + '\n' + LAW + '\n' + SCOPE + '\nYou are BUILD seat ' + g.k + '. ' + g.first + 'Read the records of the seats before you in ' + REL + '/ (git log first). Build these rows, in order, one commit each: ' + g.rows + '. A row that cannot reach its witness in one attempt at the root is reverted whole and listed under rows_moved with what you learned; do not ship a partial. Write the CHANGELOG clause for each row you land. Run typecheck and vitest after your last row. Record in ' + REL + '/build-' + g.k + '.md and commit.' + RES('build-1102-' + g.k), { label: 'build-1102-' + g.k, phase: 'Build', model: 'opus', schema: SCHEMA })
   if (!b || !b.measured) return { stopped: 'build-not-measured', group: g.k, b: b && b.summary && b.summary.slice(0, 1500) }
   built.push({ k: g.k, done: b.rows_done, moved: b.rows_moved })
 }
