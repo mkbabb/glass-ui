@@ -9,7 +9,7 @@ import {
 } from "../../demo/stories/feedback/loop-driver";
 
 const PROGRESS_STORY = readFileSync(
-    resolve(process.cwd(), "demo/stories/feedback/progress.vue"),
+    resolve(process.cwd(), "demo/stories/feedback/progress.stage.vue"),
     "utf8",
 );
 const MOTION_TOKENS = readFileSync(
