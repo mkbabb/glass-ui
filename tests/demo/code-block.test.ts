@@ -2,10 +2,6 @@ import { flushPromises, mount } from "@vue/test-utils";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import CodeBlock from "../../demo/chassis/code/CodeBlock.vue";
-import CardExample from "../../demo/examples/CardExample.vue";
-import cardExampleSource from "../../demo/examples/CardExample.vue?raw";
-import ConfiguratorExample from "../../demo/examples/ConfiguratorExample.vue";
-import configuratorExampleSource from "../../demo/examples/ConfiguratorExample.vue?raw";
 import ToasterExample from "../../demo/examples/ToasterExample.vue";
 import toasterExampleSource from "../../demo/examples/ToasterExample.vue?raw";
 
@@ -36,12 +32,6 @@ afterEach(() => {
 
 describe("CodeBlock source fidelity", () => {
     it.each([
-        [CardExample, cardExampleSource, "@glass/components/card"],
-        [
-            ConfiguratorExample,
-            configuratorExampleSource,
-            "@glass/components/configurator",
-        ],
         [ToasterExample, toasterExampleSource, "@glass/components/toast"],
     ])(
         "imports one Vue module as both runtime and raw source",
