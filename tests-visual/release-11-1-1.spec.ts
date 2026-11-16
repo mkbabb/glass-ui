@@ -1016,6 +1016,149 @@ for (const c of leaves) {
     });
 }
 
+// The surfaces the exits harness does not hold, on their own page: a ContextMenu, a
+// hover card, a Dialog unmounted mid-exit, and an in-place Popover inside an open
+// shadow root, heard on its host.
+const LEAVE_HARNESS = "/tests-visual/release-11-1-1/leave-harness.html";
+type Heard = { at: number; kind: string; bubbles: boolean; composed: boolean };
+type HeardLog = { window: Heard[]; host: Heard[]; emits: Record<string, number> };
+
+async function openLeaveHarness(page: Page): Promise<void> {
+    await page.goto(LEAVE_HARNESS);
+    await page.locator("body[data-ready='1']").waitFor({ state: "attached" });
+    await page.waitForTimeout(300);
+}
+
+const heardLog = (page: Page) => page.evaluate(() => JSON.parse(JSON.stringify((window as unknown as { __heard: HeardLog }).__heard)) as HeardLog);
+
+/** Samples, every frame, the last time the element `find` returns was still seen. */
+async function watchLastSeen(page: Page, find: string): Promise<void> {
+    await page.evaluate((find) => {
+        const w = window as unknown as { __lastSeen: number; __watchStop: boolean };
+        const get = new Function(`return (${find})`) as () => Element | null;
+        w.__lastSeen = 0;
+        w.__watchStop = false;
+        const seen = (el: Element) => {
+            let o = 1;
+            for (let n: Node | null = el; n; n = n instanceof ShadowRoot ? n.host : (n as Element).parentNode) {
+                if (!(n instanceof Element)) continue;
+                const cs = getComputedStyle(n);
+                if (cs.display === "none" || cs.visibility === "hidden") return 0;
+                o *= parseFloat(cs.opacity);
+            }
+            return o;
+        };
+        const tick = (t: number) => {
+            const el = get();
+            if (el && seen(el) > 0.001) w.__lastSeen = t;
+            if (!w.__watchStop) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+    }, find);
+}
+const lastSeen = (page: Page) =>
+    page.evaluate(() => {
+        const w = window as unknown as { __lastSeen: number; __watchStop: boolean };
+        w.__watchStop = true;
+        return w.__lastSeen;
+    });
+
+function expectOnce(log: Heard[], kind: string, seenAt: number, emits: number | undefined, at: string): void {
+    expect(log.length, `one event ${at}`).toBe(1);
+    expect(log[0].kind, `its kind ${at}`).toBe(kind);
+    expect(log[0].bubbles && log[0].composed, `it bubbles and is composed ${at}`).toBe(true);
+    expect(log[0].at, `it comes at or after the last seen frame ${at}`).toBeGreaterThanOrEqual(seenAt);
+    expect(emits, `the Vue emit fires once with it ${at}`).toBe(1);
+}
+
+test("leave · a Popover inside a shadow root says so to its host", async ({ page }, info) => {
+    await openLeaveHarness(page);
+    const content = "document.getElementById('host').shadowRoot.querySelector('[data-testid=\"l-shadow-content\"]')";
+    const trigger = await page.evaluate(() => {
+        const el = document.getElementById("host")!.shadowRoot!.querySelector('[data-testid="l-shadow-trigger"]')!;
+        const r = el.getBoundingClientRect();
+        return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+    });
+    await press(page, info.project.name, trigger.x, trigger.y);
+    await page.waitForFunction((c) => (new Function(`return (${c})`)() as Element | null)?.getAttribute("data-state") === "open", content);
+    await page.waitForTimeout(900);
+    await watchLastSeen(page, content);
+    await page.keyboard.press("Escape");
+    await page.waitForTimeout(1200);
+    const seenAt = await lastSeen(page);
+    const log = await heardLog(page);
+    const mounted = await page.evaluate((c) => Boolean(new Function(`return (${c})`)()), content);
+    const at = JSON.stringify({ ...log, seenAt, mounted });
+    await info.attach("leave", { body: at, contentType: "application/json" });
+    expect(mounted, `the popover has left ${at}`).toBe(false);
+    expectOnce(log.host, "popover", seenAt, log.emits["l-shadow"], at);
+});
+
+for (const route of ["escape", "pick"] as const) {
+    test(`leave · a ContextMenu says once that its leave has finished, by ${route}`, async ({ page }, info) => {
+        test.skip(isPhone(info.project.name), "a ContextMenu opens on a long press, which Playwright's touchscreen cannot hold");
+        await openLeaveHarness(page);
+        await page.locator('[data-testid="l-ctx"]').click({ button: "right" });
+        await page.locator('[data-testid="l-ctx-content"][data-state="open"]').waitFor();
+        await page.waitForTimeout(800);
+        await watchLastSeen(page, "document.querySelector('[data-testid=\"l-ctx-content\"]')");
+        if (route === "escape") await page.keyboard.press("Escape");
+        else await page.locator('[data-testid="l-ctx-Share"]').click();
+        await page.waitForTimeout(1000);
+        const seenAt = await lastSeen(page);
+        const log = await heardLog(page);
+        const at = JSON.stringify({ ...log, seenAt });
+        await info.attach("leave", { body: at, contentType: "application/json" });
+        expectOnce(log.window, "menu", seenAt, log.emits.ctx, at);
+    });
+}
+
+test("leave · a hover card says once that its leave has finished", async ({ page }, info) => {
+    test.skip(isPhone(info.project.name), "a hover card does not open on touch");
+    await openLeaveHarness(page);
+    await page.mouse.move(700, 700);
+    await page.locator('[data-testid="l-hover"]').hover();
+    await page.locator('[data-testid="l-hover-content"][data-state="open"]').waitFor();
+    await page.waitForTimeout(800);
+    await watchLastSeen(page, "document.querySelector('[data-testid=\"l-hover-content\"]')");
+    await page.mouse.move(700, 700, { steps: 6 });
+    await page.waitForTimeout(1200);
+    const seenAt = await lastSeen(page);
+    const log = await heardLog(page);
+    const at = JSON.stringify({ ...log, seenAt });
+    await info.attach("leave", { body: at, contentType: "application/json" });
+    expect(await page.locator('[data-testid="l-hover-content"]').count(), "the card has left").toBe(0);
+    expectOnce(log.window, "hover-card", seenAt, log.emits.hover, at);
+});
+
+test("leave · a Dialog unmounted mid-exit says so once, at the unmount", async ({ page }, info) => {
+    await openLeaveHarness(page);
+    await pressOn(page, info.project.name, '[data-testid="l-dialog"]');
+    await page.locator('[data-testid="l-dialog-content"][data-state="open"]').waitFor();
+    await page.waitForTimeout(900);
+    const cut = await page.evaluate(
+        () =>
+            new Promise<number>((done) => {
+                const d = (window as unknown as { __dialog: { open: { value: boolean }; mounted: { value: boolean } } }).__dialog;
+                d.open.value = false;
+                setTimeout(() => {
+                    d.mounted.value = false;
+                    done(performance.now());
+                }, 40);
+            }),
+    );
+    await page.waitForTimeout(800);
+    const log = await heardLog(page);
+    const at = JSON.stringify({ ...log, cut });
+    await info.attach("leave", { body: at, contentType: "application/json" });
+    expect(await page.locator('[data-testid="l-dialog-content"]').count(), "the dialog is gone").toBe(0);
+    expect(log.window.length, `one event ${at}`).toBe(1);
+    expect(log.window[0].kind, `its kind ${at}`).toBe("dialog");
+    // The exit had about 140 ms left at the cut; the event comes with the unmount.
+    expect(log.window[0].at - cut, `it comes with the unmount ${at}`).toBeLessThanOrEqual(50);
+    expect(log.emits.dialog, `the Vue emit fires once with it ${at}`).toBe(1);
+});
+
 // ── standing ───────────────────────────────────────────────────────────────────────
 //   standing  every surface in the exits table, by every route it has: the exit is
 //             painted for more than two frames, and no frame carries more than a fifth

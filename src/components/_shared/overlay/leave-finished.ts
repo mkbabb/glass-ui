@@ -1,4 +1,4 @@
-import { onBeforeUnmount, onMounted, useId, watch } from "vue";
+import { getCurrentInstance, onBeforeUnmount, useId, watch } from "vue";
 
 /** The surfaces that announce the end of their leave, as `detail.kind` names them. */
 export type LeaveKind =
@@ -39,14 +39,39 @@ export function useLeaveFinished(o: {
     emit: () => void;
 }): { attrs: { "data-leave-key": string } } {
     const key = useId();
-    const element = () =>
-        typeof document === "undefined"
-            ? null
-            : document.querySelector(`[data-leave-key="${key}"]`);
+    const instance = getCurrentInstance();
+    /* The content is where the component mounts it (in the page, or inside a shadow
+       root) or where its portal sends it (the document's body). */
+    const element = (): Element | null => {
+        if (typeof document === "undefined") return null;
+        const selector = `[data-leave-key="${key}"]`;
+        const own = (instance?.vnode.el as Node | null)?.getRootNode?.();
+        const inOwnTree =
+            own && own !== document && "querySelector" in own
+                ? (own as ParentNode).querySelector(selector)
+                : null;
+        return inOwnTree ?? document.querySelector(selector);
+    };
     let leaving: Element | null = null;
+    /* reka's event does not bubble out of a shadow root, so the listener sits on the
+       root the leaving content lives in. */
+    let listening: Node | null = null;
+
+    const onPresenceLeft = (event: Event) => {
+        const target = event.target;
+        if (!leaving || !(target instanceof Node)) return;
+        // The Presence node is the content element itself, or the popper wrapper round it.
+        if (target === leaving || target.contains(leaving)) finish();
+    };
+    const listen = (root: Node | null) => {
+        listening?.removeEventListener(PRESENCE_AFTER_LEAVE, onPresenceLeft, true);
+        listening = root;
+        listening?.addEventListener(PRESENCE_AFTER_LEAVE, onPresenceLeft, true);
+    };
 
     const finish = () => {
         const el = leaving;
+        listen(null);
         if (!el) return;
         leaving = null;
         o.emit();
@@ -62,25 +87,18 @@ export function useLeaveFinished(o: {
     watch(
         o.open,
         (open, was) => {
-            if (open) leaving = null;
-            else if (was) leaving = element();
+            if (open) {
+                leaving = null;
+                listen(null);
+            } else if (was) {
+                leaving = element();
+                listen(leaving?.getRootNode() ?? null);
+            }
         },
         { flush: "sync" },
     );
 
-    const onPresenceLeft = (event: Event) => {
-        const target = event.target;
-        if (!leaving || !(target instanceof Node)) return;
-        // The Presence node is the content element itself, or the popper wrapper round it.
-        if (target === leaving || target.contains(leaving)) finish();
-    };
-    onMounted(() =>
-        document.addEventListener(PRESENCE_AFTER_LEAVE, onPresenceLeft, true),
-    );
-    onBeforeUnmount(() => {
-        document.removeEventListener(PRESENCE_AFTER_LEAVE, onPresenceLeft, true);
-        finish();
-    });
+    onBeforeUnmount(finish);
 
     return { attrs: { "data-leave-key": key } };
 }
