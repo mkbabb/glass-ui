@@ -7,7 +7,8 @@
 //            the fade spans at least two painted frames, its opacity only rises on the
 //            way in and only falls on the way out, its box (place and size) never takes
 //            a step between its two ends, and the fade is over within 200 ms (one
-//            frame of slack for the sampling)
+//            frame of slack for the sampling); a surface that says when its leave has
+//            finished says so once, at or after the fade's last seen frame
 //   fold     a collapsible dock unfolds and folds by cross-fading its two faces, the
 //            box landing at once
 //   mark     a navigation run's selected plate moves to a new seat by a cross-fade:
@@ -103,32 +104,36 @@ type Surface = {
     enter: (page: Page, project: string) => Promise<void>;
     leave: (page: Page, project: string) => Promise<void>;
     desktopOnly?: boolean;
+    /** The surface says when its leave has finished (README, "leave-finished"). */
+    says?: boolean;
 };
 
 const tap = (sel: string) => (page: Page, project: string) => pressOn(page, project, sel);
 const escape = async (page: Page) => page.keyboard.press("Escape");
 
 const surfaces: Surface[] = [
-    { name: "Popover", content: '[data-testid="x-popover-content"]', enter: tap('[data-testid="x-popover"]'), leave: escape },
-    { name: "DropdownMenu", content: '[data-testid="x-menu-content"]', enter: tap('[data-testid="x-menu"]'), leave: escape },
-    { name: "dock Select", content: '[data-testid="x-select-content"]', enter: tap('[data-testid="x-select"]'), leave: escape },
-    { name: "plain Select", content: '[data-testid="x-plain-select-content"]', enter: tap('[data-testid="x-plain-select"]'), leave: escape },
+    { name: "Popover", says: true, content: '[data-testid="x-popover-content"]', enter: tap('[data-testid="x-popover"]'), leave: escape },
+    { name: "DropdownMenu", says: true, content: '[data-testid="x-menu-content"]', enter: tap('[data-testid="x-menu"]'), leave: escape },
+    { name: "dock Select", says: true, content: '[data-testid="x-select-content"]', enter: tap('[data-testid="x-select"]'), leave: escape },
+    { name: "plain Select", says: true, content: '[data-testid="x-plain-select-content"]', enter: tap('[data-testid="x-plain-select"]'), leave: escape },
     {
         name: "Tooltip",
         content: '[data-testid="x-tooltip-content"]',
         enter: async (page) => page.locator('[data-testid="x-tooltip"]').hover(),
         leave: async (page) => page.mouse.move(8, 880),
         desktopOnly: true,
+        says: true,
     },
-    { name: "Dialog", content: '[data-testid="x-dialog-content"]', enter: tap('[data-testid="x-dialog"]'), leave: escape },
-    { name: "Sheet right", content: '[data-testid="x-sheet-right-content"]', enter: tap('[data-testid="x-sheet-right"]'), leave: escape },
-    { name: "Sheet bottom", content: '[data-testid="x-sheet-bottom-content"]', enter: tap('[data-testid="x-sheet-bottom"]'), leave: escape },
+    { name: "Dialog", says: true, content: '[data-testid="x-dialog-content"]', enter: tap('[data-testid="x-dialog"]'), leave: escape },
+    { name: "Sheet right", says: true, content: '[data-testid="x-sheet-right-content"]', enter: tap('[data-testid="x-sheet-right"]'), leave: escape },
+    { name: "Sheet bottom", says: true, content: '[data-testid="x-sheet-bottom-content"]', enter: tap('[data-testid="x-sheet-bottom"]'), leave: escape },
     {
         name: "Toast",
         content: '[data-slot="toast"]',
         film: '[data-slot="toast"] > div',
         enter: tap('[data-testid="x-toast"]'),
         leave: tap('[data-slot="toast"] button[aria-label="Dismiss"]'),
+        says: true,
     },
     { name: "Collapsible", content: '[data-testid="x-collapsible-content"]', enter: tap('[data-testid="x-collapsible"]'), leave: tap('[data-testid="x-collapsible"]') },
     { name: "Accordion", content: '[data-testid="x-accordion-content"]', enter: tap('[data-testid="x-accordion"]'), leave: tap('[data-testid="x-accordion"]') },
@@ -152,16 +157,28 @@ for (const s of surfaces) {
         const inFilm = await stopFilm(page, 700);
         await page.locator(s.content).first().waitFor();
         await page.waitForTimeout(300);
+        await page.evaluate(() => {
+            const w = window as unknown as { __said: number[] };
+            w.__said = [];
+            window.addEventListener("leave-finished", () => w.__said.push(performance.now()));
+        });
         await startFilm(page, sel);
         await markFilm(page);
         await s.leave(page, project);
         const outFilm = await stopFilm(page, 900);
+        const said = await page.evaluate(() => (window as unknown as { __said: number[] }).__said);
         const legIn = judgeLeg(inFilm, "in", opacity, boxOf);
         const legOut = judgeLeg(outFilm, "out", opacity, boxOf);
-        const at = JSON.stringify({ in: legIn, out: legOut });
+        const lastSeen = Math.max(...outFilm.frames.filter((f) => f.t >= outFilm.mark && opacity(f) > 0.01).map((f) => f.t), outFilm.mark);
+        const leave = said.map((t) => Math.round(t - outFilm.t0 - lastSeen));
+        const at = JSON.stringify({ in: legIn, out: legOut, leave });
         await info.attach("fade", { body: at, contentType: "application/json" });
         expectFade(legIn, "in", at);
         expectFade(legOut, "out", at);
+        if (s.says) {
+            expect(leave.length, `one leave-finished event ${at}`).toBe(1);
+            expect(leave[0], `it comes at or after the last seen frame ${at}`).toBeGreaterThanOrEqual(0);
+        }
     });
 }
 
