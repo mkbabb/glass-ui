@@ -143,16 +143,17 @@
 
         /* The spatial leg drops; the arrival and the departure still read. A 0.12s
          * opacity fade is the house's reduced rung, not a cut, which would have the room
-         * appear and vanish with no event at all. */
+         * appear and vanish with no event at all. The clocks are `!important` so the
+         * reduced-motion fallback, a later layer, does not zero them. */
         .expandable-container[data-state="expanded"] > [data-part="panel"],
         .expandable-container[data-state="expanded"][data-leaving] > [data-part="panel"] {
             scale: none;
-            transition: opacity 0.12s linear;
+            transition: opacity 0.12s linear !important;
         }
 
         .expandable-container[data-state="expanded"],
         .expandable-container[data-state="expanded"][data-leaving] {
-            transition: background-color 0.12s linear;
+            transition: background-color 0.12s linear !important;
         }
     }
 }

@@ -1,4 +1,8 @@
-@layer theme, base, components, utilities;
+@layer theme, base, components, utilities, reduced-motion;
+
+/* `reduced-motion` comes last: it holds only the reduced-motion fallback
+   (utilities/a11y-overrides.css), which beats every layered rule and loses to a
+   site's unlayered or `!important` one. */
 
 /*
  * @mkbabb/glass-ui — Unified design system styles

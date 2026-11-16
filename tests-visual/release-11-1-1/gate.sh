@@ -10,6 +10,7 @@ parts=(
     "(form|glass|exit|routes|round|weight|lift) · "
     "(reverse|tooltip|expand|leave) · "
     "standing · "
+    "(site|fade|fold|mark) · "
 )
 for project in chromium-phone chromium-desktop webkit-phone webkit-desktop; do
     for part in "${parts[@]}"; do

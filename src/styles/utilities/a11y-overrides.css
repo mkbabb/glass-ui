@@ -3,56 +3,34 @@
    LAST in cascade.
    A partial of the utilities.css cascade; @import-ed by utilities.css in
    cascade order. See docs/precepts/design-idioms.md §cohesion-aware partials. */
-/* ── Reduced motion: INSTANT global fallback (no resurrection) ────────────────
-   A global PRM fallback SUPPRESSES motion; it may NOT create transition
-   eligibility, re-enable an explicitly de-animated receiver, or attach a nonzero
-   clock to a receiver that authored none (Q-PRM-NO-RESURRECTION-C2 → FM W3,
-   row 12 `BJ.W-FEEDBACK-MOTION-TUNE`; this SUPERSEDES the historical BAND-A11Y
-   "wildcard reduced-motion substrate CONFIRMED KEEP" fence, now formation prose).
+/* ── Reduced motion: the instant fallback, in its own last layer ───────────────
+   Under `prefers-reduced-motion: reduce` every animation snaps to its end frame and
+   every transition runs on a zero clock. It mints no `transition-property`, so an
+   element that authored no transition gains none and `transition: none` stays none.
 
-   This is the KISS INSTANT wildcard: it snaps animation to a single endpoint
-   frame and forces transition-duration to ZERO. It deliberately does NOT mint a
-   `transition-property` list — minting one was the resurrection vector: the old
-   `transition-property: opacity, color, background-color, border-color,
-   box-shadow` override created a 100ms clock on transitionless receivers (the SCI
-   focal chip / plate rim's authored `transition:none`, VFT `.focus-ring`'s
-   un-authored color change). With `transition-property` left untouched, an
-   element that authored `transition:none` keeps `transition-property:none`
-   (nothing transitions — the `none` is NOT defeated), and an element that
-   authored no transition keeps its instant clock (no un-authored hover/focus
-   colour change acquires one).
-
-   `transition-duration:0s` is a genuine ZERO clock, not the old 0.1s (nor a
-   forensically-visible 0.01ms) — the instant fallback attaches no clock at all.
-   accessibility is absolute: `[data-allow-motion]` is NOT carved out here (a user
-   who asks for reduced motion outranks any per-element motion-allow). Its
-   theme-flip capability is the SEPARATE `html.no-transition` marker below and is
-   never overloaded into a public PRM licence.
-
-   The ONLY nonzero PRM transition clocks that survive are NARROW, explicit,
-   producer-owned authorizations that outrank this fallback ~~NOT by specificity
-   (both are `!important`) but by cascade LAYER — they are `!important` inside
-   `@layer components`, and per CSS Cascade L5 layered `!important` beats unlayered
-   `!important` (index.css:1 layer order)~~ [2026-09-22 · BK register wave 10-1 —
-   this fallback is itself in `@layer components` at 10.0.0, so both sides are
-   `!important` in ONE layer and the authorization wins by specificity: every row is
-   a class selector, the fallback is `*` at (0,0,0). Against everything outside the
-   layer the fallback got stronger — CSS Cascade L5 ranks an earlier layer's
-   `!important` above `utilities` and unlayered `!important`]. enumerated + hashed in
-   docs/tranches/BJ/waves/BAND-FEEDBACK-MOTION.md §PRM-AUTHORIZED-SET (the
-   opacity-only Vue fade / pane-swap classes in transitions.css). They are never
-   inferred from a `*` wildcard. */
-@layer components {
+   The rule is a normal declaration at zero specificity in `reduced-motion`, the layer
+   declared after `utilities` (index.css). It beats every normal declaration glass
+   ships, all of which are layered, and every utility class; it loses to anything
+   unlayered or `!important`. So a site's own rule, such as `transition: opacity
+   144ms` in its own stylesheet, keeps its clock under reduced motion with no
+   `!important`, and a glass fade that must survive is a carve: an `!important`
+   declaration in `components` (the reveal, glass/reveal.css; the Toast's dissolve,
+   glass/dissolve.css; the Vue fade classes, transitions.css), each a row of
+   docs/tranches/BJ/waves/BAND-FEEDBACK-MOTION.md §PRM-AUTHORIZED-SET. `[data-allow-motion]`
+   is not carved: a user who asks for reduced motion outranks a per-element allowance. */
+@layer reduced-motion {
     @media (prefers-reduced-motion: reduce) {
         *,
         *::before,
         *::after {
-            animation-duration: 0.01ms !important;
-            animation-iteration-count: 1 !important;
-            transition-duration: 0s !important;
+            animation-duration: 0.01ms;
+            animation-iteration-count: 1;
+            transition-duration: 0s;
         }
     }
+}
 
+@layer components {
     /* ── No-transition class (for theme switches, etc.) ──────────────────────────
        The theme-flip transition-suppression storm: `useGlobalDark.toggleDark()` adds
        `.no-transition` to `<html>` for the flip's single style recalc so the page's

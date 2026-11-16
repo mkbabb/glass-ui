@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>glass-ui reduced-motion harness</title>
+  <style>
+    /* A site's own fade, in its own unlayered stylesheet, with no !important. */
+    .site-fade { transition: opacity 144ms linear; }
+    .site-fade[data-off] { opacity: 0; }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script type="module" src="./reduce-harness.ts"></script>
+</body>
+</html>

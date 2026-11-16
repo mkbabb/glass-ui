@@ -11,7 +11,7 @@ const chromium = base.projects!.find((p) => p.name === "chromium-headless-new")!
 const webkit = wk.projects!.find((p) => p.name === "webkit")!;
 const phone = { viewport: { width: 390, height: 844 }, deviceScaleFactor: 3, hasTouch: true, isMobile: true };
 const desktop = { viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1, hasTouch: false, isMobile: false };
-const testMatch = ["release-11-1-1.spec.ts", "release-11-1-1-controls.spec.ts"];
+const testMatch = ["release-11-1-1.spec.ts", "release-11-1-1-controls.spec.ts", "release-11-1-1-reduce.spec.ts"];
 
 export default {
     ...base,

@@ -367,7 +367,11 @@
  * their endpoints (scale → none, translate → none) and the blur-settle to none —
  * ZERO transform/blur frames. The OPACITY fade SURVIVES (opacity is not a vestibular
  * trigger; the surface fades, never flies, never disappears). The fade rides the
- * short `--duration-fast` clock (the `.glass-top-layer` PRM precedent). */
+ * short `--duration-fast` clock (the `.glass-top-layer` PRM precedent). The clocks are
+ * `!important`: the reduced-motion fallback (utilities/a11y-overrides.css) is a later
+ * layer and zeroes every normal clock, so a fade that survives says so. The closed
+ * state restates its hold keyframe's duration for the same reason, or reka would unmount
+ * the surface at once. */
 @layer components {
     @media (prefers-reduced-motion: reduce) {
         .glass-reveal {
@@ -377,8 +381,8 @@
                `glass-floating` backdrop-filter plate blur is UNTOUCHED. */
             filter: blur(0);
             transition-property: opacity, display, overlay;
-            transition-duration: var(--duration-fast);
-            transition-timing-function: var(--ease-out);
+            transition-duration: var(--duration-fast) !important;
+            transition-timing-function: var(--ease-out) !important;
         }
         .glass-reveal[data-state="closed"] {
             scale: none;
@@ -388,6 +392,9 @@
                opacity transition from where the surface stands, the hold keyframe keeping
                the node for reka until it lands. */
             transition-property: opacity, display, overlay;
+            transition-duration: var(--reveal-exit-clock) !important;
+            transition-timing-function: var(--reveal-exit-curve) !important;
+            animation-duration: var(--reveal-exit-clock) !important;
         }
         /* The menu keeps no geometry under reduced motion: it fades in and out on the
            same short clock as every reveal, its whole plate uncovered. */
@@ -396,8 +403,8 @@
         }
         .glass-reveal.glass-reveal[data-reveal="menu"][data-state="open"] {
             transition-property: opacity, display, overlay;
-            transition-duration: var(--duration-fast);
-            transition-timing-function: var(--ease-out);
+            transition-duration: var(--duration-fast) !important;
+            transition-timing-function: var(--ease-out) !important;
             @starting-style {
                 opacity: 0;
             }
