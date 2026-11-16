@@ -52,7 +52,7 @@ import { Button } from "@mkbabb/glass-ui/button";
                         :loading="saving"
                         @click="save"
                     >
-                        {{ saving ? "Saving" : "Save" }}
+                        Save
                     </Button>
                     <Button data-scenario="button-disabled" disabled>Disabled</Button>
                     <Button
