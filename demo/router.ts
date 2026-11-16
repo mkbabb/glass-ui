@@ -2,16 +2,15 @@ import { createRouter, createWebHistory } from "vue-router";
 import type { RouteRecordRaw } from "vue-router";
 import {
     CATEGORIES,
+    cardsRunCanvas,
     firstStoryPath,
 } from "./stories/manifest";
-import { ownsCanvas } from "./chassis/hero/focal";
 
 /**
- * Routes are derived from the manifest. Every category produces a
- * `/:category` section-landing hero
- * plus a `/:category/:story` route per story. There are no flat standalone routes
- * the former Aurora/GooBlob/Blob flat tools are now rows in the Substrates
- * category.
+ * Routes are derived from the manifest: `/`, a `/:category` section page per category
+ * and a `/:category/:story` route per row. `meta.ownsCanvas` is read from the rows'
+ * own `canvas` declarations: where the page (or a card on it) runs a live canvas, the
+ * shell keeps its field static.
  */
 function buildRoutes(): RouteRecordRaw[] {
     const routes: RouteRecordRaw[] = [
@@ -22,6 +21,9 @@ function buildRoutes(): RouteRecordRaw[] {
             meta: {
                 landing: true,
                 title: "Glass UI",
+                ownsCanvas: cardsRunCanvas(
+                    CATEGORIES.flatMap((c) => c.stories.slice(0, 1)),
+                ),
             },
         },
     ];
@@ -38,7 +40,7 @@ function buildRoutes(): RouteRecordRaw[] {
                           categoryId: category.id,
                           landing: true,
                           title: category.title,
-                          ownsCanvas: false,
+                          ownsCanvas: cardsRunCanvas(category.stories),
                       },
                   }
                 : {
@@ -57,7 +59,7 @@ function buildRoutes(): RouteRecordRaw[] {
                     categoryId: category.id,
                     storyId: story.id,
                     title: story.title,
-                    ownsCanvas: ownsCanvas(`${category.id}/${story.id}`),
+                    ownsCanvas: Boolean(story.canvas),
                 },
             });
         }

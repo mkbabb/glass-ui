@@ -30,6 +30,8 @@ export interface Story {
     stage?: () => Promise<Component>;
     /** A card preview, only where the stage cannot run small and inert. */
     tile?: () => Promise<Component>;
+    /** Where the page runs a live canvas of its own (`RouteRow.canvas`). */
+    canvas?: "page" | "card";
 }
 
 export interface Category {
@@ -64,6 +66,7 @@ function category(section: SectionRoutes): Category {
             id: row.id,
             title: row.title,
             lede: row.lede,
+            canvas: row.canvas,
             component: lazy(section.id, row.id),
             stage: loader(stageModules, `./${section.id}/${row.id}.stage.vue`),
             tile: loader(tileModules, `./${section.id}/${row.id}.tile.vue`),
@@ -96,6 +99,11 @@ export function findStory(
     const category = findCategory(categoryId);
     const story = category?.stories.find((s) => s.id === storyId);
     return category && story ? { category, story } : undefined;
+}
+
+/** A card on this page runs a live canvas, so the shell's field stays static there. */
+export function cardsRunCanvas(stories: readonly Story[]): boolean {
+    return stories.some((s) => s.canvas === "card");
 }
 
 export function firstStoryPath(): string {
