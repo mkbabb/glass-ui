@@ -1233,7 +1233,7 @@ test("leave · a Dialog unmounted mid-exit says so once, at the unmount", async 
 //             route, and a trigger press that closes through that listener), and a
 //             Tooltip does not open on touch.
 
-type StandingRoute = "pick" | "outside" | "escape" | "trigger" | "close" | "away";
+type StandingRoute = "pick" | "outside" | "escape" | "trigger" | "close" | "away" | "focus" | "timeout";
 type StandingCase = {
     name: string;
     content: string;
@@ -1262,19 +1262,33 @@ const standing: StandingCase[] = [
         routes: { pick: tap('[data-testid="x-item-Share"]'), outside: outsidePress, escape, trigger: tap('[data-testid="x-menu"]') },
     },
     {
+        name: "plain Select",
+        content: '[data-testid="x-plain-select-content"]',
+        open: tap('[data-testid="x-plain-select"]'),
+        routes: { pick: tap('[data-testid="x-plain-Mix"]'), outside: outsidePress, escape },
+    },
+    {
         name: "Popover",
         content: '[data-testid="x-popover-content"]',
         open: tap('[data-testid="x-popover"]'),
-        routes: { outside: outsidePress, escape, trigger: tap('[data-testid="x-popover"]') },
+        // Focus leaving: the panel takes focus as it opens, and Tab carries it out.
+        routes: { outside: outsidePress, escape, trigger: tap('[data-testid="x-popover"]'), focus: async (page) => page.keyboard.press("Tab") },
     },
     {
         name: "Tooltip",
         content: '[data-testid="x-tooltip-content"]',
         open: hover('[data-testid="x-tooltip"]'),
-        routes: { escape, away },
+        routes: { escape, away, trigger: async (page) => page.locator('[data-testid="x-tooltip"]').click() },
         desktopOnly: true,
     },
-    ...(["dialog", "sheet-right", "sheet-bottom"] as const).map((id) => ({
+    {
+        name: "brief Toast",
+        content: '[data-slot="toast"]',
+        film: '[data-slot="toast"] > div',
+        open: tap('[data-testid="x-toast-brief"]'),
+        routes: { timeout: async () => {} },
+    },
+    ...(["dialog", "sheet-right", "sheet-bottom", "sheet-top", "sheet-left"] as const).map((id) => ({
         name: id === "dialog" ? "Dialog" : `Sheet ${id.slice(6)}`,
         content: `[data-testid="x-${id}-content"]`,
         open: tap(`[data-testid="x-${id}"]`),

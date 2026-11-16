@@ -1,9 +1,9 @@
 // Every surface the exits witnesses close, on a busy ground. A GlassDock at the top
 // seats a Select (its open state driven by `v-model:open`, as value.js's pages dropdown
 // drives it) and a DropdownMenu; below it a row of triggers opens a Popover, a Tooltip,
-// a Dialog, a right and a bottom Sheet and a detented bottom Sheet; a third row holds a
-// Toast trigger, a press counter (the page behind a leaving sheet), a Collapsible and an
-// Accordion; then an ExpandableContainer with an outside toggle for its open state. Imports are relative to `src/`, so the file mounts unchanged on an older tree.
+// a Dialog, a Sheet on each side and a detented bottom Sheet; a third row holds a Toast
+// trigger, a brief Toast that times out, a plain Select outside the dock, a press counter
+// (the page behind a leaving sheet), a Collapsible and an Accordion; then an ExpandableContainer with an outside toggle for its open state. Imports are relative to `src/`, so the file mounts unchanged on an older tree.
 import "../../demo/demo.css";
 import { createApp, h, ref } from "vue";
 
@@ -14,6 +14,7 @@ import Select from "../../src/components/select/Select.vue";
 import SelectContent from "../../src/components/select/SelectContent.vue";
 import SelectItem from "../../src/components/select/SelectItem.vue";
 import SelectValue from "../../src/components/select/SelectValue.vue";
+import SelectTrigger from "../../src/components/select/SelectTrigger.vue";
 import DropdownMenu from "../../src/components/menu/DropdownMenu.vue";
 import DropdownMenuContent from "../../src/components/menu/DropdownMenuContent.vue";
 import DropdownMenuItem from "../../src/components/menu/DropdownMenuItem.vue";
@@ -57,6 +58,7 @@ document.body.style.cssText = [
 
 const pages = ["Picker", "Palettes", "Gradient", "Mix", "Extract"];
 const view = ref("Picker");
+const plain = ref("Picker");
 const open = ref(false);
 const rung = ref(0.5);
 const presses = ref(0);
@@ -121,7 +123,7 @@ createApp({
                     h(DialogTrigger, { "data-testid": "x-dialog", style: "padding:10px 14px;background:#fff;color:#000;border-radius:8px;font:14px sans-serif" }, () => "Dialog"),
                     h(DialogContent, { "data-testid": "x-dialog-content", ...onLeave("x-dialog-content") }, () => [h(DialogTitle, () => "A dialog"), h("p", "Its body.")]),
                 ]),
-                ...(["right", "bottom"] as const).map((side) =>
+                ...(["right", "bottom", "top", "left"] as const).map((side) =>
                     h(Dialog, null, () => [
                         h(DialogTrigger, { "data-testid": `x-sheet-${side}`, style: "padding:10px 14px;background:#fff;color:#000;border-radius:8px;font:14px sans-serif" }, () => `Sheet ${side}`),
                         h(SheetContent, { side, "data-testid": `x-sheet-${side}-content`, ...onLeave(`x-sheet-${side}-content`) }, () => [h(DialogTitle, () => "A sheet"), h("p", "Its body.")]),
@@ -144,6 +146,17 @@ createApp({
             ]),
             h("div", { style: "display:flex;flex-wrap:wrap;gap:8px;justify-content:center" }, [
                 h("button", { "data-testid": "x-toast", style: btn, onClick: () => toast({ title: "A toast", description: "Its body." }) }, "Toast"),
+                h("button", { "data-testid": "x-toast-brief", style: btn, onClick: () => toast({ title: "A brief toast", duration: 1800 }) }, "Brief toast"),
+                h(
+                    Select,
+                    { modelValue: plain.value, "onUpdate:modelValue": (v: unknown) => (plain.value = String(v)) },
+                    () => [
+                        h(SelectTrigger, { "data-testid": "x-plain-select", class: "w-40" }, () => h(SelectValue)),
+                        h(SelectContent, { "data-testid": "x-plain-select-content" }, () =>
+                            pages.map((p) => h(SelectItem, { value: p, "data-testid": `x-plain-${p}` }, () => p)),
+                        ),
+                    ],
+                ),
                 h("button", { "data-testid": "x-count", "data-presses": presses.value, style: btn, onClick: () => presses.value++ }, `Pressed ${presses.value}`),
             ]),
             h("div", { class: "glass-quiet", style: "width:min(22rem,90vw);padding:8px 16px;border-radius:16px;background:#fff;color:#000" }, [
