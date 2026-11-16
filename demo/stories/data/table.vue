@@ -24,7 +24,7 @@ const snippet = `<Table>
 <template>
     <StoryPage>
         <template #stage>
-            <StoryStage size="tall">
+            <StoryStage size="fit">
                 <TableStage />
             </StoryStage>
         </template>
