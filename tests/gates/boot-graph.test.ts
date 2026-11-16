@@ -107,7 +107,9 @@ const EAGER_SHELL_MODULES = [
 //    original headroom was 512,000 − 483,862 = 28,138 B, so 475,283 + 28,138 = 503,421,
 //    expressed as 492 KiB = 503,808 B (headroom 28,525 B). The gate does not get looser
 //    at this close; it gets looser on the axis that stopped meaning anything and tighter
-//    on the axis that still does.
+//    on the axis that still does. The count then took one more request, the chunk that
+//    holds the module every overlay content shares (`_shared/overlay/leave-finished.ts`,
+//    the leave-finished event), so it is 68, with the byte arm unchanged.
 //
 //    THE GRAPH FIX IS REFUSED HERE AND ROUTED, NOT ABANDONED. The eager mass is the menu
 //    stack (~25 files / ~90 KB: `DropdownMenuTrigger` 41,303 + `PopperContent` 25,784 +
@@ -122,7 +124,7 @@ const EAGER_SHELL_MODULES = [
 //        (14 click + 14 context), and every menu SFC imports `useMenuPart` from it — so a
 //        consumer using only the click arm eagerly pays for the context arm too. That is
 //        a menu-lane cut with its own paint, not a ceiling's business.
-const MAX_MODULEPRELOADS = 67;
+const MAX_MODULEPRELOADS = 68;
 const MAX_EAGER_JS_BYTES = 492 * 1024;
 
 export interface BootGraphViolation {
