@@ -6,17 +6,10 @@ export const OWN_CANVAS_ROUTES: ReadonlySet<string> = new Set([
     "substrates/constellation",
     "substrates/fourier-field",
     "substrates/glass-panel",
-    "dock/overview",
-    "dock/layers",
-    "dock/sections",
-    "dock/dock-search",
-    "dock/cta-receive",
-    "dock/controls",
-    "dock/overflow",
-    "dock/vertical",
     "compositions/auth-shell",
 ]);
 
+/** Every dock page's stage carries its own field, so the shell's stands down. */
 export function ownsCanvas(routeId: string): boolean {
-    return OWN_CANVAS_ROUTES.has(routeId);
+    return routeId.startsWith("dock/") || OWN_CANVAS_ROUTES.has(routeId);
 }
