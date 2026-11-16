@@ -15,6 +15,12 @@
 //
 // usage: node check.mjs --base http://localhost:5451 --routes /,/display/buttons
 //        [--cells d1440,l1440,m390] [--budget /display/buttons=40] [--out rows.jsonl]
+//        [--plant b2,l4,dock]
+//
+// `--plant` writes a known fault into each page before it is measured, so a line that
+// was taught to skip something can be seen still to bite: `b2` two overlapping visible
+// runs in the header (beside a clipped pair that must not count), `l4` a blurb paragraph
+// in the first card's body, `dock` a square corner on the first dock in a card.
 import { chromium } from "playwright";
 import fs from "node:fs";
 
@@ -34,6 +40,34 @@ const BUDGET = Object.fromEntries(
     }),
 );
 const OUT = args.out ? fs.createWriteStream(args.out, { flags: "a" }) : null;
+const PLANTS = (args.plant ?? "").split(",").filter(Boolean);
+
+// ---------- planted faults (see the usage note) ----------
+const PLANT = (plants) => {
+    const header = document.querySelector("#demo-main [data-story-header]");
+    if (plants.includes("b2") && header) {
+        const box = document.createElement("div");
+        box.style.cssText = "position:relative;block-size:2.5rem";
+        box.innerHTML =
+            '<span style="position:absolute;inset:0 auto auto 0">Planted overlap one</span>' +
+            '<span style="position:absolute;inset:4px auto auto 4px">Planted overlap two</span>' +
+            // a clipped pair: the line must not count these
+            '<div style="position:absolute;inset:0;overflow:hidden;block-size:0">' +
+            '<span style="position:absolute;inset:0 auto auto 0">Hidden pair one</span>' +
+            '<span style="position:absolute;inset:4px auto auto 4px">Hidden pair two</span></div>';
+        header.append(box);
+    }
+    const card = document.querySelector("#demo-main [data-story-card]");
+    if (plants.includes("l4") && card) {
+        const p = document.createElement("p");
+        p.textContent = "A planted blurb under the card title.";
+        card.append(p);
+    }
+    if (plants.includes("dock")) {
+        const plate = document.querySelector("#demo-main [data-story-card] .glass-dock > .dock-plate");
+        if (plate) plate.style.setProperty("border-radius", "4px", "important");
+    }
+};
 
 export const CELLS = {
     d1440: { viewport: { width: 1440, height: 900 }, scheme: "dark", touch: false },
@@ -108,6 +142,29 @@ const MEASURE = async ({ shotB64, vw, vh }) => {
         return { left: r.left, top: r.top, right: r.right, bottom: r.bottom, width: r.width, height: r.height };
     };
 
+    // A run's visible box: its text box cut by every ancestor that clips (overflow other
+    // than visible: a closed disclosure, a scroll port, an sr-only box), up to `main`,
+    // whose own scroll is the page's. Text whose visible box is empty is not on screen.
+    const clipped = (el, r) => {
+        let { left: l, top: t, right: rt, bottom: b } = r;
+        for (let e = el; e && e !== main && e !== document.documentElement; e = e.parentElement) {
+            const cs = getComputedStyle(e);
+            const clipsX = cs.overflowX !== "visible", clipsY = cs.overflowY !== "visible";
+            if (!clipsX && !clipsY && cs.clipPath === "none" && cs.clip === "auto") continue;
+            const q = e.getBoundingClientRect();
+            if (clipsX || cs.clip !== "auto") { l = Math.max(l, q.left); rt = Math.min(rt, q.right); }
+            if (clipsY || cs.clip !== "auto") { t = Math.max(t, q.top); b = Math.min(b, q.bottom); }
+            if (cs.clip !== "auto" && /rect\(0(px)?,? 0(px)?,? 0(px)?,? 0(px)?\)/.test(cs.clip)) return null;
+            if (rt - l < 2 || b - t < 2) return null;
+        }
+        return { left: l, top: t, right: rt, bottom: b };
+    };
+    // Ink that paints nothing (a reserve copy sized for layout) is not visible text.
+    const inkless = (el) => {
+        const cs = getComputedStyle(el);
+        return toRGBA(cs.color)[3] === 0 || toRGBA(cs.webkitTextFillColor || cs.color)[3] === 0;
+    };
+
     // text runs in the article: grouped by parent element
     const runs = [];
     if (article) {
@@ -134,7 +191,9 @@ const MEASURE = async ({ shotB64, vw, vh }) => {
                 text += n.data;
             }
             if (r < 0) continue;
-            runs.push({ el, rect: { left: l, top: t, right: r, bottom: b }, text: text.replace(/\s+/g, " ").trim() });
+            const vis = clipped(el, { left: l, top: t, right: r, bottom: b });
+            if (!vis || inkless(el)) continue;
+            runs.push({ el, rect: vis, text: text.replace(/\s+/g, " ").trim() });
         }
     }
     const inStage = (el) => stages.some((s) => s.contains(el));
@@ -193,13 +252,16 @@ const MEASURE = async ({ shotB64, vw, vh }) => {
     // docks: corner radii against half the cross size
     const docks = [...document.querySelectorAll(".glass-dock")].map((d) => {
         const plate = d.querySelector(":scope > .dock-plate") || d;
-        const r = plate.getBoundingClientRect();
+        // layout pixels, not client ones: a card scales its specimen, and the radius
+        // the style reports is in the unscaled box
+        const r = { width: plate.offsetWidth, height: plate.offsetHeight };
         const cs = getComputedStyle(plate);
         const raw = [cs.borderTopLeftRadius, cs.borderTopRightRadius, cs.borderBottomRightRadius, cs.borderBottomLeftRadius].map((v) => parseFloat(v));
         const vertical = d.classList.contains("vertical");
         const cross = vertical ? r.width : r.height;
         const eff = raw.map((v) => Math.min(v, Math.min(r.width, r.height) / 2));
-        return { testid: d.dataset.testid ?? null, vertical, w: Math.round(r.width), h: Math.round(r.height), radius: eff.map((v) => +v.toFixed(1)), pill: eff.every((e) => e >= cross / 2 - 1), state: d.classList.contains("collapsed") ? "folded" : "open" };
+        const where = d.closest("[data-story-card]") ? "card" : d.closest("[data-story-stage]") ? "stage" : "shell";
+        return { testid: d.dataset.testid ?? null, where, vertical, w: Math.round(r.width), h: Math.round(r.height), radius: eff.map((v) => +v.toFixed(1)), pill: eff.every((e) => e >= cross / 2 - 1), state: d.classList.contains("collapsed") ? "folded" : "open" };
     });
 
     // banned words in the rendered article text
@@ -261,7 +323,16 @@ const MEASURE = async ({ shotB64, vw, vh }) => {
             titleShare: tr ? +(tr.height / vh).toFixed(3) : null,
             titleToLede: tr && lr ? Math.round(lr.top - tr.bottom) : null,
             ledeWords: words(lp?.textContent ?? ""),
-            cardP: cards.reduce((s, c) => s + c.querySelectorAll("p").length, 0),
+            // A card is the preview, then the title (FORM.md section 3). A blurb is any
+            // paragraph or word in the card outside its preview; a component inside the
+            // preview keeps its own paragraphs (a Card's description, a live region).
+            cardP: cards.reduce((s, c) => {
+                const pv = c.querySelector("[data-card-preview]");
+                const ps = [...c.querySelectorAll("p")].filter((p) => !pv?.contains(p)).length;
+                const body = [...c.childNodes].filter((n) => n !== pv).map((n) => n.textContent).join(" ");
+                const title = c.querySelector("[data-route-label]")?.textContent ?? "";
+                return s + ps + Math.max(0, words(body) - words(title));
+            }, 0),
             cardImg: cards.reduce((s, c) => s + c.querySelectorAll("img").length, 0),
             cardRadius: [...new Set(cards.map((c) => getComputedStyle(c).borderTopLeftRadius + "/" + getComputedStyle(c).borderBottomRightRadius))],
             withPreview: cards.filter((c) => c.querySelector('[data-card-preview="live"]')).length,
@@ -294,6 +365,16 @@ const MEASURE = async ({ shotB64, vw, vh }) => {
         proseShare: +((pa * G * G) / vpArea).toFixed(3),
         imgInStage: stages.reduce((s, st) => s + st.querySelectorAll("img").length, 0),
         canvases: document.querySelectorAll("canvas").length,
+        canvasOwners: (() => {
+            const o = { shell: 0, stage: 0, card: 0, other: 0 };
+            for (const c of document.querySelectorAll("canvas")) {
+                if (c.closest(".shell-aurora")) o.shell++;
+                else if (c.closest("[data-story-card]")) o.card++;
+                else if (c.closest("[data-story-stage]")) o.stage++;
+                else o.other++;
+            }
+            return o;
+        })(),
         variantRows: variants ? variants.querySelectorAll(".story-variant-row").length : 0,
         variantLabels: variants ? [...variants.querySelectorAll(".story-variant-label")].map((l) => l.textContent.trim()) : [],
         variantP: variants ? variants.querySelectorAll("p").length : 0,
@@ -385,7 +466,16 @@ function rowsFor(route, cell, m, errors, extra) {
         add("L11", "every card specimen whole", L.specimensClipped === 0, L.specimensClipped);
         add("L9", "first row of cards in first screen", W ? null : L.firstRowInView, L.firstRowInView);
     }
-    if (!m.marked) return R;
+    const dockRow = () => add(11, "every dock a full pill", m.docks.every((d) => d.pill), m.docks.map((d) => `${d.where}:${d.testid ?? "dock"}:${d.state}:${d.w}x${d.h}:r${Math.min(...d.radius)}`).join(" "));
+    const C = m.canvasOwners;
+    const canvasLine = m.landing
+        ? (C.card > 0 ? C.shell === 0 && C.stage + C.other === 0 : C.shell + C.stage + C.other === 1)
+        : C.shell + C.stage + C.other + C.card === 1;
+    add("C1", m.landing ? "one live field; shell static where cards draw" : "exactly one live canvas", canvasLine, `shell ${C.shell} stage ${C.stage} card ${C.card} other ${C.other}`);
+    if (!m.marked) {
+        dockRow();
+        return R;
+    }
     const editorPage = !!m.editor;
     add(1, "words before stage ≤ 24", m.wordsBefore <= 24, m.wordsBefore);
     add("1b", "lede ≤ 16 words, one sentence", m.ledeWords <= (editorPage ? 12 : 16) && m.ledeSentences <= 1, `${m.ledeWords}w/${m.ledeSentences}s`);
@@ -400,7 +490,7 @@ function rowsFor(route, cell, m, errors, extra) {
     const minCr = m.contrast.length ? Math.min(...m.contrast.map((c) => c.cr)) : null;
     add(9, "header/label text ≥ 4.5:1", minCr === null ? null : minCr >= 4.5, minCr);
     add(10, "no banned words", m.banned.length === 0, m.banned.slice(0, 5).join(" ") || 0);
-    add(11, "every dock a full pill", m.docks.every((d) => d.pill), m.docks.map((d) => `${d.testid ?? "dock"}:${d.state}:${d.w}x${d.h}:r${Math.min(...d.radius)}`).join(" "));
+    dockRow();
     add(14, `page ≤ ${W ? 3 : 2} screens`, m.screens <= (W ? 3 : 2), m.screens);
     if (editorPage) {
         const E = m.editor;
@@ -442,6 +532,7 @@ export async function run() {
                     await page.goto(BASE + route, { waitUntil: "load", timeout: 45000 });
                     await page.waitForSelector("#demo-main", { timeout: 15000 });
                     await sleep(2500);
+                    if (PLANTS.length) await page.evaluate(PLANT, PLANTS);
                     const shot = (await page.screenshot({ type: "png" })).toString("base64");
                     const m = await page.evaluate(MEASURE, { shotB64: shot, vw: C.viewport.width, vh: C.viewport.height });
                     const tracks = route === "/display/buttons" ? await page.evaluate(TRACKS) : null;
