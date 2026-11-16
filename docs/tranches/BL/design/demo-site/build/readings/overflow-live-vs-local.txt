@@ -1,0 +1,24 @@
+https://glass.babb.dev pass m390 /data/virtual-section [12] console: 0
+https://glass.babb.dev FAIL m390 /data/virtual-section [13] no sideways overflow: overflow
+https://glass.babb.dev pass m390 /motion/deck [12] console: 0
+https://glass.babb.dev FAIL m390 /motion/deck [13] no sideways overflow: overflow
+https://glass.babb.dev FAIL m390 /dock/dock-search [12] console: ["error: [demo] app error https://vuejs.org/error-reference/#runtime-3 TypeError: e.addEventListener is not a function\n    at i.immediate (https://glass.babb.dev/assets/"]
+https://glass.babb.dev pass m390 /dock/dock-search [13] no sideways overflow: ok
+https://glass.babb.dev pass d1440 /data/virtual-section [12] console: 0
+https://glass.babb.dev pass d1440 /data/virtual-section [13] no sideways overflow: ok
+https://glass.babb.dev pass d1440 /motion/deck [12] console: 0
+https://glass.babb.dev pass d1440 /motion/deck [13] no sideways overflow: ok
+https://glass.babb.dev FAIL d1440 /dock/dock-search [12] console: ["error: [demo] app error https://vuejs.org/error-reference/#runtime-3 TypeError: e.addEventListener is not a function\n    at i.immediate (https://glass.babb.dev/assets/"]
+https://glass.babb.dev pass d1440 /dock/dock-search [13] no sideways overflow: ok
+http://localhost:5451 pass m390 /data/virtual-section [12] console: 0
+http://localhost:5451 FAIL m390 /data/virtual-section [13] no sideways overflow: overflow
+http://localhost:5451 pass m390 /motion/deck [12] console: 0
+http://localhost:5451 FAIL m390 /motion/deck [13] no sideways overflow: overflow
+http://localhost:5451 FAIL m390 /dock/dock-search [12] console: ["error: [demo] app error https://vuejs.org/error-reference/#runtime-3 TypeError: e.addEventListener is not a function\n    at In.i.immediate (http://localhost:5451/asset"]
+http://localhost:5451 pass m390 /dock/dock-search [13] no sideways overflow: ok
+http://localhost:5451 pass d1440 /data/virtual-section [12] console: 0
+http://localhost:5451 pass d1440 /data/virtual-section [13] no sideways overflow: ok
+http://localhost:5451 pass d1440 /motion/deck [12] console: 0
+http://localhost:5451 pass d1440 /motion/deck [13] no sideways overflow: ok
+http://localhost:5451 FAIL d1440 /dock/dock-search [12] console: ["error: [demo] app error https://vuejs.org/error-reference/#runtime-3 TypeError: e.addEventListener is not a function\n    at In.i.immediate (http://localhost:5451/asset"]
+http://localhost:5451 pass d1440 /dock/dock-search [13] no sideways overflow: ok

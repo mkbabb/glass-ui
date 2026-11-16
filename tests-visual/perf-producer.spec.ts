@@ -188,12 +188,12 @@ test("A′-1 — a Blob mount ships exactly ONE canvas + ONE live context, relea
     // Unmount (route away) → the context is released (no orphan). We cannot read the
     // disposed context directly, but the producer source disposes onUnmounted (the
     // gate's W3 asserts it); here we confirm routing away removes the wrapper.
-    await goto(page, "/foundations/intro");
+    await goto(page, "/");
     const afterUnmount = await page.evaluate(
         () => document.querySelectorAll(".goo-blob-wrapper canvas").length,
     );
     readback.a1_canvasesAfterUnmount = afterUnmount;
-    // The blob route's wrappers are gone; any Blob on /foundations/intro is its
+    // The blob route's wrappers are gone; any Blob on / is its
     // own mount (still one-canvas-per-wrapper by construction).
     expect(afterUnmount, "the blob-route canvases are released on unmount (no orphan survivor)").toBeLessThanOrEqual(
         mounted.perWrapper.reduce((s, w) => s + w.canvases, 0),
@@ -267,7 +267,7 @@ test("A′-5 — the aurora canvas backing-store dimension is at the SUB-2× was
 test("A′-6 — a spacious dock's icon glyph computes larger than a compact dock's", async ({
     page,
 }) => {
-    await goto(page, "/dock/overview");
+    await goto(page, "/dock/chrome");
 
     const glyph = await page.evaluate(() => {
         const dock = document.querySelector(".glass-dock") as HTMLElement | null;

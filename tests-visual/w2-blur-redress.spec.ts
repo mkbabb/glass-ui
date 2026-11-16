@@ -206,10 +206,10 @@ async function readOverlayRadius(page: Page): Promise<number> {
 // ═════════════════════════════════════════════════════════════════════════════════
 test.describe("W2 blur redress — compiled-CSS capture (Chromium → WebKit harness)", () => {
     test("capture the demo cascade into w2-compiled.css", async ({ page }) => {
-        // /containers/drawer mounts the Drawer (its component CSS injects) — the glass
-        // tokens + drawer/styles.css scrim rules are globally imported regardless, so
+        // /containers/sheet mounts the Sheet (its component CSS injects) — the glass
+        // tokens + scrim rules are globally imported regardless, so
         // one route's stable CSSOM carries the whole W2 surface.
-        await page.goto(`${DEMO_URL}/containers/drawer`, {
+        await page.goto(`${DEMO_URL}/containers/sheet`, {
             waitUntil: "networkidle",
         });
         let prev = -1;
@@ -265,7 +265,7 @@ test.describe("W2 blur redress — calm ladder, overlay every-DPR, deep continuu
         page,
         browser,
     }, info) => {
-        await page.goto(`${DEMO_URL}/containers/drawer`, {
+        await page.goto(`${DEMO_URL}/containers/sheet`, {
             waitUntil: "networkidle",
         });
 
@@ -395,7 +395,7 @@ async function proveOverlayAt2Dppx(browser: Browser): Promise<{
     });
     try {
         const page = await ctx.newPage();
-        await page.goto(`${DEMO_URL}/containers/drawer`, {
+        await page.goto(`${DEMO_URL}/containers/sheet`, {
             waitUntil: "networkidle",
         });
         const devicePixelRatio = await page.evaluate(() => window.devicePixelRatio);
@@ -541,31 +541,6 @@ test.describe("W2 blur redress — immersive stage scrim on real receivers (Chro
             await shot(page, info, `dialog-immersive-${vp.name}`);
         }
         record(info, "dialog-immersive-scrim", probes);
-    });
-
-    test("Drawer (new story) — scrim computes fixed 14px × --glass-level, no --stage-t coupling, no saturation", async ({
-        page,
-    }, info) => {
-        await page.goto(`${DEMO_URL}/containers/drawer`, {
-            waitUntil: "networkidle",
-        });
-        await page
-            .getByRole("button", { name: /open immersive drawer/i })
-            .first()
-            .click();
-        await page.locator(SCRIM).first().waitFor({ state: "attached" });
-        await settleFrames(page);
-
-        const probes: Record<string, unknown> = {};
-        for (const vp of VIEWPORTS) {
-            await page.setViewportSize({ width: vp.width, height: vp.height });
-            await settleFrames(page);
-            const probe = await probeScrim(page);
-            probes[vp.name] = probe;
-            assertScrim(probe, `drawer@${vp.name}`);
-            await shot(page, info, `drawer-immersive-${vp.name}`);
-        }
-        record(info, "drawer-immersive-scrim", probes);
     });
 
     test("CommandDialog is NOT a receiver — opening the command palette mounts no immersive scrim", async ({

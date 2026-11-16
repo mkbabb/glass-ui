@@ -15,8 +15,6 @@
 //          (deep past the ~126px header) the pinned .story-hero-shrink cluster stays PINNED
 //          near the scroller top (born-RED: it scrolled away with the 126px header before
 //          the display:contents carve) and its ::before frosted plate lifts painted.
-//   PC-3 — the depth-keyed size hierarchy: across a category's depths the resolved
-//          hero <h1> font-size STEPS DOWN by depth — D1 landing > D2 main > D3 sub.
 //   PC-4 — PRM: with prefers-reduced-motion: reduce the scale stays 1 across scroll.
 //   PC-5 — exactly ONE chassis glass card per page (off the PC3 allowlist).
 //   PC-6 — the section-landing + inline preview: each <SectionPreviewCard> renders an
@@ -43,12 +41,8 @@ const DISPLAY4_FLOOR_PX = 40; // a conservative floor (clamp min) — display-4 
 const SAMPLE = [
     { route: "/substrates", depth: "D1", subpath: "@mkbabb/glass-ui/aurora" },
     { route: "/substrates/aurora", depth: "D2", subpath: "@mkbabb/glass-ui/aurora" },
-    { route: "/substrates/glass-panel", depth: "D3", subpath: "@mkbabb/glass-ui/glass-panel" },
     { route: "/forms", depth: "D1", subpath: "@mkbabb/glass-ui/forms" },
     { route: "/forms/inputs", depth: "D2", subpath: "@mkbabb/glass-ui/forms" },
-    { route: "/forms/label", depth: "D3", subpath: "@mkbabb/glass-ui/label" },
-    { route: "/foundations/intro", depth: "D0", subpath: "/foundations/intro" },
-    { route: "/data/avatar", depth: "D3", subpath: "/data/avatar" },
 ];
 
 function heroScale(matrix: string): number {
@@ -155,7 +149,7 @@ test.describe("BC.W-PAGE-CHASSIS — the ONE standardized page idiom (π)", () =
         // it scrolled AWAY with the 126px header (a strongly negative offset). And the
         // pinned plate (.story-hero-shrink::before) fades in so a stuck header lifts
         // PAINTED, not transparent.
-        const CONTENT_ROUTES = ["/forms/inputs", "/data/avatar"];
+        const CONTENT_ROUTES = ["/forms/inputs"];
         const perRoute: Record<string, unknown> = {};
         for (const route of CONTENT_ROUTES) {
             await page.goto(route, { waitUntil: "domcontentloaded" });
@@ -208,33 +202,6 @@ test.describe("BC.W-PAGE-CHASSIS — the ONE standardized page idiom (π)", () =
         paired["PC-STICKY"] = perRoute;
     });
 
-    test("PC-3 — the depth-keyed title size hierarchy (D1 > D2 > D3)", async ({
-        page,
-    }) => {
-        // substrates: /substrates (D1 hero) > /substrates/aurora (D2 hero) is a
-        // marquee-band TIE at `hero`; the legible step is the D3 calm sub. We assert
-        // the forms band where the step is unambiguous: D1 hero > D2 (5) > D3 (4).
-        const band = [
-            { route: "/forms", tier: "D1" },
-            { route: "/forms/inputs", tier: "D2" },
-            { route: "/forms/label", tier: "D3" },
-        ];
-        const sizes: Record<string, number> = {};
-        for (const { route, tier } of band) {
-            await page.goto(route, { waitUntil: "domcontentloaded" });
-            await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
-            await page.waitForTimeout(400);
-            const fs = await page.evaluate(() => {
-                const h1 = document.querySelector("article h1.story-hero-title");
-                return h1 ? parseFloat(getComputedStyle(h1).fontSize) : 0;
-            });
-            sizes[tier] = fs;
-        }
-        paired["PC-3"] = sizes;
-        expect(sizes.D1, "D1 landing > D2 main").toBeGreaterThan(sizes.D2);
-        expect(sizes.D2, "D2 main > D3 sub").toBeGreaterThan(sizes.D3);
-    });
-
     test("PC-4 — PRM: the hero does NOT shrink under reduced-motion", async ({
         browser,
     }) => {
@@ -268,7 +235,7 @@ test.describe("BC.W-PAGE-CHASSIS — the ONE standardized page idiom (π)", () =
 
     test("PC-5 — exactly ONE chassis glass card per page", async ({ page }) => {
         const perRoute: Record<string, number> = {};
-        for (const route of ["/forms/inputs", "/forms/label", "/data/avatar"]) {
+        for (const route of ["/forms/inputs"]) {
             await page.goto(route, { waitUntil: "domcontentloaded" });
             await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
             await page.waitForTimeout(400);

@@ -52,15 +52,6 @@ export const FOURIER_CHAIN_HUE_SWEEP = 0.35;
 export const FOURIER_SCAFFOLD_STROKE_FRAC = 0.4;
 
 /**
- * The three mark-stroke rungs in CSS px. Three rungs, three visibly distinct pictures.
- * Deliberately OFF the `/fourier-field` barrel: nothing clamps `markStroke` to it, and no
- * consumer reads it. The two in-repo readers (the studio story's segmented control and
- * the smoke battery) deep-import this module, which is the house idiom for a module-level
- * constant with in-repo readers and no consumer need.
- */
-export const FOURIER_STROKE_RUNGS = [4, 8, 12] as const;
-
-/**
  * The flick's advance cap in turns. A full flick advances the clock by at most half a
  * figure (`|∫flick| = v/ω² ≤ FOURIER_FLICK_TURNS`), so the machine stays checkable: the
  * reader can always see where the head went.

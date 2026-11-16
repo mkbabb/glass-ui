@@ -1,23 +1,21 @@
 // AX.W00 — the π-lane SCENES manifest.
 //
-// keyframes I-1/I-2 anti-drift mandate: the SCENES list is RE-SOURCED from the
-// source-of-truth (`demo/stories/manifest.ts`), NEVER a drifted hand-list. The
-// demo manifest is browser/Vite-resolved (`import.meta.glob` + lucide SFC lazy
-// loaders), so a Node-side import would pull a Vite-only graph; instead we STATIC-
-// PARSE the canonical `s("<cat>", "<id>", …)` call sites out of the manifest source
-// text. Route paths are `/${category}/${story}` (demo/router.ts buildRoutes). If a
-// story id/category is renamed in the manifest, this re-source tracks it — there is
-// no second hand-list to drift.
+// The SCENES list is re-sourced from the source of truth, the `routes.ts` file in
+// each `demo/stories/<section>/` directory, never a hand list. The demo manifest is
+// Vite-resolved (`import.meta.glob`), so a Node-side import would pull a Vite-only
+// graph; instead each section's `id` and its rows' `{ id: "…", title` are parsed out
+// of the source text. Route paths are `/${section}/${row}` (demo/router.ts). A
+// renamed or removed row fails `resolveScene` rather than driving a dead route.
 //
 // The 3 target π scenes (aurora, blob, dock) are RESOLVED against the re-sourced
 // set so a manifest rename fails the resolution rather than silently driving a dead
 // route.
 
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const LIBRARY_ROOT = fileURLToPath(new URL("..", import.meta.url));
-const MANIFEST_PATH = `${LIBRARY_ROOT}demo/stories/manifest.ts`;
+const STORIES_DIR = `${LIBRARY_ROOT}demo/stories`;
 const PRESETS_PATH = `${LIBRARY_ROOT}demo/stories/substrates/aurora/presets.ts`;
 
 export interface Scene {
@@ -27,27 +25,22 @@ export interface Scene {
     story: string;
 }
 
-/**
- * Re-source every navigable scene from the demo manifest source-of-truth by
- * static-parsing the `s("<cat>", "<id>", …)` helper call sites. NOT a hand list.
- */
+/** Re-source every navigable scene from each section's `routes.ts`. NOT a hand list. */
 export function sourceScenes(): Scene[] {
-    const src = readFileSync(MANIFEST_PATH, "utf8");
-    // The canonical row helper: `s("category", "id", "Title", …)`.
-    const RE = /\bs\(\s*"([a-z0-9-]+)"\s*,\s*"([a-z0-9-]+)"/g;
     const scenes: Scene[] = [];
-    const seen = new Set<string>();
-    for (const m of src.matchAll(RE)) {
-        const category = m[1]!;
-        const story = m[2]!;
-        const path = `/${category}/${story}`;
-        if (seen.has(path)) continue;
-        seen.add(path);
-        scenes.push({ path, category, story });
+    for (const dir of readdirSync(STORIES_DIR, { withFileTypes: true })) {
+        const file = `${STORIES_DIR}/${dir.name}/routes.ts`;
+        if (!dir.isDirectory() || !existsSync(file)) continue;
+        const src = readFileSync(file, "utf8");
+        const category = src.match(/\bid:\s*"([a-z0-9-]+)",\s*\n\s*title:/)?.[1];
+        if (!category) continue;
+        for (const m of src.matchAll(/\{ id: "([a-z0-9-]+)", title:/g)) {
+            scenes.push({ path: `/${category}/${m[1]}`, category, story: m[1]! });
+        }
     }
     if (scenes.length === 0) {
         throw new Error(
-            `pi-manifest: re-source FAILED — no s("cat","id") rows parsed from ${MANIFEST_PATH}. The manifest helper shape moved; the SCENES re-source is the source-of-truth, do NOT hand-list.`,
+            `pi-manifest: re-source FAILED — no rows parsed from ${STORIES_DIR}/*/routes.ts. The row shape moved; do NOT hand-list.`,
         );
     }
     return scenes;
@@ -80,13 +73,9 @@ export const PI_TARGETS = {
         return resolveScene("substrates", "blob");
     },
     get dock(): Scene {
-        // AY.W-DOCK2 (D7) — the REAL collapsible dock is `("dock", "overview")`.
-        // The prior `("navigation", "dock")` resolved to a NON-DOCK page (the
-        // `navigation` category has no `dock` story — tabs/deck-progress/header-
-        // ribbon/carousel only), so `dock-animation-live.spec.ts`'s
-        // `page.goto(PI_TARGETS.dock.path)` landed on a catch-all route and the
-        // entering-child morph was NEVER sampled (the twin of the source-arm route bug).
-        return resolveScene("dock", "overview");
+        // The REAL collapsible dock is the app-chrome page, `("dock", "chrome")`:
+        // `collapse="closed" fit-content`, folding to its seal when idle.
+        return resolveScene("dock", "chrome");
     },
     // AY.W-COHERE — the constellation + fourier substrate routes the set-cohesion
     // gate samples (the focal ring + the comet head accent marks; the recession

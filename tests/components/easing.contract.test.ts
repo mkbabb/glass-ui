@@ -510,16 +510,10 @@ describe("G-E3 VOID+CEL — one column, one plot, a canvas that tracks its conta
         expect(display).not.toMatch(/<svg[^>]*height=/);
     });
 
-    it("renders exactly one plot and one editor on the consumer route", () => {
+    it("renders exactly one plot inside the editor", () => {
         const wrapper = mountPicker();
         expect(wrapper.findAll('[data-slot="easing-curve"]')).toHaveLength(1);
         wrapper.unmount();
-
-        const story = readFileSync(
-            resolve(__dirname, "../../demo/stories/motion/curve-gallery.vue"),
-            "utf-8",
-        );
-        expect([...story.matchAll(/<EasingPicker[\s/>]/g)]).toHaveLength(1);
     });
 });
 

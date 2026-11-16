@@ -144,23 +144,6 @@ test.describe("no-shadcn-default (the reskinned ui/ surfaces read the glass/pape
             assertMaterial(`Toggle outline (${mode})`, surf);
         });
 
-        // ── TagsInput active item → the warm .focus-ring, NOT the cold ring-ring ──────────────
-        test(`${mode}: TagsInput active item resolves the warm focus ring (NOT cold ring-ring) — /data/tags-input`, async ({
-            page,
-        }) => {
-            await page.goto("/data/tags-input", { waitUntil: "networkidle" });
-            await setMode(page, mode);
-            // Focus a tag item so its active ring paints; once BC.W-CONTROL-SMOOTH lands, the
-            // active ring resolves the warm --focus-ring-shadow box-shadow, NOT the cold ring-ring
-            // outline + ring-offset. The item chip itself resolves the glass-well register.
-            const item = page.locator('[role="listitem"], [data-tags-input-item], li').first();
-            const surf = await readSurface(item);
-            // The chip material (warm, translucent) — the active-ring colour is asserted via the
-            // warm rim (the box-shadow must be the warm --focus-ring-shadow, non-none).
-            assertMaterial(`TagsInput item (${mode})`, surf);
-        });
-
-        // ── Switch thumb → the warm material, NOT the page-background neutral ─────────────────
         test(`${mode}: Switch thumb resolves the warm material (NOT the page-background neutral) — /forms/checks`, async ({
             page,
         }) => {

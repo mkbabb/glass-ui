@@ -1,110 +1,53 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { LabeledSlider, LabeledSwitch } from "@glass/components/labeled-field";
 import StoryPage from "../../chassis/page/StoryPage.vue";
-import StorySection from "../../chassis/section/StorySection.vue";
-import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
-import {
-    LabeledField,
-    LabeledInput,
-    LabeledSlider,
-    LabeledSwitch,
-} from "@glass/components/labeled-field";
-import { Textarea } from "@glass/components/textarea";
+import StoryStage from "../../chassis/stage/StoryStage.vue";
+import StoryVariants from "../../chassis/variants/StoryVariants.vue";
+import StoryVariantRow from "../../chassis/variants/StoryVariantRow.vue";
+import StoryCode from "../../chassis/code/StoryCode.vue";
+import LabeledFieldStage from "./labeled-field.stage.vue";
 
-const name = ref("");
-const email = ref("not-an-address");
-const bio = ref("");
 const intensity = ref(64);
-const enabled = ref(true);
+const grain = ref(true);
+
+const snippet = `<LabeledInput
+    v-model="email"
+    label="Email"
+    description="Used to sign in."
+    requirement="required"
+    type="email"
+    :invalid="!valid"
+>
+    <template #error>Enter a valid address.</template>
+</LabeledInput>`;
 </script>
 
 <template>
     <StoryPage>
-        <StorySection
-            label="field anatomy"
-            blurb="One visible label, optional supporting copy, the control, and an explicit error. Requirement and state stay aligned with the control rather than becoming decoration."
-        >
-            <ShowcaseFrame pad="lg">
-                <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-                    <LabeledInput v-model="name" label="Workspace name" />
-                    <LabeledInput
-                        v-model="name"
-                        label="Display name"
-                        description="Shown to collaborators in shared workspaces."
-                        requirement="optional"
-                    />
-                    <LabeledInput
-                        v-model="name"
-                        label="Release name"
-                        description="Names the published revision."
-                        requirement="required"
-                    />
-                    <LabeledInput
-                        v-model="email"
-                        label="Notification email"
-                        description="Used only for release notices."
-                        type="email"
-                        invalid
-                    >
-                        <template #error>Enter a valid email address.</template>
-                    </LabeledInput>
-                    <LabeledInput
-                        model-value="Locked by policy"
-                        label="Organization"
-                        description="Managed by your workspace administrator."
-                        disabled
-                    />
-                </div>
-            </ShowcaseFrame>
-        </StorySection>
+        <template #stage>
+            <StoryStage size="fit">
+                <LabeledFieldStage />
+            </StoryStage>
+        </template>
 
-        <StorySection
-            label="control adapters"
-            blurb="Thin adapters share the same field anatomy while Input, Slider, and Switch retain their own behavior and paint. There is no select adapter — an items array is a preset, not a composition — so a select is written the way every other uncovered control is: through the direct slot beside these three."
-        >
-            <ShowcaseFrame pad="lg">
-                <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-                    <LabeledSlider
-                        v-model="intensity"
-                        :min="0"
-                        :max="100"
-                        label="Intensity"
-                        description="Balances the procedural field against the content."
-                    />
-                    <LabeledSwitch
-                        v-model="enabled"
-                        label="Paper grain"
-                        description="Adds a quiet material texture above the field."
-                    />
-                    <LabeledField
-                        label="Release notes"
-                        description="A direct slot covers controls outside the adapter set."
-                    >
-                        <template #default="{ controlId, describedBy }">
-                            <Textarea
-                                :id="controlId"
-                                v-model="bio"
-                                :aria-describedby="describedBy"
-                                                                placeholder="Summarize this revision…"
-                            />
-                        </template>
-                    </LabeledField>
-                </div>
-            </ShowcaseFrame>
-        </StorySection>
+        <template #variants>
+            <StoryVariants>
+                <StoryVariantRow label="Controls">
+                    <LabeledSlider v-model="intensity" class="labeled-row-item" :min="0" :max="100" label="Intensity" />
+                    <LabeledSwitch v-model="grain" class="labeled-row-item" label="Paper grain" />
+                </StoryVariantRow>
+            </StoryVariants>
+        </template>
 
-        <StorySection
-            label="responsive composition"
-            blurb="The horizontal field preserves label-before-control document order and returns to the same stacked anatomy at the narrow viewport."
-        >
-            <ShowcaseFrame pad="lg">
-                <LabeledInput
-                    v-model="name"
-                    label="Project title"
-                    description="Horizontal with room; stacked when the viewport narrows."
-                    layout="horizontal"
-                />
-            </ShowcaseFrame>
-        </StorySection>
+        <template #code>
+            <StoryCode :code="snippet" />
+        </template>
     </StoryPage>
 </template>
+
+<style scoped>
+.labeled-row-item {
+    inline-size: 14rem;
+}
+</style>

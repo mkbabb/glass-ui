@@ -47,7 +47,7 @@ const STUDIOS = [
     { route: "/substrates/blob", id: "blob", presetThumbs: false },
     { route: "/substrates/fourier-field", id: "fourier-field", presetThumbs: false },
     // liquid-grid DELETED at BJ.W-REDUCE-DELETE (REDUCTION W3 — the ruled clean
-    // delete: component + /liquid-grid subpath + /substrates/liquid-grid route) —
+    // delete: component + /liquid-grid subpath + its route) —
     // off the studio set.
 ] as const;
 

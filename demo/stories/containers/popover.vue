@@ -1,266 +1,51 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
-import StorySection from "../../chassis/section/StorySection.vue";
-import { computed, ref } from "vue";
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-    type PopoverVirtualElement,
-} from "@glass/components/popover";
-import { Button } from "@glass/components/button";
-import { Surface } from "@glass/components/surface";
-import { Input } from "@glass/components/input";
-import { Label } from "@glass/components/label";
+import StoryStage from "../../chassis/stage/StoryStage.vue";
+import StoryVariants from "../../chassis/variants/StoryVariants.vue";
+import StoryVariantRow from "../../chassis/variants/StoryVariantRow.vue";
+import StoryCode from "../../chassis/code/StoryCode.vue";
+import PopoverStage from "./popover.stage.vue";
 
-// reconcile — the containers band's ONE coherent --section-color-2
-// blue identity. PH3-safe (inline borderLeft, not the border-l-[3px] +
+type Mode = "press" | "hover" | "card";
 
-type Side = "top" | "right" | "bottom" | "left";
+const mode = ref<Mode>("press");
 
-// A popover on a point that is not an element: the pointer's position over a field,
-// the way a map hover card anchors to a coordinate.
-const point = ref({ x: 0, y: 0 });
-const hovering = ref(false);
-const anchor = computed<PopoverVirtualElement>(() => {
-    const { x, y } = point.value;
-    return { getBoundingClientRect: () => new DOMRect(x, y, 0, 0) };
-});
-function track(event: PointerEvent): void {
-    point.value = { x: event.clientX, y: event.clientY };
-    hovering.value = true;
-}
-const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
+const MODES: { value: Mode; label: string }[] = [
+    { value: "press", label: "Press" },
+    { value: "hover", label: "Hover" },
+    { value: "card", label: "Hover card" },
+];
+
+const snippet = `<Popover>
+    <PopoverTrigger as-child>
+        <Button>Dimensions</Button>
+    </PopoverTrigger>
+    <PopoverContent class="w-72">
+        <Label for="w">Width</Label>
+        <Input id="w" model-value="8" />
+    </PopoverContent>
+</Popover>
+
+<Popover trigger="hover">…</Popover>`;
 </script>
 
 <template>
     <StoryPage>
+        <template #stage>
+            <StoryStage size="tall">
+                <PopoverStage :mode="mode" open-on-load />
+            </StoryStage>
+        </template>
 
-        <div class="grid gap-12">
-            <StorySection heading="Form pod" gap="lg">
-                <p class="text-small text-muted-foreground">
-                    A typical two-field editor anchored to a button.
-                </p>
-                <!-- The lone trigger is wrapped in the `flex flex-wrap` idiom so it
-                     sizes to its content, never balloons to the article width (the
-                     StorySection body uses `align-items: stretch`). -->
-                <div class="flex flex-wrap gap-3">
-                    <Popover>
-                        <PopoverTrigger as-child>
-                            <Button>Dimensions</Button>
-                        </PopoverTrigger>
-                        <PopoverContent class="w-80">
-                            <div class="grid gap-3">
-                                <div>
-                                    <h4 class="font-display text-base">Dimensions</h4>
-                                    <p class="text-micro text-muted-foreground">
-                                        Set width and height in grid cells.
-                                    </p>
-                                </div>
-                                <div
-                                    class="grid grid-cols-[1fr_auto] items-center gap-3"
-                                >
-                                    <Label for="w">Width</Label>
-                                    <Input id="w" model-value="8" class="w-20" />
-                                    <Label for="h">Height</Label>
-                                    <Input id="h" model-value="4" class="w-20" />
-                                </div>
-                            </div>
-                        </PopoverContent>
-                    </Popover>
-                </div>
-            </StorySection>
+        <template #variants>
+            <StoryVariants>
+                <StoryVariantRow v-model="mode" label="Opens on" :options="MODES" />
+            </StoryVariants>
+        </template>
 
-            <StorySection heading="Pointer-adaptive preview" gap="lg">
-                <p class="text-small text-muted-foreground">
-                    Hover or focus on a fine pointer; tap on a coarse pointer. The
-                    same public trigger promotes to a tap-toggle surface when hover
-                    is unavailable, so the content never becomes pointer-exclusive.
-                </p>
-                <Surface
-                    tier="quiet"
-                    surface="veil"
-                    class="flex min-h-40 items-center justify-center p-5"
-                >
-                    <Popover trigger="hover" :open-delay="120" :close-delay="120">
-                        <PopoverTrigger as-child>
-                            <Button>Inspect Fourier profile</Button>
-                        </PopoverTrigger>
-                        <PopoverContent
-                            aria-label="Fourier profile"
-                            class="w-72"
-                        >
-                            <div class="grid gap-3">
-                                <div>
-                                    <h4 class="font-display text-base">
-                                        Fourier profile
-                                    </h4>
-                                    <p class="text-micro text-muted-foreground">
-                                        A stable harmonic blend for quiet motion.
-                                    </p>
-                                </div>
-                                <dl class="grid grid-cols-2 gap-x-4 gap-y-2 text-micro">
-                                    <dt class="text-muted-foreground">Terms</dt>
-                                    <dd class="font-mono text-right">8</dd>
-                                    <dt class="text-muted-foreground">Falloff</dt>
-                                    <dd class="font-mono text-right">1.62</dd>
-                                    <dt class="text-muted-foreground">Loop</dt>
-                                    <dd class="font-mono text-right">24 s</dd>
-                                </dl>
-                            </div>
-                        </PopoverContent>
-                    </Popover>
-                </Surface>
-            </StorySection>
-
-            <StorySection heading="Placement" gap="lg">
-                <p class="text-small text-muted-foreground">
-                    <code class="font-mono text-micro">side</code> controls the preferred
-                    edge; Floating UI flips if there's not enough room.
-                </p>
-                <div class="grid place-items-center py-12">
-                    <div class="grid grid-cols-3 gap-6">
-                        <div />
-                        <Popover>
-                            <PopoverTrigger as-child>
-                                <Button>Top</Button>
-                            </PopoverTrigger>
-                            <PopoverContent side="top">
-                                <p class="font-mono text-micro">side=top</p>
-                            </PopoverContent>
-                        </Popover>
-                        <div />
-                        <Popover>
-                            <PopoverTrigger as-child>
-                                <Button>Left</Button>
-                            </PopoverTrigger>
-                            <PopoverContent side="left">
-                                <p class="font-mono text-micro">side=left</p>
-                            </PopoverContent>
-                        </Popover>
-                        <div />
-                        <Popover>
-                            <PopoverTrigger as-child>
-                                <Button>Right</Button>
-                            </PopoverTrigger>
-                            <PopoverContent side="right">
-                                <p class="font-mono text-micro">side=right</p>
-                            </PopoverContent>
-                        </Popover>
-                        <div />
-                        <Popover>
-                            <PopoverTrigger as-child>
-                                <Button>Bottom</Button>
-                            </PopoverTrigger>
-                            <PopoverContent side="bottom">
-                                <p class="font-mono text-micro">side=bottom</p>
-                            </PopoverContent>
-                        </Popover>
-                        <div />
-                    </div>
-                </div>
-                <div
-                    class="flex flex-wrap items-center gap-3 pt-4 border-t border-border"
-                >
-                    <span class="text-micro text-muted-foreground font-mono">
-                        align:
-                    </span>
-                    <Popover v-for="side in sides" :key="side">
-                        <PopoverTrigger as-child>
-                            <Button emphasis="quiet" size="sm" class="capitalize">
-                                {{ side }}
-                            </Button>
-                        </PopoverTrigger>
-                        <PopoverContent
-                            :align="
-                                side === 'left'
-                                    ? 'start'
-                                    : side === 'right'
-                                      ? 'end'
-                                      : 'center'
-                            "
-                            class="w-auto"
-                        >
-                            <p class="font-mono text-micro">align variant</p>
-                        </PopoverContent>
-                    </Popover>
-                </div>
-            </StorySection>
-
-            <StorySection heading="On a point" gap="lg">
-                <p class="text-small text-muted-foreground">
-                    <code class="font-mono text-micro">reference</code> anchors the
-                    content to anything with a
-                    <code class="font-mono text-micro">getBoundingClientRect()</code>:
-                    here, the pointer over the field. It flips at the viewport's edge
-                    and closes on a press outside, as it does on a trigger.
-                </p>
-                <div
-                    class="h-56 rounded-card bg-muted/40"
-                    @pointermove="track"
-                    @pointerleave="hovering = false"
-                />
-                <Popover v-model:open="hovering">
-                    <!-- a hover card keeps focus where it is -->
-                    <PopoverContent
-                        :reference="anchor"
-                        side="top"
-                        class="w-auto"
-                        @open-auto-focus="(event: Event) => event.preventDefault()"
-                    >
-                        <p class="font-mono text-micro">
-                            {{ Math.round(point.x) }}, {{ Math.round(point.y) }}
-                        </p>
-                    </PopoverContent>
-                </Popover>
-            </StorySection>
-
-            <StorySection heading="Trigger states" gap="lg">
-                <p class="text-small text-muted-foreground">
-                    The trigger is an ordinary
-                    <code class="font-mono text-micro">Button</code> — any variant, size,
-                    or the disabled edge. A disabled trigger never opens and drops out
-                    of the tab order.
-                </p>
-                <Surface
-                    tier="quiet"
-                    surface="veil"
-                    class="flex flex-wrap items-center gap-3 p-5"
-                >
-                    <Popover>
-                        <PopoverTrigger as-child>
-                            <Button>Primary</Button>
-                        </PopoverTrigger>
-                        <PopoverContent class="w-auto">
-                            <p class="text-small">Solid trigger.</p>
-                        </PopoverContent>
-                    </Popover>
-                    <Popover>
-                        <PopoverTrigger as-child>
-                            <Button size="sm">Outline · sm</Button>
-                        </PopoverTrigger>
-                        <PopoverContent class="w-auto">
-                            <p class="text-small">Compact outline trigger.</p>
-                        </PopoverContent>
-                    </Popover>
-                    <Popover>
-                        <PopoverTrigger as-child>
-                            <Button emphasis="quiet">Ghost</Button>
-                        </PopoverTrigger>
-                        <PopoverContent class="w-auto">
-                            <p class="text-small">Ghost trigger.</p>
-                        </PopoverContent>
-                    </Popover>
-                    <Popover>
-                        <PopoverTrigger as-child>
-                            <Button disabled>Disabled</Button>
-                        </PopoverTrigger>
-                        <PopoverContent class="w-auto">
-                            <p class="text-small">Never reached.</p>
-                        </PopoverContent>
-                    </Popover>
-                </Surface>
-            </StorySection>
-        </div>
+        <template #code>
+            <StoryCode :code="snippet" />
+        </template>
     </StoryPage>
 </template>

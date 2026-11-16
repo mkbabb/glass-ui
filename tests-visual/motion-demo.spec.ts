@@ -89,58 +89,6 @@ async function setDark(page: Page, dark: boolean): Promise<void> {
 }
 
 test.describe("motion-demo (π lane — the robust /motion render, fail-CLOSED)", () => {
-    // ── CURVE-FAMILIES-ALL: the expanded gallery renders all 10 families ─────────
-    for (const dark of [false, true]) {
-        const mode = dark ? "dark" : "light";
-        test(`gallery renders the full 10-family taxonomy + real-twin plots (${mode})`, async ({ page }) => {
-            await page.setViewportSize({ width: 1280, height: 900 });
-            await page.goto("/motion/curve-gallery", { waitUntil: "networkidle" });
-            await setDark(page, dark);
-
-            // the family tabs (the SegmentedTabs strip) carry all 10 family labels.
-            const REQUIRED = ["Standard", "Sine", "Quad", "Cubic", "Expo", "Circ", "Back", "Bounce", "Steps", "Custom"];
-            const text = await page.locator("body").innerText();
-            for (const fam of REQUIRED) {
-                expect(text, `family ${fam} must render`).toContain(fam);
-            }
-
-            // the active family plots a grid of real-twin polylines (not a fake hint-SVG).
-            const polylines = page.locator("svg polyline");
-            expect(await polylines.count(), "the gallery must plot real-twin polylines").toBeGreaterThanOrEqual(3);
-        });
-    }
-
-    // ── PURPLE-IDENTITY: the dominant motion accent is the violet family, not red ──
-    for (const dark of [false, true]) {
-        const mode = dark ? "dark" : "light";
-        test(`the plot stroke + dot read the violet --motion-accent (no warm-red) (${mode})`, async ({ page }) => {
-            await page.setViewportSize({ width: 1280, height: 900 });
-            await page.goto("/motion/curve-gallery", { waitUntil: "networkidle" });
-            await setDark(page, dark);
-
-            // --motion-accent resolves to the violet --viz-legendre (oklch ~317.5°).
-            const accent = await page.evaluate(() =>
-                getComputedStyle(document.documentElement).getPropertyValue("--motion-accent").trim(),
-            );
-            const accentRgb = parseColor(accent);
-            expect(accentRgb, `--motion-accent must resolve to a color (${accent})`).not.toBeNull();
-            const accentHue = rgbHueDeg(...accentRgb!);
-            // violet sits ~300-330°; warm-red ~20-40°. Assert violet, not red.
-            expect(accentHue, `--motion-accent hue ${accentHue.toFixed(1)}° must be violet (300-340°), not warm-red`).toBeGreaterThan(290);
-            expect(accentHue).toBeLessThan(350);
-
-            // the painted plot stroke reads the SAME violet (one color event).
-            const stroke = await page.locator("svg polyline").first().evaluate(
-                (el) => getComputedStyle(el).stroke,
-            );
-            const strokeRgb = parseColor(stroke);
-            if (strokeRgb) {
-                const strokeHue = rgbHueDeg(...strokeRgb);
-                expect(strokeHue, `the plot stroke hue ${strokeHue.toFixed(1)}° must be violet, not warm-red`).toBeGreaterThan(280);
-            }
-        });
-    }
-
     // ── SPRING-PLAYGROUND-LIVE: the slider drag changes the linear() readout ──────
     test("the spring playground updates the linear() readout on slider drag", async ({ page }) => {
         await page.setViewportSize({ width: 1280, height: 900 });
@@ -204,20 +152,6 @@ test.describe("motion-demo (π lane — the robust /motion render, fail-CLOSED)"
             mkdirSync(VISUAL_DIR, { recursive: true });
             await page.setViewportSize({ width: 1280, height: 900 });
 
-            // the all-families gallery
-            await page.goto("/motion/curve-gallery", { waitUntil: "networkidle" });
-            await setDark(page, dark);
-            await page.waitForTimeout(250);
-            await page.screenshot({ path: `${VISUAL_DIR}W-MOTION-SUITE-curve-gallery-after-${mode}.png`, fullPage: false });
-
-            // the bezier editor (the Custom family)
-            const customTab = page.getByRole("button", { name: "Custom" }).first();
-            if (await customTab.count()) {
-                await customTab.click();
-                await page.waitForTimeout(300);
-                await page.screenshot({ path: `${VISUAL_DIR}W-MOTION-SUITE-bezier-editor-${mode}.png`, fullPage: false });
-            }
-
             // the springs orchestrator + playground
             await page.goto("/motion/springs", { waitUntil: "networkidle" });
             await setDark(page, dark);
@@ -242,7 +176,7 @@ test.describe("motion-demo (π lane — the robust /motion render, fail-CLOSED)"
         mkdirSync(VISUAL_DIR, { recursive: true });
         const out: Record<string, unknown> = {};
         for (const dark of [false, true]) {
-            await page.goto("/motion/curve-gallery", { waitUntil: "networkidle" });
+            await page.goto("/motion/springs", { waitUntil: "networkidle" });
             await setDark(page, dark);
             const accent = await page.evaluate(() =>
                 getComputedStyle(document.documentElement).getPropertyValue("--motion-accent").trim(),

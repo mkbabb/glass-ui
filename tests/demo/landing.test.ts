@@ -17,12 +17,15 @@ function testRouter() {
 }
 
 describe("demo landing semantics", () => {
-    it("gives every routed story one concise lede", () => {
-        expect(
-            CATEGORIES.flatMap((category) =>
-                category.stories.filter((story) => !story.blurb),
-            ),
-        ).toEqual([]);
+    it("gives every routed story one lede of at most 16 words, one sentence", () => {
+        const words = (s: string) => s.split(/\s+/).filter(Boolean).length;
+        const bad = CATEGORIES.flatMap((category) =>
+            category.stories
+                .filter((story) => !story.lede || words(story.lede) > 16 || /[.!?]\s+\S/.test(story.lede))
+                .map((story) => `${category.id}/${story.id}`),
+        );
+        expect(bad).toEqual([]);
+        expect(CATEGORIES.filter((c) => words(c.lede) > 12).map((c) => c.id)).toEqual([]);
     });
 
     it("lists every manifest category from one primary heading", () => {

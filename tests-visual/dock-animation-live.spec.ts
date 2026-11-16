@@ -54,7 +54,7 @@ const MIN_MORPH_FRAMES = 5; // the box AND the scalar must each rise over ≥5 f
 const LOCKSTEP_BUDGET_MS = 0.8 * 650 + FRAME_MS; // ≈ 537ms
 
 // AY.W-DOCK2 — the deterministic capture target (the plain testid collapsible dock
-// at /dock/overview that reliably morphs, per W-DOCK1 §F). NOT data-container-name,
+// that reliably morphs, per W-DOCK1 §F; absent, the first collapsed dock is held). NOT data-container-name,
 // which co-applies container-type: inline-size and FREEZES the morph (§F1 trap).
 const DOCK_CAPTURE_SEL = '.glass-dock[data-testid="dock-capture"]';
 
@@ -97,8 +97,7 @@ test.describe("dock-animation-live (π lane — single-scalar, fail-CLOSED)", ()
     test("the dock box and --dock-morph-t morph on ONE clock (lead/lag ≤ 1 frame)", async ({
         page,
     }) => {
-        // AY.W-DOCK2 (D7) — PI_TARGETS.dock now resolves to /dock/overview (the real
-        // collapsible dock; the prior /navigation/dock was a non-dock route).
+        // PI_TARGETS.dock resolves to /dock/chrome (the real collapsible dock).
         await page.goto(PI_TARGETS.dock.path);
         // AY.W-DOCK2 — target the deterministic capture dock (the plain testid
         // collapsible dock that reliably morphs); fall back to the first collapsed

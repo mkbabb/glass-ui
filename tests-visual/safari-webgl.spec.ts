@@ -7,7 +7,7 @@
 // the binding PAINTED truth on the WebKit project (the engine with the same
 // `backdrop-filter: url()` absence + the same context-eviction model):
 //
-//   - THE NO-FLASH ASSERT (the §H headline): over /substrates/aurora + /dock/overview,
+//   - THE NO-FLASH ASSERT (the §H headline): over /substrates/aurora + /dock/chrome,
 //     capture a frame-series across ~2s and assert the painted region's meanLum does NOT
 //     oscillate (no strobe — the frame-to-frame meanLum variance stays below a flash floor).
 //   - THE VIZ-PAINT-ON-WEBKIT ASSERT: aurora/constellation/blob each read
@@ -15,7 +15,7 @@
 //   - THE DOCK-STABILITY-ON-WEBKIT ASSERT: the dock over a live aurora field (DockStage)
 //     paints a continuous glass plate at every frame (meanLum > 0, no white box) — the WebGL
 //     context under it never storms. (BI.W-DOCK-RETIRES retired the V↔H morph-showcase route;
-//     /dock/overview is the surviving dock-over-live-field WebKit witness.)
+//     /dock/chrome is the surviving dock-over-live-field WebKit witness.)
 //   - THE GLASS-DEGRADE-ON-WEBKIT ASSERT: a glass card reads the blur+saturate+tint base
 //     (translucent warm glass, NOT an un-styled box) — the lens absence is invisible, the
 //     material present.
@@ -44,8 +44,8 @@ const VIZ = [
 ] as const;
 
 // BI.W-DOCK-RETIRES — the V↔H morph-showcase route retired; the dock-over-live-field
-// WebKit stability witness is /dock/overview (DockStage aurora under the dock plate).
-const MORPH_ROUTE = "/dock/overview";
+// WebKit stability witness is /dock/chrome (the stage's field under the dock plate).
+const MORPH_ROUTE = "/dock/chrome";
 const SCHEMES = ["light", "dark"] as const;
 
 // The flash floor: the frame-to-frame meanLum standard deviation across the capture window.

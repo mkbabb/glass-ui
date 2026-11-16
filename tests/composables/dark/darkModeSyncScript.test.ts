@@ -518,16 +518,20 @@ describe("G-NO-FLASH — the parse-time stamp: precedence, determinism, write-ba
             ) => Array<{ tag: string; children?: string; injectTo?: string }>;
             const tags = await handler("<html><head></head><body></body></html>", {});
 
-            expect(tags).toHaveLength(1);
-            expect(tags[0].tag).toBe("script");
+            // Two tags: the ground colour, then the theme script that picks its arm.
+            expect(tags).toHaveLength(2);
+            expect(tags[0].tag).toBe("style");
+            expect(tags[0].children).toMatch(/^html\{background-color:rgb\([^)]*\)\}html\.dark\{background-color:rgb\([^)]*\)\}$/);
+            const script = tags[1];
+            expect(script.tag).toBe("script");
             // `head-prepend`: before the icon link, before any stylesheet, before the
             // module — the position is the entire point of a parse-time stamp.
-            expect(tags[0].injectTo).toBe("head-prepend");
+            expect(tags.every((t) => t.injectTo === "head-prepend")).toBe(true);
             // the EMITTED bytes, not a transcription of them (sci-report transcribed;
             // that is the failure this recipe exists to end)
-            expect(tags[0].children).toBe(darkModeSyncScript());
-            expect(tags[0].children).toContain("localStorage.getItem");
-            expect(tags[0].children).toContain('classList.toggle("dark"');
+            expect(script.children).toBe(darkModeSyncScript());
+            expect(script.children).toContain("localStorage.getItem");
+            expect(script.children).toContain('classList.toggle("dark"');
         },
         30_000,
     );
@@ -562,10 +566,9 @@ describe("G-NO-FLASH — the parse-time stamp: precedence, determinism, write-ba
             ) => Array<{ tag: string; children?: string; injectTo?: string }>;
             const tags = await handler("<html><head></head><body></body></html>", {});
 
-            expect(tags).toHaveLength(1);
-            expect(tags[0].tag).toBe("script");
-            expect(tags[0].injectTo).toBe("head-prepend");
-            expect(tags[0].children).toBe(darkModeSyncScript());
+            expect(tags.map((t) => t.tag)).toEqual(["style", "script"]);
+            expect(tags.every((t) => t.injectTo === "head-prepend")).toBe(true);
+            expect(tags[1].children).toBe(darkModeSyncScript());
         },
         30_000,
     );

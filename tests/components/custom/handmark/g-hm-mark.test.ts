@@ -25,7 +25,7 @@ const SHAPE_MEMBERS = ["underline", "strike", "circle", "highlight"] as const;
 /** The φ multiples of the ONE root the story must name for three rungs to exist. */
 const RUNG_MULTIPLES = ["1.618", "2.618"] as const;
 const REPO_ROOT = process.cwd();
-const STORY = resolve(REPO_ROOT, "demo/stories/motion/handmark.vue");
+const STORY = resolve(REPO_ROOT, "demo/stories/motion/handmark.stage.vue");
 
 afterEach(restoreMeasure);
 

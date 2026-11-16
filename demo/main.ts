@@ -111,8 +111,6 @@ async function bootCaptureMode(
     //     Forward any EXTRA capture params (everything except `capture`/`mode`/`motion`) onto
     //     the pushed route as query — history-mode push drops the OUTER search string,
     //     so a story cannot read window.location.search; it reads useRoute().query.
-    //     The `&aurmedium=…` deterministic medium override flows
-    //     through here; general, so a future per-story capture param needs no edit.)
     const extra = new URLSearchParams();
     for (const [k, v] of params) {
         if (k !== "capture" && k !== "mode" && k !== "motion") extra.set(k, v);

@@ -2,16 +2,15 @@ import { createRouter, createWebHistory } from "vue-router";
 import type { RouteRecordRaw } from "vue-router";
 import {
     CATEGORIES,
+    cardsRunCanvas,
     firstStoryPath,
 } from "./stories/manifest";
-import { isFocalRoute, suppressesShellField } from "./chassis/hero/focal";
 
 /**
- * Routes are derived from the manifest. Every category produces a
- * `/:category` section-landing hero
- * plus a `/:category/:story` route per story. There are no flat standalone routes
- * the former Aurora/GooBlob/Blob flat tools are now rows in the Substrates
- * category.
+ * Routes are derived from the manifest: `/`, a `/:category` section page per category
+ * and a `/:category/:story` route per row. `meta.ownsCanvas` is read from the rows'
+ * own `canvas` declarations: where the page (or a card on it) runs a live canvas, the
+ * shell keeps its field static.
  */
 function buildRoutes(): RouteRecordRaw[] {
     const routes: RouteRecordRaw[] = [
@@ -22,16 +21,15 @@ function buildRoutes(): RouteRecordRaw[] {
             meta: {
                 landing: true,
                 title: "Glass UI",
+                ownsCanvas: cardsRunCanvas(
+                    CATEGORIES.flatMap((c) => c.stories.slice(0, 1)),
+                ),
             },
         },
     ];
 
     for (const category of CATEGORIES) {
-        // the category landing is the D1 SECTION HERO (the
-        // newly-begotten per-section identity moment + the bento <SectionPreviewCard>
-        // grid), NOT a redirect to the first story. The SAME StoryHero chassis at
-        // heroScale: "hero", depth: "D1" (no new component — SectionLanding composes
-        // it). An empty category falls back to the first story path.
+        // A category's landing is its title, its lede and a card per page.
         routes.push(
             category.stories.length > 0
                 ? {
@@ -42,16 +40,7 @@ function buildRoutes(): RouteRecordRaw[] {
                           categoryId: category.id,
                           landing: true,
                           title: category.title,
-                          // Whether the landing paints its own full-bleed field.
-                          focal: isFocalRoute(category.id, category.landing?.background),
-                          // A landing always mounts `StoryHero`
-                          // as a true hero route (`isHeroPage: true`); the shell
-                          // stands down only for a CHROMATIC landing field.
-                          suppressesShellField: suppressesShellField(
-                              category.id,
-                              category.landing?.background,
-                              true,
-                          ),
+                          ownsCanvas: cardsRunCanvas(category.stories),
                       },
                   }
                 : {
@@ -70,17 +59,7 @@ function buildRoutes(): RouteRecordRaw[] {
                     categoryId: category.id,
                     storyId: story.id,
                     title: story.title,
-                    // A route is focal when it owns a live background or stages one itself.
-                    focal: isFocalRoute(`${category.id}/${story.id}`, story.background),
-                    // A `background.kind` field mounts only on a hero page
-                    // (`story.hero`); a CONTENT page (no hero) mounts no field and
-                    // KEEPS the warm shell, and an achromatic constellation/fourier
-                    // hero keeps it as an underpaint (CHROMATIC_FIELD_KINDS only).
-                    suppressesShellField: suppressesShellField(
-                        `${category.id}/${story.id}`,
-                        story.background,
-                        story.hero === true,
-                    ),
+                    ownsCanvas: Boolean(story.canvas),
                 },
             });
         }

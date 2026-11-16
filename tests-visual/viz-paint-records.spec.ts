@@ -48,7 +48,7 @@ const VIZ = [
     // DOTFLOW DELETED at BI.W-VIZ-DELETIONS (the user-ordered clean-break prune of the
     // dot-flow-field viz) — off the paint-record set.
     // PAPERGRID (liquid-grid) DELETED at BJ.W-REDUCE-DELETE (REDUCTION W3 — the ruled
-    // clean delete: component + /liquid-grid subpath + /substrates/liquid-grid route) —
+    // clean delete: component + /liquid-grid subpath + its route) —
     // off the paint-record set (mirrors the DOTFLOW-DELETED precedent above).
 ] as const;
 

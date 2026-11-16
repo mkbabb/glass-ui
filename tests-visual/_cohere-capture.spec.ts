@@ -34,7 +34,7 @@ const SUBSTRATES: { id: string; path: string; locator: string }[] = [
         locator: ".constellation",
     },
     { id: "fourier", path: "/substrates/fourier-field", locator: ".fourier-field" },
-    { id: "dock", path: "/dock/overview", locator: ".glass-dock" },
+    { id: "dock", path: "/dock/chrome", locator: ".glass-dock" },
 ];
 
 const VIEWPORTS: { id: string; width: number; height: number }[] = [
