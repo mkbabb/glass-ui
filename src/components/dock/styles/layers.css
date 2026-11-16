@@ -148,12 +148,21 @@
         transition: visibility 0s linear var(--duration-normal);
     }
 
-    /* Under reduced motion a posture or face change snaps: the leaving pane is already
-       at opacity 0 (the spring lands in one frame), so it hides at once instead of
-       holding a delayed visibility flip. */
+    /* Under reduced motion a posture or face change cross-fades. The box lands at once
+       (the spring lands in one frame); the leaving pane fades out over `--duration-fast`
+       on `--exit-curve` and then hides, and the entering pane fades in on the same clock
+       and shows at once. `!important`, as the reduced-motion fallback is a later layer. */
     @media (prefers-reduced-motion: reduce) {
         :where(.glass-dock, .dock-layer-group) .dock-layer {
-            transition: none;
+            transition:
+                opacity var(--duration-fast) var(--exit-curve),
+                visibility 0s linear var(--duration-fast) !important;
+        }
+
+        :where(.glass-dock, .dock-layer-group) .dock-layer.is-active {
+            transition:
+                opacity var(--duration-fast) var(--exit-curve),
+                visibility 0s !important;
         }
     }
 
