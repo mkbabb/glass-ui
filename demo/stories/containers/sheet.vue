@@ -38,8 +38,8 @@ const snippet = `<Dialog>
 <template>
     <StoryPage>
         <template #stage>
-            <StoryStage size="tall">
-                <SheetStage :side="side" :detented="detents === 'on'" />
+            <StoryStage size="fit">
+                <SheetStage :side="side" :detented="detents === 'on'" open-on-load />
             </StoryStage>
         </template>
 

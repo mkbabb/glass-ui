@@ -44,8 +44,8 @@ const snippet = `<Dialog>
 <template>
     <StoryPage>
         <template #stage>
-            <StoryStage size="tall">
-                <DialogStage :dismiss="dismiss" :scrim="scrim" />
+            <StoryStage size="fit">
+                <DialogStage :dismiss="dismiss" :scrim="scrim" open-on-load />
             </StoryStage>
         </template>
 
