@@ -70,8 +70,7 @@ html[data-capture] [data-reveal] {
  * Every procedural-viz host carries `contain: content` +
  * `content-visibility: auto` (a render-skip + containment context); force it
  * `visible`/`none` so the WebGL/WebGPU field always renders into the base layer
- * the snapshot reads. This is NOT aurora-only: a viz seated BELOW the fold (the
- * concentric story rides a long StorySection blurb above its stage) mounts
+ * the snapshot reads. This is NOT aurora-only: a viz seated BELOW the fold mounts
  * content-SKIPPED, and an off-screen WKWebView snapshot never lays it out → the
  * field snapshots BLANK while the DOM is fully real (the dual-engine paint judge
  * "silent blank" — content-visibility, NOT a shader defect). Generalized from
