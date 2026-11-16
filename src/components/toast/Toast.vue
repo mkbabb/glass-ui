@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { computed, type HTMLAttributes } from "vue";
+import { computed, ref, watch, type HTMLAttributes } from "vue";
 import { ToastRoot, useForwardPropsEmits } from "reka-ui";
 import { cn } from "../_shared/class-names";
 import type { Surface, Tone } from "../_shared/axes";
 import { surfaceClass } from "../_shared/surface/resolve";
+import { useLeaveFinished } from "../_shared/overlay";
 
 // Tone rides ON glass. The Toast `variant` no longer paints a
 // SOLID `bg-<tone>` token plate over the `glass-floating` base (the opaque-slab
@@ -49,9 +50,13 @@ export interface ToastEmits {
     swipeMove: [event: ToastSwipeEvent];
     swipeCancel: [event: ToastSwipeEvent];
     swipeEnd: [event: ToastSwipeEvent];
+    leaveFinished: [];
 }
 
 const props = withDefaults(defineProps<ToastProps>(), {
+    /* Unset rather than `false`, so the open state below can tell a held prop from none. */
+    open: undefined,
+    defaultOpen: undefined,
     tone: "neutral",
     surface: "glass",
 });
@@ -70,6 +75,22 @@ const delegatedProps = computed(() => {
 });
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits);
+
+/* Once its dismissal has finished, the toast says so (`_shared/overlay/leave-finished.ts`).
+   Its open state is the prop when the caller holds it, else what the root reports. */
+const isOpen = ref(props.open ?? props.defaultOpen ?? true);
+watch(
+    () => props.open,
+    (open) => {
+        if (open !== undefined) isOpen.value = open;
+    },
+    { flush: "sync" },
+);
+const leave = useLeaveFinished({
+    kind: "toast",
+    open: () => isOpen.value,
+    emit: () => emits("leaveFinished"),
+});
 </script>
 
 <template>
@@ -79,7 +100,8 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
         :data-surface="surface"
         data-reveal="overlay"
         data-corner="top-left"
-        v-bind="forwarded"
+        v-bind="{ ...forwarded, ...leave.attrs }"
+        @update:open="isOpen = $event"
         :class="
             cn(
                 // The overlay-band material carve: Toast joins the shared

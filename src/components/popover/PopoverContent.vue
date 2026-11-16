@@ -5,12 +5,14 @@ import {
     HoverCardPortal as RekaHoverCardPortal,
     PopoverContent as RekaPopoverContent,
     PopoverPortal as RekaPopoverPortal,
+    injectHoverCardRootContext,
     injectPopoverRootContext,
 } from "reka-ui";
 import type { DismissableContentEmits } from "../_shared/interaction";
 import {
     overlayContentAttrs,
     useDockParticipation,
+    useLeaveFinished,
     useModalShortcutBarrier,
     type FloatingPlacementProps,
 } from "../_shared/overlay";
@@ -59,7 +61,9 @@ export interface PopoverContentProps extends FloatingPlacementProps {
     ariaLabel?: string;
 }
 
-export interface PopoverContentEmits extends DismissableContentEmits {}
+export interface PopoverContentEmits extends DismissableContentEmits {
+    leaveFinished: [];
+}
 
 defineOptions({ name: "PopoverContent", inheritAttrs: false });
 
@@ -105,8 +109,10 @@ const placementProps = computed(() => ({
    Teleport gates its whole subtree on `useMounted()`, so a "disabled" portal
    still withholds the content until mount — a wrapper that is not a no-op is not
    an off switch. */
-const PassThrough = (_props: unknown, { slots }: { slots: Record<string, undefined | (() => unknown)> }) =>
-    slots.default?.();
+const PassThrough = (
+    _props: unknown,
+    { slots }: { slots: Record<string, undefined | (() => unknown)> },
+) => slots.default?.();
 
 const union = usePopoverUnion();
 const usesHoverRoot = computed(() => union?.usesHoverRoot.value ?? false);
@@ -150,6 +156,17 @@ const a11yAttrs = computed(() => ({
 const popoverRoot = injectPopoverRootContext(null);
 useModalShortcutBarrier(() => isModal.value && (popoverRoot?.open.value ?? false));
 
+/* Once the exit has finished, the panel says so (`_shared/overlay/leave-finished.ts`);
+   on the hover arm it is a hover card. */
+const hoverRoot = injectHoverCardRootContext(null);
+const leave = useLeaveFinished({
+    kind: () => (usesHoverRoot.value ? "hover-card" : "popover"),
+    open: () =>
+        (usesHoverRoot.value ? hoverRoot?.open.value : popoverRoot?.open.value) ??
+        false,
+    emit: () => emit("leaveFinished"),
+});
+
 const dock = useDockParticipation();
 const contentAttrs = computed(() =>
     overlayContentAttrs({
@@ -170,6 +187,7 @@ const contentAttrs = computed(() =>
                 ...attrs,
                 ...a11yAttrs,
                 ...contentAttrs,
+                ...leave.attrs,
             }"
             @escape-key-down="emit('escapeKeyDown', $event)"
             @pointer-down-outside="emit('pointerDownOutside', $event)"

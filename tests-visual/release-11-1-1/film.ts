@@ -23,7 +23,7 @@ export type Frame = {
     also?: boolean;
 };
 
-export type Film = { mark: number; turn: number; frames: Frame[] };
+export type Film = { mark: number; turn: number; t0: number; frames: Frame[] };
 
 export async function startFilm(page: Page, selector: string, also = ""): Promise<void> {
     await page.evaluate(({ selector, also }) => {
@@ -31,6 +31,7 @@ export async function startFilm(page: Page, selector: string, also = ""): Promis
         const film = { mark: -1, turn: -1, frames: [] as unknown[], stop: false };
         w.__film = film;
         const t0 = performance.now();
+        (film as unknown as { t0: number }).t0 = t0;
         const effective = (el: Element) => {
             let o = 1;
             for (let n: Element | null = el; n; n = n.parentElement) {
@@ -92,9 +93,9 @@ export async function markTurn(page: Page): Promise<void> {
 export async function stopFilm(page: Page, ms: number): Promise<Film> {
     await page.waitForTimeout(ms);
     return page.evaluate(() => {
-        const f = (window as unknown as { __film: { mark: number; turn: number; frames: Frame[]; stop: boolean } }).__film;
+        const f = (window as unknown as { __film: { mark: number; turn: number; t0: number; frames: Frame[]; stop: boolean } }).__film;
         f.stop = true;
-        return { mark: f.mark, turn: f.turn, frames: f.frames };
+        return { mark: f.mark, turn: f.turn, t0: f.t0, frames: f.frames };
     });
 }
 

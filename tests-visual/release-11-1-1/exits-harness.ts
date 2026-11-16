@@ -41,6 +41,10 @@ import { toast } from "../../src/components/toast/use-toast";
 import { DialogTrigger } from "reka-ui";
 
 const params = new URLSearchParams(location.search);
+/* Every surface's leave-finished emit is counted here, by the surface's test id. */
+const emitted: Record<string, number> = {};
+(window as unknown as { __emitted: typeof emitted }).__emitted = emitted;
+const onLeave = (id: string) => ({ onLeaveFinished: () => (emitted[id] = (emitted[id] ?? 0) + 1) });
 if (params.get("scheme") === "dark") document.documentElement.classList.add("dark");
 
 /* The busy ground: hard black and white bars under saturated colour, so a translucent
@@ -82,14 +86,14 @@ createApp({
                                     h("span", view.value),
                                     h(SelectValue, { class: "sr-only" }),
                                 ]),
-                                h(SelectContent, { class: "min-w-[12rem]", "data-testid": "x-select-content" }, () =>
+                                h(SelectContent, { class: "min-w-[12rem]", "data-testid": "x-select-content", ...onLeave("x-select-content") }, () =>
                                     pages.map((p) => h(SelectItem, { value: p, "data-testid": `x-opt-${p}` }, () => p)),
                                 ),
                             ],
                         ),
                         h(DropdownMenu, null, () => [
                             h(DockTrigger, { for: "dropdown", "aria-label": "Actions", "data-testid": "x-menu" }, () => "⋯"),
-                            h(DropdownMenuContent, { align: "center", class: "w-52", "data-testid": "x-menu-content" }, () =>
+                            h(DropdownMenuContent, { align: "center", class: "w-52", "data-testid": "x-menu-content", ...onLeave("x-menu-content") }, () =>
                                 ["Copy", "Share", "Archive"].map((t) =>
                                     h(DropdownMenuItem, { "data-testid": `x-item-${t}` }, () => t),
                                 ),
@@ -101,26 +105,26 @@ createApp({
             h("div", { style: "display:flex;flex-wrap:wrap;gap:8px;justify-content:center" }, [
                 h(Popover, null, () => [
                     h(PopoverTrigger, { "data-testid": "x-popover", style: "padding:10px 14px;background:#fff;color:#000;border-radius:8px;font:14px sans-serif" }, () => "Popover"),
-                    h(PopoverContent, { class: "w-56", "data-testid": "x-popover-content" }, () => h("p", "A popover.")),
+                    h(PopoverContent, { class: "w-56", "data-testid": "x-popover-content", ...onLeave("x-popover-content") }, () => h("p", "A popover.")),
                 ]),
                 h(TooltipProvider, { delayDuration: 0 }, () =>
                     ["", "2"].map((n) =>
                         h(Tooltip, { delayDuration: 0 }, {
                             default: () => [
                                 h(TooltipTrigger, { "data-testid": `x-tooltip${n}`, style: btn }, () => `Tooltip${n ? " " + n : ""}`),
-                                h(TooltipContent, { "data-testid": `x-tooltip${n}-content` }, () => `A hint${n ? " " + n : ""}`),
+                                h(TooltipContent, { "data-testid": `x-tooltip${n}-content`, ...onLeave(`x-tooltip${n}-content`) }, () => `A hint${n ? " " + n : ""}`),
                             ],
                         }),
                     ),
                 ),
                 h(Dialog, null, () => [
                     h(DialogTrigger, { "data-testid": "x-dialog", style: "padding:10px 14px;background:#fff;color:#000;border-radius:8px;font:14px sans-serif" }, () => "Dialog"),
-                    h(DialogContent, { "data-testid": "x-dialog-content" }, () => [h(DialogTitle, () => "A dialog"), h("p", "Its body.")]),
+                    h(DialogContent, { "data-testid": "x-dialog-content", ...onLeave("x-dialog-content") }, () => [h(DialogTitle, () => "A dialog"), h("p", "Its body.")]),
                 ]),
                 ...(["right", "bottom"] as const).map((side) =>
                     h(Dialog, null, () => [
                         h(DialogTrigger, { "data-testid": `x-sheet-${side}`, style: "padding:10px 14px;background:#fff;color:#000;border-radius:8px;font:14px sans-serif" }, () => `Sheet ${side}`),
-                        h(SheetContent, { side, "data-testid": `x-sheet-${side}-content` }, () => [h(DialogTitle, () => "A sheet"), h("p", "Its body.")]),
+                        h(SheetContent, { side, "data-testid": `x-sheet-${side}-content`, ...onLeave(`x-sheet-${side}-content`) }, () => [h(DialogTitle, () => "A sheet"), h("p", "Its body.")]),
                     ]),
                 ),
                 h(Dialog, null, () => [

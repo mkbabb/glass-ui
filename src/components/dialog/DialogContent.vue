@@ -17,6 +17,7 @@ import { scrimOpacity } from "../sheet/motion";
 import {
     returnFocusQuietly,
     useExitPress,
+    useLeaveFinished,
     useModalShortcutBarrier,
 } from "../_shared/overlay";
 import type { DismissableContentEmits } from "../_shared/interaction";
@@ -51,7 +52,7 @@ const props = withDefaults(defineProps<DialogContentProps>(), {
     scroll: false,
     dismiss: "free",
 });
-const emits = defineEmits<DismissableContentEmits>();
+const emits = defineEmits<DismissableContentEmits & { leaveFinished: [] }>();
 
 const delegatedProps = computed(() => {
     const {
@@ -166,6 +167,22 @@ function refuse(event: Event) {
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits);
 
+// Once the exit has finished, the plate says so (`_shared/overlay/leave-finished.ts`).
+const leave = useLeaveFinished({
+    kind: "dialog",
+    open: () => dialogRoot.open.value,
+    emit: () => emits("leaveFinished"),
+});
+// The forwarded emits carry the leave emit as a listener; on reka's content it would
+// land on the element and answer the DOM event of the same name a second time.
+const forwardedToContent = computed(() => {
+    const { onLeaveFinished: _leave, ...rest } = forwarded.value as Record<
+        string,
+        unknown
+    >;
+    return rest;
+});
+
 // The exit takes no press: once closed, the layer stops blocking the page and an outside
 // press that began after the close dismisses nothing, so the trigger can reopen the
 // surface mid-exit and the page behind it stays live (`_shared/overlay/exit-press.ts`).
@@ -209,10 +226,11 @@ const contentClass = computed(() =>
         <ModalOverlay veil :opacity="scrimAlpha" :force-mount="scrimForceMount" />
         <RekaDialogContent
             v-bind="{
-                ...forwarded,
+                ...forwardedToContent,
                 ...$attrs,
                 inert: closingInert,
                 disableOutsidePointerEvents: exitPress.blockOutside.value,
+                ...leave.attrs,
             }"
             :aria-modal="dialogRoot.modal.value ? 'true' : undefined"
             :force-mount="contentForceMount"

@@ -7,6 +7,7 @@ import type {
 import {
     overlayContentAttrs,
     useDockParticipation,
+    useLeaveFinished,
     useModalShortcutBarrier,
     useSheetWidth,
     type FloatingPlacementProps,
@@ -23,6 +24,7 @@ export interface DropdownMenuContentEmits {
     focusOutside: [event: FocusOutsideEvent];
     interactOutside: [event: PointerDownOutsideEvent | FocusOutsideEvent];
     closeAutoFocus: [event: Event];
+    leaveFinished: [];
 }
 
 defineOptions({ name: "DropdownMenuContent", inheritAttrs: false });
@@ -82,11 +84,19 @@ const dock = useDockParticipation({
    the content carries no material prop (BK #66). An anchored menu outside a dock, or
    any menu above 30rem, keeps the floating plate. */
 const sheetWidth = useSheetWidth(() => menuRoot?.open.value ?? false);
-const firm = computed(() => sheetWidth.value && "data-glass-dock-portal" in dock.portalAttrs.value);
+const firm = computed(
+    () => sheetWidth.value && "data-glass-dock-portal" in dock.portalAttrs.value,
+);
 /* ONE CLASS SPELLING. The root used to carry BOTH `dropdown-menu-content` and
    `menu__content` — two names for one element, feeding two different
    unlayered sheets. Both are gone; the register is `.glass-overlay-plate`, which
    `overlayContentAttrs` writes. */
+/* Once the exit has finished, the menu says so (`_shared/overlay/leave-finished.ts`). */
+const leave = useLeaveFinished({
+    kind: "menu",
+    open: () => menuRoot?.open.value ?? false,
+    emit: () => emit("leaveFinished"),
+});
 const contentAttrs = computed(() =>
     overlayContentAttrs({
         role: "menu",
@@ -101,7 +111,12 @@ const contentAttrs = computed(() =>
     <component :is="PortalComp">
         <component
             :is="ContentComp"
-            v-bind="{ ...placementProps, ...forwardedAttrs, ...contentAttrs }"
+            v-bind="{
+                ...placementProps,
+                ...forwardedAttrs,
+                ...contentAttrs,
+                ...leave.attrs,
+            }"
             :data-plate="firm ? 'firm' : undefined"
             @escape-key-down="emit('escapeKeyDown', $event)"
             @pointer-down-outside="emit('pointerDownOutside', $event)"

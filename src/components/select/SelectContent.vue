@@ -11,6 +11,7 @@ export interface SelectContentEmits {
     closeAutoFocus: [event: Event];
     escapeKeyDown: [event: KeyboardEvent];
     pointerDownOutside: [event: PointerDownOutsideEvent];
+    leaveFinished: [];
 }
 </script>
 
@@ -24,7 +25,12 @@ import {
 } from "reka-ui";
 import SelectScrollButton from "./SelectScrollButton.vue";
 import { cn } from "../_shared/class-names";
-import { useDockParticipation, useExitPress, useSheetWidth } from "../_shared/overlay";
+import {
+    useDockParticipation,
+    useExitPress,
+    useLeaveFinished,
+    useSheetWidth,
+} from "../_shared/overlay";
 import { injectSelectOpenInput } from "./openInput";
 
 defineOptions({
@@ -111,6 +117,12 @@ const exitPress = useExitPress(
     () => selectRoot?.open.value ?? false,
     () => true,
 );
+/* Once the exit has finished, the listbox says so (`_shared/overlay/leave-finished.ts`). */
+const leave = useLeaveFinished({
+    kind: "select",
+    open: () => selectRoot?.open.value ?? false,
+    emit: () => emit("leaveFinished"),
+});
 function onPointerDownOutside(event: PointerDownOutsideEvent): void {
     exitPress.letThrough(event);
     emit("pointerDownOutside", event);
@@ -142,6 +154,7 @@ const dock = useDockParticipation({
                 ...rootAttrs,
                 ...dock.portalAttrs.value,
                 disableOutsidePointerEvents: exitPress.blockOutside.value,
+                ...leave.attrs,
             }"
             data-reveal="menu"
             data-slot="select-content"

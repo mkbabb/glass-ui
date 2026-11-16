@@ -3,10 +3,12 @@ import { computed, useAttrs, type HTMLAttributes } from "vue";
 import {
     TooltipContent as RekaTooltipContent,
     TooltipPortal as RekaTooltipPortal,
+    injectTooltipRootContext,
 } from "reka-ui";
 import {
     overlayContentAttrs,
     useDockParticipation,
+    useLeaveFinished,
     type FloatingPlacementProps,
 } from "../_shared/overlay";
 
@@ -17,6 +19,7 @@ export interface TooltipContentProps extends FloatingPlacementProps {
 export interface TooltipContentEmits {
     escapeKeyDown: [event: KeyboardEvent];
     pointerDownOutside: [event: Event];
+    leaveFinished: [];
 }
 
 defineOptions({ name: "TooltipContent", inheritAttrs: false });
@@ -47,6 +50,14 @@ const placementProps = computed(() => ({
    click-away and pointer-out can tell a dock's own overlay from the page. */
 const dock = useDockParticipation();
 
+/* Once the exit has finished, the hint says so (`_shared/overlay/leave-finished.ts`). */
+const tooltipRoot = injectTooltipRootContext();
+const leave = useLeaveFinished({
+    kind: "tooltip",
+    open: () => tooltipRoot.open.value,
+    emit: () => emit("leaveFinished"),
+});
+
 /* The `z-tooltip` rung is the hint ROLE's, written by the ONE register with
    everything else the plate is. The retired
    `border text-popover-foreground rounded-tooltip overflow-hidden` utilities
@@ -72,7 +83,12 @@ const contentAttrs = computed(() =>
            trigger (WCAG 1.4.13): the rendered text is the announcement, and an
            icon-only trigger labels ITSELF. -->
         <RekaTooltipContent
-            v-bind="{ ...placementProps, ...forwardedAttrs, ...contentAttrs }"
+            v-bind="{
+                ...placementProps,
+                ...forwardedAttrs,
+                ...contentAttrs,
+                ...leave.attrs,
+            }"
             @escape-key-down="emit('escapeKeyDown', $event)"
             @pointer-down-outside="emit('pointerDownOutside', $event)"
         >

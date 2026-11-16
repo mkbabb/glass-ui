@@ -8,6 +8,12 @@
  */
 export { overlayContentAttrs, type OverlayAttrs, type OverlayRole } from "./content";
 export { useExitPress } from "./exit-press";
+export {
+    LEAVE_FINISHED,
+    useLeaveFinished,
+    type LeaveFinishedDetail,
+    type LeaveKind,
+} from "./leave-finished";
 export { returnFocusQuietly } from "./focus-return";
 export { isTeleportedTarget } from "./isTeleportedTarget";
 export {

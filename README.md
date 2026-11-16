@@ -253,6 +253,27 @@ your own interactive faces. `.control-bit` is the binary-control register
 paint sits on the smaller `.control-bit__face` child — so the rect the pointer
 hits is the rect `getBoundingClientRect` reads, and the paint stays small.
 
+## Closing a surface
+
+Close a dialog, sheet, popover, menu, select, tooltip or toast through its `open`
+state and leave it mounted: it stays on screen through its exit and removes itself
+when the exit has finished. Unmounting it with `v-if` in the same tick as the close
+cuts the exit, so the surface vanishes in one frame. A surface reopened during its
+exit turns back from where it is.
+
+To act once a surface is gone, listen for `leave-finished`. `Dialog`, `Sheet`,
+`Popover` (and its hover card), `DropdownMenu`, `Select`, `Tooltip` and `Toast`
+content emit it once per close, after the exit's last frame, and never for a close
+that a reopen turned back. The content element also dispatches it as a DOM
+`CustomEvent` that bubbles and crosses shadow roots, with the surface's kind in
+`detail.kind` (`dialog`, `sheet`, `popover`, `hover-card`, `menu`, `select`,
+`tooltip` or `toast`). If the surface is unmounted before its exit ends, it fires at
+the unmount.
+
+```vue
+<DialogContent @leave-finished="selection = null">…</DialogContent>
+```
+
 ## Conventions
 
 - TypeScript `strict:true`, `verbatimModuleSyntax:true`; `moduleResolution:bundler`, `target:ES2022`, `lib:ES2023`

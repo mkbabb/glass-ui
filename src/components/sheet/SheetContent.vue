@@ -13,7 +13,12 @@ import ModalOverlay from "../dialog/ModalOverlay.vue";
 import type { Motion, Surface } from "../_shared/axes";
 import { useMotionAxis } from "../_shared/useMotionAxis";
 import { surfaceClass } from "../_shared/surface/resolve";
-import { returnFocusQuietly, useExitPress, useModalShortcutBarrier } from "../_shared/overlay";
+import {
+    returnFocusQuietly,
+    useExitPress,
+    useLeaveFinished,
+    useModalShortcutBarrier,
+} from "../_shared/overlay";
 import {
     scrimDetentOpacity,
     scrimOpacity,
@@ -57,7 +62,7 @@ const props = withDefaults(defineProps<SheetContentProps>(), {
     detent: undefined,
 });
 const emits = defineEmits<
-    DismissableContentEmits & { "update:detent": [value: number | null] }
+    DismissableContentEmits & { "update:detent": [value: number | null]; leaveFinished: [] }
 >();
 
 const delegatedProps = computed(() => {
@@ -276,6 +281,19 @@ const onCloseAutoFocus = returnFocusQuietly(() => dialogRoot.triggerElement.valu
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits);
 
+// Once the exit has finished, the sheet says so (`_shared/overlay/leave-finished.ts`).
+const leave = useLeaveFinished({
+    kind: "sheet",
+    open: () => dialogRoot.open.value,
+    emit: () => emits("leaveFinished"),
+});
+// The forwarded emits carry the leave emit as a listener; on reka's content it would
+// land on the element and answer the DOM event of the same name a second time.
+const forwardedToContent = computed(() => {
+    const { onLeaveFinished: _leave, ...rest } = forwarded.value as Record<string, unknown>;
+    return rest;
+});
+
 // The exit takes no press: once closed, the layer stops blocking the page and an outside
 // press that began after the close dismisses nothing, so the trigger can reopen the
 // surface mid-exit and the page behind it stays live (`_shared/overlay/exit-press.ts`).
@@ -317,10 +335,11 @@ const contentStyle = computed<CSSProperties>(() => ({
         <ModalOverlay :opacity="scrimAlpha" :force-mount="scrimForceMount" />
         <RekaDialogContent
             v-bind="{
-                ...forwarded,
+                ...forwardedToContent,
                 ...$attrs,
                 inert: closingInert,
                 disableOutsidePointerEvents: exitPress.blockOutside.value,
+                ...leave.attrs,
             }"
             :aria-modal="dialogRoot.modal.value ? 'true' : undefined"
             :force-mount="contentForceMount"

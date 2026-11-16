@@ -58,6 +58,14 @@ A patch on 11.1.0 about how surfaces leave. Nothing is removed or renamed.
   its exit, turns it from where it is; Escape works from the entrance's first frame, and
   a leaving overlay lets presses through to the page.
 
+- **Surfaces say when they have finished leaving.** `Dialog`, `Sheet`, `Popover`,
+  `DropdownMenu`, `Select`, `Tooltip` and `Toast` content now emit `leave-finished`
+  once per close, after the last frame of the exit, and dispatch a DOM event of the
+  same name from the content element that bubbles and crosses shadow roots, with the
+  surface's kind in `detail.kind`. A close reversed by a reopen sends nothing. Clear
+  whatever the surface shows on this event rather than on the close, and it stays on
+  screen until it is gone.
+
 ## 11.1.0 — 2026-11-15
 
 A minor release. No API changes shape, so your code keeps working as it is. Two

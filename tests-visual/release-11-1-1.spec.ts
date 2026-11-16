@@ -927,3 +927,91 @@ test("expand · Escape is live from the entrance's first frame", async ({ page }
     await page.waitForTimeout(800);
     expect(await page.locator(`${EXPAND}[data-state="collapsed"]`).count(), "Escape in the entrance's first frame closes it").toBe(1);
 });
+
+// ── leave ──────────────────────────────────────────────────────────────────────────
+//   leave  every surface that opens says when its leave has finished: one bubbling,
+//          composed `leave-finished` event from its content element, with its kind in
+//          `detail`, stamped at or after the last frame in which the surface is still
+//          seen, and the same-named Vue emit once with it; a close reversed by a reopen
+//          says nothing.
+
+const leaves = [
+    { name: "Dialog", kind: "dialog", trigger: '[data-testid="x-dialog"]', content: '[data-testid="x-dialog-content"]' },
+    { name: "Sheet", kind: "sheet", trigger: '[data-testid="x-sheet-right"]', content: '[data-testid="x-sheet-right-content"]' },
+    { name: "Popover", kind: "popover", trigger: '[data-testid="x-popover"]', content: '[data-testid="x-popover-content"]' },
+    { name: "DropdownMenu", kind: "menu", trigger: '[data-testid="x-menu"]', content: '[data-testid="x-menu-content"]' },
+    { name: "Select", kind: "select", trigger: '[data-testid="x-select"]', content: '[data-testid="x-select-content"]' },
+    { name: "Tooltip", kind: "tooltip", trigger: '[data-testid="x-tooltip"]', content: '[data-testid="x-tooltip-content"]', hover: true },
+    { name: "Toast", kind: "toast", trigger: '[data-testid="x-toast"]', content: '[data-slot="toast"]', dismiss: '[data-slot="toast"] button[aria-label="Dismiss"]' },
+];
+
+async function listenLeaves(page: Page): Promise<void> {
+    await page.evaluate(() => {
+        const w = window as unknown as { __leaves: { at: number; kind: string; bubbles: boolean; composed: boolean }[] };
+        w.__leaves = [];
+        window.addEventListener("leave-finished", (e) => {
+            const ce = e as CustomEvent<{ kind: string }>;
+            w.__leaves.push({ at: performance.now(), kind: ce.detail?.kind, bubbles: ce.bubbles, composed: ce.composed });
+        });
+    });
+}
+
+const readLeaves = (page: Page) =>
+    page.evaluate(() => ({
+        events: (window as unknown as { __leaves: { at: number; kind: string; bubbles: boolean; composed: boolean }[] }).__leaves,
+        emitted: (window as unknown as { __emitted?: Record<string, number> }).__emitted ?? {},
+    }));
+
+for (const c of leaves) {
+    const open = async (page: Page, project: string) => (c.hover ? page.locator(c.trigger).hover() : pressOn(page, project, c.trigger));
+    const close = async (page: Page, project: string) =>
+        c.dismiss ? pressOn(page, project, c.dismiss) : c.hover ? page.mouse.move(8, 880) : page.keyboard.press("Escape");
+
+    test(`leave · a ${c.name} says once that its leave has finished, after its last seen frame`, async ({ page }, info) => {
+        const project = info.project.name;
+        test.skip(Boolean(c.hover) && isPhone(project), "a Tooltip does not open on touch");
+        await openHarness(page);
+        await listenLeaves(page);
+        await open(page, project);
+        await page.locator(`${c.content}[data-state$="open"]`).first().waitFor();
+        await page.waitForTimeout(900);
+        await startFilm(page, c.content);
+        await markFilm(page);
+        await close(page, project);
+        const film = await stopFilm(page, 1200);
+        const { events, emitted } = await readLeaves(page);
+        const seen = seenChannel(page.viewportSize()!);
+        const lastSeen = Math.max(...film.frames.filter((f) => f.t >= film.mark && seen(f) > 0.001).map((f) => f.t), film.mark);
+        const read = {
+            events: events.map((e) => ({ ...e, at: Math.round(e.at - film.t0 - film.mark) })),
+            lastSeen: Math.round(lastSeen - film.mark),
+            emitted: emitted[c.content.match(/"(x-[^"]+)"/)?.[1] ?? ""] ?? null,
+        };
+        await info.attach("leave", { body: JSON.stringify(read), contentType: "application/json" });
+        const at = JSON.stringify(read);
+        expect(events.length, `one event ${at}`).toBe(1);
+        expect(events[0].kind, `its kind ${at}`).toBe(c.kind);
+        expect(events[0].bubbles && events[0].composed, `it bubbles and is composed ${at}`).toBe(true);
+        expect(events[0].at - film.t0, `it comes at or after the last seen frame ${at}`).toBeGreaterThanOrEqual(lastSeen);
+        if (c.kind !== "toast") expect(read.emitted, `the Vue emit fires once with it ${at}`).toBe(1);
+    });
+
+    test(`leave · a ${c.name} closed and reopened mid-exit says nothing`, async ({ page }, info) => {
+        const project = info.project.name;
+        test.skip(Boolean(c.hover) && isPhone(project), "a Tooltip does not open on touch");
+        test.skip(c.kind === "toast", "a dismissed toast is not reopened");
+        await openHarness(page);
+        await listenLeaves(page);
+        await open(page, project);
+        await page.locator(`${c.content}[data-state$="open"]`).first().waitFor();
+        await page.waitForTimeout(900);
+        await close(page, project);
+        await page.waitForTimeout(40);
+        await open(page, project);
+        await page.waitForTimeout(900);
+        const { events, emitted } = await readLeaves(page);
+        expect(await page.locator(`${c.content}[data-state$="open"]`).count(), "it is open again").toBe(1);
+        expect(events, "no leave-finished event").toEqual([]);
+        expect(Object.values(emitted).reduce((a, b) => a + b, 0), "no emit").toBe(0);
+    });
+}
