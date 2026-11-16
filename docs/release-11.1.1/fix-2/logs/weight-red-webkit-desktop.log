@@ -1,0 +1,46 @@
+
+Running 1 test using 1 worker
+
+  ✘  1 [webkit-desktop] › tests-visual/release-11-1-1-controls.spec.ts:46:1 › weight · selecting a word-labelled ToggleGroupItem moves no item box (1.9s)
+
+
+  1) [webkit-desktop] › tests-visual/release-11-1-1-controls.spec.ts:46:1 › weight · selecting a word-labelled ToggleGroupItem moves no item box 
+
+    Error: selected: every item where it was
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 3
+    + Received  + 3
+
+      Array [
+        Array [
+          12,
+    -     99.2,
+    +     101.1,
+        ],
+        Array [
+    -     119.2,
+    +     121.1,
+          60.1,
+        ],
+        Array [
+    -     187.3,
+    +     189.2,
+          129.6,
+        ],
+      ]
+
+      63 |     const off = await boxes();
+      64 |     await info.attach("boxes", { body: JSON.stringify({ rest, on, off }), contentType: "application/json" });
+    > 65 |     expect(on, "selected: every item where it was").toEqual(rest);
+         |                                                     ^
+      66 |     expect(off, "deselected: every item where it was").toEqual(rest);
+      67 | });
+      68 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-controls.spec.ts:65:53
+
+    Error Context: tests-visual/test-results/release-11-1-1-controls-we-4efa1-GroupItem-moves-no-item-box-webkit-desktop/error-context.md
+
+  1 failed
+    [webkit-desktop] › tests-visual/release-11-1-1-controls.spec.ts:46:1 › weight · selecting a word-labelled ToggleGroupItem moves no item box 

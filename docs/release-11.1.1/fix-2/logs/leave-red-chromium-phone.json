@@ -1,0 +1,453 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-1-1.config.ts",
+      "--project=chromium-phone",
+      "--workers=1",
+      "release-11-1-1.spec",
+      "-g",
+      "leave · a (Popover inside|ContextMenu|hover card|Dialog unmounted)"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-2/logs/leave-red-chromium-phone.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5352",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/",
+      "url": "http://localhost:5352",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "leave · a Popover inside a shadow root says so to its host",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3454,
+                  "error": {
+                    "message": "Error: one event {\"window\":[],\"host\":[],\"emits\":{},\"seenAt\":2325.8,\"mounted\":false}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m",
+                    "stack": "Error: one event {\"window\":[],\"host\":[],\"emits\":{},\"seenAt\":2325.8,\"mounted\":false}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n    at expectOnce (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1067:43)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1094:5",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 43,
+                      "line": 1067
+                    },
+                    "snippet": "  1065 |\n  1066 | function expectOnce(log: Heard[], kind: string, seenAt: number, emits: number | undefined, at: string): void {\n> 1067 |     expect(log.length, `one event ${at}`).toBe(1);\n       |                                           ^\n  1068 |     expect(log[0].kind, `its kind ${at}`).toBe(kind);\n  1069 |     expect(log[0].bubbles && log[0].composed, `it bubbles and is composed ${at}`).toBe(true);\n  1070 |     expect(log[0].at, `it comes at or after the last seen frame ${at}`).toBeGreaterThanOrEqual(seenAt);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 43,
+                        "line": 1067
+                      },
+                      "message": "Error: one event {\"window\":[],\"host\":[],\"emits\":{},\"seenAt\":2325.8,\"mounted\":false}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n\n  1065 |\n  1066 | function expectOnce(log: Heard[], kind: string, seenAt: number, emits: number | undefined, at: string): void {\n> 1067 |     expect(log.length, `one event ${at}`).toBe(1);\n       |                                           ^\n  1068 |     expect(log[0].kind, `its kind ${at}`).toBe(kind);\n  1069 |     expect(log[0].bubbles && log[0].composed, `it bubbles and is composed ${at}`).toBe(true);\n  1070 |     expect(log[0].at, `it comes at or after the last seen frame ${at}`).toBeGreaterThanOrEqual(seenAt);\n    at expectOnce (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1067:43)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1094:5"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:27:01.761Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJ3aW5kb3ciOltdLCJob3N0IjpbXSwiZW1pdHMiOnt9LCJzZWVuQXQiOjIzMjUuOCwibW91bnRlZCI6ZmFsc2V9"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-leave-·-a-P-3423b-ow-root-says-so-to-its-host-chromium-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 43,
+                    "line": 1067
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-0b83f2e43d7ece818a26",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "leave · a ContextMenu says once that its leave has finished, by escape",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a ContextMenu opens on a long press, which Playwright's touchscreen cannot hold",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1099,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 59,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:27:05.684Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a ContextMenu opens on a long press, which Playwright's touchscreen cannot hold",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1099,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-bd8ae2a4e7def88d9c3f",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1098,
+          "column": 5
+        },
+        {
+          "title": "leave · a ContextMenu says once that its leave has finished, by pick",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a ContextMenu opens on a long press, which Playwright's touchscreen cannot hold",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1099,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 53,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:27:05.855Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a ContextMenu opens on a long press, which Playwright's touchscreen cannot hold",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1099,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-5ca4f9e038937f71ac4a",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1098,
+          "column": 5
+        },
+        {
+          "title": "leave · a hover card says once that its leave has finished",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a hover card does not open on touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1117,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 46,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:27:05.914Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a hover card does not open on touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1117,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-85f5704a48212ce214cd",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1116,
+          "column": 1
+        },
+        {
+          "title": "leave · a Dialog unmounted mid-exit says so once, at the unmount",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3072,
+                  "error": {
+                    "message": "Error: one event {\"window\":[],\"host\":[],\"emits\":{},\"cut\":2207.7999999821186}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m",
+                    "stack": "Error: one event {\"window\":[],\"host\":[],\"emits\":{},\"cut\":2207.7999999821186}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1155:50",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 50,
+                      "line": 1155
+                    },
+                    "snippet": "  1153 |     await info.attach(\"leave\", { body: at, contentType: \"application/json\" });\n  1154 |     expect(await page.locator('[data-testid=\"l-dialog-content\"]').count(), \"the dialog is gone\").toBe(0);\n> 1155 |     expect(log.window.length, `one event ${at}`).toBe(1);\n       |                                                  ^\n  1156 |     expect(log.window[0].kind, `its kind ${at}`).toBe(\"dialog\");\n  1157 |     // The exit had about 140 ms left at the cut; the event comes with the unmount.\n  1158 |     expect(log.window[0].at - cut, `it comes with the unmount ${at}`).toBeLessThanOrEqual(50);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 50,
+                        "line": 1155
+                      },
+                      "message": "Error: one event {\"window\":[],\"host\":[],\"emits\":{},\"cut\":2207.7999999821186}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n\n  1153 |     await info.attach(\"leave\", { body: at, contentType: \"application/json\" });\n  1154 |     expect(await page.locator('[data-testid=\"l-dialog-content\"]').count(), \"the dialog is gone\").toBe(0);\n> 1155 |     expect(log.window.length, `one event ${at}`).toBe(1);\n       |                                                  ^\n  1156 |     expect(log.window[0].kind, `its kind ${at}`).toBe(\"dialog\");\n  1157 |     // The exit had about 140 ms left at the cut; the event comes with the unmount.\n  1158 |     expect(log.window[0].at - cut, `it comes with the unmount ${at}`).toBeLessThanOrEqual(50);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1155:50"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:27:05.967Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJ3aW5kb3ciOltdLCJob3N0IjpbXSwiZW1pdHMiOnt9LCJjdXQiOjIyMDcuNzk5OTk5OTgyMTE4Nn0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-leave-·-a-D-e96bd-says-so-once-at-the-unmount-chromium-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 50,
+                    "line": 1155
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-d8957e886c852c843566",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1134,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-16T07:26:59.958Z",
+    "duration": 9135.848,
+    "expected": 0,
+    "skipped": 3,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

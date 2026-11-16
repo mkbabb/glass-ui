@@ -1,0 +1,13 @@
+# Orchestrator ruling (2026-11-16 00:25, after build B): row 8 is NOT moved. BINDING for the critics, the fix seats and the close.
+
+Build B moved row 8 (reduced motion is a fade) whole, with four findings. The owner's standing order is that no item is deferred, two consumers are waiting on it (a dashboard's reduced-motion fold stand-in, and a second site's reduced-motion rows), and row 13 (a) depends on its law. So row 8 is in 11.1.1 and an unbuilt row 8 is a DEFECT for the critic to file.
+
+The fix seat builds it in four commits, in this order, using build B's findings (build-B.md):
+1. The blanket guard becomes relaxable: a zero-specificity normal declaration in a layer after components, with every glass fade that must survive restated as a layered carve; the Toast's carve in `glass/dissolve.css` is the pattern. A consumer's own fade under reduced motion must now win without `!important`.
+2. The cap is RULED at 200 ms, not 150: the reveal's reduced-motion carve already fades over `--duration-fast` (200 ms), and a second token for 150 ms fails the two-consumer bar. Under reduced motion: opacity and colour change over at most 200 ms on `--exit-curve`; transform, clip and size do not travel (they land at once, under the fade). The scope's "150 ms" is superseded by this note; row 13 (a) follows the same number.
+3. `useSpringMount`'s exit under reduced motion fades the Dialog and the Sheet over that clock instead of returning false and snapping; the entrance likewise.
+4. The dock's fold under reduced motion cross-fades the two faces over that clock (the JS morph in `useDockMorph.ts` and the `--dock-t` pin in `dock.css`), box landing at once under the fade. Then row 13 (a), the run mark, on the same law.
+
+Witness per commit: with `prefers-reduced-motion: reduce`, in both engines at 390 and 1440, no surface in the exits table appears or leaves in under two frames, opacity is monotone, no transform or size value takes an intermediate step, and each fade ends within 200 ms. RED on v11.1.0, GREEN on the branch. The leave-finished event fires when the fade ends.
+
+Also for the critic and the close, from build B's gaps: re-run the 11.0.x and 11.1.0 release specs; re-read the whole release-11-1-1 spec in WebKit on the tip in one pass (the earlier pass was cut at cell 90 by a server timeout: give the server a 90-minute guard and split the spec in two runs if needed); add a harness witness for the leave-finished event on ContextMenu and the Popover hover card; and measure the dock entry's size including the chunks Select and DropdownMenu content now pull (orchestrator-note-dock-size.md).

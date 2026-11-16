@@ -1,0 +1,51 @@
+[guarded] waiting for the 'webkit' lock
+
+Running 4 tests using 1 worker
+
+  -  1 [webkit-desktop] › tests-visual/release-11-1-1-controls.spec.ts:22:5 › round · a compact SegmentedTabs strip is round-ended on touch
+  -  2 [webkit-desktop] › tests-visual/release-11-1-1-controls.spec.ts:22:5 › round · a wide SegmentedTabs strip is round-ended on touch
+  ✘  3 [webkit-desktop] › tests-visual/release-11-1-1-controls.spec.ts:46:1 › weight · selecting a word-labelled ToggleGroupItem moves no item box (1.8s)
+  -  4 [webkit-desktop] › tests-visual/release-11-1-1-controls.spec.ts:68:1 › lift · a scale-on-hover element returns to rest after a tap
+
+
+  1) [webkit-desktop] › tests-visual/release-11-1-1-controls.spec.ts:46:1 › weight · selecting a word-labelled ToggleGroupItem moves no item box 
+
+    Error: selected: every item where it was
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 3
+    + Received  + 3
+
+      Array [
+        Array [
+          12,
+    -     101.2,
+    +     102,
+        ],
+        Array [
+    -     121.2,
+    +     122,
+          62.9,
+        ],
+        Array [
+    -     192.1,
+    +     192.9,
+          134,
+        ],
+      ]
+
+      62 |     const off = await boxes();
+      63 |     await info.attach("boxes", { body: JSON.stringify({ rest, on, off }), contentType: "application/json" });
+    > 64 |     expect(on, "selected: every item where it was").toEqual(rest);
+         |                                                     ^
+      65 |     expect(off, "deselected: every item where it was").toEqual(rest);
+      66 | });
+      67 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-controls.spec.ts:64:53
+
+    Error Context: tests-visual/test-results/release-11-1-1-controls-we-4efa1-GroupItem-moves-no-item-box-webkit-desktop/error-context.md
+
+  1 failed
+    [webkit-desktop] › tests-visual/release-11-1-1-controls.spec.ts:46:1 › weight · selecting a word-labelled ToggleGroupItem moves no item box 
+  3 skipped

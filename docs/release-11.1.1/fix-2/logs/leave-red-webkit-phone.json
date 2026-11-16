@@ -1,0 +1,457 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-1-1.config.ts",
+      "--project=webkit-phone",
+      "--workers=1",
+      "release-11-1-1.spec",
+      "-g",
+      "leave · a (Popover inside|ContextMenu|hover card|Dialog unmounted)"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-ro.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-ro.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-ro.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-ro.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-2/logs/leave-red-webkit-phone.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5352",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/",
+      "url": "http://localhost:5352",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "leave · a Popover inside a shadow root says so to its host",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3933,
+                  "error": {
+                    "message": "Error: one event {\"window\":[],\"host\":[],\"emits\":{},\"seenAt\":2382,\"mounted\":false}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m",
+                    "stack": "Error: one event {\"window\":[],\"host\":[],\"emits\":{},\"seenAt\":2382,\"mounted\":false}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n    at expectOnce (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1076:43)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1103:5",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 43,
+                      "line": 1076
+                    },
+                    "snippet": "  1074 |\n  1075 | function expectOnce(log: Heard[], kind: string, seenAt: number, emits: number | undefined, at: string): void {\n> 1076 |     expect(log.length, `one event ${at}`).toBe(1);\n       |                                           ^\n  1077 |     expect(log[0].kind, `its kind ${at}`).toBe(kind);\n  1078 |     expect(log[0].bubbles && log[0].composed, `it bubbles and is composed ${at}`).toBe(true);\n  1079 |     expect(log[0].at, `it comes at or after the last seen frame ${at}`).toBeGreaterThanOrEqual(seenAt);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 43,
+                        "line": 1076
+                      },
+                      "message": "Error: one event {\"window\":[],\"host\":[],\"emits\":{},\"seenAt\":2382,\"mounted\":false}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n\n  1074 |\n  1075 | function expectOnce(log: Heard[], kind: string, seenAt: number, emits: number | undefined, at: string): void {\n> 1076 |     expect(log.length, `one event ${at}`).toBe(1);\n       |                                           ^\n  1077 |     expect(log[0].kind, `its kind ${at}`).toBe(kind);\n  1078 |     expect(log[0].bubbles && log[0].composed, `it bubbles and is composed ${at}`).toBe(true);\n  1079 |     expect(log[0].at, `it comes at or after the last seen frame ${at}`).toBeGreaterThanOrEqual(seenAt);\n    at expectOnce (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1076:43)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1103:5"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:30:23.641Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJ3aW5kb3ciOltdLCJob3N0IjpbXSwiZW1pdHMiOnt9LCJzZWVuQXQiOjIzODIsIm1vdW50ZWQiOmZhbHNlfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-leave-·-a-P-3423b-ow-root-says-so-to-its-host-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 43,
+                    "line": 1076
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-9b9a96df2ec99501a18a",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1083,
+          "column": 1
+        },
+        {
+          "title": "leave · a ContextMenu says once that its leave has finished, by escape",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a ContextMenu opens on a long press, which Playwright's touchscreen cannot hold",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1108,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 470,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:30:28.184Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a ContextMenu opens on a long press, which Playwright's touchscreen cannot hold",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1108,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-c98cb90e23dbeee907da",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1107,
+          "column": 5
+        },
+        {
+          "title": "leave · a ContextMenu says once that its leave has finished, by pick",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a ContextMenu opens on a long press, which Playwright's touchscreen cannot hold",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1108,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 250,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:30:28.853Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a ContextMenu opens on a long press, which Playwright's touchscreen cannot hold",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1108,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-8138146739f19a6450ad",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1107,
+          "column": 5
+        },
+        {
+          "title": "leave · a hover card says once that its leave has finished",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a hover card does not open on touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1126,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 259,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:30:29.110Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a hover card does not open on touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1126,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-061d752937c708e63d47",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1125,
+          "column": 1
+        },
+        {
+          "title": "leave · a Dialog unmounted mid-exit says so once, at the unmount",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3386,
+                  "error": {
+                    "message": "Error: one event {\"window\":[],\"host\":[],\"emits\":{},\"cut\":2296.0000000000005}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m",
+                    "stack": "Error: one event {\"window\":[],\"host\":[],\"emits\":{},\"cut\":2296.0000000000005}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1164:50",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 50,
+                      "line": 1164
+                    },
+                    "snippet": "  1162 |     await info.attach(\"leave\", { body: at, contentType: \"application/json\" });\n  1163 |     expect(await page.locator('[data-testid=\"l-dialog-content\"]').count(), \"the dialog is gone\").toBe(0);\n> 1164 |     expect(log.window.length, `one event ${at}`).toBe(1);\n       |                                                  ^\n  1165 |     expect(log.window[0].kind, `its kind ${at}`).toBe(\"dialog\");\n  1166 |     // The exit had about 140 ms left at the cut; the event comes with the unmount.\n  1167 |     expect(log.window[0].at - cut, `it comes with the unmount ${at}`).toBeLessThanOrEqual(50);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 50,
+                        "line": 1164
+                      },
+                      "message": "Error: one event {\"window\":[],\"host\":[],\"emits\":{},\"cut\":2296.0000000000005}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n\n  1162 |     await info.attach(\"leave\", { body: at, contentType: \"application/json\" });\n  1163 |     expect(await page.locator('[data-testid=\"l-dialog-content\"]').count(), \"the dialog is gone\").toBe(0);\n> 1164 |     expect(log.window.length, `one event ${at}`).toBe(1);\n       |                                                  ^\n  1165 |     expect(log.window[0].kind, `its kind ${at}`).toBe(\"dialog\");\n  1166 |     // The exit had about 140 ms left at the cut; the event comes with the unmount.\n  1167 |     expect(log.window[0].at - cut, `it comes with the unmount ${at}`).toBeLessThanOrEqual(50);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1164:50"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:30:29.375Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJ3aW5kb3ciOltdLCJob3N0IjpbXSwiZW1pdHMiOnt9LCJjdXQiOjIyOTYuMDAwMDAwMDAwMDAwNX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-leave-·-a-D-e96bd-says-so-once-at-the-unmount-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 50,
+                    "line": 1164
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-263b3bc51b0955aba18b",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1143,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-16T07:30:21.843Z",
+    "duration": 10990.161,
+    "expected": 0,
+    "skipped": 3,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

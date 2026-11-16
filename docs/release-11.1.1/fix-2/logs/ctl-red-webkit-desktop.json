@@ -1,0 +1,382 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-1-1.config.ts",
+      "--project=webkit-desktop",
+      "--workers=1",
+      "release-11-1-1-controls"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-2/logs/ctl-red-webkit-desktop.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5352",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/",
+      "url": "http://localhost:5352",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1-controls.spec.ts",
+      "file": "release-11-1-1-controls.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "round · a compact SegmentedTabs strip is round-ended on touch",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the touch floor and its shape are a coarse-pointer claim",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                    "line": 23,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 312,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:26:26.397Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the touch floor and its shape are a coarse-pointer claim",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                        "line": 23,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "cb8d16cc229feb6ea1bb-cfa8c5610b4ab717700f",
+          "file": "release-11-1-1-controls.spec.ts",
+          "line": 22,
+          "column": 5
+        },
+        {
+          "title": "round · a wide SegmentedTabs strip is round-ended on touch",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the touch floor and its shape are a coarse-pointer claim",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                    "line": 23,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 243,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:26:26.892Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the touch floor and its shape are a coarse-pointer claim",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                        "line": 23,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "cb8d16cc229feb6ea1bb-2fe133d8d9c0a7455966",
+          "file": "release-11-1-1-controls.spec.ts",
+          "line": 22,
+          "column": 5
+        },
+        {
+          "title": "weight · selecting a word-labelled ToggleGroupItem moves no item box",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1803,
+                  "error": {
+                    "message": "Error: selected: every item where it was\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 3\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[2m  Array [\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[2m      12,\u001b[22m\n\u001b[32m-     101.2,\u001b[39m\n\u001b[31m+     102,\u001b[39m\n\u001b[2m    ],\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[32m-     121.2,\u001b[39m\n\u001b[31m+     122,\u001b[39m\n\u001b[2m      62.9,\u001b[22m\n\u001b[2m    ],\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[32m-     192.1,\u001b[39m\n\u001b[31m+     192.9,\u001b[39m\n\u001b[2m      134,\u001b[22m\n\u001b[2m    ],\u001b[22m\n\u001b[2m  ]\u001b[22m",
+                    "stack": "Error: selected: every item where it was\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 3\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[2m  Array [\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[2m      12,\u001b[22m\n\u001b[32m-     101.2,\u001b[39m\n\u001b[31m+     102,\u001b[39m\n\u001b[2m    ],\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[32m-     121.2,\u001b[39m\n\u001b[31m+     122,\u001b[39m\n\u001b[2m      62.9,\u001b[22m\n\u001b[2m    ],\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[32m-     192.1,\u001b[39m\n\u001b[31m+     192.9,\u001b[39m\n\u001b[2m      134,\u001b[22m\n\u001b[2m    ],\u001b[22m\n\u001b[2m  ]\u001b[22m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-controls.spec.ts:64:53",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                      "column": 53,
+                      "line": 64
+                    },
+                    "snippet": "  62 |     const off = await boxes();\n  63 |     await info.attach(\"boxes\", { body: JSON.stringify({ rest, on, off }), contentType: \"application/json\" });\n> 64 |     expect(on, \"selected: every item where it was\").toEqual(rest);\n     |                                                     ^\n  65 |     expect(off, \"deselected: every item where it was\").toEqual(rest);\n  66 | });\n  67 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                        "column": 53,
+                        "line": 64
+                      },
+                      "message": "Error: selected: every item where it was\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 3\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[2m  Array [\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[2m      12,\u001b[22m\n\u001b[32m-     101.2,\u001b[39m\n\u001b[31m+     102,\u001b[39m\n\u001b[2m    ],\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[32m-     121.2,\u001b[39m\n\u001b[31m+     122,\u001b[39m\n\u001b[2m      62.9,\u001b[22m\n\u001b[2m    ],\u001b[22m\n\u001b[2m    Array [\u001b[22m\n\u001b[32m-     192.1,\u001b[39m\n\u001b[31m+     192.9,\u001b[39m\n\u001b[2m      134,\u001b[22m\n\u001b[2m    ],\u001b[22m\n\u001b[2m  ]\u001b[22m\n\n  62 |     const off = await boxes();\n  63 |     await info.attach(\"boxes\", { body: JSON.stringify({ rest, on, off }), contentType: \"application/json\" });\n> 64 |     expect(on, \"selected: every item where it was\").toEqual(rest);\n     |                                                     ^\n  65 |     expect(off, \"deselected: every item where it was\").toEqual(rest);\n  66 | });\n  67 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-controls.spec.ts:64:53"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:26:27.144Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "boxes",
+                      "contentType": "application/json",
+                      "body": "eyJyZXN0IjpbWzEyLDEwMS4yXSxbMTIxLjIsNjIuOV0sWzE5Mi4xLDEzNF1dLCJvbiI6W1sxMiwxMDJdLFsxMjIsNjIuOV0sWzE5Mi45LDEzNF1dLCJvZmYiOltbMTIsMTAxLjJdLFsxMjEuMiw2Mi45XSxbMTkyLjEsMTM0XV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-controls-we-4efa1-GroupItem-moves-no-item-box-webkit-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                    "column": 53,
+                    "line": 64
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "cb8d16cc229feb6ea1bb-09bffc769f0c21121f08",
+          "file": "release-11-1-1-controls.spec.ts",
+          "line": 46,
+          "column": 1
+        },
+        {
+          "title": "lift · a scale-on-hover element returns to rest after a tap",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a tap is a touch claim",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                    "line": 69,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 344,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:26:29.309Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a tap is a touch claim",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-controls.spec.ts",
+                        "line": 69,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "cb8d16cc229feb6ea1bb-ac92b1778e7fef9c2109",
+          "file": "release-11-1-1-controls.spec.ts",
+          "line": 68,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-16T07:26:24.804Z",
+    "duration": 5202.0560000000005,
+    "expected": 0,
+    "skipped": 3,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,2453 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-1-1.config.ts",
+      "--project=chromium-phone",
+      "--workers=1",
+      "release-11-1-1.spec",
+      "-g",
+      "(reverse|tooltip|expand|leave) · "
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-2/logs/tipB-chromium-phone.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "reverse · a Select closed while it opens turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2384,
+                  "error": {
+                    "message": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.371,\"back\":0.153,\"share\":0.089,\"end\":0,\"frames\":[[-6,0.371],[3,0.426],[11,0.48],[19,0.504],[28,0.519],[36,0.524],[44,0.52],[53,0.508],[61,0.489],[69,0.466],[78,0.435],[86,0.402],[94,0.367],[103,0.33],[111,0.292],[119,0.254],[128,0.218],[136,0.183],[143,0.152],[153,0.118],[161,0.091],[169,0.068],[178,0.049],[186,0.033],[194,0.021],[203,0.012],[211,0.006],[219,0.002],[228,0],[235,0],[245,0],[253,0],[261,0],[269,0],[278,0],[286,0],[294,0],[303,0],[311,0],[318,0],[328,0],[336,0],[344,0],[353,0],[361,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.153\u001b[39m",
+                    "stack": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.371,\"back\":0.153,\"share\":0.089,\"end\":0,\"frames\":[[-6,0.371],[3,0.426],[11,0.48],[19,0.504],[28,0.519],[36,0.524],[44,0.52],[53,0.508],[61,0.489],[69,0.466],[78,0.435],[86,0.402],[94,0.367],[103,0.33],[111,0.292],[119,0.254],[128,0.218],[136,0.183],[143,0.152],[153,0.118],[161,0.091],[169,0.068],[178,0.049],[186,0.033],[194,0.021],[203,0.012],[211,0.006],[219,0.002],[228,0],[235,0],[245,0],[253,0],[261,0],[269,0],[278,0],[286,0],[294,0],[303,0],[311,0],[318,0],[328,0],[336,0],[344,0],[353,0],[361,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.153\u001b[39m\n    at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:652:89)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:704:13",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 89,
+                      "line": 652
+                    },
+                    "snippet": "  650 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n  651 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n> 652 |     expect(read.back, `after the turn it does not run on toward the end it left ${at}`).toBeLessThanOrEqual(0.06);\n      |                                                                                         ^\n  653 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n  654 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);\n  655 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 89,
+                        "line": 652
+                      },
+                      "message": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.371,\"back\":0.153,\"share\":0.089,\"end\":0,\"frames\":[[-6,0.371],[3,0.426],[11,0.48],[19,0.504],[28,0.519],[36,0.524],[44,0.52],[53,0.508],[61,0.489],[69,0.466],[78,0.435],[86,0.402],[94,0.367],[103,0.33],[111,0.292],[119,0.254],[128,0.218],[136,0.183],[143,0.152],[153,0.118],[161,0.091],[169,0.068],[178,0.049],[186,0.033],[194,0.021],[203,0.012],[211,0.006],[219,0.002],[228,0],[235,0],[245,0],[253,0],[261,0],[269,0],[278,0],[286,0],[294,0],[303,0],[311,0],[318,0],[328,0],[336,0],[344,0],[353,0],[361,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.153\u001b[39m\n\n  650 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n  651 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n> 652 |     expect(read.back, `after the turn it does not run on toward the end it left ${at}`).toBeLessThanOrEqual(0.06);\n      |                                                                                         ^\n  653 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n  654 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);\n  655 | }\n    at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:652:89)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:704:13"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:36:42.639Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuMzcxLCJiYWNrIjowLjE1Mywic2hhcmUiOjAuMDg5LCJlbmQiOjAsImZyYW1lcyI6W1stNiwwLjM3MV0sWzMsMC40MjZdLFsxMSwwLjQ4XSxbMTksMC41MDRdLFsyOCwwLjUxOV0sWzM2LDAuNTI0XSxbNDQsMC41Ml0sWzUzLDAuNTA4XSxbNjEsMC40ODldLFs2OSwwLjQ2Nl0sWzc4LDAuNDM1XSxbODYsMC40MDJdLFs5NCwwLjM2N10sWzEwMywwLjMzXSxbMTExLDAuMjkyXSxbMTE5LDAuMjU0XSxbMTI4LDAuMjE4XSxbMTM2LDAuMTgzXSxbMTQzLDAuMTUyXSxbMTUzLDAuMTE4XSxbMTYxLDAuMDkxXSxbMTY5LDAuMDY4XSxbMTc4LDAuMDQ5XSxbMTg2LDAuMDMzXSxbMTk0LDAuMDIxXSxbMjAzLDAuMDEyXSxbMjExLDAuMDA2XSxbMjE5LDAuMDAyXSxbMjI4LDBdLFsyMzUsMF0sWzI0NSwwXSxbMjUzLDBdLFsyNjEsMF0sWzI2OSwwXSxbMjc4LDBdLFsyODYsMF0sWzI5NCwwXSxbMzAzLDBdLFszMTEsMF0sWzMxOCwwXSxbMzI4LDBdLFszMzYsMF0sWzM0NCwwXSxbMzUzLDBdLFszNjEsMF0sWzM2OSwwXSxbMzc4LDBdLFszODYsMF0sWzM5NCwwXSxbNDAzLDBdLFs0MTEsMF0sWzQxOCwwXSxbNDI4LDBdLFs0MzYsMF0sWzQ0NCwwXSxbNDUzLDBdLFs0NjEsMF0sWzQ2OSwwXSxbNDc4LDBdLFs0ODYsMF0sWzQ5NCwwXSxbNTAzLDBdLFs1MTAsMF0sWzUxOSwwXSxbNTI4LDBdLFs1MzYsMF0sWzU0NCwwXSxbNTUzLDBdLFs1NjEsMF0sWzU2OCwwXSxbNTc3LDBdLFs1ODYsMF0sWzU5NCwwXSxbNjAzLDBdLFs2MTAsMF0sWzYxOSwwXSxbNjI4LDBdLFs2MzYsMF0sWzY0NCwwXSxbNjUzLDBdLFs2NjEsMF0sWzY2OSwwXSxbNjc4LDBdLFs2ODYsMF0sWzY5NCwwXSxbNzAzLDBdLFs3MTEsMF0sWzcxOSwwXSxbNzI4LDBdLFs3MzYsMF0sWzc0NCwwXSxbNzUzLDBdLFs3NjEsMF0sWzc2OSwwXSxbNzc4LDBdLFs3ODYsMF0sWzc5NCwwXSxbODAzLDBdLFs4MTEsMF0sWzgxOSwwXSxbODI4LDBdLFs4MzYsMF0sWzg0NCwwXSxbODUzLDBdLFs4NjEsMF0sWzg2OSwwXSxbODc2LDBdLFs4ODYsMF0sWzg5NCwwXSxbOTAzLDBdLFs5MTEsMF0sWzkxOSwwXSxbOTI4LDBdLFs5MzYsMF0sWzk0NCwwXSxbOTUzLDBdLFs5NjEsMF0sWzk2OSwwXSxbOTc4LDBdLFs5ODYsMF0sWzk5MywwXSxbMTAwMSwwXSxbMTAxMSwwXSxbMTAxOSwwXSxbMTAyOCwwXSxbMTAzNiwwXSxbMTA0NCwwXSxbMTA1MSwwXSxbMTA2MSwwXSxbMTA2OSwwXSxbMTA3OCwwXSxbMTA4NiwwXSxbMTA5NCwwXSxbMTEwMywwXSxbMTExMSwwXSxbMTExOSwwXSxbMTEyNywwXSxbMTEzNiwwXSxbMTE0NCwwXSxbMTE1MywwXSxbMTE2MSwwXSxbMTE2OSwwXSxbMTE3OCwwXSxbMTE4NiwwXSxbMTE5NCwwXSxbMTIwMywwXSxbMTIxMSwwXSxbMTIxOSwwXSxbMTIyOCwwXSxbMTIzNiwwXSxbMTI0NCwwXSxbMTI1MiwwXSxbMTI2MSwwXSxbMTI2OSwwXSxbMTI3NywwXSxbMTI4NSwwXSxbMTI5MywwXSxbMTMwMywwXSxbMTMxMSwwXSxbMTMxOCwwXSxbMTMyOCwwXSxbMTMzNiwwXSxbMTM0NCwwXSxbMTM1MywwXSxbMTM2MCwwXSxbMTM2OSwwXSxbMTM3OCwwXSxbMTM4NiwwXSxbMTM5NCwwXSxbMTQwMywwXSxbMTQxMSwwXV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-reverse-·-a-ed757-pens-turns-from-where-it-is-chromium-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 89,
+                    "line": 652
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-de019b1ce5103e042ac9",
+          "file": "release-11-1-1.spec.ts",
+          "line": 698,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Select reopened while it closes turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3150,
+                  "error": {
+                    "message": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.708,\"back\":0.241,\"share\":0.147,\"end\":1,\"frames\":[[-5,0.708],[3,0.645],[11,0.584],[20,0.525],[28,0.467],[36,0.508],[44,0.555],[53,0.624],[61,0.692],[70,0.766],[78,0.84],[86,0.911],[95,0.976],[103,1],[110,1],[120,1],[128,1],[136,1],[145,1],[153,1],[161,1],[170,1],[178,1],[187,1],[195,1],[203,1],[211,1],[220,1],[228,1],[235,1],[243,1],[254,1],[260,1],[270,1],[278,1],[287,1],[295,1],[303,1],[312,1],[320,1],[327,1],[336,1],[345,1],[353,1],[361,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.241\u001b[39m",
+                    "stack": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.708,\"back\":0.241,\"share\":0.147,\"end\":1,\"frames\":[[-5,0.708],[3,0.645],[11,0.584],[20,0.525],[28,0.467],[36,0.508],[44,0.555],[53,0.624],[61,0.692],[70,0.766],[78,0.84],[86,0.911],[95,0.976],[103,1],[110,1],[120,1],[128,1],[136,1],[145,1],[153,1],[161,1],[170,1],[178,1],[187,1],[195,1],[203,1],[211,1],[220,1],[228,1],[235,1],[243,1],[254,1],[260,1],[270,1],[278,1],[287,1],[295,1],[303,1],[312,1],[320,1],[327,1],[336,1],[345,1],[353,1],[361,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.241\u001b[39m\n    at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:652:89)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:717:13",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 89,
+                      "line": 652
+                    },
+                    "snippet": "  650 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n  651 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n> 652 |     expect(read.back, `after the turn it does not run on toward the end it left ${at}`).toBeLessThanOrEqual(0.06);\n      |                                                                                         ^\n  653 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n  654 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);\n  655 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 89,
+                        "line": 652
+                      },
+                      "message": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.708,\"back\":0.241,\"share\":0.147,\"end\":1,\"frames\":[[-5,0.708],[3,0.645],[11,0.584],[20,0.525],[28,0.467],[36,0.508],[44,0.555],[53,0.624],[61,0.692],[70,0.766],[78,0.84],[86,0.911],[95,0.976],[103,1],[110,1],[120,1],[128,1],[136,1],[145,1],[153,1],[161,1],[170,1],[178,1],[187,1],[195,1],[203,1],[211,1],[220,1],[228,1],[235,1],[243,1],[254,1],[260,1],[270,1],[278,1],[287,1],[295,1],[303,1],[312,1],[320,1],[327,1],[336,1],[345,1],[353,1],[361,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.241\u001b[39m\n\n  650 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n  651 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n> 652 |     expect(read.back, `after the turn it does not run on toward the end it left ${at}`).toBeLessThanOrEqual(0.06);\n      |                                                                                         ^\n  653 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n  654 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);\n  655 | }\n    at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:652:89)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:717:13"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:36:45.493Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNzA4LCJiYWNrIjowLjI0MSwic2hhcmUiOjAuMTQ3LCJlbmQiOjEsImZyYW1lcyI6W1stNSwwLjcwOF0sWzMsMC42NDVdLFsxMSwwLjU4NF0sWzIwLDAuNTI1XSxbMjgsMC40NjddLFszNiwwLjUwOF0sWzQ0LDAuNTU1XSxbNTMsMC42MjRdLFs2MSwwLjY5Ml0sWzcwLDAuNzY2XSxbNzgsMC44NF0sWzg2LDAuOTExXSxbOTUsMC45NzZdLFsxMDMsMV0sWzExMCwxXSxbMTIwLDFdLFsxMjgsMV0sWzEzNiwxXSxbMTQ1LDFdLFsxNTMsMV0sWzE2MSwxXSxbMTcwLDFdLFsxNzgsMV0sWzE4NywxXSxbMTk1LDFdLFsyMDMsMV0sWzIxMSwxXSxbMjIwLDFdLFsyMjgsMV0sWzIzNSwxXSxbMjQzLDFdLFsyNTQsMV0sWzI2MCwxXSxbMjcwLDFdLFsyNzgsMV0sWzI4NywxXSxbMjk1LDFdLFszMDMsMV0sWzMxMiwxXSxbMzIwLDFdLFszMjcsMV0sWzMzNiwxXSxbMzQ1LDFdLFszNTMsMV0sWzM2MSwxXSxbMzcwLDFdLFszNzgsMV0sWzM4NiwxXSxbMzk1LDFdLFs0MDMsMV0sWzQxMSwxXSxbNDIwLDFdLFs0MjgsMV0sWzQzNiwxXSxbNDQ1LDFdLFs0NTMsMV0sWzQ2MSwxXSxbNDY4LDFdLFs0NzcsMV0sWzQ4NywxXSxbNDk1LDFdLFs1MDIsMV0sWzUxMiwxXSxbNTE4LDFdLFs1MjgsMV0sWzUzNiwxXSxbNTQ1LDFdLFs1NTMsMV0sWzU2MSwxXSxbNTcwLDFdLFs1NzgsMV0sWzU4NiwxXSxbNTk1LDFdLFs2MDMsMV0sWzYxMCwxXSxbNjIwLDFdLFs2MjgsMV0sWzYzNSwxXSxbNjQ1LDFdLFs2NTMsMV0sWzY2MSwxXSxbNjcwLDFdLFs2NzgsMV0sWzY4NiwxXSxbNjk1LDFdLFs3MDMsMV0sWzcxMSwxXSxbNzIwLDFdLFs3MjgsMV0sWzczNiwxXSxbNzQ1LDFdLFs3NTMsMV0sWzc2MSwxXSxbNzcwLDFdLFs3NzcsMV0sWzc4NywxXSxbNzk1LDFdLFs4MDIsMV0sWzgxMSwxXSxbODIwLDFdLFs4MjcsMV0sWzgzNiwxXSxbODQ1LDFdLFs4NTMsMV0sWzg2MCwxXSxbODcwLDFdLFs4NzgsMV0sWzg4NSwxXSxbODk1LDFdLFs5MDMsMV0sWzkxMSwxXSxbOTE4LDFdLFs5MjgsMV0sWzkzNiwxXSxbOTQ1LDFdLFs5NTMsMV0sWzk2MiwxXSxbOTcwLDFdLFs5NzgsMV0sWzk4NiwxXSxbOTk1LDFdLFsxMDAzLDFdLFsxMDExLDFdLFsxMDIwLDFdLFsxMDI4LDFdLFsxMDM2LDFdLFsxMDQ0LDFdLFsxMDUzLDFdLFsxMDYxLDFdLFsxMDY5LDFdLFsxMDc4LDFdLFsxMDg2LDFdLFsxMDk1LDFdLFsxMTAzLDFdLFsxMTExLDFdLFsxMTIwLDFdLFsxMTI4LDFdLFsxMTM2LDFdLFsxMTQ1LDFdLFsxMTUzLDFdLFsxMTYyLDFdLFsxMTcwLDFdLFsxMTc4LDFdLFsxMTg2LDFdLFsxMTk1LDFdLFsxMjAzLDFdLFsxMjEwLDFdLFsxMjIwLDFdLFsxMjI4LDFdLFsxMjM2LDFdLFsxMjQ1LDFdLFsxMjUzLDFdLFsxMjYwLDFdLFsxMjcwLDFdLFsxMjc4LDFdLFsxMjg2LDFdLFsxMjk1LDFdLFsxMzAzLDFdLFsxMzExLDFdLFsxMzE4LDFdLFsxMzI4LDFdLFsxMzM2LDFdLFsxMzQ1LDFdLFsxMzUzLDFdLFsxMzYwLDFdLFsxMzY5LDFdLFsxMzc4LDFdLFsxMzg2LDFdLFsxMzk0LDFdLFsxNDAzLDFdLFsxNDExLDFdLFsxNDIwLDFdLFsxNDI4LDFdLFsxNDM3LDFdXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-reverse-·-a-c9729-oses-turns-from-where-it-is-chromium-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 89,
+                    "line": 652
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-6bb6926a8c27546d4032",
+          "file": "release-11-1-1.spec.ts",
+          "line": 708,
+          "column": 9
+        },
+        {
+          "title": "reverse · a DropdownMenu closed while it opens turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2211,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:36:49.126Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNDUsImJhY2siOjAsInNoYXJlIjowLjA0NiwiZW5kIjowLCJmcmFtZXMiOltbLTEsMC40NV0sWzUsMC40NV0sWzE2LDAuNDVdLFsyNCwwLjQzMl0sWzMyLDAuNDEyXSxbNDAsMC4zOTFdLFs0OSwwLjM2OF0sWzU3LDAuMzQ1XSxbNjUsMC4zMjJdLFs3NCwwLjI5OV0sWzgyLDAuMjc2XSxbOTAsMC4yNTNdLFs5OSwwLjIzMl0sWzEwNywwLjIxXSxbMTE1LDAuMTg5XSxbMTI0LDAuMTY5XSxbMTMyLDAuMTVdLFsxNDAsMC4xMzJdLFsxNDksMC4xMTRdLFsxNTYsMC4xXSxbMTY1LDAuMDgzXSxbMTc0LDAuMDY5XSxbMTgyLDAuMDU3XSxbMTkwLDAuMDQ1XSxbMTk5LDAuMDM1XSxbMjA3LDAuMDI1XSxbMjE1LDAuMDE3XSxbMjI0LDAuMDFdLFsyMzIsMC4wMDRdLFsyNDAsMF0sWzI0OSwwXSxbMjU3LDBdLFsyNjUsMF0sWzI3MywwXSxbMjgyLDBdLFsyOTAsMF0sWzI5OCwwXSxbMzA3LDBdLFszMTUsMF0sWzMyNCwwXSxbMzMyLDBdLFszMzksMF0sWzM0OSwwXSxbMzU3LDBdLFszNjUsMF0sWzM3NCwwXSxbMzgyLDBdLFszOTAsMF0sWzM5NywwXSxbNDA3LDBdLFs0MTQsMF0sWzQyMywwXSxbNDMyLDBdLFs0NDAsMF0sWzQ0OSwwXSxbNDU3LDBdLFs0NjUsMF0sWzQ3NCwwXSxbNDgyLDBdLFs0OTAsMF0sWzQ5OSwwXSxbNTA3LDBdLFs1MTUsMF0sWzUyMywwXSxbNTMyLDBdLFs1NDAsMF0sWzU0OSwwXSxbNTU3LDBdLFs1NjUsMF0sWzU3NCwwXSxbNTgyLDBdLFs1OTAsMF0sWzU5OSwwXSxbNjA3LDBdLFs2MTUsMF0sWzYyNCwwXSxbNjMyLDBdLFs2NDAsMF0sWzY0OSwwXSxbNjU3LDBdLFs2NjUsMF0sWzY3MiwwXSxbNjgyLDBdLFs2OTAsMF0sWzY5NywwXSxbNzA3LDBdLFs3MTUsMF0sWzcyMywwXSxbNzMxLDBdLFs3NDAsMF0sWzc0OSwwXSxbNzU3LDBdLFs3NjUsMF0sWzc3MywwXSxbNzgwLDBdLFs3OTEsMF0sWzc5OSwwXSxbODA3LDBdLFs4MTQsMF0sWzgyMywwXSxbODMyLDBdLFs4NDAsMF0sWzg0OSwwXSxbODU3LDBdLFs4NjUsMF0sWzg3NCwwXSxbODgyLDBdLFs4ODksMF0sWzg5OSwwXSxbOTA3LDBdLFs5MTUsMF0sWzkyNCwwXSxbOTMyLDBdLFs5MzksMF0sWzk0NywwXSxbOTU3LDBdLFs5NjUsMF0sWzk3NCwwXSxbOTgyLDBdLFs5OTAsMF0sWzk5OSwwXSxbMTAwNywwXSxbMTAxNCwwXSxbMTAyMywwXSxbMTAzMSwwXSxbMTA0MSwwXSxbMTA0OCwwXSxbMTA1NywwXSxbMTA2NSwwXSxbMTA3NCwwXSxbMTA4MiwwXSxbMTA5MCwwXSxbMTA5OSwwXSxbMTEwNiwwXSxbMTExNiwwXSxbMTEyNCwwXSxbMTEzMiwwXSxbMTE0MCwwXSxbMTE0OSwwXSxbMTE1NSwwXSxbMTE2NSwwXSxbMTE3NCwwXSxbMTE4MiwwXSxbMTE5MCwwXSxbMTE5NywwXSxbMTIwNywwXSxbMTIxNSwwXSxbMTIyMywwXSxbMTIzMiwwXSxbMTIzOSwwXSxbMTI0OSwwXSxbMTI1NiwwXSxbMTI2NSwwXSxbMTI3NCwwXSxbMTI4MiwwXSxbMTI5MCwwXSxbMTI5OSwwXSxbMTMwNywwXSxbMTMxNSwwXSxbMTMyNCwwXSxbMTMzMiwwXSxbMTM0MCwwXSxbMTM0OCwwXSxbMTM1NywwXSxbMTM2NSwwXSxbMTM3NCwwXSxbMTM4MiwwXSxbMTM5MCwwXSxbMTM5OCwwXSxbMTQwNywwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-60082895354b6276eb7b",
+          "file": "release-11-1-1.spec.ts",
+          "line": 698,
+          "column": 9
+        },
+        {
+          "title": "reverse · a DropdownMenu reopened while it closes turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3039,
+                  "error": {
+                    "message": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.875,\"back\":0.217,\"share\":0.13,\"end\":1,\"frames\":[[-7,0.875],[1,0.841],[11,0.794],[19,0.726],[27,0.658],[35,0.686],[43,0.734],[51,0.804],[61,0.87],[68,0.904],[78,0.952],[85,0.984],[92,1],[103,1],[110,1],[119,1],[127,1],[134,1],[144,1],[152,1],[159,1],[169,1],[177,1],[185,1],[194,1],[202,1],[210,1],[219,1],[227,1],[236,1],[244,1],[251,1],[261,1],[269,1],[277,1],[284,1],[294,1],[302,1],[311,1],[319,1],[326,1],[336,1],[344,1],[352,1],[361,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.217\u001b[39m",
+                    "stack": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.875,\"back\":0.217,\"share\":0.13,\"end\":1,\"frames\":[[-7,0.875],[1,0.841],[11,0.794],[19,0.726],[27,0.658],[35,0.686],[43,0.734],[51,0.804],[61,0.87],[68,0.904],[78,0.952],[85,0.984],[92,1],[103,1],[110,1],[119,1],[127,1],[134,1],[144,1],[152,1],[159,1],[169,1],[177,1],[185,1],[194,1],[202,1],[210,1],[219,1],[227,1],[236,1],[244,1],[251,1],[261,1],[269,1],[277,1],[284,1],[294,1],[302,1],[311,1],[319,1],[326,1],[336,1],[344,1],[352,1],[361,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.217\u001b[39m\n    at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:652:89)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:717:13",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 89,
+                      "line": 652
+                    },
+                    "snippet": "  650 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n  651 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n> 652 |     expect(read.back, `after the turn it does not run on toward the end it left ${at}`).toBeLessThanOrEqual(0.06);\n      |                                                                                         ^\n  653 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n  654 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);\n  655 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 89,
+                        "line": 652
+                      },
+                      "message": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.875,\"back\":0.217,\"share\":0.13,\"end\":1,\"frames\":[[-7,0.875],[1,0.841],[11,0.794],[19,0.726],[27,0.658],[35,0.686],[43,0.734],[51,0.804],[61,0.87],[68,0.904],[78,0.952],[85,0.984],[92,1],[103,1],[110,1],[119,1],[127,1],[134,1],[144,1],[152,1],[159,1],[169,1],[177,1],[185,1],[194,1],[202,1],[210,1],[219,1],[227,1],[236,1],[244,1],[251,1],[261,1],[269,1],[277,1],[284,1],[294,1],[302,1],[311,1],[319,1],[326,1],[336,1],[344,1],[352,1],[361,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.217\u001b[39m\n\n  650 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n  651 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n> 652 |     expect(read.back, `after the turn it does not run on toward the end it left ${at}`).toBeLessThanOrEqual(0.06);\n      |                                                                                         ^\n  653 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n  654 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);\n  655 | }\n    at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:652:89)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:717:13"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:36:51.447Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuODc1LCJiYWNrIjowLjIxNywic2hhcmUiOjAuMTMsImVuZCI6MSwiZnJhbWVzIjpbWy03LDAuODc1XSxbMSwwLjg0MV0sWzExLDAuNzk0XSxbMTksMC43MjZdLFsyNywwLjY1OF0sWzM1LDAuNjg2XSxbNDMsMC43MzRdLFs1MSwwLjgwNF0sWzYxLDAuODddLFs2OCwwLjkwNF0sWzc4LDAuOTUyXSxbODUsMC45ODRdLFs5MiwxXSxbMTAzLDFdLFsxMTAsMV0sWzExOSwxXSxbMTI3LDFdLFsxMzQsMV0sWzE0NCwxXSxbMTUyLDFdLFsxNTksMV0sWzE2OSwxXSxbMTc3LDFdLFsxODUsMV0sWzE5NCwxXSxbMjAyLDFdLFsyMTAsMV0sWzIxOSwxXSxbMjI3LDFdLFsyMzYsMV0sWzI0NCwxXSxbMjUxLDFdLFsyNjEsMV0sWzI2OSwxXSxbMjc3LDFdLFsyODQsMV0sWzI5NCwxXSxbMzAyLDFdLFszMTEsMV0sWzMxOSwxXSxbMzI2LDFdLFszMzYsMV0sWzM0NCwxXSxbMzUyLDFdLFszNjEsMV0sWzM2OSwxXSxbMzc3LDFdLFszODYsMV0sWzM5NCwxXSxbNDAyLDFdLFs0MDksMV0sWzQxOSwxXSxbNDI2LDFdLFs0MzQsMV0sWzQ0NCwxXSxbNDUxLDFdLFs0NjAsMV0sWzQ2OCwxXSxbNDc3LDFdLFs0ODYsMV0sWzQ5NCwxXSxbNTAxLDFdLFs1MTAsMV0sWzUxOSwxXSxbNTI3LDFdLFs1MzYsMV0sWzU0NCwxXSxbNTUyLDFdLFs1NjEsMV0sWzU2OSwxXSxbNTc3LDFdLFs1ODYsMV0sWzU5NCwxXSxbNjAyLDFdLFs2MTAsMV0sWzYxOSwxXSxbNjI3LDFdLFs2MzQsMV0sWzY0NCwxXSxbNjUyLDFdLFs2NjEsMV0sWzY2OSwxXSxbNjc2LDFdLFs2ODYsMV0sWzY5NCwxXSxbNzAyLDFdLFs3MTEsMV0sWzcxOSwxXSxbNzI2LDFdLFs3MzYsMV0sWzc0NCwxXSxbNzUyLDFdLFs3NjAsMV0sWzc2OSwxXSxbNzc2LDFdLFs3ODYsMV0sWzc5NCwxXSxbODAyLDFdLFs4MTEsMV0sWzgxOSwxXSxbODI3LDFdLFs4MzYsMV0sWzg0NCwxXSxbODUyLDFdLFs4NjEsMV0sWzg2OSwxXSxbODc3LDFdLFs4ODYsMV0sWzg5NCwxXSxbOTAxLDFdLFs5MTEsMV0sWzkxOSwxXSxbOTI2LDFdLFs5MzYsMV0sWzk0NCwxXSxbOTUxLDFdLFs5NjAsMV0sWzk2OCwxXSxbOTc3LDFdLFs5ODQsMV0sWzk5NCwxXSxbMTAwMiwxXSxbMTAxMCwxXSxbMTAxOSwxXSxbMTAyNywxXSxbMTAzNSwxXSxbMTA0NCwxXSxbMTA1MiwxXSxbMTA1OSwxXSxbMTA2OSwxXSxbMTA3NywxXSxbMTA4NiwxXSxbMTA5NCwxXSxbMTEwMiwxXSxbMTExMSwxXSxbMTExOSwxXSxbMTEyNywxXSxbMTEzNSwxXSxbMTE0NCwxXSxbMTE1MiwxXSxbMTE2MCwxXSxbMTE2OSwxXSxbMTE3NywxXSxbMTE4NiwxXSxbMTE5NCwxXSxbMTIwMiwxXSxbMTIwOSwxXSxbMTIxOSwxXSxbMTIyNywxXSxbMTIzNSwxXSxbMTI0NCwxXSxbMTI1MiwxXSxbMTI2MSwxXSxbMTI2OSwxXSxbMTI3NywxXSxbMTI4NSwxXSxbMTI5NCwxXSxbMTMwMiwxXSxbMTMxMSwxXSxbMTMxOSwxXSxbMTMyNywxXSxbMTMzNiwxXSxbMTM0NCwxXSxbMTM1MiwxXSxbMTM2MCwxXSxbMTM2NywxXSxbMTM3NywxXSxbMTM4NCwxXSxbMTM5NCwxXSxbMTQwMSwxXSxbMTQxMSwxXSxbMTQxOSwxXSxbMTQyNiwxXV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-reverse-·-a-7ca73-oses-turns-from-where-it-is-chromium-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 89,
+                    "line": 652
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-4741e92abe0a79428469",
+          "file": "release-11-1-1.spec.ts",
+          "line": 708,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Popover closed while it opens turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2207,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:36:54.811Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNTkxLCJiYWNrIjotMC4wMjQsInNoYXJlIjowLjA3NiwiZW5kIjowLCJmcmFtZXMiOltbLTQsMC41OTFdLFs0LDAuNTY3XSxbMTMsMC41MzldLFsyMSwwLjUwOF0sWzI5LDAuNDc1XSxbMzgsMC40NF0sWzQ1LDAuNDA5XSxbNTQsMC4zNjZdLFs2MywwLjMyOV0sWzcxLDAuMjkxXSxbNzksMC4yNTJdLFs4OCwwLjIxNV0sWzk2LDAuMTc4XSxbMTA0LDAuMTQyXSxbMTEzLDAuMTA3XSxbMTIxLDAuMDc1XSxbMTI5LDAuMDQ1XSxbMTM4LDAuMDE4XSxbMTQ2LDBdLFsxNTQsMF0sWzE2MywwXSxbMTcwLDBdLFsxNzksMF0sWzE4OCwwXSxbMTk2LDBdLFsyMDQsMF0sWzIxMywwXSxbMjIxLDBdLFsyMjksMF0sWzIzOCwwXSxbMjQ2LDBdLFsyNTQsMF0sWzI2MywwXSxbMjcwLDBdLFsyODAsMF0sWzI4OCwwXSxbMjk2LDBdLFszMDQsMF0sWzMxMywwXSxbMzIxLDBdLFszMjksMF0sWzMzOCwwXSxbMzQ2LDBdLFszNTQsMF0sWzM2MywwXSxbMzcxLDBdLFszNzksMF0sWzM4OCwwXSxbMzk2LDBdLFs0MDQsMF0sWzQxMywwXSxbNDIxLDBdLFs0MjksMF0sWzQzOCwwXSxbNDQ2LDBdLFs0NTQsMF0sWzQ2MiwwXSxbNDcxLDBdLFs0NzksMF0sWzQ4OCwwXSxbNDk2LDBdLFs1MDQsMF0sWzUxMywwXSxbNTIxLDBdLFs1MjksMF0sWzUzOCwwXSxbNTQ1LDBdLFs1NTQsMF0sWzU2MywwXSxbNTcxLDBdLFs1NzksMF0sWzU4OCwwXSxbNTk2LDBdLFs2MDQsMF0sWzYxMywwXSxbNjIxLDBdLFs2MjgsMF0sWzYzOCwwXSxbNjQ2LDBdLFs2NTQsMF0sWzY2MywwXSxbNjcxLDBdLFs2NzksMF0sWzY4OCwwXSxbNjk2LDBdLFs3MDQsMF0sWzcxMywwXSxbNzIwLDBdLFs3MjksMF0sWzczOCwwXSxbNzQ2LDBdLFs3NTQsMF0sWzc2MywwXSxbNzcxLDBdLFs3NzksMF0sWzc4OCwwXSxbNzk2LDBdLFs4MDQsMF0sWzgxMywwXSxbODIxLDBdLFs4MjksMF0sWzgzOCwwXSxbODQ2LDBdLFs4NTQsMF0sWzg2MywwXSxbODcxLDBdLFs4NzksMF0sWzg4NywwXSxbODk2LDBdLFs5MDQsMF0sWzkxMywwXSxbOTIwLDBdLFs5MjksMF0sWzkzOCwwXSxbOTQ2LDBdLFs5NTQsMF0sWzk2MywwXSxbOTcxLDBdLFs5NzksMF0sWzk4OCwwXSxbOTk2LDBdLFsxMDA0LDBdLFsxMDEzLDBdLFsxMDIxLDBdLFsxMDI5LDBdLFsxMDM3LDBdLFsxMDQ2LDBdLFsxMDUzLDBdLFsxMDYzLDBdLFsxMDcxLDBdLFsxMDc5LDBdLFsxMDg4LDBdLFsxMDk2LDBdLFsxMTA0LDBdLFsxMTEzLDBdLFsxMTIxLDBdLFsxMTI4LDBdLFsxMTM3LDBdLFsxMTQ2LDBdLFsxMTU0LDBdLFsxMTYzLDBdLFsxMTcxLDBdLFsxMTc5LDBdLFsxMTg4LDBdLFsxMTk2LDBdLFsxMjA0LDBdLFsxMjEzLDBdLFsxMjIxLDBdLFsxMjI5LDBdLFsxMjM4LDBdLFsxMjQ2LDBdLFsxMjU0LDBdLFsxMjYzLDBdLFsxMjcxLDBdLFsxMjc4LDBdLFsxMjg4LDBdLFsxMjk2LDBdLFsxMzA0LDBdLFsxMzEyLDBdLFsxMzIxLDBdLFsxMzI5LDBdLFsxMzM4LDBdLFsxMzQ0LDBdLFsxMzU0LDBdLFsxMzYzLDBdLFsxMzcwLDBdLFsxMzc4LDBdLFsxMzg4LDBdLFsxMzk2LDBdLFsxNDA1LDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-ffe55c38a5ff0363869c",
+          "file": "release-11-1-1.spec.ts",
+          "line": 698,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Popover reopened while it closes turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3095,
+                  "error": {
+                    "message": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.865,\"back\":0.14,\"share\":0.104,\"end\":1,\"frames\":[[-1,0.865],[8,0.829],[16,0.795],[23,0.767],[33,0.725],[41,0.786],[50,0.829],[58,0.863],[67,0.891],[75,0.914],[83,0.934],[92,0.95],[100,0.963],[108,0.974],[116,0.983],[125,0.989],[133,0.994],[142,0.998],[150,1],[158,1],[167,1],[175,1],[182,1],[192,1],[200,1],[208,1],[217,1],[225,1],[233,1],[241,1],[250,1],[258,1],[267,1],[275,1],[283,1],[292,1],[300,1],[308,1],[317,1],[325,1],[333,1],[342,1],[350,1],[357,1],[367,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.14\u001b[39m",
+                    "stack": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.865,\"back\":0.14,\"share\":0.104,\"end\":1,\"frames\":[[-1,0.865],[8,0.829],[16,0.795],[23,0.767],[33,0.725],[41,0.786],[50,0.829],[58,0.863],[67,0.891],[75,0.914],[83,0.934],[92,0.95],[100,0.963],[108,0.974],[116,0.983],[125,0.989],[133,0.994],[142,0.998],[150,1],[158,1],[167,1],[175,1],[182,1],[192,1],[200,1],[208,1],[217,1],[225,1],[233,1],[241,1],[250,1],[258,1],[267,1],[275,1],[283,1],[292,1],[300,1],[308,1],[317,1],[325,1],[333,1],[342,1],[350,1],[357,1],[367,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.14\u001b[39m\n    at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:652:89)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:717:13",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 89,
+                      "line": 652
+                    },
+                    "snippet": "  650 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n  651 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n> 652 |     expect(read.back, `after the turn it does not run on toward the end it left ${at}`).toBeLessThanOrEqual(0.06);\n      |                                                                                         ^\n  653 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n  654 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);\n  655 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 89,
+                        "line": 652
+                      },
+                      "message": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.865,\"back\":0.14,\"share\":0.104,\"end\":1,\"frames\":[[-1,0.865],[8,0.829],[16,0.795],[23,0.767],[33,0.725],[41,0.786],[50,0.829],[58,0.863],[67,0.891],[75,0.914],[83,0.934],[92,0.95],[100,0.963],[108,0.974],[116,0.983],[125,0.989],[133,0.994],[142,0.998],[150,1],[158,1],[167,1],[175,1],[182,1],[192,1],[200,1],[208,1],[217,1],[225,1],[233,1],[241,1],[250,1],[258,1],[267,1],[275,1],[283,1],[292,1],[300,1],[308,1],[317,1],[325,1],[333,1],[342,1],[350,1],[357,1],[367,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.14\u001b[39m\n\n  650 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n  651 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n> 652 |     expect(read.back, `after the turn it does not run on toward the end it left ${at}`).toBeLessThanOrEqual(0.06);\n      |                                                                                         ^\n  653 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n  654 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);\n  655 | }\n    at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:652:89)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:717:13"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:36:57.111Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuODY1LCJiYWNrIjowLjE0LCJzaGFyZSI6MC4xMDQsImVuZCI6MSwiZnJhbWVzIjpbWy0xLDAuODY1XSxbOCwwLjgyOV0sWzE2LDAuNzk1XSxbMjMsMC43NjddLFszMywwLjcyNV0sWzQxLDAuNzg2XSxbNTAsMC44MjldLFs1OCwwLjg2M10sWzY3LDAuODkxXSxbNzUsMC45MTRdLFs4MywwLjkzNF0sWzkyLDAuOTVdLFsxMDAsMC45NjNdLFsxMDgsMC45NzRdLFsxMTYsMC45ODNdLFsxMjUsMC45ODldLFsxMzMsMC45OTRdLFsxNDIsMC45OThdLFsxNTAsMV0sWzE1OCwxXSxbMTY3LDFdLFsxNzUsMV0sWzE4MiwxXSxbMTkyLDFdLFsyMDAsMV0sWzIwOCwxXSxbMjE3LDFdLFsyMjUsMV0sWzIzMywxXSxbMjQxLDFdLFsyNTAsMV0sWzI1OCwxXSxbMjY3LDFdLFsyNzUsMV0sWzI4MywxXSxbMjkyLDFdLFszMDAsMV0sWzMwOCwxXSxbMzE3LDFdLFszMjUsMV0sWzMzMywxXSxbMzQyLDFdLFszNTAsMV0sWzM1NywxXSxbMzY3LDFdLFszNzUsMV0sWzM4MiwxXSxbMzkyLDFdLFszOTksMV0sWzQwOCwxXSxbNDE2LDFdLFs0MjUsMV0sWzQzMywxXSxbNDQyLDFdLFs0NTAsMV0sWzQ1NywxXSxbNDY3LDFdLFs0NzMsMV0sWzQ4NCwxXSxbNDkxLDFdLFs1MDAsMV0sWzUwOCwxXSxbNTE2LDFdLFs1MjUsMV0sWzUzMiwxXSxbNTQyLDFdLFs1NTAsMV0sWzU1OCwxXSxbNTY3LDFdLFs1NzMsMV0sWzU4MiwxXSxbNTkyLDFdLFs2MDAsMV0sWzYwOCwxXSxbNjE3LDFdLFs2MjQsMV0sWzYzMywxXSxbNjQxLDFdLFs2NTAsMV0sWzY1OCwxXSxbNjY3LDFdLFs2NzUsMV0sWzY4MywxXSxbNjkyLDFdLFs3MDAsMV0sWzcwOCwxXSxbNzE2LDFdLFs3MjUsMV0sWzczMywxXSxbNzQyLDFdLFs3NTAsMV0sWzc1OCwxXSxbNzY3LDFdLFs3NzUsMV0sWzc4MywxXSxbNzkyLDFdLFs4MDAsMV0sWzgwOCwxXSxbODE2LDFdLFs4MjUsMV0sWzgzMywxXSxbODQyLDFdLFs4NDksMV0sWzg1OCwxXSxbODY2LDFdLFs4NzUsMV0sWzg4MiwxXSxbODkwLDFdLFs4OTksMV0sWzkwOCwxXSxbOTE3LDFdLFs5MjUsMV0sWzkzMywxXSxbOTQyLDFdLFs5NDksMV0sWzk1OCwxXSxbOTY2LDFdLFs5NzUsMV0sWzk4MywxXSxbOTkyLDFdLFsxMDAwLDFdLFsxMDA4LDFdLFsxMDE3LDFdLFsxMDI1LDFdLFsxMDMzLDFdLFsxMDQyLDFdLFsxMDQ5LDFdLFsxMDU4LDFdLFsxMDY2LDFdLFsxMDc1LDFdLFsxMDgzLDFdLFsxMDkyLDFdLFsxMTAwLDFdLFsxMTA4LDFdLFsxMTE3LDFdLFsxMTI1LDFdLFsxMTMzLDFdLFsxMTQyLDFdLFsxMTUwLDFdLFsxMTU4LDFdLFsxMTY3LDFdLFsxMTc1LDFdLFsxMTgzLDFdLFsxMTkxLDFdLFsxMjAwLDFdLFsxMjA4LDFdLFsxMjE3LDFdLFsxMjI1LDFdLFsxMjMyLDFdLFsxMjQwLDFdLFsxMjUwLDFdLFsxMjU4LDFdLFsxMjY3LDFdLFsxMjc1LDFdLFsxMjgzLDFdLFsxMjkyLDFdLFsxMzAwLDFdLFsxMzA4LDFdLFsxMzE2LDFdLFsxMzI1LDFdLFsxMzMzLDFdLFsxMzQxLDFdLFsxMzUwLDFdLFsxMzU4LDFdLFsxMzY2LDFdLFsxMzc1LDFdLFsxMzgzLDFdLFsxMzkxLDFdLFsxMzk5LDFdLFsxNDA4LDFdLFsxNDE2LDFdLFsxNDI1LDFdLFsxNDMzLDFdXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-reverse-·-a-ebf48-oses-turns-from-where-it-is-chromium-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 89,
+                    "line": 652
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-4df86fe69d092831c3a1",
+          "file": "release-11-1-1.spec.ts",
+          "line": 708,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Toast closed while it opens turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3097,
+                  "error": {
+                    "message": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.565,\"back\":0.435,\"share\":0.133,\"end\":0,\"frames\":[[-7,0.565],[1,0.591],[9,0.617],[18,0.641],[26,0.664],[34,0.686],[43,0.707],[49,0.723],[59,0.744],[68,0.763],[76,0.78],[84,0.796],[93,0.811],[101,0.826],[109,0.84],[118,0.853],[126,0.865],[134,0.877],[143,0.888],[151,0.898],[158,0.907],[166,0.916],[176,0.926],[184,0.934],[193,0.942],[201,0.949],[209,0.956],[218,0.962],[226,0.967],[234,0.972],[243,0.977],[251,0.981],[259,0.985],[268,0.988],[276,0.991],[283,0.993],[293,0.995],[301,0.997],[309,0.998],[316,0.999],[326,1],[334,1],[343,1],[351,1],[359,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.435\u001b[39m",
+                    "stack": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.565,\"back\":0.435,\"share\":0.133,\"end\":0,\"frames\":[[-7,0.565],[1,0.591],[9,0.617],[18,0.641],[26,0.664],[34,0.686],[43,0.707],[49,0.723],[59,0.744],[68,0.763],[76,0.78],[84,0.796],[93,0.811],[101,0.826],[109,0.84],[118,0.853],[126,0.865],[134,0.877],[143,0.888],[151,0.898],[158,0.907],[166,0.916],[176,0.926],[184,0.934],[193,0.942],[201,0.949],[209,0.956],[218,0.962],[226,0.967],[234,0.972],[243,0.977],[251,0.981],[259,0.985],[268,0.988],[276,0.991],[283,0.993],[293,0.995],[301,0.997],[309,0.998],[316,0.999],[326,1],[334,1],[343,1],[351,1],[359,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.435\u001b[39m\n    at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:652:89)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:704:13",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 89,
+                      "line": 652
+                    },
+                    "snippet": "  650 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n  651 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n> 652 |     expect(read.back, `after the turn it does not run on toward the end it left ${at}`).toBeLessThanOrEqual(0.06);\n      |                                                                                         ^\n  653 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n  654 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);\n  655 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 89,
+                        "line": 652
+                      },
+                      "message": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.565,\"back\":0.435,\"share\":0.133,\"end\":0,\"frames\":[[-7,0.565],[1,0.591],[9,0.617],[18,0.641],[26,0.664],[34,0.686],[43,0.707],[49,0.723],[59,0.744],[68,0.763],[76,0.78],[84,0.796],[93,0.811],[101,0.826],[109,0.84],[118,0.853],[126,0.865],[134,0.877],[143,0.888],[151,0.898],[158,0.907],[166,0.916],[176,0.926],[184,0.934],[193,0.942],[201,0.949],[209,0.956],[218,0.962],[226,0.967],[234,0.972],[243,0.977],[251,0.981],[259,0.985],[268,0.988],[276,0.991],[283,0.993],[293,0.995],[301,0.997],[309,0.998],[316,0.999],[326,1],[334,1],[343,1],[351,1],[359,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.435\u001b[39m\n\n  650 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n  651 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n> 652 |     expect(read.back, `after the turn it does not run on toward the end it left ${at}`).toBeLessThanOrEqual(0.06);\n      |                                                                                         ^\n  653 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n  654 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);\n  655 | }\n    at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:652:89)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:704:13"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:37:00.583Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNTY1LCJiYWNrIjowLjQzNSwic2hhcmUiOjAuMTMzLCJlbmQiOjAsImZyYW1lcyI6W1stNywwLjU2NV0sWzEsMC41OTFdLFs5LDAuNjE3XSxbMTgsMC42NDFdLFsyNiwwLjY2NF0sWzM0LDAuNjg2XSxbNDMsMC43MDddLFs0OSwwLjcyM10sWzU5LDAuNzQ0XSxbNjgsMC43NjNdLFs3NiwwLjc4XSxbODQsMC43OTZdLFs5MywwLjgxMV0sWzEwMSwwLjgyNl0sWzEwOSwwLjg0XSxbMTE4LDAuODUzXSxbMTI2LDAuODY1XSxbMTM0LDAuODc3XSxbMTQzLDAuODg4XSxbMTUxLDAuODk4XSxbMTU4LDAuOTA3XSxbMTY2LDAuOTE2XSxbMTc2LDAuOTI2XSxbMTg0LDAuOTM0XSxbMTkzLDAuOTQyXSxbMjAxLDAuOTQ5XSxbMjA5LDAuOTU2XSxbMjE4LDAuOTYyXSxbMjI2LDAuOTY3XSxbMjM0LDAuOTcyXSxbMjQzLDAuOTc3XSxbMjUxLDAuOTgxXSxbMjU5LDAuOTg1XSxbMjY4LDAuOTg4XSxbMjc2LDAuOTkxXSxbMjgzLDAuOTkzXSxbMjkzLDAuOTk1XSxbMzAxLDAuOTk3XSxbMzA5LDAuOTk4XSxbMzE2LDAuOTk5XSxbMzI2LDFdLFszMzQsMV0sWzM0MywxXSxbMzUxLDFdLFszNTksMV0sWzM2NywxXSxbMzc2LDFdLFszODQsMV0sWzM5MSwxXSxbNDAxLDFdLFs0MDksMV0sWzQxOCwxXSxbNDI2LDFdLFs0MzQsMV0sWzQ0MywxXSxbNDUxLDFdLFs0NTgsMV0sWzQ2OCwxXSxbNDc2LDFdLFs0ODMsMV0sWzQ5MywxXSxbNTAxLDFdLFs1MDksMV0sWzUxOCwxXSxbNTI2LDFdLFs1MzMsMV0sWzU0MSwxXSxbNTUwLDFdLFs1NTksMV0sWzU2NywxXSxbNTc2LDFdLFs1ODQsMV0sWzU5MiwxXSxbNjAxLDFdLFs2MDksMV0sWzYxOCwxXSxbNjI2LDFdLFs2MzQsMV0sWzY0MywxXSxbNjUxLDFdLFs2NTksMV0sWzY2NiwxXSxbNjc2LDFdLFs2ODQsMV0sWzY5MywxXSxbNzAxLDFdLFs3MDksMV0sWzcxOCwxXSxbNzI2LDFdLFs3MzQsMV0sWzc0MywxXSxbNzUxLDFdLFs3NTksMV0sWzc2OCwxXSxbNzc2LDFdLFs3ODQsMV0sWzc5MSwxXSxbODAxLDFdLFs4MDksMV0sWzgxOCwxXSxbODI2LDFdLFs4MzQsMV0sWzg0MywxXSxbODUxLDAuOTU2XSxbODU5LDAuOTAzXSxbODY4LDAuODQ0XSxbODc1LDAuNzg3XSxbODgzLDAuNzI5XSxbODkzLDAuNjVdLFs5MDEsMC41ODVdLFs5MDksMC41MThdLFs5MTgsMC40NTZdLFs5MjYsMC4zOTddLFs5MzQsMC4zNDVdLFs5NDMsMC4zXSxbOTUxLDAuMjhdLFs5NTksMC4yNTddLFs5NjgsMC4yMzFdLFs5NzYsMC4yMDRdLFs5ODQsMC4xNzZdLFs5OTMsMC4xNDZdLFsxMDAxLDAuMTE3XSxbMTAwOSwwLjA4OF0sWzEwMTgsMC4wNjFdLFsxMDI2LDAuMDM2XSxbMTAzNCwwLjAxM10sWzEwNDMsMF0sWzEwNTEsMF0sWzEwNTksMF0sWzEwNjgsMF0sWzEwNzYsMF0sWzEwODQsMF0sWzEwOTMsMF0sWzExMDEsMF0sWzExMDksMF0sWzExMTgsMF0sWzExMjYsMF0sWzExMzQsMF0sWzExNDMsMF0sWzExNTEsMF0sWzExNTksMF0sWzExNjgsMF0sWzExNzYsMF0sWzExODQsMF0sWzExOTMsMF0sWzEyMDEsMF0sWzEyMDksMF0sWzEyMTgsMF0sWzEyMjYsMF0sWzEyMzQsMF0sWzEyNDMsMF0sWzEyNTEsMF0sWzEyNTksMF0sWzEyNjgsMF0sWzEyNzYsMF0sWzEyODMsMF0sWzEyOTEsMF0sWzEzMDEsMF0sWzEzMDksMF0sWzEzMTgsMF0sWzEzMjYsMF0sWzEzMzMsMF0sWzEzNDMsMF0sWzEzNTEsMF0sWzEzNTksMF0sWzEzNjgsMF0sWzEzNzUsMF0sWzEzODUsMF0sWzEzOTMsMF0sWzE0MDEsMF0sWzE0MDgsMF0sWzE0MTgsMF0sWzE0MjYsMF0sWzE0MzQsMF0sWzE0NDMsMF0sWzE0NTEsMF0sWzE0NTksMF0sWzE0NjgsMF0sWzE0NzYsMF0sWzE0ODQsMF0sWzE0OTMsMF0sWzE1MDEsMF0sWzE1MDksMF0sWzE1MTgsMF0sWzE1MjYsMF0sWzE1MzQsMF0sWzE1NDMsMF0sWzE1NTEsMF0sWzE1NTksMF0sWzE1NjcsMF0sWzE1NzYsMF0sWzE1ODQsMF0sWzE1OTIsMF0sWzE2MDEsMF0sWzE2MDksMF0sWzE2MTgsMF0sWzE2MjYsMF0sWzE2MzQsMF0sWzE2NDMsMF0sWzE2NTEsMF0sWzE2NTksMF0sWzE2NjgsMF0sWzE2NzYsMF0sWzE2ODQsMF0sWzE2OTMsMF0sWzE3MDEsMF0sWzE3MDksMF0sWzE3MTcsMF0sWzE3MjYsMF0sWzE3MzQsMF0sWzE3NDMsMF0sWzE3NTEsMF0sWzE3NTgsMF0sWzE3NjgsMF0sWzE3NzYsMF0sWzE3ODQsMF0sWzE3OTMsMF0sWzE4MDEsMF0sWzE4MDksMF0sWzE4MTgsMF0sWzE4MjYsMF0sWzE4MzQsMF0sWzE4NDMsMF0sWzE4NTEsMF0sWzE4NTksMF0sWzE4NjYsMF0sWzE4NzYsMF0sWzE4ODQsMF0sWzE4OTMsMF0sWzE5MDEsMF0sWzE5MDksMF0sWzE5MTgsMF0sWzE5MjYsMF0sWzE5MzQsMF0sWzE5NDMsMF0sWzE5NTEsMF0sWzE5NTksMF0sWzE5NjgsMF0sWzE5NzYsMF0sWzE5ODQsMF0sWzE5OTMsMF0sWzIwMDEsMF0sWzIwMDksMF0sWzIwMTgsMF0sWzIwMjQsMF0sWzIwMzQsMF0sWzIwNDMsMF0sWzIwNTAsMF0sWzIwNTksMF0sWzIwNjgsMF0sWzIwNzYsMF0sWzIwODQsMF0sWzIwOTMsMF0sWzIxMDEsMF0sWzIxMDgsMF0sWzIxMTgsMF0sWzIxMjYsMF0sWzIxMzQsMF0sWzIxNDMsMF0sWzIxNTEsMF0sWzIxNTksMF0sWzIxNjgsMF0sWzIxNzYsMF0sWzIxODQsMF0sWzIxOTMsMF0sWzIyMDEsMF0sWzIyMDksMF0sWzIyMTgsMF0sWzIyMjYsMF0sWzIyMzQsMF1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-reverse-·-a-96d04-pens-turns-from-where-it-is-chromium-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 89,
+                    "line": 652
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-2bb04b924abb28f996df",
+          "file": "release-11-1-1.spec.ts",
+          "line": 698,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Tooltip closed while it opens turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "it does not open on touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 700,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 57,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:37:04.197Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "it does not open on touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 700,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-02f999a50a7e0c419f20",
+          "file": "release-11-1-1.spec.ts",
+          "line": 698,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Tooltip reopened while it closes turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "it does not open on touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 710,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 47,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:37:04.366Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "it does not open on touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 710,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-2a4b0f5a7efbe64cb861",
+          "file": "release-11-1-1.spec.ts",
+          "line": 708,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Collapsible closed while it opens turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 4076,
+                  "error": {
+                    "message": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.496,\"back\":0.187,\"share\":0.158,\"end\":0,\"frames\":[[-1,0.496],[7,0.568],[15,0.631],[23,0.684],[32,0.684],[40,0.6],[49,0.521],[57,0.449],[65,0.382],[74,0.325],[82,0.274],[90,0.23],[99,0.193],[106,0.164],[115,0.135],[124,0.111],[132,0.092],[140,0.076],[149,0.063],[157,0.052],[165,0.042],[174,0.035],[181,0.029],[190,0.01],[199,0],[207,0],[215,0],[224,0],[232,0],[240,0],[249,0],[257,0],[265,0],[273,0],[281,0],[290,0],[299,0],[307,0],[314,0],[324,0],[332,0],[340,0],[349,0],[357,0],[365,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.187\u001b[39m",
+                    "stack": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.496,\"back\":0.187,\"share\":0.158,\"end\":0,\"frames\":[[-1,0.496],[7,0.568],[15,0.631],[23,0.684],[32,0.684],[40,0.6],[49,0.521],[57,0.449],[65,0.382],[74,0.325],[82,0.274],[90,0.23],[99,0.193],[106,0.164],[115,0.135],[124,0.111],[132,0.092],[140,0.076],[149,0.063],[157,0.052],[165,0.042],[174,0.035],[181,0.029],[190,0.01],[199,0],[207,0],[215,0],[224,0],[232,0],[240,0],[249,0],[257,0],[265,0],[273,0],[281,0],[290,0],[299,0],[307,0],[314,0],[324,0],[332,0],[340,0],[349,0],[357,0],[365,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.187\u001b[39m\n    at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:652:89)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:704:13",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 89,
+                      "line": 652
+                    },
+                    "snippet": "  650 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n  651 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n> 652 |     expect(read.back, `after the turn it does not run on toward the end it left ${at}`).toBeLessThanOrEqual(0.06);\n      |                                                                                         ^\n  653 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n  654 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);\n  655 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 89,
+                        "line": 652
+                      },
+                      "message": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.496,\"back\":0.187,\"share\":0.158,\"end\":0,\"frames\":[[-1,0.496],[7,0.568],[15,0.631],[23,0.684],[32,0.684],[40,0.6],[49,0.521],[57,0.449],[65,0.382],[74,0.325],[82,0.274],[90,0.23],[99,0.193],[106,0.164],[115,0.135],[124,0.111],[132,0.092],[140,0.076],[149,0.063],[157,0.052],[165,0.042],[174,0.035],[181,0.029],[190,0.01],[199,0],[207,0],[215,0],[224,0],[232,0],[240,0],[249,0],[257,0],[265,0],[273,0],[281,0],[290,0],[299,0],[307,0],[314,0],[324,0],[332,0],[340,0],[349,0],[357,0],[365,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.187\u001b[39m\n\n  650 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n  651 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n> 652 |     expect(read.back, `after the turn it does not run on toward the end it left ${at}`).toBeLessThanOrEqual(0.06);\n      |                                                                                         ^\n  653 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n  654 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);\n  655 | }\n    at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:652:89)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:704:13"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:37:04.420Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNDk2LCJiYWNrIjowLjE4Nywic2hhcmUiOjAuMTU4LCJlbmQiOjAsImZyYW1lcyI6W1stMSwwLjQ5Nl0sWzcsMC41NjhdLFsxNSwwLjYzMV0sWzIzLDAuNjg0XSxbMzIsMC42ODRdLFs0MCwwLjZdLFs0OSwwLjUyMV0sWzU3LDAuNDQ5XSxbNjUsMC4zODJdLFs3NCwwLjMyNV0sWzgyLDAuMjc0XSxbOTAsMC4yM10sWzk5LDAuMTkzXSxbMTA2LDAuMTY0XSxbMTE1LDAuMTM1XSxbMTI0LDAuMTExXSxbMTMyLDAuMDkyXSxbMTQwLDAuMDc2XSxbMTQ5LDAuMDYzXSxbMTU3LDAuMDUyXSxbMTY1LDAuMDQyXSxbMTc0LDAuMDM1XSxbMTgxLDAuMDI5XSxbMTkwLDAuMDFdLFsxOTksMF0sWzIwNywwXSxbMjE1LDBdLFsyMjQsMF0sWzIzMiwwXSxbMjQwLDBdLFsyNDksMF0sWzI1NywwXSxbMjY1LDBdLFsyNzMsMF0sWzI4MSwwXSxbMjkwLDBdLFsyOTksMF0sWzMwNywwXSxbMzE0LDBdLFszMjQsMF0sWzMzMiwwXSxbMzQwLDBdLFszNDksMF0sWzM1NywwXSxbMzY1LDBdLFszNzMsMF0sWzM4MiwwXSxbMzkwLDBdLFszOTcsMF0sWzQwNiwwXSxbNDE1LDBdLFs0MjQsMF0sWzQzMiwwXSxbNDQwLDBdLFs0NDksMF0sWzQ1NywwXSxbNDY1LDBdLFs0NzQsMF0sWzQ4MiwwXSxbNDkwLDBdLFs0OTcsMF0sWzUwNywwXSxbNTE1LDBdLFs1MjQsMF0sWzUzMiwwXSxbNTQwLDBdLFs1NDksMF0sWzU1NiwwXSxbNTY1LDBdLFs1NzQsMF0sWzU4MSwwXSxbNTkwLDBdLFs1OTksMF0sWzYwNywwXSxbNjE1LDBdLFs2MjQsMF0sWzYzMiwwXSxbNjQwLDBdLFs2NDcsMF0sWzY1NywwXSxbNjY1LDBdLFs2NzQsMF0sWzY4MSwwXSxbNjkxLDBdLFs2OTgsMF0sWzcwNywwXSxbNzE1LDBdLFs3MjQsMF0sWzczMSwwXSxbNzQwLDBdLFs3NDksMF0sWzc1NywwXSxbNzY1LDBdLFs3NzQsMF0sWzc4MiwwXSxbNzkwLDBdLFs3OTgsMF0sWzgwNywwXSxbODE1LDBdLFs4MjQsMF0sWzgzMiwwXSxbODQwLDBdLFs4NDksMF0sWzg1NywwXSxbODY1LDBdLFs4NzIsMF0sWzg4MSwwXSxbODkwLDBdLFs4OTksMF0sWzkwNywwXSxbOTE1LDBdLFs5MjQsMF0sWzkzMiwwXSxbOTM5LDBdLFs5NDksMF0sWzk1NywwXSxbOTY1LDBdLFs5NzQsMF0sWzk4MiwwXSxbOTkwLDBdLFs5OTksMF0sWzEwMDcsMF0sWzEwMTUsMF0sWzEwMjQsMF0sWzEwMzIsMF0sWzEwNDAsMF0sWzEwNDksMF0sWzEwNTcsMF0sWzEwNjUsMF0sWzEwNzQsMF0sWzEwODEsMF0sWzEwODksMF0sWzEwOTksMF0sWzExMDcsMF0sWzExMTUsMF0sWzExMjMsMF0sWzExMzIsMF0sWzExNDAsMF0sWzExNDksMF0sWzExNTcsMF0sWzExNjUsMF0sWzExNzQsMF0sWzExODIsMF0sWzExOTAsMF0sWzExOTksMF0sWzEyMDYsMF0sWzEyMTUsMF0sWzEyMjMsMF0sWzEyMzIsMF0sWzEyNDAsMF0sWzEyNDgsMF0sWzEyNTYsMF0sWzEyNjUsMF0sWzEyNzQsMF0sWzEyODEsMF0sWzEyOTAsMF0sWzEyOTksMF0sWzEzMDYsMF0sWzEzMTYsMF0sWzEzMjMsMF0sWzEzMzIsMF0sWzEzNDAsMF0sWzEzNDksMF0sWzEzNTcsMF0sWzEzNjUsMF0sWzEzNzQsMF0sWzEzODAsMF0sWzEzODksMF0sWzEzOTcsMF0sWzE0MDcsMF0sWzE0MTUsMF0sWzE0MjQsMF1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-reverse-·-a-b3d24-pens-turns-from-where-it-is-chromium-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 89,
+                    "line": 652
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-5ab05ddba0a7390f4197",
+          "file": "release-11-1-1.spec.ts",
+          "line": 698,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Collapsible reopened while it closes turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5008,
+                  "error": {
+                    "message": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.574,\"back\":0.211,\"share\":0.157,\"end\":1,\"frames\":[[-1,0.574],[7,0.501],[16,0.424],[24,0.363],[31,0.363],[41,0.463],[49,0.534],[57,0.602],[66,0.662],[74,0.714],[82,0.759],[91,0.798],[99,0.831],[107,0.859],[116,0.883],[123,0.901],[133,0.921],[141,0.934],[149,0.946],[157,0.955],[165,0.963],[174,0.97],[182,0.976],[191,1],[199,1],[207,1],[215,1],[224,1],[232,1],[241,1],[249,1],[257,1],[266,1],[274,1],[282,1],[291,1],[299,1],[306,1],[316,1],[324,1],[332,1],[341,1],[349,1],[357,1],[366,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.211\u001b[39m",
+                    "stack": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.574,\"back\":0.211,\"share\":0.157,\"end\":1,\"frames\":[[-1,0.574],[7,0.501],[16,0.424],[24,0.363],[31,0.363],[41,0.463],[49,0.534],[57,0.602],[66,0.662],[74,0.714],[82,0.759],[91,0.798],[99,0.831],[107,0.859],[116,0.883],[123,0.901],[133,0.921],[141,0.934],[149,0.946],[157,0.955],[165,0.963],[174,0.97],[182,0.976],[191,1],[199,1],[207,1],[215,1],[224,1],[232,1],[241,1],[249,1],[257,1],[266,1],[274,1],[282,1],[291,1],[299,1],[306,1],[316,1],[324,1],[332,1],[341,1],[349,1],[357,1],[366,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.211\u001b[39m\n    at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:652:89)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:717:13",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 89,
+                      "line": 652
+                    },
+                    "snippet": "  650 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n  651 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n> 652 |     expect(read.back, `after the turn it does not run on toward the end it left ${at}`).toBeLessThanOrEqual(0.06);\n      |                                                                                         ^\n  653 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n  654 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);\n  655 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 89,
+                        "line": 652
+                      },
+                      "message": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.574,\"back\":0.211,\"share\":0.157,\"end\":1,\"frames\":[[-1,0.574],[7,0.501],[16,0.424],[24,0.363],[31,0.363],[41,0.463],[49,0.534],[57,0.602],[66,0.662],[74,0.714],[82,0.759],[91,0.798],[99,0.831],[107,0.859],[116,0.883],[123,0.901],[133,0.921],[141,0.934],[149,0.946],[157,0.955],[165,0.963],[174,0.97],[182,0.976],[191,1],[199,1],[207,1],[215,1],[224,1],[232,1],[241,1],[249,1],[257,1],[266,1],[274,1],[282,1],[291,1],[299,1],[306,1],[316,1],[324,1],[332,1],[341,1],[349,1],[357,1],[366,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.211\u001b[39m\n\n  650 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n  651 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n> 652 |     expect(read.back, `after the turn it does not run on toward the end it left ${at}`).toBeLessThanOrEqual(0.06);\n      |                                                                                         ^\n  653 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n  654 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);\n  655 | }\n    at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:652:89)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:717:13"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:37:08.857Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNTc0LCJiYWNrIjowLjIxMSwic2hhcmUiOjAuMTU3LCJlbmQiOjEsImZyYW1lcyI6W1stMSwwLjU3NF0sWzcsMC41MDFdLFsxNiwwLjQyNF0sWzI0LDAuMzYzXSxbMzEsMC4zNjNdLFs0MSwwLjQ2M10sWzQ5LDAuNTM0XSxbNTcsMC42MDJdLFs2NiwwLjY2Ml0sWzc0LDAuNzE0XSxbODIsMC43NTldLFs5MSwwLjc5OF0sWzk5LDAuODMxXSxbMTA3LDAuODU5XSxbMTE2LDAuODgzXSxbMTIzLDAuOTAxXSxbMTMzLDAuOTIxXSxbMTQxLDAuOTM0XSxbMTQ5LDAuOTQ2XSxbMTU3LDAuOTU1XSxbMTY1LDAuOTYzXSxbMTc0LDAuOTddLFsxODIsMC45NzZdLFsxOTEsMV0sWzE5OSwxXSxbMjA3LDFdLFsyMTUsMV0sWzIyNCwxXSxbMjMyLDFdLFsyNDEsMV0sWzI0OSwxXSxbMjU3LDFdLFsyNjYsMV0sWzI3NCwxXSxbMjgyLDFdLFsyOTEsMV0sWzI5OSwxXSxbMzA2LDFdLFszMTYsMV0sWzMyNCwxXSxbMzMyLDFdLFszNDEsMV0sWzM0OSwxXSxbMzU3LDFdLFszNjYsMV0sWzM3NCwxXSxbMzgyLDFdLFszOTEsMV0sWzM5OSwxXSxbNDA3LDFdLFs0MTYsMV0sWzQyNCwxXSxbNDMyLDFdLFs0NDEsMV0sWzQ0OSwxXSxbNDU3LDFdLFs0NjQsMV0sWzQ3NCwxXSxbNDgyLDFdLFs0OTAsMV0sWzQ5OSwxXSxbNTA3LDFdLFs1MTYsMV0sWzUyNCwxXSxbNTMyLDFdLFs1NDEsMV0sWzU0OSwxXSxbNTU3LDFdLFs1NjYsMV0sWzU3NCwxXSxbNTgyLDFdLFs1OTEsMV0sWzU5OSwxXSxbNjA3LDFdLFs2MTUsMV0sWzYyNCwxXSxbNjMyLDFdLFs2NDAsMV0sWzY0OSwxXSxbNjU3LDFdLFs2NjYsMV0sWzY3NCwxXSxbNjgyLDFdLFs2OTAsMV0sWzY5OSwxXSxbNzA3LDFdLFs3MTYsMV0sWzcyNCwxXSxbNzMyLDFdLFs3NDEsMV0sWzc0OSwxXSxbNzU3LDFdLFs3NjYsMV0sWzc3NCwxXSxbNzgyLDFdLFs3OTEsMV0sWzc5OSwxXSxbODA3LDFdLFs4MTYsMV0sWzgyNCwxXSxbODMyLDFdLFs4NDEsMV0sWzg0OSwxXSxbODU2LDFdLFs4NjYsMV0sWzg3NCwxXSxbODgyLDFdLFs4OTEsMV0sWzg5OCwxXSxbOTA2LDFdLFs5MTYsMV0sWzkyMiwxXSxbOTMzLDFdLFs5NDEsMV0sWzk0OSwxXSxbOTU3LDFdLFs5NjYsMV0sWzk3NCwxXSxbOTgyLDFdLFs5OTEsMV0sWzk5OSwxXSxbMTAwNywxXSxbMTAxNiwxXSxbMTAyNCwxXSxbMTAzMiwxXSxbMTA0MSwxXSxbMTA0OCwxXSxbMTA1NywxXSxbMTA2NiwxXSxbMTA3MywxXSxbMTA4MiwxXSxbMTA5MCwxXSxbMTA5OSwxXSxbMTEwNywxXSxbMTExNiwxXSxbMTEyNCwxXSxbMTEzMiwxXSxbMTE0MSwxXSxbMTE0OSwxXSxbMTE1NywxXSxbMTE2NiwxXSxbMTE3NCwxXSxbMTE4MiwxXSxbMTE5MSwxXSxbMTE5OSwxXSxbMTIwNywxXSxbMTIxNiwxXSxbMTIyNCwxXSxbMTIzMiwxXSxbMTI0MSwxXSxbMTI0OSwxXSxbMTI1NywxXSxbMTI2NiwxXSxbMTI3NCwxXSxbMTI4MiwxXSxbMTI5MSwxXSxbMTI5OSwxXSxbMTMwNywxXSxbMTMxNiwxXSxbMTMyNCwxXSxbMTMzMiwxXSxbMTM0MSwxXSxbMTM0OSwxXSxbMTM1NywxXSxbMTM2NiwxXSxbMTM3MywxXSxbMTM4MywxXSxbMTM5MSwxXSxbMTM5OSwxXSxbMTQwNywxXSxbMTQxNiwxXSxbMTQyMywxXV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-reverse-·-a-87c79-oses-turns-from-where-it-is-chromium-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 89,
+                    "line": 652
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-5f30912329e541d59f94",
+          "file": "release-11-1-1.spec.ts",
+          "line": 708,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Accordion closed while it opens turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 4080,
+                  "error": {
+                    "message": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.506,\"back\":0.187,\"share\":0.161,\"end\":0,\"frames\":[[-1,0.506],[6,0.563],[16,0.642],[24,0.694],[32,0.694],[41,0.608],[49,0.529],[56,0.468],[66,0.386],[74,0.33],[82,0.279],[91,0.234],[99,0.196],[106,0.168],[116,0.136],[124,0.113],[132,0.094],[141,0.077],[149,0.064],[157,0.052],[166,0.043],[172,0.037],[182,0.029],[191,0.016],[199,0],[207,0],[216,0],[224,0],[232,0],[241,0],[249,0],[257,0],[266,0],[274,0],[282,0],[290,0],[299,0],[306,0],[316,0],[324,0],[332,0],[341,0],[349,0],[357,0],[366,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.187\u001b[39m",
+                    "stack": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.506,\"back\":0.187,\"share\":0.161,\"end\":0,\"frames\":[[-1,0.506],[6,0.563],[16,0.642],[24,0.694],[32,0.694],[41,0.608],[49,0.529],[56,0.468],[66,0.386],[74,0.33],[82,0.279],[91,0.234],[99,0.196],[106,0.168],[116,0.136],[124,0.113],[132,0.094],[141,0.077],[149,0.064],[157,0.052],[166,0.043],[172,0.037],[182,0.029],[191,0.016],[199,0],[207,0],[216,0],[224,0],[232,0],[241,0],[249,0],[257,0],[266,0],[274,0],[282,0],[290,0],[299,0],[306,0],[316,0],[324,0],[332,0],[341,0],[349,0],[357,0],[366,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.187\u001b[39m\n    at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:652:89)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:704:13",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 89,
+                      "line": 652
+                    },
+                    "snippet": "  650 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n  651 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n> 652 |     expect(read.back, `after the turn it does not run on toward the end it left ${at}`).toBeLessThanOrEqual(0.06);\n      |                                                                                         ^\n  653 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n  654 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);\n  655 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 89,
+                        "line": 652
+                      },
+                      "message": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.506,\"back\":0.187,\"share\":0.161,\"end\":0,\"frames\":[[-1,0.506],[6,0.563],[16,0.642],[24,0.694],[32,0.694],[41,0.608],[49,0.529],[56,0.468],[66,0.386],[74,0.33],[82,0.279],[91,0.234],[99,0.196],[106,0.168],[116,0.136],[124,0.113],[132,0.094],[141,0.077],[149,0.064],[157,0.052],[166,0.043],[172,0.037],[182,0.029],[191,0.016],[199,0],[207,0],[216,0],[224,0],[232,0],[241,0],[249,0],[257,0],[266,0],[274,0],[282,0],[290,0],[299,0],[306,0],[316,0],[324,0],[332,0],[341,0],[349,0],[357,0],[366,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.187\u001b[39m\n\n  650 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n  651 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n> 652 |     expect(read.back, `after the turn it does not run on toward the end it left ${at}`).toBeLessThanOrEqual(0.06);\n      |                                                                                         ^\n  653 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n  654 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);\n  655 | }\n    at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:652:89)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:704:13"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:37:14.314Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNTA2LCJiYWNrIjowLjE4Nywic2hhcmUiOjAuMTYxLCJlbmQiOjAsImZyYW1lcyI6W1stMSwwLjUwNl0sWzYsMC41NjNdLFsxNiwwLjY0Ml0sWzI0LDAuNjk0XSxbMzIsMC42OTRdLFs0MSwwLjYwOF0sWzQ5LDAuNTI5XSxbNTYsMC40NjhdLFs2NiwwLjM4Nl0sWzc0LDAuMzNdLFs4MiwwLjI3OV0sWzkxLDAuMjM0XSxbOTksMC4xOTZdLFsxMDYsMC4xNjhdLFsxMTYsMC4xMzZdLFsxMjQsMC4xMTNdLFsxMzIsMC4wOTRdLFsxNDEsMC4wNzddLFsxNDksMC4wNjRdLFsxNTcsMC4wNTJdLFsxNjYsMC4wNDNdLFsxNzIsMC4wMzddLFsxODIsMC4wMjldLFsxOTEsMC4wMTZdLFsxOTksMF0sWzIwNywwXSxbMjE2LDBdLFsyMjQsMF0sWzIzMiwwXSxbMjQxLDBdLFsyNDksMF0sWzI1NywwXSxbMjY2LDBdLFsyNzQsMF0sWzI4MiwwXSxbMjkwLDBdLFsyOTksMF0sWzMwNiwwXSxbMzE2LDBdLFszMjQsMF0sWzMzMiwwXSxbMzQxLDBdLFszNDksMF0sWzM1NywwXSxbMzY2LDBdLFszNzQsMF0sWzM4MiwwXSxbMzkxLDBdLFszOTksMF0sWzQwNywwXSxbNDE1LDBdLFs0MjQsMF0sWzQzMiwwXSxbNDQxLDBdLFs0NDgsMF0sWzQ1NywwXSxbNDY2LDBdLFs0NzQsMF0sWzQ4MiwwXSxbNDkxLDBdLFs0OTksMF0sWzUwNywwXSxbNTE2LDBdLFs1MjQsMF0sWzUzMiwwXSxbNTQxLDBdLFs1NDksMF0sWzU1NywwXSxbNTY2LDBdLFs1NzQsMF0sWzU4MiwwXSxbNTkxLDBdLFs1OTksMF0sWzYwNywwXSxbNjE2LDBdLFs2MjQsMF0sWzYzMiwwXSxbNjQxLDBdLFs2NDksMF0sWzY1NywwXSxbNjY2LDBdLFs2NzQsMF0sWzY4MiwwXSxbNjkxLDBdLFs2OTksMF0sWzcwNiwwXSxbNzE2LDBdLFs3MjQsMF0sWzczMiwwXSxbNzQxLDBdLFs3NDksMF0sWzc1NywwXSxbNzY2LDBdLFs3NzQsMF0sWzc4MiwwXSxbNzkxLDBdLFs3OTksMF0sWzgwNywwXSxbODE2LDBdLFs4MjQsMF0sWzgzMiwwXSxbODQwLDBdLFs4NDksMF0sWzg1NywwXSxbODY2LDBdLFs4NzQsMF0sWzg4MiwwXSxbODkxLDBdLFs4OTgsMF0sWzkwNywwXSxbOTE2LDBdLFs5MjQsMF0sWzkzMiwwXSxbOTM5LDBdLFs5NDksMF0sWzk1NywwXSxbOTY2LDBdLFs5NzMsMF0sWzk4MiwwXSxbOTkxLDBdLFs5OTksMF0sWzEwMDYsMF0sWzEwMTQsMF0sWzEwMjQsMF0sWzEwMzIsMF0sWzEwNDEsMF0sWzEwNDcsMF0sWzEwNTYsMF0sWzEwNjUsMF0sWzEwNzIsMF0sWzEwODIsMF0sWzEwOTEsMF0sWzEwOTcsMF0sWzExMDgsMF0sWzExMTUsMF0sWzExMjQsMF0sWzExMzIsMF0sWzExNDEsMF0sWzExNDksMF0sWzExNTcsMF0sWzExNjYsMF0sWzExNzQsMF0sWzExODIsMF0sWzExOTEsMF0sWzExOTksMF0sWzEyMDcsMF0sWzEyMTYsMF0sWzEyMjQsMF0sWzEyMzIsMF0sWzEyNDEsMF0sWzEyNDksMF0sWzEyNTcsMF0sWzEyNjYsMF0sWzEyNzQsMF0sWzEyODIsMF0sWzEyOTEsMF0sWzEyOTgsMF0sWzEzMDcsMF0sWzEzMTYsMF0sWzEzMjMsMF0sWzEzMzEsMF0sWzEzNDEsMF0sWzEzNDksMF0sWzEzNTcsMF0sWzEzNjYsMF0sWzEzNzQsMF0sWzEzODIsMF0sWzEzOTEsMF0sWzEzOTgsMF0sWzE0MDYsMF0sWzE0MTYsMF0sWzE0MjQsMF0sWzE0MzIsMF1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-reverse-·-a-5b1b6-pens-turns-from-where-it-is-chromium-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 89,
+                    "line": 652
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-38eb8d13840c085ec071",
+          "file": "release-11-1-1.spec.ts",
+          "line": 698,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Accordion reopened while it closes turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5040,
+                  "error": {
+                    "message": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.578,\"back\":0.269,\"share\":0.159,\"end\":1,\"frames\":[[-1,0.578],[8,0.499],[16,0.429],[24,0.365],[32,0.31],[41,0.31],[49,0.396],[57,0.475],[66,0.548],[74,0.614],[82,0.672],[90,0.719],[99,0.768],[108,0.805],[116,0.837],[124,0.865],[132,0.885],[141,0.907],[149,0.923],[157,0.937],[166,0.948],[174,0.957],[182,0.965],[191,0.971],[199,0.986],[208,1],[215,1],[224,1],[231,1],[241,1],[248,1],[256,1],[266,1],[273,1],[282,1],[291,1],[299,1],[307,1],[316,1],[324,1],[332,1],[341,1],[349,1],[356,1],[366,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.269\u001b[39m",
+                    "stack": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.578,\"back\":0.269,\"share\":0.159,\"end\":1,\"frames\":[[-1,0.578],[8,0.499],[16,0.429],[24,0.365],[32,0.31],[41,0.31],[49,0.396],[57,0.475],[66,0.548],[74,0.614],[82,0.672],[90,0.719],[99,0.768],[108,0.805],[116,0.837],[124,0.865],[132,0.885],[141,0.907],[149,0.923],[157,0.937],[166,0.948],[174,0.957],[182,0.965],[191,0.971],[199,0.986],[208,1],[215,1],[224,1],[231,1],[241,1],[248,1],[256,1],[266,1],[273,1],[282,1],[291,1],[299,1],[307,1],[316,1],[324,1],[332,1],[341,1],[349,1],[356,1],[366,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.269\u001b[39m\n    at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:652:89)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:717:13",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 89,
+                      "line": 652
+                    },
+                    "snippet": "  650 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n  651 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n> 652 |     expect(read.back, `after the turn it does not run on toward the end it left ${at}`).toBeLessThanOrEqual(0.06);\n      |                                                                                         ^\n  653 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n  654 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);\n  655 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 89,
+                        "line": 652
+                      },
+                      "message": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.578,\"back\":0.269,\"share\":0.159,\"end\":1,\"frames\":[[-1,0.578],[8,0.499],[16,0.429],[24,0.365],[32,0.31],[41,0.31],[49,0.396],[57,0.475],[66,0.548],[74,0.614],[82,0.672],[90,0.719],[99,0.768],[108,0.805],[116,0.837],[124,0.865],[132,0.885],[141,0.907],[149,0.923],[157,0.937],[166,0.948],[174,0.957],[182,0.965],[191,0.971],[199,0.986],[208,1],[215,1],[224,1],[231,1],[241,1],[248,1],[256,1],[266,1],[273,1],[282,1],[291,1],[299,1],[307,1],[316,1],[324,1],[332,1],[341,1],[349,1],[356,1],[366,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.269\u001b[39m\n\n  650 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n  651 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n> 652 |     expect(read.back, `after the turn it does not run on toward the end it left ${at}`).toBeLessThanOrEqual(0.06);\n      |                                                                                         ^\n  653 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n  654 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);\n  655 | }\n    at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:652:89)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:717:13"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:37:18.860Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNTc4LCJiYWNrIjowLjI2OSwic2hhcmUiOjAuMTU5LCJlbmQiOjEsImZyYW1lcyI6W1stMSwwLjU3OF0sWzgsMC40OTldLFsxNiwwLjQyOV0sWzI0LDAuMzY1XSxbMzIsMC4zMV0sWzQxLDAuMzFdLFs0OSwwLjM5Nl0sWzU3LDAuNDc1XSxbNjYsMC41NDhdLFs3NCwwLjYxNF0sWzgyLDAuNjcyXSxbOTAsMC43MTldLFs5OSwwLjc2OF0sWzEwOCwwLjgwNV0sWzExNiwwLjgzN10sWzEyNCwwLjg2NV0sWzEzMiwwLjg4NV0sWzE0MSwwLjkwN10sWzE0OSwwLjkyM10sWzE1NywwLjkzN10sWzE2NiwwLjk0OF0sWzE3NCwwLjk1N10sWzE4MiwwLjk2NV0sWzE5MSwwLjk3MV0sWzE5OSwwLjk4Nl0sWzIwOCwxXSxbMjE1LDFdLFsyMjQsMV0sWzIzMSwxXSxbMjQxLDFdLFsyNDgsMV0sWzI1NiwxXSxbMjY2LDFdLFsyNzMsMV0sWzI4MiwxXSxbMjkxLDFdLFsyOTksMV0sWzMwNywxXSxbMzE2LDFdLFszMjQsMV0sWzMzMiwxXSxbMzQxLDFdLFszNDksMV0sWzM1NiwxXSxbMzY2LDFdLFszNzQsMV0sWzM4MywxXSxbMzkxLDFdLFszOTksMV0sWzQwNywxXSxbNDE2LDFdLFs0MjQsMV0sWzQzMywxXSxbNDM5LDFdLFs0NDksMV0sWzQ1NywxXSxbNDY1LDFdLFs0NzQsMV0sWzQ4MiwxXSxbNDkwLDFdLFs0OTksMV0sWzUwNywxXSxbNTE2LDFdLFs1MjQsMV0sWzUzMSwxXSxbNTQxLDFdLFs1NDksMV0sWzU1NiwxXSxbNTY2LDFdLFs1NzQsMV0sWzU4MywxXSxbNTkxLDFdLFs1OTksMV0sWzYwOCwxXSxbNjE2LDFdLFs2MjMsMV0sWzYzMywxXSxbNjQxLDFdLFs2NDgsMV0sWzY1OCwxXSxbNjY2LDFdLFs2NzQsMV0sWzY4MSwxXSxbNjkxLDFdLFs2OTksMV0sWzcwOCwxXSxbNzE2LDFdLFs3MjQsMV0sWzczMiwxXSxbNzQxLDFdLFs3NDksMV0sWzc1NywxXSxbNzY2LDFdLFs3NzQsMV0sWzc4MiwxXSxbNzkxLDFdLFs3OTksMV0sWzgwNywxXSxbODE2LDFdLFs4MjQsMV0sWzgzMiwxXSxbODQxLDFdLFs4NDksMV0sWzg1OCwxXSxbODY2LDFdLFs4NzMsMV0sWzg4MiwxXSxbODkxLDFdLFs4OTksMV0sWzkwNywxXSxbOTE2LDFdLFs5MjQsMV0sWzkzMiwxXSxbOTQxLDFdLFs5NDksMV0sWzk1NywxXSxbOTY2LDFdLFs5NzQsMV0sWzk4MSwxXSxbOTkxLDFdLFs5OTksMV0sWzEwMDYsMV0sWzEwMTYsMV0sWzEwMjQsMV0sWzEwMzIsMV0sWzEwNDEsMV0sWzEwNDksMV0sWzEwNTcsMV0sWzEwNjYsMV0sWzEwNzQsMV0sWzEwODEsMV0sWzEwODksMV0sWzExMDAsMV0sWzExMDcsMV0sWzExMTYsMV0sWzExMjQsMV0sWzExMzIsMV0sWzExNDEsMV0sWzExNDksMV0sWzExNTcsMV0sWzExNjYsMV0sWzExNzQsMV0sWzExODMsMV0sWzExOTEsMV0sWzExOTgsMV0sWzEyMDgsMV0sWzEyMTUsMV0sWzEyMjQsMV0sWzEyMzMsMV0sWzEyNDEsMV0sWzEyNDksMV0sWzEyNTgsMV0sWzEyNjYsMV0sWzEyNzQsMV0sWzEyODMsMV0sWzEyOTEsMV0sWzEyOTksMV0sWzEzMDYsMV0sWzEzMTYsMV0sWzEzMjQsMV0sWzEzMzIsMV0sWzEzNDEsMV0sWzEzNDksMV0sWzEzNTcsMV0sWzEzNjYsMV0sWzEzNzQsMV0sWzEzODIsMV0sWzEzOTEsMV0sWzEzOTgsMV0sWzE0MDgsMV0sWzE0MTYsMV0sWzE0MjQsMV0sWzE0MzIsMV1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-reverse-·-a-88999-oses-turns-from-where-it-is-chromium-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 89,
+                    "line": 652
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-c8f8a767df4e9238a0a5",
+          "file": "release-11-1-1.spec.ts",
+          "line": 708,
+          "column": 9
+        },
+        {
+          "title": "reverse · a press on a leaving Dialog's trigger reopens it from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3234,
+                  "error": {
+                    "message": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.748,\"back\":0.102,\"share\":0.064,\"end\":1,\"frames\":[[-1,0.748],[7,0.699],[14,0.647],[24,0.676],[31,0.707],[40,0.733],[49,0.768],[57,0.797],[65,0.825],[74,0.85],[82,0.872],[90,0.892],[99,0.909],[107,0.923],[115,0.936],[124,0.947],[132,0.955],[139,0.963],[149,0.969],[157,0.975],[165,0.979],[173,0.983],[182,0.986],[190,0.989],[199,0.991],[207,0.992],[215,0.994],[224,0.995],[232,0.996],[239,0.997],[249,0.997],[256,0.998],[265,0.998],[274,0.999],[282,0.999],[290,0.999],[299,0.999],[307,0.999],[315,0.999],[324,1],[332,1],[339,1],[347,1],[357,1],[365,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.102\u001b[39m",
+                    "stack": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.748,\"back\":0.102,\"share\":0.064,\"end\":1,\"frames\":[[-1,0.748],[7,0.699],[14,0.647],[24,0.676],[31,0.707],[40,0.733],[49,0.768],[57,0.797],[65,0.825],[74,0.85],[82,0.872],[90,0.892],[99,0.909],[107,0.923],[115,0.936],[124,0.947],[132,0.955],[139,0.963],[149,0.969],[157,0.975],[165,0.979],[173,0.983],[182,0.986],[190,0.989],[199,0.991],[207,0.992],[215,0.994],[224,0.995],[232,0.996],[239,0.997],[249,0.997],[256,0.998],[265,0.998],[274,0.999],[282,0.999],[290,0.999],[299,0.999],[307,0.999],[315,0.999],[324,1],[332,1],[339,1],[347,1],[357,1],[365,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.102\u001b[39m\n    at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:652:89)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:743:9",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 89,
+                      "line": 652
+                    },
+                    "snippet": "  650 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n  651 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n> 652 |     expect(read.back, `after the turn it does not run on toward the end it left ${at}`).toBeLessThanOrEqual(0.06);\n      |                                                                                         ^\n  653 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n  654 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);\n  655 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 89,
+                        "line": 652
+                      },
+                      "message": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.748,\"back\":0.102,\"share\":0.064,\"end\":1,\"frames\":[[-1,0.748],[7,0.699],[14,0.647],[24,0.676],[31,0.707],[40,0.733],[49,0.768],[57,0.797],[65,0.825],[74,0.85],[82,0.872],[90,0.892],[99,0.909],[107,0.923],[115,0.936],[124,0.947],[132,0.955],[139,0.963],[149,0.969],[157,0.975],[165,0.979],[173,0.983],[182,0.986],[190,0.989],[199,0.991],[207,0.992],[215,0.994],[224,0.995],[232,0.996],[239,0.997],[249,0.997],[256,0.998],[265,0.998],[274,0.999],[282,0.999],[290,0.999],[299,0.999],[307,0.999],[315,0.999],[324,1],[332,1],[339,1],[347,1],[357,1],[365,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.102\u001b[39m\n\n  650 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n  651 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n> 652 |     expect(read.back, `after the turn it does not run on toward the end it left ${at}`).toBeLessThanOrEqual(0.06);\n      |                                                                                         ^\n  653 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n  654 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);\n  655 | }\n    at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:652:89)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:743:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:37:24.392Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNzQ4LCJiYWNrIjowLjEwMiwic2hhcmUiOjAuMDY0LCJlbmQiOjEsImZyYW1lcyI6W1stMSwwLjc0OF0sWzcsMC42OTldLFsxNCwwLjY0N10sWzI0LDAuNjc2XSxbMzEsMC43MDddLFs0MCwwLjczM10sWzQ5LDAuNzY4XSxbNTcsMC43OTddLFs2NSwwLjgyNV0sWzc0LDAuODVdLFs4MiwwLjg3Ml0sWzkwLDAuODkyXSxbOTksMC45MDldLFsxMDcsMC45MjNdLFsxMTUsMC45MzZdLFsxMjQsMC45NDddLFsxMzIsMC45NTVdLFsxMzksMC45NjNdLFsxNDksMC45NjldLFsxNTcsMC45NzVdLFsxNjUsMC45NzldLFsxNzMsMC45ODNdLFsxODIsMC45ODZdLFsxOTAsMC45ODldLFsxOTksMC45OTFdLFsyMDcsMC45OTJdLFsyMTUsMC45OTRdLFsyMjQsMC45OTVdLFsyMzIsMC45OTZdLFsyMzksMC45OTddLFsyNDksMC45OTddLFsyNTYsMC45OThdLFsyNjUsMC45OThdLFsyNzQsMC45OTldLFsyODIsMC45OTldLFsyOTAsMC45OTldLFsyOTksMC45OTldLFszMDcsMC45OTldLFszMTUsMC45OTldLFszMjQsMV0sWzMzMiwxXSxbMzM5LDFdLFszNDcsMV0sWzM1NywxXSxbMzY1LDFdLFszNzQsMV0sWzM4MiwxXSxbMzkwLDFdLFszOTgsMV0sWzQwNywxXSxbNDE1LDFdLFs0MjQsMV0sWzQzMiwxXSxbNDQwLDFdLFs0NDksMV0sWzQ1NywxXSxbNDY1LDFdLFs0NzQsMV0sWzQ4MiwxXSxbNDg5LDFdLFs0OTgsMV0sWzUwNywxXSxbNTE1LDFdLFs1MjMsMV0sWzUzMSwxXSxbNTQxLDFdLFs1NDgsMV0sWzU1NywxXSxbNTY1LDFdLFs1NzIsMV0sWzU4MiwxXSxbNTkwLDFdLFs1OTksMV0sWzYwNywxXSxbNjE1LDFdLFs2MjIsMV0sWzYzMiwxXSxbNjM5LDFdLFs2NDksMV0sWzY1NywxXSxbNjY1LDFdLFs2NzQsMV0sWzY4MSwxXSxbNjkxLDFdLFs2OTcsMV0sWzcwNiwxXSxbNzE2LDFdLFs3MjQsMV0sWzczMiwxXSxbNzQwLDFdLFs3NDksMV0sWzc1NywxXSxbNzY1LDFdLFs3NzQsMV0sWzc4MiwxXSxbNzkwLDFdLFs3OTksMV0sWzgwNiwxXSxbODE1LDFdLFs4MjQsMV0sWzgzMSwxXSxbODQxLDFdLFs4NDksMV0sWzg1NywxXSxbODY1LDFdLFs4NzQsMV0sWzg4MiwxXSxbODkwLDFdLFs4OTcsMV0sWzkwNywxXSxbOTE1LDFdLFs5MjQsMV0sWzkzMiwxXSxbOTQwLDFdLFs5NDgsMV0sWzk1NiwxXSxbOTY1LDFdLFs5NzMsMV0sWzk4MiwxXSxbOTkwLDFdLFs5OTksMV0sWzEwMDYsMV0sWzEwMTYsMV0sWzEwMjMsMV0sWzEwMzIsMV0sWzEwNDAsMV0sWzEwNDksMV0sWzEwNTcsMV0sWzEwNjUsMV0sWzEwNzQsMV0sWzEwODAsMV0sWzEwOTEsMV0sWzEwOTksMV0sWzExMDcsMV0sWzExMTUsMV0sWzExMjQsMV0sWzExMzIsMV0sWzExNDAsMV0sWzExNDksMV0sWzExNTcsMV0sWzExNjQsMV0sWzExNzQsMV0sWzExODIsMV0sWzExOTAsMV0sWzExOTcsMV0sWzEyMDcsMV0sWzEyMTUsMV0sWzEyMjMsMV0sWzEyMzIsMV0sWzEyNDAsMV0sWzEyNDksMV0sWzEyNTYsMV0sWzEyNjUsMV0sWzEyNzIsMV0sWzEyODIsMV0sWzEyOTAsMV0sWzEyOTksMV0sWzEzMDcsMV0sWzEzMTUsMV0sWzEzMjQsMV0sWzEzMzIsMV0sWzEzNDAsMV0sWzEzNDksMV0sWzEzNTcsMV0sWzEzNjUsMV0sWzEzNzQsMV0sWzEzODIsMV0sWzEzOTAsMV0sWzEzOTksMV0sWzE0MDcsMV0sWzE0MTUsMV1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-reverse-·-a-ff9dd-reopens-it-from-where-it-is-chromium-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 89,
+                    "line": 652
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-ab4d7fe8f60bbbb634d7",
+          "file": "release-11-1-1.spec.ts",
+          "line": 728,
+          "column": 5
+        },
+        {
+          "title": "reverse · a press on a leaving Sheet's trigger reopens it from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3201,
+                  "error": {
+                    "message": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.862,\"back\":0.067,\"share\":0.04,\"end\":1,\"frames\":[[-3,0.862],[5,0.829],[13,0.796],[22,0.802],[30,0.809],[38,0.818],[46,0.828],[53,0.839],[63,0.849],[72,0.863],[80,0.875],[87,0.887],[96,0.897],[105,0.91],[113,0.921],[122,0.931],[130,0.941],[138,0.95],[147,0.958],[155,0.965],[162,0.972],[172,0.977],[180,0.983],[188,0.988],[195,0.992],[205,0.995],[213,0.999],[222,1],[230,1],[238,1],[245,1],[255,1],[262,1],[272,1],[280,1],[288,1],[297,1],[305,1],[313,1],[321,1],[329,1],[338,1],[347,1],[354,1],[363,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.067\u001b[39m",
+                    "stack": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.862,\"back\":0.067,\"share\":0.04,\"end\":1,\"frames\":[[-3,0.862],[5,0.829],[13,0.796],[22,0.802],[30,0.809],[38,0.818],[46,0.828],[53,0.839],[63,0.849],[72,0.863],[80,0.875],[87,0.887],[96,0.897],[105,0.91],[113,0.921],[122,0.931],[130,0.941],[138,0.95],[147,0.958],[155,0.965],[162,0.972],[172,0.977],[180,0.983],[188,0.988],[195,0.992],[205,0.995],[213,0.999],[222,1],[230,1],[238,1],[245,1],[255,1],[262,1],[272,1],[280,1],[288,1],[297,1],[305,1],[313,1],[321,1],[329,1],[338,1],[347,1],[354,1],[363,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.067\u001b[39m\n    at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:652:89)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:743:9",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 89,
+                      "line": 652
+                    },
+                    "snippet": "  650 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n  651 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n> 652 |     expect(read.back, `after the turn it does not run on toward the end it left ${at}`).toBeLessThanOrEqual(0.06);\n      |                                                                                         ^\n  653 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n  654 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);\n  655 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 89,
+                        "line": 652
+                      },
+                      "message": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.862,\"back\":0.067,\"share\":0.04,\"end\":1,\"frames\":[[-3,0.862],[5,0.829],[13,0.796],[22,0.802],[30,0.809],[38,0.818],[46,0.828],[53,0.839],[63,0.849],[72,0.863],[80,0.875],[87,0.887],[96,0.897],[105,0.91],[113,0.921],[122,0.931],[130,0.941],[138,0.95],[147,0.958],[155,0.965],[162,0.972],[172,0.977],[180,0.983],[188,0.988],[195,0.992],[205,0.995],[213,0.999],[222,1],[230,1],[238,1],[245,1],[255,1],[262,1],[272,1],[280,1],[288,1],[297,1],[305,1],[313,1],[321,1],[329,1],[338,1],[347,1],[354,1],[363,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.067\u001b[39m\n\n  650 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n  651 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n> 652 |     expect(read.back, `after the turn it does not run on toward the end it left ${at}`).toBeLessThanOrEqual(0.06);\n      |                                                                                         ^\n  653 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n  654 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);\n  655 | }\n    at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:652:89)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:743:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:37:28.111Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuODYyLCJiYWNrIjowLjA2Nywic2hhcmUiOjAuMDQsImVuZCI6MSwiZnJhbWVzIjpbWy0zLDAuODYyXSxbNSwwLjgyOV0sWzEzLDAuNzk2XSxbMjIsMC44MDJdLFszMCwwLjgwOV0sWzM4LDAuODE4XSxbNDYsMC44MjhdLFs1MywwLjgzOV0sWzYzLDAuODQ5XSxbNzIsMC44NjNdLFs4MCwwLjg3NV0sWzg3LDAuODg3XSxbOTYsMC44OTddLFsxMDUsMC45MV0sWzExMywwLjkyMV0sWzEyMiwwLjkzMV0sWzEzMCwwLjk0MV0sWzEzOCwwLjk1XSxbMTQ3LDAuOTU4XSxbMTU1LDAuOTY1XSxbMTYyLDAuOTcyXSxbMTcyLDAuOTc3XSxbMTgwLDAuOTgzXSxbMTg4LDAuOTg4XSxbMTk1LDAuOTkyXSxbMjA1LDAuOTk1XSxbMjEzLDAuOTk5XSxbMjIyLDFdLFsyMzAsMV0sWzIzOCwxXSxbMjQ1LDFdLFsyNTUsMV0sWzI2MiwxXSxbMjcyLDFdLFsyODAsMV0sWzI4OCwxXSxbMjk3LDFdLFszMDUsMV0sWzMxMywxXSxbMzIxLDFdLFszMjksMV0sWzMzOCwxXSxbMzQ3LDFdLFszNTQsMV0sWzM2MywxXSxbMzcyLDFdLFszODAsMV0sWzM4NywxXSxbMzk3LDFdLFs0MDUsMV0sWzQxMywxXSxbNDIyLDFdLFs0MzAsMV0sWzQzOCwxXSxbNDQ2LDFdLFs0NTUsMV0sWzQ2MywxXSxbNDcyLDFdLFs0ODAsMV0sWzQ4NywxXSxbNDk3LDFdLFs1MDUsMV0sWzUxMywxXSxbNTIyLDFdLFs1MzAsMV0sWzUzOCwxXSxbNTQ3LDFdLFs1NTUsMV0sWzU2MywxXSxbNTcwLDFdLFs1NzgsMV0sWzU4NywxXSxbNTk3LDFdLFs2MDUsMV0sWzYxMywxXSxbNjIxLDFdLFs2MzAsMV0sWzYzOCwxXSxbNjQ3LDFdLFs2NTQsMV0sWzY2MywxXSxbNjcyLDFdLFs2ODAsMV0sWzY4OCwxXSxbNjk3LDFdLFs3MDUsMV0sWzcxMywxXSxbNzIyLDFdLFs3MzAsMV0sWzczOCwxXSxbNzQ2LDFdLFs3NTUsMV0sWzc2MywxXSxbNzcyLDFdLFs3ODAsMV0sWzc4OCwxXSxbNzk3LDFdLFs4MDUsMV0sWzgxMywxXSxbODIyLDFdLFs4MzAsMV0sWzgzOCwxXSxbODQ3LDFdLFs4NTUsMV0sWzg2MywxXSxbODcwLDFdLFs4ODAsMV0sWzg4NywxXSxbODk1LDFdLFs5MDMsMV0sWzkxMywxXSxbOTIyLDFdLFs5MzAsMV0sWzkzOCwxXSxbOTQ3LDFdLFs5NTUsMV0sWzk2MiwxXSxbOTcyLDFdLFs5ODAsMV0sWzk4OCwxXSxbOTk3LDFdLFsxMDA1LDFdLFsxMDEzLDFdLFsxMDIyLDFdLFsxMDMwLDFdLFsxMDM4LDFdLFsxMDQ3LDFdLFsxMDU1LDFdLFsxMDYzLDFdLFsxMDcyLDFdLFsxMDgwLDFdLFsxMDg4LDFdLFsxMDk3LDFdLFsxMTA1LDFdLFsxMTEzLDFdLFsxMTIxLDFdLFsxMTMwLDFdLFsxMTM4LDFdLFsxMTQ3LDFdLFsxMTU1LDFdLFsxMTYzLDFdLFsxMTcxLDFdLFsxMTgwLDFdLFsxMTg4LDFdLFsxMTk3LDFdLFsxMjA1LDFdLFsxMjEzLDFdLFsxMjIyLDFdLFsxMjMwLDFdLFsxMjM4LDFdLFsxMjQ3LDFdLFsxMjU1LDFdLFsxMjYzLDFdLFsxMjcyLDFdLFsxMjgwLDFdLFsxMjg4LDFdLFsxMjk2LDFdLFsxMzA1LDFdLFsxMzEzLDFdLFsxMzIyLDFdLFsxMzMwLDFdLFsxMzM4LDFdLFsxMzQ2LDFdLFsxMzUzLDFdLFsxMzYzLDFdLFsxMzcyLDFdLFsxMzgwLDFdLFsxMzg4LDFdLFsxMzk1LDFdLFsxNDA1LDFdLFsxNDEyLDFdXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-reverse-·-a-9f4cc-reopens-it-from-where-it-is-chromium-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 89,
+                    "line": 652
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-24a2ef22387abdcdee63",
+          "file": "release-11-1-1.spec.ts",
+          "line": 728,
+          "column": 5
+        },
+        {
+          "title": "reverse · a press on a leaving Select's trigger reopens it from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3240,
+                  "error": {
+                    "message": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.646,\"back\":0.062,\"share\":0.152,\"end\":1,\"frames\":[[-5,0.646],[4,0.584],[12,0.632],[19,0.684],[29,0.768],[37,0.844],[46,0.919],[54,0.985],[62,1],[70,1],[79,1],[87,1],[94,1],[104,1],[112,1],[120,1],[129,1],[137,1],[144,1],[154,1],[162,1],[171,1],[179,1],[186,1],[195,1],[203,1],[211,1],[221,1],[229,1],[237,1],[245,1],[254,1],[262,1],[271,1],[279,1],[287,1],[296,1],[304,1],[312,1],[321,1],[329,1],[336,1],[344,1],[354,1],[362,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.062\u001b[39m",
+                    "stack": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.646,\"back\":0.062,\"share\":0.152,\"end\":1,\"frames\":[[-5,0.646],[4,0.584],[12,0.632],[19,0.684],[29,0.768],[37,0.844],[46,0.919],[54,0.985],[62,1],[70,1],[79,1],[87,1],[94,1],[104,1],[112,1],[120,1],[129,1],[137,1],[144,1],[154,1],[162,1],[171,1],[179,1],[186,1],[195,1],[203,1],[211,1],[221,1],[229,1],[237,1],[245,1],[254,1],[262,1],[271,1],[279,1],[287,1],[296,1],[304,1],[312,1],[321,1],[329,1],[336,1],[344,1],[354,1],[362,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.062\u001b[39m\n    at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:652:89)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:743:9",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 89,
+                      "line": 652
+                    },
+                    "snippet": "  650 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n  651 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n> 652 |     expect(read.back, `after the turn it does not run on toward the end it left ${at}`).toBeLessThanOrEqual(0.06);\n      |                                                                                         ^\n  653 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n  654 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);\n  655 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 89,
+                        "line": 652
+                      },
+                      "message": "Error: after the turn it does not run on toward the end it left {\"atTurn\":0.646,\"back\":0.062,\"share\":0.152,\"end\":1,\"frames\":[[-5,0.646],[4,0.584],[12,0.632],[19,0.684],[29,0.768],[37,0.844],[46,0.919],[54,0.985],[62,1],[70,1],[79,1],[87,1],[94,1],[104,1],[112,1],[120,1],[129,1],[137,1],[144,1],[154,1],[162,1],[171,1],[179,1],[186,1],[195,1],[203,1],[211,1],[221,1],[229,1],[237,1],[245,1],[254,1],[262,1],[271,1],[279,1],[287,1],[296,1],[304,1],[312,1],[321,1],[329,1],[336,1],[344,1],[354,1],[362,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.062\u001b[39m\n\n  650 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n  651 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n> 652 |     expect(read.back, `after the turn it does not run on toward the end it left ${at}`).toBeLessThanOrEqual(0.06);\n      |                                                                                         ^\n  653 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n  654 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);\n  655 | }\n    at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:652:89)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:743:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:37:31.806Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNjQ2LCJiYWNrIjowLjA2Miwic2hhcmUiOjAuMTUyLCJlbmQiOjEsImZyYW1lcyI6W1stNSwwLjY0Nl0sWzQsMC41ODRdLFsxMiwwLjYzMl0sWzE5LDAuNjg0XSxbMjksMC43NjhdLFszNywwLjg0NF0sWzQ2LDAuOTE5XSxbNTQsMC45ODVdLFs2MiwxXSxbNzAsMV0sWzc5LDFdLFs4NywxXSxbOTQsMV0sWzEwNCwxXSxbMTEyLDFdLFsxMjAsMV0sWzEyOSwxXSxbMTM3LDFdLFsxNDQsMV0sWzE1NCwxXSxbMTYyLDFdLFsxNzEsMV0sWzE3OSwxXSxbMTg2LDFdLFsxOTUsMV0sWzIwMywxXSxbMjExLDFdLFsyMjEsMV0sWzIyOSwxXSxbMjM3LDFdLFsyNDUsMV0sWzI1NCwxXSxbMjYyLDFdLFsyNzEsMV0sWzI3OSwxXSxbMjg3LDFdLFsyOTYsMV0sWzMwNCwxXSxbMzEyLDFdLFszMjEsMV0sWzMyOSwxXSxbMzM2LDFdLFszNDQsMV0sWzM1NCwxXSxbMzYyLDFdLFszNzEsMV0sWzM3OSwxXSxbMzg3LDFdLFszOTYsMV0sWzQwNCwxXSxbNDEyLDFdLFs0MjEsMV0sWzQyOSwxXSxbNDM3LDFdLFs0NDYsMV0sWzQ1NCwxXSxbNDYxLDFdLFs0NzEsMV0sWzQ3OSwxXSxbNDg3LDFdLFs0OTUsMV0sWzUwMywxXSxbNTEyLDFdLFs1MjAsMV0sWzUyNywxXSxbNTM3LDFdLFs1NDUsMV0sWzU1NCwxXSxbNTYxLDFdLFs1NzAsMV0sWzU3OSwxXSxbNTg3LDFdLFs1OTYsMV0sWzYwNCwxXSxbNjExLDFdLFs2MjAsMV0sWzYyOSwxXSxbNjM3LDFdLFs2NDYsMV0sWzY1NCwxXSxbNjYxLDFdLFs2NjksMV0sWzY3OSwxXSxbNjg3LDFdLFs2OTUsMV0sWzcwMywxXSxbNzEyLDFdLFs3MjEsMV0sWzcyOSwxXSxbNzM3LDFdLFs3NDYsMV0sWzc1NCwxXSxbNzYyLDFdLFs3NzAsMV0sWzc3OSwxXSxbNzg2LDFdLFs3OTQsMV0sWzgwNCwxXSxbODEyLDFdLFs4MjEsMV0sWzgyOSwxXSxbODM3LDFdLFs4NDYsMV0sWzg1NCwxXSxbODYyLDFdLFs4NzAsMV0sWzg3OSwxXSxbODg3LDFdLFs4OTYsMV0sWzkwNCwxXSxbOTEyLDFdLFs5MjEsMV0sWzkyOCwxXSxbOTM3LDFdLFs5NDQsMV0sWzk1NCwxXSxbOTYxLDFdLFs5NzAsMV0sWzk3OCwxXSxbOTg3LDFdLFs5OTUsMV0sWzEwMDQsMV0sWzEwMTIsMV0sWzEwMjAsMV0sWzEwMjgsMV0sWzEwMzYsMV0sWzEwNDQsMV0sWzEwNTQsMV0sWzEwNjIsMV0sWzEwNzEsMV0sWzEwNzksMV0sWzEwODcsMV0sWzEwOTUsMV0sWzExMDQsMV0sWzExMTIsMV0sWzExMjAsMV0sWzExMjksMV0sWzExMzcsMV0sWzExNDUsMV0sWzExNTQsMV0sWzExNjIsMV0sWzExNzAsMV0sWzExNzksMV0sWzExODcsMV0sWzExOTYsMV0sWzEyMDQsMV0sWzEyMTIsMV0sWzEyMjEsMV0sWzEyMjksMV0sWzEyMzYsMV0sWzEyNDQsMV0sWzEyNTQsMV0sWzEyNjEsMV0sWzEyNzEsMV0sWzEyNzgsMV0sWzEyODcsMV0sWzEyOTYsMV0sWzEzMDIsMV0sWzEzMTEsMV0sWzEzMjEsMV0sWzEzMjksMV0sWzEzMzcsMV0sWzEzNDUsMV0sWzEzNTQsMV0sWzEzNjIsMV0sWzEzNzEsMV0sWzEzNzgsMV0sWzEzODcsMV0sWzEzOTUsMV0sWzE0MDIsMV0sWzE0MTIsMV1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-reverse-·-a-dd297-reopens-it-from-where-it-is-chromium-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 89,
+                    "line": 652
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-a1c927310d44396affdf",
+          "file": "release-11-1-1.spec.ts",
+          "line": 728,
+          "column": 5
+        },
+        {
+          "title": "reverse · a press on the page while a sheet leaves reaches the page",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2304,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:37:35.543Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-53ab90cc83b97c2761a6",
+          "file": "release-11-1-1.spec.ts",
+          "line": 748,
+          "column": 1
+        },
+        {
+          "title": "tooltip · a Tooltip enters on a tween",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a Tooltip does not open on touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 788,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 40,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:37:37.960Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a Tooltip does not open on touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 788,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-d712c15245ac03aadf27",
+          "file": "release-11-1-1.spec.ts",
+          "line": 787,
+          "column": 1
+        },
+        {
+          "title": "tooltip · a hint handed to its neighbour fades, incoming",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a Tooltip does not open on touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 803,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 42,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:37:38.005Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a Tooltip does not open on touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 803,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-14f038ab071aeb006722",
+          "file": "release-11-1-1.spec.ts",
+          "line": 802,
+          "column": 5
+        },
+        {
+          "title": "tooltip · a hint handed to its neighbour fades, outgoing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a Tooltip does not open on touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 803,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 43,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:37:38.053Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a Tooltip does not open on touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 803,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-4c8814b3f05fa23e495f",
+          "file": "release-11-1-1.spec.ts",
+          "line": 802,
+          "column": 5
+        },
+        {
+          "title": "expand · an ExpandableContainer enters on a tween",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3737,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:37:38.103Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "enter",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MCwiYmV0d2VlbiI6MjMsInNoYXJlIjowLjE1OCwiZW5kIjoxLCJmcmFtZXMiOltbLTIsMF0sWzYsMF0sWzE0LDBdLFsyMywwXSxbMzEsMF0sWzM5LDAuMDg0XSxbNDgsMC4xNl0sWzU2LDAuMjIzXSxbNjQsMC4yODRdLFs3MiwwLjMzOV0sWzgxLDAuNF0sWzg5LDAuNDU3XSxbOTgsMC41MTFdLFsxMDYsMC41NjNdLFsxMTQsMC42MTNdLFsxMjEsMC42NTNdLFsxMzEsMC43MDRdLFsxMzksMC43NDddLFsxNDgsMC43ODVdLFsxNTYsMC44MTldLFsxNjQsMC44NV0sWzE3MywwLjg3OF0sWzE4MSwwLjkwMl0sWzE4OSwwLjkyM10sWzE5OCwwLjk0MV0sWzIwNiwwLjk1Nl0sWzIxMywwLjk2N10sWzIyMywwLjk3OF0sWzIzMSwwLjk4NV0sWzIzOSwwLjk5NV0sWzI0NywxXSxbMjU2LDFdLFsyNjQsMV0sWzI3MywxXSxbMjgxLDFdLFsyODgsMV0sWzI5OCwxXSxbMzA2LDFdLFszMTQsMV0sWzMyMywxXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-3b5563a1aaa6b3bdaf02",
+          "file": "release-11-1-1.spec.ts",
+          "line": 895,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer leaves on a tween by exit",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4660,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:37:41.845Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MSwiYmV0d2VlbiI6MTQsInNoYXJlIjowLjE2OSwiZW5kIjowLCJmcmFtZXMiOltbLTMsMV0sWzYsMV0sWzE0LDFdLFsyMiwxXSxbMjksMV0sWzM5LDAuOTE4XSxbNDcsMC44MzldLFs1NiwwLjc1NV0sWzY0LDAuNjddLFs3MiwwLjU4NV0sWzgwLDAuNTA4XSxbODksMC40MjRdLFs5NywwLjM1Ml0sWzEwNiwwLjI4Ml0sWzExNCwwLjIxOV0sWzEyMiwwLjE2MV0sWzEzMSwwLjExMV0sWzEzOSwwLjA2Nl0sWzE0NywwLjAyOV0sWzE1NiwwXSxbMTYyLDBdLFsxNzMsMF0sWzE4MCwwXSxbMTg5LDBdLFsxOTcsMF0sWzIwNiwwXSxbMjEzLDBdLFsyMjIsMF0sWzIzMSwwXSxbMjM5LDBdLFsyNDcsMF0sWzI1NiwwXSxbMjY0LDBdLFsyNzIsMF0sWzI4MSwwXSxbMjg5LDBdLFsyOTcsMF0sWzMwNiwwXSxbMzE0LDBdLFszMjEsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-811c9bdef4acba090454",
+          "file": "release-11-1-1.spec.ts",
+          "line": 910,
+          "column": 5
+        },
+        {
+          "title": "expand · an ExpandableContainer leaves on a tween by escape",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4678,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:37:46.513Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MSwiYmV0d2VlbiI6MTQsInNoYXJlIjowLjE2OCwiZW5kIjowLCJmcmFtZXMiOltbLTUsMV0sWzQsMV0sWzEyLDAuOTNdLFsxOSwwLjg2XSxbMjksMC43N10sWzM3LDAuNjg1XSxbNDUsMC42MDZdLFs1MiwwLjUzMl0sWzYyLDAuNDM5XSxbNjksMC4zNzddLFs3OSwwLjI5M10sWzg3LDAuMjI5XSxbOTUsMC4xNzFdLFsxMDQsMC4xMTldLFsxMTEsMC4wNzddLFsxMjAsMC4wMzVdLFsxMjksMC4wMDNdLFsxMzcsMF0sWzE0NSwwXSxbMTU0LDBdLFsxNjIsMF0sWzE3MCwwXSxbMTc5LDBdLFsxODcsMF0sWzE5NSwwXSxbMjA0LDBdLFsyMTIsMF0sWzIyMCwwXSxbMjI3LDBdLFsyMzcsMF0sWzI0NSwwXSxbMjU0LDBdLFsyNjEsMF0sWzI3MCwwXSxbMjc5LDBdLFsyODYsMF0sWzI5NCwwXSxbMzA0LDBdLFszMTEsMF0sWzMyMCwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-462a7bf7b113b36c3ef1",
+          "file": "release-11-1-1.spec.ts",
+          "line": 910,
+          "column": 5
+        },
+        {
+          "title": "expand · an ExpandableContainer leaves on a tween by open",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4679,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:37:51.197Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MSwiYmV0d2VlbiI6MTQsInNoYXJlIjowLjE2OSwiZW5kIjowLCJmcmFtZXMiOltbLTMsMV0sWzcsMV0sWzE1LDAuOTMxXSxbMjQsMC44NTJdLFszMiwwLjc3XSxbNDAsMC42ODVdLFs0OSwwLjYwMV0sWzU3LDAuNTE4XSxbNjUsMC40MzldLFs3NCwwLjM2NF0sWzgyLDAuMjk0XSxbOTAsMC4yM10sWzk5LDAuMTcxXSxbMTA3LDAuMTE5XSxbMTE1LDAuMDc3XSxbMTIyLDAuMDQyXSxbMTMyLDAuMDA0XSxbMTM5LDBdLFsxNDksMF0sWzE1NywwXSxbMTY1LDBdLFsxNzMsMF0sWzE4MiwwXSxbMTkwLDBdLFsxOTksMF0sWzIwNywwXSxbMjE1LDBdLFsyMjQsMF0sWzIzMCwwXSxbMjQwLDBdLFsyNDksMF0sWzI1NywwXSxbMjY1LDBdLFsyNzQsMF0sWzI4MiwwXSxbMjkwLDBdLFsyOTksMF0sWzMwNywwXSxbMzE1LDBdLFszMjQsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-ea9786e77f835c9595da",
+          "file": "release-11-1-1.spec.ts",
+          "line": 910,
+          "column": 5
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3820,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:37:55.881Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC40NTcsImJldHdlZW4iOjExLCJzaGFyZSI6MC4xMjQsImVuZCI6MCwiZnJhbWVzIjpbWy03LDAuNDU3XSxbMCwwLjUwNl0sWzksMC40NDhdLFsxOCwwLjM4OV0sWzI1LDAuMzM2XSxbMzQsMC4yNjRdLFs0MywwLjIwNl0sWzUxLDAuMTUzXSxbNTksMC4xMDddLFs2NiwwLjA3M10sWzc2LDAuMDI4XSxbODQsMF0sWzkzLDBdLFsxMDEsMF0sWzEwOCwwXSxbMTE2LDBdLFsxMjUsMF0sWzEzNCwwXSxbMTQzLDBdLFsxNTEsMF0sWzE1OSwwXSxbMTY4LDBdLFsxNzUsMF0sWzE4NCwwXSxbMTkzLDBdLFsyMDEsMF0sWzIwOSwwXSxbMjE4LDBdLFsyMjYsMF0sWzIzMywwXSxbMjQzLDBdLFsyNTEsMF0sWzI1OSwwXSxbMjY4LDBdLFsyNzYsMF0sWzI4NCwwXSxbMjkzLDBdLFszMDEsMF0sWzMwOSwwXSxbMzE4LDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-c6d20a4d59c9d4a96fcd",
+          "file": "release-11-1-1.spec.ts",
+          "line": 933,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer reopened while it leaves turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4732,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:37:59.708Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC41MTUsImJldHdlZW4iOjIwLCJzaGFyZSI6MC4xODIsImVuZCI6MSwiZnJhbWVzIjpbWy03LDAuNTE1XSxbMSwwLjQzOV0sWzgsMC4zNzZdLFsxOCwwLjI5XSxbMjYsMC4yMjldLFszNCwwLjMzMV0sWzQzLDAuNDExXSxbNTEsMC40ODZdLFs1OSwwLjU1NF0sWzY4LDAuNjJdLFs3NiwwLjY4XSxbODQsMC43MzVdLFs5MywwLjc4NF0sWzEwMSwwLjgyNl0sWzExMCwwLjg2N10sWzExOCwwLjg5OV0sWzEyNiwwLjkyNl0sWzEzNCwwLjk0OF0sWzE0MywwLjk2NV0sWzE1MSwwLjk3OF0sWzE2MCwwLjk4N10sWzE2OCwwLjk5Nl0sWzE3NiwxXSxbMTg0LDFdLFsxOTEsMV0sWzIwMSwxXSxbMjA4LDFdLFsyMTgsMV0sWzIyNiwxXSxbMjM0LDFdLFsyNDIsMV0sWzI1MSwxXSxbMjU5LDFdLFsyNjgsMV0sWzI3NiwxXSxbMjg0LDFdLFsyOTMsMV0sWzMwMSwxXSxbMzA5LDFdLFszMTgsMV1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-88442f8a482e04520655",
+          "file": "release-11-1-1.spec.ts",
+          "line": 950,
+          "column": 1
+        },
+        {
+          "title": "expand · Escape is live from the entrance's first frame",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1374,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:38:04.446Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-8c561ecccba119b12505",
+          "file": "release-11-1-1.spec.ts",
+          "line": 966,
+          "column": 1
+        },
+        {
+          "title": "leave · a Dialog says once that its leave has finished, after its last seen frame",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2785,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:38:05.824Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJldmVudHMiOlt7ImF0IjoxOTMsImtpbmQiOiJkaWFsb2ciLCJidWJibGVzIjp0cnVlLCJjb21wb3NlZCI6dHJ1ZX1dLCJsYXN0U2VlbiI6MTkyLCJlbWl0dGVkIjoxfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-08fdea3cd709a20d9390",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1025,
+          "column": 5
+        },
+        {
+          "title": "leave · a Dialog closed and reopened mid-exit says nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2438,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:38:08.614Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-65e5303877643569eea6",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1054,
+          "column": 5
+        },
+        {
+          "title": "leave · a Sheet says once that its leave has finished, after its last seen frame",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2729,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:38:11.059Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJldmVudHMiOlt7ImF0IjoyNTksImtpbmQiOiJzaGVldCIsImJ1YmJsZXMiOnRydWUsImNvbXBvc2VkIjp0cnVlfV0sImxhc3RTZWVuIjoyNTcsImVtaXR0ZWQiOjF9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-af269dbbf02ae3a9b39c",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1025,
+          "column": 5
+        },
+        {
+          "title": "leave · a Sheet closed and reopened mid-exit says nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2479,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:38:13.793Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-6bee7cb7e7f9dc2f2e9f",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1054,
+          "column": 5
+        },
+        {
+          "title": "leave · a Popover says once that its leave has finished, after its last seen frame",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2764,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:38:16.276Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJldmVudHMiOlt7ImF0IjoyNTMsImtpbmQiOiJwb3BvdmVyIiwiYnViYmxlcyI6dHJ1ZSwiY29tcG9zZWQiOnRydWV9XSwibGFzdFNlZW4iOjI0MywiZW1pdHRlZCI6MX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-328f713f635f9b4a5bb0",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1025,
+          "column": 5
+        },
+        {
+          "title": "leave · a Popover closed and reopened mid-exit says nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2468,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:38:19.045Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-1caa02645cb15e7078df",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1054,
+          "column": 5
+        },
+        {
+          "title": "leave · a DropdownMenu says once that its leave has finished, after its last seen frame",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2795,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:38:21.517Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJldmVudHMiOlt7ImF0IjoyMzMsImtpbmQiOiJtZW51IiwiYnViYmxlcyI6dHJ1ZSwiY29tcG9zZWQiOnRydWV9XSwibGFzdFNlZW4iOjIyMywiZW1pdHRlZCI6MX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-ff51ef502d8770e359f1",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1025,
+          "column": 5
+        },
+        {
+          "title": "leave · a DropdownMenu closed and reopened mid-exit says nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2488,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:38:24.317Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-f81b96a610c4a012998c",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1054,
+          "column": 5
+        },
+        {
+          "title": "leave · a Select says once that its leave has finished, after its last seen frame",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2800,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:38:26.810Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJldmVudHMiOlt7ImF0IjoyMzUsImtpbmQiOiJzZWxlY3QiLCJidWJibGVzIjp0cnVlLCJjb21wb3NlZCI6dHJ1ZX1dLCJsYXN0U2VlbiI6MjE3LCJlbWl0dGVkIjoxfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-2f703bf08cfb2fe92d2b",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1025,
+          "column": 5
+        },
+        {
+          "title": "leave · a Select closed and reopened mid-exit says nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2460,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:38:29.614Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-9765f5f81c784502d9c1",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1054,
+          "column": 5
+        },
+        {
+          "title": "leave · a Tooltip says once that its leave has finished, after its last seen frame",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a Tooltip does not open on touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1027,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 48,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:38:32.080Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a Tooltip does not open on touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1027,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-56e6780f434cb40c692e",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1025,
+          "column": 5
+        },
+        {
+          "title": "leave · a Tooltip closed and reopened mid-exit says nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a Tooltip does not open on touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1056,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 44,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:38:32.133Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a Tooltip does not open on touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1056,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-182339b4da046eccdd7a",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1054,
+          "column": 5
+        },
+        {
+          "title": "leave · a Toast says once that its leave has finished, after its last seen frame",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2829,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:38:32.181Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJldmVudHMiOlt7ImF0IjoyODUsImtpbmQiOiJ0b2FzdCIsImJ1YmJsZXMiOnRydWUsImNvbXBvc2VkIjp0cnVlfV0sImxhc3RTZWVuIjoyNzUsImVtaXR0ZWQiOm51bGx9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-6a8f9a6d6c4b7665a206",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1025,
+          "column": 5
+        },
+        {
+          "title": "leave · a Toast closed and reopened mid-exit says nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a dismissed toast is not reopened",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1057,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 49,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:38:35.015Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a dismissed toast is not reopened",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1057,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-910d680e329adfdf385b",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1054,
+          "column": 5
+        },
+        {
+          "title": "leave · a Popover inside a shadow root says so to its host",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3405,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:38:35.069Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJ3aW5kb3ciOlt7ImF0IjoyNDEyLjkwMDAwMDAwNTk2MDUsImtpbmQiOiJwb3BvdmVyIiwiYnViYmxlcyI6dHJ1ZSwiY29tcG9zZWQiOnRydWV9XSwiaG9zdCI6W3siYXQiOjI0MTIuOTAwMDAwMDA1OTYwNSwia2luZCI6InBvcG92ZXIiLCJidWJibGVzIjp0cnVlLCJjb21wb3NlZCI6dHJ1ZX1dLCJlbWl0cyI6eyJsLXNoYWRvdyI6MX0sInNlZW5BdCI6MjQwMi43LCJtb3VudGVkIjpmYWxzZX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-0b83f2e43d7ece818a26",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1129,
+          "column": 1
+        },
+        {
+          "title": "leave · a ContextMenu says once that its leave has finished, by escape",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a ContextMenu opens on a long press, which Playwright's touchscreen cannot hold",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1154,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 44,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:38:38.479Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a ContextMenu opens on a long press, which Playwright's touchscreen cannot hold",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1154,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-bd8ae2a4e7def88d9c3f",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1153,
+          "column": 5
+        },
+        {
+          "title": "leave · a ContextMenu says once that its leave has finished, by pick",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a ContextMenu opens on a long press, which Playwright's touchscreen cannot hold",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1154,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 46,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:38:38.527Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a ContextMenu opens on a long press, which Playwright's touchscreen cannot hold",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1154,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-5ca4f9e038937f71ac4a",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1153,
+          "column": 5
+        },
+        {
+          "title": "leave · a hover card says once that its leave has finished",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a hover card does not open on touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1172,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 47,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:38:38.578Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a hover card does not open on touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1172,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-85f5704a48212ce214cd",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1171,
+          "column": 1
+        },
+        {
+          "title": "leave · a Dialog unmounted mid-exit says so once, at the unmount",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3076,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:38:38.630Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJ3aW5kb3ciOlt7ImF0IjoyMjEyLjIwMDAwMDAxNzg4MTQsImtpbmQiOiJkaWFsb2ciLCJidWJibGVzIjp0cnVlLCJjb21wb3NlZCI6dHJ1ZX1dLCJob3N0IjpbXSwiZW1pdHMiOnsiZGlhbG9nIjoxfSwiY3V0IjoyMjExLjQwMDAwMDAwNTk2MDV9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-d8957e886c852c843566",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1189,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-16T07:36:40.956Z",
+    "duration": 120899.567,
+    "expected": 23,
+    "skipped": 11,
+    "unexpected": 12,
+    "flaky": 0
+  }
+}

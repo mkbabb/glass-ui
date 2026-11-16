@@ -1,0 +1,56 @@
+
+Running 5 tests using 1 worker
+
+  ✘  1 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:1074:1 › leave · a Popover inside a shadow root says so to its host (3.5s)
+  -  2 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:1098:5 › leave · a ContextMenu says once that its leave has finished, by escape
+  -  3 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:1098:5 › leave · a ContextMenu says once that its leave has finished, by pick
+  -  4 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:1116:1 › leave · a hover card says once that its leave has finished
+[WebServer] 2:27:07 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  5 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:1134:1 › leave · a Dialog unmounted mid-exit says so once, at the unmount (3.1s)
+
+
+  1) [chromium-phone] › tests-visual/release-11-1-1.spec.ts:1074:1 › leave · a Popover inside a shadow root says so to its host 
+
+    Error: one event {"window":[],"host":[],"emits":{},"seenAt":2325.8,"mounted":false}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      1065 |
+      1066 | function expectOnce(log: Heard[], kind: string, seenAt: number, emits: number | undefined, at: string): void {
+    > 1067 |     expect(log.length, `one event ${at}`).toBe(1);
+           |                                           ^
+      1068 |     expect(log[0].kind, `its kind ${at}`).toBe(kind);
+      1069 |     expect(log[0].bubbles && log[0].composed, `it bubbles and is composed ${at}`).toBe(true);
+      1070 |     expect(log[0].at, `it comes at or after the last seen frame ${at}`).toBeGreaterThanOrEqual(seenAt);
+        at expectOnce (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1067:43)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1094:5
+
+    Error Context: tests-visual/test-results/release-11-1-1-leave-·-a-P-3423b-ow-root-says-so-to-its-host-chromium-phone/error-context.md
+
+  2) [chromium-phone] › tests-visual/release-11-1-1.spec.ts:1134:1 › leave · a Dialog unmounted mid-exit says so once, at the unmount 
+
+    Error: one event {"window":[],"host":[],"emits":{},"cut":2207.7999999821186}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      1153 |     await info.attach("leave", { body: at, contentType: "application/json" });
+      1154 |     expect(await page.locator('[data-testid="l-dialog-content"]').count(), "the dialog is gone").toBe(0);
+    > 1155 |     expect(log.window.length, `one event ${at}`).toBe(1);
+           |                                                  ^
+      1156 |     expect(log.window[0].kind, `its kind ${at}`).toBe("dialog");
+      1157 |     // The exit had about 140 ms left at the cut; the event comes with the unmount.
+      1158 |     expect(log.window[0].at - cut, `it comes with the unmount ${at}`).toBeLessThanOrEqual(50);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1155:50
+
+    Error Context: tests-visual/test-results/release-11-1-1-leave-·-a-D-e96bd-says-so-once-at-the-unmount-chromium-phone/error-context.md
+
+  2 failed
+    [chromium-phone] › tests-visual/release-11-1-1.spec.ts:1074:1 › leave · a Popover inside a shadow root says so to its host 
+    [chromium-phone] › tests-visual/release-11-1-1.spec.ts:1134:1 › leave · a Dialog unmounted mid-exit says so once, at the unmount 
+  3 skipped

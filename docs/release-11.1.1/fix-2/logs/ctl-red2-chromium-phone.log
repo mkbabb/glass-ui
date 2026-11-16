@@ -1,0 +1,52 @@
+
+Running 4 tests using 1 worker
+
+  ✓  1 [chromium-phone] › tests-visual/release-11-1-1-controls.spec.ts:22:5 › round · a compact SegmentedTabs strip is round-ended on touch (851ms)
+  ✘  2 [chromium-phone] › tests-visual/release-11-1-1-controls.spec.ts:22:5 › round · a wide SegmentedTabs strip is round-ended on touch (647ms)
+  ✓  3 [chromium-phone] › tests-visual/release-11-1-1-controls.spec.ts:46:1 › weight · selecting a word-labelled ToggleGroupItem moves no item box (1.5s)
+  ✘  4 [chromium-phone] › tests-visual/release-11-1-1-controls.spec.ts:68:1 › lift · a scale-on-hover element returns to rest after a tap (1.6s)
+
+
+  1) [chromium-phone] › tests-visual/release-11-1-1-controls.spec.ts:22:5 › round · a wide SegmentedTabs strip is round-ended on touch 
+
+    Error: strip: corner 15 on a 50 px box [{"what":"strip","h":50,"r":15},{"what":"plate","h":44,"r":12},{"what":"tab 0","h":44,"r":12},{"what":"tab 1","h":44,"r":12},{"what":"tab 2","h":44,"r":12}]
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 24.5
+    Received:    15
+
+      39 |         expect(corners[0].h, "the strip holds a 44 px tab and its trim").toBeGreaterThanOrEqual(44);
+      40 |         for (const c of corners) {
+    > 41 |             expect(c.r, `${c.what}: corner ${c.r} on a ${c.h} px box ${JSON.stringify(corners)}`).toBeGreaterThanOrEqual(c.h / 2 - 0.5);
+         |                                                                                                   ^
+      42 |         }
+      43 |     });
+      44 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-controls.spec.ts:41:99
+
+    Error Context: tests-visual/test-results/release-11-1-1-controls-ro-15a7d-rip-is-round-ended-on-touch-chromium-phone/error-context.md
+
+  2) [chromium-phone] › tests-visual/release-11-1-1-controls.spec.ts:68:1 › lift · a scale-on-hover element returns to rest after a tap 
+
+    Error: scale after the tap: 1.08
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      72 |     await page.waitForTimeout(800);
+      73 |     const scale = await page.locator('[data-testid="c-lift"]').evaluate((el) => getComputedStyle(el).scale);
+    > 74 |     expect(scale === "none" || scale === "1", `scale after the tap: ${scale}`).toBe(true);
+         |                                                                                ^
+      75 | });
+      76 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-controls.spec.ts:74:80
+
+    Error Context: tests-visual/test-results/release-11-1-1-controls-li-8367a-returns-to-rest-after-a-tap-chromium-phone/error-context.md
+
+  2 failed
+    [chromium-phone] › tests-visual/release-11-1-1-controls.spec.ts:22:5 › round · a wide SegmentedTabs strip is round-ended on touch 
+    [chromium-phone] › tests-visual/release-11-1-1-controls.spec.ts:68:1 › lift · a scale-on-hover element returns to rest after a tap 
+  2 passed (7.1s)

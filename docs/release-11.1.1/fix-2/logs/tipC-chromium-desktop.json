@@ -1,0 +1,1913 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-1-1.config.ts",
+      "--project=chromium-desktop",
+      "--workers=1",
+      "release-11-1-1.spec",
+      "-g",
+      "standing · "
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-2/logs/tipC-chromium-desktop.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "standing · Select by pick: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3300,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:46:31.857Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyOSwic2hhcmUiOjAuMTMzLCJ0cmF2ZWwiOjEwLCJ0cmF2ZWxTaGFyZSI6bnVsbCwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjpbWy03LDFdLFsxLDFdLFsxMCwxXSxbMTgsMV0sWzI2LDFdLFszMywxXSxbNDIsMC45N10sWzUyLDAuOTM3XSxbNTgsMC45MV0sWzY3LDAuODc1XSxbNzYsMC44MTRdLFs4NCwwLjc1NV0sWzkzLDAuNjgxXSxbMTAxLDAuNjE2XSxbMTEwLDAuNTUzXSxbMTE4LDAuNDkzXSxbMTI2LDAuNDM1XSxbMTM1LDAuMzgxXSxbMTQzLDAuMzNdLFsxNTEsMC4yODddLFsxNjAsMC4yMzldLFsxNjcsMC4yMDRdLFsxNzYsMC4xNjNdLFsxODQsMC4xMzRdLFsxOTMsMC4xMDNdLFsyMDEsMC4wNzhdLFsyMTAsMC4wNThdLFsyMTgsMC4wNF0sWzIyNiwwLjAyN10sWzIzNSwwLjAxNl0sWzI0MywwLjAwOF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-173f0414c500cf4efb33",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · Select by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3152,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:46:35.272Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNSwic2hhcmUiOjAuMTMzLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTcsMV0sWzIsMV0sWzEwLDAuOTczXSxbMTgsMC45NDRdLFsyNywwLjkxMl0sWzM1LDAuODc3XSxbNDMsMC44MjddLFs1MiwwLjc2XSxbNjAsMC42OTNdLFs2OCwwLjYyOF0sWzc3LDAuNTY1XSxbODUsMC41MDZdLFs5MywwLjQ0Nl0sWzEwMiwwLjM5MV0sWzExMCwwLjMzOV0sWzExOCwwLjI5MV0sWzEyNiwwLjI1Ml0sWzEzNSwwLjIwNl0sWzE0MywwLjE3XSxbMTUyLDAuMTM3XSxbMTYwLDAuMTA4XSxbMTY4LDAuMDgzXSxbMTc3LDAuMDYxXSxbMTg1LDAuMDQ0XSxbMTkzLDAuMDI5XSxbMjAyLDAuMDE4XSxbMjEwLDAuMDA5XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-ff8ab4e316fa7e85c6ba",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · Select by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3136,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:46:38.430Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNSwic2hhcmUiOjAuMTMyLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTUsMV0sWzQsMV0sWzEzLDAuOTczXSxbMjEsMC45NDRdLFsyOCwwLjkxNV0sWzM4LDAuODc2XSxbNDYsMC44MjZdLFs1NCwwLjc1OV0sWzYxLDAuNzA2XSxbNzAsMC42MzldLFs4MCwwLjU2M10sWzg3LDAuNTFdLFs5NSwwLjQ1XSxbMTAzLDAuNF0sWzExMywwLjMzOV0sWzEyMSwwLjI5MV0sWzEyOCwwLjI1NF0sWzEzOCwwLjIwNl0sWzE0NSwwLjE3MV0sWzE1NCwwLjEzNl0sWzE2MiwwLjExMV0sWzE3MSwwLjA4M10sWzE3OCwwLjA2NV0sWzE4NywwLjA0NV0sWzE5NiwwLjAyOV0sWzIwMywwLjAxOV0sWzIxMywwLjAwOV1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-8ff9836c8bb8e8e100e3",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · Select by trigger: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3194,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:46:41.574Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyOSwic2hhcmUiOjAuMTMyLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTcsMV0sWzEsMV0sWzksMV0sWzE3LDFdLFsyNiwxXSxbMzQsMC45NzNdLFs0MywwLjk0NF0sWzUwLDAuOTE2XSxbNTksMC44NzddLFs2OCwwLjgyNl0sWzc1LDAuNzY2XSxbODQsMC42OTldLFs5MywwLjYyN10sWzEwMSwwLjU2Nl0sWzEwOSwwLjUwOV0sWzExOCwwLjQ0Nl0sWzEyNiwwLjM5MV0sWzEzNCwwLjMzOV0sWzE0MywwLjI5MV0sWzE1MSwwLjI0N10sWzE2MCwwLjIwNl0sWzE2OCwwLjE2OV0sWzE3NiwwLjEzN10sWzE4NCwwLjEwOF0sWzE5MywwLjA4M10sWzIwMSwwLjA2MV0sWzIwOSwwLjA0NV0sWzIxNywwLjAzXSxbMjI2LDAuMDE4XSxbMjMzLDAuMDFdLFsyNDMsMC4wMDNdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-bdc47322472b2e96d60f",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · DropdownMenu by pick: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3144,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:46:44.774Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyOCwic2hhcmUiOjAuMTMxLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTMsMV0sWzUsMV0sWzEzLDFdLFsyMiwxXSxbMjksMC45NzZdLFszNywwLjk0OF0sWzQ3LDAuOTExXSxbNTUsMC44NzddLFs2MywwLjg0MV0sWzcwLDAuODFdLFs4MCwwLjc0MV0sWzg4LDAuNjc3XSxbOTYsMC42MTddLFsxMDUsMC41NDldLFsxMTMsMC40ODVdLFsxMjIsMC40MjhdLFsxMzAsMC4zNzRdLFsxMzcsMC4zM10sWzE0NywwLjI3NF0sWzE1NSwwLjIzM10sWzE2MywwLjE5M10sWzE3MCwwLjE2Ml0sWzE4MCwwLjEyNV0sWzE4OCwwLjA5OF0sWzE5NSwwLjA3OF0sWzIwNCwwLjA1NV0sWzIxMiwwLjAzOV0sWzIyMSwwLjAyNF0sWzIzMCwwLjAxMl0sWzIzOCwwLjAwNF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-1b6e09fa96496b31f140",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · DropdownMenu by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3135,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:46:47.926Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNywic2hhcmUiOjAuMTMzLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTgsMV0sWzAsMV0sWzksMV0sWzE3LDAuOTczXSxbMjUsMC45NDRdLFszNCwwLjkxMl0sWzQxLDAuODgyXSxbNTEsMC44NF0sWzU5LDAuODA0XSxbNjcsMC43NDRdLFs3NSwwLjY3N10sWzg0LDAuNjExXSxbOTIsMC41NTFdLFsxMDEsMC40ODVdLFsxMDksMC40MjldLFsxMTYsMC4zODNdLFsxMjYsMC4zMjNdLFsxMzQsMC4yNzZdLFsxNDIsMC4yMzZdLFsxNTAsMC4xOTNdLFsxNTgsMC4xNl0sWzE2NywwLjEyNV0sWzE3NSwwLjA5OF0sWzE4MywwLjA3N10sWzE5MSwwLjA1N10sWzE5OSwwLjAzOV0sWzIwOSwwLjAyM10sWzIxNywwLjAxMl0sWzIyNiwwLjAwNF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-2cbaa2cbf15c4f440b0c",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · DropdownMenu by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3161,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:46:51.066Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNiwic2hhcmUiOjAuMTMzLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTIsMV0sWzcsMV0sWzE0LDAuOTc1XSxbMjQsMC45NDNdLFszMiwwLjkxMV0sWzQwLDAuODc3XSxbNDksMC44NF0sWzU3LDAuODAzXSxbNjUsMC43NDNdLFs3NCwwLjY3NV0sWzgyLDAuNjA5XSxbOTAsMC41NTFdLFs5OCwwLjQ4Nl0sWzEwNywwLjQyOF0sWzExNSwwLjM3M10sWzEyMiwwLjMzXSxbMTMyLDAuMjc2XSxbMTQwLDAuMjMzXSxbMTQ5LDAuMTkyXSxbMTU2LDAuMTZdLFsxNjUsMC4xMjVdLFsxNzIsMC4xMDJdLFsxODIsMC4wNzNdLFsxODksMC4wNTZdLFsxOTksMC4wMzZdLFsyMDcsMC4wMjNdLFsyMTUsMC4wMTJdLFsyMjQsMC4wMDRdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-2cc811d8bd0eeaa9a62c",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · DropdownMenu by trigger: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3152,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:46:54.233Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyOCwic2hhcmUiOjAuMTMxLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTIsMV0sWzYsMV0sWzE1LDFdLFsyMywxXSxbMzEsMC45NzRdLFszOSwwLjk0Nl0sWzQ4LDAuOTEyXSxbNTYsMC44NzddLFs2NSwwLjg0MV0sWzczLDAuODAzXSxbODEsMC43NDNdLFs5MCwwLjY3Nl0sWzk4LDAuNjExXSxbMTA1LDAuNTU3XSxbMTE1LDAuNDg2XSxbMTIzLDAuNDI4XSxbMTMxLDAuMzc0XSxbMTQwLDAuMzIzXSxbMTQ4LDAuMjc2XSxbMTU2LDAuMjMzXSxbMTY1LDAuMTkzXSxbMTczLDAuMTU4XSxbMTgxLDAuMTI2XSxbMTg4LDAuMTAzXSxbMTk4LDAuMDc0XSxbMjA1LDAuMDU3XSxbMjE1LDAuMDM3XSxbMjIzLDAuMDIzXSxbMjMxLDAuMDEyXSxbMjQwLDAuMDA0XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-4e42f470dc0e7082c257",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · plain Select by pick: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3187,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:46:57.390Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyOSwic2hhcmUiOjAuMTMxLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTcsMV0sWzEsMV0sWzEwLDFdLFsxNiwxXSxbMjcsMV0sWzM1LDFdLFs0MywwLjk3M10sWzUwLDAuOTQ4XSxbNjAsMC45MV0sWzY4LDAuODc3XSxbNzYsMC44MjldLFs4NSwwLjc2Ml0sWzkyLDAuNzAyXSxbMTAwLDAuNjQzXSxbMTEwLDAuNTY5XSxbMTE4LDAuNTA4XSxbMTI2LDAuNDUxXSxbMTM1LDAuMzk1XSxbMTQzLDAuMzQ0XSxbMTUxLDAuMjk1XSxbMTU5LDAuMjU1XSxbMTY4LDAuMjFdLFsxNzYsMC4xNzNdLFsxODUsMC4xNF0sWzE5MywwLjExMV0sWzIwMSwwLjA4NV0sWzIxMCwwLjA2NF0sWzIxOCwwLjA0Nl0sWzIyNiwwLjAzMV0sWzIzNSwwLjAxOV0sWzI0MywwLjAxXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-69ab33d49c069beb7617",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · plain Select by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3152,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:47:00.583Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNSwic2hhcmUiOjAuMTMxLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTYsMV0sWzIsMV0sWzEwLDAuOTc0XSxbMTksMC45NDNdLFsyNSwwLjkxN10sWzM1LDAuODc3XSxbNDQsMC44MjldLFs1MiwwLjc2M10sWzYwLDAuNjk3XSxbNjksMC42MzJdLFs3NywwLjU2OV0sWzg1LDAuNTA5XSxbOTMsMC40NTFdLFsxMDIsMC4zOTZdLFsxMTAsMC4zNDRdLFsxMTgsMC4yOTZdLFsxMjcsMC4yNTFdLFsxMzUsMC4yMTFdLFsxNDQsMC4xNzNdLFsxNTEsMC4xNDJdLFsxNjAsMC4xMTFdLFsxNjksMC4wODZdLFsxNzcsMC4wNjRdLFsxODQsMC4wNDldLFsxOTMsMC4wMzFdLFsyMDAsMC4wMjFdLFsyMTAsMC4wMV1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-ad3a89f15474dedb42c6",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · plain Select by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3143,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:47:03.742Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNiwic2hhcmUiOjAuMTMyLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTYsMV0sWzIsMV0sWzEwLDAuOTc2XSxbMTksMC45NDNdLFsyNywwLjkxMl0sWzM0LDAuODgxXSxbNDQsMC44MjldLFs1MiwwLjc2M10sWzYwLDAuNjk2XSxbNjksMC42MzNdLFs3NywwLjU2OV0sWzg0LDAuNTE1XSxbOTQsMC40NDldLFsxMDIsMC4zOTZdLFsxMTAsMC4zNDRdLFsxMTcsMC4zMDRdLFsxMjcsMC4yNV0sWzEzNSwwLjIxMV0sWzE0NCwwLjE3M10sWzE1MiwwLjE0MV0sWzE2MCwwLjExMV0sWzE2NywwLjA5MV0sWzE3NywwLjA2M10sWzE4NSwwLjA0Nl0sWzE5NCwwLjAzMV0sWzIwMSwwLjAyXSxbMjEwLDAuMDFdLFsyMTcsMC4wMDRdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-ca52c5446bd7fea5c91c",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · Popover by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3124,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:47:06.890Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozMCwic2hhcmUiOjAuMDc2LCJ0cmF2ZWwiOjgsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTUsMV0sWzMsMV0sWzEyLDAuOTc2XSxbMjAsMC45NV0sWzI4LDAuOTIzXSxbMzcsMC44OTNdLFs0NSwwLjg2M10sWzUzLDAuODI4XSxbNjIsMC43OTVdLFs3MCwwLjc2MV0sWzc4LDAuNzI0XSxbODYsMC42OTJdLFs5NSwwLjY1MV0sWzEwMywwLjYxNF0sWzExMiwwLjU3Nl0sWzEyMCwwLjUzOF0sWzEyOCwwLjVdLFsxMzcsMC40NjJdLFsxNDUsMC40MjRdLFsxNTMsMC4zODZdLFsxNjIsMC4zNDhdLFsxNzAsMC4zMTJdLFsxNzgsMC4yNzVdLFsxODcsMC4yNF0sWzE5NSwwLjIwNV0sWzIwMiwwLjE3OF0sWzIxMiwwLjEzOV0sWzIyMCwwLjEwN10sWzIyOCwwLjA3N10sWzIzNywwLjA1XSxbMjQ1LDAuMDIzXSxbMjUzLDAuMDAyXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-cf3f845d36212175b106",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · Popover by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3132,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:47:10.018Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozMCwic2hhcmUiOjAuMDc2LCJ0cmF2ZWwiOjgsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTcsMV0sWzMsMV0sWzExLDAuOTc3XSxbMTksMC45NTJdLFsyNywwLjkyM10sWzM2LDAuODk0XSxbNDMsMC44NjZdLFs1MiwwLjgzXSxbNjEsMC43OTZdLFs2OSwwLjc2MV0sWzc3LDAuNzI2XSxbODQsMC42OTVdLFs5MiwwLjY2XSxbMTAyLDAuNjE3XSxbMTExLDAuNTc3XSxbMTE5LDAuNTRdLFsxMjcsMC41MDFdLFsxMzYsMC40NjNdLFsxNDMsMC40M10sWzE1MSwwLjM5M10sWzE2MSwwLjM0OV0sWzE2OSwwLjMxM10sWzE3NywwLjI3N10sWzE4NiwwLjI0MV0sWzE5NCwwLjIwNl0sWzIwMiwwLjE3NV0sWzIxMSwwLjE0XSxbMjE5LDAuMTA4XSxbMjI3LDAuMDc5XSxbMjM1LDAuMDUxXSxbMjQ0LDAuMDI0XSxbMjUyLDAuMDAxXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-e1b277ed46c04e883433",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · Popover by trigger: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3151,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:47:13.156Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozMiwic2hhcmUiOjAuMDc2LCJ0cmF2ZWwiOjgsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbMCwxXSxbOCwxXSxbMTYsMV0sWzI0LDFdLFszMywwLjk3M10sWzQxLDAuOTQ3XSxbNDgsMC45MjRdLFs1OCwwLjg4OV0sWzY1LDAuODYzXSxbNzMsMC44MjldLFs4MiwwLjc5M10sWzkxLDAuNzU1XSxbMTAwLDAuNzJdLFsxMDgsMC42ODNdLFsxMTUsMC42NTNdLFsxMjQsMC42MTJdLFsxMzIsMC41NzVdLFsxNDEsMC41MzNdLFsxNDksMC41XSxbMTU3LDAuNDU5XSxbMTY2LDAuNDE4XSxbMTc1LDAuMzgyXSxbMTgzLDAuMzQ0XSxbMTkxLDAuMzA3XSxbMjAwLDAuMjcxXSxbMjA4LDAuMjM1XSxbMjE2LDAuMjAxXSxbMjI1LDAuMTY3XSxbMjMzLDAuMTM0XSxbMjQxLDAuMTAzXSxbMjQ5LDAuMDc0XSxbMjU2LDAuMDUxXSxbMjY3LDAuMDE5XSxbMjc0LDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-9131597ca3e12e8480f0",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · Popover by focus: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3137,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:47:16.312Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozMCwic2hhcmUiOjAuMDc2LCJ0cmF2ZWwiOjgsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTEsMV0sWzYsMV0sWzE1LDAuOTc2XSxbMjMsMC45NV0sWzMxLDAuOTI1XSxbNDEsMC44ODhdLFs0NywwLjg2NF0sWzU2LDAuODI5XSxbNjQsMC43OTddLFs3NCwwLjc1N10sWzgyLDAuNzIxXSxbODksMC42OV0sWzk5LDAuNjQ3XSxbMTA3LDAuNjFdLFsxMTUsMC41NzJdLFsxMjQsMC41MzRdLFsxMzIsMC40OTZdLFsxNDEsMC40NTddLFsxNDksMC40Ml0sWzE1NywwLjM4Ml0sWzE2NSwwLjM0NV0sWzE3NCwwLjMwOF0sWzE4MiwwLjI3MV0sWzE5MCwwLjIzNl0sWzE5NywwLjIwN10sWzIwNywwLjE2N10sWzIxNSwwLjEzNl0sWzIyNCwwLjEwNF0sWzIzMSwwLjA3N10sWzI0MSwwLjA0Nl0sWzI0OSwwLjAyMV0sWzI1NywwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-323ca464c35d2ca43f92",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · Tooltip by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3104,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:47:19.454Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoxNSwic2hhcmUiOjAuMTU4LCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTEsMV0sWzcsMV0sWzE0LDAuOTU2XSxbMjQsMC44ODZdLFszMSwwLjgzMl0sWzQxLDAuNzQ5XSxbNDksMC42NzVdLFs1NiwwLjYwNl0sWzY0LDAuNTI3XSxbNzQsMC40MzhdLFs4MSwwLjM2OV0sWzkxLDAuMjc5XSxbOTgsMC4yMTddLFsxMDcsMC4xMzddLFsxMTUsMC4wODNdLFsxMjQsMC4wMThdLFsxMzIsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-846c59a6cb5c5a934666",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · Tooltip by away: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3097,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:47:22.563Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoxNSwic2hhcmUiOjAuMTU4LCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTMsMV0sWzYsMV0sWzE0LDAuOTQ4XSxbMjIsMC44ODddLFszMSwwLjgyXSxbMzksMC43NDhdLFs0NywwLjY3M10sWzU2LDAuNTk0XSxbNjMsMC41MjddLFs3MywwLjQzNF0sWzgwLDAuMzY2XSxbODcsMC4yOTZdLFs5NiwwLjIxOF0sWzEwNiwwLjEzNV0sWzExNCwwLjA3Nl0sWzEyMiwwLjAxOV0sWzEyOSwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-f1d6fcb3455f8463a919",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · Tooltip by trigger: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3050,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:47:25.666Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoxOCwic2hhcmUiOjAuMTU4LCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTksMV0sWzEsMV0sWzgsMV0sWzE4LDFdLFsyNiwxXSxbMzQsMC45NV0sWzQyLDAuODk0XSxbNTAsMC44M10sWzU5LDAuNzQ5XSxbNjgsMC42NzFdLFs3NSwwLjU5OV0sWzg0LDAuNTE0XSxbOTMsMC40MzZdLFsxMDAsMC4zNjddLFsxMDgsMC4yOTFdLFsxMTcsMC4yMTNdLFsxMjYsMC4xMzddLFsxMzQsMC4wNzRdLFsxNDMsMC4wMTldLFsxNTEsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-b376e0e84cfb2d1cd43a",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · brief Toast by timeout: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3050,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:47:28.722Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoxMDksInNoYXJlIjowLjEzMywidHJhdmVsIjowLCJ0cmF2ZWxTaGFyZSI6bnVsbCwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjpbWy02LDFdLFsyLDFdLFsxMCwxXSxbMTcsMV0sWzI2LDFdLFszNSwxXSxbNDMsMV0sWzUyLDFdLFs2MCwxXSxbNjksMV0sWzc3LDFdLFs4NCwxXSxbOTQsMV0sWzEwMiwxXSxbMTA5LDFdLFsxMTksMV0sWzEyNywxXSxbMTM1LDFdLFsxNDMsMV0sWzE1MiwxXSxbMTYwLDFdLFsxNjgsMV0sWzE3NSwxXSxbMTg1LDFdLFsxOTQsMV0sWzIwMiwxXSxbMjEwLDFdLFsyMTgsMV0sWzIyNywxXSxbMjM1LDFdLFsyNDMsMV0sWzI1MiwxXSxbMjYwLDFdLFsyNjksMV0sWzI3NywxXSxbMjg1LDFdLFsyOTQsMV0sWzMwMiwxXSxbMzA5LDFdLFszMTgsMV1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-f0a24d0bb7262821759b",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · Dialog by close: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3121,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:47:31.778Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNiwic2hhcmUiOjAuMTEyLCJ0cmF2ZWwiOjEzLCJ0cmF2ZWxTaGFyZSI6bnVsbCwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjpbWy03LDFdLFsyLDFdLFsxMSwxXSxbMTcsMV0sWzI3LDFdLFszNSwxXSxbNDQsMC45NjhdLFs1MiwwLjkyN10sWzYxLDAuODg3XSxbNjgsMC44NDNdLFs3NywwLjgwMl0sWzg2LDAuNzQ4XSxbOTQsMC42OTddLFsxMDIsMC42NDZdLFsxMTAsMC41OTddLFsxMTksMC41NDZdLFsxMjYsMC40OV0sWzEzNSwwLjQ0NV0sWzE0NCwwLjM4NF0sWzE1MiwwLjMzMV0sWzE2MSwwLjI4XSxbMTY5LDAuMjMxXSxbMTc3LDAuMTgzXSxbMTg2LDAuMTM3XSxbMTk0LDAuMDk1XSxbMjAyLDAuMDU1XSxbMjEwLDAuMDE5XSxbMjE5LDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-eed394fdb24c9c7dc503",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · Dialog by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3102,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:47:34.903Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyMywic2hhcmUiOjAuMTA5LCJ0cmF2ZWwiOjEzLCJ0cmF2ZWxTaGFyZSI6bnVsbCwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjpbWy03LDFdLFszLDFdLFsxMSwxXSxbMTgsMC45NjldLFsyOCwwLjkzNl0sWzM2LDAuODg4XSxbNDQsMC44NDZdLFs1MSwwLjc5OV0sWzYxLDAuNzU4XSxbNjksMC42OTldLFs3OCwwLjY0OV0sWzg2LDAuNTk3XSxbOTQsMC41NDRdLFsxMDMsMC40OTJdLFsxMTEsMC40MzldLFsxMTksMC4zODddLFsxMjYsMC4zMzZdLFsxMzYsMC4yOTJdLFsxNDQsMC4yMzRdLFsxNTMsMC4xODZdLFsxNjEsMC4xNDFdLFsxNjksMC4wOTddLFsxNzgsMC4wNThdLFsxODYsMC4wMjFdLFsxOTMsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-7ff7f595232429d24e3e",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · Dialog by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3116,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:47:38.009Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyMywic2hhcmUiOjAuMTA3LCJ0cmF2ZWwiOjEzLCJ0cmF2ZWxTaGFyZSI6bnVsbCwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjpbWy02LDFdLFsyLDFdLFsxMCwxXSxbMTgsMC45NzJdLFsyNiwwLjkzNF0sWzM2LDAuODk0XSxbNDQsMC44NDNdLFs1MiwwLjhdLFs2MSwwLjc0OV0sWzY5LDAuNjk5XSxbNzcsMC42NDddLFs4NiwwLjU5NV0sWzk0LDAuNTQzXSxbMTAyLDAuNDldLFsxMTEsMC40MzddLFsxMTksMC4zODRdLFsxMjcsMC4zMzNdLFsxMzYsMC4yODVdLFsxNDMsMC4yMzNdLFsxNTIsMC4xOTJdLFsxNjEsMC4xNDFdLFsxNjksMC4wOTZdLFsxNzcsMC4wNTZdLFsxODYsMC4wMl0sWzE5NCwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-89f6e79e3f1d40bd4ef2",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet right by close: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3121,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:47:41.130Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozNCwic2hhcmUiOjAuMDgsInRyYXZlbCI6Mzc1LCJ0cmF2ZWxTaGFyZSI6MC4wODIsImdvbmUiOnRydWUsImZyYW1lcyI6W1stNCwxXSxbMywxXSxbMTIsMV0sWzIxLDFdLFsyOSwxXSxbMzcsMV0sWzQ2LDAuOTc4XSxbNTQsMC45NV0sWzYzLDAuOTIzXSxbNzEsMC44OTNdLFs3OSwwLjg2MV0sWzg4LDAuODNdLFs5NiwwLjc5NV0sWzEwNCwwLjc2XSxbMTExLDAuNzI1XSxbMTIxLDAuNjkzXSxbMTI4LDAuNjVdLFsxMzgsMC42Ml0sWzE0NiwwLjU3Nl0sWzE1NCwwLjUzN10sWzE2MywwLjVdLFsxNzEsMC40NjJdLFsxNzksMC40MjRdLFsxODcsMC4zODZdLFsxOTYsMC4zNDldLFsyMDQsMC4zMTJdLFsyMTIsMC4yNzVdLFsyMjAsMC4yNF0sWzIyOSwwLjIwOF0sWzIzOCwwLjE3MV0sWzI0NiwwLjEzOF0sWzI1NCwwLjEwN10sWzI2MiwwLjA3N10sWzI3MSwwLjA1XSxbMjc5LDAuMDIzXSxbMjg3LDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-dc072dae7dfcc440ec62",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet right by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3101,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:47:44.256Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozMiwic2hhcmUiOjAuMDc4LCJ0cmF2ZWwiOjM3MywidHJhdmVsU2hhcmUiOjAuMDgxLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTksMV0sWzIsMV0sWzksMV0sWzE3LDFdLFsyNiwwLjk3N10sWzM0LDAuOTVdLFs0MywwLjkyM10sWzUxLDAuODkyXSxbNTksMC44NjFdLFs2OCwwLjgzMl0sWzc2LDAuNzk0XSxbODUsMC43NjJdLFs5MywwLjcyNF0sWzEwMSwwLjY4OF0sWzExMCwwLjY1MV0sWzExOCwwLjYxM10sWzEyNiwwLjU3Nl0sWzEzNSwwLjUzN10sWzE0MywwLjVdLFsxNTEsMC40NjJdLFsxNjAsMC40MjddLFsxNjgsMC4zODZdLFsxNzUsMC4zNDldLFsxODUsMC4zMTVdLFsxOTMsMC4yNzRdLFsyMDEsMC4yNF0sWzIwOSwwLjIwNV0sWzIxOCwwLjE3MV0sWzIyNiwwLjEzOF0sWzIzNSwwLjEwN10sWzI0MywwLjA3N10sWzI1MCwwLjA0OV0sWzI2MCwwLjAyOF0sWzI2OCwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-608fbadeda191fe81efe",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet right by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3102,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:47:47.362Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozMSwic2hhcmUiOjAuMDgyLCJ0cmF2ZWwiOjM3NSwidHJhdmVsU2hhcmUiOjAuMDg0LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTMsMV0sWzUsMV0sWzE0LDFdLFsyMiwwLjk3N10sWzMwLDAuOTVdLFszOSwwLjkyM10sWzQ3LDAuODkzXSxbNTUsMC44NjJdLFs2NCwwLjgyOV0sWzcyLDAuNzk1XSxbODAsMC43Nl0sWzg5LDAuNzI1XSxbOTcsMC42ODhdLFsxMDUsMC42NTFdLFsxMTMsMC42MTRdLFsxMjIsMC41NzddLFsxMzAsMC41MzhdLFsxMzksMC41XSxbMTQ1LDAuNDYyXSxbMTU1LDAuNDMyXSxbMTY0LDAuMzg2XSxbMTcyLDAuMzQ5XSxbMTgwLDAuMzEyXSxbMTg5LDAuMjc1XSxbMTk3LDAuMjRdLFsyMDUsMC4yMDVdLFsyMTQsMC4xNzFdLFsyMjIsMC4xMzldLFsyMzAsMC4xMDddLFsyMzgsMC4wNzddLFsyNDcsMC4wNTJdLFsyNTUsMC4wMjNdLFsyNjQsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-cd5980dff1cb9484317f",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet bottom by close: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3131,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:47:50.468Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozMywic2hhcmUiOjAuMDgsInRyYXZlbCI6MTE0LCJ0cmF2ZWxTaGFyZSI6MC4wODIsImdvbmUiOnRydWUsImZyYW1lcyI6W1stMywxXSxbNiwxXSxbMTUsMV0sWzIzLDFdLFszMSwxXSxbNDAsMC45NzZdLFs0NywwLjk1XSxbNTYsMC45MjZdLFs2NSwwLjg5M10sWzczLDAuODYxXSxbODEsMC44MjhdLFs4OSwwLjc5NV0sWzk4LDAuNzYzXSxbMTA2LDAuNzIzXSxbMTE1LDAuNjg4XSxbMTIzLDAuNjUxXSxbMTMwLDAuNjE0XSxbMTQwLDAuNTgzXSxbMTQ4LDAuNTM4XSxbMTU1LDAuNV0sWzE2NSwwLjQ2Nl0sWzE3MywwLjQyNF0sWzE4MSwwLjM4Nl0sWzE5MCwwLjM0OV0sWzE5OCwwLjMxMl0sWzIwNiwwLjI3NV0sWzIxNSwwLjI0XSxbMjIzLDAuMjA1XSxbMjMxLDAuMTcxXSxbMjQwLDAuMTM4XSxbMjQ4LDAuMTA3XSxbMjU2LDAuMDc3XSxbMjY0LDAuMDQ5XSxbMjczLDAuMDI2XSxbMjgxLDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-e082e9843ac59794f3d9",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet bottom by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3111,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:47:53.603Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozMSwic2hhcmUiOjAuMDc5LCJ0cmF2ZWwiOjExNSwidHJhdmVsU2hhcmUiOjAuMDgxLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTQsMV0sWzQsMV0sWzEzLDFdLFsyMSwwLjk3NF0sWzMwLDAuOTQ4XSxbMzgsMC45MTldLFs0NiwwLjg5XSxbNTUsMC44NThdLFs2MywwLjgyNl0sWzcxLDAuNzkxXSxbODAsMC43NTddLFs4OCwwLjcyMV0sWzk2LDAuNjg0XSxbMTA1LDAuNjQ4XSxbMTEyLDAuNjFdLFsxMjEsMC41NzVdLFsxMzAsMC41MzNdLFsxMzgsMC40OTZdLFsxNDYsMC40NThdLFsxNTMsMC40MjFdLFsxNjMsMC4zODhdLFsxNzEsMC4zNDRdLFsxNzksMC4zMDhdLFsxODgsMC4yNzJdLFsxOTYsMC4yMzZdLFsyMDUsMC4yMDJdLFsyMTIsMC4xNjhdLFsyMjEsMC4xMzldLFsyMzAsMC4xMDNdLFsyMzgsMC4wNzRdLFsyNDYsMC4wNDddLFsyNTUsMC4wMjJdLFsyNjMsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-a85b3f844a3033ec700b",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet bottom by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3097,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:47:56.719Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozMSwic2hhcmUiOjAuMDc4LCJ0cmF2ZWwiOjExNSwidHJhdmVsU2hhcmUiOjAuMDgsImdvbmUiOnRydWUsImZyYW1lcyI6W1stNSwxXSxbNCwxXSxbMTMsMV0sWzIxLDAuOTc3XSxbMjksMC45NTFdLFszOCwwLjkyM10sWzQ2LDAuODkzXSxbNTQsMC44NjJdLFs2MywwLjgzXSxbNzEsMC43OTVdLFs3OSwwLjc2XSxbODcsMC43MjVdLFs5NiwwLjY5MV0sWzEwNCwwLjY1MV0sWzExMywwLjYxNF0sWzEyMSwwLjU3Nl0sWzEyOSwwLjUzOF0sWzEzOCwwLjVdLFsxNDYsMC40NjJdLFsxNTQsMC40MjRdLFsxNjMsMC4zODldLFsxNzAsMC4zNDldLFsxNzksMC4zMTZdLFsxODcsMC4yNzhdLFsxOTYsMC4yNDNdLFsyMDQsMC4yMDVdLFsyMTIsMC4xNzJdLFsyMjAsMC4xMzldLFsyMjksMC4xMTFdLFsyMzcsMC4wNzddLFsyNDYsMC4wNV0sWzI1NCwwLjAyM10sWzI2MiwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-283dc12f6021bfdec7cf",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet top by close: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3138,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:47:59.820Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozNCwic2hhcmUiOjAuMDc5LCJ0cmF2ZWwiOjExNSwidHJhdmVsU2hhcmUiOjAuMDgxLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTUsMV0sWzMsMV0sWzExLDFdLFsyMSwxXSxbMjcsMV0sWzM3LDFdLFs0NSwwLjk3MV0sWzU0LDAuOTQ2XSxbNjIsMC45MThdLFs3MCwwLjg4N10sWzc4LDAuODU2XSxbODcsMC44MjVdLFs5NCwwLjc4OV0sWzEwNCwwLjc2MV0sWzExMSwwLjcxOF0sWzEyMCwwLjY4N10sWzEyOSwwLjY0NV0sWzEzNywwLjYwN10sWzE0NSwwLjU2OV0sWzE1NCwwLjUzMl0sWzE2MiwwLjQ5NF0sWzE3MCwwLjQ1NV0sWzE3OSwwLjQxN10sWzE4NywwLjM4XSxbMTk1LDAuMzQzXSxbMjAzLDAuMzA2XSxbMjEyLDAuMjczXSxbMjIwLDAuMjM0XSxbMjI4LDAuMTk5XSxbMjM3LDAuMTY4XSxbMjQ1LDAuMTMyXSxbMjU0LDAuMTAyXSxbMjYyLDAuMDcyXSxbMjcwLDAuMDQ1XSxbMjc5LDAuMDIyXSxbMjg3LDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-3c3eebb51a9c23fa3f56",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet top by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3110,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:48:02.964Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozMSwic2hhcmUiOjAuMDgxLCJ0cmF2ZWwiOjExNSwidHJhdmVsU2hhcmUiOjAuMDgzLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTUsMV0sWzIsMV0sWzEyLDFdLFsyMCwwLjk3Ml0sWzI4LDAuOTQ3XSxbMzUsMC45MTldLFs0NSwwLjg5Ml0sWzUyLDAuODU4XSxbNjEsMC44MjhdLFs3MCwwLjc5XSxbNzgsMC43NTVdLFs4NiwwLjcyXSxbOTUsMC42ODNdLFsxMDMsMC42NDZdLFsxMTEsMC42MDldLFsxMjAsMC41NzFdLFsxMjcsMC41MzNdLFsxMzYsMC41XSxbMTQ1LDAuNDU3XSxbMTUzLDAuNDE5XSxbMTYxLDAuMzgxXSxbMTY5LDAuMzQ0XSxbMTc3LDAuMzA5XSxbMTg2LDAuMjczXSxbMTk1LDAuMjM1XSxbMjAzLDAuMl0sWzIxMSwwLjE2N10sWzIxOCwwLjEzNF0sWzIyOCwwLjEwOF0sWzIzNSwwLjA3NF0sWzI0NSwwLjA1MV0sWzI1MywwLjAyXSxbMjYwLDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-8660d802757dce8f6864",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet top by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3126,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:48:06.079Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozMSwic2hhcmUiOjAuMDc5LCJ0cmF2ZWwiOjExNCwidHJhdmVsU2hhcmUiOjAuMDgxLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTYsMV0sWzIsMV0sWzEwLDFdLFsxNywwLjk3Nl0sWzI3LDAuOTU1XSxbMzUsMC45MjFdLFs0MiwwLjg5M10sWzUyLDAuODY3XSxbNjAsMC44M10sWzY4LDAuNzk1XSxbNzUsMC43NjRdLFs4NSwwLjczMV0sWzk0LDAuNjg5XSxbMTAyLDAuNjUxXSxbMTEwLDAuNjEzXSxbMTE4LDAuNTc2XSxbMTI3LDAuNTM4XSxbMTM1LDAuNTAxXSxbMTQ0LDAuNDYyXSxbMTUyLDAuNDI0XSxbMTYwLDAuMzg2XSxbMTY5LDAuMzUyXSxbMTc2LDAuMzExXSxbMTg1LDAuMjc4XSxbMTk0LDAuMjRdLFsyMDAsMC4yMDVdLFsyMTEsMC4xNzddLFsyMTgsMC4xMzddLFsyMjcsMC4xMV0sWzIzNSwwLjA3N10sWzI0MywwLjA0OV0sWzI1MiwwLjAyNl0sWzI2MCwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-558b43da7ab7ef56810a",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet left by close: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3124,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:48:09.210Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozNCwic2hhcmUiOjAuMDc4LCJ0cmF2ZWwiOjM4MywidHJhdmVsU2hhcmUiOjAuMDc4LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTcsMV0sWzMsMV0sWzExLDFdLFsxOSwxXSxbMjgsMV0sWzM2LDFdLFs0NCwwLjk3N10sWzUzLDAuOTVdLFs2MCwwLjkyMl0sWzcwLDAuODk2XSxbNzgsMC44NjFdLFs4NiwwLjgyOV0sWzk0LDAuNzk1XSxbMTAzLDAuNzZdLFsxMTEsMC43MjVdLFsxMTksMC42ODhdLFsxMjgsMC42NTFdLFsxMzYsMC42MTNdLFsxNDQsMC41NzZdLFsxNTMsMC41MzhdLFsxNjEsMC41XSxbMTY5LDAuNDYyXSxbMTc4LDAuNDI0XSxbMTg2LDAuMzg2XSxbMTk0LDAuMzQ5XSxbMjAzLDAuMzE1XSxbMjExLDAuMjc1XSxbMjE4LDAuMjRdLFsyMjgsMC4yMTFdLFsyMzYsMC4xN10sWzI0NCwwLjEzOV0sWzI1MiwwLjEwN10sWzI1OSwwLjA4MV0sWzI2OCwwLjA1NV0sWzI3NiwwLjAyNl0sWzI4NiwwLjAwM11dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-d4a1d644f853f2b8094e",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet left by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3110,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:48:12.339Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozMSwic2hhcmUiOjAuMDgsInRyYXZlbCI6Mzg0LCJ0cmF2ZWxTaGFyZSI6MC4wOCwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjpbWy00LDFdLFs0LDFdLFsxMywxXSxbMjEsMC45NzddLFsyOSwwLjk1Ml0sWzM3LDAuOTIzXSxbNDYsMC44OTNdLFs1NCwwLjg2Ml0sWzYzLDAuODNdLFs3MCwwLjc5NV0sWzc4LDAuNzY2XSxbODgsMC43MjhdLFs5NiwwLjY4N10sWzEwNCwwLjY1MV0sWzExMywwLjYxNF0sWzEyMSwwLjU3Nl0sWzEyOCwwLjUzOF0sWzEzOCwwLjUwNV0sWzE0NiwwLjQ2MV0sWzE1NCwwLjQyNV0sWzE2MywwLjM4Nl0sWzE3MSwwLjM0OV0sWzE3OSwwLjMxMl0sWzE4NiwwLjI3NV0sWzE5NSwwLjI0NV0sWzIwMywwLjIwOV0sWzIxMiwwLjE3Nl0sWzIyMSwwLjEzOV0sWzIyOSwwLjEwN10sWzIzNiwwLjA3OF0sWzI0NiwwLjA1NF0sWzI1NCwwLjAyNF0sWzI2MywwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-58c76f48445dfffda587",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet left by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3105,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:48:15.454Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozMSwic2hhcmUiOjAuMDgyLCJ0cmF2ZWwiOjM3NiwidHJhdmVsU2hhcmUiOjAuMDgzLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTMsMV0sWzQsMV0sWzEyLDFdLFsyMiwwLjk3NV0sWzMwLDAuOTQ2XSxbMzcsMC45MThdLFs0NSwwLjg5M10sWzU1LDAuODYzXSxbNjIsMC44MjRdLFs3MiwwLjc5Nl0sWzgwLDAuNzUzXSxbODcsMC43MTldLFs5NywwLjY4OF0sWzEwNSwwLjY0NV0sWzExMiwwLjYwOF0sWzEyMiwwLjU3OF0sWzEzMCwwLjUzMl0sWzEzOCwwLjQ5NF0sWzE0NywwLjQ1Nl0sWzE1NSwwLjQxOF0sWzE2MywwLjM4XSxbMTcxLDAuMzQzXSxbMTgwLDAuMzA5XSxbMTg3LDAuMjY5XSxbMTk3LDAuMjM4XSxbMjAzLDAuMTk4XSxbMjEzLDAuMTcyXSxbMjIyLDAuMTM0XSxbMjMwLDAuMTAyXSxbMjM3LDAuMDc0XSxbMjQ3LDAuMDVdLFsyNTUsMC4wMl0sWzI2MywwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-b68a7556fb831fbca7f2",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · detented Sheet by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3078,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:48:18.564Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjo0NSwic2hhcmUiOjAuMTU3LCJ0cmF2ZWwiOjQ0OCwidHJhdmVsU2hhcmUiOjAuMDk4LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTksMV0sWzAsMV0sWzksMV0sWzE2LDFdLFsyNSwxXSxbMzQsMV0sWzQyLDFdLFs1MCwxXSxbNTksMV0sWzY3LDFdLFs3NSwxXSxbODQsMV0sWzkyLDFdLFsxMDAsMV0sWzEwOSwxXSxbMTE3LDAuOTddLFsxMjQsMC44ODVdLFsxMzQsMC44MTJdLFsxNDIsMC43MjZdLFsxNTAsMC42NTVdLFsxNTksMC41ODldLFsxNjcsMC41MjhdLFsxNzQsMC40NzJdLFsxODQsMC40MjddLFsxOTIsMC4zNzVdLFsyMDAsMC4zMzNdLFsyMDksMC4yOTNdLFsyMTcsMC4yNThdLFsyMjUsMC4yMjddLFsyMzQsMC4xOThdLFsyNDIsMC4xNzNdLFsyNTAsMC4xNV0sWzI1OSwwLjEzXSxbMjY3LDAuMTEyXSxbMjc1LDAuMDk2XSxbMjg0LDAuMDgyXSxbMjkyLDAuMDddLFszMDAsMC4wNTldLFszMDksMC4wNDldLFszMTcsMC4wNDFdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-e8b877490e9dd99f43d4",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · detented Sheet by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3092,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:48:21.646Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjo0NCwic2hhcmUiOjAuMTYyLCJ0cmF2ZWwiOjQ0OCwidHJhdmVsU2hhcmUiOjAuMTAzLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTQsMV0sWzQsMV0sWzEzLDFdLFsyMiwxXSxbMzAsMV0sWzM2LDFdLFs0NSwxXSxbNTQsMV0sWzYyLDFdLFs3MSwxXSxbODAsMV0sWzg4LDFdLFs5NiwxXSxbMTA0LDFdLFsxMTIsMC45NjVdLFsxMjEsMC44ODFdLFsxMzAsMC43OTVdLFsxMzgsMC43MTVdLFsxNDYsMC42NDZdLFsxNTUsMC41ODFdLFsxNjIsMC41Ml0sWzE3MCwwLjQ3Ml0sWzE3OSwwLjQyM10sWzE4OCwwLjM3Ml0sWzE5NiwwLjMyNV0sWzIwMywwLjI4OF0sWzIxMywwLjI2XSxbMjIxLDAuMjIyXSxbMjMwLDAuMTk3XSxbMjM3LDAuMTddLFsyNDcsMC4xNDldLFsyNTUsMC4xMjddLFsyNjMsMC4xMV0sWzI3MSwwLjA5NF0sWzI4MCwwLjA4XSxbMjg3LDAuMDY4XSxbMjk2LDAuMDU4XSxbMzA0LDAuMDQ5XSxbMzEzLDAuMDQxXSxbMzIwLDAuMDMzXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-ee15c102bef8ea434ef7",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · Toast by close: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3114,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:48:24.743Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNiwic2hhcmUiOjAuMTMzLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTMsMV0sWzYsMV0sWzE0LDFdLFsyMiwxXSxbMzEsMC45NTVdLFszOSwwLjkwMl0sWzQ3LDAuODQ3XSxbNTYsMC43ODFdLFs2NCwwLjcxNl0sWzcxLDAuNjU5XSxbODEsMC41ODJdLFs4OCwwLjUyNF0sWzk3LDAuNDU1XSxbMTA2LDAuMzk3XSxbMTE0LDAuMzQ0XSxbMTIyLDAuM10sWzEzMSwwLjI4XSxbMTM5LDAuMjU3XSxbMTQ3LDAuMjMxXSxbMTU2LDAuMjA0XSxbMTY0LDAuMTc1XSxbMTcyLDAuMTQ1XSxbMTgxLDAuMTE3XSxbMTg5LDAuMDg4XSxbMTk3LDAuMDYxXSxbMjA2LDAuMDM2XSxbMjE0LDAuMDE0XSxbMjIyLDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-22ca7bf0766d8682dc7e",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · Collapsible by trigger: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3144,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:48:27.862Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNiwic2hhcmUiOjAuMTcxLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTEsMV0sWzYsMV0sWzE1LDFdLFsyMywxXSxbMzIsMC45NzFdLFs0MSwwLjkwOV0sWzQ5LDAuODMxXSxbNTcsMC43NDRdLFs2NSwwLjY2N10sWzczLDAuNTg1XSxbODIsMC40OTZdLFs5MCwwLjQyOV0sWzk5LDAuMzYzXSxbMTA2LDAuMzE2XSxbMTE2LDAuMjZdLFsxMjQsMC4yMThdLFsxMzIsMC4xODJdLFsxNDEsMC4xNTJdLFsxNDcsMC4xM10sWzE1OCwwLjEwNF0sWzE2NiwwLjA4N10sWzE3NCwwLjA3MV0sWzE4MiwwLjA1OV0sWzE5MCwwLjA0OV0sWzE5OSwwLjA0XSxbMjA3LDAuMDMzXSxbMjE0LDAuMDI3XSxbMjIzLDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-7f4b49e62d54683da4e0",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · Accordion by trigger: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3148,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:48:31.011Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNiwic2hhcmUiOjAuMTczLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTEsMV0sWzgsMV0sWzE2LDFdLFsyNSwxXSxbMzMsMC45NzZdLFs0MSwwLjkxN10sWzUwLDAuODM5XSxbNTgsMC43NTNdLFs2NiwwLjY2Nl0sWzczLDAuNTk4XSxbODMsMC41MDRdLFs5MSwwLjQzM10sWzEwMCwwLjM2OV0sWzEwNywwLjMxNl0sWzExNiwwLjI2NF0sWzEyMywwLjIyOF0sWzEzMywwLjE4NV0sWzE0MSwwLjE1NV0sWzE0OSwwLjEzXSxbMTU4LDAuMTA3XSxbMTY2LDAuMDg4XSxbMTc1LDAuMDczXSxbMTgzLDAuMDZdLFsxOTEsMC4wNDldLFsxOTgsMC4wNDJdLFsyMDcsMC4wMzRdLFsyMTYsMC4wMjddLFsyMjQsMC4wMDFdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-943371dc41405647e9b3",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · ExpandableContainer by close: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3115,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:48:34.165Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoxOSwic2hhcmUiOjAuMTUsInRyYXZlbCI6OTgsInRyYXZlbFNoYXJlIjowLjE1MywiZ29uZSI6dHJ1ZSwiZnJhbWVzIjpbWy02LDFdLFszLDFdLFsxMCwxXSxbMTksMV0sWzI4LDFdLFszNiwwLjk1MV0sWzQ0LDAuODk0XSxbNTMsMC44MzFdLFs2MSwwLjc2Ml0sWzY5LDAuNjldLFs3NiwwLjYzMV0sWzg2LDAuNTQxXSxbOTMsMC40NzldLFsxMDIsMC40MDFdLFsxMTEsMC4zMTZdLFsxMTgsMC4yNTldLFsxMjgsMC4xNzddLFsxMzYsMC4xMTNdLFsxNDQsMC4wNTldLFsxNTEsMC4wMTRdLFsxNjEsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-5207e362806aee6d7fa4",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · ExpandableContainer by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3126,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:48:37.286Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoxNiwic2hhcmUiOjAuMTUxLCJ0cmF2ZWwiOjk5LCJ0cmF2ZWxTaGFyZSI6MC4xNTEsImdvbmUiOnRydWUsImZyYW1lcyI6W1stOCwxXSxbMCwxXSxbOSwxXSxbMTcsMC45NTFdLFsyNSwwLjg5NF0sWzM0LDAuODNdLFs0MiwwLjc2M10sWzUwLDAuNjk3XSxbNTgsMC42Ml0sWzY3LDAuNTQxXSxbNzUsMC40NjddLFs4NCwwLjM5Ml0sWzkyLDAuMzE4XSxbMTAwLDAuMjQ2XSxbMTA5LDAuMTc4XSxbMTE3LDAuMTEzXSxbMTI1LDAuMDU5XSxbMTM0LDAuMDA1XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-b71107fc64ff3de54f1c",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · CommandDialog by pick: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3232,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:48:40.417Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNSwic2hhcmUiOjAuMTIyLCJ0cmF2ZWwiOjEzLCJ0cmF2ZWxTaGFyZSI6bnVsbCwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjpbWy03LDFdLFsxLDFdLFs5LDFdLFsxOCwxXSxbMjYsMV0sWzU5LDFdLFs2OCwwLjkyOV0sWzc2LDAuODg4XSxbODQsMC44NDRdLFs5MiwwLjc5OV0sWzk5LDAuNzU1XSxbMTA4LDAuNzA4XSxbMTE4LDAuNjU2XSxbMTI1LDAuNTk1XSxbMTM1LDAuNTUyXSxbMTQzLDAuNDg4XSxbMTUxLDAuNDM3XSxbMTU4LDAuMzg1XSxbMTY4LDAuMzQzXSxbMTc2LDAuMjc5XSxbMTg0LDAuMjMyXSxbMTkzLDAuMTg0XSxbMjAxLDAuMTM5XSxbMjA5LDAuMDk1XSxbMjE4LDAuMDU1XSxbMjI2LDAuMDJdLFsyMzQsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-6b64d56e1c063339fcd8",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · CommandDialog by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3023,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:48:43.655Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyMiwic2hhcmUiOjAuMTEsInRyYXZlbCI6MTMsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTEsMV0sWzgsMV0sWzMyLDFdLFszOSwwLjkyOV0sWzQ5LDAuODk1XSxbNTgsMC44NDNdLFs2NSwwLjc5Nl0sWzc0LDAuNzUyXSxbODEsMC42OThdLFs5MSwwLjY1NV0sWzk4LDAuNTk1XSxbMTA4LDAuNTQ5XSxbMTE2LDAuNDg5XSxbMTI0LDAuNDM2XSxbMTMzLDAuMzg0XSxbMTQxLDAuMzMyXSxbMTQ5LDAuMjgxXSxbMTU3LDAuMjMyXSxbMTY0LDAuMTg0XSxbMTc0LDAuMTQ3XSxbMTgxLDAuMDk1XSxbMTkxLDAuMDYxXSxbMTk5LDAuMDE5XSxbMjA4LDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-c286e63567e12529848c",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        },
+        {
+          "title": "standing · CommandDialog by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3028,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T07:48:46.683Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyMiwic2hhcmUiOjAuMTE2LCJ0cmF2ZWwiOjEzLCJ0cmF2ZWxTaGFyZSI6bnVsbCwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjpbWy04LDFdLFsxLDFdLFsyNSwxXSxbMzUsMC45MjldLFs0MywwLjg3OF0sWzUxLDAuODM1XSxbNjAsMC43ODhdLFs2OCwwLjczOV0sWzc2LDAuNjg5XSxbODQsMC42MzhdLFs5MiwwLjU5Ml0sWzEwMCwwLjU0XSxbMTEwLDAuNDldLFsxMTgsMC40MjddLFsxMjYsMC4zNzRdLFsxMzUsMC4zMjJdLFsxNDIsMC4yNzJdLFsxNTEsMC4yMzFdLFsxNjAsMC4xNzVdLFsxNjgsMC4xM10sWzE3NiwwLjA4OF0sWzE4NSwwLjA0OV0sWzE5MywwLjAxM10sWzIwMSwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-1cbcfa6297723851289d",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1349,
+          "column": 9
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-16T07:46:30.053Z",
+    "duration": 139725.74300000002,
+    "expected": 44,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

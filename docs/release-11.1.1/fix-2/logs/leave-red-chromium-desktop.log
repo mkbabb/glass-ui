@@ -1,0 +1,121 @@
+
+Running 5 tests using 1 worker
+
+  ✘  1 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1081:1 › leave · a Popover inside a shadow root says so to its host (3.4s)
+  ✘  2 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1105:5 › leave · a ContextMenu says once that its leave has finished, by escape (3.1s)
+  ✘  3 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1105:5 › leave · a ContextMenu says once that its leave has finished, by pick (3.1s)
+  ✘  4 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1123:1 › leave · a hover card says once that its leave has finished (3.4s)
+[WebServer] 2:28:03 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  5 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1141:1 › leave · a Dialog unmounted mid-exit says so once, at the unmount (3.1s)
+
+
+  1) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1081:1 › leave · a Popover inside a shadow root says so to its host 
+
+    Error: one event {"window":[],"host":[],"emits":{},"seenAt":2323.7,"mounted":false}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      1072 |
+      1073 | function expectOnce(log: Heard[], kind: string, seenAt: number, emits: number | undefined, at: string): void {
+    > 1074 |     expect(log.length, `one event ${at}`).toBe(1);
+           |                                           ^
+      1075 |     expect(log[0].kind, `its kind ${at}`).toBe(kind);
+      1076 |     expect(log[0].bubbles && log[0].composed, `it bubbles and is composed ${at}`).toBe(true);
+      1077 |     expect(log[0].at, `it comes at or after the last seen frame ${at}`).toBeGreaterThanOrEqual(seenAt);
+        at expectOnce (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1074:43)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1101:5
+
+    Error Context: tests-visual/test-results/release-11-1-1-leave-·-a-P-3423b-ow-root-says-so-to-its-host-chromium-desktop/error-context.md
+
+  2) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1105:5 › leave · a ContextMenu says once that its leave has finished, by escape 
+
+    Error: one event {"window":[],"host":[],"emits":{},"seenAt":2178.6}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      1072 |
+      1073 | function expectOnce(log: Heard[], kind: string, seenAt: number, emits: number | undefined, at: string): void {
+    > 1074 |     expect(log.length, `one event ${at}`).toBe(1);
+           |                                           ^
+      1075 |     expect(log[0].kind, `its kind ${at}`).toBe(kind);
+      1076 |     expect(log[0].bubbles && log[0].composed, `it bubbles and is composed ${at}`).toBe(true);
+      1077 |     expect(log[0].at, `it comes at or after the last seen frame ${at}`).toBeGreaterThanOrEqual(seenAt);
+        at expectOnce (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1074:43)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1119:9
+
+    Error Context: tests-visual/test-results/release-11-1-1-leave-·-a-C-e6861-eave-has-finished-by-escape-chromium-desktop/error-context.md
+
+  3) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1105:5 › leave · a ContextMenu says once that its leave has finished, by pick 
+
+    Error: one event {"window":[],"host":[],"emits":{},"seenAt":2194}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      1072 |
+      1073 | function expectOnce(log: Heard[], kind: string, seenAt: number, emits: number | undefined, at: string): void {
+    > 1074 |     expect(log.length, `one event ${at}`).toBe(1);
+           |                                           ^
+      1075 |     expect(log[0].kind, `its kind ${at}`).toBe(kind);
+      1076 |     expect(log[0].bubbles && log[0].composed, `it bubbles and is composed ${at}`).toBe(true);
+      1077 |     expect(log[0].at, `it comes at or after the last seen frame ${at}`).toBeGreaterThanOrEqual(seenAt);
+        at expectOnce (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1074:43)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1119:9
+
+    Error Context: tests-visual/test-results/release-11-1-1-leave-·-a-C-3448a--leave-has-finished-by-pick-chromium-desktop/error-context.md
+
+  4) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1123:1 › leave · a hover card says once that its leave has finished 
+
+    Error: one event {"window":[],"host":[],"emits":{},"seenAt":2207.4}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      1072 |
+      1073 | function expectOnce(log: Heard[], kind: string, seenAt: number, emits: number | undefined, at: string): void {
+    > 1074 |     expect(log.length, `one event ${at}`).toBe(1);
+           |                                           ^
+      1075 |     expect(log[0].kind, `its kind ${at}`).toBe(kind);
+      1076 |     expect(log[0].bubbles && log[0].composed, `it bubbles and is composed ${at}`).toBe(true);
+      1077 |     expect(log[0].at, `it comes at or after the last seen frame ${at}`).toBeGreaterThanOrEqual(seenAt);
+        at expectOnce (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1074:43)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1138:5
+
+    Error Context: tests-visual/test-results/release-11-1-1-leave-·-a-h-c9754-that-its-leave-has-finished-chromium-desktop/error-context.md
+
+  5) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1141:1 › leave · a Dialog unmounted mid-exit says so once, at the unmount 
+
+    Error: one event {"window":[],"host":[],"emits":{},"cut":2206}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      1160 |     await info.attach("leave", { body: at, contentType: "application/json" });
+      1161 |     expect(await page.locator('[data-testid="l-dialog-content"]').count(), "the dialog is gone").toBe(0);
+    > 1162 |     expect(log.window.length, `one event ${at}`).toBe(1);
+           |                                                  ^
+      1163 |     expect(log.window[0].kind, `its kind ${at}`).toBe("dialog");
+      1164 |     // The exit had about 140 ms left at the cut; the event comes with the unmount.
+      1165 |     expect(log.window[0].at - cut, `it comes with the unmount ${at}`).toBeLessThanOrEqual(50);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1162:50
+
+    Error Context: tests-visual/test-results/release-11-1-1-leave-·-a-D-e96bd-says-so-once-at-the-unmount-chromium-desktop/error-context.md
+
+  5 failed
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1081:1 › leave · a Popover inside a shadow root says so to its host 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1105:5 › leave · a ContextMenu says once that its leave has finished, by escape 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1105:5 › leave · a ContextMenu says once that its leave has finished, by pick 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1123:1 › leave · a hover card says once that its leave has finished 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1141:1 › leave · a Dialog unmounted mid-exit says so once, at the unmount 

@@ -1,0 +1,232 @@
+
+Running 12 tests using 1 worker
+
+  ✘   1 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:98:5 › form · a dock DropdownMenu keeps its material through the exit · pick (2.5s)
+  ✘   2 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:98:5 › form · a dock DropdownMenu keeps its material through the exit · outside (2.4s)
+  ✘   3 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:98:5 › form · a dock DropdownMenu keeps its material through the exit · escape (2.4s)
+  ✘   4 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Select leaves on the exit curve, shorter than it entered (3.5s)
+  ✘   5 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · DropdownMenu leaves on the exit curve, shorter than it entered (3.5s)
+  ✘   6 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Popover leaves on the exit curve, shorter than it entered (3.4s)
+  -   7 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Tooltip leaves on the exit curve, shorter than it entered
+[WebServer] 2:41:28 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘   8 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Dialog leaves on the exit curve, shorter than it entered (3.5s)
+[WebServer] 2:41:32 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘   9 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Sheet right leaves on the exit curve, shorter than it entered (3.4s)
+[WebServer] 2:41:36 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  10 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Sheet bottom leaves on the exit curve, shorter than it entered (3.4s)
+  ✘  11 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:405:5 › exit · a Popover leaves on opacity and its slide alone (1.8s)
+  -  12 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:405:5 › exit · a Tooltip leaves on opacity and its slide alone
+
+
+  1) [chromium-phone] › tests-visual/release-11-1-1.spec.ts:98:5 › form · a dock DropdownMenu keeps its material through the exit · pick 
+
+    Error: material attribute +35 ms
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "opaque"
+    Received: null
+
+      120 |         for (const f of exit) {
+      121 |             const at = `+${Math.round(f.t - film.mark)} ms`;
+    > 122 |             expect(f.surface, `material attribute ${at}`).toBe(rest.surface);
+          |                                                           ^
+      123 |             expect(f.bf, `backdrop ${at}`).toBe(rest.bf);
+      124 |             expect(f.bg, `fill ${at}`).toBe(rest.bg);
+      125 |         }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:122:59
+
+    Error Context: tests-visual/test-results/release-11-1-1-form-·-a-do-b92ff-ial-through-the-exit-·-pick-chromium-phone/error-context.md
+
+  2) [chromium-phone] › tests-visual/release-11-1-1.spec.ts:98:5 › form · a dock DropdownMenu keeps its material through the exit · outside 
+
+    Error: material attribute +14 ms
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "opaque"
+    Received: null
+
+      120 |         for (const f of exit) {
+      121 |             const at = `+${Math.round(f.t - film.mark)} ms`;
+    > 122 |             expect(f.surface, `material attribute ${at}`).toBe(rest.surface);
+          |                                                           ^
+      123 |             expect(f.bf, `backdrop ${at}`).toBe(rest.bf);
+      124 |             expect(f.bg, `fill ${at}`).toBe(rest.bg);
+      125 |         }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:122:59
+
+    Error Context: tests-visual/test-results/release-11-1-1-form-·-a-do-f9776--through-the-exit-·-outside-chromium-phone/error-context.md
+
+  3) [chromium-phone] › tests-visual/release-11-1-1.spec.ts:98:5 › form · a dock DropdownMenu keeps its material through the exit · escape 
+
+    Error: material attribute +2 ms
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "opaque"
+    Received: null
+
+      120 |         for (const f of exit) {
+      121 |             const at = `+${Math.round(f.t - film.mark)} ms`;
+    > 122 |             expect(f.surface, `material attribute ${at}`).toBe(rest.surface);
+          |                                                           ^
+      123 |             expect(f.bf, `backdrop ${at}`).toBe(rest.bf);
+      124 |             expect(f.bg, `fill ${at}`).toBe(rest.bg);
+      125 |         }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:122:59
+
+    Error Context: tests-visual/test-results/release-11-1-1-form-·-a-do-0ca6a-l-through-the-exit-·-escape-chromium-phone/error-context.md
+
+  4) [chromium-phone] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Select leaves on the exit curve, shorter than it entered 
+
+    Error: no frame takes more than a fifth of what is seen {"entrance":417,"exit":137,"painted":16,"seenShare":0.966,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.77,"travel":549,"travelShare":0.817,"frames":[[0,1,615],[4,1,610],[12,1,66],[20,1,66],[29,1,66],[37,1,66],[46,1,66],[54,1,66],[62,1,66],[71,1,66],[79,1,66],[86,1,66],[96,1,66],[104,1,66],[112,1,66],[120,0.794,66],[129,0.032,66],[137,0,null]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.966
+
+      387 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });
+      388 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 389 |         expect(read.seenShare, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                          ^
+      390 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+      391 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);
+      392 |         // The old ease-out sheet strays 0.09 to 0.11 from this curve; on the curve a
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:389:90
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-Sele-dd1af-rve-shorter-than-it-entered-chromium-phone/error-context.md
+
+  5) [chromium-phone] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · DropdownMenu leaves on the exit curve, shorter than it entered 
+
+    Error: no frame takes more than a fifth of what is seen {"entrance":416,"exit":132,"painted":15,"seenShare":0.883,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.753,"travel":0,"travelShare":null,"frames":[[0,1,155],[7,1,155],[15,1,155],[22,1,155],[32,1,155],[40,1,155],[48,1,155],[57,1,155],[65,1,155],[73,1,155],[82,1,155],[90,1,155],[98,1,155],[107,1,155],[115,0.884,155],[122,0.082,155],[132,0,null]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.883
+
+      387 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });
+      388 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 389 |         expect(read.seenShare, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                          ^
+      390 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+      391 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);
+      392 |         // The old ease-out sheet strays 0.09 to 0.11 from this curve; on the curve a
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:389:90
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-Drop-7d51e-rve-shorter-than-it-entered-chromium-phone/error-context.md
+
+  6) [chromium-phone] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Popover leaves on the exit curve, shorter than it entered 
+
+    Error: no frame takes more than a fifth of what is seen {"entrance":485,"exit":139,"painted":16,"seenShare":0.294,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.3,"travel":7,"travelShare":null,"frames":[[0,1,140],[5,1,140],[14,0.81,139],[22,0.672,138],[30,0.558,138],[39,0.464,137],[47,0.383,136],[55,0.315,136],[64,0.256,136],[72,0.204,135],[79,0.168,135],[89,0.124,135],[97,0.092,134],[105,0.066,134],[112,0.048,134],[122,0.028,133],[130,0.015,133],[139,0.007,133]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.294
+
+      387 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });
+      388 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 389 |         expect(read.seenShare, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                          ^
+      390 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+      391 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);
+      392 |         // The old ease-out sheet strays 0.09 to 0.11 from this curve; on the curve a
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:389:90
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-Popo-25b8f-rve-shorter-than-it-entered-chromium-phone/error-context.md
+
+  7) [chromium-phone] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Dialog leaves on the exit curve, shorter than it entered 
+
+    Error: the exit follows the exit curve {"entrance":264,"exit":229,"painted":27,"seenShare":0.171,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.374,"travel":9,"travelShare":null,"frames":[[0,1,20],[4,1,20],[12,0.917,21],[21,0.839,21],[29,0.753,22],[37,0.666,23],[46,0.583,24],[54,0.504,24],[62,0.433,25],[71,0.368,26],[79,0.313,26],[87,0.264,26],[96,0.225,27],[104,0.185,27],[112,0.155,27],[121,0.128,28],[129,0.107,28],[137,0.088,28],[145,0.073,28],[154,0.061,28],[162,0.049,28],[171,0.041,28],[179,0.033,28],[187,0.027,29],[196,0.022,29],[204,0.018,29],[212,0.015,29],[221,0.012,29],[229,0.01,29]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.07
+    Received:    0.374
+
+      392 |         // The old ease-out sheet strays 0.09 to 0.11 from this curve; on the curve a
+      393 |         // surface strays no more than 0.05.
+    > 394 |         expect(read.stray, `the exit follows the exit curve ${at}`).toBeLessThanOrEqual(0.07);
+          |                                                                     ^
+      395 |     });
+      396 | }
+      397 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:394:69
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-Dial-279d3-rve-shorter-than-it-entered-chromium-phone/error-context.md
+
+  8) [chromium-phone] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Sheet right leaves on the exit curve, shorter than it entered 
+
+    Error: the exit follows the exit curve {"entrance":618,"exit":207,"painted":24,"seenShare":0.136,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.1,"travel":286,"travelShare":0.139,"frames":[[0,1,98],[7,1,98],[14,0.97,106],[24,0.942,115],[32,0.89,130],[39,0.844,143],[49,0.8,156],[57,0.729,177],[66,0.674,193],[72,0.613,211],[81,0.566,224],[91,0.503,243],[99,0.442,261],[107,0.388,277],[116,0.338,291],[124,0.291,305],[132,0.249,317],[141,0.209,329],[148,0.171,340],[157,0.144,348],[164,0.109,358],[174,0.087,365],[182,0.06,373],[191,0.039,378],[199,0.022,384],[207,0.007,388]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.07
+    Received:    0.1
+
+      392 |         // The old ease-out sheet strays 0.09 to 0.11 from this curve; on the curve a
+      393 |         // surface strays no more than 0.05.
+    > 394 |         expect(read.stray, `the exit follows the exit curve ${at}`).toBeLessThanOrEqual(0.07);
+          |                                                                     ^
+      395 |     });
+      396 | }
+      397 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:394:69
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-Shee-4a00a-rve-shorter-than-it-entered-chromium-phone/error-context.md
+
+  9) [chromium-phone] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Sheet bottom leaves on the exit curve, shorter than it entered 
+
+    Error: the exit follows the exit curve {"entrance":480,"exit":204,"painted":24,"seenShare":0.125,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.114,"travel":87,"travelShare":0.127,"frames":[[0,1,755],[3,1,755],[13,0.97,758],[21,0.928,762],[28,0.887,765],[37,0.845,769],[45,0.787,774],[54,0.73,779],[63,0.666,785],[71,0.605,790],[78,0.548,796],[88,0.497,800],[95,0.433,806],[105,0.385,810],[113,0.33,815],[120,0.285,819],[130,0.246,822],[137,0.201,826],[145,0.17,829],[155,0.139,832],[163,0.104,835],[171,0.079,837],[179,0.057,839],[188,0.037,841],[196,0.02,842],[204,0.006,844]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.07
+    Received:    0.114
+
+      392 |         // The old ease-out sheet strays 0.09 to 0.11 from this curve; on the curve a
+      393 |         // surface strays no more than 0.05.
+    > 394 |         expect(read.stray, `the exit follows the exit curve ${at}`).toBeLessThanOrEqual(0.07);
+          |                                                                     ^
+      395 |     });
+      396 | }
+      397 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:394:69
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-Shee-72c6c-rve-shorter-than-it-entered-chromium-phone/error-context.md
+
+  10) [chromium-phone] › tests-visual/release-11-1-1.spec.ts:405:5 › exit · a Popover leaves on opacity and its slide alone 
+
+    Error: no scale +6 ms [{"t":-1,"scale":"1","filter":"blur(0px)"},{"t":6,"scale":"0.999599 0.987563","filter":"blur(0.66805px)"},{"t":15,"scale":"0.999201 0.975209","filter":"blur(1.33168px)"},{"t":23,"scale":"0.998908 0.966107","filter":"blur(1.82058px)"},{"t":32,"scale":"0.998649 0.958094","filter":"blur(2.25099px)"},{"t":39,"scale":"0.998432 0.951351","filter":"blur(2.6132px)"},{"t":49,"scale":"0.998196 0.944035","filter":"blur(3.00619px)"},{"t":57,"scale":"0.998011 0.93829","filter":"blur(3.31478px)"},{"t":64,"scale":"0.997868 0.93386","filter":"blur(3.55272px)"},{"t":74,"scale":"0.997672 0.927755","filter":"blur(3.88064px)"},{"t":82,"scale":"0.997535 0.923515","filter":"blur(4.1084px)"},{"t":90,"scale":"0.997402 0.919386","filter":"blur(4.33022px)"}]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      434 |         for (const f of frames) {
+      435 |             const at = `+${f.t} ms ${JSON.stringify(frames.slice(0, 12))}`;
+    > 436 |             expect(f.scale === "none" || f.scale === "1" || f.scale === "1 1", `no scale ${at}`).toBe(true);
+          |                                                                                                  ^
+      437 |             expect(f.filter === "none" || f.filter === "blur(0px)", `no blur ${at}`).toBe(true);
+      438 |         }
+      439 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:436:98
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-a-Po-f000e-opacity-and-its-slide-alone-chromium-phone/error-context.md
+
+  10 failed
+    [chromium-phone] › tests-visual/release-11-1-1.spec.ts:98:5 › form · a dock DropdownMenu keeps its material through the exit · pick 
+    [chromium-phone] › tests-visual/release-11-1-1.spec.ts:98:5 › form · a dock DropdownMenu keeps its material through the exit · outside 
+    [chromium-phone] › tests-visual/release-11-1-1.spec.ts:98:5 › form · a dock DropdownMenu keeps its material through the exit · escape 
+    [chromium-phone] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Select leaves on the exit curve, shorter than it entered 
+    [chromium-phone] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · DropdownMenu leaves on the exit curve, shorter than it entered 
+    [chromium-phone] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Popover leaves on the exit curve, shorter than it entered 
+    [chromium-phone] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Dialog leaves on the exit curve, shorter than it entered 
+    [chromium-phone] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Sheet right leaves on the exit curve, shorter than it entered 
+    [chromium-phone] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Sheet bottom leaves on the exit curve, shorter than it entered 
+    [chromium-phone] › tests-visual/release-11-1-1.spec.ts:405:5 › exit · a Popover leaves on opacity and its slide alone 
+  2 skipped
