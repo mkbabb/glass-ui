@@ -1,0 +1,3 @@
+# Orchestrator note (2026-11-15 23:30): the scope has a thirteenth row. BINDING for the first fix seat (or seat B if it has not returned), the critics and the close.
+
+Row 13 in `docs/tranches/BL/driver/glass-11.1.1-exits-scope.md` (main checkout): two faults a consumer measured on 11.1.0 in production. (a) The dock's run mark jumps about 167 px in one frame under reduced motion: it cross-fades, as row 8 rules. (b) A ResizeObserver loop error in WebKit about 2 s into load, from the plate observer writing `--dock-plate-cross-px` in its own callback. Read the row for the reproduction order, the cure's shape and what to do if (b) does not reproduce. One commit each, a "Fixed" CHANGELOG clause each. The scope is now CLOSED at thirteen rows: nothing further joins 11.1.1.

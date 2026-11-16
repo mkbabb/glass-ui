@@ -203,8 +203,12 @@ that takes it:
 
 ## Not done here
 
-- Row 12 (the SegmentedTabs corners on touch, added after this seat started): left to the first
-  fix seat, as its note says.
+- Rows 10, 12 and 13 (row 10's evidence and rows 12 and 13 landed after this seat started; their
+  notes give them to the first fix seat if seat B has returned): not built here. The dock-size
+  note binds the fix seats and the close; this seat did not measure the dock entry, and rows 5
+  and 11 add `_shared/overlay/exit-press.ts` and `leave-finished.ts` to Select and
+  DropdownMenu content, which a dock seat can open, so the close's measurement should include
+  them.
 - The 11.0.x and 11.1.0 release specs were not re-run by this seat.
 - No frame-cost claim is made, so no GPU-lane renderer string is recorded.
 - No tag, no push, no publish.
