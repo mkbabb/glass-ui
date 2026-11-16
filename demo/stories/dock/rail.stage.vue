@@ -1,7 +1,8 @@
 <script setup lang="ts">
 // A section rail at the start edge: a crest that stays, the sections, then settings
-// and the theme at the foot. Folded, it is the crest and the foot.
-import { ref } from "vue";
+// and the theme at the foot. Folded, it is the crest and the foot. The page beside it
+// is the current section's: its title and its bars follow each press.
+import { computed, ref } from "vue";
 import { BookOpen, Compass, Landmark, Map, Settings2, Sprout } from "@lucide/vue";
 import { DockControl, DockSeparator, GlassDock } from "@glass/components/dock";
 import {
@@ -12,7 +13,8 @@ import {
 } from "@glass/components/tooltip";
 import { DarkModeToggle } from "@glass/components/dark-mode-toggle";
 import DockScene from "./_parts/DockScene.vue";
-import ScenePane from "./_parts/ScenePane.vue";
+import ScenePage from "./_parts/ScenePage.vue";
+import MiniBars from "./_parts/MiniBars.vue";
 
 withDefaults(defineProps<{ folds?: boolean }>(), { folds: true });
 
@@ -24,13 +26,26 @@ const SECTIONS = [
     { id: "notes", label: "Notes", icon: BookOpen },
 ] as const;
 
+// Each section's own figure, so a new section tweens the bars.
+const VALUES: Record<string, readonly number[]> = {
+    overview: [24, 28, 26, 33, 31, 37, 35, 41],
+    regions: [52, 18, 37, 44, 29, 61, 23, 40],
+    schools: [12, 16, 21, 19, 25, 30, 28, 34],
+    growth: [5, 8, 12, 17, 23, 30, 38, 47],
+    notes: [20, 14, 20, 14, 20, 14, 20, 14],
+};
+
 const section = ref<string>("regions");
+const title = computed(() => SECTIONS.find((s) => s.id === section.value)?.label ?? "");
+const values = computed(() => VALUES[section.value] ?? []);
 </script>
 
 <template>
     <DockScene place="start">
         <template #context>
-            <ScenePane shape="column" />
+            <ScenePage shape="column" :title="title">
+                <MiniBars :values="values" :label="title" />
+            </ScenePage>
         </template>
         <TooltipProvider :delay-duration="250">
             <Transition name="fade" mode="out-in">
