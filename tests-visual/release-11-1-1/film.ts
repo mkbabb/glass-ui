@@ -21,12 +21,15 @@ export type Frame = {
     clip?: string;
     /** The companion selector is mounted. */
     also?: boolean;
+    /** The anchor's top-left corner, when the film names one. */
+    ax?: number;
+    ay?: number;
 };
 
 export type Film = { mark: number; turn: number; t0: number; frames: Frame[] };
 
-export async function startFilm(page: Page, selector: string, also = ""): Promise<void> {
-    await page.evaluate(({ selector, also }) => {
+export async function startFilm(page: Page, selector: string, also = "", anchor = ""): Promise<void> {
+    await page.evaluate(({ selector, also, anchor }) => {
         const w = window as unknown as { __film: { mark: number; frames: unknown[]; stop: boolean } };
         const film = { mark: -1, turn: -1, frames: [] as unknown[], stop: false };
         w.__film = film;
@@ -66,6 +69,7 @@ export async function startFilm(page: Page, selector: string, also = ""): Promis
                     anim: el.getAnimations().some((a) => a.playState === "running"),
                     clip: cs.clipPath,
                     also: also ? !!document.querySelector(also) : undefined,
+                    ...(anchor ? (({ left, top }) => ({ ax: left, ay: top }))(document.querySelector(anchor)?.getBoundingClientRect() ?? { left: 0, top: 0 }) : {}),
                 });
             }
             if (!film.stop) requestAnimationFrame(tick);
@@ -77,7 +81,7 @@ export async function startFilm(page: Page, selector: string, also = ""): Promis
         (window as unknown as { __turn: () => void }).__turn = () => {
             film.turn = performance.now() - t0;
         };
-    }, { selector, also });
+    }, { selector, also, anchor });
     await page.waitForTimeout(80);
 }
 
