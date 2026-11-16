@@ -1,6 +1,6 @@
 <script setup lang="ts">
-// Radii's stage: each corner rung on a real glass surface, at natural size.
-import { Surface } from "@glass/components/surface";
+// Radii's stage: each corner rung as one filled shape, at natural size. The fill is
+// mixed from the ink, so the corner reads against the stage plate in both themes.
 
 const RUNGS = [
     { cls: "rounded-sm", label: "4" },
@@ -16,10 +16,7 @@ const RUNGS = [
 <template>
     <div class="radii-stage">
         <figure v-for="r in RUNGS" :key="r.cls" class="radii-cell">
-            <Surface
-                tier="floating"
-                :class="[r.cls, 'radii-plate', { 'radii-plate--wide': 'wide' in r }]"
-            />
+            <div :class="[r.cls, 'radii-plate', { 'radii-plate--wide': 'wide' in r }]" />
             <figcaption>{{ r.label }}</figcaption>
         </figure>
     </div>
@@ -50,7 +47,7 @@ const RUNGS = [
 .radii-plate {
     inline-size: 6rem;
     block-size: 6rem;
-    border: 1px solid var(--glass-border-floating);
+    background-color: color-mix(in srgb, var(--foreground) 55%, transparent);
 }
 
 .radii-plate--wide {
