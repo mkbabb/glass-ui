@@ -1,6 +1,6 @@
 # Changelog
 
-## 11.1.0 — unreleased
+## 11.1.0 — 2026-11-15
 
 A minor release. No API changes shape, so your code keeps working as it is. Two
 undocumented route variables are gone with the slide they tuned: `--route-slide` and
