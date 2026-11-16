@@ -132,7 +132,7 @@
                       pairs at floating's 20px
          sheet    +2  content-bearing over a busy grid; radius pairs at overlay's 22px */
     --glass-veil-chassis: calc(var(--glass-veil-base) - 2 * var(--glass-veil-step));
-    --glass-veil-dock:    calc(var(--glass-veil-base) - 1 * var(--glass-veil-step));
+    --glass-veil-dock:    var(--glass-veil-base); /* RU-44: the dock rides the base rung */
     --glass-veil-crown:   calc(var(--glass-veil-base) + 1 * var(--glass-veil-step));
     --glass-veil-dialog:  calc(var(--glass-veil-base) + 1 * var(--glass-veil-step));
     --glass-veil-sheet:   calc(var(--glass-veil-base) + 2 * var(--glass-veil-step));

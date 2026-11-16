@@ -144,7 +144,8 @@
            (dock/dock.css), which is what lets the observer's measured luminance reach
            the paint. A `--glass-plate-*` colour endpoint bakes `:root`'s luma and
            cannot. */
-        --dock-plate-collapsed-tier: var(--glass-veil-wash);
+        /* RU-44: one tier, folded and open. */
+        --dock-plate-collapsed-tier: var(--glass-veil-dock);
         --dock-plate-collapsed-border: var(--glass-border-floating);
         --dock-plate-expanded-tier: var(--glass-veil-dock);
         --dock-plate-expanded-border: var(--glass-border-dock);

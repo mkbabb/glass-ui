@@ -18,7 +18,8 @@
    to list; the level term works for every surface that reads the rim, which is all of
    them. */
 @media (prefers-reduced-transparency: reduce) {
-    :root {
+    :root,
+    :root .glass-dock {
         --glass-level: 0;
         --glass-grain-opacity: 0;
     }
@@ -35,7 +36,8 @@
    and the level IS the mix. The separate tint-darken this bracket used to add was a
    second writer pushing the same plate the same direction. */
 @media (prefers-contrast: more) {
-    :root {
+    :root,
+    :root .glass-dock {
         --glass-level: 0.3;
         /* Definition is the MID rung of the SAME
            a11y ladder `--glass-level: 0.3` rides: an explicit "more contrast" request
@@ -66,7 +68,8 @@
    it maps to `Canvas`. The grain kill matches the reduce bracket (it sits off the
    level axis). */
 @media (forced-colors: active) {
-    :root {
+    :root,
+    :root .glass-dock {
         --glass-level: 0;
         --glass-grain-opacity: 0;
     }

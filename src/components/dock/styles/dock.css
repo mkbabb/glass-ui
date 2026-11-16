@@ -213,6 +213,12 @@
         pointer-events: none;
     }
 
+    /* RU-44: the dock's plate takes more of the scheme's own surface (G-15: words 4.5:1 and
+       glyphs 3:1 over a busy field, both schemes). The a11y brackets still lower it. */
+    .glass-dock {
+        --glass-level: 0.4;
+    }
+
     /* When a consumer needs the control run to be a real box (a scroll port lands here at
        ), it stays `overflow: visible` on the cross axis — never a clip. */
     .glass-dock > .dock-controls {

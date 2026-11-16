@@ -101,4 +101,12 @@
         backdrop-filter: none;
         -webkit-backdrop-filter: none;
     }
+
+    /* RU-44 with the orchestrator's clarification (2026-11-15): every word in a dock is the dock's full ink;
+       "not current" is the absence of the mark. An unselected segment's label is not mixed toward the
+       capsule's warm inside a dock. */
+    .glass-dock .segmented-tab:not([data-active]),
+    .glass-dock .segmented-tabs:not(.segmented-tabs--underline) .segmented-tab:not([data-active]):hover {
+        color: var(--dock-fg-on-aurora);
+    }
 }
