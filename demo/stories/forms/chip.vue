@@ -1,61 +1,80 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { Circle, Sparkles } from "@lucide/vue";
-import StoryPage from "../../chassis/page/StoryPage.vue";
-import StorySection from "../../chassis/section/StorySection.vue";
-import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
 import { Chip } from "@glass/components/chip";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StoryStage from "../../chassis/stage/StoryStage.vue";
+import StoryVariants from "../../chassis/variants/StoryVariants.vue";
+import StoryVariantRow from "../../chassis/variants/StoryVariantRow.vue";
+import StoryCode from "../../chassis/code/StoryCode.vue";
+import ChipStage from "./chip.stage.vue";
 
-const selected = ref(false);
+// A removed chip fades out in place, then fades back after a pause; its seat is kept so
+// nothing beside it moves.
 const removed = ref(false);
-const actions = ref(0);
+let timer = 0;
+function remove(): void {
+    removed.value = true;
+    window.clearTimeout(timer);
+    timer = window.setTimeout(() => (removed.value = false), 1600);
+}
+
+const snippet = `<Chip v-model="fourier" mode="selectable" tone="var(--viz-fourier)">
+    Fourier
+</Chip>
+<Chip mode="removable" remove-label="Remove filter" @remove="remove">
+    Draft
+</Chip>`;
 </script>
 
 <template>
     <StoryPage>
-        <StorySection
-            label="semantics"
-            blurb="Mode states the root contract explicitly; shape changes only geometry."
-        >
-            <ShowcaseFrame pad="lg">
-                <div class="flex flex-wrap items-center gap-3">
-                    <Chip>Static</Chip>
-                    <Chip shape="icon" tone="var(--section-color-5)">
-                        <Sparkles class="size-4" aria-hidden="true" />
-                    </Chip>
-                    <Chip v-model="selected" mode="selectable" tone="var(--section-color-7)">
-                        Selectable
-                    </Chip>
-                    <Chip mode="selectable" disabled>Disabled</Chip>
-                    <Chip mode="action" @click="actions++">Run · {{ actions }}</Chip>
-                    <Chip
-                        v-if="!removed"
-                        mode="removable"
-                        remove-label="Remove Fourier filter"
-                        @remove="removed = true"
-                    >
-                        Fourier
-                    </Chip>
-                </div>
-            </ShowcaseFrame>
-        </StorySection>
+        <template #stage>
+            <StoryStage size="fit">
+                <ChipStage />
+            </StoryStage>
+        </template>
 
-        <StorySection
-            label="geometry"
-            blurb="Pill, cell, and icon silhouettes retain the same declared semantics."
-        >
-            <ShowcaseFrame pad="lg">
-                <div class="flex flex-wrap items-center gap-3">
+        <template #variants>
+            <StoryVariants>
+                <StoryVariantRow label="Kinds">
+                    <Chip>Static</Chip>
+                    <Chip mode="action">Run</Chip>
+                    <Chip mode="selectable" disabled>Disabled</Chip>
+                    <span class="chip-seat" :data-removed="removed || undefined" :inert="removed">
+                        <Chip mode="removable" remove-label="Remove the draft filter" @remove="remove">
+                            Draft
+                        </Chip>
+                    </span>
+                </StoryVariantRow>
+                <StoryVariantRow label="Shapes">
                     <Chip shape="pill">Pill</Chip>
                     <Chip shape="cell">
                         <Circle class="size-5" aria-hidden="true" />
                         <span>Cell</span>
                     </Chip>
-                    <Chip shape="icon">
-                        <Circle class="size-4" aria-hidden="true" />
+                    <Chip shape="icon" aria-label="Icon">
+                        <Sparkles class="size-4" aria-hidden="true" />
                     </Chip>
-                </div>
-            </ShowcaseFrame>
-        </StorySection>
+                </StoryVariantRow>
+            </StoryVariants>
+        </template>
+
+        <template #code>
+            <StoryCode :code="snippet" />
+        </template>
     </StoryPage>
 </template>
+
+<style scoped>
+.chip-seat {
+    display: inline-flex;
+    transition:
+        opacity var(--duration-fast, 160ms) var(--ease-out),
+        scale var(--duration-fast, 160ms) var(--ease-out);
+}
+.chip-seat[data-removed] {
+    opacity: 0;
+    scale: 0.92;
+}
+</style>
