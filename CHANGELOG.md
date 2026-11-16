@@ -33,26 +33,31 @@ A patch on 11.1.0 about how surfaces leave. Nothing is removed or renamed.
 
 - **A popover moves by fading and a short slide.** A `Popover` and a hover card grew,
   unsquashed and sharpened from a blur as they arrived, and shrank, squashed and blurred
-  again as they left. They now enter and leave on opacity and
-  their few pixels of slide alone. A tooltip no longer shrinks as it leaves; it still
-  grows slightly as it arrives.
+  again as they left. They now enter and leave on opacity and their few pixels of slide
+  alone. A `Toast` arrives the same way, since it shares the popover's register, and so
+  does an element of your own that wears `.glass-reveal` with no `data-reveal` value or
+  with `data-reveal="overlay"`. `--enter-overlay-scale` and `--enter-overlay-blur` are
+  still defined, but they no longer shape these entrances; a site that tuned them for a
+  popover or a toast should know they no longer apply there. A tooltip no longer
+  shrinks as it leaves; it still grows slightly as it arrives.
 
-- **A closing surface leaves the same way however you close it.** A `Sheet` with
-  detents stopped shrinking at its smallest honest height and then vanished with half
-  of it still on screen; it now slides the rest of the way past the edge before it is
-  removed, however it is closed. A `CommandDialog` dropped its list in the first frame
-  of its close, so the plate fell to its search field before it faded; the list now
-  stays until the dialog is gone. Menus no longer run the `glass-menu-grow` keyframes to
-  open (the grow is a transition now, so it can turn back); the keyframes are still
-  defined for stylesheets that name them.
+- **A closing surface leaves the same way however you close it.** A `Sheet` with detents
+  stopped shrinking at its smallest honest height and then vanished with half of it
+  still on screen; it now slides the rest of the way past the edge before it is removed,
+  however it is closed. Dragged down and let go, it jumped back up to its rung before it
+  closed; it now carries on down from where the finger left it. A `CommandDialog`
+  dropped its list in the first frame of its close, so the plate fell to its search
+  field before it faded; the list now stays until the dialog is gone. Menus no longer
+  run the `glass-menu-grow` keyframes to open (the grow is a transition now, so it can
+  turn back); the keyframes are still defined for stylesheets that name them.
 
 - **A surface turned back mid-way turns from where it is.** Closing a `Popover`,
-  `DropdownMenu`, `Select` or `Toast` while it was still opening, or reopening one while
-  it was leaving, made it jump to fully open before it moved again, and an `Accordion`
-  or `Collapsible` reversed mid-way ran to its far end for a frame before it turned.
-  Each now carries on from the light and the height it had. The popups' exits are
-  transitions now, held for reka's presence by a keyframe that paints nothing
-  (`glass-reveal-hold`); the `glass-reveal-out` keyframe is still defined for
+  `DropdownMenu`, `Select` or `Toast` while it was still opening made it jump to fully
+  open before it moved again, as did reopening a `Popover` or a tooltip while it was
+  leaving, and an `Accordion` or `Collapsible` reversed mid-way ran to its far end for a
+  frame before it turned. Each now carries on from the light and the height it had. The
+  popups' exits are transitions now, held for reka's presence by a keyframe that paints
+  nothing (`glass-reveal-hold`); the `glass-reveal-out` keyframe is still defined for
   stylesheets that name it. A press on the trigger of a `Dialog`, `Sheet` or `Select`
   that is still leaving reopens it from where it stands, where the press used to be
   swallowed, and a press on the page behind a leaving sheet now reaches the page.
@@ -66,11 +71,13 @@ A patch on 11.1.0 about how surfaces leave. Nothing is removed or renamed.
   overlay for the in-page box in one frame, and its dim arrived the same way. The panel
   now shrinks and fades back out as the dim fades, and the content returns to its place
   only when that has finished. Closing it during its entrance, or reopening it during
-  its exit, turns it from where it is, and a leaving overlay lets presses through to
-  the page. While it leaves, the root keeps `data-state="expanded"` and the default
-  slot's `fullscreen` prop stays `true`, since the content is still in the overlay; the
-  root also carries a new `data-leaving` attribute for that stretch, so a style keyed
-  on the state follows the content out.
+  its exit, turns it from where it is, and a leaving overlay lets presses through to the
+  page. While it leaves, the root keeps `data-state="expanded"` and the default slot's
+  `fullscreen` prop stays `true`, since the content is still in the overlay; the root
+  also carries a new `data-leaving` attribute for that stretch, so a style keyed on the
+  state follows the content out. To turn back mid-way it runs on transitions now, so it
+  no longer runs the `expandable-container-birth` and `expandable-container-arrive`
+  keyframes; both are still defined for stylesheets that name them.
 
 - **Reduced motion is a fade.** With reduced motion turned on, popovers, menus, selects,
   tooltips, toasts, dialogs and sheets appeared and vanished in a single frame, an
@@ -78,11 +85,16 @@ A patch on 11.1.0 about how surfaces leave. Nothing is removed or renamed.
   from one face to the other. Each now fades in and out over at most 200 ms on
   `--exit-curve`, and nothing travels: a surface is in its place and at its size from
   the first frame, and a folding dock takes its new size at once while its two faces
-  cross-fade. The rule that stills motion under reduced motion now sits in its own
-  cascade layer, `reduced-motion`, declared after `utilities`, as a plain declaration.
-  Your own stylesheet's rule, such as `transition: opacity 144ms`, or a style set
-  inline, now keeps its clock under reduced motion without `!important`, where glass's
-  rule used to win even over `!important`. Utility classes are still stilled.
+  cross-fade. A `Select`, menu or popover trigger seated in a dock darkens on a press
+  without shrinking, so what it opens is placed against the trigger at rest. The rule
+  that stills motion under reduced motion now sits in its own cascade layer,
+  `reduced-motion`, declared after `utilities`, as a plain declaration. Your own
+  stylesheet's rule, such as `transition: opacity 144ms`, or a style set inline, now
+  keeps its clock under reduced motion without `!important`, where glass's rule used to
+  win even over `!important`. That works both ways: glass no longer stills your own
+  unlayered or inline animations and transitions under reduced motion, movement
+  included, so a site that relied on it to stop them needs a `prefers-reduced-motion`
+  rule of its own. Utility classes are still stilled.
 
 - **Surfaces say when they have finished leaving.** `Dialog`, `Sheet`, `Popover` (and
   its hover card), `DropdownMenu` (and `ContextMenu`), `Select`, `Tooltip` and `Toast`
