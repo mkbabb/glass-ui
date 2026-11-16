@@ -7,7 +7,7 @@ export const section: SectionRoutes = {
     icon: Sparkles,
     lede: "Springs, scrolling, decks and moving text.",
     routes: [
-        { id: "springs", title: "Springs", lede: "Tune a spring or an easing curve and watch it move." },
+        { id: "springs", title: "Springs", lede: "Tune a curve and watch it move." },
         { id: "scroll", title: "Scroll Progress", lede: "Progress and reveals that follow a scrolling column." },
         { id: "deck", title: "Deck", lede: "A presentation you page through by key, dot or arrow." },
         { id: "handmark", title: "Hand Mark", lede: "A pen that underlines, strikes, circles and highlights." },

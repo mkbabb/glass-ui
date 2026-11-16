@@ -21,33 +21,46 @@ const t = ref(1);
 const value = computed(() => curve.value.fn(t.value));
 const drawn = ref(true);
 
-const span = computed(() => curve.value.peak - curve.value.floor);
-const along = computed(() => (value.value - curve.value.floor) / span.value);
+// The track spans one fixed range, so the disc's rest is the same spot for every curve.
+const LOW = -0.15;
+const HIGH = 1.35;
+const along = computed(() => Math.min(1, Math.max(0, (value.value - LOW) / (HIGH - LOW))));
 const clipped = computed(() => curve.value.peak > 1.1 || curve.value.floor < -0.1);
 
 let raf = 0;
-let start = 0;
 
-function frame(now: number): void {
-    if (!start) start = now;
-    t.value = Math.min(1, (now - start) / curve.value.ms);
-    raf = t.value < 1 ? requestAnimationFrame(frame) : 0;
+// Runs t from its current value to `to` over `ms`, eased or linear in time.
+function run(to: number, ms: number, eased: boolean, done?: () => void): void {
+    cancelAnimationFrame(raf);
+    const from = t.value;
+    let start = 0;
+    const frame = (now: number): void => {
+        if (!start) start = now;
+        const k = Math.min(1, (now - start) / ms);
+        const e = eased ? k * k * (3 - 2 * k) : k;
+        t.value = from + (to - from) * e;
+        if (k < 1) raf = requestAnimationFrame(frame);
+        else done?.();
+    };
+    raf = requestAnimationFrame(frame);
 }
 
+// A replay first carries the disc back along the curve, then plays it forward.
 function play(): void {
-    cancelAnimationFrame(raf);
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        cancelAnimationFrame(raf);
         t.value = 1;
         return;
     }
-    start = 0;
-    t.value = 0;
-    raf = requestAnimationFrame(frame);
+    const forward = (): void => run(1, curve.value.ms, false);
+    if (t.value > 0) run(0, 160 + 220 * t.value, true, forward);
+    else forward();
 }
 
 function wipeAndPlay(): void {
     drawn.value = false;
     requestAnimationFrame(() => {
+        window.clearTimeout(pending);
         drawn.value = true;
         play();
     });
@@ -134,14 +147,14 @@ defineExpose({ play });
     inset-inline-start: 0.25rem;
     inline-size: var(--disc);
     block-size: var(--disc);
-    border-radius: var(--radius-pill);
+    border-radius: 50%;
     background: var(--motion-accent, var(--primary));
     translate: calc(var(--along) * (100cqi - var(--disc) - 0.5rem)) 0;
 }
 
 .springs-replay {
     position: absolute;
-    inset-block-end: 0.75rem;
+    inset-block-start: 0.75rem;
     inset-inline-start: 0.75rem;
 }
 </style>
