@@ -734,6 +734,21 @@ const stageStyle = computed(() =>
             </GlassDock>
             <button type="button" data-testid="w-words-longer" style="margin-top: 24px" @click="wordsB = wordsB === 'bw' ? 'cbw' : 'bw'">longer</button>
         </template>
+        <!-- MEASURE-7 (RU-54, C6-M8): w-pwords, a dock capped by its stage whose #persistent seat is a worded Select
+             trigger; the button outside makes its word longer or shorter, which takes room from the run with the run's
+             seats, their count and the root's extent unchanged. -->
+        <template v-if="cell === 'w-pwords'">
+            <GlassDock data-testid="w-pwords" aria-label="figure" :collapse="false" style="max-inline-size: 100%">
+                <template #persistent>
+                    <Select v-model="wordsB">
+                        <DockTrigger for="select" aria-label="View" data-testid="w-pwords-view"><SelectValue /></DockTrigger>
+                        <SelectContent><SelectItem value="bw">View: Bandwidth</SelectItem><SelectItem value="cbw">View: Contracted bandwidth</SelectItem></SelectContent>
+                    </Select>
+                </template>
+                <DockControl v-for="p in manyTabs.slice(0, 3)" :key="p.id" :aria-label="p.label" :data-testid="`w-pwords-${p.id}`"><component :is="p.icon" /></DockControl>
+            </GlassDock>
+            <button type="button" data-testid="w-pwords-longer" style="margin-top: 24px" @click="wordsB = wordsB === 'bw' ? 'cbw' : 'bw'">longer</button>
+        </template>
         <GlassDock v-if="cell === 'w-railp'" data-testid="w-railp" aria-label="sections" orientation="vertical" collapse="closed">
             <template #persistent>
                 <DockControl aria-label="Home" data-testid="w-railp-home"><Home /></DockControl>
