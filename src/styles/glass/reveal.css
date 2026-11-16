@@ -60,15 +60,15 @@
         --reveal-exit-curve: var(--exit-curve);
         /* The materialize channels — the register bundle's scale-from / decongest-blur /
            edge-slide. The overlay default is scale-from 0.94, blur 6px (the dominant
-           overlay channel), slide 0.5rem. The closed/exit leg +
-           @starting-style read these knobs (with a defensive fallback for a non-supporting
+           overlay channel), slide 0.5rem. The entrance's @starting-style reads the
+           scale and blur knobs, and the closed state the slide (with a defensive fallback for a non-supporting
            engine). */
         --glass-reveal-enter-scale: var(--enter-overlay-scale);
         --glass-reveal-blur: var(--enter-overlay-blur);
         --glass-reveal-slide: var(--enter-overlay-slide);
         /* The SQUISH channel — the same volume-preserving born-wide+flat squish the
            universal `.liquid-enter` mount recipe speaks (ONE grammar, no fork). The
-           closed leg rides it on the `scale:` LONGHAND (vol-preserving sx·sy ≈ 1),
+           entrance rides it on the `scale:` LONGHAND (vol-preserving sx·sy ≈ 1),
            settling to `1 1` at open; the bloom-from-small grace is the coupled
            scale-down (--glass-reveal-enter-scale) × this squish, never a separate
            transform: shorthand (which would clobber a centering transform). */
@@ -157,8 +157,8 @@
            inserted element regardless of data-state timing. Applying the native
            top-layer grammar to the data-state recipe lets the entrance
            interpolate FROM the closed values on the register's own clock (≥6 intermediate
-           frames). The from-state MIRRORS the closed snapshot below exactly — the enter
-           blooms from where the exit recedes to. The transition/timing is inherited
+           frames). The from-state is the bloom; the exit below does not retrace it, it
+           only fades and slides. The transition/timing is inherited
            from the base `.glass-reveal` rule (the register spring on the SPATIAL legs,
            ease-out on the EFFECTS legs); the
            closed rule's fast un-sprung exit clock is NOT reached on enter. Under PRM
@@ -176,15 +176,12 @@
        `--exit-curve` (a bezier, NO overshoot — a closing surface must never overshoot
        past gone); NO `--spring-*` token on the exit. */
     .glass-reveal[data-state="closed"] {
-        /* Born wide+flat AND bloom-from-small: the SQUISH (--lq-stretch-x/-y,
-           vol-preserving) couples with the bloom-from-0.94 on the SAME `scale:`
-           LONGHAND (two factors, ONE longhand — never a second transform: shorthand
-           that would clobber a Dialog's centering translate). These static values are
-           the EXIT end-state and the end-state the entrance's `@starting-style` mirrors. */
-        scale: calc(var(--glass-reveal-enter-scale, 0.94) * var(--lq-stretch-x, 1.06))
-            calc(var(--glass-reveal-enter-scale, 0.94) * var(--lq-stretch-y, 0.945));
+        /* The exit is opacity and the side's few pixels of slide, nothing else: the
+           surface keeps its size and its focus as it goes. The bloom (scale, squish and
+           blur) belongs to the entrance alone, in the open rule's `@starting-style`. */
+        scale: 1 1;
         opacity: 0;
-        filter: blur(var(--glass-reveal-blur));
+        filter: blur(0);
         /* The exit is a TRANSITION on every channel, from wherever the surface stands:
            a close during the entrance turns the entrance around, and a reopen during the
            exit turns the exit around, each from its current value (the engine retargets

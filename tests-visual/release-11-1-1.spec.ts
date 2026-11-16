@@ -393,6 +393,50 @@ for (const c of exitCases) {
     });
 }
 
+// The exit is opacity and a few pixels of travel: no squash, no scale, no blur on the
+// way out, read from the computed style on every frame of a Popover's and a Tooltip's
+// exit.
+for (const c of [
+    { name: "Popover", trigger: '[data-testid="x-popover"]', content: '[data-testid="x-popover-content"]' },
+    { name: "Tooltip", trigger: '[data-testid="x-tooltip"]', content: '[data-testid="x-tooltip-content"]', hover: true },
+]) {
+    test(`exit · a ${c.name} leaves on opacity and its slide alone`, async ({ page }, info) => {
+        const project = info.project.name;
+        test.skip(Boolean(c.hover) && isPhone(project), "a Tooltip does not open on touch");
+        await openHarness(page);
+        if (c.hover) await page.locator(c.trigger).hover();
+        else await pressOn(page, project, c.trigger);
+        await page.locator(`${c.content}[data-state$="open"]`).waitFor();
+        await page.waitForTimeout(900);
+        const frames = await page.evaluate(
+            (sel) =>
+                new Promise<{ t: number; scale: string; filter: string }[]>((done) => {
+                    const out: { t: number; scale: string; filter: string }[] = [];
+                    const t0 = performance.now();
+                    const tick = (t: number) => {
+                        const el = document.querySelector(sel);
+                        if (el) {
+                            const cs = getComputedStyle(el);
+                            out.push({ t: Math.round(t - t0), scale: cs.scale, filter: cs.filter });
+                        }
+                        if (el && t - t0 < 1200) requestAnimationFrame(tick);
+                        else done(out);
+                    };
+                    document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
+                    requestAnimationFrame(tick);
+                }),
+            c.content,
+        );
+        await info.attach("exit", { body: JSON.stringify(frames), contentType: "application/json" });
+        expect(frames.length, "the exit is filmed").toBeGreaterThan(2);
+        for (const f of frames) {
+            const at = `+${f.t} ms ${JSON.stringify(frames.slice(0, 12))}`;
+            expect(f.scale === "none" || f.scale === "1" || f.scale === "1 1", `no scale ${at}`).toBe(true);
+            expect(f.filter === "none" || f.filter === "blur(0px)", `no blur ${at}`).toBe(true);
+        }
+    });
+}
+
 // ── routes ─────────────────────────────────────────────────────────────────────────
 /** Opacity times the share of the box on screen. */
 function seenIn(vw: { width: number; height: number }) {
