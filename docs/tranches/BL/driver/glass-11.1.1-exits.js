@@ -1,5 +1,5 @@
 export const meta = {
-  name: 'glass-11.1.1-exits'
+  name: 'glass-11.1.1-exits',
   description: 'glass-ui 11.1.1, the exits patch on 11.1.0: every surface that opens leaves on a tween, turns from where it is, is glass where its siblings are, and fades under reduced motion; two build seats in order, Fable critics on a finite list, then the release close (no tag or push)',
   phases: [{ title: 'Build' }, { title: 'Verify' }, { title: 'Fix' }, { title: 'Close' }],
 }
