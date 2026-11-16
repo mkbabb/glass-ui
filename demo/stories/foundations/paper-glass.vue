@@ -1,8 +1,5 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { Badge } from "@glass/components/badge";
-import { DarkModeToggle } from "@glass/components/dark-mode-toggle";
-import { GlassDock } from "@glass/components/dock";
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StoryStage from "../../chassis/stage/StoryStage.vue";
 import StoryVariants from "../../chassis/variants/StoryVariants.vue";
@@ -41,15 +38,6 @@ const snippet = `<template>
             <StoryVariants>
                 <StoryVariantRow v-model="ground" label="Ground" :options="GROUNDS" />
                 <StoryVariantRow v-model="grain" label="Grain" :options="GRAIN" />
-                <StoryVariantRow label="Bare plate">
-                    <GlassDock :collapse="false" fit-content aria-label="Theme">
-                        <DarkModeToggle size="dock" />
-                    </GlassDock>
-                    <GlassDock :collapse="false" fit-content aria-label="Result">
-                        <Badge variant="secondary">Step 2 of 4</Badge>
-                        <Badge>Ready</Badge>
-                    </GlassDock>
-                </StoryVariantRow>
             </StoryVariants>
         </template>
 
