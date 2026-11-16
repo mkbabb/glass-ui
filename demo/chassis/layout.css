@@ -138,3 +138,175 @@
 .story-stage {
     block-size: var(--stage-block);
 }
+
+/* ── The page form ─────────────────────────────────────────────────────────
+   Header, stage, variants, code: in that order and nothing else. */
+:root {
+    /* The `tall` stage: surfaces, containers, docks, data, scenes. */
+    --story-stage-tall: min(56svh, 40rem);
+    /* The `fit` stage's floor: small controls at their natural size. */
+    --story-stage-fit-min: 16rem;
+    /* The editor's stage floor at narrow widths. */
+    --configurator-stage-min: 18.75rem;
+}
+
+@media (width <= 768px) {
+    :root {
+        --story-stage-fit-min: 14rem;
+    }
+}
+
+.story-article {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.story-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    color: var(--foreground);
+}
+
+.story-header-return {
+    display: inline-flex;
+    inline-size: fit-content;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: var(--text-small, 0.875rem);
+    color: var(--foreground);
+}
+
+.story-header-title {
+    font-family: var(--font-display);
+    font-size: var(--chrome-title-rung);
+    font-weight: var(--type-weight-display);
+    line-height: var(--type-leading-display);
+    letter-spacing: var(--type-tracking-display);
+    font-optical-sizing: auto;
+    color: var(--foreground);
+}
+
+.story-header-lede {
+    color: var(--foreground);
+}
+
+/* The stage: one box, full article width, keyed to its own width. */
+[data-story-stage] {
+    position: relative;
+    container-type: inline-size;
+    inline-size: 100%;
+    border-radius: var(--radius-3xl);
+    border: 1px solid var(--glass-border-quiet);
+    overflow: clip;
+}
+
+[data-story-stage="tall"] {
+    block-size: var(--story-stage-tall);
+}
+
+[data-story-stage="fit"] {
+    min-block-size: var(--story-stage-fit-min);
+    display: grid;
+    align-content: center;
+    padding: var(--sp-5);
+}
+
+/* Variants: at most three labelled rows under the stage. */
+[data-story-variants] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+}
+
+.story-variant-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-3) var(--sp-4);
+}
+
+.story-variant-label {
+    min-inline-size: 6rem;
+    font-size: var(--text-small, 0.875rem);
+    color: var(--foreground);
+}
+
+.story-variant-items {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-3);
+}
+
+/* ── The editor form ───────────────────────────────────────────────────────
+   The studio is the page: it fills from the header to the pager dock's clearance and
+   the page itself does not scroll. Its editor never drops under 18rem. */
+.story-article[data-form="editor"] {
+    block-size: 100%;
+    min-block-size: 0;
+}
+
+.story-article[data-form="editor"] .story-header-lede {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.story-editor {
+    flex: 1 1 auto;
+    min-block-size: 40rem;
+    display: flex;
+}
+
+@media (width > 768px) {
+    .story-editor {
+        min-block-size: 0;
+    }
+}
+
+.story-editor-shell {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+    min-block-size: 0;
+}
+
+.story-editor-shell > [data-slot="configurator"] {
+    block-size: 100%;
+}
+
+[data-story-stage="fill"] {
+    border: 0;
+    border-radius: 0;
+    overflow: visible;
+    container-type: normal;
+}
+
+/* One line per control: the label on the left, the control on the right. */
+.story-editor-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-3);
+    min-block-size: 2.5rem;
+    max-block-size: 3rem;
+    padding-inline: 1.25rem;
+    font-size: var(--text-small, 0.875rem);
+    color: var(--foreground);
+}
+
+.story-editor-row > :last-child {
+    flex: 0 1 12rem;
+    display: flex;
+    justify-content: flex-end;
+    min-inline-size: 0;
+}
+
+/* The landing card grid: four across at 1440, one across at 390. */
+.story-card-grid {
+    display: grid;
+    align-items: start;
+    grid-template-columns: repeat(auto-fill, minmax(min(18.125rem, 100%), 1fr));
+    gap: var(--sp-4);
+}

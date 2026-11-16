@@ -19,11 +19,16 @@ describe("demo route field ownership", () => {
         expect(router.currentRoute.value.meta.ownsCanvas).toBe(true);
     }, 30_000);
 
-    it("every other route keeps the live shell field, async () => {
+    it("every other route keeps the live shell field, and no row carries a background", async () => {
         await router.push("/display/buttons");
         expect(router.currentRoute.value.meta.ownsCanvas).toBe(false);
         await router.push("/");
         expect(router.currentRoute.value.meta.ownsCanvas).toBeFalsy();
+        for (const category of CATEGORIES) {
+            for (const story of category.stories) {
+                expect(story).not.toHaveProperty("background");
+            }
+        }
     }, 30_000);
 
     // BK #21 W-DAG-REDUCE. The shell field used to be a `shellFieldActive` computed
