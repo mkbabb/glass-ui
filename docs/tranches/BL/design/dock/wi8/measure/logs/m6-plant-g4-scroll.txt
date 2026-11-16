@@ -1,0 +1,15 @@
+== g4-scroll 03:32:14 (load { 15.80 15.27 14.80 })
+applied g4-scroll - G-4 (the open seat changes in a compact scrolling run): the offset left to the run's reach
+== p3-seat-long-coarse chromium 03:32:17 load { 15.10 15.13 14.75 }
+{"cell":"390-coarse-light","rows":"p3-seat-long-coarse.wi8.chromium.390-coarse-light.rows.json","strips":[],"frames":297,"firstChange":92.9,"lastChange":1925.9,"screencast":null,"consoleErrors":0}
+chromium rc=0
+== p3-seat-long-coarse webkit 03:32:26 load { 15.17 15.16 14.76 }
+{"cell":"390-coarse-light","rows":"p3-seat-long-coarse.wi8.webkit.390-coarse-light.rows.json","strips":[],"frames":151,"firstChange":64,"lastChange":1964,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g4-scroll
+-- judge
+p3-seat-long-coarse chromium 390-coarse-light [{"mark":"neighbour","seatsMoved":0,"largestPx":0,"plateMovePx":0,"viol":[]},{"mark":"far","seatsMoved":10,"largestPx":260,"plateMovePx":0,"viol":["seat#0 from rest 20.0% > 1.6%","seat#0 step 20.0% > 8.0%","seat#0 step 20.0% > 8.1%","seat#0 last 52.00 px","seat#1 from rest 20.0% > 1.6%","seat#1 step 20.0% > 8.0%"]},{"mark":"twice","seatsMoved":10,"largestPx":278.4,"plateMovePx":0,"viol":["seat#0 from rest 18.7% > 1.6%","seat#0 step 18.7% > 8.0%","seat#0 last 52.00 px","seat#1 from rest 18.7% > 1.6%","seat#1 step 18.7% > 8.0%","seat#1 last 52.00 px"]}]
+p3-seat-long-coarse webkit 390-coarse-light [{"mark":"neighbour","seatsMoved":0,"largestPx":0,"plateMovePx":0,"viol":[]},{"mark":"far","seatsMoved":10,"largestPx":260,"plateMovePx":0,"viol":["seat#0 from rest 20.0% > 5.3%","seat#0 step 20.0% > 15.3%","seat#0 step 20.0% > 16.3%","seat#0 step 20.0% > 17.2%","seat#0 step 20.0% > 18.2%","seat#0 last 52.00 px"]},{"mark":"twice","seatsMoved":10,"largestPx":276,"plateMovePx":0,"viol":["seat#0 from rest 18.8% > 7.2%","seat#0 step 18.8% > 18.2%","seat#0 step 18.8% > 14.4%","seat#0 step 18.8% > 15.3%","seat#0 last 52.00 px","seat#1 from rest 18.8% > 7.2%"]}]
+p3-seat-long-coarse | chromium | 390-coarse-light | curve 0 | held 0 | whole {"row":296,"fits":false,"whole":5,"of":10,"partial":[],"absent":5,"ext":326,"over":210,"room":374,"offset":104,"focused":false} | touch true | openSeat 0 | FAIL: at open rest: row 296: a run that does not fit rests 326.0 px wide in a room of 374
+p3-seat-long-coarse | webkit | 390-coarse-light | curve 0 | held 0 | whole {"row":150,"fits":false,"whole":5,"of":10,"partial":[],"absent":5,"ext":326,"over":210,"room":374,"offset":104,"focused":false} | touch true | openSeat 0 | FAIL: at open rest: row 150: a run that does not fit rests 326.0 px wide in a room of 374
+== done 03:32:35

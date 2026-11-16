@@ -1,0 +1,13 @@
+== g2-whole-length 03:46:53 (load { 14.40 13.31 13.59 })
+applied g2-whole-length - G-2 (RU-27): a length written in place of the percentage (the carrier caps the run at n pitches in px)
+== p5-many-lift-fine chromium 03:46:56 load { 14.68 13.39 13.62 }
+{"cell":"1440-fine-light","rows":"p5-many-lift-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":249,"firstChange":56.9,"lastChange":1665.3,"screencast":null,"consoleErrors":0}
+chromium rc=0
+== p5-many-lift-fine webkit 03:47:04 load { 14.31 13.33 13.60 }
+{"cell":"1440-fine-light","rows":"p5-many-lift-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":141,"firstChange":69,"lastChange":1918,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g2-whole-length
+-- judge
+p5-many-lift-fine | chromium | 1440-fine-light | curve 0.01 | held 0 | whole {"row":248,"fits":false,"whole":6,"of":7,"partial":[],"absent":1,"ext":304,"over":50,"room":304,"offset":0,"focused":false} | lift null | cap plate 0 hidden 0 | FAIL: the host's cap lifted: every seat shows never after the change (bound 2)
+p5-many-lift-fine | webkit | 1440-fine-light | curve 0 | held 0 | whole {"row":140,"fits":false,"whole":6,"of":7,"partial":[],"absent":1,"ext":304,"over":50,"room":304,"offset":0,"focused":false} | lift null | cap plate 0 hidden 0 | FAIL: the host's cap lifted: every seat shows never after the change (bound 2)
+== done 03:47:13

@@ -1,0 +1,13 @@
+== g2-held 03:32:35 (load { 15.64 15.25 14.80 })
+applied g2-held - G-2 (from rest): a leaving face sized by its border box as its content box
+== p3-fold-pill-fine chromium 03:32:38 load { 15.59 15.25 14.80 }
+{"cell":"1440-fine-light","rows":"p3-fold-pill-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":217,"firstChange":239.7,"lastChange":1406,"screencast":null,"consoleErrors":0}
+chromium rc=0
+== p3-fold-pill-fine webkit 03:32:45 load { 18.13 15.81 15.01 }
+{"cell":"1440-fine-light","rows":"p3-fold-pill-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":125,"firstChange":233,"lastChange":1665,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g2-held
+-- judge
+p3-fold-pill-fine | chromium | 1440-fine-light | curve 0.03 | held 4 | whole {"row":122,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":208,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: a unit moves 4.00 px in the window's first row (seat#0 row 123)
+p3-fold-pill-fine | webkit | 1440-fine-light | curve 0.02 | held 4 | whole {"row":76,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":208,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: a unit moves 4.00 px in the window's first row (seat#0 row 77)
+== done 03:32:53

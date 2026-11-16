@@ -1,0 +1,31 @@
+== g2-lane 03:33:24 (load { 16.23 15.56 14.94 })
+applied g2-lane - G-2 (inside the plate): every lane corner rounded, as before (CSS scales them down)
+== p3-region-fine chromium 03:33:27 load { 15.81 15.48 14.92 }
+{"cell":"1440-fine-light","rows":"p3-region-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":548,"firstChange":237.1,"lastChange":4144.9,"screencast":null,"consoleErrors":0}
+== p3-region-rm chromium 03:33:33 load { 15.42 15.41 14.90 }
+{"cell":"1440-fine-light-rm","rows":"p3-region-rm.wi8.chromium.1440-fine-light-rm.rows.json","strips":[],"frames":368,"firstChange":232.6,"lastChange":2657.4,"screencast":null,"consoleErrors":0}
+== p3-fold-outlet-fine chromium 03:33:38 load { 15.31 15.38 14.89 }
+{"cell":"1440-fine-light","rows":"p3-fold-outlet-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":227,"firstChange":246.1,"lastChange":1478.9,"screencast":null,"consoleErrors":0}
+== p3-fold-fourier-fine chromium 03:33:42 load { 14.64 15.24 14.84 }
+{"cell":"1440-fine-light","rows":"p3-fold-fourier-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":230,"firstChange":311.5,"lastChange":1486.3,"screencast":null,"consoleErrors":0}
+chromium rc=0
+== p3-region-fine webkit 03:33:50 load { 14.43 15.19 14.83 }
+{"cell":"1440-fine-light","rows":"p3-region-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":281,"firstChange":223,"lastChange":4266,"screencast":null,"consoleErrors":0}
+== p3-region-rm webkit 03:33:56 load { 14.93 15.28 14.86 }
+{"cell":"1440-fine-light-rm","rows":"p3-region-rm.wi8.webkit.1440-fine-light-rm.rows.json","strips":[],"frames":192,"firstChange":228,"lastChange":2786,"screencast":null,"consoleErrors":0}
+== p3-fold-outlet-fine webkit 03:34:01 load { 14.94 15.28 14.86 }
+{"cell":"1440-fine-light","rows":"p3-fold-outlet-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":124,"firstChange":240,"lastChange":1650,"screencast":null,"consoleErrors":0}
+== p3-fold-fourier-fine webkit 03:34:05 load { 14.94 15.28 14.86 }
+{"cell":"1440-fine-light","rows":"p3-fold-fourier-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":115,"firstChange":294,"lastChange":1496,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g2-lane
+-- judge
+p3-fold-fourier-fine | chromium | 1440-fine-light | curve 0.02 | held 0 | whole {"row":132,"fits":true,"whole":3,"of":3,"partial":[],"absent":0,"ext":204,"over":0,"room":1424,"offset":0,"focused":false} | pass
+p3-fold-fourier-fine | webkit | 1440-fine-light | curve 0.01 | held 0 | whole {"row":66,"fits":true,"whole":3,"of":3,"partial":[],"absent":0,"ext":204,"over":0,"room":1424,"offset":0,"focused":false} | pass
+p3-fold-outlet-fine | chromium | 1440-fine-light | curve 0 | held 0 | whole {"row":131,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":302,"over":0,"room":1424,"offset":0,"focused":false} | pass
+p3-fold-outlet-fine | webkit | 1440-fine-light | curve 0 | held 0 | whole {"row":75,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":302,"over":0,"room":1424,"offset":0,"focused":false} | pass
+p3-region-fine | chromium | 1440-fine-light | curve 0.02 | held 0 | whole {"row":282,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":252,"over":0,"room":1424,"offset":0,"focused":false} | pass
+p3-region-fine | webkit | 1440-fine-light | curve 0.01 | held 0 | whole {"row":145,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":252,"over":0,"room":1424,"offset":0,"focused":false} | pass
+p3-region-rm | chromium | 1440-fine-light-rm | curve 1.62 | held 0 | whole {"row":190,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":252,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: content 1.62 px outside the plate's curve (seat#1 row 191 (travel))
+p3-region-rm | webkit | 1440-fine-light-rm | curve 1.62 | held 0 | whole {"row":103,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":252,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: content 1.62 px outside the plate's curve (seat#1 row 104 (travel))
+== done 03:34:13

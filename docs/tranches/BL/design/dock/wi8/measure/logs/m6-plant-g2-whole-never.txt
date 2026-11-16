@@ -1,0 +1,19 @@
+== g2-whole-never 03:46:23 (load { 16.06 13.49 13.66 })
+applied g2-whole-never - G-2 (RU-27): the whole-seat flag never set
+== p3-fold-many-coarse chromium 03:46:26 load { 15.65 13.44 13.65 }
+{"cell":"390-coarse-light","rows":"p3-fold-many-coarse.wi8.chromium.390-coarse-light.rows.json","strips":[],"frames":205,"firstChange":94,"lastChange":1294,"screencast":null,"consoleErrors":0}
+== p3-fold-many-c360 chromium 03:46:30 load { 15.65 13.44 13.65 }
+{"cell":"360-coarse-light","rows":"p3-fold-many-c360.wi8.chromium.360-coarse-light.rows.json","strips":[],"frames":204,"firstChange":76.8,"lastChange":1269.2,"screencast":null,"consoleErrors":0}
+chromium rc=0
+== p3-fold-many-coarse webkit 03:46:36 load { 15.14 13.40 13.63 }
+{"cell":"390-coarse-light","rows":"p3-fold-many-coarse.wi8.webkit.390-coarse-light.rows.json","strips":[],"frames":102,"firstChange":64,"lastChange":1262,"screencast":null,"consoleErrors":0}
+== p3-fold-many-c360 webkit 03:46:40 load { 15.14 13.40 13.63 }
+{"cell":"360-coarse-light","rows":"p3-fold-many-c360.wi8.webkit.360-coarse-light.rows.json","strips":[],"frames":102,"firstChange":64,"lastChange":1265,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g2-whole-never
+-- judge
+p3-fold-many-c360 | chromium | 360-coarse-light | curve 0.02 | held 0 | whole {"row":106,"fits":false,"whole":5,"of":7,"partial":[12],"absent":1,"ext":296,"over":84,"room":344,"offset":0,"focused":false} | touch true | FAIL: at open rest: row 106: a run that does not fit has a partial seat [12] (+1 rests)
+p3-fold-many-c360 | webkit | 360-coarse-light | curve 0.02 | held 0 | whole {"row":52,"fits":false,"whole":5,"of":7,"partial":[12],"absent":1,"ext":296,"over":84,"room":344,"offset":0,"focused":false} | touch true | FAIL: at open rest: row 52: a run that does not fit has a partial seat [12] (+1 rests)
+p3-fold-many-coarse | chromium | 390-coarse-light | curve 0.02 | held 0 | whole {"row":109,"fits":false,"whole":5,"of":7,"partial":[42],"absent":1,"ext":326,"over":54,"room":374,"offset":0,"focused":false} | touch true | FAIL: at open rest: row 109: a run that does not fit has a partial seat [42] (+1 rests)
+p3-fold-many-coarse | webkit | 390-coarse-light | curve 0.02 | held 0 | whole {"row":52,"fits":false,"whole":5,"of":7,"partial":[42],"absent":1,"ext":326,"over":54,"room":374,"offset":0,"focused":false} | touch true | FAIL: at open rest: row 52: a run that does not fit has a partial seat [42] (+1 rests)
+== done 03:46:48

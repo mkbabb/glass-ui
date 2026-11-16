@@ -29,9 +29,9 @@ try {
                 const span = Math.max(...kids.map((c) => c.offsetLeft + c.offsetWidth)) - Math.min(...kids.map((c) => c.offsetLeft));
                 const capped = run.clientWidth, whole = run.hasAttribute("data-run-whole");
                 if (whole) run.removeAttribute("data-run-whole");
-                const lifted = run.clientWidth, region = run.parentElement.clientWidth, dockW = d.getBoundingClientRect().width;
+                const lifted = run.clientWidth, region = run.parentElement.clientWidth, dockW = d.getBoundingClientRect().width; const hs = getComputedStyle(run.parentElement), rs = getComputedStyle(run), px = (x) => parseFloat(x) || 0; const room = Math.floor(region - px(hs.paddingLeft) - px(hs.paddingRight) - px(rs.marginLeft) - px(rs.marginRight) - px(rs.borderLeftWidth) - px(rs.borderRightWidth) + 0.01);
                 if (whole) run.setAttribute("data-run-whole", "");
-                return { cap, fits: d.hasAttribute("data-run-fits"), whole, span, capped, lifted, region, dockW: +dockW.toFixed(2), flips: log.length, log: log.slice(0, 8) };
+                return { cap, fits: d.hasAttribute("data-run-fits"), whole, span, capped, lifted, region, room, dockW: +dockW.toFixed(2), flips: log.length, log: log.slice(0, 8) };
             }, cap);
             console.log(JSON.stringify(r));
         }

@@ -1,0 +1,42 @@
+== g1-lift 03:30:11 (load { 17.79 15.09 14.67 })
+applied g1-lift - G-1 (f): the linger scheduled in the touch pointerup, before the tap's focus
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8
+
+ ❯ tests/components/custom/dock/GlassDock.posture.test.ts (24 tests | 1 failed | 23 skipped) 24ms
+     × holds while the finger is down and folds one linger after the lift, past the tap's focus 23ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/custom/dock/GlassDock.posture.test.ts > useDockState — G-1 (f): a held finger holds, the linger runs from the lift > holds while the finger is down and folds one linger after the lift, past the tap's focus
+AssertionError: one linger after the lift: expected 'hover' to be 'collapsed' // Object.is equality
+
+Expected: "collapsed"
+Received: "hover"
+
+ ❯ tests/components/custom/dock/GlassDock.posture.test.ts:186:65
+    184|         expect(handle.state.value, "not before one linger from the lif…
+    185|         vi.advanceTimersByTime(400);
+    186|         expect(handle.state.value, "one linger after the lift").toBe("…
+       |                                                                 ^
+    187|     });
+    188| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 23 skipped (24)
+   Start at  03:30:11
+   Duration  1.02s (transform 383ms, setup 62ms, import 418ms, tests 24ms, environment 342ms)
+
+unit rc=1
+{"finger":{"how":"CDP touchStart/touchEnd","opened":true,"foldedWhileHeld":false,"lifted":{"open":true,"pinned":false,"focus":"w-pill-read","focusSummary":false,"fv":false,"held":false,"exp":true},"foldAfterLiftMs":null,"end":{"open":true,"pinned":false,"focus":"w-pill-read","focusSummary":false,"fv":false,"held":false,"exp":true},"events":[[826,"pointerdown","touch"],[826,"pointerup","touch"],[826,"touchend",""],[827,"focusin",""],[827,"click","touch"],[1743,"pointerdown","touch"],[10748,"pointerup","touch"],[10749,"touchend",""],[10749,"focusin",""],[10750,"click","touch"]],"tDown":1741,"tUp":10747}}
+{"tapseat":{"foldAfterSeatTapMs":null,"end":{"open":true,"pinned":false,"focus":"w-pill-read","focusSummary":false,"fv":false,"held":false,"exp":true}}}
+{"c390":{"g":{"opened":true,"pinned":false,"foldAfterTapMs":6008},"hOutside":{"opened":true,"foldAfterTapOutsideMs":2.8}}}
+chromium rc=0
+{"tapseat":{"foldAfterSeatTapMs":null,"end":{"open":true,"pinned":false,"focus":"w-pill-read","focusSummary":false,"fv":false,"held":false,"exp":true}}}
+{"c390":{"g":{"opened":true,"pinned":false,"foldAfterTapMs":6013},"hOutside":{"opened":true,"foldAfterTapOutsideMs":3}}}
+webkit rc=0
+reverted g1-lift
+== done 03:31:56

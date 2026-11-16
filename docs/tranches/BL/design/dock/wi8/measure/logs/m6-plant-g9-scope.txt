@@ -1,0 +1,13 @@
+== g9-scope 03:39:31 (load { 10.29 12.76 13.86 })
+applied g9-scope - G-9: the scope write removed
+== p3-scope-fine chromium 03:39:34 load { 10.29 12.76 13.86 }
+{"cell":"1440-fine-light","rows":"p3-scope-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":223,"firstChange":255.8,"lastChange":1438.6,"screencast":null,"consoleErrors":0}
+chromium rc=0
+== p3-scope-fine webkit 03:39:42 load { 9.63 12.54 13.77 }
+{"cell":"1440-fine-light","rows":"p3-scope-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":125,"firstChange":233,"lastChange":1664,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g9-scope
+-- judge
+p3-scope-fine chromium 1440-fine-light: rest first 0 last 0; absent rows 0; class change without data-morphing 0; scope element vs root max 0.0000; follower rows 90, worst lag 4 rows (off by 100.00 px) -> FAIL
+p3-scope-fine webkit 1440-fine-light: rest first 0 last 0; absent rows 0; class change without data-morphing 0; scope element vs root max 0.0000; follower rows 46, worst lag 4 rows (off by 100.00 px) -> FAIL
+== done 03:39:49

@@ -1,0 +1,176 @@
+[guarded] waiting for the 'webkit' lock
+
+Running 8 tests using 1 worker
+
+  ✓  1 [webkit] › tests-visual/release-10-1-5.spec.ts:723:5 › critique 2, coarse phone › e4 at 390: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring (5.7s)
+  ✓  2 [webkit] › tests-visual/release-10-1-5.spec.ts:723:5 › e4 at 1440: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring (3.6s)
+  ✓  3 [webkit] › tests-visual/release-10-1-5.spec.ts:1189:5 › critique 5, coarse phone › k3 at 320: a capped dock whose seats all show holds the fit law and rests round (2.1s)
+  ✓  4 [webkit] › tests-visual/release-10-1-5.spec.ts:1189:5 › k3 at 320: a capped dock whose seats all show holds the fit law and rests round (2.6s)
+  ✓  5 [webkit] › tests-visual/release-10-1-5.spec.ts:1412:5 › critique 7, coarse phone › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge (18.2s)
+  ✓  6 [webkit] › tests-visual/release-10-1-5.spec.ts:1412:5 › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge (17.9s)
+[WebServer] 12:44:15 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:59
+[WebServer] 
+[WebServer] 12:44:22 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:59
+[WebServer] 
+[WebServer] 12:44:22 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:59
+[WebServer] 
+  ✘  7 [webkit] › tests-visual/release-10-1-5.spec.ts:2343:5 › s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round (46.5s)
+[WebServer] 12:45:00 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:59
+[WebServer] 
+[WebServer] 12:45:00 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:59
+[WebServer] 
+[WebServer] 12:45:04 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:59
+[WebServer] 
+[WebServer] 12:45:04 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:59
+[WebServer] 
+[WebServer] 12:45:05 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:59
+[WebServer] 
+[WebServer] 12:45:05 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:59
+[WebServer] 
+[WebServer] 12:45:07 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:59
+[WebServer] 
+[WebServer] 12:45:07 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:59
+[WebServer] 
+  ✘  8 [webkit] › tests-visual/release-10-1-5.spec.ts:2343:5 › fix 11, coarse phone › s2 O-201 at 390: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round (46.7s)
+
+
+  1) [webkit] › tests-visual/release-10-1-5.spec.ts:2343:5 › s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round 
+
+    Error: a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 21
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "cap": 268,
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 4,
+    +     "port": 252,
+    +     "radii": Array [
+    +       "28px",
+    +       "28px",
+    +       "28px",
+    +       "28px",
+    +     ],
+    +     "range": 8,
+    +     "ring": 4,
+    +     "round": true,
+    +     "span": 252,
+    +   },
+    + ]
+
+      2368 |         }
+      2369 |         expect(unfit, `the sweep under ${natural} crosses the fit edge`).toBeGreaterThan(2);
+    > 2370 |         expect(bad, "a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round").toEqual([]);
+           |                                                                                                                                                ^
+      2371 |     });
+      2372 | }
+      2373 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:2370:144
+
+    Error Context: tests-visual/test-results/release-10-1-5-s2-O-201-at-f97e1-t-hides-nothing-rests-round-webkit/error-context.md
+
+  2) [webkit] › tests-visual/release-10-1-5.spec.ts:2343:5 › fix 11, coarse phone › s2 O-201 at 390: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round 
+
+    Error: a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 59
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "cap": 275,
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 2,
+    +     "port": 259,
+    +     "radii": Array [
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +     ],
+    +     "range": 6,
+    +     "ring": 4,
+    +     "round": true,
+    +     "span": 257,
+    +   },
+    +   Object {
+    +     "cap": 274,
+    +     "fits": true,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 6,
+    +     "port": 255,
+    +     "radii": Array [
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +     ],
+    +     "range": 10,
+    +     "ring": 4,
+    +     "round": true,
+    +     "span": 257,
+    +   },
+    +   Object {
+    +     "cap": 273,
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 4,
+    +     "port": 257,
+    +     "radii": Array [
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +     ],
+    +     "range": 8,
+    +     "ring": 4,
+    +     "round": true,
+    +     "span": 257,
+    +   },
+    + ]
+
+      2368 |         }
+      2369 |         expect(unfit, `the sweep under ${natural} crosses the fit edge`).toBeGreaterThan(2);
+    > 2370 |         expect(bad, "a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round").toEqual([]);
+           |                                                                                                                                                ^
+      2371 |     });
+      2372 | }
+      2373 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:2370:144
+
+    Error Context: tests-visual/test-results/release-10-1-5-fix-11-coar-b6824-t-hides-nothing-rests-round-webkit/error-context.md
+
+  2 failed
+    [webkit] › tests-visual/release-10-1-5.spec.ts:2343:5 › s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:2343:5 › fix 11, coarse phone › s2 O-201 at 390: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round 
+  6 passed (2.5m)
+rc=1

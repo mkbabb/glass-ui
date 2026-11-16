@@ -1,0 +1,13 @@
+/* RU-44 step 1: one step, one tier. The dock rung is the base rung (0.14 light, 0.18 dark); the folded plate takes it too. */
+:root { --glass-veil-dock: var(--glass-veil-base); }
+.glass-dock { --dock-plate-collapsed-tier: var(--glass-veil-dock); }
+/* RU-44 step 2: the dock's plate takes more of the scheme's own surface. */
+.glass-dock { --glass-level: 0.4; }
+/* RU-44 step 3, ink by deletion: no word or glyph in a dock dimmed to rank it (the chevron's 0.5; the tab seat's
+   muted ink is the dock's ink, as adaptive-legibility.css already re-points it). */
+.glass-dock .dock-select-trigger__chevron { opacity: 1; }
+.glass-dock .dock-tab-button { color: var(--dock-fg-on-aurora); }
+/* INPUT-secondary-ink (orchestrator, 2026-11-15): every word in a dock is full ink; "not current" is the absence of
+   the mark. An unselected segment's label is not mixed toward the capsule's warm inside a dock. */
+.glass-dock .segmented-tab:not([data-active]),
+.glass-dock .segmented-tabs:not(.segmented-tabs--underline) .segmented-tab:not([data-active]):hover { color: var(--dock-fg-on-aurora); }

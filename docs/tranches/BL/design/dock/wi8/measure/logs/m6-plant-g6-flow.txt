@@ -1,0 +1,31 @@
+== g6-flow 03:34:13 (load { 14.38 15.15 14.82 })
+applied g6-flow - G-6: a name put in flow on hover (the hovered seat 24 px wider)
+== p3-hover-fine chromium 03:34:16 load { 13.95 15.05 14.79 }
+{"cell":"1440-fine-light","rows":"p3-hover-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":1214,"firstChange":234.6,"lastChange":9425.5,"screencast":null,"consoleErrors":0}
+== p4-hover-390 chromium 03:34:29 load { 13.99 15.03 14.79 }
+{"cell":"390-fine-light","rows":"p4-hover-390.wi8.chromium.390-fine-light.rows.json","strips":[],"frames":1183,"firstChange":235.1,"lastChange":9137.1,"screencast":null,"consoleErrors":0}
+== p4-hover-key chromium 03:34:42 load { 13.78 14.93 14.75 }
+{"cell":"1440-fine-light","rows":"p4-hover-key.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":398,"firstChange":81.3,"lastChange":458,"screencast":null,"consoleErrors":0}
+== p6-press-fine chromium 03:34:47 load { 13.39 14.83 14.72 }
+{"cell":"1440-fine-light","rows":"p6-press-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":760,"firstChange":235.5,"lastChange":6326.4,"screencast":null,"consoleErrors":0}
+chromium rc=0
+== p3-hover-fine webkit 03:35:01 load { 12.97 14.66 14.66 }
+{"cell":"1440-fine-light","rows":"p3-hover-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":598,"firstChange":223,"lastChange":9267,"screencast":null,"consoleErrors":0}
+== p4-hover-390 webkit 03:35:13 load { 12.73 14.55 14.62 }
+{"cell":"390-fine-light","rows":"p4-hover-390.wi8.webkit.390-fine-light.rows.json","strips":[],"frames":598,"firstChange":223,"lastChange":9221,"screencast":null,"consoleErrors":0}
+== p4-hover-key webkit 03:35:25 load { 12.62 14.47 14.59 }
+{"cell":"1440-fine-light","rows":"p4-hover-key.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":200,"firstChange":81,"lastChange":3114,"screencast":null,"consoleErrors":0}
+== p6-press-fine webkit 03:35:30 load { 15.87 15.08 14.81 }
+{"cell":"1440-fine-light","rows":"p6-press-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":371,"firstChange":220,"lastChange":6165,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g6-flow
+-- judge
+FAIL p3-hover-fine.wi8.chromium.1440-fine-light.rows.json: rows 1060, largest box change 24.00 px (seat#0 row 160), folded rows 0
+FAIL p3-hover-fine.wi8.webkit.1440-fine-light.rows.json: rows 531, largest box change 24.00 px (dock row 68), folded rows 0
+FAIL p4-hover-390.wi8.chromium.390-fine-light.rows.json: rows 1060, largest box change 24.00 px (seat#1 row 127), folded rows 0
+FAIL p4-hover-390.wi8.webkit.390-fine-light.rows.json: rows 531, largest box change 24.00 px (seat#1 row 69), folded rows 0
+pass p4-hover-key.wi8.chromium.1440-fine-light.rows.json: rows 291, largest box change 0.00 px (-), folded rows 0
+FAIL p4-hover-key.wi8.webkit.1440-fine-light.rows.json: rows 146, largest box change 4.00 px (seat#0 row 114), folded rows 0
+FAIL p6-press-fine.wi8.chromium.1440-fine-light.rows.json: rows 605, largest box change 28.00 px (seat#4 row 701), folded rows 0
+FAIL p6-press-fine.wi8.webkit.1440-fine-light.rows.json: rows 304, largest box change 28.00 px (seat#4 row 353), folded rows 0
+== done 03:35:43

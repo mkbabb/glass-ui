@@ -51,8 +51,9 @@ try {
         out[`hit-${id}-390`] = await cell(390, true, url, async (page) => {
             await page.locator(`[data-testid=${id}] .dock-layer--summary`).tap();
             await page.waitForTimeout(800);
-            const boxes = await page.$$eval(`[data-testid=${id}] [data-glass-dock-seat]`, (els) => els.map((e) => { const r = e.getBoundingClientRect(); return [e.getAttribute("aria-label"), +r.width.toFixed(1), +r.height.toFixed(1)]; }));
-            return { seats: boxes.length, under44: boxes.filter((b) => b[1] < 44 || b[2] < 44) };
+            const boxes = await page.$$eval(`[data-testid=${id}] [data-glass-dock-seat]`, (els) => els.map((e) => { const r = e.getBoundingClientRect(); const g = e.querySelector(":scope > svg, :scope > img, :scope > picture, :scope > [data-dock-glyph]")?.getBoundingClientRect(); return [e.getAttribute("aria-label"), +r.width.toFixed(1), +r.height.toFixed(1), g ? +g.width.toFixed(1) : null]; }));
+            // RU-45 (MEASURE-6): each seat's glyph width is recorded beside its box (the share at 390 coarse).
+            return { seats: boxes.length, under44: boxes.filter((b) => b[1] < 44 || b[2] < 44), glyphs: boxes.map((b) => `${b[0]} ${b[1]}x${b[2]} glyph ${b[3]}`) };
         });
     }
     // 3. The layer group's roving (PROTOTYPE-3: w-lseats, whose faces hold seats): one stop in

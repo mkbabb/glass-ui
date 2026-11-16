@@ -1,0 +1,14 @@
+== g2-rim 03:27:57 (load { 14.08 13.09 13.98 })
+applied g2-rim - G-2 (the rim): the rim drawn on the root, not the plate
+== p3-fold-rim-fine chromium 03:28:00 load { 13.75 13.04 13.95 }
+{"cell":"1440-fine-light","rows":"p3-fold-rim-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":218,"firstChange":240,"lastChange":1414.3,"screencast":null,"consoleErrors":0}
+chromium rc=0
+[guarded] waiting for the 'webkit' lock
+== p3-fold-rim-fine webkit 03:28:31 load { 18.67 14.19 14.33 }
+{"cell":"1440-fine-light","rows":"p3-fold-rim-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":125,"firstChange":244,"lastChange":1653,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g2-rim
+-- judge
+p3-fold-rim-fine | chromium | 1440-fine-light | curve 0.02 | held 0 | rim {"dev":76,"fill":"40..40%"} | whole {"row":123,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":208,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: rim 76.00 px off the plate's edge
+p3-fold-rim-fine | webkit | 1440-fine-light | curve 0.02 | held 0 | rim {"dev":76,"fill":"40..40%"} | whole {"row":75,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":208,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: rim 76.00 px off the plate's edge
+== done 03:28:40

@@ -1,6 +1,12 @@
 // cells6.mjs: MEASURE-6. m4/cells.mjs with RU-42: G-1 (f)'s WebKit cell is retired (WebKit's finger
 // was dispatched pointer events, which is what a unit test sends; clause (f) is read there by the unit
 // witness on useDockState and in Chromium on a real touch). Logs logs/m4-cells.<tag>.<engine>.json.
+// RU-43's cells, added:
+//   G-1 390 railp  a vertical rail whose folded face is only its persistent seats, at 390 coarse: it rests
+//                  open (R-2: a dock with nothing to tap), and does not fold in 8 s
+//   G-8 trig       the overlays dock (w-g8) open; each of DropdownMenu, Select, a click Popover and a Sheet
+//                  opened from its seat, then its trigger pressed again, by mouse (1440) and by touch (390
+//                  coarse): the surface closes once, is still closed 1 s later, and the dock is still open
 // cells.mjs <port> <tag> [--engine chromium|webkit]: MEASURE-4, the cells MEASURE-3 did not run,
 // each with an action that reaches the state it reads. One browser, a new context per cell,
 // everything closed in finally. Times are read in the page (performance.now()) from a
@@ -164,6 +170,97 @@ const cells = {
             return { opened, foldAfterMs: f ? +(f[0] - t0).toFixed(1) : null };
         });
         return { fine1440: fine, coarse390: coarse };
+    },
+    // INPUT-hover-shift (reading only): how far the in-flow dock's neighbours move on hover and on focus.
+    async inflow() {
+        const res = {};
+        for (const coarse of [false, true]) {
+            res[coarse ? "390-touch" : "1440-fine"] = await withPage(coarse, "w-inflow", "", async ({ page, center, st }) => {
+                const boxes = () => page.evaluate(() => Object.fromEntries(["w-inflow", "w-inflow-beside", "w-inflow-below"].map((k) => { const r = document.querySelector(`[data-testid=${k}]`).getBoundingClientRect(); return [k, { x: +r.x.toFixed(2), y: +r.y.toFixed(2), w: +r.width.toFixed(2), h: +r.height.toFixed(2) }]; })));
+                const d = (a, b, k) => ({ dx: +(b[k].x - a[k].x).toFixed(2), dy: +(b[k].y - a[k].y).toFixed(2), dw: +(b[k].w - a[k].w).toFixed(2), dh: +(b[k].h - a[k].h).toFixed(2) });
+                const rest = await boxes();
+                const [x, y] = await center("[data-testid=w-inflow]");
+                if (coarse) await page.touchscreen.tap(x, y);
+                else { await page.mouse.move(x - 200, y); await page.mouse.move(x, y, { steps: 3 }); }
+                await page.waitForTimeout(1200);
+                const hov = await boxes(); const openH = (await st()).open;
+                const out = { open: openH, [coarse ? "tap" : "hover"]: { dock: d(rest, hov, "w-inflow"), beside: d(rest, hov, "w-inflow-beside"), below: d(rest, hov, "w-inflow-below") } };
+                if (!coarse) {
+                    await page.mouse.move(2, 2); await page.evaluate(() => window.__dockApi?.value?.collapse()); await page.waitForTimeout(1200);
+                    const rest2 = await boxes();
+                    await page.evaluate(() => document.querySelector("[data-testid=w-inflow] .dock-layer--summary, [data-testid=w-inflow] [tabindex], [data-testid=w-inflow] button")?.focus());
+                    await page.keyboard.press("Shift"); await page.waitForTimeout(1200);
+                    const foc = await boxes();
+                    out.focus = { open: (await st()).open, dock: d(rest2, foc, "w-inflow"), beside: d(rest2, foc, "w-inflow-beside"), below: d(rest2, foc, "w-inflow-below") };
+                }
+                return out;
+            });
+        }
+        return res;
+    },
+    // INPUT-daraksha-2x, 23:15 point 1 (reading only): a seat's name on touch. Hover (fine) and a tap and a
+    // press-and-hold (touch, 390) on w-seat's Search seat; whether any tooltip with a name is shown.
+    async touchname() {
+        const tip = (page) => page.evaluate(() => [...document.querySelectorAll("[role=tooltip], [data-dock-tooltip], [data-reka-popper-content-wrapper]")].filter((e) => { const r = e.getBoundingClientRect(); return r.width > 0 && r.height > 0 && +getComputedStyle(e).opacity > 0.05; }).map((e) => e.textContent.trim().slice(0, 30)));
+        const fine = await withPage(false, "w-seat", "", async ({ page, center }) => {
+            await hoverOpen(page, center, "w-seat");
+            const [x, y] = await center("[data-testid=w-seat-search]");
+            await page.mouse.move(x, y, { steps: 3 }); await page.waitForTimeout(1200);
+            return { hoverNames: await tip(page) };
+        });
+        const touch = await withPage(true, "w-seat", "", async ({ page, center }) => {
+            const [dx, dy] = await center("[data-testid=w-seat]");
+            await page.touchscreen.tap(dx, dy); await page.waitForTimeout(900);
+            const [x, y] = await center("[data-testid=w-seat-search]");
+            const cdp = engine === "chromium" ? await page.context().newCDPSession(page) : null;
+            let held = null;
+            if (cdp) {
+                await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x, y }] });
+                await page.waitForTimeout(1200); held = await tip(page);
+                await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+            }
+            await page.waitForTimeout(300);
+            const afterHold = await tip(page);
+            return { holdNames: held ?? "press-and-hold not dispatchable in this engine (Playwright WebKit has no touch-hold)", afterRelease: afterHold };
+        });
+        return { fine, touch, namesOnTouch: Array.isArray(touch.holdNames) ? touch.holdNames.length > 0 : null };
+    },
+    async railp() {
+        return withPage(true, "w-railp", "", async ({ page, now, cls, st }) => {
+            await page.waitForTimeout(900);
+            const first = await st();
+            const t0 = await now();
+            await page.waitForTimeout(8000);
+            const f = firstAfter(await cls(), t0, "collapsed");
+            return { restsOpen: first.open, foldedIn8s: !!f, pass: first.open && !f };
+        });
+    },
+    async trig() {
+        const surfaces = [["menu", "[data-testid=w-g8-menu]", "[data-testid=w-g8-menu-content]"], ["select", "[data-testid=w-g8-select]", "[data-testid=w-g8-select-content]"], ["popover", "[data-testid=w-g8-pop]", "[data-testid=w-g8-pop-content]"], ["sheet", "[data-testid=w-g8-sheet]", "[data-testid=w-g8-sheet-content]"]];
+        const out = {};
+        for (const coarse of [false, true]) for (const [name, trig, content] of surfaces) {
+            out[`${name}-${coarse ? "touch" : "mouse"}`] = await withPage(coarse, "w-g8", "", async ({ page, center, st }) => {
+                const shown = () => page.evaluate((s) => { const e = document.querySelector(s); if (!e) return false; const r = e.getBoundingClientRect(); return r.width > 0 && r.height > 0 && +getComputedStyle(e).opacity > 0.05 && e.getAttribute("data-state") !== "closed"; }, content);
+                const press = async (x, y) => { if (coarse) await page.touchscreen.tap(x, y); else await page.mouse.click(x, y); };
+                if (coarse) { const [x, y] = await center("[data-testid=w-g8]"); await page.touchscreen.tap(x, y); await page.waitForTimeout(900); }
+                else await hoverOpen(page, center, "w-g8");
+                const dockOpen0 = (await st()).open;
+                const [tx, ty] = await center(trig);
+                await press(tx, ty);
+                await page.waitForTimeout(700);
+                const opened = await shown();
+                let opens = 0; await page.evaluate((s) => { window.__opens = 0; const mo = new MutationObserver(() => { const e = document.querySelector(s); if (e && e.getAttribute("data-state") === "open") window.__opens++; }); mo.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ["data-state"] }); }, content);
+                await press(tx, ty);
+                await page.waitForTimeout(500);
+                const closed = !(await shown());
+                await page.waitForTimeout(1000);
+                const stillClosed = !(await shown());
+                opens = await page.evaluate(() => window.__opens);
+                const dockOpen = (await st()).open;
+                return { dockOpen0, opened, closed, stillClosed, reopened: opens, dockOpen, pass: opened && closed && stillClosed && dockOpen && opens === 0 };
+            });
+        }
+        return out;
     },
     async c390() {
         const g = await withPage(true, "w-pill", "", async ({ page, now, cls, center, st }) => {

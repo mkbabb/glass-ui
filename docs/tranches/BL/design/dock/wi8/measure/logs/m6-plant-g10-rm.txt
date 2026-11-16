@@ -1,0 +1,51 @@
+== g10-rm 03:39:49 (load { 9.18 12.39 13.71 })
+applied g10-rm - G-10: reduced motion's seat removed (geometry glides on the spring)
+== p3-fold-pill-rm chromium 03:39:52 load { 8.76 12.25 13.65 }
+{"cell":"1440-fine-light-rm","rows":"p3-fold-pill-rm.wi8.chromium.1440-fine-light-rm.rows.json","strips":[],"frames":222,"firstChange":247.9,"lastChange":1422.8,"screencast":null,"consoleErrors":0}
+== p3-swap-xf-rm chromium 03:39:56 load { 8.38 12.12 13.59 }
+{"cell":"1440-fine-light-rm","rows":"p3-swap-xf-rm.wi8.chromium.1440-fine-light-rm.rows.json","strips":[],"frames":277,"firstChange":70.8,"lastChange":1790.9,"screencast":null,"consoleErrors":0}
+== p3-swap-layers-rm chromium 03:39:59 load { 8.38 12.12 13.59 }
+{"cell":"1440-fine-light-rm","rows":"p3-swap-layers-rm.wi8.chromium.1440-fine-light-rm.rows.json","strips":[],"frames":314,"firstChange":224.6,"lastChange":2082.3,"screencast":null,"consoleErrors":0}
+chromium rc=0
+[guarded] waiting for the 'webkit' lock
+== p3-fold-pill-rm webkit 03:41:14 load { 12.84 12.45 13.58 }
+{"cell":"1440-fine-light-rm","rows":"p3-fold-pill-rm.wi8.webkit.1440-fine-light-rm.rows.json","strips":[],"frames":111,"firstChange":243,"lastChange":1435,"screencast":null,"consoleErrors":0}
+== p3-swap-xf-rm webkit 03:41:17 load { 12.37 12.36 13.54 }
+{"cell":"1440-fine-light-rm","rows":"p3-swap-xf-rm.wi8.webkit.1440-fine-light-rm.rows.json","strips":[],"frames":142,"firstChange":70,"lastChange":1835,"screencast":null,"consoleErrors":0}
+== p3-swap-layers-rm webkit 03:41:21 load { 12.18 12.32 13.52 }
+{"cell":"1440-fine-light-rm","rows":"p3-swap-layers-rm.wi8.webkit.1440-fine-light-rm.rows.json","strips":[],"frames":161,"firstChange":233,"lastChange":2153,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g10-rm
+-- judge
+p3-fold-pill-rm | wi8 | chromium | 1440-fine-light-rm | load 8.76/8.38 | f28-f29 8ms | L 76px first 100% max 100% last 76px; R 76px first 100% max 100% last 76px | op60 0.01 | out 0px | FAIL: full fade 27 values over 225 ms; summary fade 27 values over 225 ms; seat#0 fade 27 values over 225 ms; seat#1 fade 27 values over 225 ms; seat#2 fade 27 values over 225 ms; seat#3 fade 27 values over 225 ms
+p3-fold-pill-rm | wi8 | chromium | 1440-fine-light-rm | load 8.76/8.38 | f73-f74 8ms |  | op60 0 | out 0px | pass
+p3-fold-pill-rm | wi8 | chromium | 1440-fine-light-rm | load 8.76/8.38 | f124-f125 8ms | L 76px first 100% max 100% last 76px; R 76px first 100% max 100% last 76px | op60 0.01 | out 0px | FAIL: full fade 27 values over 225 ms; summary fade 27 values over 225 ms; seat#0 fade 27 values over 225 ms; seat#1 fade 27 values over 225 ms; seat#2 fade 27 values over 225 ms; seat#3 fade 27 values over 225 ms
+p3-fold-pill-rm | wi8 | chromium | 1440-fine-light-rm | load 8.76/8.38 | f169-f170 8ms |  | op60 0 | out 0px | pass
+p3-fold-pill-rm | wi8 | webkit | 1440-fine-light-rm | load 12.37/12.37 | f13-f14 26ms | L 76px first 100% max 100% last 76px; R 76px first 100% max 100% last 76px | op60 0.01 | out 0px | FAIL: full fade 15 values over 240 ms; summary fade 15 values over 240 ms; seat#0 fade 15 values over 240 ms; seat#1 fade 15 values over 240 ms; seat#2 fade 15 values over 240 ms; seat#3 fade 15 values over 240 ms
+p3-fold-pill-rm | wi8 | webkit | 1440-fine-light-rm | load 12.37/12.37 | f36-f37 17ms |  | op60 0 | out 0px | FAIL: full fade 14 values over 215 ms; summary fade 14 values over 215 ms; seat#0 fade 14 values over 215 ms; seat#1 fade 14 values over 215 ms; seat#2 fade 14 values over 215 ms; seat#3 fade 14 values over 215 ms
+p3-fold-pill-rm | wi8 | webkit | 1440-fine-light-rm | load 12.37/12.37 | f62-f63 19ms | L 76px first 100% max 100% last 76px; R 76px first 100% max 100% last 76px | op60 0.04 | out 0px | FAIL: full fade 16 values over 248 ms; summary fade 16 values over 248 ms; seat#0 fade 16 values over 248 ms; seat#1 fade 16 values over 248 ms; seat#2 fade 16 values over 248 ms; seat#3 fade 16 values over 248 ms
+p3-fold-pill-rm | wi8 | webkit | 1440-fine-light-rm | load 12.37/12.37 | f85-f86 18ms |  | op60 0 | out 0px | pass
+p3-swap-layers-rm | wi8 | chromium | 1440-fine-light-rm | load 8.51/8.51 | f26-f27 8ms | L 115.6px first 100% max 100% last 115.61px; R 115.6px first 100% max 100% last 115.59px; T 26px first 100% max 100% last 26px; B 26px first 100% max 100% last 26px | op60 0.02 | out 0px | FAIL: full fade 27 values over 226 ms; summary fade 26 values over 217 ms; face#0 fade 27 values over 226 ms
+p3-swap-layers-rm | wi8 | chromium | 1440-fine-light-rm | load 8.51/8.51 | f71-f72 9ms |  | op60 0 | out 0px | pass
+p3-swap-layers-rm | wi8 | chromium | 1440-fine-light-rm | load 8.51/8.51 | f121-f122 7ms | L 5.8px first 100% max 100% last 5.76px; R 5.8px first 100% max 100% last 5.77px | op60 0.02 | out 0px | FAIL: face#0 fade 27 values over 226 ms; face#1 fade 27 values over 226 ms
+p3-swap-layers-rm | wi8 | chromium | 1440-fine-light-rm | load 8.51/8.51 | f153-f154 8ms |  | op60 0 | out 0px | pass
+p3-swap-layers-rm | wi8 | chromium | 1440-fine-light-rm | load 8.51/8.51 | f204-f217 110ms | L 4.9px first 4.3% max 4.3% last 4.94px; R 4.9px first 4.3% max 4.3% last 4.94px | op60 0.14 | out 0px | FAIL: face#1 still fading 209 ms after third; face#2 still fading 209 ms after third
+p3-swap-layers-rm | wi8 | chromium | 1440-fine-light-rm | load 8.51/8.51 | f249-f250 8ms |  | op60 0 | out 0px | pass
+p3-swap-layers-rm | wi8 | webkit | 1440-fine-light-rm | load 12.18/12.33 | f12-f13 34ms | L 117.3px first 100% max 100% last 117.28px; R 117.3px first 100% max 100% last 117.28px; T 26px first 100% max 100% last 26px; B 26px first 100% max 100% last 26px | op60 0.01 | out 0px | FAIL: full fade 17 values over 251 ms; summary fade 17 values over 251 ms; face#0 fade 17 values over 251 ms
+p3-swap-layers-rm | wi8 | webkit | 1440-fine-light-rm | load 12.18/12.33 | f36-f37 15ms |  | op60 0 | out 0px | FAIL: face#0 fade 14 values over 208 ms; face#1 fade 14 values over 208 ms
+p3-swap-layers-rm | wi8 | webkit | 1440-fine-light-rm | load 12.18/12.33 | f62-f63 24ms | L 6.1px first 100% max 100% last 6.09px; R 6.1px first 100% max 100% last 6.08px | op60 0.01 | out 0px | FAIL: face#0 fade 15 values over 242 ms; face#1 fade 15 values over 242 ms
+p3-swap-layers-rm | wi8 | webkit | 1440-fine-light-rm | load 12.18/12.33 | f79-f80 18ms |  | op60 0 | out 0px | pass
+p3-swap-layers-rm | wi8 | webkit | 1440-fine-light-rm | load 12.18/12.33 | f105-f112 127ms | L 5.4px first 4.6% max 4.6% last 5.4px; R 5.4px first 4.6% max 4.6% last 5.39px | op60 0.14 | out 0px | FAIL: face#1 still fading 224 ms after third; face#2 still fading 224 ms after third
+p3-swap-layers-rm | wi8 | webkit | 1440-fine-light-rm | load 12.18/12.33 | f128-f129 15ms |  | op60 0 | out 0px | pass
+p3-swap-xf-rm | wi8 | chromium | 1440-fine-light-rm | load 8.38/8.38 | f6-f7 8ms | L 12.5px first 100% max 100% last 12.5px; R 12.5px first 100% max 100% last 12.5px; T 17.8px first 100% max 100% last 17.75px; B 17.8px first 100% max 100% last 17.75px | op60 0.01 | out 0px | FAIL: face#0 fade 27 values over 225 ms; face#1 fade 27 values over 225 ms
+p3-swap-xf-rm | wi8 | chromium | 1440-fine-light-rm | load 8.38/8.38 | f38-f39 10ms |  | op60 0 | out 0px | pass
+p3-swap-xf-rm | wi8 | chromium | 1440-fine-light-rm | load 8.38/8.38 | f88-f89 8ms | L 24.7px first 100% max 100% last 24.67px; R 24.7px first 100% max 100% last 24.68px; T 26.6px first 100% max 100% last 26.62px; B 26.6px first 100% max 100% last 26.63px | op60 0.01 | out 0px | FAIL: face#1 fade 27 values over 225 ms; face#2 fade 27 values over 225 ms
+p3-swap-xf-rm | wi8 | chromium | 1440-fine-light-rm | load 8.38/8.38 | f120-f121 8ms |  | op60 0 | out 0px | pass
+p3-swap-xf-rm | wi8 | chromium | 1440-fine-light-rm | load 8.38/8.38 | f171-f184 107ms | L 15.8px first 64% max 64% last 3.61px; R 15.8px first 64% max 64% last 3.61px; T 17.8px first 66.7% max 66.7% last 8.88px; B 17.8px first 66.7% max 66.7% last 8.87px | op60 0.14 | out 0px | FAIL: face#0 still fading 218 ms after third; face#2 still fading 177 ms after third; face#3 still fading 193 ms after third
+p3-swap-xf-rm | wi8 | chromium | 1440-fine-light-rm | load 8.38/8.38 | f214-f215 9ms |  | op60 0 | out 0px | pass
+p3-swap-xf-rm | wi8 | webkit | 1440-fine-light-rm | load 12.37/12.18 | f3-f4 22ms | L 11.8px first 100% max 100% last 11.78px; R 11.8px first 100% max 100% last 11.78px; T 17.8px first 100% max 100% last 17.75px; B 17.8px first 100% max 100% last 17.75px | op60 0.03 | out 0px | FAIL: face#0 fade 16 values over 245 ms; face#1 fade 16 values over 245 ms
+p3-swap-xf-rm | wi8 | webkit | 1440-fine-light-rm | load 12.37/12.18 | f20-f21 18ms |  | op60 0 | out 0px | FAIL: face#1 fade 14 values over 216 ms; face#2 fade 14 values over 216 ms
+p3-swap-xf-rm | wi8 | webkit | 1440-fine-light-rm | load 12.37/12.18 | f45-f46 30ms | L 24.1px first 100% max 100% last 24.14px; R 24.1px first 100% max 100% last 24.14px; T 26.6px first 100% max 100% last 26.62px; B 26.6px first 100% max 100% last 26.63px | op60 0 | out 0px | FAIL: face#1 fade 16 values over 248 ms; face#2 fade 16 values over 248 ms
+p3-swap-xf-rm | wi8 | webkit | 1440-fine-light-rm | load 12.37/12.18 | f62-f63 18ms |  | op60 0 | out 0px | FAIL: face#2 fade 14 values over 216 ms
+p3-swap-xf-rm | wi8 | webkit | 1440-fine-light-rm | load 12.37/12.18 | f88-f110 367ms | L 16.2px first 67.1% max 67.1% last 3.83px; R 16.2px first 67.1% max 67.1% last 3.83px; T 17.8px first 66.7% max 66.7% last 8.88px; B 17.8px first 66.7% max 66.7% last 8.87px | op60 0.14 | out 0px | FAIL: face#0 still fading 227 ms after third; face#2 still fading 194 ms after third; face#3 still fading 211 ms after third
+== done 03:41:30

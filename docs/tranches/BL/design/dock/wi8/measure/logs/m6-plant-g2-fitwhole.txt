@@ -1,0 +1,25 @@
+== g2-fitwhole 03:45:50 (load { 13.49 12.81 13.44 })
+applied g2-fitwhole - G-2/G-13 (RU-26): fitWhole restored as built (the window read as clientWidth less two reserves, the run capped by a length)
+== p3-fold-pill-fine chromium 03:45:54 load { 13.49 12.81 13.44 }
+{"cell":"1440-fine-light","rows":"p3-fold-pill-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":217,"firstChange":247.8,"lastChange":1405.7,"screencast":null,"consoleErrors":0}
+== p3-fold-ctl6-c360 chromium 03:45:57 load { 12.97 12.72 13.40 }
+{"cell":"360-coarse-light","rows":"p3-fold-ctl6-c360.wi8.chromium.360-coarse-light.rows.json","strips":[],"frames":212,"firstChange":72.2,"lastChange":1333,"screencast":null,"consoleErrors":0}
+== p3-fold-transport-rm chromium 03:46:00 load { 13.69 12.87 13.46 }
+{"cell":"1440-fine-light-rm","rows":"p3-fold-transport-rm.wi8.chromium.1440-fine-light-rm.rows.json","strips":[],"frames":154,"firstChange":251.3,"lastChange":876.3,"screencast":null,"consoleErrors":0}
+chromium rc=0
+== p3-fold-pill-fine webkit 03:46:07 load { 14.84 13.12 13.54 }
+{"cell":"1440-fine-light","rows":"p3-fold-pill-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":113,"firstChange":237,"lastChange":1464,"screencast":null,"consoleErrors":0}
+== p3-fold-ctl6-c360 webkit 03:46:10 load { 16.29 13.45 13.65 }
+{"cell":"360-coarse-light","rows":"p3-fold-ctl6-c360.wi8.webkit.360-coarse-light.rows.json","strips":[],"frames":105,"firstChange":67,"lastChange":1332,"screencast":null,"consoleErrors":0}
+== p3-fold-transport-rm webkit 03:46:14 load { 16.29 13.45 13.65 }
+{"cell":"1440-fine-light-rm","rows":"p3-fold-transport-rm.wi8.webkit.1440-fine-light-rm.rows.json","strips":[],"frames":79,"firstChange":238,"lastChange":885,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g2-fitwhole
+-- judge
+p3-fold-ctl6-c360 | chromium | 360-coarse-light | curve 0.02 | held 0 | whole {"row":110,"fits":true,"whole":5,"of":6,"partial":[],"absent":1,"ext":264,"over":48,"room":344,"offset":0,"focused":false} | touch true | FAIL: at open rest: row 110: a run that fits shows 5 of 6 seats whole (partial [])
+p3-fold-ctl6-c360 | webkit | 360-coarse-light | curve 0.01 | held 0 | whole {"row":54,"fits":true,"whole":5,"of":6,"partial":[],"absent":1,"ext":264,"over":48,"room":344,"offset":0,"focused":false} | touch true | FAIL: at open rest: row 54: a run that fits shows 5 of 6 seats whole (partial [])
+p3-fold-pill-fine | chromium | 1440-fine-light | curve 0.01 | held 0 | whole {"row":122,"fits":true,"whole":3,"of":4,"partial":[],"absent":1,"ext":164,"over":44,"room":1424,"offset":0,"focused":false} | FAIL: at open rest: row 122: a run that fits shows 3 of 4 seats whole (partial [])
+p3-fold-pill-fine | webkit | 1440-fine-light | curve 0.01 | held 0 | whole {"row":64,"fits":true,"whole":3,"of":4,"partial":[],"absent":1,"ext":164,"over":44,"room":1424,"offset":0,"focused":false} | FAIL: at open rest: row 64: a run that fits shows 3 of 4 seats whole (partial [])
+p3-fold-transport-rm | chromium | 1440-fine-light-rm | curve 0 | held 0 | whole {"row":92,"fits":true,"whole":1,"of":2,"partial":[],"absent":1,"ext":118,"over":44,"room":1424,"offset":0,"focused":false} | FAIL: at open rest: row 92: a run that fits shows 1 of 2 seats whole (partial [])
+p3-fold-transport-rm | webkit | 1440-fine-light-rm | curve 0 | held 0 | whole {"row":46,"fits":true,"whole":1,"of":2,"partial":[],"absent":1,"ext":118,"over":44,"room":1424,"offset":0,"focused":false} | FAIL: at open rest: row 46: a run that fits shows 1 of 2 seats whole (partial [])
+== done 03:46:23

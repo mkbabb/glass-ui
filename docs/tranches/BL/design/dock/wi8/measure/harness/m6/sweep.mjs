@@ -15,14 +15,16 @@ const val = (k, d) => (a.includes(k) ? a[a.indexOf(k) + 1] : d);
 const [port, tag] = a;
 const engine = val("--engine", "chromium");
 const cellId = val("--cell", "w-many");
-const out = { engine, cell: cellId, steps: [], bad: [], dirBad: [] };
+// --law room (RU-50): the flag is judged against the room the host gives the run; the default is RU-39's client box.
+const LAW = val("--law", "client");
+const out = { engine, cell: cellId, law: LAW, steps: [], bad: [], dirBad: [] };
 let browser;
 try {
     browser = await pw[engine].launch({ headless: true, ...(engine === "webkit" ? { executablePath: `${process.env.HOME}/Library/Caches/ms-playwright/webkit-2287/pw_run.sh` } : {}) });
     const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 2 });
     try {
         const page = await ctx.newPage();
-        await page.goto(`http://localhost:${port}/?c=dock-wi8&cell=${cellId}`);
+        await page.goto(`http://${val("--host", "localhost")}:${port}/?c=dock-wi8&cell=${cellId}`);
         await page.waitForFunction(() => window.__animReady === true, null, { timeout: 15000 });
         await page.waitForSelector(`[data-testid=${cellId}]`);
         await page.waitForTimeout(500);
@@ -31,7 +33,7 @@ try {
         await page.waitForTimeout(1400);
         const read = (w) =>
             page.evaluate(
-                async ([id, w]) => {
+                async ([id, w, process_room]) => {
                     const stage = document.querySelector("[data-testid=wi8-stage]");
                     stage.style.marginInline = "auto";
                     stage.style.maxInlineSize = w + "px";
@@ -48,9 +50,12 @@ try {
                     if (wholeFlag) run.removeAttribute("data-run-whole");
                     const cw = run.clientWidth;
                     if (wholeFlag) run.setAttribute("data-run-whole", "");
-                    return { w, span, cw, fitsFlag, wholeFlag, truth: span <= cw, dock: +d.getBoundingClientRect().width.toFixed(2), expanded: d.classList.contains("expanded") };
+                    // RU-50's room: the run's host's content box less the run's margins and border (no box the flag styles)
+                    const hs = getComputedStyle(run.parentElement), rs = getComputedStyle(run), px = (x) => parseFloat(x) || 0;
+                    const room = Math.floor(run.parentElement.clientWidth - px(hs.paddingLeft) - px(hs.paddingRight) - px(rs.marginLeft) - px(rs.marginRight) - px(rs.borderLeftWidth) - px(rs.borderRightWidth) + 0.01);
+                    return { w, span, cw, room, fitsFlag, wholeFlag, truthClient: span <= cw, truth: process_room ? span <= room : span <= cw, dock: +d.getBoundingClientRect().width.toFixed(2), expanded: d.classList.contains("expanded") };
                 },
-                [cellId, w],
+                [cellId, w, LAW === "room"],
             );
         // coarse: down from 420 until the flag flips
         let flip = null, prev = null;
@@ -70,7 +75,7 @@ try {
                 r.dir = k < ws.length ? "up" : "down";
                 out.steps.push(r);
                 if (!r.expanded) out.bad.push(`${w} ${r.dir}: the dock folded`);
-                if (r.fitsFlag !== r.truth) out.bad.push(`${w} ${r.dir}: fits ${r.fitsFlag} but span ${r.span} against client ${r.cw}`);
+                if (r.fitsFlag !== r.truth) out.bad.push(`${w} ${r.dir}: fits ${r.fitsFlag} but span ${r.span} against ${LAW === "room" ? "room " + r.room : "client " + r.cw}`);
                 if (r.wholeFlag === r.fitsFlag) out.bad.push(`${w} ${r.dir}: whole ${r.wholeFlag} with fits ${r.fitsFlag}`);
                 (byW[w] ||= []).push(r.fitsFlag);
             }

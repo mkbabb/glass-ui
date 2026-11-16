@@ -1,0 +1,29 @@
+== g3-retarget 03:48:27 (load { 13.15 13.39 13.60 })
+applied g3-retarget - G-3 (RU-42): a retarget mid-travel held four rows
+== p3-rev-fold-25-ptr chromium 03:48:30 load { 12.57 13.27 13.56 }
+{"cell":"1440-fine-light","rows":"p3-rev-fold-25-ptr.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":240,"firstChange":235.5,"lastChange":1493.7,"screencast":null,"consoleErrors":0}
+== p3-rev-fold-50-ptr chromium 03:48:34 load { 12.57 13.27 13.56 }
+{"cell":"1440-fine-light","rows":"p3-rev-fold-50-ptr.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":244,"firstChange":229.2,"lastChange":1519.7,"screencast":null,"consoleErrors":0}
+== p3-rev-unfold-50-out chromium 03:48:37 load { 12.13 13.16 13.52 }
+{"cell":"1440-fine-light","rows":"p3-rev-unfold-50-out.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":144,"firstChange":232.2,"lastChange":679.8,"screencast":null,"consoleErrors":0}
+chromium rc=0
+== p3-rev-fold-25-ptr webkit 03:48:44 load { 12.12 13.14 13.51 }
+{"cell":"1440-fine-light","rows":"p3-rev-fold-25-ptr.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":147,"firstChange":215,"lastChange":1926,"screencast":null,"consoleErrors":0}
+== p3-rev-fold-50-ptr webkit 03:48:48 load { 12.19 13.14 13.51 }
+{"cell":"1440-fine-light","rows":"p3-rev-fold-50-ptr.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":159,"firstChange":214,"lastChange":2126,"screencast":null,"consoleErrors":0}
+== p3-rev-unfold-50-out webkit 03:48:52 load { 12.73 13.24 13.54 }
+{"cell":"1440-fine-light","rows":"p3-rev-unfold-50-out.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":75,"firstChange":222,"lastChange":735,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g3-retarget
+-- judge
+p3-rev-fold-25-ptr | wi8 | chromium | 1440-fine-light | load 12.57/12.57 | f27-f77 417ms | L 76px first 1.4% max 7.8% last 0.08px; R 76px first 1.4% max 7.8% last 0.08px | op60 0.26 | out 0px | pass
+p3-rev-fold-25-ptr | wi8 | chromium | 1440-fine-light | load 12.57/12.57 | f127-f179 433ms | L 30.8px first 1.7% max 6.9% last 0.13px; R 30.8px first 1.7% max 6.9% last 0.12px | op60 0.25 | out 0px | FAIL: a seat that meets its lane is hidden in 29 unit-rows (seat#3 f150 shows again)
+p3-rev-fold-25-ptr | wi8 | webkit | 1440-fine-light | load 12.19/12.19 | f12-f40 467ms | L 76px first 4.6% max 14.3% last 0.25px; R 76px first 4.6% max 14.3% last 0.25px | op60 0.22 | out 0px | pass
+p3-rev-fold-25-ptr | wi8 | webkit | 1440-fine-light | load 12.19/12.19 | f76-f107 517ms | L 30.2px first 5.2% max 13.1% last 0.2px; R 30.2px first 5.2% max 13.1% last 0.21px | op60 0.24 | out 0px | FAIL: a seat that meets its lane is hidden in 15 unit-rows (seat#3 f92 shows again)
+p3-rev-fold-50-ptr | wi8 | chromium | 1440-fine-light | load 12.57/12.13 | f26-f76 416ms | L 76px first 1.4% max 7.1% last 0.08px; R 76px first 1.4% max 7.1% last 0.08px | op60 0.25 | out 0px | pass
+p3-rev-fold-50-ptr | wi8 | chromium | 1440-fine-light | load 12.57/12.13 | f127-f182 457ms | L 43.1px first 1.4% max 7.8% last 0.09px; R 43.1px first 1.4% max 7.8% last 0.1px | op60 0.25 | out 0px | FAIL: no face showing for 42 ms (5 rows; bound 34 ms)
+p3-rev-fold-50-ptr | wi8 | webkit | 1440-fine-light | load 12.19/12.73 | f12-f40 466ms | L 76px first 4.6% max 13.9% last 0.25px; R 76px first 4.6% max 13.9% last 0.25px | op60 0.25 | out 0px | pass
+p3-rev-fold-50-ptr | wi8 | webkit | 1440-fine-light | load 12.19/12.73 | f77-f110 550ms | L 46.8px first 5.2% max 14% last 0.16px; R 46.8px first 5.2% max 13.9% last 0.15px | op60 0.25 | out 0px | pass
+p3-rev-unfold-50-out | wi8 | chromium | 1440-fine-light | load 12.13/12.13 | f26-f81 457ms | L 43.8px first 1.9% max 8.1% last 0.09px; R 43.8px first 1.9% max 8.1% last 0.1px | op60 0.26 | out 0px | pass
+p3-rev-unfold-50-out | wi8 | webkit | 1440-fine-light | load 12.73/12.73 | f12-f44 536ms | L 47.3px first 5.7% max 13.5% last 0.17px; R 47.3px first 5.7% max 13.5% last 0.17px | op60 0.24 | out 0px | pass
+== done 03:49:00

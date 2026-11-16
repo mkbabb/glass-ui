@@ -1,0 +1,48 @@
+diff --git a/src/components/dock/styles/controls/icon-button.css b/src/components/dock/styles/controls/icon-button.css
+index e0d2d6cef..342247dd8 100644
+--- a/src/components/dock/styles/controls/icon-button.css
++++ b/src/components/dock/styles/controls/icon-button.css
+@@ -244,9 +244,11 @@
+        A consumer passing an explicit lucide size class still WINS (utility layer >
+        component layer) — a DEFAULT, not a ceiling, matching the `.dock-tab-button`
+        font-size precedent. */
+-    .dock-icon-button > svg {
+-        width: var(--dock-icon-glyph, 1.25rem);
+-        height: var(--dock-icon-glyph, 1.25rem);
++    /* RU-45: the glyph is 0.9 of its seat (`--dock-icon-glyph-ratio`), and the seat sizes a site's own
++       picture too: a direct svg, img or picture, or any direct child marked `data-dock-glyph`. */
++    .dock-icon-button > :is(svg, img, picture, [data-dock-glyph]) {
++        width: var(--dock-control-glyph-size, 1.25rem);
++        height: var(--dock-control-glyph-size, 1.25rem);
+     }
+ 
+     .dock-icon-button--compact {
+diff --git a/src/components/dock/styles/controls/tab-button.css b/src/components/dock/styles/controls/tab-button.css
+index 312aa894c..b63e0f75b 100644
+--- a/src/components/dock/styles/controls/tab-button.css
++++ b/src/components/dock/styles/controls/tab-button.css
+@@ -153,4 +153,11 @@
+                 0 0.5px 0 0 rgb(0 0 0 / 0.06);
+         }
+     }
++
++    /* RU-45: a glyph beside a word is sized from the word, 1.5 em, not from the seat. */
++    .dock-tab-button > svg {
++        width: 1.5em;
++        height: 1.5em;
++        flex-shrink: 0;
++    }
+ }
+diff --git a/src/styles/tokens/sizing.css b/src/styles/tokens/sizing.css
+index fd08a2cdb..f110b863b 100644
+--- a/src/styles/tokens/sizing.css
++++ b/src/styles/tokens/sizing.css
+@@ -176,7 +176,7 @@
+        inline FALLBACK ladder; density.css RE-RESOLVES `--dock-icon-glyph` inside each
+        `[data-size]` scope so the density-painted height flows in. The 16px floor keeps
+        a sub-1 density or coarse register from dropping the glyph below legibility. */
+-    --dock-icon-glyph-ratio: 0.5;
++    --dock-icon-glyph-ratio: 0.9;
+     --dock-icon-glyph-floor: 1rem;
+     --dock-icon-glyph: max(
+         calc(var(--dock-layer-height, calc(2.5rem * var(--dock-scale))) * var(--dock-icon-glyph-ratio)),

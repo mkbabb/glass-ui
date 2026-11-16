@@ -1,0 +1,5 @@
+/* RU-44 step 1: one step, one tier. The dock rung is the base rung (0.14 light, 0.18 dark); the folded plate takes it too. */
+:root { --glass-veil-dock: var(--glass-veil-base); }
+.glass-dock { --dock-plate-collapsed-tier: var(--glass-veil-dock); }
+/* RU-44 step 2: the dock's plate takes more of the scheme's own surface. */
+.glass-dock { --glass-level: 0.7; }

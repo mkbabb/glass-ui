@@ -1,0 +1,54 @@
+== press 03:52:33
+applied press: the run takes no pointer events while [data-morphing] is set
+
+Running 2 tests using 1 worker
+
+  ✘  1 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1576:5 › critique 7, coarse phone › m3 O-177 a press during the expand activates its seat once (10.6s)
+  ✘  2 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1576:5 › m3 O-177 a press during the expand activates its seat once (10.1s)
+
+
+  1) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1576:5 › critique 7, coarse phone › m3 O-177 a press during the expand activates its seat once 
+
+    Error: exactly once ([{"delay":0,"morphing":true,"painted":false,"clicks":0},{"delay":100,"morphing":true,"painted":true,"clicks":0},{"delay":240,"morphing":true,"painted":true,"clicks":0},{"delay":480,"morphing":false,"painted":true,"clicks":1}])
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      1605 |         }
+      1606 |         expect(rows.some((r) => (r as { morphing: boolean; painted: boolean }).morphing && (r as { painted: boolean }).painted), `a press lands on the painted seat mid-morph (${JSON.stringify(rows)})`).toBe(true);
+    > 1607 |         for (const r of rows) expect((r as { clicks: number }).clicks, `exactly once (${JSON.stringify(rows)})`).toBe((r as { painted: boolean }).painted ? 1 : 0);
+           |                                                                                                                  ^
+      1608 |     });
+      1609 | }
+      1610 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:1607:114
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-7--48bf3-and-activates-its-seat-once-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1576:5 › m3 O-177 a press during the expand activates its seat once 
+
+    Error: exactly once ([{"delay":0,"morphing":true,"painted":false,"clicks":0},{"delay":100,"morphing":true,"painted":true,"clicks":0},{"delay":240,"morphing":true,"painted":true,"clicks":0},{"delay":480,"morphing":false,"painted":true,"clicks":1}])
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      1605 |         }
+      1606 |         expect(rows.some((r) => (r as { morphing: boolean; painted: boolean }).morphing && (r as { painted: boolean }).painted), `a press lands on the painted seat mid-morph (${JSON.stringify(rows)})`).toBe(true);
+    > 1607 |         for (const r of rows) expect((r as { clicks: number }).clicks, `exactly once (${JSON.stringify(rows)})`).toBe((r as { painted: boolean }).painted ? 1 : 0);
+           |                                                                                                                  ^
+      1608 |     });
+      1609 | }
+      1610 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:1607:114
+
+    Error Context: tests-visual/test-results/release-10-1-5-m3-O-177-a--eb4f0-and-activates-its-seat-once-chromium-headless-new/error-context.md
+
+  2 failed
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1576:5 › critique 7, coarse phone › m3 O-177 a press during the expand activates its seat once 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1576:5 › m3 O-177 a press during the expand activates its seat once 
+rc=1
+reverted press

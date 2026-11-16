@@ -1,0 +1,17 @@
+## G-10: 59/59 segments pass over 26 scenarios (0 with a failing segment); blank rows max 0
+   turns: p3-swap-layers-rm:leave 8.2/rev -<=-ms, p3-swap-xf-rm:leave 8.3/rev -<=-ms
+## G-2: 134/134 segments pass over 69 scenarios (0 with a failing segment); blank rows max 1
+   turns: p3-fold-ctlout-coarse:leave 9.1/rev -<=-ms, p3-fold-daraksha-coarse:leave 10/rev -<=-ms
+## G-3: 18/18 segments pass over 12 scenarios (0 with a failing segment); blank rows max 1
+   turns: p3-rev-fold-25-press:leave 7.7/rev 25<=35.4ms, p3-rev-fold-25-ptr:leave 8.1/rev 24.8<=35.4ms, p3-rev-fold-50-press:leave 8.5/rev 25.3<=27.1ms, p3-rev-fold-50-ptr:leave 8.1/rev 16.4<=26.8ms, p3-rev-fold-75-press:leave 8.4/rev 8.4<=16.9ms, p3-rev-fold-75-ptr:leave 8/rev 8<=16.4ms, p3-rev-unfold-25-esc:leave 10/rev 26.4<=36.2ms, p3-rev-unfold-25-out:leave 8.4/rev 24.6<=35.4ms, p3-rev-unfold-50-esc:leave 8.1/rev 26.4<=26.3ms, p3-rev-unfold-50-out:leave 8.3/rev 16.6<=24.4ms, p3-rev-unfold-75-esc:leave 8.3/rev 8.3<=16.5ms, p3-rev-unfold-75-out:leave 7.5/rev 7.5<=16.1ms
+## G-4: 42/43 segments pass over 16 scenarios (1 with a failing segment); blank rows max 1
+   turns: p3-swap-fold-during:leave -/rev -<=-ms, p3-swap-layers-coarse:leave 25.1/rev 16.7<=23.2ms, p3-swap-layers-dark:leave 15.2/rev 15.2<=23.2ms, p3-swap-layers-fine:leave 16.6/rev 16.6<=22.3ms, p3-swap-return-15:leave 8.4/rev 33.4<=38.8ms, p3-swap-return-30:leave 174.2/rev 174.2<=23.6ms, p3-swap-return-60:leave 8.3/rev -<=-ms, p3-swap-xf-coarse:leave 15.7/rev 58.4<=64.1ms, p3-swap-xf-dark:leave 17.8/rev -<=-ms, p3-swap-xf-fine:leave 16.8/rev -<=-ms, p4-swap-layers-rtl-fine:leave 16.1/rev 16.1<=21.5ms
+   1 × L leaves its path n ms after return-n   e.g. p3-swap-return-30 1440-fine-light: L leaves its path 174 ms after return-30
+   1 × R leaves its path n ms after return-n   e.g. p3-swap-return-30 1440-fine-light: R leaves its path 174 ms after return-30
+   1 × T leaves its path n ms after return-n   e.g. p3-swap-return-30 1440-fine-light: T leaves its path 174 ms after return-30
+   1 × B leaves its path n ms after return-n   e.g. p3-swap-return-30 1440-fine-light: B leaves its path 174 ms after return-30
+   failing: p3-swap-return-30
+## G-6: 3/3 segments pass over 3 scenarios (0 with a failing segment); blank rows max 1
+## G-9: 3/3 segments pass over 2 scenarios (0 with a failing segment); blank rows max 1
+   turns: p3-scope-rev:leave 8.1/rev 25.1<=34ms
+## other: 3/3 segments pass over 1 scenarios (0 with a failing segment); blank rows max 1

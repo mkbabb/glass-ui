@@ -1,0 +1,19 @@
+== g4-ghost 03:32:53 (load { 17.31 15.68 14.97 })
+applied g4-ghost - G-4 (a control leaves): the removed control held inside the run's scroll port
+== p3-seatset-fine chromium 03:32:56 load { 16.81 15.61 14.94 }
+{"cell":"1440-fine-light","rows":"p3-seatset-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":418,"firstChange":235.2,"lastChange":3067.3,"screencast":null,"consoleErrors":0}
+== p3-seatset-coarse chromium 03:33:02 load { 16.98 15.66 14.97 }
+{"cell":"390-coarse-light","rows":"p3-seatset-coarse.wi8.chromium.390-coarse-light.rows.json","strips":[],"frames":293,"firstChange":74.6,"lastChange":2034,"screencast":null,"consoleErrors":0}
+chromium rc=0
+== p3-seatset-fine webkit 03:33:09 load { 16.26 15.54 14.92 }
+{"cell":"1440-fine-light","rows":"p3-seatset-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":201,"firstChange":218,"lastChange":2928,"screencast":null,"consoleErrors":0}
+== p3-seatset-coarse webkit 03:33:15 load { 16.56 15.61 14.95 }
+{"cell":"390-coarse-light","rows":"p3-seatset-coarse.wi8.webkit.390-coarse-light.rows.json","strips":[],"frames":150,"firstChange":66,"lastChange":2066,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g4-ghost
+-- judge
+p3-seatset-coarse | chromium | 390-coarse-light | curve 0.01 | held 0 | ghost {"rows":9,"hidden":7} | join {"step":0.25,"cuts":0,"fades":"in 184ms out 83ms"} | whole {"row":292,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":224,"over":0,"room":374,"offset":0,"focused":false} | touch true | FAIL: a removed control hidden before covered in 7 rows (ghost#0 row 212 (74.8 ms))
+p3-seatset-coarse | webkit | 390-coarse-light | curve 0.01 | held 0 | ghost {"rows":5,"hidden":4} | join {"step":0.27,"cuts":0,"fades":"in 184ms out 85ms"} | whole {"row":149,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":224,"over":0,"room":374,"offset":0,"focused":false} | touch true | FAIL: a removed control hidden before covered in 4 rows (ghost#0 row 108 (85.0 ms))
+p3-seatset-fine | chromium | 1440-fine-light | curve 0.01 | held 0 | ghost {"rows":36,"hidden":14} | join {"step":0.25,"cuts":0,"fades":"in 183ms out 83ms"} | whole {"row":417,"fits":true,"whole":3,"of":3,"partial":[],"absent":0,"ext":160,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: a removed control hidden before covered in 14 rows (ghost#0 row 229 (74.7 ms))
+p3-seatset-fine | webkit | 1440-fine-light | curve 0 | held 0 | ghost {"rows":20,"hidden":8} | join {"step":0.22,"cuts":0,"fades":"in 182ms out 85ms"} | whole {"row":200,"fits":true,"whole":3,"of":3,"partial":[],"absent":0,"ext":160,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: a removed control hidden before covered in 8 rows (ghost#0 row 105 (85.0 ms))
+== done 03:33:24

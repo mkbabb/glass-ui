@@ -1,0 +1,35 @@
+diff --git a/src/components/dock/composables/useDockBody.ts b/src/components/dock/composables/useDockBody.ts
+index 9e196ad4f..20960d030 100644
+--- a/src/components/dock/composables/useDockBody.ts
++++ b/src/components/dock/composables/useDockBody.ts
+@@ -501,6 +501,15 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
+      *  root's observer fires), the flag is removed, the run's client box is read, and the flag
+      *  is set again or left off: RU-29's named flag frame, the only frame that pays. */
+     let capOn: { span: number; n: number; region: number } | null = null;
++    function roomOf(run: HTMLElement): number {
++        const host = run.parentElement;
++        if (!host) return run.clientWidth;
++        const h = getComputedStyle(host);
++        const r = getComputedStyle(run);
++        const px = (x: string) => Number.parseFloat(x) || 0;
++        const box = host.clientWidth - px(h.paddingLeft) - px(h.paddingRight);
++        return Math.floor(box - px(r.marginLeft) - px(r.marginRight) - px(r.borderLeftWidth) - px(r.borderRightWidth) + 0.01);
++    }
+     function fitRun(run: HTMLElement, open: boolean): FitPlan | null {
+         // The fit is the open run's. A face with no box (RU-17), or a run leaving on a fold (its
+         // region already laid out at the folded size), keeps the reading it had when it was
+@@ -529,8 +538,12 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
+             if (capOn && capOn.span === span && capOn.n === n && capOn.region === region) return { run, fits: false, whole: true, room: "", span, n };
+             run.removeAttribute("data-run-whole");
+         }
+-        // The port is the shipped one, the run's client box, uncapped.
+-        const port = v ? run.clientHeight : run.clientWidth;
++        // The port is the shipped one, the run's client box, uncapped. RU-50: on the inline axis it
++        // is the room the host gives the run, not the run's own client box, which the flag's yield
++        // changes (the reserves shrink under `data-run-fits`, so an overflowing run's box narrows by
++        // its overhang and the flag read its own yield, 10.1.5 s2). The room is the region's content
++        // box less the run's margins and border, none of which the flag styles, in layout integers.
++        const port = v ? run.clientHeight : roomOf(run);
+         const fits = span > 0 && span <= port;
+         // RU-27: the seats do not fit, so the run scrolls and its window is a whole number of
+         // seats (run.css); the carrier sets only the flag. Not on a plain run, a run of

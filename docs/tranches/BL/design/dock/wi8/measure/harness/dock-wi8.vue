@@ -46,6 +46,11 @@
 //   w-ctl6    a ControlsDock of six controls (the cap), at 360
 //   w-rim     a pill with the reading-progress rim at 40 % in its plate (#rim)
 //   w-long    a site dock of ten seats, so the run scrolls even when compact
+// MEASURE-6 cells (RULINGS-5):
+//   w-words   three worded Select triggers in an open dock; a button outside sets the middle one's
+//             value to a longer word (RULINGS-4's clarification of RU-28: the neighbours carried)
+//   w-railp   a vertical rail whose folded face is only its persistent seats (no #collapsed):
+//             it rests open on a coarse pointer (RU-43, O-376 (b))
 import { computed, defineComponent, h, ref, onMounted } from "vue";
 import * as dock from "@glass/components/dock";
 import { Slider } from "@glass/components/slider";
@@ -101,6 +106,9 @@ onMounted(() => {
     (window as unknown as { __dockApi: typeof pillDock }).__dockApi = pillDock;
 });
 const g8Select = ref("a");
+const wordsA = ref("day");
+const wordsB = ref("bw");
+const wordsC = ref("all");
 const g8Pop = ref(false);
 
 const dark = ref(document.documentElement.classList.contains("dark"));
@@ -659,6 +667,22 @@ const stageStyle = computed(() =>
                 <DockControl aria-label="Sort"><BarChart3 /></DockControl>
             </component>
         </template>
+        <template v-if="cell === 'w-inflow'">
+            <!-- INPUT-hover-shift (reading only): an in-flow collapsible dock in a row beside a neighbour, a block below -->
+            <div data-testid="w-inflow-row" style="display: flex; align-items: center; gap: 12px">
+                <GlassDock data-testid="w-inflow" aria-label="figure" collapse="closed">
+                    <DockControl aria-label="Grid" data-testid="w-inflow-grid"><Table2 /></DockControl>
+                    <DockControl aria-label="Filter"><Filter /></DockControl>
+                    <DockControl aria-label="Sort"><BarChart3 /></DockControl>
+                    <DockControl aria-label="Theme"><Palette /></DockControl>
+                    <template #collapsed>
+                        <SlidersHorizontal class="h-4 w-4" aria-hidden="true" />
+                    </template>
+                </GlassDock>
+                <div data-testid="w-inflow-beside" style="padding: 8px 12px; border: 1px solid currentColor">legend</div>
+            </div>
+            <div data-testid="w-inflow-below" style="margin-top: 12px; padding: 8px 12px; border: 1px solid currentColor">the figure below</div>
+        </template>
         <template v-if="cell === 'w-seatset'">
             <div style="display: flex; gap: 6px">
                 <button type="button" data-testid="w-seatset-add" @click="extraSeat = !extraSeat">seat</button>
@@ -693,6 +717,33 @@ const stageStyle = computed(() =>
             </GlassDock>
         </template>
         <!-- MEASURE-3 cells -->
+        <template v-if="cell === 'w-words'">
+            <GlassDock data-testid="w-words" aria-label="figure" :collapse="false">
+                <Select v-model="wordsA">
+                    <DockTrigger for="select" aria-label="Range" data-testid="w-words-a"><SelectValue /></DockTrigger>
+                    <SelectContent><SelectItem value="day">Day</SelectItem><SelectItem value="week">Week</SelectItem></SelectContent>
+                </Select>
+                <Select v-model="wordsB">
+                    <DockTrigger for="select" aria-label="View" data-testid="w-words-b"><SelectValue /></DockTrigger>
+                    <SelectContent><SelectItem value="bw">View: Bandwidth</SelectItem><SelectItem value="cbw">View: Contracted bandwidth</SelectItem></SelectContent>
+                </Select>
+                <Select v-model="wordsC">
+                    <DockTrigger for="select" aria-label="Region" data-testid="w-words-c"><SelectValue /></DockTrigger>
+                    <SelectContent><SelectItem value="all">All regions</SelectItem><SelectItem value="ne">North-east</SelectItem></SelectContent>
+                </Select>
+            </GlassDock>
+            <button type="button" data-testid="w-words-longer" style="margin-top: 24px" @click="wordsB = wordsB === 'bw' ? 'cbw' : 'bw'">longer</button>
+        </template>
+        <GlassDock v-if="cell === 'w-railp'" data-testid="w-railp" aria-label="sections" orientation="vertical" collapse="closed">
+            <template #persistent>
+                <DockControl aria-label="Home" data-testid="w-railp-home"><Home /></DockControl>
+            </template>
+            <DockControl aria-label="Reader" aria-current="page"><BookOpen /></DockControl>
+            <DockControl aria-label="Search"><Search /></DockControl>
+            <template #persistent-end>
+                <DockControl aria-label="Settings"><Settings /></DockControl>
+            </template>
+        </GlassDock>
         <GlassDock v-if="cell === 'w-many'" data-testid="w-many" aria-label="dashboard" collapse="closed">
             <DockControl
                 v-for="p in manyTabs"

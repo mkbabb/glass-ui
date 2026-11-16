@@ -1,0 +1,1233 @@
+
+Running 556 tests using 1 worker
+
+  ✓    1 [chromium-headless-new] › tests-visual/release-10-1-1.spec.ts:51:5 › 10.1.1 › G-1 · an open sheet is fixed and inside the viewport (1.5s)
+  ✓    2 [chromium-headless-new] › tests-visual/release-10-1-1.spec.ts:74:5 › 10.1.1 › G-2 · a menu and its submenu paint above the dock's rung (671ms)
+  ✓    3 [chromium-headless-new] › tests-visual/release-10-1-1.spec.ts:84:5 › 10.1.1 › G-3 · a composite in a container seat keeps its tab stop and its arrows (220ms)
+  ✓    4 [chromium-headless-new] › tests-visual/release-10-1-1.spec.ts:113:5 › 10.1.1 › G-3 · a composite seated directly in the run keeps its arrows (261ms)
+  ✓    5 [chromium-headless-new] › tests-visual/release-10-1-1.spec.ts:137:9 › 10.1.1 › O-102(3) · a dropdown opened from a seat closes when the dock collapses (508ms)
+  ✓    6 [chromium-headless-new] › tests-visual/release-10-1-1.spec.ts:137:9 › 10.1.1 › O-102(3) · a popover opened from a seat closes when the dock collapses (556ms)
+[WebServer] 2:25:41 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+  ✓    7 [chromium-headless-new] › tests-visual/release-10-1-1.spec.ts:137:9 › 10.1.1 › O-102(3) · a select opened from a seat closes when the dock collapses (475ms)
+  ✓    8 [chromium-headless-new] › tests-visual/release-10-1-1.spec.ts:156:5 › 10.1.1 › O-102(3) · a collapse-closed menu hands focus to the summary, not <body> (750ms)
+  ✓    9 [chromium-headless-new] › tests-visual/release-10-1-1.spec.ts:186:5 › 10.1.1 › O-102(3) · a popover opened from #persistent outlives the collapse, and the dock stays collapsed (1.8s)
+  ✓   10 [chromium-headless-new] › tests-visual/release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a tooltip opened from a seat is portalled out of the run and not clipped (desktop) (654ms)
+  ✓   11 [chromium-headless-new] › tests-visual/release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a popover opened from a seat is portalled out of the run and not clipped (desktop) (637ms)
+  ✓   12 [chromium-headless-new] › tests-visual/release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a popover-inline opened from a seat is portalled out of the run and not clipped (desktop) (644ms)
+  ✓   13 [chromium-headless-new] › tests-visual/release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a hovercard opened from a seat is portalled out of the run and not clipped (desktop) (652ms)
+  ✓   14 [chromium-headless-new] › tests-visual/release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a menu opened from a seat is portalled out of the run and not clipped (desktop) (658ms)
+  ✓   15 [chromium-headless-new] › tests-visual/release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a select opened from a seat is portalled out of the run and not clipped (desktop) (636ms)
+  ✓   16 [chromium-headless-new] › tests-visual/release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a tooltip opened from a seat is portalled out of the run and not clipped (phone) (630ms)
+  ✓   17 [chromium-headless-new] › tests-visual/release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a popover opened from a seat is portalled out of the run and not clipped (phone) (623ms)
+  ✓   18 [chromium-headless-new] › tests-visual/release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a popover-inline opened from a seat is portalled out of the run and not clipped (phone) (594ms)
+  ✓   19 [chromium-headless-new] › tests-visual/release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a hovercard opened from a seat is portalled out of the run and not clipped (phone) (611ms)
+  ✓   20 [chromium-headless-new] › tests-visual/release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a menu opened from a seat is portalled out of the run and not clipped (phone) (644ms)
+  ✓   21 [chromium-headless-new] › tests-visual/release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a select opened from a seat is portalled out of the run and not clipped (phone) (640ms)
+  ✓   22 [chromium-headless-new] › tests-visual/release-10-1-1.spec.ts:256:5 › 10.1.1 › Skeleton · shimmer travels, the plain tile breathes, an off-screen one is paused (313ms)
+  ✓   23 [chromium-headless-new] › tests-visual/release-10-1-1.spec.ts:290:9 › 10.1.1 › Skeleton · the shimmer layer covers the tile through its whole cycle (ltr) (188ms)
+  ✓   24 [chromium-headless-new] › tests-visual/release-10-1-1.spec.ts:290:9 › 10.1.1 › Skeleton · the shimmer layer covers the tile through its whole cycle (rtl) (181ms)
+  ✓   25 [chromium-headless-new] › tests-visual/release-10-1-1.spec.ts:323:5 › 10.1.1 › Skeleton · shimmer holds still under reduced motion (168ms)
+  ✓   26 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:51:9 › 10.1.2 · 1440 › G-4 · the atlas shapes seated in a run are all Tab-reachable (224ms)
+  ✓   27 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:68:9 › 10.1.2 · 1440 › G-4 · arrows rove only the declared seats; an undeclared control keeps its keys (236ms)
+  ✓   28 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:84:9 › 10.1.2 · 1440 › G-4 · a run with an undeclared child claims no toolbar role (209ms)
+  ✓   29 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:92:9 › 10.1.2 · 1440 › G-4 · a focusable splitter is undeclared: its own stop, no toolbar role (208ms)
+  ✓   30 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:102:9 › 10.1.2 · 1440 › G-4 · an all-declared run is one toolbar stop with arrows across it (243ms)
+  ✓   31 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:119:9 › 10.1.2 · 1440 › G-4 · a DockTrigger for=select in a form keeps an all-declared run's toolbar (247ms)
+  ✓   32 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:137:9 › 10.1.2 · 1440 › G-4 · the toolbar claim follows a child's aria-hidden and tabindex in place (228ms)
+  ✓   33 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:158:9 › 10.1.2 · 1440 › G-4 · an aria-hidden wrapper around a Tab stop voids the toolbar claim (211ms)
+  ✓   34 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:169:9 › 10.1.2 · 1440 › G-4 · a child that drops its declaration is Tab-reachable again (248ms)
+  ✓   35 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:187:9 › 10.1.2 · 1440 › G-4 · a disabled DockTrigger holding the stop keeps the run in the Tab order (247ms)
+  ✓   36 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:203:9 › 10.1.2 · 1440 › G-4 · the arrows pass a disabled DockTrigger mid-run (238ms)
+  ✓   37 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:216:9 › 10.1.2 · 1440 › G-4 · a RadioGroup and a ToggleGroup seated directly keep their arrows (234ms)
+  ✓   38 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:51:9 › 10.1.2 · 390 › G-4 · the atlas shapes seated in a run are all Tab-reachable (259ms)
+  ✓   39 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:68:9 › 10.1.2 · 390 › G-4 · arrows rove only the declared seats; an undeclared control keeps its keys (259ms)
+  ✓   40 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:84:9 › 10.1.2 · 390 › G-4 · a run with an undeclared child claims no toolbar role (200ms)
+  ✓   41 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:92:9 › 10.1.2 · 390 › G-4 · a focusable splitter is undeclared: its own stop, no toolbar role (213ms)
+  ✓   42 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:102:9 › 10.1.2 · 390 › G-4 · an all-declared run is one toolbar stop with arrows across it (241ms)
+  ✓   43 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:119:9 › 10.1.2 · 390 › G-4 · a DockTrigger for=select in a form keeps an all-declared run's toolbar (234ms)
+  ✓   44 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:137:9 › 10.1.2 · 390 › G-4 · the toolbar claim follows a child's aria-hidden and tabindex in place (232ms)
+  ✓   45 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:158:9 › 10.1.2 · 390 › G-4 · an aria-hidden wrapper around a Tab stop voids the toolbar claim (215ms)
+  ✓   46 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:169:9 › 10.1.2 · 390 › G-4 · a child that drops its declaration is Tab-reachable again (247ms)
+  ✓   47 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:187:9 › 10.1.2 · 390 › G-4 · a disabled DockTrigger holding the stop keeps the run in the Tab order (239ms)
+  ✓   48 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:203:9 › 10.1.2 · 390 › G-4 · the arrows pass a disabled DockTrigger mid-run (234ms)
+  ✓   49 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:216:9 › 10.1.2 · 390 › G-4 · a RadioGroup and a ToggleGroup seated directly keep their arrows (249ms)
+  ✓   50 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:267:13 › 10.1.2 · 1440 · light › D-1 · a disabled DockTrigger paints disabled and takes no hover or press fill (701ms)
+  ✓   51 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:267:13 › 10.1.2 · 1440 · dark › D-1 · a disabled DockTrigger paints disabled and takes no hover or press fill (718ms)
+  ✓   52 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:267:13 › 10.1.2 · 390 · light › D-1 · a disabled DockTrigger paints disabled and takes no hover or press fill (696ms)
+  ✓   53 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:267:13 › 10.1.2 · 390 · dark › D-1 · a disabled DockTrigger paints disabled and takes no hover or press fill (703ms)
+  ✓   54 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · horizontal · pinned · the expanded endpoint follows the pane (1440->390) (2.1s)
+  ✓   55 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · horizontal · collapsed · the expanded endpoint follows the pane (1440->390) (2.2s)
+  ✘   56 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390) (1.5s)
+  ✓   57 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (1440->390) (981ms)
+  ✓   58 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · horizontal · pinned · the expanded endpoint follows the pane (390->1440) (2.0s)
+  ✓   59 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · horizontal · collapsed · the expanded endpoint follows the pane (390->1440) (2.2s)
+  ✘   60 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (390->1440) (1.5s)
+  ✓   61 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (390->1440) (983ms)
+  ✓   62 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · vertical · pinned · the expanded endpoint follows the pane (1440->390) (2.2s)
+  ✓   63 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · vertical · collapsed · the expanded endpoint follows the pane (1440->390) (2.3s)
+  ✘   64 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (1440->390) (1.6s)
+  ✓   65 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (1440->390) (958ms)
+  ✓   66 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · vertical · pinned · the expanded endpoint follows the pane (390->1440) (1.9s)
+  ✓   67 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · vertical · collapsed · the expanded endpoint follows the pane (390->1440) (2.2s)
+  ✓   68 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (390->1440) (1.5s)
+  ✓   69 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (390->1440) (948ms)
+  ✓   70 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:490:5 › RU-35 · horizontal · the outputs read the root's extents after an unfold and after a fold (1.1s)
+  ✓   71 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:490:5 › RU-35 · vertical · the outputs read the root's extents after an unfold and after a fold (1.2s)
+  ✓   72 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:533:9 › O-101a · a host change during the morph · collapsed (1440->390) (2.3s)
+  ✓   73 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:533:9 › O-101a · a host change during the morph · reversal (1440->390) (1.6s)
+  ✓   74 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:533:9 › O-101a · a host change during the morph · mid-expand (1440->390) (974ms)
+  ✓   75 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:533:9 › O-101a · a host change during the morph · collapsed (390->1440) (2.2s)
+  ✓   76 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:533:9 › O-101a · a host change during the morph · reversal (390->1440) (1.5s)
+  ✓   77 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:533:9 › O-101a · a host change during the morph · mid-expand (390->1440) (966ms)
+  ✓   78 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:573:5 › O-101 · a capture keeps a scrolled run's scroll position (390) (1.7s)
+  ✓   79 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:573:5 › O-101 · a capture keeps a scrolled run's scroll position (1440) (1.7s)
+  ✓   80 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:143:13 › 10.1.3 · 360 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · a click on the anchored persistent seat of a collapsed dock reaches it (1.5s)
+  ✓   81 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 360 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer (1.7s)
+  ✓   82 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:226:13 › 10.1.3 · 360 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · a press on the anchored persistent seat mid-expand is kept (1.5s)
+  ✓   83 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:143:13 › 10.1.3 · 360 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · a click on the anchored persistent seat of a collapsed dock reaches it (1.5s)
+  ✓   84 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 360 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer (1.7s)
+  ✓   85 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:226:13 › 10.1.3 · 360 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · a press on the anchored persistent seat mid-expand is kept (1.5s)
+  ✓   86 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:143:13 › 10.1.3 · 390 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · a click on the anchored persistent seat of a collapsed dock reaches it (1.4s)
+  ✓   87 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 390 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer (1.7s)
+  ✓   88 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:226:13 › 10.1.3 · 390 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · a press on the anchored persistent seat mid-expand is kept (1.5s)
+  ✓   89 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:143:13 › 10.1.3 · 390 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · a click on the anchored persistent seat of a collapsed dock reaches it (1.4s)
+  ✓   90 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 390 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer (1.7s)
+  ✓   91 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:226:13 › 10.1.3 · 390 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · a press on the anchored persistent seat mid-expand is kept (1.5s)
+  ✓   92 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:143:13 › 10.1.3 · 430 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · a click on the anchored persistent seat of a collapsed dock reaches it (1.5s)
+  ✓   93 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 430 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer (1.7s)
+  ✓   94 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:226:13 › 10.1.3 · 430 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · a press on the anchored persistent seat mid-expand is kept (1.5s)
+  ✓   95 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:143:13 › 10.1.3 · 430 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · a click on the anchored persistent seat of a collapsed dock reaches it (1.4s)
+  ✓   96 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 430 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer (1.7s)
+  ✓   97 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:226:13 › 10.1.3 · 430 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · a press on the anchored persistent seat mid-expand is kept (1.5s)
+  ✓   98 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:143:13 › 10.1.3 · 1440 · right-anchored (fourier f-w14-control-row G-h) › O-110 · a click on the anchored persistent seat of a collapsed dock reaches it (1.4s)
+  ✓   99 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 1440 · right-anchored (fourier f-w14-control-row G-h) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer (1.7s)
+  ✓  100 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:226:13 › 10.1.3 · 1440 · right-anchored (fourier f-w14-control-row G-h) › O-110 · a press on the anchored persistent seat mid-expand is kept (1.5s)
+  ✓  101 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:143:13 › 10.1.3 · 1440 · left-anchored (fourier f-w14-control-row G-h) › O-110 · a click on the anchored persistent seat of a collapsed dock reaches it (1.4s)
+  ✓  102 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 1440 · left-anchored (fourier f-w14-control-row G-h) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer (1.7s)
+  ✓  103 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:226:13 › 10.1.3 · 1440 · left-anchored (fourier f-w14-control-row G-h) › O-110 · a press on the anchored persistent seat mid-expand is kept (1.5s)
+  ✓  104 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:277:9 › 10.1.3 · 390 · right-anchored, open-side seat › D-1 · a click on the open-side persistent seat of a collapsed dock reaches it (1.4s)
+  ✓  105 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:277:9 › 10.1.3 · 1440 · right-anchored, open-side seat › D-1 · a click on the open-side persistent seat of a collapsed dock reaches it (1.4s)
+  ✓  106 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:277:9 › 10.1.3 · 390 · left-anchored, open-side seat › D-1 · a click on the open-side persistent seat of a collapsed dock reaches it (1.4s)
+  ✓  107 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:277:9 › 10.1.3 · 390 · bottom-anchored, open-side seat › D-1 · a click on the open-side persistent seat of a collapsed dock reaches it (1.4s)
+  ✓  108 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:300:9 › 10.1.3 · 360 · touch · right-anchored, open-side seat › D-1 · a tap on the open-side persistent seat of a collapsed dock reaches it (1.4s)
+  ✓  109 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:300:9 › 10.1.3 · 390 · touch · right-anchored, open-side seat › D-1 · a tap on the open-side persistent seat of a collapsed dock reaches it (1.4s)
+  ✓  110 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:300:9 › 10.1.3 · 430 · touch · right-anchored, open-side seat › D-1 · a tap on the open-side persistent seat of a collapsed dock reaches it (1.4s)
+  ✓  111 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:326:9 › 10.1.3 · 390 · right-anchored collapse › D-2 · the collapse shrinks toward the anchored edge and settles without a snap (3.5s)
+  ✓  112 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:326:9 › 10.1.3 · 390 · left-anchored collapse › D-2 · the collapse shrinks toward the anchored edge and settles without a snap (3.5s)
+  ✓  113 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:326:9 › 10.1.3 · 390 · bottom-anchored collapse › D-2 · the collapse shrinks toward the anchored edge and settles without a snap (3.5s)
+  ✓  114 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:326:9 › 10.1.3 · 390 · top-anchored collapse › D-2 · the collapse shrinks toward the anchored edge and settles without a snap (3.5s)
+  ✓  115 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:385:9 › 10.1.3 · 390 · right-anchored reversal › D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate (2.9s)
+  ✓  116 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:385:9 › 10.1.3 · 390 · left-anchored reversal › D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate (2.9s)
+  ✓  117 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:385:9 › 10.1.3 · 390 · bottom-anchored reversal › D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate (2.9s)
+  ✓  118 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:441:5 › 10.1.3 · 390 · reduced motion › D-3 · under reduced motion the expand jumps to its rest (1.5s)
+  ✓  119 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:473:9 › 10.1.3 · 390 · touch · run swipe, Escape, then focus › D-1 (critique-2) · after a clickless, cancel-less touch press, a focus expands the collapsed dock (4.8s)
+  ✓  120 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:473:9 › 10.1.3 · 390 · touch · run swipe, Escape, then hover › D-1 (critique-2) · after a clickless, cancel-less touch press, a hover expands the collapsed dock (4.8s)
+  ✓  121 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:520:5 › 10.1.3 · 390 · a touch press with no tap, then focus › D-1 (critique-2) · a focus after a clickless touch press expands the collapsed dock (1.7s)
+  ✓  122 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:601:9 › 10.1.3 · 390 · right-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse (3.4s)
+  ✓  123 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:601:9 › 10.1.3 · 1440 · right-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse (3.3s)
+  ✓  124 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:601:9 › 10.1.3 · 390 · left-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse (3.3s)
+  ✓  125 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:601:9 › 10.1.3 · 390 · bottom-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse (3.3s)
+  ✓  126 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:637:9 › 10.1.3 · 390 · right-anchored double reversal, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate through a double reversal (2.7s)
+  ✓  127 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:637:9 › 10.1.3 · 390 · bottom-anchored double reversal, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate through a double reversal (2.6s)
+  ✓  128 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:728:9 › 10.1.3 · 390 · right-anchored expand, frozen at 40 % of its travel › D-1 (critique-4) · the stage beside the plate paints no control mid-expand (812ms)
+  ✓  129 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:728:9 › 10.1.3 · 390 · right-anchored collapse, frozen at 30 % of its travel › D-1 (critique-4) · the stage beside the plate paints no control mid-collapse (2.2s)
+  ✓  130 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:818:13 › 10.1.3 · 390 · right-anchored · drag a dock link out, then focus › D-1 (critique-6) · after a press that became a native drag, a focus expands the collapsed dock (2.5s)
+  ✓  131 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:818:13 › 10.1.3 · 390 · right-anchored · drag a dock link out, then hover › D-1 (critique-6) · after a press that became a native drag, a hover expands the collapsed dock (2.6s)
+  ✓  132 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:818:13 › 10.1.3 · 390 · left-anchored · drag a dock link out, then focus › D-1 (critique-6) · after a press that became a native drag, a focus expands the collapsed dock (2.4s)
+  ✓  133 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:818:13 › 10.1.3 · 390 · left-anchored · drag a dock link out, then hover › D-1 (critique-6) · after a press that became a native drag, a hover expands the collapsed dock (2.5s)
+  ✓  134 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:843:5 › 10.1.3 · 390 · right-anchored · right-click a collapsed seat, then focus › D-1 (critique-6) · after a right-click, a focus expands the collapsed dock (2.3s)
+  ✓  135 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:868:5 › 10.1.3 · 390 · right-anchored · hover-intent dwell across a right-click › D-1 (critique-6) · a hover dwell that completes after a right-click expands the collapsed dock (1.4s)
+  ✓  136 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:899:5 › 10.1.3 · 390 · a mouse press with no release, a press outside, then focus › D-1 (critique-6) · a press outside the dock supersedes an unreleased mouse press (1.7s)
+  ✓  137 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:931:9 › 10.1.3 · 390 · right-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (3.9s)
+  ✓  138 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:931:9 › 10.1.3 · 390 · left-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (3.9s)
+  ✓  139 [chromium-headless-new] › tests-visual/release-10-1-3.spec.ts:931:9 › 10.1.3 · 390 · bottom-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (3.9s)
+  ✓  140 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:104:5 › O-119 (g): DataTable learns its width on mount › a responsive DataTable in a 390 px box is a card list on the first observation, with no resize (464ms)
+  ✓  141 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:116:5 › O-119 (g): DataTable learns its width on mount › the same DataTable in a 900 px box stays a table (405ms)
+  ✓  142 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:136:9 › critique-3 F-4: a DataTable in a content-sized host settles › inline host: the projection settles from mount (2.2s)
+  ✓  143 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:136:9 › critique-3 F-4: a DataTable in a content-sized host settles › grid host: the projection settles from mount (2.2s)
+  ✓  144 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:136:9 › critique-3 F-4: a DataTable in a content-sized host settles › flex host: the projection settles from mount (2.2s)
+  ✓  145 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:136:9 › critique-3 F-4: a DataTable in a content-sized host settles › fit host: the projection settles from mount (2.2s)
+  ✓  146 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:146:5 › critique-3 F-4: a DataTable in a content-sized host settles › flex host, rows arriving after mount: the projection settles (2.5s)
+  ✓  147 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:158:5 › O-119 (f), the @page half: only a deck prints at slide geometry › a page without a deck keeps the reader's print defaults (162ms)
+  ✓  148 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:170:5 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck page takes the deck's print resets and its named page (165ms)
+  ✓  149 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:187:5 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck in a modal dialog (top layer, out of flow) hands its named page to the document (165ms)
+  ✓  150 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:199:5 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck page in flow: the document takes the deck's page too (158ms)
+[WebServer] 2:29:09 AM [vite] (client) [console.warn] Warning: `DialogContent` requires a `DialogTitle` for the component to be accessible for screen reader users.
+[WebServer] 
+[WebServer] If you want to hide the `DialogTitle`, you can wrap it with our VisuallyHidden component.
+[WebServer] 
+[WebServer] For more information, see https://www.reka-ui.com/docs/components/dialog.html#title
+  ✓  151 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:212:9 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck in the library's own Dialog (a fixed plate) hands its named page to the document (171ms)
+[WebServer] 2:29:09 AM [vite] (client) [console.warn] Warning: `DialogContent` requires a `DialogTitle` for the component to be accessible for screen reader users.
+[WebServer] 
+[WebServer] If you want to hide the `DialogTitle`, you can wrap it with our VisuallyHidden component.
+[WebServer] 
+[WebServer] For more information, see https://www.reka-ui.com/docs/components/dialog.html#title
+  ✓  152 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:224:9 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a deck in the library's own Dialog (a fixed plate) prints at slide geometry (205ms)
+  ✓  153 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:212:9 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck in a fixed overlay hands its named page to the document (165ms)
+  ✓  154 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:224:9 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a deck in a fixed overlay prints at slide geometry (160ms)
+  ✓  155 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:212:9 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck in a non-modal <dialog open> (absolute) hands its named page to the document (181ms)
+  ✓  156 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:224:9 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a deck in a non-modal <dialog open> (absolute) prints at slide geometry (163ms)
+  ✓  157 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:241:5 › O-119 (f), the @page half: only a deck prints at slide geometry › the deck's named page outranks a consumer's own @page (168ms)
+  ✓  158 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:257:5 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a consumer's own @page does not resize the deck's sheets (160ms)
+  ✓  159 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:271:5 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a consumer's own @page still sets the paper of a page with no deck (158ms)
+  ✓  160 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:284:5 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a page without a deck prints on the default paper (Letter) (162ms)
+  ✓  161 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:296:5 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a deck page prints one 1280x720 page per slide (170ms)
+  ✓  162 [chromium-headless-new] › tests-visual/release-10-1-4.spec.ts:311:5 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a deck in a modal dialog prints at slide geometry (160ms)
+  ✓  163 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 390: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (1.9s)
+  ✓  164 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 844: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (1.8s)
+  ✓  165 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:249:5 › coarse phone › g4 at 390 coarse the field type is at most 16px and at most 1.25x the pane subtitle (926ms)
+  ✓  166 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:217:5 › g1 rest dock at 1280: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (1.8s)
+  ✓  167 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:294:1 › g1 an overflowing run at scroll 0: the leading cap rests at half the block extent, a length; the trailing cap is cut (1.1s)
+  ✓  168 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:318:1 › g2 collapsed: the plate is a circle, half its extent on both axes (1.3s)
+  ✓  169 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:336:1 › g2 expanded (collapsible), each layer and input mode hold g1 (3.4s)
+  ✓  170 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:362:1 › g3 the Slider thumb is visible and one size at min, mid and max, inside the fill (905ms)
+  ✓  171 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:409:1 › g5 the DropdownMenuItem icon-to-label gap is the icon-slot token, the dock trigger's own (1.7s)
+  ✓  172 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:439:1 › c1 a value mark is the thumb's centre at that value, on every axis; the loupe's value point is the thumb's centre (1.4s)
+  ✓  173 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:507:5 › coarse phone, round 1 › c2 coarse: the -sm rung stays the quieter rung for every non-field reader; an sm field floors at 16px (933ms)
+  ✓  174 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:536:5 › coarse phone, round 1 › c4 coarse 390: a keyboard-focused seat under the pointer keeps its whole ring (2.3s)
+  ✓  175 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:543:1 › c3 the disabled scrubber dims its thumb with its fill (919ms)
+  ✓  176 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:619:1 › c4 desktop: a keyboard-focused seat under the pointer keeps its whole ring (2.3s)
+  ✓  177 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:638:5 › critique 2, coarse phone › e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner (1.8s)
+  ✓  178 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:638:5 › critique 2, coarse phone › e1 at 844: a label-wide tab under the pointer gives the run no reach and cuts no corner (1.8s)
+  ✓  179 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:662:5 › critique 2, coarse phone › e2 at 390: focused, hovered tab seats keep their whole ring on every edge (4.8s)
+  ✓  180 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:674:5 › critique 2, coarse phone › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled (5.4s)
+  ✓  181 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:723:5 › critique 2, coarse phone › e4 at 390: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring (2.6s)
+  ✓  182 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:638:5 › e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner (1.8s)
+  ✓  183 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:638:5 › e1 at 1440: a label-wide tab under the pointer gives the run no reach and cuts no corner (1.8s)
+  ✓  184 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:662:5 › e2 at 390: focused, hovered tab seats keep their whole ring on every edge (4.8s)
+  ✓  185 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:662:5 › e2 at 1440: focused, hovered tab seats keep their whole ring on every edge (4.8s)
+  ✓  186 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:674:5 › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled (5.4s)
+  ✓  187 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:723:5 › e4 at 1440: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring (2.6s)
+  ✓  188 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:763:1 › f1 a SegmentedTabs under a fixed z:1 header paints beneath it; its labels paint over the indicator (3.0s)
+  ✓  189 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:805:1 › f2 Table row and header rules paint in --border, light and dark (897ms)
+  ✓  190 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:840:9 › h1 at 2x › h1 house at 390: a seat cut by the trailing clip paints nothing past the plate's corner arc (3.0s)
+  ✓  191 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:840:9 › h1 at 2x › h1 cockpit at 390: a seat cut by the trailing clip paints nothing past the plate's corner arc (3.1s)
+  ✓  192 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:956:1 › h2 at 844: a labelled DockTrigger adds no reserve; the run's room is the icon dock's (2.2s)
+  ✓  193 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:972:1 › h3 a ticking seat label constructs no ResizeObserver (2.0s)
+  ✓  194 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:990:1 › h4 with no ResizeObserver the plate rests at half its block extent (1.2s)
+  ✓  195 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1150:1 › k2 vertical: a wide tab at a flush edge keeps its whole ring, at the start and at the end (4.3s)
+  ✓  196 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1087:5 › critique 5, coarse phone › k1 at 320: End, focus() and hover+focus land the end seat flush with its ring whole; Home lands the first (10.6s)
+  ✓  197 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1189:5 › critique 5, coarse phone › k3 at 320: a capped dock whose seats all show holds the fit law and rests round (2.1s)
+  ✓  198 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1087:5 › k1 at 320: End, focus() and hover+focus land the end seat flush with its ring whole; Home lands the first (10.7s)
+  ✘  199 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1189:5 › k3 at 320: a capped dock whose seats all show holds the fit law and rests round (1.2s)
+  ✓  200 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1278:13 › critique 6, coarse phone › l1 a cap lifted under a run scrolled to its end rests round (tab:Home,icon,icon,icon,tab:Settings) (3.1s)
+  ✓  201 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1278:13 › critique 6, coarse phone › l1 a cap lifted under a run scrolled to its mid rests round (tab:Home,icon,icon,icon,tab:Settings) (3.1s)
+  ✓  202 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1278:13 › critique 6, coarse phone › l1 a cap lifted under a run scrolled to its end rests round (icon,icon,icon,icon,icon,icon) (3.1s)
+  ✓  203 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1278:13 › critique 6, coarse phone › l1 a cap lifted under a run scrolled to its mid rests round (icon,icon,icon,icon,icon,icon) (3.1s)
+  ✓  204 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1295:5 › critique 6, coarse phone › l1 a viewport resize 390 → 844 under a run scrolled to its end rests round (3.6s)
+  ✓  205 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1311:5 › critique 6, coarse phone › l1 a vertical run's stage grown under a run scrolled to its end rests round (3.1s)
+  ✓  206 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1278:13 › l1 a cap lifted under a run scrolled to its end rests round (tab:Home,icon,icon,icon,tab:Settings) (3.1s)
+  ✓  207 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1278:13 › l1 a cap lifted under a run scrolled to its mid rests round (tab:Home,icon,icon,icon,tab:Settings) (3.1s)
+  ✓  208 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1278:13 › l1 a cap lifted under a run scrolled to its end rests round (icon,icon,icon,icon,icon,icon) (3.1s)
+  ✓  209 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1278:13 › l1 a cap lifted under a run scrolled to its mid rests round (icon,icon,icon,icon,icon,icon) (3.1s)
+  ✓  210 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1295:5 › l1 a viewport resize 390 → 844 under a run scrolled to its end rests round (3.5s)
+  ✓  211 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1311:5 › l1 a vertical run's stage grown under a run scrolled to its end rests round (3.1s)
+  ✓  212 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1383:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its mid seals round (7.3s)
+  ✓  213 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1383:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its end seals round (7.3s)
+  ✓  214 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1383:9 › critique 7, coarse phone › m1 at 1440: a collapse from a run scrolled to its end seals round (7.3s)
+  ✓  215 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1661:9 › critique 7, coarse phone › m5 O-182 horizontal: in dark nothing past the plate is lighter than the ground (2.9s)
+  ✓  216 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1661:9 › critique 7, coarse phone › m5 O-182 vertical: in dark nothing past the plate is lighter than the ground (2.8s)
+  ✓  217 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1661:9 › critique 7, coarse phone › m5 O-182 collapsed: in dark nothing past the plate is lighter than the ground (2.8s)
+  ✓  218 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1720:5 › critique 7, coarse phone › m5 O-182 light: the shadow is still the foreground (935ms)
+  ✓  219 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1412:5 › critique 7, coarse phone › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge (14.9s)
+  ✓  220 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1433:9 › critique 7, coarse phone › m4 at 390: a layered overflowing run rests at its start, the leading corner round (1.6s)
+  ✓  221 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1433:9 › critique 7, coarse phone › m4 at 1440: a layered overflowing run rests at its start, the leading corner round (1.6s)
+  ✓  222 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1453:5 › critique 7, coarse phone › m3 O-157 a static-backdrop plate follows --glass-veil-ink, light and dark (4.8s)
+  ✓  223 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1508:5 › critique 7, coarse phone › m3 O-162 the folded summary's ring follows the pill after Escape (3.9s)
+  ✓  224 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1535:5 › critique 7, coarse phone › m3 O-177 Tab onto the folded face expands the dock and lands on a seat (2.5s)
+  ✓  225 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1557:5 › critique 7, coarse phone › m3 O-176 a collapse=open dock left untouched idles shut, and after a remount (13.3s)
+  ✓  226 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1576:5 › critique 7, coarse phone › m3 O-177 a press during the expand activates its seat once (10.2s)
+  ✓  227 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1613:5 › critique 7, coarse phone › m3 O-167 the dock Slider's fill is a calm ink in dark and its thumb tracks the drag (1.9s)
+  ✓  228 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1488:5 › critique 7, coarse phone › m3 O-161 a tap leaves no hover paint on the DarkModeToggle or a DockControl (2.6s)
+  ✓  229 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1383:9 › m1 at 390: a collapse from a run scrolled to its mid seals round (7.3s)
+  ✓  230 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1383:9 › m1 at 390: a collapse from a run scrolled to its end seals round (7.3s)
+  ✓  231 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1383:9 › m1 at 1440: a collapse from a run scrolled to its end seals round (7.2s)
+  ✓  232 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1661:9 › m5 O-182 horizontal: in dark nothing past the plate is lighter than the ground (2.9s)
+  ✓  233 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1661:9 › m5 O-182 vertical: in dark nothing past the plate is lighter than the ground (2.9s)
+  ✓  234 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1661:9 › m5 O-182 collapsed: in dark nothing past the plate is lighter than the ground (2.8s)
+  ✓  235 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1720:5 › m5 O-182 light: the shadow is still the foreground (917ms)
+  ✓  236 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1412:5 › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge (14.7s)
+  ✓  237 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1433:9 › m4 at 390: a layered overflowing run rests at its start, the leading corner round (1.5s)
+  ✓  238 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1433:9 › m4 at 1440: a layered overflowing run rests at its start, the leading corner round (1.5s)
+  ✓  239 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1453:5 › m3 O-157 a static-backdrop plate follows --glass-veil-ink, light and dark (4.8s)
+  ✓  240 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1508:5 › m3 O-162 the folded summary's ring follows the pill after Escape (3.9s)
+  ✓  241 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1535:5 › m3 O-177 Tab onto the folded face expands the dock and lands on a seat (2.4s)
+  ✓  242 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1557:5 › m3 O-176 a collapse=open dock left untouched idles shut, and after a remount (13.3s)
+  ✓  243 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1576:5 › m3 O-177 a press during the expand activates its seat once (10.2s)
+  ✓  244 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1613:5 › m3 O-167 the dock Slider's fill is a calm ink in dark and its thumb tracks the drag (1.8s)
+  ✓  245 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1789:5 › critique 8, coarse phone › n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge (15.6s)
+  ✓  246 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1789:5 › n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge (15.6s)
+  ✓  247 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1890:5 › critique 9, coarse phone › p1 a dock its host resizes mid-expand holds every seat at the settle (horizontal clamp, vertical yield band) (15.7s)
+  ✓  248 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1890:5 › p1 a dock its host resizes mid-expand holds every seat at the settle (horizontal clamp, vertical yield band) (15.7s)
+  ✓  249 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1936:5 › critique 10, coarse phone › p2 a 1-2 px host change across the fit edge mid-expand holds every seat at the settle (48.2s)
+  ✓  250 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1936:5 › p2 a 1-2 px host change across the fit edge mid-expand holds every seat at the settle (50.0s)
+  ✓  251 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2040:5 › q1 O-186 at 1440: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage (12.6s)
+  ✓  252 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2070:5 › q2 O-187 at 1440: a nested .dock-run group keeps each hovered control's whole ink (3.4s)
+  ✓  253 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2102:5 › q3 O-187 at 1440: the plate has exactly one scroll timeline in scope, the visible run's (918ms)
+  ✓  254 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2040:5 › q1 O-186 at 390: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage (9.1s)
+  ✓  255 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2070:5 › q2 O-187 at 390: a nested .dock-run group keeps each hovered control's whole ink (2.2s)
+  ✓  256 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2102:5 › q3 O-187 at 390: the plate has exactly one scroll timeline in scope, the visible run's (928ms)
+  ✓  257 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2121:5 › r1 Q2 at 1440: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout (2.4s)
+  ✓  258 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2121:5 › fix 10, coarse phone › r1 Q2 at 390: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout (2.4s)
+  ✓  259 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2234:5 › s1 O-205 at 1440: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run (5.6s)
+[WebServer] 2:37:59 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+[WebServer] 2:38:05 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+[WebServer] 2:38:05 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+  ✘  260 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2343:5 › s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round (44.5s)
+  ✓  261 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2234:5 › fix 11, coarse phone › s1 O-205 at 390: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run (5.0s)
+[WebServer] 2:38:46 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+[WebServer] 2:38:46 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+[WebServer] 2:38:51 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+[WebServer] 2:38:51 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+[WebServer] 2:38:52 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+[WebServer] 2:38:52 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+[WebServer] 2:38:54 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+[WebServer] 2:38:54 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+  ✘  262 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2343:5 › fix 11, coarse phone › s2 O-201 at 390: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round (44.7s)
+  ✓  263 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2383:5 › fix 12, desktop › t1 O-201 vertical: through the fit edge the end seats keep their whole ring, bounded in the yield band (45.7s)
+  ✓  264 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2383:5 › fix 12, coarse phone › t1 O-201 vertical: through the fit edge the end seats keep their whole ring, bounded in the yield band (45.5s)
+  ✓  265 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2438:1 › s3 O-207 G3 a disclosure trigger's keyboard ring is the house outline, whatever it composes (3.0s)
+  ✓  266 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2456:1 › s4 a host padding change across the fit edge mid-expand holds every seat at the settle (vertical) (29.1s)
+  ✓  267 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2504:5 › fix 13, coarse phone › u1 a collapsing vertical run that does not fit keeps its scroll on the first morph frame (44.7s)
+  ✓  268 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2548:1 › m3 O-159 the dock README names every DockProps member and no other (54ms)
+  ✓  269 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2562:1 › m3 O-160 no cut-cap or clip keyframe carries a percentage radius (46ms)
+o1 focus hover {"radii":["20px","20px","20px","20px"],"w":96,"h":44}
+  ✘  270 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:73:5 › o1 the wide label seat › o1 the hover plate of a compact 'Focus' label seat is a capsule, never an ellipse (911ms)
+o1 name rest {"radii":["20px","20px","20px","20px"],"w":107,"h":44} hover {"radii":["20px","20px","20px","20px"],"w":107,"h":44}
+  ✘  271 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:85:5 › o1 the wide label seat › o1 the active 'Name ›' seat's plate, at rest and under hover, is a capsule (962ms)
+o2 open house tokens plate {"radii":["30px","30px","30px","30px"],"w":273,"h":60} root {"radii":["30px","30px","30px","30px"],"w":273,"h":60}
+  ✓  272 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round (626ms)
+o2 collapsed house tokens plate {"radii":["28px","28px","28px","28px"],"w":102,"h":56} root {"radii":["28px","28px","28px","28px"],"w":102,"h":56}
+  ✓  273 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round (566ms)
+o2 narrow house tokens plate {"radii":["28px","28px","28px","28px"],"w":158,"h":56} root {"radii":["28px","28px","28px","28px"],"w":158,"h":56} run {"scroll":0}
+  ✓  274 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round (575ms)
+o2 open radius-dock 1.875rem plate {"radii":["30px","30px","30px","30px"],"w":273,"h":60} root {"radii":["30px","30px","30px","30px"],"w":273,"h":60}
+  ✓  275 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open at rest, the plate and the box are round (586ms)
+o2 collapsed radius-dock 1.875rem plate {"radii":["28px","28px","28px","28px"],"w":102,"h":56} root {"radii":["28px","28px","28px","28px"],"w":102,"h":56}
+  ✓  276 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: collapsed with a persistent seat beside the summary, the plate and the box are round (583ms)
+o2 narrow radius-dock 1.875rem plate {"radii":["28px","28px","28px","28px"],"w":158,"h":56} root {"radii":["28px","28px","28px","28px"],"w":158,"h":56} run {"scroll":0}
+  ✓  277 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round (593ms)
+o3 expand {"frames":167,"morphing":44,"bad":[]}
+o3 collapse {"frames":169,"morphing":46,"bad":[]}
+  ✓  278 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:142:1 › o3 every frame of the expand and of the collapse paints a round end (3.4s)
+  ✓  279 [coarse-touch] › tests-visual/release-10-1-1.spec.ts:51:5 › 10.1.1 › G-1 · an open sheet is fixed and inside the viewport (855ms)
+  ✓  280 [coarse-touch] › tests-visual/release-10-1-1.spec.ts:74:5 › 10.1.1 › G-2 · a menu and its submenu paint above the dock's rung (654ms)
+  ✓  281 [coarse-touch] › tests-visual/release-10-1-1.spec.ts:84:5 › 10.1.1 › G-3 · a composite in a container seat keeps its tab stop and its arrows (239ms)
+  ✓  282 [coarse-touch] › tests-visual/release-10-1-1.spec.ts:113:5 › 10.1.1 › G-3 · a composite seated directly in the run keeps its arrows (266ms)
+  ✓  283 [coarse-touch] › tests-visual/release-10-1-1.spec.ts:137:9 › 10.1.1 › O-102(3) · a dropdown opened from a seat closes when the dock collapses (518ms)
+  ✓  284 [coarse-touch] › tests-visual/release-10-1-1.spec.ts:137:9 › 10.1.1 › O-102(3) · a popover opened from a seat closes when the dock collapses (574ms)
+[WebServer] 2:42:27 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+  ✓  285 [coarse-touch] › tests-visual/release-10-1-1.spec.ts:137:9 › 10.1.1 › O-102(3) · a select opened from a seat closes when the dock collapses (492ms)
+  ✓  286 [coarse-touch] › tests-visual/release-10-1-1.spec.ts:156:5 › 10.1.1 › O-102(3) · a collapse-closed menu hands focus to the summary, not <body> (768ms)
+  ✓  287 [coarse-touch] › tests-visual/release-10-1-1.spec.ts:186:5 › 10.1.1 › O-102(3) · a popover opened from #persistent outlives the collapse, and the dock stays collapsed (1.8s)
+  ✓  288 [coarse-touch] › tests-visual/release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a tooltip opened from a seat is portalled out of the run and not clipped (desktop) (646ms)
+  ✓  289 [coarse-touch] › tests-visual/release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a popover opened from a seat is portalled out of the run and not clipped (desktop) (640ms)
+  ✓  290 [coarse-touch] › tests-visual/release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a popover-inline opened from a seat is portalled out of the run and not clipped (desktop) (651ms)
+  ✓  291 [coarse-touch] › tests-visual/release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a hovercard opened from a seat is portalled out of the run and not clipped (desktop) (650ms)
+  ✓  292 [coarse-touch] › tests-visual/release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a menu opened from a seat is portalled out of the run and not clipped (desktop) (685ms)
+  ✓  293 [coarse-touch] › tests-visual/release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a select opened from a seat is portalled out of the run and not clipped (desktop) (652ms)
+  ✓  294 [coarse-touch] › tests-visual/release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a tooltip opened from a seat is portalled out of the run and not clipped (phone) (637ms)
+  ✓  295 [coarse-touch] › tests-visual/release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a popover opened from a seat is portalled out of the run and not clipped (phone) (641ms)
+  ✓  296 [coarse-touch] › tests-visual/release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a popover-inline opened from a seat is portalled out of the run and not clipped (phone) (632ms)
+  ✓  297 [coarse-touch] › tests-visual/release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a hovercard opened from a seat is portalled out of the run and not clipped (phone) (631ms)
+  ✓  298 [coarse-touch] › tests-visual/release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a menu opened from a seat is portalled out of the run and not clipped (phone) (673ms)
+  ✓  299 [coarse-touch] › tests-visual/release-10-1-1.spec.ts:229:13 › 10.1.1 › O-102(6) · a select opened from a seat is portalled out of the run and not clipped (phone) (666ms)
+  ✓  300 [coarse-touch] › tests-visual/release-10-1-1.spec.ts:256:5 › 10.1.1 › Skeleton · shimmer travels, the plain tile breathes, an off-screen one is paused (327ms)
+  ✓  301 [coarse-touch] › tests-visual/release-10-1-1.spec.ts:290:9 › 10.1.1 › Skeleton · the shimmer layer covers the tile through its whole cycle (ltr) (205ms)
+  ✓  302 [coarse-touch] › tests-visual/release-10-1-1.spec.ts:290:9 › 10.1.1 › Skeleton · the shimmer layer covers the tile through its whole cycle (rtl) (196ms)
+  ✓  303 [coarse-touch] › tests-visual/release-10-1-1.spec.ts:323:5 › 10.1.1 › Skeleton · shimmer holds still under reduced motion (191ms)
+  ✓  304 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:51:9 › 10.1.2 · 1440 › G-4 · the atlas shapes seated in a run are all Tab-reachable (240ms)
+  ✓  305 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:68:9 › 10.1.2 · 1440 › G-4 · arrows rove only the declared seats; an undeclared control keeps its keys (251ms)
+  ✓  306 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:84:9 › 10.1.2 · 1440 › G-4 · a run with an undeclared child claims no toolbar role (209ms)
+  ✓  307 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:92:9 › 10.1.2 · 1440 › G-4 · a focusable splitter is undeclared: its own stop, no toolbar role (225ms)
+  ✓  308 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:102:9 › 10.1.2 · 1440 › G-4 · an all-declared run is one toolbar stop with arrows across it (241ms)
+  ✓  309 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:119:9 › 10.1.2 · 1440 › G-4 · a DockTrigger for=select in a form keeps an all-declared run's toolbar (248ms)
+  ✓  310 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:137:9 › 10.1.2 · 1440 › G-4 · the toolbar claim follows a child's aria-hidden and tabindex in place (255ms)
+  ✓  311 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:158:9 › 10.1.2 · 1440 › G-4 · an aria-hidden wrapper around a Tab stop voids the toolbar claim (228ms)
+  ✓  312 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:169:9 › 10.1.2 · 1440 › G-4 · a child that drops its declaration is Tab-reachable again (239ms)
+  ✓  313 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:187:9 › 10.1.2 · 1440 › G-4 · a disabled DockTrigger holding the stop keeps the run in the Tab order (259ms)
+  ✓  314 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:203:9 › 10.1.2 · 1440 › G-4 · the arrows pass a disabled DockTrigger mid-run (244ms)
+  ✓  315 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:216:9 › 10.1.2 · 1440 › G-4 · a RadioGroup and a ToggleGroup seated directly keep their arrows (248ms)
+  ✓  316 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:51:9 › 10.1.2 · 390 › G-4 · the atlas shapes seated in a run are all Tab-reachable (241ms)
+  ✓  317 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:68:9 › 10.1.2 · 390 › G-4 · arrows rove only the declared seats; an undeclared control keeps its keys (249ms)
+  ✓  318 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:84:9 › 10.1.2 · 390 › G-4 · a run with an undeclared child claims no toolbar role (209ms)
+  ✓  319 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:92:9 › 10.1.2 · 390 › G-4 · a focusable splitter is undeclared: its own stop, no toolbar role (219ms)
+  ✓  320 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:102:9 › 10.1.2 · 390 › G-4 · an all-declared run is one toolbar stop with arrows across it (236ms)
+  ✓  321 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:119:9 › 10.1.2 · 390 › G-4 · a DockTrigger for=select in a form keeps an all-declared run's toolbar (246ms)
+  ✓  322 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:137:9 › 10.1.2 · 390 › G-4 · the toolbar claim follows a child's aria-hidden and tabindex in place (237ms)
+  ✓  323 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:158:9 › 10.1.2 · 390 › G-4 · an aria-hidden wrapper around a Tab stop voids the toolbar claim (216ms)
+  ✓  324 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:169:9 › 10.1.2 · 390 › G-4 · a child that drops its declaration is Tab-reachable again (247ms)
+  ✓  325 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:187:9 › 10.1.2 · 390 › G-4 · a disabled DockTrigger holding the stop keeps the run in the Tab order (237ms)
+  ✓  326 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:203:9 › 10.1.2 · 390 › G-4 · the arrows pass a disabled DockTrigger mid-run (213ms)
+  ✓  327 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:216:9 › 10.1.2 · 390 › G-4 · a RadioGroup and a ToggleGroup seated directly keep their arrows (225ms)
+  ✓  328 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:267:13 › 10.1.2 · 1440 · light › D-1 · a disabled DockTrigger paints disabled and takes no hover or press fill (413ms)
+  ✓  329 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:267:13 › 10.1.2 · 1440 · dark › D-1 · a disabled DockTrigger paints disabled and takes no hover or press fill (413ms)
+  ✓  330 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:267:13 › 10.1.2 · 390 · light › D-1 · a disabled DockTrigger paints disabled and takes no hover or press fill (437ms)
+  ✓  331 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:267:13 › 10.1.2 · 390 · dark › D-1 · a disabled DockTrigger paints disabled and takes no hover or press fill (440ms)
+  ✓  332 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · horizontal · pinned · the expanded endpoint follows the pane (1440->390) (2.0s)
+  ✓  333 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · horizontal · collapsed · the expanded endpoint follows the pane (1440->390) (2.2s)
+  ✘  334 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390) (1.5s)
+  ✓  335 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (1440->390) (951ms)
+  ✓  336 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · horizontal · pinned · the expanded endpoint follows the pane (390->1440) (2.0s)
+  ✓  337 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · horizontal · collapsed · the expanded endpoint follows the pane (390->1440) (2.2s)
+  ✘  338 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (390->1440) (1.5s)
+  ✓  339 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (390->1440) (977ms)
+  ✓  340 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · vertical · pinned · the expanded endpoint follows the pane (1440->390) (2.1s)
+  ✓  341 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · vertical · collapsed · the expanded endpoint follows the pane (1440->390) (2.3s)
+  ✘  342 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (1440->390) (1.6s)
+  ✓  343 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (1440->390) (967ms)
+  ✓  344 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · vertical · pinned · the expanded endpoint follows the pane (390->1440) (1.9s)
+  ✓  345 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · vertical · collapsed · the expanded endpoint follows the pane (390->1440) (2.2s)
+  ✘  346 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (390->1440) (1.5s)
+  ✓  347 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (390->1440) (967ms)
+  ✓  348 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:490:5 › RU-35 · horizontal · the outputs read the root's extents after an unfold and after a fold (1.1s)
+  ✓  349 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:490:5 › RU-35 · vertical · the outputs read the root's extents after an unfold and after a fold (1.1s)
+  ✓  350 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:533:9 › O-101a · a host change during the morph · collapsed (1440->390) (2.3s)
+  ✓  351 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:533:9 › O-101a · a host change during the morph · reversal (1440->390) (1.6s)
+  ✓  352 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:533:9 › O-101a · a host change during the morph · mid-expand (1440->390) (964ms)
+  ✓  353 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:533:9 › O-101a · a host change during the morph · collapsed (390->1440) (2.3s)
+  ✓  354 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:533:9 › O-101a · a host change during the morph · reversal (390->1440) (1.5s)
+  ✓  355 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:533:9 › O-101a · a host change during the morph · mid-expand (390->1440) (989ms)
+  ✓  356 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:573:5 › O-101 · a capture keeps a scrolled run's scroll position (390) (1.7s)
+  ✓  357 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:573:5 › O-101 · a capture keeps a scrolled run's scroll position (1440) (1.7s)
+  ✓  358 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:143:13 › 10.1.3 · 360 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · a click on the anchored persistent seat of a collapsed dock reaches it (1.5s)
+  ✓  359 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 360 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer (1.8s)
+  ✓  360 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:226:13 › 10.1.3 · 360 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · a press on the anchored persistent seat mid-expand is kept (1.5s)
+  ✓  361 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:143:13 › 10.1.3 · 360 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · a click on the anchored persistent seat of a collapsed dock reaches it (1.4s)
+  ✓  362 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 360 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer (1.7s)
+  ✓  363 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:226:13 › 10.1.3 · 360 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · a press on the anchored persistent seat mid-expand is kept (1.5s)
+  ✓  364 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:143:13 › 10.1.3 · 390 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · a click on the anchored persistent seat of a collapsed dock reaches it (1.5s)
+  ✓  365 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 390 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer (1.7s)
+  ✓  366 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:226:13 › 10.1.3 · 390 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · a press on the anchored persistent seat mid-expand is kept (1.5s)
+  ✓  367 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:143:13 › 10.1.3 · 390 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · a click on the anchored persistent seat of a collapsed dock reaches it (1.5s)
+  ✓  368 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 390 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer (1.8s)
+  ✓  369 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:226:13 › 10.1.3 · 390 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · a press on the anchored persistent seat mid-expand is kept (1.5s)
+  ✓  370 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:143:13 › 10.1.3 · 430 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · a click on the anchored persistent seat of a collapsed dock reaches it (1.5s)
+  ✓  371 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 430 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer (1.7s)
+  ✓  372 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:226:13 › 10.1.3 · 430 · right-anchored (fourier f-w14v-au2 L2-15) › O-110 · a press on the anchored persistent seat mid-expand is kept (1.5s)
+  ✓  373 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:143:13 › 10.1.3 · 430 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · a click on the anchored persistent seat of a collapsed dock reaches it (1.4s)
+  ✓  374 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 430 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer (1.7s)
+  ✓  375 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:226:13 › 10.1.3 · 430 · left-anchored (fourier f-w14v-au2 L2-15) › O-110 · a press on the anchored persistent seat mid-expand is kept (1.5s)
+  ✓  376 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:143:13 › 10.1.3 · 1440 · right-anchored (fourier f-w14-control-row G-h) › O-110 · a click on the anchored persistent seat of a collapsed dock reaches it (1.5s)
+  ✓  377 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 1440 · right-anchored (fourier f-w14-control-row G-h) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer (1.8s)
+  ✓  378 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:226:13 › 10.1.3 · 1440 · right-anchored (fourier f-w14-control-row G-h) › O-110 · a press on the anchored persistent seat mid-expand is kept (1.5s)
+  ✓  379 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:143:13 › 10.1.3 · 1440 · left-anchored (fourier f-w14-control-row G-h) › O-110 · a click on the anchored persistent seat of a collapsed dock reaches it (1.5s)
+  ✓  380 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:167:13 › 10.1.3 · 1440 · left-anchored (fourier f-w14-control-row G-h) › O-110 · the expand grows from the anchored edge from its first frame; the seat stays under the pointer (1.7s)
+  ✓  381 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:226:13 › 10.1.3 · 1440 · left-anchored (fourier f-w14-control-row G-h) › O-110 · a press on the anchored persistent seat mid-expand is kept (1.5s)
+  ✓  382 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:277:9 › 10.1.3 · 390 · right-anchored, open-side seat › D-1 · a click on the open-side persistent seat of a collapsed dock reaches it (1.5s)
+  ✓  383 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:277:9 › 10.1.3 · 1440 · right-anchored, open-side seat › D-1 · a click on the open-side persistent seat of a collapsed dock reaches it (1.5s)
+  ✓  384 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:277:9 › 10.1.3 · 390 · left-anchored, open-side seat › D-1 · a click on the open-side persistent seat of a collapsed dock reaches it (1.5s)
+  ✓  385 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:277:9 › 10.1.3 · 390 · bottom-anchored, open-side seat › D-1 · a click on the open-side persistent seat of a collapsed dock reaches it (1.4s)
+  ✓  386 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:300:9 › 10.1.3 · 360 · touch · right-anchored, open-side seat › D-1 · a tap on the open-side persistent seat of a collapsed dock reaches it (1.4s)
+  ✓  387 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:300:9 › 10.1.3 · 390 · touch · right-anchored, open-side seat › D-1 · a tap on the open-side persistent seat of a collapsed dock reaches it (1.4s)
+  ✓  388 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:300:9 › 10.1.3 · 430 · touch · right-anchored, open-side seat › D-1 · a tap on the open-side persistent seat of a collapsed dock reaches it (1.4s)
+  ✓  389 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:326:9 › 10.1.3 · 390 · right-anchored collapse › D-2 · the collapse shrinks toward the anchored edge and settles without a snap (3.6s)
+  ✓  390 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:326:9 › 10.1.3 · 390 · left-anchored collapse › D-2 · the collapse shrinks toward the anchored edge and settles without a snap (3.6s)
+  ✓  391 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:326:9 › 10.1.3 · 390 · bottom-anchored collapse › D-2 · the collapse shrinks toward the anchored edge and settles without a snap (3.6s)
+  ✓  392 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:326:9 › 10.1.3 · 390 · top-anchored collapse › D-2 · the collapse shrinks toward the anchored edge and settles without a snap (3.6s)
+  ✓  393 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:385:9 › 10.1.3 · 390 · right-anchored reversal › D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate (3.0s)
+  ✓  394 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:385:9 › 10.1.3 · 390 · left-anchored reversal › D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate (3.0s)
+  ✓  395 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:385:9 › 10.1.3 · 390 · bottom-anchored reversal › D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate (3.0s)
+  ✓  396 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:441:5 › 10.1.3 · 390 · reduced motion › D-3 · under reduced motion the expand jumps to its rest (1.6s)
+  ✓  397 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:473:9 › 10.1.3 · 390 · touch · run swipe, Escape, then focus › D-1 (critique-2) · after a clickless, cancel-less touch press, a focus expands the collapsed dock (4.8s)
+  ✓  398 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:473:9 › 10.1.3 · 390 · touch · run swipe, Escape, then hover › D-1 (critique-2) · after a clickless, cancel-less touch press, a hover expands the collapsed dock (4.8s)
+  ✓  399 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:520:5 › 10.1.3 · 390 · a touch press with no tap, then focus › D-1 (critique-2) · a focus after a clickless touch press expands the collapsed dock (1.7s)
+  ✓  400 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:601:9 › 10.1.3 · 390 · right-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse (3.4s)
+  ✓  401 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:601:9 › 10.1.3 · 1440 · right-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse (3.4s)
+  ✓  402 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:601:9 › 10.1.3 · 390 · left-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse (3.4s)
+  ✓  403 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:601:9 › 10.1.3 · 390 · bottom-anchored, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate on the expand or the collapse (3.4s)
+  ✓  404 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:637:9 › 10.1.3 · 390 · right-anchored double reversal, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate through a double reversal (2.7s)
+  ✓  405 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:637:9 › 10.1.3 · 390 · bottom-anchored double reversal, the plate holds what it paints › D-1 (critique-4) · no control paints outside the plate through a double reversal (2.7s)
+  ✓  406 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:728:9 › 10.1.3 · 390 · right-anchored expand, frozen at 40 % of its travel › D-1 (critique-4) · the stage beside the plate paints no control mid-expand (886ms)
+  ✓  407 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:728:9 › 10.1.3 · 390 · right-anchored collapse, frozen at 30 % of its travel › D-1 (critique-4) · the stage beside the plate paints no control mid-collapse (2.2s)
+  ✓  408 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:818:13 › 10.1.3 · 390 · right-anchored · drag a dock link out, then focus › D-1 (critique-6) · after a press that became a native drag, a focus expands the collapsed dock (2.5s)
+  ✓  409 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:818:13 › 10.1.3 · 390 · right-anchored · drag a dock link out, then hover › D-1 (critique-6) · after a press that became a native drag, a hover expands the collapsed dock (2.5s)
+  ✓  410 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:818:13 › 10.1.3 · 390 · left-anchored · drag a dock link out, then focus › D-1 (critique-6) · after a press that became a native drag, a focus expands the collapsed dock (2.5s)
+  ✓  411 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:818:13 › 10.1.3 · 390 · left-anchored · drag a dock link out, then hover › D-1 (critique-6) · after a press that became a native drag, a hover expands the collapsed dock (2.5s)
+  ✓  412 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:843:5 › 10.1.3 · 390 · right-anchored · right-click a collapsed seat, then focus › D-1 (critique-6) · after a right-click, a focus expands the collapsed dock (2.4s)
+  ✓  413 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:868:5 › 10.1.3 · 390 · right-anchored · hover-intent dwell across a right-click › D-1 (critique-6) · a hover dwell that completes after a right-click expands the collapsed dock (1.5s)
+  ✓  414 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:899:5 › 10.1.3 · 390 · a mouse press with no release, a press outside, then focus › D-1 (critique-6) · a press outside the dock supersedes an unreleased mouse press (1.8s)
+  ✓  415 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:931:9 › 10.1.3 · 390 · right-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (4.0s)
+  ✓  416 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:931:9 › 10.1.3 · 390 · left-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (4.0s)
+  ✓  417 [coarse-touch] › tests-visual/release-10-1-3.spec.ts:931:9 › 10.1.3 · 390 · bottom-anchored · ancestor zoom 1.25 › D-1 (critique-7) · the summary glyph holds its box through the expand and the collapse (3.9s)
+  ✓  418 [coarse-touch] › tests-visual/release-10-1-4.spec.ts:104:5 › O-119 (g): DataTable learns its width on mount › a responsive DataTable in a 390 px box is a card list on the first observation, with no resize (372ms)
+  ✓  419 [coarse-touch] › tests-visual/release-10-1-4.spec.ts:116:5 › O-119 (g): DataTable learns its width on mount › the same DataTable in a 900 px box stays a table (374ms)
+  ✓  420 [coarse-touch] › tests-visual/release-10-1-4.spec.ts:136:9 › critique-3 F-4: a DataTable in a content-sized host settles › inline host: the projection settles from mount (2.1s)
+  ✓  421 [coarse-touch] › tests-visual/release-10-1-4.spec.ts:136:9 › critique-3 F-4: a DataTable in a content-sized host settles › grid host: the projection settles from mount (2.1s)
+  ✓  422 [coarse-touch] › tests-visual/release-10-1-4.spec.ts:136:9 › critique-3 F-4: a DataTable in a content-sized host settles › flex host: the projection settles from mount (2.2s)
+  ✓  423 [coarse-touch] › tests-visual/release-10-1-4.spec.ts:136:9 › critique-3 F-4: a DataTable in a content-sized host settles › fit host: the projection settles from mount (2.2s)
+  ✓  424 [coarse-touch] › tests-visual/release-10-1-4.spec.ts:146:5 › critique-3 F-4: a DataTable in a content-sized host settles › flex host, rows arriving after mount: the projection settles (2.5s)
+  ✓  425 [coarse-touch] › tests-visual/release-10-1-4.spec.ts:158:5 › O-119 (f), the @page half: only a deck prints at slide geometry › a page without a deck keeps the reader's print defaults (171ms)
+  ✓  426 [coarse-touch] › tests-visual/release-10-1-4.spec.ts:170:5 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck page takes the deck's print resets and its named page (182ms)
+  ✓  427 [coarse-touch] › tests-visual/release-10-1-4.spec.ts:187:5 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck in a modal dialog (top layer, out of flow) hands its named page to the document (191ms)
+  ✓  428 [coarse-touch] › tests-visual/release-10-1-4.spec.ts:199:5 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck page in flow: the document takes the deck's page too (180ms)
+[WebServer] 2:45:56 AM [vite] (client) [console.warn] Warning: `DialogContent` requires a `DialogTitle` for the component to be accessible for screen reader users.
+[WebServer] 
+[WebServer] If you want to hide the `DialogTitle`, you can wrap it with our VisuallyHidden component.
+[WebServer] 
+[WebServer] For more information, see https://www.reka-ui.com/docs/components/dialog.html#title
+  ✓  429 [coarse-touch] › tests-visual/release-10-1-4.spec.ts:212:9 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck in the library's own Dialog (a fixed plate) hands its named page to the document (201ms)
+[WebServer] 2:45:57 AM [vite] (client) [console.warn] Warning: `DialogContent` requires a `DialogTitle` for the component to be accessible for screen reader users.
+[WebServer] 
+[WebServer] If you want to hide the `DialogTitle`, you can wrap it with our VisuallyHidden component.
+[WebServer] 
+[WebServer] For more information, see https://www.reka-ui.com/docs/components/dialog.html#title
+  ✓  430 [coarse-touch] › tests-visual/release-10-1-4.spec.ts:224:9 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a deck in the library's own Dialog (a fixed plate) prints at slide geometry (262ms)
+  ✓  431 [coarse-touch] › tests-visual/release-10-1-4.spec.ts:212:9 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck in a fixed overlay hands its named page to the document (193ms)
+  ✓  432 [coarse-touch] › tests-visual/release-10-1-4.spec.ts:224:9 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a deck in a fixed overlay prints at slide geometry (208ms)
+  ✓  433 [coarse-touch] › tests-visual/release-10-1-4.spec.ts:212:9 › O-119 (f), the @page half: only a deck prints at slide geometry › a deck in a non-modal <dialog open> (absolute) hands its named page to the document (194ms)
+  ✓  434 [coarse-touch] › tests-visual/release-10-1-4.spec.ts:224:9 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a deck in a non-modal <dialog open> (absolute) prints at slide geometry (185ms)
+  ✓  435 [coarse-touch] › tests-visual/release-10-1-4.spec.ts:241:5 › O-119 (f), the @page half: only a deck prints at slide geometry › the deck's named page outranks a consumer's own @page (183ms)
+  ✓  436 [coarse-touch] › tests-visual/release-10-1-4.spec.ts:257:5 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a consumer's own @page does not resize the deck's sheets (183ms)
+  ✓  437 [coarse-touch] › tests-visual/release-10-1-4.spec.ts:271:5 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a consumer's own @page still sets the paper of a page with no deck (175ms)
+  ✓  438 [coarse-touch] › tests-visual/release-10-1-4.spec.ts:284:5 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a page without a deck prints on the default paper (Letter) (178ms)
+  ✓  439 [coarse-touch] › tests-visual/release-10-1-4.spec.ts:296:5 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a deck page prints one 1280x720 page per slide (173ms)
+  ✓  440 [coarse-touch] › tests-visual/release-10-1-4.spec.ts:311:5 › O-119 (f), the @page half: only a deck prints at slide geometry › page.pdf: a deck in a modal dialog prints at slide geometry (173ms)
+  ✓  441 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 390: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (1.8s)
+  ✓  442 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 844: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (1.8s)
+  ✓  443 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:249:5 › coarse phone › g4 at 390 coarse the field type is at most 16px and at most 1.25x the pane subtitle (951ms)
+  ✓  444 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:217:5 › g1 rest dock at 1280: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (1.8s)
+  ✓  445 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:294:1 › g1 an overflowing run at scroll 0: the leading cap rests at half the block extent, a length; the trailing cap is cut (1.2s)
+  ✓  446 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:318:1 › g2 collapsed: the plate is a circle, half its extent on both axes (1.4s)
+  ✓  447 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:336:1 › g2 expanded (collapsible), each layer and input mode hold g1 (3.5s)
+  ✓  448 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:362:1 › g3 the Slider thumb is visible and one size at min, mid and max, inside the fill (949ms)
+  ✓  449 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:409:1 › g5 the DropdownMenuItem icon-to-label gap is the icon-slot token, the dock trigger's own (1.8s)
+  ✓  450 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:439:1 › c1 a value mark is the thumb's centre at that value, on every axis; the loupe's value point is the thumb's centre (1.4s)
+  ✓  451 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:507:5 › coarse phone, round 1 › c2 coarse: the -sm rung stays the quieter rung for every non-field reader; an sm field floors at 16px (934ms)
+  ✓  452 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:536:5 › coarse phone, round 1 › c4 coarse 390: a keyboard-focused seat under the pointer keeps its whole ring (2.3s)
+  ✓  453 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:543:1 › c3 the disabled scrubber dims its thumb with its fill (929ms)
+  ✓  454 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:619:1 › c4 desktop: a keyboard-focused seat under the pointer keeps its whole ring (2.3s)
+  ✓  455 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:638:5 › critique 2, coarse phone › e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner (1.8s)
+  ✓  456 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:638:5 › critique 2, coarse phone › e1 at 844: a label-wide tab under the pointer gives the run no reach and cuts no corner (1.8s)
+  ✓  457 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:662:5 › critique 2, coarse phone › e2 at 390: focused, hovered tab seats keep their whole ring on every edge (4.8s)
+  ✓  458 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:674:5 › critique 2, coarse phone › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled (5.4s)
+  ✓  459 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:723:5 › critique 2, coarse phone › e4 at 390: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring (2.6s)
+  ✓  460 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:638:5 › e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner (1.8s)
+  ✓  461 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:638:5 › e1 at 1440: a label-wide tab under the pointer gives the run no reach and cuts no corner (1.8s)
+  ✓  462 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:662:5 › e2 at 390: focused, hovered tab seats keep their whole ring on every edge (4.9s)
+  ✓  463 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:662:5 › e2 at 1440: focused, hovered tab seats keep their whole ring on every edge (4.9s)
+  ✓  464 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:674:5 › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled (5.5s)
+  ✓  465 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:723:5 › e4 at 1440: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring (2.7s)
+  ✓  466 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:763:1 › f1 a SegmentedTabs under a fixed z:1 header paints beneath it; its labels paint over the indicator (3.0s)
+  ✓  467 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:805:1 › f2 Table row and header rules paint in --border, light and dark (912ms)
+  ✓  468 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:840:9 › h1 at 2x › h1 house at 390: a seat cut by the trailing clip paints nothing past the plate's corner arc (3.1s)
+  ✓  469 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:840:9 › h1 at 2x › h1 cockpit at 390: a seat cut by the trailing clip paints nothing past the plate's corner arc (3.1s)
+  ✓  470 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:956:1 › h2 at 844: a labelled DockTrigger adds no reserve; the run's room is the icon dock's (2.2s)
+  ✓  471 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:972:1 › h3 a ticking seat label constructs no ResizeObserver (2.0s)
+  ✓  472 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:990:1 › h4 with no ResizeObserver the plate rests at half its block extent (1.2s)
+  ✓  473 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1150:1 › k2 vertical: a wide tab at a flush edge keeps its whole ring, at the start and at the end (4.3s)
+  ✓  474 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1087:5 › critique 5, coarse phone › k1 at 320: End, focus() and hover+focus land the end seat flush with its ring whole; Home lands the first (10.6s)
+  ✓  475 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1189:5 › critique 5, coarse phone › k3 at 320: a capped dock whose seats all show holds the fit law and rests round (2.0s)
+  ✓  476 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1087:5 › k1 at 320: End, focus() and hover+focus land the end seat flush with its ring whole; Home lands the first (10.6s)
+  ✓  477 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1189:5 › k3 at 320: a capped dock whose seats all show holds the fit law and rests round (2.1s)
+  ✓  478 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1278:13 › critique 6, coarse phone › l1 a cap lifted under a run scrolled to its end rests round (tab:Home,icon,icon,icon,tab:Settings) (3.1s)
+  ✓  479 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1278:13 › critique 6, coarse phone › l1 a cap lifted under a run scrolled to its mid rests round (tab:Home,icon,icon,icon,tab:Settings) (3.1s)
+  ✓  480 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1278:13 › critique 6, coarse phone › l1 a cap lifted under a run scrolled to its end rests round (icon,icon,icon,icon,icon,icon) (3.1s)
+  ✓  481 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1278:13 › critique 6, coarse phone › l1 a cap lifted under a run scrolled to its mid rests round (icon,icon,icon,icon,icon,icon) (3.1s)
+  ✓  482 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1295:5 › critique 6, coarse phone › l1 a viewport resize 390 → 844 under a run scrolled to its end rests round (3.5s)
+  ✓  483 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1311:5 › critique 6, coarse phone › l1 a vertical run's stage grown under a run scrolled to its end rests round (3.1s)
+  ✓  484 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1278:13 › l1 a cap lifted under a run scrolled to its end rests round (tab:Home,icon,icon,icon,tab:Settings) (3.1s)
+  ✓  485 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1278:13 › l1 a cap lifted under a run scrolled to its mid rests round (tab:Home,icon,icon,icon,tab:Settings) (3.1s)
+  ✓  486 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1278:13 › l1 a cap lifted under a run scrolled to its end rests round (icon,icon,icon,icon,icon,icon) (3.1s)
+  ✓  487 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1278:13 › l1 a cap lifted under a run scrolled to its mid rests round (icon,icon,icon,icon,icon,icon) (3.1s)
+  ✓  488 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1295:5 › l1 a viewport resize 390 → 844 under a run scrolled to its end rests round (3.5s)
+  ✓  489 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1311:5 › l1 a vertical run's stage grown under a run scrolled to its end rests round (3.1s)
+  ✓  490 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1383:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its mid seals round (7.3s)
+  ✓  491 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1383:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its end seals round (7.3s)
+  ✓  492 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1383:9 › critique 7, coarse phone › m1 at 1440: a collapse from a run scrolled to its end seals round (7.3s)
+  ✓  493 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1661:9 › critique 7, coarse phone › m5 O-182 horizontal: in dark nothing past the plate is lighter than the ground (2.9s)
+  ✓  494 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1661:9 › critique 7, coarse phone › m5 O-182 vertical: in dark nothing past the plate is lighter than the ground (2.9s)
+  ✓  495 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1661:9 › critique 7, coarse phone › m5 O-182 collapsed: in dark nothing past the plate is lighter than the ground (2.9s)
+  ✓  496 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1720:5 › critique 7, coarse phone › m5 O-182 light: the shadow is still the foreground (950ms)
+  ✓  497 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1412:5 › critique 7, coarse phone › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge (15.0s)
+  ✓  498 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1433:9 › critique 7, coarse phone › m4 at 390: a layered overflowing run rests at its start, the leading corner round (1.6s)
+  ✓  499 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1433:9 › critique 7, coarse phone › m4 at 1440: a layered overflowing run rests at its start, the leading corner round (1.6s)
+  ✓  500 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1453:5 › critique 7, coarse phone › m3 O-157 a static-backdrop plate follows --glass-veil-ink, light and dark (4.9s)
+  ✓  501 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1508:5 › critique 7, coarse phone › m3 O-162 the folded summary's ring follows the pill after Escape (3.9s)
+  ✓  502 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1535:5 › critique 7, coarse phone › m3 O-177 Tab onto the folded face expands the dock and lands on a seat (2.5s)
+  ✓  503 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1557:5 › critique 7, coarse phone › m3 O-176 a collapse=open dock left untouched idles shut, and after a remount (13.3s)
+  ✓  504 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1576:5 › critique 7, coarse phone › m3 O-177 a press during the expand activates its seat once (10.2s)
+  ✓  505 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1613:5 › critique 7, coarse phone › m3 O-167 the dock Slider's fill is a calm ink in dark and its thumb tracks the drag (1.8s)
+  ✓  506 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1488:5 › critique 7, coarse phone › m3 O-161 a tap leaves no hover paint on the DarkModeToggle or a DockControl (2.6s)
+  ✓  507 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1383:9 › m1 at 390: a collapse from a run scrolled to its mid seals round (7.3s)
+  ✓  508 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1383:9 › m1 at 390: a collapse from a run scrolled to its end seals round (7.3s)
+  ✓  509 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1383:9 › m1 at 1440: a collapse from a run scrolled to its end seals round (7.3s)
+  ✓  510 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1661:9 › m5 O-182 horizontal: in dark nothing past the plate is lighter than the ground (2.9s)
+  ✓  511 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1661:9 › m5 O-182 vertical: in dark nothing past the plate is lighter than the ground (2.9s)
+  ✓  512 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1661:9 › m5 O-182 collapsed: in dark nothing past the plate is lighter than the ground (2.8s)
+  ✓  513 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1720:5 › m5 O-182 light: the shadow is still the foreground (927ms)
+  ✓  514 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1412:5 › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge (15.0s)
+  ✓  515 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1433:9 › m4 at 390: a layered overflowing run rests at its start, the leading corner round (1.6s)
+  ✓  516 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1433:9 › m4 at 1440: a layered overflowing run rests at its start, the leading corner round (1.6s)
+  ✓  517 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1453:5 › m3 O-157 a static-backdrop plate follows --glass-veil-ink, light and dark (4.9s)
+  ✓  518 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1508:5 › m3 O-162 the folded summary's ring follows the pill after Escape (3.9s)
+  ✓  519 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1535:5 › m3 O-177 Tab onto the folded face expands the dock and lands on a seat (2.5s)
+  ✓  520 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1557:5 › m3 O-176 a collapse=open dock left untouched idles shut, and after a remount (13.3s)
+  ✓  521 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1576:5 › m3 O-177 a press during the expand activates its seat once (10.3s)
+  ✓  522 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1613:5 › m3 O-167 the dock Slider's fill is a calm ink in dark and its thumb tracks the drag (1.8s)
+  ✓  523 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1789:5 › critique 8, coarse phone › n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge (15.7s)
+  ✓  524 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1789:5 › n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge (15.6s)
+  ✓  525 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1890:5 › critique 9, coarse phone › p1 a dock its host resizes mid-expand holds every seat at the settle (horizontal clamp, vertical yield band) (15.7s)
+  ✓  526 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1890:5 › p1 a dock its host resizes mid-expand holds every seat at the settle (horizontal clamp, vertical yield band) (15.7s)
+  ✓  527 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1936:5 › critique 10, coarse phone › p2 a 1-2 px host change across the fit edge mid-expand holds every seat at the settle (48.3s)
+  ✓  528 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1936:5 › p2 a 1-2 px host change across the fit edge mid-expand holds every seat at the settle (48.2s)
+  ✓  529 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2040:5 › q1 O-186 at 1440: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage (12.5s)
+  ✓  530 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2070:5 › q2 O-187 at 1440: a nested .dock-run group keeps each hovered control's whole ink (3.4s)
+  ✓  531 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2102:5 › q3 O-187 at 1440: the plate has exactly one scroll timeline in scope, the visible run's (895ms)
+  ✓  532 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2040:5 › q1 O-186 at 390: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage (9.1s)
+  ✓  533 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2070:5 › q2 O-187 at 390: a nested .dock-run group keeps each hovered control's whole ink (2.1s)
+  ✓  534 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2102:5 › q3 O-187 at 390: the plate has exactly one scroll timeline in scope, the visible run's (910ms)
+  ✓  535 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2121:5 › r1 Q2 at 1440: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout (2.4s)
+  ✓  536 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2121:5 › fix 10, coarse phone › r1 Q2 at 390: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout (2.4s)
+  ✓  537 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2234:5 › s1 O-205 at 1440: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run (5.0s)
+[WebServer] 2:54:44 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+[WebServer] 2:54:44 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+[WebServer] 2:54:49 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+[WebServer] 2:54:49 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+[WebServer] 2:54:51 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+[WebServer] 2:54:51 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+[WebServer] 2:54:53 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+[WebServer] 2:54:53 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+  ✘  538 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2343:5 › s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round (44.5s)
+  ✓  539 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2234:5 › fix 11, coarse phone › s1 O-205 at 390: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run (5.0s)
+[WebServer] 2:55:33 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+[WebServer] 2:55:33 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+[WebServer] 2:55:38 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+[WebServer] 2:55:38 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+[WebServer] 2:55:39 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+[WebServer] 2:55:39 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+[WebServer] 2:55:41 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+[WebServer] 2:55:41 AM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+  ✘  540 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2343:5 › fix 11, coarse phone › s2 O-201 at 390: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round (44.6s)
+  ✓  541 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2383:5 › fix 12, desktop › t1 O-201 vertical: through the fit edge the end seats keep their whole ring, bounded in the yield band (45.5s)
+  ✓  542 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2383:5 › fix 12, coarse phone › t1 O-201 vertical: through the fit edge the end seats keep their whole ring, bounded in the yield band (45.5s)
+  ✓  543 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2438:1 › s3 O-207 G3 a disclosure trigger's keyboard ring is the house outline, whatever it composes (3.0s)
+  ✓  544 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2456:1 › s4 a host padding change across the fit edge mid-expand holds every seat at the settle (vertical) (27.3s)
+  ✓  545 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2504:5 › fix 13, coarse phone › u1 a collapsing vertical run that does not fit keeps its scroll on the first morph frame (44.7s)
+  ✓  546 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2548:1 › m3 O-159 the dock README names every DockProps member and no other (71ms)
+  ✓  547 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2562:1 › m3 O-160 no cut-cap or clip keyframe carries a percentage radius (56ms)
+o1 focus hover {"radii":["22px","22px","22px","22px"],"w":94,"h":48}
+  ✘  548 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:73:5 › o1 the wide label seat › o1 the hover plate of a compact 'Focus' label seat is a capsule, never an ellipse (923ms)
+o1 name rest {"radii":["22px","22px","22px","22px"],"w":103,"h":48} hover {"radii":["22px","22px","22px","22px"],"w":103,"h":48}
+  ✘  549 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:85:5 › o1 the wide label seat › o1 the active 'Name ›' seat's plate, at rest and under hover, is a capsule (924ms)
+o2 open house tokens plate {"radii":["32px","32px","32px","32px"],"w":281,"h":64} root {"radii":["32px","32px","32px","32px"],"w":281,"h":64}
+  ✓  550 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round (599ms)
+o2 collapsed house tokens plate {"radii":["30px","30px","30px","30px"],"w":110,"h":60} root {"radii":["30px","30px","30px","30px"],"w":110,"h":60}
+  ✓  551 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round (551ms)
+o2 narrow house tokens plate {"radii":["30px","30px","30px","30px"],"w":170,"h":60} root {"radii":["30px","30px","30px","30px"],"w":170,"h":60} run {"scroll":0}
+  ✓  552 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round (569ms)
+o2 open radius-dock 1.875rem plate {"radii":["32px","32px","32px","32px"],"w":281,"h":64} root {"radii":["32px","32px","32px","32px"],"w":281,"h":64}
+  ✓  553 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open at rest, the plate and the box are round (575ms)
+o2 collapsed radius-dock 1.875rem plate {"radii":["30px","30px","30px","30px"],"w":110,"h":60} root {"radii":["30px","30px","30px","30px"],"w":110,"h":60}
+  ✓  554 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: collapsed with a persistent seat beside the summary, the plate and the box are round (572ms)
+o2 narrow radius-dock 1.875rem plate {"radii":["30px","30px","30px","30px"],"w":170,"h":60} root {"radii":["30px","30px","30px","30px"],"w":170,"h":60} run {"scroll":0}
+  ✓  555 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round (575ms)
+o3 expand {"frames":168,"morphing":45,"bad":[]}
+o3 collapse {"frames":169,"morphing":46,"bad":[]}
+  ✓  556 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:142:1 › o3 every frame of the expand and of the collapse paints a round end (3.4s)
+
+
+  1) [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390) 
+
+    Error: morphing frames after the change reserving other than the settled 160px (56)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      467 |                         stale.length,
+      468 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+    > 469 |                     ).toBe(0);
+          |                       ^
+      470 |                 }
+      471 |                 const over = seq.filter((f) => f.scroll > f.client);
+      472 |                 expect
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-2.spec.ts:469:23
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101-·-hor-45391-follows-the-pane-1440--390--chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (390->1440) 
+
+    Error: morphing frames after the change reserving other than the settled 592px (56)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      467 |                         stale.length,
+      468 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+    > 469 |                     ).toBe(0);
+          |                       ^
+      470 |                 }
+      471 |                 const over = seq.filter((f) => f.scroll > f.client);
+      472 |                 expect
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-2.spec.ts:469:23
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101-·-hor-ea1b6-follows-the-pane-390--1440--chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (1440->390) 
+
+    Error: morphing frames after the change reserving other than the settled 152px (58)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      467 |                         stale.length,
+      468 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+    > 469 |                     ).toBe(0);
+          |                       ^
+      470 |                 }
+      471 |                 const over = seq.filter((f) => f.scroll > f.client);
+      472 |                 expect
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-2.spec.ts:469:23
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101-·-ver-cc1e1-follows-the-pane-1440--390--chromium-headless-new/error-context.md
+
+  4) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1189:5 › k3 at 320: a capped dock whose seats all show holds the fit law and rests round 
+
+    Error: the dock is capped by the viewport
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 316
+    Received:    310.28125
+
+      1191 |         await openSeats(page, "kinds=tab:Home,icon,icon,tab:Settings");
+      1192 |         const read = await readPlate(page);
+    > 1193 |         expect(read.w, "the dock is capped by the viewport").toBeGreaterThanOrEqual(316);
+           |                                                              ^
+      1194 |         const seats = await page.evaluate(() => {
+      1195 |             const run = document.querySelector<HTMLElement>(".dock-run.is-active")!;
+      1196 |             const k = [...run.children] as HTMLElement[];
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:1193:62
+
+    Error Context: tests-visual/test-results/release-10-1-5-k3-at-320-a-13047-the-fit-law-and-rests-round-chromium-headless-new/error-context.md
+
+  5) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2343:5 › s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round 
+
+    Error: a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 21
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "cap": 266,
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 4,
+    +     "port": 250,
+    +     "radii": Array [
+    +       "28px",
+    +       "28px",
+    +       "28px",
+    +       "28px",
+    +     ],
+    +     "range": 8,
+    +     "ring": 4,
+    +     "round": true,
+    +     "span": 250,
+    +   },
+    + ]
+
+      2368 |         }
+      2369 |         expect(unfit, `the sweep under ${natural} crosses the fit edge`).toBeGreaterThan(2);
+    > 2370 |         expect(bad, "a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round").toEqual([]);
+           |                                                                                                                                                ^
+      2371 |     });
+      2372 | }
+      2373 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:2370:144
+
+    Error Context: tests-visual/test-results/release-10-1-5-s2-O-201-at-f97e1-t-hides-nothing-rests-round-chromium-headless-new/error-context.md
+
+  6) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2343:5 › fix 11, coarse phone › s2 O-201 at 390: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round 
+
+    Error: a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 59
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "cap": 273,
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 2,
+    +     "port": 257,
+    +     "radii": Array [
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +     ],
+    +     "range": 6,
+    +     "ring": 4,
+    +     "round": true,
+    +     "span": 255,
+    +   },
+    +   Object {
+    +     "cap": 272,
+    +     "fits": true,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 6,
+    +     "port": 253,
+    +     "radii": Array [
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +     ],
+    +     "range": 10,
+    +     "ring": 4,
+    +     "round": true,
+    +     "span": 255,
+    +   },
+    +   Object {
+    +     "cap": 271,
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 4,
+    +     "port": 255,
+    +     "radii": Array [
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +     ],
+    +     "range": 8,
+    +     "ring": 4,
+    +     "round": true,
+    +     "span": 255,
+    +   },
+    + ]
+
+      2368 |         }
+      2369 |         expect(unfit, `the sweep under ${natural} crosses the fit edge`).toBeGreaterThan(2);
+    > 2370 |         expect(bad, "a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round").toEqual([]);
+           |                                                                                                                                                ^
+      2371 |     });
+      2372 | }
+      2373 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:2370:144
+
+    Error Context: tests-visual/test-results/release-10-1-5-fix-11-coar-b6824-t-hides-nothing-rests-round-chromium-headless-new/error-context.md
+
+  7) [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:73:5 › o1 the wide label seat › o1 the hover plate of a compact 'Focus' label seat is a capsule, never an ellipse 
+
+    Error: {"radii":["20px","20px","20px","20px"],"w":96,"h":44}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      80 |         console.log(`o1 focus hover ${JSON.stringify(read)}`);
+      81 |         expect(read.w).toBeGreaterThan(read.h + 4);
+    > 82 |         expect(stadium(read), JSON.stringify(read)).toBe(true);
+         |                                                     ^
+      83 |     });
+      84 |
+      85 |     test("o1 the active 'Name ›' seat's plate, at rest and under hover, is a capsule", async ({ page }, info) => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-11-0-1.spec.ts:82:53
+
+    Error Context: tests-visual/test-results/release-11-0-1-o1-the-wide-45049--a-capsule-never-an-ellipse-chromium-headless-new/error-context.md
+
+  8) [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:85:5 › o1 the wide label seat › o1 the active 'Name ›' seat's plate, at rest and under hover, is a capsule 
+
+    Error: {"radii":["20px","20px","20px","20px"],"w":107,"h":44}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      94 |         console.log(`o1 name rest ${JSON.stringify(rest)} hover ${JSON.stringify(hover)}`);
+      95 |         expect(rest.w).toBeGreaterThan(rest.h + 4);
+    > 96 |         expect(stadium(rest), JSON.stringify(rest)).toBe(true);
+         |                                                     ^
+      97 |         expect(stadium(hover), JSON.stringify(hover)).toBe(true);
+      98 |     });
+      99 | });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-11-0-1.spec.ts:96:53
+
+    Error Context: tests-visual/test-results/release-11-0-1-o1-the-wide-93085-nd-under-hover-is-a-capsule-chromium-headless-new/error-context.md
+
+  9) [coarse-touch] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390) 
+
+    Error: morphing frames after the change reserving other than the settled 172px (60)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      467 |                         stale.length,
+      468 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+    > 469 |                     ).toBe(0);
+          |                       ^
+      470 |                 }
+      471 |                 const over = seq.filter((f) => f.scroll > f.client);
+      472 |                 expect
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-2.spec.ts:469:23
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101-·-hor-45391-follows-the-pane-1440--390--coarse-touch/error-context.md
+
+  10) [coarse-touch] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (390->1440) 
+
+    Error: morphing frames after the change reserving other than the settled 640px (60)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      467 |                         stale.length,
+      468 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+    > 469 |                     ).toBe(0);
+          |                       ^
+      470 |                 }
+      471 |                 const over = seq.filter((f) => f.scroll > f.client);
+      472 |                 expect
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-2.spec.ts:469:23
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101-·-hor-ea1b6-follows-the-pane-390--1440--coarse-touch/error-context.md
+
+  11) [coarse-touch] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (1440->390) 
+
+    Error: morphing frames after the change reserving other than the settled 164px (61)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      467 |                         stale.length,
+      468 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+    > 469 |                     ).toBe(0);
+          |                       ^
+      470 |                 }
+      471 |                 const over = seq.filter((f) => f.scroll > f.client);
+      472 |                 expect
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-2.spec.ts:469:23
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101-·-ver-cc1e1-follows-the-pane-1440--390--coarse-touch/error-context.md
+
+  12) [coarse-touch] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (390->1440) 
+
+    Error: morphing frames after the change reserving other than the settled 632px (61)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      467 |                         stale.length,
+      468 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+    > 469 |                     ).toBe(0);
+          |                       ^
+      470 |                 }
+      471 |                 const over = seq.filter((f) => f.scroll > f.client);
+      472 |                 expect
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-2.spec.ts:469:23
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101-·-ver-8cda2-follows-the-pane-390--1440--coarse-touch/error-context.md
+
+  13) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2343:5 › s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round 
+
+    Error: a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 59
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "cap": 280,
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 2,
+    +     "port": 264,
+    +     "radii": Array [
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +     ],
+    +     "range": 6,
+    +     "ring": 4,
+    +     "round": true,
+    +     "span": 262,
+    +   },
+    +   Object {
+    +     "cap": 279,
+    +     "fits": true,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 6,
+    +     "port": 260,
+    +     "radii": Array [
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +     ],
+    +     "range": 10,
+    +     "ring": 4,
+    +     "round": true,
+    +     "span": 262,
+    +   },
+    +   Object {
+    +     "cap": 278,
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 4,
+    +     "port": 262,
+    +     "radii": Array [
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +     ],
+    +     "range": 8,
+    +     "ring": 4,
+    +     "round": true,
+    +     "span": 262,
+    +   },
+    + ]
+
+      2368 |         }
+      2369 |         expect(unfit, `the sweep under ${natural} crosses the fit edge`).toBeGreaterThan(2);
+    > 2370 |         expect(bad, "a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round").toEqual([]);
+           |                                                                                                                                                ^
+      2371 |     });
+      2372 | }
+      2373 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:2370:144
+
+    Error Context: tests-visual/test-results/release-10-1-5-s2-O-201-at-f97e1-t-hides-nothing-rests-round-coarse-touch/error-context.md
+
+  14) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2343:5 › fix 11, coarse phone › s2 O-201 at 390: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round 
+
+    Error: a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 59
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "cap": 273,
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 2,
+    +     "port": 257,
+    +     "radii": Array [
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +     ],
+    +     "range": 6,
+    +     "ring": 4,
+    +     "round": true,
+    +     "span": 255,
+    +   },
+    +   Object {
+    +     "cap": 272,
+    +     "fits": true,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 6,
+    +     "port": 253,
+    +     "radii": Array [
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +     ],
+    +     "range": 10,
+    +     "ring": 4,
+    +     "round": true,
+    +     "span": 255,
+    +   },
+    +   Object {
+    +     "cap": 271,
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 4,
+    +     "port": 255,
+    +     "radii": Array [
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +       "30px",
+    +     ],
+    +     "range": 8,
+    +     "ring": 4,
+    +     "round": true,
+    +     "span": 255,
+    +   },
+    + ]
+
+      2368 |         }
+      2369 |         expect(unfit, `the sweep under ${natural} crosses the fit edge`).toBeGreaterThan(2);
+    > 2370 |         expect(bad, "a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round").toEqual([]);
+           |                                                                                                                                                ^
+      2371 |     });
+      2372 | }
+      2373 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:2370:144
+
+    Error Context: tests-visual/test-results/release-10-1-5-fix-11-coar-b6824-t-hides-nothing-rests-round-coarse-touch/error-context.md
+
+  15) [coarse-touch] › tests-visual/release-11-0-1.spec.ts:73:5 › o1 the wide label seat › o1 the hover plate of a compact 'Focus' label seat is a capsule, never an ellipse 
+
+    Error: {"radii":["22px","22px","22px","22px"],"w":94,"h":48}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      80 |         console.log(`o1 focus hover ${JSON.stringify(read)}`);
+      81 |         expect(read.w).toBeGreaterThan(read.h + 4);
+    > 82 |         expect(stadium(read), JSON.stringify(read)).toBe(true);
+         |                                                     ^
+      83 |     });
+      84 |
+      85 |     test("o1 the active 'Name ›' seat's plate, at rest and under hover, is a capsule", async ({ page }, info) => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-11-0-1.spec.ts:82:53
+
+    Error Context: tests-visual/test-results/release-11-0-1-o1-the-wide-45049--a-capsule-never-an-ellipse-coarse-touch/error-context.md
+
+  16) [coarse-touch] › tests-visual/release-11-0-1.spec.ts:85:5 › o1 the wide label seat › o1 the active 'Name ›' seat's plate, at rest and under hover, is a capsule 
+
+    Error: {"radii":["22px","22px","22px","22px"],"w":103,"h":48}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      94 |         console.log(`o1 name rest ${JSON.stringify(rest)} hover ${JSON.stringify(hover)}`);
+      95 |         expect(rest.w).toBeGreaterThan(rest.h + 4);
+    > 96 |         expect(stadium(rest), JSON.stringify(rest)).toBe(true);
+         |                                                     ^
+      97 |         expect(stadium(hover), JSON.stringify(hover)).toBe(true);
+      98 |     });
+      99 | });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-11-0-1.spec.ts:96:53
+
+    Error Context: tests-visual/test-results/release-11-0-1-o1-the-wide-93085-nd-under-hover-is-a-capsule-coarse-touch/error-context.md
+
+  16 failed
+    [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390) 
+    [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (390->1440) 
+    [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (1440->390) 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1189:5 › k3 at 320: a capped dock whose seats all show holds the fit law and rests round 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2343:5 › s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2343:5 › fix 11, coarse phone › s2 O-201 at 390: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round 
+    [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:73:5 › o1 the wide label seat › o1 the hover plate of a compact 'Focus' label seat is a capsule, never an ellipse 
+    [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:85:5 › o1 the wide label seat › o1 the active 'Name ›' seat's plate, at rest and under hover, is a capsule 
+    [coarse-touch] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390) 
+    [coarse-touch] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (390->1440) 
+    [coarse-touch] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (1440->390) 
+    [coarse-touch] › tests-visual/release-10-1-2.spec.ts:446:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (390->1440) 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2343:5 › s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2343:5 › fix 11, coarse phone › s2 O-201 at 390: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round 
+    [coarse-touch] › tests-visual/release-11-0-1.spec.ts:73:5 › o1 the wide label seat › o1 the hover plate of a compact 'Focus' label seat is a capsule, never an ellipse 
+    [coarse-touch] › tests-visual/release-11-0-1.spec.ts:85:5 › o1 the wide label seat › o1 the active 'Name ›' seat's plate, at rest and under hover, is a capsule 
+  540 passed (33.5m)
+rc=1
