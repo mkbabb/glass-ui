@@ -250,6 +250,52 @@ try {
         });
     }
 
+    // The folded pager's title: whole, or capped with an ellipsis past 24 characters.
+    // Read at rest and on every frame of a fold.
+    if (want("pagerTitle")) {
+        const TITLE = (sel) => {
+            const t = document.querySelector(`${sel} [data-pager-title]`);
+            if (!t) return null;
+            const pane = t.closest(".dock-layer--summary") || t.parentElement;
+            const r = t.getBoundingClientRect(), pr = pane.getBoundingClientRect();
+            return { text: t.textContent.trim(), chars: t.textContent.trim().length, w: +r.width.toFixed(1), need: t.scrollWidth, clipped: t.scrollWidth > t.clientWidth + 0.5, pane: [+pr.width.toFixed(1), +pr.height.toFixed(1)] };
+        };
+        const FRAMES = ({ sel, ms }) => new Promise((done) => {
+            const out = [], t0 = performance.now();
+            const tick = () => {
+                const t = document.querySelector(`${sel} [data-pager-title]`);
+                const d = document.querySelector(sel);
+                if (t) out.push({ t: Math.round(performance.now() - t0), w: +t.getBoundingClientRect().width.toFixed(1), need: t.scrollWidth, clipped: t.scrollWidth > t.clientWidth + 0.5, opacity: +getComputedStyle(t.closest(".dock-layer--summary") || t).opacity, folded: d.classList.contains("collapsed") });
+                if (performance.now() - t0 < ms) requestAnimationFrame(tick); else done(out);
+            };
+            requestAnimationFrame(tick);
+        });
+        out.pagerTitle = [];
+        for (const [width, height, touch] of [[1440, 900, false], [390, 844, true]]) {
+            for (const route of ["/", "/display/buttons", "/containers/configurator", "/forms/checks"]) {
+                out.pagerTitle.push(await cell({ width, height, touch }, async (page) => {
+                    await page.goto(BASE + route);
+                    await page.waitForSelector(PAGER);
+                    await page.mouse.move(width / 2, 200);
+                    await sleep(2500);
+                    const rest = await page.evaluate(TITLE, PAGER);
+                    let fold = null;
+                    if (!touch && route === "/display/buttons") {
+                        const box = await page.locator(PAGER).boundingBox();
+                        await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2, { steps: 3 });
+                        await sleep(1500);
+                        const rec = page.evaluate(FRAMES, { sel: PAGER, ms: 8000 });
+                        await page.mouse.move(width / 2, 200);
+                        const frames = await rec;
+                        const shown = frames.filter((f) => f.folded && f.opacity > 0.5);
+                        fold = { frames: frames.length, foldedFrames: frames.filter((f) => f.folded).length, shownFrames: shown.length, clippedShown: shown.filter((f) => f.clipped).length, widths: [...new Set(shown.map((f) => f.w))].slice(0, 12) };
+                    }
+                    return { width, route, rest, fold };
+                }));
+            }
+        }
+    }
+
     // ── 2 at 390: both docks' corners; 10: the Sheet and its unfolded rail ──
     if (want("phone")) {
         out.phone = await cell({ width: 390, height: 844, touch: true }, async (page, errors) => {

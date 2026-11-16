@@ -264,7 +264,15 @@ const MEASURE = async ({ shotB64, vw, vh }) => {
             cardP: cards.reduce((s, c) => s + c.querySelectorAll("p").length, 0),
             cardImg: cards.reduce((s, c) => s + c.querySelectorAll("img").length, 0),
             cardRadius: [...new Set(cards.map((c) => getComputedStyle(c).borderTopLeftRadius + "/" + getComputedStyle(c).borderBottomRightRadius))],
-            withPreview: cards.filter((c) => c.querySelector("[data-card-preview]")).length,
+            withPreview: cards.filter((c) => c.querySelector('[data-card-preview="live"]')).length,
+            // every card one size; every specimen whole inside its plate
+            cardSizes: [...new Set(cards.map((c) => { const r = rectOf(c); return `${Math.round(r.width)}x${Math.round(r.height)}`; }))],
+            specimensClipped: cards.filter((c) => {
+                const p = c.querySelector("[data-card-preview]"), sp = c.querySelector("[data-card-specimen]");
+                if (!p || !sp) return false;
+                const a = rectOf(p), b = rectOf(sp);
+                return b.left < a.left - 0.5 || b.right > a.right + 0.5 || b.top < a.top - 0.5 || b.bottom > a.bottom + 0.5;
+            }).length,
             firstRowInView: rectOf(cards[0]).bottom <= vh,
             canvases: cards.reduce((s, c) => s + c.querySelectorAll("canvas").length, 0),
         };
@@ -326,6 +334,32 @@ const TRACKS = () => {
     return { buttons: out.length, inside: out.filter(Boolean).length };
 };
 
+// The face the page title paints. `document.fonts.check` alone is not enough: with
+// `font-display: optional` it reads true while a missed face leaves the title in the
+// fallback for the page's life, so the platform font is read through CDP as well.
+async function titleFace(ctx, page) {
+    const sel = (await page.locator("[data-story-title]").count()) ? "[data-story-title]" : "h1";
+    const first = await page.evaluate((s) => {
+        const t = document.querySelector(s);
+        if (!t) return null;
+        const fam = getComputedStyle(t).fontFamily.split(",")[0].trim().replace(/^["']|["']$/g, "");
+        return { fam, check: document.fonts.check(`${getComputedStyle(t).fontWeight} 16px "${fam}"`) };
+    }, sel);
+    if (!first) return null;
+    const cdp = await ctx.newCDPSession(page);
+    try {
+        await cdp.send("DOM.enable");
+        await cdp.send("CSS.enable");
+        const { root } = await cdp.send("DOM.getDocument");
+        const { nodeId } = await cdp.send("DOM.querySelector", { nodeId: root.nodeId, selector: sel });
+        const { fonts } = await cdp.send("CSS.getPlatformFontsForNode", { nodeId });
+        const top = [...fonts].sort((a, b) => b.glyphCount - a.glyphCount)[0];
+        return { first: first.fam, check: first.check, painted: top?.familyName ?? null };
+    } finally {
+        await cdp.detach().catch(() => {});
+    }
+}
+
 function rowsFor(route, cell, m, errors, extra) {
     const W = cell === "m390";
     const budget = Math.min(60, BUDGET[route] ?? 60);
@@ -333,6 +367,10 @@ function rowsFor(route, cell, m, errors, extra) {
     const add = (line, name, pass, value) => R.push({ route, cell, line, name, pass: pass === null ? "n/a" : pass ? "pass" : "FAIL", value });
     add(12, "console", errors.length === 0, errors.length ? errors.slice(0, 3) : 0);
     add(13, "no sideways overflow", !m.overflowX, m.overflowX ? "overflow" : "ok");
+    if (extra?.face) {
+        const F = extra.face;
+        add("F1", "title paints its first loaded face", F.check && F.painted === F.first, `${F.first} check=${F.check} painted=${F.painted}`);
+    }
     if (m.landing) {
         const L = m.landing;
         add("L1", "title block ≤ 22% vh", L.titleShare <= 0.22, L.titleShare);
@@ -343,6 +381,8 @@ function rowsFor(route, cell, m, errors, extra) {
         add("L6", "card corners 24 px", L.cardRadius.every((r) => r === "24px/24px"), L.cardRadius.join(" "));
         add("L7", "cards with a live preview", null, `${L.withPreview}/${L.cards}`);
         add("L8", "live canvases in cards ≤ 4", L.canvases <= 4, L.canvases);
+        add("L10", "every card one size", L.cardSizes.length === 1, L.cardSizes.join(" "));
+        add("L11", "every card specimen whole", L.specimensClipped === 0, L.specimensClipped);
         add("L9", "first row of cards in first screen", W ? null : L.firstRowInView, L.firstRowInView);
     }
     if (!m.marked) return R;
@@ -405,13 +445,14 @@ export async function run() {
                     const shot = (await page.screenshot({ type: "png" })).toString("base64");
                     const m = await page.evaluate(MEASURE, { shotB64: shot, vw: C.viewport.width, vh: C.viewport.height });
                     const tracks = route === "/display/buttons" ? await page.evaluate(TRACKS) : null;
+                    const face = await titleFace(ctx, page);
                     // open the code disclosure, to load it with its console clean
                     const codeBtn = page.locator("[data-story-code] button").first();
                     if (await codeBtn.count()) {
                         await codeBtn.click();
                         await sleep(600);
                     }
-                    const rows = rowsFor(route, cellId, m, errors, { tracks });
+                    const rows = rowsFor(route, cellId, m, errors, { tracks, face });
                     for (const r of rows) {
                         all.push(r);
                         OUT?.write(JSON.stringify(r) + "\n");
