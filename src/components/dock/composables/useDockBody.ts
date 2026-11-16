@@ -667,6 +667,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         // (the fit law, RU-27's whole-seat window, the curve inset) are decided from that one
         // read and written together; only when one changed is the layout read once more.
         if (POSE) performance.mark("dock:read", { detail: { reason } });
+        syncedSinceRo = true;
         {
             const open = o.expanded();
             const run = runEl();
@@ -1230,6 +1231,31 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         }
     }
 
+    /** RU-38: an observer delivery after a sync has already read this layout (the posture watch syncs
+     *  before the flush, the class change resizes the root, and the delivery lands in that frame) compares
+     *  each entry's own border-box size, which the entry carries, with the box that sync holds, and
+     *  returns when they are equal: no layout is read for it. */
+    let syncedSinceRo = false;
+    function heldSize(en: ResizeObserverEntry): boolean {
+        const b = en.borderBoxSize?.[0];
+        if (!b) return false;
+        const el = en.target;
+        let w: number | null = null;
+        let h: number | null = null;
+        if (el === root() && layout) (w = layout.r - layout.l), (h = layout.b - layout.t);
+        else {
+            for (const t of regions.values()) if (t.el === el) (w = t.w), (h = t.h);
+            const st = seats.get(el as HTMLElement);
+            if (w === null && st) (w = st.w), (h = st.h);
+        }
+        return w !== null && h !== null && Math.abs(b.inlineSize - w) <= 0.5 && Math.abs(b.blockSize - h) <= 0.5;
+    }
+    function onResize(entries: ResizeObserverEntry[]): void {
+        const synced = syncedSinceRo;
+        syncedSinceRo = false;
+        if (synced && entries.every(heldSize)) return;
+        sync("ro");
+    }
     let resized = false;
     let shown = false;
     let resizeFrame: number | null = null;
@@ -1254,7 +1280,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             shown = true;
         });
         if (typeof ResizeObserver === "undefined") return;
-        ro = new ResizeObserver(() => sync("ro"));
+        ro = new ResizeObserver(onResize);
         const el = root();
         if (el) ro.observe(el);
         for (const { el: r } of o.regions()) if (r) ro.observe(r);
