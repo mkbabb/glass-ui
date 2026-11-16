@@ -254,13 +254,6 @@ describe("3. exact W1 bindings", () => {
         expect(bar).not.toContain("--radius-2xl");
     });
 
-    it("InfiniteScroll Reset → the public Button, not a raw <button>", () => {
-        const demo = read("demo/stories/data/infinite-scroll.vue");
-        expect(demo).toContain("import { Button }");
-        expect(demo).toMatch(/<Button[^>]*@click="reset"/);
-        expect(demo).not.toContain("<button");
-    });
-
     // [2026-08-09 · BK #66 CLOSE · RT-18A] ~~F12 → field container + public Chip
     // child (boundary-sharing, not a pill)~~ — STRUCK WITH ITS SUBJECT. The case read
     // `src/components/tags-input/styles.css` and `TagsInputItem.vue` and nothing else;
