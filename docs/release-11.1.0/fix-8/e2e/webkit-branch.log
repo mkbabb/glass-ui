@@ -1,0 +1,1117 @@
+[guarded] waiting for the 'webkit' lock
+
+Running 104 tests using 1 worker
+
+  ✘    1 [webkit] › tests-visual/a11y-slider.spec.ts:54:5 › a11y-slider (π lane — every Slider thumb resolves an accessible name) › aurora — no nameless thumb (was ≥22), light + dark (2.3s)
+  ✓    2 [webkit] › tests-visual/a11y-slider.spec.ts:63:5 › a11y-slider (π lane — every Slider thumb resolves an accessible name) › configurator — LabeledSlider forwards the field label to the thumb (1.5s)
+  ✓    3 [webkit] › tests-visual/aria-orientation.spec.ts:38:5 › pill (role=group) carries NO aria-orientation — light (1.5s)
+  ✓    4 [webkit] › tests-visual/aria-orientation.spec.ts:53:5 › underline (role=tablist) KEEPS aria-orientation — light (1.5s)
+  ✓    5 [webkit] › tests-visual/aria-orientation.spec.ts:38:5 › pill (role=group) carries NO aria-orientation — dark (1.6s)
+  ✓    6 [webkit] › tests-visual/aria-orientation.spec.ts:53:5 › underline (role=tablist) KEEPS aria-orientation — dark (1.5s)
+  ✘    7 [webkit] › tests-visual/config-chassis.spec.ts:63:13 › W1 — the slotted slider width contract › slotted slider width ≥ 1px @ mobile light (1.8s)
+  ✘    8 [webkit] › tests-visual/config-chassis.spec.ts:63:13 › W1 — the slotted slider width contract › slotted slider width ≥ 1px @ mobile dark (2.0s)
+  ✘    9 [webkit] › tests-visual/config-chassis.spec.ts:63:13 › W1 — the slotted slider width contract › slotted slider width ≥ 1px @ desktop light (2.0s)
+  ✘   10 [webkit] › tests-visual/config-chassis.spec.ts:63:13 › W1 — the slotted slider width contract › slotted slider width ≥ 1px @ desktop dark (2.0s)
+  ✘   11 [webkit] › tests-visual/config-chassis.spec.ts:106:1 › W4 — the DERIVE chip group's rightmost chip is not clipped (2.3s)
+[WebServer] 6:04:52 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 6:04:52 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 6:04:52 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 6:04:52 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 6:04:52 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 6:04:52 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+  ✓   12 [webkit] › tests-visual/config-chassis.spec.ts:153:1 › W6+W5 — the gear dark row flips html.dark + the section rung resolves (3.1s)
+[WebServer] 6:04:55 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 6:04:55 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 6:04:55 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 6:04:55 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 6:04:55 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+[WebServer] 6:04:55 PM [vite] (client) [console.warn] [Slider] no accessible name: a single-thumb <Slider> has no `aria-label` or `aria-labelledby`, so its role="slider" thumb is nameless to a screen reader (reka mints no fallback name for one thumb). Wrap it in <LabeledField>, or pass an explicit `aria-label`.
+  ✓   13 [webkit] › tests-visual/config-chassis.spec.ts:220:1 › W2 — the configurator dividers read on the dark plate (2.3s)
+  ✓   14 [webkit] › tests-visual/config-chassis.spec.ts:262:1 › PPD-1 — the Speedtest preset preview swatch is vivid (mean-alpha ≥ 0.95) (4.0s)
+  ✘   15 [webkit] › tests-visual/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › aurora light: two-column, aside right, rounded, DOM stage→aside (2.2s)
+  ✘   16 [webkit] › tests-visual/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › aurora dark: two-column, aside right, rounded, DOM stage→aside (2.4s)
+  ✘   17 [webkit] › tests-visual/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › blob light: two-column, aside right, rounded, DOM stage→aside (2.3s)
+  ✘   18 [webkit] › tests-visual/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › blob dark: two-column, aside right, rounded, DOM stage→aside (2.4s)
+  ✘   19 [webkit] › tests-visual/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › fourier-field light: two-column, aside right, rounded, DOM stage→aside (2.3s)
+  ✘   20 [webkit] › tests-visual/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › fourier-field dark: two-column, aside right, rounded, DOM stage→aside (2.4s)
+  ✘   21 [webkit] › tests-visual/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › configurator light: two-column, aside right, rounded, DOM stage→aside (2.1s)
+  ✘   22 [webkit] › tests-visual/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › configurator dark: two-column, aside right, rounded, DOM stage→aside (2.2s)
+  ✓   23 [webkit] › tests-visual/config-right.spec.ts:218:9 › narrow — the single-column stack (stage above controls below lg) › aurora: ≤900px resolves ONE column, stage above aside (2.1s)
+  ✓   24 [webkit] › tests-visual/config-right.spec.ts:218:9 › narrow — the single-column stack (stage above controls below lg) › blob: ≤900px resolves ONE column, stage above aside (1.9s)
+  ✓   25 [webkit] › tests-visual/config-right.spec.ts:218:9 › narrow — the single-column stack (stage above controls below lg) › fourier-field: ≤900px resolves ONE column, stage above aside (1.8s)
+  ✓   26 [webkit] › tests-visual/config-right.spec.ts:218:9 › narrow — the single-column stack (stage above controls below lg) › configurator: ≤900px resolves ONE column, stage above aside (1.7s)
+[WebServer] 6:05:30 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/forms/select" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  -   27 [webkit] › tests-visual/disclosure-rotate.spec.ts:110:5 › disclosure-rotate — ONE register, none snap (light)
+[WebServer] 6:05:32 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/forms/select" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  -   28 [webkit] › tests-visual/disclosure-rotate.spec.ts:110:5 › disclosure-rotate — ONE register, none snap (dark)
+  ✘   29 [webkit] › tests-visual/dock-morph-family.spec.ts:43:1 › (a)/(b) — the morph composites a transform over a reserved footprint (no per-frame relayout) (1.9s)
+  ✘   30 [webkit] › tests-visual/dock-morph-family.spec.ts:83:1 › (c) — under PRM the dock seats synchronously (every control inside the box, no sliver) (2.7s)
+  ✘   31 [webkit] › tests-visual/dock-morph-family.spec.ts:139:1 › (d) — a nested DockLayerGroup reserves its peak-layer block-size (consumer never guesses) (2.1s)
+  ✘   32 [webkit] › tests-visual/dock-morph-family.spec.ts:170:1 › (e) — a --dock-local-scale override on a dock scope paints a larger box (the @property thread) (2.1s)
+[WebServer] 6:05:43 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/dock/rail" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✓   33 [webkit] › tests-visual/dock-morph-family.spec.ts:207:1 › (f) — the vertical dock morphs plate chrome continuously with its block-size (no snap, inline invariant) (1.8s)
+  ✘   34 [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (light) (228ms)
+  ✘   35 [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (dark) (376ms)
+  ✘   36 [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (light) (386ms)
+  ✘   37 [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (dark) (405ms)
+  ✓   38 [webkit] › tests-visual/handmark.spec.ts:40:13 › the hand voice paints › four gestures over real text (desktop light) (3.1s)
+  ✓   39 [webkit] › tests-visual/handmark.spec.ts:87:13 › the hand voice paints › the band sits under the letterforms and inside its card (desktop light) (2.7s)
+  ✓   40 [webkit] › tests-visual/handmark.spec.ts:40:13 › the hand voice paints › four gestures over real text (desktop dark) (2.9s)
+  ✓   41 [webkit] › tests-visual/handmark.spec.ts:87:13 › the hand voice paints › the band sits under the letterforms and inside its card (desktop dark) (2.6s)
+  ✓   42 [webkit] › tests-visual/handmark.spec.ts:40:13 › the hand voice paints › four gestures over real text (mobile light) (2.8s)
+  ✓   43 [webkit] › tests-visual/handmark.spec.ts:87:13 › the hand voice paints › the band sits under the letterforms and inside its card (mobile light) (2.6s)
+  ✓   44 [webkit] › tests-visual/handmark.spec.ts:40:13 › the hand voice paints › four gestures over real text (mobile dark) (2.7s)
+  ✓   45 [webkit] › tests-visual/handmark.spec.ts:87:13 › the hand voice paints › the band sits under the letterforms and inside its card (mobile dark) (2.6s)
+  ✓   46 [webkit] › tests-visual/handmark.spec.ts:138:5 › the hand voice paints › the ring reserves the room it spills into (2.5s)
+  ✓   47 [webkit] › tests-visual/handmark.spec.ts:168:5 › the hand voice paints › the mark is whole and solid at rest, and one path per line rect (2.5s)
+[WebServer] 6:06:15 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 6:06:15 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✓   48 [webkit] › tests-visual/liquid-hover.spec.ts:82:5 › BB.W-LIQUIDHOVER — the tier-root pointer-following gleam (π) › (a) GLEAM TRACKS — two pointer positions read two distinct --mouse-x (off the dead-centre 50%) (1.8s)
+  ✓   49 [webkit] › tests-visual/liquid-hover.spec.ts:114:5 › BB.W-LIQUIDHOVER — the tier-root pointer-following gleam (π) › (b) DOCK CONTROL — the dock control gleams pointer-following with zero wiring (1.8s)
+[WebServer] 6:06:19 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 6:06:19 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘   50 [webkit] › tests-visual/liquid-hover.spec.ts:136:5 › BB.W-LIQUIDHOVER — the tier-root pointer-following gleam (π) › (c) GRAIN NO-POP — the grain background-image stays constant across the hover onset (1.2s)
+[WebServer] 6:06:21 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 6:06:21 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✓   51 [webkit] › tests-visual/liquid-hover.spec.ts:162:5 › BB.W-LIQUIDHOVER — the tier-root pointer-following gleam (π) › (d) PRM STATIC — under reduced-motion the gleam pins static at centre (1.4s)
+[WebServer] 6:06:23 PM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../@vite/client:531:59
+[WebServer] 
+  ✓   52 [webkit] › tests-visual/menu-glass.spec.ts:221:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (a-b) hovered row = glass tint + ≥44px @ mobile light (1.9s)
+[WebServer] 6:06:25 PM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../@vite/client:531:59
+[WebServer] 
+  ✘   53 [webkit] › tests-visual/menu-glass.spec.ts:247:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (d) section caption mono + hairline @ mobile light (1.2s)
+[WebServer] 6:06:26 PM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../@vite/client:531:59
+[WebServer] 
+  ✓   54 [webkit] › tests-visual/menu-glass.spec.ts:263:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (e) font-rung parity — trigger + item at ONE scale @ mobile light (1.4s)
+[WebServer] 6:06:28 PM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../@vite/client:531:59
+[WebServer] 
+  ✓   55 [webkit] › tests-visual/menu-glass.spec.ts:221:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (a-b) hovered row = glass tint + ≥44px @ mobile dark (1.8s)
+[WebServer] 6:06:30 PM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../@vite/client:531:59
+[WebServer] 
+  ✘   56 [webkit] › tests-visual/menu-glass.spec.ts:247:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (d) section caption mono + hairline @ mobile dark (1.3s)
+[WebServer] 6:06:31 PM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../@vite/client:531:59
+[WebServer] 
+  ✓   57 [webkit] › tests-visual/menu-glass.spec.ts:263:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (e) font-rung parity — trigger + item at ONE scale @ mobile dark (1.4s)
+  ✓   58 [webkit] › tests-visual/menu-glass.spec.ts:221:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (a-b) hovered row = glass tint + ≥44px @ desktop light (1.8s)
+  ✘   59 [webkit] › tests-visual/menu-glass.spec.ts:247:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (d) section caption mono + hairline @ desktop light (1.2s)
+  ✓   60 [webkit] › tests-visual/menu-glass.spec.ts:263:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (e) font-rung parity — trigger + item at ONE scale @ desktop light (1.3s)
+  ✓   61 [webkit] › tests-visual/menu-glass.spec.ts:221:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (a-b) hovered row = glass tint + ≥44px @ desktop dark (1.9s)
+  ✘   62 [webkit] › tests-visual/menu-glass.spec.ts:247:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (d) section caption mono + hairline @ desktop dark (1.2s)
+  ✓   63 [webkit] › tests-visual/menu-glass.spec.ts:263:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (e) font-rung parity — trigger + item at ONE scale @ desktop dark (1.4s)
+  ✓   64 [webkit] › tests-visual/menu-glass.spec.ts:288:5 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (c) hover-lift register non-zero under motion @ desktop light (1.8s)
+  ✓   65 [webkit] › tests-visual/menu-glass.spec.ts:301:5 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (c) PRM — hover-lift register is the identity (0) under prefers-reduced-motion @ desktop light (1.8s)
+  ✓   66 [webkit] › tests-visual/menu-glass.spec.ts:318:5 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › DELTA capture — the glassy menu open, a row hovered, both modes (3.2s)
+  ✘   67 [webkit] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › light · mobile — nav-dock gestalt (1.0s)
+  ✘   68 [webkit] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › light · desktop — nav-dock gestalt (1.1s)
+  ✘   69 [webkit] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › dark · mobile — nav-dock gestalt (1.3s)
+  ✘   70 [webkit] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › dark · desktop — nav-dock gestalt (1.1s)
+  ✓   71 [webkit] › tests-visual/nav-dock-fix.spec.ts:198:5 › W-NAV-DOCK-FIX — the nav-dock binding π › bottom-dock tab strip + persistent prev/next (1.1s)
+  ✓   72 [webkit] › tests-visual/overlay-sizing.spec.ts:44:5 › DropdownMenu at the right edge: 16px from the edge, at most 22rem wide, card radius (853ms)
+  ✓   73 [webkit] › tests-visual/overlay-sizing.spec.ts:44:5 › Popover at the right edge: 16px from the edge, at most 22rem wide, card radius (723ms)
+  ✓   74 [webkit] › tests-visual/overlay-sizing.spec.ts:53:1 › a forty-row menu opened low fits the room and scrolls inside (752ms)
+  ✓   75 [webkit] › tests-visual/overlay-sizing.spec.ts:62:1 › the phone viewport: a long menu is the viewport less 1rem a side at most (749ms)
+[WebServer] 6:06:59 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/dock/rail" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘   76 [webkit] › tests-visual/register-ios.spec.ts:160:13 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › rail selected item reads iOS glass (no brand-red) @ mobile (light) (1.3s)
+[WebServer] 6:07:00 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/dock/rail" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘   77 [webkit] › tests-visual/register-ios.spec.ts:160:13 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › rail selected item reads iOS glass (no brand-red) @ mobile (dark) (1.5s)
+[WebServer] 6:07:02 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/dock/rail" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘   78 [webkit] › tests-visual/register-ios.spec.ts:160:13 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › rail selected item reads iOS glass (no brand-red) @ desktop (light) (1.5s)
+[WebServer] 6:07:04 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/dock/rail" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘   79 [webkit] › tests-visual/register-ios.spec.ts:160:13 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › rail selected item reads iOS glass (no brand-red) @ desktop (dark) (1.5s)
+  ✓   80 [webkit] › tests-visual/register-ios.spec.ts:221:13 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › selected dock icon-button reads the glass plate (no brand-red) @ mobile (light) (1.4s)
+  ✓   81 [webkit] › tests-visual/register-ios.spec.ts:221:13 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › selected dock icon-button reads the glass plate (no brand-red) @ mobile (dark) (1.2s)
+  ✓   82 [webkit] › tests-visual/register-ios.spec.ts:221:13 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › selected dock icon-button reads the glass plate (no brand-red) @ desktop (light) (1.3s)
+  ✓   83 [webkit] › tests-visual/register-ios.spec.ts:221:13 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › selected dock icon-button reads the glass plate (no brand-red) @ desktop (dark) (1.3s)
+[WebServer] 6:07:11 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/dock/rail" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘   84 [webkit] › tests-visual/register-ios.spec.ts:280:9 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › G-CLOSE — capture the rail selected-register DELTA (light) (1.5m)
+[WebServer] 6:08:42 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/dock/rail" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘   85 [webkit] › tests-visual/register-ios.spec.ts:280:9 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › G-CLOSE — capture the rail selected-register DELTA (dark) (1.5m)
+  ✓   86 [webkit] › tests-visual/SegmentedTabs.glide.spec.ts:70:5 › adjacent hop: the indicator glides at its own size in one monotone leg (1.7s)
+  ✓   87 [webkit] › tests-visual/SegmentedTabs.glide.spec.ts:70:5 › far hop: the indicator glides at its own size in one monotone leg (1.5s)
+  ✓   88 [webkit] › tests-visual/SegmentedTabs.glide.spec.ts:115:1 › hover on an inactive tab changes its colour and nothing else (1.2s)
+  ✓   89 [webkit] › tests-visual/SegmentedTabs.glide.spec.ts:164:5 › re-clicking the active tab on its centre moves nothing (1.7s)
+  ✓   90 [webkit] › tests-visual/SegmentedTabs.glide.spec.ts:164:5 › re-clicking the active tab off its centre moves nothing (1.6s)
+  ✓   91 [webkit] › tests-visual/SegmentedTabs.glide.spec.ts:179:1 › the indicator can be dragged to the next tab, and stays under the label it commits (1.7s)
+  ✓   92 [webkit] › tests-visual/SegmentedTabs.glide.spec.ts:205:5 › a 8 px drag out and back, released on its start, leaves the next hop gliding (1.9s)
+  ✓   93 [webkit] › tests-visual/SegmentedTabs.glide.spec.ts:205:5 › a 24 px drag out and back, released on its start, leaves the next hop gliding (1.9s)
+[WebServer] 6:10:25 PM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../@vite/client:531:59
+[WebServer] 
+  ✓   94 [webkit] › tests-visual/Select.bound.spec.ts:17:1 › a twelve-row list that fits the room shows whole (747ms)
+[WebServer] 6:10:26 PM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../@vite/client:531:59
+[WebServer] 
+  ✓   95 [webkit] › tests-visual/Select.bound.spec.ts:35:1 › a short viewport bounds the list 16px from the edge and it scrolls inside (752ms)
+  ✓   96 [webkit] › tests-visual/Select.bound.spec.ts:53:1 › below 30rem the listbox is a bottom sheet at full width (725ms)
+  ✓   97 [webkit] › tests-visual/Sheet.position.spec.ts:14:5 › sheet opened deep in the page is fixed and on screen (consumer layer) (1.1s)
+  ✓   98 [webkit] › tests-visual/Sheet.position.spec.ts:14:5 › sheet opened deep in the page is fixed and on screen (unlayered) (1.0s)
+  ✓   99 [webkit] › tests-visual/tabs-std.spec.ts:49:1 › W1 — underline paints NO plate (no filled pill behind the active tab) (1.4s)
+  ✓  100 [webkit] › tests-visual/tabs-std.spec.ts:91:1 › W2 — vertical indicator tracks the block axis (y/height change dominates) (1.9s)
+  ✓  101 [webkit] › tests-visual/tabs-std.spec.ts:121:1 › W3 — the indicator settles inside the calibrated clock with no dead tail (2.6s)
+  ✓  102 [webkit] › tests-visual/tabs-std.spec.ts:189:5 › W5 — indicator center == label center (both axes) [pill] (1.9s)
+  ✓  103 [webkit] › tests-visual/tabs-std.spec.ts:189:5 › W5 — indicator center == label center (both axes) [underline] (1.9s)
+[WebServer] 6:10:40 PM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../@vite/client:531:59
+[WebServer] 
+[WebServer] 6:10:41 PM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../@vite/client:531:59
+[WebServer] 
+  ✓  104 [webkit] › tests-visual/tabs-std.spec.ts:245:1 › capture — the standardized tab materials over their substrates (3.3s)
+
+
+  1) [webkit] › tests-visual/a11y-slider.spec.ts:54:5 › a11y-slider (π lane — every Slider thumb resolves an accessible name) › aurora — no nameless thumb (was ≥22), light + dark 
+
+    Error: aurora (light): 56 of 79 slider thumb(s) resolve NO accessible name (aria-input-field-name)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 79
+    Received: 23
+
+      48 |         named,
+      49 |         `${label}: ${all - named} of ${all} slider thumb(s) resolve NO accessible name (aria-input-field-name)`,
+    > 50 |     ).toBe(all);
+         |       ^
+      51 | }
+      52 |
+      53 | test.describe("a11y-slider (π lane — every Slider thumb resolves an accessible name)", () => {
+        at assertEveryThumbNamed (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/a11y-slider.spec.ts:50:7)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/a11y-slider.spec.ts:56:9
+
+    Error Context: test-results/a11y-slider-a11y-slider-π--953be-ss-thumb-was-≥22-light-dark-webkit/error-context.md
+
+  2) [webkit] › tests-visual/config-chassis.spec.ts:63:13 › W1 — the slotted slider width contract › slotted slider width ≥ 1px @ mobile light 
+
+    Error: a ConfiguratorRow-slotted slider must exist on /substrates/blob
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > -1
+    Received:   -1
+
+      88 |                 // -1 means no slotted slider found on this route — recorded, not a false RED
+      89 |                 // (the route must carry at least one; if it doesn't the test is mis-targeted).
+    > 90 |                 expect(width, "a ConfiguratorRow-slotted slider must exist on /substrates/blob").toBeGreaterThan(
+         |                                                                                                  ^
+      91 |                     -1,
+      92 |                 );
+      93 |                 // THE BINDING FLOOR — the 0px-slider class is dead.
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-chassis.spec.ts:90:98
+
+    Error Context: test-results/config-chassis-W1-—-the-sl-d0174-er-width-≥-1px-mobile-light-webkit/error-context.md
+
+  3) [webkit] › tests-visual/config-chassis.spec.ts:63:13 › W1 — the slotted slider width contract › slotted slider width ≥ 1px @ mobile dark 
+
+    Error: a ConfiguratorRow-slotted slider must exist on /substrates/blob
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > -1
+    Received:   -1
+
+      88 |                 // -1 means no slotted slider found on this route — recorded, not a false RED
+      89 |                 // (the route must carry at least one; if it doesn't the test is mis-targeted).
+    > 90 |                 expect(width, "a ConfiguratorRow-slotted slider must exist on /substrates/blob").toBeGreaterThan(
+         |                                                                                                  ^
+      91 |                     -1,
+      92 |                 );
+      93 |                 // THE BINDING FLOOR — the 0px-slider class is dead.
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-chassis.spec.ts:90:98
+
+    Error Context: test-results/config-chassis-W1-—-the-sl-aa37f-der-width-≥-1px-mobile-dark-webkit/error-context.md
+
+  4) [webkit] › tests-visual/config-chassis.spec.ts:63:13 › W1 — the slotted slider width contract › slotted slider width ≥ 1px @ desktop light 
+
+    Error: a ConfiguratorRow-slotted slider must exist on /substrates/blob
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > -1
+    Received:   -1
+
+      88 |                 // -1 means no slotted slider found on this route — recorded, not a false RED
+      89 |                 // (the route must carry at least one; if it doesn't the test is mis-targeted).
+    > 90 |                 expect(width, "a ConfiguratorRow-slotted slider must exist on /substrates/blob").toBeGreaterThan(
+         |                                                                                                  ^
+      91 |                     -1,
+      92 |                 );
+      93 |                 // THE BINDING FLOOR — the 0px-slider class is dead.
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-chassis.spec.ts:90:98
+
+    Error Context: test-results/config-chassis-W1-—-the-sl-19a2c-r-width-≥-1px-desktop-light-webkit/error-context.md
+
+  5) [webkit] › tests-visual/config-chassis.spec.ts:63:13 › W1 — the slotted slider width contract › slotted slider width ≥ 1px @ desktop dark 
+
+    Error: a ConfiguratorRow-slotted slider must exist on /substrates/blob
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > -1
+    Received:   -1
+
+      88 |                 // -1 means no slotted slider found on this route — recorded, not a false RED
+      89 |                 // (the route must carry at least one; if it doesn't the test is mis-targeted).
+    > 90 |                 expect(width, "a ConfiguratorRow-slotted slider must exist on /substrates/blob").toBeGreaterThan(
+         |                                                                                                  ^
+      91 |                     -1,
+      92 |                 );
+      93 |                 // THE BINDING FLOOR — the 0px-slider class is dead.
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-chassis.spec.ts:90:98
+
+    Error Context: test-results/config-chassis-W1-—-the-sl-8890b-er-width-≥-1px-desktop-dark-webkit/error-context.md
+
+  6) [webkit] › tests-visual/config-chassis.spec.ts:106:1 › W4 — the DERIVE chip group's rightmost chip is not clipped 
+
+    Error: the rightmost DERIVE chip (right 3987) must not overflow the aside content right (1215) — no MONO slice
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 1217
+    Received:    3987
+
+      145 |         result.maxRight,
+      146 |         `the rightmost DERIVE chip (right ${result.maxRight}) must not overflow the aside content right (${result.asideRight}) — no MONO slice`,
+    > 147 |     ).toBeLessThanOrEqual((result.asideRight ?? 0) + 2);
+          |       ^
+      148 |
+      149 |     await shot(page, "W-CONFIG-CHASSIS-aurora-derive-chips-dark");
+      150 | });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-chassis.spec.ts:147:7
+
+    Error Context: test-results/config-chassis-W4-—-the-DE-44ae7-ghtmost-chip-is-not-clipped-webkit/error-context.md
+
+  7) [webkit] › tests-visual/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › aurora light: two-column, aside right, rounded, DOM stage→aside 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 380
+    Received:    400
+
+      175 |                     `${studio.id}: the aside width sits in the 280-360px band`,
+      176 |                 ).toBeGreaterThanOrEqual(270);
+    > 177 |                 expect(L.aside.width).toBeLessThanOrEqual(380);
+          |                                       ^
+      178 |
+      179 |                 // controls on the RIGHT: the aside's left edge is right of the stage's.
+      180 |                 expect(
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts:177:39
+
+    Error Context: test-results/config-right-desktop-—-con-4b969-ght-rounded-DOM-stage→aside-webkit/error-context.md
+
+  8) [webkit] › tests-visual/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › aurora dark: two-column, aside right, rounded, DOM stage→aside 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 380
+    Received:    400
+
+      175 |                     `${studio.id}: the aside width sits in the 280-360px band`,
+      176 |                 ).toBeGreaterThanOrEqual(270);
+    > 177 |                 expect(L.aside.width).toBeLessThanOrEqual(380);
+          |                                       ^
+      178 |
+      179 |                 // controls on the RIGHT: the aside's left edge is right of the stage's.
+      180 |                 expect(
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts:177:39
+
+    Error Context: test-results/config-right-desktop-—-con-e4a48-ght-rounded-DOM-stage→aside-webkit/error-context.md
+
+  9) [webkit] › tests-visual/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › blob light: two-column, aside right, rounded, DOM stage→aside 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 380
+    Received:    400
+
+      175 |                     `${studio.id}: the aside width sits in the 280-360px band`,
+      176 |                 ).toBeGreaterThanOrEqual(270);
+    > 177 |                 expect(L.aside.width).toBeLessThanOrEqual(380);
+          |                                       ^
+      178 |
+      179 |                 // controls on the RIGHT: the aside's left edge is right of the stage's.
+      180 |                 expect(
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts:177:39
+
+    Error Context: test-results/config-right-desktop-—-con-ba523-ght-rounded-DOM-stage→aside-webkit/error-context.md
+
+  10) [webkit] › tests-visual/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › blob dark: two-column, aside right, rounded, DOM stage→aside 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 380
+    Received:    400
+
+      175 |                     `${studio.id}: the aside width sits in the 280-360px band`,
+      176 |                 ).toBeGreaterThanOrEqual(270);
+    > 177 |                 expect(L.aside.width).toBeLessThanOrEqual(380);
+          |                                       ^
+      178 |
+      179 |                 // controls on the RIGHT: the aside's left edge is right of the stage's.
+      180 |                 expect(
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts:177:39
+
+    Error Context: test-results/config-right-desktop-—-con-15986-ght-rounded-DOM-stage→aside-webkit/error-context.md
+
+  11) [webkit] › tests-visual/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › fourier-field light: two-column, aside right, rounded, DOM stage→aside 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 380
+    Received:    400
+
+      175 |                     `${studio.id}: the aside width sits in the 280-360px band`,
+      176 |                 ).toBeGreaterThanOrEqual(270);
+    > 177 |                 expect(L.aside.width).toBeLessThanOrEqual(380);
+          |                                       ^
+      178 |
+      179 |                 // controls on the RIGHT: the aside's left edge is right of the stage's.
+      180 |                 expect(
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts:177:39
+
+    Error Context: test-results/config-right-desktop-—-con-785fc-ght-rounded-DOM-stage→aside-webkit/error-context.md
+
+  12) [webkit] › tests-visual/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › fourier-field dark: two-column, aside right, rounded, DOM stage→aside 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 380
+    Received:    400
+
+      175 |                     `${studio.id}: the aside width sits in the 280-360px band`,
+      176 |                 ).toBeGreaterThanOrEqual(270);
+    > 177 |                 expect(L.aside.width).toBeLessThanOrEqual(380);
+          |                                       ^
+      178 |
+      179 |                 // controls on the RIGHT: the aside's left edge is right of the stage's.
+      180 |                 expect(
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts:177:39
+
+    Error Context: test-results/config-right-desktop-—-con-60d8f-ght-rounded-DOM-stage→aside-webkit/error-context.md
+
+  13) [webkit] › tests-visual/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › configurator light: two-column, aside right, rounded, DOM stage→aside 
+
+    Error: configurator: desktop grid-template-columns must resolve TWO tracks (was "492px")
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 2
+    Received: 1
+
+      165 |                     L.trackCount,
+      166 |                     `${studio.id}: desktop grid-template-columns must resolve TWO tracks (was "${L.gridTemplateColumns}")`,
+    > 167 |                 ).toBe(2);
+          |                   ^
+      168 |
+      169 |                 // The aside track is in the 280-360px band (the --configurator-aside-{min,max}).
+      170 |                 expect(L.aside, `${studio.id}: aside must render`).not.toBeNull();
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts:167:19
+
+    Error Context: test-results/config-right-desktop-—-con-686ad-ght-rounded-DOM-stage→aside-webkit/error-context.md
+
+  14) [webkit] › tests-visual/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › configurator dark: two-column, aside right, rounded, DOM stage→aside 
+
+    Error: configurator: desktop grid-template-columns must resolve TWO tracks (was "492px")
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 2
+    Received: 1
+
+      165 |                     L.trackCount,
+      166 |                     `${studio.id}: desktop grid-template-columns must resolve TWO tracks (was "${L.gridTemplateColumns}")`,
+    > 167 |                 ).toBe(2);
+          |                   ^
+      168 |
+      169 |                 // The aside track is in the 280-360px band (the --configurator-aside-{min,max}).
+      170 |                 expect(L.aside, `${studio.id}: aside must render`).not.toBeNull();
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts:167:19
+
+    Error Context: test-results/config-right-desktop-—-con-d5fc4-ght-rounded-DOM-stage→aside-webkit/error-context.md
+
+  15) [webkit] › tests-visual/dock-morph-family.spec.ts:43:1 › (a)/(b) — the morph composites a transform over a reserved footprint (no per-frame relayout) 
+
+    Error: the morph-axis box composites a transform mid-morph (got none)
+
+    expect(received).toBeTruthy()
+
+    Received: false
+
+      73 |         read.transform && read.transform !== "none" && read.transform !== "matrix(1, 0, 0, 1, 0, 0)",
+      74 |         `the morph-axis box composites a transform mid-morph (got ${read.transform})`,
+    > 75 |     ).toBeTruthy();
+         |       ^
+      76 |     // The reserved footprint is the SETTLED `to` (~240px), not the live-scalar interp
+      77 |     // (~150px at t=0.5). A reserved 240px box with a 0.625 scale reads as ~150px.
+      78 |     const reserved = Number.parseFloat(read.reservedInline ?? "0");
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-morph-family.spec.ts:75:7
+
+    Error Context: test-results/dock-morph-family--a-b-—-t-4df0f-rint-no-per-frame-relayout--webkit/error-context.md
+
+  16) [webkit] › tests-visual/dock-morph-family.spec.ts:83:1 › (c) — under PRM the dock seats synchronously (every control inside the box, no sliver) 
+
+    Error: every dock control seats INSIDE the box under PRM (1/13 outside)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      132 |         seat.allInside,
+      133 |         `every dock control seats INSIDE the box under PRM (${seat.outsideCount}/${seat.controlCount} outside)`,
+    > 134 |     ).toBe(true);
+          |       ^
+      135 |     await page.emulateMedia({ reducedMotion: null });
+      136 | });
+      137 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-morph-family.spec.ts:134:7
+
+    Error Context: test-results/dock-morph-family--c-—-und-4dba9-l-inside-the-box-no-sliver--webkit/error-context.md
+
+  17) [webkit] › tests-visual/dock-morph-family.spec.ts:139:1 › (d) — a nested DockLayerGroup reserves its peak-layer block-size (consumer never guesses) 
+
+    Error: --dock-layer-peak-block-size is a measured non-zero peak (got )
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      160 |     expect(reserve.found, "the .dock-layer-group is present").toBe(true);
+      161 |     // The group exposes a non-zero measured peak + reserves it as min-block-size.
+    > 162 |     expect(reserve.peakPx, `--dock-layer-peak-block-size is a measured non-zero peak (got ${reserve.peakVar})`).toBeGreaterThan(0);
+          |                                                                                                                 ^
+      163 |     expect(
+      164 |         Math.abs(reserve.minPx - reserve.peakPx),
+      165 |         `the group min-block-size (${reserve.minPx}) == the measured peak (${reserve.peakPx})`,
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-morph-family.spec.ts:162:113
+
+    Error Context: test-results/dock-morph-family--d-—-a-n-169aa-ize-consumer-never-guesses--webkit/error-context.md
+
+  18) [webkit] › tests-visual/dock-morph-family.spec.ts:170:1 › (e) — a --dock-local-scale override on a dock scope paints a larger box (the @property thread) 
+
+    Error: --dock-local-scale: 1.4 on the dock scope re-evaluates --dock-scale (base 1 → threaded 1)
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 1.3
+    Received:   1
+
+      197 |         thread.threadedScale,
+      198 |         `--dock-local-scale: 1.4 on the dock scope re-evaluates --dock-scale (base ${thread.baseScale} → threaded ${thread.threadedScale})`,
+    > 199 |     ).toBeGreaterThan(thread.baseScale * 1.3);
+          |       ^
+      200 | });
+      201 |
+      202 | // ── (f) — the VERTICAL collapse→expand morphs its chrome continuously ────────────
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-morph-family.spec.ts:199:7
+
+    Error Context: test-results/dock-morph-family--e-—-a---1db31-er-box-the-property-thread--webkit/error-context.md
+
+  19) [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (light) 
+
+    Error: page.goto: Could not connect to the server.
+    Call log:
+      - navigating to "http://localhost:5199/dock/overview", waiting until "networkidle"
+
+
+      36 |
+      37 | async function goto(page: Page, route: string) {
+    > 38 |     await page.goto(BASE + route, { waitUntil: "networkidle" });
+         |                ^
+      39 |     await page.waitForTimeout(450);
+      40 | }
+      41 |
+        at goto (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:38:16)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:176:19
+
+    Error Context: test-results/dock-plate-clearance-plate-e898a-e-—-sidebar-vertical-light--webkit/error-context.md
+
+    Error Context: test-results/dock-plate-clearance-plate-e898a-e-—-sidebar-vertical-light--webkit/error-context.md
+
+  20) [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (dark) 
+
+    Error: page.goto: Could not connect to the server.
+    Call log:
+      - navigating to "http://localhost:5199/dock/overview", waiting until "networkidle"
+
+
+      36 |
+      37 | async function goto(page: Page, route: string) {
+    > 38 |     await page.goto(BASE + route, { waitUntil: "networkidle" });
+         |                ^
+      39 |     await page.waitForTimeout(450);
+      40 | }
+      41 |
+        at goto (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:38:16)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:176:19
+
+    Error Context: test-results/dock-plate-clearance-plate-a45e2-ce-—-sidebar-vertical-dark--webkit/error-context.md
+
+    Error Context: test-results/dock-plate-clearance-plate-a45e2-ce-—-sidebar-vertical-dark--webkit/error-context.md
+
+  21) [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (light) 
+
+    Error: page.goto: Could not connect to the server.
+    Call log:
+      - navigating to "http://localhost:5199/dock/overview", waiting until "networkidle"
+
+
+      36 |
+      37 | async function goto(page: Page, route: string) {
+    > 38 |     await page.goto(BASE + route, { waitUntil: "networkidle" });
+         |                ^
+      39 |     await page.waitForTimeout(450);
+      40 | }
+      41 |
+        at goto (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:38:16)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:176:19
+
+    Error Context: test-results/dock-plate-clearance-plate-0270e--—-bottom-horizontal-light--webkit/error-context.md
+
+    Error Context: test-results/dock-plate-clearance-plate-0270e--—-bottom-horizontal-light--webkit/error-context.md
+
+  22) [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (dark) 
+
+    Error: page.goto: Could not connect to the server.
+    Call log:
+      - navigating to "http://localhost:5199/dock/overview", waiting until "networkidle"
+
+
+      36 |
+      37 | async function goto(page: Page, route: string) {
+    > 38 |     await page.goto(BASE + route, { waitUntil: "networkidle" });
+         |                ^
+      39 |     await page.waitForTimeout(450);
+      40 | }
+      41 |
+        at goto (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:38:16)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:176:19
+
+    Error Context: test-results/dock-plate-clearance-plate-0ad3d-e-—-bottom-horizontal-dark--webkit/error-context.md
+
+    Error Context: test-results/dock-plate-clearance-plate-0ad3d-e-—-bottom-horizontal-dark--webkit/error-context.md
+
+  23) [webkit] › tests-visual/liquid-hover.spec.ts:136:5 › BB.W-LIQUIDHOVER — the tier-root pointer-following gleam (π) › (c) GRAIN NO-POP — the grain background-image stays constant across the hover onset 
+
+    Error: the grain ::after background-image is always present (never `none` — no decode-and-pop swap)
+
+    expect(received).not.toBe(expected) // Object.is equality
+
+    Expected: not "none"
+
+      156 |                 images,
+      157 |                 "the grain ::after background-image is always present (never `none` — no decode-and-pop swap)",
+    > 158 |             ).not.toBe("none");
+          |                   ^
+      159 |         }
+      160 |     });
+      161 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/liquid-hover.spec.ts:158:19
+
+    Error Context: test-results/liquid-hover-BB-W-LIQUIDHO-6d727-tant-across-the-hover-onset-webkit/error-context.md
+
+  24) [webkit] › tests-visual/menu-glass.spec.ts:247:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (d) section caption mono + hairline @ mobile light 
+
+    Error: the .glass-menu-section caption must read the mono register — got ""Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif"
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /mono|fira|menlo|monaco|consolas|courier/
+    Received string:  "\"plus jakarta sans\", \"plus jakarta sans fallback\", system-ui, sans-serif"
+
+      254 |                     fontFamily.toLowerCase(),
+      255 |                     `the .glass-menu-section caption must read the mono register — got "${fontFamily}"`,
+    > 256 |                 ).toMatch(/mono|fira|menlo|monaco|consolas|courier/);
+          |                   ^
+      257 |                 expect(
+      258 |                     boxShadow,
+      259 |                     "the .glass-menu-section must paint a hairline (a box-shadow divider, not none)",
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/menu-glass.spec.ts:256:19
+
+    Error Context: test-results/menu-glass-menu-glass-π-—--50191--mono-hairline-mobile-light-webkit/error-context.md
+
+  25) [webkit] › tests-visual/menu-glass.spec.ts:247:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (d) section caption mono + hairline @ mobile dark 
+
+    Error: the .glass-menu-section caption must read the mono register — got ""Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif"
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /mono|fira|menlo|monaco|consolas|courier/
+    Received string:  "\"plus jakarta sans\", \"plus jakarta sans fallback\", system-ui, sans-serif"
+
+      254 |                     fontFamily.toLowerCase(),
+      255 |                     `the .glass-menu-section caption must read the mono register — got "${fontFamily}"`,
+    > 256 |                 ).toMatch(/mono|fira|menlo|monaco|consolas|courier/);
+          |                   ^
+      257 |                 expect(
+      258 |                     boxShadow,
+      259 |                     "the .glass-menu-section must paint a hairline (a box-shadow divider, not none)",
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/menu-glass.spec.ts:256:19
+
+    Error Context: test-results/menu-glass-menu-glass-π-—--c5ce0-n-mono-hairline-mobile-dark-webkit/error-context.md
+
+  26) [webkit] › tests-visual/menu-glass.spec.ts:247:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (d) section caption mono + hairline @ desktop light 
+
+    Error: the .glass-menu-section caption must read the mono register — got ""Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif"
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /mono|fira|menlo|monaco|consolas|courier/
+    Received string:  "\"plus jakarta sans\", \"plus jakarta sans fallback\", system-ui, sans-serif"
+
+      254 |                     fontFamily.toLowerCase(),
+      255 |                     `the .glass-menu-section caption must read the mono register — got "${fontFamily}"`,
+    > 256 |                 ).toMatch(/mono|fira|menlo|monaco|consolas|courier/);
+          |                   ^
+      257 |                 expect(
+      258 |                     boxShadow,
+      259 |                     "the .glass-menu-section must paint a hairline (a box-shadow divider, not none)",
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/menu-glass.spec.ts:256:19
+
+    Error Context: test-results/menu-glass-menu-glass-π-—--91a23-mono-hairline-desktop-light-webkit/error-context.md
+
+  27) [webkit] › tests-visual/menu-glass.spec.ts:247:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (d) section caption mono + hairline @ desktop dark 
+
+    Error: the .glass-menu-section caption must read the mono register — got ""Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif"
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /mono|fira|menlo|monaco|consolas|courier/
+    Received string:  "\"plus jakarta sans\", \"plus jakarta sans fallback\", system-ui, sans-serif"
+
+      254 |                     fontFamily.toLowerCase(),
+      255 |                     `the .glass-menu-section caption must read the mono register — got "${fontFamily}"`,
+    > 256 |                 ).toMatch(/mono|fira|menlo|monaco|consolas|courier/);
+          |                   ^
+      257 |                 expect(
+      258 |                     boxShadow,
+      259 |                     "the .glass-menu-section must paint a hairline (a box-shadow divider, not none)",
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/menu-glass.spec.ts:256:19
+
+    Error Context: test-results/menu-glass-menu-glass-π-—--981e8--mono-hairline-desktop-dark-webkit/error-context.md
+
+  28) [webkit] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › light · mobile — nav-dock gestalt 
+
+    Error: the rail renders mode="facets"
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "facets"
+    Received: null
+
+      138 |                     return rail?.getAttribute("data-mode") ?? null;
+      139 |                 });
+    > 140 |                 expect(railMode, 'the rail renders mode="facets"').toBe("facets");
+          |                                                                    ^
+      141 |
+      142 |                 // Distinct per-facet --glass-accent (read the inline style hue).
+      143 |                 const accents = await page.evaluate(() => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/nav-dock-fix.spec.ts:140:68
+
+    Error Context: test-results/nav-dock-fix-W-NAV-DOCK-FI-e4817-·-mobile-—-nav-dock-gestalt-webkit/error-context.md
+
+  29) [webkit] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › light · desktop — nav-dock gestalt 
+
+    Error: the rail renders mode="facets"
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "facets"
+    Received: null
+
+      138 |                     return rail?.getAttribute("data-mode") ?? null;
+      139 |                 });
+    > 140 |                 expect(railMode, 'the rail renders mode="facets"').toBe("facets");
+          |                                                                    ^
+      141 |
+      142 |                 // Distinct per-facet --glass-accent (read the inline style hue).
+      143 |                 const accents = await page.evaluate(() => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/nav-dock-fix.spec.ts:140:68
+
+    Error Context: test-results/nav-dock-fix-W-NAV-DOCK-FI-c3b61--desktop-—-nav-dock-gestalt-webkit/error-context.md
+
+  30) [webkit] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › dark · mobile — nav-dock gestalt 
+
+    Error: the rail renders mode="facets"
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "facets"
+    Received: null
+
+      138 |                     return rail?.getAttribute("data-mode") ?? null;
+      139 |                 });
+    > 140 |                 expect(railMode, 'the rail renders mode="facets"').toBe("facets");
+          |                                                                    ^
+      141 |
+      142 |                 // Distinct per-facet --glass-accent (read the inline style hue).
+      143 |                 const accents = await page.evaluate(() => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/nav-dock-fix.spec.ts:140:68
+
+    Error Context: test-results/nav-dock-fix-W-NAV-DOCK-FI-abc92-·-mobile-—-nav-dock-gestalt-webkit/error-context.md
+
+  31) [webkit] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › dark · desktop — nav-dock gestalt 
+
+    Error: the rail renders mode="facets"
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "facets"
+    Received: null
+
+      138 |                     return rail?.getAttribute("data-mode") ?? null;
+      139 |                 });
+    > 140 |                 expect(railMode, 'the rail renders mode="facets"').toBe("facets");
+          |                                                                    ^
+      141 |
+      142 |                 // Distinct per-facet --glass-accent (read the inline style hue).
+      143 |                 const accents = await page.evaluate(() => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/nav-dock-fix.spec.ts:140:68
+
+    Error Context: test-results/nav-dock-fix-W-NAV-DOCK-FI-5fb77--desktop-—-nav-dock-gestalt-webkit/error-context.md
+
+  32) [webkit] › tests-visual/register-ios.spec.ts:160:13 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › rail selected item reads iOS glass (no brand-red) @ mobile (light) 
+
+    Error: could not find the active rail item
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      186 |                 });
+      187 |
+    > 188 |                 expect(readout, "could not find the active rail item").not.toBeNull();
+          |                                                                            ^
+      189 |                 const r = readout!;
+      190 |                 const red = dark ? RED_DARK : RED_LIGHT;
+      191 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/register-ios.spec.ts:188:76
+
+    Error Context: test-results/register-ios-register-ios--cf128--no-brand-red-mobile-light--webkit/error-context.md
+
+  33) [webkit] › tests-visual/register-ios.spec.ts:160:13 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › rail selected item reads iOS glass (no brand-red) @ mobile (dark) 
+
+    Error: could not find the active rail item
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      186 |                 });
+      187 |
+    > 188 |                 expect(readout, "could not find the active rail item").not.toBeNull();
+          |                                                                            ^
+      189 |                 const r = readout!;
+      190 |                 const red = dark ? RED_DARK : RED_LIGHT;
+      191 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/register-ios.spec.ts:188:76
+
+    Error Context: test-results/register-ios-register-ios--b71ba-s-no-brand-red-mobile-dark--webkit/error-context.md
+
+  34) [webkit] › tests-visual/register-ios.spec.ts:160:13 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › rail selected item reads iOS glass (no brand-red) @ desktop (light) 
+
+    Error: could not find the active rail item
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      186 |                 });
+      187 |
+    > 188 |                 expect(readout, "could not find the active rail item").not.toBeNull();
+          |                                                                            ^
+      189 |                 const r = readout!;
+      190 |                 const red = dark ? RED_DARK : RED_LIGHT;
+      191 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/register-ios.spec.ts:188:76
+
+    Error Context: test-results/register-ios-register-ios--d64fa-no-brand-red-desktop-light--webkit/error-context.md
+
+  35) [webkit] › tests-visual/register-ios.spec.ts:160:13 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › rail selected item reads iOS glass (no brand-red) @ desktop (dark) 
+
+    Error: could not find the active rail item
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      186 |                 });
+      187 |
+    > 188 |                 expect(readout, "could not find the active rail item").not.toBeNull();
+          |                                                                            ^
+      189 |                 const r = readout!;
+      190 |                 const red = dark ? RED_DARK : RED_LIGHT;
+      191 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/register-ios.spec.ts:188:76
+
+    Error Context: test-results/register-ios-register-ios--3bc26--no-brand-red-desktop-dark--webkit/error-context.md
+
+  36) [webkit] › tests-visual/register-ios.spec.ts:280:9 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › G-CLOSE — capture the rail selected-register DELTA (light) 
+
+    Test timeout of 90000ms exceeded.
+
+    Error: locator.screenshot: Test timeout of 90000ms exceeded.
+    Call log:
+      - waiting for locator('.glass-dock.variant-rail').first()
+
+
+      294 |                 .locator(".glass-dock.variant-rail")
+      295 |                 .first();
+    > 296 |             await dock.screenshot({
+          |                        ^
+      297 |                 path: `${VISUAL_DIR}W-REGISTER-IOS-rail-desktop-${mode}.png`,
+      298 |             });
+      299 |         });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/register-ios.spec.ts:296:24
+
+    Error Context: test-results/register-ios-register-ios--b384d-ected-register-DELTA-light--webkit/error-context.md
+
+  37) [webkit] › tests-visual/register-ios.spec.ts:280:9 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › G-CLOSE — capture the rail selected-register DELTA (dark) 
+
+    Test timeout of 90000ms exceeded.
+
+    Error: locator.screenshot: Test timeout of 90000ms exceeded.
+    Call log:
+      - waiting for locator('.glass-dock.variant-rail').first()
+
+
+      294 |                 .locator(".glass-dock.variant-rail")
+      295 |                 .first();
+    > 296 |             await dock.screenshot({
+          |                        ^
+      297 |                 path: `${VISUAL_DIR}W-REGISTER-IOS-rail-desktop-${mode}.png`,
+      298 |             });
+      299 |         });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/register-ios.spec.ts:296:24
+
+    Error Context: test-results/register-ios-register-ios--55168-lected-register-DELTA-dark--webkit/error-context.md
+
+  37 failed
+    [webkit] › tests-visual/a11y-slider.spec.ts:54:5 › a11y-slider (π lane — every Slider thumb resolves an accessible name) › aurora — no nameless thumb (was ≥22), light + dark 
+    [webkit] › tests-visual/config-chassis.spec.ts:63:13 › W1 — the slotted slider width contract › slotted slider width ≥ 1px @ mobile light 
+    [webkit] › tests-visual/config-chassis.spec.ts:63:13 › W1 — the slotted slider width contract › slotted slider width ≥ 1px @ mobile dark 
+    [webkit] › tests-visual/config-chassis.spec.ts:63:13 › W1 — the slotted slider width contract › slotted slider width ≥ 1px @ desktop light 
+    [webkit] › tests-visual/config-chassis.spec.ts:63:13 › W1 — the slotted slider width contract › slotted slider width ≥ 1px @ desktop dark 
+    [webkit] › tests-visual/config-chassis.spec.ts:106:1 › W4 — the DERIVE chip group's rightmost chip is not clipped 
+    [webkit] › tests-visual/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › aurora light: two-column, aside right, rounded, DOM stage→aside 
+    [webkit] › tests-visual/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › aurora dark: two-column, aside right, rounded, DOM stage→aside 
+    [webkit] › tests-visual/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › blob light: two-column, aside right, rounded, DOM stage→aside 
+    [webkit] › tests-visual/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › blob dark: two-column, aside right, rounded, DOM stage→aside 
+    [webkit] › tests-visual/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › fourier-field light: two-column, aside right, rounded, DOM stage→aside 
+    [webkit] › tests-visual/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › fourier-field dark: two-column, aside right, rounded, DOM stage→aside 
+    [webkit] › tests-visual/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › configurator light: two-column, aside right, rounded, DOM stage→aside 
+    [webkit] › tests-visual/config-right.spec.ts:146:13 › desktop — controls on the RIGHT (the standardized two-column) › configurator dark: two-column, aside right, rounded, DOM stage→aside 
+    [webkit] › tests-visual/dock-morph-family.spec.ts:43:1 › (a)/(b) — the morph composites a transform over a reserved footprint (no per-frame relayout) 
+    [webkit] › tests-visual/dock-morph-family.spec.ts:83:1 › (c) — under PRM the dock seats synchronously (every control inside the box, no sliver) 
+    [webkit] › tests-visual/dock-morph-family.spec.ts:139:1 › (d) — a nested DockLayerGroup reserves its peak-layer block-size (consumer never guesses) 
+    [webkit] › tests-visual/dock-morph-family.spec.ts:170:1 › (e) — a --dock-local-scale override on a dock scope paints a larger box (the @property thread) 
+    [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (light) 
+    [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (dark) 
+    [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (light) 
+    [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (dark) 
+    [webkit] › tests-visual/liquid-hover.spec.ts:136:5 › BB.W-LIQUIDHOVER — the tier-root pointer-following gleam (π) › (c) GRAIN NO-POP — the grain background-image stays constant across the hover onset 
+    [webkit] › tests-visual/menu-glass.spec.ts:247:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (d) section caption mono + hairline @ mobile light 
+    [webkit] › tests-visual/menu-glass.spec.ts:247:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (d) section caption mono + hairline @ mobile dark 
+    [webkit] › tests-visual/menu-glass.spec.ts:247:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (d) section caption mono + hairline @ desktop light 
+    [webkit] › tests-visual/menu-glass.spec.ts:247:13 › menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED) › (d) section caption mono + hairline @ desktop dark 
+    [webkit] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › light · mobile — nav-dock gestalt 
+    [webkit] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › light · desktop — nav-dock gestalt 
+    [webkit] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › dark · mobile — nav-dock gestalt 
+    [webkit] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › dark · desktop — nav-dock gestalt 
+    [webkit] › tests-visual/register-ios.spec.ts:160:13 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › rail selected item reads iOS glass (no brand-red) @ mobile (light) 
+    [webkit] › tests-visual/register-ios.spec.ts:160:13 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › rail selected item reads iOS glass (no brand-red) @ mobile (dark) 
+    [webkit] › tests-visual/register-ios.spec.ts:160:13 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › rail selected item reads iOS glass (no brand-red) @ desktop (light) 
+    [webkit] › tests-visual/register-ios.spec.ts:160:13 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › rail selected item reads iOS glass (no brand-red) @ desktop (dark) 
+    [webkit] › tests-visual/register-ios.spec.ts:280:9 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › G-CLOSE — capture the rail selected-register DELTA (light) 
+    [webkit] › tests-visual/register-ios.spec.ts:280:9 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › G-CLOSE — capture the rail selected-register DELTA (dark) 
+  2 skipped
+  65 passed (6.3m)

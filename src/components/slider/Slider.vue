@@ -17,6 +17,7 @@ import {
     useForwardPropsEmits,
 } from "reka-ui";
 import { useDragVelocity } from "../../composables/dom/useDragVelocity";
+import { useFrameCoalesce } from "../../composables/dom/useFrameCoalesce";
 import { useDockHold } from "../dock/composables/useDockHold";
 import { resolveValueMarks } from "../_shared/field/valueDomain";
 import { useMotionAxis } from "../_shared/useMotionAxis";
@@ -31,6 +32,10 @@ const props = withDefaults(defineProps<SliderProps>(), {
 const emits = defineEmits<{
     "update:modelValue": [value: number[] | undefined];
     valueCommit: [value: number[]];
+    /** A pointer took the slider: from here to `release` the hand owns the value. */
+    grab: [];
+    /** The pointer let go; carries the value the hand left, already emitted. */
+    release: [value: number[]];
 }>();
 
 const v = computed<SliderVariant>(() => props.variant);
@@ -48,7 +53,9 @@ const delegatedProps = computed(() => {
         invalid: _____,
         motion: ______,
         valueText: _______,
-        loupe: ________,
+        modelValue: ________,
+        defaultValue: _________,
+        loupe: __________,
         ...delegated
     } = props;
     // The containment law: reka's `contain` alignment clamps the thumb's value-follow
@@ -56,7 +63,76 @@ const delegatedProps = computed(() => {
     return { ...delegated, thumbAlignment: "contain" as const };
 });
 
-const forwarded = useForwardPropsEmits(delegatedProps, emits);
+const forwarded = useForwardPropsEmits(delegatedProps);
+
+/* ── THE HAND AND THE MODEL ────────────────────────────────────────────────────────
+   reka's root is driven by `own`, the value the slider paints, never by the prop
+   directly. Outside a grab `own` follows `modelValue`. From the press to the release
+   the hand owns it: a model written meanwhile (a playback clock) does not move the
+   thumb, and the pointer's value wins. On release the slider follows the model again,
+   from the value the hand left, so nothing jumps. A key step writes `own` and emits;
+   the next render then returns `own` to the model, so a consumer who declines the
+   step (leaves the model as it was) keeps the thumb where the model is.
+
+   A drag streams `update:modelValue` at most once per frame, the latest value winning
+   (`useFrameCoalesce`); the pending value is delivered before `valueCommit`, and
+   `release` comes last. A key step (arrows, Page, Home, End) is not a drag and emits
+   at once. The release listeners are bubble-phase so they run after reka's own
+   pointerup (its slide end and commit); the grab is capture-phase so the press's own
+   value already streams. */
+const grabbed = ref(false);
+const own = ref<number[]>(
+    props.modelValue ?? props.defaultValue ?? [props.min ?? 0],
+);
+watch(
+    () => props.modelValue,
+    (next) => {
+        if (!grabbed.value && next) own.value = next;
+    },
+    { deep: true },
+);
+
+const stream = useFrameCoalesce<number[]>((value) =>
+    emits("update:modelValue", value),
+);
+
+/** Outside a grab, return `own` to the model the consumer holds once the render that
+    carries it has run (the value just delivered, a declined step, or a clock's write). */
+function followModel(): void {
+    void nextTick(() => {
+        if (!grabbed.value && props.modelValue) own.value = props.modelValue;
+    });
+}
+
+function onRekaUpdate(next: number[] | undefined): void {
+    if (!next) return;
+    own.value = next;
+    if (grabbed.value) {
+        stream.push(next);
+        return;
+    }
+    emits("update:modelValue", next);
+    followModel();
+}
+
+function onRekaCommit(value: number[]): void {
+    stream.flush();
+    emits("valueCommit", value);
+}
+
+function onGrab(event: PointerEvent): void {
+    if (props.disabled || event.button !== 0 || grabbed.value) return;
+    grabbed.value = true;
+    emits("grab");
+}
+
+function onLetGo(): void {
+    if (!grabbed.value) return;
+    stream.flush();
+    grabbed.value = false;
+    emits("release", [...own.value]);
+    followModel();
+}
 
 /* The host-native drag hold — one owner, one acquire path. `useDockHold` attaches
    NATIVE `pointerdown`/`touchstart` on the RESOLVED host, and not because a template
@@ -189,7 +265,7 @@ const loupeShown = computed(
 function valueFraction(): number {
     const min = props.min ?? 0;
     const max = props.max ?? 100;
-    const values = props.modelValue ?? props.defaultValue ?? [min];
+    const values = own.value;
     const head = values[values.length - 1] ?? min;
     if (max === min) return 0;
     return Math.min(1, Math.max(0, (head - min) / (max - min)));
@@ -247,7 +323,7 @@ watch(grasping, async (open) => {
     trackViewport(true);
 });
 watch(
-    () => props.modelValue,
+    own,
     () => {
         if (grasping.value) writeLoupeValue();
     },
@@ -306,6 +382,13 @@ onMounted(() => {
         :data-motion="motionAxis.dataMotion.value"
         :style="hostStyle"
         v-bind="forwarded"
+        :model-value="own"
+        @update:model-value="onRekaUpdate"
+        @value-commit="onRekaCommit"
+        @pointerdown.capture="onGrab"
+        @pointerup="onLetGo"
+        @pointercancel="onLetGo"
+        @lostpointercapture="onLetGo"
         @pointerdown="onPointerDown"
     >
         <!--

@@ -177,8 +177,10 @@ for (const theme of ["light", "dark"]) {
             expect(short.shape).toBeNull();
             const shortTab = await shape(page, '[data-witness="strip-short"] .segmented-tab');
             // The tab reads `--radius-tab` (1rem); a caption tab is about 33 px tall, so
-            // its corner sits within 1 px of a full stadium.
-            expect(shortTab.radius).toBe("16px");
+            // its corner sits within 1 px of a full stadium. Under a coarse pointer the tab
+            // grows to the 44 px control floor and its corner follows it, half of 44.
+            const coarse = test.info().project.name === "coarse-touch";
+            expect(shortTab.radius).toBe(coarse ? "22px" : "16px");
             expect(parseFloat(shortTab.radius)).toBeGreaterThanOrEqual(shortTab.h / 2 - 1);
         });
     });

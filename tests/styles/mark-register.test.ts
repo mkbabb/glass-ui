@@ -250,7 +250,7 @@ describe("BK #87 · the inert-mark register", () => {
         expect(badge).not.toContain("wrap-anywhere");
         expect(badge).toContain("whitespace-nowrap");
         expect(badge).not.toContain("--ui-glyph-sm");
-        expect(badge).toContain("size-[1em]");
+        expect(badge).toContain("size-[var(--mark-glyph)]");
         expect(badge).toContain("var(--control-label)");
 
         const label = read(LABEL);

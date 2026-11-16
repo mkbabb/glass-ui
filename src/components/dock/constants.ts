@@ -44,6 +44,13 @@ export const DOCK_LAYER_GROUP_LABEL = "glass-ui:dock-layer-group";
  * this window cancels the expansion. */
 export const HOVER_INTENT_MS = 60;
 
+/** A touch or pen press held this long on a collapsed dock's persistent seat expands
+ * the dock instead of pressing the seat (the coarse pointer has no hover). */
+export const DOCK_LONG_PRESS_MS = 500;
+
+/** Travel, in px, past which a held press is a drag and never a long press. */
+export const DOCK_LONG_PRESS_SLOP_PX = 10;
+
 /**
  * The one idle window before an unheld, unhovered dock auto-collapses: six seconds
  * after the pointer and focus leave it, or after mount for a dock mounted open. Long

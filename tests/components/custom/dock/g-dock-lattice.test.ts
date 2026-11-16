@@ -310,7 +310,8 @@ describe("G-DOCK-RUN — the platform is the detent engine", () => {
         expect(run).toContain(`overscroll-behavior-${axis}: contain`);
         expect(run).toContain(`overscroll-behavior-${axis === "x" ? "y" : "x"}: auto`);
         expect(run).not.toMatch(/overscroll-behavior:\s*contain/);
-        expect(run).toMatch(/\.dock-run > \*\s*\{[^{}]*scroll-snap-align:\s*start/);
+        // Every child but the run's mark is a seat, and a snap target.
+        expect(run).toMatch(/\.dock-run > :not\(\.dock-run-mark\)\s*\{[^{}]*scroll-snap-align:\s*start/);
     });
 
     /** `proximity` anywhere in the band is the de-quantisation mutation, spelled out. */
@@ -361,7 +362,7 @@ describe("G-DOCK-RUN — the platform is the detent engine", () => {
             }
         }
         const decls = declarations(`${STYLES}/run.css`);
-        expect(decls).toMatch(/--dock-cap-rest:\s*calc\(var\(--dock-cross\) \/ 2\)/);
+        expect(decls).toMatch(/--dock-cap-rest:\s*min\(var\(--radius-dock\), calc\(var\(--dock-cross\) \/ 2\)\)/);
         expect(decls).not.toMatch(/--dock-cap-rest:\s*[\d.]+%/);
         // Declarations only: `from: 9999px` is NAMED in the docblock as the rejected
         // alternative, and a detector that cannot tell a rejection from a declaration

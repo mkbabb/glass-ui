@@ -1,0 +1,34 @@
+/* THE TABLE CONTAINER — the one element that rounds, clips and scrolls a table.
+
+   `<Table>` renders its `<table>` inside `.table-container`; a consumer who writes
+   their own `<table>` wraps it in an element with the same class and gets the same
+   corners. The radius and the clip live on this one box: a scroll port clips its
+   content to its own rounded padding box, so a header row, a last row, a sticky header
+   mid-scroll and a horizontally scrolled body all stay inside the outline, and the
+   corner pixels outside the radius are the page. Nothing on a row or a cell has to
+   know it is at a corner.
+
+   The box sits on the quiet plate's colour and the material rim. It adds no border:
+   the rows draw their own inner rules, and the rim is a box-shadow with no layout box,
+   so the container edge carries one line, not two. The plate is the box's own
+   background, not a positioned layer, so it stays put while the content scrolls.
+
+   In the main cascade (src/styles/index.css), not the component's chunk, because a
+   plain table that never imports `<Table>` uses it too. */
+@layer components {
+    .table-container {
+        position: relative;
+        inline-size: 100%;
+        overflow: auto;
+        border-radius: var(--radius-card);
+        background: var(--glass-plate-quiet);
+        box-shadow: var(--glass-material-rim);
+    }
+
+    /* Inside a glass surface (a Card, a Dialog, a Sheet) that surface is the one plate:
+       the container keeps its corners and its clip and paints nothing of its own. */
+    :is(.glass-wash, .glass-quiet, .glass-resting, .glass-floating, .glass-overlay) .table-container {
+        background: transparent;
+        box-shadow: none;
+    }
+}

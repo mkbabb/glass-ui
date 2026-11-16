@@ -39,7 +39,14 @@ src/fonts/plus-jakarta-sans/plus-jakarta-sans-latin.woff2
 src/fonts/plus-jakarta-sans/plus-jakarta-sans-latin-ext.woff2
 src/fonts/fira-code/fira-code-latin.woff2
 src/fonts/fira-code/fira-code-latin-ext.woff2
+src/fonts/ibm-plex-sans/ibm-plex-sans-latin.woff2
+src/fonts/ibm-plex-sans/ibm-plex-sans-italic-latin.woff2
 ```
+
+IBM Plex Sans (<https://github.com/IBM/plex>, OFL-1.1) is an optional text face a
+consumer selects through `--font-stack-text`: a variable wght 100..700 Latin subset,
+upright and italic. It is declared only in `src/styles/font-files.css`, which ships
+every face as a file; the inlined `styles/fonts` sheet carries the brand faces only.
 
 Plus Jakarta Sans is the text + display register (`--font-stack-text`,
 aliased by `--font-stack-display`); Fira Code is `--font-stack-mono`. Each is

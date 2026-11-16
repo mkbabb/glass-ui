@@ -1,0 +1,748 @@
+
+Running 70 tests using 1 worker
+
+  ✘   1 [webkit] › tests-visual/dock-morph-family.spec.ts:43:1 › (a)/(b) — the morph composites a transform over a reserved footprint (no per-frame relayout) (2.2s)
+  ✘   2 [webkit] › tests-visual/dock-morph-family.spec.ts:83:1 › (c) — under PRM the dock seats synchronously (every control inside the box, no sliver) (2.6s)
+  ✘   3 [webkit] › tests-visual/dock-morph-family.spec.ts:139:1 › (d) — a nested DockLayerGroup reserves its peak-layer block-size (consumer never guesses) (2.2s)
+  ✘   4 [webkit] › tests-visual/dock-morph-family.spec.ts:170:1 › (e) — a --dock-local-scale override on a dock scope paints a larger box (the @property thread) (2.0s)
+[WebServer] 9:12:20 AM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/dock/rail" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✓   5 [webkit] › tests-visual/dock-morph-family.spec.ts:207:1 › (f) — the vertical dock morphs plate chrome continuously with its block-size (no snap, inline invariant) (1.8s)
+  ✘   6 [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (light) (298ms)
+  ✘   7 [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (dark) (369ms)
+  ✘   8 [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (light) (366ms)
+  ✘   9 [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (dark) (372ms)
+  ✘  10 [webkit] › tests-visual/drag-morph.spec.ts:70:1 › (a) drag frame-series — follow ~1:1, velocity-squish, fling to nearest (1.7s)
+  ✓  11 [webkit] › tests-visual/drag-morph.spec.ts:146:1 › (b) flick past midpoint snaps forward; slow short-of-midpoint snaps back (2.6s)
+  ✘  12 [webkit] › tests-visual/drag-morph.spec.ts:183:1 › (c) PRM — drag functions, snap commits, NO squish frames (6.6s)
+  ✓  13 [webkit] › tests-visual/drag-morph.spec.ts:226:1 › (d) keyboard roving — one tabstop, arrow/Home/End move focus + activate (2.9s)
+  ✘  14 [webkit] › tests-visual/drag-morph.spec.ts:286:1 › (e) liquid-tab reachability — grab lands on the indicator, drag starts, click un-regressed (7.9s)
+  ✘  15 [webkit] › tests-visual/drag-morph.spec.ts:357:1 › consumer #2 — DockLayerGroup pull-to-switch flips the active layer (8.0s)
+[WebServer] 9:12:56 AM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 9:12:56 AM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✓  16 [webkit] › tests-visual/liquid-hover.spec.ts:82:5 › BB.W-LIQUIDHOVER — the tier-root pointer-following gleam (π) › (a) GLEAM TRACKS — two pointer positions read two distinct --mouse-x (off the dead-centre 50%) (1.8s)
+  ✓  17 [webkit] › tests-visual/liquid-hover.spec.ts:114:5 › BB.W-LIQUIDHOVER — the tier-root pointer-following gleam (π) › (b) DOCK CONTROL — the dock control gleams pointer-following with zero wiring (1.7s)
+[WebServer] 9:13:00 AM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 9:13:00 AM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  18 [webkit] › tests-visual/liquid-hover.spec.ts:136:5 › BB.W-LIQUIDHOVER — the tier-root pointer-following gleam (π) › (c) GRAIN NO-POP — the grain background-image stays constant across the hover onset (1.2s)
+[WebServer] 9:13:02 AM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child" as-child="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+[WebServer] 9:13:02 AM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button data-scenario="button-as-child-disabled" as-child="" disabled="" > 
+[WebServer]   at <Primitive material="content" shadow=true grain=false  ... > 
+[WebServer]   at <Surface material="content" tier="resting" surface="opaque"  ... > 
+[WebServer]   at <ShowcaseFrame caption="As-child" pad="sm" > 
+[WebServer]   at <StorySection heading="Keyboard, touch, and the linked command" blurb="One native button accepts Enter, Space, click, and coarse taps. `as-child` hands the whole command contract to another element without giving up the material." > 
+[WebServer]   at <TooltipProvider delay-duration=250 skip-delay-duration=300 > 
+[WebServer]   at <TooltipProvider delay-duration=250 > 
+[WebServer]   at <StoryPage> 
+[WebServer]   at <Buttons onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/buttons" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✓  19 [webkit] › tests-visual/liquid-hover.spec.ts:162:5 › BB.W-LIQUIDHOVER — the tier-root pointer-following gleam (π) › (d) PRM STATIC — under reduced-motion the gleam pins static at centre (1.4s)
+  ✘  20 [webkit] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › light · mobile — nav-dock gestalt (1.0s)
+  ✘  21 [webkit] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › light · desktop — nav-dock gestalt (1.2s)
+  ✘  22 [webkit] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › dark · mobile — nav-dock gestalt (1.2s)
+  ✘  23 [webkit] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › dark · desktop — nav-dock gestalt (1.2s)
+  ✓  24 [webkit] › tests-visual/nav-dock-fix.spec.ts:198:5 › W-NAV-DOCK-FIX — the nav-dock binding π › bottom-dock tab strip + persistent prev/next (1.2s)
+[WebServer] 9:13:10 AM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/dock/rail" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  25 [webkit] › tests-visual/register-ios.spec.ts:160:13 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › rail selected item reads iOS glass (no brand-red) @ mobile (light) (1.4s)
+[WebServer] 9:13:12 AM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/dock/rail" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  26 [webkit] › tests-visual/register-ios.spec.ts:160:13 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › rail selected item reads iOS glass (no brand-red) @ mobile (dark) (1.5s)
+[WebServer] 9:13:14 AM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/dock/rail" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  27 [webkit] › tests-visual/register-ios.spec.ts:160:13 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › rail selected item reads iOS glass (no brand-red) @ desktop (light) (1.5s)
+[WebServer] 9:13:16 AM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/dock/rail" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  28 [webkit] › tests-visual/register-ios.spec.ts:160:13 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › rail selected item reads iOS glass (no brand-red) @ desktop (dark) (1.5s)
+  ✓  29 [webkit] › tests-visual/register-ios.spec.ts:221:13 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › selected dock icon-button reads the glass plate (no brand-red) @ mobile (light) (1.4s)
+  ✓  30 [webkit] › tests-visual/register-ios.spec.ts:221:13 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › selected dock icon-button reads the glass plate (no brand-red) @ mobile (dark) (1.3s)
+  ✓  31 [webkit] › tests-visual/register-ios.spec.ts:221:13 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › selected dock icon-button reads the glass plate (no brand-red) @ desktop (light) (1.3s)
+  ✓  32 [webkit] › tests-visual/register-ios.spec.ts:221:13 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › selected dock icon-button reads the glass plate (no brand-red) @ desktop (dark) (1.3s)
+[WebServer] 9:13:23 AM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/dock/rail" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  33 [webkit] › tests-visual/register-ios.spec.ts:280:9 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › G-CLOSE — capture the rail selected-register DELTA (light) (1.5m)
+[WebServer] 9:14:54 AM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/dock/rail" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  34 [webkit] › tests-visual/register-ios.spec.ts:280:9 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › G-CLOSE — capture the rail selected-register DELTA (dark) (1.5m)
+  ✓  35 [webkit] › tests-visual/release-10-1-1.spec.ts:45:5 › 10.1.1 › G-1 · an open sheet is fixed and inside the viewport (1.2s)
+  ✓  36 [webkit] › tests-visual/release-10-1-1.spec.ts:68:5 › 10.1.1 › G-2 · a menu and its submenu paint above the dock's rung (820ms)
+  ✓  37 [webkit] › tests-visual/release-10-1-1.spec.ts:78:5 › 10.1.1 › G-3 · a composite in a container seat keeps its tab stop and its arrows (402ms)
+  ✓  38 [webkit] › tests-visual/release-10-1-1.spec.ts:107:5 › 10.1.1 › G-3 · a composite seated directly in the run keeps its arrows (394ms)
+  ✓  39 [webkit] › tests-visual/release-10-1-1.spec.ts:131:9 › 10.1.1 › O-102(3) · a dropdown opened from a seat closes when the dock collapses (649ms)
+  ✓  40 [webkit] › tests-visual/release-10-1-1.spec.ts:131:9 › 10.1.1 › O-102(3) · a popover opened from a seat closes when the dock collapses (701ms)
+  ✓  41 [webkit] › tests-visual/release-10-1-1.spec.ts:131:9 › 10.1.1 › O-102(3) · a select opened from a seat closes when the dock collapses (627ms)
+  ✓  42 [webkit] › tests-visual/release-10-1-1.spec.ts:150:5 › 10.1.1 › O-102(3) · a collapse-closed menu hands focus to the summary, not <body> (877ms)
+  ✓  43 [webkit] › tests-visual/release-10-1-1.spec.ts:180:5 › 10.1.1 › O-102(3) · a popover opened from #persistent outlives the collapse, and the dock stays collapsed (1.9s)
+  ✓  44 [webkit] › tests-visual/release-10-1-1.spec.ts:223:13 › 10.1.1 › O-102(6) · a tooltip opened from a seat is portalled out of the run and not clipped (desktop) (797ms)
+  ✓  45 [webkit] › tests-visual/release-10-1-1.spec.ts:223:13 › 10.1.1 › O-102(6) · a popover opened from a seat is portalled out of the run and not clipped (desktop) (841ms)
+  ✓  46 [webkit] › tests-visual/release-10-1-1.spec.ts:223:13 › 10.1.1 › O-102(6) · a popover-inline opened from a seat is portalled out of the run and not clipped (desktop) (815ms)
+  ✓  47 [webkit] › tests-visual/release-10-1-1.spec.ts:223:13 › 10.1.1 › O-102(6) · a hovercard opened from a seat is portalled out of the run and not clipped (desktop) (839ms)
+  ✓  48 [webkit] › tests-visual/release-10-1-1.spec.ts:223:13 › 10.1.1 › O-102(6) · a menu opened from a seat is portalled out of the run and not clipped (desktop) (821ms)
+  ✓  49 [webkit] › tests-visual/release-10-1-1.spec.ts:223:13 › 10.1.1 › O-102(6) · a select opened from a seat is portalled out of the run and not clipped (desktop) (838ms)
+  ✓  50 [webkit] › tests-visual/release-10-1-1.spec.ts:223:13 › 10.1.1 › O-102(6) · a tooltip opened from a seat is portalled out of the run and not clipped (phone) (796ms)
+  ✓  51 [webkit] › tests-visual/release-10-1-1.spec.ts:223:13 › 10.1.1 › O-102(6) · a popover opened from a seat is portalled out of the run and not clipped (phone) (816ms)
+  ✓  52 [webkit] › tests-visual/release-10-1-1.spec.ts:223:13 › 10.1.1 › O-102(6) · a popover-inline opened from a seat is portalled out of the run and not clipped (phone) (812ms)
+  ✓  53 [webkit] › tests-visual/release-10-1-1.spec.ts:223:13 › 10.1.1 › O-102(6) · a hovercard opened from a seat is portalled out of the run and not clipped (phone) (823ms)
+  ✓  54 [webkit] › tests-visual/release-10-1-1.spec.ts:223:13 › 10.1.1 › O-102(6) · a menu opened from a seat is portalled out of the run and not clipped (phone) (842ms)
+  ✓  55 [webkit] › tests-visual/release-10-1-1.spec.ts:223:13 › 10.1.1 › O-102(6) · a select opened from a seat is portalled out of the run and not clipped (phone) (806ms)
+  ✓  56 [webkit] › tests-visual/release-10-1-1.spec.ts:250:5 › 10.1.1 › Skeleton · shimmer travels, the plain tile breathes, an off-screen one is paused (506ms)
+  ✓  57 [webkit] › tests-visual/release-10-1-1.spec.ts:284:9 › 10.1.1 › Skeleton · the shimmer layer covers the tile through its whole cycle (ltr) (352ms)
+  ✓  58 [webkit] › tests-visual/release-10-1-1.spec.ts:284:9 › 10.1.1 › Skeleton · the shimmer layer covers the tile through its whole cycle (rtl) (327ms)
+  ✓  59 [webkit] › tests-visual/release-10-1-1.spec.ts:317:5 › 10.1.1 › Skeleton · shimmer holds still under reduced motion (329ms)
+  ✓  60 [webkit] › tests-visual/u-b7.spec.ts:36:5 › U/B7 › D-5 · a seat pressed mid-morph after an owner-opened expand is hit and activated (1.0s)
+  ✓  61 [webkit] › tests-visual/u-b7.spec.ts:68:5 › U/B7 › run · the wheel reaches every seat, returns to the top, and never scrolls the page (13.5s)
+  ✓  62 [webkit] › tests-visual/u-b7.spec.ts:97:5 › U/B7 › run · the arrows walk every seat once, in order, each one in view (5.0s)
+  ✓  63 [webkit] › tests-visual/u-b7.spec.ts:113:5 › U/B7 › run · every seat is clickable once reached (6.0s)
+  -  64 [webkit] › tests-visual/u-b7.spec.ts:127:5 › U/B7 › run · a touch drag pans the run and not the page
+  ✓  65 [webkit] › tests-visual/u-b7.spec.ts:160:5 › U/B7 › F6 · twelve scroll steps write nothing to the aurora ground (2.4s)
+  ✓  66 [webkit] › tests-visual/u-b7.spec.ts:232:9 › anchor › anchor · an anchor="start" dock at its row's start (ltr) keeps that edge through expand and collapse (3.2s)
+  ✓  67 [webkit] › tests-visual/u-b7.spec.ts:232:9 › anchor › anchor · an anchor="end" dock at its row's end (ltr) keeps that edge through expand and collapse (3.2s)
+  ✓  68 [webkit] › tests-visual/u-b7.spec.ts:232:9 › anchor › anchor · an anchor="end" dock at its row's end (rtl) keeps that edge through expand and collapse (3.2s)
+  ✓  69 [webkit] › tests-visual/u-b7.spec.ts:252:5 › anchor › anchor · the prop moves neither the dock nor its morph: start, end and center rest and open alike (9.0s)
+  ✓  70 [webkit] › tests-visual/u-b7.spec.ts:279:5 › anchor › anchor · atlas's figure lane holds its end edge through expand and collapse (3.2s)
+
+
+  1) [webkit] › tests-visual/dock-morph-family.spec.ts:43:1 › (a)/(b) — the morph composites a transform over a reserved footprint (no per-frame relayout) 
+
+    Error: the morph-axis box composites a transform mid-morph (got none)
+
+    expect(received).toBeTruthy()
+
+    Received: false
+
+      73 |         read.transform && read.transform !== "none" && read.transform !== "matrix(1, 0, 0, 1, 0, 0)",
+      74 |         `the morph-axis box composites a transform mid-morph (got ${read.transform})`,
+    > 75 |     ).toBeTruthy();
+         |       ^
+      76 |     // The reserved footprint is the SETTLED `to` (~240px), not the live-scalar interp
+      77 |     // (~150px at t=0.5). A reserved 240px box with a 0.625 scale reads as ~150px.
+      78 |     const reserved = Number.parseFloat(read.reservedInline ?? "0");
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-morph-family.spec.ts:75:7
+
+    Error Context: test-results/dock-morph-family--a-b-—-t-4df0f-rint-no-per-frame-relayout--webkit/error-context.md
+
+  2) [webkit] › tests-visual/dock-morph-family.spec.ts:83:1 › (c) — under PRM the dock seats synchronously (every control inside the box, no sliver) 
+
+    Error: every dock control seats INSIDE the box under PRM (1/13 outside)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      132 |         seat.allInside,
+      133 |         `every dock control seats INSIDE the box under PRM (${seat.outsideCount}/${seat.controlCount} outside)`,
+    > 134 |     ).toBe(true);
+          |       ^
+      135 |     await page.emulateMedia({ reducedMotion: null });
+      136 | });
+      137 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-morph-family.spec.ts:134:7
+
+    Error Context: test-results/dock-morph-family--c-—-und-4dba9-l-inside-the-box-no-sliver--webkit/error-context.md
+
+  3) [webkit] › tests-visual/dock-morph-family.spec.ts:139:1 › (d) — a nested DockLayerGroup reserves its peak-layer block-size (consumer never guesses) 
+
+    Error: --dock-layer-peak-block-size is a measured non-zero peak (got )
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      160 |     expect(reserve.found, "the .dock-layer-group is present").toBe(true);
+      161 |     // The group exposes a non-zero measured peak + reserves it as min-block-size.
+    > 162 |     expect(reserve.peakPx, `--dock-layer-peak-block-size is a measured non-zero peak (got ${reserve.peakVar})`).toBeGreaterThan(0);
+          |                                                                                                                 ^
+      163 |     expect(
+      164 |         Math.abs(reserve.minPx - reserve.peakPx),
+      165 |         `the group min-block-size (${reserve.minPx}) == the measured peak (${reserve.peakPx})`,
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-morph-family.spec.ts:162:113
+
+    Error Context: test-results/dock-morph-family--d-—-a-n-169aa-ize-consumer-never-guesses--webkit/error-context.md
+
+  4) [webkit] › tests-visual/dock-morph-family.spec.ts:170:1 › (e) — a --dock-local-scale override on a dock scope paints a larger box (the @property thread) 
+
+    Error: --dock-local-scale: 1.4 on the dock scope re-evaluates --dock-scale (base 1 → threaded 1)
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 1.3
+    Received:   1
+
+      197 |         thread.threadedScale,
+      198 |         `--dock-local-scale: 1.4 on the dock scope re-evaluates --dock-scale (base ${thread.baseScale} → threaded ${thread.threadedScale})`,
+    > 199 |     ).toBeGreaterThan(thread.baseScale * 1.3);
+          |       ^
+      200 | });
+      201 |
+      202 | // ── (f) — the VERTICAL collapse→expand morphs its chrome continuously ────────────
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-morph-family.spec.ts:199:7
+
+    Error Context: test-results/dock-morph-family--e-—-a---1db31-er-box-the-property-thread--webkit/error-context.md
+
+  5) [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (light) 
+
+    Error: page.goto: Could not connect to the server.
+    Call log:
+      - navigating to "http://localhost:5199/dock/overview", waiting until "networkidle"
+
+
+      36 |
+      37 | async function goto(page: Page, route: string) {
+    > 38 |     await page.goto(BASE + route, { waitUntil: "networkidle" });
+         |                ^
+      39 |     await page.waitForTimeout(450);
+      40 | }
+      41 |
+        at goto (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:38:16)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:176:19
+
+    Error Context: test-results/dock-plate-clearance-plate-e898a-e-—-sidebar-vertical-light--webkit/error-context.md
+
+    Error Context: test-results/dock-plate-clearance-plate-e898a-e-—-sidebar-vertical-light--webkit/error-context.md
+
+  6) [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (dark) 
+
+    Error: page.goto: Could not connect to the server.
+    Call log:
+      - navigating to "http://localhost:5199/dock/overview", waiting until "networkidle"
+
+
+      36 |
+      37 | async function goto(page: Page, route: string) {
+    > 38 |     await page.goto(BASE + route, { waitUntil: "networkidle" });
+         |                ^
+      39 |     await page.waitForTimeout(450);
+      40 | }
+      41 |
+        at goto (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:38:16)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:176:19
+
+    Error Context: test-results/dock-plate-clearance-plate-a45e2-ce-—-sidebar-vertical-dark--webkit/error-context.md
+
+    Error Context: test-results/dock-plate-clearance-plate-a45e2-ce-—-sidebar-vertical-dark--webkit/error-context.md
+
+  7) [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (light) 
+
+    Error: page.goto: Could not connect to the server.
+    Call log:
+      - navigating to "http://localhost:5199/dock/overview", waiting until "networkidle"
+
+
+      36 |
+      37 | async function goto(page: Page, route: string) {
+    > 38 |     await page.goto(BASE + route, { waitUntil: "networkidle" });
+         |                ^
+      39 |     await page.waitForTimeout(450);
+      40 | }
+      41 |
+        at goto (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:38:16)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:176:19
+
+    Error Context: test-results/dock-plate-clearance-plate-0270e--—-bottom-horizontal-light--webkit/error-context.md
+
+    Error Context: test-results/dock-plate-clearance-plate-0270e--—-bottom-horizontal-light--webkit/error-context.md
+
+  8) [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (dark) 
+
+    Error: page.goto: Could not connect to the server.
+    Call log:
+      - navigating to "http://localhost:5199/dock/overview", waiting until "networkidle"
+
+
+      36 |
+      37 | async function goto(page: Page, route: string) {
+    > 38 |     await page.goto(BASE + route, { waitUntil: "networkidle" });
+         |                ^
+      39 |     await page.waitForTimeout(450);
+      40 | }
+      41 |
+        at goto (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:38:16)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:176:19
+
+    Error Context: test-results/dock-plate-clearance-plate-0ad3d-e-—-bottom-horizontal-dark--webkit/error-context.md
+
+    Error Context: test-results/dock-plate-clearance-plate-0ad3d-e-—-bottom-horizontal-dark--webkit/error-context.md
+
+  9) [webkit] › tests-visual/drag-morph.spec.ts:70:1 › (a) drag frame-series — follow ~1:1, velocity-squish, fling to nearest 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 1
+    Received:   1
+
+      122 |     expect(followError).toBeLessThan(40);
+      123 |     // VELOCITY-SQUISH — a fast pull swells the plate above 1, capped ≤ 1.08.
+    > 124 |     expect(maxStretch).toBeGreaterThan(1);
+          |                        ^
+      125 |     expect(maxStretch).toBeLessThanOrEqual(1.085);
+      126 |
+      127 |     // Release — the fling snaps to the nearest tab + the model commits.
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/drag-morph.spec.ts:124:24
+
+    Error Context: test-results/drag-morph--a-drag-frame-s-04af1-ity-squish-fling-to-nearest-webkit/error-context.md
+
+  10) [webkit] › tests-visual/drag-morph.spec.ts:183:1 › (c) PRM — drag functions, snap commits, NO squish frames 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('.segmented-tabs:not(.segmented-tabs--underline):not(.segmented-tabs--vertical)').first().locator('.segmented-indicator.glass-drag-grabbable')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('.segmented-tabs:not(.segmented-tabs--underline):not(.segmented-tabs--vertical)').first().locator('.segmented-indicator.glass-drag-grabbable')
+
+
+      190 |     const indicator = strip.locator(".segmented-indicator.glass-drag-grabbable");
+      191 |     const tabs = strip.locator(".segmented-tab");
+    > 192 |     await expect(indicator).toBeVisible();
+          |                             ^
+      193 |
+      194 |     await selectTab(tabs, 0);
+      195 |     await page.waitForTimeout(300);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/drag-morph.spec.ts:192:29
+
+    Error Context: test-results/drag-morph--c-PRM-—-drag-f-da388-ap-commits-NO-squish-frames-webkit/error-context.md
+
+  11) [webkit] › tests-visual/drag-morph.spec.ts:286:1 › (e) liquid-tab reachability — grab lands on the indicator, drag starts, click un-regressed 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('.segmented-tabs:not(.segmented-tabs--underline):not(.segmented-tabs--vertical)').first().locator('.segmented-tab').first()
+    Expected: "true"
+    Received: "false"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for locator('.segmented-tabs:not(.segmented-tabs--underline):not(.segmented-tabs--vertical)').first().locator('.segmented-tab').first()
+        14 × locator resolved to <button type="button" tabindex="-1" aria-pressed="false" class="segmented-tab">Grid</button>
+           - unexpected value "false"
+
+
+      346 |     await selectTab(tabs, 0);
+      347 |     await page.waitForTimeout(400);
+    > 348 |     await expect(tabs.nth(0)).toHaveAttribute("aria-pressed", "true");
+          |                               ^
+      349 |
+      350 |     mkdirSync(VISUAL_DIR, { recursive: true });
+      351 |     await page.screenshot({
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/drag-morph.spec.ts:348:31
+
+    Error Context: test-results/drag-morph--e-liquid-tab-r-96882-g-starts-click-un-regressed-webkit/error-context.md
+
+  12) [webkit] › tests-visual/drag-morph.spec.ts:357:1 › consumer #2 — DockLayerGroup pull-to-switch flips the active layer 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('.dock-layer-rail.glass-drag-grabbable').first()
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('.dock-layer-rail.glass-drag-grabbable').first()
+
+
+      363 |
+      364 |     const rail = page.locator(".dock-layer-rail.glass-drag-grabbable").first();
+    > 365 |     await expect(rail).toBeVisible();
+          |                        ^
+      366 |
+      367 |     const tabs = rail.locator(".dock-layer-tab");
+      368 |     const count = await tabs.count();
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/drag-morph.spec.ts:365:24
+
+    Error Context: test-results/drag-morph-consumer-2-—-Do-31930-itch-flips-the-active-layer-webkit/error-context.md
+
+  13) [webkit] › tests-visual/liquid-hover.spec.ts:136:5 › BB.W-LIQUIDHOVER — the tier-root pointer-following gleam (π) › (c) GRAIN NO-POP — the grain background-image stays constant across the hover onset 
+
+    Error: the grain ::after background-image is always present (never `none` — no decode-and-pop swap)
+
+    expect(received).not.toBe(expected) // Object.is equality
+
+    Expected: not "none"
+
+      156 |                 images,
+      157 |                 "the grain ::after background-image is always present (never `none` — no decode-and-pop swap)",
+    > 158 |             ).not.toBe("none");
+          |                   ^
+      159 |         }
+      160 |     });
+      161 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/liquid-hover.spec.ts:158:19
+
+    Error Context: test-results/liquid-hover-BB-W-LIQUIDHO-6d727-tant-across-the-hover-onset-webkit/error-context.md
+
+  14) [webkit] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › light · mobile — nav-dock gestalt 
+
+    Error: the rail renders mode="facets"
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "facets"
+    Received: null
+
+      138 |                     return rail?.getAttribute("data-mode") ?? null;
+      139 |                 });
+    > 140 |                 expect(railMode, 'the rail renders mode="facets"').toBe("facets");
+          |                                                                    ^
+      141 |
+      142 |                 // Distinct per-facet --glass-accent (read the inline style hue).
+      143 |                 const accents = await page.evaluate(() => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/nav-dock-fix.spec.ts:140:68
+
+    Error Context: test-results/nav-dock-fix-W-NAV-DOCK-FI-e4817-·-mobile-—-nav-dock-gestalt-webkit/error-context.md
+
+  15) [webkit] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › light · desktop — nav-dock gestalt 
+
+    Error: the rail renders mode="facets"
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "facets"
+    Received: null
+
+      138 |                     return rail?.getAttribute("data-mode") ?? null;
+      139 |                 });
+    > 140 |                 expect(railMode, 'the rail renders mode="facets"').toBe("facets");
+          |                                                                    ^
+      141 |
+      142 |                 // Distinct per-facet --glass-accent (read the inline style hue).
+      143 |                 const accents = await page.evaluate(() => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/nav-dock-fix.spec.ts:140:68
+
+    Error Context: test-results/nav-dock-fix-W-NAV-DOCK-FI-c3b61--desktop-—-nav-dock-gestalt-webkit/error-context.md
+
+  16) [webkit] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › dark · mobile — nav-dock gestalt 
+
+    Error: the rail renders mode="facets"
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "facets"
+    Received: null
+
+      138 |                     return rail?.getAttribute("data-mode") ?? null;
+      139 |                 });
+    > 140 |                 expect(railMode, 'the rail renders mode="facets"').toBe("facets");
+          |                                                                    ^
+      141 |
+      142 |                 // Distinct per-facet --glass-accent (read the inline style hue).
+      143 |                 const accents = await page.evaluate(() => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/nav-dock-fix.spec.ts:140:68
+
+    Error Context: test-results/nav-dock-fix-W-NAV-DOCK-FI-abc92-·-mobile-—-nav-dock-gestalt-webkit/error-context.md
+
+  17) [webkit] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › dark · desktop — nav-dock gestalt 
+
+    Error: the rail renders mode="facets"
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "facets"
+    Received: null
+
+      138 |                     return rail?.getAttribute("data-mode") ?? null;
+      139 |                 });
+    > 140 |                 expect(railMode, 'the rail renders mode="facets"').toBe("facets");
+          |                                                                    ^
+      141 |
+      142 |                 // Distinct per-facet --glass-accent (read the inline style hue).
+      143 |                 const accents = await page.evaluate(() => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/nav-dock-fix.spec.ts:140:68
+
+    Error Context: test-results/nav-dock-fix-W-NAV-DOCK-FI-5fb77--desktop-—-nav-dock-gestalt-webkit/error-context.md
+
+  18) [webkit] › tests-visual/register-ios.spec.ts:160:13 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › rail selected item reads iOS glass (no brand-red) @ mobile (light) 
+
+    Error: could not find the active rail item
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      186 |                 });
+      187 |
+    > 188 |                 expect(readout, "could not find the active rail item").not.toBeNull();
+          |                                                                            ^
+      189 |                 const r = readout!;
+      190 |                 const red = dark ? RED_DARK : RED_LIGHT;
+      191 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/register-ios.spec.ts:188:76
+
+    Error Context: test-results/register-ios-register-ios--cf128--no-brand-red-mobile-light--webkit/error-context.md
+
+  19) [webkit] › tests-visual/register-ios.spec.ts:160:13 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › rail selected item reads iOS glass (no brand-red) @ mobile (dark) 
+
+    Error: could not find the active rail item
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      186 |                 });
+      187 |
+    > 188 |                 expect(readout, "could not find the active rail item").not.toBeNull();
+          |                                                                            ^
+      189 |                 const r = readout!;
+      190 |                 const red = dark ? RED_DARK : RED_LIGHT;
+      191 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/register-ios.spec.ts:188:76
+
+    Error Context: test-results/register-ios-register-ios--b71ba-s-no-brand-red-mobile-dark--webkit/error-context.md
+
+  20) [webkit] › tests-visual/register-ios.spec.ts:160:13 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › rail selected item reads iOS glass (no brand-red) @ desktop (light) 
+
+    Error: could not find the active rail item
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      186 |                 });
+      187 |
+    > 188 |                 expect(readout, "could not find the active rail item").not.toBeNull();
+          |                                                                            ^
+      189 |                 const r = readout!;
+      190 |                 const red = dark ? RED_DARK : RED_LIGHT;
+      191 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/register-ios.spec.ts:188:76
+
+    Error Context: test-results/register-ios-register-ios--d64fa-no-brand-red-desktop-light--webkit/error-context.md
+
+  21) [webkit] › tests-visual/register-ios.spec.ts:160:13 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › rail selected item reads iOS glass (no brand-red) @ desktop (dark) 
+
+    Error: could not find the active rail item
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      186 |                 });
+      187 |
+    > 188 |                 expect(readout, "could not find the active rail item").not.toBeNull();
+          |                                                                            ^
+      189 |                 const r = readout!;
+      190 |                 const red = dark ? RED_DARK : RED_LIGHT;
+      191 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/register-ios.spec.ts:188:76
+
+    Error Context: test-results/register-ios-register-ios--3bc26--no-brand-red-desktop-dark--webkit/error-context.md
+
+  22) [webkit] › tests-visual/register-ios.spec.ts:280:9 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › G-CLOSE — capture the rail selected-register DELTA (light) 
+
+    Test timeout of 90000ms exceeded.
+
+    Error: locator.screenshot: Test timeout of 90000ms exceeded.
+    Call log:
+      - waiting for locator('.glass-dock.variant-rail').first()
+
+
+      294 |                 .locator(".glass-dock.variant-rail")
+      295 |                 .first();
+    > 296 |             await dock.screenshot({
+          |                        ^
+      297 |                 path: `${VISUAL_DIR}W-REGISTER-IOS-rail-desktop-${mode}.png`,
+      298 |             });
+      299 |         });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/register-ios.spec.ts:296:24
+
+    Error Context: test-results/register-ios-register-ios--b384d-ected-register-DELTA-light--webkit/error-context.md
+
+  23) [webkit] › tests-visual/register-ios.spec.ts:280:9 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › G-CLOSE — capture the rail selected-register DELTA (dark) 
+
+    Test timeout of 90000ms exceeded.
+
+    Error: locator.screenshot: Test timeout of 90000ms exceeded.
+    Call log:
+      - waiting for locator('.glass-dock.variant-rail').first()
+
+
+      294 |                 .locator(".glass-dock.variant-rail")
+      295 |                 .first();
+    > 296 |             await dock.screenshot({
+          |                        ^
+      297 |                 path: `${VISUAL_DIR}W-REGISTER-IOS-rail-desktop-${mode}.png`,
+      298 |             });
+      299 |         });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/register-ios.spec.ts:296:24
+
+    Error Context: test-results/register-ios-register-ios--55168-lected-register-DELTA-dark--webkit/error-context.md
+
+  23 failed
+    [webkit] › tests-visual/dock-morph-family.spec.ts:43:1 › (a)/(b) — the morph composites a transform over a reserved footprint (no per-frame relayout) 
+    [webkit] › tests-visual/dock-morph-family.spec.ts:83:1 › (c) — under PRM the dock seats synchronously (every control inside the box, no sliver) 
+    [webkit] › tests-visual/dock-morph-family.spec.ts:139:1 › (d) — a nested DockLayerGroup reserves its peak-layer block-size (consumer never guesses) 
+    [webkit] › tests-visual/dock-morph-family.spec.ts:170:1 › (e) — a --dock-local-scale override on a dock scope paints a larger box (the @property thread) 
+    [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (light) 
+    [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (dark) 
+    [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (light) 
+    [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (dark) 
+    [webkit] › tests-visual/drag-morph.spec.ts:70:1 › (a) drag frame-series — follow ~1:1, velocity-squish, fling to nearest 
+    [webkit] › tests-visual/drag-morph.spec.ts:183:1 › (c) PRM — drag functions, snap commits, NO squish frames 
+    [webkit] › tests-visual/drag-morph.spec.ts:286:1 › (e) liquid-tab reachability — grab lands on the indicator, drag starts, click un-regressed 
+    [webkit] › tests-visual/drag-morph.spec.ts:357:1 › consumer #2 — DockLayerGroup pull-to-switch flips the active layer 
+    [webkit] › tests-visual/liquid-hover.spec.ts:136:5 › BB.W-LIQUIDHOVER — the tier-root pointer-following gleam (π) › (c) GRAIN NO-POP — the grain background-image stays constant across the hover onset 
+    [webkit] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › light · mobile — nav-dock gestalt 
+    [webkit] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › light · desktop — nav-dock gestalt 
+    [webkit] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › dark · mobile — nav-dock gestalt 
+    [webkit] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › dark · desktop — nav-dock gestalt 
+    [webkit] › tests-visual/register-ios.spec.ts:160:13 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › rail selected item reads iOS glass (no brand-red) @ mobile (light) 
+    [webkit] › tests-visual/register-ios.spec.ts:160:13 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › rail selected item reads iOS glass (no brand-red) @ mobile (dark) 
+    [webkit] › tests-visual/register-ios.spec.ts:160:13 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › rail selected item reads iOS glass (no brand-red) @ desktop (light) 
+    [webkit] › tests-visual/register-ios.spec.ts:160:13 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › rail selected item reads iOS glass (no brand-red) @ desktop (dark) 
+    [webkit] › tests-visual/register-ios.spec.ts:280:9 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › G-CLOSE — capture the rail selected-register DELTA (light) 
+    [webkit] › tests-visual/register-ios.spec.ts:280:9 › register-ios (π lane — the de-red'd iOS selected register, fail-CLOSED) › G-CLOSE — capture the rail selected-register DELTA (dark) 
+  1 skipped
+  46 passed (5.5m)

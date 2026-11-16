@@ -24,7 +24,7 @@ type BadgeHasSurface = "surface" extends keyof BadgeProps ? true : false;
 describe("Badge static metadata contract", () => {
     it("keeps metadata axes and removes the cast API", () => {
         expectTypeOf<BadgeProps["variant"]>().toEqualTypeOf<
-            "default" | "secondary" | "outline" | null | undefined
+            "default" | "secondary" | "outline" | "bare" | null | undefined
         >();
         expectTypeOf<BadgeProps["tone"]>().toEqualTypeOf<
             | "neutral"
@@ -91,7 +91,8 @@ describe("Badge static metadata contract", () => {
         expect(base).not.toContain("wrap-anywhere");
         expect(base).toContain("whitespace-nowrap");
         expect(base).not.toContain("--ui-glyph-sm");
-        expect(base).toContain("size-[1em]");
+        expect(base).toContain("size-[var(--mark-glyph)]");
+        expect(markCss()).toMatch(/:where\(\.badge-atom\) \{[^}]*--mark-glyph: 1em;/);
     });
 
     // BORN-RED at the cure (A-22, 2026-08-08). The floor SHIPPED INERT: spelled as
@@ -151,6 +152,7 @@ describe("Badge static metadata contract", () => {
             badgeVariants(),
             badgeVariants({ variant: "secondary" }),
             badgeVariants({ variant: "outline" }),
+            badgeVariants({ variant: "bare" }),
             badgeVariants({ tone: "destructive" }),
             badgeVariants({ tone: "success" }),
             badgeVariants({ tone: "warning" }),
@@ -160,5 +162,37 @@ describe("Badge static metadata contract", () => {
         expect(classes).not.toMatch(/(?:^|\s)(?:hover:|active:|focus(?:-visible)?:)/);
         expect(classes).not.toContain("focus-ring");
         expect(classes).not.toContain("transition-control");
+    });
+});
+
+// The bare form (value.js asked for it on phone-width cards): one more value on the
+// variant axis, not a parallel component. Its box rules are glass-atom.css's.
+describe("Badge bare variant", () => {
+    const atomCss = (): string =>
+        readFileSync(join(process.cwd(), "src/styles/glass/glass-atom.css"), "utf8")
+            .replace(/\/\*[\s\S]*?\*\//g, "")
+            .replace(/\s+/g, " ");
+
+    it("stamps the variant and carries no plate classes", () => {
+        const wrapper = mount(Badge, { props: { variant: "bare" }, slots: { default: "<svg></svg><span>Featured</span>" } });
+        expect(wrapper.attributes("data-variant")).toBe("bare");
+        expect(wrapper.classes()).toContain("badge-atom--bare");
+        expect(wrapper.classes().some((c) => c.startsWith("bg-"))).toBe(false);
+        expect(wrapper.text()).toBe("Featured");
+    });
+
+    it("drops the plate, rim, floor and pad, sizes the glyph to the cap height, and keeps the label for assistive tech", () => {
+        const css = atomCss();
+        const rule = css.match(/\.badge-atom--bare \{([^}]*)\}/)?.[1] ?? "";
+        expect(rule).toContain("--mark-glyph: 1cap");
+        expect(rule).toContain("min-inline-size: 0");
+        expect(rule).toContain("padding: 0");
+        expect(rule).toContain("background: none");
+        expect(rule).toContain("box-shadow: none");
+        const label = css.match(/\.badge-atom--bare > :not\(svg, :has\(svg\)\) \{([^}]*)\}/)?.[1] ?? "";
+        expect(label).toContain("clip-path: inset(50%)");
+        expect(label).not.toContain("display: none");
+        // after the contrast arm, which re-writes `.badge-atom`'s box-shadow at the same specificity
+        expect(css.indexOf(".badge-atom--bare {")).toBeGreaterThan(css.indexOf("@media (prefers-contrast: more)"));
     });
 });

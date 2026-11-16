@@ -50,8 +50,12 @@
            taller strip takes 16px corners. The TRACK corner is CONCENTRIC with the pill (Apple's
            `.containerConcentric`): the pill radius + the trim inset, so a stadium pill
            sits inside a near-stadium track. No breakpoint radius bump — a stadium does
-           not change radius across viewports (clean break, the 640px radius lines gone). */
-        --bouncy-slider-radius: var(--radius-tab);
+           not change radius across viewports (clean break, the 640px radius lines gone).
+           Under a coarse pointer a tab grows to `--control-floor` (44px); the radius
+           follows it to half that height, so the tab, the indicator and the track stay
+           capsules at the touch floor. On a fine pointer the floor is 0 and the radius is
+           `--radius-tab` as before. */
+        --bouncy-slider-radius: max(var(--radius-tab), calc(var(--control-floor) / 2));
         --bouncy-track-radius: calc(var(--bouncy-slider-radius) + var(--bouncy-track-trim));
         position: relative;
         display: inline-grid;
@@ -177,6 +181,10 @@
         cursor: pointer;
         white-space: nowrap;
         padding: 0.25rem 0.625rem;
+        /* The touch floor: `--control-floor` is 0 on a fine pointer and the 44px target
+           under a coarse one (tokens/light-dark.css), so a tab, and the strip with it,
+           grows to a target a finger can hold. */
+        min-block-size: var(--control-floor);
         /* The button silhouette reads the SAME orientation-aware seam the indicator does
            (`--bouncy-slider-radius`): horizontal → `--radius-tab` (the control stadium),
            vertical → the parent's `--radius-strip` rebind (the bounded column-stack corner).

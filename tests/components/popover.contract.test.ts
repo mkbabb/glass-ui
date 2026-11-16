@@ -6,7 +6,7 @@ import {
     PopoverRoot,
 } from "reka-ui";
 import { afterEach, describe, expect, expectTypeOf, it, vi } from "vitest";
-import { defineComponent, nextTick } from "vue";
+import { defineComponent, nextTick, toRaw } from "vue";
 
 import * as PopoverSurface from "@glass/components/popover";
 import Popover from "@glass/components/popover/Popover.vue";
@@ -218,5 +218,50 @@ describe("Popover trigger contract", () => {
             collisionPadding: 99,
             sticky: "always",
         });
+    });
+});
+
+// A virtual anchor (parkway's map hover cards): `reference` reaches reka's own content
+// prop, on both arms, and the content needs no trigger at all.
+describe("Popover virtual reference", () => {
+    const rectAt = (x: number, y: number) => ({
+        getBoundingClientRect: () => ({ x, y, width: 0, height: 0, top: y, left: x, right: x, bottom: y }),
+    });
+
+    it("passes the reference to reka's content on the click arm, with no trigger", async () => {
+        setCoarsePointer(false);
+        const reference = rectAt(120, 80);
+        const Host = defineComponent({
+            components: { Popover, PopoverContent },
+            data: () => ({ reference }),
+            template: `
+                <Popover :open="true">
+                    <PopoverContent :reference="reference" :portal="false">Card</PopoverContent>
+                </Popover>
+            `,
+        });
+        const wrapper = mount(Host);
+        await flushPromises();
+        expect(toRaw(wrapper.getComponent(RekaPopoverContent).props("reference"))).toBe(reference);
+        expect(wrapper.get('[role="dialog"]').text()).toBe("Card");
+    });
+
+    it("passes it on the hover arm too", async () => {
+        setCoarsePointer(false);
+        const reference = rectAt(40, 40);
+        const Host = defineComponent({
+            components: { Popover, PopoverContent },
+            data: () => ({ reference }),
+            template: `
+                <Popover trigger="hover" :open="true">
+                    <PopoverContent :reference="reference" :portal="false" aria-label="Station">Card</PopoverContent>
+                </Popover>
+            `,
+        });
+        const wrapper = mount(Host);
+        await flushPromises();
+        const content = wrapper.findAllComponents({ name: "HoverCardContent" });
+        expect(content.length).toBe(1);
+        expect(toRaw(content[0]!.props("reference"))).toBe(reference);
     });
 });

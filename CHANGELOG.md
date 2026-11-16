@@ -1,5 +1,437 @@
 # Changelog
 
+## 11.1.0 — 2026-11-15
+
+A minor release. No API changes shape, so your code keeps working as it is. Two
+undocumented route variables are gone with the slide they tuned: `--route-slide` and
+`--route-world-slide` (the `lateral` entry below names what sets that travel now).
+
+Most of what is new is yours to opt into, but these defaults change how a page looks
+without you doing anything, and each has its own entry below:
+
+- a dock control marked with `aria-current` always shows the selected plate, glyph
+  controls included, and the plate glides when the current control changes;
+- a dock glyph control's hover, press and `active` fills sit inside one rounded plate,
+  the same one the selected plate fills, rather than filling the whole control;
+- a `#persistent-end` control sits as far from the dock's other controls as a
+  `#persistent` one, and in a vertical dock the space after a `#persistent` control is
+  half what it was;
+- the dock's paper grain is a fine dot field at the same faint strength;
+- the `--radius-dock` token is now the stadium, so a box you round with it or with the
+  `rounded-dock` utility gets fully round ends instead of a 16 px corner, and a
+  `--radius-dock` your theme sets shapes the dock again;
+- HandMark draws in your page's focal colour;
+- the `.dark` class alone decides the theme;
+- menus grow from their trigger instead of fading in;
+- tables have rounded corners;
+- `Collapsible` and `Accordion` no longer fade as they open and close;
+- on a touch screen, `SegmentedTabs` are at least 44 px tall, so a row that holds them
+  is taller;
+- the `lateral` route transition swaps cards instead of fading and sliding;
+- `Blob` paints into the space around its box instead of stopping at its edge;
+- `useStagger` spaces a long series closer.
+
+A few fixes below also change what you see, where the old look was a defect: a `Select`
+with a wide trigger, a `Select` opened with the mouse, `Configurator` with its controls
+on the left, the dock with reduced motion turned on, and the timing of HandMark's draw.
+
+### Dock
+
+- **A collapsed dock can show a glyph with a short reading.** Put an icon and a few
+  characters in the `#collapsed` slot, such as a clock glyph with "Now" or a count, and
+  the collapsed dock grows to fit them with round ends instead of clipping them. A single
+  glyph still collapses to a circle, exactly as before.
+
+- **The selected tab in a navigation dock now glides.** When the controls in a dock mark
+  where you are with `aria-current` (a `RouterLink` does this for you, or set
+  `aria-current="page"` on the current `DockControl`), the dock draws one selected
+  plate and moves it from the old tab to the new one on the dock's spring, instead of
+  switching instantly. It scrolls with the dock's controls, it stays on its tab when the
+  dock sits inside something zoomed or scaled (a preview pane, a slide scaled to fit, a
+  dialog that grows in as it opens), and with reduced motion turned on it moves in a
+  single step. Controls that sit inside their own scrolling strip
+  keep their own selected look. Glyph controls take part too: a glyph `DockControl` that
+  carries `aria-current` now shows the selected plate, where before it showed one only
+  with `active`, so a row of glyph `RouterLink`s gains one after upgrading. If you set
+  `active` on a glyph nav control to show where you are, you no longer need it, since
+  `aria-current` alone shows the plate; keeping both is fine, and the control shows the
+  same single plate either way. While the gliding plate sits on a control, that control
+  draws no selected fill, rim or shadow of its own (a `--dock-active-shadow` you set
+  included), so the dock always shows one shape. The plate is the same size however the
+  control became current, by click, tap, keyboard or a route change, and a glyph
+  control's hover, press and `active` fills now sit inside that same plate instead of
+  filling the whole control. If you style an active glyph control through the
+  `--dock-active-*` variables with a border or a shadow, that border and shadow stay at
+  the control's edge while the fill sits inset inside them; set `--dock-icon-padding: 0`
+  on the control or a parent to bring the fill out to the border as before. If you retune the hover fill with `--dock-icon-hover-bg`,
+  give it a colour: it now sets the fill's colour, so an image or a gradient there no
+  longer paints. The plate also stays on its control when a page switches between
+  left-to-right and right-to-left without reloading, and on a control that carries a
+  `dir` of its own, such as a language switch.
+
+- **`ScrollProgressRim` can draw progress on the border itself.** Pass
+  `edge="border"` and the progress becomes the host's own border: a stroke the width of
+  the border, running edge to edge and around the corners, filling from the leading side
+  as the value grows. Nothing is drawn where it is unfilled, so at rest the host looks
+  exactly as it did. Inside a `GlassDock` it matches the dock's border width and corner
+  on its own. The stroke uses one colour, the first of `stops` if you pass them, and moves
+  on the dock's spring (a single step with reduced motion). On a host that draws its own
+  CSS border, set `--scroll-progress-rim-outset` to that border's width so the stroke
+  covers it. The default `edge="inset"` track is unchanged.
+
+  ```vue
+  <GlassDock>
+      <template #persistent>
+          <ScrollProgressRim :value="progress" edge="border" />
+      </template>
+      …
+  </GlassDock>
+  ```
+
+- **`--radius-dock` sets the dock's corner again.** The dock keeps its round ends by
+  default, now through its radius token, which is the stadium: a new token,
+  `--radius-stadium` (also the `rounded-stadium` utility), is a radius the browser clamps
+  to half the box's shorter side, so it draws a circle on a square box and round ends on
+  a wider one, where `--radius-circle` would draw an oval. If you prefer the rounded bar,
+  set `--radius-dock: 1rem` on the dock or on any element around it, and the dock keeps
+  that corner open, collapsed, standing vertically and while it opens and closes. The
+  `rounded-dock` utility follows the same token.
+
+  ```css
+  .site-header {
+      --radius-dock: 1rem;
+  }
+  ```
+
+- **A collapsed dock can be just its always-visible controls.** Leave out the
+  `#collapsed` slot and put a control in `#persistent` or `#persistent-end`, such as a
+  theme toggle, and the collapsed dock is exactly that control, with its own icon, its
+  own name and its own pressed state, and no "Expand dock" button beside it. If you pass
+  the `#collapsed` slot only some of the time, say with a `v-if` on its template so a
+  reading appears once data loads, the collapsed dock follows the slot: while you pass it
+  the dock shows the "Expand dock" button, and while you don't, the always-visible
+  controls stand alone. The dock looks at whether the slot is passed, not at what it
+  renders, so put the condition on the slot's template rather than inside it. With
+  controls in both slots, the leading ones come first and the trailing ones follow. The
+  dock still opens the way `expand-on` says: hovering it with a mouse or trackpad opens
+  it, and tabbing onto the control opens it from the keyboard, so Tab (or Shift+Tab, for
+  a trailing control) carries you on into the rest of the dock. A touch screen has no
+  hover, so there you press and hold the control to open the dock; a quick tap is the
+  control's own.
+
+  ```vue
+  <GlassDock collapse="closed">
+      <template #persistent-end>
+          <DockControl aria-label="Dark theme" :active="isDark" @click="toggleDark">
+              <MoonIcon />
+          </DockControl>
+      </template>
+      …
+  </GlassDock>
+  ```
+
+- **Pressing an always-visible control only presses it.** A click or tap on a control
+  in `#persistent` or `#persistent-end` now does that control's job and nothing else:
+  the collapsed dock no longer opens behind it. If hovering had already opened the
+  dock, it closes as soon as the pointer leaves, instead of waiting out the usual pause.
+
+- **Trailing controls keep their spacing.** A control in `#persistent-end` now sits the
+  same distance from the rest of the dock as one in `#persistent`, in horizontal and
+  vertical docks alike, so the dock's last control and the trailing one no longer touch.
+  In a vertical dock the space after a `#persistent` control is now that same single
+  gap, where before it was twice as wide.
+
+- **With reduced motion turned on, the dock changes in one step.** Opening, closing,
+  switching faces and pressing all land at once, with nothing sliding, growing or
+  changing shape, and a face that is leaving disappears immediately rather than after a
+  short hold. The corner that tightens while controls are hidden past the dock's edge
+  holds still too; the half-visible control at the edge still shows there is more.
+
+- **Resizing or rotating while the dock opens or closes is quiet again.** 11.0.2 could
+  make the browser report "ResizeObserver loop completed with undelivered notifications"
+  when the window was resized, or a phone rotated, while the dock was in the middle of
+  opening or closing. The dock now takes its new size on the next frame, so the error
+  no longer appears and the dock still lands at the right size.
+
+### Motion and forms
+
+- **Dragging a `Slider` sends one update per frame.** A fast pointer can deliver two or
+  more moves between frames, and each one used to reach your `v-model`, so your code ran
+  for values nobody saw. During a drag the slider now sends at most one
+  `update:modelValue` per frame, always the latest value, and sends the last one before
+  `valueCommit`, so the commit always matches where the pointer let go. Arrow keys, Page
+  Up and Down, Home and End still update at once.
+
+- **A `Slider` you drive from a clock no longer fights the hand.** If your code writes
+  `modelValue` continuously, say a playback clock moving a scrubber, the slider now holds
+  the value under the pointer from the moment it is pressed until it is released, and
+  then follows your model again from where the hand left it, with no jump. Two new
+  events tell you when the hand has it, so you can pause your clock: `grab` when a
+  pointer takes the slider, and `release` (with the value it left) when it lets go.
+  The same holds if your handler declines a value: during a drag the thumb stays with
+  the hand and returns to your model when it lets go, and a key press you decline
+  leaves the thumb where your model is.
+
+  ```vue
+  <Slider
+      v-model="position"
+      variant="scrubber"
+      @grab="clock.pause()"
+      @release="clock.resume()"
+  />
+  ```
+
+- **`Collapsible` and `Accordion` open without fading.** The content grows to its own
+  height and gives it back on close at full strength, so only its edge moves. The markup
+  and the variables are the same as before, so styles and animations you wrote against
+  the content keep working, and content you lay out as a grid or a flex row keeps its
+  items exactly where they were. Padding you give the content now grows with the height
+  too, rather than appearing whole on the first frame. To space a `Collapsible`'s
+  content from its trigger, set `--collapsible-gap` on the `Collapsible` (for example
+  `class="[--collapsible-gap:--spacing(3)]"`) instead of a `gap` on the root: the space
+  is the content's top padding, so it opens and closes with it, where a `gap` appears and
+  disappears in one frame. If you pad the top of the content yourself and leave
+  `--collapsible-gap` unset, your padding stands exactly as before, wherever you declare
+  it. If you set the gap too, your padding still wins when it is unlayered, a utility
+  such as `p-4`, or in the `components` layer; a padding in an earlier layer, such as
+  `base`, gives way to the gap.
+
+- **Segmented tabs are easier to tap.** On a touch screen every tab in a
+  `SegmentedTabs` strip is at least 44 px tall, and the strip grows to hold them, so a
+  finger has a whole target. The tabs, the selected plate and the strip keep their round
+  ends at that height. With a mouse or trackpad the strip is unchanged.
+
+- **Menus grow from their trigger.** `Select`, `DropdownMenu` and the other menus no
+  longer bloom and fade in. The list is laid out at its full size and opens from the edge
+  facing its trigger, starting as a strip the trigger's height, so the rows stay still
+  and sharp while the edge travels. Closing runs the same way back and lets go at the
+  very end. With reduced motion turned on, a menu fades in and out quickly instead.
+
+- **Chart entrances.** Three new classes animate the marks of a chart as they arrive,
+  each on a spring the library already uses: `.viz-bar` grows a bar from its baseline
+  (it never draws past its value, even as the spring settles), `.viz-mark` lands a point
+  or glyph in place, and `.viz-ripple` opens a radial field from a point. Set `--i` on
+  each mark and `--viz-n` on the series, and the cascade is spaced so a series of any
+  length starts within one bar's growth. A bar that hangs from the top or runs
+  sideways takes `data-viz-from="top"`, `"left"` or `"right"`. Once a bar or a ripple has
+  landed it keeps no clip, so a focus ring, a label that overhangs it or a hover shadow
+  shows whole. With reduced motion turned on, the marks are simply drawn.
+
+  ```vue
+  <g :style="{ '--viz-n': values.length }">
+      <rect
+          v-for="(v, i) in values"
+          :key="i"
+          class="viz-bar"
+          :style="{ '--i': i }"
+          …
+      />
+  </g>
+  ```
+
+- **`useStagger` spaces long series closer.** Without an explicit `delayMs`, it now uses
+  the same spacing as the chart entrances: 80 ms apart for a short series, closer for a
+  long one, so the whole cascade starts within the same short window. Pass `delayMs` to
+  keep a fixed spacing.
+
+- **Mounting a page full of controls is lighter.** Pressable controls no longer read
+  the page's motion settings from computed style as they mount (the first control in a
+  batch that mounts together reads the value and the rest share it, and the next batch
+  reads it afresh, so a change to the page's motion speed is never missed), a press reads its element's motion weight once
+  when it begins rather than on every frame, and a glass surface that samples the
+  brightness behind it takes its first sample on the next frame, together with every
+  other surface mounting at the same time, instead of inside the mount.
+
+- **The `lateral` route transition is a card swap.** Moving between sibling pages with
+  the `lateral` type no longer fades the page. The page you leave recedes slightly in
+  place, and the new page slides in over it from the side it lies on, set by
+  `--route-direction` (`1` forward, `-1` back). How far it travels is
+  `--route-card-travel` (by default `min(6rem, 24vw)`), which takes the place of
+  `--route-slide`. With no direction it simply settles into place. Everything outside the moving page changes at once, and with reduced motion
+  turned on, nothing animates.
+
+### Surfaces
+
+- **A `Badge` can be just its mark.** `variant="bare"` draws no plate, no ring and no
+  minimum width, so the badge is exactly the size of its icon, and the icon sits at the
+  height of the capital letters beside it, in the colour of the surrounding text. Any
+  label you put next to the icon in its own element stays as the badge's accessible name
+  but is not drawn. It suits a tight spot such as a card title on a phone, where a full
+  pill would crowd out the words it annotates.
+
+  ```vue
+  <Badge variant="bare">
+      <Award />
+      <span>Featured</span>
+  </Badge>
+  ```
+
+- **Tables have rounded corners.** `Table` (and so `DataTable`) now sits in a rounded
+  container on the quiet glass plate, with no border of its own. The corners clip
+  everything inside them: the header row, the last row, a header you make sticky, and
+  rows scrolled sideways, at either end. To give a table you write by hand the same
+  corners, wrap it in an element with the `table-container` class. The container scrolls
+  its table, so a sticky header sticks to the container's top; give the container a
+  `max-block-size` for that. Inside a `Card`, a `Dialog`, a `Sheet` or any other glass
+  surface, the table keeps its corners but draws no plate of its own, so the surface
+  around it stays the one panel.
+
+  ```html
+  <div class="table-container" style="max-block-size: 20rem">
+      <table>…</table>
+  </div>
+  ```
+
+- **A `Select` with a wide trigger fits its list.** The list is at least as wide as its
+  trigger and grows to fit its options, but never past the room between its left edge
+  and the far side of the screen, less the usual margin. A trigger wider than 22rem now
+  widens the list with it, where before every option lost its right edge and the
+  highlight ran square into the list's border. The room is measured inside the page's
+  scrollbar, so a list never slides under it. Menus and popovers follow the same rule.
+
+- **Opening a `Select` with the mouse shows one highlight.** After a click or a tap,
+  the checked option shows its highlight alone, without a keyboard focus ring around it.
+  Press a key in the list and the ring comes back, and opening the list from the
+  keyboard shows it as before.
+
+- **`Configurator` keeps its stage wide with the controls on the left.** With
+  `aside-side="left"`, the controls now take the narrow column on the left and the stage
+  the wide one, as they do on the right. Before, the stage was squeezed into the controls'
+  column. The reading and tab order are unchanged.
+
+- **A popover can point at something that is not an element.** `PopoverContent` takes a
+  `reference`: an element, or any object with a `getBoundingClientRect()` that returns
+  where the anchor is on screen, such as the point under the pointer on a map. Placement,
+  flipping at the viewport's edge and closing on an outside press all work as they do
+  with a trigger, and you open it with `v-model:open` on `Popover`, with no
+  `PopoverTrigger` needed. To move it, hand it a new object (a `computed` over your
+  coordinates does this); it is placed again once per change and does nothing in
+  between. The object's type is exported as `PopoverVirtualElement`.
+
+  ```vue
+  <script setup lang="ts">
+  const anchor = computed<PopoverVirtualElement>(() => ({
+      getBoundingClientRect: () => new DOMRect(point.x, point.y, 0, 0),
+  }));
+  </script>
+
+  <Popover v-model:open="hovering">
+      <PopoverContent :reference="anchor" side="top">{{ station.name }}</PopoverContent>
+  </Popover>
+  ```
+
+- **Side sheets can lean in as they arrive.** Set `--sheet-enter-skew` to an angle (at
+  `:root`, or on the sheet's class) and a sliding `SheetContent` starts its entry sheared
+  by that angle and straightens as it settles, on the same spring as the slide, without
+  leaning the other way as it lands. It
+  defaults to `0deg`, so nothing changes until you set it, and with reduced motion
+  turned on the sheet never shears. Sheets with detents grow rather than slide, and do
+  not shear.
+
+### Type and material
+
+- **IBM Plex Sans ships with the library.** The upright and italic faces (Latin, every
+  weight from 100 to 700 in one variable file each) are at
+  `@mkbabb/glass-ui/fonts/ibm-plex-sans/`, declared in the new `styles/font-files`
+  entry below. Point your text stack at it and delete any copy you host yourself:
+
+  ```css
+  @import "@mkbabb/glass-ui/styles/font-files";
+
+  :root {
+      --font-stack-text: "IBM Plex Sans", system-ui, sans-serif;
+  }
+  ```
+
+- **Fonts as files.** The new `@mkbabb/glass-ui/styles/font-files` entry declares Plus
+  Jakarta Sans, Fira Code and IBM Plex Sans with each face pointing at its WOFF2 file,
+  instead of carrying about 131 KB of font data inside the CSS. Your bundler copies and
+  hashes the files, and the browser downloads a face only when your text uses it. If
+  your CSS goes through a bundler, import it in place of `styles/fonts`. To land the
+  brand face in the first frame, preload
+  `@mkbabb/glass-ui/fonts/plus-jakarta-sans/plus-jakarta-sans-latin.woff2` (the README
+  shows how with Vite). `styles/fonts` is unchanged and still the right choice if you
+  emit the sheet as it is, for example with a `?url` import, which does not copy the
+  files a sheet points at. If you link the package with `file:` in development, add its
+  `dist` folder to Vite's `server.fs.allow`.
+
+- **The `.dark` class alone decides the theme.** Before, a page with no `.dark` class on
+  a phone or computer set to dark mode painted some colours from the dark theme and
+  others from the light one. The page root now asks the browser for the light scheme
+  until `.dark` is applied, so the class you set is the theme you get, whatever the
+  system setting. If you want to follow the system, set the class from
+  `prefers-color-scheme`; the pre-paint script and `useGlobalDark` already do this for
+  you.
+
+- **The shadow tokens you can rely on are listed.** The README now names every shadow
+  token you can set: `--shadow-color`, the five glass tier shadows and
+  `--glass-shadow-capsule`, the three `--glass-under-shadow-*` casts, the cartoon
+  stamps, the two dock shadows and `--shadow-dock-override`. Each is stable within a
+  major version.
+
+- **The dock's paper grain is no longer a page's largest paint.** Chrome and Safari
+  counted the grain on the dock's plate as page content, because it was an image, so on
+  a page with little else the grain became the Largest Contentful Paint and its timing
+  followed the dock's entrance. The grain is now a fine dot field drawn with gradients,
+  which browsers never count as content, at the same faint strength
+  (`--glass-grain-opacity`). If you raised `--glass-grain-opacity` on a dock, you will now
+  see a regular pattern of fine dots there instead of paper noise. If you set
+  `--glass-grain-opacity: 0` on the dock for this reason, you can remove that line.
+
+- **The blob's goo reaches past its box.** `Blob` no longer clips its own painting to its
+  layout box, so the goo and the satellites that orbit wide paint fully into the space
+  around it, as they were drawn to. A blob scrolled out of view still stops drawing
+  entirely.
+
+### HandMark
+
+- **Marks draw in your page's focal colour.** With no `color`, an underline, strike or
+  ring now paints in `--primary`, and a highlight takes the hue of `--primary`, instead
+  of the text colour and a fixed yellow. Since `--primary` follows your theme, a mark
+  in dark mode takes your dark accent on its own. Passing `color` works as before: a
+  colour for a stroke, a hue number for a highlight. `color="78"` gives you the old
+  yellow band back.
+
+- **Marks wait until they are scrolled to.** Add `trigger="in-view"` and a mark holds
+  undrawn until at least half of it is on screen, then draws in, so a heading further
+  down the page draws when your reader gets there rather than while it is out of sight.
+  It draws once; add `retrigger` to draw it again each time it comes back into view.
+  Without `trigger`, a mark draws as soon as it mounts, as before.
+
+  ```vue
+  <h2>
+      Plan the <HandMark shape="highlight" trigger="in-view">quiet season</HandMark>
+  </h2>
+  ```
+
+- **The draw keeps the library's time.** Each line of a mark draws on the library's
+  `present` spring (`--spring-present`), one line after another across a wrapped
+  phrase, and it follows `--motion-tempo` like every other motion. A mark that is
+  re-measured, for example when your fonts finish loading, keeps its place instead of
+  drawing over again.
+
+- **Reduced motion and print show the finished mark.** With reduced motion turned on,
+  or when the page is printed, every mark is fully drawn from the first frame, including
+  a `trigger="in-view"` mark that has not been scrolled to.
+
+- **The draw stays smooth while your page is busy.** An underline, strike or highlight
+  now draws by sliding a window open along the stroke, which the browser animates off
+  the main thread. So a heavy mount or a long script that lands mid-draw no longer
+  freezes the stroke halfway: it keeps drawing at its own pace. The finished mark looks
+  just as it did. A ring still draws round along its own path.
+
+- **Sequence your page on `drawn`.** A mark emits `drawn` once its last line has
+  finished drawing, so you can bring in what follows it without polling its
+  animations. With reduced motion, in print, or with `:draw="false"`, the mark is
+  finished from the start, and `drawn` fires as soon as it mounts. A `retrigger` mark
+  emits it again after each redraw.
+
+  ```vue
+  <h1>
+      Plan the <HandMark @drawn="showPlate = true">quiet season</HandMark>
+  </h1>
+  ```
+
 ## 11.0.2 — 2026-11-15
 
 A patch on 11.0.1. Nothing is removed or renamed. The Slider's thumb takes a new

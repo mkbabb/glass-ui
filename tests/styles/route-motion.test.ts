@@ -255,7 +255,10 @@ describe("G-NO-FLASH — the route grammar conserves alpha", () => {
         ] as const;
         for (const row of ROUTE_GRAMMAR) {
             if (row.nav === "route") continue; // no window is named, so none can be unmatched
-            const clock = rootClockOf(row.nav);
+            // `lateral` cuts its root and fades nothing there, so an unpartnered card
+            // rides the handover clock instead (the card-swap arm below).
+            const clock =
+                row.nav === "lateral" ? "var(--route-inhale-clock)" : rootClockOf(row.nav);
             for (const [half, keyframe] of HALVES) {
                 const forks = rules.filter(
                     (rule) =>
@@ -278,6 +281,7 @@ describe("G-NO-FLASH — the route grammar conserves alpha", () => {
     it("clocks both halves of the pair identically in every class", () => {
         for (const row of ROUTE_GRAMMAR) {
             const type = row.nav;
+            if (type === "lateral") continue; // no root fade: the card-swap arm below
             const durations = new Set(
                 rootPairRules
                     .filter((rule) => rule.selector.includes(`(${type})`))
@@ -467,14 +471,14 @@ describe("the route grammar — the world outlives the foreground", () => {
         // EXEMPLARS-CODEX I4 measures 1.7-2x on Apple's clocks. Ours are table-fixed by
         // BK #26 and no row may own a second job, so the multiple is whatever the two
         // named rows produce — recorded here, never tuned to fit. `collapse` lands inside
-        // the band; `zoom` and `lateral` bracket it.
+        // the band; `zoom` sits below it. `lateral` has no world.
         const measured = Object.fromEntries(
             ROUTE_GRAMMAR.filter((r) => r.world).map((r) => [
                 r.nav,
                 Number((worldEnd(r) / foregroundEnd(r)).toFixed(3)),
             ]),
         );
-        expect(measured).toEqual({ zoom: 1.267, lateral: 2.714, collapse: 2 });
+        expect(measured).toEqual({ zoom: 1.267, collapse: 2 });
     });
 });
 
@@ -502,10 +506,12 @@ describe("the route grammar — non-dock, and one window at a time", () => {
         // page flying into a short cell paints far outside the rect it is travelling to.
         // Found in paint, not in source; §9.6's "revealed by clip" is the cure and this
         // is what holds it.
+        // `lateral` lifts it (a card swap is two whole cards; its own block below).
         const clip = rules.filter(
             (rule) =>
                 rule.selector.includes("::view-transition-group(gl-route-window)") &&
-                declOf(rule, "overflow") !== null,
+                declOf(rule, "overflow") !== null &&
+                !typesOf(rule.selector).includes("lateral"),
         );
         expect(clip.length).toBe(1);
         expect(declOf(clip[0]!, "overflow")).toBe("clip");
@@ -543,5 +549,74 @@ describe("the route grammar — non-dock, and one window at a time", () => {
         for (const rule of timed) {
             expect(rule.selector).toMatch(/:active-view-transition-type\(/);
         }
+    });
+});
+
+describe("the route grammar — lateral is an opaque card swap", () => {
+    const lateral = (pseudo: string) =>
+        rules.filter(
+            (rule) =>
+                typesOf(rule.selector).includes("lateral") &&
+                rule.selector.includes(pseudo) &&
+                !rule.selector.includes(":only-child"),
+        );
+    const namesOf = (pseudo: string) =>
+        lateral(pseudo)
+            .map((rule) => declOf(rule, "animation-name") ?? declOf(rule, "animation"))
+            .filter((v): v is string => v !== null)
+            .flatMap((v) => v.split(",").map((n) => n.trim()));
+    const fades = (name: string) => /opacity/.test(keyframes.get(name)?.toString() ?? "");
+
+    it("puts no opacity keyframe on the root or the window", () => {
+        for (const pseudo of [
+            "::view-transition-old(root)",
+            "::view-transition-new(root)",
+            "::view-transition-old(gl-route-window)",
+            "::view-transition-new(gl-route-window)",
+        ]) {
+            expect(namesOf(pseudo).filter(fades), pseudo).toEqual([]);
+        }
+        expect(namesOf("::view-transition-old(root)")).toEqual(["none"]);
+        expect(namesOf("::view-transition-new(root)")).toEqual(["none"]);
+    });
+
+    it("recedes the old card and signs the new card's travel by the direction", () => {
+        expect(namesOf("::view-transition-old(gl-route-window)")).toEqual([
+            "gl-route-card-recede",
+        ]);
+        expect(namesOf("::view-transition-new(gl-route-window)")).toEqual([
+            "gl-route-card-enter",
+        ]);
+        const enter = keyframes.get("gl-route-card-enter")?.toString() ?? "";
+        expect(enter).toMatch(/translate:\s*calc\(var\(--route-direction, 0\) \* var\(--route-card-travel\)\)/);
+    });
+
+    it("stacks both cards opaque on one spring with the group", () => {
+        const pair = lateral("::view-transition-old(gl-route-window)").find(
+            (rule) => declOf(rule, "mix-blend-mode") !== null,
+        );
+        expect(pair && declOf(pair, "mix-blend-mode")).toBe("normal");
+        expect(pair && declOf(pair, "animation-timing-function")).toBe(
+            "var(--route-lateral-spring)",
+        );
+        const group = lateral("::view-transition-group(gl-route-window)").find(
+            (rule) => declOf(rule, "animation-timing-function") !== null,
+        );
+        expect(group && declOf(group, "animation-timing-function")).toBe(
+            "var(--route-lateral-spring)",
+        );
+    });
+
+    it("never clips the arriving card to the departing card's rect", () => {
+        const unclipped = lateral("::view-transition-group(gl-route-window)").find(
+            (rule) => declOf(rule, "overflow") !== null,
+        );
+        expect(unclipped && declOf(unclipped, "overflow")).toBe("visible");
+    });
+
+    it("recedes the departing card by scale alone", () => {
+        const recede = keyframes.get("gl-route-card-recede")?.toString() ?? "";
+        expect(recede).toMatch(/scale:\s*var\(--route-card-recede\)/);
+        expect(recede).not.toMatch(/translate|filter|opacity/);
     });
 });

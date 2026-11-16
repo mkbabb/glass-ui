@@ -1,0 +1,54 @@
+== chromium-headless-new: reports ch-part-aa.json ch-part-ab.json ch-part-ac.json ch-part-ad.json ch-part-ae.json ch-part-af.json ch-part-ag.json ch-part-ah.json ch-part-ai.json ch-part-aj.json ch-part-ak.json ch-part-al.json
+branch 450 failing, v11.0.0 450
+-- branch-only:
+dockmorph-cta.spec.ts	dockmorph-cta — the CTA-receive landing SEAT (π lane, LOCAL) > the seat reserves its box (no jump) and reveals with an opacity FLIP
+easing-primitive.spec.ts	BK #85 W-EASING — the published curve family (π) > P1 — the bezier stroke plots the real CubicBezier twin
+easing-primitive.spec.ts	BK #85 W-EASING — the published curve family (π) > P11 — the draw-on sweeps over frames, and lands on one under reduce
+easing-primitive.spec.ts	BK #85 W-EASING — the published curve family (π) > P2 — the steps stroke is constructed, not sampled
+easing-primitive.spec.ts	BK #85 W-EASING — the published curve family (π) > P4 — the readout is the re-parseable literal in both modes
+easing-primitive.spec.ts	BK #85 W-EASING — the published curve family (π) > P5 — the frame is constant and the plot is square (letterbox zero)
+no-gray.spec.ts	no-gray (π — the warm-chroma floor, fail-CLOSED) > (a) the WARM-IT tokens resolve C ≥ floor at the warm hue [dark] @ desktop
+viz-fourier-ribbon.spec.ts	fourier ribbon paints as a chromatic stroke — dark
+-- v11.0.0-only (failing there, passing here):
+release-10-1-2.spec.ts	O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (1440->390)
+release-10-1-2.spec.ts	O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (390->1440)
+release-10-1-2.spec.ts	O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390)
+release-10-1-2.spec.ts	O-101 · horizontal · reversal · the expanded endpoint follows the pane (390->1440)
+release-10-1-2.spec.ts	O-101 · vertical · mid-expand · the expanded endpoint follows the pane (1440->390)
+release-10-1-2.spec.ts	O-101 · vertical · mid-expand · the expanded endpoint follows the pane (390->1440)
+release-10-1-2.spec.ts	O-101 · vertical · reversal · the expanded endpoint follows the pane (1440->390)
+release-10-1-2.spec.ts	O-101 · vertical · reversal · the expanded endpoint follows the pane (390->1440)
+-- release specs (ch-rel.json), every failure:
+== coarse-touch: reports co-part-aa.json co-part-ab.json co-part-ac.json co-part-ad.json co-part-ae.json co-part-af.json co-part-ag.json co-part-ah.json co-part-ai.json co-part-aj.json co-part-ak.json co-part-al.json
+branch 451 failing, v11.0.0 456
+-- branch-only:
+motion2.spec.ts	motion2 (π lane — the curve gallery REDRESS render, fail-CLOSED) > the page paints a calm substrate behind the glass card (not bare)
+radius-scale.spec.ts	dark bar > a SegmentedTabs strip wider than 20rem is a bar; a short one a stadium
+radius-scale.spec.ts	light bar > a SegmentedTabs strip wider than 20rem is a bar; a short one a stadium
+-- v11.0.0-only (failing there, passing here):
+release-10-1-2.spec.ts	O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (1440->390)
+release-10-1-2.spec.ts	O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (390->1440)
+release-10-1-2.spec.ts	O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390)
+release-10-1-2.spec.ts	O-101 · horizontal · reversal · the expanded endpoint follows the pane (390->1440)
+release-10-1-2.spec.ts	O-101 · vertical · mid-expand · the expanded endpoint follows the pane (1440->390)
+release-10-1-2.spec.ts	O-101 · vertical · mid-expand · the expanded endpoint follows the pane (390->1440)
+release-10-1-2.spec.ts	O-101 · vertical · reversal · the expanded endpoint follows the pane (1440->390)
+release-10-1-2.spec.ts	O-101 · vertical · reversal · the expanded endpoint follows the pane (390->1440)
+-- release specs (co-rel.json), every failure:
+== webkit: reports wk-proj.json
+branch 4 failing, v11.0.0 10
+-- branch-only:
+release-10-1-3.spec.ts	10.1.3 · 430 · right-anchored (fourier f-w14v-au2 L2-15) > O-110 · a click on the anchored persistent seat of a collapsed dock reaches it
+release-10-1-5.spec.ts	e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner
+safari-webgl.spec.ts	viz paints + does NOT flash on this engine — /substrates/blob (dark)
+-- v11.0.0-only (failing there, passing here):
+release-10-1-2.spec.ts	O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (1440->390)
+release-10-1-2.spec.ts	O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (390->1440)
+release-10-1-2.spec.ts	O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390)
+release-10-1-2.spec.ts	O-101 · horizontal · reversal · the expanded endpoint follows the pane (390->1440)
+release-10-1-2.spec.ts	O-101 · vertical · mid-expand · the expanded endpoint follows the pane (1440->390)
+release-10-1-2.spec.ts	O-101 · vertical · mid-expand · the expanded endpoint follows the pane (390->1440)
+release-10-1-2.spec.ts	O-101 · vertical · reversal · the expanded endpoint follows the pane (1440->390)
+release-10-1-2.spec.ts	O-101 · vertical · reversal · the expanded endpoint follows the pane (390->1440)
+safari-webgl.spec.ts	dock over the live field paints a continuous plate + does NOT flash (light)
+-- release specs (wk-rel.json), every failure:

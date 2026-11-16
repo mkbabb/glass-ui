@@ -1,0 +1,26 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0
+
+ ❯ tests/components/custom/dock/GlassDock.persistent-face.test.ts (12 tests | 1 failed) 4060ms
+     × a fine press on a #persistent-end seat inside the hover dwell never expands the dock 266ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/custom/dock/GlassDock.persistent-face.test.ts > a press on a persistent seat is the seat's > a fine press on a #persistent-end seat inside the hover dwell never expands the dock
+AssertionError: expected "vi.fn()" to be called 1 times, but got 0 times
+ ❯ tests/components/custom/dock/GlassDock.persistent-face.test.ts:102:29
+    100|             await wait(HOVER_INTENT_MS + 200);
+    101|             await nextTick();
+    102|             expect(onClick).toHaveBeenCalledTimes(1);
+       |                             ^
+    103|             expect(root.classList.contains("expanded")).toBe(false);
+    104|         });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 17 passed (18)
+   Start at  18:02:15
+   Duration  4.73s (transform 584ms, setup 113ms, import 624ms, tests 4.13s, environment 301ms)
+

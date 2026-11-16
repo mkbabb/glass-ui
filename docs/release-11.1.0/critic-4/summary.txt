@@ -1,0 +1,103 @@
+fix3-witness green chromium: green chromium 26 cells 0 errors
+fix3-witness pre chromium: pre chromium 26 cells 0 errors
+fix3-witness red chromium: red chromium 26 cells 0 errors
+fix3-witness green webkit: green webkit 26 cells 0 errors
+fix3-witness pre webkit: pre webkit 26 cells 0 errors
+fix3-witness red webkit: red webkit 26 cells 0 errors
+fix2-witness green chromium: green chromium {"O-212":[20,20],"O-213 anchored":[4,4],"O-214 pointer":[4,4],"O-214 keyboard":[12,12],"G13":[4,4],"G14":[4,4],"Collapsible contract":[4,4],"Collapsible gap":[4,4],"Table one surface":[4,4]}
+fix2-witness red chromium: red chromium {"O-212":[14,20],"O-213 anchored":[2,4],"O-214 pointer":[0,4],"O-214 keyboard":[12,12],"G13":[2,4],"G14":[2,4],"Collapsible contract":[4,4],"Collapsible gap":[0,4],"Table one surface":[0,4]}
+fix2-witness green webkit: green webkit {"O-212":[20,20],"O-213 anchored":[4,4],"O-214 pointer":[4,4],"O-214 keyboard":[12,12],"G13":[4,4],"G14":[4,4],"Collapsible contract":[4,4],"Collapsible gap":[4,4],"Table one surface":[4,4]}
+fix2-witness red webkit: red webkit {"O-212":[14,20],"O-213 anchored":[2,4],"O-214 pointer":[0,4],"O-214 keyboard":[12,12],"G13":[2,4],"G14":[2,4],"Collapsible contract":[4,4],"Collapsible gap":[0,4],"Table one surface":[0,4]}
+c2-probe green chromium: green chromium 23 cells 0 errors
+c2-probe red chromium: red chromium 23 cells 0 errors
+c2-probe green webkit: green webkit 23 cells 0 errors
+c2-probe red webkit: red webkit 23 cells 0 errors
+probe green chromium: green chromium 36 cells 0 errors
+probe red chromium: red chromium 36 cells 0 errors
+probe green webkit: green webkit 36 cells 0 errors
+probe red webkit: red webkit 36 cells 0 errors
+rerun/lane-L1 green chromium: {"O-164":{"pass":4,"fail":0},"O-188":{"pass":6,"fail":0},"O-169":{"pass":17,"fail":0}}
+rerun/lane-L1 red chromium: FAIL O-169 tick {"mutated":["scroll-progress-rim|style","scroll-progress-rim|aria-valuenow"],"trace":{"updateLayoutTree":[3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"layoutCount":0,"layoutDirty":[]}}
+rerun/lane-L1 green webkit: {"O-164":{"pass":4,"fail":0},"O-188":{"pass":6,"fail":0},"O-169":{"pass":17,"fail":0}}
+rerun/lane-L1 red webkit: FAIL O-169 tick {"mutated":["scroll-progress-rim|style","scroll-progress-rim|aria-valuenow"],"trace":null}
+rerun/lane-L2 green chromium: {"O-181":{"pass":4,"total":4},"O-196":{"pass":4,"total":4},"O-189":{"pass":4,"total":4},"O-171":{"pass":5,"total":5},"O-168":{"pass":5,"total":5},"O-173 paint":{"pass":4,"total":4},"O-173":{"pass":5,"total":5},"O-180":{"pass":2,"total":2}}
+rerun/lane-L2 red chromium: {"O-181":{"pass":0,"total":4},"O-196":{"pass":0,"total":4},"O-189":{"pass":0,"total":4},"O-171":{"pass":1,"total":5},"O-168":{"pass":1,"total":5},"O-173 paint":{"pass":0,"total":4,"unmeasurable":4},"O-173":{"pass":1,"total":5},"O-180":{"pass":0,"total":2}}
+rerun/lane-L2 green webkit: {"O-181":{"pass":4,"total":4},"O-196":{"pass":4,"total":4},"O-189":{"pass":4,"total":4},"O-171":{"pass":5,"total":5},"O-168":{"pass":5,"total":5},"O-173 paint":{"pass":0,"total":4,"unmeasurable":4},"O-173":{"pass":5,"total":5},"O-180":{"pass":2,"total":2}}
+rerun/lane-L2 red webkit: {"O-181":{"pass":0,"total":4},"O-196":{"pass":0,"total":4},"O-189":{"pass":0,"total":4},"O-171":{"pass":1,"total":5},"O-168":{"pass":1,"total":5},"O-173 paint":{"pass":0,"total":4,"unmeasurable":4},"O-173":{"pass":1,"total":5},"O-180":{"pass":0,"total":2}}
+rerun/lane-L3 green chromium: {"O-158":{"pass":4,"total":4},"O-184":{"pass":4,"total":4},"O-178":{"pass":4,"total":4},"O-179":{"pass":6,"total":6}}
+rerun/lane-L3 red chromium: {"O-158":{"pass":0,"total":4},"O-184":{"pass":0,"total":4},"O-178":{"pass":4,"total":4},"O-179":{"pass":2,"total":6}}
+rerun/lane-L3 green webkit: {"O-158":{"pass":4,"total":4},"O-184":{"pass":4,"total":4},"O-178":{"pass":4,"total":4},"O-179":{"pass":6,"total":6}}
+rerun/lane-L3 red webkit: {"O-158":{"pass":0,"total":4},"O-184":{"pass":0,"total":4},"O-178":{"pass":4,"total":4},"O-179":{"pass":2,"total":6}}
+rerun/lane-L4 green chromium: probe exit 0, fontprobe exit 0
+rerun/lane-L4 red chromium: probe exit 1, fontprobe exit 1
+rerun/lane-L4 green webkit: probe exit 0, fontprobe exit 0
+rerun/lane-L4 red webkit: probe exit 1, fontprobe exit 1
+rerun/lane-L5 green chromium: green chromium: 60/60
+rerun/lane-L5 red chromium: red chromium: 26/60
+rerun/lane-L5 green webkit: green webkit: 60/60
+rerun/lane-L5 red webkit: red webkit: 26/60
+rerun/lane-L6 green chromium: {"O-194":{"pass":66,"fail":0},"O-197":{"pass":10,"fail":0},"O-198":{"pass":3,"fail":0},"O-199":{"pass":82,"fail":0}}
+rerun/lane-L6 red chromium: FAIL O-199 host-bar col-v-persist 1440 light {"key":"col-v-persist","vertical":true,"collapsed":true,"morphing":false,"w":64,"h":110,"cross":64,"dock":["16px","16px","16px","16px"],"plate":["16px","16px","4px","4px"],"usedDock":[[16,16],[16,16],[16,16],[16,16]],"usedPlate":[[16,16],[16,16],[4,4],[4,4]],"scale":[1,1]}
+rerun/lane-L6 green webkit: {"O-194":{"pass":60,"fail":0},"O-197":{"pass":10,"fail":0},"O-198":{"pass":3,"fail":0},"O-199":{"pass":82,"fail":0}}
+rerun/lane-L6 red webkit: FAIL O-199 host-bar col-v-persist 1440 light {"key":"col-v-persist","vertical":true,"collapsed":true,"morphing":false,"w":64,"h":110,"cross":64,"dock":["16px","16px","16px","16px"],"plate":["16px","16px","4px","4px"],"usedDock":[[16,16],[16,16],[16,16],[16,16]],"usedPlate":[[16,16],[16,16],[4,4],[4,4]],"scale":[1,1]}
+rerun/lane-L7 green chromium: green chromium: 80/80
+rerun/lane-L7 red chromium: red chromium: 4/64
+rerun/lane-L7 green webkit: green webkit: 64/80
+rerun/lane-L7 red webkit: red webkit: 15/64
+green chromium Collapsible layout: 5/5;green chromium Collapsible gap: 7/7;green chromium Collapsible frames: 2/2;green chromium Slider controlled: 3/3;green chromium Root tempo: 1/1;green chromium Tabs radius: 8/8;pre chromium Collapsible layout: 1/5;pre chromium Collapsible gap: 1/7;pre chromium Collapsible frames: 2/2;pre chromium Slider controlled: 1/3;pre chromium Root tempo: 0/1;pre chromium Tabs radius: 4/8;red chromium Collapsible layout: 5/5;red chromium Collapsible gap: 0/7;red chromium Collapsible frames: 2/2;red chromium Slider controlled: 3/3;red chromium Root tempo: 1/1;red chromium Tabs radius: 4/8;
+green webkit Collapsible layout: 5/5;green webkit Collapsible gap: 7/7;green webkit Collapsible frames: 2/2;green webkit Slider controlled: 3/3;green webkit Root tempo: 1/1;green webkit Tabs radius: 8/8;pre webkit Collapsible layout: 1/5;pre webkit Collapsible gap: 1/7;pre webkit Collapsible frames: 2/2;pre webkit Slider controlled: 1/3;pre webkit Root tempo: 0/1;pre webkit Tabs radius: 4/8;red webkit Collapsible layout: 5/5;red webkit Collapsible gap: 0/7;red webkit Collapsible frames: 2/2;red webkit Slider controlled: 3/3;red webkit Root tempo: 1/1;red webkit Tabs radius: 4/8;
+10:05:32 fix4-witness chromium exit 1: 10:03:45 green chromium exit 0 :: VERDICT green chromium 17/17;10:04:36 pre chromium exit 1 :: VERDICT pre chromium 11/17;10:05:27 red chromium exit 1 :: VERDICT
+10:06:16 fix3-witness green chromium exit 0
+10:07:00 fix3-witness pre chromium exit 0
+10:07:44 fix3-witness red chromium exit 0
+10:09:07 fix2-witness green chromium exit 0
+10:10:31 fix2-witness red chromium exit 1
+10:11:26 c2-probe green chromium exit 0
+10:12:19 c2-probe red chromium exit 0
+10:14:42 lane L1 chromium: 10:13:31 green chromium  exit 0;10:14:42 red chromium  exit 1;
+10:16:44 lane L2 chromium: 10:15:43 green chromium  exit 0;10:16:44 red chromium  exit 1;
+10:18:03 lane L3 chromium: 10:17:24 green chromium  exit 0;10:18:03 red chromium  exit 1;
+10:19:52 lane L4 chromium: 10:18:57 green chromium   exit 0;10:19:52 red chromium   exit 1;
+10:21:16 lane L5 chromium: 10:20:32 green chromium  exit 0;10:21:16 red chromium  exit 1;
+10:27:48 lane L6 chromium: 10:24:26 green chromium  items=all exit 0;10:27:48 red chromium  items=all exit 1;
+10:32:42 lane L7 chromium: 10:30:32 green chromium  exit 0;10:32:42 red chromium  exit 1;
+10:34:05 probe green chromium exit 0
+10:35:29 probe red chromium exit 0
+10:37:04 probe4 green chromium exit 0
+10:38:28 probe4 red chromium exit 0
+10:45:09 probe5 green chromium exit 0
+10:47:09 probe4 green webkit exit 0 (10 cells errored: see below); probe4 red webkit was waiting on the webkit lock when run-all3 was stopped and guarded ended it (KILLED: caller died); both are taken
+10:50:20 probe6 green chromium exit 0
+10:53:29 probe6 red chromium exit 0
+10:54:57 probe4 green webkit exit 0
+10:56:20 probe4 red webkit exit 0
+10:59:57 probe5 green webkit exit 0
+11:04:45 probe6 green webkit exit 0
+11:09:23 probe6 red webkit exit 0
+11:12:09 fix4-witness webkit exit 1: 11:10:18 green webkit exit 0 :: VERDICT green webkit 17/17;11:11:12 pre webkit exit 1 :: VERDICT pre webkit 11/17;11:12:05 red webkit exit 1 :: VERDICT red webkit 
+11:12:59 fix3-witness green webkit exit 0
+11:13:49 fix3-witness pre webkit exit 0
+11:14:40 fix3-witness red webkit exit 0
+11:16:16 fix2-witness green webkit exit 0
+11:17:54 fix2-witness red webkit exit 1
+11:20:21 c2-probe green webkit exit 0
+11:21:16 c2-probe red webkit exit 0
+11:24:42 lane L1 webkit: 11:23:05 green webkit  exit 0;11:24:42 red webkit  exit 1;
+11:27:10 lane L2 webkit: 11:25:57 green webkit  exit 0;11:27:10 red webkit  exit 1;
+11:28:43 lane L3 webkit: 11:27:58 green webkit  exit 0;11:28:43 red webkit  exit 1;
+11:30:27 lane L4 webkit: 11:29:35 green webkit   exit 0;11:30:27 red webkit   exit 1;
+11:31:58 lane L5 webkit: 11:31:11 green webkit  exit 0;11:31:58 red webkit  exit 1;
+11:38:29 lane L6 webkit: 11:34:57 green webkit  items=all exit 0;11:38:29 red webkit  items=all exit 1;
+11:42:03 lane L7 webkit: 11:40:15 green webkit  exit 1;11:42:03 red webkit  exit 1;
+11:43:34 probe green webkit exit 0
+11:45:03 probe red webkit exit 0
+11:47:14 e2e chromium branch exit 1
+11:49:59 e2e webkit branch exit 1
+11:52:18 e2e chromium v1100 exit 1
+11:55:02 e2e webkit v1100 exit 1
+11:59:42 probe6 green chromium (with the natural cells) exit 0
+12:04:03 probe6 red chromium (with the natural cells) exit 0
+12:04:55 probe7 green chromium exit 0
+12:05:34 probe7 red chromium exit 0
+12:06:18 probe7 green webkit exit 0
+12:07:16 probe7 red webkit exit 0

@@ -168,11 +168,10 @@
     }
 
     /* The collapsed horizontal dock at rest is a square box, and it is drawn as a
-       circle (`--radius-circle`). `--radius-dock` (the pill rung, 1rem) is a corner on
-       anything taller than 32px, so the circle is stated here, for the settled box
-       only: mid-morph the box carries the expanded footprint under a scale. The
-       stadium shape is not named here: its corner is half its cross extent in every
-       posture (run.css), which is this circle on a square box. */
+       circle (`--radius-circle`), for the settled box only: mid-morph the box carries
+       the expanded footprint under a scale. These two rules are the finite shapes'
+       (`rounded`, `card`). The stadium shape is not named here: its corner is half its
+       cross extent in every posture (run.css), which is this circle on a square box. */
     .glass-dock.collapsed:not([data-morphing]):not(.vertical):not(.shape-pill) {
         border-radius: var(--radius-circle);
     }
@@ -181,31 +180,30 @@
        square: it is two cells wide (atlas's figure dock, Table view plus the handle,
        100 x 52). `50%` on that box drew an oval lozenge, a full-radius box over 40 px
        (U/B8r I-3, atlas register F-20). Such a dock is a short bar, a container, so it
-       keeps the bar corner it wears open (`--radius-dock`, 16 px on a 52 px box): the
+       keeps a bar corner (`--radius-pill`, 16 px on a 52 px box): the
        collapse and the open dock share one corner, and the morph swaps no silhouette.
        The circle stays for the square cases: the summary alone, or a persistent
        control alone (the empty-summary case above). Two flat `:has()`, never nested. */
     .glass-dock.collapsed:not([data-morphing]):not(.vertical):not(.shape-pill):has(.dock-persistent):has(
             .dock-layer--summary:not(:empty)
         ) {
-        border-radius: var(--radius-dock);
+        border-radius: var(--radius-pill);
     }
 
-    /* The collapsed summary is a PERFECT CIRCLE. The `.dock-layer`
-       base rule (`.glass-dock:not(.vertical) .dock-layer`) locks `height:
-       var(--dock-layer-height)` (40px) on EVERY layer including the summary; against
-       the 0.85× `--dock-collapsed-summary-min-size` min-width that made the pane
-       40h × 30w — an oval (the user's "circle, not oval"). This rule (1) LIFTS the
-       height-lock so the summary block-sizes to the SAME token its width floors at,
-       and (2) floors both axes to that ONE token, so the collapsed pane is a square
-       and the root's symmetric collapsed padding keeps the pill a circle. The glyph
-       sits centred on both axes. The `aspect-ratio: 1` belt-and-braces guarantees
-       1:1 even if a consumer's collapsed-slot content is wider than the floor. */
+    /* The collapsed summary is a SQUARE FLOOR that sizes to its content. Its block
+       size is the summary token (floored by the layer's own `min-height` on a
+       horizontal dock), and `aspect-ratio: 1` makes the inline size match it, so one
+       glyph is a square pane and the root's symmetric collapsed padding keeps the
+       pill a circle. The inline minimum is `auto` ON PURPOSE: for a box with an
+       aspect ratio, `auto` is its min-content width, so a wider face (a glyph and a
+       reading, "⌁ 12") widens the pane instead of overflowing a 1:1 box. A length
+       here is what clipped it: the ratio then fixes the width at the height and the
+       content runs past it. The stadium's corner (half the cross extent, run.css)
+       rounds the wide pane's ends; the dock's own collapsed padding keeps the face off
+       the curve. The pane carries no padding of its own, so the square holds under
+       either box model. */
     .glass-dock .dock-layer--summary {
-        min-width: var(
-            --dock-collapsed-summary-min-size,
-            var(--dock-layer-height, 2.5rem)
-        );
+        min-width: auto;
         min-block-size: var(
             --dock-collapsed-summary-min-size,
             var(--dock-layer-height, 2.5rem)
@@ -270,12 +268,29 @@
         border: 0;
     }
 
-    /* The persistent control IS the collapsed pill in the empty-summary case — drop
-       the inter-region gap so the collapsed circle is exactly the persistent box. */
-    .glass-dock.collapsed:has(.dock-layer--summary:empty)
-        .dock-persistent
-        + .dock-layers {
-        margin-inline-start: 0;
+    /* THE PERSISTENT FACE. With an empty summary the persistent seats ARE the
+       collapsed face: the (now empty) morph region drops the gaps it keeps toward the
+       regions (run.css, THE ROOM FOR THE RESERVE), so the plate is exactly the seats,
+       and a trailing region follows a leading one at the one gap. On a vertical dock
+       the empty summary also gives up its block size, so the collapsed column is the
+       seats too. */
+    .glass-dock.collapsed:has(.dock-layer--summary:empty) > .dock-controls > .dock-layers {
+        margin: 0;
+    }
+    .glass-dock.collapsed:not(.vertical):has(.dock-layer--summary:empty)
+        .dock-persistent-start
+        ~ .dock-persistent-end {
+        margin-inline-start: var(--dock-layer-gap, 0.375rem);
+    }
+    .glass-dock.collapsed.vertical:has(.dock-layer--summary:empty)
+        .dock-persistent-start
+        ~ .dock-persistent-end {
+        margin-block-start: var(--dock-layer-gap, 0.375rem);
+    }
+    .glass-dock.vertical .dock-layer--summary:empty {
+        min-block-size: 0;
+        block-size: 0;
+        height: 0;
     }
 
     /* The collapsed persistent pill centers its single glyph on

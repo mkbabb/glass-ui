@@ -1,0 +1,905 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "docs/release-11.1.0/lane-L2/e2e-webkit.config.ts",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/docs/release-11.1.0/lane-L2/e2e-webkit.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "a11y-slider.spec.ts",
+          "Select.bound.spec.ts",
+          "easing-primitive.spec.ts",
+          "dock-with-slider-live.spec.ts"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/docs/release-11.1.0/lane-L2/gates/e2e-webkit-v1100.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite --host localhost --port 7952 --strictPort",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100",
+      "url": "http://localhost:7952",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "a11y-slider.spec.ts",
+      "file": "a11y-slider.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "a11y-slider (π lane — every Slider thumb resolves an accessible name)",
+          "file": "a11y-slider.spec.ts",
+          "line": 53,
+          "column": 6,
+          "specs": [
+            {
+              "title": "aurora — no nameless thumb (was ≥22), light + dark",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 3626,
+                      "error": {
+                        "message": "Error: aurora (light): 56 of 79 slider thumb(s) resolve NO accessible name (aria-input-field-name)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m79\u001b[39m\nReceived: \u001b[31m23\u001b[39m",
+                        "stack": "Error: aurora (light): 56 of 79 slider thumb(s) resolve NO accessible name (aria-input-field-name)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m79\u001b[39m\nReceived: \u001b[31m23\u001b[39m\n    at assertEveryThumbNamed (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/a11y-slider.spec.ts:50:7)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/a11y-slider.spec.ts:56:9",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/a11y-slider.spec.ts",
+                          "column": 7,
+                          "line": 50
+                        },
+                        "snippet": "  48 |         named,\n  49 |         `${label}: ${all - named} of ${all} slider thumb(s) resolve NO accessible name (aria-input-field-name)`,\n> 50 |     ).toBe(all);\n     |       ^\n  51 | }\n  52 |\n  53 | test.describe(\"a11y-slider (π lane — every Slider thumb resolves an accessible name)\", () => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/a11y-slider.spec.ts",
+                            "column": 7,
+                            "line": 50
+                          },
+                          "message": "Error: aurora (light): 56 of 79 slider thumb(s) resolve NO accessible name (aria-input-field-name)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m79\u001b[39m\nReceived: \u001b[31m23\u001b[39m\n\n  48 |         named,\n  49 |         `${label}: ${all - named} of ${all} slider thumb(s) resolve NO accessible name (aria-input-field-name)`,\n> 50 |     ).toBe(all);\n     |       ^\n  51 | }\n  52 |\n  53 | test.describe(\"a11y-slider (π lane — every Slider thumb resolves an accessible name)\", () => {\n    at assertEveryThumbNamed (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/a11y-slider.spec.ts:50:7)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/a11y-slider.spec.ts:56:9"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T21:25:17.115Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/test-results/a11y-slider-a11y-slider-π--953be-ss-thumb-was-≥22-light-dark-webkit/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/a11y-slider.spec.ts",
+                        "column": 7,
+                        "line": 50
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d88a893a2cb43eccfc93-a4c0d54a97d058fc6363",
+              "file": "a11y-slider.spec.ts",
+              "line": 54,
+              "column": 5
+            },
+            {
+              "title": "configurator — LabeledSlider forwards the field label to the thumb",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2240,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T21:25:21.682Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d88a893a2cb43eccfc93-1ffb8fe081ab5c4b92b5",
+              "file": "a11y-slider.spec.ts",
+              "line": 63,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "dock-with-slider-live.spec.ts",
+      "file": "dock-with-slider-live.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "dock-with-slider keepDockOpen (π lane — LIVE drag DELTA, fail-CLOSED)",
+          "file": "dock-with-slider-live.spec.ts",
+          "line": 71,
+          "column": 6,
+          "specs": [
+            {
+              "title": "hold + clear + capture — desktop / light",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 9542,
+                      "error": {
+                        "message": "TimeoutError: page.waitForSelector: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.glass-dock[data-testid=\"dock-slider-hold-root\"]') to be visible\u001b[22m\n",
+                        "stack": "TimeoutError: page.waitForSelector: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.glass-dock[data-testid=\"dock-slider-hold-root\"]') to be visible\u001b[22m\n\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/dock-with-slider-live.spec.ts:112:28",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/dock-with-slider-live.spec.ts",
+                          "column": 28,
+                          "line": 112
+                        },
+                        "snippet": "  110 |\n  111 |                 // The CLAUDE.md-pointer + route resolution proof: the dock cell exists.\n> 112 |                 await page.waitForSelector(DOCK_SEL, { timeout: 8000 });\n      |                            ^\n  113 |                 const dock = page.locator(DOCK_SEL).first();\n  114 |                 // Scroll the dock to viewport CENTRE — `scrollIntoViewIfNeeded` parks\n  115 |                 // it at the page bottom (the cell sits low in the two-cell story), so"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/dock-with-slider-live.spec.ts",
+                            "column": 28,
+                            "line": 112
+                          },
+                          "message": "TimeoutError: page.waitForSelector: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.glass-dock[data-testid=\"dock-slider-hold-root\"]') to be visible\u001b[22m\n\n\n  110 |\n  111 |                 // The CLAUDE.md-pointer + route resolution proof: the dock cell exists.\n> 112 |                 await page.waitForSelector(DOCK_SEL, { timeout: 8000 });\n      |                            ^\n  113 |                 const dock = page.locator(DOCK_SEL).first();\n  114 |                 // Scroll the dock to viewport CENTRE — `scrollIntoViewIfNeeded` parks\n  115 |                 // it at the page bottom (the cell sits low in the two-cell story), so\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/dock-with-slider-live.spec.ts:112:28"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T21:25:24.214Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/test-results/dock-with-slider-live-dock-f2567-ear-capture-—-desktop-light-webkit/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/dock-with-slider-live.spec.ts",
+                        "column": 28,
+                        "line": 112
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "c4b27896e19824d0c313-6effacff7ece06474004",
+              "file": "dock-with-slider-live.spec.ts",
+              "line": 76,
+              "column": 13
+            },
+            {
+              "title": "hold + clear + capture — desktop / dark",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 9887,
+                      "error": {
+                        "message": "TimeoutError: page.waitForSelector: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.glass-dock[data-testid=\"dock-slider-hold-root\"]') to be visible\u001b[22m\n",
+                        "stack": "TimeoutError: page.waitForSelector: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.glass-dock[data-testid=\"dock-slider-hold-root\"]') to be visible\u001b[22m\n\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/dock-with-slider-live.spec.ts:112:28",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/dock-with-slider-live.spec.ts",
+                          "column": 28,
+                          "line": 112
+                        },
+                        "snippet": "  110 |\n  111 |                 // The CLAUDE.md-pointer + route resolution proof: the dock cell exists.\n> 112 |                 await page.waitForSelector(DOCK_SEL, { timeout: 8000 });\n      |                            ^\n  113 |                 const dock = page.locator(DOCK_SEL).first();\n  114 |                 // Scroll the dock to viewport CENTRE — `scrollIntoViewIfNeeded` parks\n  115 |                 // it at the page bottom (the cell sits low in the two-cell story), so"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/dock-with-slider-live.spec.ts",
+                            "column": 28,
+                            "line": 112
+                          },
+                          "message": "TimeoutError: page.waitForSelector: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.glass-dock[data-testid=\"dock-slider-hold-root\"]') to be visible\u001b[22m\n\n\n  110 |\n  111 |                 // The CLAUDE.md-pointer + route resolution proof: the dock cell exists.\n> 112 |                 await page.waitForSelector(DOCK_SEL, { timeout: 8000 });\n      |                            ^\n  113 |                 const dock = page.locator(DOCK_SEL).first();\n  114 |                 // Scroll the dock to viewport CENTRE — `scrollIntoViewIfNeeded` parks\n  115 |                 // it at the page bottom (the cell sits low in the two-cell story), so\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/dock-with-slider-live.spec.ts:112:28"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T21:25:34.436Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/test-results/dock-with-slider-live-dock-44aac-lear-capture-—-desktop-dark-webkit/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/dock-with-slider-live.spec.ts",
+                        "column": 28,
+                        "line": 112
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "c4b27896e19824d0c313-98491db2fdfe81da6e68",
+              "file": "dock-with-slider-live.spec.ts",
+              "line": 76,
+              "column": 13
+            },
+            {
+              "title": "hold + clear + capture — mobile / light",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 9658,
+                      "error": {
+                        "message": "TimeoutError: page.waitForSelector: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.glass-dock[data-testid=\"dock-slider-hold-root\"]') to be visible\u001b[22m\n",
+                        "stack": "TimeoutError: page.waitForSelector: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.glass-dock[data-testid=\"dock-slider-hold-root\"]') to be visible\u001b[22m\n\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/dock-with-slider-live.spec.ts:112:28",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/dock-with-slider-live.spec.ts",
+                          "column": 28,
+                          "line": 112
+                        },
+                        "snippet": "  110 |\n  111 |                 // The CLAUDE.md-pointer + route resolution proof: the dock cell exists.\n> 112 |                 await page.waitForSelector(DOCK_SEL, { timeout: 8000 });\n      |                            ^\n  113 |                 const dock = page.locator(DOCK_SEL).first();\n  114 |                 // Scroll the dock to viewport CENTRE — `scrollIntoViewIfNeeded` parks\n  115 |                 // it at the page bottom (the cell sits low in the two-cell story), so"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/dock-with-slider-live.spec.ts",
+                            "column": 28,
+                            "line": 112
+                          },
+                          "message": "TimeoutError: page.waitForSelector: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.glass-dock[data-testid=\"dock-slider-hold-root\"]') to be visible\u001b[22m\n\n\n  110 |\n  111 |                 // The CLAUDE.md-pointer + route resolution proof: the dock cell exists.\n> 112 |                 await page.waitForSelector(DOCK_SEL, { timeout: 8000 });\n      |                            ^\n  113 |                 const dock = page.locator(DOCK_SEL).first();\n  114 |                 // Scroll the dock to viewport CENTRE — `scrollIntoViewIfNeeded` parks\n  115 |                 // it at the page bottom (the cell sits low in the two-cell story), so\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/dock-with-slider-live.spec.ts:112:28"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T21:25:45.155Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/test-results/dock-with-slider-live-dock-ccf81-lear-capture-—-mobile-light-webkit/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/dock-with-slider-live.spec.ts",
+                        "column": 28,
+                        "line": 112
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "c4b27896e19824d0c313-4b8ceedb1966722b7496",
+              "file": "dock-with-slider-live.spec.ts",
+              "line": 76,
+              "column": 13
+            },
+            {
+              "title": "hold + clear + capture — mobile / dark",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 9913,
+                      "error": {
+                        "message": "TimeoutError: page.waitForSelector: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.glass-dock[data-testid=\"dock-slider-hold-root\"]') to be visible\u001b[22m\n",
+                        "stack": "TimeoutError: page.waitForSelector: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.glass-dock[data-testid=\"dock-slider-hold-root\"]') to be visible\u001b[22m\n\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/dock-with-slider-live.spec.ts:112:28",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/dock-with-slider-live.spec.ts",
+                          "column": 28,
+                          "line": 112
+                        },
+                        "snippet": "  110 |\n  111 |                 // The CLAUDE.md-pointer + route resolution proof: the dock cell exists.\n> 112 |                 await page.waitForSelector(DOCK_SEL, { timeout: 8000 });\n      |                            ^\n  113 |                 const dock = page.locator(DOCK_SEL).first();\n  114 |                 // Scroll the dock to viewport CENTRE — `scrollIntoViewIfNeeded` parks\n  115 |                 // it at the page bottom (the cell sits low in the two-cell story), so"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/dock-with-slider-live.spec.ts",
+                            "column": 28,
+                            "line": 112
+                          },
+                          "message": "TimeoutError: page.waitForSelector: Timeout 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.glass-dock[data-testid=\"dock-slider-hold-root\"]') to be visible\u001b[22m\n\n\n  110 |\n  111 |                 // The CLAUDE.md-pointer + route resolution proof: the dock cell exists.\n> 112 |                 await page.waitForSelector(DOCK_SEL, { timeout: 8000 });\n      |                            ^\n  113 |                 const dock = page.locator(DOCK_SEL).first();\n  114 |                 // Scroll the dock to viewport CENTRE — `scrollIntoViewIfNeeded` parks\n  115 |                 // it at the page bottom (the cell sits low in the two-cell story), so\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/dock-with-slider-live.spec.ts:112:28"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T21:25:55.818Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/test-results/dock-with-slider-live-dock-da71e-clear-capture-—-mobile-dark-webkit/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/dock-with-slider-live.spec.ts",
+                        "column": 28,
+                        "line": 112
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "c4b27896e19824d0c313-e6e482001a396035b4ef",
+              "file": "dock-with-slider-live.spec.ts",
+              "line": 76,
+              "column": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "easing-primitive.spec.ts",
+      "file": "easing-primitive.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "BK #85 W-EASING — the published curve family (π)",
+          "file": "easing-primitive.spec.ts",
+          "line": 68,
+          "column": 6,
+          "specs": [
+            {
+              "title": "P1 — the bezier stroke plots the real CubicBezier twin",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2412,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T21:26:06.618Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9dcbd91b0290ed4c0cff-818fdea2e1ba9bc39a32",
+              "file": "easing-primitive.spec.ts",
+              "line": 69,
+              "column": 5
+            },
+            {
+              "title": "P2 — the steps stroke is constructed, not sampled",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1949,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T21:26:09.311Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9dcbd91b0290ed4c0cff-74a019f57e5196b4433f",
+              "file": "easing-primitive.spec.ts",
+              "line": 102,
+              "column": 5
+            },
+            {
+              "title": "P3 — the curve strokes the violet --motion-accent twin (light)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2071,
+                      "error": {
+                        "message": "Error: the curve stroke resolves to a color (oklch(0.532 0.18 317.5))\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m",
+                        "stack": "Error: the curve stroke resolves to a color (oklch(0.532 0.18 317.5))\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/easing-primitive.spec.ts:160:84",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/easing-primitive.spec.ts",
+                          "column": 84,
+                          "line": 160
+                        },
+                        "snippet": "  158 |             }, INK);\n  159 |             const rgb = parseRgb(strokeRgb || \"\");\n> 160 |             expect(rgb, `the curve stroke resolves to a color (${strokeRgb})`).not.toBeNull();\n      |                                                                                    ^\n  161 |             const hue = rgbHueDeg(rgb![0], rgb![1], rgb![2]);\n  162 |             // --viz-legendre is the violet identity (oklch hue ~317.5° light /\n  163 |             // ~318.1° dark) — NOT the warm-red --viz-fourier (~30°)."
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/easing-primitive.spec.ts",
+                            "column": 84,
+                            "line": 160
+                          },
+                          "message": "Error: the curve stroke resolves to a color (oklch(0.532 0.18 317.5))\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n\n  158 |             }, INK);\n  159 |             const rgb = parseRgb(strokeRgb || \"\");\n> 160 |             expect(rgb, `the curve stroke resolves to a color (${strokeRgb})`).not.toBeNull();\n      |                                                                                    ^\n  161 |             const hue = rgbHueDeg(rgb![0], rgb![1], rgb![2]);\n  162 |             // --viz-legendre is the violet identity (oklch hue ~317.5° light /\n  163 |             // ~318.1° dark) — NOT the warm-red --viz-fourier (~30°).\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/easing-primitive.spec.ts:160:84"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T21:26:11.270Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/test-results/easing-primitive-BK-85-W-E-40a79---motion-accent-twin-light--webkit/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/easing-primitive.spec.ts",
+                        "column": 84,
+                        "line": 160
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "9dcbd91b0290ed4c0cff-9dcdb9da0571bcc2b181",
+              "file": "easing-primitive.spec.ts",
+              "line": 143,
+              "column": 9
+            },
+            {
+              "title": "P3 — the curve strokes the violet --motion-accent twin (dark)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2361,
+                      "error": {
+                        "message": "Error: the curve stroke resolves to a color (oklch(0.739 0.134 318.100006))\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m",
+                        "stack": "Error: the curve stroke resolves to a color (oklch(0.739 0.134 318.100006))\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/easing-primitive.spec.ts:160:84",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/easing-primitive.spec.ts",
+                          "column": 84,
+                          "line": 160
+                        },
+                        "snippet": "  158 |             }, INK);\n  159 |             const rgb = parseRgb(strokeRgb || \"\");\n> 160 |             expect(rgb, `the curve stroke resolves to a color (${strokeRgb})`).not.toBeNull();\n      |                                                                                    ^\n  161 |             const hue = rgbHueDeg(rgb![0], rgb![1], rgb![2]);\n  162 |             // --viz-legendre is the violet identity (oklch hue ~317.5° light /\n  163 |             // ~318.1° dark) — NOT the warm-red --viz-fourier (~30°)."
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/easing-primitive.spec.ts",
+                            "column": 84,
+                            "line": 160
+                          },
+                          "message": "Error: the curve stroke resolves to a color (oklch(0.739 0.134 318.100006))\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n\n  158 |             }, INK);\n  159 |             const rgb = parseRgb(strokeRgb || \"\");\n> 160 |             expect(rgb, `the curve stroke resolves to a color (${strokeRgb})`).not.toBeNull();\n      |                                                                                    ^\n  161 |             const hue = rgbHueDeg(rgb![0], rgb![1], rgb![2]);\n  162 |             // --viz-legendre is the violet identity (oklch hue ~317.5° light /\n  163 |             // ~318.1° dark) — NOT the warm-red --viz-fourier (~30°).\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/easing-primitive.spec.ts:160:84"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T21:26:13.897Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/test-results/easing-primitive-BK-85-W-E-db3e0----motion-accent-twin-dark--webkit/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l2-v1100/tests-visual/easing-primitive.spec.ts",
+                        "column": 84,
+                        "line": 160
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "9dcbd91b0290ed4c0cff-63665a8b82a8234f9033",
+              "file": "easing-primitive.spec.ts",
+              "line": 143,
+              "column": 9
+            },
+            {
+              "title": "P4 — the readout is the re-parseable literal in both modes",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2449,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T21:26:17.172Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9dcbd91b0290ed4c0cff-a031a4cefa27d304cdc4",
+              "file": "easing-primitive.spec.ts",
+              "line": 172,
+              "column": 5
+            },
+            {
+              "title": "P5 — the frame is constant and the plot is square (letterbox zero)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1973,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T21:26:19.945Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9dcbd91b0290ed4c0cff-4b0b3ec6b428c43497ca",
+              "file": "easing-primitive.spec.ts",
+              "line": 190,
+              "column": 5
+            },
+            {
+              "title": "P11 — the draw-on sweeps over frames, and lands on one under reduce",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4983,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T21:26:21.928Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "9dcbd91b0290ed4c0cff-4f46c0e502937ee29c1c",
+              "file": "easing-primitive.spec.ts",
+              "line": 238,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Select.bound.spec.ts",
+      "file": "Select.bound.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "a twelve-row list that fits the room shows whole",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1430,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T21:26:26.932Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d3b8c31450e710e3fb68-7c48f7f047cbb11ad950",
+          "file": "Select.bound.spec.ts",
+          "line": 17,
+          "column": 1
+        },
+        {
+          "title": "a short viewport bounds the list 16px from the edge and it scrolls inside",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1083,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T21:26:28.369Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d3b8c31450e710e3fb68-70967b40e55dc249cb3a",
+          "file": "Select.bound.spec.ts",
+          "line": 35,
+          "column": 1
+        },
+        {
+          "title": "below 30rem the listbox is a bottom sheet at full width",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1092,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T21:26:29.459Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d3b8c31450e710e3fb68-205acd10d8b3433305b0",
+          "file": "Select.bound.spec.ts",
+          "line": 53,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-09T21:25:14.407Z",
+    "duration": 76198.834,
+    "expected": 9,
+    "skipped": 0,
+    "unexpected": 7,
+    "flaky": 0
+  }
+}

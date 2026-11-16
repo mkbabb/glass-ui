@@ -1,0 +1,70 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0
+
+ ❯ tests/styles/feedback-motion.test.ts (22 tests | 1 failed) 7308ms
+     × REFUSES ripple/splash — the press answer is already owned (the decide row) 7139ms
+ ❯ tests/components/custom/dock/GlassDock.seat-floats-portal.test.ts (5 tests | 1 failed) 228180ms
+     × tooltip opened from a seat renders outside the dock 227867ms
+(node:58630) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:58643) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:60747) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:61398) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/styles/feedback-motion.test.ts > #28's two refusals, made standing locks > REFUSES ripple/splash — the press answer is already owned (the decide row)
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/styles/feedback-motion.test.ts:327:5
+    325|     });
+    326|
+    327|     it("REFUSES ripple/splash — the press answer is already owned (the…
+       |     ^
+    328|         // TERMINAL-ROSTER #28 carries the "ripple/splash decide row" …
+    329|         // jubilance residue (RECONCILIATION §8-9 row 13: "genuinely u…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/components/custom/dock/GlassDock.seat-floats-portal.test.ts > 10.1.1 · O-102 (6) guard — every float a dock seat hosts portals out of the run by default > tooltip opened from a seat renders outside the dock
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/components/custom/dock/GlassDock.seat-floats-portal.test.ts:107:9
+    105| describe("10.1.1 · O-102 (6) guard — every float a dock seat hosts por…
+    106|     for (const [name, seat] of FLOATS) {
+    107|         it(`${name} opened from a seat renders outside the dock`, asyn…
+       |         ^
+    108|             const Host = defineComponent(() => () =>
+    109|                 h(GlassDock, { collapse: false }, () => [seat()]),
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+⎯⎯⎯⎯⎯⎯ Unhandled Errors ⎯⎯⎯⎯⎯⎯
+
+Vitest caught 1 unhandled error during the test run.
+This might cause false positive tests. Resolve unhandled errors to make sure your tests are not affected.
+
+⎯⎯⎯⎯⎯⎯ Unhandled Error ⎯⎯⎯⎯⎯⎯⎯
+Error: [vitest-pool]: Failed to start forks worker for test files /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests/components/number-field.contract.test.ts.
+ ❯ ../../../node_modules/vitest/dist/chunks/cli-api.BK8pd4xc.js:3465:94
+ ❯ runNextTicks node:internal/process/task_queues:65:5
+ ❯ processTimers node:internal/timers:538:9
+ ❯ Pool.schedule ../../../node_modules/vitest/dist/chunks/cli-api.BK8pd4xc.js:3465:5
+
+Caused by: Error: [vitest-pool-runner]: Timeout waiting for worker to respond
+ ❯ Timeout.<anonymous> ../../../node_modules/vitest/dist/chunks/cli-api.BK8pd4xc.js:3041:58
+ ❯ listOnTimeout node:internal/timers:605:17
+ ❯ processTimers node:internal/timers:541:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+
+ Test Files  2 failed | 276 passed (278)
+      Tests  2 failed | 2569 passed | 10 expected fail | 1 skipped (2582)
+     Errors  1 error
+   Start at  10:39:35
+   Duration  1610.41s (transform 15.28s, setup 28.06s, import 1533.58s, tests 317.36s, environment 145.69s)
+

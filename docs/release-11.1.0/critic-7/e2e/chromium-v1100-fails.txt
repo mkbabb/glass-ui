@@ -1,0 +1,223 @@
+-- aurora — no nameless thumb (was ≥22), light + dark
+   Error: aurora (light): 56 of 79 slider thumb(s) resolve NO accessible name (aria-input-field-name)
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+   
+   Expected: [32m79[39m
+   Received: [31m23[39m
+-- W4 — the DERIVE chip group's rightmost chip is not clipped
+   Error: the rightmost DERIVE chip (right 3987) must not overflow the aside content right (1215) — no MONO slice
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mtoBeLessThanOrEqual[2m([22m[32mexpected[39m[2m)[22m
+   
+   Expected: <= [32m1217[39m
+   Received:    [31m3987[39m
+-- slotted slider width ≥ 1px @ mobile light
+   Error: a ConfiguratorRow-slotted slider must exist on /substrates/blob
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mtoBeGreaterThan[2m([22m[32mexpected[39m[2m)[22m
+   
+   Expected: > [32m-1[39m
+   Received:   [31m-1[39m
+-- slotted slider width ≥ 1px @ mobile dark
+   Error: a ConfiguratorRow-slotted slider must exist on /substrates/blob
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mtoBeGreaterThan[2m([22m[32mexpected[39m[2m)[22m
+   
+   Expected: > [32m-1[39m
+   Received:   [31m-1[39m
+-- slotted slider width ≥ 1px @ desktop light
+   Error: a ConfiguratorRow-slotted slider must exist on /substrates/blob
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mtoBeGreaterThan[2m([22m[32mexpected[39m[2m)[22m
+   
+   Expected: > [32m-1[39m
+   Received:   [31m-1[39m
+-- slotted slider width ≥ 1px @ desktop dark
+   Error: a ConfiguratorRow-slotted slider must exist on /substrates/blob
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mtoBeGreaterThan[2m([22m[32mexpected[39m[2m)[22m
+   
+   Expected: > [32m-1[39m
+   Received:   [31m-1[39m
+-- aurora light: two-column, aside right, rounded, DOM stage→aside
+   Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeLessThanOrEqual[2m([22m[32mexpected[39m[2m)[22m
+   
+   Expected: <= [32m380[39m
+   Received:    [31m400[39m
+-- aurora dark: two-column, aside right, rounded, DOM stage→aside
+   Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeLessThanOrEqual[2m([22m[32mexpected[39m[2m)[22m
+   
+   Expected: <= [32m380[39m
+   Received:    [31m400[39m
+-- blob light: two-column, aside right, rounded, DOM stage→aside
+   Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeLessThanOrEqual[2m([22m[32mexpected[39m[2m)[22m
+   
+   Expected: <= [32m380[39m
+   Received:    [31m400[39m
+-- blob dark: two-column, aside right, rounded, DOM stage→aside
+   Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeLessThanOrEqual[2m([22m[32mexpected[39m[2m)[22m
+   
+   Expected: <= [32m380[39m
+   Received:    [31m400[39m
+-- fourier-field light: two-column, aside right, rounded, DOM stage→aside
+   Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeLessThanOrEqual[2m([22m[32mexpected[39m[2m)[22m
+   
+   Expected: <= [32m380[39m
+   Received:    [31m400[39m
+-- fourier-field dark: two-column, aside right, rounded, DOM stage→aside
+   Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeLessThanOrEqual[2m([22m[32mexpected[39m[2m)[22m
+   
+   Expected: <= [32m380[39m
+   Received:    [31m400[39m
+-- configurator light: two-column, aside right, rounded, DOM stage→aside
+   Error: configurator: desktop grid-template-columns must resolve TWO tracks (was "492px")
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+   
+   Expected: [32m2[39m
+   Received: [31m1[39m
+-- configurator dark: two-column, aside right, rounded, DOM stage→aside
+   Error: configurator: desktop grid-template-columns must resolve TWO tracks (was "492px")
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+   
+   Expected: [32m2[39m
+   Received: [31m1[39m
+-- (a)/(b) — the morph composites a transform over a reserved footprint (no per-frame relayout)
+   Error: the morph-axis box composites a transform mid-morph (got none)
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mtoBeTruthy[2m()[22m
+   
+   Received: [31mfalse[39m
+-- (c) — under PRM the dock seats synchronously (every control inside the box, no sliver)
+   Error: every dock control seats INSIDE the box under PRM (2/13 outside)
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+   
+   Expected: [32mtrue[39m
+   Received: [31mfalse[39m
+-- (d) — a nested DockLayerGroup reserves its peak-layer block-size (consumer never guesses)
+   Error: --dock-layer-peak-block-size is a measured non-zero peak (got )
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mtoBeGreaterThan[2m([22m[32mexpected[39m[2m)[22m
+   
+   Expected: > [32m0[39m
+   Received:   [31m0[39m
+-- (e) — a --dock-local-scale override on a dock scope paints a larger box (the @property thread)
+   Error: --dock-local-scale: 1.4 on the dock scope re-evaluates --dock-scale (base 1 → threaded 1)
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mtoBeGreaterThan[2m([22m[32mexpected[39m[2m)[22m
+   
+   Expected: > [32m1.3[39m
+   Received:   [31m1[39m
+-- plate clearance — sidebar-vertical (light)
+   Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5199/dock/overview
+   Call log:
+   [2m  - navigating to "http://localhost:5199/dock/overview", waiting until "networkidle"[22m
+   
+-- plate clearance — sidebar-vertical (dark)
+   Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5199/dock/overview
+   Call log:
+   [2m  - navigating to "http://localhost:5199/dock/overview", waiting until "networkidle"[22m
+   
+-- plate clearance — bottom-horizontal (light)
+   Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5199/dock/overview
+   Call log:
+   [2m  - navigating to "http://localhost:5199/dock/overview", waiting until "networkidle"[22m
+   
+-- plate clearance — bottom-horizontal (dark)
+   Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5199/dock/overview
+   Call log:
+   [2m  - navigating to "http://localhost:5199/dock/overview", waiting until "networkidle"[22m
+   
+-- (c) GRAIN NO-POP — the grain background-image stays constant across the hover onset
+   Error: the grain ::after background-image is always present (never `none` — no decode-and-pop swap)
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+   
+   Expected: not [32m"none"[39m
+-- (d) section caption mono + hairline @ mobile light
+   Error: the .glass-menu-section caption must read the mono register — got ""Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif"
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mtoMatch[2m([22m[32mexpected[39m[2m)[22m
+   
+   Expected pattern: [32m/mono|fira|menlo|monaco|consolas|courier/[39m
+   Received string:  [31m"\"plus jakarta sans\", \"plus jakarta sans fallback\", system-ui, sans-serif"[39
+-- (d) section caption mono + hairline @ mobile dark
+   Error: the .glass-menu-section caption must read the mono register — got ""Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif"
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mtoMatch[2m([22m[32mexpected[39m[2m)[22m
+   
+   Expected pattern: [32m/mono|fira|menlo|monaco|consolas|courier/[39m
+   Received string:  [31m"\"plus jakarta sans\", \"plus jakarta sans fallback\", system-ui, sans-serif"[39
+-- (d) section caption mono + hairline @ desktop light
+   Error: the .glass-menu-section caption must read the mono register — got ""Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif"
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mtoMatch[2m([22m[32mexpected[39m[2m)[22m
+   
+   Expected pattern: [32m/mono|fira|menlo|monaco|consolas|courier/[39m
+   Received string:  [31m"\"plus jakarta sans\", \"plus jakarta sans fallback\", system-ui, sans-serif"[39
+-- (d) section caption mono + hairline @ desktop dark
+   Error: the .glass-menu-section caption must read the mono register — got ""Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif"
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mtoMatch[2m([22m[32mexpected[39m[2m)[22m
+   
+   Expected pattern: [32m/mono|fira|menlo|monaco|consolas|courier/[39m
+   Received string:  [31m"\"plus jakarta sans\", \"plus jakarta sans fallback\", system-ui, sans-serif"[39
+-- light · mobile — nav-dock gestalt
+   Error: the rail renders mode="facets"
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+   
+   Expected: [32m"facets"[39m
+   Received: [31mnull[39m
+-- light · desktop — nav-dock gestalt
+   Error: the rail renders mode="facets"
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+   
+   Expected: [32m"facets"[39m
+   Received: [31mnull[39m
+-- dark · mobile — nav-dock gestalt
+   Error: the rail renders mode="facets"
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+   
+   Expected: [32m"facets"[39m
+   Received: [31mnull[39m
+-- dark · desktop — nav-dock gestalt
+   Error: the rail renders mode="facets"
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mtoBe[2m([22m[32mexpected[39m[2m) // Object.is equality[22m
+   
+   Expected: [32m"facets"[39m
+   Received: [31mnull[39m
+-- rail selected item reads iOS glass (no brand-red) @ mobile (light)
+   Error: could not find the active rail item
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBeNull[2m()[22m
+   
+   Received: [31mnull[39m
+-- rail selected item reads iOS glass (no brand-red) @ mobile (dark)
+   Error: could not find the active rail item
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBeNull[2m()[22m
+   
+   Received: [31mnull[39m
+-- rail selected item reads iOS glass (no brand-red) @ desktop (light)
+   Error: could not find the active rail item
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBeNull[2m()[22m
+   
+   Received: [31mnull[39m
+-- rail selected item reads iOS glass (no brand-red) @ desktop (dark)
+   Error: could not find the active rail item
+   
+   [2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.[22mtoBeNull[2m()[22m
+   
+   Received: [31mnull[39m
+-- G-CLOSE — capture the rail selected-register DELTA (light)
+   [31mTest timeout of 60000ms exceeded.[39m
+-- G-CLOSE — capture the rail selected-register DELTA (dark)
+   [31mTest timeout of 60000ms exceeded.[39m

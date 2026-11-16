@@ -1,0 +1,188 @@
+{
+  "label": "green",
+  "engine": "webkit",
+  "byItem": {
+    "Collapsible layout": {
+      "pass": 5,
+      "total": 5
+    },
+    "Collapsible gap": {
+      "pass": 7,
+      "total": 7
+    },
+    "Collapsible frames": {
+      "pass": 2,
+      "total": 2
+    },
+    "Slider controlled": {
+      "pass": 3,
+      "total": 3
+    },
+    "Root tempo": {
+      "pass": 1,
+      "total": 1
+    },
+    "Tabs radius": {
+      "pass": 8,
+      "total": 8
+    }
+  },
+  "verdicts": [
+    {
+      "item": "Collapsible layout",
+      "cell": "390-block",
+      "pass": true,
+      "why": "content 78.4 vs v11.0.0 78.4; kids [[0,0,358],[0,19.6,358],[0,39.2,358],[0,58.8,358]] vs [[0,0,358],[0,19.6,358],[0,39.2,358],[0,58.8,358]]"
+    },
+    {
+      "item": "Collapsible layout",
+      "cell": "390-grid",
+      "pass": true,
+      "why": "content 102.4 vs v11.0.0 102.4; kids [[0,0,358],[0,27.6,358],[0,55.2,358],[0,82.8,358]] vs [[0,0,358],[0,27.6,358],[0,55.2,358],[0,82.8,358]]"
+    },
+    {
+      "item": "Collapsible layout",
+      "cell": "390-grid2",
+      "pass": true,
+      "why": "content 47.2 vs v11.0.0 47.2; kids [[0,0,175],[183,0,175],[0,27.6,175],[183,27.6,175]] vs [[0,0,175],[183,0,175],[0,27.6,175],[183,27.6,175]]"
+    },
+    {
+      "item": "Collapsible layout",
+      "cell": "390-flex",
+      "pass": true,
+      "why": "content 102.4 vs v11.0.0 102.4; kids [[0,0,358],[0,27.6,358],[0,55.2,358],[0,82.8,358]] vs [[0,0,358],[0,27.6,358],[0,55.2,358],[0,82.8,358]]"
+    },
+    {
+      "item": "Collapsible layout",
+      "cell": "390-row",
+      "pass": true,
+      "why": "content 19.6 vs v11.0.0 19.6; kids [[0,0,28.6],[36.6,0,49.9],[94.4,0,33.5],[135.9,0,42.5]] vs [[0,0,28.6],[36.6,0,49.9],[94.4,0,33.5],[135.9,0,42.5]]"
+    },
+    {
+      "item": "Collapsible gap",
+      "cell": "390-light-block",
+      "pass": true,
+      "why": "first child at (0, 12); ::before none"
+    },
+    {
+      "item": "Collapsible gap",
+      "cell": "390-light-grid",
+      "pass": true,
+      "why": "first child at (0, 12); ::before none"
+    },
+    {
+      "item": "Collapsible gap",
+      "cell": "390-light-flex",
+      "pass": true,
+      "why": "first child at (0, 12); ::before none"
+    },
+    {
+      "item": "Collapsible gap",
+      "cell": "390-light-grid2",
+      "pass": true,
+      "why": "first child at (0, 12), second at (183, 12); ::before none"
+    },
+    {
+      "item": "Collapsible gap",
+      "cell": "390-dark-grid2",
+      "pass": true,
+      "why": "first child at (0, 12), second at (183, 12); ::before none"
+    },
+    {
+      "item": "Collapsible gap",
+      "cell": "1440-light-grid2",
+      "pass": true,
+      "why": "first child at (0, 12), second at (708, 12); ::before none"
+    },
+    {
+      "item": "Collapsible gap",
+      "cell": "1440-dark-grid2",
+      "pass": true,
+      "why": "first child at (0, 12), second at (708, 12); ::before none"
+    },
+    {
+      "item": "Collapsible frames",
+      "cell": "390",
+      "pass": true,
+      "why": "closed 24, first open frame 24 (content 0, padding 0px), open 138.38, last close frame 24.33"
+    },
+    {
+      "item": "Collapsible frames",
+      "cell": "1440",
+      "pass": true,
+      "why": "closed 27.89, first open frame 27.89 (content 0, padding 0px), open 155.64, last close frame 28.27"
+    },
+    {
+      "item": "Slider controlled",
+      "cell": "390-reject",
+      "pass": true,
+      "why": "initial 50/50/0.5; ArrowRight 60/60/0.6; ArrowRight 60/60/0.6; ArrowRight 60/60/0.6; End 60/60/0.6"
+    },
+    {
+      "item": "Slider controlled",
+      "cell": "1440-reject",
+      "pass": true,
+      "why": "initial 50/50/0.5; ArrowRight 60/60/0.6; ArrowRight 60/60/0.6; ArrowRight 60/60/0.6; End 60/60/0.6"
+    },
+    {
+      "item": "Slider controlled",
+      "cell": "390-clamp",
+      "pass": true,
+      "why": "initial 50/50/0.5; ArrowRight 60/60/0.6; ArrowRight 60/60/0.6; ArrowRight 60/60/0.6; End 60/60/0.6"
+    },
+    {
+      "item": "Root tempo",
+      "cell": "1440",
+      "pass": true,
+      "why": "initial 1/1; inlineStyle 0.5/0.5; reset 1/1; insertRule 0.6/0.6; beforeResize 1/1; afterResize 0.7/0.7; beforeLink 1/1; afterLinkLoad 0.8/0.8; link load, sheet at append false"
+    },
+    {
+      "item": "Tabs radius",
+      "cell": "390-fine-light",
+      "pass": true,
+      "why": "coarse false; h/r page.tab 26.3/16, page.indicator 26.3/16, page.strip 32.3/19, dock.tab 26.3/16, dock.indicator 26.3/16, dock.strip 32.3/19 (fine: equal to v11.0.0)"
+    },
+    {
+      "item": "Tabs radius",
+      "cell": "390-fine-dark",
+      "pass": true,
+      "why": "coarse false; h/r page.tab 26.3/16, page.indicator 26.3/16, page.strip 32.3/19, dock.tab 26.3/16, dock.indicator 26.3/16, dock.strip 32.3/19 (fine: equal to v11.0.0)"
+    },
+    {
+      "item": "Tabs radius",
+      "cell": "390-coarse-light",
+      "pass": true,
+      "why": "coarse true; h/r page.tab 44/22, page.indicator 44/22, page.strip 50/25, dock.tab 44/22, dock.indicator 44/22, dock.strip 50/25"
+    },
+    {
+      "item": "Tabs radius",
+      "cell": "390-coarse-dark",
+      "pass": true,
+      "why": "coarse true; h/r page.tab 44/22, page.indicator 44/22, page.strip 50/25, dock.tab 44/22, dock.indicator 44/22, dock.strip 50/25"
+    },
+    {
+      "item": "Tabs radius",
+      "cell": "1440-fine-light",
+      "pass": true,
+      "why": "coarse false; h/r page.tab 34.6/16, page.indicator 34.6/16, page.strip 42.6/20, dock.tab 34.6/16, dock.indicator 34.6/16, dock.strip 42.6/20 (fine: equal to v11.0.0)"
+    },
+    {
+      "item": "Tabs radius",
+      "cell": "1440-fine-dark",
+      "pass": true,
+      "why": "coarse false; h/r page.tab 34.6/16, page.indicator 34.6/16, page.strip 42.6/20, dock.tab 34.6/16, dock.indicator 34.6/16, dock.strip 42.6/20 (fine: equal to v11.0.0)"
+    },
+    {
+      "item": "Tabs radius",
+      "cell": "1440-coarse-light",
+      "pass": true,
+      "why": "coarse true; h/r page.tab 44/22, page.indicator 44/22, page.strip 52/26, dock.tab 44/22, dock.indicator 44/22, dock.strip 52/26"
+    },
+    {
+      "item": "Tabs radius",
+      "cell": "1440-coarse-dark",
+      "pass": true,
+      "why": "coarse true; h/r page.tab 44/22, page.indicator 44/22, page.strip 52/26, dock.tab 44/22, dock.indicator 44/22, dock.strip 52/26"
+    }
+  ]
+}

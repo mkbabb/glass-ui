@@ -1,0 +1,8 @@
+@import "tailwindcss" source("../../../../src");
+@import "tw-animate-css";
+@import "../../../../src/styles/index.css";
+
+body { margin: 0; background: var(--background); color: var(--foreground); }
+.scene { padding: 48px 24px; display: flex; flex-direction: column; gap: 40px; align-items: center; }
+.row { display: flex; gap: 32px; align-items: flex-start; flex-wrap: wrap; justify-content: center; }
+.glyph { display: inline-flex; }

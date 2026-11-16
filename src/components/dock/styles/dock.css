@@ -159,7 +159,7 @@
             var(--_dock-edge-expanded-ink) calc(var(--dock-expand-t) * 100%),
             var(--dock-plate-collapsed-border)
         );
-        border: 1.5px solid
+        border: var(--dock-plate-border-width) solid
             var(--_dock-edge-by-expanded, var(--_dock-edge-by-collapsed, var(--_dock-edge-lerp)));
     }
 
@@ -186,16 +186,28 @@
         display: none;
     }
 
-    /* The paper-grain overlay — MOVED off `.glass-dock::after` onto the plate (the grain
-       belongs on the glass surface, which is the plate now). Same recipe, byte-identical. */
+    /* The paper grain on the plate: a generated dot field of foreground ink, three
+       gradient dot lattices at co-prime pitches, so the pattern repeats only every few
+       hundred pixels. No `url()` image paints here. Browsers count a `url()` image as
+       page content (Chromium a background, WebKit a mask as well), so an SVG grain
+       became a page's Largest Contentful Paint entry, timed by the dock's late land.
+       Gradients are never LCP candidates in either engine. The ink darkens on light
+       and lifts on dark through the blend. */
     .dock-plate::after {
         content: "";
         position: absolute;
         inset: 0;
         border-radius: inherit;
-        background: var(--paper-clean-texture);
+        background-image:
+            radial-gradient(circle at 30% 40%, var(--foreground) 0 0.5px, transparent 0.9px),
+            radial-gradient(circle at 70% 25%, var(--foreground) 0 0.5px, transparent 0.9px),
+            radial-gradient(
+                circle at 45% 75%,
+                color-mix(in srgb, var(--foreground) 50%, transparent) 0 0.6px,
+                transparent 1px
+            );
+        background-size: 7px 7px, 11px 13px, 17px 19px;
         background-repeat: repeat;
-        background-size: var(--paper-texture-size);
         opacity: var(--glass-grain-opacity);
         pointer-events: none;
         mix-blend-mode: overlay;
@@ -218,6 +230,15 @@
         display: contents;
         overflow: visible;
         pointer-events: auto;
+    }
+
+    /* The dock's corner reaches a progress rim seated in a persistent region. The rim is
+       out of flow and fills the dock box, so on its border edge it traces the dock's
+       radius; neither wrapper paints, clips or draws a background, so passing the corner
+       through them changes nothing else. */
+    .glass-dock > .dock-controls,
+    .glass-dock > .dock-controls > .dock-persistent {
+        border-radius: inherit;
     }
 
     /* When a consumer needs the control run to be a real box (a scroll port lands here at

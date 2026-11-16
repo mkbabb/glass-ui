@@ -1,5 +1,7 @@
 import { onScopeDispose, watch, type Ref } from "vue";
 
+import { isRunSeat } from "./useDockRunMark";
+
 type Axis = "horizontal" | "vertical";
 
 function getSize(el: HTMLElement, axis: Axis): number {
@@ -193,6 +195,15 @@ function constraintOf(root: HTMLElement, axis: Axis): string {
  * (through a morph, a hit on the root, the layers or the panes alone is the morph's own
  * frame and captures nothing), on a MutationObserver record in either pane, on a window resize (in the resize step,
  * before the frame's layout), and once fonts are ready.
+ *
+ * THROUGH A MORPH NO CAPTURE RUNS INSIDE AN OBSERVER DELIVERY. A morph capture writes
+ * `--dock-expanded-px`, which `[data-morphing]` sizes the root by, and so the root's
+ * parent when the dock sizes it. Both are already delivered by then, so the write
+ * leaves a notification undelivered (the ResizeObserver loop error, O-360a: a resize
+ * across a breakpoint mid-morph, where the reading moves). The delivery, and a host
+ * style record in its microtask checkpoint, owe a capture, and it runs once at the next
+ * animation frame, before that frame's layout. A pane's content patched mid-morph is
+ * captured on its mutation record, before the layout of the frame it lands in.
  */
 export function useDockExpandedSize(
     options: UseDockExpandedSizeOptions,
@@ -351,7 +362,7 @@ export function useDockExpandedSize(
         let start = Infinity;
         let end = -Infinity;
         for (const seat of run.children) {
-            if (!(seat instanceof HTMLElement) || seat.offsetParent !== run) continue;
+            if (!(seat instanceof HTMLElement) || !isRunSeat(seat) || seat.offsetParent !== run) continue;
             const offset = horizontal ? seat.offsetLeft : seat.offsetTop;
             start = Math.min(start, offset);
             end = Math.max(end, offset + (horizontal ? seat.offsetWidth : seat.offsetHeight));
@@ -389,7 +400,7 @@ export function useDockExpandedSize(
             if (el) observer.observe(el);
         }
         for (const pane of panes) {
-            for (const child of pane?.children ?? []) observer.observe(child);
+            for (const child of pane?.children ?? []) if (isRunSeat(child)) observer.observe(child);
         }
     }
 
@@ -423,6 +434,21 @@ export function useDockExpandedSize(
         crossObserver.observe(plate);
     }
 
+    /* The capture a morph's observer delivery owes, taken at the next animation frame. */
+    let owedFrame = 0;
+
+    function owe(): void {
+        if (owedFrame) return;
+        if (typeof requestAnimationFrame === "undefined") {
+            capture();
+            return;
+        }
+        owedFrame = requestAnimationFrame(() => {
+            owedFrame = 0;
+            if (!disposed) capture();
+        });
+    }
+
     function attach(): void {
         observer?.disconnect();
         observer = null;
@@ -449,14 +475,13 @@ export function useDockExpandedSize(
             // delivery of the morph's own boxes alone therefore captures nothing, and
             // skipping it keeps the capture's measuring layouts out of every morph frame.
             observer = new ResizeObserver((entries) => {
-                const own = [rootEl.value, contentEl.value, expandedEl.value, collapsedEl.value];
-                if (
-                    rootEl.value?.hasAttribute("data-morphing") &&
-                    entries.every((entry) => own.includes(entry.target as HTMLElement))
-                ) {
+                if (!rootEl.value?.hasAttribute("data-morphing")) {
+                    capture();
                     return;
                 }
-                capture();
+                const own = [rootEl.value, contentEl.value, expandedEl.value, collapsedEl.value];
+                if (entries.every((entry) => own.includes(entry.target as HTMLElement))) return;
+                owe();
             });
             observe();
         }
@@ -469,9 +494,12 @@ export function useDockExpandedSize(
             // bar's Sections cell changes on each section crossing (glass `getSize` was the top
             // self-time function of the /sci phone scroll walk, 107 ms; U/B8 PF). Without an
             // observer the microtask is the last moment before paint, so it captures.
+            // Through a morph it captures here too: the delivery that would see the change
+            // may not write a size (O-360a), and the frame the patch lands in must reserve
+            // the new pane's box (O-101).
             mutations = new MutationObserver(() => {
                 observe();
-                if (!observer) capture();
+                if (!observer || rootEl.value?.hasAttribute("data-morphing")) capture();
             });
             for (const pane of [expandedEl.value, collapsedEl.value]) {
                 if (pane) {
@@ -490,7 +518,7 @@ export function useDockExpandedSize(
                 // Once the host has moved, the morph already takes every reading, and the
                 // capture's own `--dock-*-px` writes must not re-enter it.
                 if (hostMoved || !restConstraint || !root.hasAttribute("data-morphing")) return;
-                if (constraintOf(root, axis.value) !== restConstraint) capture();
+                if (constraintOf(root, axis.value) !== restConstraint) owe();
             });
             hostStyle.observe(root, { attributes: true, attributeFilter: ["style", "class"] });
         }
@@ -516,6 +544,7 @@ export function useDockExpandedSize(
 
     onScopeDispose(() => {
         disposed = true;
+        if (owedFrame) cancelAnimationFrame(owedFrame);
         observer?.disconnect();
         observer = null;
         crossObserver?.disconnect();
