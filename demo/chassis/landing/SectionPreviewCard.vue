@@ -1,7 +1,9 @@
 <script setup lang="ts">
-// A card: the live preview edge to edge across its top, then the title. The preview
-// is the page's own stage (or its tile), mounted inert. A card has no blurb.
-import { computed, defineAsyncComponent } from "vue";
+// A card: the preview plate across its top, then the title. The plate shows the page's
+// own stage (or its tile), mounted inert and scaled down to fit whole; a section with
+// neither shows the empty plate at the same height, so every card is the same size.
+// A card has no blurb.
+import { computed, defineAsyncComponent, onBeforeUnmount, onMounted, ref } from "vue";
 import TransitionRouteLink from "../TransitionRouteLink.vue";
 import type { TileResolution } from "./storyTile";
 
@@ -14,6 +16,30 @@ const props = defineProps<{
 const preview = computed(() =>
     props.tile.kind === "live" ? defineAsyncComponent(props.tile.loader) : null,
 );
+
+// The specimen lays out at the plate's width; when its natural box is larger than the
+// plate it is scaled down about its centre until the whole of it fits.
+const plate = ref<HTMLElement | null>(null);
+const specimen = ref<HTMLElement | null>(null);
+const fit = ref(1);
+let observer: ResizeObserver | null = null;
+
+function measure(): void {
+    const box = plate.value;
+    const inner = specimen.value;
+    if (!box || !inner) return;
+    const w = Math.max(inner.scrollWidth, inner.offsetWidth);
+    const h = Math.max(inner.scrollHeight, inner.offsetHeight);
+    if (w === 0 || h === 0) return;
+    fit.value = Math.min(1, box.clientWidth / w, box.clientHeight / h);
+}
+
+onMounted(() => {
+    observer = new ResizeObserver(measure);
+    if (plate.value) observer.observe(plate.value);
+    if (specimen.value) observer.observe(specimen.value);
+});
+onBeforeUnmount(() => observer?.disconnect());
 </script>
 
 <template>
@@ -24,13 +50,21 @@ const preview = computed(() =>
         data-story-card
     >
         <div
-            v-if="preview"
+            ref="plate"
             class="section-preview-card-preview"
             inert
             aria-hidden="true"
-            data-card-preview
+            :data-card-preview="preview ? 'live' : 'empty'"
         >
-            <component :is="preview" />
+            <div
+                v-if="preview"
+                ref="specimen"
+                class="section-preview-card-specimen"
+                :style="{ scale: fit }"
+                data-card-specimen
+            >
+                <component :is="preview" />
+            </div>
         </div>
         <span data-route-label class="section-preview-card-title text-subheading text-foreground">
             {{ title }}
@@ -55,16 +89,25 @@ const preview = computed(() =>
     translate: 0 -2px;
 }
 
-/* The preview runs edge to edge and is clipped by the card's own corner. */
+/* The plate runs edge to edge at 16:10 on every card, specimen or not. */
 .section-preview-card-preview {
     position: relative;
-    display: grid;
-    place-items: center;
     overflow: clip;
-    container-type: size;
     aspect-ratio: 16 / 10;
+    background-color: var(--story-stage-plate);
     pointer-events: none;
     user-select: none;
+}
+
+/* The specimen at the plate's width and its own height, centred, scaled to fit. */
+.section-preview-card-specimen {
+    position: absolute;
+    inset-inline: 0;
+    top: 50%;
+    translate: 0 -50%;
+    transform-origin: center;
+    container-type: inline-size;
+    padding: var(--sp-4);
 }
 
 .section-preview-card-title {

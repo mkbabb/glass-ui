@@ -68,7 +68,15 @@ describe("the card", () => {
         expect(wrapper.findAll("p")).toHaveLength(0);
         expect(wrapper.findAll("img")).toHaveLength(0);
         expect(wrapper.text()).toBe("Forms");
-        expect(wrapper.find("[data-card-preview]").exists()).toBe(false);
+    });
+
+    it("shows the empty plate when its section has no stage yet, so every card is one size", () => {
+        const wrapper = mount(SectionPreviewCard, {
+            props: { to: "/forms", title: "Forms", tile: { kind: "none" } },
+            ...stub,
+        });
+        expect(wrapper.get("[data-card-preview]").attributes("data-card-preview")).toBe("empty");
+        expect(wrapper.find("[data-card-specimen]").exists()).toBe(false);
     });
 
     it("mounts a live preview inert and out of the accessibility tree", () => {
@@ -81,6 +89,7 @@ describe("the card", () => {
             ...stub,
         });
         const preview = wrapper.get("[data-card-preview]");
+        expect(preview.attributes("data-card-preview")).toBe("live");
         expect(preview.attributes("inert")).toBeDefined();
         expect(preview.attributes("aria-hidden")).toBe("true");
     });
