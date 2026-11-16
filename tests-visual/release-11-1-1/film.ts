@@ -19,12 +19,14 @@ export type Frame = {
     /** A CSS animation or transition is running on the surface. */
     anim?: boolean;
     clip?: string;
+    /** The companion selector is mounted. */
+    also?: boolean;
 };
 
 export type Film = { mark: number; frames: Frame[] };
 
-export async function startFilm(page: Page, selector: string): Promise<void> {
-    await page.evaluate((selector) => {
+export async function startFilm(page: Page, selector: string, also = ""): Promise<void> {
+    await page.evaluate(({ selector, also }) => {
         const w = window as unknown as { __film: { mark: number; frames: unknown[]; stop: boolean } };
         const film = { mark: -1, frames: [] as unknown[], stop: false };
         w.__film = film;
@@ -62,6 +64,7 @@ export async function startFilm(page: Page, selector: string): Promise<void> {
                     bg: cs.backgroundColor,
                     anim: el.getAnimations().some((a) => a.playState === "running"),
                     clip: cs.clipPath,
+                    also: also ? !!document.querySelector(also) : undefined,
                 });
             }
             if (!film.stop) requestAnimationFrame(tick);
@@ -70,7 +73,7 @@ export async function startFilm(page: Page, selector: string): Promise<void> {
         (window as unknown as { __mark: () => void }).__mark = () => {
             film.mark = performance.now() - t0;
         };
-    }, selector);
+    }, { selector, also });
     await page.waitForTimeout(80);
 }
 
@@ -125,6 +128,7 @@ export async function press(page: Page, project: string, x: number, y: number): 
 }
 
 export async function pressOn(page: Page, project: string, selector: string): Promise<void> {
+    await page.locator(selector).first().scrollIntoViewIfNeeded();
     const box = await page.locator(selector).first().boundingBox();
     if (!box) throw new Error(`no box for ${selector}`);
     await press(page, project, box.x + box.width / 2, box.y + box.height / 2);

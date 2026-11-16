@@ -392,3 +392,119 @@ for (const c of exitCases) {
         expect(read.stray, `the exit follows the exit curve ${at}`).toBeLessThanOrEqual(0.12);
     });
 }
+
+// ── routes ─────────────────────────────────────────────────────────────────────────
+/** Opacity times the share of the box on screen. */
+function seenIn(vw: { width: number; height: number }) {
+    return (f: Frame) => {
+        if (!f.present || !f.w || !f.h) return 0;
+        const w = Math.max(0, Math.min(f.x! + f.w, vw.width) - Math.max(f.x!, 0));
+        const h = Math.max(0, Math.min(f.y! + f.h, vw.height) - Math.max(f.y!, 0));
+        return (f.op ?? 0) * ((w * h) / (f.w * f.h));
+    };
+}
+
+function judgeLeave(film: Film, vw: { width: number; height: number }) {
+    const seen = seenIn(vw);
+    const { rest } = exitOf(film);
+    const after = film.frames.filter((f) => f.t >= film.mark);
+    const goneIdx = after.findIndex((f) => seen(f) <= 0.01);
+    const leaving = [{ ...rest, t: film.mark }, ...after.slice(0, goneIdx < 0 ? after.length : goneIdx + 1)];
+    const series: [number, number][] = leaving.map((f) => [f.t, seen(f)]);
+    return {
+        rest,
+        after,
+        goneIdx,
+        painted: after.slice(0, goneIdx < 0 ? after.length : goneIdx).filter((f) => seen(f) > 0.01).length,
+        reopened: goneIdx >= 0 && (after.slice(goneIdx).some((f) => seen(f) > 0.05) || after[after.length - 1].present),
+        share: +worstFrameShare(series, seen(rest)).toFixed(3),
+        frames: leaving.map((f) => [Math.round(f.t - film.mark), +seen(f).toFixed(3), f.present ? Math.round(f.h!) : null]),
+    };
+}
+
+for (const route of ["escape", "outside"] as const) {
+    test(`routes · a detented Sheet leaves whole by ${route}`, async ({ page }, info) => {
+        const project = info.project.name;
+        test.skip(project === "webkit-phone" && route === "outside", "Playwright WebKit's touchscreen.tap reaches no outside-press listener");
+        await openHarness(page);
+        await pressOn(page, project, '[data-testid="x-detent"]');
+        await page.locator('[data-testid="x-detent-content"][data-state="open"]').waitFor();
+        await page.waitForTimeout(1200);
+        await startFilm(page, '[data-testid="x-detent-content"]');
+        await markFilm(page);
+        if (route === "escape") await page.keyboard.press("Escape");
+        else await press(page, project, 20, 20);
+        const film = await stopFilm(page, 1600);
+        const read = judgeLeave(film, page.viewportSize()!);
+        await info.attach("routes", { body: JSON.stringify(read), contentType: "application/json" });
+        const at = JSON.stringify(read.frames);
+        expect(read.goneIdx, `the sheet leaves ${at}`).toBeGreaterThan(-1);
+        expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+        expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+    });
+}
+
+for (const route of ["pick", "escape", "outside"] as const) {
+    test(`routes · a CommandDialog keeps its list through its exit by ${route}`, async ({ page }, info) => {
+        const project = info.project.name;
+        test.skip(project === "webkit-phone" && route === "outside", "Playwright WebKit's touchscreen.tap reaches no outside-press listener");
+        // The demo's own palette story: its list of groups is the case that cut.
+        await page.goto("/containers/command");
+        await pressOn(page, project, "button:has-text('Open palette')");
+        await page.locator('.command-dialog__content[data-state="open"]').waitFor();
+        await page.waitForTimeout(900);
+        await startFilm(page, ".command-dialog__content", ".command-dialog__content [data-slot=command-list]");
+        await markFilm(page);
+        if (route === "pick") await pressOn(page, project, ".command-dialog__content [data-slot=command-item]:not([data-disabled])");
+        else if (route === "escape") await page.keyboard.press("Escape");
+        else await press(page, project, 10, 10);
+        const film = await stopFilm(page, 1000);
+        const read = judgeLeave(film, page.viewportSize()!);
+        await info.attach("routes", { body: JSON.stringify(read), contentType: "application/json" });
+        const at = JSON.stringify(read.frames);
+        expect(read.goneIdx, `the palette leaves ${at}`).toBeGreaterThan(-1);
+        for (const f of read.after.slice(0, read.goneIdx)) {
+            if (!f.present) continue;
+            expect(f.also, `the list is mounted while the plate is seen ${at}`).toBe(true);
+            expect(f.h!, `the plate keeps its height ${at}`).toBeGreaterThanOrEqual(read.rest.h! * 0.9);
+        }
+        expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+    });
+}
+
+const triggerCases = [
+    { name: "Select", trigger: '[data-testid="x-select"]', content: '[data-testid="x-select-content"]' },
+    { name: "DropdownMenu", trigger: '[data-testid="x-menu"]', content: '[data-testid="x-menu-content"]' },
+    { name: "Popover", trigger: '[data-testid="x-popover"]', content: '[data-testid="x-popover-content"]' },
+];
+
+for (const c of triggerCases) {
+    test(`routes · a press on an open ${c.name}'s trigger closes it once`, async ({ page }, info) => {
+        const project = info.project.name;
+        test.skip(
+            project === "webkit-phone",
+            "a touch press closes these surfaces through the outside-press listener, which Playwright WebKit's touchscreen.tap does not reach",
+        );
+        await openHarness(page);
+        await pressOn(page, project, c.trigger);
+        await page.locator(`${c.content}[data-state="open"]`).waitFor();
+        await page.waitForTimeout(800);
+        const box = (await page.locator(c.trigger).boundingBox())!;
+        const covered = await page.evaluate(
+            ({ x, y, content }) => !!document.elementFromPoint(x, y)?.closest(content),
+            { x: box.x + box.width / 2, y: box.y + box.height / 2, content: c.content },
+        );
+        test.skip(covered, "the open surface covers its trigger");
+        await startFilm(page, c.content);
+        await markFilm(page);
+        await press(page, project, box.x + box.width / 2, box.y + box.height / 2);
+        const film = await stopFilm(page, 900);
+        const read = judgeLeave(film, page.viewportSize()!);
+        await info.attach("routes", { body: JSON.stringify(read), contentType: "application/json" });
+        const at = JSON.stringify(read.frames);
+        expect(read.goneIdx, `the surface leaves ${at}`).toBeGreaterThan(-1);
+        expect(read.reopened, `and stays closed ${at}`).toBe(false);
+        expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+        expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+    });
+}

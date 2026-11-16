@@ -48,7 +48,7 @@
  *
  * `--detent-t` is the fraction of the anchored axis the sheet occupies, and the sheet
  * takes its BLOCK-SIZE (or inline-size, on a side edge) from it while staying pinned to
- * its edge. Nothing translates.
+ * its edge. Above the floor (below) nothing translates.
  *
  * The alternative — the shipped one — gave the sheet `height: 100%` and translated it by
  * `(1 − t)·100%`. Every consequence of that followed from one fact: the box was always
@@ -531,16 +531,18 @@
      * absent from this sum by intent), the body still keeps one line, and the rungs above the
      * chrome are untouched.
      *
-     * `0` remains legal as the DISMISSAL endpoint: the rung scalar still resolves onto it, the
-     * engine still requests the close, and the exit is the unmount — never a shrinking clipped
-     * box. The INLINE axis takes no floor this round; a narrow side rung clips along a
-     * different axis and rides the sheet family's next π. */
+     * `0` remains legal as the DISMISSAL endpoint: the rung scalar still resolves onto it and
+     * the engine still requests the close. Below the floor the box stops shrinking, so the
+     * plate slides by the difference instead: what shows of it is always the rung's share of
+     * the viewport, and at 0 it is wholly past the edge when it unmounts, on every route
+     * that closes it and on the way in. The INLINE axis takes no floor this round; a narrow
+     * side rung clips along a different axis and rides the sheet family's next π. */
     :where(
         [data-slot="sheet-content"][data-detents][data-side="bottom"],
         [data-slot="sheet-content"][data-detents][data-side="top"]
     ) {
         block-size: calc(clamp(0, var(--detent-t), 1) * 100dvh);
-        min-block-size: calc(
+        --_sheet-floor: calc(
             /* the plate: its own padding, and the one inner edge it draws */ 2 *
                 var(--space-family) + var(--sheet-seam-width) +
                 /* the grip's operable row */ var(--touch-target) +
@@ -550,7 +552,18 @@
                 1lh + /* the footer's seam, and an action at least operable */
                 var(--space-body) + var(--sheet-seam-width) + var(--touch-target)
         );
+        min-block-size: var(--_sheet-floor);
         max-block-size: 100dvh;
+        --_sheet-below-floor: max(
+            0px,
+            var(--_sheet-floor) - clamp(0, var(--detent-t), 1) * 100dvh
+        );
+    }
+    :where([data-slot="sheet-content"][data-detents][data-side="bottom"]) {
+        translate: 0 var(--_sheet-below-floor);
+    }
+    :where([data-slot="sheet-content"][data-detents][data-side="top"]) {
+        translate: 0 calc(-1 * var(--_sheet-below-floor));
     }
 
     :where(

@@ -1,7 +1,7 @@
 // Every surface the exits witnesses close, on a busy ground. A GlassDock at the top
 // seats a Select (its open state driven by `v-model:open`, as value.js's pages dropdown
 // drives it) and a DropdownMenu; below it a row of triggers opens a Popover, a Tooltip,
-// a Dialog and a right and a bottom Sheet. Imports are relative to `src/`, so the file mounts
+// a Dialog, a right and a bottom Sheet and a detented bottom Sheet. Imports are relative to `src/`, so the file mounts
 // unchanged on an older tree.
 import "../../demo/demo.css";
 import { createApp, h, ref } from "vue";
@@ -43,6 +43,7 @@ document.body.style.cssText = [
 const pages = ["Picker", "Palettes", "Gradient", "Mix", "Extract"];
 const view = ref("Picker");
 const open = ref(false);
+const rung = ref(0.5);
 
 createApp({
     setup: () => () =>
@@ -103,6 +104,20 @@ createApp({
                         h(SheetContent, { side, "data-testid": `x-sheet-${side}-content` }, () => [h(DialogTitle, () => "A sheet"), h("p", "Its body.")]),
                     ]),
                 ),
+                h(Dialog, null, () => [
+                    h(DialogTrigger, { "data-testid": "x-detent", style: "padding:10px 14px;background:#fff;color:#000;border-radius:8px;font:14px sans-serif" }, () => "Detented"),
+                    h(
+                        SheetContent,
+                        {
+                            side: "bottom",
+                            detents: [0.5, 0.9],
+                            detent: rung.value,
+                            "onUpdate:detent": (v: number) => (rung.value = v),
+                            "data-testid": "x-detent-content",
+                        },
+                        () => [h(DialogTitle, () => "A detented sheet"), h("p", "Its body.")],
+                    ),
+                ]),
             ]),
         ]),
 }).mount("#app");

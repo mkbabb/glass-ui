@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, useAttrs } from "vue";
-import { ComboboxContent as RekaComboboxContent } from "reka-ui";
+import { ComboboxContent as RekaComboboxContent, injectDialogRootContext } from "reka-ui";
 import { cn } from "../_shared/class-names";
 import { useDockParticipation } from "../_shared/overlay";
 import type { ComboboxListEmits } from "../_shared/selection";
@@ -24,6 +24,13 @@ const forwardedAttrs = computed(() => ({ ...attrs }));
    command palette's own list read as foreign DOM to the dock's click-away, so
    scrolling the list could collapse the dock under it. */
 const dock = useDockParticipation();
+
+/* A palette inside a dialog closes with the dialog, and reka unmounts a closed combobox's
+   list at once, so the rows left in the dialog's first exit frame and the plate fell to
+   its input. Once the dialog it sits in has closed, the list stays mounted, and the
+   dialog's own exit takes it away with the plate. */
+const dialogRoot = injectDialogRootContext(null);
+const leaving = computed(() => (dialogRoot ? !dialogRoot.open.value : false));
 </script>
 
 <template>
@@ -37,6 +44,7 @@ const dock = useDockParticipation();
         data-fade-start
         data-fade-end
         :disable-outside-pointer-events="false"
+        :force-mount="leaving || undefined"
         :data-surface="props.surface"
         :class="cn('command__list fading-scroll fading-scroll--y', props.class)"
         @escape-key-down="emit('escapeKeyDown', $event)"

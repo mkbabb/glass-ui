@@ -65,7 +65,7 @@ describe("gate:G-SHEET-REACH — a detent is a size, so the actions stay on the 
         );
     });
 
-    it("never translates a detented sheet — the box the frost samples is stationary", () => {
+    it("translates a detented sheet only below its floor — at every rung the box is stationary", () => {
         const sfc = read("src/components/sheet/SheetContent.vue");
         // The detented branch of the spring style publishes the scalar and returns.
         const branch = /if\s*\(detented\.value\)\s*return\s*\{([^}]*)\}/.exec(sfc);
@@ -77,10 +77,18 @@ describe("gate:G-SHEET-REACH — a detent is a size, so the actions stay on the 
         expect(branch![1]).not.toContain("translate");
         expect(branch![1]).not.toContain("transform");
 
+        // The stylesheet slides the plate by the share of the rung its floor will not
+        // shrink to, and by nothing at a rung at or above the floor: as the scalar runs to
+        // 0 on a close the plate leaves past the edge instead of unmounting half painted.
         const css = read("src/components/sheet/styles.css");
         const detentRules = rules(css, /\[data-detents\]/).join("\n");
-        expect(detentRules).not.toMatch(/\btranslate\s*:/);
         expect(detentRules).not.toMatch(/\btransform\s*:/);
+        const translates = detentRules.match(/\btranslate\s*:[^;]*;/g) ?? [];
+        expect(translates.length).toBe(2);
+        for (const t of translates) expect(t).toContain("var(--_sheet-below-floor)");
+        expect(detentRules).toMatch(
+            /--_sheet-below-floor:\s*max\(\s*0px,\s*var\(--_sheet-floor\)\s*-\s*clamp\(0, var\(--detent-t\), 1\) \* 100dvh\s*\)/,
+        );
     });
 
     it("restores neither `height: 100%` nor `mt-auto` on the detented block axis", () => {
@@ -253,7 +261,8 @@ describe("gate:G-SHEET-REACH — a detent is a size, so the actions stay on the 
         const block = rules(css, /\[data-detents\]\[data-side="(bottom|top)"\]/).join(
             "\n",
         );
-        const floor = /min-block-size:\s*calc\(([\s\S]*?)\);/.exec(block)?.[1];
+        expect(block).toMatch(/min-block-size:\s*var\(--_sheet-floor\)/);
+        const floor = /--_sheet-floor:\s*calc\(([\s\S]*?)\);/.exec(block)?.[1];
         expect(
             floor,
             "the detented block arm must floor at its own chrome",

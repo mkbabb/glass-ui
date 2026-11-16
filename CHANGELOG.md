@@ -28,6 +28,13 @@ A patch on 11.1.0 about how surfaces leave. Nothing is removed or renamed.
   sheet in 250 ms), where a dialog used to take as long to close as to open. The
   `--exit-curve` token carries the new curve.
 
+- **A closing surface leaves the same way however you close it.** A `Sheet` with
+  detents stopped shrinking at its smallest honest height and then vanished with half
+  of it still on screen; it now slides the rest of the way past the edge before it is
+  removed, however it is closed. A `CommandDialog` dropped its list in the first frame
+  of its close, so the plate fell to its search field before it faded; the list now
+  stays until the dialog is gone.
+
 ## 11.1.0 — 2026-11-15
 
 A minor release. No API changes shape, so your code keeps working as it is. Two
