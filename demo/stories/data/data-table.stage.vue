@@ -93,9 +93,21 @@ const rows = computed(() => (props.state === "loaded" ? sorted.value : []));
     inline-size: min(100%, 48rem);
 }
 
+/* Narrow: the rows are cards, taller than the stage. The swap box holds the stage's
+   height and its pane scrolls, so a switch only cross-fades. */
 @container (inline-size < 36rem) {
     .data-table-stage {
-        align-content: start;
+        display: block;
+        padding: 0;
+        overflow: clip;
+    }
+    .data-table-stage-swap {
+        block-size: 100%;
+    }
+    .data-table-stage-swap :deep(.stage-swap-pane) {
+        block-size: 100%;
+        overflow-y: auto;
+        overscroll-behavior: contain;
         padding: var(--sp-3);
     }
 }
