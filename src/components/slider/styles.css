@@ -600,9 +600,22 @@
     opacity: 0.24;
 }
 
+/* Under reduced motion the slider is still: every part changes on a zero clock, so the
+   press, the release's follow-through and the loupe land at once. Glass's reduced-motion
+   fallback (`utilities/a11y-overrides.css`) is a layered rule, and this sheet is
+   unlayered, so it cannot reach the transitions above; each rule that sets one is named
+   again here, after it and at its own specificity. */
 @media (prefers-reduced-motion: reduce) {
-    .glass-loupe {
-        transition-duration: 0.01ms;
+    .glass-slider,
+    .slider-track,
+    .slider-thumb,
+    .glass-slider[data-held] .slider-range,
+    .glass-slider:active .slider-range,
+    .glass-slider:not(:active):not([data-held]) .slider-range,
+    .glass-loupe,
+    .glass-loupe:not([data-engaged]),
+    .glass-loupe-clone {
+        transition-duration: 0s;
     }
     .glass-loupe-clone {
         filter: none;

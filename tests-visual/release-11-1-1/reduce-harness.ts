@@ -1,13 +1,14 @@
 // What the exits harness does not hold for the reduced-motion witnesses: a site's own
 // fade (an unlayered rule in the page, `transition: opacity 144ms`), a collapsible dock
 // that a press on its summary unfolds and Escape folds, and a navigation run of four
-// seats whose `aria-current` moves on a press. Imports are relative to `src/`, so the
-// file mounts unchanged on an older tree.
+// seats whose `aria-current` moves on a press, and a Slider. Imports are relative to
+// `src/`, so the file mounts unchanged on an older tree.
 import "../../demo/demo.css";
 import { createApp, h, ref } from "vue";
 
 import GlassDock from "../../src/components/dock/GlassDock.vue";
 import DockControl from "../../src/components/dock/DockControl.vue";
+import Slider from "../../src/components/slider/Slider.vue";
 
 document.body.style.cssText = "margin:0;min-height:100vh;background:#e9e4dc";
 
@@ -53,6 +54,7 @@ createApp({
                         ),
                 },
             ),
+            h("div", { "data-testid": "r-slider", style: "width:240px;padding:12px" }, [h(Slider, { defaultValue: [40], "aria-label": "Level" })]),
         ]),
 }).mount("#app");
 document.body.dataset.ready = "1";
