@@ -230,9 +230,11 @@ onBeforeUnmount(() => mql?.removeEventListener("change", onPointerChange));
 /* The folded face: the page's title, one line. The library holds the folded face to
    a fixed square today, so the title is clipped to it (LIBRARY-FAULTS, recorded in
    the P0 record); it sizes to its words when the face sizes to its content. */
+/* The folded face sizes to its content (the library's summary pane takes its
+   min-content width), so a title shows whole; one past 24 characters stops there. */
 .demo-pager-title {
     display: block;
-    max-inline-size: 100%;
+    max-inline-size: 24ch;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
