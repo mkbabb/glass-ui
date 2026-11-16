@@ -87,3 +87,22 @@ Each has a default, and the work goes on with it unless you say otherwise.
    Default: out, then in.
 
 One thing only you can do: a look at any dock page in real Safari, on a phone if you can. Seats cannot open a headed browser, every Safari reading here is the test engine's, and that engine draws the glass without its blur.
+
+## Added 2026-11-15, after the fifth build was measured
+
+The fifth build passes eight of its tests in both engines, and the work left is small (`MEASURE-5.md`, `RULINGS-5.md`). Today's strips are `fold/strip-fold-5.png`, `fold/strip-swap-5.png` and `fold/crop-many-5.png`. Four things are yours to decide. Each has a default, and the work goes on with it unless you say otherwise.
+
+8. **The current page's name is no longer inside the dock.** Every icon is the same width, the current one included, and the current page is shown by its highlight. On every page change the old named icon moved all the others by 96 px in one frame, and it could not be made to glide in this release. The name shows above the icon on hover and focus instead (question 2). This also replaces the line above about the name giving way on a phone: a dock with too many icons now shows whole icons only and scrolls by whole icons.
+
+   ![seven icons on a phone](fold/crop-many-5.png)
+
+   Default: yes, icons only, with names above. If you want the name beside the icon, it comes back in 12.0.0, where it can glide.
+
+9. **Icons at nine tenths of their seat, on every site.** You asked for icons twice as big with less padding. On daraksha's dock that came out as a 40 px picture in a 44 px seat, with the bar no taller. The same share becomes the default for every dock, line icons included. Strips at today's size, at three quarters and at nine tenths are owed to you before it ships.
+   Default: nine tenths.
+
+10. **A firmer dock.** Measured over a busy ground in dark, the dock's words and icons read at 1.9 to 4.1 where 4.5 is the floor for words. More opacity alone did not fix it on daraksha (two steps only made it greyer). So the plate goes one step more opaque, takes more of the page's own surface colour until the words read, and nothing in a dock is drawn dimmer than the rest to rank it: an inactive tab is as dark as the current one and differs by the highlight. The blur and the shadow do not change. Strips of today's plate, one step, and the first that passes are owed to you.
+    Default: the least firm plate that passes.
+
+11. **When a page changes the room it gives an open dock.** A window resize already moves the dock at once, with the window. The same now holds when the page itself narrows or widens the dock's room: the dock follows in that frame and does not glide after it, so it never paints outside its room and never trails a panel being dragged. Everything the dock does itself (open, fold, layers, icons added or removed) still glides.
+    Default: follow at once.

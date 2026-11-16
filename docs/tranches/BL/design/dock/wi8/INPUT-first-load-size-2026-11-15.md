@@ -1,0 +1,5 @@
+# Input to the dock loop: the dock's first-load size is a gate (value.js, 2026-11-15)
+
+11.1.0's dock entry grew about 1.6 KB gzipped over 11.0.2. One site (hard budgets: 472 KB total, 125 KB a page; it sat at 471.1 / 124.8) went over by it and stayed on 11.0.2. Ask: a dock that never collapses or never morphs should not pay for the measuring and observer code on first load, or that code loads with the first fold.
+
+For the next ruling pass: (1) a size gate on the redesign: the dock entry's gzipped size after W-I.8 is no larger than v11.0.2's, measured on git-archive builds, and reported per pass from MEASURE-7 on; the sixth pass's deletions (the capped port, the second plate tier) count toward it. (2) Rule whether the morph and its observers split into a chunk loaded when a dock can fold (`collapse` not false), so the fifteen of twenty-nine docks in the usage audit that never collapse do not carry it. A split must not make the first fold wait on a network fetch the user can see: preload on idle or on first pointer approach.

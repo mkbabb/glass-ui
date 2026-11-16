@@ -1,0 +1,8 @@
+pad     expect: hover box+padding  got: hover[target:box sibling:box sibling:box] rules=#pad:hover  press[target:box sibling:box sibling:box] rules=#pad:hover  release[target:box sibling:box sibling:box] rules=#pad:hover  moves: -
+bw      expect: hover border       got: hover[sibling:box target:box sibling:box] rules=#bw:hover  press[sibling:box target:box sibling:box] rules=#bw:hover  release[sibling:box target:box sibling:box] rules=#bw:hover  moves: -
+fw      expect: hover font-weight  got: hover[target:box sibling:box sibling:box] rules=#fw:hover  press[target:box sibling:box sibling:box] rules=#fw:hover  release[target:box sibling:box sibling:box] rules=#fw:hover  moves: -
+lift    expect: transform only     got: -  moves: hover:-4/-9.1/8/6.2 press:-4/-9.1/8/6.2 release:-4/-9.1/8/6.2
+reveal  expect: hover box          got: hover[target:box sibling:box sibling:box] rules=#reveal:hover .x  press[target:box sibling:box sibling:box] rules=#reveal:hover .x  release[target:box sibling:box sibling:box] rules=#reveal:hover .x  moves: -
+foc     expect: focus margin       got: focus[target:box sibling:box sibling:box] rules=#foc:focus-visible  moves: -
+act     expect: press padding      got: press[sibling:box sibling:box sibling:box] rules=#act:active  moves: -
+ok      expect: nothing            got: -  moves: -
