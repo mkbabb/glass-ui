@@ -51,12 +51,6 @@ function goToStory(storyId: string): void {
 }
 
 const sheetOpen = ref(false);
-const hasPrev = computed(() => (current.value ? current.value.storyIndex > 0 : false));
-const hasNext = computed(() =>
-    current.value
-        ? current.value.storyIndex < current.value.category.stories.length - 1
-        : false,
-);
 
 // Hover opens the dock under a fine pointer; a coarse pointer opens it by a press.
 const coarse = ref(false);
@@ -188,7 +182,6 @@ onBeforeUnmount(() => mql?.removeEventListener("change", onPointerChange));
                                 <DockControl
                                     type="button"
                                     aria-label="Previous page"
-                                    :disabled="!hasPrev"
                                     @click="prev()"
                                 >
                                     <ChevronLeft class="h-4 w-4" aria-hidden="true" />
@@ -203,7 +196,6 @@ onBeforeUnmount(() => mql?.removeEventListener("change", onPointerChange));
                                 <DockControl
                                     type="button"
                                     aria-label="Next page"
-                                    :disabled="!hasNext"
                                     @click="next()"
                                 >
                                     <ChevronRight class="h-4 w-4" aria-hidden="true" />
