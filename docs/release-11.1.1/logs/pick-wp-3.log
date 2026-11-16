@@ -1,0 +1,28 @@
+
+Running 1 test using 1 worker
+
+  ✘  1 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:448:5 › routes · a CommandDialog keeps its list through its exit by pick (3.1s)
+
+
+  1) [webkit-phone] › tests-visual/release-11-1-1.spec.ts:448:5 › routes · a CommandDialog keeps its list through its exit by pick 
+
+    Error: no frame takes more than a fifth of what is seen [[0,1,435],[6,1,435],[17,1,435],[18,1,435],[23,1,435],[64,1,435],[84,1,435],[96,0.888,433],[101,0.789,430],[109,0.745,429],[120,0.673,428],[130,0.57,426],[142,0.475,424],[151,0.361,421],[161,0.278,419],[172,0.191,417],[182,0.102,415],[192,0.032,414],[207,0,null]]
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.207
+
+      469 |             expect(f.h!, `the plate keeps its height ${at}`).toBeGreaterThanOrEqual(read.rest.h! * 0.9);
+      470 |         }
+    > 471 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                      ^
+      472 |     });
+      473 | }
+      474 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:471:86
+
+    Error Context: tests-visual/test-results/release-11-1-1-routes-·-a--79dcb-st-through-its-exit-by-pick-webkit-phone/error-context.md
+
+  1 failed
+    [webkit-phone] › tests-visual/release-11-1-1.spec.ts:448:5 › routes · a CommandDialog keeps its list through its exit by pick 
