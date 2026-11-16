@@ -251,22 +251,13 @@
  * simply vanished would be a worse answer for a motion-sensitive reader than one that
  * releases calmly, and WCAG 2.3.3 asks for the motion to go, not the meaning.
  *
- * LAYERED `!important` IS THE ONLY FORM THAT DELIVERS THAT CONTRACT, and it takes both
- * halves to clear the two rules standing between it and the paint:
- *   · `glass/reveal.css`'s own PRM carve is UNLAYERED, and an unlayered NORMAL
- *     declaration beats a layered one at any specificity — its `animation-name:
- *     glass-reveal-out-reduced` captures this root unless the counter-declaration is
- *     `!important` (important beats normal within an origin, layer notwithstanding);
- *   · `utilities/a11y-overrides.css`'s universal instant fallback is `animation-duration:
- *     0.01ms !important`, and an unlayered `!important` yields only to a LAYERED
- *     `!important` (CSS Cascade L5 reverses layer order for important declarations;
- *     `index.css:1` declares the order).
- *   [2026-09-22 · BK register wave 10-1 — both rules above sit in `@layer components`
- *   at 10.0.0. The carve still holds: `!important` beats the reveal carve's normal
- *   declaration in any layer, and against the universal fallback, now `!important` in
- *   the same layer, this carve wins by specificity — both rows (0,2,0) over `*`.]
- * Take one half and the surface vanishes on the wrong keyframe or on a 0.01ms one. This
- * is the documented escape (`utilities/a11y-overrides.css:32-39`), and this carve is the
+ * `!important` IS WHAT DELIVERS THAT CONTRACT. The universal reduced-motion fallback
+ * (`utilities/a11y-overrides.css`) is a normal declaration in the last layer, so it
+ * beats every normal clock glass declares; an `!important` one beats it. The name list
+ * is `!important` too, so no other reduced-motion rule renames the root's keyframes. The
+ * clock is the dismissal's own, held to at most `--duration-fast` (200 ms) on the
+ * dismissal's `--exit-curve`.
+ * Without it the surface vanishes on a 0.01ms keyframe. This carve is the
  * enumerated + hashed AUTH-3 row of the §PRM-AUTHORIZED-SET it points at
  * (`docs/tranches/BJ/waves/BAND-FEEDBACK-MOTION.md`): two exact selectors, producer-owned,
  * never inferred from a wildcard. The root keeps the SAME three names it runs otherwise —
@@ -277,11 +268,11 @@
             animation-name:
                 glass-vaporize-saturate, glass-vaporize-panel,
                 glass-vaporize-blur !important;
-            animation-duration: var(--vap-clock) !important;
+            animation-duration: min(var(--vap-clock), var(--duration-fast)) !important;
         }
         .glass-vaporize[data-state="closed"] > * {
             animation-name: glass-vaporize-ink-reduced !important;
-            animation-duration: var(--vap-clock) !important;
+            animation-duration: min(var(--vap-clock), var(--duration-fast)) !important;
         }
     }
 }

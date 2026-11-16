@@ -144,10 +144,33 @@
     }
 }
 
+/* Under reduced motion the region does not grow or shrink: it is at its full size from
+   the first frame of the way in and to the last frame of the way out, and fades. */
+@keyframes disclosure-fade-open {
+    from {
+        opacity: 0;
+    }
+}
+
+@keyframes disclosure-fade-close {
+    to {
+        opacity: 0;
+    }
+}
+
 @layer components {
     @media (prefers-reduced-motion: reduce) {
         .disclosure-content {
-            animation-duration: 0.01ms;
+            animation-duration: var(--duration-fast) !important;
+            animation-timing-function: var(--exit-curve) !important;
+        }
+
+        .disclosure-content[data-state="open"] {
+            animation-name: disclosure-fade-open;
+        }
+
+        .disclosure-content[data-state="closed"] {
+            animation-name: disclosure-fade-close;
         }
 
         .disclosure-icon {

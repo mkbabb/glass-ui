@@ -148,12 +148,12 @@
         .expandable-container[data-state="expanded"] > [data-part="panel"],
         .expandable-container[data-state="expanded"][data-leaving] > [data-part="panel"] {
             scale: none;
-            transition: opacity 0.12s linear !important;
+            transition: opacity 0.12s var(--exit-curve) !important;
         }
 
         .expandable-container[data-state="expanded"],
         .expandable-container[data-state="expanded"][data-leaving] {
-            transition: background-color 0.12s linear !important;
+            transition: background-color 0.12s var(--exit-curve) !important;
         }
     }
 }

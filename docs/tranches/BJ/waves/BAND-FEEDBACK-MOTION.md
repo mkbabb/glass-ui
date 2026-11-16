@@ -191,7 +191,10 @@ fallback; index.css:1 layer order):
 |----|------|-----------|-------------------|--------------|
 | AUTH-1 | `transitions.css:120-130` | `.fade-*`/`.tab-fade-*`/`.pane-swap-*`/`.metric-swap-*` -active/-leave | opacity fade / 0.1s | `9e04f749…` |
 | AUTH-2 | `transitions.css:132-140` | `.pane-swap-*`/`.metric-swap-*` -active | `transition-property: opacity` / 0.15s | `d3f21adf…` |
-| AUTH-3 | `glass/dissolve.css:266-279` | `.glass-vaporize[data-state="closed"]` + its `> *` | `animation-name` (the three material channels / the reduced ink) + `animation-duration: var(--vap-clock)` | `c3333028…` |
+| AUTH-3 | `glass/dissolve.css:274-288` | `.glass-vaporize[data-state="closed"]` + its `> *` | `animation-name` (the three material channels / the reduced ink) + `animation-duration: min(var(--vap-clock), var(--duration-fast))` | `511c1ab4…` |
+| AUTH-4 | `glass/reveal.css` (the reduced-motion carve) | `.glass-reveal`, its closed state and the menu's open state | opacity on `--exit-curve`, `--duration-fast` in, at most `--duration-fast` out (with the hold keyframe) | n/a |
+| AUTH-5 | `_shared/disclosure/disclosure.css` | `.disclosure-content` | an opacity keyframe each way over `--duration-fast` on `--exit-curve` | n/a |
+| AUTH-6 | `expandable-container/styles.css` | the expanded panel and root | opacity and background colour over 0.12s on `--exit-curve` | n/a |
 
 **[AMENDED 2026-08-05 — BK #30 W-DISSOLVE cure, CURE-3.]** AUTH-3 is the vaporize dismissal's own
 reduced-motion exit, and it needs BOTH halves of the escape for two different reasons: `!important`
