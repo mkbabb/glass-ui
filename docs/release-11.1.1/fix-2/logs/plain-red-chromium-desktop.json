@@ -1,0 +1,291 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-1-1.config.ts",
+      "--project=chromium-desktop",
+      "--workers=1",
+      "release-11-1-1.spec",
+      "-g",
+      "its slide alone"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-2/logs/plain-red-chromium-desktop.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5352",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/",
+      "url": "http://localhost:5352",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "exit · a Popover enters and leaves on opacity and its slide alone",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2316,
+                  "error": {
+                    "message": "Error: no scale entrance +31 ms [{\"t\":31,\"scale\":\"0.9964 0.8883\",\"filter\":\"blur(6px)\"},{\"t\":47,\"scale\":\"0.9964 0.8883\",\"filter\":\"blur(6px)\"},{\"t\":56,\"scale\":\"0.996431 0.889265\",\"filter\":\"blur(5.56339px)\"},{\"t\":66,\"scale\":\"0.996528 0.892282\",\"filter\":\"blur(5.12383px)\"},{\"t\":74,\"scale\":\"0.99665 0.896067\",\"filter\":\"blur(4.8168px)\"},{\"t\":82,\"scale\":\"0.99681 0.901027\",\"filter\":\"blur(4.51507px)\"},{\"t\":89,\"scale\":\"0.996969 0.90596\",\"filter\":\"blur(4.27193px)\"},{\"t\":97,\"scale\":\"0.99715 0.911585\",\"filter\":\"blur(4.03229px)\"},{\"t\":106,\"scale\":\"0.997357 0.917995\",\"filter\":\"blur(3.79077px)\"},{\"t\":115,\"scale\":\"0.997601 0.92557\",\"filter\":\"blur(3.53316px)\"},{\"t\":122,\"scale\":\"0.997786 0.931302\",\"filter\":\"blur(3.35144px)\"},{\"t\":132,\"scale\":\"0.99803 0.938874\",\"filter\":\"blur(3.12289px)\"}]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: no scale entrance +31 ms [{\"t\":31,\"scale\":\"0.9964 0.8883\",\"filter\":\"blur(6px)\"},{\"t\":47,\"scale\":\"0.9964 0.8883\",\"filter\":\"blur(6px)\"},{\"t\":56,\"scale\":\"0.996431 0.889265\",\"filter\":\"blur(5.56339px)\"},{\"t\":66,\"scale\":\"0.996528 0.892282\",\"filter\":\"blur(5.12383px)\"},{\"t\":74,\"scale\":\"0.99665 0.896067\",\"filter\":\"blur(4.8168px)\"},{\"t\":82,\"scale\":\"0.99681 0.901027\",\"filter\":\"blur(4.51507px)\"},{\"t\":89,\"scale\":\"0.996969 0.90596\",\"filter\":\"blur(4.27193px)\"},{\"t\":97,\"scale\":\"0.99715 0.911585\",\"filter\":\"blur(4.03229px)\"},{\"t\":106,\"scale\":\"0.997357 0.917995\",\"filter\":\"blur(3.79077px)\"},{\"t\":115,\"scale\":\"0.997601 0.92557\",\"filter\":\"blur(3.53316px)\"},{\"t\":122,\"scale\":\"0.997786 0.931302\",\"filter\":\"blur(3.35144px)\"},{\"t\":132,\"scale\":\"0.99803 0.938874\",\"filter\":\"blur(3.12289px)\"}]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at expectPlain (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:434:94)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:455:23",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 94,
+                      "line": 434
+                    },
+                    "snippet": "  432 |     for (const f of frames) {\n  433 |         const at = `${leg} +${f.t} ms ${JSON.stringify(frames.slice(0, 12))}`;\n> 434 |         expect(f.scale === \"none\" || f.scale === \"1\" || f.scale === \"1 1\", `no scale ${at}`).toBe(true);\n      |                                                                                              ^\n  435 |         expect(f.filter === \"none\" || f.filter === \"blur(0px)\", `no blur ${at}`).toBe(true);\n  436 |     }\n  437 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 94,
+                        "line": 434
+                      },
+                      "message": "Error: no scale entrance +31 ms [{\"t\":31,\"scale\":\"0.9964 0.8883\",\"filter\":\"blur(6px)\"},{\"t\":47,\"scale\":\"0.9964 0.8883\",\"filter\":\"blur(6px)\"},{\"t\":56,\"scale\":\"0.996431 0.889265\",\"filter\":\"blur(5.56339px)\"},{\"t\":66,\"scale\":\"0.996528 0.892282\",\"filter\":\"blur(5.12383px)\"},{\"t\":74,\"scale\":\"0.99665 0.896067\",\"filter\":\"blur(4.8168px)\"},{\"t\":82,\"scale\":\"0.99681 0.901027\",\"filter\":\"blur(4.51507px)\"},{\"t\":89,\"scale\":\"0.996969 0.90596\",\"filter\":\"blur(4.27193px)\"},{\"t\":97,\"scale\":\"0.99715 0.911585\",\"filter\":\"blur(4.03229px)\"},{\"t\":106,\"scale\":\"0.997357 0.917995\",\"filter\":\"blur(3.79077px)\"},{\"t\":115,\"scale\":\"0.997601 0.92557\",\"filter\":\"blur(3.53316px)\"},{\"t\":122,\"scale\":\"0.997786 0.931302\",\"filter\":\"blur(3.35144px)\"},{\"t\":132,\"scale\":\"0.99803 0.938874\",\"filter\":\"blur(3.12289px)\"}]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  432 |     for (const f of frames) {\n  433 |         const at = `${leg} +${f.t} ms ${JSON.stringify(frames.slice(0, 12))}`;\n> 434 |         expect(f.scale === \"none\" || f.scale === \"1\" || f.scale === \"1 1\", `no scale ${at}`).toBe(true);\n      |                                                                                              ^\n  435 |         expect(f.filter === \"none\" || f.filter === \"blur(0px)\", `no blur ${at}`).toBe(true);\n  436 |     }\n  437 | }\n    at expectPlain (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:434:94)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:455:23"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T08:42:00.502Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "style",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6W3sidCI6MzEsInNjYWxlIjoiMC45OTY0IDAuODg4MyIsImZpbHRlciI6ImJsdXIoNnB4KSJ9LHsidCI6NDcsInNjYWxlIjoiMC45OTY0IDAuODg4MyIsImZpbHRlciI6ImJsdXIoNnB4KSJ9LHsidCI6NTYsInNjYWxlIjoiMC45OTY0MzEgMC44ODkyNjUiLCJmaWx0ZXIiOiJibHVyKDUuNTYzMzlweCkifSx7InQiOjY2LCJzY2FsZSI6IjAuOTk2NTI4IDAuODkyMjgyIiwiZmlsdGVyIjoiYmx1cig1LjEyMzgzcHgpIn0seyJ0Ijo3NCwic2NhbGUiOiIwLjk5NjY1IDAuODk2MDY3IiwiZmlsdGVyIjoiYmx1cig0LjgxNjhweCkifSx7InQiOjgyLCJzY2FsZSI6IjAuOTk2ODEgMC45MDEwMjciLCJmaWx0ZXIiOiJibHVyKDQuNTE1MDdweCkifSx7InQiOjg5LCJzY2FsZSI6IjAuOTk2OTY5IDAuOTA1OTYiLCJmaWx0ZXIiOiJibHVyKDQuMjcxOTNweCkifSx7InQiOjk3LCJzY2FsZSI6IjAuOTk3MTUgMC45MTE1ODUiLCJmaWx0ZXIiOiJibHVyKDQuMDMyMjlweCkifSx7InQiOjEwNiwic2NhbGUiOiIwLjk5NzM1NyAwLjkxNzk5NSIsImZpbHRlciI6ImJsdXIoMy43OTA3N3B4KSJ9LHsidCI6MTE1LCJzY2FsZSI6IjAuOTk3NjAxIDAuOTI1NTciLCJmaWx0ZXIiOiJibHVyKDMuNTMzMTZweCkifSx7InQiOjEyMiwic2NhbGUiOiIwLjk5Nzc4NiAwLjkzMTMwMiIsImZpbHRlciI6ImJsdXIoMy4zNTE0NHB4KSJ9LHsidCI6MTMyLCJzY2FsZSI6IjAuOTk4MDMgMC45Mzg4NzQiLCJmaWx0ZXIiOiJibHVyKDMuMTIyODlweCkifSx7InQiOjEzOSwic2NhbGUiOiIwLjk5ODIwNyAwLjk0NDM2NyIsImZpbHRlciI6ImJsdXIoMi45NjMxMXB4KSJ9LHsidCI6MTQ4LCJzY2FsZSI6IjAuOTk4NDEzIDAuOTUwNzciLCJmaWx0ZXIiOiJibHVyKDIuNzc5MjdweCkifSx7InQiOjE1Niwic2NhbGUiOiIwLjk5ODU5NiAwLjk1NjQ0MyIsImZpbHRlciI6ImJsdXIoMi42MTcwOXB4KSJ9LHsidCI6MTY1LCJzY2FsZSI6IjAuOTk4ODA0IDAuOTYyODc2IiwiZmlsdGVyIjoiYmx1cigyLjQzMjkxcHgpIn0seyJ0IjoxNzIsInNjYWxlIjoiMC45OTg5NCAwLjk2NzExOCIsImZpbHRlciI6ImJsdXIoMi4zMDg5cHgpIn0seyJ0IjoxODAsInNjYWxlIjoiMC45OTkwOTUgMC45NzE5MjIiLCJmaWx0ZXIiOiJibHVyKDIuMTY2MDRweCkifSx7InQiOjE5MCwic2NhbGUiOiIwLjk5OTI2OSAwLjk3NzMyMiIsImZpbHRlciI6ImJsdXIoMS45OTk1M3B4KSJ9LHsidCI6MTk4LCJzY2FsZSI6IjAuOTk5MzggMC45ODA3NzQiLCJmaWx0ZXIiOiJibHVyKDEuODg4MzhweCkifSx7InQiOjIwNiwic2NhbGUiOiIwLjk5OTUwNCAwLjk4NDYxNyIsImZpbHRlciI6ImJsdXIoMS43NTg0N3B4KSJ9LHsidCI6MjE0LCJzY2FsZSI6IjAuOTk5NjA0IDAuOTg3NzIzIiwiZmlsdGVyIjoiYmx1cigxLjY0NzZweCkifSx7InQiOjIyMywic2NhbGUiOiIwLjk5OTcwMiAwLjk5MDc2MSIsImZpbHRlciI6ImJsdXIoMS41MzEyMXB4KSJ9LHsidCI6MjMyLCJzY2FsZSI6IjAuOTk5NzkyIDAuOTkzNTYiLCJmaWx0ZXIiOiJibHVyKDEuNDE0NDRweCkifSx7InQiOjIzOSwic2NhbGUiOiIwLjk5OTg1OSAwLjk5NTYxIiwiZmlsdGVyIjoiYmx1cigxLjMyMDUycHgpIn0seyJ0IjoyNDksInNjYWxlIjoiMC45OTk5MjggMC45OTc3NjQiLCJmaWx0ZXIiOiJibHVyKDEuMjExNjhweCkifSx7InQiOjI1Niwic2NhbGUiOiIwLjk5OTk2OSAwLjk5OTA0OCIsImZpbHRlciI6ImJsdXIoMS4xMzc4NnB4KSJ9LHsidCI6MjY0LCJzY2FsZSI6IjEuMDAwMDEgMS4wMDA0NSIsImZpbHRlciI6ImJsdXIoMS4wNDk1NXB4KSJ9LHsidCI6Mjc0LCJzY2FsZSI6IjEuMDAwMDYgMS4wMDE3NiIsImZpbHRlciI6ImJsdXIoMC45NTMyMzZweCkifSx7InQiOjI4MSwic2NhbGUiOiIxLjAwMDA4IDEuMDAyNTMiLCJmaWx0ZXIiOiJibHVyKDAuODg3MzZweCkifSx7InQiOjI5MCwic2NhbGUiOiIxLjAwMDExIDEuMDAzMzYiLCJmaWx0ZXIiOiJibHVyKDAuODAwOTIycHgpIn0seyJ0IjoyOTksInNjYWxlIjoiMS4wMDAxMyAxLjAwMzg5IiwiZmlsdGVyIjoiYmx1cigwLjczMTI3N3B4KSJ9LHsidCI6MzA2LCJzY2FsZSI6IjEuMDAwMTQgMS4wMDQyNSIsImZpbHRlciI6ImJsdXIoMC42NzE2NTZweCkifSx7InQiOjMxNSwic2NhbGUiOiIxLjAwMDE1IDEuMDA0NTMiLCJmaWx0ZXIiOiJibHVyKDAuNjAxOTVweCkifSx7InQiOjMyMiwic2NhbGUiOiIxLjAwMDE1IDEuMDA0NjUiLCJmaWx0ZXIiOiJibHVyKDAuNTUzMTY3cHgpIn0seyJ0IjozMzIsInNjYWxlIjoiMS4wMDAxNSAxLjAwNDciLCJmaWx0ZXIiOiJibHVyKDAuNDg2NzYycHgpIn0seyJ0IjozMzksInNjYWxlIjoiMS4wMDAxNSAxLjAwNDY2IiwiZmlsdGVyIjoiYmx1cigwLjQ0NDQzcHgpIn0seyJ0IjozNDksInNjYWxlIjoiMS4wMDAxNSAxLjAwNDU1IiwiZmlsdGVyIjoiYmx1cigwLjM4OTAwMnB4KSJ9LHsidCI6MzU2LCJzY2FsZSI6IjEuMDAwMTQgMS4wMDQ0IiwiZmlsdGVyIjoiYmx1cigwLjM0NzY5MnB4KSJ9LHsidCI6MzY0LCJzY2FsZSI6IjEuMDAwMTQgMS4wMDQyMiIsImZpbHRlciI6ImJsdXIoMC4zMDgwMjFweCkifSx7InQiOjM3NCwic2NhbGUiOiIxLjAwMDEzIDEuMDAzOTUiLCJmaWx0ZXIiOiJibHVyKDAuMjYyNDM5cHgpIn0seyJ0IjozODEsInNjYWxlIjoiMS4wMDAxMiAxLjAwMzc0IiwiZmlsdGVyIjoiYmx1cigwLjIzMjA2MXB4KSJ9LHsidCI6MzkxLCJzY2FsZSI6IjEuMDAwMTEgMS4wMDM0MiIsImZpbHRlciI6ImJsdXIoMC4xOTI5ODRweCkifSx7InQiOjM5OSwic2NhbGUiOiIxLjAwMDEgMS4wMDMxNSIsImZpbHRlciI6ImJsdXIoMC4xNjM2NDlweCkifSx7InQiOjQwNywic2NhbGUiOiIxLjAwMDA5IDEuMDAyODgiLCJmaWx0ZXIiOiJibHVyKDAuMTM2NjE1cHgpIn0seyJ0Ijo0MTQsInNjYWxlIjoiMS4wMDAwOSAxLjAwMjY0IiwiZmlsdGVyIjoiYmx1cigwLjExNTMyNHB4KSJ9LHsidCI6NDI0LCJzY2FsZSI6IjEuMDAwMDcgMS4wMDIzMSIsImZpbHRlciI6ImJsdXIoMC4wODgzNDI5cHgpIn0seyJ0Ijo0MzAsInNjYWxlIjoiMS4wMDAwNyAxLjAwMjEyIiwiZmlsdGVyIjoiYmx1cigwLjA3MzQzNjZweCkifSx7InQiOjQzOSwic2NhbGUiOiIxLjAwMDA2IDEuMDAxODYiLCJmaWx0ZXIiOiJibHVyKDAuMDU1NjE1cHgpIn0seyJ0Ijo0NDksInNjYWxlIjoiMS4wMDAwNSAxLjAwMTU4IiwiZmlsdGVyIjoiYmx1cigwLjAzODEwMjdweCkifSx7InQiOjQ1Niwic2NhbGUiOiIxLjAwMDA1IDEuMDAxNCIsImZpbHRlciI6ImJsdXIoMC4wMjc5MTcxcHgpIn0seyJ0Ijo0NjUsInNjYWxlIjoiMS4wMDAwNCAxLjAwMTE2IiwiZmlsdGVyIjoiYmx1cigwLjAxNjQ0NDdweCkifSx7InQiOjQ3Miwic2NhbGUiOiIxLjAwMDAzIDEuMDAxMDEiLCJmaWx0ZXIiOiJibHVyKDAuMDEwMTgxOXB4KSJ9LHsidCI6NDgyLCJzY2FsZSI6IjEuMDAwMDMgMS4wMDA3OSIsImZpbHRlciI6ImJsdXIoMC4wMDM1NzUwOHB4KSJ9LHsidCI6NDkwLCJzY2FsZSI6IjEuMDAwMDIgMS4wMDA1NyIsImZpbHRlciI6ImJsdXIoMC4wMDA5Mjc5cHgpIn0seyJ0Ijo0OTcsInNjYWxlIjoiMSAxLjAwMDAyIiwiZmlsdGVyIjoiYmx1cig4LjIzNjE3ZS0wN3B4KSJ9LHsidCI6NTA2LCJzY2FsZSI6IjEiLCJmaWx0ZXIiOiJibHVyKDBweCkifV0sImV4aXQiOlt7InQiOi01LCJzY2FsZSI6IjEiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjEyLCJzY2FsZSI6IjAuOTk5MTk5IDAuOTc1MTU1IiwiZmlsdGVyIjoiYmx1cigxLjMzNDU1cHgpIn0seyJ0IjoyMCwic2NhbGUiOiIwLjk5ODkwOSAwLjk2NjE2NCIsImZpbHRlciI6ImJsdXIoMS44MTc1MXB4KSJ9LHsidCI6MjksInNjYWxlIjoiMC45OTg2NDIgMC45NTc4NjkiLCJmaWx0ZXIiOiJibHVyKDIuMjYzMDlweCkifSx7InQiOjM3LCJzY2FsZSI6IjAuOTk4NDEgMC45NTA2NTEiLCJmaWx0ZXIiOiJibHVyKDIuNjUwOHB4KSJ9LHsidCI6NDQsInNjYWxlIjoiMC45OTgyMzQgMC45NDUyMDEiLCJmaWx0ZXIiOiJibHVyKDIuOTQzNTNweCkifSx7InQiOjU0LCJzY2FsZSI6IjAuOTk4MDA4IDAuOTM4MTkyIiwiZmlsdGVyIjoiYmx1cigzLjMyMDA1cHgpIn0seyJ0Ijo2Miwic2NhbGUiOiIwLjk5Nzg0NSAwLjkzMzE0NyIsImZpbHRlciI6ImJsdXIoMy41OTEwM3B4KSJ9LHsidCI6NzEsInNjYWxlIjoiMC45OTc2NzQgMC45Mjc4NDIiLCJmaWx0ZXIiOiJibHVyKDMuODc1OTdweCkifSx7InQiOjc5LCJzY2FsZSI6IjAuOTk3NTMzIDAuOTIzNDQxIiwiZmlsdGVyIjoiYmx1cig0LjExMjRweCkifSx7InQiOjg3LCJzY2FsZSI6IjAuOTk3NDAxIDAuOTE5MzY1IiwiZmlsdGVyIjoiYmx1cig0LjMzMTM1cHgpIn0seyJ0Ijo5NSwic2NhbGUiOiIwLjk5NzI4IDAuOTE1NTk0IiwiZmlsdGVyIjoiYmx1cig0LjUzMzg4cHgpIn0seyJ0IjoxMDIsInNjYWxlIjoiMC45OTcxODcgMC45MTI3MDQiLCJmaWx0ZXIiOiJibHVyKDQuNjg5MTJweCkifSx7InQiOjExMiwic2NhbGUiOiIwLjk5NzA3IDAuOTA5MDg2IiwiZmlsdGVyIjoiYmx1cig0Ljg4MzQ5cHgpIn0seyJ0IjoxMjAsInNjYWxlIjoiMC45OTY5NzggMC45MDYyMjQiLCJmaWx0ZXIiOiJibHVyKDUuMDM3MjFweCkifSx7InQiOjEyOSwic2NhbGUiOiIwLjk5Njg5NSAwLjkwMzY1NiIsImZpbHRlciI6ImJsdXIoNS4xNzUxNHB4KSJ9LHsidCI6MTM2LCJzY2FsZSI6IjAuOTk2ODMgMC45MDE2NTMiLCJmaWx0ZXIiOiJibHVyKDUuMjgyNzZweCkifSx7InQiOjE0NSwic2NhbGUiOiIwLjk5Njc1MiAwLjg5OTIzNCIsImZpbHRlciI6ImJsdXIoNS40MTI2N3B4KSJ9LHsidCI6MTU0LCJzY2FsZSI6IjAuOTk2NjkxIDAuODk3MzMyIiwiZmlsdGVyIjoiYmx1cig1LjUxNDg0cHgpIn0seyJ0IjoxNjEsInNjYWxlIjoiMC45OTY2NDYgMC44OTU5MjciLCJmaWx0ZXIiOiJibHVyKDUuNTkwMzNweCkifSx7InQiOjE3MSwic2NhbGUiOiIwLjk5NjU4NyAwLjg5NDExMiIsImZpbHRlciI6ImJsdXIoNS42ODc3OXB4KSJ9LHsidCI6MTc5LCJzY2FsZSI6IjAuOTk2NTQ3IDAuODkyODciLCJmaWx0ZXIiOiJibHVyKDUuNzU0NTNweCkifSx7InQiOjE4Nywic2NhbGUiOiIwLjk5NjUxMSAwLjg5MTc1NCIsImZpbHRlciI6ImJsdXIoNS44MTQ0N3B4KSJ9LHsidCI6MTk1LCJzY2FsZSI6IjAuOTk2NDggMC44OTA3OTYiLCJmaWx0ZXIiOiJibHVyKDUuODY1OTJweCkifSx7InQiOjIwNCwic2NhbGUiOiIwLjk5NjQ1NSAwLjg5MDAxMiIsImZpbHRlciI6ImJsdXIoNS45MDgwMnB4KSJ9LHsidCI6MjEyLCJzY2FsZSI6IjAuOTk2NDM1IDAuODg5MzgzIiwiZmlsdGVyIjoiYmx1cig1Ljk0MTgxcHgpIn0seyJ0IjoyMjAsInNjYWxlIjoiMC45OTY0MTkgMC44ODg4OTgiLCJmaWx0ZXIiOiJibHVyKDUuOTY3ODdweCkifSx7InQiOjIyOSwic2NhbGUiOiIwLjk5NjQwOCAwLjg4ODU2MyIsImZpbHRlciI6ImJsdXIoNS45ODU4OXB4KSJ9LHsidCI6MjM1LCJzY2FsZSI6IjAuOTk2NDAzIDAuODg4MzkzIiwiZmlsdGVyIjoiYmx1cig1Ljk5NTAzcHgpIn1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-exit-·-a-Po-1aa83-opacity-and-its-slide-alone-chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 94,
+                    "line": 434
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-e5543fb9c9d6fcb3ad55",
+          "file": "release-11-1-1.spec.ts",
+          "line": 443,
+          "column": 5
+        },
+        {
+          "title": "exit · a Tooltip leaves on opacity and its slide alone",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1590,
+                  "error": {
+                    "message": "Error: no scale exit +14 ms [{\"t\":-4,\"scale\":\"1\",\"filter\":\"blur(0px)\"},{\"t\":14,\"scale\":\"1.01164 0.965603\",\"filter\":\"blur(0px)\"},{\"t\":22,\"scale\":\"1.01507 0.955445\",\"filter\":\"blur(0px)\"},{\"t\":30,\"scale\":\"1.01785 0.947243\",\"filter\":\"blur(0px)\"},{\"t\":38,\"scale\":\"1.01999 0.940905\",\"filter\":\"blur(0px)\"},{\"t\":46,\"scale\":\"1.0219 0.935259\",\"filter\":\"blur(0px)\"},{\"t\":56,\"scale\":\"1.02368 0.930015\",\"filter\":\"blur(0px)\"},{\"t\":62,\"scale\":\"1.0247 0.926984\",\"filter\":\"blur(0px)\"},{\"t\":72,\"scale\":\"1.02592 0.923378\",\"filter\":\"blur(0px)\"},{\"t\":79,\"scale\":\"1.02668 0.92115\",\"filter\":\"blur(0px)\"},{\"t\":88,\"scale\":\"1.02732 0.919237\",\"filter\":\"blur(0px)\"},{\"t\":97,\"scale\":\"1.02783 0.917758\",\"filter\":\"blur(0px)\"}]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: no scale exit +14 ms [{\"t\":-4,\"scale\":\"1\",\"filter\":\"blur(0px)\"},{\"t\":14,\"scale\":\"1.01164 0.965603\",\"filter\":\"blur(0px)\"},{\"t\":22,\"scale\":\"1.01507 0.955445\",\"filter\":\"blur(0px)\"},{\"t\":30,\"scale\":\"1.01785 0.947243\",\"filter\":\"blur(0px)\"},{\"t\":38,\"scale\":\"1.01999 0.940905\",\"filter\":\"blur(0px)\"},{\"t\":46,\"scale\":\"1.0219 0.935259\",\"filter\":\"blur(0px)\"},{\"t\":56,\"scale\":\"1.02368 0.930015\",\"filter\":\"blur(0px)\"},{\"t\":62,\"scale\":\"1.0247 0.926984\",\"filter\":\"blur(0px)\"},{\"t\":72,\"scale\":\"1.02592 0.923378\",\"filter\":\"blur(0px)\"},{\"t\":79,\"scale\":\"1.02668 0.92115\",\"filter\":\"blur(0px)\"},{\"t\":88,\"scale\":\"1.02732 0.919237\",\"filter\":\"blur(0px)\"},{\"t\":97,\"scale\":\"1.02783 0.917758\",\"filter\":\"blur(0px)\"}]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at expectPlain (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:434:94)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:456:9",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 94,
+                      "line": 434
+                    },
+                    "snippet": "  432 |     for (const f of frames) {\n  433 |         const at = `${leg} +${f.t} ms ${JSON.stringify(frames.slice(0, 12))}`;\n> 434 |         expect(f.scale === \"none\" || f.scale === \"1\" || f.scale === \"1 1\", `no scale ${at}`).toBe(true);\n      |                                                                                              ^\n  435 |         expect(f.filter === \"none\" || f.filter === \"blur(0px)\", `no blur ${at}`).toBe(true);\n  436 |     }\n  437 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 94,
+                        "line": 434
+                      },
+                      "message": "Error: no scale exit +14 ms [{\"t\":-4,\"scale\":\"1\",\"filter\":\"blur(0px)\"},{\"t\":14,\"scale\":\"1.01164 0.965603\",\"filter\":\"blur(0px)\"},{\"t\":22,\"scale\":\"1.01507 0.955445\",\"filter\":\"blur(0px)\"},{\"t\":30,\"scale\":\"1.01785 0.947243\",\"filter\":\"blur(0px)\"},{\"t\":38,\"scale\":\"1.01999 0.940905\",\"filter\":\"blur(0px)\"},{\"t\":46,\"scale\":\"1.0219 0.935259\",\"filter\":\"blur(0px)\"},{\"t\":56,\"scale\":\"1.02368 0.930015\",\"filter\":\"blur(0px)\"},{\"t\":62,\"scale\":\"1.0247 0.926984\",\"filter\":\"blur(0px)\"},{\"t\":72,\"scale\":\"1.02592 0.923378\",\"filter\":\"blur(0px)\"},{\"t\":79,\"scale\":\"1.02668 0.92115\",\"filter\":\"blur(0px)\"},{\"t\":88,\"scale\":\"1.02732 0.919237\",\"filter\":\"blur(0px)\"},{\"t\":97,\"scale\":\"1.02783 0.917758\",\"filter\":\"blur(0px)\"}]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  432 |     for (const f of frames) {\n  433 |         const at = `${leg} +${f.t} ms ${JSON.stringify(frames.slice(0, 12))}`;\n> 434 |         expect(f.scale === \"none\" || f.scale === \"1\" || f.scale === \"1 1\", `no scale ${at}`).toBe(true);\n      |                                                                                              ^\n  435 |         expect(f.filter === \"none\" || f.filter === \"blur(0px)\", `no blur ${at}`).toBe(true);\n  436 |     }\n  437 | }\n    at expectPlain (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:434:94)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:456:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T08:42:03.157Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "style",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6bnVsbCwiZXhpdCI6W3sidCI6LTQsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MTQsInNjYWxlIjoiMS4wMTE2NCAwLjk2NTYwMyIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MjIsInNjYWxlIjoiMS4wMTUwNyAwLjk1NTQ0NSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MzAsInNjYWxlIjoiMS4wMTc4NSAwLjk0NzI0MyIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MzgsInNjYWxlIjoiMS4wMTk5OSAwLjk0MDkwNSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6NDYsInNjYWxlIjoiMS4wMjE5IDAuOTM1MjU5IiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0Ijo1Niwic2NhbGUiOiIxLjAyMzY4IDAuOTMwMDE1IiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0Ijo2Miwic2NhbGUiOiIxLjAyNDcgMC45MjY5ODQiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjcyLCJzY2FsZSI6IjEuMDI1OTIgMC45MjMzNzgiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjc5LCJzY2FsZSI6IjEuMDI2NjggMC45MjExNSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6ODgsInNjYWxlIjoiMS4wMjczMiAwLjkxOTIzNyIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6OTcsInNjYWxlIjoiMS4wMjc4MyAwLjkxNzc1OCIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MTA2LCJzY2FsZSI6IjEuMDI4MDkgMC45MTY5NjMiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjExNCwic2NhbGUiOiIxLjAyODIgMC45MTY2NiIsImZpbHRlciI6ImJsdXIoMHB4KSJ9XX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-exit-·-a-To-1b8b6-opacity-and-its-slide-alone-chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 94,
+                    "line": 434
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-0acc07e07da2eee7d67a",
+          "file": "release-11-1-1.spec.ts",
+          "line": 443,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-16T08:41:58.849Z",
+    "duration": 6016.078,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

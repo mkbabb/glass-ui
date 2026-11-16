@@ -1,0 +1,52 @@
+
+Running 2 tests using 1 worker
+
+  ✘  1 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:443:5 › exit · a Popover enters and leaves on opacity and its slide alone (2.3s)
+  ✘  2 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:443:5 › exit · a Tooltip leaves on opacity and its slide alone (1.6s)
+
+
+  1) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:443:5 › exit · a Popover enters and leaves on opacity and its slide alone 
+
+    Error: no scale entrance +31 ms [{"t":31,"scale":"0.9964 0.8883","filter":"blur(6px)"},{"t":47,"scale":"0.9964 0.8883","filter":"blur(6px)"},{"t":56,"scale":"0.996431 0.889265","filter":"blur(5.56339px)"},{"t":66,"scale":"0.996528 0.892282","filter":"blur(5.12383px)"},{"t":74,"scale":"0.99665 0.896067","filter":"blur(4.8168px)"},{"t":82,"scale":"0.99681 0.901027","filter":"blur(4.51507px)"},{"t":89,"scale":"0.996969 0.90596","filter":"blur(4.27193px)"},{"t":97,"scale":"0.99715 0.911585","filter":"blur(4.03229px)"},{"t":106,"scale":"0.997357 0.917995","filter":"blur(3.79077px)"},{"t":115,"scale":"0.997601 0.92557","filter":"blur(3.53316px)"},{"t":122,"scale":"0.997786 0.931302","filter":"blur(3.35144px)"},{"t":132,"scale":"0.99803 0.938874","filter":"blur(3.12289px)"}]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      432 |     for (const f of frames) {
+      433 |         const at = `${leg} +${f.t} ms ${JSON.stringify(frames.slice(0, 12))}`;
+    > 434 |         expect(f.scale === "none" || f.scale === "1" || f.scale === "1 1", `no scale ${at}`).toBe(true);
+          |                                                                                              ^
+      435 |         expect(f.filter === "none" || f.filter === "blur(0px)", `no blur ${at}`).toBe(true);
+      436 |     }
+      437 | }
+        at expectPlain (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:434:94)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:455:23
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-a-Po-1aa83-opacity-and-its-slide-alone-chromium-desktop/error-context.md
+
+  2) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:443:5 › exit · a Tooltip leaves on opacity and its slide alone 
+
+    Error: no scale exit +14 ms [{"t":-4,"scale":"1","filter":"blur(0px)"},{"t":14,"scale":"1.01164 0.965603","filter":"blur(0px)"},{"t":22,"scale":"1.01507 0.955445","filter":"blur(0px)"},{"t":30,"scale":"1.01785 0.947243","filter":"blur(0px)"},{"t":38,"scale":"1.01999 0.940905","filter":"blur(0px)"},{"t":46,"scale":"1.0219 0.935259","filter":"blur(0px)"},{"t":56,"scale":"1.02368 0.930015","filter":"blur(0px)"},{"t":62,"scale":"1.0247 0.926984","filter":"blur(0px)"},{"t":72,"scale":"1.02592 0.923378","filter":"blur(0px)"},{"t":79,"scale":"1.02668 0.92115","filter":"blur(0px)"},{"t":88,"scale":"1.02732 0.919237","filter":"blur(0px)"},{"t":97,"scale":"1.02783 0.917758","filter":"blur(0px)"}]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      432 |     for (const f of frames) {
+      433 |         const at = `${leg} +${f.t} ms ${JSON.stringify(frames.slice(0, 12))}`;
+    > 434 |         expect(f.scale === "none" || f.scale === "1" || f.scale === "1 1", `no scale ${at}`).toBe(true);
+          |                                                                                              ^
+      435 |         expect(f.filter === "none" || f.filter === "blur(0px)", `no blur ${at}`).toBe(true);
+      436 |     }
+      437 | }
+        at expectPlain (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:434:94)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:456:9
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-a-To-1b8b6-opacity-and-its-slide-alone-chromium-desktop/error-context.md
+
+  2 failed
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:443:5 › exit · a Popover enters and leaves on opacity and its slide alone 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:443:5 › exit · a Tooltip leaves on opacity and its slide alone 

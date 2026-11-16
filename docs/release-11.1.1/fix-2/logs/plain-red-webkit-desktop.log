@@ -1,0 +1,52 @@
+
+Running 2 tests using 1 worker
+
+  ✘  1 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:443:5 › exit · a Popover enters and leaves on opacity and its slide alone (2.8s)
+  ✘  2 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:443:5 › exit · a Tooltip leaves on opacity and its slide alone (2.0s)
+
+
+  1) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:443:5 › exit · a Popover enters and leaves on opacity and its slide alone 
+
+    Error: no scale entrance +54 ms [{"t":54,"scale":"0.9964 0.8883","filter":"blur(6px)"},{"t":71,"scale":"0.996516 0.891905","filter":"blur(5.171892px)"},{"t":88,"scale":"0.996799 0.900683","filter":"blur(4.534467px)"},{"t":104,"scale":"0.997156 0.911759","filter":"blur(4.025426px)"},{"t":122,"scale":"0.997607 0.925754","filter":"blur(3.527185px)"},{"t":137,"scale":"0.997991 0.937661","filter":"blur(3.159226px)"},{"t":154,"scale":"0.998407 0.95057","filter":"blur(2.784864px)"},{"t":171,"scale":"0.998785 0.962302","filter":"blur(2.449137px)"},{"t":187,"scale":"0.999097 0.971996","filter":"blur(2.163813px)"},{"t":206,"scale":"0.999409 0.981657","filter":"blur(1.85896px)"},{"t":221,"scale":"0.999609 0.987877","filter":"blur(1.641623px)"},{"t":237,"scale":"0.999781 0.993192","filter":"blur(1.43034px)"}]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      432 |     for (const f of frames) {
+      433 |         const at = `${leg} +${f.t} ms ${JSON.stringify(frames.slice(0, 12))}`;
+    > 434 |         expect(f.scale === "none" || f.scale === "1" || f.scale === "1 1", `no scale ${at}`).toBe(true);
+          |                                                                                              ^
+      435 |         expect(f.filter === "none" || f.filter === "blur(0px)", `no blur ${at}`).toBe(true);
+      436 |     }
+      437 | }
+        at expectPlain (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:434:94)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:455:23
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-a-Po-1aa83-opacity-and-its-slide-alone-webkit-desktop/error-context.md
+
+  2) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:443:5 › exit · a Tooltip leaves on opacity and its slide alone 
+
+    Error: no scale exit +19 ms [{"t":2,"scale":"1","filter":"blur(0px)"},{"t":19,"scale":"1.011561 0.965828","filter":"blur(0px)"},{"t":36,"scale":"1.017584 0.948028","filter":"blur(0px)"},{"t":52,"scale":"1.02174 0.935744","filter":"blur(0px)"},{"t":69,"scale":"1.024766 0.926799","filter":"blur(0px)"},{"t":86,"scale":"1.026716 0.921037","filter":"blur(0px)"},{"t":102,"scale":"1.027766 0.917932","filter":"blur(0px)"},{"t":119,"scale":"1.028191 0.916677","filter":"blur(0px)"}]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      432 |     for (const f of frames) {
+      433 |         const at = `${leg} +${f.t} ms ${JSON.stringify(frames.slice(0, 12))}`;
+    > 434 |         expect(f.scale === "none" || f.scale === "1" || f.scale === "1 1", `no scale ${at}`).toBe(true);
+          |                                                                                              ^
+      435 |         expect(f.filter === "none" || f.filter === "blur(0px)", `no blur ${at}`).toBe(true);
+      436 |     }
+      437 | }
+        at expectPlain (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:434:94)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:456:9
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-a-To-1b8b6-opacity-and-its-slide-alone-webkit-desktop/error-context.md
+
+  2 failed
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:443:5 › exit · a Popover enters and leaves on opacity and its slide alone 
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:443:5 › exit · a Tooltip leaves on opacity and its slide alone 

@@ -1,0 +1,31 @@
+
+Running 2 tests using 1 worker
+
+  ✘  1 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:443:5 › exit · a Popover enters and leaves on opacity and its slide alone (2.7s)
+  -  2 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:443:5 › exit · a Tooltip leaves on opacity and its slide alone
+
+
+  1) [webkit-phone] › tests-visual/release-11-1-1.spec.ts:443:5 › exit · a Popover enters and leaves on opacity and its slide alone 
+
+    Error: no scale entrance +63 ms [{"t":63,"scale":"0.9964 0.8883","filter":"blur(6px)"},{"t":76,"scale":"0.996475 0.890615","filter":"blur(5.342426px)"},{"t":92,"scale":"0.996702 0.89766","filter":"blur(4.709748px)"},{"t":108,"scale":"0.997037 0.908059","filter":"blur(4.176915px)"},{"t":126,"scale":"0.997479 0.921785","filter":"blur(3.658833px)"},{"t":142,"scale":"0.997889 0.934497","filter":"blur(3.253636px)"},{"t":160,"scale":"0.998335 0.948338","filter":"blur(2.84795px)"},{"t":175,"scale":"0.998678 0.958996","filter":"blur(2.544202px)"},{"t":193,"scale":"0.999043 0.970311","filter":"blur(2.215217px)"},{"t":208,"scale":"0.999302 0.978356","filter":"blur(1.967251px)"},{"t":225,"scale":"0.999547 0.985929","filter":"blur(1.711915px)"},{"t":243,"scale":"0.999751 0.992261","filter":"blur(1.468423px)"}]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      432 |     for (const f of frames) {
+      433 |         const at = `${leg} +${f.t} ms ${JSON.stringify(frames.slice(0, 12))}`;
+    > 434 |         expect(f.scale === "none" || f.scale === "1" || f.scale === "1 1", `no scale ${at}`).toBe(true);
+          |                                                                                              ^
+      435 |         expect(f.filter === "none" || f.filter === "blur(0px)", `no blur ${at}`).toBe(true);
+      436 |     }
+      437 | }
+        at expectPlain (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:434:94)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:455:23
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-a-Po-1aa83-opacity-and-its-slide-alone-webkit-phone/error-context.md
+
+  1 failed
+    [webkit-phone] › tests-visual/release-11-1-1.spec.ts:443:5 › exit · a Popover enters and leaves on opacity and its slide alone 
+  1 skipped

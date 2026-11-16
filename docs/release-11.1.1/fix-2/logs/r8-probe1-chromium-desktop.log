@@ -1,0 +1,199 @@
+
+Running 15 tests using 1 worker
+
+  ✓   1 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:80:1 › site · a site's own opacity fade keeps its clock under reduced motion (1.5s)
+  ✘   2 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:140:5 › fade · a Popover appears and leaves on a fade (2.9s)
+  ✓   3 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:140:5 › fade · a DropdownMenu appears and leaves on a fade (2.8s)
+  ✓   4 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:140:5 › fade · a dock Select appears and leaves on a fade (2.8s)
+  ✓   5 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:140:5 › fade · a plain Select appears and leaves on a fade (2.8s)
+  ✓   6 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:140:5 › fade · a Tooltip appears and leaves on a fade (2.7s)
+[WebServer] 2:06:25 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘   7 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:140:5 › fade · a Dialog appears and leaves on a fade (2.8s)
+[WebServer] 2:06:28 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘   8 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:140:5 › fade · a Sheet right appears and leaves on a fade (2.8s)
+[WebServer] 2:06:31 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘   9 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:140:5 › fade · a Sheet bottom appears and leaves on a fade (2.8s)
+  ✓  10 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:140:5 › fade · a Toast appears and leaves on a fade (2.8s)
+  ✘  11 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:140:5 › fade · a Collapsible appears and leaves on a fade (2.7s)
+  ✘  12 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:140:5 › fade · a Accordion appears and leaves on a fade (2.8s)
+  ✓  13 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:140:5 › fade · a ExpandableContainer appears and leaves on a fade (2.8s)
+  ✘  14 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:204:1 › fold · a dock unfolds and folds by cross-fading its faces, its box landing at once (2.7s)
+  ✘  15 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:222:1 › mark · a run's selected plate moves to a new seat by a cross-fade (1.8s)
+
+
+  1) [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:140:5 › fade · a Popover appears and leaves on a fade 
+
+    Error: out: no painted frame holds a box between its two ends {"in":{"fading":19,"rises":true,"falls":true,"span":158,"boxSteps":0,"from":0,"to":1},"out":{"fading":29,"rises":true,"falls":true,"span":242,"boxSteps":30,"from":1,"to":0}}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 30
+
+      71 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);
+      72 |     expect(dir === "in" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);
+    > 73 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);
+         |                                                                                             ^
+      74 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);
+      75 | }
+      76 |
+        at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-reduce.spec.ts:73:93)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-reduce.spec.ts:160:9
+
+    Error Context: tests-visual/test-results/release-11-1-1-reduce-fade-b4bf7-ppears-and-leaves-on-a-fade-chromium-desktop/error-context.md
+
+  2) [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:140:5 › fade · a Dialog appears and leaves on a fade 
+
+    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"from":0,"to":1},"out":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"from":1,"to":0}}
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 2
+    Received:    0
+
+      69 |
+      70 | function expectFade(leg: Leg, dir: "in" | "out", at: string): void {
+    > 71 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);
+         |                                                                            ^
+      72 |     expect(dir === "in" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);
+      73 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);
+      74 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);
+        at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-reduce.spec.ts:71:76)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-reduce.spec.ts:159:9
+
+    Error Context: tests-visual/test-results/release-11-1-1-reduce-fade-ed693-ppears-and-leaves-on-a-fade-chromium-desktop/error-context.md
+
+  3) [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:140:5 › fade · a Sheet right appears and leaves on a fade 
+
+    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"from":0,"to":1},"out":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"from":1,"to":0}}
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 2
+    Received:    0
+
+      69 |
+      70 | function expectFade(leg: Leg, dir: "in" | "out", at: string): void {
+    > 71 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);
+         |                                                                            ^
+      72 |     expect(dir === "in" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);
+      73 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);
+      74 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);
+        at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-reduce.spec.ts:71:76)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-reduce.spec.ts:159:9
+
+    Error Context: tests-visual/test-results/release-11-1-1-reduce-fade-cfeca-ppears-and-leaves-on-a-fade-chromium-desktop/error-context.md
+
+  4) [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:140:5 › fade · a Sheet bottom appears and leaves on a fade 
+
+    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"from":0,"to":1},"out":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"from":1,"to":0}}
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 2
+    Received:    0
+
+      69 |
+      70 | function expectFade(leg: Leg, dir: "in" | "out", at: string): void {
+    > 71 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);
+         |                                                                            ^
+      72 |     expect(dir === "in" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);
+      73 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);
+      74 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);
+        at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-reduce.spec.ts:71:76)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-reduce.spec.ts:159:9
+
+    Error Context: tests-visual/test-results/release-11-1-1-reduce-fade-1f21c-ppears-and-leaves-on-a-fade-chromium-desktop/error-context.md
+
+  5) [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:140:5 › fade · a Collapsible appears and leaves on a fade 
+
+    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":1,"from":0,"to":1},"out":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"from":1,"to":0}}
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 2
+    Received:    0
+
+      69 |
+      70 | function expectFade(leg: Leg, dir: "in" | "out", at: string): void {
+    > 71 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);
+         |                                                                            ^
+      72 |     expect(dir === "in" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);
+      73 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);
+      74 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);
+        at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-reduce.spec.ts:71:76)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-reduce.spec.ts:159:9
+
+    Error Context: tests-visual/test-results/release-11-1-1-reduce-fade-bd195-ppears-and-leaves-on-a-fade-chromium-desktop/error-context.md
+
+  6) [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:140:5 › fade · a Accordion appears and leaves on a fade 
+
+    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":1,"from":0,"to":1},"out":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"from":1,"to":0}}
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 2
+    Received:    0
+
+      69 |
+      70 | function expectFade(leg: Leg, dir: "in" | "out", at: string): void {
+    > 71 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);
+         |                                                                            ^
+      72 |     expect(dir === "in" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);
+      73 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);
+      74 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);
+        at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-reduce.spec.ts:71:76)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-reduce.spec.ts:159:9
+
+    Error Context: tests-visual/test-results/release-11-1-1-reduce-fade-e7f5a-ppears-and-leaves-on-a-fade-chromium-desktop/error-context.md
+
+  7) [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:204:1 › fold · a dock unfolds and folds by cross-fading its faces, its box landing at once 
+
+    Error: it folded {"unfold":{"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"from":0,"to":1},"out":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"from":1,"to":0}},"fold":{"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"from":0,"to":0},"out":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"from":1,"to":1}}}
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0.99
+    Received:   0
+
+      213 |     await info.attach("fold", { body: at, contentType: "application/json" });
+      214 |     expect(legs.unfold.in.to, `it unfolded ${at}`).toBeGreaterThan(0.99);
+    > 215 |     expect(legs.fold.in.to, `it folded ${at}`).toBeGreaterThan(0.99);
+          |                                                ^
+      216 |     for (const [name, leg] of Object.entries(legs)) {
+      217 |         expectFade(leg.in, "in", `${name} ${at}`);
+      218 |         expectFade(leg.out, "out", `${name} ${at}`);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-reduce.spec.ts:215:48
+
+    Error Context: tests-visual/test-results/release-11-1-1-reduce-fold-28509-ces-its-box-landing-at-once-chromium-desktop/error-context.md
+
+  8) [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:222:1 › mark · a run's selected plate moves to a new seat by a cross-fade 
+
+    Error: no painted plate travels {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"from":0,"to":0},"out":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"from":0,"to":0},"travel":140}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 140
+
+      276 |     const at = JSON.stringify(legs);
+      277 |     await info.attach("mark", { body: at, contentType: "application/json" });
+    > 278 |     expect(legs.travel, `no painted plate travels ${at}`).toBe(0);
+          |                                                           ^
+      279 |     expectFade(legs.in, "in", `new seat ${at}`);
+      280 |     expectFade(legs.out, "out", `old seat ${at}`);
+      281 | });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-reduce.spec.ts:278:59
+
+    Error Context: tests-visual/test-results/release-11-1-1-reduce-mark-1e12c--a-new-seat-by-a-cross-fade-chromium-desktop/error-context.md
+
+  8 failed
+    [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:140:5 › fade · a Popover appears and leaves on a fade 
+    [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:140:5 › fade · a Dialog appears and leaves on a fade 
+    [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:140:5 › fade · a Sheet right appears and leaves on a fade 
+    [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:140:5 › fade · a Sheet bottom appears and leaves on a fade 
+    [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:140:5 › fade · a Collapsible appears and leaves on a fade 
+    [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:140:5 › fade · a Accordion appears and leaves on a fade 
+    [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:204:1 › fold · a dock unfolds and folds by cross-fading its faces, its box landing at once 
+    [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:222:1 › mark · a run's selected plate moves to a new seat by a cross-fade 
+  7 passed (44.8s)

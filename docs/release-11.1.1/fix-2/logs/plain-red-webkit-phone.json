@@ -1,0 +1,276 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-1-1.config.ts",
+      "--project=webkit-phone",
+      "--workers=1",
+      "release-11-1-1.spec",
+      "-g",
+      "its slide alone"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-2/logs/plain-red-webkit-phone.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5352",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/",
+      "url": "http://localhost:5352",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "exit · a Popover enters and leaves on opacity and its slide alone",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2746,
+                  "error": {
+                    "message": "Error: no scale entrance +63 ms [{\"t\":63,\"scale\":\"0.9964 0.8883\",\"filter\":\"blur(6px)\"},{\"t\":76,\"scale\":\"0.996475 0.890615\",\"filter\":\"blur(5.342426px)\"},{\"t\":92,\"scale\":\"0.996702 0.89766\",\"filter\":\"blur(4.709748px)\"},{\"t\":108,\"scale\":\"0.997037 0.908059\",\"filter\":\"blur(4.176915px)\"},{\"t\":126,\"scale\":\"0.997479 0.921785\",\"filter\":\"blur(3.658833px)\"},{\"t\":142,\"scale\":\"0.997889 0.934497\",\"filter\":\"blur(3.253636px)\"},{\"t\":160,\"scale\":\"0.998335 0.948338\",\"filter\":\"blur(2.84795px)\"},{\"t\":175,\"scale\":\"0.998678 0.958996\",\"filter\":\"blur(2.544202px)\"},{\"t\":193,\"scale\":\"0.999043 0.970311\",\"filter\":\"blur(2.215217px)\"},{\"t\":208,\"scale\":\"0.999302 0.978356\",\"filter\":\"blur(1.967251px)\"},{\"t\":225,\"scale\":\"0.999547 0.985929\",\"filter\":\"blur(1.711915px)\"},{\"t\":243,\"scale\":\"0.999751 0.992261\",\"filter\":\"blur(1.468423px)\"}]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: no scale entrance +63 ms [{\"t\":63,\"scale\":\"0.9964 0.8883\",\"filter\":\"blur(6px)\"},{\"t\":76,\"scale\":\"0.996475 0.890615\",\"filter\":\"blur(5.342426px)\"},{\"t\":92,\"scale\":\"0.996702 0.89766\",\"filter\":\"blur(4.709748px)\"},{\"t\":108,\"scale\":\"0.997037 0.908059\",\"filter\":\"blur(4.176915px)\"},{\"t\":126,\"scale\":\"0.997479 0.921785\",\"filter\":\"blur(3.658833px)\"},{\"t\":142,\"scale\":\"0.997889 0.934497\",\"filter\":\"blur(3.253636px)\"},{\"t\":160,\"scale\":\"0.998335 0.948338\",\"filter\":\"blur(2.84795px)\"},{\"t\":175,\"scale\":\"0.998678 0.958996\",\"filter\":\"blur(2.544202px)\"},{\"t\":193,\"scale\":\"0.999043 0.970311\",\"filter\":\"blur(2.215217px)\"},{\"t\":208,\"scale\":\"0.999302 0.978356\",\"filter\":\"blur(1.967251px)\"},{\"t\":225,\"scale\":\"0.999547 0.985929\",\"filter\":\"blur(1.711915px)\"},{\"t\":243,\"scale\":\"0.999751 0.992261\",\"filter\":\"blur(1.468423px)\"}]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at expectPlain (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:434:94)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:455:23",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 94,
+                      "line": 434
+                    },
+                    "snippet": "  432 |     for (const f of frames) {\n  433 |         const at = `${leg} +${f.t} ms ${JSON.stringify(frames.slice(0, 12))}`;\n> 434 |         expect(f.scale === \"none\" || f.scale === \"1\" || f.scale === \"1 1\", `no scale ${at}`).toBe(true);\n      |                                                                                              ^\n  435 |         expect(f.filter === \"none\" || f.filter === \"blur(0px)\", `no blur ${at}`).toBe(true);\n  436 |     }\n  437 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 94,
+                        "line": 434
+                      },
+                      "message": "Error: no scale entrance +63 ms [{\"t\":63,\"scale\":\"0.9964 0.8883\",\"filter\":\"blur(6px)\"},{\"t\":76,\"scale\":\"0.996475 0.890615\",\"filter\":\"blur(5.342426px)\"},{\"t\":92,\"scale\":\"0.996702 0.89766\",\"filter\":\"blur(4.709748px)\"},{\"t\":108,\"scale\":\"0.997037 0.908059\",\"filter\":\"blur(4.176915px)\"},{\"t\":126,\"scale\":\"0.997479 0.921785\",\"filter\":\"blur(3.658833px)\"},{\"t\":142,\"scale\":\"0.997889 0.934497\",\"filter\":\"blur(3.253636px)\"},{\"t\":160,\"scale\":\"0.998335 0.948338\",\"filter\":\"blur(2.84795px)\"},{\"t\":175,\"scale\":\"0.998678 0.958996\",\"filter\":\"blur(2.544202px)\"},{\"t\":193,\"scale\":\"0.999043 0.970311\",\"filter\":\"blur(2.215217px)\"},{\"t\":208,\"scale\":\"0.999302 0.978356\",\"filter\":\"blur(1.967251px)\"},{\"t\":225,\"scale\":\"0.999547 0.985929\",\"filter\":\"blur(1.711915px)\"},{\"t\":243,\"scale\":\"0.999751 0.992261\",\"filter\":\"blur(1.468423px)\"}]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  432 |     for (const f of frames) {\n  433 |         const at = `${leg} +${f.t} ms ${JSON.stringify(frames.slice(0, 12))}`;\n> 434 |         expect(f.scale === \"none\" || f.scale === \"1\" || f.scale === \"1 1\", `no scale ${at}`).toBe(true);\n      |                                                                                              ^\n  435 |         expect(f.filter === \"none\" || f.filter === \"blur(0px)\", `no blur ${at}`).toBe(true);\n  436 |     }\n  437 | }\n    at expectPlain (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:434:94)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:455:23"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T08:43:04.056Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "style",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6W3sidCI6NjMsInNjYWxlIjoiMC45OTY0IDAuODg4MyIsImZpbHRlciI6ImJsdXIoNnB4KSJ9LHsidCI6NzYsInNjYWxlIjoiMC45OTY0NzUgMC44OTA2MTUiLCJmaWx0ZXIiOiJibHVyKDUuMzQyNDI2cHgpIn0seyJ0Ijo5Miwic2NhbGUiOiIwLjk5NjcwMiAwLjg5NzY2IiwiZmlsdGVyIjoiYmx1cig0LjcwOTc0OHB4KSJ9LHsidCI6MTA4LCJzY2FsZSI6IjAuOTk3MDM3IDAuOTA4MDU5IiwiZmlsdGVyIjoiYmx1cig0LjE3NjkxNXB4KSJ9LHsidCI6MTI2LCJzY2FsZSI6IjAuOTk3NDc5IDAuOTIxNzg1IiwiZmlsdGVyIjoiYmx1cigzLjY1ODgzM3B4KSJ9LHsidCI6MTQyLCJzY2FsZSI6IjAuOTk3ODg5IDAuOTM0NDk3IiwiZmlsdGVyIjoiYmx1cigzLjI1MzYzNnB4KSJ9LHsidCI6MTYwLCJzY2FsZSI6IjAuOTk4MzM1IDAuOTQ4MzM4IiwiZmlsdGVyIjoiYmx1cigyLjg0Nzk1cHgpIn0seyJ0IjoxNzUsInNjYWxlIjoiMC45OTg2NzggMC45NTg5OTYiLCJmaWx0ZXIiOiJibHVyKDIuNTQ0MjAycHgpIn0seyJ0IjoxOTMsInNjYWxlIjoiMC45OTkwNDMgMC45NzAzMTEiLCJmaWx0ZXIiOiJibHVyKDIuMjE1MjE3cHgpIn0seyJ0IjoyMDgsInNjYWxlIjoiMC45OTkzMDIgMC45NzgzNTYiLCJmaWx0ZXIiOiJibHVyKDEuOTY3MjUxcHgpIn0seyJ0IjoyMjUsInNjYWxlIjoiMC45OTk1NDcgMC45ODU5MjkiLCJmaWx0ZXIiOiJibHVyKDEuNzExOTE1cHgpIn0seyJ0IjoyNDMsInNjYWxlIjoiMC45OTk3NTEgMC45OTIyNjEiLCJmaWx0ZXIiOiJibHVyKDEuNDY4NDIzcHgpIn0seyJ0IjoyNjAsInNjYWxlIjoiMC45OTk4OTYgMC45OTY3OCIsImZpbHRlciI6ImJsdXIoMS4yNjE0OXB4KSJ9LHsidCI6Mjc2LCJzY2FsZSI6IjAuOTk5OTk3IDAuOTk5OTE0IiwiZmlsdGVyIjoiYmx1cigxLjA4NTQ1OHB4KSJ9LHsidCI6MjkyLCJzY2FsZSI6IjEuMDAwMDY4IDEuMDAyMTEzIiwiZmlsdGVyIjoiYmx1cigwLjkyNjIzNHB4KSJ9LHsidCI6MzEwLCJzY2FsZSI6IjEuMDAwMTE4IDEuMDAzNjU4IiwiZmlsdGVyIjoiYmx1cigwLjc2NTc3cHgpIn0seyJ0IjozMjYsInNjYWxlIjoiMS4wMDAxNDEgMS4wMDQzODgiLCJmaWx0ZXIiOiJibHVyKDAuNjM4NjJweCkifSx7InQiOjM0Miwic2NhbGUiOiIxLjAwMDE1MSAxLjAwNDY3NiIsImZpbHRlciI6ImJsdXIoMC41MjUxMjdweCkifSx7InQiOjM2MCwic2NhbGUiOiIxLjAwMDE0OCAxLjAwNDYwNyIsImZpbHRlciI6ImJsdXIoMC40MTI4MDFweCkifSx7InQiOjM3NSwic2NhbGUiOiIxLjAwMDE0IDEuMDA0MzM2IiwiZmlsdGVyIjoiYmx1cigwLjMzMDkyOHB4KSJ9LHsidCI6MzkyLCJzY2FsZSI6IjEuMDAwMTI1IDEuMDAzODcxIiwiZmlsdGVyIjoiYmx1cigwLjI1MDMzOXB4KSJ9LHsidCI6NDEwLCJzY2FsZSI6IjEuMDAwMTA2IDEuMDAzMjk0IiwiZmlsdGVyIjoiYmx1cigwLjE3ODQxN3B4KSJ9LHsidCI6NDI3LCJzY2FsZSI6IjEuMDAwMDg4IDEuMDAyNzI1IiwiZmlsdGVyIjoiYmx1cigwLjEyMjUwOHB4KSJ9LHsidCI6NDQzLCJzY2FsZSI6IjEuMDAwMDcxIDEuMDAyMjA3IiwiZmlsdGVyIjoiYmx1cigwLjA4MDA0NHB4KSJ9LHsidCI6NDYwLCJzY2FsZSI6IjEuMDAwMDU1IDEuMDAxNjk5IiwiZmlsdGVyIjoiYmx1cigwLjA0NTIzMXB4KSJ9LHsidCI6NDc1LCJzY2FsZSI6IjEuMDAwMDQyIDEuMDAxMjk5IiwiZmlsdGVyIjoiYmx1cigwLjAyMjk2NnB4KSJ9LHsidCI6NDkyLCJzY2FsZSI6IjEuMDAwMDI5IDEuMDAwOTEyIiwiZmlsdGVyIjoiYmx1cigwLjAwNjkxOHB4KSJ9LHsidCI6NTEwLCJzY2FsZSI6IjEuMDAwMDA3IDEuMDAwMjIyIiwiZmlsdGVyIjoiYmx1cigwLjAwMDEzOXB4KSJ9XSwiZXhpdCI6W3sidCI6Mywic2NhbGUiOiIwLjk5OTkzNSAwLjk5Nzk5MSIsImZpbHRlciI6ImJsdXIoMC4xMDc5MTFweCkifSx7InQiOjE3LCJzY2FsZSI6IjAuOTk5MjY5IDAuOTc3MzMzIiwiZmlsdGVyIjoiYmx1cigxLjIxNzU3cHgpIn0seyJ0IjozNSwic2NhbGUiOiIwLjk5ODY1NCAwLjk1ODIzNyIsImZpbHRlciI6ImJsdXIoMi4yNDMzMDhweCkifSx7InQiOjUxLCJzY2FsZSI6IjAuOTk4MjI0IDAuOTQ0ODk5IiwiZmlsdGVyIjoiYmx1cigyLjk1OTc2MnB4KSJ9LHsidCI6NjcsInNjYWxlIjoiMC45OTc4NjkgMC45MzM4OTUiLCJmaWx0ZXIiOiJibHVyKDMuNTUwODYzcHgpIn0seyJ0Ijo4NSwic2NhbGUiOiIwLjk5NzUzOSAwLjkyMzY0NyIsImZpbHRlciI6ImJsdXIoNC4xMDEzNDZweCkifSx7InQiOjEwMCwic2NhbGUiOiIwLjk5NzMwOSAwLjkxNjUwNSIsImZpbHRlciI6ImJsdXIoNC40ODQ5NTlweCkifSx7InQiOjExOCwic2NhbGUiOiIwLjk5NzA3OCAwLjkwOTMzNyIsImZpbHRlciI6ImJsdXIoNC44NzAwMTFweCkifSx7InQiOjEzNCwic2NhbGUiOiIwLjk5NjkwOCAwLjkwNDA3MiIsImZpbHRlciI6ImJsdXIoNS4xNTI4MTJweCkifSx7InQiOjE1Mywic2NhbGUiOiIwLjk5Njc0NSAwLjg5ODk5NiIsImZpbHRlciI6ImJsdXIoNS40MjU0MzlweCkifSx7InQiOjE2Nywic2NhbGUiOiIwLjk5NjY0OCAwLjg5NTk4NSIsImZpbHRlciI6ImJsdXIoNS41ODcxOTlweCkifSx7InQiOjE4NSwic2NhbGUiOiIwLjk5NjU0OSAwLjg5MjkyOCIsImZpbHRlciI6ImJsdXIoNS43NTE0MDZweCkifSx7InQiOjIwMCwic2NhbGUiOiIwLjk5NjQ4OCAwLjg5MTAyIiwiZmlsdGVyIjoiYmx1cig1Ljg1MzkwMnB4KSJ9LHsidCI6MjE3LCJzY2FsZSI6IjAuOTk2NDM5IDAuODg5NSIsImZpbHRlciI6ImJsdXIoNS45MzU1NXB4KSJ9LHsidCI6MjMzLCJzY2FsZSI6IjAuOTk2NDExIDAuODg4NjQ1IiwiZmlsdGVyIjoiYmx1cig1Ljk4MTQ1NXB4KSJ9XX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-exit-·-a-Po-1aa83-opacity-and-its-slide-alone-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 94,
+                    "line": 434
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-b428ac8ec6fb018c0cc6",
+          "file": "release-11-1-1.spec.ts",
+          "line": 443,
+          "column": 5
+        },
+        {
+          "title": "exit · a Tooltip leaves on opacity and its slide alone",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a Tooltip does not open on touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "line": 445,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 352,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T08:43:07.372Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a Tooltip does not open on touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "line": 445,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-cbca81ff56c13da78372",
+          "file": "release-11-1-1.spec.ts",
+          "line": 443,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-16T08:43:02.430Z",
+    "duration": 5535.41,
+    "expected": 0,
+    "skipped": 1,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}
