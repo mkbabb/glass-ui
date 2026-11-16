@@ -57,7 +57,7 @@ export const FIELD_ALPHA_FLOOR = 0.02;
  *  NOT name an explicit `backgroundCanvas` auto-discovers this canvas so it samples
  *  the LIVE field rather than a static stack-walk; absent it (a focal route where the
  *  shell stands down, an SSR scope) the static `elementsFromPoint` path is the floor. */
-export const SHELL_FIELD_CANVAS_SELECTOR =
+const SHELL_FIELD_CANVAS_SELECTOR =
     "[data-glass-field-canvas] canvas, canvas[data-glass-field-canvas]";
 
 /**
