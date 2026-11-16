@@ -82,40 +82,19 @@
             block-size var(--spring-dock-duration) var(--spring-dock);
 
         /* The dock control press couples to
-           the ONE interruptible press spring. DockIconButton composes `useLiquidPress`
+           the ONE interruptible press spring. DockControl composes `useLiquidPress`
            (springPreset('press'), squish on) writing the `--dock-press-t` 0..1 drive; the
-           CSS reads it on TWO coupled feedback legs so a tap reads as a spring-settling iOS
-           press (the paint-judge dock-hover-press repair), while the binary `:active`
-           register below stays the no-JS / PRM floor:
-
-           • the SPECULAR leg — the dock press drive aliases onto the shared
-             `--glass-btn-press-t` the material `::before` catch-light reads (glass/
-             material.css `--specular-intensity: max(rest, active·--glass-btn-press-t)`),
-             so on RELEASE the gleam SETTLES with the spring's alive rebound instead of
-             snapping to rest (the material comment's "a dock control writes it" intent, now
-             wired). At rest `--dock-press-t` is 0 → `--glass-btn-press-t` 0 → byte-identical
-             (no second specular recipe — the DRY reuse of the built material gleam).
-           • the DARKEN leg — a sub-perceptual `filter: brightness()` deepen on the SAME
-             drive so the plate reads as pressing IN (not just shrinking), settling on the
-             spring; `filter` is compositor-safe (`proof:no-layout-animation` greens it),
-             and `brightness(1)` at rest is a no-op. */
-        --glass-btn-press-t: var(--dock-press-t, 0);
+           CSS reads it on the DARKEN leg — a sub-perceptual `filter: brightness()` deepen
+           so the plate reads as pressing IN (not just shrinking), settling on the
+           spring; `filter` is compositor-safe (`proof:no-layout-animation` greens it),
+           and `brightness(1)` at rest is a no-op. The binary `:active` register below
+           stays the no-JS / PRM floor. */
         filter: brightness(calc(1 - var(--dock-press-t, 0) * 0.04));
 
         /* Glass icon-hover. The icon-button hover reads as a glass
            surface, not a flat `--muted` plate: a translucent card-tinted fill is
-           the hover affordance. A consumer retunes the fill via `--dock-icon-hover-bg`.
-
-           The dock control's SECOND specular (the struck highlight
-           hover box-shadow) is RETIRED. The dock-icon-button is a
-           member of the unified material selector group (glass/material.css), so the moving
-           `::before` catch-light is now its SOLE specular owner — one light per
-           surface (the §0 "excise or fail" discipline). Stacking the
-           inset box-shadow on the most-hovered, floating
-           surface was the worst-offending double-light blowout; the card-tinted
-           hover fill carries the affordance without a second catch-light, and
-           dropping it also removes the `:not(:focus-visible)` specular-vs-ring
-           juggle. */
+           the hover affordance, with the ink firming on the same clock. No light follows
+           the pointer. A consumer retunes the fill via `--dock-icon-hover-bg`. */
         /* The hover reads the FAMILY token `--dock-control-hover-bg`
            (the per-control `--dock-icon-hover-bg` still wins if a consumer set it),
            so the whole dock-control family shares ONE glass-translucent hover fill.
@@ -124,7 +103,7 @@
            an ungated fill stayed painted after a tap. The tab, trigger, switcher and
            DarkModeToggle hovers take the same gate. */
         /* NO HOVER SCALE (U/B8r I-2; atlas register MO-09; the owner's order of
-           2026-10-19, "less flashy"). A hover answers with the fill and the gleam, never
+           2026-10-19, "less flashy"). A hover answers with the fill and the ink, never
            with size: the 1.1 lift deformed the atlas figure dock's Table view toggle
            under the pointer in every engine. The press keeps its spring. */
         /* `background-color`, never the `background` shorthand: the shorthand resets

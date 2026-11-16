@@ -7,7 +7,6 @@ import {
 } from "reka-ui";
 import { ChevronDown } from "@lucide/vue";
 import { cn } from "../_shared/class-names";
-import { vSpecular } from "../../composables/glass";
 import DropdownMenuTrigger from "../menu/DropdownMenuTrigger.vue";
 import { DOCK_SEAT_ATTR } from "./constants";
 
@@ -91,7 +90,6 @@ const triggerClass = computed(() =>
 <template>
     <SelectTrigger
         v-if="props.for === 'select'"
-        v-specular
         v-bind="{ ...$attrs, ...seat }"
         as-child
         :class="triggerClass"
@@ -108,7 +106,6 @@ const triggerClass = computed(() =>
 
     <DropdownMenuTrigger
         v-else-if="props.for === 'dropdown'"
-        v-specular
         v-bind="{ ...$attrs, ...seat }"
         as-child
         action="pointerdown"
@@ -119,7 +116,6 @@ const triggerClass = computed(() =>
 
     <PopoverTrigger
         v-else
-        v-specular
         v-bind="{ ...$attrs, ...seat }"
         as-child
         :class="triggerClass"

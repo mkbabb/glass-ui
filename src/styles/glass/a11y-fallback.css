@@ -98,17 +98,10 @@
             background: Canvas;
         }
 
-        /* The decorative specular catch-light (`::before`) paints nothing meaningful
-           once chroma collapses — yield it entirely (the same decorative-chrome cede
-           the `--glass-level: 0` opaque escape performs on the body). It is NOT part
-           of the structure the skin restores. (The `::after` arms went with the grain
-           register — K1; there is no rung `::after` left to yield.) */
-        .glass-wash::before,
-        .glass-quiet::before,
-        .glass-resting::before,
-        .glass-floating::before,
-        .glass-overlay::before,
-        .glass-card::before {
+        /* The decorative specular catch-light (`::before`, the opt-in
+           `.glass-specular-track` only) paints nothing meaningful once chroma
+           collapses — yield it entirely. */
+        .glass-specular-track::before {
             display: none;
         }
     }

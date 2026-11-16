@@ -280,18 +280,4 @@
     .button[data-loading] {
         cursor: progress;
     }
-
-    /* The press-coupled gleam, re-keyed onto the `::before` seat this host actually
-       carries. It rides the ONE `--glass-btn-press-t` spring drive, so the catch-light
-       tracks the squish frame-for-frame instead of snapping between two CSS states. */
-    .button.glass-specular-track:active::before {
-        --specular-intensity: calc(
-            var(--glass-specular-intensity-hover) +
-                (
-                    var(--glass-specular-intensity-active) -
-                        var(--glass-specular-intensity-hover)
-                ) *
-                var(--glass-btn-press-t)
-        );
-    }
 }

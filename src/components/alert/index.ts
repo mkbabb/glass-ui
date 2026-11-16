@@ -29,12 +29,6 @@ export { default as AlertTitle } from "./AlertTitle.vue";
        so a surface outside the ladder never received `--on-glass-muted` and its
        description ink kept the page-calibrated value on a translucent plate.
 
-   `--glass-specular-intensity-hover: 0` is the one added declaration and it is a
-   subtraction in disguise: joining the rung would otherwise hand a `role="alert"`
-   surface a pointer-reactive gleam. An alert is announced, not operated; a hover
-   affordance on it is a false promise. Rest specular is already 0 (`property-regs-
-   specular.css`), so this closes the hover half and nothing else.
-
    `.liquid-enter` is the breath. Alert measured 0 hover / 0 transition / 0 spring in 77
    LOC — a genuinely inert component under the breath-of-life edict — and the honest
    channel for a surface nobody points at is its ARRIVAL, not a gleam it cannot earn.
@@ -53,7 +47,7 @@ export { default as AlertTitle } from "./AlertTitle.vue";
    (which is what `currentcolor` already resolved to, so neutral paint is unchanged) and
    takes `--tone` on the four toned arms, where it is the whole colour event. */
 const BASE =
-    "glass-quiet liquid-enter [--glass-specular-intensity-hover:0] w-full rounded-card px-4 py-3 grid has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] grid-cols-[0_1fr] has-[>svg]:gap-x-3 gap-y-0.5 items-start [&>svg]:size-(--ui-glyph) [&>svg]:translate-y-0.5";
+    "glass-quiet liquid-enter w-full rounded-card px-4 py-3 grid has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] grid-cols-[0_1fr] has-[>svg]:gap-x-3 gap-y-0.5 items-start [&>svg]:size-(--ui-glyph) [&>svg]:translate-y-0.5";
 
 /* THE TONE ARMS — neutral glass + status ink. The status-tinted PLATE is not built:
    colour arrives as the full-chroma glyph and the tone-keyed ink, over the same neutral

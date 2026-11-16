@@ -1,15 +1,11 @@
 <script setup lang="ts">
 // BK #80 W-BUTTON — the command. KEEP + RE-SEAT (CWT-3 §LANE button §1).
 //
-// ONE MATERIAL OWNER. The host composes `.glass-capsule` (the ONE backdrop owner)
-// and `.glass-specular-track` (the ONE `::before` gleam seat). It never composed a
-// ladder rung and a capsule at once again: two plate classes on one element is two
-// materials arguing, and the loser's border/shadow/backdrop die on the cascade with
-// nobody able to read which one paints. The gleam seat is `.glass-specular-track`
-// rather than a ladder rung because material.css transitions the track's `::before`
-// UNQUALIFIED while every ladder rung's is `:hover`/`:active`-scoped — a scoped
-// transition ceases to exist the instant the pointer leaves, so a rung-seated gleam
-// fades in over 240ms and snaps out in 0.
+// ONE MATERIAL OWNER. The host composes `.glass-capsule` (the ONE backdrop owner),
+// whose rim is its light; no gleam follows the pointer. It never composes a ladder
+// rung and a capsule at once: two plate classes on one element is two materials
+// arguing, and the loser's border/shadow/backdrop die on the cascade with nobody able
+// to read which one paints.
 //
 // THREE STATES THAT DIFFER. `loading` and `disabled` are not the same fact and no
 // longer paint the same: a loading command is FOCUSABLE, reports `aria-busy`, shows
@@ -32,7 +28,6 @@ import type { Size, Tone } from "../_shared/axes";
 import { cn } from "../_shared/class-names";
 import type { PrimitiveProps } from "../_shared/primitive";
 import DotRing from "../_shared/feedback/DotRing.vue";
-import { vSpecular } from "../../composables/glass";
 import { asElement } from "../../composables/motion/core/asElement";
 import { useLiquidPress } from "../../composables/motion/spring/useLiquidPress";
 import { useBarShape } from "../_shared/shape/useBarShape";
@@ -119,7 +114,7 @@ const hostStyle = computed<CSSProperties>(() => press.pressStyle.value);
 const hostClass = computed(() =>
     cn(
         "button tap-squish focus-ring",
-        glassMaterial.value && "glass-capsule glass-specular-track",
+        glassMaterial.value && "glass-capsule",
         props.emphasis === "primary" && "glass-deep",
         interactiveGlass.value && "glass-capsule-hover",
         props.class,
@@ -163,7 +158,6 @@ function guardDisabledActivation(event: MouseEvent): void {
 <template>
     <Primitive
         :ref="captureHost"
-        v-specular="interactiveGlass"
         :as="as"
         :as-child="asChild"
         data-slot="button"

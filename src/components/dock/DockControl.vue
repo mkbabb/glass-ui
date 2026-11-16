@@ -8,7 +8,6 @@ import {
 } from "vue";
 import { Primitive } from "reka-ui";
 import { cn } from "../_shared/class-names";
-import { vSpecular } from "../../composables/glass";
 import { useLiquidPress } from "../../composables/motion/spring/useLiquidPress";
 import { springPreset } from "../../composables/motion/spring/springPresets";
 import { DOCK_SEAT_ATTR } from "./constants";
@@ -18,10 +17,9 @@ import { DOCK_SEAT_ATTR } from "./constants";
  * a `shape` discriminant:
  *
  *   • `shape="icon"` (default) — fixed-square icon control with glass hover,
- *     interruptible spring press,
- *     pointer-anchored specular gleam, the selectable `active` glass-capsule seat.
+ *     interruptible spring press, the selectable `active` glass-capsule seat.
  *   • `shape="tab"` — auto-sized text-tab control with
- *     the de-red'd glass hover register + the pointer-following gleam.
+ *     the de-red'd glass hover register.
  *
  * ONE FACE, the folded safe-inset. Both shapes read the shared `.glass-capsule`
  * face (glass/glass-capsule.css): the painted plate insets via the dock-scoped
@@ -87,13 +85,13 @@ const isTab = computed(() => props.shape === "tab");
 
 // The icon shape composes the full glass-capsule register (hover-lift + press +
 // the selected `.glass-capsule` seat); the tab shape reads its own de-red'd glass
-// hover register (`.dock-tab-button`, dock-controls/tab-button.css). Both carry
-// `glass-specular-track` for the moving `::before` catch-light the directive feeds.
+// hover register (`.dock-tab-button`, dock-controls/tab-button.css). No light follows
+// the pointer on either.
 const classes = computed(() =>
     isTab.value
-        ? cn("dock-tab-button glass-specular-track", props.class)
+        ? cn("dock-tab-button", props.class)
         : cn(
-              "dock-icon-button glass-specular-track glass-capsule-hover",
+              "dock-icon-button glass-capsule-hover",
               { "glass-capsule": props.active },
               { "dock-icon-button--compact": props.compact },
               props.class,
@@ -130,7 +128,7 @@ const hostAttrs = computed(() =>
 // its private spring driver reaches kf `SpringProgress`, so a rapid re-press
 // re-seats the LIVE (position, velocity) — the iOS velocity-continuous contract.
 // It reads the `press` SPRING_PRESETS row and writes `--dock-press-t` the
-// dock-controls CSS reads to couple darken/specular to the spring physics. The
+// dock-controls CSS reads to couple the darken to the spring physics. The
 // CSS `:active` register stays the no-JS, PRM floor; `useLiquidPress` is
 // PRM-instant + compositor-only. The tab shape reads its own CSS press register.
 const PRESS = springPreset("press");
@@ -154,8 +152,6 @@ function blockDisabledActivation(event: MouseEvent): void {
     event.stopImmediatePropagation();
 }
 
-// the dock control auto-arms the pointer-following gleam via the
-// tier-root `v-specular` directive (ONE position-write source, zero call-site wiring).
 // The icon shape wires the interruptible spring-press; the tab shape reads its own CSS
 // press/hover register. The template is SINGLE-ROOT (no leading comment node) so attr
 // fall-through + VTU `.attributes()` behave exactly as the retired DockIconButton did.
@@ -163,7 +159,6 @@ function blockDisabledActivation(event: MouseEvent): void {
 
 <template>
     <Primitive
-        v-specular
         :as="as"
         :as-child="asChild"
         v-bind="{ ...hostAttrs, ...stateAttrs }"

@@ -18,14 +18,15 @@
    THREE states:
      · REST  = .glass-capsule           — the warm-glass lifted plate.
      · TRACK = .glass-capsule-track     — the recessed warm channel.
-     · HOVER = .glass-capsule-hover     — the specular catch-light, no spatial leg.
+     · HOVER = .glass-capsule-hover     — names a hover-answering capsule; in a dock
+                                          it joins the content-box clip below.
 
    Every channel is compositor-only + Safari-native by construction (the §7 floor):
    no `backdrop-filter: url()`, no SVG goo, no WebGL. The recess is a STATIC inset
    shadow built off a PLAIN per-mode token pair (NEVER a `light-dark()` fragment —
    an inset-shadow leg inside light-dark() computes the WHOLE box-shadow to `none`,
-   the binding MEMORY lesson). The hover is a `--glass-specular` step only, factored
-   once on `.glass-capsule-hover` below.
+   the binding MEMORY lesson). No light follows the pointer: each composer answers
+   hover with its own fill.
    ════════════════════════════════════════════════════════════════════════ */
 
 @layer components {
@@ -83,37 +84,6 @@
             var(--glass-rim-top),
             var(--glass-rim-bottom),
             inset 0 1px 2px var(--tab-track-recess-ink);
-    }
-
-    /* ── .glass-capsule-hover — the SHARED specular hover ──
-       One channel: the specular catch-light brightens on hover, on the fast bezier
-       clock (an effects cross-fade, not spatial motion). Nothing scales on hover or
-       press (U/B7, the owner's order of 2026-10-19: "less flashy"); the press is
-       acknowledged by the control's own state change. */
-    .glass-capsule-hover {
-        transition: --specular-intensity var(--duration-fast) var(--ease-standard);
-    }
-    /* THE CAPSULE'S HOVER GLEAM RUNG, and the one seat from which it can be reached.
-       `--specular-intensity` is registered `inherits: false` (`tokens/property-regs.css`
-       — the registration's own comment says why: "a hovered parent must not push its
-       specular onto a child"), and `material.css` declares that property ON the
-       `::before` in every state rule it owns. A host-level `--specular-intensity: 0.14`
-       here therefore reached nothing, a priori, under a comment asserting it drove "the
-       REAL gleam-opacity channel" — it is struck, both arms, rather than left as a
-       literal that reads live and paints nothing.
-
-       What replaces it reaches by the only path there is: `--glass-specular-intensity-
-       hover` is UNREGISTERED, so it inherits into the pseudo, and material.css's hover
-       rule reads it. The rung is the capsule's own — a lit warm-glass lozenge reads a
-       notch brighter at the grazing edge than the global whisper — so it is declared
-       once here, for every capsule composer, rather than re-declared by each of them.
-       The dark arm rides softer; both live at `tokens/property-regs-specular.css`. */
-    /* Hover paint needs a pointer that hovers: on touch, `:hover` sticks to the last
-       tapped element, so an ungated gleam would stay lit after the tap. */
-    @media (hover: hover) {
-        .glass-capsule-hover:hover {
-            --glass-specular-intensity-hover: var(--glass-specular-capsule-hover);
-        }
     }
 
     /* ── The folded dock-control safe-inset (the face token) ──

@@ -484,9 +484,6 @@ onMounted(() => {
             </span>
         </SliderTrack>
         <!--
-            The thumb's specular anchor is FROZEN at 50%/50% and that is correct, not a
-            bug: the house has one light source, and pointer-tracking a 12px box is
-            noise. Do not add `v-specular` here.
             `aria-valuetext` is the ONE humane readout — reka mints none, so a screen
             reader otherwise hears the raw number for a slider whose scale is a curve, a
             colour, or a duration. It is authored per thumb because each thumb carries
@@ -501,7 +498,7 @@ onMounted(() => {
             :aria-errormessage="($attrs['aria-errormessage'] as string) ?? undefined"
             :aria-invalid="props.invalid || undefined"
             :aria-valuetext="props.valueText?.(value as number, key) ?? undefined"
-            class="slider-thumb glass-specular-track"
+            class="slider-thumb"
         />
     </SliderRoot>
 </template>

@@ -158,7 +158,7 @@ describe("Button §5 MATERIAL — one owner, one attribute", () => {
                 slots: { default: "Save" },
             }).classes();
             expect(classes).toContain("glass-capsule");
-            expect(classes).toContain("glass-specular-track");
+            expect(classes).not.toContain("glass-specular-track");
             for (const rung of [
                 "glass-wash",
                 "glass-quiet",
