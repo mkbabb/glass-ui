@@ -66,7 +66,7 @@ export interface UseDockStateReturn {
     /** Mouseleave handler — schedules `hover → collapsed` after `collapseDelay`. */
     onMouseLeave: (e?: MouseEvent) => void;
     /** Focusin handler — transitions `collapsed → hover` (keyboard parity with mouse). */
-    onFocusIn: () => void;
+    onFocusIn: (e?: FocusEvent) => void;
     /** Focusout handler — schedules `hover → collapsed` when focus leaves the dock. */
     onFocusOut: (e: FocusEvent) => void;
     /** Click handler on the collapsed layer — transitions to `pinned`. */
@@ -552,10 +552,17 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
 
     // --- Focus handlers ---
 
-    function onFocusIn() {
+    function onFocusIn(e?: FocusEvent) {
         if (isQuiet() || pressOnly()) return;
         dismissedUnderPointer = false;
-        clearTimer();
+        // W-I.8 RU-62: an overlay that closes releases the dock into its linger, and its quiet
+        // return of focus to the trigger (no :focus-visible) with the pointer outside does not
+        // cancel that linger; a keyboard focus does.
+        const quietReturn =
+            collapseTimer !== null &&
+            !pointerInside &&
+            !(e?.target instanceof Element && e.target.matches(":focus-visible"));
+        if (!quietReturn) clearTimer();
         enterInside();
         if (state.value === "collapsed") {
             if (pressHolds()) {

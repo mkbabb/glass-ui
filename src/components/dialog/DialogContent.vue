@@ -201,7 +201,7 @@ const contentClass = computed(() =>
         <!-- `veil` is passed HERE and nowhere else: the centred plate sits inside the
              focus veil's own fixed core, which is the only geometry that mask is true
              for. `sheet/SheetContent.vue` composes the same scrim and passes none. -->
-        <ModalOverlay veil :opacity="scrimAlpha" :force-mount="scrimForceMount" />
+        <ModalOverlay v-bind="dock.portalAttrs.value" veil :opacity="scrimAlpha" :force-mount="scrimForceMount" />
         <RekaDialogContent
             v-bind="{ ...forwarded, ...$attrs, ...dock.portalAttrs.value, inert: closingInert }"
             :aria-modal="dialogRoot.modal.value ? 'true' : undefined"

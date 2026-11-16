@@ -309,7 +309,7 @@ const contentStyle = computed<CSSProperties>(() => ({
         <!-- The scrim is DIM ONLY here — no `veil`. The focus veil's core is fixed at
              the viewport centre, and a sheet is anchored at an edge: the pool would
              frost the middle of the page with nothing engaged inside it. -->
-        <ModalOverlay :opacity="scrimAlpha" :force-mount="scrimForceMount" />
+        <ModalOverlay v-bind="dock.portalAttrs.value" :opacity="scrimAlpha" :force-mount="scrimForceMount" />
         <RekaDialogContent
             v-bind="{ ...forwarded, ...$attrs, ...dock.portalAttrs.value, inert: closingInert }"
             :aria-modal="dialogRoot.modal.value ? 'true' : undefined"

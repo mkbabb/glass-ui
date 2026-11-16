@@ -54,6 +54,9 @@ interface ModalOverlayProps {
     veil?: boolean;
 }
 
+// W-I.8 RU-62: a surface's dock stamp (participation.ts) lands on the scrim element itself.
+defineOptions({ inheritAttrs: false });
+
 const props = withDefaults(defineProps<ModalOverlayProps>(), {
     opacity: null,
     veil: false,
@@ -73,6 +76,7 @@ const root = injectDialogRootContext();
         :force-mount="props.forceMount || !root.unmountOnHide.value"
     >
         <ModalScrim
+            v-bind="$attrs"
             v-show="root.unmountOnHide.value || present"
             :present="root.unmountOnHide.value || present"
             :class="

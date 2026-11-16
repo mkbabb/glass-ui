@@ -80,6 +80,13 @@ export function useHoldToken(
  * nothing at all, so a dock-anchored tooltip collapsed the dock the moment the
  * pointer left the icon for the hint.
  */
+/**
+ * W-I.8 RU-62: the stamp marks everything a dock-owned surface paints over the page, its
+ * content root and, for a modal surface, its scrim. A press on either is the surface's own
+ * (its trigger's toggle or its own dismissal acts, once), never the dock's outside press:
+ * the dock does not fold under it, and when the surface closes its hold releases the dock
+ * into its linger. A press on the trigger itself is inside the dock already.
+ */
 export interface DockPortalAttrs {
     "data-glass-dock-portal"?: string;
     "data-glass-dock-owner"?: string;
