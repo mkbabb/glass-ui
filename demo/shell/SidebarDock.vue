@@ -74,6 +74,7 @@ function openConfigurator(): void {
                     <TooltipTrigger as-child>
                         <DockControl
                             type="button"
+                            :active="category.id === activeCategoryId ? true : undefined"
                             :aria-current="
                                 category.id === activeCategoryId ? 'page' : undefined
                             "
