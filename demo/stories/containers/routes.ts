@@ -7,7 +7,7 @@ export const section: SectionRoutes = {
     icon: Boxes,
     lede: "Dialogs, sheets, popovers, menus and tooltips.",
     routes: [
-        { id: "dialog", title: "Dialog", lede: "A modal plate that asks for a decision." },
+        { id: "dialog", title: "Dialog", lede: "A modal panel that asks for a decision." },
         { id: "sheet", title: "Sheet", lede: "A panel that slides in from an edge." },
         { id: "popover", title: "Popover", lede: "A floating panel anchored to its trigger." },
         { id: "dropdown-menu", title: "Menu", lede: "A list of actions, opened from a button or a right press." },

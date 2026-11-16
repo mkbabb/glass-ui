@@ -12,6 +12,7 @@ import {
 } from "@glass/components/tooltip";
 import { DarkModeToggle } from "@glass/components/dark-mode-toggle";
 import DockScene from "./_parts/DockScene.vue";
+import ScenePane from "./_parts/ScenePane.vue";
 
 withDefaults(defineProps<{ folds?: boolean }>(), { folds: true });
 
@@ -28,6 +29,9 @@ const section = ref<string>("regions");
 
 <template>
     <DockScene place="start">
+        <template #context>
+            <ScenePane shape="column" />
+        </template>
         <TooltipProvider :delay-duration="250">
             <Transition name="fade" mode="out-in">
                 <div :key="String(folds)" class="scene-swap">

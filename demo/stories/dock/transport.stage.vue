@@ -8,6 +8,7 @@ import { DockTrigger } from "@glass/components/dock/trigger";
 import { Select, SelectContent, SelectItem, SelectValue } from "@glass/components/select";
 import { Progress } from "@glass/components/progress";
 import DockScene from "./_parts/DockScene.vue";
+import ScenePane from "./_parts/ScenePane.vue";
 
 const LENGTH = 40;
 const playing = ref(false);
@@ -33,6 +34,9 @@ const clock = computed(() => {
 
 <template>
     <DockScene place="bottom">
+        <template #context>
+            <ScenePane shape="figure" />
+        </template>
         <GlassDock collapse="closed" fit-content collapsed-label="Open the transport" aria-label="Transport">
             <template #persistent>
                 <DockControl

@@ -1,16 +1,16 @@
 <script setup lang="ts">
-// A figure's dial bar above its card: two captioned dials parted by a separator, then
-// a period stepper. It never folds. Under 30rem the captions go, and the range and
-// the period become selects, so the run fits without scrolling.
+// A figure's dial bar above its figure: two captioned dials parted by a separator,
+// then a year stepper. It never folds, and the figure answers each dial. Under 30rem
+// the captions go, and the range and the year become selects, so the run fits without
+// scrolling.
 import { computed, ref } from "vue";
 import { ChevronLeft, ChevronRight } from "@lucide/vue";
 import { DockControl, DockSeparator, GlassDock } from "@glass/components/dock";
 import { DockTrigger } from "@glass/components/dock/trigger";
 import { Select, SelectContent, SelectItem, SelectValue } from "@glass/components/select";
 import { SegmentedTabs } from "@glass/components/tabs";
-import { Card, CardContent, CardTitle } from "@glass/components/card";
-import { Skeleton } from "@glass/components/skeleton";
 import DockScene from "./_parts/DockScene.vue";
+import MiniBars from "./_parts/MiniBars.vue";
 
 const RANGES = [
     { value: "1y", label: "1Y" },
@@ -22,12 +22,27 @@ const scale = ref("linear");
 const year = ref(2024);
 const YEARS = ["2021", "2022", "2023", "2024", "2025"];
 const yearValue = computed({ get: () => String(year.value), set: (v: string) => (year.value = Number(v)) });
+
+// A month's balance: a slow rise with a seasonal swing.
+const month = (y: number, m: number): number => {
+    const t = (y - 2015) * 12 + m;
+    return 400 + 14 * t + 90 * Math.sin(t / 1.9) + 40 * Math.cos(t / 5.3);
+};
+const yearTotal = (y: number): number => Array.from({ length: 12 }, (_, m) => month(y, m)).reduce((a, b) => a + b, 0);
+const values = computed(() => {
+    if (range.value === "1y") return Array.from({ length: 12 }, (_, m) => month(year.value, m));
+    const span = range.value === "5y" ? 5 : 10;
+    return Array.from({ length: span }, (_, i) => yearTotal(year.value - span + 1 + i));
+});
+const figureLabel = computed(
+    () => `Balance by ${range.value === "1y" ? "month" : "year"} to ${year.value}, ${scale.value} scale`,
+);
 </script>
 
 <template>
     <DockScene v-slot="{ narrow }" place="center">
         <div class="dials">
-            <GlassDock :collapse="false" fit-content aria-label="Fund balance filters">
+            <GlassDock :collapse="false" fit-content aria-label="Figure filters">
                 <Select v-if="narrow" v-model="range">
                     <DockTrigger for="select" aria-label="Range">
                         <SelectValue class="text-small" />
@@ -73,12 +88,9 @@ const yearValue = computed({ get: () => String(year.value), set: (v: string) => 
                     </DockControl>
                 </div>
             </GlassDock>
-            <Card size="sm" class="dials-card">
-                <CardTitle as="h3" class="dials-title text-body">Fund balance</CardTitle>
-                <CardContent>
-                    <Skeleton class="dials-chart w-full" />
-                </CardContent>
-            </Card>
+            <div class="dials-figure">
+                <MiniBars :values="values" :log="scale === 'log'" :label="figureLabel" />
+            </div>
         </div>
     </DockScene>
 </template>
@@ -108,21 +120,23 @@ const yearValue = computed({ get: () => String(year.value), set: (v: string) => 
     text-align: center;
 }
 
-.dials-card {
+.dials-figure {
+    box-sizing: border-box;
     inline-size: 100%;
+    block-size: 14rem;
+    padding: var(--sp-4);
+    border-radius: var(--radius-2xl);
+    border: 1px solid var(--glass-border-quiet);
+    background-color: color-mix(in srgb, var(--card) 72%, transparent);
 }
 
-.dials-title {
-    padding: var(--sp-4) var(--sp-4) 0;
-}
-
-.dials-chart {
-    block-size: 9rem;
+.dark .dials-figure {
+    background-color: color-mix(in srgb, var(--foreground) 8%, transparent);
 }
 
 @container (inline-size < 30rem) {
-    .dials-chart {
-        block-size: 6rem;
+    .dials-figure {
+        block-size: 9rem;
     }
 }
 </style>

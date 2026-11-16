@@ -5,11 +5,18 @@ import { reactive } from "vue";
 import { ChevronDown, Download, Maximize2, MoreHorizontal, SlidersHorizontal, Table2 } from "@lucide/vue";
 import { DockControl, GlassDock } from "@glass/components/dock";
 import { Card, CardContent, CardTitle } from "@glass/components/card";
-import { Skeleton } from "@glass/components/skeleton";
+import MiniBars from "./_parts/MiniBars.vue";
 
 withDefaults(defineProps<{ face?: "handle" | "words" }>(), { face: "handle" });
 
 const FIGURES = ["Revenue", "Headcount", "Churn"] as const;
+// Eight quarters of each figure; the table view lists the last four.
+const SERIES: Record<(typeof FIGURES)[number], number[]> = {
+    Revenue: [32, 41, 38, 52, 61, 58, 70, 76],
+    Headcount: [12, 13, 15, 15, 18, 20, 21, 24],
+    Churn: [8, 7, 9, 6, 5, 6, 4, 4],
+};
+const QUARTERS = ["Q1", "Q2", "Q3", "Q4"];
 const table = reactive<Record<string, boolean>>({});
 </script>
 
@@ -54,10 +61,15 @@ const table = reactive<Record<string, boolean>>({});
             </div>
             <CardContent class="figure-body">
                 <Transition name="fade" mode="out-in">
-                    <div v-if="table[f]" class="figure-rows">
-                        <Skeleton v-for="i in 3" :key="i" class="h-3 w-full" />
+                    <dl v-if="table[f]" class="figure-rows text-small tabular-nums">
+                        <div v-for="(q, i) in QUARTERS" :key="q" class="figure-row">
+                            <dt>{{ q }}</dt>
+                            <dd>{{ SERIES[f][4 + i] }}</dd>
+                        </div>
+                    </dl>
+                    <div v-else class="figure-chart">
+                        <MiniBars :values="SERIES[f]" :label="`${f} by quarter`" />
                     </div>
-                    <Skeleton v-else class="figure-chart w-full" />
                 </Transition>
             </CardContent>
         </Card>
@@ -112,9 +124,22 @@ const table = reactive<Record<string, boolean>>({});
 
 .figure-rows {
     display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     align-content: center;
-    gap: var(--sp-3);
+    gap: var(--sp-2) var(--sp-4);
     block-size: 7rem;
+    margin: 0;
+    color: var(--foreground);
+}
+
+.figure-row {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--sp-2);
+}
+
+.figure-row dd {
+    margin: 0;
 }
 
 @container (inline-size < 48rem) {
@@ -123,6 +148,7 @@ const table = reactive<Record<string, boolean>>({});
         block-size: 2.5rem;
     }
     .figure-rows {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
         gap: var(--sp-2);
     }
 }

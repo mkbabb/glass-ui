@@ -21,6 +21,7 @@ import {
 import { Popover, PopoverContent } from "@glass/components/popover";
 import { DarkModeToggle } from "@glass/components/dark-mode-toggle";
 import DockScene from "./_parts/DockScene.vue";
+import ScenePane from "./_parts/ScenePane.vue";
 
 const props = withDefaults(
     defineProps<{ startsOpen?: boolean; face?: "app" | "page" }>(),
@@ -55,6 +56,9 @@ const zoom = ref(100);
 
 <template>
     <DockScene place="top" class="chrome-scene">
+        <template #context>
+            <ScenePane shape="column" />
+        </template>
         <Transition name="fade" mode="out-in">
             <div :key="String(startsOpen)" class="scene-swap">
                 <GlassDock
