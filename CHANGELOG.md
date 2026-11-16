@@ -19,32 +19,41 @@ A patch on 11.1.0 about how surfaces leave. Nothing is removed or renamed.
   carried `data-surface="opaque"`, so a stylesheet that targeted the old attribute on
   these two surfaces should target the new one.
 
-- **Surfaces leave on one curve you can see.** Menus, selects, popovers and tooltips
-  lost a third of their light in the first frame and were gone in about 70 ms. Every
-  floating surface now fades across its whole exit on one gentle curve, and no single
-  frame takes more than a fifth of it. Menus and selects take about 220 ms to leave,
-  popovers 250 ms and tooltips 120 ms, each shorter than its entrance. `Dialog` and
-  `Sheet` close on the same curve, faster than they open (a dialog in about 180 ms, a
-  sheet in 250 ms), where a dialog used to take as long to close as to open. The
-  `--exit-curve` token carries the new curve.
+- **Surfaces leave on one curve you can see.** A menu or a select held its full light
+  for about 105 ms while its edge drew in, then vanished in a single frame at about
+  130 ms; a popover was gone in about 135 ms; a tooltip lost a third of its light in
+  its first frame and was gone in about 70 ms. Every floating surface now fades across
+  its whole exit on one even curve, and no single frame takes more than a fifth of it.
+  Menus and selects take about 220 ms to leave, popovers 250 ms and tooltips 120 ms,
+  each shorter than its entrance. `Dialog` and `Sheet` close on the same curve, faster
+  than they open (a dialog in about 180 ms, a sheet in 250 ms), where a dialog used to
+  take as long to close as to open and a sheet front-loaded its slide. The
+  `--exit-curve` token carries the new curve: it was `var(--ease-out)`, that is
+  `cubic-bezier(0, 0, 0.2, 1)`, and is now `cubic-bezier(0.3, 0.2, 0.7, 0.8)`.
+
+- **A popover leaves by fading and a short slide.** A `Popover` and a hover card used to
+  shrink, squash and blur as they faded out, and a tooltip shrank. They now leave on
+  opacity and their few pixels of slide alone. Their entrance is unchanged.
 
 - **A closing surface leaves the same way however you close it.** A `Sheet` with
   detents stopped shrinking at its smallest honest height and then vanished with half
   of it still on screen; it now slides the rest of the way past the edge before it is
   removed, however it is closed. A `CommandDialog` dropped its list in the first frame
   of its close, so the plate fell to its search field before it faded; the list now
-  stays until the dialog is gone.
+  stays until the dialog is gone. Menus no longer run the `glass-menu-grow` keyframes to
+  open (the grow is a transition now, so it can turn back); the keyframes are still
+  defined for stylesheets that name them.
 
 - **A surface turned back mid-way turns from where it is.** Closing a `Popover`,
   `DropdownMenu`, `Select` or `Toast` while it was still opening, or reopening one while
   it was leaving, made it jump to fully open before it moved again, and an `Accordion`
-  or `Collapsible` reversed mid-way restarted from its far end. Each now carries on from
-  the light and the height it had. The popups' exits are transitions now, held for
-  reka's presence by a keyframe that paints nothing (`glass-reveal-hold`); the
-  `glass-reveal-out` keyframe is still defined for stylesheets that name it. A press on
-  the trigger of a `Dialog`, `Sheet` or `Select` that is still leaving reopens it from
-  where it stands, where the press used to be swallowed, and a press on the page behind
-  a leaving sheet now reaches the page.
+  or `Collapsible` reversed mid-way ran to its far end for a frame before it turned.
+  Each now carries on from the light and the height it had. The popups' exits are
+  transitions now, held for reka's presence by a keyframe that paints nothing
+  (`glass-reveal-hold`); the `glass-reveal-out` keyframe is still defined for
+  stylesheets that name it. A press on the trigger of a `Dialog`, `Sheet` or `Select`
+  that is still leaving reopens it from where it stands, where the press used to be
+  swallowed, and a press on the page behind a leaving sheet now reaches the page.
 
 - **Tooltips fade in.** A tooltip appeared whole in one frame, and moving the pointer to
   a neighbouring trigger swapped one hint for the other at once. A tooltip now fades in
@@ -55,16 +64,46 @@ A patch on 11.1.0 about how surfaces leave. Nothing is removed or renamed.
   overlay for the in-page box in one frame, and its dim arrived the same way. The panel
   now shrinks and fades back out as the dim fades, and the content returns to its place
   only when that has finished. Closing it during its entrance, or reopening it during
-  its exit, turns it from where it is; Escape works from the entrance's first frame, and
-  a leaving overlay lets presses through to the page.
+  its exit, turns it from where it is, and a leaving overlay lets presses through to
+  the page. While it leaves, the root keeps `data-state="expanded"` and the default
+  slot's `fullscreen` prop stays `true`, since the content is still in the overlay; the
+  root also carries a new `data-leaving` attribute for that stretch, so a style keyed
+  on the state follows the content out.
 
-- **Surfaces say when they have finished leaving.** `Dialog`, `Sheet`, `Popover`,
-  `DropdownMenu`, `Select`, `Tooltip` and `Toast` content now emit `leave-finished`
-  once per close, after the last frame of the exit, and dispatch a DOM event of the
-  same name from the content element that bubbles and crosses shadow roots, with the
-  surface's kind in `detail.kind`. A close reversed by a reopen sends nothing. Clear
-  whatever the surface shows on this event rather than on the close, and it stays on
-  screen until it is gone.
+- **Surfaces say when they have finished leaving.** `Dialog`, `Sheet`, `Popover` (and
+  its hover card), `DropdownMenu` (and `ContextMenu`), `Select`, `Tooltip` and `Toast`
+  content now emit `leave-finished` once per close, after the last frame of the exit,
+  and dispatch a DOM event of the same name from the content element that bubbles and
+  is composed, so a listener on a shadow host hears it too, with the surface's kind in
+  `detail.kind`. A close reversed by a reopen sends nothing; a surface unmounted before
+  its exit ends sends it at the unmount. Clear whatever the surface shows on this event
+  rather than on the close, and it stays on screen until it is gone.
+
+### Fixed
+
+- **A wide `SegmentedTabs` keeps round ends on a touch screen.** 11.1.0 raised a tab to
+  the 44 px touch target, which makes the strip 50 px with its trim, but a strip wider
+  than 20rem kept the bar's 12 px corners, so it lost the round ends the release
+  promised. Under a coarse pointer the strip, its tabs and the selected plate are now
+  round-ended at every width. The 50 px is intended: the target is the tab, and the
+  strip carries its 3 px trim round it.
+
+- **Selecting a `ToggleGroupItem` no longer moves its neighbours.** A selected item
+  turned bold, which widened an item sized to its word and pushed the items after it.
+  An item now keeps one weight; selection is its fill and its colour.
+
+- **`scale-on-hover` no longer sticks after a tap.** On a touch screen a tap left the
+  element lifted until the next tap elsewhere. The lift now applies only where the
+  pointer can hover.
+
+### Sizes
+
+- The dock entry (`@mkbabb/glass-ui/dock` with every chunk it imports), gzipped: 38,673
+  bytes in 11.0.2, 40,541 in 11.1.0 and 40,541 in this release. This patch adds nothing
+  to it.
+- The surfaces a dock opens grew with the leave event and the exits that turn back,
+  gzipped, from 11.1.0: `dialog` 12,508 to 14,395 bytes, `select` 8,453 to 9,517,
+  `popover` 8,663 to 9,385, `tooltip` 5,897 to 6,607 and `menu` 11,865 to 12,555.
 
 ## 11.1.0 — 2026-11-15
 

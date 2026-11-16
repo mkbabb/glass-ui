@@ -262,10 +262,11 @@ cuts the exit, so the surface vanishes in one frame. A surface reopened during i
 exit turns back from where it is.
 
 To act once a surface is gone, listen for `leave-finished`. `Dialog`, `Sheet`,
-`Popover` (and its hover card), `DropdownMenu`, `Select`, `Tooltip` and `Toast`
-content emit it once per close, after the exit's last frame, and never for a close
+`Popover` (and its hover card), `DropdownMenu` (and `ContextMenu`), `Select`,
+`Tooltip` and `Toast` content emit it once per close, after the exit's last frame, and never for a close
 that a reopen turned back. The content element also dispatches it as a DOM
-`CustomEvent` that bubbles and crosses shadow roots, with the surface's kind in
+`CustomEvent` that bubbles and is composed, so a listener on a shadow host hears a
+surface mounted inside its shadow root, with the surface's kind in
 `detail.kind` (`dialog`, `sheet`, `popover`, `hover-card`, `menu`, `select`,
 `tooltip` or `toast`). If the surface is unmounted before its exit ends, it fires at
 the unmount.
