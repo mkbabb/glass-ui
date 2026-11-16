@@ -6,6 +6,7 @@ export const OWN_CANVAS_ROUTES: ReadonlySet<string> = new Set([
     "substrates/constellation",
     "substrates/fourier-field",
     "substrates/glass-panel",
+    "display/surface",
     "compositions/auth-shell",
 ]);
 
