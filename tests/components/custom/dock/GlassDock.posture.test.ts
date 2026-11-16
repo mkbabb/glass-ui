@@ -153,6 +153,40 @@ describe("useDockState — a press that ends without a release", () => {
     });
 });
 
+// W-I.8 RU-42: G-1 (f) on the unit, where WebKit's finger was only ever dispatched pointer
+// events. A tap opens by the clock; a finger then held down on a seat holds the dock past any
+// linger; at the lift the linger runs from the lift and starts when the lift's task ends, so the
+// tap's own focus on the seat (in that task) cannot cancel it. Plant: the linger scheduled in the
+// pointerup itself, before the tap's focus (the dock then never folds).
+describe("useDockState — G-1 (f): a held finger holds, the linger runs from the lift", () => {
+    it("holds while the finger is down and folds one linger after the lift, past the tap's focus", () => {
+        const { handle } = mountState({ collapseDelay: 1000 });
+        const root = document.querySelector<HTMLElement>(".state-root")!;
+        const seat = document.createElement("button");
+        root.appendChild(seat);
+        // The tap that opens: a touch press and lift on the folded face, then its click.
+        root.dispatchEvent(pointer("pointerdown", { pointerType: "touch" }));
+        root.dispatchEvent(pointer("pointerup", { pointerType: "touch" }));
+        handle.onClickCollapsed();
+        window.dispatchEvent(new Event("click"));
+        vi.advanceTimersByTime(0);
+        expect(handle.state.value).toBe("hover");
+        // A finger held down on a seat for nine lingers: no fold.
+        seat.dispatchEvent(pointer("pointerdown", { pointerType: "touch" }));
+        vi.advanceTimersByTime(9000);
+        expect(handle.state.value, "a held finger holds").toBe("hover");
+        // The lift: its pointerup, the tap's focus in the same task, then its click.
+        seat.dispatchEvent(pointer("pointerup", { pointerType: "touch" }));
+        handle.onFocusIn();
+        window.dispatchEvent(new Event("click"));
+        vi.advanceTimersByTime(0);
+        vi.advanceTimersByTime(900);
+        expect(handle.state.value, "not before one linger from the lift").toBe("hover");
+        vi.advanceTimersByTime(400);
+        expect(handle.state.value, "one linger after the lift").toBe("collapsed");
+    });
+});
+
 describe("useDockShellProps — `collapse` folds the two retired posture props", () => {
     it("`false` is the force-pinned pole and never starts collapsed", () => {
         const shell = useDockShellProps({ collapse: false });

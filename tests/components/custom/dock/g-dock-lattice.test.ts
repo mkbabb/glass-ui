@@ -2,7 +2,7 @@ import { readFileSync, readdirSync } from "node:fs";
 import { join, sep } from "node:path";
 import { mount } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
-import { nextTick } from "vue";
+import { h, nextTick } from "vue";
 
 import GlassDock from "@glass/components/dock/GlassDock.vue";
 
@@ -880,23 +880,44 @@ describe("G-DOCK-STATE — one selected seat, carried on at least two channels",
      * vanishes, and the count drops to one.
      */
     /*
-     * W-I.8 RU-28: STRUCK, listed for the owner (MEASURE-5, pile (c)). The open seat's width
-     * was the geometric carrier; every seat is now one seat wide and the mark says which page
-     * is current (the mark as a gliding plate is 12.0.0's, W-R.1). Kept as a known failure
-     * so the promise is not dropped silently.
+     * W-I.8 RU-41: selection is the current seat's mark. The open seat's width (the old
+     * geometric carrier) is struck by RU-28; the promise is restated on the mark, as a passing
+     * witness: in both orientations exactly one seat of a run carries the mark, no rule of the
+     * band gives a marked seat a size of its own (so its box is every other seat's), and the
+     * marked seat's fill is a declared rung that a resting seat does not paint. The indicator
+     * that glides between seats is 12.0.0's, with W-R.1's seats.
      */
-    it.fails("the geometric carrier is real on both orientations", () => {
-        const css = declarations(`${STYLES}/run.css`);
-        const inline = Number(css.match(/\.glass-dock \{[\s\S]*?--dock-open-pitches:\s*(\d+)/)![1]);
-        const block = Number(
-            css.match(/\.glass-dock\.vertical \{[\s\S]*?--dock-open-pitches:\s*(\d+)/)![1],
+    it("selection is the current seat's mark: one seat, no size of its own, a fill of its own", async () => {
+        for (const orientation of ["horizontal", "vertical"] as const) {
+            const w = mount(GlassDock, {
+                props: { orientation, collapse: false },
+                slots: {
+                    default: () => [0, 1, 2, 3].map((k) =>
+                        h("button", { "data-glass-dock-seat": "", "aria-label": `s${k}`, ...(k === 2 ? { "aria-current": "page" } : {}) }),
+                    ),
+                },
+                attachTo: document.body,
+            });
+            await nextTick();
+            const seats = w.findAll(".dock-run > [data-glass-dock-seat]");
+            expect(seats.length).toBe(4);
+            const marked = seats.filter((s) => {
+                const v = s.attributes("aria-current");
+                return v != null && v !== "false";
+            });
+            expect(marked.length).toBe(1);
+            w.unmount();
+        }
+        const mark = /\[aria-current|\[data-active\]|\.is-active|\[aria-pressed="true"\]/;
+        const sized = bandDeclSites(/(^|[\s;{])(inline-size|block-size|width|height|min-width|min-inline-size)\s*:/).filter(
+            // the seat's own box; a mark's pseudo-element (the rail's accent) is the mark, not the seat
+            (site) => mark.test(site.chain) && !/::(before|after)/.test(site.chain) && /dock-(icon|tab)-button|dock-run|data-glass-dock-seat/.test(site.chain),
         );
-        expect(inline).toBeGreaterThanOrEqual(2);
-        expect(block).toBeGreaterThanOrEqual(2);
-        // …and the rail's m is SMALLER, deliberately: at m=3 a block-axis open seat is
-        // 148px tall around a 24px glyph and an 11.5px label.
-        expect(block).toBeLessThan(inline);
-        expect(css).toMatch(/block-size:\s*var\(--dock-open-seat\)/);
+        expect(sized).toEqual([]);
+        const icon = declarations(`${STYLES}/controls/icon-button.css`);
+        const tab = declarations(`${STYLES}/controls/tab-button.css`);
+        expect(icon).toMatch(/&\[data-active\] \{[\s\S]*?background: var\(--glass-capsule-fill\)/);
+        expect(tab).toMatch(/&:is\(\.is-active, \.active, \[aria-current="page"\][^)]*\) \{[\s\S]*?background: var\(--dock-control-active-bg\)/);
     });
 
     /**

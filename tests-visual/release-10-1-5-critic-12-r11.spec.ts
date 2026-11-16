@@ -396,7 +396,10 @@ test("c11g an undeclared wrapper around the current anchor", async ({ page }) =>
             read: await page.evaluate(() => {
                 const w = document.querySelector<HTMLElement>('[data-witness="wrap"]')!;
                 const cs = getComputedStyle(w);
-                return { w: +w.getBoundingClientRect().width.toFixed(2), inlineSize: cs.inlineSize, openSeat: getComputedStyle(document.querySelector(".glass-dock")!).getPropertyValue("--dock-open-seat") };
+                // W-I.8 RU-41: selection is the current seat's mark, not its width. The wrapper around
+                // the current anchor is one seat wide like its siblings, and it holds the mark.
+                const sib = [...(w.parentElement?.children ?? [])].find((c) => c !== w) as HTMLElement | undefined;
+                return { w: +w.getBoundingClientRect().width.toFixed(2), inlineSize: cs.inlineSize, sibling: sib ? +sib.getBoundingClientRect().width.toFixed(2) : null, marked: !!w.querySelector('[aria-current]:not([aria-current="false"])') };
             }),
         });
         await page.locator(".glass-dock").screenshot({ path: `${dir()}/c11g-${width}.png` });
