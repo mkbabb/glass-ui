@@ -6,18 +6,18 @@ import { HandMark } from "@glass/components/handmark";
 
 <template>
     <div class="handmark-stage">
-        <p class="handmark-line handmark-line-lg">
+        <div class="handmark-line handmark-line-lg">
             Who <HandMark>pays in</HandMark> gets connected
-        </p>
-        <p class="handmark-line">
+        </div>
+        <div class="handmark-line">
             The deadline is <HandMark shape="strike">Friday</HandMark> Monday
-        </p>
-        <p class="handmark-line">
+        </div>
+        <div class="handmark-line">
             Up <HandMark shape="circle">threefold</HandMark> since spring
-        </p>
-        <p class="handmark-line">
+        </div>
+        <div class="handmark-line">
             The part that <HandMark shape="highlight">really matters</HandMark>
-        </p>
+        </div>
     </div>
 </template>
 
@@ -41,11 +41,23 @@ import { HandMark } from "@glass/components/handmark";
 }
 
 @container (inline-size < 34rem) {
+    .handmark-stage {
+        gap: 0.75rem;
+    }
     .handmark-line {
         font-size: calc(var(--type-body) * 1.272);
     }
     .handmark-line-lg {
         font-size: calc(var(--type-body) * 1.618);
+    }
+}
+
+@container (inline-size < 22rem) {
+    .handmark-line {
+        font-size: var(--type-body);
+    }
+    .handmark-line-lg {
+        font-size: calc(var(--type-body) * 1.272);
     }
 }
 </style>
