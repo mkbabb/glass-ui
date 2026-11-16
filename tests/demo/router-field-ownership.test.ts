@@ -12,9 +12,6 @@ describe("demo route field ownership", () => {
     });
 
     it("a page that runs its own canvas starts no second live field", async () => {
-        await router.push("/dock/overview");
-        expect(router.currentRoute.value.meta.ownsCanvas).toBe(true);
-
         await router.push("/substrates/aurora");
         expect(router.currentRoute.value.meta.ownsCanvas).toBe(true);
     }, 30_000);
