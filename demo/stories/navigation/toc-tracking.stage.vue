@@ -133,6 +133,7 @@ useClickDelegate({
 .toc-stage {
     display: grid;
     grid-template-columns: minmax(0, min(14rem, 30%)) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
     gap: var(--sp-4);
     block-size: 100%;
     /* A card gives the stage no height; the tall stage's height keeps both panes
