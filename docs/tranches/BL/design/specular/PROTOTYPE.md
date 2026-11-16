@@ -157,69 +157,88 @@ The **slider thumb** stays legible and pressable without its dot, because the sl
 
 ## After the ruling
 
-`RULING.md` item 3, built on `bl/specular/proto` as one commit. `bl/specular/proto-b` was not touched.
+`RULING.md` item 3 and its addendum of 2026-11-16 01:05, built on `bl/specular/proto` in two commits. `bl/specular/proto-b` was not touched.
 
-**Tip:** `f6fe1efb39ec6739efb4c4fc5d4f587b34ad5b0f` ("proto(specular): the glass Button answers hover with its plate"), pushed.
+**Tip:** `3795843de317c7417fe4726a1a4eb8af3a34f020` ("proto(specular): in dark the glass Button's hover lifts toward the foreground"), pushed. Its parent is `f6fe1efb3` (the first build).
 
 ### What was built
 
-One rule in `src/components/button/styles.css`: 13 lines added, none removed, no token added.
+38 lines in `src/components/button/styles.css`, all inside the Button's existing `@media (hover: hover)` block. They apply to a primary or secondary Button (the icon button included) that is not disabled or loading. No token is added. There is no second layer, shadow or image, and nothing follows the pointer.
 
-- **Where it applies:** inside the Button's existing `@media (hover: hover)` block, on a primary or secondary Button (the icon button included) that is not disabled or loading.
-- **What it sets:** `--glass-veil-rung: calc(var(--glass-veil-rest) + var(--glass-veil-resting))`.
-- **Which token it reuses:** the dock seat's hover rule (`controls/icon-button.css`) paints `--dock-control-hover-bg`. In light that is `--glass-plate-resting`, the veil ink at alpha `--glass-veil-resting` (0.14) over no fill. The Button's plate already has a fill, so the same step is that alpha added to the plate's own rung. The earned darken, the warm floor and a tone tint all still compose on top.
-- **How it moves:** it rides the Button's existing `background-color` leg (`--engage-control-engage-release`, `--ease-standard`). Nothing follows the pointer, and there is no new rule for press or focus.
+**Light.** The plate's rung gains the dock seat's light hover tint: `--glass-veil-rung: calc(var(--glass-veil-rest) + var(--glass-veil-resting))`. The seat's light hover fill is `--glass-plate-resting`, which is veil ink at alpha `--glass-veil-resting`.
+
+**Dark.** The rung is held at rest. The rest fill is then mixed toward the foreground by the 8% that the seat's dark hover token uses (`tokens/dark-arm.css:294-299`), with one `color-mix()` on the `background-color` the Button already tweens:
+
+```css
+background-color: color-mix(in oklab, <the capsule's rest fill>, var(--foreground) 8%);
+```
+
+The rest-fill expression is the capsule's own, from `glass/glass-capsule.css`: `var(--glass-capsule-fill, …)`. A tone tint still rides on it.
+
+**Why there are still two arms.** I looked for a token that names a per-mode hover ink, so one expression could serve both modes. None exists. The seat's light step is veil ink (`--glass-veil-ink`) at a plate alpha, and its dark step is `--foreground` at 8%. `--dock-control-hover-bg` is a finished translucent colour, not an ink: mixing it in would apply its own alpha a second time at a 50/50 split. So the mode split stays.
+
+**WebKit and the nested mix.** The house comments warn that Safari drops a `color-mix()` whose endpoint is itself a `color-mix()`, and the rest fill nests one. One WebKit run (build 2311, `--exclusive webkit`) computes the same hovered colour as Chromium, for example `oklab(0.414935 0.010466 0.03477 / 0.397216)` on the primary in dark. So WebKit's engine build keeps the declaration. Shipping Safari was not tested.
 
 ### Readings
 
-Chromium headless shell at 2x, on the page described above.
+Chromium headless shell at 2x. Hover minus rest, in levels: the mean luma of the plate face, with the label and glyph excluded.
 
-**Hover minus rest, in levels** (mean luma of the plate face, label and glyph excluded):
+| Ground | Icon button | Primary Button | Dock seat | Within 3 of the seat? | Sign |
+|---|---|---|---|---|---|
+| dark, warm busy | +11.7 | +11.8 | +12.3 | yes (0.6, 0.5) | positive |
+| dark, plain | +15.6 | +15.1 | +17.0 | yes (1.4, 1.9) | positive |
+| light, warm busy | −12.2 | −13.4 | −13.6 | yes (1.4, 0.2) | negative |
+| light, plain | −25.3 | −25.2 | −26.7 | yes (1.4, 1.5) | negative |
 
-| Ground | Icon button | Primary Button | Dock seat (the bar) | Gate |
-|---|---|---|---|---|
-| dark, warm busy | **−9.4** | **−9.9** | +12.3 | fails: smaller, and the opposite direction |
-| dark, plain | **0.0** | **+0.2** | +17.0 | fails: no visible hover |
-| light, warm busy | −12.2 | −13.4 | −13.6 | short by 1.4 and 0.2 levels |
-| light, plain | −25.3 | −25.2 | −26.7 | short by 1.4 and 1.5 levels |
+The WebKit readings, from the same run, are all within 2.5 levels:
 
-Today's icon and primary Buttons read 0.0 on every ground, which is the defect the ruling cures.
+| Ground | Icon | Primary | Seat |
+|---|---|---|---|
+| dark, busy | +13.0 | +12.7 | +14.3 |
+| dark, plain | +15.7 | +15.3 | +17.3 |
+| light, busy | −6.6 | −10.1 | −9.1 |
+| light, plain | −25.2 | −25.5 | −26.6 |
 
-**Why dark fails.** The dock seat's hover token has two arms (`tokens/dark-arm.css:294-299`). In dark it is `color-mix(in oklab, var(--foreground) 8%, transparent)`: it lifts toward the foreground, because, as the comment there says, the deeper veil ink "would draw the seat darker than the plate it sits on". I reused the light arm's step (veil ink), which in dark deepens an already dark ink, `oklch(0.17 0.03 70)`. On the plain dark ground the alpha rises (0.28 to 0.43) while the composite stays the same (0 levels). On the busy ground it darkens.
+**The percentage.** 8% passes as ruled, so no other percentage is used. A sweep on the dark grounds shows the margin:
 
-The dark arm's lift cannot reach the Button in one leg, because the Button already paints a plate fill. A tint on top of a fill is either a second `color-mix` around the plate, or a second paint layer (an image layer, which does not tween, or an inset shadow, which breaks the one-shadow ceiling). Neither is "the plate's fill steps one tint" with no new mechanism, so I did not build either. Which one, if any, is a design call.
+| Dark mix | Plain ground | Busy ground |
+|---|---|---|
+| 8% | within 1.9 levels of the seat | within 0.6 |
+| 10% | within 2.1 | within 2.4 |
+| 12% | overshoots by 6.1 | overshoots by 5.4 |
 
-**Per frame, hover in and out** (computed `background-color` per animation frame, not screenshots):
+**Per frame**, from the computed `background-color` on every animation frame, hover in and then out, on all four grounds:
 
 | | Frames in | Largest step, in | Frames out | Largest step, out |
 |---|---|---|---|---|
-| icon button, all four grounds | 22 | 0.133 to 0.148 of the change | 22 | 0.116 to 0.152 |
-| primary Button, all four grounds | 22 | 0.127 to 0.129 | 22 | 0.120 to 0.130 |
+| icon button | 22 | 0.129 to 0.132 of the change | 22 | 0.117 to 0.141 |
+| primary Button | 22 | 0.129 to 0.134 | 22 | 0.120 to 0.138 |
 
-Every frame carries less than a fifth of the change: **passes**. The rung moves 0.14 → 0.32 on the icon button in dark (0.10 → 0.24 in light) and 0.22 → 0.40 on the primary in dark (0.18 → 0.32 in light).
+No frame carries a fifth of the change.
 
-**Other checks:**
+**The rest of the gate:**
 
-- **Shift gate:** on this tree, dark and light, no box moves on hover or focus. The same two slider-press shifts appear as in every tree.
-- **Typecheck:** `src` is clean. The test project shows the same two `dist/`-dependent errors as before.
-- **vitest:** 7 files that read the Button and its styles, `--maxWorkers=2`: 247 pass, 1 expected fail.
+- **Shift gate** (`shift-gate.mjs`, dark and light, this tree): no box moves on hover or focus. It reports the same two slider-press shifts as every tree.
+- **Typecheck:** `src` is clean.
+- **The seven Button test files:** 247 pass, 1 expected fail.
 
 ### The strips
 
-`strips/icon.png`, `strips/primary.png` and `strips/quiet.png` are replaced, with two rows each: "today" and "no pointer light, plain hover". The columns and the four grounds are the same as before. The cells are from the committed tip.
+`strips/icon.png` and `strips/primary.png` were re-captured from the tip. Each has two rows ("today", "no pointer light, plain hover"), the same five columns and four grounds. `strips/quiet.png` keeps the capture from the first build; the quiet Button is not touched by either commit.
 
-- **Light:** hovering the icon button and the primary Button now shows a plain, even step in the plate, with no spot.
-- **Press:** pressing keeps the hover fill, because the pointer is still over the button, as on a dock seat.
-- **Dark, warm ground:** the plate goes a shade darker.
-- **Dark, plain ground:** hover looks like rest. Crop: `strips/primary.png`, the dark, plain-ground block, "at rest" against "hover, centre".
-- **Quiet Button:** unchanged; it had its own hover already.
+- **Dark:** hovering lifts the plate a shade toward the label's ink, on the busy ground and the plain one alike.
+- **Light:** hovering deepens the plate one tint.
+- **Press:** the hover fill stays while pressing, because the pointer is still over the button, as on a dock seat.
+- **Focus:** unchanged.
 
-### Gate summary for item 3
+### Gate summary
 
 | Part of the gate | Result |
 |---|---|
-| Light | Fails by up to 1.5 levels, a near miss, not a visible gap: the step is the same alpha as the seat's, laid over a plate that already has a fill rather than over none. |
-| Dark | Fails outright for the reason above. |
-| Frames | Pass. |
-| Box movement | Passes. |
+| Sign of hover minus rest | Passes on all four grounds: positive in dark, negative in light. |
+| Within 3 levels of the dock seat | Passes everywhere: the largest gap is 1.9 levels in Chromium and 2.5 in WebKit. |
+| No frame carries a fifth of the change | Passes. |
+| No box moves | Passes. |
+| Typecheck | Passes. |
+| The seven Button test files | Pass. |
 | Press and focus | Unchanged. |
