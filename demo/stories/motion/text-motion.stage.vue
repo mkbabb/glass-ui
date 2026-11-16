@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // Text Motion's stage: a line that types its phrases and three figures that count up,
-// with one control that runs both again.
-import { computed, onMounted, ref } from "vue";
+// with one control that counts the figures again.
+import { computed, onMounted, ref, watch } from "vue";
 import { RotateCcw } from "@lucide/vue";
 import { TypewriterText, type TypewriterWord } from "@glass/components/typewriter";
 import { useAnimatedNumber } from "@glass/composables/motion";
@@ -24,34 +24,42 @@ const targets = FIGURES.map(() => ref(0));
 const counters = FIGURES.map((_, i) => useAnimatedNumber(targets[i]!, { initial: 0 }));
 const shown = counters.map((c) => computed(() => Math.round(c.current.value).toLocaleString("en-US")));
 
-const run = ref(0);
-
 function count(): void {
     FIGURES.forEach((f, i) => (targets[i]!.value = f.target));
 }
 
+// Replay counts the figures down to zero, then up again.
+const rewinding = ref(false);
 function replay(): void {
-    run.value++;
+    rewinding.value = true;
     targets.forEach((t) => (t.value = 0));
-    counters.forEach((c) => c.reset(0));
-    requestAnimationFrame(count);
 }
+watch(
+    () => counters[0]!.current.value,
+    (v) => {
+        if (rewinding.value && v < 1) {
+            rewinding.value = false;
+            count();
+        }
+    },
+);
 
 onMounted(() => window.setTimeout(count, 300));
 </script>
 
 <template>
     <div class="text-motion-stage">
-        <p class="text-motion-line">
+        <div class="text-motion-line">
             Built on
-            <TypewriterText
-                :key="run"
-                :words="phrases"
-                :base-speed="110"
-                :pause-after-type="2200"
-                :pause-after-delete="600"
-            />
-        </p>
+            <span class="text-motion-typed">
+                <TypewriterText
+                    :words="phrases"
+                    :base-speed="110"
+                    :pause-after-type="2200"
+                    :pause-after-delete="600"
+                />
+            </span>
+        </div>
         <div class="text-motion-figures">
             <div v-for="(f, i) in FIGURES" :key="f.unit" class="text-motion-figure">
                 <span class="text-motion-value">{{ shown[i]!.value }}</span>
@@ -79,6 +87,11 @@ onMounted(() => window.setTimeout(count, 300));
     font-size: calc(var(--type-body) * 2.618);
     line-height: 1.1;
     text-align: center;
+}
+
+.text-motion-typed {
+    display: inline-block;
+    text-align: start;
 }
 
 .text-motion-figures {
