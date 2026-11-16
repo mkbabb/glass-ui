@@ -1,6 +1,8 @@
 // glass-ui 11.1.1 witnesses: small controls whose state change must not move or reshape
 // a box. Same four projects as `release-11-1-1.spec.ts`.
 //
+//   round   on a touch screen every SegmentedTabs strip, its tabs and its selected plate
+//           are round-ended, at a compact width and past 20rem where the strip is a bar
 //   weight  selecting and deselecting a word-labelled ToggleGroupItem moves no item box
 //   lift    after a tap on touch, a `scale-on-hover` element returns to its rest scale
 import { expect, test, type Page } from "@playwright/test";
@@ -12,6 +14,33 @@ async function openHarness(page: Page): Promise<void> {
     await page.goto(HARNESS);
     await page.locator("body[data-ready='1']").waitFor({ state: "attached" });
     await page.waitForTimeout(400);
+}
+
+type Corner = { what: string; h: number; r: number };
+
+for (const strip of ["compact", "wide"] as const) {
+    test(`round · a ${strip} SegmentedTabs strip is round-ended on touch`, async ({ page }, info) => {
+        test.skip(!isPhone(info.project.name), "the touch floor and its shape are a coarse-pointer claim");
+        await openHarness(page);
+        const corners = await page.evaluate((id) => {
+            const root = document.querySelector(`[data-testid="c-tabs-${id}"]`) as HTMLElement;
+            const read = (what: string, el: Element): Corner => {
+                const cs = getComputedStyle(el);
+                const r = el.getBoundingClientRect();
+                return { what, h: r.height, r: Math.min(parseFloat(cs.borderTopLeftRadius), parseFloat(cs.borderBottomRightRadius)) };
+            };
+            return [
+                read("strip", root),
+                read("plate", root.querySelector(".segmented-indicator")!),
+                ...[...root.querySelectorAll(".segmented-tab")].map((el, i) => read(`tab ${i}`, el)),
+            ];
+        }, strip);
+        await info.attach("corners", { body: JSON.stringify(corners), contentType: "application/json" });
+        expect(corners[0].h, "the strip holds a 44 px tab and its trim").toBeGreaterThanOrEqual(44);
+        for (const c of corners) {
+            expect(c.r, `${c.what}: corner ${c.r} on a ${c.h} px box ${JSON.stringify(corners)}`).toBeGreaterThanOrEqual(c.h / 2 - 0.5);
+        }
+    });
 }
 
 test("weight · selecting a word-labelled ToggleGroupItem moves no item box", async ({ page }, info) => {

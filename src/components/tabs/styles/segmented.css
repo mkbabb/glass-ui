@@ -73,9 +73,11 @@
 
     /* Past 20rem the horizontal strip is a bar (U/B7 G1-7, `useBarShape`): the one
        radius seam re-binds to `--radius-bar`, so the tabs, the indicator and the
-       concentric track follow it. */
+       concentric track follow it. Under a coarse pointer the bar keeps round ends: the
+       radius takes half the touch floor, as the stadium arm above does, so a 44 px tab
+       is a capsule and the strip round it (44 px and its trim, 50 px) is one too. */
     .segmented-tabs[data-shape="bar"]:not(.segmented-tabs--vertical) {
-        --bouncy-slider-radius: var(--radius-bar);
+        --bouncy-slider-radius: max(var(--radius-bar), calc(var(--control-floor) / 2));
     }
 
     /* ── The vertical orientation axis (the block stack) ── */
