@@ -136,4 +136,4 @@ One correction first, to question 10. The sixth build made the dock about two th
 
 ## Added 2026-11-16: the sixth rulings' questions
 
-Questions 10 and 12 to 18, as amended by the fold, are at the end of `RULINGS-6.md` (each in plain words, with its default). The defaults stand until you answer; the strips that show each are made by the seventh pass.
+Questions 10 and 12 to 18, as amended by the fold, are at the end of `RULINGS-6.md` (each with its default and the strip that shows it). The defaults stand until you answer; the strips that show each are made by the seventh pass.
