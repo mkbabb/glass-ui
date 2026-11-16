@@ -113,3 +113,10 @@ Every row of `docs/tranches/BL/audit/animation/INBOUND-ROWS.md` whose release is
 ## Added 2026-11-16: the specular change, ready to take (O-367, O-367a)
 
 Branch `bl/specular/proto` @ 3795843de (three commits on master @ 610e598d4): the pointer-following light leaves every control (248 CSS lines), and the glass Button and icon button get a plain hover (light: one tint step; dark: the rest fill mixed 8% toward the foreground). Ruling and readings: `design/specular/RULING.md`, `PROTOTYPE.md`, strips beside them. This file is 11.1.2's scope. The build seat rebases the three commits onto the release branch, re-reads the gates there in both engines (hover minus rest positive in dark and negative in light on four grounds, within 3 levels of the dock seat's; no frame over a fifth; shift-gate clean), and adds one read the prototype could not make: the nested `color-mix()` in the dark rule in real Safari or, failing that, a flat fallback declared before it. V-B (`bl/specular/proto-b`) is not taken.
+
+## Added 2026-11-16: three hover snaps (O-386, value.js's four-site sweep), under the motion law
+
+1. Slider fill: the hover brightness is not in the transition list (`slider/styles.css:275-277`, `:315-320`).
+2. Slider thumb ring: the thumb transitions transform only, so the hover ring cuts in (`slider/styles.css:379-382`).
+3. Select triggers and toggle tiles: hover swaps a gradient background, which cannot interpolate (`control-surfaces.css:85-87`): a colour-only change, or a cross-faded layer.
+Witness for each: per-frame computed values on hover in and out, no frame over a fifth of the change, both engines.
