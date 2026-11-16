@@ -6,12 +6,12 @@
 //   weight  selecting and deselecting a word-labelled ToggleGroupItem moves no item box
 //   lift    after a tap on touch, a `scale-on-hover` element returns to its rest scale
 import { expect, test, type Page } from "@playwright/test";
-import { isPhone, pressOn } from "./release-11-1-1/film";
+import { gotoReady, isPhone, pressOn } from "./release-11-1-1/film";
 
 const HARNESS = "/tests-visual/release-11-1-1/controls-harness.html";
 
 async function openHarness(page: Page): Promise<void> {
-    await page.goto(HARNESS);
+    await gotoReady(page, HARNESS);
     await page.locator("body[data-ready='1']").waitFor({ state: "attached" });
     await page.waitForTimeout(400);
 }

@@ -17,12 +17,12 @@
 //          Playwright WebKit paints no backdrop blur, so there the material is read from
 //          computed style and the contrast is recorded, not judged
 import { expect, test, type Page } from "@playwright/test";
-import { exitOf, isPhone, markFilm, markTurn, press, pressOn, startFilm, stopFilm, worstFrameShare, type Film, type Frame } from "./release-11-1-1/film";
+import { exitOf, gotoReady, isPhone, markFilm, markTurn, press, pressOn, startFilm, stopFilm, worstFrameShare, type Film, type Frame } from "./release-11-1-1/film";
 
 const HARNESS = "/tests-visual/release-11-1-1/exits-harness.html";
 
 async function openHarness(page: Page, query = ""): Promise<void> {
-    await page.goto(`${HARNESS}${query}`);
+    await gotoReady(page, `${HARNESS}${query}`);
     await page.locator("body[data-ready='1']").waitFor({ state: "attached" });
     await page.waitForTimeout(300);
 }
@@ -513,7 +513,7 @@ for (const route of ["pick", "escape", "outside"] as const) {
         const project = info.project.name;
         test.skip(project === "webkit-phone" && route === "outside", "Playwright WebKit's touchscreen.tap reaches no outside-press listener");
         // The demo's own palette story: its list of groups is the case that cut.
-        await page.goto("/containers/command");
+        await gotoReady(page, "/containers/command");
         await pressOn(page, project, "button:has-text('Open palette')");
         await page.locator('.command-dialog__content[data-state="open"]').waitFor();
         await page.waitForTimeout(900);
@@ -1105,7 +1105,7 @@ type Heard = { at: number; kind: string; bubbles: boolean; composed: boolean };
 type HeardLog = { window: Heard[]; host: Heard[]; emits: Record<string, number> };
 
 async function openLeaveHarness(page: Page): Promise<void> {
-    await page.goto(LEAVE_HARNESS);
+    await gotoReady(page, LEAVE_HARNESS);
     await page.locator("body[data-ready='1']").waitFor({ state: "attached" });
     await page.waitForTimeout(300);
 }
@@ -1369,7 +1369,7 @@ for (const c of standing) {
                 project === "webkit-phone" && (route === "outside" || (route === "trigger" && !c.height)),
                 "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
             );
-            if (c.path) await page.goto(c.path);
+            if (c.path) await gotoReady(page, c.path);
             else await openHarness(page);
             await c.open(page, project);
             await page.locator(`${c.content}[data-state$="open"], ${c.content}`).first().waitFor();

@@ -142,3 +142,19 @@ export async function pressOn(page: Page, project: string, selector: string): Pr
     if (!box) throw new Error(`no box for ${selector}`);
     await press(page, project, box.x + box.width / 2, box.y + box.height / 2);
 }
+
+/** Opens `url`. A WebKit process that has opened many pages can hang on a navigation with
+ *  the server alive, so a navigation that times out is retried once, after the server has
+ *  answered; a server that does not answer fails the cell by name. */
+export async function gotoReady(page: Page, url: string): Promise<void> {
+    try {
+        await page.goto(url, { timeout: 20_000 });
+    } catch (first) {
+        const status = await page.request
+            .get("/", { timeout: 10_000 })
+            .then((r) => r.status())
+            .catch(() => 0);
+        if (status !== 200) throw new Error(`the server did not answer (${status}) after ${String(first)}`);
+        await page.goto(url, { timeout: 20_000 });
+    }
+}
