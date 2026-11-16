@@ -11,7 +11,5 @@ export const section: SectionRoutes = {
         { id: "blob", title: "Blob", lede: "A soft droplet that answers the pointer." },
         { id: "constellation", title: "Constellation", lede: "A drifting lattice of points and links." },
         { id: "fourier-field", title: "Fourier Field", lede: "A curve drawn by summing circles, one term at a time." },
-        { id: "glass-material", title: "Glass Material", lede: "Glass plates over a live field." },
-        { id: "glass-panel", title: "Glass Panel", lede: "The glass tiers as panels." },
     ],
 };
