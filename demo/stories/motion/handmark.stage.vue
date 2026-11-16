@@ -41,9 +41,6 @@ import { HandMark } from "@glass/components/handmark";
 }
 
 @container (inline-size < 34rem) {
-    .handmark-stage {
-        gap: 0.75rem;
-    }
     .handmark-line {
         font-size: calc(var(--type-body) * 1.272);
     }
@@ -53,6 +50,9 @@ import { HandMark } from "@glass/components/handmark";
 }
 
 @container (inline-size < 22rem) {
+    .handmark-stage {
+        gap: 0.75rem;
+    }
     .handmark-line {
         font-size: var(--type-body);
     }
