@@ -389,7 +389,11 @@ for (const c of exitCases) {
         expect(read.seenShare, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);
-        expect(read.stray, `the exit follows the exit curve ${at}`).toBeLessThanOrEqual(0.12);
+        // A Dialog or a Sheet leaves on one script tween whose progress is the curve
+        // itself, so it is held close to it (the old ease-out sheet strays 0.09 to
+        // 0.11); a floating surface's fade rides with a hold, a clip or a slide.
+        const scripted = c.name === "Dialog" || c.name.startsWith("Sheet");
+        expect(read.stray, `the exit follows the exit curve ${at}`).toBeLessThanOrEqual(scripted ? 0.06 : 0.12);
     });
 }
 
