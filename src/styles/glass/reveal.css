@@ -263,6 +263,9 @@
     .glass-reveal[data-state="closed"][data-side="right"] {
         translate: calc(-1 * var(--glass-reveal-slide)) 0;
     }
+    .glass-reveal[data-form="sheet"][data-state="closed"] {
+        translate: 0 100%;
+    }
 
     /* ── THE MENU GROWS FROM ITS TRIGGER ──────────────────────────────────────────
        The plate opens as geometry anchored on its trigger: a clip uncovers the laid-out
@@ -288,6 +291,13 @@
     }
     .glass-reveal[data-reveal="menu"][data-state="closed"][data-side="top"] {
         animation-name: glass-menu-recede-up;
+    }
+    /* The sheet form leaves the way a sheet does: it slides down past the foot of the
+       screen as it fades, on the exit clock, and keeps its full width and its material
+       to the last frame. The fade is the plain reveal exit; the slide is the closed
+       state's `translate`, after the side rules it replaces. */
+    .glass-reveal[data-reveal="menu"][data-form="sheet"][data-state="closed"] {
+        animation-name: glass-reveal-out;
     }
 
     /* ── The `data-motion` reduction axis ─────────────────────────────────────────
@@ -377,6 +387,9 @@
         }
         .glass-reveal.glass-reveal[data-reveal="menu"][data-state="closed"] {
             animation-name: glass-reveal-out-reduced;
+        }
+        .glass-reveal[data-form="sheet"][data-state="closed"] {
+            translate: none;
         }
     }
 }

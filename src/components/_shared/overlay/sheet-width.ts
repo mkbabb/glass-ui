@@ -8,7 +8,10 @@ import { onBeforeUnmount, shallowRef, watch, type ShallowRef } from "vue";
  * that has a sheet form; no content component carries a material prop for it.
  *
  * The query is held only while the overlay is open, so a closed overlay keeps no
- * listener; it is read synchronously on open, before the content renders.
+ * listener; it is read synchronously on open, before the content renders. On close the
+ * listener goes and the form stays: a surface leaves in the form it opened in, so its
+ * exit plays on the same box, side and material it entered on. The next open reads the
+ * query again.
  */
 const SHEET_QUERY = "(width < 30rem)";
 
@@ -26,7 +29,8 @@ export function useSheetWidth(open: () => boolean): Readonly<ShallowRef<boolean>
         open,
         (isOpen) => {
             release();
-            if (isOpen && typeof window !== "undefined" && typeof window.matchMedia === "function") {
+            if (!isOpen) return;
+            if (typeof window !== "undefined" && typeof window.matchMedia === "function") {
                 query = window.matchMedia(SHEET_QUERY);
                 query.addEventListener("change", sync);
             }

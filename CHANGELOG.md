@@ -4,6 +4,13 @@
 
 A patch on 11.1.0 about how surfaces leave. Nothing is removed or renamed.
 
+- **A popup closes in the form it opened in.** On a narrow screen a `Select` opens as a
+  sheet at the foot of the screen. As it closed it turned back into the small anchored
+  list in the same frame and jumped to its trigger, often hundreds of pixels up, before
+  it faded. It now keeps its sheet form, its width and its material until it is gone,
+  and leaves by sliding down past the edge of the screen as it fades. A `DropdownMenu`
+  seated in a `GlassDock` keeps its material through its exit the same way.
+
 ## 11.1.0 — 2026-11-15
 
 A minor release. No API changes shape, so your code keeps working as it is. Two
