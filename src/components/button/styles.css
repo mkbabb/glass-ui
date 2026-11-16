@@ -206,6 +206,31 @@
             --glass-veil-rung: calc(var(--glass-veil-rest) + var(--glass-veil-resting));
         }
 
+        /* In dark a deeper veil reads as a hole, so the plate lifts toward the
+           foreground instead, by the 8% the dock seat's dark hover uses
+           (tokens/dark-arm.css). One mix on the rest fill (the capsule's own fill
+           expression, glass/glass-capsule.css), on the tweened background-color. */
+        .dark
+            .button:is([data-emphasis="primary"], [data-emphasis="secondary"]):hover:not(
+                :disabled,
+                [aria-disabled="true"],
+                [data-loading]
+            ) {
+            --glass-veil-rung: var(--glass-veil-rest);
+            background-color: color-mix(
+                in oklab,
+                var(
+                    --glass-capsule-fill,
+                    color-mix(
+                        in oklab,
+                        var(--glass-veil),
+                        var(--glass-capsule-warm) var(--glass-capsule-warm-floor)
+                    )
+                ),
+                var(--foreground) 8%
+            );
+        }
+
         .button[data-emphasis="quiet"]:hover:not(:disabled, [aria-disabled="true"]) {
             --button-ink: var(--button-tone);
             background: color-mix(
