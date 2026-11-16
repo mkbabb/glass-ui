@@ -153,4 +153,11 @@
                 0 0.5px 0 0 rgb(0 0 0 / 0.06);
         }
     }
+
+    /* RU-45: a glyph beside a word is sized from the word, 1.5 em, not from the seat. */
+    .dock-tab-button > svg {
+        width: 1.5em;
+        height: 1.5em;
+        flex-shrink: 0;
+    }
 }

@@ -176,7 +176,7 @@
        inline FALLBACK ladder; density.css RE-RESOLVES `--dock-icon-glyph` inside each
        `[data-size]` scope so the density-painted height flows in. The 16px floor keeps
        a sub-1 density or coarse register from dropping the glyph below legibility. */
-    --dock-icon-glyph-ratio: 0.5;
+    --dock-icon-glyph-ratio: 0.9;
     --dock-icon-glyph-floor: 1rem;
     --dock-icon-glyph: max(
         calc(var(--dock-layer-height, calc(2.5rem * var(--dock-scale))) * var(--dock-icon-glyph-ratio)),

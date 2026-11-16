@@ -244,9 +244,11 @@
        A consumer passing an explicit lucide size class still WINS (utility layer >
        component layer) — a DEFAULT, not a ceiling, matching the `.dock-tab-button`
        font-size precedent. */
-    .dock-icon-button > svg {
-        width: var(--dock-icon-glyph, 1.25rem);
-        height: var(--dock-icon-glyph, 1.25rem);
+    /* RU-45: the glyph is 0.9 of its seat (`--dock-icon-glyph-ratio`), and the seat sizes a site's own
+       picture too: a direct svg, img or picture, or any direct child marked `data-dock-glyph`. */
+    .dock-icon-button > :is(svg, img, picture, [data-dock-glyph]) {
+        width: var(--dock-control-glyph-size, 1.25rem);
+        height: var(--dock-control-glyph-size, 1.25rem);
     }
 
     .dock-icon-button--compact {
