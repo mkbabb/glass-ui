@@ -91,7 +91,9 @@
         padding-inline: 1.25rem;
     }
 
-    /* THE ON-STATE CARRIES ON INK AND WEIGHT, AND ASSISTS WITH FILL. It used to be a
+    /* THE ON-STATE CARRIES ON INK AND FILL, AT THE ITEM'S ONE WEIGHT. A bolder
+       selected label widened a word-sized item and pushed its neighbours, so the
+       weight no longer changes with the state. It used to be a
        four-carrier slab: an opaque `--accent` fill, a 28%-α `--primary` border, a
        `--shadow-sm`, and the ink. The shadow was the real defect — it tied the focus
        ring at (0,2,0) against (0,2,0), so which one a focused-and-selected pill
@@ -99,8 +101,8 @@
        and the resting rim's; a selected state does not get to spend it.
 
        0.12 and 0.16 are the ONLY two fill literals in this sheet, both with a MARKED
-       SEAM (as the gap above), and the 0.12 is licensed only because ink and weight
-       co-carry: fill alone cannot make the distinction against a 1.53 L* noise floor.
+       SEAM (as the gap above), and the 0.12 is licensed only because the ink
+       co-carries: fill alone cannot make the distinction against a 1.53 L* noise floor.
 
        A THIRD literal — CWT-3 §3.5's unselected hover at 0.05 — is NOT written here,
        and that is a DEVIATION BY COMPOSITION rather than an omission. Unselected hover
@@ -117,7 +119,6 @@
     .toggle-group__item[data-state="on"] {
         background-color: color-mix(in oklab, var(--foreground) 12%, transparent);
         color: var(--foreground);
-        font-weight: 600;
     }
 
     .toggle-group__item[data-state="on"]:hover:not(:disabled) {
