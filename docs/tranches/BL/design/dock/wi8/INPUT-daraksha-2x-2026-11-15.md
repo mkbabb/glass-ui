@@ -20,3 +20,9 @@ A measured data point for O-368 (glyphs twice as big, less padding) and O-370 (t
 
 ## For the ruling pass
 The default glyph share and the default veil are the owner's to see as strips (owed). This point says: about 0.9 of the seat reads as his "2x"; one veil step is enough; the second step is waste.
+
+## Added 2026-11-15 23:15 (value.js, second note): three points RULINGS-5 has not seen
+
+1. **RU-47's gap on touch.** The site moved names to glass's Tooltip above the seat (no re-layout, boxes held to 0.5 px). But the dock turns tooltips off on touch, so a phone now shows NO page name at all. RU-47 ("the name is shown above by Tooltip") does not close on touch as ruled. The next ruling pass must say what names a seat on a phone: the name shown above on press-and-hold, the current seat's name shown briefly on selection, or the name kept in the run on coarse pointers only.
+2. **Selection at a high glyph share.** At 40 px in a 44 px seat there is no room for the hover fill or an under-mark; the site marks the selected seat with a 1.5 px ring through `--dock-active-shadow`. An active-ring option would make that first-class. Bears on RU-41 (selection is the seat's mark) and on RU-46's gap 6 (deferred to 12.0.0): at the new default share of 0.9 this is no longer an edge case, so it cannot wait for 12.0.0.
+3. **Fit law.** Narrowing the dock's inline padding at desk pushed a control 0.1 px past the closing plate during the fold fade (one red in five). A sub-pixel overhang during the fold: RU-39's one-comparison law should be read in layout integers, as ruled, and the fold's clip should cover the fade.
