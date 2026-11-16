@@ -9,6 +9,7 @@ import {
 } from "reka-ui";
 import { cn } from "../_shared/class-names";
 import { useSpringMount } from "../../composables/motion/spring/useSpringMount";
+import { useReducedMotion } from "../../composables/motion/core/useReducedMotion";
 import ModalOverlay from "../dialog/ModalOverlay.vue";
 import type { Motion, Surface } from "../_shared/axes";
 import { useMotionAxis } from "../_shared/useMotionAxis";
@@ -133,6 +134,7 @@ useModalShortcutBarrier(() => dialogRoot.open.value && dialogRoot.modal.value);
 // surface whose gesture gate arms G-SPRING-HONEST.
 const slideOpen = computed(() => !detented.value && dialogRoot.open.value);
 const springMount = useSpringMount({ open: slideOpen, preset: "panel" });
+const reducedMotion = useReducedMotion();
 
 // The rung model. Self-controlled so an unbound sheet still has one, mirrored from the
 // prop when the consumer binds `v-model:detent`, and emitted on every settled rung.
@@ -166,8 +168,12 @@ const springStyle = computed<CSSProperties | undefined>(() => {
     // carries the entry shear on the same scalar (0 unless `--sheet-enter-skew` is
     // set); a reduced register (the OS setting or `motion="reduced"`) draws none.
     const p = springMount.position.value;
+    // Under reduced motion the position is a fade's clock: the sheet stays where it rests
+    // and its opacity carries the entrance and the exit. A drag still moves it.
+    const fade = reducedMotion.value && !springMount.isDragging.value;
     return {
-        translate: sheetSlideTransform(props.side, p),
+        translate: sheetSlideTransform(props.side, fade ? 0 : p),
+        opacity: fade ? String(1 - p) : undefined,
         transform: motionAxis.resolved.value === "full" ? sheetEntryShear(props.side, p) : "none",
         animation: "none",
         transition: "none",

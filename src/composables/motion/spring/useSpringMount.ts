@@ -15,9 +15,10 @@
 // Releasing the pointer at any velocity hands off cleanly to the
 // spring without a visual jump.
 //
-// PRM bracket: `useSpring`'s `respectReducedMotion` snaps to target instantly,
-// so the entrance is a no-op transform and drag still resolves (the visual
-// is linear-equivalent because there is no integration phase).
+// REDUCED MOTION: the entrance and the exit are a tween of the position on `--exit-curve`
+// over the row's exit clock held to at most `--duration-fast` (200 ms), which the host
+// reads as an opacity fade with no travel. A drag still tracks the pointer, and its
+// release snaps (`useSpring`'s `respectReducedMotion`).
 //
 // THE EXIT is not the spring. A close that is not a drag release rides the floating
 // surfaces' exit: the position tweens from where it is to 1 over the row's exit clock
@@ -144,17 +145,22 @@ function bezierOf(timing: string): ((k: number) => number) | null {
  *  well inside its entrance. The other rows leave on their own clock. */
 const MOUNT_EXIT_STRETCH: Partial<Record<SpringPreset, number>> = { present: 1.5 };
 
-/** The row's exit clock (ms) and the exit curve, read from the stylesheet. */
-function readExit(preset: SpringPreset): { ms: number; ease: (k: number) => number } | null {
+const msOf = (duration: string): number =>
+    duration.endsWith("ms") ? parseFloat(duration) : parseFloat(duration) * 1000;
+
+/** The row's exit clock (ms) and the exit curve, read from the stylesheet. Under reduced
+ *  motion the clock is held to at most `--duration-fast`. */
+function readExit(
+    preset: SpringPreset,
+    reduced: boolean,
+): { ms: number; ease: (k: number) => number } | null {
     if (typeof document === "undefined" || !document.body) return null;
     const probe = document.createElement("div");
-    probe.style.cssText = `position:absolute;visibility:hidden;transition-duration:var(--spring-${preset}-exit-duration);transition-timing-function:var(--exit-curve)`;
+    probe.style.cssText = `position:absolute;visibility:hidden;transition-duration:var(--spring-${preset}-exit-duration);transition-timing-function:var(--exit-curve);animation-duration:var(--duration-fast)`;
     document.body.appendChild(probe);
     const cs = getComputedStyle(probe);
-    const duration = cs.transitionDuration.trim();
-    const ms =
-        (duration.endsWith("ms") ? parseFloat(duration) : parseFloat(duration) * 1000) *
-        (MOUNT_EXIT_STRETCH[preset] ?? 1);
+    const exitMs = msOf(cs.transitionDuration.trim()) * (MOUNT_EXIT_STRETCH[preset] ?? 1);
+    const ms = reduced ? Math.min(exitMs, msOf(cs.animationDuration.trim())) : exitMs;
     const ease = bezierOf(cs.transitionTimingFunction);
     probe.remove();
     return ms > 0 && ease ? { ms, ease } : null;
@@ -205,8 +211,12 @@ export function useSpringMount(options: UseSpringMountOptions): SpringMountRef {
         typeof window !== "undefined" &&
         typeof window.matchMedia === "function" &&
         window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    function runExit(): boolean {
-        const exit = reducedMotion() ? null : readExit(presetName);
+    /** Tweens the position from where it is to `to` on the exit clock. The exit always
+     *  takes it; the entrance only under reduced motion, where it is the fade. */
+    function tween(to: 0 | 1): boolean {
+        const reduced = reducedMotion();
+        if (to === 0 && !reduced) return false;
+        const exit = readExit(presetName, reduced);
         if (!exit || typeof requestAnimationFrame !== "function") return false;
         stopExit();
         const from = exitPosition.value ?? spring.value.value;
@@ -216,19 +226,19 @@ export function useSpringMount(options: UseSpringMountOptions): SpringMountRef {
         let last: number | null = null;
         let elapsed = 0;
         exitPosition.value = from;
-        // The spring heads for the dismissed end underneath, so a reopen retargets it.
-        target.value = 1;
+        // The spring heads for the same end underneath, so a reversal retargets it.
+        target.value = to;
         const step = (now: number) => {
             if (last !== null) elapsed += Math.min(now - last, 1000 / 60);
             last = now;
             const k = Math.min(1, elapsed / exit.ms);
-            exitPosition.value = from + (1 - from) * exit.ease(k);
+            exitPosition.value = from + (to - from) * exit.ease(k);
             if (k < 1) {
                 exitFrame = requestAnimationFrame(step);
                 return;
             }
             exitFrame = 0;
-            spring.reset(1, 0);
+            spring.reset(to, 0);
             exitPosition.value = null;
         };
         exitFrame = requestAnimationFrame(step);
@@ -240,7 +250,7 @@ export function useSpringMount(options: UseSpringMountOptions): SpringMountRef {
     onMounted(() => {
         if (options.open.value) {
             void nextTick(() => {
-                target.value = 0;
+                if (!tween(0)) target.value = 0;
             });
         }
     });
@@ -254,6 +264,7 @@ export function useSpringMount(options: UseSpringMountOptions): SpringMountRef {
             if (next) present.value = true; // mount before anything else can early-return
             if (isDragging.value) return; // drag owns the target while active
             if (next) {
+                if (tween(0)) return;
                 if (exitPosition.value !== null) {
                     stopExit();
                     spring.reset(exitPosition.value, 0);
@@ -262,7 +273,7 @@ export function useSpringMount(options: UseSpringMountOptions): SpringMountRef {
                 target.value = 0;
                 return;
             }
-            if (pendingDismiss || !runExit()) target.value = 1;
+            if (pendingDismiss || !tween(1)) target.value = 1;
         },
         { immediate: false },
     );

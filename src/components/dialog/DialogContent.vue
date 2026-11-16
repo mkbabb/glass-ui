@@ -9,6 +9,7 @@ import {
 } from "reka-ui";
 import { cn } from "../_shared/class-names";
 import { useSpringMount } from "../../composables/motion/spring/useSpringMount";
+import { useReducedMotion } from "../../composables/motion/core/useReducedMotion";
 import ModalOverlay from "./ModalOverlay.vue";
 import type { Motion, Surface } from "../_shared/axes";
 import { useMotionAxis } from "../_shared/useMotionAxis";
@@ -86,6 +87,7 @@ useModalShortcutBarrier(() => dialogRoot.open.value && dialogRoot.modal.value);
 // the choice took its bug with it: it was captured non-reactively at setup, so a live
 // `prefers-reduced-motion` flip lost both the bloom AND the spring.
 const springMount = useSpringMount({ open: dialogRoot.open, preset: "present" });
+const reducedMotion = useReducedMotion();
 
 // The entrance is UNTOUCHED — anisotropic squish into a small overshoot, then settle.
 // The centring rides `translate:` (authored in styles.css so it survives motion="off")
@@ -99,9 +101,10 @@ const springMount = useSpringMount({ open: dialogRoot.open, preset: "present" })
 const springStyle = computed<CSSProperties | undefined>(() => {
     if (!live.value) return undefined;
     const p = springMount.position.value; // 0 = mounted, 1 = dismissed
+    // Under reduced motion the position is a fade's clock: the plate keeps its size.
     return {
         transform: "none",
-        scale: String(1 - 0.05 * p),
+        scale: reducedMotion.value ? "1" : String(1 - 0.05 * p),
         opacity: String(1 - p),
         transition: "none",
     };
