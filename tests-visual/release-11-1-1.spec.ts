@@ -844,7 +844,9 @@ for (const dir of ["incoming", "outgoing"] as const) {
 //           and Escape is live from the entrance's first frame. What is seen is the
 //           panel's opacity times its share of the viewport, counted only while the
 //           root is the fullscreen overlay, so the subtree's return to its place in the
-//           page is not read as the overlay.
+//           page is not read as the overlay. The entrance and the first-frame Escape
+//           already held on 11.1.0: those two cells keep them from regressing, and are
+//           not witnesses of a change.
 
 const EXPAND = '[data-testid="x-expand"]';
 const PANEL = `${EXPAND}[data-state="expanded"] > [data-part="panel"]`;
