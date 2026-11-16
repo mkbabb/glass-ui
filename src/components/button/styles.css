@@ -193,6 +193,19 @@
        and stays latched, painting a command as permanently pointed-at. The coarse
        answer is the press rung below, which every arm carries. */
     @media (hover: hover) {
+        /* The glass plate answers hover the way a dock seat does: its fill steps by the
+           dock seat's own hover tint (the seat goes from no fill to the resting plate,
+           `--glass-veil-resting` of veil ink), added to the plate's rung, so the earned
+           darken, the warm floor and a tone tint all ride along. It tweens on the
+           button's `background-color` leg; nothing follows the pointer. */
+        .button:is([data-emphasis="primary"], [data-emphasis="secondary"]):hover:not(
+                :disabled,
+                [aria-disabled="true"],
+                [data-loading]
+            ) {
+            --glass-veil-rung: calc(var(--glass-veil-rest) + var(--glass-veil-resting));
+        }
+
         .button[data-emphasis="quiet"]:hover:not(:disabled, [aria-disabled="true"]) {
             --button-ink: var(--button-tone);
             background: color-mix(
