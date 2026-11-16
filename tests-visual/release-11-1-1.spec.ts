@@ -617,6 +617,12 @@ type Turn = {
 };
 
 const tap = (sel: string) => (page: Page, project: string) => pressOn(page, project, sel);
+/** A press on an element that is still moving, where it stands now: `pressOn` scrolls it
+ *  into view first, which waits for it to stop. */
+const tapNow = (sel: string) => async (page: Page, project: string) => {
+    const box = (await page.locator(sel).first().boundingBox())!;
+    await press(page, project, box.x + box.width / 2, box.y + box.height / 2);
+};
 const escape = async (page: Page) => page.keyboard.press("Escape");
 const hover = (sel: string) => async (page: Page) => page.locator(sel).hover();
 const away = async (page: Page) => page.mouse.move(8, 880);
@@ -630,8 +636,15 @@ async function judgeTurn(page: Page, info: Attach, c: Turn, film: Film, mark2: n
     const turn = before[before.length - 1];
     const after = film.frames.filter((f) => f.t >= mark2);
     const series: [number, number][] = [turn, ...after].map((f) => [f.t, channel(f)]);
+    // Where it turned: the furthest it went toward the end it was heading for before
+    // the second input took hold. A surface that turns from where it is turns short of
+    // that end; one that restarts from its far end, or empties, touches the end first,
+    // for however brief a frame.
+    const values = [turn, ...after].map(channel);
+    const turnedAt = ends === "gone" ? Math.max(...values) : Math.min(...values);
     const read = {
         atTurn: +channel(turn).toFixed(3),
+        turnedAt: +turnedAt.toFixed(3),
         share: +worstFrameShare(series, 1).toFixed(3),
         end: +channel(after[after.length - 1]).toFixed(3),
         frames: series.map(([t, v]) => [Math.round(t - mark2), +v.toFixed(3)]),
@@ -641,6 +654,8 @@ async function judgeTurn(page: Page, info: Attach, c: Turn, film: Film, mark2: n
     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+    expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+    expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);
 }
@@ -654,7 +669,7 @@ const turns: Turn[] = [
         content: '[data-slot="toast"]',
         film: '[data-slot="toast"] > div',
         open: tap('[data-testid="x-toast"]'),
-        close: tap('[data-slot="toast"] button[aria-label="Dismiss"]'),
+        close: tapNow('[data-slot="toast"] button[aria-label="Dismiss"]'),
         at: 110,
         only: "close",
     },
