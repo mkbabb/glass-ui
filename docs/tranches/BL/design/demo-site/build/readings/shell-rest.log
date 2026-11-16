@@ -1,0 +1,1566 @@
+{
+ "rail": {
+  "openCorners": {
+   "w": 64,
+   "h": 653,
+   "radius": [
+    32,
+    32,
+    32,
+    32
+   ],
+   "need": 31,
+   "pill": true,
+   "state": "open"
+  },
+  "foldedCorners": {
+   "w": 58,
+   "h": 58,
+   "radius": [
+    29,
+    29,
+    29,
+    29
+   ],
+   "need": 28,
+   "pill": true,
+   "state": "folded"
+  },
+  "openRects": {
+   "railColumn": [
+    0,
+    0,
+    80,
+    900
+   ],
+   "main": [
+    80,
+    0,
+    1360,
+    900
+   ],
+   "rail": [
+    8,
+    20,
+    64,
+    653
+   ],
+   "pager": [
+    686,
+    832,
+    148,
+    56
+   ]
+  },
+  "foldedRects": {
+   "railColumn": [
+    0,
+    0,
+    80,
+    900
+   ],
+   "main": [
+    80,
+    0,
+    1360,
+    900
+   ],
+   "rail": [
+    11,
+    20,
+    58,
+    58
+   ],
+   "pager": [
+    686,
+    832,
+    148,
+    56
+   ]
+  },
+  "fold": {
+   "from": 653,
+   "to": 58,
+   "total": 595,
+   "maxStepShare": 0.071,
+   "movingFrames": 35,
+   "reversals": 0,
+   "overshoot": 0,
+   "s24": {
+    "values": [
+     653,
+     346.3,
+     152.4,
+     79.3,
+     59.2,
+     58,
+     58,
+     58,
+     58,
+     58,
+     58,
+     58,
+     58,
+     58,
+     58,
+     58,
+     58,
+     58,
+     58,
+     58,
+     58,
+     58,
+     58,
+     58
+    ],
+    "monotone": true,
+    "start": 653,
+    "stop": 58
+   },
+   "states": [
+    "open",
+    "folded"
+   ]
+  },
+  "open": {
+   "from": 58,
+   "to": 653,
+   "total": 595,
+   "maxStepShare": 0.067,
+   "movingFrames": 34,
+   "reversals": 0,
+   "overshoot": 0,
+   "s24": {
+    "values": [
+     58,
+     356.3,
+     551.5,
+     627.1,
+     650.8,
+     653,
+     653,
+     653,
+     653,
+     653,
+     653,
+     653,
+     653,
+     653,
+     653,
+     653,
+     653,
+     653,
+     653,
+     653,
+     653,
+     653,
+     653,
+     653
+    ],
+    "monotone": true,
+    "start": 58,
+    "stop": 653
+   },
+   "states": [
+    "folded",
+    "open"
+   ]
+  },
+  "errors": []
+ },
+ "firstClick": [
+  {
+   "cat": "foundations",
+   "i": 0,
+   "to": "/foundations/colors",
+   "ok": true,
+   "ms": 93
+  },
+  {
+   "cat": "substrates",
+   "i": 1,
+   "to": "/substrates/aurora",
+   "ok": true,
+   "ms": 605
+  },
+  {
+   "cat": "display",
+   "i": 2,
+   "to": "/display/buttons",
+   "ok": true,
+   "ms": 963
+  },
+  {
+   "cat": "forms",
+   "i": 3,
+   "to": "/forms/inputs",
+   "ok": true,
+   "ms": 367
+  },
+  {
+   "cat": "containers",
+   "i": 4,
+   "to": "/containers/dialog",
+   "ok": true,
+   "ms": 205
+  },
+  {
+   "cat": "navigation",
+   "i": 5,
+   "to": "/navigation/tabs",
+   "ok": true,
+   "ms": 248
+  },
+  {
+   "cat": "dock",
+   "i": 6,
+   "to": "/dock/overview",
+   "ok": true,
+   "ms": 600
+  },
+  {
+   "cat": "data",
+   "i": 7,
+   "to": "/data/table",
+   "ok": true,
+   "ms": 284
+  },
+  {
+   "cat": "feedback",
+   "i": 8,
+   "to": "/feedback/alert",
+   "ok": true,
+   "ms": 297
+  },
+  {
+   "cat": "motion",
+   "i": 9,
+   "to": "/motion/springs",
+   "ok": true,
+   "ms": 179
+  },
+  {
+   "cat": "compositions",
+   "i": 10,
+   "to": "/compositions/auth-shell",
+   "ok": true,
+   "ms": 370
+  }
+ ],
+ "under": {
+  "mid": {
+   "screens": 3.83,
+   "dock": [
+    686,
+    832,
+    148,
+    56
+   ],
+   "leavesUnder": 4,
+   "sample": [
+    "DIV.aurora-placeholder",
+    "DIV.aurora-placeholder",
+    "CANVAS.aurora-canvas"
+   ]
+  },
+  "end": {
+   "lastBottom": 808,
+   "dockTop": 832,
+   "clear": true
+  }
+ },
+ "contrast": [
+  {
+   "route": "/data/table",
+   "scheme": "dark",
+   "folded": [
+    {
+     "what": "title",
+     "cr": 13.7
+    },
+    {
+     "what": "icon:Previous page",
+     "cr": 3.82
+    },
+    {
+     "what": "icon:Next page",
+     "cr": 11.31
+    }
+   ],
+   "open": [
+    {
+     "what": "word:Table",
+     "cr": 10.69
+    },
+    {
+     "what": "word:Data Table",
+     "cr": 16.99
+    },
+    {
+     "what": "word:Sortable List",
+     "cr": 16.97
+    },
+    {
+     "what": "word:Infinite Scroll",
+     "cr": 16.98
+    },
+    {
+     "what": "word:Timeline",
+     "cr": 12.07
+    },
+    {
+     "what": "word:Fuzzy Search",
+     "cr": 17
+    },
+    {
+     "what": "word:Virtual Section ",
+     "cr": 11.28
+    },
+    {
+     "what": "word:Metric",
+     "cr": 11.3
+    },
+    {
+     "what": "icon:Previous section",
+     "cr": 11.31
+    },
+    {
+     "what": "icon:Next section",
+     "cr": 11.31
+    },
+    {
+     "what": "icon:Previous page",
+     "cr": 3.82
+    },
+    {
+     "what": "icon:Next page",
+     "cr": 11.32
+    }
+   ]
+  },
+  {
+   "route": "/data/table",
+   "scheme": "light",
+   "folded": [
+    {
+     "what": "title",
+     "cr": 9.47
+    },
+    {
+     "what": "icon:Previous page",
+     "cr": 2.62
+    },
+    {
+     "what": "icon:Next page",
+     "cr": 8.19
+    }
+   ],
+   "open": [
+    {
+     "what": "word:Table",
+     "cr": 6.88
+    },
+    {
+     "what": "word:Data Table",
+     "cr": 11.26
+    },
+    {
+     "what": "word:Sortable List",
+     "cr": 11.36
+    },
+    {
+     "what": "word:Infinite Scroll",
+     "cr": 11.4
+    },
+    {
+     "what": "word:Timeline",
+     "cr": 7.5
+    },
+    {
+     "what": "word:Fuzzy Search",
+     "cr": 11.4
+    },
+    {
+     "what": "word:Virtual Section ",
+     "cr": 8.21
+    },
+    {
+     "what": "word:Metric",
+     "cr": 8.17
+    },
+    {
+     "what": "icon:Previous section",
+     "cr": 8.22
+    },
+    {
+     "what": "icon:Next section",
+     "cr": 8.22
+    },
+    {
+     "what": "icon:Previous page",
+     "cr": 2.62
+    },
+    {
+     "what": "icon:Next page",
+     "cr": 8.19
+    }
+   ]
+  },
+  {
+   "route": "/substrates/aurora",
+   "scheme": "dark",
+   "folded": [
+    {
+     "what": "title",
+     "cr": 13.62
+    },
+    {
+     "what": "icon:Previous page",
+     "cr": 3.79
+    },
+    {
+     "what": "icon:Next page",
+     "cr": 11.24
+    }
+   ],
+   "open": [
+    {
+     "what": "word:Aurora",
+     "cr": 9.99
+    },
+    {
+     "what": "word:Blob",
+     "cr": 16.69
+    },
+    {
+     "what": "word:Constellation",
+     "cr": 16.72
+    },
+    {
+     "what": "word:Fourier Field",
+     "cr": 16.84
+    },
+    {
+     "what": "word:Glass Material",
+     "cr": 12.01
+    },
+    {
+     "what": "word:Glass Panel",
+     "cr": 16.89
+    },
+    {
+     "what": "icon:Previous section",
+     "cr": 11.25
+    },
+    {
+     "what": "icon:Next section",
+     "cr": 11.25
+    },
+    {
+     "what": "icon:Previous page",
+     "cr": 3.79
+    },
+    {
+     "what": "icon:Next page",
+     "cr": 11.25
+    }
+   ]
+  },
+  {
+   "route": "/substrates/aurora",
+   "scheme": "light",
+   "folded": [
+    {
+     "what": "title",
+     "cr": 9.92
+    },
+    {
+     "what": "icon:Previous page",
+     "cr": 2.63
+    },
+    {
+     "what": "icon:Next page",
+     "cr": 8.44
+    }
+   ],
+   "open": [
+    {
+     "what": "word:Aurora",
+     "cr": 7.06
+    },
+    {
+     "what": "word:Blob",
+     "cr": 11.62
+    },
+    {
+     "what": "word:Constellation",
+     "cr": 11.74
+    },
+    {
+     "what": "word:Fourier Field",
+     "cr": 11.87
+    },
+    {
+     "what": "word:Glass Material",
+     "cr": 7.83
+    },
+    {
+     "what": "word:Glass Panel",
+     "cr": 11.98
+    },
+    {
+     "what": "icon:Previous section",
+     "cr": 8.51
+    },
+    {
+     "what": "icon:Next section",
+     "cr": 8.51
+    },
+    {
+     "what": "icon:Previous page",
+     "cr": 2.63
+    },
+    {
+     "what": "icon:Next page",
+     "cr": 8.43
+    }
+   ]
+  }
+ ],
+ "coldload": [
+  {
+   "route": "/",
+   "frames": [
+    {
+     "t": 42,
+     "meanLuma": 35.4,
+     "darkShare": 0,
+     "mean": [
+      43,
+      34,
+      27
+     ]
+    },
+    {
+     "t": 172,
+     "meanLuma": 36.2,
+     "darkShare": 0,
+     "mean": [
+      47,
+      34,
+      24
+     ]
+    },
+    {
+     "t": 209,
+     "meanLuma": 37.4,
+     "darkShare": 0,
+     "mean": [
+      50,
+      35,
+      26
+     ]
+    },
+    {
+     "t": 243,
+     "meanLuma": 37,
+     "darkShare": 0,
+     "mean": [
+      50,
+      34,
+      25
+     ]
+    },
+    {
+     "t": 288,
+     "meanLuma": 37,
+     "darkShare": 0,
+     "mean": [
+      50,
+      34,
+      25
+     ]
+    },
+    {
+     "t": 469,
+     "meanLuma": 37,
+     "darkShare": 0,
+     "mean": [
+      50,
+      34,
+      25
+     ]
+    },
+    {
+     "t": 677,
+     "meanLuma": 36.7,
+     "darkShare": 0,
+     "mean": [
+      49,
+      34,
+      25
+     ]
+    },
+    {
+     "t": 882,
+     "meanLuma": 36.7,
+     "darkShare": 0,
+     "mean": [
+      49,
+      34,
+      25
+     ]
+    },
+    {
+     "t": 1087,
+     "meanLuma": 36.7,
+     "darkShare": 0,
+     "mean": [
+      49,
+      34,
+      25
+     ]
+    },
+    {
+     "t": 1296,
+     "meanLuma": 36.7,
+     "darkShare": 0,
+     "mean": [
+      49,
+      34,
+      25
+     ]
+    },
+    {
+     "t": 1502,
+     "meanLuma": 36.7,
+     "darkShare": 0,
+     "mean": [
+      49,
+      34,
+      25
+     ]
+    },
+    {
+     "t": 3163,
+     "meanLuma": 36.8,
+     "darkShare": 0,
+     "mean": [
+      49,
+      34,
+      25
+     ]
+    }
+   ],
+   "blackFrames": 0,
+   "maxLumaStep": 1.2,
+   "first": {
+    "meanLuma": 35.4,
+    "darkShare": 0,
+    "mean": [
+     43,
+     34,
+     27
+    ]
+   }
+  },
+  {
+   "route": "/substrates/aurora",
+   "frames": [
+    {
+     "t": 39,
+     "meanLuma": 35.4,
+     "darkShare": 0,
+     "mean": [
+      43,
+      34,
+      27
+     ]
+    },
+    {
+     "t": 88,
+     "meanLuma": 35.4,
+     "darkShare": 0,
+     "mean": [
+      43,
+      34,
+      27
+     ]
+    },
+    {
+     "t": 304,
+     "meanLuma": 35.4,
+     "darkShare": 0,
+     "mean": [
+      43,
+      34,
+      27
+     ]
+    },
+    {
+     "t": 411,
+     "meanLuma": 69.3,
+     "darkShare": 0,
+     "mean": [
+      93,
+      64,
+      51
+     ]
+    },
+    {
+     "t": 493,
+     "meanLuma": 69.3,
+     "darkShare": 0,
+     "mean": [
+      93,
+      64,
+      51
+     ]
+    },
+    {
+     "t": 580,
+     "meanLuma": 69.5,
+     "darkShare": 0,
+     "mean": [
+      94,
+      64,
+      51
+     ]
+    },
+    {
+     "t": 672,
+     "meanLuma": 70.5,
+     "darkShare": 0,
+     "mean": [
+      94,
+      66,
+      52
+     ]
+    },
+    {
+     "t": 770,
+     "meanLuma": 71.4,
+     "darkShare": 0,
+     "mean": [
+      94,
+      67,
+      53
+     ]
+    },
+    {
+     "t": 873,
+     "meanLuma": 71.8,
+     "darkShare": 0,
+     "mean": [
+      94,
+      67,
+      53
+     ]
+    },
+    {
+     "t": 968,
+     "meanLuma": 71.9,
+     "darkShare": 0,
+     "mean": [
+      94,
+      67,
+      53
+     ]
+    },
+    {
+     "t": 1066,
+     "meanLuma": 71.9,
+     "darkShare": 0,
+     "mean": [
+      94,
+      67,
+      53
+     ]
+    },
+    {
+     "t": 1160,
+     "meanLuma": 71.9,
+     "darkShare": 0,
+     "mean": [
+      94,
+      67,
+      53
+     ]
+    },
+    {
+     "t": 1256,
+     "meanLuma": 71.9,
+     "darkShare": 0,
+     "mean": [
+      94,
+      67,
+      53
+     ]
+    },
+    {
+     "t": 1356,
+     "meanLuma": 71.9,
+     "darkShare": 0,
+     "mean": [
+      94,
+      67,
+      53
+     ]
+    },
+    {
+     "t": 1453,
+     "meanLuma": 71.9,
+     "darkShare": 0,
+     "mean": [
+      94,
+      67,
+      53
+     ]
+    },
+    {
+     "t": 3052,
+     "meanLuma": 72,
+     "darkShare": 0,
+     "mean": [
+      94,
+      67,
+      53
+     ]
+    }
+   ],
+   "blackFrames": 0,
+   "maxLumaStep": 33.9,
+   "first": {
+    "meanLuma": 35.4,
+    "darkShare": 0,
+    "mean": [
+     43,
+     34,
+     27
+    ]
+   }
+  },
+  {
+   "route": "/dock/overview",
+   "frames": [
+    {
+     "t": 42,
+     "meanLuma": 35.4,
+     "darkShare": 0,
+     "mean": [
+      43,
+      34,
+      27
+     ]
+    },
+    {
+     "t": 73,
+     "meanLuma": 35.4,
+     "darkShare": 0,
+     "mean": [
+      43,
+      34,
+      27
+     ]
+    },
+    {
+     "t": 277,
+     "meanLuma": 96.7,
+     "darkShare": 0,
+     "mean": [
+      126,
+      90,
+      78
+     ]
+    },
+    {
+     "t": 329,
+     "meanLuma": 96.6,
+     "darkShare": 0,
+     "mean": [
+      126,
+      90,
+      78
+     ]
+    },
+    {
+     "t": 372,
+     "meanLuma": 96.4,
+     "darkShare": 0,
+     "mean": [
+      126,
+      90,
+      78
+     ]
+    },
+    {
+     "t": 432,
+     "meanLuma": 96.1,
+     "darkShare": 0,
+     "mean": [
+      126,
+      89,
+      78
+     ]
+    },
+    {
+     "t": 574,
+     "meanLuma": 95.1,
+     "darkShare": 0,
+     "mean": [
+      127,
+      88,
+      76
+     ]
+    },
+    {
+     "t": 799,
+     "meanLuma": 93.4,
+     "darkShare": 0,
+     "mean": [
+      127,
+      86,
+      72
+     ]
+    },
+    {
+     "t": 1035,
+     "meanLuma": 93.1,
+     "darkShare": 0,
+     "mean": [
+      127,
+      85,
+      72
+     ]
+    },
+    {
+     "t": 1266,
+     "meanLuma": 93.1,
+     "darkShare": 0,
+     "mean": [
+      127,
+      85,
+      72
+     ]
+    },
+    {
+     "t": 1489,
+     "meanLuma": 93.1,
+     "darkShare": 0,
+     "mean": [
+      127,
+      85,
+      72
+     ]
+    },
+    {
+     "t": 3225,
+     "meanLuma": 93.2,
+     "darkShare": 0,
+     "mean": [
+      127,
+      85,
+      72
+     ]
+    }
+   ],
+   "blackFrames": 0,
+   "maxLumaStep": 61.3,
+   "first": {
+    "meanLuma": 35.4,
+    "darkShare": 0,
+    "mean": [
+     43,
+     34,
+     27
+    ]
+   }
+  },
+  {
+   "route": "/dock/controls",
+   "frames": [
+    {
+     "t": 39,
+     "meanLuma": 35.4,
+     "darkShare": 0,
+     "mean": [
+      43,
+      34,
+      27
+     ]
+    },
+    {
+     "t": 81,
+     "meanLuma": 35.4,
+     "darkShare": 0,
+     "mean": [
+      43,
+      34,
+      27
+     ]
+    },
+    {
+     "t": 267,
+     "meanLuma": 49.6,
+     "darkShare": 0,
+     "mean": [
+      69,
+      45,
+      37
+     ]
+    },
+    {
+     "t": 311,
+     "meanLuma": 49.5,
+     "darkShare": 0,
+     "mean": [
+      68,
+      45,
+      37
+     ]
+    },
+    {
+     "t": 353,
+     "meanLuma": 49.5,
+     "darkShare": 0,
+     "mean": [
+      68,
+      45,
+      37
+     ]
+    },
+    {
+     "t": 399,
+     "meanLuma": 49.6,
+     "darkShare": 0,
+     "mean": [
+      68,
+      45,
+      37
+     ]
+    },
+    {
+     "t": 453,
+     "meanLuma": 49.6,
+     "darkShare": 0,
+     "mean": [
+      69,
+      45,
+      37
+     ]
+    },
+    {
+     "t": 520,
+     "meanLuma": 49.7,
+     "darkShare": 0,
+     "mean": [
+      68,
+      45,
+      37
+     ]
+    },
+    {
+     "t": 603,
+     "meanLuma": 49.8,
+     "darkShare": 0,
+     "mean": [
+      68,
+      45,
+      38
+     ]
+    },
+    {
+     "t": 689,
+     "meanLuma": 49.8,
+     "darkShare": 0,
+     "mean": [
+      68,
+      45,
+      38
+     ]
+    },
+    {
+     "t": 770,
+     "meanLuma": 49.8,
+     "darkShare": 0,
+     "mean": [
+      68,
+      45,
+      38
+     ]
+    },
+    {
+     "t": 853,
+     "meanLuma": 49.8,
+     "darkShare": 0,
+     "mean": [
+      68,
+      45,
+      38
+     ]
+    },
+    {
+     "t": 938,
+     "meanLuma": 49.8,
+     "darkShare": 0,
+     "mean": [
+      68,
+      45,
+      38
+     ]
+    },
+    {
+     "t": 1022,
+     "meanLuma": 49.8,
+     "darkShare": 0,
+     "mean": [
+      68,
+      45,
+      38
+     ]
+    },
+    {
+     "t": 1103,
+     "meanLuma": 49.8,
+     "darkShare": 0,
+     "mean": [
+      68,
+      45,
+      38
+     ]
+    },
+    {
+     "t": 1183,
+     "meanLuma": 49.8,
+     "darkShare": 0,
+     "mean": [
+      68,
+      45,
+      38
+     ]
+    },
+    {
+     "t": 1265,
+     "meanLuma": 49.8,
+     "darkShare": 0,
+     "mean": [
+      68,
+      45,
+      38
+     ]
+    },
+    {
+     "t": 1345,
+     "meanLuma": 49.8,
+     "darkShare": 0,
+     "mean": [
+      68,
+      45,
+      38
+     ]
+    },
+    {
+     "t": 1425,
+     "meanLuma": 49.8,
+     "darkShare": 0,
+     "mean": [
+      68,
+      45,
+      38
+     ]
+    },
+    {
+     "t": 3011,
+     "meanLuma": 49.8,
+     "darkShare": 0,
+     "mean": [
+      68,
+      45,
+      38
+     ]
+    }
+   ],
+   "blackFrames": 0,
+   "maxLumaStep": 14.2,
+   "first": {
+    "meanLuma": 35.4,
+    "darkShare": 0,
+    "mean": [
+     43,
+     34,
+     27
+    ]
+   }
+  },
+  {
+   "route": "/dock/overflow",
+   "frames": [
+    {
+     "t": 41,
+     "meanLuma": 35.4,
+     "darkShare": 0,
+     "mean": [
+      43,
+      34,
+      27
+     ]
+    },
+    {
+     "t": 172,
+     "meanLuma": 35.4,
+     "darkShare": 0,
+     "mean": [
+      43,
+      34,
+      27
+     ]
+    },
+    {
+     "t": 212,
+     "meanLuma": 46.4,
+     "darkShare": 0,
+     "mean": [
+      63,
+      43,
+      35
+     ]
+    },
+    {
+     "t": 248,
+     "meanLuma": 46.4,
+     "darkShare": 0,
+     "mean": [
+      63,
+      43,
+      35
+     ]
+    },
+    {
+     "t": 283,
+     "meanLuma": 46.4,
+     "darkShare": 0,
+     "mean": [
+      63,
+      43,
+      35
+     ]
+    },
+    {
+     "t": 321,
+     "meanLuma": 46.4,
+     "darkShare": 0,
+     "mean": [
+      63,
+      43,
+      35
+     ]
+    },
+    {
+     "t": 360,
+     "meanLuma": 46.3,
+     "darkShare": 0,
+     "mean": [
+      63,
+      42,
+      35
+     ]
+    },
+    {
+     "t": 408,
+     "meanLuma": 46.2,
+     "darkShare": 0,
+     "mean": [
+      63,
+      42,
+      35
+     ]
+    },
+    {
+     "t": 462,
+     "meanLuma": 46,
+     "darkShare": 0,
+     "mean": [
+      63,
+      42,
+      35
+     ]
+    },
+    {
+     "t": 511,
+     "meanLuma": 46,
+     "darkShare": 0,
+     "mean": [
+      63,
+      42,
+      34
+     ]
+    },
+    {
+     "t": 567,
+     "meanLuma": 45.9,
+     "darkShare": 0,
+     "mean": [
+      63,
+      42,
+      34
+     ]
+    },
+    {
+     "t": 625,
+     "meanLuma": 45.9,
+     "darkShare": 0,
+     "mean": [
+      63,
+      42,
+      34
+     ]
+    },
+    {
+     "t": 686,
+     "meanLuma": 45.8,
+     "darkShare": 0,
+     "mean": [
+      63,
+      42,
+      34
+     ]
+    },
+    {
+     "t": 748,
+     "meanLuma": 45.8,
+     "darkShare": 0,
+     "mean": [
+      63,
+      42,
+      34
+     ]
+    },
+    {
+     "t": 809,
+     "meanLuma": 45.8,
+     "darkShare": 0,
+     "mean": [
+      63,
+      42,
+      34
+     ]
+    },
+    {
+     "t": 866,
+     "meanLuma": 45.8,
+     "darkShare": 0,
+     "mean": [
+      63,
+      42,
+      34
+     ]
+    },
+    {
+     "t": 929,
+     "meanLuma": 45.8,
+     "darkShare": 0,
+     "mean": [
+      63,
+      42,
+      34
+     ]
+    },
+    {
+     "t": 992,
+     "meanLuma": 45.8,
+     "darkShare": 0,
+     "mean": [
+      63,
+      42,
+      34
+     ]
+    },
+    {
+     "t": 1049,
+     "meanLuma": 45.8,
+     "darkShare": 0,
+     "mean": [
+      63,
+      42,
+      34
+     ]
+    },
+    {
+     "t": 1109,
+     "meanLuma": 45.8,
+     "darkShare": 0,
+     "mean": [
+      63,
+      42,
+      34
+     ]
+    },
+    {
+     "t": 1167,
+     "meanLuma": 45.8,
+     "darkShare": 0,
+     "mean": [
+      63,
+      42,
+      34
+     ]
+    },
+    {
+     "t": 1231,
+     "meanLuma": 45.8,
+     "darkShare": 0,
+     "mean": [
+      63,
+      42,
+      34
+     ]
+    },
+    {
+     "t": 1289,
+     "meanLuma": 45.8,
+     "darkShare": 0,
+     "mean": [
+      63,
+      42,
+      34
+     ]
+    },
+    {
+     "t": 1349,
+     "meanLuma": 45.8,
+     "darkShare": 0,
+     "mean": [
+      63,
+      42,
+      34
+     ]
+    },
+    {
+     "t": 1415,
+     "meanLuma": 45.8,
+     "darkShare": 0,
+     "mean": [
+      63,
+      42,
+      34
+     ]
+    },
+    {
+     "t": 2974,
+     "meanLuma": 45.8,
+     "darkShare": 0,
+     "mean": [
+      63,
+      42,
+      34
+     ]
+    }
+   ],
+   "blackFrames": 0,
+   "maxLumaStep": 11,
+   "first": {
+    "meanLuma": 35.4,
+    "darkShare": 0,
+    "mean": [
+     43,
+     34,
+     27
+    ]
+   }
+  },
+  {
+   "route": "/display/buttons",
+   "frames": [
+    {
+     "t": 38,
+     "meanLuma": 35.4,
+     "darkShare": 0,
+     "mean": [
+      43,
+      34,
+      27
+     ]
+    },
+    {
+     "t": 81,
+     "meanLuma": 35.4,
+     "darkShare": 0,
+     "mean": [
+      43,
+      34,
+      27
+     ]
+    },
+    {
+     "t": 159,
+     "meanLuma": 35.4,
+     "darkShare": 0,
+     "mean": [
+      43,
+      34,
+      27
+     ]
+    },
+    {
+     "t": 222,
+     "meanLuma": 36.1,
+     "darkShare": 0,
+     "mean": [
+      48,
+      34,
+      25
+     ]
+    },
+    {
+     "t": 251,
+     "meanLuma": 35.7,
+     "darkShare": 0,
+     "mean": [
+      48,
+      33,
+      24
+     ]
+    },
+    {
+     "t": 285,
+     "meanLuma": 35.7,
+     "darkShare": 0,
+     "mean": [
+      48,
+      33,
+      24
+     ]
+    },
+    {
+     "t": 370,
+     "meanLuma": 35.7,
+     "darkShare": 0,
+     "mean": [
+      48,
+      33,
+      24
+     ]
+    },
+    {
+     "t": 646,
+     "meanLuma": 35.5,
+     "darkShare": 0,
+     "mean": [
+      47,
+      33,
+      24
+     ]
+    },
+    {
+     "t": 914,
+     "meanLuma": 35.3,
+     "darkShare": 0,
+     "mean": [
+      47,
+      33,
+      24
+     ]
+    },
+    {
+     "t": 1132,
+     "meanLuma": 35.3,
