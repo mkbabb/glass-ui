@@ -494,6 +494,8 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
      *  sized by script. A horizontal run reads its port from the layers region it fills, a
      *  box the whole-seat cap does not change, so a host that gives the dock more room is
      *  read again (the root's observer fires) and the flag goes. */
+    /** What a horizontal run's client box adds to its layers region uncapped, unyielded (RU-27). */
+    let capExtra = 0;
     function fitRun(run: HTMLElement, open: boolean): FitPlan | null {
         // The fit is the open run's. A face with no box (RU-17), or a run leaving on a fold (its
         // region already laid out at the folded size), keeps the reading it had when it was
@@ -517,9 +519,17 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             n++;
         }
         const span = last > first ? last - first : 0;
+        // The port is the shipped one, the run's client box, read uncapped. RU-27's cap narrows
+        // that box, and a capped run is a run that did not fit, so the reserve did not yield: its
+        // uncapped client box is the layers region it fills (which the cap does not change) plus
+        // what the run's box added to the region when it was last read uncapped and not fitting.
         const host = run.parentElement;
-        const port = v || !host ? (v ? run.clientHeight : run.clientWidth) : host.clientWidth;
+        const capped = !v && !!host && run.hasAttribute("data-run-whole");
+        // Fractional boxes for the capped reading: two rounded client widths can sum a pixel
+        // over the one the run has uncapped, and the flag then reads its own cap.
+        const port = v ? run.clientHeight : capped ? Math.round(host!.getBoundingClientRect().width + capExtra) : run.clientWidth;
         const fits = span > 0 && span <= port;
+        if (!v && host && !capped && !fits) capExtra = run.clientWidth - host.getBoundingClientRect().width;
         // RU-27: the seats do not fit, so the run scrolls and its window is a whole number of
         // seats (run.css); the carrier sets only the flag. Not on a plain run, a run of
         // seats of more than one size, or a vertical run (12.0.0).
