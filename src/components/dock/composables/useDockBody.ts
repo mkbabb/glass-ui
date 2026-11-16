@@ -488,12 +488,16 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         return movedAny;
     }
 
-    /** The open run's one fit reading (RU-26, RU-27, RU-28): the seats' span in layout
-     *  boxes, then the fit law, then the whole-seat flag. Every seat is one seat wide, the
-     *  current one included, so nothing is lifted for the read and nothing in the run is
-     *  sized by script. A horizontal run reads its port from the layers region it fills, a
-     *  box the whole-seat cap does not change, so a host that gives the dock more room is
-     *  read again (the root's observer fires) and the flag goes. */
+    /** The open run's one fit reading (RU-26, RU-27, RU-28, RU-39): the seats' span in layout
+     *  boxes against the run's uncapped client box, in the integers layout reports, then the
+     *  whole-seat flag. Every seat is one seat wide, the current one included, and nothing in
+     *  the run is sized by script. A capped run is asked by lifting its cap for the read, never
+     *  by arithmetic: the carrier remembers what the cap was set on (the seats' span, their
+     *  count, the region's width), and while all three hold the cap stands and nothing is read.
+     *  When one has changed (a host that gives the dock more room changes the region, and the
+     *  root's observer fires), the flag is removed, the run's client box is read, and the flag
+     *  is set again or left off: RU-29's named flag frame, the only frame that pays. */
+    let capOn: { span: number; n: number; region: number } | null = null;
     function fitRun(run: HTMLElement, open: boolean): FitPlan | null {
         // The fit is the open run's. A face with no box (RU-17), or a run leaving on a fold (its
         // region already laid out at the folded size), keeps the reading it had when it was
@@ -517,13 +521,19 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             n++;
         }
         const span = last > first ? last - first : 0;
-        // The port is the shipped one, the run's client box.
+        const region = run.parentElement?.clientWidth ?? 0;
+        if (!v && run.hasAttribute("data-run-whole")) {
+            if (capOn && capOn.span === span && capOn.n === n && capOn.region === region) return { run, fits: false, whole: true, room: "" };
+            run.removeAttribute("data-run-whole");
+        }
+        // The port is the shipped one, the run's client box, uncapped.
         const port = v ? run.clientHeight : run.clientWidth;
         const fits = span > 0 && span <= port;
         // RU-27: the seats do not fit, so the run scrolls and its window is a whole number of
         // seats (run.css); the carrier sets only the flag. Not on a plain run, a run of
         // seats of more than one size, or a vertical run (12.0.0).
         const whole = !v && !fits && same && n >= 2 && root()?.getAttribute("data-run") !== "plain";
+        capOn = whole ? { span, n, region } : null;
         const room = v && fits ? `${Math.floor(((port - span) / 2) * 100) / 100}px` : "";
         return { run, fits, whole, room };
     }
