@@ -36,7 +36,10 @@ export function useDisclosureTurn(open: Ref<boolean>, id: string): void {
                 .then(() => {
                     const next = el
                         .getAnimations()
-                        .find((a) => isDisclosureMotion(a) && a !== running);
+                        .find(
+                            (a): a is CSSAnimation =>
+                                isDisclosureMotion(a) && a !== running,
+                        );
                     const end = Number(next?.effect?.getComputedTiming().endTime ?? 0);
                     if (!next || !(end > 0)) return;
                     const closing = next.animationName === "disclosure-close";
