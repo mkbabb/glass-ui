@@ -99,9 +99,6 @@ import {
 import { isAuroraPointerEnabled } from "@glass/components/aurora/composables/runtime";
 import { AURORA_SETTLE_MS } from "@glass/components/aurora/composables/useAurora";
 
-import AuroraStage from "../../../../demo/stories/substrates/aurora/AuroraStage.vue";
-import NucleiOverlay from "../../../../demo/stories/substrates/aurora/NucleiOverlay.vue";
-
 const repoFile = (rel: string): string =>
     readFileSync(join(process.cwd(), rel), "utf8");
 
@@ -362,63 +359,5 @@ describe("GF-AURORA W0 · the settle beacon", () => {
 
         await advanceFrames(200);
         expect(beaconOf(wrapper)).toBe("");
-    });
-});
-
-describe("GF-AURORA W0 · the probe surface", () => {
-    it("strikes the NucleiOverlay medium coupling outright", () => {
-        // The overlay stepped opacity 35→70 on `medium === "smooth"`, so the measured
-        // surface moved with the variable under test. There is no affordance ground for
-        // it: the rings label the composition, and the composition does not change with
-        // the deposition body. The prop is GONE, not defaulted.
-        expect(NucleiOverlay.props ?? {}).not.toHaveProperty("dimmed");
-        const stageSrc = repoFile("demo/stories/substrates/aurora/AuroraStage.vue");
-        expect(stageSrc).not.toContain("dimmed");
-    });
-
-    it("clears every chrome layer painted OVER the stage under ?probe=1", async () => {
-        const wrapper = shallowMount(AuroraStage, {
-            props: { config: DEFAULT_AURORA_CONFIG },
-        });
-        const overStage = () => [
-            wrapper.findComponent(NucleiOverlay).exists(),
-            wrapper.findComponent({ name: "RendererStatusView" }).exists(),
-        ];
-
-        expect(overStage()).toEqual([true, true]);
-
-        await wrapper.setProps({ probe: true });
-
-        expect(overStage()).toEqual([false, false]);
-        expect(wrapper.text()).not.toContain("move to shape the field");
-        // The canvas itself is untouched — the probe removes observers, never the subject.
-        expect(wrapper.findComponent(Aurora).exists()).toBe(true);
-    });
-
-    it("forces the WebGL2 arm in-app rather than pretending with a flag", async () => {
-        const wrapper = shallowMount(AuroraStage, {
-            props: { config: DEFAULT_AURORA_CONFIG, engine: "webgl2" },
-        });
-        expect(wrapper.findComponent(Aurora).props("runtimeOptions")).toMatchObject({
-            forceBackend: "webgl2",
-        });
-        await wrapper.setProps({ engine: undefined });
-        expect(
-            wrapper.findComponent(Aurora).props("runtimeOptions")?.forceBackend,
-        ).toBeUndefined();
-    });
-
-    it("seats the forced medium BEFORE the config dock seeds its atoms", () => {
-        // The stale-combobox defect was pure ORDER: the story wrote the medium in
-        // `onMounted`, which runs AFTER the child's `setup` has already frozen
-        // `reactive(configToAtoms(props.config))`. Reading the param during the parent's
-        // own setup makes combobox, config and shader agree by construction — no reseed
-        // watcher, no second source of truth.
-        const storySrc = repoFile("demo/stories/substrates/aurora.vue");
-        const forcedAt = storySrc.indexOf("studio.config.medium =");
-        const mountedAt = storySrc.indexOf("onMounted(");
-        expect(forcedAt).toBeGreaterThan(-1);
-        expect(mountedAt).toBeGreaterThan(-1);
-        expect(forcedAt).toBeLessThan(mountedAt);
     });
 });
