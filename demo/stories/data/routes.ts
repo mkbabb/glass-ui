@@ -12,8 +12,6 @@ export const section: SectionRoutes = {
         { id: "sortable-list", title: "Sortable List", lede: "Reorder items by dragging or with the keyboard." },
         { id: "infinite-scroll", title: "Infinite Scroll", lede: "A feed that loads more as you reach its end." },
         { id: "timeline", title: "Timeline", lede: "Phases and marks along one axis." },
-        { id: "search", title: "Fuzzy Search", lede: "Find items by typing part of their name." },
-        { id: "virtual-section", title: "Virtual Section Window", lede: "A long document that renders only what is near the screen." },
         { id: "metric", title: "Metric", lede: "A number with its label." },
     ],
 };
