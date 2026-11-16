@@ -101,12 +101,16 @@ createApp({
                     h(PopoverTrigger, { "data-testid": "x-popover", style: "padding:10px 14px;background:#fff;color:#000;border-radius:8px;font:14px sans-serif" }, () => "Popover"),
                     h(PopoverContent, { class: "w-56", "data-testid": "x-popover-content" }, () => h("p", "A popover.")),
                 ]),
-                h(TooltipProvider, null, () => h(Tooltip, { delayDuration: 0 }, {
-                    default: () => [
-                        h(TooltipTrigger, { "data-testid": "x-tooltip", style: "padding:10px 14px;background:#fff;color:#000;border-radius:8px;font:14px sans-serif" }, () => "Tooltip"),
-                        h(TooltipContent, { "data-testid": "x-tooltip-content" }, () => "A hint"),
-                    ],
-                })),
+                h(TooltipProvider, { delayDuration: 0 }, () =>
+                    ["", "2"].map((n) =>
+                        h(Tooltip, { delayDuration: 0 }, {
+                            default: () => [
+                                h(TooltipTrigger, { "data-testid": `x-tooltip${n}`, style: btn }, () => `Tooltip${n ? " " + n : ""}`),
+                                h(TooltipContent, { "data-testid": `x-tooltip${n}-content` }, () => `A hint${n ? " " + n : ""}`),
+                            ],
+                        }),
+                    ),
+                ),
                 h(Dialog, null, () => [
                     h(DialogTrigger, { "data-testid": "x-dialog", style: "padding:10px 14px;background:#fff;color:#000;border-radius:8px;font:14px sans-serif" }, () => "Dialog"),
                     h(DialogContent, { "data-testid": "x-dialog-content" }, () => [h(DialogTitle, () => "A dialog"), h("p", "Its body.")]),

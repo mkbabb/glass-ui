@@ -574,6 +574,8 @@ type Turn = {
 
 const tap = (sel: string) => (page: Page, project: string) => pressOn(page, project, sel);
 const escape = async (page: Page) => page.keyboard.press("Escape");
+const hover = (sel: string) => async (page: Page) => page.locator(sel).hover();
+const away = async (page: Page) => page.mouse.move(8, 880);
 
 type Attach = { attach: (n: string, o: { body: string; contentType: string }) => Promise<void> };
 
@@ -612,6 +614,7 @@ const turns: Turn[] = [
         at: 110,
         only: "close",
     },
+    { name: "Tooltip", content: '[data-testid="x-tooltip-content"]', open: hover('[data-testid="x-tooltip"]'), close: away, at: 60, desktopOnly: true },
     { name: "Collapsible", content: '[data-testid="x-collapsible-content"]', open: tap('[data-testid="x-collapsible"]'), close: tap('[data-testid="x-collapsible"]'), at: 60, height: true },
     { name: "Accordion", content: '[data-testid="x-accordion-content"]', open: tap('[data-testid="x-accordion"]'), close: tap('[data-testid="x-accordion"]'), at: 60, height: true },
 ];
@@ -708,3 +711,65 @@ test("reverse · a press on the page while a sheet leaves reaches the page", asy
     expect(during, "the sheet was still leaving when the press landed").toBe(1);
     expect(await count.getAttribute("data-presses"), "the press reached the page").toBe("1");
 });
+
+// ── tooltip ────────────────────────────────────────────────────────────────────────
+//   tooltip  a hint enters and leaves on a tween (more than two painted frames between
+//            gone and whole, no frame carrying more than a fifth of it), and when the
+//            pointer moves to a neighbour's trigger the outgoing hint fades out and the
+//            incoming one fades in, neither appearing or vanishing in one frame. Reka's
+//            Tooltip does not open on touch, so these are the desktop form's.
+
+function judgeTween(film: Film, vw: { width: number; height: number }, from: number) {
+    const seen = seenChannel(vw);
+    const after = film.frames.filter((f) => f.t >= from);
+    const series: [number, number][] = after.map((f) => [f.t, seen(f)]);
+    return {
+        between: series.filter(([, v]) => v > 0.02 && v < 0.98).length,
+        share: +worstFrameShare(series, 1).toFixed(3),
+        end: +(series[series.length - 1]?.[1] ?? 0).toFixed(3),
+        frames: series.map(([t, v]) => [Math.round(t - from), +v.toFixed(3)]).slice(0, 40),
+    };
+}
+
+test("tooltip · a Tooltip enters on a tween", async ({ page }, info) => {
+    test.skip(isPhone(info.project.name), "a Tooltip does not open on touch");
+    await openHarness(page);
+    await startFilm(page, '[data-testid="x-tooltip-content"]');
+    await markFilm(page);
+    await page.locator('[data-testid="x-tooltip"]').hover();
+    const film = await stopFilm(page, 900);
+    const read = judgeTween(film, page.viewportSize()!, film.mark);
+    await info.attach("enter", { body: JSON.stringify(read), contentType: "application/json" });
+    expect(read.end, `it ends whole ${JSON.stringify(read)}`).toBeGreaterThan(0.95);
+    expect(read.between, `more than two frames between gone and whole ${JSON.stringify(read)}`).toBeGreaterThan(2);
+    expect(read.share, `no frame carries more than a fifth ${JSON.stringify(read)}`).toBeLessThanOrEqual(0.2);
+});
+
+for (const dir of ["incoming", "outgoing"] as const) {
+    test(`tooltip · a hint handed to its neighbour fades, ${dir}`, async ({ page }, info) => {
+        test.skip(isPhone(info.project.name), "a Tooltip does not open on touch");
+        await openHarness(page);
+        const [first, second] = dir === "incoming" ? ["x-tooltip", "x-tooltip2"] : ["x-tooltip2", "x-tooltip"];
+        await page.locator(`[data-testid="${first}"]`).hover();
+        await page.locator(`[data-testid="${first}-content"][data-state$="open"]`).waitFor();
+        await page.waitForTimeout(500);
+        const to = (await page.locator(`[data-testid="${second}"]`).boundingBox())!;
+        await startFilm(page, '[data-testid="x-tooltip2-content"]');
+        await markFilm(page);
+        // A pointer slides across: reka's tooltips read the moves, not a jump.
+        await page.mouse.move(to.x + to.width / 2, to.y + to.height / 2, { steps: 8 });
+        const film = await stopFilm(page, 900);
+        const read = {
+            ...judgeTween(film, page.viewportSize()!, film.mark),
+            states: await page.evaluate(() =>
+                [...document.querySelectorAll('[data-slot="tooltip-content"]')].map((e) => `${e.getAttribute("data-testid")}:${e.getAttribute("data-state")}`),
+            ),
+        };
+        await info.attach("handover", { body: JSON.stringify(read), contentType: "application/json" });
+        const at = JSON.stringify(read);
+        if (dir === "incoming") expect(read.end, `the neighbour's hint ends whole ${at}`).toBeGreaterThan(0.95);
+        else expect(read.end, `the hint ends gone ${at}`).toBeLessThan(0.02);
+        expect(read.between, `more than two frames between gone and whole ${at}`).toBeGreaterThan(2);
+        expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+    });
+}

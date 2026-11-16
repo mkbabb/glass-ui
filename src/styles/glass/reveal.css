@@ -48,6 +48,8 @@
            the full settle clock. */
         --reveal-spring: var(--enter-overlay-spring);
         --reveal-clock: var(--enter-overlay-clock);
+        /* The fade's curve on the way in. */
+        --reveal-fade: var(--ease-out);
         /* The named exit register: 0.6 × the ENTRY of the same job (bounded to a
            legible band by the generator's clamp), derived from the entering row's own
            settle, on `--exit-curve`. It owns a token instead of retuning
@@ -83,7 +85,7 @@
             var(--reveal-clock), var(--reveal-clock),
             var(--reveal-clock), var(--reveal-clock);
         transition-timing-function: var(--reveal-spring), var(--reveal-spring),
-            var(--ease-out), var(--ease-out), linear, linear;
+            var(--reveal-fade), var(--ease-out), linear, linear;
         transition-behavior: allow-discrete;
     }
 
@@ -127,18 +129,23 @@
            it borrows the anchored-entrance row's exit reader, which is the shortest
            the table ships and stays inside the hint's own arrival. */
         --reveal-exit-clock: var(--spring-present-exit-duration);
+        /* A hint is all fade: it comes in on the exit's own even curve, so no frame of
+           its short clock carries more than a tenth of its light, and a hint turned back
+           mid-way retraces at the same pace. */
+        --reveal-fade: var(--exit-curve);
         --glass-reveal-enter-scale: var(--enter-tooltip-scale);
         --glass-reveal-blur: var(--enter-tooltip-blur);
         --glass-reveal-slide: var(--enter-tooltip-slide);
     }
 
-    /* OPEN — the settled, bloomed-in state (the spring-clocked scale/fade/blur-settle
+    /* OPEN — the settled, bloomed-in state, keyed on every open state reka writes
+       (`open`, and a tooltip's `delayed-open` and `instant-open`; the spring-clocked scale/fade/blur-settle
        interpolates FROM the closed values). `filter: blur(0)` clarifies the surface;
        the resting `glass-floating` backdrop-filter is untouched. The `translate` leg
        is set ONLY by the `data-side` variants below (a side-anchored popover slides
        from its edge) — the BASE never writes `translate`, so a center-anchored Dialog
        keeping its `-translate-x-1/2 -translate-y-1/2` centering is NEVER clobbered. */
-    .glass-reveal[data-state="open"] {
+    .glass-reveal[data-state$="open"] {
         scale: 1 1;
         opacity: 1;
         filter: blur(0);
@@ -208,25 +215,25 @@
        the anchor edge (reka mounts already `open`, so without the from-state the side
        popover would pop in place). The from-state MIRRORS the matching closed exit-slide
        below (enter blooms from where the exit recedes to). */
-    .glass-reveal[data-side="top"][data-state="open"] {
+    .glass-reveal[data-side="top"][data-state$="open"] {
         translate: 0 0;
         @starting-style {
             translate: 0 var(--glass-reveal-slide);
         }
     }
-    .glass-reveal[data-side="bottom"][data-state="open"] {
+    .glass-reveal[data-side="bottom"][data-state$="open"] {
         translate: 0 0;
         @starting-style {
             translate: 0 calc(-1 * var(--glass-reveal-slide));
         }
     }
-    .glass-reveal[data-side="left"][data-state="open"] {
+    .glass-reveal[data-side="left"][data-state$="open"] {
         translate: 0 0;
         @starting-style {
             translate: var(--glass-reveal-slide) 0;
         }
     }
-    .glass-reveal[data-side="right"][data-state="open"] {
+    .glass-reveal[data-side="right"][data-state$="open"] {
         translate: 0 0;
         @starting-style {
             translate: calc(-1 * var(--glass-reveal-slide)) 0;

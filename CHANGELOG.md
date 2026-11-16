@@ -46,6 +46,11 @@ A patch on 11.1.0 about how surfaces leave. Nothing is removed or renamed.
   where it stands, where the press used to be swallowed, and a press on the page behind
   a leaving sheet now reaches the page.
 
+- **Tooltips fade in.** A tooltip appeared whole in one frame, and moving the pointer to
+  a neighbouring trigger swapped one hint for the other at once. A tooltip now fades in
+  and out on one even curve, and on a hand-off the outgoing hint fades as the incoming
+  one arrives.
+
 ## 11.1.0 — 2026-11-15
 
 A minor release. No API changes shape, so your code keeps working as it is. Two
