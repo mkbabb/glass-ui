@@ -19,7 +19,7 @@
 //   PH-π-2 — a multi-section page renders ≥1 visible delimiter between sections, and
 //            its computed border-top-color is non-transparent in BOTH modes (the
 //            dark-adaptive hairline survives the dark glass plate).
-//   PH-π-3 — the per-TYPE delimiter MODE: /forms/inputs + /dock/overview (hr type)
+//   PH-π-3 — the per-TYPE delimiter MODE: /forms/inputs (hr type)
 //            render the hairline delimiter between R2 sections.
 
 import { test, expect } from "@playwright/test";
@@ -35,7 +35,7 @@ const SUBHEADING_PX = 20.4;
 const TOL = 0.6;
 
 // The enrolled routes — the multi-section worst-offender set the acceptance names.
-const ROUTES = ["/display/card", "/dock/overview", "/forms/inputs"];
+const ROUTES = ["/display/card", "/forms/inputs"];
 
 const paired: Record<string, unknown> = {};
 

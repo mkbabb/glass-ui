@@ -33,7 +33,7 @@ const VISUAL_DIR = resolve(ROOT, "docs/tranches/BA/audit/visual");
 const SCHEMES = ["light", "dark"] as const;
 
 const BUTTONS_ROUTE = "/display/buttons";
-const DOCK_ROUTE = "/dock/overview";
+const DOCK_ROUTE = "/dock/chrome";
 const BLOB_ROUTE = "/substrates/blob";
 
 // The dialed-back radii (BA.W-GLASS-CAL Unit 1) the resolved :root tokens must read.

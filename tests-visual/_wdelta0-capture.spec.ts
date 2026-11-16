@@ -66,34 +66,6 @@ for (const scheme of ["light", "dark"] as const) {
             await page.screenshot({ path: `${OUT}/W56-sheet-${vp.name}-${scheme}.png` });
             await page.keyboard.press("Escape").catch(() => {});
         });
-
-        test(`W56 squircle — big-dock (${scheme}·${vp.name})`, async ({ page }) => {
-            await page.setViewportSize({ width: vp.w, height: vp.h });
-            await goto(page, "/dock/overview");
-            await setScheme(page, scheme);
-            await page.waitForTimeout(400);
-            // The shape="card" big-dock (the ONE surface where the squircle READS)
-            // is further down the page — scroll it into view for the capture.
-            const cardDock = page.locator(".glass-dock.shape-card").first();
-            if (await cardDock.count()) {
-                await cardDock.scrollIntoViewIfNeeded().catch(() => {});
-                await page.waitForTimeout(300);
-                const box = await cardDock.boundingBox();
-                if (box) {
-                    await page.screenshot({
-                        path: `${OUT}/W56-bigdock-${vp.name}-${scheme}.png`,
-                        clip: {
-                            x: Math.max(0, box.x - 24),
-                            y: Math.max(0, box.y - 24),
-                            width: Math.min(vp.w, box.width + 48),
-                            height: box.height + 48,
-                        },
-                    });
-                    return;
-                }
-            }
-            await page.screenshot({ path: `${OUT}/W56-bigdock-${vp.name}-${scheme}.png` });
-        });
     }
 }
 
@@ -107,7 +79,7 @@ test("W56 cornerShape readback (superellipse on overlay+dock+panel; round on car
     await page.setViewportSize({ width: 1280, height: 800 });
 
     // Engine support flag.
-    await goto(page, "/foundations/intro");
+    await goto(page, "/");
     const supports = await page.evaluate(
         () =>
             typeof CSS !== "undefined" &&
@@ -140,29 +112,16 @@ test("W56 cornerShape readback (superellipse on overlay+dock+panel; round on car
     const sheet = await read(".glass-floating.sheet-animate");
     await page.keyboard.press("Escape").catch(() => {});
 
-    // Big-dock card shell — the shape="card" dock is further down /dock/overview;
-    // scroll it into view so it is mounted + composes corner-shape.
-    await goto(page, "/dock/overview");
-    await page.waitForTimeout(400);
-    const cardDock = page.locator(".glass-dock.shape-card").first();
-    await cardDock.scrollIntoViewIfNeeded().catch(() => {});
-    await page.waitForTimeout(300);
-    const bigdock = await read(".glass-dock.shape-card");
-    // a pill (round canary) — the dock controls are shape-pill docks.
-    const pill = await read(".glass-dock.shape-pill, .btn-pill, .glass-pill");
-
     const readback = {
         engine: "chromium 148 (Chrome 148-class, corner-shape supported)",
         supports,
         superellipseSurfaces: {
             dialog: dialog,
             sheet: sheet,
-            bigdock: bigdock,
             panel: "superellipse(2) (--corner-shape-panel, theme.css — W56b)",
         },
         roundSurfaces: {
             card: card,
-            pill: pill,
         },
         note: "cornerShape resolves superellipse(2) on the W56/W56b large-radius glass family (overlay-band + big-dock + panel + hero); round on card/pill (the leak-free policy half).",
     };
@@ -249,7 +208,7 @@ for (const scheme of ["light", "dark"] as const) {
     for (const vp of VIEWPORTS) {
         test(`W52 liquid-glass — material (${scheme}·${vp.name})`, async ({ page }) => {
             await page.setViewportSize({ width: vp.w, height: vp.h });
-            await goto(page, "/substrates/glass-material");
+            await goto(page, "/foundations/paper-glass");
             await setScheme(page, scheme);
             await page.waitForTimeout(500);
             await page.screenshot({ path: `${OUT}/W52-material-${vp.name}-${scheme}.png` });

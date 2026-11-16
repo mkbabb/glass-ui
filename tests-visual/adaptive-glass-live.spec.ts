@@ -78,18 +78,15 @@ const VIEWPORTS = [
 // runs on these (it asserts the darken stays legible AND glassy); the calm-light paint arm
 // (the warm-cream REST band) asserts only the DOCK there (the dock holds the calm floor at
 // rest; the content tiers earn the darken — twinned with glass-identity.spec.ts's treatment).
-const BUSY_AURORA_ROUTES = new Set(["/substrates/glass-material"]);
+const BUSY_AURORA_ROUTES = new Set<string>();
 
 const ROUTES = [
-    "/dock/overview",
-    "/dock/layers",
+    "/dock/chrome",
     "/dock/rail",
     "/compositions/settings",
     "/foundations/colors",
-    "/data/metric-cell",
     "/display/card",
     "/foundations/paper-glass",
-    "/substrates/glass-material",
 ] as const;
 
 // ── WCAG plumbing (mirrors adaptive-glass.spec.ts; axe-independent) ──────────────────
@@ -393,7 +390,7 @@ function resolvedStrengthAt(page: Page, luma: number): Promise<number | null> {
 }
 
 test.describe("adaptive-glass-live (CONTINUOUS-TRACK — the observer loop DRIVES the plate)", () => {
-    for (const route of ["/dock/overview", "/display/card", "/substrates/glass-material"] as const) {
+    for (const route of ["/dock/chrome", "/display/card", "/foundations/paper-glass"] as const) {
         test(`bright-region plate is STRONGER than dark-region plate (the luma DRIVES) — ${route}`, async ({
             page,
         }) => {

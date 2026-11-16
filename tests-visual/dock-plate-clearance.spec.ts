@@ -173,7 +173,7 @@ for (const shell of SHELLS) {
         const mode = dark ? "dark" : "light";
         test(`plate clearance — ${shell.name} (${mode})`, async ({ page }) => {
             await page.setViewportSize(shell.viewport);
-            await goto(page, "/dock/overview");
+            await goto(page, "/dock/chrome");
             await setDark(page, dark);
 
             const dockHandle = page.locator(shell.dock).first();

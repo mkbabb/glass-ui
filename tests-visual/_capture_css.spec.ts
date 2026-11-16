@@ -18,11 +18,9 @@ const OUT = fileURLToPath(
 
 const ROUTES = [
     "/navigation/tabs",
-    "/data/search",
     "/feedback/skeleton",
     "/data/infinite-scroll",
     "/display/atoms",
-    "/data/tags-input",
     "/data/sortable-list",
     "/forms/inputs",
     "/containers/command",

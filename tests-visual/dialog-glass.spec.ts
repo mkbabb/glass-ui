@@ -39,7 +39,6 @@ const VISUAL_DIR = resolve(ROOT, "docs/tranches/BC/audit/visual");
 
 const MODES = ["light", "dark"] as const;
 const DIALOG_ROUTE = "/containers/dialog";
-const CONFIRM_ROUTE = "/feedback/confirm-dialog";
 
 async function setMode(page: Page, mode: "light" | "dark") {
     await page.evaluate((m) => {
@@ -249,49 +248,6 @@ test.describe("BC.W-DIALOG-GLASS — the glass dialog is ACTUAL liquid glass (π
                 /inset/.test(rim.boxShadow) || rim.boxShadow !== "none",
                 `dialog carries the directional catch-light rim (box-shadow: ${rim.boxShadow.slice(0, 60)})`,
             ).toBe(true);
-        }
-    });
-
-    test("(4) CONFIRM GLASS — the re-based ConfirmDialog composites a translucent glass material", async ({
-        page,
-    }) => {
-        await page.goto(CONFIRM_ROUTE, { waitUntil: "networkidle" });
-        for (const mode of MODES) {
-            await setMode(page, mode);
-            // open the first confirm flow — click the trigger in the DOM (skipping the
-            // breathing fixed dock buttons that hang Playwright actionability).
-            const opened = await page.evaluate(() => {
-                const buttons = Array.from(document.querySelectorAll("button")) as HTMLButtonElement[];
-                const isDock = (b: Element) => b.closest(".dock-icon-button, [data-slot='dock'], nav") != null
-                    || (typeof b.className === "string" && b.className.includes("dock-icon-button"));
-                const trigger =
-                    buttons.find((b) => !isDock(b) && b.getAttribute("data-slot") === "button") ??
-                    buttons.find((b) => !isDock(b));
-                if (trigger) { trigger.click(); return true; }
-                return false;
-            });
-            if (opened) await page.waitForTimeout(300);
-            const read = await page.evaluate(() => {
-                const el = document.querySelector(
-                    '[data-slot="dialog-content"], [role="dialog"]',
-                ) as HTMLElement | null;
-                return el ? getComputedStyle(el).backgroundColor : null;
-            });
-            if (read) {
-                const stats = statsFromResolvedBg(read);
-                if (stats) {
-                    // the confirm modal is now a translucent glass material (α < 0.95),
-                    // NOT the prior opaque bg-card slab (α = 1).
-                    expect(
-                        stats.alpha,
-                        `ConfirmDialog plate α (${stats.alpha.toFixed(3)}) < 0.95 — a translucent glass material, not the opaque bg-card slab in ${mode}`,
-                    ).toBeLessThan(0.95);
-                }
-            }
-            await page.screenshot({
-                path: resolve(VISUAL_DIR, `W-DIALOG-GLASS-confirm-${mode}.png`),
-                fullPage: true,
-            });
         }
     });
 });

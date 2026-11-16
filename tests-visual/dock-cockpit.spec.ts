@@ -113,7 +113,7 @@ for (const dark of [false, true]) {
 
     test(`cockpit preset geometry + label ratio (${mode})`, async ({ page }) => {
         await page.setViewportSize({ width: 1280, height: 800 });
-        await goto(page, "/dock/overview");
+        await goto(page, "/dock/chrome");
         await setDark(page, dark);
 
         const base = await mountAndRead(page);
@@ -156,7 +156,7 @@ for (const dark of [false, true]) {
         ).toBeGreaterThan(base.comfortable.labelFontPx);
 
         // Capture the comfortable-vs-cockpit frame for the DELTA (the gestalt input).
-        await goto(page, "/dock/overview");
+        await goto(page, "/dock/chrome");
         await setDark(page, dark);
         await page.screenshot({ path: `${OUT}/dock-overview-${mode}.png` });
     });
@@ -166,7 +166,7 @@ test("cockpit control clears the 44px floor on coarse pointer", async ({ browser
     const ctx = await browser.newContext({ hasTouch: true, isMobile: true });
     const page = await ctx.newPage();
     await page.setViewportSize({ width: 390, height: 844 });
-    await goto(page, "/dock/overview");
+    await goto(page, "/dock/chrome");
 
     const coarse = await mountAndRead(page);
     results["coarse/base"] = coarse;

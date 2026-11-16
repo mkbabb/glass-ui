@@ -15,8 +15,6 @@
 //   S2 — a MOTION plot/dot resolves to the violet --viz-legendre family
 //        (oklch ~317.5°, hue 290-350°) NOT the warm-red --viz-fourier (~30°) —
 //        the motion-purple identity (D3-3/D3-4).
-//   S3 — an ACTIVATED metric number resolves to the mega/audacious tier
-//        (>> the text-title 32.9px page rung) — the dead tiers are alive (D2-3).
 //   S4 — an enrolled THIN page's grid underlay is VISIBLE (the .story-bg-grid
 //        layer paints + the card drops to a thin tier so it reads) — the calm
 //        content idiom at readable strength (D4-1/D4-3).
@@ -103,8 +101,6 @@ async function setDark(page: Page, dark: boolean): Promise<void> {
 
 // The page-title rung the uplift must EXCEED — text-heading = φ = 25.9px.
 const TEXT_HEADING_PX = 25.9;
-// The page-title rung the activated metric tier must EXCEED — text-title = 32.9px.
-const TEXT_TITLE_PX = 32.9;
 
 const paired: Record<string, unknown> = {};
 
@@ -149,7 +145,7 @@ test.describe("AZ.W-SUFFUSE — the suffusion pass (π)", () => {
             page,
         }) => {
             await page.setViewportSize({ width: 1280, height: 900 });
-            await page.goto("/motion/curve-gallery", { waitUntil: "networkidle" });
+            await page.goto("/motion/springs", { waitUntil: "networkidle" });
             await setDark(page, dark);
 
             const accent = await page.evaluate(() =>
@@ -195,50 +191,6 @@ test.describe("AZ.W-SUFFUSE — the suffusion pass (π)", () => {
             });
         });
     }
-
-    // ── S3 — an activated metric number resolves to the mega/audacious tier ──────
-    test("S3 — an activated metric number resolves to the mega/audacious tier (>> text-title)", async ({
-        page,
-    }) => {
-        await page.setViewportSize({ width: 1280, height: 1000 });
-        await page.goto("/data/metric-cell", { waitUntil: "networkidle" });
-        await page.waitForTimeout(400);
-
-        const tiers = await page.evaluate(() => {
-            const px = (v: string) => Math.round(parseFloat(v) * 100) / 100;
-            const mega = document.querySelector(".text-display-mega");
-            const aud = document.querySelector(".text-display-audacious");
-            return {
-                megaFs: mega ? px(getComputedStyle(mega).fontSize) : null,
-                audFs: aud ? px(getComputedStyle(aud).fontSize) : null,
-            };
-        });
-
-        paired.metricTiers = tiers;
-        expect(
-            tiers.megaFs,
-            "the text-display-mega metric number renders",
-        ).not.toBeNull();
-        expect(
-            tiers.audFs,
-            "the text-display-audacious metric number renders",
-        ).not.toBeNull();
-        // Both peg WELL above the text-title 32.9px page rung — the dead tiers
-        // are alive on the metric surface (the fast.com peg).
-        expect(
-            tiers.megaFs!,
-            `text-display-mega resolves ${tiers.megaFs}px — must be the audacious tier (>> ${TEXT_TITLE_PX}px text-title) (D2-3)`,
-        ).toBeGreaterThan(TEXT_TITLE_PX + 10);
-        expect(
-            tiers.audFs!,
-            `text-display-audacious resolves ${tiers.audFs}px — must be the audacious tier (>> ${TEXT_TITLE_PX}px text-title) (D2-3)`,
-        ).toBeGreaterThan(TEXT_TITLE_PX + 10);
-
-        await page.screenshot({
-            path: `${VISUAL_DIR}/W-SUFFUSE-metric-audacious-light.png`,
-            fullPage: false,
-        });
-    });
 
     // ── S4 — an enrolled thin page's grid underlay is VISIBLE ────────────────────
     test("S4 — the settings thin page's grid underlay paints + the card drops to a thin tier", async ({

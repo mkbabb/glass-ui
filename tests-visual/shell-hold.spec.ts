@@ -39,7 +39,7 @@ mkdirSync(OUT, { recursive: true });
 // The lane's own drift list — the routes whose CURRENT story sits OUTSIDE any
 // multi-facet contextual set (the common case), so the `get` fallback resolves to
 // `contextLayers.value[0]` and the echo fires the unconditional push at HEAD.
-const HOLD_ROUTES = ["/dock/overview", "/motion/curve-gallery", "/navigation/tabs"];
+const HOLD_ROUTES = ["/dock/chrome", "/motion/springs", "/navigation/tabs"];
 
 // A faceted route — Forms carries 3 facets (Text/Selection/Toggles), so the carousel
 // strip mounts and a chip click is a genuine user activation that MUST navigate.

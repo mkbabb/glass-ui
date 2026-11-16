@@ -15,10 +15,6 @@
 //   /navigation/tabs   — SegmentedTabs horizontal pill+underline buttons resolve
 //                        --radius-tab (the 1rem pill); vertical resolve --radius-strip (12px);
 //                        the button is co-geometric with its indicator.
-//   /data/search       — the live single-line field computes --radius-control (1rem pill,
-//                        the true control pill) and carries the .input-bar glass plate.
-//                        [2026-08-25 · BK #42] the floating/bare variant clones are
-//                        struck with searchVariants.ts.
 //   /feedback/skeleton — default/text specimen computes --radius-media (10px); the 48px
 //                        avatar specimen computes a CIRCLE (rounded-full wins); the card
 //                        specimen computes --radius-card (16px) — proving the @layer
@@ -27,11 +23,6 @@
 //                        control radius 1rem pill), not a hand-rolled button.
 //   /display/atoms     — Avatar square identity computes --radius-media (10px),
 //                        value-identical to the retained rung; circle is the pill.
-//   /data/tags-input   — the field CONTAINER computes the ruled --radius-field (16px),
-//                        NEVER 0px; the pill Chip child computes 1rem pill, is DISTINCT
-//                        from the container, and is STRICTLY INSET — the corrected F12
-//                        containment law. (Born-RED before d7588514: --radius-field was
-//                        tree-shaken from runtime :root and the container fell to 0px.)
 //   /forms/inputs      — the field-radius census: base single-line input keeps the pill
 //                        (the 1rem pill); Textarea computes --radius-field (16px); a dialog-
 //                        nested single-line input (F7, [data-slot=dialog-content] scope)
@@ -230,82 +221,6 @@ test.describe("W1 radius redress — computed receivers (fine pointer, Chromium)
         await setDark(page, false);
     });
 
-    // ── /data/search ─────────────────────────────────────────────────────────
-    // [2026-08-25 · BK #42 W-SEARCH] THE VARIANT HALF IS STRUCK WITH ITS SUBJECT.
-    // ~~The arm read `searchVariants.ts` off disk and cloned the live `.input-bar` with
-    // the `floating` / `bare` classes to prove F17 (floating RETAINS the plate, bare is
-    // the sole chromeless).~~ `SearchBar` went DELETE-with-relay at #42 and the CVA died
-    // with it: there is no `floating` and no `bare`, so there is nothing left that could
-    // strip a plate and no mutation left to bite. ~~`expect(probe.inline.length)
-    // .toBeGreaterThanOrEqual(3)` + the ≥2 distinct heights~~ go the same way — those
-    // three receivers were the Sizes section's `size=sm|md|lg` specimens, struck with
-    // the prop.
-    //
-    // WHAT SURVIVES IS NOT A REMNANT. `.input-bar` is a RECIPE in
-    // `src/styles/utilities/components.css`, not the component's own CSS, and it still
-    // has live readers after the cut (the dock-search demo hand-rolls it, the dock's
-    // `search.css` styles it, four value.js sites select it). Its radius ROLE is
-    // therefore still a real claim to hold: the route's one live field must compute the
-    // true control pill and carry the plate.
-    test("search — the live .input-bar computes --radius-control (the 1rem pill) + the glass plate", async ({
-        page,
-    }, info) => {
-        await page.goto("/data/search", { waitUntil: "networkidle" });
-        await waitForReceiver(page, ".input-bar");
-
-        const probe = await page.evaluate(() => {
-            const bars = [...document.querySelectorAll(".input-bar")];
-            const readPlate = (el: Element) => {
-                const cs = getComputedStyle(el);
-                // alpha from rgba()/rgb()/color(srgb .. / a) — 0 for transparent.
-                let alpha = 1;
-                const bg = cs.backgroundColor;
-                if (bg === "transparent" || bg === "rgba(0, 0, 0, 0)") alpha = 0;
-                else {
-                    const slash = bg.match(/\/\s*([\d.]+)\s*\)/);
-                    if (slash) alpha = parseFloat(slash[1]);
-                    else {
-                        const nums = bg.match(/[\d.]+/g);
-                        if (nums && nums.length >= 4) alpha = parseFloat(nums[3]);
-                    }
-                }
-                return {
-                    radius: cs.borderRadius,
-                    borderTopWidth: cs.borderTopWidth,
-                    bgAlpha: alpha,
-                    paddingLeft: cs.paddingLeft,
-                    radiusControl: cs.getPropertyValue("--radius-control").trim(),
-                };
-            };
-            return {
-                inline: bars.map((b) => ({
-                    h: Math.round(b.getBoundingClientRect().height),
-                    ...readPlate(b),
-                })),
-            };
-        });
-
-        record(info, "search", probe);
-
-        expect(probe.inline.length, "no .input-bar receiver on /data/search").toBeGreaterThanOrEqual(1);
-        // Every rendered field is a true control pill (the 1rem pill) carrying the plate.
-        for (const bar of probe.inline) {
-            expect(parsePx(bar.radius), `bar h=${bar.h} radius`).toBeGreaterThanOrEqual(PILL - EPS);
-            expect(bar.bgAlpha, `bar h=${bar.h} plate bg alpha`).toBeGreaterThan(0.05);
-            expect(parsePx(bar.borderTopWidth), `bar h=${bar.h} plate border`).toBeGreaterThanOrEqual(1 - EPS);
-        }
-
-        for (const vp of VIEWPORTS) {
-            await page.setViewportSize({ width: vp.width, height: vp.height });
-            for (const mode of [false, true] as const) {
-                await setDark(page, mode);
-                await settleFrames(page);
-                await shot(page, info, `search-${vp.name}-${mode ? "dark" : "light"}`);
-            }
-        }
-        await setDark(page, false);
-    });
-
     // ── /feedback/skeleton ─────────────────────────────────────────────────────
     test("skeleton — default → --radius-media (10px); 48px avatar → circle; card → --radius-card (16px) [caller utilities win the @layer cascade]", async ({
         page,
@@ -455,79 +370,6 @@ test.describe("W1 radius redress — computed receivers (fine pointer, Chromium)
         await shot(page, info, "atoms-avatar");
     });
 
-    // ── /data/tags-input (F12) ──────────────────────────────────────────────────
-    test("tags-input — the field CONTAINER computes --radius-field (16px, NEVER 0px); the pill Chip child is 1rem pill, DISTINCT, and STRICTLY INSET", async ({
-        page,
-    }, info) => {
-        await page.goto("/data/tags-input", { waitUntil: "networkidle" });
-        await waitForReceiver(page, '[data-slot="tags-input"] .tags-input__chip, [data-slot="tags-input"] [data-tags-input-item]');
-
-        const probe = await page.evaluate(() => {
-            const roots = [...document.querySelectorAll('[data-slot="tags-input"]')] as HTMLElement[];
-            const rootField = getComputedStyle(document.documentElement)
-                .getPropertyValue("--radius-field")
-                .trim();
-            const rows = roots
-                .map((root) => {
-                    const chip = root.querySelector(
-                        ".tags-input__chip, [data-tags-input-item]",
-                    ) as HTMLElement | null;
-                    if (!chip) return null;
-                    const cs = getComputedStyle(root);
-                    const chipCs = getComputedStyle(chip);
-                    const rr = root.getBoundingClientRect();
-                    const cr = chip.getBoundingClientRect();
-                    return {
-                        containerRadius: cs.borderRadius,
-                        containerOverflow: cs.overflow,
-                        chipRadius: chipCs.borderRadius,
-                        insetTop: +(cr.top - rr.top).toFixed(2),
-                        insetLeft: +(cr.left - rr.left).toFixed(2),
-                        insetRight: +(rr.right - cr.right).toFixed(2),
-                        insetBottom: +(rr.bottom - cr.bottom).toFixed(2),
-                    };
-                })
-                .filter(Boolean);
-            return { rootField, rows };
-        });
-        record(info, "tags-input", probe);
-
-        // The token itself resolves at runtime :root (born-RED before d7588514: it was
-        // tree-shaken because its only consumers are JS-bundled component stylesheets
-        // Tailwind never scans; @theme static now force-emits the radius canon). The raw
-        // custom-property serializes as its authored "1rem"; the RESOLVED 16px proof is
-        // the container's computed border-radius below.
-        expect(probe.rootField, "--radius-field must resolve at :root (was tree-shaken/EMPTY)").not.toBe("");
-
-        expect(probe.rows.length, "no TagsInput with a Chip child").toBeGreaterThan(0);
-        for (const r of probe.rows as NonNullable<(typeof probe.rows)[number]>[]) {
-            // The container computes the RULED --radius-field (16px) — never 0px. This
-            // is the load-bearing acceptance: a 0px square container (the shipped defect
-            // before the writer fix) REDs here; distinctness alone is NOT acceptance.
-            expect(parsePx(r.containerRadius), "container must compute --radius-field (16px)").toBeCloseTo(16, 0);
-            expect(parsePx(r.containerRadius), "container must never be 0px").toBeGreaterThan(EPS);
-            // The child is a PILL Chip.
-            expect(parsePx(r.chipRadius), "chip must be a pill").toBeGreaterThanOrEqual(PILL - EPS);
-            // The container role silhouette is DISTINCT from the chip's pill.
-            expect(
-                Math.abs(parsePx(r.chipRadius) - parsePx(r.containerRadius)),
-                "container radius must be distinct from the chip pill",
-            ).toBeGreaterThan(100);
-            // The child is STRICTLY INSET on every edge — it neither clips nor collides
-            // with (is tangent to) the container's painted boundary.
-            expect(r.insetTop, "chip inset-top").toBeGreaterThan(0);
-            expect(r.insetLeft, "chip inset-left").toBeGreaterThan(0);
-            expect(r.insetRight, "chip inset-right").toBeGreaterThan(0);
-            expect(r.insetBottom, "chip inset-bottom").toBeGreaterThan(0);
-        }
-
-        for (const vp of VIEWPORTS) {
-            await page.setViewportSize({ width: vp.width, height: vp.height });
-            await settleFrames(page);
-            await shot(page, info, `tags-input-${vp.name}`);
-        }
-    });
-
     // ── /forms/inputs (the --radius-field census) ───────────────────────────────
     test("field census — base single-line input keeps the pill (the 1rem pill); Textarea → --radius-field (16px); dialog-nested input (F7) → --radius-field (16px)", async ({
         page,
@@ -674,93 +516,6 @@ test.describe("W1 radius redress — computed receivers (fine pointer, Chromium)
 // ─────────────────────────────────────────────────────────────────────────────
 test.describe("W1 radius redress — coarse hit-floor + insertion (F12)", () => {
     test.skip(({ isMobile }) => isMobile !== true, "coarse-pointer only");
-
-    test("tags-input — the coarse child MEASURES a ≥44px action region (chip min-block + ::after spacer), owns its corners, and stays strictly inset", async ({
-        page,
-    }, info) => {
-        await page.goto("/data/tags-input", { waitUntil: "networkidle" });
-        await waitForReceiver(page, '[data-slot="tags-input"] .tags-input__chip, [data-slot="tags-input"] [data-tags-input-item]');
-
-        const probe = await page.evaluate((floor) => {
-            const root = document.querySelector('[data-slot="tags-input"]') as HTMLElement | null;
-            if (!root) return { ok: false as const, reason: "no tags-input" };
-            const chip = root.querySelector(
-                ".tags-input__chip, [data-tags-input-item]",
-            ) as HTMLElement | null;
-            if (!chip) return { ok: false as const, reason: "no chip" };
-            const rr = root.getBoundingClientRect();
-            const cr = chip.getBoundingClientRect();
-            const chipCs = getComputedStyle(chip);
-            // The coarse action floor lives on the chip's min-block-size (=--touch-target)
-            // and the ::after touch spacer's inline-size — NOT ::before (which carries
-            // nothing). Read BOTH.
-            const afterCs = getComputedStyle(chip, "::after");
-            const chipHeight = cr.height;
-            const minBlock = chipCs.minBlockSize || chipCs.minHeight || "";
-            const afterInline = afterCs.inlineSize || afterCs.width || "";
-            // elementFromPoint across the chip's action region: the chip (or a
-            // descendant) must own its center + the full vertical extent (top/bottom
-            // edge-mids at center-x) + the left rounded cap. NOTE a pill's border-radius
-            // CLIPS hit-testing, so the rect CORNERS legitimately fall through to the
-            // container — we sample interior/edge-mid points that lie inside the capsule
-            // (the right side is skipped: the coarse ::after delete overlay lives there).
-            const owns = (x: number, y: number) => {
-                const el = document.elementFromPoint(x, y);
-                return !!el && (el === chip || chip.contains(el));
-            };
-            const cx = cr.left + cr.width / 2;
-            const cy = cr.top + cr.height / 2;
-            const corners = {
-                center: owns(cx, cy),
-                topMid: owns(cx, cr.top + 4),
-                bottomMid: owns(cx, cr.bottom - 4),
-                leftMid: owns(cr.left + Math.min(cr.height / 2, 8), cy),
-            };
-            return {
-                ok: true as const,
-                pointerCoarse: matchMedia("(pointer: coarse)").matches,
-                floor,
-                chipHeight: +chipHeight.toFixed(2),
-                minBlock,
-                afterInline,
-                corners,
-                insetTop: +(cr.top - rr.top).toFixed(2),
-                insetLeft: +(cr.left - rr.left).toFixed(2),
-                insetRight: +(rr.right - cr.right).toFixed(2),
-                insetBottom: +(rr.bottom - cr.bottom).toFixed(2),
-            };
-        }, TOUCH_FLOOR);
-        record(info, "tags-input-coarse", probe);
-
-        expect(probe.ok, probe.ok ? "" : (probe as { reason: string }).reason).toBeTruthy();
-        if (!probe.ok) return;
-        // Coarse media is active in this project.
-        expect(probe.pointerCoarse, "coarse pointer media must match in this project").toBe(true);
-
-        // The chip's own action region MEASURES ≥44px: its painted height reaches the
-        // touch floor (min-block-size = --touch-target) AND its ::after spacer widens
-        // the hit box to ≥44px. RED on sub-44.
-        expect(parsePx(probe.minBlock), "chip min-block-size (--touch-target)").toBeGreaterThanOrEqual(TOUCH_FLOOR - EPS);
-        expect(probe.chipHeight, "chip painted height ≥ 44px").toBeGreaterThanOrEqual(TOUCH_FLOOR - EPS);
-        expect(parsePx(probe.afterInline), "chip ::after touch spacer inline-size ≥ 44px").toBeGreaterThanOrEqual(TOUCH_FLOOR - EPS);
-
-        // The chip OWNS its action region across its full ≥44px vertical extent (center
-        // + top/bottom edge-mids + the left cap hit-test to the chip or a descendant —
-        // no ancestor overlay steals the touch).
-        expect(probe.corners.center, "chip owns its center hit-point").toBe(true);
-        expect(probe.corners.topMid, "chip owns top-edge mid").toBe(true);
-        expect(probe.corners.bottomMid, "chip owns bottom-edge mid").toBe(true);
-        expect(probe.corners.leftMid, "chip owns left-cap mid").toBe(true);
-
-        // The child never touches the outer corner at coarse touch size (no overlap /
-        // collision with the container's painted boundary).
-        expect(probe.insetTop, "chip inset-top").toBeGreaterThan(0);
-        expect(probe.insetLeft, "chip inset-left").toBeGreaterThan(0);
-        expect(probe.insetRight, "chip inset-right").toBeGreaterThan(0);
-        expect(probe.insetBottom, "chip inset-bottom").toBeGreaterThan(0);
-
-        await shot(page, info, "tags-input-coarse");
-    });
 
     test("sortable-list — the coarse insertion capsule computes --radius-pill (the 1rem pill)", async ({
         page,

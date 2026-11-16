@@ -16,7 +16,7 @@
 // reads back, off the LIVE painted `:5199` DOM:
 //   - the active rail item (`/dock/rail`, the first entry is active on load) — its
 //     glyph `color` and its `::before` accent-bar `background`.
-//   - a SELECTED dock icon-button (`/dock/overview`, aria-pressed forced in-test) —
+//   - a SELECTED dock icon-button (`/dock/transport`, aria-pressed forced in-test) —
 //     its glyph `color` + its active plate `background`.
 // and asserts (in BOTH light and dark, ≥2 viewports):
 //   (1) the active glyph `color` is NOT `--viz-fourier` (oklch(0.579 0.201 30.4)
@@ -213,7 +213,7 @@ test.describe("register-ios (π lane — the de-red'd iOS selected register, fai
     }
 
     // ── A SELECTED dock icon-button: the glass material-lift plate + warm-ink glyph
-    // The /dock/overview transport play/pause is the icon-button; force aria-pressed
+    // The /dock/transport play/pause is the icon-button; force aria-pressed
     // in-test (it starts unpressed) so the active register paints, then read it back.
     for (const vp of VIEWPORTS) {
         for (const dark of [false, true]) {
@@ -222,7 +222,7 @@ test.describe("register-ios (π lane — the de-red'd iOS selected register, fai
                 page,
             }) => {
                 await page.setViewportSize({ width: vp.width, height: vp.height });
-                await page.goto("/dock/overview", { waitUntil: "networkidle" });
+                await page.goto("/dock/transport", { waitUntil: "networkidle" });
                 await setDark(page, dark);
 
                 const readout = await page.evaluate(() => {

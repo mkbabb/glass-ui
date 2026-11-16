@@ -16,7 +16,7 @@
 //   S3 — a data page (/data/table, stop 9 slate) — same two-site coherence.
 //   S4 — a content page's chrome <h1> font-size resolves strictly ABOVE the
 //        section <h2> font-size (the HS-2 rung grade).
-//   S5 — the motion band (/motion/countup) reads --motion-accent violet (hue
+//   S5 — the motion band (/motion/text-motion) reads --motion-accent violet (hue
 //        290-350°), no warm-red.
 //
 // THE BINDING ASSERTION IS THE RESOLVED READBACK. It loads :5199 →
@@ -259,7 +259,7 @@ test.describe("BA.W-SUFFUSE2 — the per-category color identity (π)", () => {
             page,
         }) => {
             await page.setViewportSize({ width: 1280, height: 900 });
-            await page.goto("/motion/countup", { waitUntil: "networkidle" });
+            await page.goto("/motion/text-motion", { waitUntil: "networkidle" });
             await setDark(page, dark);
             await page.waitForTimeout(250);
 
