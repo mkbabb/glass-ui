@@ -14,6 +14,8 @@ const studio = useConfiguratorState<FourierStudio>({
     cloneMode: "per-preset",
 });
 const paused = ref(false);
+// Where the field cannot draw, nothing runs, so there is nothing to pause.
+const unavailable = ref(false);
 </script>
 
 <template>
@@ -26,8 +28,14 @@ const paused = ref(false);
                 @reset="studio.resetCurrent"
             >
                 <template #stage>
-                    <FourierStage :studio="studio.config" :paused="paused" />
-                    <PauseControl v-model:paused="paused" />
+                    <FourierStage
+                        v-model:unavailable="unavailable"
+                        :studio="studio.config"
+                        :paused="paused"
+                    />
+                    <Transition name="fourier-pause">
+                        <PauseControl v-if="!unavailable" v-model:paused="paused" />
+                    </Transition>
                 </template>
                 <template #controls>
                     <FourierControls :config="studio.config" />
@@ -36,3 +44,13 @@ const paused = ref(false);
         </template>
     </StoryPage>
 </template>
+
+<style scoped>
+.fourier-pause-leave-active {
+    transition: opacity var(--duration-normal) var(--ease-out);
+}
+
+.fourier-pause-leave-to {
+    opacity: 0;
+}
+</style>
