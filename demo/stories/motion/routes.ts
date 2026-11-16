@@ -7,10 +7,9 @@ export const section: SectionRoutes = {
     icon: Sparkles,
     lede: "Springs, scrolling, decks and moving text.",
     routes: [
-        { id: "springs", title: "Spring Orchestrator", lede: "Tune a spring and watch its response." },
-        { id: "curve-gallery", title: "Motion Lab", lede: "Compare springs and easing curves side by side." },
-        { id: "scroll", title: "Scroll Register", lede: "Progress and reveals that follow the page's scroll." },
-        { id: "deck", title: "Deck", lede: "A full-screen presentation you page through." },
+        { id: "springs", title: "Springs", lede: "Tune a spring or an easing curve and watch it move." },
+        { id: "scroll", title: "Scroll Progress", lede: "Progress and reveals that follow a scrolling column." },
+        { id: "deck", title: "Deck", lede: "A presentation you page through by key, dot or arrow." },
         { id: "handmark", title: "Hand Mark", lede: "A pen that underlines, strikes, circles and highlights." },
         { id: "text-motion", title: "Text Motion", lede: "Text that types itself and numbers that count." },
     ],
