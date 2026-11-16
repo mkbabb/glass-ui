@@ -72,6 +72,18 @@ A patch on 11.1.0 about how surfaces leave. Nothing is removed or renamed.
   root also carries a new `data-leaving` attribute for that stretch, so a style keyed
   on the state follows the content out.
 
+- **Reduced motion is a fade.** With reduced motion turned on, popovers, menus, selects,
+  tooltips, toasts, dialogs and sheets appeared and vanished in a single frame, an
+  `Accordion` or `Collapsible` region snapped open and shut, and the dock's fold jumped
+  from one face to the other. Each now fades in and out over at most 200 ms on
+  `--exit-curve`, and nothing travels: a surface is in its place and at its size from
+  the first frame, and a folding dock takes its new size at once while its two faces
+  cross-fade. The rule that stills motion under reduced motion now sits in its own
+  cascade layer, `reduced-motion`, declared after `utilities`, as a plain declaration.
+  Your own stylesheet's rule, such as `transition: opacity 144ms`, or a style set
+  inline, now keeps its clock under reduced motion without `!important`, where glass's
+  rule used to win even over `!important`. Utility classes are still stilled.
+
 - **Surfaces say when they have finished leaving.** `Dialog`, `Sheet`, `Popover` (and
   its hover card), `DropdownMenu` (and `ContextMenu`), `Select`, `Tooltip` and `Toast`
   content now emit `leave-finished` once per close, after the last frame of the exit,
@@ -98,13 +110,18 @@ A patch on 11.1.0 about how surfaces leave. Nothing is removed or renamed.
   element lifted until the next tap elsewhere. The lift now applies only where the
   pointer can hover.
 
+- **A dock run's selected plate no longer jumps under reduced motion.** Moving
+  `aria-current` to another control in a dock moved the selected plate across the dock
+  in one frame, about 167 px on a wide one. With reduced motion turned on, the plate now
+  fades out of the old control and into the new one where they stand.
+
 ### Sizes
 
 - The dock entry (`@mkbabb/glass-ui/dock` with every chunk it imports), gzipped: 38,673
   bytes in 11.0.2, 40,541 in 11.1.0 and 40,541 in this release. This patch adds nothing
   to it.
 - The surfaces a dock opens grew with the leave event and the exits that turn back,
-  gzipped, from 11.1.0: `dialog` 12,508 to 14,395 bytes, `select` 8,453 to 9,517,
+  gzipped, from 11.1.0: `dialog` 12,508 to 14,494 bytes, `select` 8,453 to 9,517,
   `popover` 8,663 to 9,385, `tooltip` 5,897 to 6,607 and `menu` 11,865 to 12,555.
 
 ## 11.1.0 — 2026-11-15
