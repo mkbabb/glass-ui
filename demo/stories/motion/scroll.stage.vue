@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // Scroll Progress' stage: one column that scrolls inside the stage. `bar` draws a
-// progress bar across its top, `rim` the progress rim along its edge with a dot per
+// progress bar across its top, `rim` the progress rim along its foot with a dot per
 // chapter, `reveal` lifts each block in as it enters.
 import { ref } from "vue";
 import { Skeleton } from "@glass/components/skeleton";
@@ -41,7 +41,6 @@ function onScroll(e: Event): void {
             <ScrollProgressRim
                 v-if="mode === 'rim'"
                 :value="progress"
-                orientation="vertical"
                 :segments="Array.from({ length: CHAPTERS }, (_, i) => i)"
             />
         </div>

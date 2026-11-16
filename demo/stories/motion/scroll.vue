@@ -22,7 +22,7 @@ const onScroll = ({ target: el }) =>
 <template>
     <div class="relative">
         <div class="h-80 overflow-y-auto" @scroll="onScroll"><slot /></div>
-        <ScrollProgressRim :value="progress" orientation="vertical" />
+        <ScrollProgressRim :value="progress" />
     </div>
 </template>`;
 </script>
