@@ -11,7 +11,9 @@
 
 /* ── THE LIQUID ENTER (the iOS-27 bloom-from-anchor) ──────────────────────────
  *
- * Three coupled channels follow the spatial/effects split:
+ * The overlay register (a Popover's panel, a hover card, a Toast) moves on opacity
+ * and its side's slide alone, in and out: its scale and blur knobs are neutral. The
+ * tooltip register keeps a slight scale on the way in. The recipe's channels:
  *
  *   (a) SCALE (the bloom — SPATIAL) rides the register's `--enter-*-spring` + its
  *       paired `--enter-*-clock` (the dedicated per-spring clock, NOT the
@@ -59,21 +61,23 @@
         --reveal-exit-clock: var(--exit-overlay-duration);
         --reveal-exit-curve: var(--exit-curve);
         /* The materialize channels — the register bundle's scale-from / decongest-blur /
-           edge-slide. The overlay default is scale-from 0.94, blur 6px (the dominant
-           overlay channel), slide 0.5rem. The entrance's @starting-style reads the
-           scale and blur knobs, and the closed state the slide (with a defensive fallback for a non-supporting
+           edge-slide. The overlay default moves on its slide (0.5rem) alone: its scale
+           and blur knobs are neutral, so it does not shrink, squash or blur on the way
+           in or out. The entrance's @starting-style reads the scale and blur knobs, and
+           the closed state the slide (with a defensive fallback for a non-supporting
            engine). */
-        --glass-reveal-enter-scale: var(--enter-overlay-scale);
-        --glass-reveal-blur: var(--enter-overlay-blur);
+        --glass-reveal-enter-scale: 1;
+        --glass-reveal-blur: 0px;
         --glass-reveal-slide: var(--enter-overlay-slide);
         /* The SQUISH channel — the same volume-preserving born-wide+flat squish the
            universal `.liquid-enter` mount recipe speaks (ONE grammar, no fork). The
            entrance rides it on the `scale:` LONGHAND (vol-preserving sx·sy ≈ 1),
            settling to `1 1` at open; the bloom-from-small grace is the coupled
            scale-down (--glass-reveal-enter-scale) × this squish, never a separate
-           transform: shorthand (which would clobber a centering transform). */
-        --lq-stretch-x: 1.06;
-        --lq-stretch-y: 0.945;
+           transform: shorthand (which would clobber a centering transform). The
+           overlay register holds it at `1 1`; the tooltip register sets its own. */
+        --lq-stretch-x: 1;
+        --lq-stretch-y: 1;
         transform-origin: var(--reka-popper-transform-origin, center);
         /* The coupled transition list — the SPATIAL legs (scale/translate) on the
            register spring's OWN settle clock, the EFFECTS legs (opacity/filter blur-
@@ -101,8 +105,8 @@
         --reveal-spring: var(--enter-overlay-spring);
         --reveal-clock: var(--enter-overlay-clock);
         --reveal-exit-clock: var(--exit-overlay-duration);
-        --glass-reveal-enter-scale: var(--enter-overlay-scale);
-        --glass-reveal-blur: var(--enter-overlay-blur);
+        --glass-reveal-enter-scale: 1;
+        --glass-reveal-blur: 0px;
         --glass-reveal-slide: var(--enter-overlay-slide);
     }
     /* enter-menu — dropdown/select/combobox/command. A menu does not bloom: it grows
@@ -136,6 +140,8 @@
         --glass-reveal-enter-scale: var(--enter-tooltip-scale);
         --glass-reveal-blur: var(--enter-tooltip-blur);
         --glass-reveal-slide: var(--enter-tooltip-slide);
+        --lq-stretch-x: 1.06;
+        --lq-stretch-y: 0.945;
     }
 
     /* OPEN — the settled, bloomed-in state, keyed on every open state reka writes

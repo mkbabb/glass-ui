@@ -397,47 +397,63 @@ for (const c of exitCases) {
     });
 }
 
-// The exit is opacity and a few pixels of travel: no squash, no scale, no blur on the
-// way out, read from the computed style on every frame of a Popover's and a Tooltip's
-// exit.
+// The overlay register moves on opacity and a few pixels of travel: no scale, no squish
+// and no blur on the way in or out, read from the computed style on every frame of a
+// Popover's entrance and exit. A Tooltip keeps a slight scale on the way in, so only its
+// exit is read.
+type Sampled = { t: number; scale: string; filter: string };
+
+/** Samples the computed scale and filter of `sel` every frame while it is mounted, for
+ *  up to `ms`, starting with `act` run in the page. */
+async function sampleStyle(page: Page, sel: string, ms: number, act: "escape" | "none"): Promise<Sampled[]> {
+    return page.evaluate(
+        ({ sel, ms, act }) =>
+            new Promise<Sampled[]>((done) => {
+                const out: Sampled[] = [];
+                const t0 = performance.now();
+                const tick = (t: number) => {
+                    const el = document.querySelector(sel);
+                    if (el) {
+                        const cs = getComputedStyle(el);
+                        out.push({ t: Math.round(t - t0), scale: cs.scale, filter: cs.filter });
+                    }
+                    if ((el || out.length === 0) && t - t0 < ms) requestAnimationFrame(tick);
+                    else done(out);
+                };
+                if (act === "escape") document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
+                requestAnimationFrame(tick);
+            }),
+        { sel, ms, act },
+    );
+}
+
+function expectPlain(frames: Sampled[], leg: string): void {
+    expect(frames.length, `the ${leg} is filmed`).toBeGreaterThan(2);
+    for (const f of frames) {
+        const at = `${leg} +${f.t} ms ${JSON.stringify(frames.slice(0, 12))}`;
+        expect(f.scale === "none" || f.scale === "1" || f.scale === "1 1", `no scale ${at}`).toBe(true);
+        expect(f.filter === "none" || f.filter === "blur(0px)", `no blur ${at}`).toBe(true);
+    }
+}
+
 for (const c of [
-    { name: "Popover", trigger: '[data-testid="x-popover"]', content: '[data-testid="x-popover-content"]' },
+    { name: "Popover", trigger: '[data-testid="x-popover"]', content: '[data-testid="x-popover-content"]', entrance: true },
     { name: "Tooltip", trigger: '[data-testid="x-tooltip"]', content: '[data-testid="x-tooltip-content"]', hover: true },
 ]) {
-    test(`exit · a ${c.name} leaves on opacity and its slide alone`, async ({ page }, info) => {
+    test(`exit · a ${c.name} ${c.entrance ? "enters and leaves" : "leaves"} on opacity and its slide alone`, async ({ page }, info) => {
         const project = info.project.name;
         test.skip(Boolean(c.hover) && isPhone(project), "a Tooltip does not open on touch");
         await openHarness(page);
+        const sampling = c.entrance ? sampleStyle(page, c.content, 500, "none") : null;
         if (c.hover) await page.locator(c.trigger).hover();
         else await pressOn(page, project, c.trigger);
+        const entrance = sampling ? await sampling : null;
         await page.locator(`${c.content}[data-state$="open"]`).waitFor();
         await page.waitForTimeout(900);
-        const frames = await page.evaluate(
-            (sel) =>
-                new Promise<{ t: number; scale: string; filter: string }[]>((done) => {
-                    const out: { t: number; scale: string; filter: string }[] = [];
-                    const t0 = performance.now();
-                    const tick = (t: number) => {
-                        const el = document.querySelector(sel);
-                        if (el) {
-                            const cs = getComputedStyle(el);
-                            out.push({ t: Math.round(t - t0), scale: cs.scale, filter: cs.filter });
-                        }
-                        if (el && t - t0 < 1200) requestAnimationFrame(tick);
-                        else done(out);
-                    };
-                    document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
-                    requestAnimationFrame(tick);
-                }),
-            c.content,
-        );
-        await info.attach("exit", { body: JSON.stringify(frames), contentType: "application/json" });
-        expect(frames.length, "the exit is filmed").toBeGreaterThan(2);
-        for (const f of frames) {
-            const at = `+${f.t} ms ${JSON.stringify(frames.slice(0, 12))}`;
-            expect(f.scale === "none" || f.scale === "1" || f.scale === "1 1", `no scale ${at}`).toBe(true);
-            expect(f.filter === "none" || f.filter === "blur(0px)", `no blur ${at}`).toBe(true);
-        }
+        const exit = await sampleStyle(page, c.content, 1200, "escape");
+        await info.attach("style", { body: JSON.stringify({ entrance, exit }), contentType: "application/json" });
+        if (entrance) expectPlain(entrance, "entrance");
+        expectPlain(exit, "exit");
     });
 }
 
