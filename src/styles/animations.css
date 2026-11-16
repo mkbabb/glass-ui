@@ -170,6 +170,16 @@
     }
 }
 
+/* The reveal's exit hold (glass/reveal.css, the closed state). The exit itself is a
+ * set of transitions; this keyframe paints nothing and only runs for the exit's clock,
+ * so reka's `usePresence`, which unmounts on `animationend`, keeps the node until the
+ * transitions have landed. */
+@keyframes glass-reveal-hold {
+    to {
+        --glass-reveal-held: 1;
+    }
+}
+
 /* THE MENU PLATE GROWS FROM ITS TRIGGER (glass/reveal.css, `data-reveal="menu"`).
  * The plate is laid out at its final size from the first frame; a clip uncovers it from
  * the edge that faces its trigger, starting as a strip the trigger's own height and

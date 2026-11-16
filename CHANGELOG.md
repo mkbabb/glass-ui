@@ -35,6 +35,17 @@ A patch on 11.1.0 about how surfaces leave. Nothing is removed or renamed.
   of its close, so the plate fell to its search field before it faded; the list now
   stays until the dialog is gone.
 
+- **A surface turned back mid-way turns from where it is.** Closing a `Popover`,
+  `DropdownMenu`, `Select` or `Toast` while it was still opening, or reopening one while
+  it was leaving, made it jump to fully open before it moved again, and an `Accordion`
+  or `Collapsible` reversed mid-way restarted from its far end. Each now carries on from
+  the light and the height it had. The popups' exits are transitions now, held for
+  reka's presence by a keyframe that paints nothing (`glass-reveal-hold`); the
+  `glass-reveal-out` keyframe is still defined for stylesheets that name it. A press on
+  the trigger of a `Dialog`, `Sheet` or `Select` that is still leaving reopens it from
+  where it stands, where the press used to be swallowed, and a press on the page behind
+  a leaving sheet now reaches the page.
+
 ## 11.1.0 — 2026-11-15
 
 A minor release. No API changes shape, so your code keeps working as it is. Two

@@ -13,7 +13,7 @@ import ModalOverlay from "../dialog/ModalOverlay.vue";
 import type { Motion, Surface } from "../_shared/axes";
 import { useMotionAxis } from "../_shared/useMotionAxis";
 import { surfaceClass } from "../_shared/surface/resolve";
-import { returnFocusQuietly, useModalShortcutBarrier } from "../_shared/overlay";
+import { returnFocusQuietly, useExitPress, useModalShortcutBarrier } from "../_shared/overlay";
 import {
     scrimDetentOpacity,
     scrimOpacity,
@@ -276,6 +276,16 @@ const onCloseAutoFocus = returnFocusQuietly(() => dialogRoot.triggerElement.valu
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits);
 
+// The exit takes no press: once closed, the layer stops blocking the page and an outside
+// press that began after the close dismisses nothing, so the trigger can reopen the
+// surface mid-exit and the page behind it stays live (`_shared/overlay/exit-press.ts`).
+const exitPress = useExitPress(
+    () => dialogRoot.open.value,
+    () =>
+        (forwarded.value as { disableOutsidePointerEvents?: boolean })
+            .disableOutsidePointerEvents ?? dialogRoot.modal.value,
+);
+
 // The sheet relays its concentric-radius context (for the gear-sheet Configurator's
 // nested cards): it PUBLISHES its resolved corner as `--radius-ctx` + its content pad as
 // `--radius-inset`, so a nested card-class surface DERIVES its own corner concentric
@@ -306,7 +316,12 @@ const contentStyle = computed<CSSProperties>(() => ({
              frost the middle of the page with nothing engaged inside it. -->
         <ModalOverlay :opacity="scrimAlpha" :force-mount="scrimForceMount" />
         <RekaDialogContent
-            v-bind="{ ...forwarded, ...$attrs, inert: closingInert }"
+            v-bind="{
+                ...forwarded,
+                ...$attrs,
+                inert: closingInert,
+                disableOutsidePointerEvents: exitPress.blockOutside.value,
+            }"
             :aria-modal="dialogRoot.modal.value ? 'true' : undefined"
             :force-mount="contentForceMount"
             :class="contentClass"
@@ -314,6 +329,7 @@ const contentStyle = computed<CSSProperties>(() => ({
             :data-surface="props.surface"
             data-slot="sheet-content"
             @close-auto-focus="onCloseAutoFocus"
+            @pointer-down-outside="exitPress.letThrough"
             :data-side="props.side"
             :data-modal="dialogRoot.modal.value ? undefined : 'false'"
             :data-detents="detented ? '' : undefined"

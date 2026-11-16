@@ -17,7 +17,7 @@
 //          Playwright WebKit paints no backdrop blur, so there the material is read from
 //          computed style and the contrast is recorded, not judged
 import { expect, test, type Page } from "@playwright/test";
-import { exitOf, isPhone, markFilm, press, pressOn, startFilm, stopFilm, worstFrameShare, type Film, type Frame } from "./release-11-1-1/film";
+import { exitOf, isPhone, markFilm, markTurn, press, pressOn, startFilm, stopFilm, worstFrameShare, type Film, type Frame } from "./release-11-1-1/film";
 
 const HARNESS = "/tests-visual/release-11-1-1/exits-harness.html";
 
@@ -508,3 +508,203 @@ for (const c of triggerCases) {
         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
     });
 }
+
+// ── reverse ────────────────────────────────────────────────────────────────────────
+//   reverse  a surface closed while it opens, or reopened while it closes, turns from
+//            where it stands: what is seen of it (its opacity, times the share of its
+//            box its clip uncovers and the share on screen; for a disclosure, its height
+//            over its open height) moves no more than a fifth in one frame after the
+//            turn, and it ends where the second input sent it. A trigger pressed while a
+//            Dialog, a Sheet or a Select leaves reopens it, and a press on the page while
+//            a sheet leaves reaches the page.
+
+/** Evaluates one computed inset() length against the box side it is a share of. */
+function insetPx(expr: string, ref: number): number {
+    const js = expr
+        .replace(/calc\(/g, "(")
+        .replace(/(-?[\d.]+)%/g, (_, n) => `(${n}*${ref}/100)`)
+        .replace(/(-?[\d.]+)px/g, "($1)");
+    // eslint-disable-next-line no-new-func
+    return Number(new Function(`return ${js}`)());
+}
+
+/** The share of the box's height a clip-path inset() leaves uncovered (1 with no clip). */
+function clipShare(clip: string | undefined, h: number): number {
+    if (!clip || !clip.startsWith("inset(") || !h) return 1;
+    const body = clip.slice(6, clip.lastIndexOf(")")).split(" round ")[0];
+    const parts: string[] = [];
+    let depth = 0;
+    let cur = "";
+    for (const ch of body) {
+        if (ch === "(") depth++;
+        if (ch === ")") depth--;
+        if (ch === " " && depth === 0) {
+            if (cur) parts.push(cur);
+            cur = "";
+        } else cur += ch;
+    }
+    if (cur) parts.push(cur);
+    const [top, , bottom = top] = parts.length === 1 ? [parts[0], parts[0], parts[0]] : parts;
+    const visible = h - Math.max(0, insetPx(top, h)) - Math.max(0, insetPx(bottom, h));
+    return Math.min(1, Math.max(0, visible / h));
+}
+
+type Channel = (f: Frame) => number;
+
+function seenChannel(vw: { width: number; height: number }): Channel {
+    const onScreen = seenIn(vw);
+    return (f) => (f.present ? onScreen(f) * clipShare(f.clip, f.h ?? 0) : 0);
+}
+
+type Turn = {
+    name: string;
+    content: string;
+    /** What is filmed, when it is not the content itself (the Toast's ink). */
+    film?: string;
+    open: (page: Page, project: string) => Promise<void>;
+    close: (page: Page, project: string) => Promise<void>;
+    /** ms after the first input at which the second lands, mid-motion. */
+    at: number;
+    /** A disclosure is read by its height. */
+    height?: boolean;
+    desktopOnly?: boolean;
+    /** Only one of the two turns is read (a dismissed Toast is not reopened). */
+    only?: "close" | "reopen";
+};
+
+const tap = (sel: string) => (page: Page, project: string) => pressOn(page, project, sel);
+const escape = async (page: Page) => page.keyboard.press("Escape");
+
+type Attach = { attach: (n: string, o: { body: string; contentType: string }) => Promise<void> };
+
+async function judgeTurn(page: Page, info: Attach, c: Turn, film: Film, mark2: number, ends: "gone" | "open", full = 1) {
+    const vw = page.viewportSize()!;
+    const channel: Channel = c.height ? (f) => (f.present ? (f.h ?? 0) / full : 0) : seenChannel(vw);
+    const before = film.frames.filter((f) => f.t < mark2);
+    const turn = before[before.length - 1];
+    const after = film.frames.filter((f) => f.t >= mark2);
+    const series: [number, number][] = [turn, ...after].map((f) => [f.t, channel(f)]);
+    const read = {
+        atTurn: +channel(turn).toFixed(3),
+        share: +worstFrameShare(series, 1).toFixed(3),
+        end: +channel(after[after.length - 1]).toFixed(3),
+        frames: series.map(([t, v]) => [Math.round(t - mark2), +v.toFixed(3)]),
+    };
+    await info.attach("turn", { body: JSON.stringify(read), contentType: "application/json" });
+    const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 45) });
+    expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+    expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+    if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+    else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);
+}
+
+const turns: Turn[] = [
+    { name: "Select", content: '[data-testid="x-select-content"]', open: tap('[data-testid="x-select"]'), close: escape, at: 70 },
+    { name: "DropdownMenu", content: '[data-testid="x-menu-content"]', open: tap('[data-testid="x-menu"]'), close: escape, at: 70 },
+    { name: "Popover", content: '[data-testid="x-popover-content"]', open: tap('[data-testid="x-popover"]'), close: escape, at: 110 },
+    {
+        name: "Toast",
+        content: '[data-slot="toast"]',
+        film: '[data-slot="toast"] > div',
+        open: tap('[data-testid="x-toast"]'),
+        close: tap('[data-slot="toast"] button[aria-label="Dismiss"]'),
+        at: 110,
+        only: "close",
+    },
+    { name: "Collapsible", content: '[data-testid="x-collapsible-content"]', open: tap('[data-testid="x-collapsible"]'), close: tap('[data-testid="x-collapsible"]'), at: 60, height: true },
+    { name: "Accordion", content: '[data-testid="x-accordion-content"]', open: tap('[data-testid="x-accordion"]'), close: tap('[data-testid="x-accordion"]'), at: 60, height: true },
+];
+
+async function filmTurn(page: Page, project: string, c: Turn, first: "open" | "close", wait: number): Promise<Film> {
+    await startFilm(page, c.film ?? c.content);
+    await markFilm(page);
+    await (first === "open" ? c.open : c.close)(page, project);
+    await page.waitForTimeout(wait);
+    await markTurn(page);
+    await (first === "open" ? c.close : c.open)(page, project);
+    return stopFilm(page, 1400);
+}
+
+/** A disclosure's open height, read at rest before the film (then closed again). */
+async function openHeight(page: Page, project: string, c: Turn): Promise<number> {
+    if (!c.height) return 1;
+    await c.open(page, project);
+    await page.waitForTimeout(900);
+    const h = (await page.locator(c.content).boundingBox())!.height;
+    await c.close(page, project);
+    await page.waitForTimeout(900);
+    return h;
+}
+
+for (const c of turns) {
+    if (c.only !== "reopen")
+        test(`reverse · a ${c.name} closed while it opens turns from where it is`, async ({ page }, info) => {
+            const project = info.project.name;
+            test.skip(Boolean(c.desktopOnly) && isPhone(project), "it does not open on touch");
+            await openHarness(page);
+            const full = await openHeight(page, project, c);
+            const film = await filmTurn(page, project, c, "open", c.at);
+            await judgeTurn(page, info, c, film, film.turn, "gone", full);
+        });
+
+    if (c.only !== "close")
+        test(`reverse · a ${c.name} reopened while it closes turns from where it is`, async ({ page }, info) => {
+            const project = info.project.name;
+            test.skip(Boolean(c.desktopOnly) && isPhone(project), "it does not open on touch");
+            await openHarness(page);
+            const full = await openHeight(page, project, c);
+            await c.open(page, project);
+            await page.locator(`${c.content}[data-state$="open"]`).waitFor();
+            await page.waitForTimeout(900);
+            const film = await filmTurn(page, project, c, "close", c.height ? 50 : 40);
+            await judgeTurn(page, info, c, film, film.turn, "open", full);
+        });
+}
+
+const reopens = [
+    { name: "Dialog", trigger: '[data-testid="x-dialog"]', content: '[data-testid="x-dialog-content"]' },
+    { name: "Sheet", trigger: '[data-testid="x-sheet-right"]', content: '[data-testid="x-sheet-right-content"]' },
+    { name: "Select", trigger: '[data-testid="x-select"]', content: '[data-testid="x-select-content"]' },
+];
+
+for (const c of reopens) {
+    test(`reverse · a press on a leaving ${c.name}'s trigger reopens it from where it is`, async ({ page }, info) => {
+        const project = info.project.name;
+        await openHarness(page);
+        const box = (await page.locator(c.trigger).boundingBox())!;
+        await pressOn(page, project, c.trigger);
+        await page.locator(`${c.content}[data-state="open"]`).waitFor();
+        await page.waitForTimeout(1000);
+        await startFilm(page, c.content);
+        await markFilm(page);
+        await page.keyboard.press("Escape");
+        await page.waitForTimeout(50);
+        await markTurn(page);
+        await press(page, project, box.x + box.width / 2, box.y + box.height / 2);
+        const film = await stopFilm(page, 1400);
+        const state = await page.locator(c.content).first().getAttribute("data-state", { timeout: 1000 }).catch(() => null);
+        await judgeTurn(page, info, { name: c.name, content: c.content, open: async () => {}, close: async () => {}, at: 0 }, film, film.turn, "open");
+        expect(state, "the surface is open again").toBe("open");
+    });
+}
+
+test("reverse · a press on the page while a sheet leaves reaches the page", async ({ page }, info) => {
+    const project = info.project.name;
+    await openHarness(page);
+    const count = page.locator('[data-testid="x-count"]');
+    await count.scrollIntoViewIfNeeded();
+    const box = (await count.boundingBox())!;
+    await pressOn(page, project, '[data-testid="x-sheet-bottom"]');
+    await page.locator('[data-testid="x-sheet-bottom-content"][data-state="open"]').waitFor();
+    await page.waitForTimeout(1000);
+    const sheet = (await page.locator('[data-testid="x-sheet-bottom-content"]').boundingBox())!;
+    test.skip(box.y + box.height > sheet.y, "the sheet covers the counter");
+    await page.keyboard.press("Escape");
+    await page.waitForTimeout(40);
+    const during = await page.locator('[data-testid="x-sheet-bottom-content"]').count();
+    await press(page, project, box.x + box.width / 2, box.y + box.height / 2);
+    await page.waitForTimeout(600);
+    expect(during, "the sheet was still leaving when the press landed").toBe(1);
+    expect(await count.getAttribute("data-presses"), "the press reached the page").toBe("1");
+});

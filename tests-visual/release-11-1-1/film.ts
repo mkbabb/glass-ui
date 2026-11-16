@@ -23,12 +23,12 @@ export type Frame = {
     also?: boolean;
 };
 
-export type Film = { mark: number; frames: Frame[] };
+export type Film = { mark: number; turn: number; frames: Frame[] };
 
 export async function startFilm(page: Page, selector: string, also = ""): Promise<void> {
     await page.evaluate(({ selector, also }) => {
         const w = window as unknown as { __film: { mark: number; frames: unknown[]; stop: boolean } };
-        const film = { mark: -1, frames: [] as unknown[], stop: false };
+        const film = { mark: -1, turn: -1, frames: [] as unknown[], stop: false };
         w.__film = film;
         const t0 = performance.now();
         const effective = (el: Element) => {
@@ -73,6 +73,9 @@ export async function startFilm(page: Page, selector: string, also = ""): Promis
         (window as unknown as { __mark: () => void }).__mark = () => {
             film.mark = performance.now() - t0;
         };
+        (window as unknown as { __turn: () => void }).__turn = () => {
+            film.turn = performance.now() - t0;
+        };
     }, { selector, also });
     await page.waitForTimeout(80);
 }
@@ -81,12 +84,17 @@ export async function markFilm(page: Page): Promise<void> {
     await page.evaluate(() => (window as unknown as { __mark: () => void }).__mark());
 }
 
+/** Marks the second input of a film that reverses a surface mid-motion. */
+export async function markTurn(page: Page): Promise<void> {
+    await page.evaluate(() => (window as unknown as { __turn: () => void }).__turn());
+}
+
 export async function stopFilm(page: Page, ms: number): Promise<Film> {
     await page.waitForTimeout(ms);
     return page.evaluate(() => {
-        const f = (window as unknown as { __film: { mark: number; frames: Frame[]; stop: boolean } }).__film;
+        const f = (window as unknown as { __film: { mark: number; turn: number; frames: Frame[]; stop: boolean } }).__film;
         f.stop = true;
-        return { mark: f.mark, frames: f.frames };
+        return { mark: f.mark, turn: f.turn, frames: f.frames };
     });
 }
 

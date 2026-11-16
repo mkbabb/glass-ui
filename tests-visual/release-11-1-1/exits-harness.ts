@@ -1,8 +1,9 @@
 // Every surface the exits witnesses close, on a busy ground. A GlassDock at the top
 // seats a Select (its open state driven by `v-model:open`, as value.js's pages dropdown
 // drives it) and a DropdownMenu; below it a row of triggers opens a Popover, a Tooltip,
-// a Dialog, a right and a bottom Sheet and a detented bottom Sheet. Imports are relative to `src/`, so the file mounts
-// unchanged on an older tree.
+// a Dialog, a right and a bottom Sheet and a detented bottom Sheet; a third row holds a
+// Toast trigger, a press counter (the page behind a leaving sheet), a Collapsible and an
+// Accordion. Imports are relative to `src/`, so the file mounts unchanged on an older tree.
 import "../../demo/demo.css";
 import { createApp, h, ref } from "vue";
 
@@ -27,6 +28,15 @@ import Dialog from "../../src/components/dialog/Dialog.vue";
 import DialogContent from "../../src/components/dialog/DialogContent.vue";
 import DialogTitle from "../../src/components/dialog/DialogTitle.vue";
 import SheetContent from "../../src/components/sheet/SheetContent.vue";
+import Accordion from "../../src/components/accordion/Accordion.vue";
+import AccordionItem from "../../src/components/accordion/AccordionItem.vue";
+import AccordionTrigger from "../../src/components/accordion/AccordionTrigger.vue";
+import AccordionContent from "../../src/components/accordion/AccordionContent.vue";
+import Collapsible from "../../src/components/collapsible/Collapsible.vue";
+import CollapsibleTrigger from "../../src/components/collapsible/CollapsibleTrigger.vue";
+import CollapsibleContent from "../../src/components/collapsible/CollapsibleContent.vue";
+import Toaster from "../../src/components/toast/Toaster.vue";
+import { toast } from "../../src/components/toast/use-toast";
 import { DialogTrigger } from "reka-ui";
 
 const params = new URLSearchParams(location.search);
@@ -44,6 +54,9 @@ const pages = ["Picker", "Palettes", "Gradient", "Mix", "Extract"];
 const view = ref("Picker");
 const open = ref(false);
 const rung = ref(0.5);
+const presses = ref(0);
+const btn = "padding:10px 14px;background:#fff;color:#000;border-radius:8px;font:14px sans-serif";
+const lines = Array.from({ length: 6 }, (_, i) => h("p", { style: "margin:0;padding:4px 0" }, `Line ${i + 1} of the region.`));
 
 createApp({
     setup: () => () =>
@@ -119,6 +132,23 @@ createApp({
                     ),
                 ]),
             ]),
+            h("div", { style: "display:flex;flex-wrap:wrap;gap:8px;justify-content:center" }, [
+                h("button", { "data-testid": "x-toast", style: btn, onClick: () => toast({ title: "A toast", description: "Its body." }) }, "Toast"),
+                h("button", { "data-testid": "x-count", "data-presses": presses.value, style: btn, onClick: () => presses.value++ }, `Pressed ${presses.value}`),
+            ]),
+            h("div", { class: "glass-quiet", style: "width:min(22rem,90vw);padding:8px 16px;border-radius:16px;background:#fff;color:#000" }, [
+                h(Collapsible, null, () => [
+                    h(CollapsibleTrigger, { "data-testid": "x-collapsible", style: btn }, () => "Collapsible"),
+                    h(CollapsibleContent, { "data-testid": "x-collapsible-content" }, () => lines),
+                ]),
+                h(Accordion, { type: "single", collapsible: true }, () => [
+                    h(AccordionItem, { value: "a" }, () => [
+                        h(AccordionTrigger, { "data-testid": "x-accordion" }, () => "Accordion"),
+                        h(AccordionContent, { "data-testid": "x-accordion-content" }, () => lines),
+                    ]),
+                ]),
+            ]),
+            h(Toaster),
         ]),
 }).mount("#app");
 document.body.dataset.ready = "1";

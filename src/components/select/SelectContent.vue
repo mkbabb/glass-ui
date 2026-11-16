@@ -24,7 +24,7 @@ import {
 } from "reka-ui";
 import SelectScrollButton from "./SelectScrollButton.vue";
 import { cn } from "../_shared/class-names";
-import { useDockParticipation, useSheetWidth } from "../_shared/overlay";
+import { useDockParticipation, useExitPress, useSheetWidth } from "../_shared/overlay";
 import { injectSelectOpenInput } from "./openInput";
 
 defineOptions({
@@ -104,6 +104,18 @@ const rootAttrs = computed(() => ({
    ring back (`openInput.ts`). */
 const openInput = injectSelectOpenInput();
 
+/* The exit takes no press: once closed, the listbox stops blocking the page and a press
+   that began after the close dismisses nothing, so its trigger reopens it mid-exit
+   (`_shared/overlay/exit-press.ts`). */
+const exitPress = useExitPress(
+    () => selectRoot?.open.value ?? false,
+    () => true,
+);
+function onPointerDownOutside(event: PointerDownOutsideEvent): void {
+    exitPress.letThrough(event);
+    emit("pointerDownOutside", event);
+}
+
 const dock = useDockParticipation({
     close: () => {
         if (selectRoot?.open.value) selectRoot.onOpenChange(false);
@@ -126,7 +138,11 @@ const dock = useDockParticipation({
       correct (one scroll port, never nested).
     -->
         <RekaSelectContent
-            v-bind="{ ...rootAttrs, ...dock.portalAttrs.value }"
+            v-bind="{
+                ...rootAttrs,
+                ...dock.portalAttrs.value,
+                disableOutsidePointerEvents: exitPress.blockOutside.value,
+            }"
             data-reveal="menu"
             data-slot="select-content"
             :data-form="sheet ? 'sheet' : undefined"
@@ -142,7 +158,7 @@ const dock = useDockParticipation({
             "
             @close-auto-focus="emit('closeAutoFocus', $event)"
             @escape-key-down="emit('escapeKeyDown', $event)"
-            @pointer-down-outside="emit('pointerDownOutside', $event)"
+            @pointer-down-outside="onPointerDownOutside"
             @keydown="openInput?.mark('keyboard')"
         >
             <SelectScrollButton direction="up" />

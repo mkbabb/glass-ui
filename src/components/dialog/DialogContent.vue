@@ -14,7 +14,11 @@ import type { Motion, Surface } from "../_shared/axes";
 import { useMotionAxis } from "../_shared/useMotionAxis";
 import { surfaceClass } from "../_shared/surface/resolve";
 import { scrimOpacity } from "../sheet/motion";
-import { returnFocusQuietly, useModalShortcutBarrier } from "../_shared/overlay";
+import {
+    returnFocusQuietly,
+    useExitPress,
+    useModalShortcutBarrier,
+} from "../_shared/overlay";
 import type { DismissableContentEmits } from "../_shared/interaction";
 
 /**
@@ -162,6 +166,16 @@ function refuse(event: Event) {
 
 const forwarded = useForwardPropsEmits(delegatedProps, emits);
 
+// The exit takes no press: once closed, the layer stops blocking the page and an outside
+// press that began after the close dismisses nothing, so the trigger can reopen the
+// surface mid-exit and the page behind it stays live (`_shared/overlay/exit-press.ts`).
+const exitPress = useExitPress(
+    () => dialogRoot.open.value,
+    () =>
+        (forwarded.value as { disableOutsidePointerEvents?: boolean })
+            .disableOutsidePointerEvents ?? dialogRoot.modal.value,
+);
+
 // The plate rides the floating tier's LIFT (edge, rim, under-shadow) at its OWN ink:
 // one step above resting, one below floating — the control-centre modal, see-through
 // enough that the page reads behind it, occluding enough to be a modal. The rung is
@@ -194,7 +208,12 @@ const contentClass = computed(() =>
              for. `sheet/SheetContent.vue` composes the same scrim and passes none. -->
         <ModalOverlay veil :opacity="scrimAlpha" :force-mount="scrimForceMount" />
         <RekaDialogContent
-            v-bind="{ ...forwarded, ...$attrs, inert: closingInert }"
+            v-bind="{
+                ...forwarded,
+                ...$attrs,
+                inert: closingInert,
+                disableOutsidePointerEvents: exitPress.blockOutside.value,
+            }"
             :aria-modal="dialogRoot.modal.value ? 'true' : undefined"
             :force-mount="contentForceMount"
             :class="contentClass"
@@ -207,7 +226,7 @@ const contentClass = computed(() =>
             :data-scroll="props.scroll ? '' : undefined"
             :data-motion="motionAxis.dataMotion.value"
             @escape-key-down="refuse"
-            @pointer-down-outside="refuse"
+            @pointer-down-outside="exitPress.letThrough($event) || refuse($event)"
         >
             <!-- Hidden anchor — the focus-handoff watch resolves the live content root
                  via `closest`, never a Presence-transient `$el`. -->
