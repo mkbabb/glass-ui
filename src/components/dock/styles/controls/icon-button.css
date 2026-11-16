@@ -249,6 +249,21 @@
     .dock-icon-button > :is(svg, img, picture, [data-dock-glyph]) {
         width: var(--dock-control-glyph-size, 1.25rem);
         height: var(--dock-control-glyph-size, 1.25rem);
+        /* RU-58 (MEASURE-7's census): the glyph is its rule's size. At the 0.9 share it is wider
+           than the seat's content box (36 px in a 40 px seat with 4 px padding), and a shrinking
+           flex item was laid out 32 by 36; it is centred over the padding instead. A page's
+           `img { max-width: 100% }` reset held an img glyph to the content box the same way. */
+        flex-shrink: 0;
+        max-inline-size: none;
+    }
+
+    /* RU-55: a glyph never sizes its seat. In an icon seat that also holds a word (an element
+       child that is not a glyph, o1's labelled seat), the glyph is sized from the word, 1.5 em,
+       as in a tab seat, so the seat's block extent stays `--dock-control-size` at every share. */
+    .dock-icon-button:has(> :not(svg, img, picture, [data-dock-glyph])) > :is(svg, img, picture, [data-dock-glyph]) {
+        width: 1.5em;
+        height: 1.5em;
+        flex-shrink: 0;
     }
 
     .dock-icon-button--compact {

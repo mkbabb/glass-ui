@@ -1219,12 +1219,17 @@ test("k2 vertical: a wide tab at a flush edge keeps its whole ring, at the start
  * and coarse: it scrolls at most the ring floor's shortfall, the plate rests at four
  * corners of half its block extent, and the keyboard-focused end seats keep their ring.
  */
-function k3(): void {
-    test("k3 at 320: a capped dock whose seats all show holds the fit law and rests round", async ({ page }) => {
-        await page.setViewportSize({ width: 320, height: 800 });
-        await openSeats(page, "kinds=tab:Home,icon,icon,tab:Settings");
+/* W-I.8 RU-55, restated fixture: k3's dock reached the viewport's cap through the icon
+   library's default 24 px tab glyph, which no ruling chose; the fixture now pins its own tab
+   glyphs at 24 px (`tabglyph=24`), and a second cell reads the same law on the default dock
+   (unsized tab glyphs at 1.5 em) at a viewport narrow enough to cap it. The assertion is
+   unchanged: the dock is capped by the viewport, then the fit law. */
+function k3(width = 320, glyphs = "&tabglyph=24"): void {
+    test(`k3 at ${width}${glyphs ? "" : ", unsized tab glyphs"}: a capped dock whose seats all show holds the fit law and rests round`, async ({ page }) => {
+        await page.setViewportSize({ width, height: 800 });
+        await openSeats(page, `kinds=tab:Home,icon,icon,tab:Settings${glyphs}`);
         const read = await readPlate(page);
-        expect(read.w, "the dock is capped by the viewport").toBeGreaterThanOrEqual(316);
+        expect(read.w, "the dock is capped by the viewport").toBeGreaterThanOrEqual(width - 4);
         const seats = await page.evaluate(() => {
             const run = document.querySelector<HTMLElement>(".dock-run.is-active")!;
             const k = [...run.children] as HTMLElement[];
@@ -1255,10 +1260,12 @@ test.describe("critique 5, coarse phone", () => {
     test.use({ hasTouch: true, isMobile: true, viewport: { width: 390, height: 844 } });
     k1();
     k3();
+    k3(306, "");
 });
 
 k1();
 k3();
+k3(306, "");
 
 /* ── l1 · critique round 6: the cap after the overflow vanishes ────────────────────
    (docs/release-10.1.5/critique-6.md L1). RED on the round-6 tip 4c9c15008, GREEN after. */

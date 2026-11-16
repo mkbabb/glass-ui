@@ -154,8 +154,10 @@
         }
     }
 
-    /* RU-45: a glyph beside a word is sized from the word, 1.5 em, not from the seat. */
-    .dock-tab-button > svg {
+    /* RU-45: a glyph beside a word is sized from the word, 1.5 em, not from the seat. RU-55
+       (RU-65): in the four forms the icon seat sizes, a direct svg, img or picture, or any
+       direct child marked `data-dock-glyph` (a site's own icon element). */
+    .dock-tab-button > :is(svg, img, picture, [data-dock-glyph]) {
         width: 1.5em;
         height: 1.5em;
         flex-shrink: 0;

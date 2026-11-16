@@ -133,6 +133,9 @@ const scenes: Record<string, Component> = {
         const persistent = params.get("persistent") === "1";
         const current = Number(params.get("current") ?? 0);
         const nest = params.get("nest") === "1";
+        // `?tabglyph=<px>`: the tab seats' glyphs carry an explicit size, so a fixture that
+        // needs a width does not take it from a glyph default (W-I.8 RU-55, k3).
+        const tabGlyph = params.get("tabglyph");
         const tab = (label: string, i: number) =>
             h(
                 DockControl,
@@ -141,7 +144,12 @@ const scenes: Record<string, Component> = {
                     "data-witness": `S${i + 1}`,
                     "aria-current": current === i + 1 ? "page" : undefined,
                 },
-                () => [glyph(), h("span", label)],
+                () => [
+                    tabGlyph
+                        ? h("svg", { viewBox: "0 0 24 24", "aria-hidden": "true", style: `width:${tabGlyph}px;height:${tabGlyph}px;flex-shrink:0` }, [h("circle", { cx: 12, cy: 12, r: 9, fill: "currentColor" })])
+                        : glyph(),
+                    h("span", label),
+                ],
             );
         const nested = (seats: unknown[]) => {
             if (!nest) return seats;
