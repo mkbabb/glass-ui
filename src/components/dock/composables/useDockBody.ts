@@ -660,7 +660,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         // RU-29: the trigger frame reads the new layout once. The flags that change layout
         // (the fit law, RU-27's whole-seat window, the curve inset) are decided from that one
         // read and written together; only when one changed is the layout read once more.
-        if (POSE) performance.mark("dock:read");
+        if (POSE) performance.mark("dock:read", { detail: { reason } });
         {
             const open = o.expanded();
             const run = runEl();

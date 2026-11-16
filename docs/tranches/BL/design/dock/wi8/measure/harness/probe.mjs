@@ -31,6 +31,7 @@
 import { createRequire } from "node:module";
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
 import { resolve, dirname, basename, join } from "node:path";
+import { loadavg } from "node:os";
 import { fileURLToPath } from "node:url";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -187,7 +188,13 @@ async function runCell(browser, cellIn, base) {
         );
         drv.t0 = start.t0;
         await sleep(50);
-        for (const s of scenario.steps) await drv.step(s);
+        // MEASURE-6 (RU-37): a mark names the event of the step after it, which the page stamps.
+        const steps = scenario.steps.map((s) => ({ ...s }));
+        steps.forEach((s, k) => { if (s.do === "mark") s._on = s.on !== undefined ? s.on : causeOf(s, steps[k + 1]); });
+        steps.forEach((s, k) => { if (s.do === "eval" && steps[k - 1]?._on === "eval") s._fire = true; });
+        const load0 = loadavg()[0];
+        for (const s of steps) await drv.step(s);
+        const load1 = loadavg()[0];
         const rec = await page.evaluate(() => window.__sampler.stop());
 
         let traceCounts = null;
@@ -221,6 +228,7 @@ async function runCell(browser, cellIn, base) {
                 engine: opt.engine,
                 browserVersion: browser.version(),
                 cell: { ...cell, dpr },
+                load: [+load0.toFixed(2), +load1.toFixed(2)],
                 url,
                 hook,
                 browserArgs: launchArgs,
@@ -322,12 +330,14 @@ function driver(page, cdp, coarse) {
         }
     };
     const mark = (name) => page.evaluate((n) => window.__sampler && window.__sampler.mark(n), name);
+    const arm = (name, on) => page.evaluate(([n, e]) => window.__sampler && window.__sampler.arm(n, e), [name, on]);
 
     d.step = async (s) => {
         const t = Date.now();
         switch (s.do) {
             case "mark":
-                await mark(s.name);
+                if (s._on) await arm(s.name, s._on);
+                else await mark(s.name);
                 break;
             case "wait":
                 await sleep(s.ms);
@@ -458,7 +468,7 @@ function driver(page, cdp, coarse) {
                 break;
             }
             case "eval":
-                await page.evaluate(s.js);
+                await page.evaluate(s._fire ? `window.__sampler && window.__sampler.fire(); ${s.js}` : s.js);
                 break;
             case "scroll":
                 await page.mouse.wheel(s.dx || 0, s.dy || 0);
@@ -473,6 +483,23 @@ function driver(page, cdp, coarse) {
         if (s.do !== "waitFraction") d.log.push({ do: s.do, ms: Date.now() - t });
     };
     return d;
+}
+
+// MEASURE-6 (RU-37): the event that is a mark's cause, by the step that makes it. A press
+// outside the dock acts on pointerdown; a click on a control (a seat, the folded dock, a host's
+// button) acts on click; a key on keydown; a hover on its first move; a resize on the window's
+// resize; collapse() and a host change in their own evaluate. A mark before a wait has no event.
+function causeOf(mk, next) {
+    if (!next) return null;
+    switch (next.do) {
+        case "click": case "down": return /^outside/.test(mk.name) ? "pointerdown" : next.do === "down" ? "pointerdown" : "click";
+        case "key": case "keydown": return "keydown";
+        case "hover": case "move": case "leave": return "pointermove";
+        case "viewport": return "resize";
+        case "eval": return "eval";
+        case "scroll": return null;
+        default: return null;
+    }
 }
 
 // ── crop, frames, strips ────────────────────────────────────────────────────
