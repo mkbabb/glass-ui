@@ -90,6 +90,16 @@
         scale: var(--scale-press-dock);
     }
 
+    /* Under reduced motion a press darkens the trigger and does not shrink it, as
+       `.tap-squish` does. There the scale would land at once, and the list, menu or
+       popover that opens on the press would be placed against the pressed box and then
+       move to the trigger at rest when the press lets go. */
+    @media (prefers-reduced-motion: reduce) {
+        .dock-trigger:active:not([aria-disabled="true"]) {
+            scale: 1;
+        }
+    }
+
     /* [2026-08-25 · BK #47 W2-W9 CURE] ~~`box-shadow: none;`~~ — the same struck line
        as the icon-button's (see that file for the full reasoning), and here it is even
        emptier: post-W8 the ring rides `outline`, so it suppresses nothing, and the
