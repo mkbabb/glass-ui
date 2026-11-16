@@ -1,0 +1,27 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+WebKit 26.5
+bare 1440 light rep1: cards 11, RO loop pageerrors 1, window errors 1 at f6 t=549
+bare 390 dark rep1: cards 11, RO loop pageerrors 1, window errors 1 at f14 t=539
+rafForce 1440 light rep1: cards 11, RO loop pageerrors 1, window errors 0, other errors ["TypeError: null is not an object (evaluating 'document.documentElement.getBoundingClientRect')"]
+rafForce 390 dark rep1: cards 11, RO loop pageerrors 1, window errors 0, other errors ["TypeError: null is not an object (evaluating 'document.documentElement.getBoundingClientRect')"]
+cure 1440 light rep1: cards 11, RO loop pageerrors 0, window errors 0, wrapped {"plain":20,"defer":12,"bar":14}, 0x0 bar deliveries 8
+cure 390 dark rep1: cards 11, RO loop pageerrors 0, window errors 0, wrapped {"plain":19,"defer":12,"bar":14}, 0x0 bar deliveries 10
+bare 1440 light rep2: cards 11, RO loop pageerrors 1, window errors 2 at f6 t=503, f7 t=551
+bare 390 dark rep2: cards 11, RO loop pageerrors 1, window errors 1 at f22 t=1198
+rafForce 1440 light rep2: cards 11, RO loop pageerrors 1, window errors 0, other errors ["TypeError: null is not an object (evaluating 'document.documentElement.getBoundingClientRect')"]
+rafForce 390 dark rep2: cards 11, RO loop pageerrors 1, window errors 0, other errors ["TypeError: null is not an object (evaluating 'document.documentElement.getBoundingClientRect')"]
+cure 1440 light rep2: cards 11, RO loop pageerrors 0, window errors 0, wrapped {"plain":20,"defer":12,"bar":14}, 0x0 bar deliveries 13
+cure 390 dark rep2: cards 11, RO loop pageerrors 0, window errors 0, wrapped {"plain":19,"defer":12,"bar":14}, 0x0 bar deliveries 9
+bare 1440 light rep3: cards 11, RO loop pageerrors 1, window errors 1 at f21 t=1172
+bare 390 dark rep3: cards 11, RO loop pageerrors 1, window errors 1 at f23 t=1247
+rafForce 1440 light rep3: cards 11, RO loop pageerrors 1, window errors 0, other errors ["TypeError: null is not an object (evaluating 'document.documentElement.getBoundingClientRect')"]
+rafForce 390 dark rep3: cards 11, RO loop pageerrors 1, window errors 0, other errors ["TypeError: null is not an object (evaluating 'document.documentElement.getBoundingClientRect')"]
+cure 1440 light rep3: cards 11, RO loop pageerrors 0, window errors 0, wrapped {"plain":20,"defer":12,"bar":14}, 0x0 bar deliveries 4
+cure 390 dark rep3: cards 11, RO loop pageerrors 0, window errors 0, wrapped {"plain":19,"defer":12,"bar":14}, 0x0 bar deliveries 0
+
+== tally (red cells / cells with a reading)
+  bare: 6/6
+  rafForce: 0/6
+  cure: 0/6
+
+NOTE (verifier): the rafForce row is VOID. Its init script threw on its first tick (documentElement was null), before the rAF loop or the window error listener were installed, so those 6 cells ran as a second bare baseline: each raised 1 RO loop pageerror. Read the rows as bare 12/12 red, cure 0/6, and the force-before-delivery prediction untested.
