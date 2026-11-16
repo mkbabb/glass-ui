@@ -93,10 +93,10 @@
 
     /* ── The neutralisers (amendment 1, and the reason a co-composed reveal cannot
        break this recipe) ───────────────────────────────────────────────────────────────
-       `.glass-reveal[data-state="closed"]` carries STATIC end-state values — a squished
-       `scale`, `opacity: 0`, a `filter` blur — as its non-supporting-engine floor.
-       Statics apply on the first frame, so a surface wearing both recipes would snap
-       invisible and squished before this animation drew anything. Restoring them is not
+       `.glass-reveal[data-state="closed"]` carries STATIC end-state values — `opacity: 0`
+       and, per side, a `translate` — and a register may still set a `scale` or a `filter`
+       there. Statics apply on the first frame, so a surface wearing both recipes would
+       snap invisible before this animation drew anything. Restoring them is not
        defensive dressing: `opacity: 1` is what lets the panel die by its own channels
        instead of by a group alpha (an `opacity < 1` element composites its
        backdrop-filter result at that alpha, which would collapse all three channels onto
