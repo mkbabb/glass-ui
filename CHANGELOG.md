@@ -24,7 +24,7 @@ A patch on 11.1.0 about how surfaces leave. Nothing is removed or renamed.
   floating surface now fades across its whole exit on one gentle curve, and no single
   frame takes more than a fifth of it. Menus and selects take about 220 ms to leave,
   popovers 250 ms and tooltips 120 ms, each shorter than its entrance. `Dialog` and
-  `Sheet` close on the same curve, faster than they open (a dialog in about 120 ms, a
+  `Sheet` close on the same curve, faster than they open (a dialog in about 180 ms, a
   sheet in 250 ms), where a dialog used to take as long to close as to open. The
   `--exit-curve` token carries the new curve.
 

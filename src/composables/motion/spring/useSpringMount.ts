@@ -138,6 +138,12 @@ function bezierOf(timing: string): ((k: number) => number) | null {
     };
 }
 
+/** How much longer than its row's exit clock a mounted surface takes to leave. The
+ *  `present` row's exit is the generator's 0.12 s floor, which a centred modal plate
+ *  crosses in too few frames to read; it leaves in 1.5 times that, about 180 ms, still
+ *  well inside its entrance. The other rows leave on their own clock. */
+const MOUNT_EXIT_STRETCH: Partial<Record<SpringPreset, number>> = { present: 1.5 };
+
 /** The row's exit clock (ms) and the exit curve, read from the stylesheet. */
 function readExit(preset: SpringPreset): { ms: number; ease: (k: number) => number } | null {
     if (typeof document === "undefined" || !document.body) return null;
@@ -146,7 +152,9 @@ function readExit(preset: SpringPreset): { ms: number; ease: (k: number) => numb
     document.body.appendChild(probe);
     const cs = getComputedStyle(probe);
     const duration = cs.transitionDuration.trim();
-    const ms = duration.endsWith("ms") ? parseFloat(duration) : parseFloat(duration) * 1000;
+    const ms =
+        (duration.endsWith("ms") ? parseFloat(duration) : parseFloat(duration) * 1000) *
+        (MOUNT_EXIT_STRETCH[preset] ?? 1);
     const ease = bezierOf(cs.transitionTimingFunction);
     probe.remove();
     return ms > 0 && ease ? { ms, ease } : null;
