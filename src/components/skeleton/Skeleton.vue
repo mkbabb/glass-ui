@@ -144,7 +144,7 @@ watch(
 @layer components {
     @media (prefers-reduced-motion: no-preference) {
         .skeleton:not([data-shimmer]) {
-            animation: skeleton-breathe 1.1s var(--ease-standard) infinite alternate;
+            animation: skeleton-breathe var(--skeleton-breathe-duration) var(--ease-standard) infinite alternate;
         }
     }
 }

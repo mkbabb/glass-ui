@@ -1,0 +1,101 @@
+/* The plate (W-B.17 R-1 to R-4, R-11).
+
+   One flat fill on the control's own `::before`, at the "on" strength. `opacity` carries
+   every lighter state; `scale` grows it from `--plate-from` on a control about as wide
+   as it is tall. Hover, focus, pressed and on come from this one rule. No node; two
+   compositor properties. A control that holds a hovered or pressed control stands down,
+   so a nested control answers alone. */
+@layer components {
+    :where(.plate) {
+        position: relative;
+        isolation: isolate;
+    }
+
+    .plate::before {
+        content: "";
+        position: absolute;
+        /* A bordered control names its border width, so the two corners are concentric. */
+        inset: calc(-1 * var(--plate-edge, 0px));
+        z-index: -1;
+        border-radius: inherit;
+        pointer-events: none;
+        background: color-mix(
+            in oklab,
+            var(--plate-tone, currentColor) calc(var(--fill-selected) * 100%),
+            transparent
+        );
+        opacity: 0;
+        scale: calc(1 - (1 - var(--plate-from, 0.8)) * var(--motion-weight, 1));
+        transition:
+            opacity var(--duration-control) var(--ease-standard),
+            scale var(--spring-present-duration) var(--ease-out);
+    }
+
+    /* R-3: a glyph with a verb takes the plate as a fill alone. */
+    .plate:has(
+            [data-glyph="grow"],
+            [data-glyph="nudge"],
+            [data-glyph="turn"],
+            [data-glyph="draw"]
+        ) {
+        --plate-from: 1;
+    }
+
+    /* Declared idle (R-10): the plate rests at the light strength. A state, not a loop. */
+    .plate[data-idle]::before {
+        opacity: calc(var(--fill-hover) / var(--fill-selected));
+        scale: 1;
+    }
+
+    @media (hover: hover) {
+        .plate:hover:not(
+                :disabled,
+                [aria-disabled="true"],
+                :has(:is(.plate, button, a[href], [role="button"]):hover)
+            )::before {
+            opacity: calc(var(--fill-hover) / var(--fill-selected));
+            scale: 1;
+        }
+    }
+    .plate:is(:focus-visible, [data-highlighted])::before {
+        opacity: calc(var(--fill-hover) / var(--fill-selected));
+        scale: 1;
+    }
+
+    /* On, held: only where the control has no other on-mark. A tab under an indicator
+       and a disclosure row beside its chevron are not in this list. */
+    .plate:is(
+            [aria-pressed="true"],
+            [data-state="on"],
+            [aria-current]:not([aria-current="false"]),
+            :is([aria-haspopup], [role="combobox"]):is([aria-expanded="true"], [data-state="open"])
+        )::before,
+    .plate:is(:active, [data-press]):not(
+            :disabled,
+            [aria-disabled="true"],
+            :has(:is(.plate, button, a[href], [role="button"]):is(:active, [data-press]))
+        )::before {
+        opacity: 1;
+        scale: 1;
+    }
+
+    /* The press (R-11, 12.0.0, on the owner's answer). Uniform, no bounce to see.
+       `:where()` so a control's own transition list always outranks this one leg. */
+    :where(.plate) {
+        /* A value at rest, so the return never ends by dropping a transform. */
+        scale: 1;
+        transition: scale var(--spring-press-duration) var(--spring-press);
+    }
+    .plate:is(:active, [data-press]):not(
+            :disabled,
+            [aria-disabled="true"],
+            :has(:is(.plate, button, a[href], [role="button"]):is(:active, [data-press]))
+        ) {
+        scale: var(--scale-press-sm);
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .plate:is(:active, [data-press]) {
+            scale: none;
+        }
+    }
+}

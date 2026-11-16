@@ -1,0 +1,85 @@
+/* The glyph (W-B.17 R-6).
+
+   Two inherited numbers on a `.plate` and on a control that holds a glyph: `--intent` (a pointer is over THIS control and
+   over no control inside it) and `--intent-set` (this control is on, open or current).
+   A glyph that carries a verb computes ONE `transform` from them, turn outermost, so a
+   nudge turns with a flipped glyph. One transition leg. Every rule is `:where()`. */
+@layer components {
+    :where(
+            .plate,
+            :is(
+                    button,
+                    a[href],
+                    summary,
+                    [role="button"],
+                    [role="tab"],
+                    [role="option"],
+                    [role="menuitem"],
+                    [role="menuitemcheckbox"],
+                    [role="menuitemradio"]
+                ):has([data-glyph])
+        ) {
+        --intent: 0;
+        --intent-set: 0;
+
+        @media (hover: hover) {
+            &:hover:not(
+                    :disabled,
+                    [aria-disabled="true"],
+                    :has(:is(.plate, button, a[href], [role="button"]):hover)
+                ) {
+                --intent: 1;
+            }
+        }
+        &:is(
+                [aria-pressed="true"],
+                [aria-expanded="true"],
+                [aria-checked="true"],
+                [aria-current]:not([aria-current="false"]),
+                [data-state="open"],
+                [data-state="on"],
+                [data-state="active"],
+                [data-state="checked"]
+            ) {
+            --intent-set: 1;
+        }
+    }
+
+    :where([data-glyph]) {
+        --glyph-g: 0;
+        --glyph-x: 0px;
+        --glyph-y: 0px;
+        --glyph-r: 0deg;
+        transform-box: fill-box;
+        transform-origin: center;
+        transform: rotate(
+                calc(
+                    var(--glyph-flip, 0deg) * var(--intent-set, 0) + var(--glyph-r) *
+                        var(--motion-weight, 1) * var(--intent, 0)
+                )
+            )
+            translate(
+                calc(var(--glyph-x) * var(--motion-weight, 1) * var(--intent, 0)),
+                calc(var(--glyph-y) * var(--motion-weight, 1) * var(--intent, 0))
+            )
+            scale(calc(1 + var(--glyph-g) * var(--motion-weight, 1) * var(--intent, 0)));
+        transition: transform var(--spring-present-duration) var(--ease-out);
+    }
+    :where([data-glyph="grow"]) {
+        --glyph-g: var(--glyph-grow, 0.13);
+    }
+    :where([data-glyph="nudge"]) {
+        --glyph-x: var(--glyph-dx, 2px);
+        --glyph-y: var(--glyph-dy, 0px);
+    }
+    :where([data-glyph="turn"]) {
+        --glyph-r: var(--glyph-turn, 15deg);
+    }
+    :where([data-glyph="draw"][pathLength="1"], [data-glyph="draw"] [pathLength="1"]) {
+        stroke-dasharray: 1 var(--glyph-gap, 0.12);
+        stroke-dashoffset: calc(
+            -1 * (1 + var(--glyph-gap, 0.12)) * (var(--intent, 0) + var(--intent-set, 0))
+        );
+        transition: stroke-dashoffset var(--duration-fast) var(--ease-standard);
+    }
+}

@@ -1,0 +1,6 @@
+{
+    "extends": "../../../tsconfig.json",
+    "compilerOptions": { "paths": { "@glass/*": ["../../../src/*"] } },
+    "vueCompilerOptions": { "checkUnknownProps": true },
+    "include": ["./ApiProbe.vue", "../../../src/composables/motion/presence/", "../../../src/testing/no-snap/", "../../../src/composables/motion/core/useReducedMotion.ts"]
+}

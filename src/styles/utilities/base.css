@@ -141,14 +141,19 @@
        thing it was rescuing, and its own mass spread over 8px was sub-edge (1.17:1)
        anyway. `--focus-ring-shadow` itself SURVIVES for its component-lane readers;
        retiring it is each lane's own act, not this one's. */
-    .focus-ring:focus-visible {
-        outline: var(--focus-ring-width) solid
-            color-mix(
-                in oklab,
-                var(--foreground) calc(var(--ink-perimeter) * 100%),
-                transparent
-            );
+    /* W-B.17 R-12: the ring is always declared, transparent at rest, and its colour
+       fades in and out. No width or offset animates. */
+    .focus-ring {
+        outline: var(--focus-ring-width) solid transparent;
         outline-offset: 2px;
+        transition: outline-color var(--duration-instant) var(--ease-standard);
+    }
+    .focus-ring:focus-visible {
+        outline-color: color-mix(
+            in oklab,
+            var(--foreground) calc(var(--ink-perimeter) * 100%),
+            transparent
+        );
     }
 
     /* ── Hairline-accent — 0.5px catch-light + under-shadow pair ──

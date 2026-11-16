@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, useId } from "vue";
+import { computed, ref, useId, watch } from "vue";
+import { follow } from "../../composables/motion/presence";
 import { Label } from "../label";
 import type { LabeledFieldProps, LabeledFieldSlotProps } from "./types";
 
@@ -28,6 +29,8 @@ const describedBy = computed(() => [
     errorMessageId.value,
 ].filter(Boolean).join(" ") || undefined);
 const required = computed(() => props.requirement === "required");
+const errorEl = ref<HTMLElement | null>(null);
+watch(() => props.invalid, () => follow(errorEl.value), { flush: "pre" });
 </script>
 
 <template>
@@ -62,9 +65,12 @@ const required = computed(() => props.requirement === "required");
                 :required="required"
             />
             <p
-                v-if="errorMessageId"
+                v-if="slots.error"
+                ref="errorEl"
                 :id="errorId"
                 class="labeled-field-error"
+                data-presence="reclaim"
+                :data-absent="!invalid || undefined"
                 :aria-live="errorLive === 'off' ? undefined : errorLive"
             >
                 <slot name="error" />
@@ -112,6 +118,12 @@ const required = computed(() => props.requirement === "required");
 
     .labeled-field-error {
         color: var(--destructive);
+    }
+
+    /* Absent, the line gives back its room and the gap before it. This rule is the
+       component's own because its `margin: 0` above outranks the shared one. */
+    .labeled-field-error[data-absent] {
+        margin-block-start: calc(-1 * var(--space-residue));
     }
 
     /* Side-by-side, the two columns are still ONE object, so they sit on the within-field

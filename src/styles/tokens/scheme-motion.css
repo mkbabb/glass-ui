@@ -94,6 +94,8 @@
        The CALM card register keeps `--duration-fast`/`--duration-normal` — a `<Card>` is
        not an interactive control. */
     --duration-control: 0.12s;
+    /* One breath clock: the Skeleton and the plate's idle and busy breath (W-B.17 R-10). */
+    --skeleton-breathe-duration: 1.1s;
     /* Base clocks stay independently tunable. The canonical `sheet-animate` reader
        multiplies its panel/fast legs by `--motion-tempo`; unrelated color and ambient
        effects may continue to consume these bases without claiming global co-scale. */

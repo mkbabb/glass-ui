@@ -53,6 +53,34 @@
         }
     }
 
+    /* W-B.17 R-9: the authorized fades of the intent pieces. Each row is a class or
+       attribute selector, so it outranks the `*` fallback above by specificity. Travel
+       needs no row: every amount multiplies `--motion-weight`, 0 under reduce. */
+    @media (prefers-reduced-motion: reduce) {
+        .plate::before {
+            transition: opacity var(--duration-instant) var(--ease-standard) !important;
+        }
+        .presence-enter-active,
+        .presence-leave-active,
+        .presence-swap-enter-active,
+        .presence-swap-leave-active {
+            transition: opacity var(--duration-instant) var(--ease-out) !important;
+        }
+        [data-presence] {
+            transition:
+                opacity var(--duration-instant) var(--ease-out),
+                visibility 0s !important;
+        }
+        [data-presence]:is([data-absent], [data-state="unchecked"]) {
+            transition:
+                opacity var(--duration-instant) var(--ease-out),
+                visibility 0s var(--duration-instant) !important;
+        }
+        .focus-ring {
+            transition: outline-color var(--duration-instant) var(--ease-standard) !important;
+        }
+    }
+
     /* ── No-transition class (for theme switches, etc.) ──────────────────────────
        The theme-flip transition-suppression storm: `useGlobalDark.toggleDark()` adds
        `.no-transition` to `<html>` for the flip's single style recalc so the page's
