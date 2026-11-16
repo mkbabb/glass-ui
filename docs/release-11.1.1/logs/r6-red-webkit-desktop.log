@@ -1,0 +1,140 @@
+
+Running 6 tests using 1 worker
+
+  ✘  1 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Tooltip leaves on the exit curve, shorter than it entered (3.9s)
+  ✘  2 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:645:9 › reverse · a Tooltip closed while it opens turns from where it is (2.6s)
+  ✘  3 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:655:9 › reverse · a Tooltip reopened while it closes turns from where it is (3.4s)
+  ✘  4 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:734:1 › tooltip · a Tooltip enters on a tween (2.0s)
+  ✘  5 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:749:5 › tooltip · a hint handed to its neighbour fades, incoming (2.7s)
+  ✘  6 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:749:5 › tooltip · a hint handed to its neighbour fades, outgoing (2.6s)
+
+
+  1) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Tooltip leaves on the exit curve, shorter than it entered 
+
+    Error: no frame takes more than a fifth of what is seen {"entrance":200,"exit":81,"painted":4,"seenShare":0.546,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.216,"travel":2,"travelShare":null,"frames":[[0,1,55],[14,1,55],[31,0.443,56],[47,0.193,57],[64,0.055,57],[81,0.003,58]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.546
+
+      387 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });
+      388 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 389 |         expect(read.seenShare, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                          ^
+      390 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+      391 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);
+      392 |         expect(read.stray, `the exit follows the exit curve ${at}`).toBeLessThanOrEqual(0.12);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:389:90
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-Tool-3332f-rve-shorter-than-it-entered-webkit-desktop/error-context.md
+
+  2) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:645:9 › reverse · a Tooltip closed while it opens turns from where it is 
+
+    Error: the second input lands mid-motion {"atTurn":1,"share":0.546,"end":0,"frames":[[-1,1],[16,1],[33,0.443],[49,0.193],[66,0.05],[82,0.004],[99,0],[116,0],[133,0],[149,0],[166,0],[183,0],[199,0],[216,0],[233,0],[248,0],[266,0],[283,0],[298,0],[316,0],[333,0],[349,0],[366,0],[383,0],[399,0],[416,0],[433,0],[449,0],[465,0],[483,0],[499,0],[516,0],[533,0],[549,0],[565,0],[583,0],[599,0],[616,0],[633,0],[649,0],[666,0],[683,0],[699,0],[716,0],[733,0]]}
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 0.96
+    Received:   1
+
+      596 |     const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 45) });
+      597 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+    > 598 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+          |                                                                    ^
+      599 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+      600 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+      601 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);
+        at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:598:68)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:651:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-1ab4d-pens-turns-from-where-it-is-webkit-desktop/error-context.md
+
+  3) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:655:9 › reverse · a Tooltip reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.205,"share":0.978,"end":1,"frames":[[-14,0.205],[5,0.05],[21,0.003],[22,0.002],[38,1],[54,1],[71,1],[88,1],[104,1],[120,1],[138,1],[154,1],[171,1],[189,1],[204,1],[221,1],[238,1],[254,1],[269,1],[288,1],[303,1],[321,1],[338,1],[353,1],[371,1],[387,1],[404,1],[420,1],[438,1],[453,1],[470,1],[488,1],[505,1],[521,1],[538,1],[554,1],[570,1],[588,1],[604,1],[621,1],[637,1],[654,1],[671,1],[688,1],[703,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.978
+
+      597 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      598 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 599 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      600 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+      601 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);
+      602 | }
+        at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:599:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:664:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-e5622-oses-turns-from-where-it-is-webkit-desktop/error-context.md
+
+  4) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:734:1 › tooltip · a Tooltip enters on a tween 
+
+    Error: more than two frames between gone and whole {"between":0,"share":0.98,"end":1,"frames":[[6,0],[21,0],[22,0],[39,1],[55,1],[71,1],[89,1],[106,1],[122,1],[139,1],[154,1],[173,1],[188,1],[206,1],[222,1],[239,1],[256,1],[272,1],[288,1],[305,1],[322,1],[338,1],[357,1],[372,1],[389,1],[406,1],[422,1],[439,1],[456,1],[473,1],[489,1],[506,1],[522,1],[539,1],[556,1],[573,1],[589,1],[605,1],[623,1],[639,1]]}
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 2
+    Received:   0
+
+      742 |     await info.attach("enter", { body: JSON.stringify(read), contentType: "application/json" });
+      743 |     expect(read.end, `it ends whole ${JSON.stringify(read)}`).toBeGreaterThan(0.95);
+    > 744 |     expect(read.between, `more than two frames between gone and whole ${JSON.stringify(read)}`).toBeGreaterThan(2);
+          |                                                                                                 ^
+      745 |     expect(read.share, `no frame carries more than a fifth ${JSON.stringify(read)}`).toBeLessThanOrEqual(0.2);
+      746 | });
+      747 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:744:97
+
+    Error Context: tests-visual/test-results/release-11-1-1-tooltip-·-a-Tooltip-enters-on-a-tween-webkit-desktop/error-context.md
+
+  5) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:749:5 › tooltip · a hint handed to its neighbour fades, incoming 
+
+    Error: more than two frames between gone and whole {"between":0,"share":0.505,"end":1,"frames":[[7,0],[24,0],[41,0],[59,0],[73,1],[92,1],[107,1],[122,1],[140,1],[159,1],[174,1],[190,1],[207,1],[223,1],[241,1],[257,1],[273,1],[289,1],[307,1],[325,1],[341,1],[360,1],[374,1],[391,1],[405,1],[418,1],[432,1],[449,1],[468,1],[484,1],[498,1],[517,1],[531,1],[550,1],[566,1],[582,1],[602,1],[617,1],[632,1],[649,1]],"states":["x-tooltip2-content:instant-open"]}
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 2
+    Received:   0
+
+      770 |         if (dir === "incoming") expect(read.end, `the neighbour's hint ends whole ${at}`).toBeGreaterThan(0.95);
+      771 |         else expect(read.end, `the hint ends gone ${at}`).toBeLessThan(0.02);
+    > 772 |         expect(read.between, `more than two frames between gone and whole ${at}`).toBeGreaterThan(2);
+          |                                                                                   ^
+      773 |         expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+      774 |     });
+      775 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:772:83
+
+    Error Context: tests-visual/test-results/release-11-1-1-tooltip-·-a-46267-ts-neighbour-fades-incoming-webkit-desktop/error-context.md
+
+  6) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:749:5 › tooltip · a hint handed to its neighbour fades, outgoing 
+
+    Error: no frame carries more than a fifth {"between":3,"share":0.408,"end":0,"frames":[[7,1],[26,1],[41,1],[58,1],[74,0.443],[91,0.193],[107,0.055],[122,0.005],[141,0],[157,0],[173,0],[191,0],[208,0],[224,0],[241,0],[257,0],[274,0],[291,0],[307,0],[325,0],[341,0],[358,0],[374,0],[391,0],[407,0],[425,0],[441,0],[457,0],[474,0],[489,0],[508,0],[523,0],[540,0],[557,0],[574,0],[591,0],[606,0],[623,0],[639,0],[658,0]],"states":["x-tooltip-content:instant-open"]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.408
+
+      771 |         else expect(read.end, `the hint ends gone ${at}`).toBeLessThan(0.02);
+      772 |         expect(read.between, `more than two frames between gone and whole ${at}`).toBeGreaterThan(2);
+    > 773 |         expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                        ^
+      774 |     });
+      775 | }
+      776 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:773:72
+
+    Error Context: tests-visual/test-results/release-11-1-1-tooltip-·-a-d62c6-ts-neighbour-fades-outgoing-webkit-desktop/error-context.md
+
+  6 failed
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Tooltip leaves on the exit curve, shorter than it entered 
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:645:9 › reverse · a Tooltip closed while it opens turns from where it is 
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:655:9 › reverse · a Tooltip reopened while it closes turns from where it is 
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:734:1 › tooltip · a Tooltip enters on a tween 
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:749:5 › tooltip · a hint handed to its neighbour fades, incoming 
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:749:5 › tooltip · a hint handed to its neighbour fades, outgoing 

@@ -1,0 +1,140 @@
+
+Running 6 tests using 1 worker
+
+  ✘  1 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Tooltip leaves on the exit curve, shorter than it entered (3.4s)
+  ✘  2 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:645:9 › reverse · a Tooltip closed while it opens turns from where it is (2.1s)
+  ✘  3 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:655:9 › reverse · a Tooltip reopened while it closes turns from where it is (3.0s)
+  ✘  4 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:734:1 › tooltip · a Tooltip enters on a tween (1.6s)
+  ✘  5 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:749:5 › tooltip · a hint handed to its neighbour fades, incoming (2.2s)
+  ✘  6 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:749:5 › tooltip · a hint handed to its neighbour fades, outgoing (2.1s)
+
+
+  1) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Tooltip leaves on the exit curve, shorter than it entered 
+
+    Error: no frame takes more than a fifth of what is seen {"entrance":200,"exit":74,"painted":8,"seenShare":0.549,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.277,"travel":3,"travelShare":null,"frames":[[0,1,55],[7,1,55],[15,0.659,56],[24,0.45,56],[32,0.3,57],[40,0.189,57],[48,0.116,57],[57,0.055,57],[65,0.02,58],[74,0.003,58]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.549
+
+      387 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });
+      388 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 389 |         expect(read.seenShare, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                          ^
+      390 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+      391 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);
+      392 |         expect(read.stray, `the exit follows the exit curve ${at}`).toBeLessThanOrEqual(0.12);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:389:90
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-Tool-3332f-rve-shorter-than-it-entered-chromium-desktop/error-context.md
+
+  2) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:645:9 › reverse · a Tooltip closed while it opens turns from where it is 
+
+    Error: the second input lands mid-motion {"atTurn":1,"share":0.467,"end":0,"frames":[[-5,1],[3,1],[12,0.661],[19,0.464],[28,0.299],[37,0.189],[45,0.11],[53,0.055],[62,0.02],[70,0.003],[78,0],[87,0],[95,0],[103,0],[112,0],[120,0],[128,0],[137,0],[145,0],[153,0],[162,0],[170,0],[178,0],[187,0],[195,0],[203,0],[212,0],[220,0],[228,0],[237,0],[245,0],[253,0],[262,0],[269,0],[278,0],[287,0],[295,0],[303,0],[312,0],[320,0],[328,0],[337,0],[345,0],[352,0],[362,0]]}
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 0.96
+    Received:   1
+
+      596 |     const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 45) });
+      597 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+    > 598 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+          |                                                                    ^
+      599 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+      600 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+      601 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);
+        at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:598:68)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:651:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-1ab4d-pens-turns-from-where-it-is-chromium-desktop/error-context.md
+
+  3) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:655:9 › reverse · a Tooltip reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.11,"share":0.978,"end":1,"frames":[[-5,0.11],[4,0.055],[12,0.02],[20,1],[29,1],[37,1],[45,1],[54,1],[62,1],[70,1],[79,1],[87,1],[95,1],[104,1],[112,1],[120,1],[129,1],[137,1],[145,1],[154,1],[162,1],[170,1],[179,1],[187,1],[195,1],[204,1],[212,1],[220,1],[228,1],[236,1],[245,1],[254,1],[262,1],[270,1],[279,1],[287,1],[295,1],[304,1],[312,1],[320,1],[328,1],[337,1],[345,1],[354,1],[362,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.978
+
+      597 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      598 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 599 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      600 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+      601 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);
+      602 | }
+        at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:599:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:664:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-e5622-oses-turns-from-where-it-is-chromium-desktop/error-context.md
+
+  4) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:734:1 › tooltip · a Tooltip enters on a tween 
+
+    Error: more than two frames between gone and whole {"between":0,"share":0.998,"end":1,"frames":[[3,0],[11,0],[20,0],[28,1],[45,1],[53,1],[61,1],[70,1],[78,1],[85,1],[94,1],[102,1],[111,1],[120,1],[128,1],[136,1],[144,1],[153,1],[161,1],[170,1],[178,1],[186,1],[195,1],[203,1],[211,1],[219,1],[228,1],[236,1],[245,1],[252,1],[261,1],[269,1],[278,1],[286,1],[295,1],[303,1],[311,1],[320,1],[328,1],[336,1]]}
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 2
+    Received:   0
+
+      742 |     await info.attach("enter", { body: JSON.stringify(read), contentType: "application/json" });
+      743 |     expect(read.end, `it ends whole ${JSON.stringify(read)}`).toBeGreaterThan(0.95);
+    > 744 |     expect(read.between, `more than two frames between gone and whole ${JSON.stringify(read)}`).toBeGreaterThan(2);
+          |                                                                                                 ^
+      745 |     expect(read.share, `no frame carries more than a fifth ${JSON.stringify(read)}`).toBeLessThanOrEqual(0.2);
+      746 | });
+      747 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:744:97
+
+    Error Context: tests-visual/test-results/release-11-1-1-tooltip-·-a-Tooltip-enters-on-a-tween-chromium-desktop/error-context.md
+
+  5) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:749:5 › tooltip · a hint handed to its neighbour fades, incoming 
+
+    Error: more than two frames between gone and whole {"between":0,"share":0.669,"end":1,"frames":[[6,0],[15,0],[23,0],[31,0],[40,1],[48,1],[56,1],[65,1],[73,1],[81,1],[90,1],[98,1],[106,1],[115,1],[123,1],[131,1],[139,1],[148,1],[156,1],[165,1],[173,1],[181,1],[190,1],[198,1],[206,1],[215,1],[223,1],[231,1],[240,1],[248,1],[256,1],[265,1],[273,1],[281,1],[290,1],[298,1],[306,1],[315,1],[323,1],[331,1]],"states":["x-tooltip2-content:instant-open"]}
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 2
+    Received:   0
+
+      770 |         if (dir === "incoming") expect(read.end, `the neighbour's hint ends whole ${at}`).toBeGreaterThan(0.95);
+      771 |         else expect(read.end, `the hint ends gone ${at}`).toBeLessThan(0.02);
+    > 772 |         expect(read.between, `more than two frames between gone and whole ${at}`).toBeGreaterThan(2);
+          |                                                                                   ^
+      773 |         expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+      774 |     });
+      775 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:772:83
+
+    Error Context: tests-visual/test-results/release-11-1-1-tooltip-·-a-46267-ts-neighbour-fades-incoming-chromium-desktop/error-context.md
+
+  6) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:749:5 › tooltip · a hint handed to its neighbour fades, outgoing 
+
+    Error: no frame carries more than a fifth {"between":7,"share":0.469,"end":0,"frames":[[4,1],[12,1],[20,1],[29,1],[37,0.66],[45,0.45],[54,0.3],[62,0.189],[70,0.11],[79,0.054],[87,0.02],[95,0.003],[104,0],[112,0],[120,0],[129,0],[137,0],[145,0],[154,0],[162,0],[170,0],[179,0],[187,0],[195,0],[204,0],[212,0],[220,0],[229,0],[237,0],[244,0],[254,0],[262,0],[270,0],[279,0],[287,0],[295,0],[304,0],[312,0],[320,0],[329,0]],"states":["x-tooltip-content:instant-open"]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.469
+
+      771 |         else expect(read.end, `the hint ends gone ${at}`).toBeLessThan(0.02);
+      772 |         expect(read.between, `more than two frames between gone and whole ${at}`).toBeGreaterThan(2);
+    > 773 |         expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                        ^
+      774 |     });
+      775 | }
+      776 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:773:72
+
+    Error Context: tests-visual/test-results/release-11-1-1-tooltip-·-a-d62c6-ts-neighbour-fades-outgoing-chromium-desktop/error-context.md
+
+  6 failed
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Tooltip leaves on the exit curve, shorter than it entered 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:645:9 › reverse · a Tooltip closed while it opens turns from where it is 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:655:9 › reverse · a Tooltip reopened while it closes turns from where it is 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:734:1 › tooltip · a Tooltip enters on a tween 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:749:5 › tooltip · a hint handed to its neighbour fades, incoming 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:749:5 › tooltip · a hint handed to its neighbour fades, outgoing 

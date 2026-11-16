@@ -1,0 +1,119 @@
+
+Running 7 tests using 1 worker
+
+  ✓  1 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:840:1 › expand · an ExpandableContainer enters on a tween (3.9s)
+  ✘  2 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:855:5 › expand · an ExpandableContainer leaves on a tween by exit (4.7s)
+  ✘  3 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:855:5 › expand · an ExpandableContainer leaves on a tween by escape (4.7s)
+  ✘  4 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:855:5 › expand · an ExpandableContainer leaves on a tween by open (4.7s)
+  ✘  5 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:878:1 › expand · an ExpandableContainer closed while it enters turns from where it is (3.8s)
+  ✘  6 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:895:1 › expand · an ExpandableContainer reopened while it leaves turns from where it is (4.8s)
+  ✓  7 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:911:1 › expand · Escape is live from the entrance's first frame (1.4s)
+
+
+  1) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:855:5 › expand · an ExpandableContainer leaves on a tween by exit 
+
+    Error: more than two frames between whole and gone {"top":1,"atTurn":1,"between":0,"share":0.998,"end":0,"frames":[[-6,1],[2,1],[11,1],[19,1],[27,0],[35,0],[44,0],[52,0],[60,0],[69,0],[77,0],[86,0],[93,0],[102,0],[110,0],[119,0],[127,0],[136,0],[144,0],[151,0],[161,0],[169,0],[177,0],[186,0],[193,0],[202,0],[211,0],[219,0],[227,0],[236,0],[244,0],[252,0],[261,0],[268,0],[277,0],[286,0],[294,0],[302,0],[311,0],[319,0]]}
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 2
+    Received:   0
+
+      871 |         const at = JSON.stringify(read);
+      872 |         expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);
+    > 873 |         expect(read.between, `more than two frames between whole and gone ${at}`).toBeGreaterThan(2);
+          |                                                                                   ^
+      874 |         expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+      875 |     });
+      876 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:873:83
+
+    Error Context: tests-visual/test-results/release-11-1-1-expand-·-an-73b18-r-leaves-on-a-tween-by-exit-chromium-desktop/error-context.md
+
+  2) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:855:5 › expand · an ExpandableContainer leaves on a tween by escape 
+
+    Error: more than two frames between whole and gone {"top":1,"atTurn":1,"between":0,"share":0.664,"end":0,"frames":[[-4,1],[4,0],[12,0],[21,0],[29,0],[37,0],[46,0],[54,0],[63,0],[71,0],[79,0],[87,0],[96,0],[104,0],[113,0],[121,0],[129,0],[138,0],[146,0],[154,0],[163,0],[171,0],[179,0],[188,0],[196,0],[204,0],[213,0],[221,0],[229,0],[238,0],[246,0],[254,0],[263,0],[271,0],[279,0],[288,0],[295,0],[304,0],[313,0],[321,0]]}
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 2
+    Received:   0
+
+      871 |         const at = JSON.stringify(read);
+      872 |         expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);
+    > 873 |         expect(read.between, `more than two frames between whole and gone ${at}`).toBeGreaterThan(2);
+          |                                                                                   ^
+      874 |         expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+      875 |     });
+      876 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:873:83
+
+    Error Context: tests-visual/test-results/release-11-1-1-expand-·-an-bf114-leaves-on-a-tween-by-escape-chromium-desktop/error-context.md
+
+  3) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:855:5 › expand · an ExpandableContainer leaves on a tween by open 
+
+    Error: more than two frames between whole and gone {"top":1,"atTurn":1,"between":0,"share":0.667,"end":0,"frames":[[-6,1],[2,0],[10,0],[19,0],[26,0],[35,0],[43,0],[52,0],[60,0],[69,0],[76,0],[85,0],[94,0],[102,0],[110,0],[118,0],[126,0],[135,0],[144,0],[152,0],[160,0],[169,0],[177,0],[185,0],[194,0],[202,0],[210,0],[219,0],[227,0],[235,0],[244,0],[252,0],[260,0],[269,0],[277,0],[285,0],[294,0],[302,0],[310,0],[319,0]]}
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 2
+    Received:   0
+
+      871 |         const at = JSON.stringify(read);
+      872 |         expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);
+    > 873 |         expect(read.between, `more than two frames between whole and gone ${at}`).toBeGreaterThan(2);
+          |                                                                                   ^
+      874 |         expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+      875 |     });
+      876 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:873:83
+
+    Error Context: tests-visual/test-results/release-11-1-1-expand-·-an-475d1-r-leaves-on-a-tween-by-open-chromium-desktop/error-context.md
+
+  4) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:878:1 › expand · an ExpandableContainer closed while it enters turns from where it is 
+
+    Error: no frame carries more than a fifth {"top":1,"atTurn":0.273,"between":2,"share":0.314,"end":0,"frames":[[-7,0.273],[1,0.328],[10,0],[18,0],[26,0],[35,0],[43,0],[51,0],[60,0],[68,0],[77,0],[85,0],[93,0],[102,0],[110,0],[118,0],[126,0],[135,0],[143,0],[152,0],[160,0],[168,0],[176,0],[185,0],[192,0],[202,0],[210,0],[218,0],[226,0],[235,0],[243,0],[251,0],[260,0],[268,0],[276,0],[285,0],[293,0],[301,0],[310,0],[318,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.314
+
+      890 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);
+      891 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);
+    > 892 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                    ^
+      893 | });
+      894 |
+      895 | test("expand · an ExpandableContainer reopened while it leaves turns from where it is", async ({ page }, info) => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:892:68
+
+    Error Context: tests-visual/test-results/release-11-1-1-expand-·-an-50e01-ters-turns-from-where-it-is-chromium-desktop/error-context.md
+
+  5) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:895:1 › expand · an ExpandableContainer reopened while it leaves turns from where it is 
+
+    Error: the reopen lands mid-exit {"top":1,"atTurn":0,"between":23,"share":0.123,"end":1,"frames":[[-2,0],[7,0],[15,0],[24,0],[31,0.007],[40,0.031],[48,0.064],[57,0.108],[65,0.158],[74,0.213],[82,0.273],[90,0.334],[99,0.395],[107,0.457],[115,0.517],[124,0.574],[132,0.627],[140,0.677],[149,0.722],[157,0.763],[165,0.8],[174,0.833],[182,0.861],[190,0.886],[199,0.907],[206,0.924],[214,0.939],[224,0.954],[232,0.984],[240,1],[249,1],[256,1],[265,1],[274,1],[282,1],[290,1],[299,1],[307,1],[315,1],[324,1]]}
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0.02
+    Received:   0
+
+      904 |     await info.attach("turn", { body: JSON.stringify(read), contentType: "application/json" });
+      905 |     const at = JSON.stringify(read);
+    > 906 |     expect(read.atTurn, `the reopen lands mid-exit ${at}`).toBeGreaterThan(0.02);
+          |                                                            ^
+      907 |     expect(read.end, `it ends whole ${at}`).toBeGreaterThan(0.95);
+      908 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+      909 | });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:906:60
+
+    Error Context: tests-visual/test-results/release-11-1-1-expand-·-an-29929-aves-turns-from-where-it-is-chromium-desktop/error-context.md
+
+  5 failed
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:855:5 › expand · an ExpandableContainer leaves on a tween by exit 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:855:5 › expand · an ExpandableContainer leaves on a tween by escape 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:855:5 › expand · an ExpandableContainer leaves on a tween by open 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:878:1 › expand · an ExpandableContainer closed while it enters turns from where it is 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:895:1 › expand · an ExpandableContainer reopened while it leaves turns from where it is 
+  2 passed (31.0s)

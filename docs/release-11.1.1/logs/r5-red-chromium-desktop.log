@@ -1,0 +1,334 @@
+
+Running 15 tests using 1 worker
+
+  ✘   1 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:642:9 › reverse · a Select closed while it opens turns from where it is (2.6s)
+  ✘   2 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:652:9 › reverse · a Select reopened while it closes turns from where it is (3.3s)
+  ✘   3 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:642:9 › reverse · a DropdownMenu closed while it opens turns from where it is (2.2s)
+  ✓   4 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:652:9 › reverse · a DropdownMenu reopened while it closes turns from where it is (3.1s)
+  ✘   5 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:642:9 › reverse · a Popover closed while it opens turns from where it is (2.2s)
+  ✘   6 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:652:9 › reverse · a Popover reopened while it closes turns from where it is (3.1s)
+  ✘   7 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:642:9 › reverse · a Toast closed while it opens turns from where it is (3.1s)
+  ✘   8 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:642:9 › reverse · a Collapsible closed while it opens turns from where it is (4.1s)
+  ✘   9 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:652:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.0s)
+  ✘  10 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:642:9 › reverse · a Accordion closed while it opens turns from where it is (4.0s)
+  ✘  11 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:652:9 › reverse · a Accordion reopened while it closes turns from where it is (4.9s)
+  ✘  12 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:672:5 › reverse · a press on a leaving Dialog's trigger reopens it from where it is (1.0m)
+  ✘  13 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:672:5 › reverse · a press on a leaving Sheet's trigger reopens it from where it is (1.0m)
+  ✘  14 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:672:5 › reverse · a press on a leaving Select's trigger reopens it from where it is (1.0m)
+  ✘  15 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:692:1 › reverse · a press on the page while a sheet leaves reaches the page (2.2s)
+
+
+  1) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:642:9 › reverse · a Select closed while it opens turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.333,"share":0.304,"end":0,"frames":[[-3,0.333],[5,1],[13,0.915],[21,0.772],[30,0.633],[38,0.534],[46,0.452],[55,0.381],[63,0.327],[72,0.277],[80,0.239],[88,0.21],[96,0.187],[105,0.171],[113,0.141],[122,0.007],[130,0],[138,0],[147,0],[155,0],[163,0],[172,0],[180,0],[188,0],[197,0],[205,0],[213,0],[222,0],[230,0],[238,0],[246,0],[255,0],[263,0],[272,0],[280,0],[288,0],[296,0],[305,0],[313,0],[322,0],[330,0],[338,0],[346,0],[354,0],[363,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.304
+
+      595 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      596 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 597 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      598 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+      599 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);
+      600 | }
+        at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:597:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:648:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-ed757-pens-turns-from-where-it-is-chromium-desktop/error-context.md
+
+  2) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:652:9 › reverse · a Select reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.451,"share":0.322,"end":0,"frames":[[-3,0.451],[5,0.381],[14,0.324],[21,0.28],[30,0],[47,0],[55,0],[64,0],[72,0],[80,0],[89,0],[97,0],[105,0],[114,0],[122,0],[130,0],[138,0],[146,0],[155,0],[164,0],[172,0],[180,0],[188,0],[196,0],[205,0],[213,0],[222,0],[230,0],[238,0],[247,0],[255,0],[264,0],[271,0],[280,0],[289,0],[297,0],[305,0],[314,0],[321,0],[330,0],[339,0],[347,0],[355,0],[364,0],[371,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.322
+
+      595 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      596 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 597 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      598 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+      599 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);
+      600 | }
+        at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:597:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:661:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-c9729-oses-turns-from-where-it-is-chromium-desktop/error-context.md
+
+  3) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:642:9 › reverse · a DropdownMenu closed while it opens turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.402,"share":0.575,"end":0,"frames":[[-3,0.402],[5,1],[13,0.978],[22,0.824],[30,0.702],[38,0.601],[47,0.519],[55,0.451],[63,0.394],[72,0.348],[80,0.31],[88,0.28],[97,0.258],[105,0.242],[113,0.203],[122,0.01],[130,0],[138,0],[147,0],[155,0],[163,0],[172,0],[180,0],[188,0],[197,0],[205,0],[213,0],[222,0],[230,0],[238,0],[247,0],[255,0],[263,0],[272,0],[280,0],[288,0],[297,0],[305,0],[313,0],[322,0],[330,0],[338,0],[347,0],[355,0],[363,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.575
+
+      595 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      596 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 597 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      598 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+      599 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);
+      600 | }
+        at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:597:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:648:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-d35a7-pens-turns-from-where-it-is-chromium-desktop/error-context.md
+
+  4) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:642:9 › reverse · a Popover closed while it opens turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.536,"share":0.294,"end":0,"frames":[[-1,0.536],[7,1],[15,0.808],[23,0.678],[32,0.558],[40,0.464],[49,0.384],[57,0.315],[65,0.255],[73,0.205],[82,0.161],[90,0.126],[98,0.093],[107,0.066],[115,0.046],[124,0.028],[131,0.016],[140,0.007],[149,0.002],[156,0],[165,0],[174,0],[182,0],[190,0],[198,0],[207,0],[215,0],[223,0],[232,0],[240,0],[249,0],[257,0],[265,0],[274,0],[282,0],[290,0],[299,0],[306,0],[315,0],[323,0],[332,0],[340,0],[349,0],[357,0],[365,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.294
+
+      595 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      596 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 597 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      598 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+      599 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);
+      600 | }
+        at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:597:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:648:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-2861f-pens-turns-from-where-it-is-chromium-desktop/error-context.md
+
+  5) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:652:9 › reverse · a Popover reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.465,"share":0.664,"end":1,"frames":[[-7,0.465],[0,0.389],[9,0.319],[18,0.255],[26,1],[34,1],[43,1],[51,1],[59,1],[68,1],[76,1],[84,1],[93,1],[101,1],[109,1],[118,1],[125,1],[134,1],[143,1],[150,1],[159,1],[167,1],[176,1],[184,1],[193,1],[201,1],[209,1],[218,1],[226,1],[234,1],[243,1],[250,1],[259,1],[268,1],[276,1],[284,1],[293,1],[301,1],[309,1],[318,1],[326,1],[334,1],[343,1],[351,1],[359,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.664
+
+      595 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      596 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 597 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      598 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+      599 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);
+      600 | }
+        at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:597:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:661:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-ebf48-oses-turns-from-where-it-is-chromium-desktop/error-context.md
+
+  6) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:642:9 › reverse · a Toast closed while it opens turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.476,"share":0.309,"end":0,"frames":[[-8,0.476],[0,0.507],[9,0.537],[17,0.565],[25,0.592],[33,0.617],[42,0.641],[50,0.664],[59,0.686],[67,0.707],[75,0.726],[84,0.745],[92,0.763],[100,0.78],[109,0.796],[117,0.812],[125,0.826],[134,0.84],[142,0.853],[150,0.865],[159,0.877],[166,0.887],[175,0.899],[184,0.908],[192,0.918],[200,0.926],[209,0.934],[217,0.942],[225,0.949],[234,0.956],[242,0.962],[250,0.967],[259,0.972],[267,0.977],[275,0.981],[284,0.985],[292,0.988],[300,0.991],[309,0.993],[317,0.995],[325,0.997],[334,0.998],[342,0.999],[350,1],[359,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.309
+
+      595 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      596 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 597 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      598 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+      599 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);
+      600 | }
+        at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:597:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:648:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-96d04-pens-turns-from-where-it-is-chromium-desktop/error-context.md
+
+  7) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:642:9 › reverse · a Collapsible closed while it opens turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.496,"share":0.368,"end":0,"frames":[[-7,0.496],[2,0.567],[10,0.631],[18,0.687],[27,1],[35,0.976],[43,0.916],[52,0.839],[60,0.754],[68,0.667],[76,0.586],[85,0.504],[93,0.433],[102,0.37],[110,0.313],[118,0.264],[126,0.226],[134,0.188],[143,0.155],[152,0.129],[160,0.107],[168,0.088],[177,0.073],[185,0.06],[193,0.049],[202,0.04],[210,0.033],[218,0.027],[227,0],[235,0],[243,0],[252,0],[260,0],[268,0],[277,0],[284,0],[293,0],[302,0],[310,0],[318,0],[327,0],[335,0],[343,0],[352,0],[360,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.368
+
+      595 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      596 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 597 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      598 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+      599 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);
+      600 | }
+        at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:597:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:648:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-b3d24-pens-turns-from-where-it-is-chromium-desktop/error-context.md
+
+  8) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:652:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.581,"share":0.502,"end":1,"frames":[[-2,0.581],[6,0.503],[15,0.432],[23,0],[32,0.025],[40,0.083],[48,0.161],[57,0.247],[64,0.328],[73,0.419],[81,0.496],[90,0.567],[98,0.631],[107,0.687],[115,0.736],[123,0.778],[131,0.814],[140,0.845],[148,0.871],[157,0.893],[165,0.912],[173,0.927],[181,0.94],[190,0.95],[198,0.959],[207,0.967],[215,0.973],[223,1],[231,1],[240,1],[248,1],[257,1],[265,1],[273,1],[281,1],[290,1],[298,1],[307,1],[315,1],[323,1],[331,1],[340,1],[348,1],[356,1],[364,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.502
+
+      595 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      596 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 597 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      598 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+      599 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);
+      600 | }
+        at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:597:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:661:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-87c79-oses-turns-from-where-it-is-chromium-desktop/error-context.md
+
+  9) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:642:9 › reverse · a Accordion closed while it opens turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.504,"share":0.423,"end":0,"frames":[[-4,0.504],[4,0.574],[12,0.633],[21,1],[29,0.976],[38,0.918],[46,0.84],[54,0.755],[63,0.667],[71,0.583],[80,0.504],[87,0.437],[96,0.37],[105,0.313],[113,0.265],[121,0.222],[130,0.186],[138,0.155],[146,0.129],[155,0.107],[163,0.088],[171,0.073],[179,0.06],[188,0.049],[196,0.04],[204,0.033],[213,0.027],[221,0.001],[229,0],[237,0],[246,0],[254,0],[263,0],[271,0],[279,0],[288,0],[295,0],[305,0],[313,0],[321,0],[329,0],[337,0],[346,0],[354,0],[363,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.423
+
+      595 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      596 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 597 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      598 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+      599 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);
+      600 | }
+        at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:597:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:648:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-5b1b6-pens-turns-from-where-it-is-chromium-desktop/error-context.md
+
+  10) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:652:9 › reverse · a Accordion reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.59,"share":0.501,"end":1,"frames":[[-1,0.59],[8,0.508],[17,0.432],[25,0],[33,0.026],[42,0.086],[50,0.163],[58,0.249],[67,0.336],[75,0.42],[83,0.498],[92,0.569],[100,0.633],[108,0.689],[117,0.737],[125,0.779],[133,0.815],[141,0.843],[150,0.872],[158,0.894],[167,0.912],[175,0.928],[183,0.94],[191,0.95],[200,0.96],[208,0.967],[217,0.973],[224,0.998],[234,1],[242,1],[250,1],[258,1],[267,1],[275,1],[283,1],[292,1],[300,1],[308,1],[317,1],[325,1],[333,1],[342,1],[350,1],[358,1],[367,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.501
+
+      595 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      596 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 597 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      598 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+      599 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);
+      600 | }
+        at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:597:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:661:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-88999-oses-turns-from-where-it-is-chromium-desktop/error-context.md
+
+  11) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:672:5 › reverse · a press on a leaving Dialog's trigger reopens it from where it is 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: it ends open {"atTurn":0.504,"share":0.135,"end":0,"frames":[[0,0.504],[8,0.433],[17,0.369],[24,0.313],[33,0.267],[41,0.221],[50,0.186],[58,0.155],[67,0.129],[75,0.107],[83,0.088],[91,0.073],[100,0.061],[108,0.049],[117,0.041],[125,0.033],[133,0.027],[142,0.022],[150,0.018],[158,0.015],[167,0.012],[175,0.01],[183,0.008],[191,0.006],[199,0.005],[208,0.004],[217,0.003],[224,0.003],[233,0.002],[242,0.002],[250,0.001],[258,0.001],[266,0],[274,0],[283,0],[292,0],[300,0],[308,0],[316,0],[325,0],[333,0],[341,0],[350,0],[358,0],[367,0]]}
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0.95
+    Received:   0
+
+      597 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+      598 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+    > 599 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);
+          |                                                 ^
+      600 | }
+      601 |
+      602 | const turns: Turn[] = [
+        at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:599:49)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:687:9
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-ff9dd-reopens-it-from-where-it-is-chromium-desktop/error-context.md
+
+  12) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:672:5 › reverse · a press on a leaving Sheet's trigger reopens it from where it is 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: it ends open {"atTurn":0.733,"share":0.118,"end":0,"frames":[[-1,0.733],[7,0.674],[15,0.614],[24,0.555],[32,0.498],[40,0.443],[49,0.389],[57,0.339],[65,0.292],[74,0.248],[82,0.208],[90,0.172],[99,0.139],[107,0.109],[115,0.083],[124,0.06],[132,0.04],[140,0.023],[149,0.008],[157,0],[165,0],[174,0],[182,0],[190,0],[199,0],[207,0],[215,0],[223,0],[231,0],[240,0],[249,0],[256,0],[265,0],[274,0],[282,0],[289,0],[299,0],[307,0],[314,0],[324,0],[332,0],[340,0],[349,0],[357,0],[365,0]]}
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0.95
+    Received:   0
+
+      597 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+      598 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+    > 599 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);
+          |                                                 ^
+      600 | }
+      601 |
+      602 | const turns: Turn[] = [
+        at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:599:49)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:687:9
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-9f4cc-reopens-it-from-where-it-is-chromium-desktop/error-context.md
+
+  13) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:672:5 › reverse · a press on a leaving Select's trigger reopens it from where it is 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.382,"share":0.381,"end":0,"frames":[[-1,0.382],[8,0],[16,0],[24,0],[33,0],[41,0],[49,0],[58,0],[66,0],[74,0],[83,0],[90,0],[99,0],[108,0],[116,0],[124,0],[132,0],[140,0],[149,0],[157,0],[165,0],[174,0],[182,0],[191,0],[199,0],[207,0],[216,0],[224,0],[232,0],[240,0],[249,0],[257,0],[266,0],[274,0],[283,0],[290,0],[299,0],[307,0],[316,0],[324,0],[332,0],[341,0],[349,0],[358,0],[366,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.381
+
+      595 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      596 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 597 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      598 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+      599 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);
+      600 | }
+        at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:597:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:687:9
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-dd297-reopens-it-from-where-it-is-chromium-desktop/error-context.md
+
+  14) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:692:1 › reverse · a press on the page while a sheet leaves reaches the page 
+
+    Error: the press reached the page
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "1"
+    Received: "0"
+
+      707 |     await page.waitForTimeout(600);
+      708 |     expect(during, "the sheet was still leaving when the press landed").toBe(1);
+    > 709 |     expect(await count.getAttribute("data-presses"), "the press reached the page").toBe("1");
+          |                                                                                    ^
+      710 | });
+      711 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:709:84
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-aba4f-eet-leaves-reaches-the-page-chromium-desktop/error-context.md
+
+  14 failed
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:642:9 › reverse · a Select closed while it opens turns from where it is 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:652:9 › reverse · a Select reopened while it closes turns from where it is 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:642:9 › reverse · a DropdownMenu closed while it opens turns from where it is 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:642:9 › reverse · a Popover closed while it opens turns from where it is 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:652:9 › reverse · a Popover reopened while it closes turns from where it is 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:642:9 › reverse · a Toast closed while it opens turns from where it is 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:642:9 › reverse · a Collapsible closed while it opens turns from where it is 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:652:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:642:9 › reverse · a Accordion closed while it opens turns from where it is 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:652:9 › reverse · a Accordion reopened while it closes turns from where it is 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:672:5 › reverse · a press on a leaving Dialog's trigger reopens it from where it is 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:672:5 › reverse · a press on a leaving Sheet's trigger reopens it from where it is 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:672:5 › reverse · a press on a leaving Select's trigger reopens it from where it is 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:692:1 › reverse · a press on the page while a sheet leaves reaches the page 
+  1 passed (3.8m)

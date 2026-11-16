@@ -1,0 +1,232 @@
+
+Running 14 tests using 1 worker
+
+  ✘   1 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:970:5 › leave · a Dialog says once that its leave has finished, after its last seen frame (2.8s)
+  ✘   2 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:999:5 › leave · a Dialog closed and reopened mid-exit says nothing (2.5s)
+  ✘   3 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:970:5 › leave · a Sheet says once that its leave has finished, after its last seen frame (2.8s)
+  ✘   4 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:999:5 › leave · a Sheet closed and reopened mid-exit says nothing (2.4s)
+  ✘   5 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:970:5 › leave · a Popover says once that its leave has finished, after its last seen frame (2.8s)
+  ✓   6 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:999:5 › leave · a Popover closed and reopened mid-exit says nothing (2.5s)
+  ✘   7 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:970:5 › leave · a DropdownMenu says once that its leave has finished, after its last seen frame (2.8s)
+  ✓   8 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:999:5 › leave · a DropdownMenu closed and reopened mid-exit says nothing (2.5s)
+  ✘   9 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:970:5 › leave · a Select says once that its leave has finished, after its last seen frame (2.7s)
+  ✘  10 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:999:5 › leave · a Select closed and reopened mid-exit says nothing (2.5s)
+  ✘  11 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:970:5 › leave · a Tooltip says once that its leave has finished, after its last seen frame (2.8s)
+  ✓  12 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:999:5 › leave · a Tooltip closed and reopened mid-exit says nothing (2.4s)
+  ✘  13 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:970:5 › leave · a Toast says once that its leave has finished, after its last seen frame (2.7s)
+  -  14 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:999:5 › leave · a Toast closed and reopened mid-exit says nothing
+
+
+  1) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:970:5 › leave · a Dialog says once that its leave has finished, after its last seen frame 
+
+    Error: one event {"events":[],"lastSeen":310,"emitted":null}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      990 |         await info.attach("leave", { body: JSON.stringify(read), contentType: "application/json" });
+      991 |         const at = JSON.stringify(read);
+    > 992 |         expect(events.length, `one event ${at}`).toBe(1);
+          |                                                  ^
+      993 |         expect(events[0].kind, `its kind ${at}`).toBe(c.kind);
+      994 |         expect(events[0].bubbles && events[0].composed, `it bubbles and is composed ${at}`).toBe(true);
+      995 |         expect(events[0].at - film.t0, `it comes at or after the last seen frame ${at}`).toBeGreaterThanOrEqual(lastSeen);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:992:50
+
+    Error Context: tests-visual/test-results/release-11-1-1-leave-·-a-D-61c17-d-after-its-last-seen-frame-chromium-desktop/error-context.md
+
+  2) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:999:5 › leave · a Dialog closed and reopened mid-exit says nothing 
+
+    Error: it is open again
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      1011 |         await page.waitForTimeout(900);
+      1012 |         const { events, emitted } = await readLeaves(page);
+    > 1013 |         expect(await page.locator(`${c.content}[data-state$="open"]`).count(), "it is open again").toBe(1);
+           |                                                                                                    ^
+      1014 |         expect(events, "no leave-finished event").toEqual([]);
+      1015 |         expect(Object.values(emitted).reduce((a, b) => a + b, 0), "no emit").toBe(0);
+      1016 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1013:100
+
+    Error Context: tests-visual/test-results/release-11-1-1-leave-·-a-D-f945c-pened-mid-exit-says-nothing-chromium-desktop/error-context.md
+
+  3) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:970:5 › leave · a Sheet says once that its leave has finished, after its last seen frame 
+
+    Error: one event {"events":[],"lastSeen":207,"emitted":null}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      990 |         await info.attach("leave", { body: JSON.stringify(read), contentType: "application/json" });
+      991 |         const at = JSON.stringify(read);
+    > 992 |         expect(events.length, `one event ${at}`).toBe(1);
+          |                                                  ^
+      993 |         expect(events[0].kind, `its kind ${at}`).toBe(c.kind);
+      994 |         expect(events[0].bubbles && events[0].composed, `it bubbles and is composed ${at}`).toBe(true);
+      995 |         expect(events[0].at - film.t0, `it comes at or after the last seen frame ${at}`).toBeGreaterThanOrEqual(lastSeen);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:992:50
+
+    Error Context: tests-visual/test-results/release-11-1-1-leave-·-a-S-cc728-d-after-its-last-seen-frame-chromium-desktop/error-context.md
+
+  4) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:999:5 › leave · a Sheet closed and reopened mid-exit says nothing 
+
+    Error: it is open again
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      1011 |         await page.waitForTimeout(900);
+      1012 |         const { events, emitted } = await readLeaves(page);
+    > 1013 |         expect(await page.locator(`${c.content}[data-state$="open"]`).count(), "it is open again").toBe(1);
+           |                                                                                                    ^
+      1014 |         expect(events, "no leave-finished event").toEqual([]);
+      1015 |         expect(Object.values(emitted).reduce((a, b) => a + b, 0), "no emit").toBe(0);
+      1016 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1013:100
+
+    Error Context: tests-visual/test-results/release-11-1-1-leave-·-a-S-b80f3-pened-mid-exit-says-nothing-chromium-desktop/error-context.md
+
+  5) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:970:5 › leave · a Popover says once that its leave has finished, after its last seen frame 
+
+    Error: one event {"events":[],"lastSeen":147,"emitted":null}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      990 |         await info.attach("leave", { body: JSON.stringify(read), contentType: "application/json" });
+      991 |         const at = JSON.stringify(read);
+    > 992 |         expect(events.length, `one event ${at}`).toBe(1);
+          |                                                  ^
+      993 |         expect(events[0].kind, `its kind ${at}`).toBe(c.kind);
+      994 |         expect(events[0].bubbles && events[0].composed, `it bubbles and is composed ${at}`).toBe(true);
+      995 |         expect(events[0].at - film.t0, `it comes at or after the last seen frame ${at}`).toBeGreaterThanOrEqual(lastSeen);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:992:50
+
+    Error Context: tests-visual/test-results/release-11-1-1-leave-·-a-P-8f2d5-d-after-its-last-seen-frame-chromium-desktop/error-context.md
+
+  6) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:970:5 › leave · a DropdownMenu says once that its leave has finished, after its last seen frame 
+
+    Error: one event {"events":[],"lastSeen":118,"emitted":null}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      990 |         await info.attach("leave", { body: JSON.stringify(read), contentType: "application/json" });
+      991 |         const at = JSON.stringify(read);
+    > 992 |         expect(events.length, `one event ${at}`).toBe(1);
+          |                                                  ^
+      993 |         expect(events[0].kind, `its kind ${at}`).toBe(c.kind);
+      994 |         expect(events[0].bubbles && events[0].composed, `it bubbles and is composed ${at}`).toBe(true);
+      995 |         expect(events[0].at - film.t0, `it comes at or after the last seen frame ${at}`).toBeGreaterThanOrEqual(lastSeen);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:992:50
+
+    Error Context: tests-visual/test-results/release-11-1-1-leave-·-a-D-81c57-d-after-its-last-seen-frame-chromium-desktop/error-context.md
+
+  7) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:970:5 › leave · a Select says once that its leave has finished, after its last seen frame 
+
+    Error: one event {"events":[],"lastSeen":122,"emitted":null}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      990 |         await info.attach("leave", { body: JSON.stringify(read), contentType: "application/json" });
+      991 |         const at = JSON.stringify(read);
+    > 992 |         expect(events.length, `one event ${at}`).toBe(1);
+          |                                                  ^
+      993 |         expect(events[0].kind, `its kind ${at}`).toBe(c.kind);
+      994 |         expect(events[0].bubbles && events[0].composed, `it bubbles and is composed ${at}`).toBe(true);
+      995 |         expect(events[0].at - film.t0, `it comes at or after the last seen frame ${at}`).toBeGreaterThanOrEqual(lastSeen);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:992:50
+
+    Error Context: tests-visual/test-results/release-11-1-1-leave-·-a-S-a0a11-d-after-its-last-seen-frame-chromium-desktop/error-context.md
+
+  8) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:999:5 › leave · a Select closed and reopened mid-exit says nothing 
+
+    Error: it is open again
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      1011 |         await page.waitForTimeout(900);
+      1012 |         const { events, emitted } = await readLeaves(page);
+    > 1013 |         expect(await page.locator(`${c.content}[data-state$="open"]`).count(), "it is open again").toBe(1);
+           |                                                                                                    ^
+      1014 |         expect(events, "no leave-finished event").toEqual([]);
+      1015 |         expect(Object.values(emitted).reduce((a, b) => a + b, 0), "no emit").toBe(0);
+      1016 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1013:100
+
+    Error Context: tests-visual/test-results/release-11-1-1-leave-·-a-S-9d71c-pened-mid-exit-says-nothing-chromium-desktop/error-context.md
+
+  9) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:970:5 › leave · a Tooltip says once that its leave has finished, after its last seen frame 
+
+    Error: one event {"events":[],"lastSeen":69,"emitted":null}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      990 |         await info.attach("leave", { body: JSON.stringify(read), contentType: "application/json" });
+      991 |         const at = JSON.stringify(read);
+    > 992 |         expect(events.length, `one event ${at}`).toBe(1);
+          |                                                  ^
+      993 |         expect(events[0].kind, `its kind ${at}`).toBe(c.kind);
+      994 |         expect(events[0].bubbles && events[0].composed, `it bubbles and is composed ${at}`).toBe(true);
+      995 |         expect(events[0].at - film.t0, `it comes at or after the last seen frame ${at}`).toBeGreaterThanOrEqual(lastSeen);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:992:50
+
+    Error Context: tests-visual/test-results/release-11-1-1-leave-·-a-T-10ce7-d-after-its-last-seen-frame-chromium-desktop/error-context.md
+
+  10) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:970:5 › leave · a Toast says once that its leave has finished, after its last seen frame 
+
+    Error: one event {"events":[],"lastSeen":267,"emitted":null}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      990 |         await info.attach("leave", { body: JSON.stringify(read), contentType: "application/json" });
+      991 |         const at = JSON.stringify(read);
+    > 992 |         expect(events.length, `one event ${at}`).toBe(1);
+          |                                                  ^
+      993 |         expect(events[0].kind, `its kind ${at}`).toBe(c.kind);
+      994 |         expect(events[0].bubbles && events[0].composed, `it bubbles and is composed ${at}`).toBe(true);
+      995 |         expect(events[0].at - film.t0, `it comes at or after the last seen frame ${at}`).toBeGreaterThanOrEqual(lastSeen);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:992:50
+
+    Error Context: tests-visual/test-results/release-11-1-1-leave-·-a-T-faac0-d-after-its-last-seen-frame-chromium-desktop/error-context.md
+
+  10 failed
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:970:5 › leave · a Dialog says once that its leave has finished, after its last seen frame 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:999:5 › leave · a Dialog closed and reopened mid-exit says nothing 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:970:5 › leave · a Sheet says once that its leave has finished, after its last seen frame 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:999:5 › leave · a Sheet closed and reopened mid-exit says nothing 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:970:5 › leave · a Popover says once that its leave has finished, after its last seen frame 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:970:5 › leave · a DropdownMenu says once that its leave has finished, after its last seen frame 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:970:5 › leave · a Select says once that its leave has finished, after its last seen frame 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:999:5 › leave · a Select closed and reopened mid-exit says nothing 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:970:5 › leave · a Tooltip says once that its leave has finished, after its last seen frame 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:970:5 › leave · a Toast says once that its leave has finished, after its last seen frame 
+  1 skipped
+  3 passed (38.8s)
