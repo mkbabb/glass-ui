@@ -17,7 +17,7 @@
 //          Playwright WebKit paints no backdrop blur, so there the material is read from
 //          computed style and the contrast is recorded, not judged
 import { expect, test, type Page } from "@playwright/test";
-import { exitOf, isPhone, markFilm, press, pressOn, startFilm, stopFilm, type Film } from "./release-11-1-1/film";
+import { exitOf, isPhone, markFilm, press, pressOn, startFilm, stopFilm, worstFrameShare, type Film, type Frame } from "./release-11-1-1/film";
 
 const HARNESS = "/tests-visual/release-11-1-1/exits-harness.html";
 
@@ -253,5 +253,142 @@ for (const c of glassCases) {
         const plate = await readPlate(page, c.content);
         expect(plate.bf).toBe("none");
         expect(plate.alpha).toBe(1);
+    });
+}
+
+// ── exit ───────────────────────────────────────────────────────────────────────────
+const exitCases = [
+    { name: "Select", trigger: '[data-testid="x-select"]', content: '[data-testid="x-select-content"]' },
+    { name: "DropdownMenu", trigger: '[data-testid="x-menu"]', content: '[data-testid="x-menu-content"]' },
+    { name: "Popover", trigger: '[data-testid="x-popover"]', content: '[data-testid="x-popover-content"]' },
+    { name: "Tooltip", trigger: '[data-testid="x-tooltip"]', content: '[data-testid="x-tooltip-content"]', hover: true },
+    { name: "Dialog", trigger: '[data-testid="x-dialog"]', content: '[data-testid="x-dialog-content"]' },
+    { name: "Sheet right", trigger: '[data-testid="x-sheet-right"]', content: '[data-testid="x-sheet-right-content"]' },
+    { name: "Sheet bottom", trigger: '[data-testid="x-sheet-bottom"]', content: '[data-testid="x-sheet-bottom-content"]' },
+];
+
+/** The one exit curve, `cubic-bezier(0.3, 0.2, 0.7, 0.8)`, as a function of progress. */
+const CURVE = (k: number): number => {
+    const at = (a: number, b: number, t: number) => 3 * (1 - t) ** 2 * t * a + 3 * (1 - t) * t * t * b + t ** 3;
+    let lo = 0;
+    let hi = 1;
+    for (let i = 0; i < 30; i++) {
+        const mid = (lo + hi) / 2;
+        if (at(0.3, 0.7, mid) < k) lo = mid;
+        else hi = mid;
+    }
+    return at(0.2, 0.8, (lo + hi) / 2);
+};
+
+function curveStray(samples: [number, number][], from: number, exitMs: number, ease: (k: number) => number): number {
+    const t0 = samples[0][0];
+    let best = Infinity;
+    for (let o = 0; o <= 40; o += 2) {
+        let worst = 0;
+        for (const [t, v] of samples) {
+            const k = Math.min(1, Math.max(0, (t - t0 - o) / Math.max(1, exitMs - o)));
+            worst = Math.max(worst, Math.abs(1 - v / from - ease(k)));
+        }
+        best = Math.min(best, worst);
+    }
+    return best;
+}
+
+const settledAt = (frames: Frame[], mark: number): number => {
+    const live = frames.filter((f) => f.t >= mark && f.present);
+    const last = live[live.length - 1];
+    let end = mark;
+    for (const f of live) {
+        const moved =
+            Math.abs((f.op ?? 0) - (last.op ?? 0)) > 0.01 ||
+            Math.abs(f.x! - last.x!) > 0.5 ||
+            Math.abs(f.y! - last.y!) > 0.5 ||
+            Math.abs(f.w! - last.w!) > 0.5 ||
+            f.anim;
+        if (moved) end = f.t;
+    }
+    return end - mark;
+};
+
+for (const c of exitCases) {
+    test(`exit · ${c.name} leaves on the exit curve, shorter than it entered`, async ({ page }, info) => {
+        const project = info.project.name;
+        test.skip(Boolean(c.hover) && isPhone(project), "a Tooltip does not open on touch");
+        await openHarness(page);
+        await startFilm(page, c.content);
+        await markFilm(page);
+        if (c.hover) await page.locator(c.trigger).hover();
+        else await pressOn(page, project, c.trigger);
+        const enter = await stopFilm(page, 1400);
+        // The entrance is what the surface paints, or for a surface that paints none
+        // yet (the Tooltip appears whole), the clock its open state declares.
+        const declared = await page.evaluate((sel) => {
+            const cs = getComputedStyle(document.querySelector(sel)!);
+            const sec = (v: string) => Math.max(...v.split(",").map((d) => (d.trim().endsWith("ms") ? parseFloat(d) : parseFloat(d) * 1000)));
+            return Math.max(sec(cs.transitionDuration), sec(cs.animationDuration));
+        }, c.content);
+        const entrance = Math.max(settledAt(enter.frames, enter.mark), declared);
+
+        await startFilm(page, c.content);
+        await markFilm(page);
+        await page.keyboard.press("Escape");
+        const film = await stopFilm(page, 1200);
+        const { rest } = exitOf(film);
+        const vw = page.viewportSize()!;
+        const after = film.frames.filter((f) => f.t >= film.mark);
+        // What the reader sees of the surface: its opacity times the share of its box on
+        // screen, so a fade and a slide off the edge read on one scale.
+        const seen = (f: Frame) => {
+            if (!f.present || !f.w || !f.h) return 0;
+            const w = Math.max(0, Math.min(f.x! + f.w, vw.width) - Math.max(f.x!, 0));
+            const h = Math.max(0, Math.min(f.y! + f.h, vw.height) - Math.max(f.y!, 0));
+            return (f.op ?? 0) * ((w * h) / (f.w * f.h));
+        };
+        const goneIdx = after.findIndex((f) => seen(f) <= 0.01);
+        expect(goneIdx, "the surface leaves inside the film").toBeGreaterThan(-1);
+        const leaving = [{ ...rest, t: film.mark }, ...after.slice(0, goneIdx + 1)];
+        const exitMs = after[goneIdx].t - film.mark;
+        const visible: [number, number][] = leaving.map((f) => [f.t, seen(f)]);
+        const dx = Math.abs(leaving[leaving.length - 2].x! - rest.x!);
+        const dy = Math.abs(leaving[leaving.length - 2].y! - rest.y!);
+        const axis = dx >= dy ? "x" : "y";
+        const travel = Math.max(dx, dy);
+        const geometry: [number, number][] = leaving
+            .filter((f) => f.present)
+            .map((f) => [f.t, axis === "x" ? f.x! : f.y!]);
+        const painted = after.slice(0, goneIdx).filter((f) => seen(f) > 0.01).length;
+        // How far the exit's progress strays from the exit curve, at the best start
+        // within 40 ms of the key press (the input's own latency).
+        const curve = await page.evaluate(() => {
+            const probe = document.createElement("div");
+            probe.style.transitionTimingFunction = "var(--exit-curve)";
+            document.body.appendChild(probe);
+            const v = getComputedStyle(probe).transitionTimingFunction;
+            probe.remove();
+            return v;
+        });
+        // A surface that fades is read by its opacity, one that only slides by what is
+        // left of it on screen.
+        const fades = (rest.op ?? 0) - Math.min(...leaving.filter((f) => f.present).map((f) => f.op ?? 0)) > 0.5;
+        const channel: [number, number][] = fades ? leaving.map((f) => [f.t, f.present ? (f.op ?? 0) : 0]) : visible;
+        const stray = curveStray(channel, fades ? (rest.op ?? 1) : seen(rest), exitMs, CURVE);
+        const read = {
+            entrance: Math.round(entrance),
+            exit: Math.round(exitMs),
+            painted,
+            seenShare: +worstFrameShare(visible, seen(rest)).toFixed(3),
+            curve,
+            stray: +stray.toFixed(3),
+            travel: Math.round(travel),
+            travelShare: travel >= 16 ? +worstFrameShare(geometry, travel).toFixed(3) : null,
+            frames: leaving.map((f) => [Math.round(f.t - film.mark), +seen(f).toFixed(3), f.present ? Math.round(axis === "x" ? f.x! : f.y!) : null]),
+        };
+        await info.attach("exit", { body: JSON.stringify(read), contentType: "application/json" });
+        const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });
+        expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+        expect(read.seenShare, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+        if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+        expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);
+        expect(read.stray, `the exit follows the exit curve ${at}`).toBeLessThanOrEqual(0.12);
     });
 }

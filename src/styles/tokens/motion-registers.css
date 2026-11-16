@@ -46,9 +46,9 @@
    row's own settle — `--spring-<row>-exit-duration`, generated beside the entry
    clock — never a shared literal in seconds. One flat number served every overlay
    before this, and it was wrong in both directions: it dragged a press and clipped
-   a deploy. The CURVE stays the no-overshoot `--ease-out`: a closing surface must
-   never overshoot past gone. The `.glass-reveal` exit reads `--exit-overlay-
-   duration`.
+   a deploy. The CURVE is `--exit-curve`: no overshoot, so a closing surface never
+   passes gone, and no front-load, so no frame takes more than a fifth of it. The
+   `.glass-reveal` exit reads `--exit-overlay-duration`.
 
    ── press / morph / cascade — NAMES over shipped recipes (zero paint change) ──
    These names point at their existing source tokens; no unused alias is minted:
@@ -145,8 +145,11 @@
        enters on, so it stays proportionate to that arrival and states no figure of
        its own. */
     --exit-overlay-duration: var(--spring-panel-exit-duration);
-    /* The exit curve — no-overshoot ease-out; never overshoot past gone. */
-    --exit-curve: var(--ease-out);
+    /* The exit curve. No overshoot, so it never passes gone, and no front-load: its
+       steepest stretch carries less than a fifth of the travel in one 60 Hz frame on the
+       shortest exit clock the table can emit (0.12s), so every exit stays visible to its
+       last frame. */
+    --exit-curve: cubic-bezier(0.3, 0.2, 0.7, 0.8);
 
     /* ── THE ENGAGEMENT ENVELOPES — the LIGHT channel's clocks ──────────────────
        The CSS projection of `composables/motion/engage/engageEnvelopes.ts`, one pair

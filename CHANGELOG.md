@@ -19,6 +19,15 @@ A patch on 11.1.0 about how surfaces leave. Nothing is removed or renamed.
   carried `data-surface="opaque"`, so a stylesheet that targeted the old attribute on
   these two surfaces should target the new one.
 
+- **Surfaces leave on one curve you can see.** Menus, selects, popovers and tooltips
+  lost a third of their light in the first frame and were gone in about 70 ms. Every
+  floating surface now fades across its whole exit on one gentle curve, and no single
+  frame takes more than a fifth of it. Menus and selects take about 220 ms to leave,
+  popovers 250 ms and tooltips 120 ms, each shorter than its entrance. `Dialog` and
+  `Sheet` close on the same curve, faster than they open (a dialog in about 120 ms, a
+  sheet in 250 ms), where a dialog used to take as long to close as to open. The
+  `--exit-curve` token carries the new curve.
+
 ## 11.1.0 — 2026-11-15
 
 A minor release. No API changes shape, so your code keeps working as it is. Two

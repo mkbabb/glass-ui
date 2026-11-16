@@ -1,6 +1,7 @@
 // Every surface the exits witnesses close, on a busy ground. A GlassDock at the top
 // seats a Select (its open state driven by `v-model:open`, as value.js's pages dropdown
-// drives it) and a DropdownMenu. Imports are relative to `src/`, so the file mounts
+// drives it) and a DropdownMenu; below it a row of triggers opens a Popover, a Tooltip,
+// a Dialog and a right and a bottom Sheet. Imports are relative to `src/`, so the file mounts
 // unchanged on an older tree.
 import "../../demo/demo.css";
 import { createApp, h, ref } from "vue";
@@ -15,6 +16,18 @@ import SelectValue from "../../src/components/select/SelectValue.vue";
 import DropdownMenu from "../../src/components/menu/DropdownMenu.vue";
 import DropdownMenuContent from "../../src/components/menu/DropdownMenuContent.vue";
 import DropdownMenuItem from "../../src/components/menu/DropdownMenuItem.vue";
+import Popover from "../../src/components/popover/Popover.vue";
+import PopoverContent from "../../src/components/popover/PopoverContent.vue";
+import PopoverTrigger from "../../src/components/popover/PopoverTrigger.vue";
+import Tooltip from "../../src/components/tooltip/Tooltip.vue";
+import TooltipContent from "../../src/components/tooltip/TooltipContent.vue";
+import TooltipTrigger from "../../src/components/tooltip/TooltipTrigger.vue";
+import TooltipProvider from "../../src/components/tooltip/TooltipProvider.vue";
+import Dialog from "../../src/components/dialog/Dialog.vue";
+import DialogContent from "../../src/components/dialog/DialogContent.vue";
+import DialogTitle from "../../src/components/dialog/DialogTitle.vue";
+import SheetContent from "../../src/components/sheet/SheetContent.vue";
+import { DialogTrigger } from "reka-ui";
 
 const params = new URLSearchParams(location.search);
 if (params.get("scheme") === "dark") document.documentElement.classList.add("dark");
@@ -33,7 +46,7 @@ const open = ref(false);
 
 createApp({
     setup: () => () =>
-        h("div", { style: "padding:16px 8px 900px;display:flex;justify-content:center" }, [
+        h("div", { style: "padding:16px 8px 900px;display:flex;flex-direction:column;align-items:center;gap:24px" }, [
             h(
                 GlassDock,
                 { collapse: false, "aria-label": "Exits" },
@@ -69,6 +82,28 @@ createApp({
                     ],
                 },
             ),
+            h("div", { style: "display:flex;flex-wrap:wrap;gap:8px;justify-content:center" }, [
+                h(Popover, null, () => [
+                    h(PopoverTrigger, { "data-testid": "x-popover", style: "padding:10px 14px;background:#fff;color:#000;border-radius:8px;font:14px sans-serif" }, () => "Popover"),
+                    h(PopoverContent, { class: "w-56", "data-testid": "x-popover-content" }, () => h("p", "A popover.")),
+                ]),
+                h(TooltipProvider, null, () => h(Tooltip, { delayDuration: 0 }, {
+                    default: () => [
+                        h(TooltipTrigger, { "data-testid": "x-tooltip", style: "padding:10px 14px;background:#fff;color:#000;border-radius:8px;font:14px sans-serif" }, () => "Tooltip"),
+                        h(TooltipContent, { "data-testid": "x-tooltip-content" }, () => "A hint"),
+                    ],
+                })),
+                h(Dialog, null, () => [
+                    h(DialogTrigger, { "data-testid": "x-dialog", style: "padding:10px 14px;background:#fff;color:#000;border-radius:8px;font:14px sans-serif" }, () => "Dialog"),
+                    h(DialogContent, { "data-testid": "x-dialog-content" }, () => [h(DialogTitle, () => "A dialog"), h("p", "Its body.")]),
+                ]),
+                ...(["right", "bottom"] as const).map((side) =>
+                    h(Dialog, null, () => [
+                        h(DialogTrigger, { "data-testid": `x-sheet-${side}`, style: "padding:10px 14px;background:#fff;color:#000;border-radius:8px;font:14px sans-serif" }, () => `Sheet ${side}`),
+                        h(SheetContent, { side, "data-testid": `x-sheet-${side}-content` }, () => [h(DialogTitle, () => "A sheet"), h("p", "Its body.")]),
+                    ]),
+                ),
+            ]),
         ]),
 }).mount("#app");
 document.body.dataset.ready = "1";

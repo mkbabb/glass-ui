@@ -16,6 +16,9 @@ export type Frame = {
     surface?: string | null;
     bf?: string;
     bg?: string;
+    /** A CSS animation or transition is running on the surface. */
+    anim?: boolean;
+    clip?: string;
 };
 
 export type Film = { mark: number; frames: Frame[] };
@@ -35,8 +38,10 @@ export async function startFilm(page: Page, selector: string): Promise<void> {
             }
             return o;
         };
-        const tick = () => {
-            const t = performance.now() - t0;
+        // Each sample is stamped with its frame's own time, the time the engine paints it
+        // for, so a late callback does not stretch or squeeze the frame it reads.
+        const tick = (frameTime: number) => {
+            const t = frameTime - t0;
             const el = document.querySelector(selector);
             if (!el) film.frames.push({ t, present: false });
             else {
@@ -55,6 +60,8 @@ export async function startFilm(page: Page, selector: string): Promise<void> {
                     surface: el.getAttribute("data-surface"),
                     bf: cs.backdropFilter || (cs as unknown as { webkitBackdropFilter?: string }).webkitBackdropFilter || "",
                     bg: cs.backgroundColor,
+                    anim: el.getAnimations().some((a) => a.playState === "running"),
+                    clip: cs.clipPath,
                 });
             }
             if (!film.stop) requestAnimationFrame(tick);
@@ -89,6 +96,24 @@ export function exitOf(film: Film): { rest: Frame; exit: Frame[]; gone: boolean 
     const exit = after.filter((f) => f.present && (f.op ?? 0) > 0.01);
     const gone = after.length > 0 && !after[after.length - 1].present;
     return { rest, exit, gone };
+}
+
+/** The largest share of a channel's travel that one frame at 60 Hz carries, over a list
+ *  of [ms, value] samples (a sample after the surface is gone reads 0). Each sample is
+ *  compared with the first one at least a frame later and the change is scaled to one
+ *  frame, so an engine's uneven callback times do not read as steps; a removal still
+ *  reads whole, since it lands within a frame or two of the last painted value. */
+export function worstFrameShare(samples: [number, number][], travel: number): number {
+    if (travel <= 0) return 0;
+    const frame = 1000 / 60;
+    let worst = 0;
+    for (let i = 0; i < samples.length - 1; i++) {
+        let j = i + 1;
+        while (j + 1 < samples.length && samples[j][0] - samples[i][0] < frame) j++;
+        const dt = Math.max(frame, samples[j][0] - samples[i][0]);
+        worst = Math.max(worst, (Math.abs(samples[j][1] - samples[i][1]) / travel) * (frame / dt));
+    }
+    return worst;
 }
 
 export const isPhone = (project: string) => project.endsWith("-phone");

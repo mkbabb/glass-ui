@@ -50,7 +50,7 @@
         --reveal-clock: var(--enter-overlay-clock);
         /* The named exit register: 0.6 × the ENTRY of the same job (bounded to a
            legible band by the generator's clamp), derived from the entering row's own
-           settle, on the no-overshoot ease-out. It owns a token instead of retuning
+           settle, on `--exit-curve`. It owns a token instead of retuning
            shared --duration-fast, and it is a RATIO, so it can never drift out of
            proportion with the entrance it reverses. Each `data-reveal` register binds
            its OWN row's reader below — a recede never outlasts its arrival. */
@@ -110,9 +110,9 @@
     .glass-reveal[data-reveal="menu"] {
         --reveal-spring: var(--enter-menu-spring);
         --reveal-clock: var(--enter-menu-clock);
-        /* The exit reader of the row this register ENTERS on — the ratio law below
-           binds each register to its OWN entering row, not to the overlay's. */
-        --reveal-exit-clock: var(--spring-present-exit-duration);
+        /* The exit reader of the row this register ENTERS on: the menu grows on the
+           `bloom` row (`glass-menu-grow` below), so it recedes on bloom's exit. */
+        --reveal-exit-clock: var(--spring-bloom-exit-duration);
         --glass-reveal-enter-scale: 1;
         --lq-stretch-x: 1;
         --lq-stretch-y: 1;
@@ -166,7 +166,7 @@
     }
 
     /* CLOSED — both the resting CLOSED snapshot AND the EXIT leg. The exit reads
-       `--ease-out` (a bezier, NO overshoot — a closing surface must never overshoot
+       `--exit-curve` (a bezier, NO overshoot — a closing surface must never overshoot
        past gone); NO `--spring-*` token on the
        exit. The exit is faster + un-sprung — the surface recedes cleanly. */
     .glass-reveal[data-state="closed"] {
@@ -195,12 +195,11 @@
            none` AND the enter being a TRANSITION (so the mounted-state animationName is
            `none` ≠ the closed `glass-reveal-out` → reka's `isAnimating` is true), reka
            dispatches ANIMATION_OUT and the exit paints its full ≥4-frame recede. The
-           clock is the no-overshoot `--ease-out`. Scale, opacity, and filter keep the
+           curve is `--exit-curve`. Scale, opacity, and filter keep the
            exit compositor-only. It rides the named exit register
            (`--reveal-exit-clock`), which each `data-reveal` variant binds to the exit
            reader of ITS OWN entering row — so no register's recede can outlast the
-           arrival it reverses — on the no-overshoot `--reveal-exit-curve`
-           (= `--ease-out`). */
+           arrival it reverses — on the no-overshoot `--reveal-exit-curve`. */
         animation: glass-reveal-out var(--reveal-exit-clock) var(--reveal-exit-curve) both;
         /* The side-popover `translate` slide-out stays a TRANSITION — a DIFFERENT
            property, so it coexists with the scale/opacity/filter animation (no cascade
@@ -273,7 +272,7 @@
        whole plate, on the `bloom` spring (animations.css `glass-menu-grow`). The rows
        are at their final size from the first frame and only the plate's far edge
        travels. There is no blur and no fade in: opacity is 1 from the first frame. On
-       close the clip runs back into the strip and the plate cuts at the last tenth. */
+       close the clip runs back into the strip as the plate fades, on the exit clock. */
     .glass-reveal[data-reveal="menu"] {
         --menu-grow-bleed: 2rem;
     }
