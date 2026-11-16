@@ -51,6 +51,13 @@ A patch on 11.1.0 about how surfaces leave. Nothing is removed or renamed.
   and out on one even curve, and on a hand-off the outgoing hint fades as the incoming
   one arrives.
 
+- **`ExpandableContainer` leaves the way it came.** Collapsing it swapped the fullscreen
+  overlay for the in-page box in one frame, and its dim arrived the same way. The panel
+  now shrinks and fades back out as the dim fades, and the content returns to its place
+  only when that has finished. Closing it during its entrance, or reopening it during
+  its exit, turns it from where it is; Escape works from the entrance's first frame, and
+  a leaving overlay lets presses through to the page.
+
 ## 11.1.0 — 2026-11-15
 
 A minor release. No API changes shape, so your code keeps working as it is. Two

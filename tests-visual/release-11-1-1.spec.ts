@@ -773,3 +773,157 @@ for (const dir of ["incoming", "outgoing"] as const) {
         expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
     });
 }
+
+// ── expand ─────────────────────────────────────────────────────────────────────────
+//   expand  an ExpandableContainer's overlay (its panel, while the root holds the
+//           fullscreen placement) enters and leaves on a tween, by its Exit button, by
+//           Escape and by its open state; it turns from where it stands when reversed;
+//           and Escape is live from the entrance's first frame. What is seen is the
+//           panel's opacity times its share of the viewport, counted only while the
+//           root is the fullscreen overlay, so the subtree's return to its place in the
+//           page is not read as the overlay.
+
+const EXPAND = '[data-testid="x-expand"]';
+const PANEL = `${EXPAND}[data-state="expanded"] > [data-part="panel"]`;
+
+function overlayChannel(vw: { width: number; height: number }): Channel {
+    return (f) => {
+        if (!f.present || !f.also || !f.w || !f.h) return 0;
+        const w = Math.max(0, Math.min(f.x! + f.w, vw.width) - Math.max(f.x!, 0));
+        const h = Math.max(0, Math.min(f.y! + f.h, vw.height) - Math.max(f.y!, 0));
+        return (f.op ?? 0) * Math.min(1, (w * h) / (vw.width * vw.height));
+    };
+}
+
+async function filmExpand(page: Page, act: () => Promise<void>, turn?: { wait: number; act: () => Promise<void> }): Promise<Film> {
+    await startFilm(page, `${EXPAND} > [data-part="panel"]`, `${EXPAND}[data-state="expanded"]`);
+    await markFilm(page);
+    await act();
+    if (turn) {
+        await page.waitForTimeout(turn.wait);
+        await markTurn(page);
+        await turn.act();
+    }
+    return stopFilm(page, 1200);
+}
+
+/** What is seen of the overlay at rest, open: read by opening it, then closing it. */
+async function overlayFull(page: Page, project: string): Promise<number> {
+    await pressOn(page, project, `${EXPAND} [data-mode="expand"]`);
+    await page.waitForTimeout(900);
+    const vw = page.viewportSize()!;
+    const box = (await page.locator(PANEL).boundingBox())!;
+    await page.keyboard.press("Escape");
+    await page.waitForTimeout(900);
+    const w = Math.max(0, Math.min(box.x + box.width, vw.width) - Math.max(box.x, 0));
+    const h = Math.max(0, Math.min(box.y + box.height, vw.height) - Math.max(box.y, 0));
+    return (w * h) / (vw.width * vw.height);
+}
+
+function judgeOverlay(film: Film, vw: { width: number; height: number }, from: number, full: number) {
+    const ch = overlayChannel(vw);
+    const before = film.frames.filter((f) => f.t < from);
+    const series: [number, number][] = [before[before.length - 1], ...film.frames.filter((f) => f.t >= from)].map((f) => [f.t, ch(f) / full]);
+    const top = 1;
+    return {
+        top: +top.toFixed(3),
+        atTurn: +series[0][1].toFixed(3),
+        between: series.filter(([, v]) => v > 0.02 && v < 0.98).length,
+        share: +worstFrameShare(series, 1).toFixed(3),
+        end: +series[series.length - 1][1].toFixed(3),
+        frames: series.map(([t, v]) => [Math.round(t - from), +v.toFixed(3)]).slice(0, 40),
+    };
+}
+
+const toggle = (project: string) => (page: Page) => pressOn(page, project, '[data-testid="x-expand-toggle"]');
+
+test("expand · an ExpandableContainer enters on a tween", async ({ page }, info) => {
+    const project = info.project.name;
+    await openHarness(page);
+    await page.locator(EXPAND).scrollIntoViewIfNeeded();
+    const full = await overlayFull(page, project);
+    const film = await filmExpand(page, () => pressOn(page, project, `${EXPAND} [data-mode="expand"]`));
+    const read = judgeOverlay(film, page.viewportSize()!, film.mark, full);
+    await info.attach("enter", { body: JSON.stringify(read), contentType: "application/json" });
+    const at = JSON.stringify(read);
+    expect(read.end, `it ends whole ${at}`).toBeGreaterThan(0.95);
+    expect(read.between, `more than two frames between gone and whole ${at}`).toBeGreaterThan(2);
+    expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+});
+
+for (const route of ["exit", "escape", "open"] as const) {
+    test(`expand · an ExpandableContainer leaves on a tween by ${route}`, async ({ page }, info) => {
+        const project = info.project.name;
+        await openHarness(page);
+        await page.locator(EXPAND).scrollIntoViewIfNeeded();
+        const full = await overlayFull(page, project);
+        await pressOn(page, project, `${EXPAND} [data-mode="expand"]`);
+        await page.waitForTimeout(900);
+        const act =
+            route === "exit"
+                ? () => pressOn(page, project, `${EXPAND} [data-mode="collapse"]`)
+                : route === "escape"
+                  ? () => page.keyboard.press("Escape")
+                  : () => page.evaluate(() => (document.querySelector('[data-testid="x-expand-toggle"]') as HTMLElement).click());
+        const film = await filmExpand(page, act);
+        const read = judgeOverlay(film, page.viewportSize()!, film.mark, full);
+        await info.attach("leave", { body: JSON.stringify(read), contentType: "application/json" });
+        const at = JSON.stringify(read);
+        expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);
+        expect(read.between, `more than two frames between whole and gone ${at}`).toBeGreaterThan(2);
+        expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+    });
+}
+
+test("expand · an ExpandableContainer closed while it enters turns from where it is", async ({ page }, info) => {
+    const project = info.project.name;
+    await openHarness(page);
+    await page.locator(EXPAND).scrollIntoViewIfNeeded();
+    const full = await overlayFull(page, project);
+    const film = await filmExpand(page, () => pressOn(page, project, `${EXPAND} [data-mode="expand"]`), {
+        wait: 60,
+        act: () => page.keyboard.press("Escape"),
+    });
+    const read = judgeOverlay(film, page.viewportSize()!, film.turn, full);
+    await info.attach("turn", { body: JSON.stringify(read), contentType: "application/json" });
+    const at = JSON.stringify(read);
+    expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);
+    expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);
+    expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+});
+
+test("expand · an ExpandableContainer reopened while it leaves turns from where it is", async ({ page }, info) => {
+    const project = info.project.name;
+    await openHarness(page);
+    await page.locator(EXPAND).scrollIntoViewIfNeeded();
+    const full = await overlayFull(page, project);
+    await pressOn(page, project, `${EXPAND} [data-mode="expand"]`);
+    await page.waitForTimeout(900);
+    const film = await filmExpand(page, () => page.keyboard.press("Escape"), { wait: 50, act: () => toggle(project)(page) });
+    const read = judgeOverlay(film, page.viewportSize()!, film.turn, full);
+    await info.attach("turn", { body: JSON.stringify(read), contentType: "application/json" });
+    const at = JSON.stringify(read);
+    expect(read.atTurn, `the reopen lands mid-exit ${at}`).toBeGreaterThan(0.02);
+    expect(read.end, `it ends whole ${at}`).toBeGreaterThan(0.95);
+    expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+});
+
+test("expand · Escape is live from the entrance's first frame", async ({ page }, info) => {
+    const project = info.project.name;
+    await openHarness(page);
+    await page.locator(EXPAND).scrollIntoViewIfNeeded();
+    // The press, then Escape in the first frame after it.
+    await page.evaluate(
+        () =>
+            new Promise<void>((done) => {
+                (document.querySelector('[data-testid="x-expand"] [data-mode="expand"]') as HTMLElement).click();
+                requestAnimationFrame(() => {
+                    (document.activeElement ?? document.body).dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
+                    done();
+                });
+            }),
+    );
+    void project;
+    await page.waitForTimeout(800);
+    expect(await page.locator(`${EXPAND}[data-state="collapsed"]`).count(), "Escape in the entrance's first frame closes it").toBe(1);
+});

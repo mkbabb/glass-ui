@@ -3,7 +3,7 @@
 // drives it) and a DropdownMenu; below it a row of triggers opens a Popover, a Tooltip,
 // a Dialog, a right and a bottom Sheet and a detented bottom Sheet; a third row holds a
 // Toast trigger, a press counter (the page behind a leaving sheet), a Collapsible and an
-// Accordion. Imports are relative to `src/`, so the file mounts unchanged on an older tree.
+// Accordion; then an ExpandableContainer with an outside toggle for its open state. Imports are relative to `src/`, so the file mounts unchanged on an older tree.
 import "../../demo/demo.css";
 import { createApp, h, ref } from "vue";
 
@@ -35,6 +35,7 @@ import AccordionContent from "../../src/components/accordion/AccordionContent.vu
 import Collapsible from "../../src/components/collapsible/Collapsible.vue";
 import CollapsibleTrigger from "../../src/components/collapsible/CollapsibleTrigger.vue";
 import CollapsibleContent from "../../src/components/collapsible/CollapsibleContent.vue";
+import ExpandableContainer from "../../src/components/expandable-container/ExpandableContainer.vue";
 import Toaster from "../../src/components/toast/Toaster.vue";
 import { toast } from "../../src/components/toast/use-toast";
 import { DialogTrigger } from "reka-ui";
@@ -55,6 +56,7 @@ const view = ref("Picker");
 const open = ref(false);
 const rung = ref(0.5);
 const presses = ref(0);
+const expanded = ref(false);
 const btn = "padding:10px 14px;background:#fff;color:#000;border-radius:8px;font:14px sans-serif";
 const lines = Array.from({ length: 6 }, (_, i) => h("p", { style: "margin:0;padding:4px 0" }, `Line ${i + 1} of the region.`));
 
@@ -152,6 +154,17 @@ createApp({
                     ]),
                 ]),
             ]),
+            h("button", { "data-testid": "x-expand-toggle", style: btn, onClick: () => (expanded.value = !expanded.value) }, "Toggle fullscreen"),
+            h(
+                ExpandableContainer,
+                {
+                    open: expanded.value,
+                    "onUpdate:open": (v: boolean) => (expanded.value = v),
+                    "data-testid": "x-expand",
+                    style: "width:min(22rem,90vw)",
+                },
+                () => h("div", { style: "height:180px;border-radius:16px;background:#fff;color:#000;padding:16px" }, "A figure."),
+            ),
             h(Toaster),
         ]),
 }).mount("#app");

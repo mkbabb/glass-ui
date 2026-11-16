@@ -1,5 +1,5 @@
 <template>
-    <Teleport to="body" :disabled="!open">
+    <Teleport to="body" :disabled="!placed">
         <FocusScope
             ref="scope"
             as-child
@@ -9,14 +9,15 @@
         >
             <div
                 class="expandable-container"
-                :data-state="open ? 'expanded' : 'collapsed'"
+                :data-state="placed ? 'expanded' : 'collapsed'"
+                :data-leaving="placed && !open ? '' : undefined"
                 :data-surface="open ? surface : undefined"
                 :role="open ? 'dialog' : undefined"
                 :aria-label="open ? expandLabel : undefined"
                 :aria-modal="open || undefined"
                 v-bind="$attrs"
             >
-                <div class="expandable-container__chrome" :hidden="open">
+                <div class="expandable-container__chrome" :hidden="placed">
                     <slot
                         name="expand-trigger"
                         :expand="expand"
@@ -36,7 +37,7 @@
                     </slot>
                 </div>
 
-                <div class="expandable-container__chrome" :hidden="!open">
+                <div class="expandable-container__chrome" :hidden="!placed">
                     <slot
                         name="fullscreen-chrome"
                         :collapse="collapse"
@@ -58,7 +59,7 @@
                 </div>
 
                 <div data-part="panel">
-                    <slot :fullscreen="open" />
+                    <slot :fullscreen="placed" />
                 </div>
             </div>
         </FocusScope>
@@ -176,15 +177,54 @@ function onScopeMountAutoFocus(event: Event) {
     event.preventDefault();
 }
 
+/*
+ * THE WAY IN AND THE WAY OUT. `open` is the reader's intent; `placed` is where the
+ * subtree is. Opening places it in the fullscreen overlay at once and the overlay
+ * enters on its transitions (`styles.css`). Closing leaves it placed, marked
+ * `data-leaving`, while the overlay leaves on the same channels in reverse; it goes
+ * back to its in-flow place when the overlay's own transitions have finished. A reopen
+ * during the exit (or a close during the entrance) turns the transitions around from
+ * where they stand, and the subtree never moves. Escape is registered the moment
+ * `open` turns true, so it is live from the entrance's first frame.
+ */
+const placed = ref(open.value);
+let leave = 0;
+
+function overlayTransitions(): Animation[] {
+    const root = getContainer();
+    if (!root || typeof root.getAnimations !== "function") return [];
+    const panel = root.querySelector(':scope > [data-part="panel"]');
+    return root
+        .getAnimations({ subtree: true })
+        .filter(
+            (a) =>
+                a instanceof CSSTransition &&
+                (a.effect as KeyframeEffect | null)?.target !== undefined &&
+                [root, panel].includes((a.effect as KeyframeEffect).target as Element),
+        );
+}
+
+function settle(run: number) {
+    if (run !== leave || open.value) return;
+    placed.value = false;
+    syncRootOverflowLock(false);
+    nextTick(restoreFocus);
+}
+
 watch(
     open,
     (isOpen, wasOpen) => {
-        syncRootOverflowLock(isOpen);
+        if (isOpen) {
+            leave++;
+            placed.value = true;
+            syncRootOverflowLock(true);
+        }
 
         if (isOpen && !wasOpen) {
             const active =
                 typeof document !== "undefined" ? document.activeElement : null;
-            restoreTarget = active instanceof HTMLElement ? active : null;
+            if (!getContainer()?.contains(active))
+                restoreTarget = active instanceof HTMLElement ? active : null;
             unregEsc = registerShortcut("Escape", collapse, {
                 label: "Exit fullscreen",
                 group: "UI",
@@ -194,10 +234,24 @@ watch(
         } else if (!isOpen && wasOpen) {
             unregEsc?.();
             unregEsc = null;
-            nextTick(restoreFocus);
         }
     },
     { immediate: true },
+);
+
+/* After the render that marks the exit, the overlay's transitions exist; the subtree
+   goes home when they have all finished, or at once when none runs (no channel
+   changes, or in a DOM without animations). */
+watch(
+    open,
+    (isOpen, wasOpen) => {
+        if (isOpen || !wasOpen) return;
+        const run = ++leave;
+        const running = overlayTransitions();
+        if (running.length === 0) return settle(run);
+        void Promise.allSettled(running.map((a) => a.finished)).then(() => settle(run));
+    },
+    { flush: "post" },
 );
 
 onUnmounted(() => {
