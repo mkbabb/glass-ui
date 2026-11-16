@@ -148,6 +148,12 @@
     --story-stage-fit-min: 16rem;
     /* The editor's stage floor at narrow widths. */
     --configurator-stage-min: 18.75rem;
+    /* The stage's plate: a paper wash that reads as a surface in both themes. */
+    --story-stage-plate: color-mix(in srgb, var(--card) 70%, transparent);
+}
+
+.dark {
+    --story-stage-plate: color-mix(in srgb, var(--foreground) 7%, transparent);
 }
 
 @media (width <= 768px) {
@@ -198,7 +204,8 @@
     container-type: inline-size;
     inline-size: 100%;
     border-radius: var(--radius-3xl);
-    border: 1px solid var(--glass-border-quiet);
+    border: 1px solid var(--glass-border-floating);
+    background-color: var(--story-stage-plate);
     overflow: clip;
 }
 
@@ -206,10 +213,13 @@
     block-size: var(--story-stage-tall);
 }
 
+/* Content height with a floor (FORM.md section 1): the instance sits at the centre
+   of both axes. */
 [data-story-stage="fit"] {
     min-block-size: var(--story-stage-fit-min);
     display: grid;
-    align-content: center;
+    place-content: center;
+    place-items: center;
     padding: var(--sp-5);
 }
 
@@ -277,6 +287,7 @@
 }
 
 [data-story-stage="fill"] {
+    background-color: transparent;
     border: 0;
     border-radius: 0;
     overflow: visible;
