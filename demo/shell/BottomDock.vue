@@ -1,18 +1,10 @@
 <script setup lang="ts">
-// BottomDock — the demo's shell-anchored bottom-bar story dock (.b).
-//
-// A horizontal `always-expanded fit-content` GlassDock seated after the independently
-// scrolling <main>. Its intrinsic height reserves the interaction-safe footer while
-// route scroll never displaces it. It carries
-// the in-category story tabs (the DockControl (shape="tab") set) PLUS the prev/next +
-// prev/next-category controls that today live only as keyboard shortcuts, AND a
-// mobile-only category trigger hosting the off-canvas SidebarDock in a left-side <SheetContent>.
-//
-// Active-story affordance uses the NCSU-red underline/pill and `tap-squish` on
-// press; DockControl (shape="tab") auto-activates its `.is-active` state when the rendered
-// RouterLink carries aria-current="page". Dogfoods the dock + glass atoms +
-// iOS-26 across the 3 viewports.
-import { computed, ref } from "vue";
+// BottomDock: the pager dock. Folded, it names the current page and keeps Previous and
+// Next live; open, it lists the section's pages and steps between sections. It opens
+// on hover where the pointer is fine and on a press where it is coarse. Where there is
+// no rail, its leading seat opens the categories in a Sheet.
+import { computed, onBeforeUnmount, onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
 import {
     ChevronLeft,
     ChevronRight,
@@ -20,14 +12,9 @@ import {
     ChevronsRight,
     PanelLeft,
 } from "@lucide/vue";
-import {
-    DockControl,
-    DockSeparator,
-    GlassDock,
-} from "@glass/components/dock";
-// The shell mounts SHEETS, never the centred plate. Deep-import the root and the three
-// text atoms so the dialog BARREL does not drag `DialogContent` — and its lucide ✕ — into
-// the eager boot graph for a surface that can never show either.
+import { DockControl, DockSeparator, GlassDock } from "@glass/components/dock";
+// The shell mounts Sheets only; deep imports keep the centred dialog plate out of the
+// boot graph.
 import Dialog from "@glass/components/dialog/Dialog.vue";
 import DialogDescription from "@glass/components/dialog/DialogDescription.vue";
 import DialogHeader from "@glass/components/dialog/DialogHeader.vue";
@@ -42,23 +29,18 @@ import {
 } from "@glass/components/tooltip";
 import { FadingScroll } from "@glass/components/fading-scroll";
 import SidebarDock from "./SidebarDock.vue";
-import DockFacetMenu from "./DockFacetMenu.vue";
 import { useStoryNavigation } from "../chassis/useStoryNavigation";
-import { useShellNavDock } from "./useShellNavDock";
 
 const { current, next, prev, nextCategory, prevCategory, goTo } = useStoryNavigation();
+const route = useRoute();
 
-// Full in-category page list, not a summary slice.
-// Every story in the active category is a jump-to-page tab in the scrolling strip; the
-// active one carries aria-current="page" (DockControl (shape="tab") auto-lifts its selected-as-glass
-// tier). The strip scrolls horizontally inside the <FadingScroll> port — the dock box
-// stays one row (box-INVIOLATE).
+const pageTitle = computed(() => String(route.meta.title ?? "Glass UI"));
+
 const categoryStories = computed(() => {
     const loc = current.value;
     if (!loc) return [];
     return loc.category.stories.map((story, index) => ({
         story,
-        index,
         active: index === loc.storyIndex,
     }));
 });
@@ -68,41 +50,40 @@ function goToStory(storyId: string): void {
     if (loc) goTo(loc.category.id, storyId);
 }
 
-// Both shell docks share one route-to-facet resolver. The existing dropdown primitive
-// owns focus, keyboard navigation, and top-layer positioning.
-const { railItems, railContext } = useShellNavDock();
 const sheetOpen = ref(false);
-
-const loc = computed(() => current.value);
-
-const categoryTitle = computed(() => loc.value?.category.title ?? "Stories");
-
-// Prev/next are disabled at the category boundaries (no wrap); the category
-// arrows wrap across categories carrying at least one story.
-const hasPrev = computed(() => (loc.value ? loc.value.storyIndex > 0 : false));
+const hasPrev = computed(() => (current.value ? current.value.storyIndex > 0 : false));
 const hasNext = computed(() =>
-    loc.value ? loc.value.storyIndex < loc.value.category.stories.length - 1 : false,
+    current.value
+        ? current.value.storyIndex < current.value.category.stories.length - 1
+        : false,
 );
+
+// Hover opens the dock under a fine pointer; a coarse pointer opens it by a press.
+const coarse = ref(false);
+let mql: MediaQueryList | null = null;
+const onPointerChange = (e: MediaQueryListEvent | MediaQueryList) => {
+    coarse.value = e.matches;
+};
+onMounted(() => {
+    mql = window.matchMedia("(pointer: coarse)");
+    onPointerChange(mql);
+    mql.addEventListener("change", onPointerChange);
+});
+onBeforeUnmount(() => mql?.removeEventListener("change", onPointerChange));
 </script>
 
 <template>
-    <nav class="demo-bottom-dock" aria-label="Stories in category">
-        <!-- The bottom dock is always expanded (a single
-             ~52px row): the persistent category trigger + the SCROLLING category-page tab
-             strip (a <FadingScroll axis="x"> of every in-category page) + the persistent
-             prev/next + category-jump nav group, all co-resident. The ≤4 collapsed-summary
-             register is retired — the full page strip in the story-nav zone supersedes it.
-             `fit-content` keeps the dock shrink-wrapped; the strip scrolls INSIDE its port
-             so the box never inflates (box-INVIOLATE). -->
+    <nav class="demo-bottom-dock" aria-label="Pages in this section">
         <GlassDock
             orientation="horizontal"
             fit-content
-            :collapse="false"
+            collapse="closed"
+            :expand-on="coarse ? 'press' : 'hover'"
+            collapsed-label="Pages in this section"
             class="demo-bottom-dock__shell"
             data-testid="bottom-dock-collapsible"
         >
-            <!-- The desktop sidebar already owns category navigation. This compact
-                 trigger exists only below that sidebar's breakpoint. -->
+            <!-- The categories seat, only where there is no rail. -->
             <template #persistent>
                 <div
                     class="demo-shell-category-menu contents"
@@ -115,13 +96,10 @@ const hasNext = computed(() =>
                                     <DialogTrigger as-child>
                                         <DockControl
                                             type="button"
-                                            class="demo-bottom-dock__menu tap-squish"
+                                            class="demo-bottom-dock__menu"
                                             aria-label="Open category navigation"
                                         >
-                                            <PanelLeft
-                                                class="h-4 w-4"
-                                                aria-hidden="true"
-                                            />
+                                            <PanelLeft class="h-4 w-4" aria-hidden="true" />
                                         </DockControl>
                                     </DialogTrigger>
                                 </TooltipTrigger>
@@ -136,33 +114,80 @@ const hasNext = computed(() =>
                         >
                             <DialogHeader class="sr-only">
                                 <DialogTitle>Category navigation</DialogTitle>
-                                <DialogDescription>
-                                    Jump to a story category.
-                                </DialogDescription>
+                                <DialogDescription>Jump to a category.</DialogDescription>
                             </DialogHeader>
                             <SidebarDock
                                 :show-tooltips="false"
+                                :folds="false"
                                 @navigate="sheetOpen = false"
                             />
                         </SheetContent>
                     </Dialog>
+                    <DockSeparator />
                 </div>
             </template>
 
-            <DockSeparator class="demo-shell-category-menu" />
+            <template #collapsed>
+                <span class="demo-pager-title text-small text-foreground" data-pager-title>{{ pageTitle }}</span>
+            </template>
 
-            <div class="contents" role="group" aria-label="Story navigation">
-                    <TooltipProvider :delay-duration="250">
-                        <!-- Previous and next remain persistent four-state
-                             controls, never DOM-absent mid-row. Disabled (not removed) at a
-                             true boundary so the row geometry holds and the control reads
-                             honestly, never "flaky". -->
+            <TooltipProvider :delay-duration="250">
+                <FadingScroll axis="x" class="demo-bottom-dock__tabs">
+                    <DockControl
+                        v-for="entry in categoryStories"
+                        :key="entry.story.id"
+                        shape="tab"
+                        :aria-current="entry.active ? 'page' : undefined"
+                        :aria-label="entry.story.title"
+                        @click="goToStory(entry.story.id)"
+                    >
+                        {{ entry.story.title }}
+                    </DockControl>
+                </FadingScroll>
+
+                <DockSeparator v-if="categoryStories.length" />
+
+                <div class="contents" role="group" aria-label="Sections">
+                    <Tooltip>
+                        <TooltipTrigger as-child>
+                            <DockControl
+                                type="button"
+                                aria-label="Previous section"
+                                @click="prevCategory()"
+                            >
+                                <ChevronsLeft class="h-4 w-4" aria-hidden="true" />
+                            </DockControl>
+                        </TooltipTrigger>
+                        <TooltipContent side="top" :side-offset="10">
+                            Previous section · <kbd class="font-mono text-micro">{</kbd>
+                        </TooltipContent>
+                    </Tooltip>
+                    <Tooltip>
+                        <TooltipTrigger as-child>
+                            <DockControl
+                                type="button"
+                                aria-label="Next section"
+                                @click="nextCategory()"
+                            >
+                                <ChevronsRight class="h-4 w-4" aria-hidden="true" />
+                            </DockControl>
+                        </TooltipTrigger>
+                        <TooltipContent side="top" :side-offset="10">
+                            Next section · <kbd class="font-mono text-micro">}</kbd>
+                        </TooltipContent>
+                    </Tooltip>
+                </div>
+            </TooltipProvider>
+
+            <!-- Previous and Next stay live while the dock is folded. -->
+            <template #persistent-end>
+                <TooltipProvider :delay-duration="250">
+                    <div class="contents" role="group" aria-label="Pages">
                         <Tooltip>
                             <TooltipTrigger as-child>
                                 <DockControl
                                     type="button"
-                                    class="tap-squish"
-                                    aria-label="Previous story"
+                                    aria-label="Previous page"
                                     :disabled="!hasPrev"
                                     @click="prev()"
                                 >
@@ -170,40 +195,14 @@ const hasNext = computed(() =>
                                 </DockControl>
                             </TooltipTrigger>
                             <TooltipContent side="top" :side-offset="10">
-                                Previous story ·
-                                <kbd class="font-mono text-micro">[</kbd>
+                                Previous page · <kbd class="font-mono text-micro">[</kbd>
                             </TooltipContent>
                         </Tooltip>
-
-                        <!-- Scrolling category-page tab
-                             strip. Every story in the active category as a jump-to-page
-                             DockControl (shape="tab"), wrapped in the shipped <FadingScroll axis="x">
-                             (start sharp at rest, end feathered while overflowing). The
-                             strip scrolls INSIDE the port — the dock box stays one row
-                             (box-INVIOLATE). Clicking a tab navigates via goToStory (one
-                             registry). -->
-                        <FadingScroll axis="x" class="demo-bottom-dock__tabs">
-                            <DockControl
-                                shape="tab"
-                                v-for="entry in categoryStories"
-                                :key="entry.story.id"
-                                class="tap-squish"
-                                :aria-current="entry.active ? 'page' : undefined"
-                                :aria-label="entry.story.title"
-                                @click="goToStory(entry.story.id)"
-                            >
-                                {{ entry.story.title }}
-                            </DockControl>
-                        </FadingScroll>
-
-                        <!-- Next remains persistent and disabled (not
-                             removed) at the last story; the row geometry never shifts. -->
                         <Tooltip>
                             <TooltipTrigger as-child>
                                 <DockControl
                                     type="button"
-                                    class="tap-squish"
-                                    aria-label="Next story"
+                                    aria-label="Next page"
                                     :disabled="!hasNext"
                                     @click="next()"
                                 >
@@ -211,88 +210,39 @@ const hasNext = computed(() =>
                                 </DockControl>
                             </TooltipTrigger>
                             <TooltipContent side="top" :side-offset="10">
-                                Next story · <kbd class="font-mono text-micro">]</kbd>
+                                Next page · <kbd class="font-mono text-micro">]</kbd>
                             </TooltipContent>
                         </Tooltip>
-                    </TooltipProvider>
-            </div>
-
-            <DockSeparator />
-
-            <div class="contents" role="group" aria-label="Category navigation">
-                <!-- The trailing category-jump group rides the `nav` zone. The category
-                     arrows WRAP across categories so they are always live (never dead
-                     chrome), visually distinct from the in-category story arrows by the
-                     chevrons-DOUBLE glyph (B8 — single = story, double = category). -->
-                    <TooltipProvider :delay-duration="250">
-                        <Tooltip>
-                            <TooltipTrigger as-child>
-                                <DockControl
-                                    type="button"
-                                    class="tap-squish"
-                                    :aria-label="`Previous category (current: ${categoryTitle})`"
-                                    @click="prevCategory()"
-                                >
-                                    <ChevronsLeft class="h-4 w-4" aria-hidden="true" />
-                                </DockControl>
-                            </TooltipTrigger>
-                            <TooltipContent side="top" :side-offset="10">
-                                Previous category ·
-                                <kbd class="font-mono text-micro">{</kbd>
-                            </TooltipContent>
-                        </Tooltip>
-                        <Tooltip>
-                            <TooltipTrigger as-child>
-                                <DockControl
-                                    type="button"
-                                    class="tap-squish"
-                                    :aria-label="`Next category (current: ${categoryTitle})`"
-                                    @click="nextCategory()"
-                                >
-                                    <ChevronsRight class="h-4 w-4" aria-hidden="true" />
-                                </DockControl>
-                            </TooltipTrigger>
-                            <TooltipContent side="top" :side-offset="10">
-                                Next category ·
-                                <kbd class="font-mono text-micro">}</kbd>
-                            </TooltipContent>
-                        </Tooltip>
-                        <!-- the V↔H orientation-morph control is
-                             DEFINITION-ABSENT (the in-situ dock morph retired
-                             decided-terminal; the shell docks no longer morph orientation). -->
-                    </TooltipProvider>
-            </div>
-
-            <DockFacetMenu
-                v-if="railItems.length > 1"
-                :items="railItems"
-                :selected="railContext"
-                side="top"
-                data-testid="bottom-facet-rail"
-                @select="railContext = $event"
-            />
+                    </div>
+                </TooltipProvider>
+            </template>
         </GlassDock>
     </nav>
 </template>
 
 <style scoped>
-/* The category-page tab strip scrolls horizontally inside
-   the FadingScroll port (the `.demo-bottom-dock__tabs` class is merged onto the
-   <FadingScroll> root, which IS the `.fading-scroll--x` scroll port). Lay the slotted
-   tab-shape DockControls in a row and cap the inline-size so overflow SCROLLS, never widening
-   the dock box (box-INVIOLATE). `min-inline-size: 0` lets the flex child shrink below
-   content; the cap keeps the strip a bounded scroller. */
+/* The page strip scrolls sideways inside its port, so the dock stays one row. */
 .demo-bottom-dock__tabs {
     display: flex;
     align-items: center;
-    gap: var(--dock-gap, 0.25rem);
+    gap: 0.25rem;
     min-inline-size: 0;
     max-inline-size: min(60vw, 42rem);
     flex: 1 1 auto;
-    /* The tab labels are short; keep each on one line so the strip reads as a row. */
     white-space: nowrap;
 }
 .demo-bottom-dock__tabs > * {
     flex: 0 0 auto;
+}
+
+/* The folded face: the page's title, one line. The library holds the folded face to
+   a fixed square today, so the title is clipped to it (LIBRARY-FAULTS, recorded in
+   the P0 record); it sizes to its words when the face sizes to its content. */
+.demo-pager-title {
+    display: block;
+    max-inline-size: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 </style>

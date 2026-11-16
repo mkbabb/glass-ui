@@ -1,112 +1,51 @@
 /*
- * dock-nav.css — demo-private layout for the GlassDock-driven navigation chrome.
- * It does not touch src/styles/.
+ * dock-nav.css: the demo shell's layout for its two navigation docks.
  *
- * Two docks compose the demo's core navigation:
- *   - SidebarDock — a FIXED vertical `always-expanded` GlassDock
- *     (`orientation="vertical"`; the left column on wide viewports; off-canvas
- *     behind a <Sheet> on narrow ones).
- *   - BottomDock — a horizontal `always-expanded` GlassDock shell footer below
- *     the independently scrolling <main> region.
- *
- * Every visual axis reads a library token (`--z-dock`, `--viz-fourier`,
- * `--radius-*`, `--duration-*`, `--spring-*`) or a demo-local `--demo-nav-*`
- * custom property — no brittle magic literal where a token resolves (the
- * styling-assay discipline).
+ *   - SidebarDock: the vertical category rail, the left column on wide landscape
+ *     viewports; behind a Sheet elsewhere.
+ *   - BottomDock: the pager dock, laid over the end of `main` at the bottom centre.
  */
 
 :root {
-    /* The retired NCSU-red accent no longer overrides interaction color. The dock's
-       selected, hover, active, and pressed states use the shared iOS-style
-       luminance-lift glass register the library ships by default
-       (`--dock-selected-accent` + the glass material-lift plate), so the demo
-       consumes the neutral root register and no longer re-tints it to red. The
-       brand red survives only as static ink (the ℱ wordmark / data-viz strokes /
-       the gold-CTA family), never on an interactive state. */
-    /* The left-edge accent rule width on the active sidebar category. */
-    --demo-nav-rail-accent-w: 3px;
-    /* Bottom-dock viewport inset (adds the iOS safe-area gutter — live only now
-       that `index.html` carries `viewport-fit=cover`; before that this `env()`
-       resolved 0 on every device and the inset was a rung wearing a safe-area
-       costume). The rung is `--sp-3`, so the narrow-short tightening the seat law
-       asks for arrives from the LADDER's own step-down (0.75rem → 0.5rem at
-       ≤768px) rather than from a second, disagreeing media block. */
-    --demo-nav-bottom-inset: calc(var(--sp-3) + env(safe-area-inset-bottom, 0px));
+    /* The pager dock's inset from the viewport's bottom edge, plus the safe-area gutter. */
+    --demo-nav-bottom-inset: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+    /* The room `main` keeps at its end so the last line clears the pager dock:
+       the dock's 60 px, its 12 px inset, 20 px of air. */
+    --demo-nav-dock-clearance: calc(5.75rem + env(safe-area-inset-bottom, 0px));
 }
 
-/* ── THE SHELL GRID ────────────────────────────────────────────────────────
-   Two columns, two rows, one topology. The rail spans both rows (it is the tall
-   seat); `main` scrolls and `dock` does not. `100dvh` — not `100vh` — because the
-   dynamic mobile toolbar makes `vh` measure the LARGEST viewport, which underflows
-   the dock by the toolbar's height for exactly as long as the toolbar is showing.
-   `overflow: clip` (not `hidden`) because `clip` does not create a scroll
-   container, so nothing here can silently become a second scroller. */
+/* The shell grid: the rail column and `main`. `main` runs the full height, and the
+   pager dock shares its cell, aligned to the end. `100dvh` measures what a phone
+   shows while its toolbar is up. */
 .demo-app-shell {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);
-    grid-template-rows: minmax(0, 1fr) auto;
-    grid-template-areas:
-        "rail main"
-        "rail dock";
+    grid-template-rows: minmax(0, 1fr);
+    grid-template-areas: "rail main";
     block-size: 100dvh;
     overflow: clip;
 }
 
-/* ── Sidebar rail occupancy ────────────────────────────────────────────────
-   The rail column. The rail dock itself sizes to content; this nav landmark
-   reserves the column gutter and centres the dock. Seated by the SEAT LAW below —
-   `display: none` is the base arm because portrait, at any width, has no rail. */
+/* The rail column. Hidden by default: portrait, at any width, has no rail. Its width
+   is the dock's open width, which the folded dock keeps, so content never shifts. */
 .demo-sidebar-rail {
     grid-area: rail;
     display: none;
     flex-direction: column;
     align-items: center;
     min-height: 0;
-    /* The INLINE rung is `--sp-2`, one below the block rung, and it is load-bearing
-       arithmetic rather than taste. §4's binding census cell is 852×393 landscape:
-       the field needs `2 × --measure-cel + --sp-4` = 692px, and it gets
-       `852 − rail − 2 × --sp-5`. The spec derived that against an 88px rail; the
-       rail on disk is a 75px dock plus its gutter, so at `--sp-3` (12px a side) the
-       column is 99px and the field lands on 689 — THREE PIXELS SHORT, and the cell
-       silently falls to 1-up. Measured, not assumed. At `--sp-2` the column is 91px
-       and the field is 697, clearing 692 with 5px of slack; 1440 is unaffected
-       (3-up either way, since 4 cels need 1404 and the article carries 1285). */
     padding: var(--sp-4) var(--sp-2);
 }
 
-/* The off-canvas Sheet host body needs no extra chrome — the SidebarDock fills
-   it. Keep the rail flush to the sheet's leading edge. */
 .demo-bottom-dock__sheet .demo-sidebar-dock {
     margin: 0;
 }
 
-/* The contained rail paints the library's default topology; the demo adds no
-   re-seat of the slot. [BK #72 · 2026-08-08] The topology sentence that stood here is
-   STRUCK, not amended: it cited `stack-rail.css`, a file in no tree of this repo, for a
-   `--dock-hairline` line nothing in `demo/` paints. The
-   demo does not override the slot — the library default paints, and the transient
-   fan reach is cleared from the content side by `--dock-content-safe-inset` (the
-   `.demo-main-scroller` scroll-padding below), NOT by re-seating the whole rail. The library
-   box stays INVIOLATE (deltaW=deltaH=0). */
-
-/* Active-category luminance-lift rail polish.
-   The active-item register + the leading-edge accent rule are SHIPPED by the
-   vertical-dock CSS (`.glass-dock.vertical`, `src/styles/dock-controls.css`): the
-   selected control reads as the glass material-lift plate + the translucent
-   `--dock-selected-accent` luminance bar — the iOS register. The demo NO LONGER
-   re-tints the accent to NCSU red; the former brand-red interactive
-   register at the root); it consumes the neutral default and only widens the
-   accent BAR geometry. `tap-squish` press feedback stays composed in markup. */
-.demo-sidebar-item.is-active {
-    --dock-vertical-accent-width: var(--demo-nav-rail-accent-w);
-}
-
-/* ── Bottom-bar shell anchoring ────────────────────────────────────────────
-   The bottom dock is the content column's non-scrolling footer. Its intrinsic
-   height therefore shortens <main> before hit testing, while only <main> scrolls
-   and the dock remains viewport-anchored. */
+/* The pager dock, laid over `main`'s cell at the bottom centre. The wrapper passes
+   pointer events through; only the dock takes them. */
 .demo-bottom-dock {
-    grid-area: dock;
+    grid-area: main;
+    align-self: end;
     position: relative;
     min-width: 0;
     z-index: var(--z-dock);
@@ -117,46 +56,31 @@
 }
 .demo-bottom-dock__shell {
     pointer-events: auto;
-    /* The dock can never exceed its content area — bind the cap to the
-       available width (the rail occupancy is handled by the shell flow). */
     max-width: min(100%, 64rem);
+    /* The one place the demo sets a dock variable: the pager dock's plate is raised
+       to the floating tier so its ink reads over the content passing under it.
+       LIBRARY-FAULTS.md F6; this rule is deleted when the library's plate is firm. */
+    --dock-plate-collapsed-tier: var(--glass-veil-floating);
+    --dock-plate-expanded-tier: var(--glass-veil-floating);
 }
 
-/* The retired in-dock `.demo-bottom-dock__tabs` story-tab run (the per-facet
-   DockTabButton column inside the deleted in-dock <DockLayerGroup>) is GONE: the
-   in-category facets re-home on the rail's floating carousel strip. The active-story
-   weight cue rode that tab run, so its rule is buried with it (no dead orphan). */
-
-/* ── THE SEAT LAW ──────────────────────────────────────────────────────────
-   The rail seats along the ABUNDANT axis, which is why width alone could never
-   decide it: 810 (tablet portrait) and 852 (landscape phone) are 42px apart and
-   want opposite answers. Portrait's abundant axis is block, so portrait's nav
-   belongs in the dock row and tablet portrait gets its full width back for the cel
-   field. Landscape phone gets the rail (88px = 9.4% of 932) and sheds the dock
-   (68px = 18% of Safari's 378px of block). Desktop keeps both.
-
-   The `>` is STRICT: at exactly 768px an inclusive `>=` handed the viewport a rail
-   AND the mobile ladder rungs in the same frame — a coincidence, not a design. */
+/* The rail seats along the abundant axis: landscape wider than 48rem has a rail;
+   portrait and narrow viewports reach the categories from the pager dock. */
 @media (width > 48rem) and (orientation: landscape) {
     .demo-sidebar-rail {
         display: flex;
     }
 
-    /* The rail carries category navigation, so the bottom dock's equivalent
-       trigger leaves both the paint and the focus order. */
     .demo-shell-category-menu {
         display: none;
     }
 
-    /* The rail covers the unsafe leading edge, so the scroller stops paying the
-       safe-area gutter a second time. */
     .demo-main-scroller {
         padding-inline-start: var(--sp-5);
     }
 }
 
-/* Landscape phone: the dock's 68px is 18% of the scarce axis and the rail already
-   carries nav. Shedding it is the whole reason the seat law reads height at all. */
+/* Landscape phone: the rail carries navigation and the block axis is scarce. */
 @media (width > 48rem) and (orientation: landscape) and (height <= 30rem) {
     .demo-bottom-dock {
         display: none;
@@ -165,50 +89,21 @@
 
 .demo-main-scroller {
     grid-area: main;
-    padding-block: var(--sp-5);
-    /* `max(rung, env())` is the whole safe-area idiom: the rung is the floor, the
-       notch is the exception. Live only now that the viewport meta carries
-       `viewport-fit=cover` — before that both `env()`s computed 0 and this was a
-       symmetric rung with extra syntax. */
+    padding-block: var(--sp-5) var(--demo-nav-dock-clearance);
+    scroll-padding-block-end: var(--demo-nav-dock-clearance);
     padding-inline: max(var(--sp-5), env(safe-area-inset-left, 0px))
         max(var(--sp-5), env(safe-area-inset-right, 0px));
-    /* No-shift discipline: this route scroller hosts the
-       portaled picker overlays (Select / DropdownMenu); reka's body scroll-lock
-       removes a classic (space-taking) scrollbar on open, and WITHOUT a reserved
-       gutter the centred `max-w-6xl` content reflows wider → the trigger twitches
-       left/right by half the scrollbar width (USER-DEFECTS §F). `scrollbar-gutter:
-       stable` RESERVES the gutter whether or not the scrollbar is present, so the
-       lock removes nothing and the content does not reflow — zero trigger shift.
-       The reference consumer adopts the library `.scroll-gutter-stable` discipline
-       (presets-in-consumers); the durable library utility is in utilities/base-misc.css.
-       Baseline-newly-available (Chrome 94+ / Firefox 97+ / Safari 18.2+). */
+    /* Reserves the scrollbar's gutter so a scroll lock on an open picker does not
+       reflow the page. */
     scrollbar-gutter: stable;
-    /* `scroll-padding-block-start` is GONE. It existed to keep a scroll-snap or
-       anchor jump from parking the page title under dock chrome that overlapped
-       the content — and under the shell grid nothing overlaps the content: the
-       dock is a row, the rail is a column, and `100dvh` closed the toolbar
-       underflow that made the reserve look necessary at all.
-
-       `scroll-padding-inline-start` SURVIVES, conditioned and not by preference:
-       the doc-record above ties it to the rail's TRANSIENT hover/focus FAN
-       crossing the trailing edge, not to the bottom dock — and the fan is a
-       live mechanism, so the reserve is load-bearing until the §9 fan-open probe
-       says otherwise. Probe clean → this line dies with this comment; probe dirty
-       → GF-DOCK (#47) owns the reserve and re-homes it onto the rail seat. The
-       probe is OWED, so the line stays: deleting it on the assumption the probe
-       is clean would be a guess dressed as a cut. */
-    scroll-padding-inline-start: var(--dock-content-safe-inset, 2.5rem);
 }
 
-/* Route settlement focuses the noninteractive landmark for assistive technology,
-   so its browser-default viewport outline is never the right visual target. */
 .demo-main-scroller:focus {
     outline: none;
 }
 
-/* Keyboard navigation receives a localized route-destination cue on the title;
-   pointer navigation keeps the same semantic focus transfer without extra chrome. */
-.demo-main-scroller[data-route-focus="keyboard"]:focus .story-hero-title {
+/* A keyboard navigation marks the new page's title. */
+.demo-main-scroller[data-route-focus="keyboard"]:focus [data-story-title] {
     border-radius: var(--radius-sm);
     box-shadow: var(--focus-ring-shadow);
 }

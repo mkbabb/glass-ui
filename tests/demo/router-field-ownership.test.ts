@@ -11,27 +11,20 @@ describe("demo route field ownership", () => {
         await router.push("/");
     });
 
-    it("keeps one story-owned field across DockStage route navigation", async () => {
+    it("a page that runs its own canvas starts no second live field", async () => {
         await router.push("/dock/overview");
-        expect(router.currentRoute.value.meta.suppressesShellField).toBe(true);
-
-        await router.push("/dock/layers");
-        expect(router.currentRoute.value.meta.suppressesShellField).toBe(true);
-        // Each `push` resolves a lazily-imported route component (`demo/router.ts:21`),
-        // so the arm's cost is module load, not assertion — vitest's 5s default flakes
-        // under the full battery while the arm runs in under a second alone.
-    }, 30_000);
-
-    it("lets the Aurora studio exclusively own its route field", async () => {
-        const aurora = CATEGORIES.find(({ id }) => id === "substrates")?.stories.find(
-            ({ id }) => id === "aurora",
-        );
-        expect(aurora?.background).toBe("paper");
+        expect(router.currentRoute.value.meta.ownsCanvas).toBe(true);
 
         await router.push("/substrates/aurora");
-        expect(router.currentRoute.value.meta.focal).toBe(true);
-        expect(router.currentRoute.value.meta.suppressesShellField).toBe(true);
-    });
+        expect(router.currentRoute.value.meta.ownsCanvas).toBe(true);
+    }, 30_000);
+
+    it("every other route keeps the live shell field, async () => {
+        await router.push("/display/buttons");
+        expect(router.currentRoute.value.meta.ownsCanvas).toBe(false);
+        await router.push("/");
+        expect(router.currentRoute.value.meta.ownsCanvas).toBeFalsy();
+    }, 30_000);
 
     // BK #21 W-DAG-REDUCE. The shell field used to be a `shellFieldActive` computed
     // EXPORTED FROM `demo/router.ts` and imported back down into `AppShell.vue` — the
