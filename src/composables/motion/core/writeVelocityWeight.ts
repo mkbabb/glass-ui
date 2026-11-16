@@ -30,6 +30,16 @@
 /** The rest weight (1/φ ≈ 0.618) — the centroid of the iOS-27 register triangle. */
 export const MOTION_WEIGHT_REST = 0.618;
 
+/** The weight and velocity term this module last wrote on each element. A reader asks
+ *  here first, so a value the JS wrote is never read back through computed style. */
+const written = new WeakMap<HTMLElement, MotionWeightReading>();
+
+/** An element's motion weight and its live velocity term. */
+export interface MotionWeightReading {
+    weight: number;
+    flexVel: number;
+}
+
 /**
  * Fold the live velocity term into a transient `--motion-weight` boost on the
  * driving element, and mirror the term onto `--flex-vel` (the non-inheriting live
@@ -48,6 +58,36 @@ export function writeVelocityWeight(
     const weight = MOTION_WEIGHT_REST + (1 - MOTION_WEIGHT_REST) * v;
     el.style.setProperty("--flex-vel", v.toFixed(4));
     el.style.setProperty("--motion-weight", weight.toFixed(4));
+    written.set(el, { weight, flexVel: v });
+}
+
+/**
+ * The element's `--motion-weight` and `--flex-vel`: the values this module wrote, when
+ * it wrote them, else one computed-style read. Call it at an event (a press, a drag
+ * start), never from a computed or a frame loop; a caller that drives the velocity term
+ * itself keeps that term and reads only the weight.
+ */
+export function motionWeightOf(el: HTMLElement): MotionWeightReading {
+    const own = written.get(el);
+    if (own) return own;
+    const cs = getComputedStyle(el);
+    const w = Number.parseFloat(cs.getPropertyValue("--motion-weight"));
+    const fv = Number.parseFloat(cs.getPropertyValue("--flex-vel"));
+    return {
+        weight: Number.isFinite(w) ? (w < 0 ? 0 : w) : MOTION_WEIGHT_REST,
+        flexVel: Number.isFinite(fv) ? (fv < 0 ? 0 : fv > 1 ? 1 : fv) : 0,
+    };
+}
+
+/**
+ * The effective cap at a given weight and velocity term (the formula `effectiveCap`
+ * documents), with no element and no style read.
+ */
+export function capAtWeight(weight: number, flexVel: number, capToken: number): number {
+    if (capToken <= 1) return capToken < 1 ? 1 : capToken;
+    const blended = weight + (1 - weight) * flexVel;
+    const cap = 1 + (capToken - 1) * (blended / MOTION_WEIGHT_REST);
+    return cap < 1 ? 1 : cap;
 }
 
 /**
@@ -73,16 +113,8 @@ export function effectiveCap(
     capToken: number,
 ): number {
     if (capToken <= 1) return capToken < 1 ? 1 : capToken;
-    let weight = MOTION_WEIGHT_REST;
-    let flexVel = 0;
-    if (el) {
-        const cs = getComputedStyle(el);
-        const w = Number.parseFloat(cs.getPropertyValue("--motion-weight"));
-        const fv = Number.parseFloat(cs.getPropertyValue("--flex-vel"));
-        if (Number.isFinite(w)) weight = w < 0 ? 0 : w;
-        if (Number.isFinite(fv)) flexVel = fv < 0 ? 0 : fv > 1 ? 1 : fv;
-    }
-    const blended = weight + (1 - weight) * flexVel;
-    const cap = 1 + (capToken - 1) * (blended / MOTION_WEIGHT_REST);
-    return cap < 1 ? 1 : cap;
+    const { weight, flexVel } = el
+        ? motionWeightOf(el)
+        : { weight: MOTION_WEIGHT_REST, flexVel: 0 };
+    return capAtWeight(weight, flexVel, capToken);
 }

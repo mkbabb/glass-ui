@@ -1,0 +1,27 @@
+dock-select 20.7s enter=tween/491 pick=CUT(teleport)/190 outside=STAYED/0 escape=CUT(teleport)/166 trigger=STAYED/0 rev=turns
+dock-select-collapsible 13.3s enter=tween/461 pick=CUT(teleport)/200 outside=CUT(teleport)/211 escape=CUT(teleport)/184
+dock-dropdown 16.4s enter=tween/444 pick=tween/158 outside=STAYED/0 escape=CUT(tail)/140 trigger=CUT(tail)/148
+dock-popover 13.1s enter=tween/521 outside=STAYED/0 escape=tween/137 trigger=tween/132
+select 20.5s enter=tween/418 pick=CUT(teleport)/200 outside=STAYED/0 escape=CUT(teleport)/180 trigger=STAYED/0 rev=reopen ignored
+dropdown-menu 22.1s enter=tween/541 pick=tween/161 outside=STAYED/0 escape=tween/146 trigger=tween/136 focusOut=tween/130
+dropdown-submenu 17.7s enter=tween/409 pick=tween/143 parentItem=n/a/ escape=tween/143 outside=STAYED/0
+context-menu 2.9s enter=undefined/undefined pick=n/a/ outside=n/a/ escape=n/a/ ERR enter: SKIP: no long-press in WebKit Playwright
+popover 16.3s enter=tween/462 outside=STAYED/0 escape=tween/130 trigger=tween/128 focusOut=tween/133
+hover-popover 11.3s enter=tween/459 leave=n/a/ outside=STAYED/0 escape=tween/133
+tooltip 11.3s enter=NEVER/0 leave=n/a/ escape=ABSENT/0 press=ABSENT/0
+dialog 16.5s enter=tween/459 close=tween/231 outside=STAYED/0 escape=tween/233 rev=reopen ignored
+dialog-opaque 5.9s enter=tween/447 escape=tween/234
+alert-dialog 12.9s enter=tween/455 close=tween/229 escape=tween/231 outside=STAYED/0
+sheet-top 16.5s enter=tween/876 close=tween/217 outside=STAYED/0 escape=tween/217 swipe=STAYED/0
+sheet-right 15.3s enter=tween/837 close=tween/219 outside=STAYED/0 escape=tween/217 swipe=STAYED/0
+sheet-bottom 15.3s enter=tween/839 close=tween/214 outside=STAYED/0 escape=tween/211 swipe=STAYED/0
+sheet-left 15.4s enter=tween/837 close=tween/216 outside=STAYED/0 escape=tween/218 swipe=STAYED/0
+sheet-detented 15.3s enter=tween/602 close=CUT(tail)/470 outside=STAYED/0 escape=CUT(tail)/481 swipe=CUT(tail)/771
+toast 14.2s enter=tween/456 close=tween/265 swipe=tween/494 timeout=tween/268
+command-dialog 12.0s enter=tween/447 pick=CUT(teleport)/253 outside=STAYED/0 escape=CUT(teleport)/266
+expandable-container 8.6s enter=tween/230 exit=CUT/13 escape=CUT/9
+accordion 5.4s enter=tween/205 trigger=tween/206
+collapsible 5.4s enter=tween/201 trigger=tween/207
+dock-collapse 10.8s enter=tween/552 outside=tween/561 leave=n/a/
+dock-layer 8.2s enter=tween/215 back=tween/234
+theme-toggle 5.4s enter=tween/223 back=tween/226

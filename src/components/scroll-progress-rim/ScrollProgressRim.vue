@@ -26,6 +26,7 @@ const DEFAULT_STOPS = [
 const props = withDefaults(defineProps<ScrollProgressRimProps>(), {
     max: 1,
     orientation: "horizontal",
+    edge: "inset",
 });
 
 const clamp = (value: number, min: number, max: number) =>
@@ -61,18 +62,34 @@ const spectrumGradient = computed(() => {
    was a second law living in one component's script. */
 const marks = computed(() => {
     const segments = props.segments;
-    if (!segments?.length) return [];
+    if (!segments?.length || props.edge === "border") return [];
     return segments.map((_, index) => {
         const position = (index + 0.5) / segments.length;
         return { position, consumed: position <= fraction.value };
     });
 });
 
-const style = computed<CSSProperties>(
+const fill = computed(() => `${(fraction.value * 100).toFixed(3)}%`);
+
+const style = computed<CSSProperties>(() =>
+    props.edge === "border"
+        ? {}
+        : ({
+              "--scroll-progress-rim-fill": fill.value,
+              "--scroll-progress-rim-spectrum": spectrumGradient.value,
+          } as CSSProperties),
+);
+
+/* THE BORDER EDGE writes its one changing value on the stroke itself, so a scroll tick
+   restyles that one element and nothing around it. The ink is one colour: the first
+   of the consumer's `stops`, else the stylesheet's focal ink. */
+const strokeStyle = computed<CSSProperties>(
     () =>
         ({
-            "--scroll-progress-rim-fill": `${(fraction.value * 100).toFixed(3)}%`,
-            "--scroll-progress-rim-spectrum": spectrumGradient.value,
+            "--scroll-progress-rim-fill": fill.value,
+            ...(props.stops?.length
+                ? { "--scroll-progress-rim-ink": props.stops[0] }
+                : {}),
         }) as CSSProperties,
 );
 </script>
@@ -81,6 +98,7 @@ const style = computed<CSSProperties>(
     <div
         class="scroll-progress-rim"
         :data-orientation="orientation"
+        :data-edge="edge"
         :style="style"
         role="progressbar"
         aria-label="Scroll progress"
@@ -88,7 +106,13 @@ const style = computed<CSSProperties>(
         :aria-valuenow="value"
         :aria-valuemax="max"
     >
-        <span class="scroll-progress-rim__track track-ground" aria-hidden="true">
+        <span
+            v-if="edge === 'border'"
+            class="scroll-progress-rim__stroke"
+            aria-hidden="true"
+            :style="strokeStyle"
+        />
+        <span v-else class="scroll-progress-rim__track track-ground" aria-hidden="true">
             <span class="scroll-progress-rim__fill" />
             <span
                 v-if="marks.length"

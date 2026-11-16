@@ -157,14 +157,14 @@
     /* THE ROOM FOR THE RESERVE, on the scroll axis. The run hands its reserve back by a
        negative margin (the run rule below), so its scroll clip reaches
        `--dock-run-reserve-*` past its slot. That reach lands in room the dock owns,
-       never on a neighbour. Beside a persistent region the slot keeps the reserve, and
-       after a leading one the family gap as well, so the gap lies between the region
-       and the run's clip, and no scrolled seat paints under a persistent seat or takes
-       its hit. At the dock's edge the slot keeps whatever the reserve needs past the
+       never on a neighbour. Beside a persistent region, leading or trailing, the slot
+       keeps the reserve and the family gap, so the gap lies between the region and the
+       run's clip, and no scrolled seat paints under a persistent seat or takes its
+       hit. At the dock's edge the slot keeps whatever the reserve needs past the
        dock's own padding (none at the house geometry). The cross axis scrolls nothing
        and keeps the full hand-back. The room is the visible run's, so a collapsed dock
        (whose run is the inactive pane) keeps its own geometry, and the family gap
-       after a leading persistent region holds in both postures. These rules are the
+       beside a persistent region holds in both postures. These rules are the
        one owner of the layers' scroll-axis margins (`morph.css`'s empty-summary
        collapse zeroes them). */
     .glass-dock:not(.vertical):not(.collapsed) > .dock-controls > .dock-layers {
@@ -182,10 +182,14 @@
         margin-inline-start: calc(var(--dock-layer-gap, 0.375rem) + var(--dock-run-reserve-inline));
     }
 
+    .glass-dock:not(.vertical) > .dock-controls > .dock-layers:has(+ .dock-persistent-end) {
+        margin-inline-end: var(--dock-layer-gap, 0.375rem);
+    }
+
     .glass-dock:not(.vertical):not(.collapsed)
         > .dock-controls
         > .dock-layers:has(+ .dock-persistent-end) {
-        margin-inline-end: var(--dock-run-reserve-inline);
+        margin-inline-end: calc(var(--dock-layer-gap, 0.375rem) + var(--dock-run-reserve-inline));
     }
 
     .glass-dock.vertical:not(.collapsed) > .dock-controls > .dock-layers {
@@ -203,10 +207,14 @@
         margin-block-start: calc(var(--dock-layer-gap, 0.375rem) + var(--dock-run-reserve-block));
     }
 
+    .glass-dock.vertical > .dock-controls > .dock-layers:has(+ .dock-persistent-end) {
+        margin-block-end: var(--dock-layer-gap, 0.375rem);
+    }
+
     .glass-dock.vertical:not(.collapsed)
         > .dock-controls
         > .dock-layers:has(+ .dock-persistent-end) {
-        margin-block-end: var(--dock-run-reserve-block);
+        margin-block-end: calc(var(--dock-layer-gap, 0.375rem) + var(--dock-run-reserve-block));
     }
 
     /* Which of the run's scroll-axis edges is the plate's own edge (1) and which lies
@@ -411,31 +419,33 @@
         padding-block: min(var(--dock-run-reserve-block), var(--dock-run-room-block, 0px));
     }
 
-    .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> *) {
+    .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> :not(.dock-run-mark)) {
         padding-inline-end: 0;
     }
 
-    .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> *)::before,
-    .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> *)::after {
+    .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> :not(.dock-run-mark))::before,
+    .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> :not(.dock-run-mark))::after {
         content: "";
         flex: 0 var(--dock-run-yield) auto;
         inline-size: var(--dock-run-reserve-inline);
         min-inline-size: var(--dock-ring-reserve);
     }
 
-    .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> *)::before {
+    .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> :not(.dock-run-mark))::before {
         margin-inline: calc(-1 * var(--dock-run-reserve-inline)) calc(-1 * var(--dock-run-gap));
     }
 
-    .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> *)::after {
+    .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> :not(.dock-run-mark))::after {
         margin-inline-start: calc(-1 * var(--dock-run-gap));
     }
 
     /* THE SEATS. Every direct child of the run is a snap target and none of them flex —
        a seat that grows is a seat that is no longer an integer number of pitches, and
        the lattice dies quietly the moment one does. `start` alignment is what the
-       `scroll-padding` above is measured against. */
-    .glass-dock :where(.dock-layers) > .dock-run > * {
+       `scroll-padding` above is measured against. The run's mark (THE ACTIVE MARK,
+       below) is its one child that is not a seat, and every seat rule says so with
+       `:not(.dock-run-mark)`; script says it once, `isRunSeat` (useDockRunMark.ts). */
+    .glass-dock :where(.dock-layers) > .dock-run > :not(.dock-run-mark) {
         scroll-snap-align: start;
         flex: 0 0 auto;
     }
@@ -547,12 +557,48 @@
        declares its own `transition` keeps it: a slotted button's hover tween runs inside
        the run as it does outside. Such a control adds the extent to its own list to take
        part in the exchange, as the dock's icon and tab controls do
-       (controls/icon-button.css, controls/tab-button.css). */
-    :where(.glass-dock:not(.vertical) .dock-layers > .dock-run > *) {
+       (controls/icon-button.css, controls/tab-button.css). The run's mark is no seat
+       and takes none of it. */
+    :where(.glass-dock:not(.vertical) .dock-layers > .dock-run > :not(.dock-run-mark)) {
         transition: inline-size var(--spring-dock-duration) var(--spring-dock);
     }
-    :where(.glass-dock.vertical .dock-layers > .dock-run > *) {
+    :where(.glass-dock.vertical .dock-layers > .dock-run > :not(.dock-run-mark)) {
         transition: block-size var(--spring-dock-duration) var(--spring-dock);
+    }
+
+    /* ══ THE ACTIVE MARK — one selected plate per navigation run ════════════════
+       A run whose destination carries `aria-current` paints ONE selected plate, on the
+       run itself, and `useDockRunMark` moves it between seats on the dock spring
+       (reduced motion cuts it in one frame). The plate is one inert element the run
+       renders while it is marked, `.dock-run-mark` (GlassDock.vue): absolute, so its
+       containing block is the run's scrolled padding box and it scrolls with the seats
+       natively, and out of flow, so the horizontal run's `::before` and `::after` stay
+       its reserve boxes. It is no seat (`:not(.dock-run-mark)` above, `isRunSeat` in
+       script): no snap target, no roving stop, not counted in `data-run-fits`. The
+       script writes the plate's box on the run as five lengths, its inline offset from
+       the run's inline-start edge, so a live change of direction mirrors the mark with
+       the seats; the stylesheet owns the paint.
+
+       z-index −1 seats it in the dock's stacking context after the glass plate (which
+       comes first in the tree) and under every seat's content. The seat it marks paints
+       no selected plate of its own (no fill, no rim or lift, no backdrop), so the run
+       shows one shape however the seat became current, `active` included. */
+    .glass-dock :where(.dock-layers) > .dock-run > .dock-run-mark {
+        position: absolute;
+        inset-block-start: var(--dock-run-mark-y);
+        inset-inline-start: var(--dock-run-mark-x);
+        z-index: -1;
+        width: var(--dock-run-mark-w);
+        height: var(--dock-run-mark-h);
+        border-radius: var(--dock-run-mark-r);
+        background: var(--dock-control-active-bg);
+        pointer-events: none;
+    }
+
+    .glass-dock :where(.dock-layers) > .dock-run:has(> .dock-run-mark) [aria-current]:not([aria-current="false"]) {
+        background-color: transparent;
+        box-shadow: none;
+        backdrop-filter: none;
     }
 
     /* THE LABEL BUDGET — and why it is a CLIP, not a token.
@@ -647,9 +693,12 @@
             calc(var(--dock-layer-height) + 2 * var(--dock-padding-block))
         );
         /* The rest corner and its two-rung drop, per shape. The stadium's rest is half
-           the plate's cross extent (see above); the finite shapes name their own rest
-           so the keyframe never has to guess at a box height. */
-        --dock-cap-rest: calc(var(--dock-cross) / 2);
+           the plate's cross extent (see above), bounded by `--radius-dock`: the token is
+           the stadium (theme/radius.css), so the bound is inert by default, and a host
+           that sets `--radius-dock: 1rem` gets the bar corner in every posture and
+           through the morph, from this one length. The finite shapes name their own
+           rest so the keyframe never has to guess at a box height. */
+        --dock-cap-rest: min(var(--radius-dock), calc(var(--dock-cross) / 2));
         --dock-cap-cut: var(--radius-card);
     }
 
@@ -807,27 +856,51 @@
        Outside its range each arm holds its own end value (`fill: both`), which is what
        makes a deeply-scrolled run keep its leading cut instead of springing back. When
        there is NOTHING to scroll the animations are off (`data-run-fits`, below) and the
-       plate paints its base corner. */
-    .glass-dock .dock-plate {
-        animation:
-            gl-dock-cap-inline-start linear both,
-            gl-dock-cap-inline-end linear both;
-        animation-timeline: --dock-run, --dock-run;
-        animation-range:
-            0 var(--dock-pitch),
-            calc(100% - var(--dock-pitch)) 100%;
-        animation-direction: normal, reverse;
+       plate paints its base corner.
+
+       Under reduced motion the plate's corner holds still: the library's scroll-driven
+       register is motion, and the run's peek of its next seat still reports the
+       overflow. The run's clip follows the plate, which now rests: it holds the
+       plate's rest corner, still, with no scroll-driven animation either. */
+    @media (prefers-reduced-motion: no-preference) {
+        .glass-dock .dock-plate {
+            animation:
+                gl-dock-cap-inline-start linear both,
+                gl-dock-cap-inline-end linear both;
+            animation-timeline: --dock-run, --dock-run;
+            animation-range:
+                0 var(--dock-pitch),
+                calc(100% - var(--dock-pitch)) 100%;
+            animation-direction: normal, reverse;
+        }
+
+        .glass-dock.vertical .dock-plate {
+            animation:
+                gl-dock-cap-block-start linear both,
+                gl-dock-cap-block-end linear both;
+            animation-timeline: --dock-run, --dock-run;
+            animation-range:
+                0 var(--dock-pitch),
+                calc(100% - var(--dock-pitch)) 100%;
+            animation-direction: normal, reverse;
+        }
     }
 
-    .glass-dock.vertical .dock-plate {
-        animation:
-            gl-dock-cap-block-start linear both,
-            gl-dock-cap-block-end linear both;
-        animation-timeline: --dock-run, --dock-run;
-        animation-range:
-            0 var(--dock-pitch),
-            calc(100% - var(--dock-pitch)) 100%;
-        animation-direction: normal, reverse;
+    @media (prefers-reduced-motion: reduce) {
+        .glass-dock:not([data-run-fits]) :where(.dock-layers) > .dock-run.is-active {
+            animation: none;
+            border-start-start-radius: calc(var(--dock-run-edge-start) * var(--dock-run-corner-rest)) var(--dock-run-cross-half);
+            border-end-start-radius: calc(var(--dock-run-edge-start) * var(--dock-run-corner-rest)) var(--dock-run-cross-half);
+            border-start-end-radius: calc(var(--dock-run-edge-end) * var(--dock-run-corner-rest)) var(--dock-run-cross-half);
+            border-end-end-radius: calc(var(--dock-run-edge-end) * var(--dock-run-corner-rest)) var(--dock-run-cross-half);
+        }
+
+        .glass-dock.vertical:not([data-run-fits]) :where(.dock-layers) > .dock-run.is-active {
+            border-start-start-radius: var(--dock-run-cross-half) calc(var(--dock-run-edge-start) * var(--dock-run-corner-rest));
+            border-start-end-radius: var(--dock-run-cross-half) calc(var(--dock-run-edge-start) * var(--dock-run-corner-rest));
+            border-end-start-radius: var(--dock-run-cross-half) calc(var(--dock-run-edge-end) * var(--dock-run-corner-rest));
+            border-end-end-radius: var(--dock-run-cross-half) calc(var(--dock-run-edge-end) * var(--dock-run-corner-rest));
+        }
     }
 
     /* THE CAP RUNS ONLY ON A RUN THAT HIDES SOMETHING. An inactive scroll timeline

@@ -1,0 +1,19 @@
+01:32 partA-ch rc=0 head=a6b92fbc3 load=246.09 109.45 82.21  84 passed (5.8m) 
+01:42 partB-ch rc=1 head=a6b92fbc3 load=33.74 143.35 132.36  1 failed  22 passed (9.3m) 
+01:42 g6-4-ch rc=0 head=a6b92fbc3 load=48.87 137.98 130.73  23 passed (20.5s) 
+01:45 g6-3-ch rc=1 head=a6b92fbc3 load=34.50 91.68 112.64  7 failed  53 passed (2.9m) 
+01:47 r2-ch rc=1 head=a6b92fbc3 load=55.58 81.47 106.44  8 failed  44 passed (1.4m) 
+01:47 owner-ch rc=0 head=a6b92fbc3 load=72.18 83.65 106.65  9 passed (17.6s) 
+01:47 fix2-ch rc=0 head=a6b92fbc3 load=73.51 83.44 106.05  14 passed (17.8s) 
+01:48 c2-ch rc=0 head=a6b92fbc3 load=56.27 78.39 103.44  9 passed (29.1s) 
+01:48 chain ch done: partA partB g6-4 g6-3 r2 owner fix2 c2
+14:13 partA-wk rc=0 head=6f3df31a7 load=31.40 20.47 16.39  84 passed (5.7m) 
+14:21 partB-wk rc=0 head=6f3df31a7 load=25.78 21.94 18.80  23 passed (7.9m) 
+14:22 g6-4-wk rc=0 head=6f3df31a7 load=29.27 23.00 19.26  8 skipped  15 passed (21.7s) 
+14:22 chain wk done: partA partB g6-4
+14:25 g6-3-wk rc=1 head=6f3df31a7 load=13.54 19.16 18.45  5 failed  2 skipped  53 passed (2.8m) 
+14:26 r2-wk rc=1 head=6f3df31a7 load=17.52 19.44 18.63  8 failed  44 passed (1.2m) 
+14:26 owner-wk rc=0 head=6f3df31a7 load=17.07 19.23 18.57  9 passed (13.3s) 
+14:27 fix2-wk rc=0 head=6f3df31a7 load=15.75 18.78 18.42  14 passed (20.2s) 
+14:27 c2-wk rc=0 head=6f3df31a7 load=14.22 18.13 18.20  9 passed (29.7s) 
+14:27 chain wk done: g6-3 r2 owner fix2 c2

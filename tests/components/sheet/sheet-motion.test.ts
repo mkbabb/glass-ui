@@ -20,7 +20,7 @@ import { mount } from "@vue/test-utils";
 import { defineComponent, h, nextTick } from "vue";
 import { describe, expect, it, vi } from "vitest";
 
-import { sheetSlideTransform, scrimOpacity } from "@glass/components/sheet/motion";
+import { sheetEntryShear, sheetSlideTransform, scrimOpacity } from "@glass/components/sheet/motion";
 import * as springMountModule from "@glass/composables/motion/spring/useSpringMount";
 import { SheetContent } from "@glass/components/sheet";
 import {
@@ -73,7 +73,7 @@ describe("scrimOpacity (position → clamped opacity)", () => {
     });
 });
 
-function mountSheet(opts: { side?: "top" | "right" | "bottom" | "left" } = {}) {
+function mountSheet(opts: { side?: "top" | "right" | "bottom" | "left"; motion?: "full" | "reduced" | "off" } = {}) {
     const Host = defineComponent({
         setup() {
             return () =>
@@ -81,7 +81,7 @@ function mountSheet(opts: { side?: "top" | "right" | "bottom" | "left" } = {}) {
                     h(DialogTrigger, () => "open"),
                     h(
                         SheetContent,
-                        { class: "test-sheet", ...(opts.side ? { side: opts.side } : {}) },
+                        { class: "test-sheet", ...(opts.side ? { side: opts.side } : {}), ...(opts.motion ? { motion: opts.motion } : {}) },
                         () => [
                             h(DialogTitle, { class: "sr-only" }, () => "Sheet"),
                             h(DialogDescription, { class: "sr-only" }, () => "Sheet motion fixture."),
@@ -144,5 +144,39 @@ describe("SheetContent arming (SHEET-INTERRUPTIBLE-MOTION)", () => {
         } finally {
             spy.mockRestore();
         }
+    });
+});
+
+// The entry shear (parkway asked; the owner likes it): `--sheet-enter-skew` × the
+// slide's own scalar, so it springs to 0 with the slide and needs no clock of its own.
+describe("sheetEntryShear — the opt-in entry shear on the slide's scalar", () => {
+    it("carries the whole angle off the edge and none at rest", () => {
+        expect(sheetEntryShear("right", 1)).toBe("skewY(calc(var(--sheet-enter-skew) * 1))");
+        expect(sheetEntryShear("right", 0)).toBe("skewY(calc(var(--sheet-enter-skew) * 0))");
+        expect(sheetEntryShear("bottom", 0.5)).toBe("skewX(calc(var(--sheet-enter-skew) * 0.5))");
+    });
+
+    it("never leans past zero on the slide's rebound", () => {
+        expect(sheetEntryShear("right", -0.04)).toBe("skewY(calc(var(--sheet-enter-skew) * 0))");
+        expect(sheetEntryShear("left", -0.04)).toBe("skewY(calc(var(--sheet-enter-skew) * 0))");
+    });
+
+    it("mirrors on the left and top edges", () => {
+        expect(sheetEntryShear("left", 1)).toBe("skewY(calc(var(--sheet-enter-skew) * -1))");
+        expect(sheetEntryShear("top", 1)).toBe("skewX(calc(var(--sheet-enter-skew) * -1))");
+    });
+
+    it("writes the shear inline on the full register and none on the reduced one", async () => {
+        const full = mountSheet({ side: "right" });
+        await nextTick();
+        await nextTick();
+        expect(content()!.style.transform).toMatch(/^skewY\(calc\(var\(--sheet-enter-skew\) \* /);
+        full.unmount();
+
+        const reduced = mountSheet({ side: "right", motion: "reduced" });
+        await nextTick();
+        await nextTick();
+        expect(content()!.style.transform).toBe("none");
+        reduced.unmount();
     });
 });

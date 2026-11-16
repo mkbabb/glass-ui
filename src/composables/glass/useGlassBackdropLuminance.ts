@@ -121,6 +121,34 @@ export interface GlassBackdropTargetRect {
     height: number;
 }
 
+/* ── THE FRAME BATCH ──────────────────────────────────────────────────────────────
+   Every surface that asks for a sample in one frame is measured first, all of them,
+   then written: reads never interleave with writes, so one frame pays one style and
+   layout pass however many surfaces sample in it. One request per surface per frame. */
+const frameRequests = new Map<object, () => (() => void) | null>();
+let batchFrame = 0;
+
+function flushFrameSamples(): void {
+    batchFrame = 0;
+    const measures = [...frameRequests.values()];
+    frameRequests.clear();
+    const writes = measures.map((measure) => measure());
+    for (const commit of writes) commit?.();
+}
+
+function requestFrameSample(key: object, measure: () => (() => void) | null): void {
+    if (typeof requestAnimationFrame !== "function") {
+        measure()?.();
+        return;
+    }
+    frameRequests.set(key, measure);
+    if (!batchFrame) batchFrame = requestAnimationFrame(flushFrameSamples);
+}
+
+function cancelFrameSample(key: object): void {
+    frameRequests.delete(key);
+}
+
 /**
  * Shared-coverage marker. A route observer stamps this on its target; descendant
  * surface observers stand down and inherit its custom properties. A DOM marker is
@@ -237,6 +265,7 @@ export function useGlassBackdropLuminance(
         el: HTMLElement,
         mode: "live" | "static",
         sampledAt: number,
+        rect: GlassBackdropTargetRect,
     ): void {
         const value = result.luma;
         luma.value = value;
@@ -248,7 +277,7 @@ export function useGlassBackdropLuminance(
             source: mode === "live" ? "canvas" : "elements",
             luma: value,
             sampledAt,
-            targetRect: targetRect(el),
+            targetRect: rect,
         };
         el.style.setProperty("--glass-backdrop-luma", value.toFixed(3));
         // Stamp the first successful write so consumers can distinguish an unsampled
@@ -271,6 +300,7 @@ export function useGlassBackdropLuminance(
         mode: "live" | "static",
         reason: "source-unavailable" | "sample-unavailable",
         sampledAt: number,
+        rect: GlassBackdropTargetRect,
     ): void {
         luma.value = null;
         bucket.value = null;
@@ -280,7 +310,7 @@ export function useGlassBackdropLuminance(
             source: mode === "live" ? "canvas" : "elements",
             reason,
             sampledAt,
-            targetRect: targetRect(el),
+            targetRect: rect,
         };
         el.style.removeProperty("--glass-backdrop-luma");
         el.style.removeProperty("--glass-backdrop-sampled");
@@ -296,13 +326,18 @@ export function useGlassBackdropLuminance(
 
     let lastSampleAt = 0;
 
-    /** One sample now (bypasses the throttle — mount + resize-settle path). */
-    function sampleNow(): void {
+    /**
+     * Read everything one sample needs (the surface's rect, the elements or canvas
+     * under it) and return the write that applies it, or null when nothing is owed.
+     * Reads and writes are split so a frame that samples several surfaces reads them
+     * all before it writes any (`requestBatchSample`).
+     */
+    function measure(): (() => void) | null {
         const el = target.value;
-        if (!el) return;
+        if (!el) return null;
         // STAND DOWN — a shared route observer covers this per-surface target; inherit its
         // `--glass-backdrop-*` via the cascade (zero readback — the 12→1 collapse).
-        if (coveredByShared(el)) return;
+        if (coveredByShared(el)) return null;
         // Live intent has one source of truth: an unavailable canvas is surfaced as
         // unavailable, never substituted with the static stack-walk/default signal.
         const ctx = getDownContext();
@@ -316,20 +351,39 @@ export function useGlassBackdropLuminance(
             mode === "live"
                 ? sampleAnimated(el, source, ctx, resolveUnderlayRgb(el, ctx))
                 : sampleStatic(el, ctx);
-        const sampledAt = Date.now();
-        if (result) write(result, el, mode, sampledAt);
-        else
-            writeUnavailable(
-                el,
-                mode,
-                mode === "live" && !source
-                    ? "source-unavailable"
-                    : "sample-unavailable",
-                sampledAt,
-            );
-        lastSampleAt =
-            typeof performance !== "undefined" ? performance.now() : sampledAt;
+        const rect = targetRect(el);
+        return () => {
+            const sampledAt = Date.now();
+            if (result) write(result, el, mode, sampledAt, rect);
+            else
+                writeUnavailable(
+                    el,
+                    mode,
+                    mode === "live" && !source
+                        ? "source-unavailable"
+                        : "sample-unavailable",
+                    sampledAt,
+                    rect,
+                );
+            lastSampleAt =
+                typeof performance !== "undefined" ? performance.now() : sampledAt;
+        };
     }
+
+    /** One sample now, read and written in this task (an explicit caller's request). */
+    function sampleNow(): void {
+        measure()?.();
+    }
+
+    /**
+     * One sample on the next frame, batched with every other surface's. A surface that
+     * mounts asks for its first sample here, never in the mounting task: a read there
+     * would force the style and layout of everything mounting with it.
+     */
+    function requestBatchSample(): void {
+        requestFrameSample(instance, measure);
+    }
+    const instance = {};
 
     // ── Live re-sampling: event-driven, throttled to ≤ 4 Hz, trailing ───────────────
     // There is no frame loop. The pixels under a live surface change only when the field
@@ -430,7 +484,7 @@ export function useGlassBackdropLuminance(
     );
 
     // ── Resize-settle re-sample (the static page case re-samples on a layout change) ─
-    const ro = useResizeObserver(target, () => sampleNow());
+    const ro = useResizeObserver(target, () => requestBatchSample());
 
     // ── Arm/disarm live re-sampling on PRM flips ─────────────────────────────────────
     function applyMotionState(): void {
@@ -443,7 +497,7 @@ export function useGlassBackdropLuminance(
         }
         if (prefersReduced.value) {
             disarmLive();
-            sampleNow(); // one static frame under reduce (the substrate freezes too)
+            requestBatchSample(); // one static frame under reduce (the substrate freezes too)
         } else if (wantsLive()) {
             // Each sample re-resolves the requested field canvas as it mounts.
             armLive();
@@ -463,13 +517,14 @@ export function useGlassBackdropLuminance(
             // no re-sampling); an uncovered surface self-samples (the honest floor).
             if (isShared) el.setAttribute(GLASS_BACKDROP_SHARED_ATTR, "");
             else if (coveredByShared(el)) return;
-            sampleNow();
+            requestBatchSample();
             applyMotionState();
         },
         { immediate: true, flush: "post" },
     );
 
     function dispose(): void {
+        cancelFrameSample(instance);
         stopTargetWatch();
         stopMotionWatch();
         disarmLive();

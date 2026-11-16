@@ -1,0 +1,12 @@
+@import "tailwindcss" source("../../../../src");
+@import "tw-animate-css";
+@import "../../../../src/styles/index.css";
+
+body { margin: 0; background: var(--background); color: var(--foreground); }
+.scene { padding: 32px 16px; display: flex; flex-direction: column; gap: 24px; align-items: flex-start; }
+.hero { font-size: 56px; line-height: 1.1; font-weight: 700; margin: 0; max-inline-size: 340px; }
+.section { font-size: 24px; line-height: 1.25; font-weight: 600; margin: 0; }
+.body { font-size: 16px; margin: 0; }
+.focal-probe { color: var(--primary); }
+.spring-probe { animation-timing-function: var(--spring-present); }
+.fold { block-size: 200vh; }

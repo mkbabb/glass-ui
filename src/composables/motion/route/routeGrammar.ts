@@ -29,9 +29,10 @@
 //             reserved for impact"). MOTION-CANON LAW 4 permits exactly one rebounding
 //             row and this is it, so the bloom costs no second register and no literal.
 //
-//   lateral   `dock` — the coordinated travel. A sibling push is a rect travelling
-//             between two positions, which is dock's job by name (BK ⊕⁴¹ made the same
-//             ruling for #48's member travel).
+//   lateral   `dock` — the coordinated travel. A sibling swap is a card travelling in
+//             over the one it replaces, which is dock's job by name (BK ⊕⁴¹ made the
+//             same ruling for #48's member travel). The page does not fade and the world
+//             does not move.
 //
 //   collapse  NO SPRING. MOTION-CANON §7: an exit takes `--ease-in`, a bezier, always —
 //             "an exit must not overshoot past gone" — and the codex measures the return
@@ -40,15 +41,16 @@
 //             never outlast the arrival it undoes.
 //
 // ── THE WORLD, AND THE ONE DEVIATION THIS TABLE SHIPS ────────────────────────────────
-// Every class that moves a window also recedes its world (MOTION-CANON §3(d) RECEDE:
+// Every class that flies a window also recedes its world (MOTION-CANON §3(d) RECEDE:
 // translateY + blur + dim, all three together, for a world being REPLACED). The world
 // binds `world` — the row whose ONE JOB is the world's recession — and the codex's
 // "world at 1.7-2× the foreground clock" is therefore not a figure we set but a RATIO our
 // table-fixed rows produce. Measured off the generated settles it is 1.267× for `zoom`
-// (0.57 / 0.45), 2.714× for `lateral` (0.57 / 0.21) and exactly 2.000× for `collapse`
-// (0.25 + 0.25, over 0.25): one class lands inside the codex's band and the other two
-// BRACKET it. Reaching the band in all three would take either a route-only clock literal
-// or a second row owning a job it does not own, and both are forbidden. What the band
+// (0.57 / 0.45) and exactly 2.000× for `collapse` (0.25 + 0.25, over 0.25): one class
+// lands inside the codex's band and the other sits below it. `lateral` has no world: its
+// card swap keeps the page where it is. Reaching the band in both would take either a
+// route-only clock literal or a second row owning a job it does not own, and both are
+// forbidden. What the band
 // actually expresses — the world is strictly slower than the foreground and finishes
 // LAST, in both directions — holds in every class, and that is what the gate arm checks
 // against the generated tokens rather than against a remembered multiple.
@@ -106,11 +108,11 @@ export const ROUTE_GRAMMAR: readonly RouteNavRow[] = [
         nav: "lateral",
         foreground: "dock",
         ease: null,
-        world: "world",
+        world: null,
         clock: "duration",
         worldWaitsForForeground: false,
         comment:
-            "Sibling to sibling — the coordinated push, with the world trailing at the parallax ratio so depth reads without anything else moving.",
+            "Sibling to sibling — an opaque card swap: the departing card recedes in place, the arriving card slides in from the destination's side above it, and nothing else moves or fades.",
     },
     {
         nav: "collapse",
@@ -141,7 +143,7 @@ export const ROUTE_CONSTANTS = {
     inhaleScale: 1.57,
     /** I4, the same beat's window. The label is already gone by the time it ends. */
     inhaleMs: 42,
-    /** I4b: "the lateral push runs parallax ~1:8". One ratio, both parallax cases. */
+    /** I4b: "parallax ~1:8". The world's travel behind a window that flies. */
     parallax: 1 / 8,
     /** I4: "opacity held then CUT at the last tenth" — the hold ends at 90% of the exit. */
     opacityCutAt: 0.9,

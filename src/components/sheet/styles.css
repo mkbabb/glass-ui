@@ -33,6 +33,15 @@
     :where([data-slot="sheet-content"]) {
         z-index: var(--z-modal);
     }
+
+    /* THE ENTRY SHEAR. The angle a sliding sheet is sheared by as it starts to enter;
+       it springs to 0 with the slide itself (SheetContent writes
+       `skew(var(--sheet-enter-skew) × the slide's position)`), so the sheet settles
+       square. 0 by default: set it at `:root`, or on the sheet's class, to opt in. A
+       transform only, with no layout cost; reduced motion draws no shear. */
+    :root {
+        --sheet-enter-skew: 0deg;
+    }
 }
 
 /* ── THE DETENT IS A SIZE ──────────────────────────────────────────────────────────

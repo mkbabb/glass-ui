@@ -17,6 +17,7 @@ import { returnFocusQuietly, useModalShortcutBarrier } from "../_shared/overlay"
 import {
     scrimDetentOpacity,
     scrimOpacity,
+    sheetEntryShear,
     sheetSlideTransform,
     type SidePlacement,
 } from "./motion";
@@ -156,10 +157,13 @@ const springStyle = computed<CSSProperties | undefined>(() => {
     if (detented.value) return { "--detent-t": String(sheetDetents.t.value) };
     // The slide rides the `translate` LONGHAND: an unclamped position drives a
     // side-keyed off-edge offset, and `p<0` overshoot IS the liquid settle.
-    // `transform/animation/transition: none` make the inline longhand the sole source.
+    // `animation/transition: none` make the inline values the sole source. `transform`
+    // carries the entry shear on the same scalar (0 unless `--sheet-enter-skew` is
+    // set); a reduced register (the OS setting or `motion="reduced"`) draws none.
+    const p = springMount.position.value;
     return {
-        translate: sheetSlideTransform(props.side, springMount.position.value),
-        transform: "none",
+        translate: sheetSlideTransform(props.side, p),
+        transform: motionAxis.resolved.value === "full" ? sheetEntryShear(props.side, p) : "none",
         animation: "none",
         transition: "none",
     };

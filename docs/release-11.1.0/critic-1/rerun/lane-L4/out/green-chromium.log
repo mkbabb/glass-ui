@@ -1,0 +1,31 @@
+PASS O-175(2) 390 dark OS, no class == light OS, no class {"differs":[]}
+PASS O-175(2) 390 light OS, .dark == dark OS, .dark {"differs":[]}
+PASS O-185 390-light no LCP entry names .dock-plate {"lcpSupported":true,"entries":[{"size":210,"url":"","time":132,"element":"p.","dockPlate":false}]}
+PASS O-185 390-light the grain paints as generated gradients, with no url() image {"backgroundImage":"radial-gradient(circle at 30% 40%, rgb(2","maskImage":"none","backgroundColor":"rgba(0, 0, 0, 0)","opacity":"0.025","blend":"overlay"}
+PASS O-204(3) 390-light the body paints 10 px outside the wrapper on all four sides {"drawn":true,"deltas":{"right":125,"left":142,"top":105,"bottom":162},"contain":"layout style","contentVisibility":"visible"}
+PASS O-185 390-dark no LCP entry names .dock-plate {"lcpSupported":true,"entries":[{"size":210,"url":"","time":140,"element":"p.","dockPlate":false}]}
+PASS O-185 390-dark the grain paints as generated gradients, with no url() image {"backgroundImage":"radial-gradient(circle at 30% 40%, rgb(2","maskImage":"none","backgroundColor":"rgba(0, 0, 0, 0)","opacity":"0.025","blend":"soft-light"}
+PASS O-204(3) 390-dark the body paints 10 px outside the wrapper on all four sides {"drawn":true,"deltas":{"right":214,"left":189,"top":220,"bottom":173},"contain":"layout style","contentVisibility":"visible"}
+PASS O-204(3) 390-light park: frames while visible > 0, while scrolled away 0, back > 0 {"visible":120,"away":0,"back":120}
+PASS O-175(2) 1440 dark OS, no class == light OS, no class {"differs":[]}
+PASS O-175(2) 1440 light OS, .dark == dark OS, .dark {"differs":[]}
+PASS O-185 1440-light no LCP entry names .dock-plate {"lcpSupported":true,"entries":[{"size":210,"url":"","time":132,"element":"p.","dockPlate":false}]}
+PASS O-185 1440-light the grain paints as generated gradients, with no url() image {"backgroundImage":"radial-gradient(circle at 30% 40%, rgb(2","maskImage":"none","backgroundColor":"rgba(0, 0, 0, 0)","opacity":"0.025","blend":"overlay"}
+PASS O-204(3) 1440-light the body paints 10 px outside the wrapper on all four sides {"drawn":true,"deltas":{"right":125,"left":142,"top":105,"bottom":162},"contain":"layout style","contentVisibility":"visible"}
+PASS O-185 1440-dark no LCP entry names .dock-plate {"lcpSupported":true,"entries":[{"size":210,"url":"","time":132,"element":"p.","dockPlate":false}]}
+PASS O-185 1440-dark the grain paints as generated gradients, with no url() image {"backgroundImage":"radial-gradient(circle at 30% 40%, rgb(2","maskImage":"none","backgroundColor":"rgba(0, 0, 0, 0)","opacity":"0.025","blend":"soft-light"}
+PASS O-204(3) 1440-dark the body paints 10 px outside the wrapper on all four sides {"drawn":true,"deltas":{"right":214,"left":189,"top":220,"bottom":173},"contain":"layout style","contentVisibility":"visible"}
+PASS O-204(3) 1440-light park: frames while visible > 0, while scrolled away 0, back > 0 {"visible":101,"away":0,"back":120}
+green chromium: 18 pass, 0 fail, 0 n/a
+PASS 390 O-173 G2 the sheet is served and carries 0 data URIs {"status":200,"bytes":2145,"dataUris":0}
+PASS 390 O-173 G2 Jakarta 400 and 600 and Fira Code load from files {"check":{"jakarta400":true,"jakarta600":true,"fira":true,"plex400":true,"plexItalic":true}}
+PASS 390 O-173 G2 every woff2 request is a file under /dist/fonts/ and answers 200 [{"url":"/dist/fonts/plus-jakarta-sans/plus-jakarta-sans-latin.woff2","status":200},{"url":"/dist/fonts/fira-code/fira-code-latin.woff2","status":200},{"url":"/dist/fonts/ibm-plex-sans/ibm-plex-sans-l
+PASS 390 O-173 G2 layout shift <= 0.01 {"cls":0}
+PASS 390 O-163 IBM Plex Sans upright and italic load [{"family":"IBM Plex Sans","style":"normal","weight":"100 700","status":"loaded"},{"family":"IBM Plex Sans","style":"italic","weight":"100 700","status":"loaded"}]
+PASS 1440 O-173 G2 the sheet is served and carries 0 data URIs {"status":200,"bytes":2145,"dataUris":0}
+PASS 1440 O-173 G2 Jakarta 400 and 600 and Fira Code load from files {"check":{"jakarta400":true,"jakarta600":true,"fira":true,"plex400":true,"plexItalic":true}}
+PASS 1440 O-173 G2 every woff2 request is a file under /dist/fonts/ and answers 200 [{"url":"/dist/fonts/plus-jakarta-sans/plus-jakarta-sans-latin.woff2","status":200},{"url":"/dist/fonts/fira-code/fira-code-latin.woff2","status":200},{"url":"/dist/fonts/ibm-plex-sans/ibm-plex-sans-i
+PASS 1440 O-173 G2 layout shift <= 0.01 {"cls":0}
+PASS 1440 O-163 IBM Plex Sans upright and italic load [{"family":"IBM Plex Sans","style":"normal","weight":"100 700","status":"loaded"},{"family":"IBM Plex Sans","style":"italic","weight":"100 700","status":"loaded"}]
+green chromium fonts: 10 pass, 0 fail
+probe exit 0, fontprobe exit 0

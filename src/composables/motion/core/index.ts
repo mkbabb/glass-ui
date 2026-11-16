@@ -17,6 +17,9 @@ export * from "./constants";
 // `useVerdictMoment.ts:60`, all off `/motion-core`. It is Vue-only, engine-free,
 // and vueuse-free, so it ships on /motion-core.
 export * from "../reveal/useStagger";
+// The data-viz entrance register (mark → present, bar → panel, ripple → bloom) and the
+// one cascade spacing `useStagger` defaults to.
+export * from "../reveal/entranceRegister";
 export * from "../scroll/useScrollProgress";
 export * from "./useRAFLoop";
 export * from "./useReducedMotion";

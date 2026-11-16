@@ -1,0 +1,114 @@
+/* glass/viz-enter.css
+   The data-viz entrance register: three entrances for chart marks, each on a named
+   spring the table already has (composables/motion/reveal/entranceRegister.ts is the
+   JS twin and the one record of which row lands which kind).
+
+     .viz-mark    a point, dot or glyph lands in place           --spring-present
+     .viz-bar     a bar or area grows from its baseline           --spring-panel
+     .viz-ripple  a radial field or map pulse opens from a point  --spring-bloom
+
+   THE BAR NEVER DRAWS PAST ITS VALUE. `panel` is the one row with an intrinsic
+   rebound, and a bar that overshoots its value lies about the data. So the bar is not
+   scaled: a clip uncovers it from its baseline. The rebound carries the clip past the
+   bar's own box, where there is nothing to paint, so the bar arrives with the row's
+   attack and rests at its value. The baseline is the bottom; `data-viz-from` names
+   another edge (`top` for a bar hanging from a baseline above it, `left` or `right`
+   for a horizontal bar).
+
+   THE CASCADE. Each item sets its index `--i`; the series sets its length `--viz-n`.
+   The spacing is the canonical stagger, tightened so the last item starts inside one
+   `panel` duration: `min(--motion-stagger-default, panel / n)`. `useStagger` defaults
+   to the same spacing in JS.
+
+   A mark lands by scale from its own centre (`transform-box: fill-box`, so an SVG
+   mark scales about itself, not the chart's origin) and does not fade. Under reduced
+   motion nothing animates: every mark is drawn where it rests.
+
+   @import-ed by glass.css after liquid-enter.css, in its own @layer components. */
+
+@layer components {
+    .viz-mark,
+    .viz-bar,
+    .viz-ripple {
+        --viz-stagger: min(var(--motion-stagger-default), var(--spring-panel-duration) / var(--viz-n, 1));
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        .viz-mark {
+            transform-box: fill-box;
+            transform-origin: center;
+            animation: gl-viz-land var(--spring-present-duration) var(--spring-present) both;
+            animation-delay: calc(var(--viz-stagger) * var(--i, 0));
+        }
+
+        .viz-bar {
+            animation: gl-viz-grow-up var(--spring-panel-duration) var(--spring-panel) backwards;
+            animation-delay: calc(var(--viz-stagger) * var(--i, 0));
+        }
+        .viz-bar[data-viz-from="top"] {
+            animation-name: gl-viz-grow-down;
+        }
+        .viz-bar[data-viz-from="left"] {
+            animation-name: gl-viz-grow-right;
+        }
+        .viz-bar[data-viz-from="right"] {
+            animation-name: gl-viz-grow-left;
+        }
+
+        .viz-ripple {
+            animation: gl-viz-ripple var(--spring-bloom-duration) var(--spring-bloom) backwards;
+            animation-delay: calc(var(--viz-stagger) * var(--i, 0));
+        }
+    }
+}
+
+@keyframes gl-viz-land {
+    from {
+        scale: 0;
+    }
+}
+
+/* Each grow names the edge that travels; the baseline edge holds at 0. */
+@keyframes gl-viz-grow-up {
+    from {
+        clip-path: inset(100% 0 0 0);
+    }
+    to {
+        clip-path: inset(0 0 0 0);
+    }
+}
+@keyframes gl-viz-grow-down {
+    from {
+        clip-path: inset(0 0 100% 0);
+    }
+    to {
+        clip-path: inset(0 0 0 0);
+    }
+}
+@keyframes gl-viz-grow-right {
+    from {
+        clip-path: inset(0 100% 0 0);
+    }
+    to {
+        clip-path: inset(0 0 0 0);
+    }
+}
+@keyframes gl-viz-grow-left {
+    from {
+        clip-path: inset(0 0 0 100%);
+    }
+    to {
+        clip-path: inset(0 0 0 0);
+    }
+}
+
+/* The ripple opens from `--viz-ripple-at` (the centre by default) to past the far
+   corner. */
+@keyframes gl-viz-ripple {
+    from {
+        clip-path: circle(0 at var(--viz-ripple-at, 50% 50%));
+    }
+    to {
+        clip-path: circle(150% at var(--viz-ripple-at, 50% 50%));
+    }
+}

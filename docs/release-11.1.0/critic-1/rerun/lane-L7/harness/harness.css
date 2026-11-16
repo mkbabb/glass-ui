@@ -1,0 +1,13 @@
+@import "tailwindcss" source("../../../../src");
+@import "tw-animate-css";
+@import "../../../../src/styles/index.css";
+
+body { margin: 0; background: var(--background); color: var(--foreground); }
+.scene { padding: 48px 16px; display: flex; flex-direction: column; gap: 28px; align-items: flex-start; }
+.mark-line { font-size: 48px; line-height: 1.2; font-weight: 700; margin: 0; white-space: nowrap; }
+.spring-probe { animation-duration: var(--spring-present-duration); animation-timing-function: var(--spring-present); }
+#pm { position: fixed; left: 0; top: 0; width: 20px; height: 20px; background: transparent; }
+/* The instrument control: a plain composited transform animation, always running. Inside a
+   blocked task, a screencast that can see compositor frames sees this square move. */
+#ctl { position: fixed; left: 30px; top: 0; width: 20px; height: 20px; background: rgb(255, 0, 255); animation: ctl 1s linear infinite; }
+@keyframes ctl { to { transform: translateX(200px); } }

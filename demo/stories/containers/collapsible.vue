@@ -23,12 +23,12 @@ const keyboardOpen = ref(false);
         >
             <div class="grid gap-4 sm:grid-cols-2">
                 <ShowcaseFrame caption="Closed" pad="sm">
-                    <Collapsible data-scenario="collapsible-closed" class="grid gap-3">
+                    <Collapsible data-scenario="collapsible-closed" class="[--collapsible-gap:--spacing(3)]">
                         <CollapsibleTrigger as-child>
                             <Button emphasis="quiet">Show release notes</Button>
                         </CollapsibleTrigger>
                         <CollapsibleContent class="text-small">
-                            The region opens from its measured block size.
+                            The region grows to its own height and gives it back on close.
                         </CollapsibleContent>
                     </Collapsible>
                 </ShowcaseFrame>
@@ -37,7 +37,7 @@ const keyboardOpen = ref(false);
                     <Collapsible
                         data-scenario="collapsible-open"
                         default-open
-                        class="grid gap-3"
+                        class="[--collapsible-gap:--spacing(3)]"
                     >
                         <CollapsibleTrigger as-child>
                             <Button emphasis="quiet">Hide release notes</Button>
@@ -58,7 +58,7 @@ const keyboardOpen = ref(false);
                 <Collapsible
                     v-model:open="controlledOpen"
                     data-scenario="collapsible-controlled"
-                    class="grid gap-3"
+                    class="[--collapsible-gap:--spacing(3)]"
                 >
                     <div class="flex items-center justify-between gap-3">
                         <div>
@@ -114,7 +114,7 @@ const keyboardOpen = ref(false);
                     <Collapsible
                         v-model:open="keyboardOpen"
                         data-scenario="collapsible-keyboard"
-                        class="grid gap-3"
+                        class="[--collapsible-gap:--spacing(3)]"
                     >
                         <CollapsibleTrigger as-child>
                             <Button emphasis="quiet">Press Enter or Space</Button>
@@ -129,13 +129,13 @@ const keyboardOpen = ref(false);
                     <Collapsible
                         data-scenario="collapsible-prm"
                         default-open
-                        class="grid gap-3"
+                        class="[--collapsible-gap:--spacing(3)]"
                     >
                         <CollapsibleTrigger as-child>
                             <Button emphasis="quiet">Motion-aware region</Button>
                         </CollapsibleTrigger>
                         <CollapsibleContent class="text-small">
-                            Reduced motion makes the measured-size transition effectively immediate.
+                            Reduced motion opens and closes the region in one step.
                         </CollapsibleContent>
                     </Collapsible>
                 </ShowcaseFrame>

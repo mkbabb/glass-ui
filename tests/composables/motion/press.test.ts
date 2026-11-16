@@ -116,38 +116,103 @@ describe("useLiquidPress", () => {
         expect(mounted.result.pressStyle.value).toBe(restStyle);
         expect(spy).not.toHaveBeenCalledWith(el);
 
-        // A press still couples the cap to the element's live weight.
+        // A press still couples the cap to the element's weight, read once as the press
+        // begins and never again while the spring moves.
         mounted.result.press();
         await settle(4);
         expect(mounted.result.pressStyle.value.scale).toBeDefined();
-        expect(spy).toHaveBeenCalledWith(el);
+        const reads = spy.mock.calls.filter(([target]) => target === el).length;
+        expect(reads).toBe(1);
+        await settle(8);
+        void mounted.result.pressStyle.value;
+        expect(spy.mock.calls.filter(([target]) => target === el).length).toBe(reads);
 
         mounted.unmount();
         el.remove();
     });
 
-    // B7c C3-5: the per-control `:root` tempo read. Every spring read `--motion-tempo`
-    // off `:root` at construction, one forced style read per pressable control.
-    it("reads the root tempo once for a batch of controls mounted in one task", async () => {
+    // The `:root` tempo is one shared value within a synchronous run: a scene of
+    // pressable controls mounting together reads it once at most.
+    it("reads the root tempo once for a scene of presses", async () => {
         const spy = vi.spyOn(window, "getComputedStyle");
+        const rootReads = () =>
+            spy.mock.calls.filter(([el]) => el === document.documentElement).length;
         const mounted = Array.from({ length: 12 }, () =>
             mountComposable(() => useLiquidPress({ squish: false })),
         );
-        const rootReads = spy.mock.calls.filter(
-            ([el]) => el === document.documentElement,
-        ).length;
-        expect(rootReads).toBe(1);
+        expect(rootReads()).toBeLessThanOrEqual(1);
 
-        // A tempo set between tasks still reaches the next mount.
+        // A later scene reads the cascade afresh, once.
         await Promise.resolve();
-        document.documentElement.style.setProperty("--motion-tempo", "0.5");
-        const later = mountComposable(() => useLiquidPress({ squish: false }));
-        expect(
-            spy.mock.calls.filter(([el]) => el === document.documentElement).length,
-        ).toBe(2);
-
-        document.documentElement.style.removeProperty("--motion-tempo");
-        later.unmount();
+        const before = rootReads();
+        const scene = Array.from({ length: 12 }, () =>
+            mountComposable(() => useLiquidPress({ squish: false })),
+        );
+        expect(rootReads()).toBeLessThanOrEqual(before + 1);
+        for (const m of scene) m.unmount();
         for (const m of mounted) m.unmount();
+    });
+
+    // The staleness path, on a fresh reader. happy-dom holds a MutationObserver's report
+    // callback only through a `WeakRef`, so after a garbage collection its observers stop
+    // hearing mutations: the same test on happy-dom's observer lost the change about one
+    // run in six. The observer here is the platform's contract (records queue on a
+    // mutation, `takeRecords` hands them over), so the reader's own logic is what runs.
+    it("reads the root tempo again after <html> changes, even in the same task", async () => {
+        const pending: MutationRecord[] = [];
+        class RecordingObserver {
+            observe(target: Node, init: MutationObserverInit): void {
+                if (target !== document.documentElement || !init.attributes) return;
+                const set = Element.prototype.setAttribute;
+                vi.spyOn(document.documentElement, "setAttribute").mockImplementation(function (
+                    this: Element,
+                    name: string,
+                    value: string,
+                ) {
+                    set.call(this, name, value);
+                    pending.push({ type: "attributes", attributeName: name } as MutationRecord);
+                });
+            }
+            takeRecords(): MutationRecord[] {
+                return pending.splice(0);
+            }
+            disconnect(): void {}
+        }
+        vi.resetModules();
+        vi.stubGlobal("MutationObserver", RecordingObserver);
+        const { motionTempo } = await import("@glass/composables/motion/core/motionTempo");
+        const spy = vi.spyOn(window, "getComputedStyle");
+        const rootReads = () =>
+            spy.mock.calls.filter(([el]) => el === document.documentElement).length;
+
+        for (let i = 0; i < 12; i++) motionTempo();
+        expect(rootReads()).toBe(1);
+
+        document.documentElement.setAttribute("data-tempo-probe", "");
+        motionTempo();
+        expect(rootReads()).toBe(2);
+        motionTempo();
+        expect(rootReads()).toBe(2);
+
+        vi.unstubAllGlobals();
+        document.documentElement.removeAttribute("data-tempo-probe");
+    });
+
+    // The shared value lasts one synchronous run. A rule inserted into a sheet, a width
+    // query or a stylesheet that loads later change no attribute; the next run reads the
+    // cascade. It leaves no timer behind.
+    it("reads the root tempo again in the next run, leaving no timer", async () => {
+        vi.resetModules();
+        const { motionTempo } = await import("@glass/composables/motion/core/motionTempo");
+        const spy = vi.spyOn(window, "getComputedStyle");
+        const rootReads = () =>
+            spy.mock.calls.filter(([el]) => el === document.documentElement).length;
+
+        for (let i = 0; i < 12; i++) motionTempo();
+        expect(rootReads()).toBe(1);
+        expect(vi.getTimerCount()).toBe(0);
+        await Promise.resolve();
+        for (let i = 0; i < 12; i++) motionTempo();
+        expect(rootReads()).toBe(2);
     });
 });

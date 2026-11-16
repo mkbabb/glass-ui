@@ -37,7 +37,11 @@ import {
 } from "vue";
 import { useSpringPress, type UseSpringPressOptions } from "./useSpringPress";
 import { useLiquidFlex } from "./useLiquidFlex";
-import { effectiveCap } from "../core/writeVelocityWeight";
+import {
+    capAtWeight,
+    MOTION_WEIGHT_REST,
+    motionWeightOf,
+} from "../core/writeVelocityWeight";
 
 export interface UseLiquidPressOptions extends UseSpringPressOptions {
     /**
@@ -168,27 +172,27 @@ export function useLiquidPress(
     // LOW. The SAME drive calls carry the release (no free-running timer — the M5
     // determinism `useLiquidFlex` documents). Built ONLY on the squishy register — the bare
     // mode (`squish: false`) presses on a uniform shrink alone (the calmer register).
-    const squish = squishOn
+    // The pressed element's weight, read when a press begins (see `activate`).
+    let pressWeight = MOTION_WEIGHT_REST;
+    const squish: ReturnType<typeof useLiquidFlex> | null = squishOn
         ? useLiquidFlex({
               from: 0,
               to: 1,
               axis: "width",
-              // the cap is weight-coupled SITE-LOCALLY: `effectiveCap`
-              // reads the live `--motion-weight` off the pressed element and returns the
-              // `maxStretch` cap at rest 0.618, 1.0 at weight 0 (the observer/PRM fence). No
-              // element → the static cap (still correct at rest weight). The reciprocal
-              // squish is the GENTLE press register.
-              //
-              // At rest (press value 0) the travel is 0, so the stretch is 1 whatever the
-              // cap (`effectiveCap` never returns below 1). The getter therefore reads no
-              // computed style and tracks no element ref until a press moves the spring:
-              // a page of mounted controls pays no forced style recalculation and no
-              // second render when each template ref binds.
+              // the cap is weight-coupled SITE-LOCALLY: the pressed element's
+              // `--motion-weight` scales the `maxStretch` cap (the cap at rest 0.618, 1.0
+              // at weight 0, the observer/PRM fence), deepened by the press's own
+              // velocity term. The weight is read ONCE, when the press begins
+              // (`activate`); the velocity term is the one this squish computes. So the
+              // getter reads no style: not at mount, not per frame. At rest (press value
+              // 0) the stretch is 1 whatever the cap. The reciprocal squish is the GENTLE
+              // press register.
               maxStretch: () =>
                   press.value.value === 0
                       ? 1
-                      : effectiveCap(
-                            options.el?.value ?? null,
+                      : capAtWeight(
+                            pressWeight,
+                            squish?.flexVel.value ?? 0,
                             toValue(options.maxStretch ?? 1.04),
                         ),
               squishLaw: "linear",
@@ -204,7 +208,12 @@ export function useLiquidPress(
 
     const isDisabled = (): boolean => Boolean(toValue(options.disabled));
     const activate = (): void => {
-        if (!isDisabled()) press.press();
+        if (isDisabled()) return;
+        if (squishOn) {
+            const el = options.el?.value;
+            pressWeight = el ? motionWeightOf(el).weight : MOTION_WEIGHT_REST;
+        }
+        press.press();
     };
     const release = (): void => press.release();
 

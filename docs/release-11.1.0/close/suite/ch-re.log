@@ -1,0 +1,251 @@
+
+Running 30 tests using 1 worker
+
+  ✘   1 [chromium-headless-new] › tests-visual/dockmorph-cta.spec.ts:39:5 › dockmorph-cta — the CTA-receive landing SEAT (π lane, LOCAL) › the seat reserves its box (no jump) and reveals with an opacity FLIP (740ms)
+  ✓   2 [chromium-headless-new] › tests-visual/dockmorph-cta.spec.ts:132:5 › dockmorph-cta — the CTA-receive landing SEAT (π lane, LOCAL) › PRM — the seat reveal is an INSTANT opacity swap (transition off) (430ms)
+  ✓   3 [chromium-headless-new] › tests-visual/easing-primitive.spec.ts:69:5 › BK #85 W-EASING — the published curve family (π) › P1 — the bezier stroke plots the real CubicBezier twin (986ms)
+  ✓   4 [chromium-headless-new] › tests-visual/easing-primitive.spec.ts:102:5 › BK #85 W-EASING — the published curve family (π) › P2 — the steps stroke is constructed, not sampled (1.0s)
+  ✘   5 [chromium-headless-new] › tests-visual/easing-primitive.spec.ts:143:9 › BK #85 W-EASING — the published curve family (π) › P3 — the curve strokes the violet --motion-accent twin (light) (1.1s)
+  ✘   6 [chromium-headless-new] › tests-visual/easing-primitive.spec.ts:143:9 › BK #85 W-EASING — the published curve family (π) › P3 — the curve strokes the violet --motion-accent twin (dark) (1.2s)
+  ✓   7 [chromium-headless-new] › tests-visual/easing-primitive.spec.ts:172:5 › BK #85 W-EASING — the published curve family (π) › P4 — the readout is the re-parseable literal in both modes (1.1s)
+  ✓   8 [chromium-headless-new] › tests-visual/easing-primitive.spec.ts:190:5 › BK #85 W-EASING — the published curve family (π) › P5 — the frame is constant and the plot is square (letterbox zero) (996ms)
+  ✓   9 [chromium-headless-new] › tests-visual/easing-primitive.spec.ts:238:5 › BK #85 W-EASING — the published curve family (π) › P11 — the draw-on sweeps over frames, and lands on one under reduce (3.1s)
+  ✓  10 [chromium-headless-new] › tests-visual/no-gray.spec.ts:174:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (a) the WARM-IT tokens resolve C ≥ floor at the warm hue [light] @ mobile (1.1s)
+  ✓  11 [chromium-headless-new] › tests-visual/no-gray.spec.ts:174:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (a) the WARM-IT tokens resolve C ≥ floor at the warm hue [dark] @ mobile (1.0s)
+  ✓  12 [chromium-headless-new] › tests-visual/no-gray.spec.ts:174:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (a) the WARM-IT tokens resolve C ≥ floor at the warm hue [light] @ desktop (986ms)
+  ✓  13 [chromium-headless-new] › tests-visual/no-gray.spec.ts:174:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (a) the WARM-IT tokens resolve C ≥ floor at the warm hue [dark] @ desktop (1.0s)
+  ✓  14 [chromium-headless-new] › tests-visual/no-gray.spec.ts:204:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (b) the default Card + glass Button plates composite warm [light] @ mobile (953ms)
+  ✓  15 [chromium-headless-new] › tests-visual/no-gray.spec.ts:204:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (b) the default Card + glass Button plates composite warm [dark] @ mobile (1.0s)
+  ✓  16 [chromium-headless-new] › tests-visual/no-gray.spec.ts:204:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (b) the default Card + glass Button plates composite warm [light] @ desktop (978ms)
+  ✓  17 [chromium-headless-new] › tests-visual/no-gray.spec.ts:204:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (b) the default Card + glass Button plates composite warm [dark] @ desktop (994ms)
+  ✓  18 [chromium-headless-new] › tests-visual/no-gray.spec.ts:243:9 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (e) the dark --foreground + the dark --surface-tint-15 chip read warm @ mobile (1.0s)
+  ✓  19 [chromium-headless-new] › tests-visual/no-gray.spec.ts:243:9 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (e) the dark --foreground + the dark --surface-tint-15 chip read warm @ desktop (966ms)
+[WebServer] 6:07:05 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/forms/select" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  20 [chromium-headless-new] › tests-visual/no-gray.spec.ts:306:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (f) the LIVE Select dropdown panel composites warm [light] @ mobile (1.0m)
+[WebServer] 6:08:05 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/forms/select" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  21 [chromium-headless-new] › tests-visual/no-gray.spec.ts:306:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (f) the LIVE Select dropdown panel composites warm [dark] @ mobile (1.0m)
+[WebServer] 6:09:06 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/forms/select" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  22 [chromium-headless-new] › tests-visual/no-gray.spec.ts:306:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (f) the LIVE Select dropdown panel composites warm [light] @ desktop (1.0m)
+[WebServer] 6:10:06 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/forms/select" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  23 [chromium-headless-new] › tests-visual/no-gray.spec.ts:306:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (f) the LIVE Select dropdown panel composites warm [dark] @ desktop (1.0m)
+  ✓  24 [chromium-headless-new] › tests-visual/no-gray.spec.ts:351:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › DELTA capture — the no-gray warm fixture [light] @ mobile (1.3s)
+  ✓  25 [chromium-headless-new] › tests-visual/no-gray.spec.ts:351:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › DELTA capture — the no-gray warm fixture [dark] @ mobile (1.2s)
+  ✓  26 [chromium-headless-new] › tests-visual/no-gray.spec.ts:351:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › DELTA capture — the no-gray warm fixture [light] @ desktop (1.2s)
+  ✓  27 [chromium-headless-new] › tests-visual/no-gray.spec.ts:351:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › DELTA capture — the no-gray warm fixture [dark] @ desktop (1.2s)
+  ✓  28 [chromium-headless-new] › tests-visual/viz-fourier-ribbon.spec.ts:104:5 › fourier ribbon paints as a chromatic stroke — light (2.1s)
+  ✘  29 [chromium-headless-new] › tests-visual/viz-fourier-ribbon.spec.ts:104:5 › fourier ribbon paints as a chromatic stroke — dark (2.0s)
+  ✓  30 [chromium-headless-new] › tests-visual/viz-fourier-ribbon.spec.ts:133:1 › PRM freezes the ribbon to one static frame (2.6s)
+
+
+  1) [chromium-headless-new] › tests-visual/dockmorph-cta.spec.ts:39:5 › dockmorph-cta — the CTA-receive landing SEAT (π lane, LOCAL) › the seat reserves its box (no jump) and reveals with an opacity FLIP 
+
+    Error: the pending ghost opacity (1) is not dimmed (< 1) — the [data-cta-pending] placeholder is not showing the dim ghost
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 1
+    Received:   1
+
+      70 |             pending!.ghostOpacity,
+      71 |             `the pending ghost opacity (${pending!.ghostOpacity}) is not dimmed (< 1) — the [data-cta-pending] placeholder is not showing the dim ghost`,
+    > 72 |         ).toBeLessThan(1);
+         |           ^
+      73 |         // The static resting-geometry reserve — a non-zero min-*-size (the no-box-jump).
+      74 |         const reserveInline = parseFloat(pending!.minInline) || 0;
+      75 |         const reserveBlock = parseFloat(pending!.minBlock) || 0;
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dockmorph-cta.spec.ts:72:11
+
+    Error Context: tests-visual/test-results/dockmorph-cta-dockmorph-ct-c2a59-eveals-with-an-opacity-FLIP-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/easing-primitive.spec.ts:143:9 › BK #85 W-EASING — the published curve family (π) › P3 — the curve strokes the violet --motion-accent twin (light) 
+
+    Error: the curve stroke resolves to a color (oklch(0.532 0.18 317.5))
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      158 |             }, INK);
+      159 |             const rgb = parseRgb(strokeRgb || "");
+    > 160 |             expect(rgb, `the curve stroke resolves to a color (${strokeRgb})`).not.toBeNull();
+          |                                                                                    ^
+      161 |             const hue = rgbHueDeg(rgb![0], rgb![1], rgb![2]);
+      162 |             // --viz-legendre is the violet identity (oklch hue ~317.5° light /
+      163 |             // ~318.1° dark) — NOT the warm-red --viz-fourier (~30°).
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/easing-primitive.spec.ts:160:84
+
+    Error Context: tests-visual/test-results/easing-primitive-BK-85-W-E-40a79---motion-accent-twin-light--chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › tests-visual/easing-primitive.spec.ts:143:9 › BK #85 W-EASING — the published curve family (π) › P3 — the curve strokes the violet --motion-accent twin (dark) 
+
+    Error: the curve stroke resolves to a color (oklch(0.739 0.134 318.1))
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      158 |             }, INK);
+      159 |             const rgb = parseRgb(strokeRgb || "");
+    > 160 |             expect(rgb, `the curve stroke resolves to a color (${strokeRgb})`).not.toBeNull();
+          |                                                                                    ^
+      161 |             const hue = rgbHueDeg(rgb![0], rgb![1], rgb![2]);
+      162 |             // --viz-legendre is the violet identity (oklch hue ~317.5° light /
+      163 |             // ~318.1° dark) — NOT the warm-red --viz-fourier (~30°).
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/easing-primitive.spec.ts:160:84
+
+    Error Context: tests-visual/test-results/easing-primitive-BK-85-W-E-db3e0----motion-accent-twin-dark--chromium-headless-new/error-context.md
+
+  4) [chromium-headless-new] › tests-visual/no-gray.spec.ts:306:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (f) the LIVE Select dropdown panel composites warm [light] @ mobile 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('[data-slot="select-trigger"], [role="combobox"]').first()
+
+
+      312 |                 // open the first Select trigger.
+      313 |                 const trigger = page.locator('[data-slot="select-trigger"], [role="combobox"]').first();
+    > 314 |                 await trigger.click();
+          |                               ^
+      315 |                 await page.waitForTimeout(260); // the glass-reveal bloom settles
+      316 |                 const read = await page.evaluate(() => {
+      317 |                     const panel = document.querySelector(
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/no-gray.spec.ts:314:31
+
+    Error Context: tests-visual/test-results/no-gray-no-gray-π-—-the-wa-9a93b-omposites-warm-light-mobile-chromium-headless-new/error-context.md
+
+  5) [chromium-headless-new] › tests-visual/no-gray.spec.ts:306:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (f) the LIVE Select dropdown panel composites warm [dark] @ mobile 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('[data-slot="select-trigger"], [role="combobox"]').first()
+
+
+      312 |                 // open the first Select trigger.
+      313 |                 const trigger = page.locator('[data-slot="select-trigger"], [role="combobox"]').first();
+    > 314 |                 await trigger.click();
+          |                               ^
+      315 |                 await page.waitForTimeout(260); // the glass-reveal bloom settles
+      316 |                 const read = await page.evaluate(() => {
+      317 |                     const panel = document.querySelector(
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/no-gray.spec.ts:314:31
+
+    Error Context: tests-visual/test-results/no-gray-no-gray-π-—-the-wa-64a05-composites-warm-dark-mobile-chromium-headless-new/error-context.md
+
+  6) [chromium-headless-new] › tests-visual/no-gray.spec.ts:306:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (f) the LIVE Select dropdown panel composites warm [light] @ desktop 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('[data-slot="select-trigger"], [role="combobox"]').first()
+
+
+      312 |                 // open the first Select trigger.
+      313 |                 const trigger = page.locator('[data-slot="select-trigger"], [role="combobox"]').first();
+    > 314 |                 await trigger.click();
+          |                               ^
+      315 |                 await page.waitForTimeout(260); // the glass-reveal bloom settles
+      316 |                 const read = await page.evaluate(() => {
+      317 |                     const panel = document.querySelector(
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/no-gray.spec.ts:314:31
+
+    Error Context: tests-visual/test-results/no-gray-no-gray-π-—-the-wa-dd3e1-mposites-warm-light-desktop-chromium-headless-new/error-context.md
+
+  7) [chromium-headless-new] › tests-visual/no-gray.spec.ts:306:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (f) the LIVE Select dropdown panel composites warm [dark] @ desktop 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('[data-slot="select-trigger"], [role="combobox"]').first()
+
+
+      312 |                 // open the first Select trigger.
+      313 |                 const trigger = page.locator('[data-slot="select-trigger"], [role="combobox"]').first();
+    > 314 |                 await trigger.click();
+          |                               ^
+      315 |                 await page.waitForTimeout(260); // the glass-reveal bloom settles
+      316 |                 const read = await page.evaluate(() => {
+      317 |                     const panel = document.querySelector(
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/no-gray.spec.ts:314:31
+
+    Error Context: tests-visual/test-results/no-gray-no-gray-π-—-the-wa-34730-omposites-warm-dark-desktop-chromium-headless-new/error-context.md
+
+  8) [chromium-headless-new] › tests-visual/viz-fourier-ribbon.spec.ts:104:5 › fourier ribbon paints as a chromatic stroke — dark 
+
+    Error: the ribbon must carry a wide luminance spread — a bright comet head over the darker body (dark)
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 60
+    Received:   59.9134
+
+      116 |             stats.spread,
+      117 |             `the ribbon must carry a wide luminance spread — a bright comet head over the darker body (${scheme})`,
+    > 118 |         ).toBeGreaterThan(60);
+          |           ^
+      119 |
+      120 |         // (b) CHROMATIC INK, A MINORITY — the warm comet + rings paint chroma the near-neutral
+      121 |         //     backdrop lacks, over a small fraction of the canvas (a curve, never a full plate).
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/viz-fourier-ribbon.spec.ts:118:11
+
+    Error Context: tests-visual/test-results/viz-fourier-ribbon-fourier-6d177-s-a-chromatic-stroke-—-dark-chromium-headless-new/error-context.md
+
+  8 failed
+    [chromium-headless-new] › tests-visual/dockmorph-cta.spec.ts:39:5 › dockmorph-cta — the CTA-receive landing SEAT (π lane, LOCAL) › the seat reserves its box (no jump) and reveals with an opacity FLIP 
+    [chromium-headless-new] › tests-visual/easing-primitive.spec.ts:143:9 › BK #85 W-EASING — the published curve family (π) › P3 — the curve strokes the violet --motion-accent twin (light) 
+    [chromium-headless-new] › tests-visual/easing-primitive.spec.ts:143:9 › BK #85 W-EASING — the published curve family (π) › P3 — the curve strokes the violet --motion-accent twin (dark) 
+    [chromium-headless-new] › tests-visual/no-gray.spec.ts:306:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (f) the LIVE Select dropdown panel composites warm [light] @ mobile 
+    [chromium-headless-new] › tests-visual/no-gray.spec.ts:306:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (f) the LIVE Select dropdown panel composites warm [dark] @ mobile 
+    [chromium-headless-new] › tests-visual/no-gray.spec.ts:306:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (f) the LIVE Select dropdown panel composites warm [light] @ desktop 
+    [chromium-headless-new] › tests-visual/no-gray.spec.ts:306:13 › no-gray (π — the warm-chroma floor, fail-CLOSED) › (f) the LIVE Select dropdown panel composites warm [dark] @ desktop 
+    [chromium-headless-new] › tests-visual/viz-fourier-ribbon.spec.ts:104:5 › fourier ribbon paints as a chromatic stroke — dark 
+  22 passed (4.6m)

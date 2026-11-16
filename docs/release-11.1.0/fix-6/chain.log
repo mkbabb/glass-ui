@@ -1,0 +1,28 @@
+2026-11-12 08:10:54 start witness green chromium
+2026-11-12 08:20:59 previous launch died at once (bash 3 empty array under set -u); relaunched
+2026-11-12 08:20:59 start witness green chromium
+2026-11-12 08:24:06 end witness green chromium exit 0: green chromium 16/16 pass
+2026-11-12 08:24:06 start witness pre chromium
+2026-11-12 08:27:01 end witness pre chromium exit 0: pre chromium 0/16 pass
+2026-11-12 08:27:01 start witness v1100 chromium
+2026-11-12 08:30:05 end witness v1100 chromium exit 0: v1100 chromium 4/16 pass
+2026-11-12 08:30:05 start witness green webkit
+2026-11-12 08:31:45 end witness green webkit exit 0: green webkit 16/16 pass
+2026-11-12 08:31:45 start witness pre webkit
+2026-11-12 08:33:32 end witness pre webkit exit 0: pre webkit 0/16 pass
+2026-11-12 08:33:32 start witness v1100 webkit
+2026-11-12 08:35:18 end witness v1100 webkit exit 0: v1100 webkit 4/16 pass
+2026-11-12 08:35:18 witness chain done
+2026-11-12 08:35:42 disk 91Gi free; HEAD d0023b4d6
+2026-11-12 08:38:43 lane L1 chromium exit 1: FAIL O-188 1440-light-prm {"start":null,"end":291.140625,"intermediate":0,"landed":false,"frames":0,"runMark":true}
+2026-11-12 08:55:35 lane L1 webkit exit 0: {"O-164":{"pass":4,"fail":0},"O-188":{"pass":6,"fail":0},"O-169":{"pass":17,"fail":0}}
+2026-11-12 08:55:35 gates on committed tree d0023b4d6, dirty src: 0
+2026-11-12 09:07:47 gates guarded exit 0: 09:05:57 build exit 0;09:06:11 typecheck exit 0;09:06:13 demo-dist-build exit 0;09:07:41 vitest exit 0;09:07:43 verify-package exit 1;
+2026-11-12 09:12:04 e2e chromium branch exit 1
+2026-11-12 09:17:36 e2e webkit branch exit 1
+2026-11-12 09:21:49 e2e chromium v1100 exit 1
+2026-11-12 09:27:24 e2e webkit v1100 exit 1
+2026-11-12 09:27:24 after chain done
+2026-11-12 09:27:28 rerun lane L1 chromium (instrument reads the logical offset)
+2026-11-12 09:29:07 lane L1 chromium rerun exit 0: {"O-164":{"pass":4,"fail":0},"O-188":{"pass":6,"fail":0},"O-169":{"pass":17,"fail":0}}
+2026-11-12 09:29:07 ALL DONE

@@ -279,6 +279,32 @@ onUnmounted(stopAnimated);
                 </div>
             </div>
 
+            <p class="font-mono text-micro text-muted-foreground">
+                <code>edge="border"</code> draws the progress as the dock's own
+                border, edge to edge and around the corners; nothing is added where it
+                is unfilled.
+            </p>
+            <div class="flex flex-wrap items-center gap-4">
+                <GlassDock
+                    v-for="value in rimStates"
+                    :key="`border-${value}`"
+                    :collapse="false"
+                    backdrop-mode="static"
+                >
+                    <span class="px-3 font-mono text-micro tabular-nums">
+                        {{ value }}%
+                    </span>
+                    <template #persistent>
+                        <ScrollProgressRim
+                            :value="value"
+                            :max="100"
+                            edge="border"
+                            :aria-label="`Dock border at ${value} percent`"
+                        />
+                    </template>
+                </GlassDock>
+            </div>
+
             <div class="grid grid-cols-3 gap-2">
                 <div
                     v-for="width in rimWidths"

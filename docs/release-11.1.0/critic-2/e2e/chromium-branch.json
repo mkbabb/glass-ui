@@ -1,0 +1,3084 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/playwright.config.ts",
+      "--project=chromium-headless-new",
+      "--workers=1",
+      "Select.bound.spec.ts",
+      "overlay-sizing.spec.ts",
+      "menu-glass.spec.ts",
+      "config-chassis.spec.ts",
+      "config-right.spec.ts",
+      "SegmentedTabs.glide.spec.ts",
+      "disclosure-rotate.spec.ts",
+      "nav-dock-fix.spec.ts",
+      "Sheet.position.spec.ts",
+      "aria-orientation.spec.ts"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/docs/release-11.1.0/critic-2/e2e/chromium-branch.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 8681",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/",
+      "url": "http://localhost:8681",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "aria-orientation.spec.ts",
+      "file": "aria-orientation.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "pill (role=group) carries NO aria-orientation — light",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1384,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T10:33:58.801Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8cbf928f28d0ee4e9980-5bf6b03b20f7da46c68f",
+          "file": "aria-orientation.spec.ts",
+          "line": 38,
+          "column": 5
+        },
+        {
+          "title": "underline (role=tablist) KEEPS aria-orientation — light",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1098,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T10:34:00.272Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8cbf928f28d0ee4e9980-e865a797ba876a3821d6",
+          "file": "aria-orientation.spec.ts",
+          "line": 53,
+          "column": 5
+        },
+        {
+          "title": "pill (role=group) carries NO aria-orientation — dark",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1118,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T10:34:01.376Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8cbf928f28d0ee4e9980-9ca0980b782f9a1bb99c",
+          "file": "aria-orientation.spec.ts",
+          "line": 38,
+          "column": 5
+        },
+        {
+          "title": "underline (role=tablist) KEEPS aria-orientation — dark",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1117,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T10:34:02.500Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8cbf928f28d0ee4e9980-b0d7fdfab2268a7ab75b",
+          "file": "aria-orientation.spec.ts",
+          "line": 53,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "config-chassis.spec.ts",
+      "file": "config-chassis.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "W4 — the DERIVE chip group's rightmost chip is not clipped",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1776,
+                  "error": {
+                    "message": "Error: the rightmost DERIVE chip (right 3987) must not overflow the aside content right (1215) — no MONO slice\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1217\u001b[39m\nReceived:    \u001b[31m3987\u001b[39m",
+                    "stack": "Error: the rightmost DERIVE chip (right 3987) must not overflow the aside content right (1215) — no MONO slice\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1217\u001b[39m\nReceived:    \u001b[31m3987\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-chassis.spec.ts:147:7",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-chassis.spec.ts",
+                      "column": 7,
+                      "line": 147
+                    },
+                    "snippet": "  145 |         result.maxRight,\n  146 |         `the rightmost DERIVE chip (right ${result.maxRight}) must not overflow the aside content right (${result.asideRight}) — no MONO slice`,\n> 147 |     ).toBeLessThanOrEqual((result.asideRight ?? 0) + 2);\n      |       ^\n  148 |\n  149 |     await shot(page, \"W-CONFIG-CHASSIS-aurora-derive-chips-dark\");\n  150 | });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-chassis.spec.ts",
+                        "column": 7,
+                        "line": 147
+                      },
+                      "message": "Error: the rightmost DERIVE chip (right 3987) must not overflow the aside content right (1215) — no MONO slice\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1217\u001b[39m\nReceived:    \u001b[31m3987\u001b[39m\n\n  145 |         result.maxRight,\n  146 |         `the rightmost DERIVE chip (right ${result.maxRight}) must not overflow the aside content right (${result.asideRight}) — no MONO slice`,\n> 147 |     ).toBeLessThanOrEqual((result.asideRight ?? 0) + 2);\n      |       ^\n  148 |\n  149 |     await shot(page, \"W-CONFIG-CHASSIS-aurora-derive-chips-dark\");\n  150 | });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-chassis.spec.ts:147:7"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T10:34:11.126Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results/config-chassis-W4-—-the-DE-44ae7-ghtmost-chip-is-not-clipped-chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-chassis.spec.ts",
+                    "column": 7,
+                    "line": 147
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bd2b517f7febd2aa9a7e-aaaa763ba344228150ee",
+          "file": "config-chassis.spec.ts",
+          "line": 106,
+          "column": 1
+        },
+        {
+          "title": "W6+W5 — the gear dark row flips html.dark + the section rung resolves",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2341,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T10:34:13.229Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd2b517f7febd2aa9a7e-54a107153724a06d3f0b",
+          "file": "config-chassis.spec.ts",
+          "line": 153,
+          "column": 1
+        },
+        {
+          "title": "W2 — the configurator dividers read on the dark plate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1539,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T10:34:15.646Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd2b517f7febd2aa9a7e-cae7eeb405e0b5664f1c",
+          "file": "config-chassis.spec.ts",
+          "line": 220,
+          "column": 1
+        },
+        {
+          "title": "PPD-1 — the Speedtest preset preview swatch is vivid (mean-alpha ≥ 0.95)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip-note",
+                  "description": "no Speedtest preview <img> found (the picker may not be on this route)"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3604,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T10:34:17.191Z",
+                  "annotations": [
+                    {
+                      "type": "skip-note",
+                      "description": "no Speedtest preview <img> found (the picker may not be on this route)"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bd2b517f7febd2aa9a7e-3a13f924b0a9f210965b",
+          "file": "config-chassis.spec.ts",
+          "line": 262,
+          "column": 1
+        }
+      ],
+      "suites": [
+        {
+          "title": "W1 — the slotted slider width contract",
+          "file": "config-chassis.spec.ts",
+          "line": 60,
+          "column": 6,
+          "specs": [
+            {
+              "title": "slotted slider width ≥ 1px @ mobile light",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1522,
+                      "error": {
+                        "message": "Error: a ConfiguratorRow-slotted slider must exist on /substrates/blob\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m-1\u001b[39m\nReceived:   \u001b[31m-1\u001b[39m",
+                        "stack": "Error: a ConfiguratorRow-slotted slider must exist on /substrates/blob\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m-1\u001b[39m\nReceived:   \u001b[31m-1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-chassis.spec.ts:90:98",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-chassis.spec.ts",
+                          "column": 98,
+                          "line": 90
+                        },
+                        "snippet": "  88 |                 // -1 means no slotted slider found on this route — recorded, not a false RED\n  89 |                 // (the route must carry at least one; if it doesn't the test is mis-targeted).\n> 90 |                 expect(width, \"a ConfiguratorRow-slotted slider must exist on /substrates/blob\").toBeGreaterThan(\n     |                                                                                                  ^\n  91 |                     -1,\n  92 |                 );\n  93 |                 // THE BINDING FLOOR — the 0px-slider class is dead."
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-chassis.spec.ts",
+                            "column": 98,
+                            "line": 90
+                          },
+                          "message": "Error: a ConfiguratorRow-slotted slider must exist on /substrates/blob\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m-1\u001b[39m\nReceived:   \u001b[31m-1\u001b[39m\n\n  88 |                 // -1 means no slotted slider found on this route — recorded, not a false RED\n  89 |                 // (the route must carry at least one; if it doesn't the test is mis-targeted).\n> 90 |                 expect(width, \"a ConfiguratorRow-slotted slider must exist on /substrates/blob\").toBeGreaterThan(\n     |                                                                                                  ^\n  91 |                     -1,\n  92 |                 );\n  93 |                 // THE BINDING FLOOR — the 0px-slider class is dead.\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-chassis.spec.ts:90:98"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:34:03.628Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results/config-chassis-W1-—-the-sl-d0174-er-width-≥-1px-mobile-light-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-chassis.spec.ts",
+                        "column": 98,
+                        "line": 90
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "bd2b517f7febd2aa9a7e-65d2210c6f3373a2a933",
+              "file": "config-chassis.spec.ts",
+              "line": 63,
+              "column": 13
+            },
+            {
+              "title": "slotted slider width ≥ 1px @ mobile dark",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1664,
+                      "error": {
+                        "message": "Error: a ConfiguratorRow-slotted slider must exist on /substrates/blob\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m-1\u001b[39m\nReceived:   \u001b[31m-1\u001b[39m",
+                        "stack": "Error: a ConfiguratorRow-slotted slider must exist on /substrates/blob\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m-1\u001b[39m\nReceived:   \u001b[31m-1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-chassis.spec.ts:90:98",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-chassis.spec.ts",
+                          "column": 98,
+                          "line": 90
+                        },
+                        "snippet": "  88 |                 // -1 means no slotted slider found on this route — recorded, not a false RED\n  89 |                 // (the route must carry at least one; if it doesn't the test is mis-targeted).\n> 90 |                 expect(width, \"a ConfiguratorRow-slotted slider must exist on /substrates/blob\").toBeGreaterThan(\n     |                                                                                                  ^\n  91 |                     -1,\n  92 |                 );\n  93 |                 // THE BINDING FLOOR — the 0px-slider class is dead."
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-chassis.spec.ts",
+                            "column": 98,
+                            "line": 90
+                          },
+                          "message": "Error: a ConfiguratorRow-slotted slider must exist on /substrates/blob\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m-1\u001b[39m\nReceived:   \u001b[31m-1\u001b[39m\n\n  88 |                 // -1 means no slotted slider found on this route — recorded, not a false RED\n  89 |                 // (the route must carry at least one; if it doesn't the test is mis-targeted).\n> 90 |                 expect(width, \"a ConfiguratorRow-slotted slider must exist on /substrates/blob\").toBeGreaterThan(\n     |                                                                                                  ^\n  91 |                     -1,\n  92 |                 );\n  93 |                 // THE BINDING FLOOR — the 0px-slider class is dead.\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-chassis.spec.ts:90:98"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:34:05.426Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results/config-chassis-W1-—-the-sl-aa37f-der-width-≥-1px-mobile-dark-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-chassis.spec.ts",
+                        "column": 98,
+                        "line": 90
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "bd2b517f7febd2aa9a7e-8a5f7a85c17e3c232a4c",
+              "file": "config-chassis.spec.ts",
+              "line": 63,
+              "column": 13
+            },
+            {
+              "title": "slotted slider width ≥ 1px @ desktop light",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1488,
+                      "error": {
+                        "message": "Error: a ConfiguratorRow-slotted slider must exist on /substrates/blob\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m-1\u001b[39m\nReceived:   \u001b[31m-1\u001b[39m",
+                        "stack": "Error: a ConfiguratorRow-slotted slider must exist on /substrates/blob\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m-1\u001b[39m\nReceived:   \u001b[31m-1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-chassis.spec.ts:90:98",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-chassis.spec.ts",
+                          "column": 98,
+                          "line": 90
+                        },
+                        "snippet": "  88 |                 // -1 means no slotted slider found on this route — recorded, not a false RED\n  89 |                 // (the route must carry at least one; if it doesn't the test is mis-targeted).\n> 90 |                 expect(width, \"a ConfiguratorRow-slotted slider must exist on /substrates/blob\").toBeGreaterThan(\n     |                                                                                                  ^\n  91 |                     -1,\n  92 |                 );\n  93 |                 // THE BINDING FLOOR — the 0px-slider class is dead."
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-chassis.spec.ts",
+                            "column": 98,
+                            "line": 90
+                          },
+                          "message": "Error: a ConfiguratorRow-slotted slider must exist on /substrates/blob\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m-1\u001b[39m\nReceived:   \u001b[31m-1\u001b[39m\n\n  88 |                 // -1 means no slotted slider found on this route — recorded, not a false RED\n  89 |                 // (the route must carry at least one; if it doesn't the test is mis-targeted).\n> 90 |                 expect(width, \"a ConfiguratorRow-slotted slider must exist on /substrates/blob\").toBeGreaterThan(\n     |                                                                                                  ^\n  91 |                     -1,\n  92 |                 );\n  93 |                 // THE BINDING FLOOR — the 0px-slider class is dead.\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-chassis.spec.ts:90:98"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:34:07.445Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results/config-chassis-W1-—-the-sl-19a2c-r-width-≥-1px-desktop-light-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-chassis.spec.ts",
+                        "column": 98,
+                        "line": 90
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "bd2b517f7febd2aa9a7e-99a0cd723b4a67315e19",
+              "file": "config-chassis.spec.ts",
+              "line": 63,
+              "column": 13
+            },
+            {
+              "title": "slotted slider width ≥ 1px @ desktop dark",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1493,
+                      "error": {
+                        "message": "Error: a ConfiguratorRow-slotted slider must exist on /substrates/blob\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m-1\u001b[39m\nReceived:   \u001b[31m-1\u001b[39m",
+                        "stack": "Error: a ConfiguratorRow-slotted slider must exist on /substrates/blob\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m-1\u001b[39m\nReceived:   \u001b[31m-1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-chassis.spec.ts:90:98",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-chassis.spec.ts",
+                          "column": 98,
+                          "line": 90
+                        },
+                        "snippet": "  88 |                 // -1 means no slotted slider found on this route — recorded, not a false RED\n  89 |                 // (the route must carry at least one; if it doesn't the test is mis-targeted).\n> 90 |                 expect(width, \"a ConfiguratorRow-slotted slider must exist on /substrates/blob\").toBeGreaterThan(\n     |                                                                                                  ^\n  91 |                     -1,\n  92 |                 );\n  93 |                 // THE BINDING FLOOR — the 0px-slider class is dead."
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-chassis.spec.ts",
+                            "column": 98,
+                            "line": 90
+                          },
+                          "message": "Error: a ConfiguratorRow-slotted slider must exist on /substrates/blob\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m-1\u001b[39m\nReceived:   \u001b[31m-1\u001b[39m\n\n  88 |                 // -1 means no slotted slider found on this route — recorded, not a false RED\n  89 |                 // (the route must carry at least one; if it doesn't the test is mis-targeted).\n> 90 |                 expect(width, \"a ConfiguratorRow-slotted slider must exist on /substrates/blob\").toBeGreaterThan(\n     |                                                                                                  ^\n  91 |                     -1,\n  92 |                 );\n  93 |                 // THE BINDING FLOOR — the 0px-slider class is dead.\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-chassis.spec.ts:90:98"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:34:09.274Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results/config-chassis-W1-—-the-sl-8890b-er-width-≥-1px-desktop-dark-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-chassis.spec.ts",
+                        "column": 98,
+                        "line": 90
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "bd2b517f7febd2aa9a7e-262e9accaacab6b0159b",
+              "file": "config-chassis.spec.ts",
+              "line": 63,
+              "column": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "config-right.spec.ts",
+      "file": "config-right.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "desktop — controls on the RIGHT (the standardized two-column)",
+          "file": "config-right.spec.ts",
+          "line": 142,
+          "column": 6,
+          "specs": [
+            {
+              "title": "aurora light: two-column, aside right, rounded, DOM stage→aside",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1469,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m380\u001b[39m\nReceived:    \u001b[31m400\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m380\u001b[39m\nReceived:    \u001b[31m400\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts:177:39",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts",
+                          "column": 39,
+                          "line": 177
+                        },
+                        "snippet": "  175 |                     `${studio.id}: the aside width sits in the 280-360px band`,\n  176 |                 ).toBeGreaterThanOrEqual(270);\n> 177 |                 expect(L.aside.width).toBeLessThanOrEqual(380);\n      |                                       ^\n  178 |\n  179 |                 // controls on the RIGHT: the aside's left edge is right of the stage's.\n  180 |                 expect("
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts",
+                            "column": 39,
+                            "line": 177
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m380\u001b[39m\nReceived:    \u001b[31m400\u001b[39m\n\n  175 |                     `${studio.id}: the aside width sits in the 280-360px band`,\n  176 |                 ).toBeGreaterThanOrEqual(270);\n> 177 |                 expect(L.aside.width).toBeLessThanOrEqual(380);\n      |                                       ^\n  178 |\n  179 |                 // controls on the RIGHT: the aside's left edge is right of the stage's.\n  180 |                 expect(\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts:177:39"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:34:20.806Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results/config-right-desktop-—-con-4b969-ght-rounded-DOM-stage→aside-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts",
+                        "column": 39,
+                        "line": 177
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "8ed0eaf61ccf3ab1695a-8305204c587ffa7c6797",
+              "file": "config-right.spec.ts",
+              "line": 146,
+              "column": 13
+            },
+            {
+              "title": "aurora dark: two-column, aside right, rounded, DOM stage→aside",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1588,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m380\u001b[39m\nReceived:    \u001b[31m400\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m380\u001b[39m\nReceived:    \u001b[31m400\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts:177:39",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts",
+                          "column": 39,
+                          "line": 177
+                        },
+                        "snippet": "  175 |                     `${studio.id}: the aside width sits in the 280-360px band`,\n  176 |                 ).toBeGreaterThanOrEqual(270);\n> 177 |                 expect(L.aside.width).toBeLessThanOrEqual(380);\n      |                                       ^\n  178 |\n  179 |                 // controls on the RIGHT: the aside's left edge is right of the stage's.\n  180 |                 expect("
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts",
+                            "column": 39,
+                            "line": 177
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m380\u001b[39m\nReceived:    \u001b[31m400\u001b[39m\n\n  175 |                     `${studio.id}: the aside width sits in the 280-360px band`,\n  176 |                 ).toBeGreaterThanOrEqual(270);\n> 177 |                 expect(L.aside.width).toBeLessThanOrEqual(380);\n      |                                       ^\n  178 |\n  179 |                 // controls on the RIGHT: the aside's left edge is right of the stage's.\n  180 |                 expect(\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts:177:39"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:34:22.525Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results/config-right-desktop-—-con-e4a48-ght-rounded-DOM-stage→aside-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts",
+                        "column": 39,
+                        "line": 177
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "8ed0eaf61ccf3ab1695a-764c571e9e6789308d4d",
+              "file": "config-right.spec.ts",
+              "line": 146,
+              "column": 13
+            },
+            {
+              "title": "blob light: two-column, aside right, rounded, DOM stage→aside",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1579,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m380\u001b[39m\nReceived:    \u001b[31m400\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m380\u001b[39m\nReceived:    \u001b[31m400\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts:177:39",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts",
+                          "column": 39,
+                          "line": 177
+                        },
+                        "snippet": "  175 |                     `${studio.id}: the aside width sits in the 280-360px band`,\n  176 |                 ).toBeGreaterThanOrEqual(270);\n> 177 |                 expect(L.aside.width).toBeLessThanOrEqual(380);\n      |                                       ^\n  178 |\n  179 |                 // controls on the RIGHT: the aside's left edge is right of the stage's.\n  180 |                 expect("
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts",
+                            "column": 39,
+                            "line": 177
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m380\u001b[39m\nReceived:    \u001b[31m400\u001b[39m\n\n  175 |                     `${studio.id}: the aside width sits in the 280-360px band`,\n  176 |                 ).toBeGreaterThanOrEqual(270);\n> 177 |                 expect(L.aside.width).toBeLessThanOrEqual(380);\n      |                                       ^\n  178 |\n  179 |                 // controls on the RIGHT: the aside's left edge is right of the stage's.\n  180 |                 expect(\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts:177:39"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:34:24.459Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results/config-right-desktop-—-con-ba523-ght-rounded-DOM-stage→aside-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts",
+                        "column": 39,
+                        "line": 177
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "8ed0eaf61ccf3ab1695a-7e41812e5768ccc563ad",
+              "file": "config-right.spec.ts",
+              "line": 146,
+              "column": 13
+            },
+            {
+              "title": "blob dark: two-column, aside right, rounded, DOM stage→aside",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1606,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m380\u001b[39m\nReceived:    \u001b[31m400\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m380\u001b[39m\nReceived:    \u001b[31m400\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts:177:39",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts",
+                          "column": 39,
+                          "line": 177
+                        },
+                        "snippet": "  175 |                     `${studio.id}: the aside width sits in the 280-360px band`,\n  176 |                 ).toBeGreaterThanOrEqual(270);\n> 177 |                 expect(L.aside.width).toBeLessThanOrEqual(380);\n      |                                       ^\n  178 |\n  179 |                 // controls on the RIGHT: the aside's left edge is right of the stage's.\n  180 |                 expect("
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts",
+                            "column": 39,
+                            "line": 177
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m380\u001b[39m\nReceived:    \u001b[31m400\u001b[39m\n\n  175 |                     `${studio.id}: the aside width sits in the 280-360px band`,\n  176 |                 ).toBeGreaterThanOrEqual(270);\n> 177 |                 expect(L.aside.width).toBeLessThanOrEqual(380);\n      |                                       ^\n  178 |\n  179 |                 // controls on the RIGHT: the aside's left edge is right of the stage's.\n  180 |                 expect(\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts:177:39"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:34:26.346Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results/config-right-desktop-—-con-15986-ght-rounded-DOM-stage→aside-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts",
+                        "column": 39,
+                        "line": 177
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "8ed0eaf61ccf3ab1695a-389e565f7e1ba37cdf74",
+              "file": "config-right.spec.ts",
+              "line": 146,
+              "column": 13
+            },
+            {
+              "title": "fourier-field light: two-column, aside right, rounded, DOM stage→aside",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1572,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m380\u001b[39m\nReceived:    \u001b[31m400\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m380\u001b[39m\nReceived:    \u001b[31m400\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts:177:39",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts",
+                          "column": 39,
+                          "line": 177
+                        },
+                        "snippet": "  175 |                     `${studio.id}: the aside width sits in the 280-360px band`,\n  176 |                 ).toBeGreaterThanOrEqual(270);\n> 177 |                 expect(L.aside.width).toBeLessThanOrEqual(380);\n      |                                       ^\n  178 |\n  179 |                 // controls on the RIGHT: the aside's left edge is right of the stage's.\n  180 |                 expect("
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts",
+                            "column": 39,
+                            "line": 177
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m380\u001b[39m\nReceived:    \u001b[31m400\u001b[39m\n\n  175 |                     `${studio.id}: the aside width sits in the 280-360px band`,\n  176 |                 ).toBeGreaterThanOrEqual(270);\n> 177 |                 expect(L.aside.width).toBeLessThanOrEqual(380);\n      |                                       ^\n  178 |\n  179 |                 // controls on the RIGHT: the aside's left edge is right of the stage's.\n  180 |                 expect(\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts:177:39"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:34:28.327Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results/config-right-desktop-—-con-785fc-ght-rounded-DOM-stage→aside-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts",
+                        "column": 39,
+                        "line": 177
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "8ed0eaf61ccf3ab1695a-30fe9275ec7d3587baf2",
+              "file": "config-right.spec.ts",
+              "line": 146,
+              "column": 13
+            },
+            {
+              "title": "fourier-field dark: two-column, aside right, rounded, DOM stage→aside",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1631,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m380\u001b[39m\nReceived:    \u001b[31m400\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m380\u001b[39m\nReceived:    \u001b[31m400\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts:177:39",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts",
+                          "column": 39,
+                          "line": 177
+                        },
+                        "snippet": "  175 |                     `${studio.id}: the aside width sits in the 280-360px band`,\n  176 |                 ).toBeGreaterThanOrEqual(270);\n> 177 |                 expect(L.aside.width).toBeLessThanOrEqual(380);\n      |                                       ^\n  178 |\n  179 |                 // controls on the RIGHT: the aside's left edge is right of the stage's.\n  180 |                 expect("
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts",
+                            "column": 39,
+                            "line": 177
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m380\u001b[39m\nReceived:    \u001b[31m400\u001b[39m\n\n  175 |                     `${studio.id}: the aside width sits in the 280-360px band`,\n  176 |                 ).toBeGreaterThanOrEqual(270);\n> 177 |                 expect(L.aside.width).toBeLessThanOrEqual(380);\n      |                                       ^\n  178 |\n  179 |                 // controls on the RIGHT: the aside's left edge is right of the stage's.\n  180 |                 expect(\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts:177:39"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:34:30.201Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results/config-right-desktop-—-con-60d8f-ght-rounded-DOM-stage→aside-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts",
+                        "column": 39,
+                        "line": 177
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "8ed0eaf61ccf3ab1695a-97c2c28a9bcd64084813",
+              "file": "config-right.spec.ts",
+              "line": 146,
+              "column": 13
+            },
+            {
+              "title": "configurator light: two-column, aside right, rounded, DOM stage→aside",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 11,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1548,
+                      "error": {
+                        "message": "Error: configurator: desktop grid-template-columns must resolve TWO tracks (was \"492px\")\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m2\u001b[39m\nReceived: \u001b[31m1\u001b[39m",
+                        "stack": "Error: configurator: desktop grid-template-columns must resolve TWO tracks (was \"492px\")\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m2\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts:167:19",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts",
+                          "column": 19,
+                          "line": 167
+                        },
+                        "snippet": "  165 |                     L.trackCount,\n  166 |                     `${studio.id}: desktop grid-template-columns must resolve TWO tracks (was \"${L.gridTemplateColumns}\")`,\n> 167 |                 ).toBe(2);\n      |                   ^\n  168 |\n  169 |                 // The aside track is in the 280-360px band (the --configurator-aside-{min,max}).\n  170 |                 expect(L.aside, `${studio.id}: aside must render`).not.toBeNull();"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts",
+                            "column": 19,
+                            "line": 167
+                          },
+                          "message": "Error: configurator: desktop grid-template-columns must resolve TWO tracks (was \"492px\")\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m2\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n\n  165 |                     L.trackCount,\n  166 |                     `${studio.id}: desktop grid-template-columns must resolve TWO tracks (was \"${L.gridTemplateColumns}\")`,\n> 167 |                 ).toBe(2);\n      |                   ^\n  168 |\n  169 |                 // The aside track is in the 280-360px band (the --configurator-aside-{min,max}).\n  170 |                 expect(L.aside, `${studio.id}: aside must render`).not.toBeNull();\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts:167:19"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:34:32.177Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results/config-right-desktop-—-con-686ad-ght-rounded-DOM-stage→aside-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts",
+                        "column": 19,
+                        "line": 167
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "8ed0eaf61ccf3ab1695a-a920968f5dbfca90fa17",
+              "file": "config-right.spec.ts",
+              "line": 146,
+              "column": 13
+            },
+            {
+              "title": "configurator dark: two-column, aside right, rounded, DOM stage→aside",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 12,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1555,
+                      "error": {
+                        "message": "Error: configurator: desktop grid-template-columns must resolve TWO tracks (was \"492px\")\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m2\u001b[39m\nReceived: \u001b[31m1\u001b[39m",
+                        "stack": "Error: configurator: desktop grid-template-columns must resolve TWO tracks (was \"492px\")\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m2\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts:167:19",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts",
+                          "column": 19,
+                          "line": 167
+                        },
+                        "snippet": "  165 |                     L.trackCount,\n  166 |                     `${studio.id}: desktop grid-template-columns must resolve TWO tracks (was \"${L.gridTemplateColumns}\")`,\n> 167 |                 ).toBe(2);\n      |                   ^\n  168 |\n  169 |                 // The aside track is in the 280-360px band (the --configurator-aside-{min,max}).\n  170 |                 expect(L.aside, `${studio.id}: aside must render`).not.toBeNull();"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts",
+                            "column": 19,
+                            "line": 167
+                          },
+                          "message": "Error: configurator: desktop grid-template-columns must resolve TWO tracks (was \"492px\")\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m2\u001b[39m\nReceived: \u001b[31m1\u001b[39m\n\n  165 |                     L.trackCount,\n  166 |                     `${studio.id}: desktop grid-template-columns must resolve TWO tracks (was \"${L.gridTemplateColumns}\")`,\n> 167 |                 ).toBe(2);\n      |                   ^\n  168 |\n  169 |                 // The aside track is in the 280-360px band (the --configurator-aside-{min,max}).\n  170 |                 expect(L.aside, `${studio.id}: aside must render`).not.toBeNull();\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts:167:19"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:34:34.036Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results/config-right-desktop-—-con-d5fc4-ght-rounded-DOM-stage→aside-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/config-right.spec.ts",
+                        "column": 19,
+                        "line": 167
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "8ed0eaf61ccf3ab1695a-bf7db380eb6e03695ebf",
+              "file": "config-right.spec.ts",
+              "line": 146,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "narrow — the single-column stack (stage above controls below lg)",
+          "file": "config-right.spec.ts",
+          "line": 216,
+          "column": 6,
+          "specs": [
+            {
+              "title": "aurora: ≤900px resolves ONE column, stage above aside",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1349,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:34:35.899Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ed0eaf61ccf3ab1695a-8f92a05dc47290d0f934",
+              "file": "config-right.spec.ts",
+              "line": 218,
+              "column": 9
+            },
+            {
+              "title": "blob: ≤900px resolves ONE column, stage above aside",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1225,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:34:37.323Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ed0eaf61ccf3ab1695a-1b6aac10d2da98caaeb4",
+              "file": "config-right.spec.ts",
+              "line": 218,
+              "column": 9
+            },
+            {
+              "title": "fourier-field: ≤900px resolves ONE column, stage above aside",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1234,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:34:38.552Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ed0eaf61ccf3ab1695a-f9e06d53932b9c0cafdf",
+              "file": "config-right.spec.ts",
+              "line": 218,
+              "column": 9
+            },
+            {
+              "title": "configurator: ≤900px resolves ONE column, stage above aside",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1180,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:34:39.789Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8ed0eaf61ccf3ab1695a-4925702a06093db7eb89",
+              "file": "config-right.spec.ts",
+              "line": 218,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "disclosure-rotate.spec.ts",
+      "file": "disclosure-rotate.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "disclosure-rotate — ONE register, none snap (light)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "no select disclosure caret on /forms/select at HEAD",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/disclosure-rotate.spec.ts",
+                    "line": 121,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 13,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 840,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T10:34:40.977Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "no select disclosure caret on /forms/select at HEAD",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/disclosure-rotate.spec.ts",
+                        "line": 121,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "66d26c1f8cfd321d9f2e-2410992f7a8df937f15a",
+          "file": "disclosure-rotate.spec.ts",
+          "line": 110,
+          "column": 5
+        },
+        {
+          "title": "disclosure-rotate — ONE register, none snap (dark)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "no select disclosure caret on /forms/select at HEAD",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/disclosure-rotate.spec.ts",
+                    "line": 121,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 13,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 808,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T10:34:41.820Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "no select disclosure caret on /forms/select at HEAD",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/disclosure-rotate.spec.ts",
+                        "line": 121,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "66d26c1f8cfd321d9f2e-4474125d8bb374357265",
+          "file": "disclosure-rotate.spec.ts",
+          "line": 110,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "menu-glass.spec.ts",
+      "file": "menu-glass.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "menu-glass (π — the glass menu-row + menu-section register, fail-CLOSED)",
+          "file": "menu-glass.spec.ts",
+          "line": 212,
+          "column": 6,
+          "specs": [
+            {
+              "title": "(a-b) hovered row = glass tint + ≥44px @ mobile light",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1497,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:34:42.640Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0a020ebe9ea7d6da2636-f4c6301c58d09175fc72",
+              "file": "menu-glass.spec.ts",
+              "line": 221,
+              "column": 13
+            },
+            {
+              "title": "(d) section caption mono + hairline @ mobile light",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 932,
+                      "error": {
+                        "message": "Error: the .glass-menu-section caption must read the mono register — got \"\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatch\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected pattern: \u001b[32m/mono|fira|menlo|monaco|consolas|courier/\u001b[39m\nReceived string:  \u001b[31m\"\\\"plus jakarta sans\\\", \\\"plus jakarta sans fallback\\\", system-ui, sans-serif\"\u001b[39m",
+                        "stack": "Error: the .glass-menu-section caption must read the mono register — got \"\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatch\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected pattern: \u001b[32m/mono|fira|menlo|monaco|consolas|courier/\u001b[39m\nReceived string:  \u001b[31m\"\\\"plus jakarta sans\\\", \\\"plus jakarta sans fallback\\\", system-ui, sans-serif\"\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/menu-glass.spec.ts:256:19",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/menu-glass.spec.ts",
+                          "column": 19,
+                          "line": 256
+                        },
+                        "snippet": "  254 |                     fontFamily.toLowerCase(),\n  255 |                     `the .glass-menu-section caption must read the mono register — got \"${fontFamily}\"`,\n> 256 |                 ).toMatch(/mono|fira|menlo|monaco|consolas|courier/);\n      |                   ^\n  257 |                 expect(\n  258 |                     boxShadow,\n  259 |                     \"the .glass-menu-section must paint a hairline (a box-shadow divider, not none)\","
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/menu-glass.spec.ts",
+                            "column": 19,
+                            "line": 256
+                          },
+                          "message": "Error: the .glass-menu-section caption must read the mono register — got \"\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatch\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected pattern: \u001b[32m/mono|fira|menlo|monaco|consolas|courier/\u001b[39m\nReceived string:  \u001b[31m\"\\\"plus jakarta sans\\\", \\\"plus jakarta sans fallback\\\", system-ui, sans-serif\"\u001b[39m\n\n  254 |                     fontFamily.toLowerCase(),\n  255 |                     `the .glass-menu-section caption must read the mono register — got \"${fontFamily}\"`,\n> 256 |                 ).toMatch(/mono|fira|menlo|monaco|consolas|courier/);\n      |                   ^\n  257 |                 expect(\n  258 |                     boxShadow,\n  259 |                     \"the .glass-menu-section must paint a hairline (a box-shadow divider, not none)\",\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/menu-glass.spec.ts:256:19"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:34:44.142Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results/menu-glass-menu-glass-π-—--50191--mono-hairline-mobile-light-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/menu-glass.spec.ts",
+                        "column": 19,
+                        "line": 256
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0a020ebe9ea7d6da2636-7ea859b274d6ad208dad",
+              "file": "menu-glass.spec.ts",
+              "line": 247,
+              "column": 13
+            },
+            {
+              "title": "(e) font-rung parity — trigger + item at ONE scale @ mobile light",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 14,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 994,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:34:45.317Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0a020ebe9ea7d6da2636-c9d1c64617c56b3ff51b",
+              "file": "menu-glass.spec.ts",
+              "line": 263,
+              "column": 13
+            },
+            {
+              "title": "(a-b) hovered row = glass tint + ≥44px @ mobile dark",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 14,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1494,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:34:46.388Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0a020ebe9ea7d6da2636-473e07eab3225e4641f4",
+              "file": "menu-glass.spec.ts",
+              "line": 221,
+              "column": 13
+            },
+            {
+              "title": "(d) section caption mono + hairline @ mobile dark",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 14,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 938,
+                      "error": {
+                        "message": "Error: the .glass-menu-section caption must read the mono register — got \"\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatch\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected pattern: \u001b[32m/mono|fira|menlo|monaco|consolas|courier/\u001b[39m\nReceived string:  \u001b[31m\"\\\"plus jakarta sans\\\", \\\"plus jakarta sans fallback\\\", system-ui, sans-serif\"\u001b[39m",
+                        "stack": "Error: the .glass-menu-section caption must read the mono register — got \"\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatch\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected pattern: \u001b[32m/mono|fira|menlo|monaco|consolas|courier/\u001b[39m\nReceived string:  \u001b[31m\"\\\"plus jakarta sans\\\", \\\"plus jakarta sans fallback\\\", system-ui, sans-serif\"\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/menu-glass.spec.ts:256:19",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/menu-glass.spec.ts",
+                          "column": 19,
+                          "line": 256
+                        },
+                        "snippet": "  254 |                     fontFamily.toLowerCase(),\n  255 |                     `the .glass-menu-section caption must read the mono register — got \"${fontFamily}\"`,\n> 256 |                 ).toMatch(/mono|fira|menlo|monaco|consolas|courier/);\n      |                   ^\n  257 |                 expect(\n  258 |                     boxShadow,\n  259 |                     \"the .glass-menu-section must paint a hairline (a box-shadow divider, not none)\","
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/menu-glass.spec.ts",
+                            "column": 19,
+                            "line": 256
+                          },
+                          "message": "Error: the .glass-menu-section caption must read the mono register — got \"\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatch\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected pattern: \u001b[32m/mono|fira|menlo|monaco|consolas|courier/\u001b[39m\nReceived string:  \u001b[31m\"\\\"plus jakarta sans\\\", \\\"plus jakarta sans fallback\\\", system-ui, sans-serif\"\u001b[39m\n\n  254 |                     fontFamily.toLowerCase(),\n  255 |                     `the .glass-menu-section caption must read the mono register — got \"${fontFamily}\"`,\n> 256 |                 ).toMatch(/mono|fira|menlo|monaco|consolas|courier/);\n      |                   ^\n  257 |                 expect(\n  258 |                     boxShadow,\n  259 |                     \"the .glass-menu-section must paint a hairline (a box-shadow divider, not none)\",\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/menu-glass.spec.ts:256:19"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:34:47.888Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results/menu-glass-menu-glass-π-—--c5ce0-n-mono-hairline-mobile-dark-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/menu-glass.spec.ts",
+                        "column": 19,
+                        "line": 256
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0a020ebe9ea7d6da2636-2483f9cb06f994042060",
+              "file": "menu-glass.spec.ts",
+              "line": 247,
+              "column": 13
+            },
+            {
+              "title": "(e) font-rung parity — trigger + item at ONE scale @ mobile dark",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 15,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 984,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:34:49.172Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0a020ebe9ea7d6da2636-5c08cd4e3803773cc878",
+              "file": "menu-glass.spec.ts",
+              "line": 263,
+              "column": 13
+            },
+            {
+              "title": "(a-b) hovered row = glass tint + ≥44px @ desktop light",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 15,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1482,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:34:50.248Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0a020ebe9ea7d6da2636-50ba1bfedbc6b070ec1c",
+              "file": "menu-glass.spec.ts",
+              "line": 221,
+              "column": 13
+            },
+            {
+              "title": "(d) section caption mono + hairline @ desktop light",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 15,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 959,
+                      "error": {
+                        "message": "Error: the .glass-menu-section caption must read the mono register — got \"\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatch\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected pattern: \u001b[32m/mono|fira|menlo|monaco|consolas|courier/\u001b[39m\nReceived string:  \u001b[31m\"\\\"plus jakarta sans\\\", \\\"plus jakarta sans fallback\\\", system-ui, sans-serif\"\u001b[39m",
+                        "stack": "Error: the .glass-menu-section caption must read the mono register — got \"\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatch\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected pattern: \u001b[32m/mono|fira|menlo|monaco|consolas|courier/\u001b[39m\nReceived string:  \u001b[31m\"\\\"plus jakarta sans\\\", \\\"plus jakarta sans fallback\\\", system-ui, sans-serif\"\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/menu-glass.spec.ts:256:19",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/menu-glass.spec.ts",
+                          "column": 19,
+                          "line": 256
+                        },
+                        "snippet": "  254 |                     fontFamily.toLowerCase(),\n  255 |                     `the .glass-menu-section caption must read the mono register — got \"${fontFamily}\"`,\n> 256 |                 ).toMatch(/mono|fira|menlo|monaco|consolas|courier/);\n      |                   ^\n  257 |                 expect(\n  258 |                     boxShadow,\n  259 |                     \"the .glass-menu-section must paint a hairline (a box-shadow divider, not none)\","
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/menu-glass.spec.ts",
+                            "column": 19,
+                            "line": 256
+                          },
+                          "message": "Error: the .glass-menu-section caption must read the mono register — got \"\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatch\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected pattern: \u001b[32m/mono|fira|menlo|monaco|consolas|courier/\u001b[39m\nReceived string:  \u001b[31m\"\\\"plus jakarta sans\\\", \\\"plus jakarta sans fallback\\\", system-ui, sans-serif\"\u001b[39m\n\n  254 |                     fontFamily.toLowerCase(),\n  255 |                     `the .glass-menu-section caption must read the mono register — got \"${fontFamily}\"`,\n> 256 |                 ).toMatch(/mono|fira|menlo|monaco|consolas|courier/);\n      |                   ^\n  257 |                 expect(\n  258 |                     boxShadow,\n  259 |                     \"the .glass-menu-section must paint a hairline (a box-shadow divider, not none)\",\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/menu-glass.spec.ts:256:19"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:34:51.735Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results/menu-glass-menu-glass-π-—--91a23-mono-hairline-desktop-light-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/menu-glass.spec.ts",
+                        "column": 19,
+                        "line": 256
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0a020ebe9ea7d6da2636-4c9f21d9cec800e16921",
+              "file": "menu-glass.spec.ts",
+              "line": 247,
+              "column": 13
+            },
+            {
+              "title": "(e) font-rung parity — trigger + item at ONE scale @ desktop light",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 16,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 998,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:34:52.956Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0a020ebe9ea7d6da2636-85e9c025d8795aa524f1",
+              "file": "menu-glass.spec.ts",
+              "line": 263,
+              "column": 13
+            },
+            {
+              "title": "(a-b) hovered row = glass tint + ≥44px @ desktop dark",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 16,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1539,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:34:54.040Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0a020ebe9ea7d6da2636-7febaca130daa9e0585a",
+              "file": "menu-glass.spec.ts",
+              "line": 221,
+              "column": 13
+            },
+            {
+              "title": "(d) section caption mono + hairline @ desktop dark",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 16,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 924,
+                      "error": {
+                        "message": "Error: the .glass-menu-section caption must read the mono register — got \"\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatch\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected pattern: \u001b[32m/mono|fira|menlo|monaco|consolas|courier/\u001b[39m\nReceived string:  \u001b[31m\"\\\"plus jakarta sans\\\", \\\"plus jakarta sans fallback\\\", system-ui, sans-serif\"\u001b[39m",
+                        "stack": "Error: the .glass-menu-section caption must read the mono register — got \"\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatch\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected pattern: \u001b[32m/mono|fira|menlo|monaco|consolas|courier/\u001b[39m\nReceived string:  \u001b[31m\"\\\"plus jakarta sans\\\", \\\"plus jakarta sans fallback\\\", system-ui, sans-serif\"\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/menu-glass.spec.ts:256:19",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/menu-glass.spec.ts",
+                          "column": 19,
+                          "line": 256
+                        },
+                        "snippet": "  254 |                     fontFamily.toLowerCase(),\n  255 |                     `the .glass-menu-section caption must read the mono register — got \"${fontFamily}\"`,\n> 256 |                 ).toMatch(/mono|fira|menlo|monaco|consolas|courier/);\n      |                   ^\n  257 |                 expect(\n  258 |                     boxShadow,\n  259 |                     \"the .glass-menu-section must paint a hairline (a box-shadow divider, not none)\","
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/menu-glass.spec.ts",
+                            "column": 19,
+                            "line": 256
+                          },
+                          "message": "Error: the .glass-menu-section caption must read the mono register — got \"\"Plus Jakarta Sans\", \"Plus Jakarta Sans Fallback\", system-ui, sans-serif\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoMatch\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected pattern: \u001b[32m/mono|fira|menlo|monaco|consolas|courier/\u001b[39m\nReceived string:  \u001b[31m\"\\\"plus jakarta sans\\\", \\\"plus jakarta sans fallback\\\", system-ui, sans-serif\"\u001b[39m\n\n  254 |                     fontFamily.toLowerCase(),\n  255 |                     `the .glass-menu-section caption must read the mono register — got \"${fontFamily}\"`,\n> 256 |                 ).toMatch(/mono|fira|menlo|monaco|consolas|courier/);\n      |                   ^\n  257 |                 expect(\n  258 |                     boxShadow,\n  259 |                     \"the .glass-menu-section must paint a hairline (a box-shadow divider, not none)\",\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/menu-glass.spec.ts:256:19"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:34:55.585Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results/menu-glass-menu-glass-π-—--981e8--mono-hairline-desktop-dark-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/menu-glass.spec.ts",
+                        "column": 19,
+                        "line": 256
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0a020ebe9ea7d6da2636-58efbb3277429c552c93",
+              "file": "menu-glass.spec.ts",
+              "line": 247,
+              "column": 13
+            },
+            {
+              "title": "(e) font-rung parity — trigger + item at ONE scale @ desktop dark",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 17,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 983,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:34:56.740Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0a020ebe9ea7d6da2636-3a8d4a23d303988d32a2",
+              "file": "menu-glass.spec.ts",
+              "line": 263,
+              "column": 13
+            },
+            {
+              "title": "(c) hover-lift register non-zero under motion @ desktop light",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 17,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1506,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:34:57.801Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0a020ebe9ea7d6da2636-835940f5fad01f9d63a8",
+              "file": "menu-glass.spec.ts",
+              "line": 288,
+              "column": 5
+            },
+            {
+              "title": "(c) PRM — hover-lift register is the identity (0) under prefers-reduced-motion @ desktop light",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 17,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1485,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:34:59.313Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0a020ebe9ea7d6da2636-43754e31a80206feb4ed",
+              "file": "menu-glass.spec.ts",
+              "line": 301,
+              "column": 5
+            },
+            {
+              "title": "DELTA capture — the glassy menu open, a row hovered, both modes",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 17,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2756,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:35:00.801Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "0a020ebe9ea7d6da2636-713cb827d69ad6afb401",
+              "file": "menu-glass.spec.ts",
+              "line": 318,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "nav-dock-fix.spec.ts",
+      "file": "nav-dock-fix.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "W-NAV-DOCK-FIX — the nav-dock binding π",
+          "file": "nav-dock-fix.spec.ts",
+          "line": 70,
+          "column": 6,
+          "specs": [
+            {
+              "title": "light · mobile — nav-dock gestalt",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 17,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 753,
+                      "error": {
+                        "message": "Error: the rail renders mode=\"facets\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"facets\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m",
+                        "stack": "Error: the rail renders mode=\"facets\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"facets\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/nav-dock-fix.spec.ts:140:68",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/nav-dock-fix.spec.ts",
+                          "column": 68,
+                          "line": 140
+                        },
+                        "snippet": "  138 |                     return rail?.getAttribute(\"data-mode\") ?? null;\n  139 |                 });\n> 140 |                 expect(railMode, 'the rail renders mode=\"facets\"').toBe(\"facets\");\n      |                                                                    ^\n  141 |\n  142 |                 // Distinct per-facet --glass-accent (read the inline style hue).\n  143 |                 const accents = await page.evaluate(() => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/nav-dock-fix.spec.ts",
+                            "column": 68,
+                            "line": 140
+                          },
+                          "message": "Error: the rail renders mode=\"facets\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"facets\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m\n\n  138 |                     return rail?.getAttribute(\"data-mode\") ?? null;\n  139 |                 });\n> 140 |                 expect(railMode, 'the rail renders mode=\"facets\"').toBe(\"facets\");\n      |                                                                    ^\n  141 |\n  142 |                 // Distinct per-facet --glass-accent (read the inline style hue).\n  143 |                 const accents = await page.evaluate(() => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/nav-dock-fix.spec.ts:140:68"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:35:03.570Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results/nav-dock-fix-W-NAV-DOCK-FI-e4817-·-mobile-—-nav-dock-gestalt-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/nav-dock-fix.spec.ts",
+                        "column": 68,
+                        "line": 140
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b6323a27afd682ee8a66-a2f993735f4e0197520e",
+              "file": "nav-dock-fix.spec.ts",
+              "line": 73,
+              "column": 13
+            },
+            {
+              "title": "light · desktop — nav-dock gestalt",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 18,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 774,
+                      "error": {
+                        "message": "Error: the rail renders mode=\"facets\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"facets\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m",
+                        "stack": "Error: the rail renders mode=\"facets\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"facets\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/nav-dock-fix.spec.ts:140:68",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/nav-dock-fix.spec.ts",
+                          "column": 68,
+                          "line": 140
+                        },
+                        "snippet": "  138 |                     return rail?.getAttribute(\"data-mode\") ?? null;\n  139 |                 });\n> 140 |                 expect(railMode, 'the rail renders mode=\"facets\"').toBe(\"facets\");\n      |                                                                    ^\n  141 |\n  142 |                 // Distinct per-facet --glass-accent (read the inline style hue).\n  143 |                 const accents = await page.evaluate(() => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/nav-dock-fix.spec.ts",
+                            "column": 68,
+                            "line": 140
+                          },
+                          "message": "Error: the rail renders mode=\"facets\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"facets\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m\n\n  138 |                     return rail?.getAttribute(\"data-mode\") ?? null;\n  139 |                 });\n> 140 |                 expect(railMode, 'the rail renders mode=\"facets\"').toBe(\"facets\");\n      |                                                                    ^\n  141 |\n  142 |                 // Distinct per-facet --glass-accent (read the inline style hue).\n  143 |                 const accents = await page.evaluate(() => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/nav-dock-fix.spec.ts:140:68"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:35:04.586Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results/nav-dock-fix-W-NAV-DOCK-FI-c3b61--desktop-—-nav-dock-gestalt-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/nav-dock-fix.spec.ts",
+                        "column": 68,
+                        "line": 140
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b6323a27afd682ee8a66-d350a25bff6d09b8d827",
+              "file": "nav-dock-fix.spec.ts",
+              "line": 73,
+              "column": 13
+            },
+            {
+              "title": "dark · mobile — nav-dock gestalt",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 19,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 777,
+                      "error": {
+                        "message": "Error: the rail renders mode=\"facets\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"facets\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m",
+                        "stack": "Error: the rail renders mode=\"facets\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"facets\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/nav-dock-fix.spec.ts:140:68",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/nav-dock-fix.spec.ts",
+                          "column": 68,
+                          "line": 140
+                        },
+                        "snippet": "  138 |                     return rail?.getAttribute(\"data-mode\") ?? null;\n  139 |                 });\n> 140 |                 expect(railMode, 'the rail renders mode=\"facets\"').toBe(\"facets\");\n      |                                                                    ^\n  141 |\n  142 |                 // Distinct per-facet --glass-accent (read the inline style hue).\n  143 |                 const accents = await page.evaluate(() => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/nav-dock-fix.spec.ts",
+                            "column": 68,
+                            "line": 140
+                          },
+                          "message": "Error: the rail renders mode=\"facets\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"facets\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m\n\n  138 |                     return rail?.getAttribute(\"data-mode\") ?? null;\n  139 |                 });\n> 140 |                 expect(railMode, 'the rail renders mode=\"facets\"').toBe(\"facets\");\n      |                                                                    ^\n  141 |\n  142 |                 // Distinct per-facet --glass-accent (read the inline style hue).\n  143 |                 const accents = await page.evaluate(() => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/nav-dock-fix.spec.ts:140:68"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:35:05.671Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results/nav-dock-fix-W-NAV-DOCK-FI-abc92-·-mobile-—-nav-dock-gestalt-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/nav-dock-fix.spec.ts",
+                        "column": 68,
+                        "line": 140
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b6323a27afd682ee8a66-4b04ac98f7107f7fa2a1",
+              "file": "nav-dock-fix.spec.ts",
+              "line": 73,
+              "column": 13
+            },
+            {
+              "title": "dark · desktop — nav-dock gestalt",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 20,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 806,
+                      "error": {
+                        "message": "Error: the rail renders mode=\"facets\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"facets\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m",
+                        "stack": "Error: the rail renders mode=\"facets\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"facets\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/nav-dock-fix.spec.ts:140:68",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/nav-dock-fix.spec.ts",
+                          "column": 68,
+                          "line": 140
+                        },
+                        "snippet": "  138 |                     return rail?.getAttribute(\"data-mode\") ?? null;\n  139 |                 });\n> 140 |                 expect(railMode, 'the rail renders mode=\"facets\"').toBe(\"facets\");\n      |                                                                    ^\n  141 |\n  142 |                 // Distinct per-facet --glass-accent (read the inline style hue).\n  143 |                 const accents = await page.evaluate(() => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/nav-dock-fix.spec.ts",
+                            "column": 68,
+                            "line": 140
+                          },
+                          "message": "Error: the rail renders mode=\"facets\"\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"facets\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m\n\n  138 |                     return rail?.getAttribute(\"data-mode\") ?? null;\n  139 |                 });\n> 140 |                 expect(railMode, 'the rail renders mode=\"facets\"').toBe(\"facets\");\n      |                                                                    ^\n  141 |\n  142 |                 // Distinct per-facet --glass-accent (read the inline style hue).\n  143 |                 const accents = await page.evaluate(() => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/nav-dock-fix.spec.ts:140:68"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:35:06.800Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results/nav-dock-fix-W-NAV-DOCK-FI-5fb77--desktop-—-nav-dock-gestalt-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/nav-dock-fix.spec.ts",
+                        "column": 68,
+                        "line": 140
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "b6323a27afd682ee8a66-972e140f3111db12d804",
+              "file": "nav-dock-fix.spec.ts",
+              "line": 73,
+              "column": 13
+            },
+            {
+              "title": "bottom-dock tab strip + persistent prev/next",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 21,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 664,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T10:35:07.917Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b6323a27afd682ee8a66-fe4195a39dc3e0adece7",
+              "file": "nav-dock-fix.spec.ts",
+              "line": 198,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "overlay-sizing.spec.ts",
+      "file": "overlay-sizing.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "DropdownMenu at the right edge: 16px from the edge, at most 22rem wide, card radius",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 21,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 681,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T10:35:08.659Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b3fe3e80f3891bcf9df8-a3baff028574b5fceb87",
+          "file": "overlay-sizing.spec.ts",
+          "line": 44,
+          "column": 5
+        },
+        {
+          "title": "Popover at the right edge: 16px from the edge, at most 22rem wide, card radius",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 21,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 558,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T10:35:09.345Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b3fe3e80f3891bcf9df8-2632951043143fe00d01",
+          "file": "overlay-sizing.spec.ts",
+          "line": 44,
+          "column": 5
+        },
+        {
+          "title": "a forty-row menu opened low fits the room and scrolls inside",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 21,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 562,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T10:35:09.908Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b3fe3e80f3891bcf9df8-b8f101f37569ea12296b",
+          "file": "overlay-sizing.spec.ts",
+          "line": 53,
+          "column": 1
+        },
+        {
+          "title": "the phone viewport: a long menu is the viewport less 1rem a side at most",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 21,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 561,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T10:35:10.476Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b3fe3e80f3891bcf9df8-72995ec51a5ef8ef2d05",
+          "file": "overlay-sizing.spec.ts",
+          "line": 62,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "SegmentedTabs.glide.spec.ts",
+      "file": "SegmentedTabs.glide.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "adjacent hop: the indicator glides at its own size in one monotone leg",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 21,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1266,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T10:35:11.049Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "81df10900155336a1b1b-b5d5730a8577dbf92d2c",
+          "file": "SegmentedTabs.glide.spec.ts",
+          "line": 70,
+          "column": 5
+        },
+        {
+          "title": "far hop: the indicator glides at its own size in one monotone leg",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 21,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1283,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T10:35:12.319Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "81df10900155336a1b1b-81914cfb2c006241a7af",
+          "file": "SegmentedTabs.glide.spec.ts",
+          "line": 70,
+          "column": 5
+        },
+        {
+          "title": "hover on an inactive tab changes its colour and nothing else",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 21,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1028,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T10:35:13.608Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "81df10900155336a1b1b-c705fc00bc1c036e285c",
+          "file": "SegmentedTabs.glide.spec.ts",
+          "line": 115,
+          "column": 1
+        },
+        {
+          "title": "re-clicking the active tab on its centre moves nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 21,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1483,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T10:35:14.641Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "81df10900155336a1b1b-d74418b0667e72a3e3e3",
+          "file": "SegmentedTabs.glide.spec.ts",
+          "line": 164,
+          "column": 5
+        },
+        {
+          "title": "re-clicking the active tab off its centre moves nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 21,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1452,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T10:35:16.128Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "81df10900155336a1b1b-1bf8fb3f39af5c68038b",
+          "file": "SegmentedTabs.glide.spec.ts",
+          "line": 164,
+          "column": 5
+        },
+        {
+          "title": "the indicator can be dragged to the next tab, and stays under the label it commits",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 21,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1577,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T10:35:17.585Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "81df10900155336a1b1b-06627c651d0de99d679f",
+          "file": "SegmentedTabs.glide.spec.ts",
+          "line": 179,
+          "column": 1
+        },
+        {
+          "title": "a 8 px drag out and back, released on its start, leaves the next hop gliding",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 21,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1799,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T10:35:19.165Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "81df10900155336a1b1b-8313c96b4521f18dfde5",
+          "file": "SegmentedTabs.glide.spec.ts",
+          "line": 205,
+          "column": 5
+        },
+        {
+          "title": "a 24 px drag out and back, released on its start, leaves the next hop gliding",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 21,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1778,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T10:35:20.967Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "81df10900155336a1b1b-00334c562871d9ff53d6",
+          "file": "SegmentedTabs.glide.spec.ts",
+          "line": 205,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "Select.bound.spec.ts",
+      "file": "Select.bound.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "a twelve-row list that fits the room shows whole",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 21,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 549,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T10:35:22.754Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d3b8c31450e710e3fb68-1763c0b54515d55b6525",
+          "file": "Select.bound.spec.ts",
+          "line": 17,
+          "column": 1
+        },
+        {
+          "title": "a short viewport bounds the list 16px from the edge and it scrolls inside",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 21,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 573,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T10:35:23.307Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d3b8c31450e710e3fb68-f1f5a48529eadf1497d6",
+          "file": "Select.bound.spec.ts",
+          "line": 35,
+          "column": 1
+        },
+        {
+          "title": "below 30rem the listbox is a bottom sheet at full width",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 21,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 539,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T10:35:23.883Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d3b8c31450e710e3fb68-004fbb5f81faaaf30b84",
+          "file": "Select.bound.spec.ts",
+          "line": 53,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "Sheet.position.spec.ts",
+      "file": "Sheet.position.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "sheet opened deep in the page is fixed and on screen (consumer layer)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 21,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 857,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T10:35:24.430Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "635c9b867fa96b29ee77-1b0f6f91b109964dc1c3",
+          "file": "Sheet.position.spec.ts",
+          "line": 14,
+          "column": 5
+        },
+        {
+          "title": "sheet opened deep in the page is fixed and on screen (unlayered)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 21,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 850,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T10:35:25.291Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "635c9b867fa96b29ee77-189a6cc1330886044094",
+          "file": "Sheet.position.spec.ts",
+          "line": 14,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-11T10:33:57.164Z",
+    "duration": 89036.003,
+    "expected": 40,
+    "skipped": 2,
+    "unexpected": 21,
+    "flaky": 0
+  }
+}

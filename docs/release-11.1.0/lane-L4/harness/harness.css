@@ -1,0 +1,15 @@
+@import "tailwindcss" source("../../../../src");
+@import "tw-animate-css";
+@import "../../../../src/styles/index.css";
+
+body { margin: 0; background: var(--background); color: var(--foreground); }
+.scene { padding: 32px 16px; display: flex; flex-direction: column; gap: 24px; align-items: flex-start; }
+
+/* O-175 (2): the surfaces and inks a broken frame mixes */
+.probe-card { inline-size: min(358px, calc(100vw - 32px)); padding: 16px; border-radius: 16px; background: var(--card); color: var(--card-foreground); }
+.probe-muted { color: var(--muted-foreground); }
+.probe-pop { margin-top: 12px; padding: 8px 12px; border-radius: 10px; background: var(--popover); color: var(--popover-foreground); }
+
+/* O-204 (3): a blob in open ground, so paint past its box lands on the page */
+.blob-host { inline-size: 200px; margin: 120px auto; }
+.spacer { block-size: 4000px; }

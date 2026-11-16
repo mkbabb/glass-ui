@@ -27,6 +27,7 @@ import { onMounted, onUnmounted, ref, watch, type ComputedRef, type Ref } from "
 import { FOCUSABLE_SELECTOR } from "../../_shared/focus";
 import { DOCK_SEAT_ATTR, DOCK_SPRING } from "../constants";
 import { useDockSpring } from "./useDockSpring";
+import { isRunSeat } from "./useDockRunMark";
 
 export interface UseDockRunOptions {
     /** The scroll port — `.dock-run`, the element the seats are children of. */
@@ -58,11 +59,11 @@ export interface UseDockRunReturn {
  * only: a seat is a lattice cell, and a focusable descendant *inside* one (a menu item
  * in an open popover, an input in the search slot) is not a second seat. Taking
  * `querySelectorAll` here would put the tab stop inside a seat that the snap never
- * aligns.
+ * aligns. The run's mark is its one child that is not a seat (`isRunSeat`).
  */
 function seatsOf(run: HTMLElement): HTMLElement[] {
     return Array.from(run.children).filter(
-        (child): child is HTMLElement => child instanceof HTMLElement,
+        (child): child is HTMLElement => child instanceof HTMLElement && isRunSeat(child),
     );
 }
 

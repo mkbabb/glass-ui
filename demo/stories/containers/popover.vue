@@ -1,7 +1,13 @@
 <script setup lang="ts">
 import StoryPage from "../../chassis/page/StoryPage.vue";
 import StorySection from "../../chassis/section/StorySection.vue";
-import { Popover, PopoverContent, PopoverTrigger } from "@glass/components/popover";
+import { computed, ref } from "vue";
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+    type PopoverVirtualElement,
+} from "@glass/components/popover";
 import { Button } from "@glass/components/button";
 import { Surface } from "@glass/components/surface";
 import { Input } from "@glass/components/input";
@@ -11,6 +17,19 @@ import { Label } from "@glass/components/label";
 // blue identity. PH3-safe (inline borderLeft, not the border-l-[3px] +
 
 type Side = "top" | "right" | "bottom" | "left";
+
+// A popover on a point that is not an element: the pointer's position over a field,
+// the way a map hover card anchors to a coordinate.
+const point = ref({ x: 0, y: 0 });
+const hovering = ref(false);
+const anchor = computed<PopoverVirtualElement>(() => {
+    const { x, y } = point.value;
+    return { getBoundingClientRect: () => new DOMRect(x, y, 0, 0) };
+});
+function track(event: PointerEvent): void {
+    point.value = { x: event.clientX, y: event.clientY };
+    hovering.value = true;
+}
 const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
 </script>
 
@@ -166,6 +185,34 @@ const sides: readonly Side[] = ["top", "right", "bottom", "left"] as const;
                         </PopoverContent>
                     </Popover>
                 </div>
+            </StorySection>
+
+            <StorySection heading="On a point" gap="lg">
+                <p class="text-small text-muted-foreground">
+                    <code class="font-mono text-micro">reference</code> anchors the
+                    content to anything with a
+                    <code class="font-mono text-micro">getBoundingClientRect()</code>:
+                    here, the pointer over the field. It flips at the viewport's edge
+                    and closes on a press outside, as it does on a trigger.
+                </p>
+                <div
+                    class="h-56 rounded-card bg-muted/40"
+                    @pointermove="track"
+                    @pointerleave="hovering = false"
+                />
+                <Popover v-model:open="hovering">
+                    <!-- a hover card keeps focus where it is -->
+                    <PopoverContent
+                        :reference="anchor"
+                        side="top"
+                        class="w-auto"
+                        @open-auto-focus="(event: Event) => event.preventDefault()"
+                    >
+                        <p class="font-mono text-micro">
+                            {{ Math.round(point.x) }}, {{ Math.round(point.y) }}
+                        </p>
+                    </PopoverContent>
+                </Popover>
             </StorySection>
 
             <StorySection heading="Trigger states" gap="lg">

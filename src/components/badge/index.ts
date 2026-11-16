@@ -23,9 +23,10 @@ export { default as Badge } from "./Badge.vue";
 // character — "Paid" rendering as P/ai/d in a narrow cel. A badge is a short
 // annotation; it does not wrap, it stays on its line.
 //
-// The GLYPH is `1em` (W-SEARCH ruling 3, inherited verbatim): an icon inside a
-// mark is sized by the mark's own type, so it tracks every rung instead of
-// freezing at `--ui-glyph-sm` while the label grows around it.
+// The GLYPH is `--mark-glyph`, `1em` on every plated variant (W-SEARCH ruling 3,
+// inherited verbatim): an icon inside a mark is sized by the mark's own type, so it
+// tracks every rung instead of freezing at `--ui-glyph-sm` while the label grows
+// around it. mark.css declares the `1em`; the `bare` variant re-points it to `1cap`.
 //
 // A-22 — the CIRCULAR FLOOR. The floor is the badge's own BOX HEIGHT (`1lh`
 // content + the two padding-block legs), so a one-character badge is a circle
@@ -41,11 +42,15 @@ export { default as Badge } from "./Badge.vue";
 // afford. The request series is unchanged: 4/8 · 4/12 · 8/12 on the spacing
 // series, off `--ui-scale`.
 const BASE =
-    "badge-atom inline-flex items-center justify-center gap-1.5 rounded-badge font-semibold whitespace-nowrap [&_svg:not([class*=size-])]:size-[1em] [&_svg]:shrink-0 [&_svg]:pointer-events-none";
+    "badge-atom inline-flex items-center justify-center gap-1.5 rounded-badge font-semibold whitespace-nowrap [&_svg:not([class*=size-])]:size-[var(--mark-glyph)] [&_svg]:shrink-0 [&_svg]:pointer-events-none";
 const VARIANT = {
     default: "bg-primary text-primary-foreground",
     secondary: "bg-secondary text-secondary-foreground",
     outline: "badge-atom--outline text-foreground",
+    // The mark alone: no plate, no ring, no floor, no pad. The glyph sits at the
+    // text's cap height and inherits the surrounding ink; a label element beside it
+    // stays in the accessibility tree but is not painted (glass-atom.css).
+    bare: "badge-atom--bare",
 } as const;
 const TONE = {
     neutral: "",

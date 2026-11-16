@@ -11,6 +11,7 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, useId, watch } from "vue";
 import { FRAME_MS } from "../../composables/motion/core/constants";
+import { motionTempo } from "../../composables/motion/core/motionTempo";
 import { useIntersectionPause } from "../../composables/motion/core/useIntersectionPause";
 import {
     BAND_HEIGHT,
@@ -21,9 +22,7 @@ import {
     handBand,
     handLine,
     handRing,
-    markDuration,
     markSeed,
-    minJerk,
     nib,
     ringReserve,
     serialize,
@@ -37,16 +36,31 @@ const props = withDefaults(
         weight?: number;
         seed?: number;
         draw?: boolean;
+        /**
+         * When the mark draws in. `"mount"` draws as soon as it is measured; `"in-view"`
+         * holds the mark undrawn until at least half of it is in the viewport, then
+         * draws it, so a heading below the fold draws when the reader reaches it.
+         */
+        trigger?: "mount" | "in-view";
+        /** With `trigger="in-view"`: undraw on leaving the viewport and draw again on each entry. */
+        retrigger?: boolean;
     }>(),
-    { shape: "underline", color: "currentColor", weight: 1, draw: true },
+    { shape: "underline", weight: 1, draw: true, trigger: "mount", retrigger: false },
 );
+
+const emit = defineEmits<{
+    /**
+     * The mark stands complete: once per draw, after its last line's last frame. Under
+     * reduced motion, in print, and with `draw` off, the mark is complete from its first
+     * frame, so it fires at mount.
+     */
+    drawn: [];
+}>();
 
 interface Mark {
     ink: string;
     guide: string;
     stroke: number;
-    delay: number;
-    duration: number;
     /** The mask's own window, in the SAME user units the geometry is emitted in. */
     window: Frame;
     /**
@@ -71,23 +85,34 @@ const reserve = ref(0);
 const swell = ref(1);
 const lag = ref(0);
 const settling = ref(false);
+/** The line rank's lead, in ms: see THE FRAME-RANK LAW in `measure()`. */
+const lead = ref(0);
 
-/** The highlight takes a HUE; every other gesture takes a colour. */
+/**
+ * Where the draw stands. `wait` holds the mark undrawn (an in-view mark not yet seen),
+ * `draw` runs the draw on the `present` spring, `rest` shows it drawn with no motion.
+ * The style block reads it; reduced motion and print show every state drawn.
+ */
+const ink = ref<"wait" | "draw" | "rest">(
+    !props.draw ? "rest" : props.trigger === "in-view" ? "wait" : "draw",
+);
+
+/**
+ * The highlight takes a HUE; every other gesture takes a colour. With no `color`, both
+ * take the page's focal ink, `--primary`: the stroke paints it, and the band takes its hue.
+ */
 const bandHue = computed(() => {
     const n = Number(props.color);
-    return Number.isFinite(n) ? n : 78;
+    return props.color !== undefined && Number.isFinite(n) ? n : null;
 });
-const inkFill = computed(() => (props.shape === "highlight" ? "var(--hm-band)" : props.color));
+const inkFill = computed(() =>
+    props.shape === "highlight" ? "var(--hm-band)" : (props.color ?? "var(--primary)"),
+);
 const hostStyle = computed(() => ({
-    "--hm-h": `${bandHue.value}`,
+    ...(bandHue.value === null ? {} : { "--hm-h": `${bandHue.value}` }),
     "--hm-reserve": reserve.value ? `${reserve.value}px` : "0px",
+    "--hm-lead": `${lead.value}ms`,
 }));
-
-function polylineLength(p: Point[]): number {
-    let sum = 0;
-    for (let i = 1; i < p.length; i++) sum += Math.hypot(p[i].x - p[i - 1].x, p[i].y - p[i - 1].y);
-    return sum;
-}
 
 /** The nearest block ancestor: the scope a mark's identity and its stagger are read in. */
 function blockScope(el: HTMLElement): HTMLElement {
@@ -179,11 +204,7 @@ function maskWindow(points: Point[], stroke: number): Frame {
 
 // The frame's `box` is the RECT, not the geometry — `measure()` owns it, so it is not
 // among the things a shape's closed form can answer for.
-function geometryFor(
-    rect: Frame,
-    fs: number,
-    seed: number,
-): Omit<Mark, "delay" | "duration" | "box"> & { length: number } {
+function geometryFor(rect: Frame, fs: number, seed: number): Omit<Mark, "box"> {
     if (props.shape === "highlight") {
         const band = handBand(rect, { fs, seed });
         const half = band.length / 2;
@@ -195,7 +216,6 @@ function geometryFor(
         return {
             ink: fillPolygon(band),
             guide: serialize(guide),
-            length: polylineLength(guide),
             stroke,
             window: maskWindow(band.concat(guide), stroke),
         };
@@ -208,7 +228,6 @@ function geometryFor(
     return {
         ink: strokeRibbon(line, w),
         guide: serialize(line),
-        length: polylineLength(line),
         stroke: w * 1.6,
         window: maskWindow(line, w * 1.6),
     };
@@ -227,8 +246,9 @@ function measure(): void {
     // THE FRAME-RANK LAW: a line's lead over the one above it is four frames of the
     // display's own beat, not a minted millisecond. `FRAME_MS` is the shared token and
     // 4 is this family's rank — the same grammar the timeline reads, so the library
-    // owns one lead/lag idea rather than two coincidentally-similar numbers.
-    let clock = line * 4 * FRAME_MS;
+    // owns one lead/lag idea rather than two coincidentally-similar numbers. Within the
+    // mark, line `i` waits `i` draws of the `present` clock (the style block).
+    lead.value = Math.round(line * 4 * FRAME_MS * 100) / 100;
     const next: Mark[] = [];
     for (const r of rects) {
         const frame: Frame = {
@@ -238,17 +258,7 @@ function measure(): void {
             height: r.height,
         };
         const g = geometryFor(frame, fs, seed + next.length);
-        const duration = markDuration(g.length);
-        next.push({
-            ink: g.ink,
-            guide: g.guide,
-            stroke: g.stroke,
-            window: g.window,
-            box: { width: up(frame.width), height: up(frame.height) },
-            delay: clock,
-            duration,
-        });
-        clock += duration;
+        next.push({ ...g, box: { width: up(frame.width), height: up(frame.height) } });
     }
     marks.value = next;
     reserve.value =
@@ -258,44 +268,127 @@ function measure(): void {
 }
 
 /**
- * The draw is a mask of the centreline, dashed open and pulled shut on a minimum-jerk
- * clock. A spring would be wrong here: a stroke cannot un-draw past its own end.
+ * THE COMPOSITOR DRAW. Each line's frame sits in a clip window (`.hm-reveal`, the mark's
+ * own window in px) that slides in from behind the stroke's start, while the frame inside
+ * slides back by the same distance. Both are `transform`s on one clock and one curve, so
+ * they cancel at every frame: the ink holds still and the window's edge travels along
+ * the stroke. A transform animation runs on the compositor in both engines, so a long
+ * task on the main thread does not stall it. The window's edge is a straight cut where
+ * the old dash front was a round cap of 0.8 nib over a ribbon of at most 1 nib; the two
+ * fronts differ by under 0.2 nib.
+ *
+ * The ring winds round on itself, and no straight edge follows it. It keeps the
+ * centreline mask, dashed open and pulled shut (`pathLength="1"`, the dash offset 1 → 0).
+ *
+ * The style block owns the clock: the `present` spring's own duration and curve, which
+ * is critically damped, so a stroke never draws past its end and back. `play()` replays it.
  */
-function run(from = 0): void {
-    if (typeof document === "undefined" || !root.value) return;
-    const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
-    const press = getComputedStyle(root.value).getPropertyValue("--spring-press").trim();
-    const easing = from > 0 && press ? press : minJerk();
-    for (const el of Array.from(root.value.querySelectorAll<SVGPathElement>(".hm-guide"))) {
-        const total = el.getTotalLength?.() ?? 0;
-        if (!total) continue;
-        const mark = marks.value[Number(el.dataset.i ?? 0)];
-        el.style.strokeDasharray = `${total}`;
-        el.style.strokeDashoffset = "0";
-        if (!props.draw || reduce || typeof el.animate !== "function") continue;
-        el.animate([{ strokeDashoffset: total * (1 - from) }, { strokeDashoffset: 0 }], {
-            duration: from > 0 ? 220 : (mark?.duration ?? 400),
-            delay: from > 0 ? 0 : (mark?.delay ?? 0),
-            easing,
-            fill: "both",
-        });
-    }
+const composited = computed(() => props.shape !== "circle");
+const DRAWS = ["hm-reveal", "hm-draw"];
+
+function drawAnimations(): Animation[] {
+    if (!root.value) return [];
+    return Array.from(
+        root.value.querySelectorAll<Element>(".hm-reveal, .hm-mark, .hm-guide, .hm-ink"),
+    ).flatMap((el) => el.getAnimations?.() ?? []);
+}
+
+/**
+ * Where the draw runs: the style block's own media condition. Anywhere else (reduced
+ * motion, print) the mark stands final from frame 0, and nothing is left to draw.
+ */
+const MOTION = "screen and (prefers-reduced-motion: no-preference)";
+
+function still(): boolean {
+    return !(window.matchMedia?.(MOTION)?.matches ?? true);
+}
+
+function reduced(): boolean {
+    return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+}
+
+/** The lines whose draw has ended in this cycle, and whether `drawn` has fired for it. */
+const ended = new Set<number>();
+let done = false;
+
+function finish(): void {
+    if (done) return;
+    done = true;
+    emit("drawn");
+}
+
+/**
+ * A new draw cycle. Under reduced motion or print the mark has stood complete all along,
+ * so there is no new cycle, and `drawn` has already fired.
+ */
+function begin(): void {
+    if (still()) return finish();
+    done = false;
+    ended.clear();
+}
+
+const complete = () => ink.value === "draw" && ended.size >= marks.value.length;
+
+/**
+ * `animationend` runs inside the frame that renders the last line's final state, before
+ * that frame reaches the screen. `drawn` waits one frame more, so it lands after the
+ * last stroke frame and whatever a consumer starts on it paints after the mark is whole.
+ */
+function onDrawEnd(e: AnimationEvent): void {
+    if (ink.value !== "draw" || !DRAWS.some((n) => e.animationName.startsWith(n))) return;
+    const i = Number((e.target as Element).getAttribute("data-i"));
+    if (Number.isFinite(i)) ended.add(i);
+    if (complete()) requestAnimationFrame(() => complete() && finish());
 }
 
 function play(): void {
-    run(0);
+    if (ink.value !== "draw") {
+        ink.value = "draw";
+        return;
+    }
+    begin();
+    for (const a of drawAnimations()) {
+        a.currentTime = 0;
+        a.play();
+    }
 }
 
-/** Re-ink: one replay, every modality. The nib swells 4%; the centreline never moves. */
+/** The share of the stroke that re-ink pulls shut again. */
+const REINK = 0.35;
+
+/**
+ * Re-ink: one replay, every modality. The nib swells 4% and the last third of the stroke
+ * pulls shut again on the `press` spring, on the same channel the draw rides; the
+ * centreline never moves.
+ */
 function reink(): void {
-    if (swell.value !== 1) return;
+    if (swell.value !== 1 || ink.value === "wait" || !root.value || reduced()) return;
+    const style = getComputedStyle(root.value);
+    const settle = parseFloat(style.getPropertyValue("--spring-press-settle"));
+    const duration = (Number.isFinite(settle) ? settle * 1000 : 0) * motionTempo(root.value);
+    const easing = style.getPropertyValue("--spring-press").trim() || "linear";
     swell.value = 1.04;
     measure();
-    run(0.35);
-    window.setTimeout(() => {
+    const timing = { duration, easing };
+    const at = (sel: string) => Array.from(root.value?.querySelectorAll<Element>(sel) ?? []);
+    const runs = composited.value
+        ? at(".hm-reveal").flatMap((win, i) => {
+              const back = REINK * (marks.value[i]?.window.width ?? 0);
+              const frame = win.querySelector(".hm-mark");
+              return [
+                  win.animate([{ transform: `translateX(${-back}px)` }, { transform: "none" }], timing),
+                  ...(frame
+                      ? [frame.animate([{ transform: `translateX(${back}px)` }, { transform: "none" }], timing)]
+                      : []),
+              ];
+          })
+        : at(".hm-guide").map((el) =>
+              el.animate([{ strokeDashoffset: REINK }, { strokeDashoffset: 0 }], timing),
+          );
+    void Promise.all(runs.map((a) => a.finished)).finally(() => {
         swell.value = 1;
         measure();
-    }, 220);
+    });
 }
 
 let quiet: number | null = null;
@@ -352,18 +445,57 @@ useIntersectionPause(root, {
     },
 });
 
+/**
+ * `trigger="in-view"`: the mark waits undrawn until half of it is in the viewport, then
+ * draws once; with `retrigger` it undraws when wholly out and draws on each entry. An
+ * observer's first report is the truth about a mark mounted off-screen, so the state
+ * starts at `wait` and only an entry moves it.
+ */
+let seen: IntersectionObserver | null = null;
+
+function watchEntry(el: HTMLElement): void {
+    if (typeof IntersectionObserver === "undefined") {
+        ink.value = "draw";
+        return;
+    }
+    seen = new IntersectionObserver(
+        ([entry]) => {
+            if (entry.intersectionRatio >= 0.5) {
+                ink.value = "draw";
+                if (!props.retrigger) {
+                    seen?.disconnect();
+                    seen = null;
+                }
+            } else if (props.retrigger && !entry.isIntersecting && !still()) {
+                ink.value = "wait";
+            }
+        },
+        { threshold: [0, 0.5] },
+    );
+    seen.observe(el);
+}
+
 let ro: ResizeObserver | null = null;
+let motionQuery: MediaQueryList | null = null;
+
+/** Turning reduced motion on (or printing) shows every mark complete, so it is drawn. */
+function onMotion(e: MediaQueryListEvent): void {
+    if (!e.matches) finish();
+}
+
+watch(ink, (v) => {
+    if (v === "draw") begin();
+});
 
 onMounted(() => {
     measure();
-    void nextTick(() => {
-        measure();
-        run(0);
-    });
-    void document.fonts?.ready?.then(() => {
-        measure();
-        run(0);
-    });
+    // A mark that will not move is complete now: `draw` off, reduced motion, print.
+    if (ink.value === "rest" || still()) finish();
+    motionQuery = window.matchMedia?.(MOTION) ?? null;
+    motionQuery?.addEventListener?.("change", onMotion);
+    void nextTick(measure);
+    void document.fonts?.ready?.then(measure);
+    if (ink.value === "wait" && root.value) watchEntry(root.value);
     if (typeof ResizeObserver !== "undefined" && root.value) {
         ro = new ResizeObserver(() => measure());
         ro.observe(root.value);
@@ -373,6 +505,8 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
     ro?.disconnect();
+    motionQuery?.removeEventListener?.("change", onMotion);
+    seen?.disconnect();
     if (quiet !== null) window.clearTimeout(quiet);
     document.removeEventListener("scroll", onScroll, { capture: true });
 });
@@ -387,49 +521,75 @@ defineExpose({ play });
         class="hm"
         ref="root"
         :data-shape="shape"
+        :data-ink="ink"
         :style="hostStyle"
         @pointerenter="reink"
         @pointerdown="reink"
         @focusin="reink"
+        @animationend="onDrawEnd"
     >
         <del v-if="shape === 'strike'"><slot /></del>
         <mark v-else-if="shape === 'highlight'"><slot /></mark>
         <slot v-else />
-        <svg
+        <span
             v-for="(m, i) in marks"
             :key="i"
-            ref="frames"
-            class="hm-mark"
-            :class="{ 'hm-mark--settling': settling }"
-            :width="m.box.width"
-            :height="m.box.height"
-            :style="{ transform: `translateY(${-lag}px)` }"
-            aria-hidden="true"
-            focusable="false"
+            class="hm-reveal"
+            :data-i="i"
+            :style="{
+                left: `${m.window.x}px`,
+                top: `${m.window.y}px`,
+                width: `${m.window.width}px`,
+                height: `${m.window.height}px`,
+                '--hm-i': i,
+                // The frame's counter-slide is the window's own slide.
+                '--hm-wipe': `${m.window.width}px`,
+            }"
         >
-            <defs>
-                <mask
-                    :id="`${uid}-${i}`"
-                    maskUnits="userSpaceOnUse"
-                    :x="m.window.x"
-                    :y="m.window.y"
-                    :width="m.window.width"
-                    :height="m.window.height"
-                >
-                    <path
-                        class="hm-guide"
-                        :data-i="i"
-                        :d="m.guide"
-                        fill="none"
-                        stroke="#fff"
-                        :stroke-width="m.stroke"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    />
-                </mask>
-            </defs>
-            <path class="hm-ink" :d="m.ink" :fill="inkFill" :mask="`url(#${uid}-${i})`" />
-        </svg>
+            <svg
+                ref="frames"
+                class="hm-mark"
+                :class="{ 'hm-mark--settling': settling }"
+                :width="m.box.width"
+                :height="m.box.height"
+                :style="{
+                    left: `${-m.window.x}px`,
+                    top: `${-m.window.y}px`,
+                    translate: `0 ${-lag}px`,
+                }"
+                aria-hidden="true"
+                focusable="false"
+            >
+                <defs v-if="!composited">
+                    <mask
+                        :id="`${uid}-${i}`"
+                        maskUnits="userSpaceOnUse"
+                        :x="m.window.x"
+                        :y="m.window.y"
+                        :width="m.window.width"
+                        :height="m.window.height"
+                    >
+                        <path
+                            class="hm-guide"
+                            :data-i="i"
+                            :d="m.guide"
+                            pathLength="1"
+                            fill="none"
+                            stroke="#fff"
+                            :stroke-width="m.stroke"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                    </mask>
+                </defs>
+                <path
+                    class="hm-ink"
+                    :d="m.ink"
+                    :fill="inkFill"
+                    :mask="composited ? undefined : `url(#${uid}-${i})`"
+                />
+            </svg>
+        </span>
     </span>
 </template>
 
@@ -440,8 +600,12 @@ defineExpose({ play });
         display: inline;
         isolation: isolate;
         padding-inline: var(--hm-reserve, 0px);
-        --hm-h: 78;
-        --hm-band: light-dark(oklch(0.86 0.16 var(--hm-h)), oklch(0.44 0.16 var(--hm-h)));
+        /* The band takes the `color` hue when one is given (`--hm-h`), else the hue of
+           the page's focal ink. */
+        --hm-band: light-dark(
+            oklch(from var(--primary) 0.86 0.16 var(--hm-h, h)),
+            oklch(from var(--primary) 0.44 0.16 var(--hm-h, h))
+        );
     }
     .hm del {
         text-decoration: none;
@@ -451,6 +615,10 @@ defineExpose({ play });
         color: inherit;
     }
     /*
+       The window is the mark's own extent in px (`maskWindow`): it clips the ink, and the
+       draw slides it open. The frame inside sits back at the containing block's origin, so
+       the geometry stays in the frame's own units.
+
        The frame is an ORIGIN, not a layer over the word — the geometry inside it is
        absolute, in 1:1 CSS px, and `overflow: visible` lets it out. So the frame's size is
        authored per mark, in those same units, as the LINE RECT the mark was made for.
@@ -464,27 +632,94 @@ defineExpose({ play });
        viewport of zero width renders nothing at all, so perfect geometry behind a perfect
        mask window painted nothing on four of the ten story mounts.
 
-       `left`/`top` stay 0: the frame's POSITION is what `measure()` reads its origin from,
-       and a size that cannot move it keeps that reading a fixed point.
+       The frame's POSITION is what `measure()` reads its origin from. The window and the
+       frame move by equal and opposite amounts during the draw, so that reading holds
+       at every frame.
     */
+    .hm-reveal {
+        position: absolute;
+        overflow: hidden;
+        pointer-events: none;
+    }
     .hm-mark {
         position: absolute;
-        left: 0;
-        top: 0;
         overflow: visible;
         pointer-events: none;
     }
-    .hm[data-shape="highlight"] .hm-mark {
+    .hm[data-shape="highlight"] .hm-reveal {
         z-index: -1;
     }
     .hm-mark--settling {
-        transition: transform var(--spring-world-duration) var(--spring-world);
+        transition: translate var(--spring-world-duration) var(--spring-world);
     }
     .hm-ink {
         /* A spring owns its own clock — the settle rides `--spring-present` and the
            duration that curve was solved for, never a literal that drifts away from it
            the first time the preset is retuned. */
         animation: hm-settle var(--spring-present-duration) var(--spring-present) both;
+    }
+    .hm-guide {
+        stroke-dasharray: 1;
+        stroke-dashoffset: 0;
+    }
+    .hm[data-ink="wait"] .hm-ink {
+        animation: none;
+    }
+    /* The draw and the undrawn wait exist only on a screen with motion allowed. Under
+       reduced motion and in print, every mark stands at its final state from frame 0,
+       with nothing to undo. */
+    @media screen and (prefers-reduced-motion: no-preference) {
+        /* Each line opens on the same `present` clock, line `i` after the `i` before it,
+           the whole mark after its line rank's lead. The window and the frame share the
+           clock, so their two transforms cancel at every frame. */
+        .hm[data-ink="draw"] :is(.hm-reveal, .hm-mark, .hm-guide) {
+            animation-duration: var(--spring-present-duration);
+            animation-timing-function: var(--spring-present);
+            animation-delay: calc(var(--hm-lead, 0ms) + var(--hm-i, 0) * var(--spring-present-duration));
+            animation-fill-mode: both;
+        }
+        .hm[data-ink="draw"]:not([data-shape="circle"]) .hm-reveal {
+            animation-name: hm-reveal;
+        }
+        .hm[data-ink="draw"]:not([data-shape="circle"]) .hm-mark {
+            animation-name: hm-frame;
+        }
+        .hm[data-ink="draw"][data-shape="circle"] .hm-guide {
+            animation-name: hm-draw;
+        }
+        .hm[data-ink="wait"]:not([data-shape="circle"]) .hm-reveal {
+            transform: translateX(-100%);
+        }
+        .hm[data-ink="wait"]:not([data-shape="circle"]) .hm-mark {
+            transform: translateX(var(--hm-wipe));
+        }
+        .hm[data-ink="wait"] .hm-guide {
+            stroke-dashoffset: 1;
+        }
+    }
+}
+@keyframes hm-reveal {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+@keyframes hm-frame {
+    from {
+        transform: translateX(var(--hm-wipe));
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+@keyframes hm-draw {
+    from {
+        stroke-dashoffset: 1;
+    }
+    to {
+        stroke-dashoffset: 0;
     }
 }
 @keyframes hm-settle {
@@ -498,10 +733,18 @@ defineExpose({ play });
 @layer components {
     @media (prefers-reduced-motion: reduce) {
         .hm-mark {
-            transform: none !important;
+            translate: none !important;
         }
         .hm-mark--settling {
             transition: none;
+        }
+        .hm-ink {
+            animation: none;
+        }
+    }
+    @media print {
+        .hm-mark {
+            translate: none;
         }
         .hm-ink {
             animation: none;

@@ -1,0 +1,12 @@
+0/4  stall: paint advances through a 400 ms main-thread task
+4/4  compositor property (transform alone) on the present clock
+0/8  drawn: once, after the last stroke frame
+0/4  stall (ring, dashoffset kept: recorded, not gated)
+4/4  ring: dashoffset on the present clock
+diag400 webkit: 12/24
+green exit 1
+0/4  stall: paint advances through a 400 ms main-thread task
+0/4  compositor property (transform alone) on the present clock
+0/4  drawn: once, after the last stroke frame
+diag400red webkit: 0/12
+red exit 1

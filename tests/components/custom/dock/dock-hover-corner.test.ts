@@ -8,7 +8,7 @@
 // I-3: a collapsed horizontal dock was always drawn as `--radius-circle` (50%). A dock
 // whose `#persistent` control sits beside the summary is two cells wide, so 50% drew an
 // oval lozenge over 40 px (atlas F-20). A stadium dock takes half its cross extent there,
-// a capsule; a finite shape keeps the bar corner `--radius-dock`.
+// a capsule; a finite shape keeps a 16 px bar corner (`--radius-pill`).
 //
 // jsdom has no cascade, so these are source detectors on comment-stripped CSS. The
 // engine half is atlas's `PlateDock.browser.spec.ts` (computed `scale` under hover and
@@ -59,15 +59,17 @@ describe("U/B8r I-3: the two-cell collapsed dock is not drawn as a circle", () =
         );
     });
 
-    it("a finite-shape collapsed dock with a persistent control beside a summary keeps --radius-dock", () => {
+    it("a finite-shape collapsed dock with a persistent control beside a summary keeps the bar corner", () => {
         expect(morph).toMatch(
-            /\.glass-dock\.collapsed:not\(\[data-morphing\]\):not\(\.vertical\):not\(\.shape-pill\):has\(\.dock-persistent\):has\(\s*\.dock-layer--summary:not\(:empty\)\s*\)\s*\{\s*border-radius:\s*var\(--radius-dock\);/,
+            /\.glass-dock\.collapsed:not\(\[data-morphing\]\):not\(\.vertical\):not\(\.shape-pill\):has\(\.dock-persistent\):has\(\s*\.dock-layer--summary:not\(:empty\)\s*\)\s*\{\s*border-radius:\s*var\(--radius-pill\);/,
         );
     });
 
     it("the stadium's corner is half its cross extent in every posture: a circle on one cell, a capsule on two", () => {
         expect(run).toMatch(/\.glass-dock\.shape-pill\s*\{\s*border-radius:\s*var\(--dock-cap-rest\);/);
-        expect(run).toMatch(/--dock-cap-rest:\s*calc\(var\(--dock-cross\) \/ 2\)/);
+        // Bounded by the dock's radius token, the stadium by default: a host's
+        // `--radius-dock: 1rem` is the bar corner in every posture.
+        expect(run).toMatch(/--dock-cap-rest:\s*min\(var\(--radius-dock\), calc\(var\(--dock-cross\) \/ 2\)\)/);
         // The cross extent is the measure, and before the script runs the same extent
         // from the density tokens: the first paint is already a stadium.
         expect(run).toMatch(/--dock-cross:\s*var\(\s*--dock-plate-cross-px,\s*calc\(var\(--dock-layer-height\) \+ 2 \* var\(--dock-padding-block\)\)\s*\)/);

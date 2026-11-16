@@ -261,6 +261,7 @@ export {
     type PopoverProps,
     type PopoverTriggerMode,
     type PopoverTriggerProps,
+    type PopoverVirtualElement,
 } from "./components/popover";
 export {
     Progress,

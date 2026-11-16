@@ -1,0 +1,12 @@
+@import "tailwindcss" source("../../../../../src");
+@import "tw-animate-css";
+@import "../../../../../src/styles/index.css";
+@source "./harness.ts";
+body { margin: 0; background: var(--background); color: var(--foreground); }
+.scene { padding: 24px 16px; min-block-size: 300px; }
+.mark-probe { --dock-control-active-bg: rgb(255, 0, 255); }
+/* A consumer's active cohort, as the library's own comment describes it (a parent-scoped
+   retint of --dock-active-*). flat: colours the probe can find. */
+.cohort-flat .dock-icon-button { --dock-active-bg: rgb(255, 0, 255); --dock-active-border: 1px solid rgb(0, 200, 0); --dock-active-shadow: none; --dock-active-scale: 1; }
+/* The values a sibling consumer ships (its tools column), at scale 1 so boxes compare. */
+.cohort-real .dock-icon-button { --dock-active-color: var(--foreground); --dock-active-bg: color-mix(in srgb, var(--primary) 6%, transparent); --dock-active-border: 1px solid color-mix(in srgb, var(--primary) 25%, transparent); --dock-active-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) 10%, transparent), 0 4px 12px color-mix(in srgb, var(--primary) 15%, transparent); --dock-active-scale: 1; }

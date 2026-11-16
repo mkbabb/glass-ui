@@ -1,0 +1,106 @@
+fix3-witness green chromium: green chromium 26 cells 0 errors
+fix3-witness pre chromium: pre chromium 26 cells 0 errors
+fix3-witness red chromium: red chromium 26 cells 0 errors
+fix3-witness green webkit: green webkit 26 cells 0 errors
+fix3-witness pre webkit: pre webkit 26 cells 0 errors
+fix3-witness red webkit: red webkit 26 cells 0 errors
+fix2-witness green chromium: green chromium {"O-212":[20,20],"O-213 anchored":[4,4],"O-214 pointer":[4,4],"O-214 keyboard":[12,12],"G13":[4,4],"G14":[4,4],"Collapsible contract":[4,4],"Collapsible gap":[4,4],"Table one surface":[4,4]}
+fix2-witness red chromium: red chromium {"O-212":[14,20],"O-213 anchored":[2,4],"O-214 pointer":[0,4],"O-214 keyboard":[12,12],"G13":[2,4],"G14":[2,4],"Collapsible contract":[4,4],"Collapsible gap":[0,4],"Table one surface":[0,4]}
+fix2-witness green webkit: green webkit {"O-212":[20,20],"O-213 anchored":[4,4],"O-214 pointer":[4,4],"O-214 keyboard":[12,12],"G13":[4,4],"G14":[4,4],"Collapsible contract":[4,4],"Collapsible gap":[4,4],"Table one surface":[4,4]}
+fix2-witness red webkit: red webkit {"O-212":[14,20],"O-213 anchored":[2,4],"O-214 pointer":[0,4],"O-214 keyboard":[12,12],"G13":[2,4],"G14":[2,4],"Collapsible contract":[4,4],"Collapsible gap":[0,4],"Table one surface":[0,4]}
+c2-probe green chromium: green chromium 23 cells 0 errors
+c2-probe red chromium: red chromium 23 cells 0 errors
+c2-probe green webkit: green webkit 23 cells 0 errors
+c2-probe red webkit: red webkit 23 cells 0 errors
+probe green chromium: green chromium 36 cells 0 errors
+probe red chromium: red chromium 36 cells 0 errors
+probe green webkit: green webkit 36 cells 0 errors
+rerun/lane-L1 green chromium: {"O-164":{"pass":4,"fail":0},"O-188":{"pass":6,"fail":0},"O-169":{"pass":17,"fail":0}}
+rerun/lane-L1 red chromium: FAIL O-169 tick {"mutated":["scroll-progress-rim|style","scroll-progress-rim|aria-valuenow"],"trace":{"updateLayoutTree":[3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"layoutCount":0,"layoutDirty":[]}}
+rerun/lane-L1 green webkit: {"O-164":{"pass":4,"fail":0},"O-188":{"pass":6,"fail":0},"O-169":{"pass":17,"fail":0}}
+rerun/lane-L1 red webkit: FAIL O-169 tick {"mutated":["scroll-progress-rim|style","scroll-progress-rim|aria-valuenow"],"trace":null}
+rerun/lane-L2 green chromium: {"O-181":{"pass":4,"total":4},"O-196":{"pass":4,"total":4},"O-189":{"pass":4,"total":4},"O-171":{"pass":5,"total":5},"O-168":{"pass":5,"total":5},"O-173 paint":{"pass":4,"total":4},"O-173":{"pass":5,"total":5},"O-180":{"pass":2,"total":2}}
+rerun/lane-L2 red chromium: {"O-181":{"pass":0,"total":4},"O-196":{"pass":0,"total":4},"O-189":{"pass":0,"total":4},"O-171":{"pass":1,"total":5},"O-168":{"pass":1,"total":5},"O-173 paint":{"pass":0,"total":4,"unmeasurable":4},"O-173":{"pass":1,"total":5},"O-180":{"pass":0,"total":2}}
+rerun/lane-L2 green webkit: {"O-181":{"pass":4,"total":4},"O-196":{"pass":4,"total":4},"O-189":{"pass":4,"total":4},"O-171":{"pass":5,"total":5},"O-168":{"pass":5,"total":5},"O-173 paint":{"pass":0,"total":4,"unmeasurable":4},"O-173":{"pass":5,"total":5},"O-180":{"pass":2,"total":2}}
+rerun/lane-L2 red webkit: {"O-181":{"pass":0,"total":4},"O-196":{"pass":0,"total":4},"O-189":{"pass":0,"total":4},"O-171":{"pass":1,"total":5},"O-168":{"pass":1,"total":5},"O-173 paint":{"pass":0,"total":4,"unmeasurable":4},"O-173":{"pass":1,"total":5},"O-180":{"pass":0,"total":2}}
+rerun/lane-L3 green chromium: {"O-158":{"pass":4,"total":4},"O-184":{"pass":4,"total":4},"O-178":{"pass":4,"total":4},"O-179":{"pass":6,"total":6}}
+rerun/lane-L3 red chromium: {"O-158":{"pass":0,"total":4},"O-184":{"pass":0,"total":4},"O-178":{"pass":4,"total":4},"O-179":{"pass":2,"total":6}}
+rerun/lane-L3 green webkit: {"O-158":{"pass":4,"total":4},"O-184":{"pass":4,"total":4},"O-178":{"pass":4,"total":4},"O-179":{"pass":6,"total":6}}
+rerun/lane-L3 red webkit: {"O-158":{"pass":0,"total":4},"O-184":{"pass":0,"total":4},"O-178":{"pass":4,"total":4},"O-179":{"pass":2,"total":6}}
+rerun/lane-L4 green chromium: probe exit 0, fontprobe exit 0
+rerun/lane-L4 red chromium: probe exit 1, fontprobe exit 1
+rerun/lane-L4 green webkit: probe exit 0, fontprobe exit 0
+rerun/lane-L4 red webkit: probe exit 1, fontprobe exit 1
+rerun/lane-L5 green chromium: green chromium: 60/60
+rerun/lane-L5 red chromium: red chromium: 26/60
+rerun/lane-L5 green webkit: green webkit: 60/60
+rerun/lane-L5 red webkit: red webkit: 26/60
+rerun/lane-L6 green chromium: {"O-194":{"pass":66,"fail":0},"O-197":{"pass":10,"fail":0},"O-198":{"pass":3,"fail":0},"O-199":{"pass":82,"fail":0}}
+rerun/lane-L6 red chromium: FAIL O-199 host-bar col-v-persist 1440 light {"key":"col-v-persist","vertical":true,"collapsed":true,"morphing":false,"w":64,"h":110,"cross":64,"dock":["16px","16px","16px","16px"],"plate":["16px","16px","4px","4px"],"usedDock":[[16,16],[16,16],[16,16],[16,16]],"usedPlate":[[16,16],[16,16],[4,4],[4,4]],"scale":[1,1]}
+rerun/lane-L6 green webkit: {"O-194":{"pass":60,"fail":0},"O-197":{"pass":10,"fail":0},"O-198":{"pass":3,"fail":0},"O-199":{"pass":82,"fail":0}}
+rerun/lane-L6 red webkit: FAIL O-199 host-bar col-v-persist 1440 light {"key":"col-v-persist","vertical":true,"collapsed":true,"morphing":false,"w":64,"h":110,"cross":64,"dock":["16px","16px","16px","16px"],"plate":["16px","16px","4px","4px"],"usedDock":[[16,16],[16,16],[16,16],[16,16]],"usedPlate":[[16,16],[16,16],[4,4],[4,4]],"scale":[1,1]}
+rerun/lane-L7 green chromium: green chromium: 80/80
+rerun/lane-L7 red chromium: red chromium: 4/64
+rerun/lane-L7 green webkit: green webkit: 79/80
+rerun/lane-L7 red webkit: red webkit: 14/64
+green chromium Collapsible layout: 5/5;green chromium Collapsible gap: 7/7;green chromium Collapsible frames: 2/2;green chromium Slider controlled: 3/3;green chromium Root tempo: 1/1;green chromium Tabs radius: 8/8;pre chromium Collapsible layout: 1/5;pre chromium Collapsible gap: 1/7;pre chromium Collapsible frames: 2/2;pre chromium Slider controlled: 1/3;pre chromium Root tempo: 0/1;pre chromium Tabs radius: 4/8;red chromium Collapsible layout: 5/5;red chromium Collapsible gap: 0/7;red chromium Collapsible frames: 2/2;red chromium Slider controlled: 3/3;red chromium Root tempo: 1/1;red chromium Tabs radius: 4/8;
+green webkit Collapsible layout: 5/5;green webkit Collapsible gap: 7/7;green webkit Collapsible frames: 2/2;green webkit Slider controlled: 3/3;green webkit Root tempo: 1/1;green webkit Tabs radius: 8/8;pre webkit Collapsible layout: 1/5;pre webkit Collapsible gap: 1/7;pre webkit Collapsible frames: 2/2;pre webkit Slider controlled: 1/3;pre webkit Root tempo: 0/1;pre webkit Tabs radius: 4/8;red webkit Collapsible layout: 5/5;red webkit Collapsible gap: 0/7;red webkit Collapsible frames: 2/2;red webkit Slider controlled: 3/3;red webkit Root tempo: 1/1;red webkit Tabs radius: 4/8;
+13:08:52 fix5-witness chromium exit 1: 13:03:55 green chromium exit 0 :: green chromium 40/40;13:06:21 pre chromium exit 1 :: pre chromium 13/40;13:08:46 red chromium exit 1 :: red chromium 0/40;
+13:11:27 fix4-witness chromium exit 1: 13:09:42 green chromium exit 0 :: VERDICT green chromium 17/17;13:10:32 pre chromium exit 1 :: VERDICT pre chromium 11/17;13:11:23 red chromium exit 1 :: VERDICT
+13:12:11 fix3-witness green chromium exit 0
+13:12:56 fix3-witness pre chromium exit 0
+13:13:40 fix3-witness red chromium exit 0
+13:15:03 fix2-witness green chromium exit 0
+13:16:27 fix2-witness red chromium exit 1
+13:17:18 c2-probe green chromium exit 0
+13:18:10 c2-probe red chromium exit 0
+13:20:31 lane L1 chromium: 13:19:20 green chromium  exit 0;13:20:31 red chromium  exit 1;
+13:22:26 lane L2 chromium: 13:21:32 green chromium  exit 0;13:22:26 red chromium  exit 1;
+13:23:42 lane L3 chromium: 13:23:04 green chromium  exit 0;13:23:42 red chromium  exit 1;
+13:25:24 lane L4 chromium: 13:24:33 green chromium   exit 0;13:25:24 red chromium   exit 1;
+13:26:45 lane L5 chromium: 13:26:02 green chromium  exit 0;13:26:45 red chromium  exit 1;
+13:32:56 lane L6 chromium: 13:29:54 green chromium  items=all exit 0;13:32:56 red chromium  items=all exit 1;
+13:37:01 lane L7 chromium: 13:35:00 green chromium  exit 0;13:37:01 red chromium  exit 1;
+13:38:24 probe green chromium exit 0
+13:39:47 probe red chromium exit 0
+13:41:10 probe4 green chromium exit 0
+13:42:33 probe4 red chromium exit 0
+13:45:54 probe5 green chromium exit 0
+13:50:17 probe6 green chromium exit 0
+13:54:40 probe6 red chromium exit 0
+13:55:20 probe7 green chromium exit 0
+13:56:00 probe7 red chromium exit 0
+14:08:42 probe8 green chromium exit 0
+14:14:27 probe8 green chromium exit 0
+14:19:29 probe8 red chromium exit 0
+14:24:43 probe8 green webkit exit 0
+14:33:05 probe8 red webkit exit 0
+14:43:15 fix5-witness webkit exit 1: 14:37:46 green webkit exit 0 :: green webkit 40/40;14:40:24 pre webkit exit 1 :: pre webkit 13/40;14:43:10 red webkit exit 1 :: red webkit 0/40;
+14:47:42 fix4-witness webkit exit 1: 14:45:45 green webkit exit 0 :: VERDICT green webkit 17/17;14:46:42 pre webkit exit 1 :: VERDICT pre webkit 11/17;14:47:36 red webkit exit 1 :: VERDICT red webkit 
+14:49:09 fix3-witness green webkit exit 0
+14:54:00 fix3-witness pre webkit exit 0
+14:56:58 fix3-witness red webkit exit 0
+14:59:59 fix2-witness green webkit exit 0
+15:02:47 fix2-witness red webkit exit 1
+15:03:43 c2-probe green webkit exit 0
+15:04:39 c2-probe red webkit exit 0
+15:07:05 lane L1 webkit: 15:05:52 green webkit  exit 0;15:07:05 red webkit  exit 1;
+15:09:21 lane L2 webkit: 15:08:20 green webkit  exit 0;15:09:21 red webkit  exit 1;
+15:13:05 lane L3 webkit: 15:12:21 green webkit  exit 0;15:13:05 red webkit  exit 1;
+15:15:02 lane L4 webkit: 15:14:03 green webkit   exit 0;15:15:02 red webkit   exit 1;
+15:22:05 lane L5 webkit: 15:17:33 green webkit  exit 0;15:22:05 red webkit  exit 1;
+15:30:09 lane L6 webkit: 15:25:31 green webkit  items=all exit 0;15:30:09 red webkit  items=all exit 1;
+15:35:33 lane L7 webkit: 15:32:48 green webkit  exit 1;15:35:33 red webkit  exit 1;
+06:47:41 probe8 (mount, active, both, dir) green chromium exit 0
+06:49:26 probe8 (mount, active, both, dir) red chromium exit 0
+06:55:08 e2e chromium branch exit 1
+07:11:32 probe8 (mount, active, both, dir) green webkit exit 0
+07:14:34 probe8 (mount, active, both, dir) red webkit exit 0
+07:29:52 probe green webkit exit 0
+07:35:52 probe4 green webkit exit 0
+07:40:59 e2e chromium branch exit 1
+07:47:19 e2e webkit branch exit 1
+07:52:06 e2e chromium v1100 exit 1
+07:58:30 e2e webkit v1100 exit 1
+07:59:49 probe8 (both2) green chromium exit 0
+08:01:06 probe8 (both2) green webkit exit 0

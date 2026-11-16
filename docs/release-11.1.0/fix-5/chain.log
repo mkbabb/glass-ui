@@ -1,0 +1,18 @@
+12:18:38 disk 125Gi free; HEAD f67c51a94; stages: witness l1 gates e2e
+12:21:04 pre chromium exit 1 :: pre chromium 13/40
+12:23:29 v1100 chromium exit 1 :: v1100 chromium 4/40
+12:23:34 witness chromium pre+v1100 guarded exit 1
+[guarded] waiting for the 'webkit' lock
+12:30:44 green webkit exit 0 :: green webkit 40/40
+12:33:17 pre webkit exit 1 :: pre webkit 13/40
+12:35:50 v1100 webkit exit 1 :: v1100 webkit 0/40
+12:35:54 witness webkit green+pre+v1100 guarded exit 1
+12:37:01 lane L1 witness chromium branch guarded exit 0
+12:38:34 lane L1 witness webkit branch guarded exit 0
+12:38:34 gates on committed tree f67c51a94, dirty src: 0
+12:40:13 gates guarded exit 0: 12:38:42 build exit 0;12:38:55 typecheck exit 0;12:38:56 demo-dist-build exit 0;12:40:07 vitest exit 0;12:40:08 verify-package exit 1;
+12:42:54 e2e chromium branch exit 1
+12:46:46 e2e webkit branch exit 1
+12:49:28 e2e chromium v1100 exit 1
+12:53:17 e2e webkit v1100 exit 1
+12:53:17 CHAIN-DONE

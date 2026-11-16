@@ -1,0 +1,152 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794252999 slope=43.3/s inuse=29715 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for the 'webkit' lock
+
+Running 13 tests using 1 worker
+
+  ✓   1 [webkit] › tests-visual/blob-pause-seam.spec.ts:89:5 › blob-integration (π lane — the WCAG-2.2.2 pause seam + context bound + README consistency) › the DockBackgroundToggle pause seam PARKS the render loop (live rAF-park observation) (24.7s)
+  ✓   2 [webkit] › tests-visual/blob-pause-seam.spec.ts:135:5 › blob-integration (π lane — the WCAG-2.2.2 pause seam + context bound + README consistency) › the re-cast blob stories hold a BOUNDED number of live WebGL2 contexts (2.4s)
+  ✓   3 [webkit] › tests-visual/blob-pause-seam.spec.ts:167:5 › blob-integration (π lane — the WCAG-2.2.2 pause seam + context bound + README consistency) › README-vs-code defineExpose CONSISTENCY — every README 'Exposed' method is on the Blob surface (6ms)
+  ✘   4 [webkit] › tests-visual/blob-render.spec.ts:526:5 › blob-render (π lane — fail-CLOSED, the blob's CLOSING gate) › blob renders a CONTAINED LIT LIVING droplet on BLOB_CONFIG_DEFAULTS (four-side containment + dome variance + silhouette + field) (25.2s)
+  ✘   5 [webkit] › tests-visual/blob-render.spec.ts:660:5 › blob-render (π lane — fail-CLOSED, the blob's CLOSING gate) › blob LEANS toward a synthetic hover-flick (the wired interaction is legible within the footprint) (13.3s)
+  ✓   6 [webkit] › tests-visual/blob-render.spec.ts:707:5 › blob-render (π lane — fail-CLOSED, the blob's CLOSING gate) › EVERY grid blob paints visibly against the page background in BOTH light and dark (the var(--primary)-dark-wash guard) (26.0s)
+  ✓   7 [webkit] › tests-visual/dark-semantic-contrast.spec.ts:197:9 › dark-semantic-contrast (π lane — the dark --destructive ink readback, fail-CLOSED) › destructive Alert title clears the 4.6:1 ink floor under .dark @ mobile (2.6s)
+  ✓   8 [webkit] › tests-visual/dark-semantic-contrast.spec.ts:197:9 › dark-semantic-contrast (π lane — the dark --destructive ink readback, fail-CLOSED) › destructive Alert title clears the 4.6:1 ink floor under .dark @ desktop (2.4s)
+  ✘   9 [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (light) (418ms)
+  ✘  10 [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (dark) (692ms)
+  ✘  11 [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (light) (816ms)
+  ✘  12 [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (dark) (761ms)
+  ✓  13 [webkit] › tests-visual/font-cascade-live.spec.ts:64:5 › font-cascade-live (π lane — DOM-cascade font readback, fail-CLOSED) › the library default register IS the rendered register (Plus Jakarta text + Fira Code mono) (2.3s)
+
+
+  1) [webkit] › tests-visual/blob-render.spec.ts:526:5 › blob-render (π lane — fail-CLOSED, the blob's CLOSING gate) › blob renders a CONTAINED LIT LIVING droplet on BLOB_CONFIG_DEFAULTS (four-side containment + dome variance + silhouette + field) 
+
+    Error: blob interior-corner empty fraction 0.448 is below the field floor 0.7 — the canvas reads as a FLAT slab (the body fills the corners), not a contained metaball field
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 0.7
+    Received:    0.44775667533081287
+
+      607 |             cornerEmpty,
+      608 |             `blob interior-corner empty fraction ${cornerEmpty.toFixed(3)} is below the field floor ${CORNER_EMPTY_MIN} — the canvas reads as a FLAT slab (the body fills the corners), not a contained metaball field`,
+    > 609 |         ).toBeGreaterThanOrEqual(CORNER_EMPTY_MIN);
+          |           ^
+      610 |
+      611 |         // 3. FOUR-SIDE CONTAINMENT (AX.W15 F0 + AX.W16 reconciliation) — the BODY is
+      612 |         // contained on EVERY edge (W15 geometry); the orbiting SATELLITE intentionally
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/blob-render.spec.ts:609:11
+
+    Error Context: test-results/blob-render-blob-render-π--62597--variance-silhouette-field--webkit/error-context.md
+
+  2) [webkit] › tests-visual/blob-render.spec.ts:660:5 › blob-render (π lane — fail-CLOSED, the blob's CLOSING gate) › blob LEANS toward a synthetic hover-flick (the wired interaction is legible within the footprint) 
+
+    Error: blob centroid shift under a rightward hover-flick = 0.0045 (rest 0.476 → lean 0.481); it must move ≥ 0.012 toward the pointer — the wired lean/pseudopod is INVISIBLE (no contained silhouette to deform legibly)
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 0.012
+    Received:    0.004504072628095934
+
+      698 |             shift,
+      699 |             `blob centroid shift under a rightward hover-flick = ${shift.toFixed(4)} (rest ${restCx.toFixed(3)} → lean ${leanCx.toFixed(3)}); it must move ≥ ${CENTROID_SHIFT_MIN} toward the pointer — the wired lean/pseudopod is INVISIBLE (no contained silhouette to deform legibly)`,
+    > 700 |         ).toBeGreaterThanOrEqual(CENTROID_SHIFT_MIN);
+          |           ^
+      701 |         expect(
+      702 |             shift,
+      703 |             `blob centroid shift under a rightward hover-flick = ${shift.toFixed(4)} exceeds the calm-lean ceiling ${CENTROID_SHIFT_MAX} — the creature LURCHES toward the cursor (the "far too dramatic" lunge; the calm lean measures ≈ 0.042, a lunge toward ≈ 0.11 reds)`,
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/blob-render.spec.ts:700:11
+
+    Error Context: test-results/blob-render-blob-render-π--770c2-gible-within-the-footprint--webkit/error-context.md
+
+  3) [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (light) 
+
+    Error: page.goto: Could not connect to the server.
+    Call log:
+      - navigating to "http://localhost:5199/dock/overview", waiting until "networkidle"
+
+
+      36 |
+      37 | async function goto(page: Page, route: string) {
+    > 38 |     await page.goto(BASE + route, { waitUntil: "networkidle" });
+         |                ^
+      39 |     await page.waitForTimeout(450);
+      40 | }
+      41 |
+        at goto (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:38:16)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:176:19
+
+    Error Context: test-results/dock-plate-clearance-plate-e898a-e-—-sidebar-vertical-light--webkit/error-context.md
+
+    Error Context: test-results/dock-plate-clearance-plate-e898a-e-—-sidebar-vertical-light--webkit/error-context.md
+
+  4) [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (dark) 
+
+    Error: page.goto: Could not connect to the server.
+    Call log:
+      - navigating to "http://localhost:5199/dock/overview", waiting until "networkidle"
+
+
+      36 |
+      37 | async function goto(page: Page, route: string) {
+    > 38 |     await page.goto(BASE + route, { waitUntil: "networkidle" });
+         |                ^
+      39 |     await page.waitForTimeout(450);
+      40 | }
+      41 |
+        at goto (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:38:16)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:176:19
+
+    Error Context: test-results/dock-plate-clearance-plate-a45e2-ce-—-sidebar-vertical-dark--webkit/error-context.md
+
+    Error Context: test-results/dock-plate-clearance-plate-a45e2-ce-—-sidebar-vertical-dark--webkit/error-context.md
+
+  5) [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (light) 
+
+    Error: page.goto: Could not connect to the server.
+    Call log:
+      - navigating to "http://localhost:5199/dock/overview", waiting until "networkidle"
+
+
+      36 |
+      37 | async function goto(page: Page, route: string) {
+    > 38 |     await page.goto(BASE + route, { waitUntil: "networkidle" });
+         |                ^
+      39 |     await page.waitForTimeout(450);
+      40 | }
+      41 |
+        at goto (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:38:16)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:176:19
+
+    Error Context: test-results/dock-plate-clearance-plate-0270e--—-bottom-horizontal-light--webkit/error-context.md
+
+    Error Context: test-results/dock-plate-clearance-plate-0270e--—-bottom-horizontal-light--webkit/error-context.md
+
+  6) [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (dark) 
+
+    Error: page.goto: Could not connect to the server.
+    Call log:
+      - navigating to "http://localhost:5199/dock/overview", waiting until "networkidle"
+
+
+      36 |
+      37 | async function goto(page: Page, route: string) {
+    > 38 |     await page.goto(BASE + route, { waitUntil: "networkidle" });
+         |                ^
+      39 |     await page.waitForTimeout(450);
+      40 | }
+      41 |
+        at goto (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:38:16)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:176:19
+
+    Error Context: test-results/dock-plate-clearance-plate-0ad3d-e-—-bottom-horizontal-dark--webkit/error-context.md
+
+    Error Context: test-results/dock-plate-clearance-plate-0ad3d-e-—-bottom-horizontal-dark--webkit/error-context.md
+
+  6 failed
+    [webkit] › tests-visual/blob-render.spec.ts:526:5 › blob-render (π lane — fail-CLOSED, the blob's CLOSING gate) › blob renders a CONTAINED LIT LIVING droplet on BLOB_CONFIG_DEFAULTS (four-side containment + dome variance + silhouette + field) 
+    [webkit] › tests-visual/blob-render.spec.ts:660:5 › blob-render (π lane — fail-CLOSED, the blob's CLOSING gate) › blob LEANS toward a synthetic hover-flick (the wired interaction is legible within the footprint) 
+    [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (light) 
+    [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (dark) 
+    [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (light) 
+    [webkit] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (dark) 
+  7 passed (1.9m)

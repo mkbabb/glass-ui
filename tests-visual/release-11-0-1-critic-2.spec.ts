@@ -3,7 +3,7 @@
 // times the box's scale, which cannot see the engine's corner clamp). The plate is filled
 // opaque magenta, frames are captured at 3x as fast as the engine gives them through each
 // morph, and in each frame the silhouette's two ends are measured against a circle of half
-// the cross extent at three depths. Each cell prints a `c2 ` JSON row and banks its frames
+// its shorter side at three depths. Each cell prints a `c2 ` JSON row and banks its frames
 // under CRITIC_OUT.
 //   m  the figure dock's expand and collapse (light and dark, 1440 fine and 390 coarse)
 //   s  the open figure dock's morph between its wide face and its one-seat face, and back
@@ -32,7 +32,7 @@ async function open(page: Page, url: string, dark: boolean): Promise<void> {
 
 type End = { r: number; worst: number; at: string };
 
-/** The magenta silhouette's two ends against a circle of half its cross extent (CSS px). */
+/** The magenta silhouette's two ends against a circle of half its shorter side (CSS px). */
 function ends(png: PNG, vertical: boolean): { main: number; cross: number; worst: number; at: string } | null {
     const W = vertical ? png.height : png.width;
     const H = vertical ? png.width : png.height;
@@ -52,8 +52,11 @@ function ends(png: PNG, vertical: boolean): { main: number; cross: number; worst
     if (cs.length < 12) return null;
     const top = cs[0], bottom = cs[cs.length - 1];
     const cross = bottom - top + 1;
-    const r = cross / 2;
     const lo = Math.min(...cs.map((c) => lines[c]![0])), hi = Math.max(...cs.map((c) => lines[c]![1]));
+    // A stadium's radius is half its SHORTER side. On a morph's first frame a dock can be
+    // shorter on its main axis than across it (a vertical dock 68 wide, 60.7 tall), and
+    // there no circle of half the cross extent fits: the corner is half the main extent.
+    const r = Math.min(cross, hi - lo + 1) / 2;
     let worst = 0, at = "";
     for (const f of [0.1, 0.3, 0.6]) {
         const d = Math.round(r * f);

@@ -1,0 +1,43 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0
+
+(node:8266) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/components/custom/dock/g-dock-lattice.test.ts (34 tests | 1 failed) 414ms
+     × no edge fade survives on either axis 7ms
+(node:9251) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:11300) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:12157) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/custom/dock/g-dock-lattice.test.ts > G-DOCK-RUN — the platform is the detent engine > no edge fade survives on either axis
+AssertionError: expected [ Array(1) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "src/components/dock/styles/dock.css",
++ ]
+
+ ❯ tests/components/custom/dock/g-dock-lattice.test.ts:370:27
+    368|             .filter(({ css }) => /(-webkit-)?mask-image:/.test(css))
+    369|             .map(({ file }) => file);
+    370|         expect(offenders).toEqual([]);
+       |                           ^
+    371|     });
+    372|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 274 passed (275)
+      Tests  1 failed | 2544 passed | 10 expected fail | 1 skipped (2556)
+   Start at  20:20:07
+   Duration  104.20s (transform 6.83s, setup 12.39s, import 48.60s, tests 51.88s, environment 54.59s)
+

@@ -66,6 +66,7 @@ const RADIUS_ROLE_INVENTORY: Readonly<Record<string, RadiusClass>> = Object.free
     "--radius-3xl": "primitive",
     "--radius-pill": "primitive",
     "--radius-circle": "primitive",
+    "--radius-stadium": "primitive",
     // semantic-role — what the surface IS
     "--radius-media": "semantic-role",
     "--radius-control": "semantic-role",
@@ -228,9 +229,10 @@ describe("3. exact W1 bindings", () => {
         // the raw literals are gone
         expect(seg).not.toContain("border-radius: 0.3125rem");
         expect(seg).not.toContain("border-radius: 0.25rem");
-        // the seam resolves orientation-aware: horizontal → tab stadium, vertical → strip
+        // the seam resolves orientation-aware: horizontal → tab stadium (half the touch
+        // floor under a coarse pointer, so a 44px tab stays a capsule), vertical → strip
         expect(rule(seg, "\\.segmented-tabs")).toContain(
-            "--bouncy-slider-radius: var(--radius-tab)",
+            "--bouncy-slider-radius: max(var(--radius-tab), calc(var(--control-floor) / 2))",
         );
         expect(seg).toMatch(
             /\.segmented-tabs--vertical\s*\{[^}]*--bouncy-slider-radius:\s*var\(--radius-strip\)/,
@@ -373,7 +375,6 @@ const ROLE_OF: Readonly<Record<string, RadiusRole>> = Object.freeze({
     "--radius-pill": "pill",
     "--radius-control": "pill",
     "--radius-badge": "pill",
-    "--radius-dock": "pill",
     "--radius-tab": "pill",
     "--radius-ctx": "relay",
     "--radius-inset": "relay",
@@ -381,6 +382,12 @@ const ROLE_OF: Readonly<Record<string, RadiusRole>> = Object.freeze({
 
 /** U/B7: the circle is its own value, a percentage, outside the px role spine. */
 const CIRCLE = "--radius-circle";
+/** The stadium is its own value too: an unbounded radius the engine clamps to half the
+ *  shorter side, so it has no px seat on the spine. */
+const STADIUM = "--radius-stadium";
+/** Roles that ARE the stadium: the dock rests as a capsule, its corner half its cross
+ *  extent in every posture, so it has no px seat on the spine either. */
+const STADIUM_ALIASES = ["--radius-dock"] as const;
 
 /** The role values, verbatim from the settlement's terminal table. */
 const ROLE_PX: Readonly<Record<Exclude<RadiusRole, "relay">, number>> = Object.freeze({
@@ -432,13 +439,27 @@ describe("6. the role spine — 7 roles, and every member of a role is ONE value
 
     it("assigns every live radius rung to a role (a new rung with no role fails)", () => {
         const roleless = radiusRungs.filter(
-            (t) => !(t in ROLE_OF) && !OFF_ROLE_12.includes(t as never) && t !== CIRCLE,
+            (t) =>
+                !(t in ROLE_OF) &&
+                !OFF_ROLE_12.includes(t as never) &&
+                !STADIUM_ALIASES.includes(t as never) &&
+                t !== CIRCLE &&
+                t !== STADIUM,
         );
         expect(roleless).toEqual([]);
     });
 
+    it("resolves the dock corner to the stadium (a capsule in every posture)", () => {
+        for (const t of STADIUM_ALIASES)
+            expect(resolveAlias(RADIUS_DECLS, t), t).toBe("calc(infinity * 1px)");
+    });
+
     it("declares the circle as 50%, apart from the pill rung", () => {
         expect(RADIUS_DECLS.get(CIRCLE)).toBe("50%");
+    });
+
+    it("declares the stadium as an unbounded radius, apart from the circle", () => {
+        expect(RADIUS_DECLS.get(STADIUM)).toBe("calc(infinity * 1px)");
     });
 
     it("declares every rung the role spine names (deleting one silently fails)", () => {
@@ -589,7 +610,7 @@ describe("7. this wave's role bindings", () => {
         const inventoried = Object.keys(RADIUS_ROLE_INVENTORY).filter((t) =>
             t.startsWith("--radius"),
         );
-        const spined = [...Object.keys(ROLE_OF), ...OFF_ROLE_12, CIRCLE];
+        const spined = [...Object.keys(ROLE_OF), ...OFF_ROLE_12, ...STADIUM_ALIASES, CIRCLE, STADIUM];
         expect([...spined].sort()).toEqual([...inventoried].sort());
     });
 });

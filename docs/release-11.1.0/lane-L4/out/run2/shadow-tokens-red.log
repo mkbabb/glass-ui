@@ -1,0 +1,40 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794252999 slope=43.3/s inuse=29715 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100
+
+ ❯ tests/styles/shadow-token-surface.test.ts (2 tests | 2 failed) 15ms
+     × are listed in the README 11ms
+     × each exists in the stylesheets 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/styles/shadow-token-surface.test.ts > the public shadow tokens > are listed in the README
+AssertionError: expected [] to include '--shadow-dock-override'
+ ❯ tests/styles/shadow-token-surface.test.ts:36:32
+     34|             "--shadow-cartoon-md",
+     35|         ]) {
+     36|             expect(documented).toContain(family);
+       |                                ^
+     37|         }
+     38|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/styles/shadow-token-surface.test.ts > the public shadow tokens > each exists in the stylesheets
+AssertionError: expected 0 to be greater than 0
+ ❯ tests/styles/shadow-token-surface.test.ts:41:35
+     39|
+     40|     it("each exists in the stylesheets", () => {
+     41|         expect(documented.length).toBeGreaterThan(0);
+       |                                   ^
+     42|         for (const token of documented) {
+     43|             const declared = new RegExp(`${token}\\s*:`).test(css);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  19:59:52
+   Duration  1.98s (transform 116ms, setup 234ms, import 255ms, tests 15ms, environment 1.06s)
+

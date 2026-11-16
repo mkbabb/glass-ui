@@ -71,6 +71,12 @@ function move(): void {
 }
 
 const overlayKey = ref(0);
+
+// The chart entrance register: bars grow from the baseline on `panel`, the points land
+// on `present`, and the ripple opens on `bloom`, all on one capped cascade.
+const chartKey = ref(0);
+const bars = [42, 68, 55, 81, 37, 63, 74, 49, 88, 58, 71, 46];
+const points = bars.map((v, i) => ({ x: 14 + i * 24, y: 100 - v }));
 const curve = ref<EasingPickerValue>();
 
 onBeforeUnmount(disposeSpring);
@@ -177,6 +183,76 @@ onBeforeUnmount(disposeSpring);
                         </li>
                     </ul>
                     <Button size="sm" @click="overlayKey++">Replay arrival</Button>
+                </div>
+            </div>
+        </StorySection>
+
+        <StorySection
+            label="Chart entrances"
+            blurb="Bars grow from their baseline on the panel spring and never draw past their value, points land on the present spring, and the ripple opens on bloom. Twelve bars still start inside one panel duration."
+        >
+            <div class="grid gap-4 md:grid-cols-[minmax(0,1fr)_18rem]">
+                <div
+                    :key="chartKey"
+                    data-scenario="chart-entrances"
+                    class="relative overflow-hidden rounded-card border border-border/60 bg-background/40 p-4"
+                >
+                    <svg
+                        viewBox="0 0 300 110"
+                        class="block w-full"
+                        role="img"
+                        aria-label="A twelve-bar chart with a point on each bar"
+                    >
+                        <circle
+                            class="viz-ripple fill-primary/15"
+                            cx="230"
+                            cy="40"
+                            r="60"
+                            style="--viz-ripple-at: 50% 50%"
+                        />
+                        <g :style="{ '--viz-n': bars.length }">
+                            <rect
+                                v-for="(v, i) in bars"
+                                :key="'bar' + i"
+                                class="viz-bar fill-primary/60"
+                                :style="{ '--i': i }"
+                                :x="6 + i * 24"
+                                :y="100 - v"
+                                width="16"
+                                :height="v"
+                                rx="3"
+                            />
+                        </g>
+                        <g :style="{ '--viz-n': points.length }">
+                            <circle
+                                v-for="(p, i) in points"
+                                :key="'pt' + i"
+                                class="viz-mark fill-foreground"
+                                :style="{ '--i': i }"
+                                :cx="p.x"
+                                :cy="p.y - 6"
+                                r="3"
+                            />
+                        </g>
+                    </svg>
+                </div>
+
+                <div class="flex flex-col justify-between gap-4">
+                    <ul class="space-y-3 text-small">
+                        <li>
+                            <span class="text-muted-foreground">Bar</span>
+                            <code class="ml-2">.viz-bar · --spring-panel</code>
+                        </li>
+                        <li>
+                            <span class="text-muted-foreground">Point</span>
+                            <code class="ml-2">.viz-mark · --spring-present</code>
+                        </li>
+                        <li>
+                            <span class="text-muted-foreground">Ripple</span>
+                            <code class="ml-2">.viz-ripple · --spring-bloom</code>
+                        </li>
+                    </ul>
+                    <Button size="sm" @click="chartKey++">Replay entrance</Button>
                 </div>
             </div>
         </StorySection>
