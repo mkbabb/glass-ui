@@ -1,0 +1,41 @@
+{
+ "base": "http://localhost:5354",
+ "clocks": {
+  "reduce": true,
+  "root": {
+   "property": "color",
+   "duration": "0s",
+   "timing": "cubic-bezier(0.4, 0, 0.2, 1)"
+  },
+  "range": {
+   "property": "transform, --glass-veil-rung, box-shadow",
+   "duration": "0s",
+   "timing": "cubic-bezier(0.4, 0, 0.2, 1), cubic-bezier(0.4, 0, 0.2, 1), "
+  },
+  "thumb": {
+   "property": "transform",
+   "duration": "0s",
+   "timing": "linear(0 0%, 0.00284 2.041%, 0.0109 4.082%, 0.02354 6.122%, "
+  },
+  "track": {
+   "property": "background, border-color",
+   "duration": "0s",
+   "timing": "cubic-bezier(0.4, 0, 0.2, 1), cubic-bezier(0.4, 0, 0.2, 1)"
+  }
+ },
+ "press": {
+  "distinct": 2,
+  "running": 0,
+  "values": [
+   "none",
+   "matrix(1, 0, 0, 0.97, 0, 0)"
+  ]
+ },
+ "release": {
+  "distinct": 1,
+  "running": 0,
+  "values": [
+   "none"
+  ]
+ }
+}

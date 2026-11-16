@@ -1,0 +1,445 @@
+[guarded] waiting for headroom (load 38 > 36)
+
+Running 33 tests using 1 worker
+
+  -   1 [webkit-desktop] › tests-visual/release-11-1-1-controls.spec.ts:22:5 › round · a compact SegmentedTabs strip is round-ended on touch
+  -   2 [webkit-desktop] › tests-visual/release-11-1-1-controls.spec.ts:22:5 › round · a wide SegmentedTabs strip is round-ended on touch
+  ✘   3 [webkit-desktop] › tests-visual/release-11-1-1-controls.spec.ts:46:1 › weight · selecting a word-labelled ToggleGroupItem moves no item box (2.0s)
+  -   4 [webkit-desktop] › tests-visual/release-11-1-1-controls.spec.ts:69:1 › lift · a scale-on-hover element returns to rest after a tap
+  ✓   5 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:58:5 › form · a dock Select leaves in the form it opened in · pick (3.0s)
+  ✓   6 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:98:5 › form · a dock DropdownMenu keeps its material through the exit · pick (3.1s)
+  ✓   7 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:58:5 › form · a dock Select leaves in the form it opened in · outside (3.0s)
+  ✓   8 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:98:5 › form · a dock DropdownMenu keeps its material through the exit · outside (2.9s)
+  ✓   9 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:58:5 › form · a dock Select leaves in the form it opened in · escape (3.0s)
+  ✓  10 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:98:5 › form · a dock DropdownMenu keeps its material through the exit · escape (2.9s)
+  -  11 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:208:9 › glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · light
+  -  12 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:208:9 › glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · dark
+  -  13 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:245:5 › glass · a phone Select is solid under reduced transparency
+  -  14 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:208:9 › glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · light
+  -  15 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:208:9 › glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · dark
+  -  16 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:245:5 › glass · a phone dock DropdownMenu is solid under reduced transparency
+  ✘  17 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Select leaves on the exit curve, shorter than it entered (3.9s)
+  ✘  18 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · DropdownMenu leaves on the exit curve, shorter than it entered (4.3s)
+  ✘  19 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Popover leaves on the exit curve, shorter than it entered (4.1s)
+  ✘  20 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Tooltip leaves on the exit curve, shorter than it entered (4.1s)
+[WebServer] 3:23:04 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  21 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Dialog leaves on the exit curve, shorter than it entered (4.2s)
+[WebServer] 3:23:09 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  22 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Sheet right leaves on the exit curve, shorter than it entered (4.1s)
+[WebServer] 3:23:13 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  23 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Sheet bottom leaves on the exit curve, shorter than it entered (4.2s)
+  ✘  24 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:443:5 › exit · a Popover enters and leaves on opacity and its slide alone (2.9s)
+  ✘  25 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:443:5 › exit · a Tooltip leaves on opacity and its slide alone (2.3s)
+[WebServer] 3:23:25 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  26 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:490:5 › routes · a detented Sheet leaves whole by escape (4.3s)
+[WebServer] 3:23:30 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  27 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:490:5 › routes · a detented Sheet leaves whole by outside (4.3s)
+  ✘  28 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:512:5 › routes · a CommandDialog keeps its list through its exit by pick (3.7s)
+  ✘  29 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:512:5 › routes · a CommandDialog keeps its list through its exit by escape (3.5s)
+  ✘  30 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:512:5 › routes · a CommandDialog keeps its list through its exit by outside (3.5s)
+  ✘  31 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:546:5 › routes · a press on an open Select's trigger closes it once (3.2s)
+  ✘  32 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:546:5 › routes · a press on an open DropdownMenu's trigger closes it once (3.2s)
+  ✘  33 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:546:5 › routes · a press on an open Popover's trigger closes it once (3.2s)
+
+
+  1) [webkit-desktop] › tests-visual/release-11-1-1-controls.spec.ts:46:1 › weight · selecting a word-labelled ToggleGroupItem moves no item box 
+
+    Error: selected: every item where it was
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 3
+    + Received  + 3
+
+      Array [
+        Array [
+          12,
+    -     99.2,
+    +     101.1,
+        ],
+        Array [
+    -     119.2,
+    +     121.1,
+          60.1,
+        ],
+        Array [
+    -     187.3,
+    +     189.2,
+          129.6,
+        ],
+      ]
+
+      63 |     const off = await boxes();
+      64 |     await info.attach("boxes", { body: JSON.stringify({ rest, on, off }), contentType: "application/json" });
+    > 65 |     expect(on, "selected: every item where it was").toEqual(rest);
+         |                                                     ^
+      66 |     expect(off, "deselected: every item where it was").toEqual(rest);
+      67 | });
+      68 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-controls.spec.ts:65:53
+
+    Error Context: tests-visual/test-results/release-11-1-1-controls-we-4efa1-GroupItem-moves-no-item-box-webkit-desktop/error-context.md
+
+  2) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Select leaves on the exit curve, shorter than it entered 
+
+    Error: no frame takes more than a fifth of what is seen {"entrance":402,"exit":138,"painted":13,"seenShare":0.833,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.825,"travel":0,"travelShare":null,"frames":[[0,1,679],[13,1,679],[18,1,679],[26,1,679],[36,1,679],[45,1,679],[56,1,679],[67,1,679],[76,1,679],[88,1,679],[98,1,679],[108,1,679],[118,1,679],[129,0.036,679],[138,0,null]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.833
+
+      387 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });
+      388 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 389 |         expect(read.seenShare, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                          ^
+      390 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+      391 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);
+      392 |         // A Dialog or a Sheet leaves on one script tween whose progress is the curve
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:389:90
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-Sele-dd1af-rve-shorter-than-it-entered-webkit-desktop/error-context.md
+
+  3) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · DropdownMenu leaves on the exit curve, shorter than it entered 
+
+    Error: no frame takes more than a fifth of what is seen {"entrance":433,"exit":126,"painted":12,"seenShare":0.996,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.908,"travel":0,"travelShare":null,"frames":[[0,1,684],[8,1,684],[14,1,684],[22,1,684],[32,1,684],[44,1,684],[53,1,684],[65,1,684],[75,1,684],[85,1,684],[94,1,684],[105,1,684],[116,1,684],[126,0.004,684]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.996
+
+      387 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });
+      388 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 389 |         expect(read.seenShare, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                          ^
+      390 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+      391 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);
+      392 |         // A Dialog or a Sheet leaves on one script tween whose progress is the curve
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:389:90
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-Drop-7d51e-rve-shorter-than-it-entered-webkit-desktop/error-context.md
+
+  4) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Popover leaves on the exit curve, shorter than it entered 
+
+    Error: no frame takes more than a fifth of what is seen {"entrance":500,"exit":141,"painted":13,"seenShare":0.32,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.283,"travel":7,"travelShare":null,"frames":[[0,1,136],[9,1,136],[18,0.779,135],[30,0.597,134],[39,0.5,133],[49,0.39,133],[60,0.307,132],[69,0.245,131],[81,0.171,131],[90,0.133,131],[99,0.098,130],[111,0.06,130],[120,0.039,130],[131,0.019,129],[141,0.008,129]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.32
+
+      387 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });
+      388 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 389 |         expect(read.seenShare, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                          ^
+      390 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+      391 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);
+      392 |         // A Dialog or a Sheet leaves on one script tween whose progress is the curve
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:389:90
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-Popo-25b8f-rve-shorter-than-it-entered-webkit-desktop/error-context.md
+
+  5) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Tooltip leaves on the exit curve, shorter than it entered 
+
+    Error: no frame takes more than a fifth of what is seen {"entrance":200,"exit":80,"painted":7,"seenShare":0.513,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.298,"travel":3,"travelShare":null,"frames":[[0,1,55],[8,1,55],[20,0.558,56],[28,0.384,56],[39,0.217,57],[49,0.115,57],[59,0.05,57],[67,0.015,58],[80,0,58]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.513
+
+      387 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });
+      388 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 389 |         expect(read.seenShare, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                          ^
+      390 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+      391 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);
+      392 |         // A Dialog or a Sheet leaves on one script tween whose progress is the curve
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:389:90
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-Tool-3332f-rve-shorter-than-it-entered-webkit-desktop/error-context.md
+
+  6) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Dialog leaves on the exit curve, shorter than it entered 
+
+    Error: the exit follows the exit curve {"entrance":281,"exit":233,"painted":22,"seenShare":0.18,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.35,"travel":13,"travelShare":null,"frames":[[0,1,464],[9,1,464],[21,0.917,465],[31,0.802,467],[42,0.697,468],[51,0.585,469],[63,0.501,470],[71,0.401,472],[83,0.343,472],[92,0.269,473],[102,0.223,474],[112,0.18,474],[124,0.145,475],[133,0.111,475],[142,0.09,476],[153,0.073,476],[163,0.057,476],[175,0.045,476],[184,0.034,476],[194,0.027,476],[204,0.021,477],[215,0.017,477],[225,0.013,477],[233,0.01,477]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.06
+    Received:    0.35
+
+      394 |         // 0.11); a floating surface's fade rides with a hold, a clip or a slide.
+      395 |         const scripted = c.name === "Dialog" || c.name.startsWith("Sheet");
+    > 396 |         expect(read.stray, `the exit follows the exit curve ${at}`).toBeLessThanOrEqual(scripted ? 0.06 : 0.12);
+          |                                                                     ^
+      397 |     });
+      398 | }
+      399 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:396:69
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-Dial-279d3-rve-shorter-than-it-entered-webkit-desktop/error-context.md
+
+  7) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Sheet right leaves on the exit curve, shorter than it entered 
+
+    Error: the exit follows the exit curve {"entrance":673,"exit":221,"painted":21,"seenShare":0.135,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.126,"travel":379,"travelShare":0.137,"frames":[[0,1,1056],[9,1,1056],[15,0.97,1068],[25,0.947,1076],[34,0.897,1095],[43,0.845,1116],[56,0.786,1138],[66,0.696,1173],[76,0.624,1200],[85,0.553,1227],[96,0.491,1251],[107,0.419,1279],[115,0.351,1305],[126,0.305,1323],[137,0.247,1345],[147,0.195,1365],[157,0.153,1381],[167,0.116,1395],[179,0.084,1408],[188,0.052,1420],[197,0.031,1428],[208,0.014,1435],[221,0,null]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.06
+    Received:    0.126
+
+      394 |         // 0.11); a floating surface's fade rides with a hold, a clip or a slide.
+      395 |         const scripted = c.name === "Dialog" || c.name.startsWith("Sheet");
+    > 396 |         expect(read.stray, `the exit follows the exit curve ${at}`).toBeLessThanOrEqual(scripted ? 0.06 : 0.12);
+          |                                                                     ^
+      397 |     });
+      398 | }
+      399 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:396:69
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-Shee-4a00a-rve-shorter-than-it-entered-webkit-desktop/error-context.md
+
+  8) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Sheet bottom leaves on the exit curve, shorter than it entered 
+
+    Error: the exit follows the exit curve {"entrance":499,"exit":216,"painted":21,"seenShare":0.126,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.086,"travel":114,"travelShare":0.13,"frames":[[0,1,783],[2,1,783],[14,1,783],[22,0.97,786],[34,0.938,790],[43,0.875,797],[55,0.82,804],[65,0.739,813],[75,0.668,822],[85,0.597,830],[97,0.527,838],[105,0.446,848],[116,0.395,854],[124,0.33,861],[136,0.285,867],[145,0.225,874],[158,0.184,878],[167,0.133,884],[177,0.102,888],[187,0.073,891],[197,0.047,894],[208,0.026,897],[216,0.007,899]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.06
+    Received:    0.086
+
+      394 |         // 0.11); a floating surface's fade rides with a hold, a clip or a slide.
+      395 |         const scripted = c.name === "Dialog" || c.name.startsWith("Sheet");
+    > 396 |         expect(read.stray, `the exit follows the exit curve ${at}`).toBeLessThanOrEqual(scripted ? 0.06 : 0.12);
+          |                                                                     ^
+      397 |     });
+      398 | }
+      399 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:396:69
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-Shee-72c6c-rve-shorter-than-it-entered-webkit-desktop/error-context.md
+
+  9) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:443:5 › exit · a Popover enters and leaves on opacity and its slide alone 
+
+    Error: no scale entrance +52 ms [{"t":52,"scale":"0.996404 0.888418","filter":"blur(5.938436px)"},{"t":58,"scale":"0.996427 0.889127","filter":"blur(5.619907px)"},{"t":60,"scale":"0.996434 0.889363","filter":"blur(5.524013px)"},{"t":70,"scale":"0.99654 0.892652","filter":"blur(5.09012px)"},{"t":78,"scale":"0.996665 0.896517","filter":"blur(4.78243px)"},{"t":90,"scale":"0.996903 0.903904","filter":"blur(4.367503px)"},{"t":101,"scale":"0.997156 0.911759","filter":"blur(4.025426px)"},{"t":111,"scale":"0.997403 0.919431","filter":"blur(3.740197px)"},{"t":121,"scale":"0.997658 0.927348","filter":"blur(3.475852px)"},{"t":131,"scale":"0.997914 0.935289","filter":"blur(3.229792px)"},{"t":141,"scale":"0.998165 0.943076","filter":"blur(3px)"},{"t":152,"scale":"0.998431 0.951314","filter":"blur(2.764104px)"}]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      432 |     for (const f of frames) {
+      433 |         const at = `${leg} +${f.t} ms ${JSON.stringify(frames.slice(0, 12))}`;
+    > 434 |         expect(f.scale === "none" || f.scale === "1" || f.scale === "1 1", `no scale ${at}`).toBe(true);
+          |                                                                                              ^
+      435 |         expect(f.filter === "none" || f.filter === "blur(0px)", `no blur ${at}`).toBe(true);
+      436 |     }
+      437 | }
+        at expectPlain (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:434:94)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:455:23
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-a-Po-1aa83-opacity-and-its-slide-alone-webkit-desktop/error-context.md
+
+  10) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:443:5 › exit · a Tooltip leaves on opacity and its slide alone 
+
+    Error: no scale exit +3 ms [{"t":3,"scale":"1.00101 0.997016","filter":"blur(0px)"},{"t":13,"scale":"1.008569 0.974674","filter":"blur(0px)"},{"t":25,"scale":"1.013703 0.959497","filter":"blur(0px)"},{"t":34,"scale":"1.016951 0.9499","filter":"blur(0px)"},{"t":44,"scale":"1.019848 0.941335","filter":"blur(0px)"},{"t":55,"scale":"1.022366 0.933895","filter":"blur(0px)"},{"t":64,"scale":"1.024 0.929063","filter":"blur(0px)"},{"t":75,"scale":"1.025564 0.924442","filter":"blur(0px)"},{"t":85,"scale":"1.026627 0.921301","filter":"blur(0px)"},{"t":95,"scale":"1.027391 0.919041","filter":"blur(0px)"},{"t":105,"scale":"1.02789 0.917567","filter":"blur(0px)"},{"t":116,"scale":"1.028163 0.91676","filter":"blur(0px)"}]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      432 |     for (const f of frames) {
+      433 |         const at = `${leg} +${f.t} ms ${JSON.stringify(frames.slice(0, 12))}`;
+    > 434 |         expect(f.scale === "none" || f.scale === "1" || f.scale === "1 1", `no scale ${at}`).toBe(true);
+          |                                                                                              ^
+      435 |         expect(f.filter === "none" || f.filter === "blur(0px)", `no blur ${at}`).toBe(true);
+      436 |     }
+      437 | }
+        at expectPlain (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:434:94)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:456:9
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-a-To-1b8b6-opacity-and-its-slide-alone-webkit-desktop/error-context.md
+
+  11) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:490:5 › routes · a detented Sheet leaves whole by escape 
+
+    Error: no frame takes more than a fifth of what is seen [[0,1,450],[1,1,450],[12,1,450],[23,1,438],[33,1,420],[43,1,399],[53,1,375],[63,1,350],[74,1,323],[83,1,294],[94,1,271],[104,1,243],[115,1,219],[123,1,207],[135,1,207],[145,1,207],[155,1,207],[167,1,207],[174,1,207],[186,1,207],[194,1,207],[206,1,207],[215,1,207],[227,1,207],[237,1,207],[247,1,207],[257,1,207],[268,1,207],[278,1,207],[288,1,207],[298,1,207],[309,1,207],[318,1,207],[329,1,207],[339,1,207],[348,1,207],[360,1,207],[368,1,207],[378,1,207],[392,1,207],[399,1,207],[411,1,207],[423,1,207],[431,1,207],[441,1,207],[452,1,207],[461,1,207],[472,1,207],[483,0,null]]
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    1
+
+      505 |         expect(read.goneIdx, `the sheet leaves ${at}`).toBeGreaterThan(-1);
+      506 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 507 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                      ^
+      508 |     });
+      509 | }
+      510 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:507:86
+
+    Error Context: tests-visual/test-results/release-11-1-1-routes-·-a--9057b-heet-leaves-whole-by-escape-webkit-desktop/error-context.md
+
+  12) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:490:5 › routes · a detented Sheet leaves whole by outside 
+
+    Error: no frame takes more than a fifth of what is seen [[0,1,450],[7,1,450],[17,1,438],[28,1,422],[37,1,399],[49,1,378],[58,1,347],[69,1,323],[79,1,294],[88,1,268],[98,1,245],[110,1,221],[120,1,207],[128,1,207],[140,1,207],[149,1,207],[158,1,207],[171,1,207],[180,1,207],[191,1,207],[201,1,207],[210,1,207],[222,1,207],[232,1,207],[242,1,207],[252,1,207],[263,1,207],[273,1,207],[283,1,207],[291,1,207],[304,1,207],[314,1,207],[324,1,207],[336,1,207],[343,1,207],[355,1,207],[363,1,207],[375,1,207],[385,1,207],[395,1,207],[404,1,207],[416,1,207],[426,1,207],[436,1,207],[445,1,207],[457,1,207],[467,1,207],[480,0,null]]
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    1
+
+      505 |         expect(read.goneIdx, `the sheet leaves ${at}`).toBeGreaterThan(-1);
+      506 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 507 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                      ^
+      508 |     });
+      509 | }
+      510 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:507:86
+
+    Error Context: tests-visual/test-results/release-11-1-1-routes-·-a--524c4-eet-leaves-whole-by-outside-webkit-desktop/error-context.md
+
+  13) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:512:5 › routes · a CommandDialog keeps its list through its exit by pick 
+
+    Error: the list is mounted while the plate is seen [[0,1,435],[3,1,435],[14,1,435],[24,1,435],[25,1,435],[35,1,435],[39,1,435],[46,1,435],[101,1,51],[121,0.917,51],[127,0.718,50],[136,0.656,50],[148,0.566,50],[157,0.457,50],[168,0.386,49],[178,0.311,49],[187,0.253,49],[198,0.21,49],[210,0.165,49],[219,0.127,49],[228,0.104,49],[239,0.084,49],[249,0.065,49],[259,0.052,49],[270,0.041,49],[278,0.031,49],[290,0.026,49],[298,0.019,48],[310,0.016,48],[320,0.012,48],[331,0.009,48]]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      530 |         for (const f of read.after.slice(0, read.goneIdx)) {
+      531 |             if (!f.present) continue;
+    > 532 |             expect(f.also, `the list is mounted while the plate is seen ${at}`).toBe(true);
+          |                                                                                 ^
+      533 |             expect(f.h!, `the plate keeps its height ${at}`).toBeGreaterThanOrEqual(read.rest.h! * 0.9);
+      534 |         }
+      535 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:532:81
+
+    Error Context: tests-visual/test-results/release-11-1-1-routes-·-a--79dcb-st-through-its-exit-by-pick-webkit-desktop/error-context.md
+
+  14) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:512:5 › routes · a CommandDialog keeps its list through its exit by escape 
+
+    Error: the list is mounted while the plate is seen [[0,1,435],[55,1,51],[74,0.917,51],[79,0.729,50],[87,0.677,50],[99,0.595,50],[108,0.483,50],[117,0.409,49],[128,0.343,49],[138,0.275,49],[148,0.223,49],[158,0.18,49],[168,0.145,49],[180,0.116,49],[189,0.088,49],[198,0.072,49],[208,0.058,49],[218,0.046,49],[231,0.036,49],[240,0.027,49],[250,0.021,49],[261,0.017,48],[271,0.013,48],[281,0.01,48]]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      530 |         for (const f of read.after.slice(0, read.goneIdx)) {
+      531 |             if (!f.present) continue;
+    > 532 |             expect(f.also, `the list is mounted while the plate is seen ${at}`).toBe(true);
+          |                                                                                 ^
+      533 |             expect(f.h!, `the plate keeps its height ${at}`).toBeGreaterThanOrEqual(read.rest.h! * 0.9);
+      534 |         }
+      535 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:532:81
+
+    Error Context: tests-visual/test-results/release-11-1-1-routes-·-a--e6d5e--through-its-exit-by-escape-webkit-desktop/error-context.md
+
+  15) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:512:5 › routes · a CommandDialog keeps its list through its exit by outside 
+
+    Error: the list is mounted while the plate is seen [[0,1,435],[52,1,51],[69,0.917,51],[75,0.75,50],[79,0.687,50],[89,0.646,50],[98,0.547,50],[109,0.466,50],[119,0.379,49],[128,0.311,49],[140,0.259,49],[150,0.201,49],[160,0.162,49],[170,0.13,49],[182,0.104,49],[189,0.079,49],[201,0.067,49],[211,0.051,49],[223,0.04,49],[231,0.03,49],[242,0.025,49],[252,0.019,48],[260,0.015,48],[271,0.012,48],[281,0.009,48]]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      530 |         for (const f of read.after.slice(0, read.goneIdx)) {
+      531 |             if (!f.present) continue;
+    > 532 |             expect(f.also, `the list is mounted while the plate is seen ${at}`).toBe(true);
+          |                                                                                 ^
+      533 |             expect(f.h!, `the plate keeps its height ${at}`).toBeGreaterThanOrEqual(read.rest.h! * 0.9);
+      534 |         }
+      535 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:532:81
+
+    Error Context: tests-visual/test-results/release-11-1-1-routes-·-a--22113-through-its-exit-by-outside-webkit-desktop/error-context.md
+
+  16) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:546:5 › routes · a press on an open Select's trigger closes it once 
+
+    Error: no frame takes more than a fifth of what is seen [[0,1,230],[2,1,230],[12,1,230],[23,1,230],[33,1,230],[43,1,230],[53,1,230],[61,1,230],[74,1,230],[84,1,230],[94,1,230],[104,1,230],[113,0.315,230],[125,0,null]]
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.794
+
+      570 |         expect(read.reopened, `and stays closed ${at}`).toBe(false);
+      571 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 572 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                      ^
+      573 |     });
+      574 | }
+      575 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:572:86
+
+    Error Context: tests-visual/test-results/release-11-1-1-routes-·-a--df64e-ct-s-trigger-closes-it-once-webkit-desktop/error-context.md
+
+  17) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:546:5 › routes · a press on an open DropdownMenu's trigger closes it once 
+
+    Error: no frame takes more than a fifth of what is seen [[0,1,158],[9,1,158],[19,1,158],[29,1,158],[39,1,158],[49,1,158],[61,1,158],[69,1,158],[79,1,158],[90,1,158],[98,1,158],[111,1,158],[119,0.422,158],[131,0,null]]
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.833
+
+      570 |         expect(read.reopened, `and stays closed ${at}`).toBe(false);
+      571 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 572 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                      ^
+      573 |     });
+      574 | }
+      575 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:572:86
+
+    Error Context: tests-visual/test-results/release-11-1-1-routes-·-a--2349d-nu-s-trigger-closes-it-once-webkit-desktop/error-context.md
+
+  18) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:546:5 › routes · a press on an open Popover's trigger closes it once 
+
+    Error: no frame takes more than a fifth of what is seen [[0,1,54],[11,1,54],[21,0.779,53],[31,0.623,52],[43,0.478,52],[52,0.39,51],[62,0.307,51],[72,0.238,50],[82,0.181,50],[92,0.133,50],[103,0.091,50],[113,0.06,49],[121,0.041,49],[133,0.019,49],[142,0.009,49]]
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.314
+
+      570 |         expect(read.reopened, `and stays closed ${at}`).toBe(false);
+      571 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 572 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                      ^
+      573 |     });
+      574 | }
+      575 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:572:86
+
+    Error Context: tests-visual/test-results/release-11-1-1-routes-·-a--f36a5-er-s-trigger-closes-it-once-webkit-desktop/error-context.md
+
+  18 failed
+    [webkit-desktop] › tests-visual/release-11-1-1-controls.spec.ts:46:1 › weight · selecting a word-labelled ToggleGroupItem moves no item box 
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Select leaves on the exit curve, shorter than it entered 
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · DropdownMenu leaves on the exit curve, shorter than it entered 
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Popover leaves on the exit curve, shorter than it entered 
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Tooltip leaves on the exit curve, shorter than it entered 
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Dialog leaves on the exit curve, shorter than it entered 
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Sheet right leaves on the exit curve, shorter than it entered 
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Sheet bottom leaves on the exit curve, shorter than it entered 
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:443:5 › exit · a Popover enters and leaves on opacity and its slide alone 
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:443:5 › exit · a Tooltip leaves on opacity and its slide alone 
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:490:5 › routes · a detented Sheet leaves whole by escape 
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:490:5 › routes · a detented Sheet leaves whole by outside 
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:512:5 › routes · a CommandDialog keeps its list through its exit by pick 
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:512:5 › routes · a CommandDialog keeps its list through its exit by escape 
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:512:5 › routes · a CommandDialog keeps its list through its exit by outside 
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:546:5 › routes · a press on an open Select's trigger closes it once 
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:546:5 › routes · a press on an open DropdownMenu's trigger closes it once 
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:546:5 › routes · a press on an open Popover's trigger closes it once 
+  9 skipped
+  6 passed (1.7m)

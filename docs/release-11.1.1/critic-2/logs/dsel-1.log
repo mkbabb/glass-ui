@@ -1,0 +1,31 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for the 'webkit' lock
+
+Running 1 test using 1 worker
+
+  ✘  1 [webkit-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:160:5 › fade · a dock Select appears and leaves on a fade (3.4s)
+
+
+  1) [webkit-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:160:5 › fade · a dock Select appears and leaves on a fade 
+
+    Error: in: no painted frame holds a box between its two ends {"in":{"fading":19,"rises":true,"falls":true,"span":187,"boxSteps":1,"stepped":[[95,0.056,681,65,128,230]],"from":0,"to":1},"out":{"fading":18,"rises":true,"falls":true,"span":192,"boxSteps":0,"stepped":[],"from":1,"to":0},"leave":[11]}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      87 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);
+      88 |     expect(dir === "in" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);
+    > 89 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);
+         |                                                                                             ^
+      90 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);
+      91 | }
+      92 |
+        at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-reduce.spec.ts:89:93)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-reduce.spec.ts:187:9
+
+    Error Context: tests-visual/test-results/release-11-1-1-reduce-fade-e4108-ppears-and-leaves-on-a-fade-webkit-desktop/error-context.md
+
+  1 failed
+    [webkit-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:160:5 › fade · a dock Select appears and leaves on a fade 
