@@ -83,6 +83,10 @@ import {
     BarChart3,
     Table2,
     PanelTop,
+    SkipBack,
+    Repeat,
+    Gauge,
+    Copy,
 } from "@lucide/vue";
 
 const { GlassDock, DockControl, DockSeparator, DockLayerGroup, DockLayer, DockCrossfade } = dock;
@@ -108,6 +112,8 @@ onMounted(() => {
 const g8Select = ref("a");
 const wordsA = ref("day");
 const wordsB = ref("bw");
+/** MEASURE-7 w-glyphs: an unsized picture glyph (a disc), as a site's own image would be. */
+const GLYPH_IMG = "data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="#888"/></svg>');
 const wordsC = ref("all");
 const g8Pop = ref(false);
 
@@ -683,6 +689,66 @@ const stageStyle = computed(() =>
             </div>
             <div data-testid="w-inflow-below" style="margin-top: 12px; padding: 8px 12px; border: 1px solid currentColor">the figure below</div>
         </template>
+        <!-- MEASURE-7 (RU-61's prototype cells, from the sites' source as USAGE.md reads it):
+             w-atlas   atlas's figure head row: a title, the legend (words and a link) and PlateDock, anchor="end" with
+                       its Table seat in #persistent (PlateDock.vue:150-156)
+             w-kf      keyframes's transport: a fixed wrapper at the bottom centre holding an in-flow dock whose Play
+                       seat is #persistent (TransportDock.vue:6-9), as shipped (anchor unset, so "center")
+             w-kfs     the same with anchor="start" (question 15's other row)
+             w-dk      daraksha's Motion page: a fixed wrapper holding the site dock with #persistent-end filled
+                       (SiteDock.vue:232, :289-294) -->
+        <template v-if="cell === 'w-atlas'">
+            <div data-testid="w-atlas-row" style="display: flex; align-items: center; gap: 12px; inline-size: min(100%, 720px)">
+                <h3 data-testid="w-atlas-title" style="margin: 0; font-size: 15px">Wages by region, 2019 to 2025</h3>
+                <div data-testid="w-atlas-legend" style="display: flex; gap: 10px; align-items: center; margin-inline-start: auto; font-size: 13px">
+                    <span>North-east</span><span>South</span><span>West</span><a href="#legend" data-testid="w-atlas-link">sources</a>
+                </div>
+                <GlassDock data-testid="w-atlas" aria-label="figure" collapse="closed" anchor="end">
+                    <template #persistent>
+                        <DockControl aria-label="Table" data-testid="w-atlas-table"><Table2 /></DockControl>
+                    </template>
+                    <DockControl aria-label="Grid"><Filter /></DockControl>
+                    <DockControl aria-label="Sort"><BarChart3 /></DockControl>
+                    <DockControl aria-label="Theme"><Palette /></DockControl>
+                    <template #collapsed>
+                        <SlidersHorizontal class="h-4 w-4" aria-hidden="true" />
+                    </template>
+                </GlassDock>
+            </div>
+            <div data-testid="w-atlas-below" style="margin-top: 12px; padding: 8px 12px; border: 1px solid currentColor; inline-size: min(100%, 720px)">the figure</div>
+        </template>
+        <template v-if="cell === 'w-kf' || cell === 'w-kfs'">
+            <div data-testid="w-kf-wrap" style="position: fixed; inset-block-end: 24px; inset-inline: 0; display: flex; justify-content: center; pointer-events: none">
+                <div style="pointer-events: auto">
+                    <GlassDock data-testid="w-kf" aria-label="transport" collapse="closed" :anchor="cell === 'w-kfs' ? 'start' : undefined">
+                        <template #persistent>
+                            <DockControl aria-label="Play" data-testid="w-kf-play"><Play /></DockControl>
+                        </template>
+                        <DockControl aria-label="Back"><SkipBack /></DockControl>
+                        <DockControl aria-label="Loop"><Repeat /></DockControl>
+                        <DockControl aria-label="Speed"><Gauge /></DockControl>
+                        <DockControl aria-label="Copy CSS"><Copy /></DockControl>
+                    </GlassDock>
+                </div>
+            </div>
+        </template>
+        <template v-if="cell === 'w-dk'">
+            <div data-testid="w-dk-wrap" style="position: fixed; inset-block-end: 24px; inset-inline: 0; display: flex; justify-content: center; pointer-events: none">
+                <div style="pointer-events: auto">
+                    <GlassDock data-testid="w-dk" aria-label="site" collapse="closed">
+                        <DockControl aria-label="Home"><Home /></DockControl>
+                        <DockControl aria-label="Motion" aria-current="page"><Gauge /></DockControl>
+                        <DockControl aria-label="Library"><Library /></DockControl>
+                        <template #persistent-end>
+                            <DockControl aria-label="Play" data-testid="w-dk-play"><Play /></DockControl>
+                        </template>
+                        <template #collapsed>
+                            <BookOpen class="h-4 w-4" aria-hidden="true" />
+                        </template>
+                    </GlassDock>
+                </div>
+            </div>
+        </template>
         <template v-if="cell === 'w-seatset'">
             <div style="display: flex; gap: 6px">
                 <button type="button" data-testid="w-seatset-add" @click="extraSeat = !extraSeat">seat</button>
@@ -733,6 +799,24 @@ const stageStyle = computed(() =>
                 </Select>
             </GlassDock>
             <button type="button" data-testid="w-words-longer" style="margin-top: 24px" @click="wordsB = wordsB === 'bw' ? 'cbw' : 'bw'">longer</button>
+        </template>
+        <!-- MEASURE-7 (RU-55, RU-58, RU-65): w-glyphs, G-13's two census lines. An icon dock whose seats hold each of
+             the four glyph forms unsized (a lucide svg, an img, a picture, a [data-dock-glyph] mark) and a labelled icon
+             seat (o1's form), and a tab dock whose seats hold the same four forms beside a word. -->
+        <template v-if="cell === 'w-glyphs'">
+            <GlassDock data-testid="w-glyphs-icon" aria-label="icons" :collapse="false">
+                <DockControl aria-label="svg" data-glyph="svg"><Home /></DockControl>
+                <DockControl aria-label="img" data-glyph="img"><img :src="GLYPH_IMG" alt="" /></DockControl>
+                <DockControl aria-label="picture" data-glyph="picture"><picture><img :src="GLYPH_IMG" alt="" style="inline-size: 100%; block-size: 100%" /></picture></DockControl>
+                <DockControl aria-label="mark" data-glyph="mark"><span data-dock-glyph style="background: currentColor; border-radius: 50%"></span></DockControl>
+                <DockControl compact aria-label="Focus" data-glyph="svg" data-worded=""><Home /><span>Focus</span></DockControl>
+            </GlassDock>
+            <GlassDock data-testid="w-glyphs-tab" aria-label="tabs" :collapse="false">
+                <DockControl shape="tab" data-glyph="svg" data-worded=""><Home /><span>Home</span></DockControl>
+                <DockControl shape="tab" data-glyph="img" data-worded=""><img :src="GLYPH_IMG" alt="" /><span>Image</span></DockControl>
+                <DockControl shape="tab" data-glyph="picture" data-worded=""><picture><img :src="GLYPH_IMG" alt="" style="inline-size: 100%; block-size: 100%" /></picture><span>Picture</span></DockControl>
+                <DockControl shape="tab" data-glyph="mark" data-worded=""><span data-dock-glyph style="background: currentColor; border-radius: 50%"></span><span>Mark</span></DockControl>
+            </GlassDock>
         </template>
         <!-- MEASURE-7 (RU-54, C6-M8): w-pwords, a dock capped by its stage whose #persistent seat is a worded Select
              trigger; the button outside makes its word longer or shorter, which takes room from the run with the run's

@@ -366,19 +366,24 @@
        seats at the settle, and a bottom-anchored dock's leaving summary misses its rest
        on the first frame of the expand under an ancestor `zoom` in WebKit.
 
-       THE RESERVE YIELDS TO THE ROOM LEFT WHEN EVERY SEAT SHOWS, down to the ring.
-       `--dock-run-yield` is the boxes' flex shrink: 1 under `data-run-fits` (the seats'
-       span is no longer than the port, `useDockExpandedSize`, dockMorphMeasure.ts), 0
-       otherwise, so a run whose seats overflow keeps both reserves whole and scrolls
-       them. The leading reserve is a box for this too: `::before` takes back the leading
-       padding by its own margin, so at full size it is the padding's twin and moves
-       nothing, and the two boxes shrink as one flex pair, equally. A yielded box never
-       falls under the ring's reach (`--dock-ring-reserve`), so a run whose seats show
-       but leave less than a ring's room at each end scrolls at most twice the ring's
-       reach, and reach (`useDockRun`) brings a focused end seat's whole ring into view.
-       Its cap animations are off (`data-run-fits`, THE CAP RUNS ONLY ON A RUN THAT HIDES
-       SOMETHING), so it rests round. The boxes' declared size is the reserve in either
-       state, so the dock's own content size never reads the yield. */
+       THE RESERVE YIELDS TO THE ROOM LEFT WHEN EVERY SEAT SHOWS, and a run whose seats
+       all show is not a scroll port (W-I.8 RU-52). `--dock-run-yield` is the boxes' flex
+       shrink: 1 under `data-run-fits` (the seats' span is no longer than the run's client
+       box, read by the carrier, useDockBody), 0 otherwise, so a run whose seats overflow
+       keeps both reserves whole and scrolls them. The leading reserve is a box for this
+       too: `::before` takes back the leading padding by its own margin, so at full size it
+       is the padding's twin and moves nothing, and the two boxes shrink as one flex pair,
+       equally, so the run still narrows with its room. Under the flag the run's overflow is
+       visible on both axes (the rule after the vertical run's): it hides nothing, so it has
+       nothing to scroll, and a focused end seat's ring paints whole over the reserve at
+       offset 0. The promise this replaces, that a fitting run keeps up to two rings of
+       scroll and `reach` spends them on focus, moved every seat 4 px when the end seat was
+       pressed; `reach` (useDockRun) now returns at once on a run that fits. The lanes still
+       cut at the plate, and the fit read (`span <= clientWidth`) does not read the overflow
+       value, so the flag never reads its own consequence. Its cap animations are off
+       (`data-run-fits`, THE CAP RUNS ONLY ON A RUN THAT HIDES SOMETHING), so it rests
+       round. The boxes' declared size is the reserve in either state, so the dock's own
+       content size never reads the yield. */
     .glass-dock {
         --dock-run-yield: 0;
     }
@@ -397,7 +402,8 @@
        every morph (`publishYield`), so the yield the run rests in is the yield it morphs
        in: no seat moves when a morph starts or settles, and the panes the morph moves
        never see the run's padding change under them. With less than a ring's room at
-       each end, a focused end seat's ring is cut by up to the ring's reach. */
+       each end a focused end seat's ring paints past the padding, since the run is not a
+       scroll port (RU-52). */
     .glass-dock.vertical[data-run-fits] :where(.dock-layers) > .dock-run {
         padding-block: min(var(--dock-run-reserve-block), var(--dock-run-room-block, 0px));
     }
@@ -494,6 +500,14 @@
            unit-8 record struck. This rule is where it BINDS hardest, though — the
            `width: 100%` that fixed this run's cross axis is what made the reserve read as
            zero, and the whole 8px overflow the re-capture measured was here. */
+    }
+
+    /* W-I.8 RU-52: A RUN WHOSE SEATS ALL SHOW IS NOT A SCROLL PORT (THE RESERVE YIELDS,
+       above). After the vertical run's rule, at its specificity, so it wins on both axes.
+       The base rules' `min-inline-size: 0` and `min-block-size: 0` stay as they are, so a
+       visible run still narrows with its room. */
+    .glass-dock[data-run-fits] :where(.dock-layers) > .dock-run {
+        overflow: visible;
     }
 
     /* W-I.8 RU-28: every seat of a run is one seat wide, the current one included, at

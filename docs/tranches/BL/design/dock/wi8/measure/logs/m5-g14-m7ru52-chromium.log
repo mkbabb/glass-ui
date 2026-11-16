@@ -1,0 +1,696 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 214 tests using 1 worker
+
+  ✓    1 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 390: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (2.5s)
+  ✓    2 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 844: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (1.8s)
+  ✓    3 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:249:5 › coarse phone › g4 at 390 coarse the field type is at most 16px and at most 1.25x the pane subtitle (950ms)
+  ✓    4 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:217:5 › g1 rest dock at 1280: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (1.8s)
+  ✓    5 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:294:1 › g1 an overflowing run at scroll 0: the leading cap rests at half the block extent, a length; the trailing cap is cut (1.1s)
+  ✓    6 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:318:1 › g2 collapsed: the plate is a circle, half its extent on both axes (1.3s)
+  ✓    7 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:336:1 › g2 expanded (collapsible), each layer and input mode hold g1 (3.4s)
+  ✓    8 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:362:1 › g3 the Slider thumb is visible and one size at min, mid and max, inside the fill (956ms)
+  ✓    9 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:409:1 › g5 the DropdownMenuItem icon-to-label gap is the icon-slot token, the dock trigger's own (1.8s)
+  ✓   10 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:439:1 › c1 a value mark is the thumb's centre at that value, on every axis; the loupe's value point is the thumb's centre (1.4s)
+  ✓   11 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:507:5 › coarse phone, round 1 › c2 coarse: the -sm rung stays the quieter rung for every non-field reader; an sm field floors at 16px (925ms)
+  ✘   12 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:536:5 › coarse phone, round 1 › c4 coarse 390: a keyboard-focused seat under the pointer keeps its whole ring (1.6s)
+  ✓   13 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:543:1 › c3 the disabled scrubber dims its thumb with its fill (925ms)
+  ✘   14 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:619:1 › c4 desktop: a keyboard-focused seat under the pointer keeps its whole ring (1.6s)
+  ✓   15 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:638:5 › critique 2, coarse phone › e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner (1.8s)
+  ✓   16 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:638:5 › critique 2, coarse phone › e1 at 844: a label-wide tab under the pointer gives the run no reach and cuts no corner (1.8s)
+  ✘   17 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:662:5 › critique 2, coarse phone › e2 at 390: focused, hovered tab seats keep their whole ring on every edge (1.8s)
+  ✘   18 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:674:5 › critique 2, coarse phone › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled (4.4s)
+  ✘   19 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:723:5 › critique 2, coarse phone › e4 at 390: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring (2.6s)
+  ✓   20 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:638:5 › e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner (1.8s)
+  ✓   21 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:638:5 › e1 at 1440: a label-wide tab under the pointer gives the run no reach and cuts no corner (1.8s)
+  ✘   22 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:662:5 › e2 at 390: focused, hovered tab seats keep their whole ring on every edge (1.8s)
+  ✘   23 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:662:5 › e2 at 1440: focused, hovered tab seats keep their whole ring on every edge (1.8s)
+  ✘   24 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:674:5 › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled (4.3s)
+  ✘   25 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:723:5 › e4 at 1440: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring (2.6s)
+  ✓   26 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:763:1 › f1 a SegmentedTabs under a fixed z:1 header paints beneath it; its labels paint over the indicator (3.0s)
+  ✓   27 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:805:1 › f2 Table row and header rules paint in --border, light and dark (898ms)
+  ✓   28 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:840:9 › h1 at 2x › h1 house at 390: a seat cut by the trailing clip paints nothing past the plate's corner arc (3.0s)
+  ✓   29 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:840:9 › h1 at 2x › h1 cockpit at 390: a seat cut by the trailing clip paints nothing past the plate's corner arc (3.1s)
+  ✓   30 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:956:1 › h2 at 844: a labelled DockTrigger adds no reserve; the run's room is the icon dock's (2.2s)
+  ✓   31 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:972:1 › h3 a ticking seat label constructs no ResizeObserver (2.0s)
+  ✓   32 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:990:1 › h4 with no ResizeObserver the plate rests at half its block extent (1.1s)
+  ✓   33 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1150:1 › k2 vertical: a wide tab at a flush edge keeps its whole ring, at the start and at the end (4.3s)
+  ✓   34 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1087:5 › critique 5, coarse phone › k1 at 320: End, focus() and hover+focus land the end seat flush with its ring whole; Home lands the first (10.6s)
+  ✓   35 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1189:5 › critique 5, coarse phone › k3 at 320: a capped dock whose seats all show holds the fit law and rests round (2.0s)
+  ✓   36 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1087:5 › k1 at 320: End, focus() and hover+focus land the end seat flush with its ring whole; Home lands the first (10.6s)
+  ✘   37 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1189:5 › k3 at 320: a capped dock whose seats all show holds the fit law and rests round (1.1s)
+  ✓   38 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1278:13 › critique 6, coarse phone › l1 a cap lifted under a run scrolled to its end rests round (tab:Home,icon,icon,icon,tab:Settings) (3.1s)
+  ✓   39 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1278:13 › critique 6, coarse phone › l1 a cap lifted under a run scrolled to its mid rests round (tab:Home,icon,icon,icon,tab:Settings) (3.1s)
+  ✓   40 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1278:13 › critique 6, coarse phone › l1 a cap lifted under a run scrolled to its end rests round (icon,icon,icon,icon,icon,icon) (3.1s)
+  ✓   41 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1278:13 › critique 6, coarse phone › l1 a cap lifted under a run scrolled to its mid rests round (icon,icon,icon,icon,icon,icon) (3.1s)
+  ✓   42 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1295:5 › critique 6, coarse phone › l1 a viewport resize 390 → 844 under a run scrolled to its end rests round (3.5s)
+  ✓   43 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1311:5 › critique 6, coarse phone › l1 a vertical run's stage grown under a run scrolled to its end rests round (3.1s)
+  ✓   44 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1278:13 › l1 a cap lifted under a run scrolled to its end rests round (tab:Home,icon,icon,icon,tab:Settings) (3.1s)
+  ✓   45 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1278:13 › l1 a cap lifted under a run scrolled to its mid rests round (tab:Home,icon,icon,icon,tab:Settings) (3.1s)
+  ✓   46 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1278:13 › l1 a cap lifted under a run scrolled to its end rests round (icon,icon,icon,icon,icon,icon) (3.1s)
+  ✓   47 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1278:13 › l1 a cap lifted under a run scrolled to its mid rests round (icon,icon,icon,icon,icon,icon) (3.1s)
+  ✓   48 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1295:5 › l1 a viewport resize 390 → 844 under a run scrolled to its end rests round (3.5s)
+  ✓   49 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1311:5 › l1 a vertical run's stage grown under a run scrolled to its end rests round (3.1s)
+  ✓   50 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1383:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its mid seals round (7.3s)
+  ✓   51 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1383:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its end seals round (7.3s)
+  ✓   52 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1383:9 › critique 7, coarse phone › m1 at 1440: a collapse from a run scrolled to its end seals round (7.3s)
+  ✓   53 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1661:9 › critique 7, coarse phone › m5 O-182 horizontal: in dark nothing past the plate is lighter than the ground (2.8s)
+  ✓   54 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1661:9 › critique 7, coarse phone › m5 O-182 vertical: in dark nothing past the plate is lighter than the ground (2.8s)
+  ✓   55 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1661:9 › critique 7, coarse phone › m5 O-182 collapsed: in dark nothing past the plate is lighter than the ground (2.9s)
+  ✓   56 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1720:5 › critique 7, coarse phone › m5 O-182 light: the shadow is still the foreground (907ms)
+  ✓   57 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1412:5 › critique 7, coarse phone › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge (14.8s)
+  ✓   58 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1433:9 › critique 7, coarse phone › m4 at 390: a layered overflowing run rests at its start, the leading corner round (1.5s)
+  ✓   59 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1433:9 › critique 7, coarse phone › m4 at 1440: a layered overflowing run rests at its start, the leading corner round (1.5s)
+  ✓   60 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1453:5 › critique 7, coarse phone › m3 O-157 a static-backdrop plate follows --glass-veil-ink, light and dark (4.8s)
+  ✓   61 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1508:5 › critique 7, coarse phone › m3 O-162 the folded summary's ring follows the pill after Escape (3.9s)
+  ✓   62 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1535:5 › critique 7, coarse phone › m3 O-177 Tab onto the folded face expands the dock and lands on a seat (2.5s)
+  ✓   63 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1557:5 › critique 7, coarse phone › m3 O-176 a collapse=open dock left untouched idles shut, and after a remount (13.3s)
+  ✓   64 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1576:5 › critique 7, coarse phone › m3 O-177 a press during the expand activates its seat once (10.2s)
+  ✓   65 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1613:5 › critique 7, coarse phone › m3 O-167 the dock Slider's fill is a calm ink in dark and its thumb tracks the drag (1.9s)
+  ✓   66 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1488:5 › critique 7, coarse phone › m3 O-161 a tap leaves no hover paint on the DarkModeToggle or a DockControl (2.6s)
+  ✓   67 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1383:9 › m1 at 390: a collapse from a run scrolled to its mid seals round (7.3s)
+  ✓   68 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1383:9 › m1 at 390: a collapse from a run scrolled to its end seals round (7.3s)
+  ✓   69 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1383:9 › m1 at 1440: a collapse from a run scrolled to its end seals round (7.3s)
+  ✓   70 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1661:9 › m5 O-182 horizontal: in dark nothing past the plate is lighter than the ground (2.9s)
+  ✓   71 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1661:9 › m5 O-182 vertical: in dark nothing past the plate is lighter than the ground (2.8s)
+  ✓   72 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1661:9 › m5 O-182 collapsed: in dark nothing past the plate is lighter than the ground (2.8s)
+  ✓   73 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1720:5 › m5 O-182 light: the shadow is still the foreground (926ms)
+  ✓   74 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1412:5 › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge (14.9s)
+  ✓   75 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1433:9 › m4 at 390: a layered overflowing run rests at its start, the leading corner round (1.5s)
+  ✓   76 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1433:9 › m4 at 1440: a layered overflowing run rests at its start, the leading corner round (1.6s)
+  ✓   77 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1453:5 › m3 O-157 a static-backdrop plate follows --glass-veil-ink, light and dark (4.8s)
+  ✓   78 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1508:5 › m3 O-162 the folded summary's ring follows the pill after Escape (3.9s)
+  ✓   79 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1535:5 › m3 O-177 Tab onto the folded face expands the dock and lands on a seat (2.5s)
+  ✓   80 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1557:5 › m3 O-176 a collapse=open dock left untouched idles shut, and after a remount (13.3s)
+  ✓   81 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1576:5 › m3 O-177 a press during the expand activates its seat once (10.2s)
+  ✓   82 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1613:5 › m3 O-167 the dock Slider's fill is a calm ink in dark and its thumb tracks the drag (1.9s)
+  ✓   83 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1789:5 › critique 8, coarse phone › n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge (15.6s)
+  ✓   84 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1789:5 › n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge (15.6s)
+  ✓   85 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1890:5 › critique 9, coarse phone › p1 a dock its host resizes mid-expand holds every seat at the settle (horizontal clamp, vertical yield band) (15.6s)
+  ✓   86 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1890:5 › p1 a dock its host resizes mid-expand holds every seat at the settle (horizontal clamp, vertical yield band) (15.6s)
+  ✓   87 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1936:5 › critique 10, coarse phone › p2 a 1-2 px host change across the fit edge mid-expand holds every seat at the settle (48.1s)
+  ✓   88 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1936:5 › p2 a 1-2 px host change across the fit edge mid-expand holds every seat at the settle (49.9s)
+  ✓   89 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2040:5 › q1 O-186 at 1440: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage (12.5s)
+  ✓   90 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2070:5 › q2 O-187 at 1440: a nested .dock-run group keeps each hovered control's whole ink (3.4s)
+  ✓   91 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2102:5 › q3 O-187 at 1440: the plate has exactly one scroll timeline in scope, the visible run's (902ms)
+  ✓   92 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2040:5 › q1 O-186 at 390: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage (9.1s)
+  ✓   93 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2070:5 › q2 O-187 at 390: a nested .dock-run group keeps each hovered control's whole ink (2.2s)
+  ✓   94 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2102:5 › q3 O-187 at 390: the plate has exactly one scroll timeline in scope, the visible run's (879ms)
+  ✓   95 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2121:5 › r1 Q2 at 1440: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout (2.3s)
+  ✓   96 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2121:5 › fix 10, coarse phone › r1 Q2 at 390: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout (2.4s)
+  ✓   97 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2234:5 › s1 O-205 at 1440: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run (5.7s)
+[WebServer] 5:43:42 PM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+[WebServer] 5:43:50 PM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+  ✓   98 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2343:5 › s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round (44.4s)
+  ✓   99 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2234:5 › fix 11, coarse phone › s1 O-205 at 390: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run (5.0s)
+[WebServer] 5:44:28 PM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+[WebServer] 5:44:30 PM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+[WebServer] 5:44:38 PM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+  ✓  100 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2343:5 › fix 11, coarse phone › s2 O-201 at 390: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round (44.4s)
+  ✓  101 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2383:5 › fix 12, desktop › t1 O-201 vertical: through the fit edge the end seats keep their whole ring, bounded in the yield band (45.2s)
+  ✓  102 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2383:5 › fix 12, coarse phone › t1 O-201 vertical: through the fit edge the end seats keep their whole ring, bounded in the yield band (45.2s)
+  ✓  103 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2438:1 › s3 O-207 G3 a disclosure trigger's keyboard ring is the house outline, whatever it composes (3.0s)
+  ✓  104 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2456:1 › s4 a host padding change across the fit edge mid-expand holds every seat at the settle (vertical) (29.0s)
+  ✓  105 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2504:5 › fix 13, coarse phone › u1 a collapsing vertical run that does not fit keeps its scroll on the first morph frame (44.7s)
+  ✓  106 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2548:1 › m3 O-159 the dock README names every DockProps member and no other (61ms)
+  ✓  107 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2562:1 › m3 O-160 no cut-cap or clip keyframe carries a percentage radius (51ms)
+  ✓  108 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 390: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (1.8s)
+  ✓  109 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 844: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (1.8s)
+  ✓  110 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:249:5 › coarse phone › g4 at 390 coarse the field type is at most 16px and at most 1.25x the pane subtitle (907ms)
+  ✓  111 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:217:5 › g1 rest dock at 1280: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (1.8s)
+  ✓  112 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:294:1 › g1 an overflowing run at scroll 0: the leading cap rests at half the block extent, a length; the trailing cap is cut (1.1s)
+  ✓  113 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:318:1 › g2 collapsed: the plate is a circle, half its extent on both axes (1.3s)
+  ✓  114 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:336:1 › g2 expanded (collapsible), each layer and input mode hold g1 (3.4s)
+  ✓  115 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:362:1 › g3 the Slider thumb is visible and one size at min, mid and max, inside the fill (939ms)
+  ✓  116 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:409:1 › g5 the DropdownMenuItem icon-to-label gap is the icon-slot token, the dock trigger's own (1.7s)
+  ✓  117 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:439:1 › c1 a value mark is the thumb's centre at that value, on every axis; the loupe's value point is the thumb's centre (1.4s)
+  ✓  118 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:507:5 › coarse phone, round 1 › c2 coarse: the -sm rung stays the quieter rung for every non-field reader; an sm field floors at 16px (941ms)
+  ✘  119 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:536:5 › coarse phone, round 1 › c4 coarse 390: a keyboard-focused seat under the pointer keeps its whole ring (1.6s)
+  ✓  120 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:543:1 › c3 the disabled scrubber dims its thumb with its fill (973ms)
+  ✘  121 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:619:1 › c4 desktop: a keyboard-focused seat under the pointer keeps its whole ring (1.6s)
+  ✓  122 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:638:5 › critique 2, coarse phone › e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner (1.8s)
+  ✓  123 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:638:5 › critique 2, coarse phone › e1 at 844: a label-wide tab under the pointer gives the run no reach and cuts no corner (1.8s)
+  ✘  124 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:662:5 › critique 2, coarse phone › e2 at 390: focused, hovered tab seats keep their whole ring on every edge (1.8s)
+  ✘  125 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:674:5 › critique 2, coarse phone › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled (4.4s)
+  ✘  126 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:723:5 › critique 2, coarse phone › e4 at 390: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring (2.6s)
+  ✓  127 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:638:5 › e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner (1.9s)
+  ✓  128 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:638:5 › e1 at 1440: a label-wide tab under the pointer gives the run no reach and cuts no corner (1.8s)
+  ✘  129 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:662:5 › e2 at 390: focused, hovered tab seats keep their whole ring on every edge (1.8s)
+  ✘  130 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:662:5 › e2 at 1440: focused, hovered tab seats keep their whole ring on every edge (1.9s)
+  ✘  131 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:674:5 › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled (4.4s)
+  ✘  132 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:723:5 › e4 at 1440: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring (2.6s)
+  ✓  133 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:763:1 › f1 a SegmentedTabs under a fixed z:1 header paints beneath it; its labels paint over the indicator (3.0s)
+  ✓  134 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:805:1 › f2 Table row and header rules paint in --border, light and dark (893ms)
+  ✓  135 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:840:9 › h1 at 2x › h1 house at 390: a seat cut by the trailing clip paints nothing past the plate's corner arc (3.1s)
+  ✓  136 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:840:9 › h1 at 2x › h1 cockpit at 390: a seat cut by the trailing clip paints nothing past the plate's corner arc (3.1s)
+  ✓  137 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:956:1 › h2 at 844: a labelled DockTrigger adds no reserve; the run's room is the icon dock's (2.2s)
+  ✓  138 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:972:1 › h3 a ticking seat label constructs no ResizeObserver (1.9s)
+  ✓  139 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:990:1 › h4 with no ResizeObserver the plate rests at half its block extent (1.1s)
+  ✓  140 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1150:1 › k2 vertical: a wide tab at a flush edge keeps its whole ring, at the start and at the end (4.3s)
+  ✓  141 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1087:5 › critique 5, coarse phone › k1 at 320: End, focus() and hover+focus land the end seat flush with its ring whole; Home lands the first (10.6s)
+  ✓  142 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1189:5 › critique 5, coarse phone › k3 at 320: a capped dock whose seats all show holds the fit law and rests round (2.0s)
+  ✓  143 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1087:5 › k1 at 320: End, focus() and hover+focus land the end seat flush with its ring whole; Home lands the first (10.6s)
+  ✓  144 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1189:5 › k3 at 320: a capped dock whose seats all show holds the fit law and rests round (2.0s)
+  ✓  145 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1278:13 › critique 6, coarse phone › l1 a cap lifted under a run scrolled to its end rests round (tab:Home,icon,icon,icon,tab:Settings) (3.0s)
+  ✓  146 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1278:13 › critique 6, coarse phone › l1 a cap lifted under a run scrolled to its mid rests round (tab:Home,icon,icon,icon,tab:Settings) (3.1s)
+  ✓  147 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1278:13 › critique 6, coarse phone › l1 a cap lifted under a run scrolled to its end rests round (icon,icon,icon,icon,icon,icon) (3.1s)
+  ✓  148 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1278:13 › critique 6, coarse phone › l1 a cap lifted under a run scrolled to its mid rests round (icon,icon,icon,icon,icon,icon) (3.1s)
+  ✓  149 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1295:5 › critique 6, coarse phone › l1 a viewport resize 390 → 844 under a run scrolled to its end rests round (3.5s)
+  ✓  150 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1311:5 › critique 6, coarse phone › l1 a vertical run's stage grown under a run scrolled to its end rests round (3.1s)
+  ✓  151 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1278:13 › l1 a cap lifted under a run scrolled to its end rests round (tab:Home,icon,icon,icon,tab:Settings) (3.1s)
+  ✓  152 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1278:13 › l1 a cap lifted under a run scrolled to its mid rests round (tab:Home,icon,icon,icon,tab:Settings) (3.1s)
+  ✓  153 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1278:13 › l1 a cap lifted under a run scrolled to its end rests round (icon,icon,icon,icon,icon,icon) (3.1s)
+  ✓  154 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1278:13 › l1 a cap lifted under a run scrolled to its mid rests round (icon,icon,icon,icon,icon,icon) (3.1s)
+  ✓  155 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1295:5 › l1 a viewport resize 390 → 844 under a run scrolled to its end rests round (3.5s)
+  ✓  156 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1311:5 › l1 a vertical run's stage grown under a run scrolled to its end rests round (3.1s)
+  ✓  157 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1383:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its mid seals round (7.2s)
+  ✓  158 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1383:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its end seals round (7.2s)
+  ✓  159 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1383:9 › critique 7, coarse phone › m1 at 1440: a collapse from a run scrolled to its end seals round (7.3s)
+  ✓  160 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1661:9 › critique 7, coarse phone › m5 O-182 horizontal: in dark nothing past the plate is lighter than the ground (3.0s)
+  ✓  161 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1661:9 › critique 7, coarse phone › m5 O-182 vertical: in dark nothing past the plate is lighter than the ground (2.9s)
+  ✓  162 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1661:9 › critique 7, coarse phone › m5 O-182 collapsed: in dark nothing past the plate is lighter than the ground (2.8s)
+  ✓  163 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1720:5 › critique 7, coarse phone › m5 O-182 light: the shadow is still the foreground (884ms)
+  ✓  164 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1412:5 › critique 7, coarse phone › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge (14.6s)
+  ✓  165 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1433:9 › critique 7, coarse phone › m4 at 390: a layered overflowing run rests at its start, the leading corner round (1.5s)
+  ✓  166 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1433:9 › critique 7, coarse phone › m4 at 1440: a layered overflowing run rests at its start, the leading corner round (1.5s)
+  ✓  167 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1453:5 › critique 7, coarse phone › m3 O-157 a static-backdrop plate follows --glass-veil-ink, light and dark (4.7s)
+  ✓  168 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1508:5 › critique 7, coarse phone › m3 O-162 the folded summary's ring follows the pill after Escape (3.9s)
+  ✓  169 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1535:5 › critique 7, coarse phone › m3 O-177 Tab onto the folded face expands the dock and lands on a seat (2.4s)
+  ✓  170 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1557:5 › critique 7, coarse phone › m3 O-176 a collapse=open dock left untouched idles shut, and after a remount (13.2s)
+  ✓  171 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1576:5 › critique 7, coarse phone › m3 O-177 a press during the expand activates its seat once (10.1s)
+  ✓  172 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1613:5 › critique 7, coarse phone › m3 O-167 the dock Slider's fill is a calm ink in dark and its thumb tracks the drag (1.7s)
+  ✓  173 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1488:5 › critique 7, coarse phone › m3 O-161 a tap leaves no hover paint on the DarkModeToggle or a DockControl (2.6s)
+  ✓  174 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1383:9 › m1 at 390: a collapse from a run scrolled to its mid seals round (7.3s)
+  ✓  175 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1383:9 › m1 at 390: a collapse from a run scrolled to its end seals round (7.2s)
+  ✓  176 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1383:9 › m1 at 1440: a collapse from a run scrolled to its end seals round (7.3s)
+  ✓  177 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1661:9 › m5 O-182 horizontal: in dark nothing past the plate is lighter than the ground (2.8s)
+  ✓  178 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1661:9 › m5 O-182 vertical: in dark nothing past the plate is lighter than the ground (2.8s)
+  ✓  179 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1661:9 › m5 O-182 collapsed: in dark nothing past the plate is lighter than the ground (2.8s)
+  ✓  180 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1720:5 › m5 O-182 light: the shadow is still the foreground (899ms)
+  ✓  181 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1412:5 › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge (14.8s)
+  ✓  182 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1433:9 › m4 at 390: a layered overflowing run rests at its start, the leading corner round (1.5s)
+  ✓  183 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1433:9 › m4 at 1440: a layered overflowing run rests at its start, the leading corner round (1.5s)
+  ✓  184 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1453:5 › m3 O-157 a static-backdrop plate follows --glass-veil-ink, light and dark (4.7s)
+  ✓  185 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1508:5 › m3 O-162 the folded summary's ring follows the pill after Escape (3.9s)
+  ✓  186 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1535:5 › m3 O-177 Tab onto the folded face expands the dock and lands on a seat (2.4s)
+  ✓  187 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1557:5 › m3 O-176 a collapse=open dock left untouched idles shut, and after a remount (13.3s)
+  ✓  188 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1576:5 › m3 O-177 a press during the expand activates its seat once (10.1s)
+  ✓  189 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1613:5 › m3 O-167 the dock Slider's fill is a calm ink in dark and its thumb tracks the drag (1.7s)
+  ✓  190 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1789:5 › critique 8, coarse phone › n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge (15.6s)
+  ✓  191 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1789:5 › n1 a fitting vertical dock's seats do not step at the expand's settle or the collapse's start, across the fit edge (15.6s)
+  ✓  192 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1890:5 › critique 9, coarse phone › p1 a dock its host resizes mid-expand holds every seat at the settle (horizontal clamp, vertical yield band) (15.6s)
+  ✓  193 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1890:5 › p1 a dock its host resizes mid-expand holds every seat at the settle (horizontal clamp, vertical yield band) (15.7s)
+  ✓  194 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1936:5 › critique 10, coarse phone › p2 a 1-2 px host change across the fit edge mid-expand holds every seat at the settle (48.1s)
+  ✓  195 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1936:5 › p2 a 1-2 px host change across the fit edge mid-expand holds every seat at the settle (48.1s)
+  ✓  196 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2040:5 › q1 O-186 at 1440: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage (12.6s)
+  ✓  197 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2070:5 › q2 O-187 at 1440: a nested .dock-run group keeps each hovered control's whole ink (3.4s)
+  ✓  198 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2102:5 › q3 O-187 at 1440: the plate has exactly one scroll timeline in scope, the visible run's (915ms)
+  ✘  199 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2040:5 › q1 O-186 at 390: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage (1.0m)
+  ✓  200 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2070:5 › q2 O-187 at 390: a nested .dock-run group keeps each hovered control's whole ink (2.2s)
+  ✓  201 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2102:5 › q3 O-187 at 390: the plate has exactly one scroll timeline in scope, the visible run's (888ms)
+  ✓  202 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2121:5 › r1 Q2 at 1440: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout (2.3s)
+  ✓  203 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2121:5 › fix 10, coarse phone › r1 Q2 at 390: a nested group holding the current seat paints every seat clear of the others, and the run's flag is its layout (2.3s)
+  ✓  204 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2234:5 › s1 O-205 at 1440: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run (4.9s)
+[WebServer] 5:57:19 PM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+[WebServer] 5:57:21 PM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+[WebServer] 5:57:29 PM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+  ✓  205 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2343:5 › s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round (44.4s)
+  ✓  206 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2234:5 › fix 11, coarse phone › s1 O-205 at 390: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run (4.9s)
+[WebServer] 5:58:07 PM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+[WebServer] 5:58:08 PM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+[WebServer] 5:58:17 PM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../@vite/client:531:50
+[WebServer] 
+  ✓  207 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2343:5 › fix 11, coarse phone › s2 O-201 at 390: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round (44.4s)
+  ✓  208 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2383:5 › fix 12, desktop › t1 O-201 vertical: through the fit edge the end seats keep their whole ring, bounded in the yield band (45.2s)
+  ✓  209 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2383:5 › fix 12, coarse phone › t1 O-201 vertical: through the fit edge the end seats keep their whole ring, bounded in the yield band (45.1s)
+  ✓  210 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2438:1 › s3 O-207 G3 a disclosure trigger's keyboard ring is the house outline, whatever it composes (2.9s)
+  ✓  211 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2456:1 › s4 a host padding change across the fit edge mid-expand holds every seat at the settle (vertical) (27.1s)
+  ✓  212 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2504:5 › fix 13, coarse phone › u1 a collapsing vertical run that does not fit keeps its scroll on the first morph frame (44.6s)
+  ✓  213 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2548:1 › m3 O-159 the dock README names every DockProps member and no other (51ms)
+  ✓  214 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2562:1 › m3 O-160 no cut-cap or clip keyframe carries a percentage radius (39ms)
+
+
+  1) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:536:5 › coarse phone, round 1 › c4 coarse 390: a keyboard-focused seat under the pointer keeps its whole ring 
+
+    Error: Seat 1 ({"focusVisible":true,"hover":true,"scale":1,"width":44,"outline":"solid","ink":4,"ring":{"l":174.5,"r":226.5,"t":20,"b":72},"clips":[]}): the run clips
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      600 |     await expectHoverScale(page, String(read.scale), cell);
+      601 |     expect(read.outline, `${cell}: the ring paints`).not.toBe("none");
+    > 602 |     expect(read.clips.length, `${cell}: the run clips`).toBeGreaterThan(0);
+          |                                                         ^
+      603 |     for (const c of read.clips) {
+      604 |         expect(read.ring.l, `${cell}: ring inside ${c.cls} (left)`).toBeGreaterThanOrEqual(c.l - 0.5);
+      605 |         expect(read.ring.r, `${cell}: ring inside ${c.cls} (right)`).toBeLessThanOrEqual(c.r + 0.5);
+        at expectFocusedRingWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:602:57)
+        at c4 (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:614:47)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:537:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-coarse-phon-82017-ointer-keeps-its-whole-ring-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:619:1 › c4 desktop: a keyboard-focused seat under the pointer keeps its whole ring 
+
+    Error: Seat 1 ({"focusVisible":true,"hover":true,"scale":1,"width":40,"outline":"solid","ink":4,"ring":{"l":628.375,"r":676.375,"t":20,"b":68},"clips":[]}): the run clips
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      600 |     await expectHoverScale(page, String(read.scale), cell);
+      601 |     expect(read.outline, `${cell}: the ring paints`).not.toBe("none");
+    > 602 |     expect(read.clips.length, `${cell}: the run clips`).toBeGreaterThan(0);
+          |                                                         ^
+      603 |     for (const c of read.clips) {
+      604 |         expect(read.ring.l, `${cell}: ring inside ${c.cls} (left)`).toBeGreaterThanOrEqual(c.l - 0.5);
+      605 |         expect(read.ring.r, `${cell}: ring inside ${c.cls} (right)`).toBeLessThanOrEqual(c.r + 0.5);
+        at expectFocusedRingWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:602:57)
+        at c4 (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:614:47)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:621:5
+
+    Error Context: tests-visual/test-results/release-10-1-5-c4-desktop--ab56a-ointer-keeps-its-whole-ring-chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:662:5 › critique 2, coarse phone › e2 at 390: focused, hovered tab seats keep their whole ring on every edge 
+
+    Error: S1 ({"focusVisible":true,"hover":true,"scale":1,"width":84.1875,"outline":"solid","ink":4,"ring":{"l":43.859375,"r":136.046875,"t":23,"b":69},"clips":[]}): the run clips
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      600 |     await expectHoverScale(page, String(read.scale), cell);
+      601 |     expect(read.outline, `${cell}: the ring paints`).not.toBe("none");
+    > 602 |     expect(read.clips.length, `${cell}: the run clips`).toBeGreaterThan(0);
+          |                                                         ^
+      603 |     for (const c of read.clips) {
+      604 |         expect(read.ring.l, `${cell}: ring inside ${c.cls} (left)`).toBeGreaterThanOrEqual(c.l - 0.5);
+      605 |         expect(read.ring.r, `${cell}: ring inside ${c.cls} (right)`).toBeLessThanOrEqual(c.r + 0.5);
+        at expectFocusedRingWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:602:57)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:665:42
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-2--c9524-ir-whole-ring-on-every-edge-chromium-headless-new/error-context.md
+
+  4) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:674:5 › critique 2, coarse phone › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled 
+
+    Error: S1 ({"focusVisible":true,"hover":true,"scale":1,"width":84.1875,"outline":"solid","ink":4,"ring":{"l":72.859375,"r":165.046875,"t":23,"b":69},"clips":[]}): the run clips
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      600 |     await expectHoverScale(page, String(read.scale), cell);
+      601 |     expect(read.outline, `${cell}: the ring paints`).not.toBe("none");
+    > 602 |     expect(read.clips.length, `${cell}: the run clips`).toBeGreaterThan(0);
+          |                                                         ^
+      603 |     for (const c of read.clips) {
+      604 |         expect(read.ring.l, `${cell}: ring inside ${c.cls} (left)`).toBeGreaterThanOrEqual(c.l - 0.5);
+      605 |         expect(read.ring.r, `${cell}: ring inside ${c.cls} (right)`).toBeLessThanOrEqual(c.r + 0.5);
+        at expectFocusedRingWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:602:57)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:709:42
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-2--d0cb9--seats-at-rest-and-scrolled-chromium-headless-new/error-context.md
+
+  5) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:723:5 › critique 2, coarse phone › e4 at 390: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring 
+
+    Error: 390 capped S3 ({"focusVisible":true,"outline":"solid","ink":4,"past":{"l":-104,"r":4.09,"t":-3,"b":-3},"seat":[203,301.09,27,65]}): ring inside the run (r)
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    4.09
+
+      1044 |     expect(read.outline, `${at}: the ring paints`).not.toBe("none");
+      1045 |     for (const [side, past] of Object.entries(read.past)) {
+    > 1046 |         expect(past, `${at}: ring inside the run (${side})`).toBeLessThanOrEqual(0.5);
+           |                                                              ^
+      1047 |     }
+      1048 | }
+      1049 |
+        at expectRingInsideRun (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:1046:62)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:739:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-2--b956f-d-keeps-the-end-seat-s-ring-chromium-headless-new/error-context.md
+
+  6) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:662:5 › e2 at 390: focused, hovered tab seats keep their whole ring on every edge 
+
+    Error: S1 ({"focusVisible":true,"hover":true,"scale":1,"width":84.1875,"outline":"solid","ink":4,"ring":{"l":47.859375,"r":140.046875,"t":21,"b":67},"clips":[]}): the run clips
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      600 |     await expectHoverScale(page, String(read.scale), cell);
+      601 |     expect(read.outline, `${cell}: the ring paints`).not.toBe("none");
+    > 602 |     expect(read.clips.length, `${cell}: the run clips`).toBeGreaterThan(0);
+          |                                                         ^
+      603 |     for (const c of read.clips) {
+      604 |         expect(read.ring.l, `${cell}: ring inside ${c.cls} (left)`).toBeGreaterThanOrEqual(c.l - 0.5);
+      605 |         expect(read.ring.r, `${cell}: ring inside ${c.cls} (right)`).toBeLessThanOrEqual(c.r + 0.5);
+        at expectFocusedRingWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:602:57)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:665:42
+
+    Error Context: tests-visual/test-results/release-10-1-5-e2-at-390-f-e62d2-ir-whole-ring-on-every-edge-chromium-headless-new/error-context.md
+
+  7) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:662:5 › e2 at 1440: focused, hovered tab seats keep their whole ring on every edge 
+
+    Error: S1 ({"focusVisible":true,"hover":true,"scale":1,"width":94.515625,"outline":"solid","ink":4,"ring":{"l":561.359375,"r":663.875,"t":20.703125,"b":67.296875},"clips":[]}): the run clips
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      600 |     await expectHoverScale(page, String(read.scale), cell);
+      601 |     expect(read.outline, `${cell}: the ring paints`).not.toBe("none");
+    > 602 |     expect(read.clips.length, `${cell}: the run clips`).toBeGreaterThan(0);
+          |                                                         ^
+      603 |     for (const c of read.clips) {
+      604 |         expect(read.ring.l, `${cell}: ring inside ${c.cls} (left)`).toBeGreaterThanOrEqual(c.l - 0.5);
+      605 |         expect(read.ring.r, `${cell}: ring inside ${c.cls} (right)`).toBeLessThanOrEqual(c.r + 0.5);
+        at expectFocusedRingWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:602:57)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:665:42
+
+    Error Context: tests-visual/test-results/release-10-1-5-e2-at-1440--0ba7a-ir-whole-ring-on-every-edge-chromium-headless-new/error-context.md
+
+  8) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:674:5 › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled 
+
+    Error: S1 ({"focusVisible":true,"hover":true,"scale":1,"width":84.1875,"outline":"solid","ink":4,"ring":{"l":74.859375,"r":167.046875,"t":21,"b":67},"clips":[]}): the run clips
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      600 |     await expectHoverScale(page, String(read.scale), cell);
+      601 |     expect(read.outline, `${cell}: the ring paints`).not.toBe("none");
+    > 602 |     expect(read.clips.length, `${cell}: the run clips`).toBeGreaterThan(0);
+          |                                                         ^
+      603 |     for (const c of read.clips) {
+      604 |         expect(read.ring.l, `${cell}: ring inside ${c.cls} (left)`).toBeGreaterThanOrEqual(c.l - 0.5);
+      605 |         expect(read.ring.r, `${cell}: ring inside ${c.cls} (right)`).toBeLessThanOrEqual(c.r + 0.5);
+        at expectFocusedRingWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:602:57)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:709:42
+
+    Error Context: tests-visual/test-results/release-10-1-5-e3-at-390-t-1ec7a--seats-at-rest-and-scrolled-chromium-headless-new/error-context.md
+
+  9) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:723:5 › e4 at 1440: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring 
+
+    Error: 1440 capped S3 ({"focusVisible":true,"outline":"solid","ink":4,"past":{"l":-96,"r":4.78,"t":-0.7,"b":-0.7},"seat":[718,828.78,24.7,63.3]}): ring inside the run (r)
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    4.78
+
+      1044 |     expect(read.outline, `${at}: the ring paints`).not.toBe("none");
+      1045 |     for (const [side, past] of Object.entries(read.past)) {
+    > 1046 |         expect(past, `${at}: ring inside the run (${side})`).toBeLessThanOrEqual(0.5);
+           |                                                              ^
+      1047 |     }
+      1048 | }
+      1049 |
+        at expectRingInsideRun (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:1046:62)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:739:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-e4-at-1440--76718-d-keeps-the-end-seat-s-ring-chromium-headless-new/error-context.md
+
+  10) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1189:5 › k3 at 320: a capped dock whose seats all show holds the fit law and rests round 
+
+    Error: the dock is capped by the viewport
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 316
+    Received:    310.28125
+
+      1191 |         await openSeats(page, "kinds=tab:Home,icon,icon,tab:Settings");
+      1192 |         const read = await readPlate(page);
+    > 1193 |         expect(read.w, "the dock is capped by the viewport").toBeGreaterThanOrEqual(316);
+           |                                                              ^
+      1194 |         const seats = await page.evaluate(() => {
+      1195 |             const run = document.querySelector<HTMLElement>(".dock-run.is-active")!;
+      1196 |             const k = [...run.children] as HTMLElement[];
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:1193:62
+
+    Error Context: tests-visual/test-results/release-10-1-5-k3-at-320-a-13047-the-fit-law-and-rests-round-chromium-headless-new/error-context.md
+
+  11) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:536:5 › coarse phone, round 1 › c4 coarse 390: a keyboard-focused seat under the pointer keeps its whole ring 
+
+    Error: Seat 1 ({"focusVisible":true,"hover":true,"scale":1,"width":44,"outline":"solid","ink":4,"ring":{"l":174.5,"r":226.5,"t":20,"b":72},"clips":[]}): the run clips
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      600 |     await expectHoverScale(page, String(read.scale), cell);
+      601 |     expect(read.outline, `${cell}: the ring paints`).not.toBe("none");
+    > 602 |     expect(read.clips.length, `${cell}: the run clips`).toBeGreaterThan(0);
+          |                                                         ^
+      603 |     for (const c of read.clips) {
+      604 |         expect(read.ring.l, `${cell}: ring inside ${c.cls} (left)`).toBeGreaterThanOrEqual(c.l - 0.5);
+      605 |         expect(read.ring.r, `${cell}: ring inside ${c.cls} (right)`).toBeLessThanOrEqual(c.r + 0.5);
+        at expectFocusedRingWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:602:57)
+        at c4 (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:614:47)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:537:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-coarse-phon-82017-ointer-keeps-its-whole-ring-coarse-touch/error-context.md
+
+  12) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:619:1 › c4 desktop: a keyboard-focused seat under the pointer keeps its whole ring 
+
+    Error: Seat 1 ({"focusVisible":true,"hover":true,"scale":1,"width":44,"outline":"solid","ink":4,"ring":{"l":622.375,"r":674.375,"t":20,"b":72},"clips":[]}): the run clips
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      600 |     await expectHoverScale(page, String(read.scale), cell);
+      601 |     expect(read.outline, `${cell}: the ring paints`).not.toBe("none");
+    > 602 |     expect(read.clips.length, `${cell}: the run clips`).toBeGreaterThan(0);
+          |                                                         ^
+      603 |     for (const c of read.clips) {
+      604 |         expect(read.ring.l, `${cell}: ring inside ${c.cls} (left)`).toBeGreaterThanOrEqual(c.l - 0.5);
+      605 |         expect(read.ring.r, `${cell}: ring inside ${c.cls} (right)`).toBeLessThanOrEqual(c.r + 0.5);
+        at expectFocusedRingWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:602:57)
+        at c4 (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:614:47)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:621:5
+
+    Error Context: tests-visual/test-results/release-10-1-5-c4-desktop--ab56a-ointer-keeps-its-whole-ring-coarse-touch/error-context.md
+
+  13) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:662:5 › critique 2, coarse phone › e2 at 390: focused, hovered tab seats keep their whole ring on every edge 
+
+    Error: S1 ({"focusVisible":true,"hover":true,"scale":1,"width":84.1875,"outline":"solid","ink":4,"ring":{"l":43.859375,"r":136.046875,"t":23,"b":69},"clips":[]}): the run clips
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      600 |     await expectHoverScale(page, String(read.scale), cell);
+      601 |     expect(read.outline, `${cell}: the ring paints`).not.toBe("none");
+    > 602 |     expect(read.clips.length, `${cell}: the run clips`).toBeGreaterThan(0);
+          |                                                         ^
+      603 |     for (const c of read.clips) {
+      604 |         expect(read.ring.l, `${cell}: ring inside ${c.cls} (left)`).toBeGreaterThanOrEqual(c.l - 0.5);
+      605 |         expect(read.ring.r, `${cell}: ring inside ${c.cls} (right)`).toBeLessThanOrEqual(c.r + 0.5);
+        at expectFocusedRingWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:602:57)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:665:42
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-2--c9524-ir-whole-ring-on-every-edge-coarse-touch/error-context.md
+
+  14) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:674:5 › critique 2, coarse phone › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled 
+
+    Error: S1 ({"focusVisible":true,"hover":true,"scale":1,"width":84.1875,"outline":"solid","ink":4,"ring":{"l":72.859375,"r":165.046875,"t":23,"b":69},"clips":[]}): the run clips
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      600 |     await expectHoverScale(page, String(read.scale), cell);
+      601 |     expect(read.outline, `${cell}: the ring paints`).not.toBe("none");
+    > 602 |     expect(read.clips.length, `${cell}: the run clips`).toBeGreaterThan(0);
+          |                                                         ^
+      603 |     for (const c of read.clips) {
+      604 |         expect(read.ring.l, `${cell}: ring inside ${c.cls} (left)`).toBeGreaterThanOrEqual(c.l - 0.5);
+      605 |         expect(read.ring.r, `${cell}: ring inside ${c.cls} (right)`).toBeLessThanOrEqual(c.r + 0.5);
+        at expectFocusedRingWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:602:57)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:709:42
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-2--d0cb9--seats-at-rest-and-scrolled-coarse-touch/error-context.md
+
+  15) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:723:5 › critique 2, coarse phone › e4 at 390: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring 
+
+    Error: 390 capped S3 ({"focusVisible":true,"outline":"solid","ink":4,"past":{"l":-104,"r":4.09,"t":-3,"b":-3},"seat":[203,301.09,27,65]}): ring inside the run (r)
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    4.09
+
+      1044 |     expect(read.outline, `${at}: the ring paints`).not.toBe("none");
+      1045 |     for (const [side, past] of Object.entries(read.past)) {
+    > 1046 |         expect(past, `${at}: ring inside the run (${side})`).toBeLessThanOrEqual(0.5);
+           |                                                              ^
+      1047 |     }
+      1048 | }
+      1049 |
+        at expectRingInsideRun (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:1046:62)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:739:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-2--b956f-d-keeps-the-end-seat-s-ring-coarse-touch/error-context.md
+
+  16) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:662:5 › e2 at 390: focused, hovered tab seats keep their whole ring on every edge 
+
+    Error: S1 ({"focusVisible":true,"hover":true,"scale":1,"width":84.1875,"outline":"solid","ink":4,"ring":{"l":43.859375,"r":136.046875,"t":23,"b":69},"clips":[]}): the run clips
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      600 |     await expectHoverScale(page, String(read.scale), cell);
+      601 |     expect(read.outline, `${cell}: the ring paints`).not.toBe("none");
+    > 602 |     expect(read.clips.length, `${cell}: the run clips`).toBeGreaterThan(0);
+          |                                                         ^
+      603 |     for (const c of read.clips) {
+      604 |         expect(read.ring.l, `${cell}: ring inside ${c.cls} (left)`).toBeGreaterThanOrEqual(c.l - 0.5);
+      605 |         expect(read.ring.r, `${cell}: ring inside ${c.cls} (right)`).toBeLessThanOrEqual(c.r + 0.5);
+        at expectFocusedRingWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:602:57)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:665:42
+
+    Error Context: tests-visual/test-results/release-10-1-5-e2-at-390-f-e62d2-ir-whole-ring-on-every-edge-coarse-touch/error-context.md
+
+  17) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:662:5 › e2 at 1440: focused, hovered tab seats keep their whole ring on every edge 
+
+    Error: S1 ({"focusVisible":true,"hover":true,"scale":1,"width":94.515625,"outline":"solid","ink":4,"ring":{"l":557.359375,"r":659.875,"t":22.703125,"b":69.296875},"clips":[]}): the run clips
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      600 |     await expectHoverScale(page, String(read.scale), cell);
+      601 |     expect(read.outline, `${cell}: the ring paints`).not.toBe("none");
+    > 602 |     expect(read.clips.length, `${cell}: the run clips`).toBeGreaterThan(0);
+          |                                                         ^
+      603 |     for (const c of read.clips) {
+      604 |         expect(read.ring.l, `${cell}: ring inside ${c.cls} (left)`).toBeGreaterThanOrEqual(c.l - 0.5);
+      605 |         expect(read.ring.r, `${cell}: ring inside ${c.cls} (right)`).toBeLessThanOrEqual(c.r + 0.5);
+        at expectFocusedRingWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:602:57)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:665:42
+
+    Error Context: tests-visual/test-results/release-10-1-5-e2-at-1440--0ba7a-ir-whole-ring-on-every-edge-coarse-touch/error-context.md
+
+  18) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:674:5 › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled 
+
+    Error: S1 ({"focusVisible":true,"hover":true,"scale":1,"width":84.1875,"outline":"solid","ink":4,"ring":{"l":72.859375,"r":165.046875,"t":23,"b":69},"clips":[]}): the run clips
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      600 |     await expectHoverScale(page, String(read.scale), cell);
+      601 |     expect(read.outline, `${cell}: the ring paints`).not.toBe("none");
+    > 602 |     expect(read.clips.length, `${cell}: the run clips`).toBeGreaterThan(0);
+          |                                                         ^
+      603 |     for (const c of read.clips) {
+      604 |         expect(read.ring.l, `${cell}: ring inside ${c.cls} (left)`).toBeGreaterThanOrEqual(c.l - 0.5);
+      605 |         expect(read.ring.r, `${cell}: ring inside ${c.cls} (right)`).toBeLessThanOrEqual(c.r + 0.5);
+        at expectFocusedRingWhole (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:602:57)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:709:42
+
+    Error Context: tests-visual/test-results/release-10-1-5-e3-at-390-t-1ec7a--seats-at-rest-and-scrolled-coarse-touch/error-context.md
+
+  19) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:723:5 › e4 at 1440: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring 
+
+    Error: 1440 capped S3 ({"focusVisible":true,"outline":"solid","ink":4,"past":{"l":-104,"r":4.78,"t":-2.7,"b":-2.7},"seat":[722,832.78,26.7,65.3]}): ring inside the run (r)
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    4.78
+
+      1044 |     expect(read.outline, `${at}: the ring paints`).not.toBe("none");
+      1045 |     for (const [side, past] of Object.entries(read.past)) {
+    > 1046 |         expect(past, `${at}: ring inside the run (${side})`).toBeLessThanOrEqual(0.5);
+           |                                                              ^
+      1047 |     }
+      1048 | }
+      1049 |
+        at expectRingInsideRun (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:1046:62)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:739:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-e4-at-1440--76718-d-keeps-the-end-seat-s-ring-coarse-touch/error-context.md
+
+  20) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2040:5 › q1 O-186 at 390: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: page.waitForFunction: Test timeout of 60000ms exceeded.
+
+      83 | async function open(page: Page, query: string): Promise<void> {
+      84 |     await page.goto(`/tests-visual/release-10-1-5/harness.html?${query}`);
+    > 85 |     await page.waitForFunction(() => (window as unknown as { __ready?: boolean }).__ready);
+         |                ^
+      86 |     await page.evaluate(() => document.fonts.ready);
+      87 |     await settle(page);
+      88 | }
+        at open (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:85:16)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:2054:13
+
+    Error Context: tests-visual/test-results/release-10-1-5-q1-O-186-at-ccb39--cross-extent-no-percentage-coarse-touch/error-context.md
+
+  20 failed
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:536:5 › coarse phone, round 1 › c4 coarse 390: a keyboard-focused seat under the pointer keeps its whole ring 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:619:1 › c4 desktop: a keyboard-focused seat under the pointer keeps its whole ring 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:662:5 › critique 2, coarse phone › e2 at 390: focused, hovered tab seats keep their whole ring on every edge 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:674:5 › critique 2, coarse phone › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:723:5 › critique 2, coarse phone › e4 at 390: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:662:5 › e2 at 390: focused, hovered tab seats keep their whole ring on every edge 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:662:5 › e2 at 1440: focused, hovered tab seats keep their whole ring on every edge 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:674:5 › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:723:5 › e4 at 1440: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1189:5 › k3 at 320: a capped dock whose seats all show holds the fit law and rests round 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:536:5 › coarse phone, round 1 › c4 coarse 390: a keyboard-focused seat under the pointer keeps its whole ring 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:619:1 › c4 desktop: a keyboard-focused seat under the pointer keeps its whole ring 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:662:5 › critique 2, coarse phone › e2 at 390: focused, hovered tab seats keep their whole ring on every edge 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:674:5 › critique 2, coarse phone › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:723:5 › critique 2, coarse phone › e4 at 390: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:662:5 › e2 at 390: focused, hovered tab seats keep their whole ring on every edge 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:662:5 › e2 at 1440: focused, hovered tab seats keep their whole ring on every edge 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:674:5 › e3 at 390: the run's clip and hit stop at the persistent seats, at rest and scrolled 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:723:5 › e4 at 1440: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2040:5 › q1 O-186 at 390: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage 
+  194 passed (26.5m)
+rc=1

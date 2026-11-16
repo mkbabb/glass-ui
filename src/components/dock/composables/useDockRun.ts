@@ -289,6 +289,12 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
         const run = runEl.value;
         if (!run) return;
         announce(seat);
+        // W-I.8 RU-52: a run whose seats all show is not a scroll port (run.css), so it has
+        // nothing to reach. Only the announcement above is reach's on a fitting run.
+        if (run.closest(".glass-dock")?.hasAttribute("data-run-fits")) {
+            glide.dispose();
+            return;
+        }
         // The latest reach owns the travel. A seat already in view (the engine's own
         // focus scroll can bring it there before `focusin`) stops a glide still running
         // toward an earlier seat, which would otherwise carry this one back out of view.
