@@ -1,0 +1,29 @@
+v11.0.2: 80 names  {"component":8,"function":6,"prop":33,"slot":11,"exposed":10,"emit":1,"attribute":11}
+v11.1.0: 80 names  {"component":8,"function":6,"prop":33,"slot":11,"exposed":10,"emit":1,"attribute":11}
+ddfa8a2ba: 102 names  {"component":10,"function":6,"prop":42,"slot":17,"emit":3,"exposed":11,"attribute":13}
+
+v11.1.0 against v11.0.2: +0 -0 net +0
+
+ddfa8a2ba against v11.0.2: +22 -0 net +22
+  + component DockOutlet
+  + component ControlsDock
+  + prop GlassDock.pinned
+  + prop GlassDock.run
+  + slot GlassDock#rim
+  + emit GlassDock@update:pinned
+  + exposed GlassDock.controlCount()
+  + prop DockOutlet.to
+  + prop DockOutlet.region
+  + slot DockOutlet#default
+  + prop ControlsDock.label
+  + prop ControlsDock.corner
+  + prop ControlsDock.within
+  + prop ControlsDock.collapse
+  + prop ControlsDock.pinned
+  + slot ControlsDock#default
+  + slot ControlsDock#collapsed
+  + slot ControlsDock#persistent
+  + slot ControlsDock#persistent-end
+  + emit ControlsDock@update:pinned
+  + attribute data-dock-glyph
+  + attribute data-dock-scope

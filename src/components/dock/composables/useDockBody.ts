@@ -688,6 +688,8 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             }
             if (POSE && (fitMoved || inset !== null)) performance.mark("dock:reread", { detail: { fit: fitMoved, inset, fits: plan?.fits ?? null, whole: plan?.whole ?? null } });
         }
+        // RU-53: the carrier's read of the root, named, so a fold frame's first forced layout is told from a flag's.
+        if (POSE) performance.mark("dock:rect");
         const next = rectOf(el);
         if (layout) {
             const keep = (a0: number, a1: number, b0: number, b1: number) => {
@@ -1236,24 +1238,33 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
      *  each entry's own border-box size, which the entry carries, with the box that sync holds, and
      *  returns when they are equal: no layout is read for it. */
     let syncedSinceRo = false;
+    function heldOf(el: Element): { w: number; h: number } | null {
+        if (el === root() && layout) return { w: layout.r - layout.l, h: layout.b - layout.t };
+        for (const t of regions.values()) if (t.el === el) return { w: t.w, h: t.h };
+        const st = seats.get(el as HTMLElement);
+        return st ? { w: st.w, h: st.h } : null;
+    }
     function heldSize(en: ResizeObserverEntry): boolean {
         const b = en.borderBoxSize?.[0];
         if (!b) return false;
-        const el = en.target;
-        let w: number | null = null;
-        let h: number | null = null;
-        if (el === root() && layout) (w = layout.r - layout.l), (h = layout.b - layout.t);
-        else {
-            for (const t of regions.values()) if (t.el === el) (w = t.w), (h = t.h);
-            const st = seats.get(el as HTMLElement);
-            if (w === null && st) (w = st.w), (h = st.h);
-        }
-        return w !== null && h !== null && Math.abs(b.inlineSize - w) <= 0.5 && Math.abs(b.blockSize - h) <= 0.5;
+        const held = heldOf(en.target);
+        return held !== null && Math.abs(b.inlineSize - held.w) <= 0.5 && Math.abs(b.blockSize - held.h) <= 0.5;
     }
     function onResize(entries: ResizeObserverEntry[]): void {
         const synced = syncedSinceRo;
         syncedSinceRo = false;
         if (synced && entries.every(heldSize)) return;
+        // RU-53: the hold build names each entry that fails the guard in a frame already synced.
+        if (POSE && synced) {
+            const miss = entries.filter((en) => !heldSize(en)).map((en) => {
+                const t = en.target as HTMLElement;
+                const b = en.borderBoxSize?.[0];
+                const held = heldOf(t);
+                const who = t === root() ? "root" : [...regions.values()].find((r) => r.el === t)?.key ?? (seats.has(t) ? "seat" : t.className?.toString?.().slice(0, 40) || t.tagName);
+                return { who, box: b ? [+b.inlineSize.toFixed(2), +b.blockSize.toFixed(2)] : null, held: held ? [+held.w.toFixed(2), +held.h.toFixed(2)] : null };
+            });
+            performance.mark("dock:ro-miss", { detail: { miss } });
+        }
         sync("ro");
     }
     let resized = false;
