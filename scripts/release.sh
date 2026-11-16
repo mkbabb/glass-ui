@@ -50,6 +50,12 @@ npm -w tests-visual run gate:pixel-floor:planted
 # own invocation, the two blob plants being mutually exclusive mutations of one canvas.
 npm -w tests-visual run gate:pixel-floor:planted:flood
 
+# How every surface leaves: each surface by each route, its reversals, and its
+# leave-finished event, in Chromium and WebKit at 390 with touch and at 1440. The
+# standing cells hold every exit to more than two frames and no frame over a fifth.
+echo "== exits =="
+npm -w tests-visual run gate:exits
+
 if [[ ! -f dist/index.d.ts ]]; then
     echo "ERROR: build did not leave dist/index.d.ts" >&2
     exit 1

@@ -1015,3 +1015,160 @@ for (const c of leaves) {
         expect(Object.values(emitted).reduce((a, b) => a + b, 0), "no emit").toBe(0);
     });
 }
+
+// ── standing ───────────────────────────────────────────────────────────────────────
+//   standing  every surface in the exits table, by every route it has: the exit is
+//             painted for more than two frames, and no frame carries more than a fifth
+//             of what is seen of it, nor (where it moves 16 px or more) of its travel.
+//             A route Playwright cannot drive in a form is skipped with its reason:
+//             WebKit's touchscreen.tap reaches no outside-press listener (so the outside
+//             route, and a trigger press that closes through that listener), and a
+//             Tooltip does not open on touch.
+
+type StandingRoute = "pick" | "outside" | "escape" | "trigger" | "close" | "away";
+type StandingCase = {
+    name: string;
+    content: string;
+    open: (page: Page, project: string) => Promise<void>;
+    routes: Partial<Record<StandingRoute, (page: Page, project: string) => Promise<void>>>;
+    height?: boolean;
+    desktopOnly?: boolean;
+    path?: string;
+    /** What is filmed, when it is not the content itself: a Toast leaves by releasing
+     *  its paint with its root at full opacity, so its ink is what is seen. */
+    film?: string;
+};
+
+const outsidePress = (page: Page, project: string) => press(page, project, 4, 4);
+const standing: StandingCase[] = [
+    {
+        name: "Select",
+        content: '[data-testid="x-select-content"]',
+        open: tap('[data-testid="x-select"]'),
+        routes: { pick: tap('[data-testid="x-opt-Gradient"]'), outside: outsidePress, escape, trigger: tap('[data-testid="x-select"]') },
+    },
+    {
+        name: "DropdownMenu",
+        content: '[data-testid="x-menu-content"]',
+        open: tap('[data-testid="x-menu"]'),
+        routes: { pick: tap('[data-testid="x-item-Share"]'), outside: outsidePress, escape, trigger: tap('[data-testid="x-menu"]') },
+    },
+    {
+        name: "Popover",
+        content: '[data-testid="x-popover-content"]',
+        open: tap('[data-testid="x-popover"]'),
+        routes: { outside: outsidePress, escape, trigger: tap('[data-testid="x-popover"]') },
+    },
+    {
+        name: "Tooltip",
+        content: '[data-testid="x-tooltip-content"]',
+        open: hover('[data-testid="x-tooltip"]'),
+        routes: { escape, away },
+        desktopOnly: true,
+    },
+    ...(["dialog", "sheet-right", "sheet-bottom"] as const).map((id) => ({
+        name: id === "dialog" ? "Dialog" : `Sheet ${id.slice(6)}`,
+        content: `[data-testid="x-${id}-content"]`,
+        open: tap(`[data-testid="x-${id}"]`),
+        routes: {
+            close: tap(`[data-testid="x-${id}-content"] [data-slot="dialog-close"], [data-testid="x-${id}-content"] button[aria-label="Close"]`),
+            outside: outsidePress,
+            escape,
+        },
+    })),
+    {
+        name: "detented Sheet",
+        content: '[data-testid="x-detent-content"]',
+        open: tap('[data-testid="x-detent"]'),
+        routes: { outside: outsidePress, escape },
+    },
+    {
+        name: "Toast",
+        content: '[data-slot="toast"]',
+        film: '[data-slot="toast"] > div',
+        open: tap('[data-testid="x-toast"]'),
+        routes: { close: tap('[data-slot="toast"] button[aria-label="Dismiss"]') },
+    },
+    {
+        name: "Collapsible",
+        content: '[data-testid="x-collapsible-content"]',
+        open: tap('[data-testid="x-collapsible"]'),
+        routes: { trigger: tap('[data-testid="x-collapsible"]') },
+        height: true,
+    },
+    {
+        name: "Accordion",
+        content: '[data-testid="x-accordion-content"]',
+        open: tap('[data-testid="x-accordion"]'),
+        routes: { trigger: tap('[data-testid="x-accordion"]') },
+        height: true,
+    },
+    {
+        name: "ExpandableContainer",
+        content: PANEL,
+        open: tap(`${EXPAND} [data-mode="expand"]`),
+        routes: { close: tap(`${EXPAND} [data-mode="collapse"]`), escape },
+    },
+    {
+        name: "CommandDialog",
+        content: ".command-dialog__content",
+        path: "/containers/command",
+        open: tap("button:has-text('Open palette')"),
+        routes: {
+            pick: tap(".command-dialog__content [data-slot=command-item]:not([data-disabled])"),
+            outside: (page, project) => press(page, project, 10, 10),
+            escape,
+        },
+    },
+];
+
+for (const c of standing) {
+    for (const [route, act] of Object.entries(c.routes) as [StandingRoute, (page: Page, project: string) => Promise<void>][]) {
+        test(`standing · ${c.name} by ${route}: no exit in under two frames, no frame over a fifth`, async ({ page }, info) => {
+            const project = info.project.name;
+            test.skip(Boolean(c.desktopOnly) && isPhone(project), "a Tooltip does not open on touch");
+            test.skip(
+                project === "webkit-phone" && (route === "outside" || (route === "trigger" && !c.height)),
+                "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+            );
+            if (c.path) await page.goto(c.path);
+            else await openHarness(page);
+            await c.open(page, project);
+            await page.locator(`${c.content}[data-state$="open"], ${c.content}`).first().waitFor();
+            await page.waitForTimeout(1000);
+            const rest = (await page.locator(c.content).first().boundingBox())!;
+            await startFilm(page, c.film ?? c.content);
+            await markFilm(page);
+            await act(page, project);
+            const film = await stopFilm(page, 1400);
+            const vw = page.viewportSize()!;
+            const channel: Channel = c.height ? (f) => (f.present ? (f.h ?? 0) / rest.height : 0) : seenChannel(vw);
+            const before = film.frames.filter((f) => f.t < film.mark);
+            const start = before[before.length - 1];
+            const after = film.frames.filter((f) => f.t >= film.mark);
+            const goneIdx = after.findIndex((f) => channel(f) <= 0.01);
+            const leaving = [start, ...after.slice(0, goneIdx < 0 ? after.length : goneIdx + 1)];
+            const series: [number, number][] = leaving.map((f) => [f.t, channel(f)]);
+            const moving = leaving.filter((f) => f.present && f.x !== undefined);
+            const dx = Math.max(...moving.map((f) => Math.abs(f.x! - start.x!)), 0);
+            const dy = Math.max(...moving.map((f) => Math.abs(f.y! - start.y!)), 0);
+            const axis = dx >= dy ? "x" : "y";
+            const travel = c.height ? 0 : Math.max(dx, dy);
+            const geometry: [number, number][] = moving.map((f) => [f.t, axis === "x" ? f.x! : f.y!]);
+            const read = {
+                painted: after.slice(0, goneIdx < 0 ? after.length : goneIdx).filter((f) => channel(f) > 0.01).length,
+                share: +worstFrameShare(series, Math.max(channel(start), 0.01)).toFixed(3),
+                travel: Math.round(travel),
+                travelShare: travel >= 16 ? +worstFrameShare(geometry, travel).toFixed(3) : null,
+                gone: goneIdx >= 0,
+                frames: series.map(([t, v]) => [Math.round(t - film.mark), +v.toFixed(3)]).slice(0, 40),
+            };
+            await info.attach("standing", { body: JSON.stringify(read), contentType: "application/json" });
+            const at = JSON.stringify(read);
+            expect(read.gone, `it leaves ${at}`).toBe(true);
+            expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+            expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+            if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+        });
+    }
+}
