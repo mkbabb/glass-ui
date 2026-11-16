@@ -156,6 +156,11 @@ const isTabsSemantic = computed(
     () => props.semantics === "tabs" || (!props.semantics && isUnderline.value),
 );
 
+// The selection engine is assembled before the optional drag owner below. A newer
+// ordinary pointer/keyboard selection must cancel an older fling before it writes the
+// model, so the late drag settle cannot overwrite the user's newer choice.
+let interruptDrag = (): void => {};
+
 // A non-selected pill tab composes the shared
 // `.glass-capsule-hover` register (specular catch-light lift + press-snap, the iOS
 // "ready to receive" read). Only the PILL material (the underline is paper — a
@@ -223,6 +228,7 @@ const selection = useSelectionGroup<SegmentedTabOption>({
     // span and swell; the hairline lengthens along its travel and has neither.
     deform: computed(() => (isUnderline.value ? "mark" : "plate")),
     onSelect: (_value, idx) => {
+        interruptDrag();
         const btn = buttonRefs.value[idx];
         if (btn) animatePress(btn);
     },
@@ -259,6 +265,7 @@ const { dragEnabled, drag } = useTabDragMorph({
     buttonRefs,
     model,
 });
+interruptDrag = drag.interrupt;
 
 // ── Button press animation (Web Animations API) ──
 // The press rides the travel register (`--spring-dock`), one

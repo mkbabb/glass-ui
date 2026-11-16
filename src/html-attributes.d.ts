@@ -66,7 +66,7 @@ declare module "@vue/runtime-core" {
         spellcheck?: boolean | "true" | "false";
         contenteditable?: boolean | "true" | "false" | "plaintext-only" | "inherit";
         translate?: "yes" | "no";
-        enterkeyhint?: string;
+        enterkeyhint?: "enter" | "done" | "go" | "next" | "previous" | "search" | "send";
         popover?: string | boolean;
         popovertarget?: string;
         commandfor?: string;

@@ -2,6 +2,16 @@ import { mount } from "@vue/test-utils";
 import { describe, expect, it } from "vitest";
 import * as InputSurface from "@glass/components/input";
 import { Input } from "@glass/components/input";
+import type { InputNativeAttrs } from "@glass/components/input";
+
+type ExpectedEnterKeyHint = "enter" | "done" | "go" | "next" | "previous" | "search" | "send";
+type Equal<A, B> = (<T>() => T extends A ? 1 : 2) extends
+    (<T>() => T extends B ? 1 : 2) ? true : false;
+const enterKeyHintIsExact: Equal<
+    NonNullable<InputNativeAttrs["enterkeyhint"]>,
+    ExpectedEnterKeyHint
+> = true;
+void enterKeyHintIsExact;
 
 describe("Input contract", () => {
     it("publishes one native single-line control", () => {

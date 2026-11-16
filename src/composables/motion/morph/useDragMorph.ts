@@ -118,6 +118,8 @@ export interface UseDragMorphReturn {
      * a no-op while a gesture is in flight (the rebuild waits for settle).
      */
     refresh: () => void;
+    /** Cancel a pending gesture episode so a newer non-drag selection owns state. */
+    interrupt: () => void;
     /** Tear down — detach the `Draggable`, dispose the spring + watchers. */
     detach: () => void;
 }
@@ -206,17 +208,7 @@ export function useDragMorph<V = string>(
             }
             // Fire the single commit when the post-release fling settles — ONLY after
             // a real gesture (not the settled-on-mount emit).
-            if (hasGestured && !dragging.value && s.settled && !committed) {
-                const value = nearestValue(v);
-                if (value != null) {
-                    committed = true;
-                    hasGestured = false;
-                    params.onSnap(value);
-                    // The model update seats the indicator's base translate while the
-                    // morph lock is held; then release the gesture delta without a jump.
-                    void nextTick(() => morph.clear());
-                }
-            }
+            settleGesture(s, v);
         });
         // Arm the engine's managed rAF lifecycle (the no-op keeps the auto-resume
         // gate non-null — the useSpring precedent; state read through `subscribe`).
@@ -291,6 +283,34 @@ export function useDragMorph<V = string>(
     let committed = false;
     let hasGestured = false;
 
+    function settleGesture(activeSpring: SpringProgress, value: number): void {
+        // kf Draggable can reset to a release coordinate that is already the chosen
+        // snap target while carrying non-zero sampled velocity. In that exact-target
+        // case its spring reports unsettled but has no distance left to drive; treat
+        // the native snap target as arrived rather than waiting for a frame that will
+        // never be scheduled.
+        const atSnapTarget = value === activeSpring.target;
+        if (
+            !hasGestured ||
+            dragging.value ||
+            (!activeSpring.settled && !atSnapTarget) ||
+            committed
+        ) {
+            return;
+        }
+        const target = nearestValue(activeSpring.target);
+        if (target == null) return;
+        committed = true;
+        hasGestured = false;
+        params.onSnap(target);
+        // The model update seats the consumer's base position while the morph lock is
+        // held; then release the gesture-only transform without a jump. A zero-distance
+        // press can already be settled before pointerup flips `dragging`, so pointerup
+        // calls this same closer explicitly below instead of waiting for a frame that
+        // the settled spring will never emit.
+        void nextTick(() => morph.clear());
+    }
+
     // The kf Draggable — the pointer-capture follow + velocity-window + the C¹
     // fling + the NATIVE snap (kf 5.1.0 `DragOptions.snap`, see the header; no
     // re-fork of the pointer-velocity engine). We hand it OUR spring (the physics
@@ -332,11 +352,16 @@ export function useDragMorph<V = string>(
         detachDrag = draggable.attach(node);
     }
 
-    function onPointerDownCapture(): void {
+    function onPointerDownCapture(event: PointerEvent): void {
         dragging.value = true;
         committed = false;
         hasGestured = true;
-        dragOrigin.value = ensureSpring().value;
+        // kf Draggable resets its spring to this pointer coordinate immediately after
+        // our listener runs. Seeding the offset origin from the prior spring value
+        // (zero on first use) turns an ordinary active-pill press into an absolute
+        // `transform: translate(clientX, 0)` jump. Use the coordinate that both owners
+        // are about to share, so a press starts at delta zero and a drag remains 1:1.
+        dragOrigin.value = axisOf() === "y" ? event.clientY : event.clientX;
         // While dragging, the squish is live; on settle the watcher releases it
         // to 1 via the normalized-position drive (the travel decays to 0).
     }
@@ -349,6 +374,14 @@ export function useDragMorph<V = string>(
         // so the settle watcher arms the single COMMIT-side `onSnap` (off the value
         // the spring settles at — the nearest center the engine snapped to).
         dragging.value = false;
+        // Close after the target's own pointerup handler has finished resetting and
+        // snapping the shared spring. This is also the zero-distance press closer:
+        // its spring is already settled, so the microtask clears the gesture channel
+        // without relying on another animation frame.
+        queueMicrotask(() => {
+            const activeSpring = ensureSpring();
+            settleGesture(activeSpring, activeSpring.value);
+        });
     }
 
     // The kf Draggable owns the per-gesture pointermove/up; we mirror dragging
@@ -374,6 +407,15 @@ export function useDragMorph<V = string>(
     function refresh(): void {
         if (dragging.value) return;
         reattach();
+    }
+
+    function interrupt(): void {
+        if (!hasGestured && !dragging.value) return;
+        hasGestured = false;
+        committed = true;
+        dragging.value = false;
+        spring?.stop();
+        morph.clear();
     }
 
     reattach();
@@ -406,6 +448,7 @@ export function useDragMorph<V = string>(
         position: readonly(position),
         stretch: readonly(stretch) as Readonly<Ref<number>>,
         refresh,
+        interrupt,
         detach,
     };
 }

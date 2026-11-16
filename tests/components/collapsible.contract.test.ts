@@ -116,7 +116,7 @@ describe("Collapsible product contract", () => {
         expect(content.get(".body").element.parentElement).toBe(content.element);
     });
 
-    it("retains the consumed asChild trigger composition with one real button", () => {
+    it("retains interactive asChild trigger composition with one real Glass Button", async () => {
         const wrapper = mount({
             components: { Button, Collapsible, CollapsibleContent, CollapsibleTrigger },
             template: `
@@ -132,8 +132,32 @@ describe("Collapsible product contract", () => {
         const trigger = wrapper.get('[data-slot="collapsible-trigger"]');
         const content = wrapper.get('[data-slot="collapsible-content"]');
 
+        expect(wrapper.findComponent(Collapsible).props("defaultOpen")).toBe(true);
         expect(trigger.element.tagName).toBe("BUTTON");
         expect(wrapper.findAll("button")).toHaveLength(1);
         expect(trigger.attributes("aria-controls")).toBe(content.attributes("id"));
+        expect(trigger.attributes("data-state")).toBe("open");
+
+        await trigger.trigger("click");
+        await nextTick();
+        expect(trigger.attributes("data-state")).toBe("closed");
+
+        trigger.element.dispatchEvent(
+            new KeyboardEvent("keydown", {
+                key: "Enter",
+                bubbles: true,
+                cancelable: true,
+            }),
+        );
+        trigger.element.dispatchEvent(
+            new KeyboardEvent("keyup", {
+                key: "Enter",
+                bubbles: true,
+                cancelable: true,
+            }),
+        );
+        // jsdom does not synthesize a native button click from keyboard events;
+        // the browser binding is covered in the live disclosure story regression.
+        expect(trigger.attributes("data-state")).toBe("closed");
     });
 });

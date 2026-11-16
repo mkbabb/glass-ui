@@ -758,6 +758,32 @@ describe("Row 8 built-artifact acceptance", () => {
         expect([...shipped].sort()).toEqual([...expected].sort());
     });
 
+    it("closes ambient platform types from every public declaration entry", () => {
+        expect(built, buildHint).toBe(true);
+        const manifest = JSON.parse(readFileSync("package.json", "utf8"));
+        expect(manifest.dependencies?.["@types/web-bluetooth"]).toBe("^0.0.21");
+
+        const publicDeclarations = filesUnder("dist")
+            .filter((file) => !file.includes("/") && file.endsWith(".d.ts"));
+        const claimedDeclarations = new Set([
+            manifest.types,
+            ...Object.values(manifest.exports as Record<string, unknown>)
+                .flatMap((entry) => typeof entry === "object" && entry !== null
+                    ? [(entry as { types?: string }).types]
+                    : []),
+        ].filter((target): target is string => typeof target === "string")
+            .map((target) => target.replace(/^\.\/dist\//, "")));
+        expect(publicDeclarations.sort()).toEqual([...claimedDeclarations].sort());
+        for (const file of publicDeclarations) {
+            expect(
+                readFileSync(resolve("dist", file), "utf8").startsWith(
+                    '/// <reference types="web-bluetooth" />\n',
+                ),
+                `${file} must be independently consumable with compilerOptions.types restricted`,
+            ).toBe(true);
+        }
+    });
+
     it("rejects packed CSS drift against the built artifact", () => {
         expect(built, buildHint).toBe(true);
         const verifier = pathToFileURL(resolve("scripts/verify-export-types.mjs")).href;

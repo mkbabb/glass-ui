@@ -35,6 +35,33 @@ const VISUAL_DIR = resolve(ROOT, "docs/tranches/BG/audit/visual");
 
 const SCHEMES = ["light", "dark"] as const;
 
+test("Collapsible uncontrolled as-child Glass Button honors default, click, and Enter", async ({
+    page,
+}) => {
+    await page.goto("/containers/collapsible", { waitUntil: "networkidle" });
+
+    const closed = page.locator('[data-scenario="collapsible-closed"]');
+    const closedTrigger = closed.locator('[data-slot="collapsible-trigger"]');
+    await expect(closed.locator("button")).toHaveCount(1);
+    await expect(closed).toHaveAttribute("data-state", "closed");
+    await expect(closedTrigger).toHaveAttribute("aria-expanded", "false");
+
+    await closedTrigger.click();
+    await expect(closed).toHaveAttribute("data-state", "open");
+    await expect(closedTrigger).toHaveAttribute("aria-expanded", "true");
+
+    await closedTrigger.focus();
+    await page.keyboard.press("Enter");
+    await expect(closed).toHaveAttribute("data-state", "closed");
+    await expect(closedTrigger).toHaveAttribute("aria-expanded", "false");
+
+    const initiallyOpen = page.locator('[data-scenario="collapsible-open"]');
+    await expect(initiallyOpen).toHaveAttribute("data-state", "open");
+    await expect(
+        initiallyOpen.locator('[data-slot="collapsible-trigger"]'),
+    ).toHaveAttribute("aria-expanded", "true");
+});
+
 // The three disclosure surfaces + how to reach each caret's rotating chevron.
 const SURFACES = [
     {

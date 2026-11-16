@@ -45,6 +45,139 @@ test.beforeEach(async ({ page }) => {
     await page.waitForTimeout(400);
 });
 
+// ── W0 — the shared touch-target token owns every rendered tab face ────────────
+test("W0 — every SegmentedTab resolves the shared 44px target floor", async ({
+    page,
+}) => {
+    const probe = await page.evaluate(async () => {
+        const buttons = [...document.querySelectorAll<HTMLElement>(".segmented-tab")];
+        const measurements = buttons.map((button) => {
+            const strip = button.closest<HTMLElement>(".segmented-tabs");
+            const style = getComputedStyle(button);
+            return {
+                variant: strip?.classList.contains("segmented-tabs--underline")
+                    ? "underline"
+                    : "pill",
+                orientation: strip?.classList.contains("segmented-tabs--vertical")
+                    ? "vertical"
+                    : "horizontal",
+                height: button.getBoundingClientRect().height,
+                minBlockSize: parseFloat(style.minBlockSize),
+            };
+        });
+
+        const strip = document.querySelector<HTMLElement>(".segmented-tabs");
+        const first = strip?.querySelector<HTMLElement>(".segmented-tab");
+        let overriddenHeight = 0;
+        let overriddenMinBlockSize = 0;
+        if (strip && first) {
+            strip.style.setProperty("--touch-target", "3rem");
+            await new Promise<void>((resolve) =>
+                requestAnimationFrame(() => resolve()),
+            );
+            overriddenHeight = first.getBoundingClientRect().height;
+            overriddenMinBlockSize = parseFloat(getComputedStyle(first).minBlockSize);
+        }
+
+        return { measurements, overriddenHeight, overriddenMinBlockSize };
+    });
+
+    const renderedKinds = new Set(
+        probe.measurements.map(
+            ({ variant, orientation }) => `${variant}:${orientation}`,
+        ),
+    );
+    expect(renderedKinds).toEqual(
+        new Set([
+            "pill:horizontal",
+            "pill:vertical",
+            "underline:horizontal",
+            "underline:vertical",
+        ]),
+    );
+    expect(probe.measurements.length).toBeGreaterThan(0);
+    for (const measurement of probe.measurements) {
+        expect(
+            measurement.minBlockSize,
+            `${measurement.variant}:${measurement.orientation} resolves --touch-target`,
+        ).toBeGreaterThanOrEqual(44);
+        expect(
+            measurement.height,
+            `${measurement.variant}:${measurement.orientation} hit box`,
+        ).toBeGreaterThanOrEqual(44);
+    }
+    expect(probe.overriddenMinBlockSize).toBe(48);
+    expect(probe.overriddenHeight).toBeGreaterThanOrEqual(48);
+});
+
+test("W0 — responsive SegmentedTabs still transposes to the Select path", async ({
+    page,
+}) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    const trigger = page.locator(".segmented-tabs__mobile [data-control-target]");
+    await expect(trigger).toBeVisible();
+    await expect(page.locator(".segmented-tabs__mobile .segmented-tab")).toHaveCount(0);
+});
+
+test("W0 — an active-pill press releases drag transform ownership before click navigation", async ({
+    page,
+}) => {
+    await page.setViewportSize({ width: 808, height: 800 });
+    const strip = page
+        .locator(
+            ".segmented-tabs:not(.segmented-tabs--underline):not(.segmented-tabs--vertical)",
+        )
+        .first();
+    const indicator = strip.locator(".segmented-indicator");
+    const tabs = strip.locator(".segmented-tab");
+    const active = tabs.first();
+    const activeBox = await active.boundingBox();
+    expect(activeBox).not.toBeNull();
+
+    // The active tab intentionally forwards pointer hit-testing to the draggable
+    // indicator below it. A zero-distance human press must still close the gesture
+    // episode on pointerup; otherwise the drag writer's inline `transform` composes
+    // with the measured writer's `translate` on the next ordinary tab click.
+    await page.mouse.move(
+        activeBox!.x + activeBox!.width / 2,
+        activeBox!.y + activeBox!.height / 2,
+    );
+    await page.mouse.down();
+    await page.mouse.up();
+    await expect
+        .poll(() => indicator.evaluate((node) => node.style.transform))
+        .toBe("");
+
+    const target = tabs.last();
+    await target.click();
+    await expect(target).toHaveAttribute("aria-pressed", "true");
+    await expect
+        .poll(() => indicator.evaluate((node) => node.style.transform))
+        .toBe("");
+    await expect
+        .poll(() =>
+            page.evaluate(() => ({
+                scrollWidth: document.documentElement.scrollWidth,
+                clientWidth: document.documentElement.clientWidth,
+            })),
+        )
+        .toEqual({ scrollWidth: 808, clientWidth: 808 });
+
+    await expect
+        .poll(async () => {
+            const [indicatorBox, targetBox] = await Promise.all([
+                indicator.boundingBox(),
+                target.boundingBox(),
+            ]);
+            if (!indicatorBox || !targetBox) return Number.POSITIVE_INFINITY;
+            return Math.max(
+                Math.abs(indicatorBox.x - targetBox.x),
+                Math.abs(indicatorBox.width - targetBox.width),
+            );
+        })
+        .toBeLessThanOrEqual(1.5);
+});
+
 // ── W1 — the underline paints NO plate (the R10-2 oval blob dead) ────────────────
 test("W1 — underline paints NO plate (no filled pill behind the active tab)", async ({
     page,

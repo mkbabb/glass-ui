@@ -15,6 +15,11 @@ import { buildEntrySet, readTree } from "./lib/subpath-policy.mjs";
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
 const declarationFilePattern = /\.d\.(?:ts|mts|cts)$/;
+// Reka's public declarations reach @vueuse/core, whose declaration surface
+// names Web Bluetooth globals. A consumer that intentionally restricts
+// compilerOptions.types must still receive the complete Glass type graph from
+// the package itself; it must not need an application-side triple-slash shim.
+const platformTypeReference = '/// <reference types="web-bluetooth" />\n';
 const relativeReferencePattern =
     /(from\s+|import\s*\(\s*|<reference\s+path\s*=\s*)(["'])(\.{1,2}\/[^"']*)\2/g;
 
@@ -116,15 +121,20 @@ export function flattenSubpathTypes(outputRoot) {
             outputRoot,
             source.replace(/^src\//, "").replace(/\.ts$/, ".d.ts"),
         );
-        if (target === emitted) continue;
-        const specifier = relative(dirname(target), emitted);
-        const runtimeSpecifier = `${specifier.startsWith(".") ? specifier : `./${specifier}`}`
-            .replace(/\.d\.(?:ts|mts|cts)$/, declarationRuntimeExtension(emitted));
-        writeFileSync(
-            target,
-            `export * from ${JSON.stringify(runtimeSpecifier)};\n`,
-            "utf8",
-        );
+        if (target !== emitted) {
+            const specifier = relative(dirname(target), emitted);
+            const runtimeSpecifier = `${specifier.startsWith(".") ? specifier : `./${specifier}`}`
+                .replace(/\.d\.(?:ts|mts|cts)$/, declarationRuntimeExtension(emitted));
+            writeFileSync(
+                target,
+                `export * from ${JSON.stringify(runtimeSpecifier)};\n`,
+                "utf8",
+            );
+        }
+        const declaration = readFileSync(target, "utf8");
+        if (!declaration.startsWith(platformTypeReference)) {
+            writeFileSync(target, `${platformTypeReference}${declaration}`, "utf8");
+        }
     }
 
     closeDeclarationReferences(outputRoot);

@@ -52,6 +52,7 @@ import {
 
 const TABS_STYLES = join(process.cwd(), "src/components/tabs/styles");
 const SEGMENTED = join(TABS_STYLES, "segmented.css");
+const SIZING = join(process.cwd(), "src/styles/tokens/sizing.css");
 
 /** The house idiom — `orphan-css-partial.test.ts:68`, `radius-role-canon.test.ts:29`. */
 const stripComments = (text: string): string => text.replace(/\/\*[\s\S]*?\*\//g, "");
@@ -370,6 +371,25 @@ describe("gate:G-TABS-SEAM — one selected-state seam, one indicator, one defor
             expect(css).toMatch(
                 /\.segmented-tabs--underline\s+\.segmented-indicator\s*\{[^}]*scale:\s*var\(--stretch\)\s*1/,
             );
+        });
+    });
+
+    describe("G-TABS-TARGET — every segment owns the shared target floor", () => {
+        it("binds the tab face to `--touch-target` instead of a component-local size", () => {
+            const css = stripComments(readFileSync(SEGMENTED, "utf8"));
+            const rule = css.match(/\.segmented-tab\s*\{([^}]*)\}/)?.[1];
+
+            expect(rule, "the base .segmented-tab rule exists").toBeDefined();
+            expect(rule).toMatch(/min-block-size:\s*var\(--touch-target\)\s*;/);
+            expect(rule).not.toMatch(/min-block-size:\s*[\d.]+(?:px|rem)/);
+        });
+
+        it("keeps the shared token at the 44px design-system floor", () => {
+            const sizing = stripComments(readFileSync(SIZING, "utf8"));
+            const rem = Number(sizing.match(/--touch-target:\s*([\d.]+)rem\s*;/)?.[1]);
+
+            expect(rem).toBeGreaterThan(0);
+            expect(rem * 16).toBeGreaterThanOrEqual(44);
         });
     });
 

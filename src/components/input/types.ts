@@ -24,7 +24,12 @@ export interface InputNativeAttrs {
     // unions is what pushes `defineProps` past `tsc`'s complexity bound (TS2590,
     // reproduced at this seat), and it was never able to type the real grammar.
     autocomplete?: string;
-    enterkeyhint?: InputHTMLAttributes["enterkeyhint"];
+    // Vue 3.5 added this platform attribute after the beginning of the peer
+    // range. Indexing its runtime-dom interface therefore makes Glass's
+    // published declaration fail for otherwise-supported older Vue 3.5 pins.
+    // Own the stable HTML enum at this boundary instead of requiring consumers
+    // to augment Vue's ambient types.
+    enterkeyhint?: "enter" | "done" | "go" | "next" | "previous" | "search" | "send";
     form?: string;
     inputmode?: InputHTMLAttributes["inputmode"];
     list?: string;

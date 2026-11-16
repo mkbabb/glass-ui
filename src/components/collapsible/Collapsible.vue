@@ -20,6 +20,10 @@ export interface CollapsibleEmits {
 defineOptions({ name: "Collapsible", inheritAttrs: false });
 
 const props = withDefaults(defineProps<CollapsibleProps>(), {
+    // An absent runtime Boolean prop otherwise coerces to false. `undefined` is the
+    // controlled/uncontrolled sentinel Reka's passive model requires so defaultOpen
+    // and internal trigger updates remain authoritative when no v-model is present.
+    open: undefined,
     defaultOpen: false,
     disabled: false,
 });

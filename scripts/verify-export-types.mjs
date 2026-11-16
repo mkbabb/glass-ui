@@ -162,6 +162,17 @@ function barePackageRoot(reference) {
     return clean.startsWith("@") ? segments.slice(0, 2).join("/") : segments[0];
 }
 
+function typeReferencePackageRoot(reference) {
+    const clean = cleanReference(reference);
+    if (!clean || clean.startsWith(".") || clean.startsWith("/") || clean.startsWith("#")) return null;
+    if (clean.startsWith("@types/")) return clean.split("/").slice(0, 2).join("/");
+    if (clean.startsWith("@")) {
+        const [scope, name] = clean.split("/");
+        return scope && name ? `@types/${scope.slice(1)}__${name}` : null;
+    }
+    return `@types/${clean.split("/")[0]}`;
+}
+
 function packageClaims(pkg, files) {
     const failures = [];
     const claims = new Map();
@@ -255,7 +266,10 @@ function validateDeclarations({ artifactRoot, pkg, files, entries, failures }) {
             else if (resolved && isDeclaration(resolved)) pending.push(resolved);
         }
         for (const { fileName } of imports.typeReferenceDirectives) {
-            const packageRoot = barePackageRoot(fileName);
+            // `/// <reference types="foo" />` resolves through the DefinitelyTyped
+            // package name `@types/foo`; ownership must be checked against the
+            // installable package, not the directive's lookup key.
+            const packageRoot = typeReferencePackageRoot(fileName);
             if (packageRoot && !barePackages.has(packageRoot)) barePackages.set(packageRoot, { file, reference: fileName });
         }
     }
@@ -371,6 +385,9 @@ function compilerOptionsForMode(resolution, module) {
         moduleResolution: ts.ModuleResolutionKind[resolution],
         module: ts.ModuleKind[module],
         lib: ["lib.es2023.d.ts", "lib.dom.d.ts", "lib.dom.iterable.d.ts"],
+        // Match consumers that deliberately whitelist ambient packages. Glass's
+        // own declaration entries must close every ambient type they require.
+        types: [],
         ignoreDeprecations: "6.0",
     };
 }
@@ -416,19 +433,17 @@ function runTypeResolverChecks(consumerRoot, pkg, sourceSurface, codeSpecifiers)
     const namespaceImports = codeSpecifiers
         .map((specifier, index) => `import * as publicModule${index} from ${JSON.stringify(specifier)};`)
         .join("\n");
-    // [2026-08-09 · BK #66 CLOSE] The ambient reference is ADDITIVE and deliberate.
-    // `@vueuse/core` declares `@types/web-bluetooth` as its own `dependency` precisely
-    // because `dist/index.d.ts:684-716` names `BluetoothLEScanFilter`,
-    // `BluetoothServiceUUID`, `BluetoothDevice` and `BluetoothRemoteGATTServer` as
-    // GLOBALS; the package is installed in the sandbox but TypeScript's automatic
-    // `@types/*` inclusion does not reach it here, so `skipLibCheck: false` convicted a
-    // peer's `.d.ts` for a gap in the SANDBOX. A triple-slash reference is used rather
-    // than a `types: [...]` compiler option on purpose: `types` RESTRICTS automatic
-    // inclusion to the named list, which would silently drop every other ambient package
-    // and weaken the check in a direction nobody asked for. This adds one and hides
-    // nothing.
-    const ambientReferences = '/// <reference types="web-bluetooth" />';
-    writeFileSync(sourcePath, `${ambientReferences}\n${rootImports}\n${namespaceImports}\n`, "utf8");
+    const inputTypeContract = `
+import type { InputNativeAttrs } from "${pkg.name}/input";
+type ExpectedEnterKeyHint = "enter" | "done" | "go" | "next" | "previous" | "search" | "send";
+type Equal<A, B> = (<T>() => T extends A ? 1 : 2) extends (<T>() => T extends B ? 1 : 2) ? true : false;
+const enterKeyHintIsExact: Equal<NonNullable<InputNativeAttrs["enterkeyhint"]>, ExpectedEnterKeyHint> = true;
+void enterKeyHintIsExact;`;
+    // Deliberately NO consumer-authored ambient reference. The installed Glass
+    // declaration entries own the Web Bluetooth closure, and the exact Input
+    // enum works across the full supported Vue 3.5 peer range without ambient
+    // module augmentation.
+    writeFileSync(sourcePath, `${rootImports}\n${namespaceImports}\n${inputTypeContract}\n`, "utf8");
     const tsc = resolve(dirname(require_.resolve("typescript")), "../bin/tsc");
     const modes = [
         ["Bundler", "Bundler", "ESNext"],
@@ -447,6 +462,7 @@ function runTypeResolverChecks(consumerRoot, pkg, sourceSurface, codeSpecifiers)
                 moduleResolution: resolution,
                 module,
                 lib: ["ES2023", "DOM", "DOM.Iterable"],
+                types: [],
                 ignoreDeprecations: "6.0",
             },
             files: [sourcePath],
