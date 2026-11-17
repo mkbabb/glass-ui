@@ -58,8 +58,12 @@ async function onEnter(): Promise<void> {
 </template>
 
 <style scoped>
+/* While the height travels, what the new content holds past the box is cut 3rem out
+   from its edge, past the reach of a shadow on what it holds: the shadow is never cut,
+   so nothing appears as the clip lifts. A clip-path, since WebKit has no
+   overflow-clip-margin. */
 .stage-swap[data-travel] {
-    overflow: clip;
+    clip-path: inset(-3rem);
 }
 .stage-swap-enter-active {
     transition: opacity 200ms var(--ease-out);
