@@ -12,9 +12,14 @@ const webkit = wk.projects!.find((p) => p.name === "webkit")!;
 const phone = { viewport: { width: 390, height: 844 }, deviceScaleFactor: 3, hasTouch: true, isMobile: true };
 const desktop = { viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1, hasTouch: false, isMobile: false };
 const testMatch = ["release-11-1-1.spec.ts", "release-11-1-1-controls.spec.ts", "release-11-1-1-reduce.spec.ts"];
+// The exits gate (`release-11-1-1/gate.sh`) sets GLASS_UI_DEMO_OWN: a run then starts its
+// own server and fails if the port already answers, rather than measure a server it did
+// not start.
+const server = base.webServer as { reuseExistingServer?: boolean };
 
 export default {
     ...base,
+    webServer: { ...server, reuseExistingServer: process.env.GLASS_UI_DEMO_OWN ? false : server.reuseExistingServer },
     projects: [
         { name: "chromium-phone", testMatch, use: { ...chromium.use, ...phone } },
         { name: "chromium-desktop", testMatch, use: { ...chromium.use, ...desktop } },
