@@ -646,7 +646,10 @@ for (const c of triggerCases) {
 //            over its open height) moves no more than a fifth in one frame after the
 //            turn, and it ends where the second input sent it. A trigger pressed while a
 //            Dialog, a Sheet or a Select leaves reopens it, and a press on the page while
-//            a sheet leaves reaches the page.
+//            a sheet leaves reaches the page. A turn is read on the frame clock, from
+//            the last frame painted before the page took the second input; a film with a
+//            hole of more than two frames before the surface comes to rest is not read
+//            either way, and the cell films it once more.
 
 /** Evaluates one computed inset() length against the box side it is a share of. */
 function insetPx(expr: string, ref: number): number {
@@ -715,27 +718,65 @@ const away = async (page: Page) => page.mouse.move(8, 880);
 
 type Attach = { attach: (n: string, o: { body: string; contentType: string }) => Promise<void> };
 
-async function judgeTurn(page: Page, info: Attach, c: Turn, film: Film, mark2: number, ends: "gone" | "open", full = 1) {
-    const vw = page.viewportSize()!;
-    const channel: Channel = c.height ? (f) => (f.present ? (f.h ?? 0) / full : 0) : seenChannel(vw);
-    const before = film.frames.filter((f) => f.t < mark2);
-    const turn = before[before.length - 1];
-    const after = film.frames.filter((f) => f.t >= mark2);
-    const series: [number, number][] = [turn, ...after].map((f) => [f.t, channel(f)]);
+/** More than two frames at 60 Hz without a sample. Across a hole that long a film does
+ *  not show where the surface stood when the second input landed, nor whether it then
+ *  stepped, so the film is not read either way. */
+const HOLE = 2 * (1000 / 60);
+
+type TurnRead = { atTurn: number; turnedAt: number; share: number; end: number; hole: number; frames: number[][] };
+
+/** A turn film read on the frame clock, from the last frame painted before the page took
+ *  the second input (`turnFrame`) to the end of the film; the frames are ms from that
+ *  frame. `hole` is the longest wait between two samples from the last frame before the
+ *  first input until the surface reaches the end the second input sent it to. */
+function readTurn(film: Film, channel: Channel, ends: "gone" | "open"): TurnRead {
+    const at = film.turnFrame ?? -1;
+    if (at < 1) throw new Error(`the film saw no second input (turnFrame ${at}, ${film.frames.length} frames)`);
+    const series: [number, number][] = film.frames.slice(at - 1).map((f) => [f.t, channel(f)]);
     // Where it turned: the furthest it went toward the end it was heading for before
     // the second input took hold. A surface that turns from where it is turns short of
     // that end; one that restarts from its far end, or empties, touches the end first,
     // for however brief a frame.
-    const values = [turn, ...after].map(channel);
+    const values = series.map(([, v]) => v);
     const turnedAt = ends === "gone" ? Math.max(...values) : Math.min(...values);
-    const read = {
-        atTurn: +channel(turn).toFixed(3),
+    const arrived = values.findIndex((v) => (ends === "gone" ? v < 0.02 : v > 0.95));
+    const from = Math.max(0, film.frames.findIndex((f) => f.t >= film.mark) - 1);
+    const until = arrived < 0 ? film.frames.length : at - 1 + arrived + 1;
+    let hole = 0;
+    for (let i = from + 1; i < until; i++) hole = Math.max(hole, film.frames[i].t - film.frames[i - 1].t);
+    return {
+        atTurn: +values[0].toFixed(3),
         turnedAt: +turnedAt.toFixed(3),
         share: +worstFrameShare(series, 1).toFixed(3),
-        end: +channel(after[after.length - 1]).toFixed(3),
-        frames: series.map(([t, v]) => [Math.round(t - mark2), +v.toFixed(3)]),
+        end: +values[values.length - 1].toFixed(3),
+        hole: Math.round(hole),
+        frames: series.map(([t, v]) => [Math.round(t - series[0][0]), +v.toFixed(3)]),
     };
+}
+
+type Shoot = (page: Page) => Promise<{ film: Film; channel: Channel }>;
+
+/** Films a turn and reads it. A film with a hole is not read: it is attached as unread
+ *  and the cell films once more from a freshly loaded page, and a second film with a
+ *  hole fails the cell as unread rather than red or green. */
+async function filmAndReadTurn(page: Page, info: Attach, shoot: Shoot, ends: "gone" | "open"): Promise<TurnRead> {
+    let shot = await shoot(page);
+    let read = readTurn(shot.film, shot.channel, ends);
+    if (read.hole > HOLE) {
+        await info.attach("unread", { body: JSON.stringify(read), contentType: "application/json" });
+        shot = await shoot(page);
+        read = readTurn(shot.film, shot.channel, ends);
+    }
     await info.attach("turn", { body: JSON.stringify(read), contentType: "application/json" });
+    expect(read.hole, `the film is read: no hole of more than two frames before it comes to rest, in either of two films ${JSON.stringify(read)}`).toBeLessThanOrEqual(HOLE);
+    return read;
+}
+
+function turnChannel(page: Page, c: { height?: boolean }, full: number): Channel {
+    return c.height ? (f) => (f.present ? (f.h ?? 0) / full : 0) : seenChannel(page.viewportSize()!);
+}
+
+function expectTurn(read: TurnRead, ends: "gone" | "open"): void {
     const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 45) });
     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
@@ -790,23 +831,27 @@ for (const c of turns) {
         test(`reverse · a ${c.name} closed while it opens turns from where it is`, async ({ page }, info) => {
             const project = info.project.name;
             test.skip(Boolean(c.desktopOnly) && isPhone(project), "it does not open on touch");
-            await openHarness(page);
-            const full = await openHeight(page, project, c);
-            const film = await filmTurn(page, project, c, "open", c.at);
-            await judgeTurn(page, info, c, film, film.turn, "gone", full);
+            const read = await filmAndReadTurn(page, info, async (page) => {
+                await openHarness(page);
+                const full = await openHeight(page, project, c);
+                return { film: await filmTurn(page, project, c, "open", c.at), channel: turnChannel(page, c, full) };
+            }, "gone");
+            expectTurn(read, "gone");
         });
 
     if (c.only !== "close")
         test(`reverse · a ${c.name} reopened while it closes turns from where it is`, async ({ page }, info) => {
             const project = info.project.name;
             test.skip(Boolean(c.desktopOnly) && isPhone(project), "it does not open on touch");
-            await openHarness(page);
-            const full = await openHeight(page, project, c);
-            await c.open(page, project);
-            await page.locator(`${c.content}[data-state$="open"]`).waitFor();
-            await page.waitForTimeout(900);
-            const film = await filmTurn(page, project, c, "close", c.height ? 50 : 40);
-            await judgeTurn(page, info, c, film, film.turn, "open", full);
+            const read = await filmAndReadTurn(page, info, async (page) => {
+                await openHarness(page);
+                const full = await openHeight(page, project, c);
+                await c.open(page, project);
+                await page.locator(`${c.content}[data-state$="open"]`).waitFor();
+                await page.waitForTimeout(900);
+                return { film: await filmTurn(page, project, c, "close", c.height ? 50 : 40), channel: turnChannel(page, c, full) };
+            }, "open");
+            expectTurn(read, "open");
         });
 }
 
@@ -819,20 +864,24 @@ const reopens = [
 for (const c of reopens) {
     test(`reverse · a press on a leaving ${c.name}'s trigger reopens it from where it is`, async ({ page }, info) => {
         const project = info.project.name;
-        await openHarness(page);
-        const box = (await page.locator(c.trigger).boundingBox())!;
-        await pressOn(page, project, c.trigger);
-        await page.locator(`${c.content}[data-state="open"]`).waitFor();
-        await page.waitForTimeout(1000);
-        await startFilm(page, c.content);
-        await markFilm(page);
-        await page.keyboard.press("Escape");
-        await page.waitForTimeout(50);
-        await markTurn(page);
-        await press(page, project, box.x + box.width / 2, box.y + box.height / 2);
-        const film = await stopFilm(page, 1400);
-        const state = await page.locator(c.content).first().getAttribute("data-state", { timeout: 1000 }).catch(() => null);
-        await judgeTurn(page, info, { name: c.name, content: c.content, open: async () => {}, close: async () => {}, at: 0 }, film, film.turn, "open");
+        let state: string | null = null;
+        const read = await filmAndReadTurn(page, info, async (page) => {
+            await openHarness(page);
+            const box = (await page.locator(c.trigger).boundingBox())!;
+            await pressOn(page, project, c.trigger);
+            await page.locator(`${c.content}[data-state="open"]`).waitFor();
+            await page.waitForTimeout(1000);
+            await startFilm(page, c.content);
+            await markFilm(page);
+            await page.keyboard.press("Escape");
+            await page.waitForTimeout(50);
+            await markTurn(page);
+            await press(page, project, box.x + box.width / 2, box.y + box.height / 2);
+            const film = await stopFilm(page, 1400);
+            state = await page.locator(c.content).first().getAttribute("data-state", { timeout: 1000 }).catch(() => null);
+            return { film, channel: turnChannel(page, {}, 1) };
+        }, "open");
+        expectTurn(read, "open");
         expect(state, "the surface is open again").toBe("open");
     });
 }

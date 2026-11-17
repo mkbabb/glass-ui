@@ -23,12 +23,21 @@ export type Frame = {
     also?: boolean;
 };
 
-export type Film = { mark: number; turn: number; t0: number; frames: Frame[] };
+export type Film = {
+    mark: number;
+    turn: number;
+    /** On the frame clock: how many frames were filmed before the page took the first
+     *  input after `markTurn`, so `frames[turnFrame - 1]` is the last one painted before
+     *  the turn's input and the frames from `turnFrame` on are painted after it. */
+    turnFrame?: number;
+    t0: number;
+    frames: Frame[];
+};
 
 export async function startFilm(page: Page, selector: string, also = ""): Promise<void> {
     await page.evaluate(({ selector, also }) => {
         const w = window as unknown as { __film: { mark: number; frames: unknown[]; stop: boolean } };
-        const film = { mark: -1, turn: -1, frames: [] as unknown[], stop: false };
+        const film = { mark: -1, turn: -1, turnFrame: -1, armed: false, frames: [] as unknown[], stop: false };
         w.__film = film;
         const t0 = performance.now();
         (film as unknown as { t0: number }).t0 = t0;
@@ -76,7 +85,17 @@ export async function startFilm(page: Page, selector: string, also = ""): Promis
         };
         (window as unknown as { __turn: () => void }).__turn = () => {
             film.turn = performance.now() - t0;
+            film.armed = true;
         };
+        // The turn's input on the frame clock: the first input event the page takes
+        // after `__turn` stamps how many frames were filmed before it.
+        const onInput = () => {
+            if (!film.armed) return;
+            film.armed = false;
+            film.turnFrame = film.frames.length;
+        };
+        for (const type of ["pointerdown", "pointermove", "mousedown", "mousemove", "touchstart", "keydown", "click"])
+            addEventListener(type, onInput, { capture: true });
     }, { selector, also });
     await page.waitForTimeout(80);
 }
@@ -93,9 +112,9 @@ export async function markTurn(page: Page): Promise<void> {
 export async function stopFilm(page: Page, ms: number): Promise<Film> {
     await page.waitForTimeout(ms);
     return page.evaluate(() => {
-        const f = (window as unknown as { __film: { mark: number; turn: number; t0: number; frames: Frame[]; stop: boolean } }).__film;
+        const f = (window as unknown as { __film: { mark: number; turn: number; turnFrame: number; t0: number; frames: Frame[]; stop: boolean } }).__film;
         f.stop = true;
-        return { mark: f.mark, turn: f.turn, t0: f.t0, frames: f.frames };
+        return { mark: f.mark, turn: f.turn, turnFrame: f.turnFrame, t0: f.t0, frames: f.frames };
     });
 }
 
