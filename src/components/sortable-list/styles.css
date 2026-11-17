@@ -187,6 +187,15 @@
         scale: var(--scale-press);
     }
 
+    /* Under reduced motion a press keeps the grip's size, where the scale would land at
+       once, and shows as a fill behind its glyph. */
+    @media (prefers-reduced-motion: reduce) {
+        .sortable-handle:active {
+            scale: 1;
+            background-color: oklch(from var(--foreground) l c h / var(--fill-selected));
+        }
+    }
+
     /* The ONE house focus register — never a second ring minted beside it. */
     .sortable-handle:focus-visible {
         outline: none;

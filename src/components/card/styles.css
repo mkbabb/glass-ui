@@ -198,6 +198,22 @@
         scale: var(--scale-press-sm);
     }
 
+    /* Under reduced motion a press keeps the card's size, where the scale would land at
+       once, and shows as a fill step: the card takes one hover rung past its hovered
+       fill, selected or not. */
+    @media (prefers-reduced-motion: reduce) {
+        .card[role="option"]:active {
+            scale: 1;
+            --card-fill: oklch(from var(--foreground) l c h / calc(var(--fill-hover) * 2));
+        }
+
+        .card[role="option"][data-selected="true"]:active {
+            --card-fill: oklch(
+                from var(--foreground) l c h / calc(var(--fill-hover) * 2 + var(--fill-selected))
+            );
+        }
+    }
+
     /* ── ANATOMY ─────────────────────────────────────────────────────────────── */
     .card-header {
         display: grid;

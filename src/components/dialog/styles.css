@@ -251,5 +251,12 @@
             outline-offset: 0;
             animation: glass-dialog-rebuff-flash var(--spring-press-duration) linear;
         }
+
+        /* The close button's plate keeps its size, where a scale would land at once, so its
+           hover and its press show by the fill alone; a press from a hovered plate would
+           otherwise shrink it from its hover scale. */
+        :where([data-slot="dialog-close"]):is(:hover, :active)::before {
+            scale: 1;
+        }
     }
 }

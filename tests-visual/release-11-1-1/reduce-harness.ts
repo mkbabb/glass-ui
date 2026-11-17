@@ -1,22 +1,32 @@
 // What the exits harness does not hold for the reduced-motion witnesses: a site's own
 // fade (an unlayered rule in the page, `transition: opacity 144ms`), a collapsible dock
 // that a press on its summary unfolds and Escape folds, and a navigation run of four
-// seats whose `aria-current` moves on a press, a Slider, and a Button and a dock of an
-// icon seat and a tab seat to hold a press on. Imports are relative to `src/`, so the
-// file mounts unchanged on an older tree.
+// seats whose `aria-current` moves on a press, a Slider, and a Button, a dock of an icon
+// seat and a tab seat, a pressable Card, a SortableList's handle and a Dialog's close
+// button to hold a press on, all on the same quiet ground. Imports are relative to
+// `src/`, so the file mounts unchanged on an older tree.
 import "../../demo/demo.css";
 import { createApp, h, ref } from "vue";
+import { DialogTrigger } from "reka-ui";
 
 import Button from "../../src/components/button/Button.vue";
+import Card from "../../src/components/card/Card.vue";
+import Dialog from "../../src/components/dialog/Dialog.vue";
+import DialogContent from "../../src/components/dialog/DialogContent.vue";
+import DialogTitle from "../../src/components/dialog/DialogTitle.vue";
 import GlassDock from "../../src/components/dock/GlassDock.vue";
 import DockControl from "../../src/components/dock/DockControl.vue";
 import Slider from "../../src/components/slider/Slider.vue";
+import SortableHandle from "../../src/components/sortable-list/SortableHandle.vue";
+import SortableItem from "../../src/components/sortable-list/SortableItem.vue";
+import SortableList from "../../src/components/sortable-list/SortableList.vue";
 
 document.body.style.cssText = "margin:0;min-height:100vh;background:#e9e4dc";
 
 const off = ref(false);
 const current = ref(0);
 const seats = ["Home", "Search", "Library", "Settings"];
+const rows = ["First", "Second"];
 const btn = "padding:10px 14px;background:#fff;color:#000;border-radius:8px;font:14px sans-serif";
 
 createApp({
@@ -69,6 +79,24 @@ createApp({
                         ],
                     },
                 ),
+            ]),
+            h("div", { style: "display:flex;align-items:center;gap:24px" }, [
+                h(Card, { selected: false, "data-testid": "r-card", style: "padding:16px 20px" }, () => "Pick"),
+                h(
+                    SortableList as never,
+                    { items: rows, getId: (r: string) => r, style: "width:160px;padding:0;margin:0" },
+                    () =>
+                        rows.map((r, i) =>
+                            h(SortableItem, { id: r, key: r }, () => [
+                                h(SortableHandle, { "data-testid": i === 0 ? "r-handle" : undefined }, () => "≡"),
+                                r,
+                            ]),
+                        ),
+                ),
+            ]),
+            h(Dialog, null, () => [
+                h(DialogTrigger, { "data-testid": "r-dialog", style: btn }, () => "Dialog"),
+                h(DialogContent, { "data-testid": "r-dialog-content" }, () => [h(DialogTitle, () => "A dialog"), h("p", "Its body.")]),
             ]),
         ]),
 }).mount("#app");

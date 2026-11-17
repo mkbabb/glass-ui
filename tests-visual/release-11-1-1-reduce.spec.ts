@@ -14,7 +14,8 @@
 //   mark     a navigation run's selected plate moves to a new seat by a cross-fade:
 //            no painted plate travels, and the new seat's plate fades in
 //   press    a pressed control shows its press by colour, not by size: a Button, a dock's
-//            icon seat, a dock's tab seat and a menu row, each held pressed by a finger at
+//            icon seat, a dock's tab seat, a pressable Card, a SortableList handle, a menu
+//            row and the plate of a Dialog's close button, each held pressed by a finger at
 //            the phone form (Chromium, through CDP) and by the mouse at the desktop form,
 //            keep scale 1 and their width on every frame of the hold, and the held
 //            control's fill differs from its fill at rest, a quarter of its crop or more
@@ -343,8 +344,10 @@ type PressRead = { rest: number; active: number; scales: string[]; transforms: s
 
 /** Holds a press on `sel` for 300 ms, filming every frame of the hold, and screenshots
  *  the control at rest and held. With the mouse the pointer rests on the control first,
- *  so the held crop differs from a hovered one by the press alone. */
-async function holdPress(page: Page, sel: string, cdp: CDPSession | null): Promise<PressRead> {
+ *  so the held crop differs from a hovered one by the press alone. A control whose plate
+ *  is its `::before` is read there (`pseudo`): its scale, transform and fill. The fill is
+ *  the background colour and image, since a plate may paint its state as a gradient. */
+async function holdPress(page: Page, sel: string, cdp: CDPSession | null, pseudo = ""): Promise<PressRead> {
     await page.locator(sel).first().scrollIntoViewIfNeeded();
     const box = (await page.locator(sel).first().boundingBox())!;
     const x = box.x + box.width / 2;
@@ -353,21 +356,25 @@ async function holdPress(page: Page, sel: string, cdp: CDPSession | null): Promi
     if (!cdp) await page.mouse.move(x, y);
     await page.waitForTimeout(300);
     const restShot = await page.screenshot({ clip });
-    const restFill = await page.locator(sel).first().evaluate((el) => getComputedStyle(el).backgroundColor);
+    const fillOf = (el: Element, pseudo: string) => {
+        const cs = getComputedStyle(el, pseudo || null);
+        return `${cs.backgroundColor} ${cs.backgroundImage}`;
+    };
+    const restFill = await page.locator(sel).first().evaluate(fillOf, pseudo);
     // Every frame of the hold: the computed scale and transform, the painted width,
     // and whether the control is pressed (`:active`), so a press that never landed
     // cannot read as one that kept its size.
-    await page.evaluate((sel) => {
+    await page.evaluate(({ sel, pseudo }) => {
         const el = document.querySelector(sel)!;
         const film = { frames: [] as [string, string, number, boolean][], stop: false };
         (window as unknown as { __hold: typeof film }).__hold = film;
         const tick = () => {
-            const cs = getComputedStyle(el);
+            const cs = getComputedStyle(el, pseudo || null);
             film.frames.push([cs.scale, cs.transform, el.getBoundingClientRect().width, el.matches(":active")]);
             if (!film.stop) requestAnimationFrame(tick);
         };
         requestAnimationFrame(tick);
-    }, sel);
+    }, { sel, pseudo });
     await page.waitForTimeout(80);
     // A finger held through Chromium's gesture pipeline, which presses the control
     // (`:active`) as a touch screen does; raw touch events do not.
@@ -380,7 +387,7 @@ async function holdPress(page: Page, sel: string, cdp: CDPSession | null): Promi
         return film.frames;
     });
     const heldShot = await page.screenshot({ clip });
-    const heldFill = await page.locator(sel).first().evaluate((el) => getComputedStyle(el).backgroundColor);
+    const heldFill = await page.locator(sel).first().evaluate(fillOf, pseudo);
     if (hold) await hold;
     else await page.mouse.up();
     await page.waitForTimeout(300);
@@ -401,7 +408,13 @@ test("press · a pressed control shows its press by colour, not by size, under r
     await open(page, REDUCE);
     const cdp = isPhone(project) ? await page.context().newCDPSession(page) : null;
     const reads: Record<string, PressRead> = {};
-    const controls = { Button: '[data-testid="r-button"]', "icon seat": '[data-testid="r-press-icon"]', "tab seat": '[data-testid="r-press-tab"]' };
+    const controls = {
+        Button: '[data-testid="r-button"]',
+        "icon seat": '[data-testid="r-press-icon"]',
+        "tab seat": '[data-testid="r-press-tab"]',
+        "pressable Card": '[data-testid="r-card"]',
+        "SortableList handle": '[data-testid="r-handle"]',
+    };
     for (const [name, sel] of Object.entries(controls)) reads[name] = await holdPress(page, sel, cdp);
     // A menu row, in the dock's DropdownMenu.
     await open(page, EXITS);
@@ -409,6 +422,12 @@ test("press · a pressed control shows its press by colour, not by size, under r
     await page.locator('[data-testid="x-menu-content"][data-state="open"]').waitFor();
     await page.waitForTimeout(500);
     reads["menu row"] = await holdPress(page, '[data-testid="x-item-Share"]', cdp);
+    // The Dialog's close button, whose plate is its `::before`, on the same quiet ground.
+    await open(page, REDUCE);
+    await pressOn(page, project, '[data-testid="r-dialog"]');
+    await page.locator('[data-testid="r-dialog-content"][data-state="open"]').waitFor();
+    await page.waitForTimeout(500);
+    reads["Dialog close plate"] = await holdPress(page, '[data-testid="r-dialog-content"] [data-slot="dialog-close"]', cdp, "::before");
     const at = JSON.stringify(reads);
     await info.attach("press", { body: at, contentType: "application/json" });
     const identity = (s: string) => s === "none" || s.split(" ").every((v) => parseFloat(v) === 1);
