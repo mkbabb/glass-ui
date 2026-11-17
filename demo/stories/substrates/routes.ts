@@ -10,6 +10,6 @@ export const section: SectionRoutes = {
         { id: "aurora", title: "Aurora", lede: "A painted gradient field that drifts slowly.", canvas: "card" },
         { id: "blob", title: "Blob", lede: "A soft droplet that answers the pointer.", canvas: "card" },
         { id: "constellation", title: "Constellation", lede: "A drifting lattice of points and links.", canvas: "card" },
-        { id: "fourier-field", title: "Fourier Field", lede: "A curve drawn by summing circles, one term at a time.", canvas: "card" },
+        { id: "fourier-field", title: "Fourier Field", lede: "Draws a curve by summing rotating circles.", canvas: "card" },
     ],
 };

@@ -11,6 +11,8 @@ import ButtonsStage from "./buttons.stage.vue";
 
 const saving = ref(false);
 
+const ICON_EMPHASES = ["primary", "secondary", "quiet"] as const;
+
 function save(): void {
     saving.value = true;
     window.setTimeout(() => (saving.value = false), 2400);
@@ -62,9 +64,13 @@ import { Button } from "@mkbabb/glass-ui/button";
                     >
                         Disabled
                     </Button>
+                </StoryVariantRow>
+                <StoryVariantRow label="Icon only">
                     <Button
-                        data-scenario="button-icon"
-                        emphasis="quiet"
+                        v-for="emphasis in ICON_EMPHASES"
+                        :key="emphasis"
+                        :data-scenario="`button-icon-${emphasis}`"
+                        :emphasis="emphasis"
                         icon-only
                         aria-label="More actions"
                     >

@@ -7,7 +7,7 @@ export const section: SectionRoutes = {
     icon: Shapes,
     lede: "Buttons, cards, badges and the small parts of a page.",
     routes: [
-        { id: "buttons", title: "Buttons", lede: "Commands at four emphases, in neutral and destructive tones." },
+        { id: "buttons", title: "Buttons", lede: "Commands at four emphases and two tones." },
         { id: "surface", title: "Surface", lede: "The glass panel every component is built on.", canvas: "page" },
         { id: "card", title: "Card", lede: "A group of related content on one surface." },
         { id: "badge", title: "Badge", lede: "Short labels for status and metadata." },

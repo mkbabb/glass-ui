@@ -1,5 +1,6 @@
 <script setup lang="ts">
 // One Fourier field filling its box: a chain of rotating circles drawing its curve.
+// Where the browser cannot draw it, the box says so in one sentence instead.
 import { computed, reactive, ref, watch } from "vue";
 import {
     DEFAULT_FOURIER_CONFIG,
@@ -9,12 +10,19 @@ import {
 } from "@glass/components/fourier-field";
 import { cssToOklch, type OklchStop } from "@glass/composables/color";
 import { useGlobalDark } from "@glass/composables/dark";
+import type { RendererStatus } from "@glass/composables/glass/webgpu/rendererStatus";
 import { FOURIER_PRESETS, mintFor, type FourierStudio } from "./fourier-field/studio";
 
 const props = withDefaults(
     defineProps<{ studio?: FourierStudio; paused?: boolean }>(),
     { studio: () => FOURIER_PRESETS[0]!.config, paused: false },
 );
+
+/** True once the field reports that it cannot draw here. */
+const unavailable = defineModel<boolean>("unavailable", { default: false });
+const onStatus = (status: RendererStatus): void => {
+    unavailable.value = status.phase === "error";
+};
 
 const minted = computed(() => mintFor(props.studio.source, props.studio.richness));
 
@@ -95,6 +103,36 @@ watch(
             :spectrum="minted.terms"
             :get-palette="getPalette"
             :interactive="studio.interactive"
+            @renderer-status="onStatus"
         />
+        <Transition name="fourier-notice" appear>
+            <p v-if="unavailable" role="status" class="fourier-notice">
+                This browser cannot draw the Fourier field.
+            </p>
+        </Transition>
     </div>
 </template>
+
+<style scoped>
+.fourier-notice {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    margin: 0;
+    padding: var(--sp-5);
+    text-align: center;
+    color: var(--foreground);
+    pointer-events: none;
+}
+
+.fourier-notice-enter-active,
+.fourier-notice-leave-active {
+    transition: opacity var(--duration-normal) var(--ease-out);
+}
+
+.fourier-notice-enter-from,
+.fourier-notice-leave-to {
+    opacity: 0;
+}
+</style>

@@ -1,7 +1,9 @@
 <script setup lang="ts">
 // Dialog's stage: one trigger, one dialog. The dismissal rung picks what the dialog
-// asks; the scrim weight sets the page's scrim token while this stage is mounted.
-import { computed, onBeforeUnmount, watchEffect } from "vue";
+// asks; the scrim weight sets the page's scrim token while this stage is mounted. The
+// page opens it on arrival, and a new dismissal or scrim opens it again, so each option
+// shows; a card mounts it closed.
+import { computed, onBeforeUnmount, ref, watch, watchEffect } from "vue";
 import {
     Dialog,
     DialogClose,
@@ -20,10 +22,16 @@ import StageSwap from "../../chassis/variants/StageSwap.vue";
 
 type ScrimWeight = "subtle" | "default" | "strong";
 
-const props = withDefaults(defineProps<{ dismiss?: DialogDismiss; scrim?: ScrimWeight }>(), {
-    dismiss: "free",
-    scrim: "default",
-});
+const props = withDefaults(
+    defineProps<{ dismiss?: DialogDismiss; scrim?: ScrimWeight; openOnLoad?: boolean }>(),
+    { dismiss: "free", scrim: "default", openOnLoad: false },
+);
+
+const open = ref(props.openOnLoad);
+watch(
+    () => [props.dismiss, props.scrim],
+    () => (open.value = true),
+);
 
 const SCRIM: Record<ScrimWeight, string | null> = {
     subtle: "var(--overlay-scrim-subtle)",
@@ -47,7 +55,7 @@ const trigger = computed(
 <template>
     <div class="dialog-stage">
         <StageSwap :swap-key="dismiss">
-        <Dialog>
+        <Dialog v-model:open="open">
             <DialogTrigger as-child>
                 <Button
                     :emphasis="dismiss === 'deliberate' ? 'secondary' : 'primary'"

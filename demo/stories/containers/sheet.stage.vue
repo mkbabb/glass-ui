@@ -1,7 +1,9 @@
 <script setup lang="ts">
 // Sheet's stage: one trigger, one sheet, from the chosen edge; with detents on, it
-// rests at a rung and the grip throws it between them.
-import { ref } from "vue";
+// rests at a rung and the grip throws it between them. The page opens it on arrival,
+// and a new edge or detent setting opens it again, so each option shows; a card mounts
+// it closed.
+import { ref, watch } from "vue";
 import {
     Dialog,
     DialogClose,
@@ -18,18 +20,28 @@ import { Label } from "@glass/components/label";
 
 type Side = "top" | "right" | "bottom" | "left";
 
-withDefaults(defineProps<{ side?: Side; detented?: boolean }>(), {
-    side: "right",
-    detented: false,
-});
+const props = withDefaults(
+    defineProps<{ side?: Side; detented?: boolean; openOnLoad?: boolean }>(),
+    { side: "right", detented: false, openOnLoad: false },
+);
 
 const RUNGS = [0.4, 0.7, 1];
-const rung = ref<number | null>(0.4);
+const rung = ref<number | null>(RUNGS[0]!);
+
+// A sheet with detents reopens at its first rung, so the rung is what the option shows.
+const open = ref(props.openOnLoad);
+watch(
+    () => [props.side, props.detented],
+    () => {
+        if (props.detented) rung.value = RUNGS[0]!;
+        open.value = true;
+    },
+);
 </script>
 
 <template>
     <div class="sheet-stage">
-        <Dialog>
+        <Dialog v-model:open="open">
             <DialogTrigger as-child>
                 <Button emphasis="primary">Edit details</Button>
             </DialogTrigger>

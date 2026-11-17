@@ -68,15 +68,9 @@ const total = ROWS.reduce((sum, r) => sum + r.amount, 0);
 <style scoped>
 .table-stage {
     display: grid;
-    align-content: center;
-    block-size: 100%;
-    padding: var(--sp-5);
 }
 
 @container (inline-size < 36rem) {
-    .table-stage {
-        padding: var(--sp-3);
-    }
     .table-stage :deep(.table-stage-wide) {
         display: none;
     }

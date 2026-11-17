@@ -1,18 +1,20 @@
 <script setup lang="ts">
 // A pager: previous, the dots, next. As a wizard's step bar: back, the step, and the
-// one primary action.
+// one primary action. The slide above shows the page's number, or the step's name, and
+// cross-fades on each change.
 import { ref } from "vue";
 import { ChevronLeft, ChevronRight } from "@lucide/vue";
 import { DockControl, DockSeparator, GlassDock } from "@glass/components/dock";
 import { PagerDots } from "@glass/components/pager-dots";
 import DockScene from "./_parts/DockScene.vue";
-import ScenePane from "./_parts/ScenePane.vue";
+import ScenePage from "./_parts/ScenePage.vue";
 
 withDefaults(defineProps<{ form?: "dots" | "steps" }>(), { form: "dots" });
 
 const PAGES = 5;
 const page = ref(1);
-const STEPS = 4;
+const STEP_NAMES = ["Account", "Plan", "Payment", "Review"] as const;
+const STEPS = STEP_NAMES.length;
 const step = ref(2);
 
 const prev = () => (page.value = (page.value + PAGES - 1) % PAGES);
@@ -22,7 +24,18 @@ const next = () => (page.value = (page.value + 1) % PAGES);
 <template>
     <DockScene place="bottom">
         <template #context>
-            <ScenePane shape="figure" />
+            <ScenePage shape="figure">
+                <div class="pager-slide">
+                    <Transition name="fade" mode="out-in">
+                        <span v-if="form === 'dots'" :key="`page-${page}`" class="pager-slide-number">
+                            {{ page + 1 }}
+                        </span>
+                        <span v-else :key="`step-${step}`" class="pager-slide-name">
+                            {{ STEP_NAMES[step - 1] }}
+                        </span>
+                    </Transition>
+                </div>
+            </ScenePage>
         </template>
         <template #default="{ narrow }">
             <Transition name="fade" mode="out-in">
@@ -80,5 +93,25 @@ const next = () => (page.value = (page.value + 1) % PAGES);
 
 .pager-step {
     padding-inline: var(--sp-2);
+}
+
+.pager-slide {
+    display: grid;
+    place-items: center;
+    block-size: 100%;
+    color: var(--foreground);
+}
+
+.pager-slide-number {
+    font-family: var(--font-display);
+    font-size: calc(var(--type-body) * 4);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+}
+
+.pager-slide-name {
+    font-family: var(--font-display);
+    font-size: calc(var(--type-body) * 2);
+    line-height: 1.1;
 }
 </style>

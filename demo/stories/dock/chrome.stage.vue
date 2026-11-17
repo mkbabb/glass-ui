@@ -1,7 +1,8 @@
 <script setup lang="ts">
 // App chrome: a view select, two menus, an about popover and the theme, folded to a
 // seal when idle. Each overlay holds the dock open while it is open. The second face
-// holds the page's own tools in place of the app's.
+// holds the page's own tools in place of the app's; its zoom sets the document's type
+// size below the bar.
 import { ref, useTemplateRef, watch } from "vue";
 import { Hexagon, Info, Minus, Plus, Redo2, Undo2 } from "@lucide/vue";
 import {
@@ -21,7 +22,7 @@ import {
 import { Popover, PopoverContent } from "@glass/components/popover";
 import { DarkModeToggle } from "@glass/components/dark-mode-toggle";
 import DockScene from "./_parts/DockScene.vue";
-import ScenePane from "./_parts/ScenePane.vue";
+import ScenePage from "./_parts/ScenePage.vue";
 
 const props = withDefaults(
     defineProps<{ startsOpen?: boolean; face?: "app" | "page" }>(),
@@ -52,12 +53,17 @@ const MENUS = [
     { label: "Edit", items: ["Undo", "Redo", "Select all"] },
 ];
 const zoom = ref(100);
+const ROWS = ["Flights", "Lodging", "Budget"] as const;
 </script>
 
 <template>
     <DockScene place="top" class="chrome-scene">
         <template #context>
-            <ScenePane shape="column" />
+            <ScenePage shape="column" title="Trip plan">
+                <ul class="trip-rows" :style="{ '--trip-zoom': zoom / 100 }">
+                    <li v-for="row in ROWS" :key="row" class="trip-row">{{ row }}</li>
+                </ul>
+            </ScenePage>
         </template>
         <Transition name="fade" mode="out-in">
             <div :key="String(startsOpen)" class="scene-swap">
@@ -140,5 +146,29 @@ const zoom = ref(100);
 .chrome-zoom {
     min-inline-size: 3.5rem;
     text-align: center;
+}
+
+/* The document's rows, at the zoom the Page face sets; a new zoom tweens. */
+.trip-rows {
+    display: grid;
+    gap: 0.5em;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: calc(var(--type-body) * var(--trip-zoom, 1));
+    line-height: var(--type-leading-body);
+    color: var(--foreground);
+    transition: font-size var(--duration-normal) var(--ease-out);
+}
+
+.trip-row {
+    padding-block-end: 0.5em;
+    border-block-end: 1px solid oklch(from var(--foreground) l c h / var(--ink-seam));
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .trip-rows {
+        transition: none;
+    }
 }
 </style>

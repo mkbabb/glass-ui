@@ -1,7 +1,8 @@
 <script setup lang="ts">
 // Site navigation: page tabs, a separator, then the theme and Find at the end. Under
-// 30rem of stage the tabs become one menu naming the current page.
-import { ref } from "vue";
+// 30rem of stage the tabs become one menu naming the current page. The page above the
+// dock is the current tab's: its title and its bars follow each press.
+import { computed, ref } from "vue";
 import { BarChart3, ChevronDown, Home, Search, Settings, Users } from "@lucide/vue";
 import { DockControl, DockSeparator, GlassDock } from "@glass/components/dock";
 import { DockTrigger } from "@glass/components/dock/trigger";
@@ -13,7 +14,8 @@ import {
 } from "@glass/components/menu";
 import { DarkModeToggle } from "@glass/components/dark-mode-toggle";
 import DockScene from "./_parts/DockScene.vue";
-import ScenePane from "./_parts/ScenePane.vue";
+import ScenePage from "./_parts/ScenePage.vue";
+import MiniBars from "./_parts/MiniBars.vue";
 
 withDefaults(defineProps<{ icons?: boolean }>(), { icons: false });
 
@@ -24,14 +26,25 @@ const PAGES = [
     { id: "settings", label: "Settings", icon: Settings },
 ] as const;
 
+// Each page's own figure, so a new tab tweens the bars.
+const VALUES: Record<string, readonly number[]> = {
+    home: [14, 22, 18, 30, 26, 34, 29, 38],
+    reports: [42, 35, 48, 40, 56, 51, 63, 58],
+    people: [8, 11, 10, 14, 13, 17, 19, 18],
+    settings: [30, 30, 24, 24, 18, 18, 12, 12],
+};
+
 const page = ref<string>("reports");
 const label = (id: string) => PAGES.find((p) => p.id === id)?.label ?? "";
+const values = computed(() => VALUES[page.value] ?? []);
 </script>
 
 <template>
     <DockScene place="bottom">
         <template #context>
-            <ScenePane shape="column" />
+            <ScenePage shape="column" :title="label(page)">
+                <MiniBars :values="values" :label="label(page)" />
+            </ScenePage>
         </template>
         <template #default="{ narrow }">
             <Transition name="fade" mode="out-in">
@@ -76,15 +89,6 @@ const label = (id: string) => PAGES.find((p) => p.id === id)?.label ?? "";
                                 <Search class="h-4 w-4" aria-hidden="true" />
                             </DockControl>
                         </template>
-
-    <style scoped>
-    /* An icon and a word in one seat, a small gap between them. */
-    .seat-face {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.375rem;
-    }
-    </style>
                     </GlassDock>
                 </div>
             </Transition>

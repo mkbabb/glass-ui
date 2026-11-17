@@ -7,7 +7,7 @@ export const section: SectionRoutes = {
     icon: Database,
     lede: "Tables, lists, timelines and metrics.",
     routes: [
-        { id: "table", title: "Table", lede: "Rows and columns with a caption and totals." },
+        { id: "table", title: "Table", lede: "Lays data out in rows and columns." },
         { id: "data-table", title: "Data Table", lede: "A table you can sort and select." },
         { id: "sortable-list", title: "Sortable List", lede: "Reorder items by dragging or with the keyboard." },
         { id: "infinite-scroll", title: "Infinite Scroll", lede: "A feed that loads more as you reach its end." },

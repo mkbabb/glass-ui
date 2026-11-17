@@ -37,7 +37,7 @@ const snippet = `<DropdownMenu>
     <StoryPage>
         <template #stage>
             <StoryStage size="tall">
-                <MenuStage :mode="mode" />
+                <MenuStage :mode="mode" open-on-load />
             </StoryStage>
         </template>
 

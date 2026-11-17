@@ -28,7 +28,7 @@ import { Metric } from "@mkbabb/glass-ui/metric";
         <template #variants>
             <StoryVariants>
                 <StoryVariantRow label="Layouts">
-                    <Metric posture="cell" label="Queue" :value="18" :delta="-4" />
+                    <Metric posture="cell" label="Queue" :value="18" :delta="-4" class="metric-cell" />
                     <MetricStack density="compact" class="metric-ledger">
                         <MetricRow>
                             <Metric posture="row" label="Latency" :value="42.8" unit="ms" />
@@ -48,7 +48,14 @@ import { Metric } from "@mkbabb/glass-ui/metric";
 </template>
 
 <style scoped>
+/* The cell and the ledger sit side by side, top edges level; the row wraps only
+   where it is narrower than both. */
+.metric-cell,
 .metric-ledger {
-    min-inline-size: 14rem;
+    align-self: flex-start;
+}
+
+.metric-ledger {
+    inline-size: 14rem;
 }
 </style>

@@ -1,6 +1,5 @@
 <script setup lang="ts">
-// Metric's stage: four readouts, with a change beside two of them and one with no
-// value yet.
+// Metric's stage: four readouts, with a change beside two of them.
 import { Metric } from "@glass/components/metric";
 </script>
 
@@ -9,7 +8,7 @@ import { Metric } from "@glass/components/metric";
         <Metric label="Download" :value="482.7" unit="Mbps" size="lg" posture="stacked" />
         <Metric label="Requests" :value="1240000" compact unit="/s" :delta="12.4" size="lg" posture="stacked" />
         <Metric label="Errors" :value="318" :delta="-7" size="lg" posture="stacked" />
-        <Metric label="Jitter" :value="null" unit="ms" size="lg" posture="stacked" />
+        <Metric label="Jitter" :value="3.2" unit="ms" size="lg" posture="stacked" />
     </div>
 </template>
 

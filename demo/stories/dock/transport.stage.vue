@@ -1,6 +1,7 @@
 <script setup lang="ts">
 // Transport: Play never leaves; speed, reset and the time open beside it. Folded, the
-// dock shows how far the run has gone.
+// dock shows how far the run has gone. The figure above it carries a playhead at the
+// current time; Play moves it, Reset returns it.
 import { computed, onBeforeUnmount, ref, watch } from "vue";
 import { Pause, Play, RotateCcw } from "@lucide/vue";
 import { DockControl, DockSeparator, GlassDock } from "@glass/components/dock";
@@ -8,9 +9,12 @@ import { DockTrigger } from "@glass/components/dock/trigger";
 import { Select, SelectContent, SelectItem, SelectValue } from "@glass/components/select";
 import { Progress } from "@glass/components/progress";
 import DockScene from "./_parts/DockScene.vue";
-import ScenePane from "./_parts/ScenePane.vue";
+import ScenePage from "./_parts/ScenePage.vue";
+import MiniBars from "./_parts/MiniBars.vue";
 
 const LENGTH = 40;
+// The run's level, one bar per two seconds.
+const LEVELS = [18, 26, 34, 22, 40, 52, 46, 30, 24, 38, 56, 62, 48, 36, 28, 44, 58, 50, 32, 20];
 const playing = ref(false);
 const time = ref(12);
 const speed = ref("1");
@@ -35,7 +39,9 @@ const clock = computed(() => {
 <template>
     <DockScene place="bottom">
         <template #context>
-            <ScenePane shape="figure" />
+            <ScenePage shape="figure">
+                <MiniBars :values="LEVELS" label="Played" :played="time / LENGTH" />
+            </ScenePage>
         </template>
         <GlassDock collapse="closed" fit-content collapsed-label="Open the transport" aria-label="Transport">
             <template #persistent>
