@@ -3,8 +3,9 @@
 # workflow has published a plain vX.Y.Z tag that npm now serves as `latest`. A
 # prerelease tag or a `--tag v10` maintenance publish skips, loud and green.
 # Manual dispatch names a tag; `rollback` redeploys an older tag (it skips the
-# `latest` check). Only a tag that carries this workflow, demo/_headers and
-# scripts/check-served.mjs can deploy: an older tag fails red at the _headers test.
+# `latest` check). Only a tag that carries this workflow, demo/_headers,
+# scripts/check-served.mjs and the assets/404.html plugin can deploy: an older tag
+# fails red at the build's file tests.
 # No browser runs here: the live assert (`scripts/check-live.mjs`) is a local command run
 # through the guard after a deploy. Record: docs/release-infra/deploy-demo.md.
 name: deploy-demo
@@ -96,11 +97,14 @@ jobs:
                   cache: npm
             - if: steps.line.outputs.go == 'true'
               run: npm ci
-            - name: Build the demo (dist-demo/, with _headers)
+            # assets/404.html makes a miss under /assets/ a 404 with no-store instead of the
+            # SPA index with `immutable` (docs/release-infra/asset-miss.md).
+            - name: Build the demo (dist-demo/, with _headers and assets/404.html)
               if: steps.line.outputs.go == 'true'
               run: |
                   npm run demo:dist:build
                   test -s dist-demo/_headers || { echo "::error title=headers::dist-demo/_headers was not written"; exit 1; }
+                  test -s dist-demo/assets/404.html || { echo "::error title=asset-miss::dist-demo/assets/404.html was not written"; exit 1; }
             - name: Credentials present?
               id: creds
               if: steps.line.outputs.go == 'true'
