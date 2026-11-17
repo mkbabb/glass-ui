@@ -1,0 +1,54 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 3 tests using 1 worker
+
+  ✓  1 [chromium-phone] › tests-visual/release-11-1-1-reduce.spec.ts:163:5 › fade · a dock Select appears and leaves on a fade (3.0s)
+  ✘  2 [chromium-phone] › tests-visual/release-11-1-1-reduce.spec.ts:322:1 › still · a Slider holds still under reduced motion (607ms)
+[WebServer] 9:08:05 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  3 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:516:1 › routes · a detented Sheet dragged off leaves from where the drag left it (3.8s)
+
+
+  1) [chromium-phone] › tests-visual/release-11-1-1-reduce.spec.ts:322:1 › still · a Slider holds still under reduced motion 
+
+    Error: the root changes on a zero clock {"clocks":{"root":"0.2s","track":"0.2s, 0.2s","fill":"0.3s, 0.21s, 0.2s","thumb":"0.12s"},"press":null,"release":null}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      376 |     const at = JSON.stringify({ clocks, press: pressLeg, release: releaseLeg });
+      377 |     await info.attach("still", { body: at, contentType: "application/json" });
+    > 378 |     for (const [part, d] of Object.entries(clocks)) expect(zero(d), `the ${part} changes on a zero clock ${at}`).toBe(true);
+          |                                                                                                                  ^
+      379 |     if (pressLeg && releaseLeg) {
+      380 |         expect(pressLeg.to, `the press reached the fill ${at}`).not.toBe(pressLeg.from);
+      381 |         expect(releaseLeg.to, `the release returned the fill to rest ${at}`).toBe(pressLeg.from);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual/release-11-1-1-reduce.spec.ts:378:114
+
+    Error Context: tests-visual/test-results/release-11-1-1-reduce-stil-3c2d8--still-under-reduced-motion-chromium-phone/error-context.md
+
+  2) [chromium-phone] › tests-visual/release-11-1-1.spec.ts:516:1 › routes · a detented Sheet dragged off leaves from where the drag left it 
+
+    Error: no frame shows more than the drag left {"left":0.147,"highest":0.973,"rise":0.826,"lastSeen":0.01,"gone":true,"frames":[[-29,0.218],[-21,0.218],[-13,0.147],[-4,0.147],[4,0.147],[12,0.147],[21,0.973],[29,0.944],[37,0.91],[46,0.866],[54,0.821],[62,0.773],[71,0.725],[79,0.675],[87,0.626],[96,0.579],[104,0.533],[112,0.488],[121,0.446],[129,0.407],[137,0.369],[146,0.334],[154,0.302],[162,0.271],[171,0.243],[179,0.217],[187,0.194],[196,0.173]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.02
+    Received:    0.826
+
+      572 |     expect(read.left, `the drag carried the sheet down ${at}`).toBeLessThan(0.6);
+      573 |     expect(read.gone, `the sheet leaves ${at}`).toBe(true);
+    > 574 |     expect(read.highest - read.left, `no frame shows more than the drag left ${at}`).toBeLessThanOrEqual(0.02);
+          |                                                                                      ^
+      575 |     expect(read.rise, `no frame rises from the one before ${at}`).toBeLessThanOrEqual(0.02);
+      576 |     expect(read.lastSeen ?? 0, `nearly gone by its last painted frame ${at}`).toBeLessThanOrEqual(0.05);
+      577 | });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual/release-11-1-1.spec.ts:574:86
+
+    Error Context: tests-visual/test-results/release-11-1-1-routes-·-a--d68a9-from-where-the-drag-left-it-chromium-phone/error-context.md
+
+  2 failed
+    [chromium-phone] › tests-visual/release-11-1-1-reduce.spec.ts:322:1 › still · a Slider holds still under reduced motion 
+    [chromium-phone] › tests-visual/release-11-1-1.spec.ts:516:1 › routes · a detented Sheet dragged off leaves from where the drag left it 
+  1 passed (9.8s)

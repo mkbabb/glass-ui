@@ -1,0 +1,342 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-1-1.config.ts",
+      "--project=chromium-phone",
+      "--workers=1",
+      "-g",
+      "(routes · a detented Sheet dragged|still · |fade · a dock Select)"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/logs/preN-chromium-phone.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5353",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/",
+      "url": "http://localhost:5353",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1-reduce.spec.ts",
+      "file": "release-11-1-1-reduce.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "fade · a dock Select appears and leaves on a fade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2990,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T02:08:00.608Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjIzLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjIzLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbMTddfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-8d69a3bd66bf566d0769",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 163,
+          "column": 5
+        },
+        {
+          "title": "still · a Slider holds still under reduced motion",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 607,
+                  "error": {
+                    "message": "Error: the root changes on a zero clock {\"clocks\":{\"root\":\"0.2s\",\"track\":\"0.2s, 0.2s\",\"fill\":\"0.3s, 0.21s, 0.2s\",\"thumb\":\"0.12s\"},\"press\":null,\"release\":null}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: the root changes on a zero clock {\"clocks\":{\"root\":\"0.2s\",\"track\":\"0.2s, 0.2s\",\"fill\":\"0.3s, 0.21s, 0.2s\",\"thumb\":\"0.12s\"},\"press\":null,\"release\":null}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual/release-11-1-1-reduce.spec.ts:378:114",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                      "column": 114,
+                      "line": 378
+                    },
+                    "snippet": "  376 |     const at = JSON.stringify({ clocks, press: pressLeg, release: releaseLeg });\n  377 |     await info.attach(\"still\", { body: at, contentType: \"application/json\" });\n> 378 |     for (const [part, d] of Object.entries(clocks)) expect(zero(d), `the ${part} changes on a zero clock ${at}`).toBe(true);\n      |                                                                                                                  ^\n  379 |     if (pressLeg && releaseLeg) {\n  380 |         expect(pressLeg.to, `the press reached the fill ${at}`).not.toBe(pressLeg.from);\n  381 |         expect(releaseLeg.to, `the release returned the fill to rest ${at}`).toBe(pressLeg.from);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                        "column": 114,
+                        "line": 378
+                      },
+                      "message": "Error: the root changes on a zero clock {\"clocks\":{\"root\":\"0.2s\",\"track\":\"0.2s, 0.2s\",\"fill\":\"0.3s, 0.21s, 0.2s\",\"thumb\":\"0.12s\"},\"press\":null,\"release\":null}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  376 |     const at = JSON.stringify({ clocks, press: pressLeg, release: releaseLeg });\n  377 |     await info.attach(\"still\", { body: at, contentType: \"application/json\" });\n> 378 |     for (const [part, d] of Object.entries(clocks)) expect(zero(d), `the ${part} changes on a zero clock ${at}`).toBe(true);\n      |                                                                                                                  ^\n  379 |     if (pressLeg && releaseLeg) {\n  380 |         expect(pressLeg.to, `the press reached the fill ${at}`).not.toBe(pressLeg.from);\n  381 |         expect(releaseLeg.to, `the release returned the fill to rest ${at}`).toBe(pressLeg.from);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual/release-11-1-1-reduce.spec.ts:378:114"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T02:08:03.707Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "still",
+                      "contentType": "application/json",
+                      "body": "eyJjbG9ja3MiOnsicm9vdCI6IjAuMnMiLCJ0cmFjayI6IjAuMnMsIDAuMnMiLCJmaWxsIjoiMC4zcywgMC4yMXMsIDAuMnMiLCJ0aHVtYiI6IjAuMTJzIn0sInByZXNzIjpudWxsLCJyZWxlYXNlIjpudWxsfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual/test-results/release-11-1-1-reduce-stil-3c2d8--still-under-reduced-motion-chromium-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                    "column": 114,
+                    "line": 378
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-c35893e499aa272a823e",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 322,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "routes · a detented Sheet dragged off leaves from where the drag left it",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3803,
+                  "error": {
+                    "message": "Error: no frame shows more than the drag left {\"left\":0.147,\"highest\":0.973,\"rise\":0.826,\"lastSeen\":0.01,\"gone\":true,\"frames\":[[-29,0.218],[-21,0.218],[-13,0.147],[-4,0.147],[4,0.147],[12,0.147],[21,0.973],[29,0.944],[37,0.91],[46,0.866],[54,0.821],[62,0.773],[71,0.725],[79,0.675],[87,0.626],[96,0.579],[104,0.533],[112,0.488],[121,0.446],[129,0.407],[137,0.369],[146,0.334],[154,0.302],[162,0.271],[171,0.243],[179,0.217],[187,0.194],[196,0.173]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m0.826\u001b[39m",
+                    "stack": "Error: no frame shows more than the drag left {\"left\":0.147,\"highest\":0.973,\"rise\":0.826,\"lastSeen\":0.01,\"gone\":true,\"frames\":[[-29,0.218],[-21,0.218],[-13,0.147],[-4,0.147],[4,0.147],[12,0.147],[21,0.973],[29,0.944],[37,0.91],[46,0.866],[54,0.821],[62,0.773],[71,0.725],[79,0.675],[87,0.626],[96,0.579],[104,0.533],[112,0.488],[121,0.446],[129,0.407],[137,0.369],[146,0.334],[154,0.302],[162,0.271],[171,0.243],[179,0.217],[187,0.194],[196,0.173]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m0.826\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual/release-11-1-1.spec.ts:574:86",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 86,
+                      "line": 574
+                    },
+                    "snippet": "  572 |     expect(read.left, `the drag carried the sheet down ${at}`).toBeLessThan(0.6);\n  573 |     expect(read.gone, `the sheet leaves ${at}`).toBe(true);\n> 574 |     expect(read.highest - read.left, `no frame shows more than the drag left ${at}`).toBeLessThanOrEqual(0.02);\n      |                                                                                      ^\n  575 |     expect(read.rise, `no frame rises from the one before ${at}`).toBeLessThanOrEqual(0.02);\n  576 |     expect(read.lastSeen ?? 0, `nearly gone by its last painted frame ${at}`).toBeLessThanOrEqual(0.05);\n  577 | });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 86,
+                        "line": 574
+                      },
+                      "message": "Error: no frame shows more than the drag left {\"left\":0.147,\"highest\":0.973,\"rise\":0.826,\"lastSeen\":0.01,\"gone\":true,\"frames\":[[-29,0.218],[-21,0.218],[-13,0.147],[-4,0.147],[4,0.147],[12,0.147],[21,0.973],[29,0.944],[37,0.91],[46,0.866],[54,0.821],[62,0.773],[71,0.725],[79,0.675],[87,0.626],[96,0.579],[104,0.533],[112,0.488],[121,0.446],[129,0.407],[137,0.369],[146,0.334],[154,0.302],[162,0.271],[171,0.243],[179,0.217],[187,0.194],[196,0.173]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m0.826\u001b[39m\n\n  572 |     expect(read.left, `the drag carried the sheet down ${at}`).toBeLessThan(0.6);\n  573 |     expect(read.gone, `the sheet leaves ${at}`).toBe(true);\n> 574 |     expect(read.highest - read.left, `no frame shows more than the drag left ${at}`).toBeLessThanOrEqual(0.02);\n      |                                                                                      ^\n  575 |     expect(read.rise, `no frame rises from the one before ${at}`).toBeLessThanOrEqual(0.02);\n  576 |     expect(read.lastSeen ?? 0, `nearly gone by its last painted frame ${at}`).toBeLessThanOrEqual(0.05);\n  577 | });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual/release-11-1-1.spec.ts:574:86"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T02:08:04.704Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "routes",
+                      "contentType": "application/json",
+                      "body": "eyJsZWZ0IjowLjE0NywiaGlnaGVzdCI6MC45NzMsInJpc2UiOjAuODI2LCJsYXN0U2VlbiI6MC4wMSwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjpbWy0yOSwwLjIxOF0sWy0yMSwwLjIxOF0sWy0xMywwLjE0N10sWy00LDAuMTQ3XSxbNCwwLjE0N10sWzEyLDAuMTQ3XSxbMjEsMC45NzNdLFsyOSwwLjk0NF0sWzM3LDAuOTFdLFs0NiwwLjg2Nl0sWzU0LDAuODIxXSxbNjIsMC43NzNdLFs3MSwwLjcyNV0sWzc5LDAuNjc1XSxbODcsMC42MjZdLFs5NiwwLjU3OV0sWzEwNCwwLjUzM10sWzExMiwwLjQ4OF0sWzEyMSwwLjQ0Nl0sWzEyOSwwLjQwN10sWzEzNywwLjM2OV0sWzE0NiwwLjMzNF0sWzE1NCwwLjMwMl0sWzE2MiwwLjI3MV0sWzE3MSwwLjI0M10sWzE3OSwwLjIxN10sWzE4NywwLjE5NF0sWzE5NiwwLjE3M11dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual/test-results/release-11-1-1-routes-·-a--d68a9-from-where-the-drag-left-it-chromium-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 86,
+                    "line": 574
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-9f7bb433af8433f42672",
+          "file": "release-11-1-1.spec.ts",
+          "line": 516,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-17T02:07:58.916Z",
+    "duration": 9752.733999999999,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

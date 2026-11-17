@@ -1,0 +1,948 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "docs/release-11.1.1/critic-3/probe/probe.config.ts",
+      "--project=chromium-phone",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/docs/release-11.1.1/critic-3/probe/probe.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/docs/release-11.1.1/critic-3/probe",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/docs/release-11.1.1/critic-3/probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/docs/release-11.1.1/critic-3/probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/docs/release-11.1.1/critic-3/probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/docs/release-11.1.1/critic-3/probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/logs/probe-red-chromium-phone.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5352",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/",
+      "url": "http://localhost:5352",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "paths.probe.ts",
+      "file": "paths.probe.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "paths · Select · outside",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2591,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PATHS {\"project\":\"chromium-phone\",\"surface\":\"Select\",\"path\":\"outside\",\"rest\":{\"form\":\"sheet\",\"surface\":\"opaque\",\"plate\":null,\"bf\":\"none\",\"bg\":\"color(srgb 0.994 0.96 0.926)\",\"x\":0,\"y\":615,\"w\":390,\"h\":229},\"gone\":true,\"frames\":16,\"lastMs\":133,\"differs\":15,\"firstDiffer\":{\"t\":16,\"form\":null,\"surface\":null,\"bf\":\"blur(20px) saturate(1.5)\",\"bg\":\"color(srgb 0.20397 0.148263 0.0829736 / 0.22)\",\"x\":16,\"y\":610,\"w\":358},\"rise\":549,\"largestStep\":544,\"xShift\":162,\"wShift\":262,\"table\":[[8,1,615,1],[16,1,610,1.004],[25,1,66,1.004],[33,1,66,1.004],[40,1,66,1.004],[49,1,66,1.004],[58,1,66,1.004],[65,1,66,1.004],[75,1,66,1.004],[83,1,66,1.004],[91,1,66,1.004],[100,1,66,1.004],[108,1,66,1.004],[116,1,66,1.004],[125,0.881,66,0.884],[133,0.041,66,0.042]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:00:14.649Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "paths",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0IjoiY2hyb21pdW0tcGhvbmUiLCJzdXJmYWNlIjoiU2VsZWN0IiwicGF0aCI6Im91dHNpZGUiLCJyZXN0Ijp7ImZvcm0iOiJzaGVldCIsInN1cmZhY2UiOiJvcGFxdWUiLCJwbGF0ZSI6bnVsbCwiYmYiOiJub25lIiwiYmciOiJjb2xvcihzcmdiIDAuOTk0IDAuOTYgMC45MjYpIiwieCI6MCwieSI6NjE1LCJ3IjozOTAsImgiOjIyOX0sImdvbmUiOnRydWUsImZyYW1lcyI6MTYsImxhc3RNcyI6MTMzLCJkaWZmZXJzIjoxNSwiZmlyc3REaWZmZXIiOnsidCI6MTYsImZvcm0iOm51bGwsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTcgMC4xNDgyNjMgMC4wODI5NzM2IC8gMC4yMikiLCJ4IjoxNiwieSI6NjEwLCJ3IjozNTh9LCJyaXNlIjo1NDksImxhcmdlc3RTdGVwIjo1NDQsInhTaGlmdCI6MTYyLCJ3U2hpZnQiOjI2MiwidGFibGUiOltbOCwxLDYxNSwxXSxbMTYsMSw2MTAsMS4wMDRdLFsyNSwxLDY2LDEuMDA0XSxbMzMsMSw2NiwxLjAwNF0sWzQwLDEsNjYsMS4wMDRdLFs0OSwxLDY2LDEuMDA0XSxbNTgsMSw2NiwxLjAwNF0sWzY1LDEsNjYsMS4wMDRdLFs3NSwxLDY2LDEuMDA0XSxbODMsMSw2NiwxLjAwNF0sWzkxLDEsNjYsMS4wMDRdLFsxMDAsMSw2NiwxLjAwNF0sWzEwOCwxLDY2LDEuMDA0XSxbMTE2LDEsNjYsMS4wMDRdLFsxMjUsMC44ODEsNjYsMC44ODRdLFsxMzMsMC4wNDEsNjYsMC4wNDJdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-ab6dfa8bb2bd1c843946",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · Select · escape",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2441,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PATHS {\"project\":\"chromium-phone\",\"surface\":\"Select\",\"path\":\"escape\",\"rest\":{\"form\":\"sheet\",\"surface\":\"opaque\",\"plate\":null,\"bf\":\"none\",\"bg\":\"color(srgb 0.994 0.96 0.926)\",\"x\":0,\"y\":615,\"w\":390,\"h\":229},\"gone\":true,\"frames\":15,\"lastMs\":126,\"differs\":15,\"firstDiffer\":{\"t\":9,\"form\":null,\"surface\":null,\"bf\":\"blur(20px) saturate(1.5)\",\"bg\":\"color(srgb 0.20397 0.148263 0.0829736 / 0.22)\",\"x\":16,\"y\":610,\"w\":358},\"rise\":549,\"largestStep\":544,\"xShift\":162,\"wShift\":262,\"table\":[[9,1,610,1.004],[17,1,66,1.004],[26,1,66,1.004],[34,1,66,1.004],[42,1,66,1.004],[51,1,66,1.004],[59,1,66,1.004],[67,1,66,1.004],[76,1,66,1.004],[84,1,66,1.004],[92,1,66,1.004],[101,1,66,1.004],[108,1,66,1.004],[117,1,66,1.004],[126,0.055,66,0.056]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:00:17.333Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "paths",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0IjoiY2hyb21pdW0tcGhvbmUiLCJzdXJmYWNlIjoiU2VsZWN0IiwicGF0aCI6ImVzY2FwZSIsInJlc3QiOnsiZm9ybSI6InNoZWV0Iiwic3VyZmFjZSI6Im9wYXF1ZSIsInBsYXRlIjpudWxsLCJiZiI6Im5vbmUiLCJiZyI6ImNvbG9yKHNyZ2IgMC45OTQgMC45NiAwLjkyNikiLCJ4IjowLCJ5Ijo2MTUsInciOjM5MCwiaCI6MjI5fSwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjoxNSwibGFzdE1zIjoxMjYsImRpZmZlcnMiOjE1LCJmaXJzdERpZmZlciI6eyJ0Ijo5LCJmb3JtIjpudWxsLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk3IDAuMTQ4MjYzIDAuMDgyOTczNiAvIDAuMjIpIiwieCI6MTYsInkiOjYxMCwidyI6MzU4fSwicmlzZSI6NTQ5LCJsYXJnZXN0U3RlcCI6NTQ0LCJ4U2hpZnQiOjE2Miwid1NoaWZ0IjoyNjIsInRhYmxlIjpbWzksMSw2MTAsMS4wMDRdLFsxNywxLDY2LDEuMDA0XSxbMjYsMSw2NiwxLjAwNF0sWzM0LDEsNjYsMS4wMDRdLFs0MiwxLDY2LDEuMDA0XSxbNTEsMSw2NiwxLjAwNF0sWzU5LDEsNjYsMS4wMDRdLFs2NywxLDY2LDEuMDA0XSxbNzYsMSw2NiwxLjAwNF0sWzg0LDEsNjYsMS4wMDRdLFs5MiwxLDY2LDEuMDA0XSxbMTAxLDEsNjYsMS4wMDRdLFsxMDgsMSw2NiwxLjAwNF0sWzExNywxLDY2LDEuMDA0XSxbMTI2LDAuMDU1LDY2LDAuMDU2XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-d19e69718b2255e9fc11",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · Select · trigger",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2458,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PATHS {\"project\":\"chromium-phone\",\"surface\":\"Select\",\"path\":\"trigger\",\"rest\":{\"form\":\"sheet\",\"surface\":\"opaque\",\"plate\":null,\"bf\":\"none\",\"bg\":\"color(srgb 0.994 0.96 0.926)\",\"x\":0,\"y\":615,\"w\":390,\"h\":229},\"gone\":true,\"frames\":16,\"lastMs\":130,\"differs\":15,\"firstDiffer\":{\"t\":14,\"form\":null,\"surface\":null,\"bf\":\"blur(20px) saturate(1.5)\",\"bg\":\"color(srgb 0.20397 0.148263 0.0829736 / 0.22)\",\"x\":16,\"y\":610,\"w\":358},\"rise\":550,\"largestStep\":544,\"xShift\":163,\"wShift\":262,\"table\":[[6,1,615,1],[14,1,610,1.004],[22,1,66,1.004],[30,1,66,1.004],[39,1,66,1.004],[47,1,66,1.004],[55,1,66,1.004],[62,1,66,1.004],[71,1,66,1.004],[81,1,66,1.004],[89,1,66,1.004],[97,1,66,1.004],[105,1,65,1.004],[112,1,65,1.004],[122,0.802,65,0.805],[130,0.044,65,0.044]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:00:19.781Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "paths",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0IjoiY2hyb21pdW0tcGhvbmUiLCJzdXJmYWNlIjoiU2VsZWN0IiwicGF0aCI6InRyaWdnZXIiLCJyZXN0Ijp7ImZvcm0iOiJzaGVldCIsInN1cmZhY2UiOiJvcGFxdWUiLCJwbGF0ZSI6bnVsbCwiYmYiOiJub25lIiwiYmciOiJjb2xvcihzcmdiIDAuOTk0IDAuOTYgMC45MjYpIiwieCI6MCwieSI6NjE1LCJ3IjozOTAsImgiOjIyOX0sImdvbmUiOnRydWUsImZyYW1lcyI6MTYsImxhc3RNcyI6MTMwLCJkaWZmZXJzIjoxNSwiZmlyc3REaWZmZXIiOnsidCI6MTQsImZvcm0iOm51bGwsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTcgMC4xNDgyNjMgMC4wODI5NzM2IC8gMC4yMikiLCJ4IjoxNiwieSI6NjEwLCJ3IjozNTh9LCJyaXNlIjo1NTAsImxhcmdlc3RTdGVwIjo1NDQsInhTaGlmdCI6MTYzLCJ3U2hpZnQiOjI2MiwidGFibGUiOltbNiwxLDYxNSwxXSxbMTQsMSw2MTAsMS4wMDRdLFsyMiwxLDY2LDEuMDA0XSxbMzAsMSw2NiwxLjAwNF0sWzM5LDEsNjYsMS4wMDRdLFs0NywxLDY2LDEuMDA0XSxbNTUsMSw2NiwxLjAwNF0sWzYyLDEsNjYsMS4wMDRdLFs3MSwxLDY2LDEuMDA0XSxbODEsMSw2NiwxLjAwNF0sWzg5LDEsNjYsMS4wMDRdLFs5NywxLDY2LDEuMDA0XSxbMTA1LDEsNjUsMS4wMDRdLFsxMTIsMSw2NSwxLjAwNF0sWzEyMiwwLjgwMiw2NSwwLjgwNV0sWzEzMCwwLjA0NCw2NSwwLjA0NF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-4bf5d2159808a3dd1d8d",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · Select · current",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2473,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PATHS {\"project\":\"chromium-phone\",\"surface\":\"Select\",\"path\":\"current\",\"rest\":{\"form\":\"sheet\",\"surface\":\"opaque\",\"plate\":null,\"bf\":\"none\",\"bg\":\"color(srgb 0.994 0.96 0.926)\",\"x\":0,\"y\":615,\"w\":390,\"h\":229},\"gone\":true,\"frames\":19,\"lastMs\":151,\"differs\":15,\"firstDiffer\":{\"t\":34,\"form\":null,\"surface\":null,\"bf\":\"blur(20px) saturate(1.5)\",\"bg\":\"color(srgb 0.20397 0.148263 0.0829736 / 0.22)\",\"x\":16,\"y\":610,\"w\":358},\"rise\":549,\"largestStep\":544,\"xShift\":162,\"wShift\":262,\"table\":[[1,1,615,1],[8,1,615,1],[18,1,615,1],[26,1,615,1],[34,1,610,1.004],[41,1,66,1.004],[51,1,66,1.004],[59,1,66,1.004],[68,1,66,1.004],[76,1,66,1.004],[84,1,66,1.004],[93,1,66,1.004],[101,1,66,1.004],[109,1,66,1.004],[118,1,66,1.004],[126,1,66,1.004],[134,1,66,1.004],[143,0.895,66,0.899],[151,0.043,66,0.043]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:00:22.243Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "paths",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0IjoiY2hyb21pdW0tcGhvbmUiLCJzdXJmYWNlIjoiU2VsZWN0IiwicGF0aCI6ImN1cnJlbnQiLCJyZXN0Ijp7ImZvcm0iOiJzaGVldCIsInN1cmZhY2UiOiJvcGFxdWUiLCJwbGF0ZSI6bnVsbCwiYmYiOiJub25lIiwiYmciOiJjb2xvcihzcmdiIDAuOTk0IDAuOTYgMC45MjYpIiwieCI6MCwieSI6NjE1LCJ3IjozOTAsImgiOjIyOX0sImdvbmUiOnRydWUsImZyYW1lcyI6MTksImxhc3RNcyI6MTUxLCJkaWZmZXJzIjoxNSwiZmlyc3REaWZmZXIiOnsidCI6MzQsImZvcm0iOm51bGwsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTcgMC4xNDgyNjMgMC4wODI5NzM2IC8gMC4yMikiLCJ4IjoxNiwieSI6NjEwLCJ3IjozNTh9LCJyaXNlIjo1NDksImxhcmdlc3RTdGVwIjo1NDQsInhTaGlmdCI6MTYyLCJ3U2hpZnQiOjI2MiwidGFibGUiOltbMSwxLDYxNSwxXSxbOCwxLDYxNSwxXSxbMTgsMSw2MTUsMV0sWzI2LDEsNjE1LDFdLFszNCwxLDYxMCwxLjAwNF0sWzQxLDEsNjYsMS4wMDRdLFs1MSwxLDY2LDEuMDA0XSxbNTksMSw2NiwxLjAwNF0sWzY4LDEsNjYsMS4wMDRdLFs3NiwxLDY2LDEuMDA0XSxbODQsMSw2NiwxLjAwNF0sWzkzLDEsNjYsMS4wMDRdLFsxMDEsMSw2NiwxLjAwNF0sWzEwOSwxLDY2LDEuMDA0XSxbMTE4LDEsNjYsMS4wMDRdLFsxMjYsMSw2NiwxLjAwNF0sWzEzNCwxLDY2LDEuMDA0XSxbMTQzLDAuODk1LDY2LDAuODk5XSxbMTUxLDAuMDQzLDY2LDAuMDQzXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-7afe455ed2cdede9c3fc",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · Select · other",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2473,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PATHS {\"project\":\"chromium-phone\",\"surface\":\"Select\",\"path\":\"other\",\"rest\":{\"form\":\"sheet\",\"surface\":\"opaque\",\"plate\":null,\"bf\":\"none\",\"bg\":\"color(srgb 0.994 0.96 0.926)\",\"x\":0,\"y\":615,\"w\":390,\"h\":229},\"gone\":true,\"frames\":18,\"lastMs\":149,\"differs\":15,\"firstDiffer\":{\"t\":33,\"form\":null,\"surface\":null,\"bf\":\"blur(20px) saturate(1.5)\",\"bg\":\"color(srgb 0.20397 0.148263 0.0829736 / 0.22)\",\"x\":16,\"y\":610,\"w\":358},\"rise\":549,\"largestStep\":544,\"xShift\":153,\"wShift\":262,\"table\":[[8,1,615,1],[16,1,615,1],[25,1,615,1],[33,1,610,1.004],[41,1,66,1.004],[50,1,66,1.004],[58,1,66,1.004],[66,1,66,1.004],[74,1,66,1.004],[83,1,66,1.004],[91,1,66,1.004],[100,1,66,1.004],[108,1,66,1.004],[116,1,66,1.004],[124,1,66,1.004],[131,1,66,1.004],[142,0.801,66,0.805],[149,0.047,66,0.047]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:00:24.720Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "paths",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0IjoiY2hyb21pdW0tcGhvbmUiLCJzdXJmYWNlIjoiU2VsZWN0IiwicGF0aCI6Im90aGVyIiwicmVzdCI6eyJmb3JtIjoic2hlZXQiLCJzdXJmYWNlIjoib3BhcXVlIiwicGxhdGUiOm51bGwsImJmIjoibm9uZSIsImJnIjoiY29sb3Ioc3JnYiAwLjk5NCAwLjk2IDAuOTI2KSIsIngiOjAsInkiOjYxNSwidyI6MzkwLCJoIjoyMjl9LCJnb25lIjp0cnVlLCJmcmFtZXMiOjE4LCJsYXN0TXMiOjE0OSwiZGlmZmVycyI6MTUsImZpcnN0RGlmZmVyIjp7InQiOjMzLCJmb3JtIjpudWxsLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk3IDAuMTQ4MjYzIDAuMDgyOTczNiAvIDAuMjIpIiwieCI6MTYsInkiOjYxMCwidyI6MzU4fSwicmlzZSI6NTQ5LCJsYXJnZXN0U3RlcCI6NTQ0LCJ4U2hpZnQiOjE1Mywid1NoaWZ0IjoyNjIsInRhYmxlIjpbWzgsMSw2MTUsMV0sWzE2LDEsNjE1LDFdLFsyNSwxLDYxNSwxXSxbMzMsMSw2MTAsMS4wMDRdLFs0MSwxLDY2LDEuMDA0XSxbNTAsMSw2NiwxLjAwNF0sWzU4LDEsNjYsMS4wMDRdLFs2NiwxLDY2LDEuMDA0XSxbNzQsMSw2NiwxLjAwNF0sWzgzLDEsNjYsMS4wMDRdLFs5MSwxLDY2LDEuMDA0XSxbMTAwLDEsNjYsMS4wMDRdLFsxMDgsMSw2NiwxLjAwNF0sWzExNiwxLDY2LDEuMDA0XSxbMTI0LDEsNjYsMS4wMDRdLFsxMzEsMSw2NiwxLjAwNF0sWzE0MiwwLjgwMSw2NiwwLjgwNV0sWzE0OSwwLjA0Nyw2NiwwLjA0N11dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-92ebf565db0d5f4d928e",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · DropdownMenu · outside",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2475,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PATHS {\"project\":\"chromium-phone\",\"surface\":\"DropdownMenu\",\"path\":\"outside\",\"rest\":{\"form\":null,\"surface\":\"opaque\",\"plate\":null,\"bf\":\"none\",\"bg\":\"color(srgb 0.994 0.96 0.926)\",\"x\":155,\"y\":66,\"w\":208,\"h\":158},\"gone\":true,\"frames\":16,\"lastMs\":130,\"differs\":15,\"firstDiffer\":{\"t\":13,\"form\":null,\"surface\":null,\"bf\":\"blur(20px) saturate(1.5)\",\"bg\":\"color(srgb 0.20397 0.148263 0.0829736 / 0.18)\",\"x\":155,\"y\":66,\"w\":208},\"rise\":0,\"largestStep\":0,\"xShift\":0,\"wShift\":0,\"table\":[[5,1,66,1],[13,1,66,1],[21,1,66,1],[30,1,66,1],[38,1,66,1],[47,1,66,1],[55,1,66,1],[63,1,66,1],[71,1,66,1],[79,1,66,1],[88,1,66,1],[96,1,66,1],[105,1,66,1],[113,1,66,1],[121,0.881,66,0.881],[130,0.044,66,0.044]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:00:27.202Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "paths",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0IjoiY2hyb21pdW0tcGhvbmUiLCJzdXJmYWNlIjoiRHJvcGRvd25NZW51IiwicGF0aCI6Im91dHNpZGUiLCJyZXN0Ijp7ImZvcm0iOm51bGwsInN1cmZhY2UiOiJvcGFxdWUiLCJwbGF0ZSI6bnVsbCwiYmYiOiJub25lIiwiYmciOiJjb2xvcihzcmdiIDAuOTk0IDAuOTYgMC45MjYpIiwieCI6MTU1LCJ5Ijo2NiwidyI6MjA4LCJoIjoxNTh9LCJnb25lIjp0cnVlLCJmcmFtZXMiOjE2LCJsYXN0TXMiOjEzMCwiZGlmZmVycyI6MTUsImZpcnN0RGlmZmVyIjp7InQiOjEzLCJmb3JtIjpudWxsLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk3IDAuMTQ4MjYzIDAuMDgyOTczNiAvIDAuMTgpIiwieCI6MTU1LCJ5Ijo2NiwidyI6MjA4fSwicmlzZSI6MCwibGFyZ2VzdFN0ZXAiOjAsInhTaGlmdCI6MCwid1NoaWZ0IjowLCJ0YWJsZSI6W1s1LDEsNjYsMV0sWzEzLDEsNjYsMV0sWzIxLDEsNjYsMV0sWzMwLDEsNjYsMV0sWzM4LDEsNjYsMV0sWzQ3LDEsNjYsMV0sWzU1LDEsNjYsMV0sWzYzLDEsNjYsMV0sWzcxLDEsNjYsMV0sWzc5LDEsNjYsMV0sWzg4LDEsNjYsMV0sWzk2LDEsNjYsMV0sWzEwNSwxLDY2LDFdLFsxMTMsMSw2NiwxXSxbMTIxLDAuODgxLDY2LDAuODgxXSxbMTMwLDAuMDQ0LDY2LDAuMDQ0XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-617a386c72c3f2293a42",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · DropdownMenu · escape",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2434,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PATHS {\"project\":\"chromium-phone\",\"surface\":\"DropdownMenu\",\"path\":\"escape\",\"rest\":{\"form\":null,\"surface\":\"opaque\",\"plate\":null,\"bf\":\"none\",\"bg\":\"color(srgb 0.994 0.96 0.926)\",\"x\":155,\"y\":66,\"w\":208,\"h\":158},\"gone\":true,\"frames\":15,\"lastMs\":122,\"differs\":15,\"firstDiffer\":{\"t\":6,\"form\":null,\"surface\":null,\"bf\":\"blur(20px) saturate(1.5)\",\"bg\":\"color(srgb 0.20397 0.148263 0.0829736 / 0.18)\",\"x\":155,\"y\":66,\"w\":208},\"rise\":0,\"largestStep\":0,\"xShift\":0,\"wShift\":0,\"table\":[[6,1,66,1],[15,1,66,1],[24,1,66,1],[31,1,66,1],[40,1,66,1],[49,1,66,1],[57,1,66,1],[65,1,66,1],[74,1,66,1],[82,1,66,1],[90,1,66,1],[99,1,66,1],[107,1,66,1],[114,0.973,66,0.973],[122,0.07,66,0.07]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:00:29.682Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "paths",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0IjoiY2hyb21pdW0tcGhvbmUiLCJzdXJmYWNlIjoiRHJvcGRvd25NZW51IiwicGF0aCI6ImVzY2FwZSIsInJlc3QiOnsiZm9ybSI6bnVsbCwic3VyZmFjZSI6Im9wYXF1ZSIsInBsYXRlIjpudWxsLCJiZiI6Im5vbmUiLCJiZyI6ImNvbG9yKHNyZ2IgMC45OTQgMC45NiAwLjkyNikiLCJ4IjoxNTUsInkiOjY2LCJ3IjoyMDgsImgiOjE1OH0sImdvbmUiOnRydWUsImZyYW1lcyI6MTUsImxhc3RNcyI6MTIyLCJkaWZmZXJzIjoxNSwiZmlyc3REaWZmZXIiOnsidCI6NiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5NyAwLjE0ODI2MyAwLjA4Mjk3MzYgLyAwLjE4KSIsIngiOjE1NSwieSI6NjYsInciOjIwOH0sInJpc2UiOjAsImxhcmdlc3RTdGVwIjowLCJ4U2hpZnQiOjAsIndTaGlmdCI6MCwidGFibGUiOltbNiwxLDY2LDFdLFsxNSwxLDY2LDFdLFsyNCwxLDY2LDFdLFszMSwxLDY2LDFdLFs0MCwxLDY2LDFdLFs0OSwxLDY2LDFdLFs1NywxLDY2LDFdLFs2NSwxLDY2LDFdLFs3NCwxLDY2LDFdLFs4MiwxLDY2LDFdLFs5MCwxLDY2LDFdLFs5OSwxLDY2LDFdLFsxMDcsMSw2NiwxXSxbMTE0LDAuOTczLDY2LDAuOTczXSxbMTIyLDAuMDcsNjYsMC4wN11dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-7cfcf9eb1bd9efbcb6b0",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · DropdownMenu · trigger",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2442,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PATHS {\"project\":\"chromium-phone\",\"surface\":\"DropdownMenu\",\"path\":\"trigger\",\"rest\":{\"form\":null,\"surface\":\"opaque\",\"plate\":null,\"bf\":\"none\",\"bg\":\"color(srgb 0.994 0.96 0.926)\",\"x\":155,\"y\":66,\"w\":208,\"h\":158},\"gone\":true,\"frames\":16,\"lastMs\":129,\"differs\":15,\"firstDiffer\":{\"t\":13,\"form\":null,\"surface\":null,\"bf\":\"blur(20px) saturate(1.5)\",\"bg\":\"color(srgb 0.20397 0.148263 0.0829736 / 0.18)\",\"x\":155,\"y\":66,\"w\":208},\"rise\":1,\"largestStep\":0,\"xShift\":0,\"wShift\":0,\"table\":[[4,1,66,1],[13,1,66,1],[21,1,66,1],[29,1,66,1],[38,1,66,1],[46,1,66,1],[54,1,66,1],[63,1,66,1],[71,1,66,1],[79,1,66,1],[88,1,66,1],[94,1,66,1],[104,1,65,1],[113,1,65,1],[121,0.874,65,0.874],[129,0.044,65,0.044]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:00:32.120Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "paths",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0IjoiY2hyb21pdW0tcGhvbmUiLCJzdXJmYWNlIjoiRHJvcGRvd25NZW51IiwicGF0aCI6InRyaWdnZXIiLCJyZXN0Ijp7ImZvcm0iOm51bGwsInN1cmZhY2UiOiJvcGFxdWUiLCJwbGF0ZSI6bnVsbCwiYmYiOiJub25lIiwiYmciOiJjb2xvcihzcmdiIDAuOTk0IDAuOTYgMC45MjYpIiwieCI6MTU1LCJ5Ijo2NiwidyI6MjA4LCJoIjoxNTh9LCJnb25lIjp0cnVlLCJmcmFtZXMiOjE2LCJsYXN0TXMiOjEyOSwiZGlmZmVycyI6MTUsImZpcnN0RGlmZmVyIjp7InQiOjEzLCJmb3JtIjpudWxsLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk3IDAuMTQ4MjYzIDAuMDgyOTczNiAvIDAuMTgpIiwieCI6MTU1LCJ5Ijo2NiwidyI6MjA4fSwicmlzZSI6MSwibGFyZ2VzdFN0ZXAiOjAsInhTaGlmdCI6MCwid1NoaWZ0IjowLCJ0YWJsZSI6W1s0LDEsNjYsMV0sWzEzLDEsNjYsMV0sWzIxLDEsNjYsMV0sWzI5LDEsNjYsMV0sWzM4LDEsNjYsMV0sWzQ2LDEsNjYsMV0sWzU0LDEsNjYsMV0sWzYzLDEsNjYsMV0sWzcxLDEsNjYsMV0sWzc5LDEsNjYsMV0sWzg4LDEsNjYsMV0sWzk0LDEsNjYsMV0sWzEwNCwxLDY1LDFdLFsxMTMsMSw2NSwxXSxbMTIxLDAuODc0LDY1LDAuODc0XSxbMTI5LDAuMDQ0LDY1LDAuMDQ0XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-a85e3245fbbd408121ec",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · DropdownMenu · current",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a menu has no current item",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/docs/release-11.1.1/critic-3/probe/paths.probe.ts",
+                    "line": 42,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 35,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:00:34.567Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a menu has no current item",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/docs/release-11.1.1/critic-3/probe/paths.probe.ts",
+                        "line": 42,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-2e2f1022695f56ad24ba",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · DropdownMenu · other",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2444,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PATHS {\"project\":\"chromium-phone\",\"surface\":\"DropdownMenu\",\"path\":\"other\",\"rest\":{\"form\":null,\"surface\":\"opaque\",\"plate\":null,\"bf\":\"none\",\"bg\":\"color(srgb 0.994 0.96 0.926)\",\"x\":155,\"y\":66,\"w\":208,\"h\":158},\"gone\":true,\"frames\":19,\"lastMs\":152,\"differs\":15,\"firstDiffer\":{\"t\":36,\"form\":null,\"surface\":null,\"bf\":\"blur(20px) saturate(1.5)\",\"bg\":\"color(srgb 0.20397 0.148263 0.0829736 / 0.18)\",\"x\":155,\"y\":66,\"w\":208},\"rise\":0,\"largestStep\":0,\"xShift\":0,\"wShift\":0,\"table\":[[2,1,66,1],[11,1,66,1],[19,1,66,1],[27,1,66,1],[36,1,66,1],[44,1,66,1],[52,1,66,1],[61,1,66,1],[69,1,66,1],[77,1,66,1],[86,1,66,1],[94,1,66,1],[101,1,66,1],[111,1,66,1],[119,1,66,1],[127,1,66,1],[136,1,66,1],[144,0.909,66,0.909],[152,0.047,66,0.047]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:00:34.609Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "paths",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0IjoiY2hyb21pdW0tcGhvbmUiLCJzdXJmYWNlIjoiRHJvcGRvd25NZW51IiwicGF0aCI6Im90aGVyIiwicmVzdCI6eyJmb3JtIjpudWxsLCJzdXJmYWNlIjoib3BhcXVlIiwicGxhdGUiOm51bGwsImJmIjoibm9uZSIsImJnIjoiY29sb3Ioc3JnYiAwLjk5NCAwLjk2IDAuOTI2KSIsIngiOjE1NSwieSI6NjYsInciOjIwOCwiaCI6MTU4fSwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjoxOSwibGFzdE1zIjoxNTIsImRpZmZlcnMiOjE1LCJmaXJzdERpZmZlciI6eyJ0IjozNiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5NyAwLjE0ODI2MyAwLjA4Mjk3MzYgLyAwLjE4KSIsIngiOjE1NSwieSI6NjYsInciOjIwOH0sInJpc2UiOjAsImxhcmdlc3RTdGVwIjowLCJ4U2hpZnQiOjAsIndTaGlmdCI6MCwidGFibGUiOltbMiwxLDY2LDFdLFsxMSwxLDY2LDFdLFsxOSwxLDY2LDFdLFsyNywxLDY2LDFdLFszNiwxLDY2LDFdLFs0NCwxLDY2LDFdLFs1MiwxLDY2LDFdLFs2MSwxLDY2LDFdLFs2OSwxLDY2LDFdLFs3NywxLDY2LDFdLFs4NiwxLDY2LDFdLFs5NCwxLDY2LDFdLFsxMDEsMSw2NiwxXSxbMTExLDEsNjYsMV0sWzExOSwxLDY2LDFdLFsxMjcsMSw2NiwxXSxbMTM2LDEsNjYsMV0sWzE0NCwwLjkwOSw2NiwwLjkwOV0sWzE1MiwwLjA0Nyw2NiwwLjA0N11dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-46d97c3458cb16b16c92",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "press · dock trigger (Select) held · reduce",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1059,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PRESS {\"project\":\"chromium-phone\",\"control\":\"dock trigger (Select)\",\"motion\":\"reduce\",\"rest\":[\"1\",78.66],\"scales\":[\"1\"],\"widths\":[78.66,78.66],\"first\":[[113,\"1\",78.66],[121,\"1\",78.66],[129,\"1\",78.66],[137,\"1\",78.66],[146,\"1\",78.66],[154,\"1\",78.66]],\"last\":[454,\"1\",78.66]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:00:37.056Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "press",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0IjoiY2hyb21pdW0tcGhvbmUiLCJjb250cm9sIjoiZG9jayB0cmlnZ2VyIChTZWxlY3QpIiwibW90aW9uIjoicmVkdWNlIiwicmVzdCI6WyIxIiw3OC42Nl0sInNjYWxlcyI6WyIxIl0sIndpZHRocyI6Wzc4LjY2LDc4LjY2XSwiZmlyc3QiOltbMTEzLCIxIiw3OC42Nl0sWzEyMSwiMSIsNzguNjZdLFsxMjksIjEiLDc4LjY2XSxbMTM3LCIxIiw3OC42Nl0sWzE0NiwiMSIsNzguNjZdLFsxNTQsIjEiLDc4LjY2XV0sImxhc3QiOls0NTQsIjEiLDc4LjY2XX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-7113fc3097d51f8f4140",
+          "file": "paths.probe.ts",
+          "line": 99,
+          "column": 9
+        },
+        {
+          "title": "press · dock trigger (menu) held · reduce",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1077,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PRESS {\"project\":\"chromium-phone\",\"control\":\"dock trigger (menu)\",\"motion\":\"reduce\",\"rest\":[\"1\",32.33],\"scales\":[\"1\"],\"widths\":[32.33,32.33],\"first\":[[104,\"1\",32.33],[114,\"1\",32.33],[122,\"1\",32.33],[129,\"1\",32.33],[139,\"1\",32.33],[147,\"1\",32.33]],\"last\":[464,\"1\",32.33]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:00:38.119Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "press",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0IjoiY2hyb21pdW0tcGhvbmUiLCJjb250cm9sIjoiZG9jayB0cmlnZ2VyIChtZW51KSIsIm1vdGlvbiI6InJlZHVjZSIsInJlc3QiOlsiMSIsMzIuMzNdLCJzY2FsZXMiOlsiMSJdLCJ3aWR0aHMiOlszMi4zMywzMi4zM10sImZpcnN0IjpbWzEwNCwiMSIsMzIuMzNdLFsxMTQsIjEiLDMyLjMzXSxbMTIyLCIxIiwzMi4zM10sWzEyOSwiMSIsMzIuMzNdLFsxMzksIjEiLDMyLjMzXSxbMTQ3LCIxIiwzMi4zM11dLCJsYXN0IjpbNDY0LCIxIiwzMi4zM119"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-2aac139fe7c6fd9132a5",
+          "file": "paths.probe.ts",
+          "line": 99,
+          "column": 9
+        },
+        {
+          "title": "press · dock seat held · reduce",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1038,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PRESS {\"project\":\"chromium-phone\",\"control\":\"dock seat\",\"motion\":\"reduce\",\"rest\":[\"1\",44],\"scales\":[\"1\",\"1.0066 0.9156\"],\"widths\":[44,44.29],\"first\":[[103,\"1\",44],[113,\"1.0066 0.9156\",44.29],[121,\"1.0066 0.9156\",44.29],[130,\"1.0066 0.9156\",44.29],[138,\"1.0066 0.9156\",44.29],[147,\"1.0066 0.9156\",44.29]],\"last\":[455,\"1.0066 0.9156\",44.29]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:00:39.202Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "press",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0IjoiY2hyb21pdW0tcGhvbmUiLCJjb250cm9sIjoiZG9jayBzZWF0IiwibW90aW9uIjoicmVkdWNlIiwicmVzdCI6WyIxIiw0NF0sInNjYWxlcyI6WyIxIiwiMS4wMDY2IDAuOTE1NiJdLCJ3aWR0aHMiOls0NCw0NC4yOV0sImZpcnN0IjpbWzEwMywiMSIsNDRdLFsxMTMsIjEuMDA2NiAwLjkxNTYiLDQ0LjI5XSxbMTIxLCIxLjAwNjYgMC45MTU2Iiw0NC4yOV0sWzEzMCwiMS4wMDY2IDAuOTE1NiIsNDQuMjldLFsxMzgsIjEuMDA2NiAwLjkxNTYiLDQ0LjI5XSxbMTQ3LCIxLjAwNjYgMC45MTU2Iiw0NC4yOV1dLCJsYXN0IjpbNDU1LCIxLjAwNjYgMC45MTU2Iiw0NC4yOV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-e875e80c8266b551bc80",
+          "file": "paths.probe.ts",
+          "line": 99,
+          "column": 9
+        },
+        {
+          "title": "press · Button held · reduce",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1489,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PRESS {\"project\":\"chromium-phone\",\"control\":\"Button\",\"motion\":\"reduce\",\"rest\":[\"1\",178.16],\"scales\":[\"1\",\"1.0328 0.911\"],\"widths\":[178.16,184],\"first\":[[105,\"1\",178.16],[114,\"1.0328 0.911\",184],[121,\"1.0328 0.911\",184],[131,\"1.0328 0.911\",184],[139,\"1.0328 0.911\",184],[147,\"1.0328 0.911\",184]],\"last\":[455,\"1.0328 0.911\",184]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:00:40.245Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "press",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0IjoiY2hyb21pdW0tcGhvbmUiLCJjb250cm9sIjoiQnV0dG9uIiwibW90aW9uIjoicmVkdWNlIiwicmVzdCI6WyIxIiwxNzguMTZdLCJzY2FsZXMiOlsiMSIsIjEuMDMyOCAwLjkxMSJdLCJ3aWR0aHMiOlsxNzguMTYsMTg0XSwiZmlyc3QiOltbMTA1LCIxIiwxNzguMTZdLFsxMTQsIjEuMDMyOCAwLjkxMSIsMTg0XSxbMTIxLCIxLjAzMjggMC45MTEiLDE4NF0sWzEzMSwiMS4wMzI4IDAuOTExIiwxODRdLFsxMzksIjEuMDMyOCAwLjkxMSIsMTg0XSxbMTQ3LCIxLjAzMjggMC45MTEiLDE4NF1dLCJsYXN0IjpbNDU1LCIxLjAzMjggMC45MTEiLDE4NF19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-f7e509dda5be9b332300",
+          "file": "paths.probe.ts",
+          "line": 99,
+          "column": 9
+        },
+        {
+          "title": "press · dock trigger (Select) held · no-preference",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1074,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PRESS {\"project\":\"chromium-phone\",\"control\":\"dock trigger (Select)\",\"motion\":\"no-preference\",\"rest\":[\"1\",78.66],\"scales\":[\"1\"],\"widths\":[78.66,78.66],\"first\":[[113,\"1\",78.66],[121,\"1\",78.66],[129,\"1\",78.66],[137,\"1\",78.66],[146,\"1\",78.66],[154,\"1\",78.66]],\"last\":[462,\"1\",78.66]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:00:41.740Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "press",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0IjoiY2hyb21pdW0tcGhvbmUiLCJjb250cm9sIjoiZG9jayB0cmlnZ2VyIChTZWxlY3QpIiwibW90aW9uIjoibm8tcHJlZmVyZW5jZSIsInJlc3QiOlsiMSIsNzguNjZdLCJzY2FsZXMiOlsiMSJdLCJ3aWR0aHMiOls3OC42Niw3OC42Nl0sImZpcnN0IjpbWzExMywiMSIsNzguNjZdLFsxMjEsIjEiLDc4LjY2XSxbMTI5LCIxIiw3OC42Nl0sWzEzNywiMSIsNzguNjZdLFsxNDYsIjEiLDc4LjY2XSxbMTU0LCIxIiw3OC42Nl1dLCJsYXN0IjpbNDYyLCIxIiw3OC42Nl19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-a1ab029c944e44c9e8a7",
+          "file": "paths.probe.ts",
+          "line": 99,
+          "column": 9
+        },
+        {
+          "title": "press · dock trigger (menu) held · no-preference",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1088,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PRESS {\"project\":\"chromium-phone\",\"control\":\"dock trigger (menu)\",\"motion\":\"no-preference\",\"rest\":[\"1\",32.33],\"scales\":[\"1\"],\"widths\":[32.33,32.33],\"first\":[[103,\"1\",32.33],[111,\"1\",32.33],[119,\"1\",32.33],[128,\"1\",32.33],[136,\"1\",32.33],[144,\"1\",32.33]],\"last\":[469,\"1\",32.33]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:00:42.819Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "press",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0IjoiY2hyb21pdW0tcGhvbmUiLCJjb250cm9sIjoiZG9jayB0cmlnZ2VyIChtZW51KSIsIm1vdGlvbiI6Im5vLXByZWZlcmVuY2UiLCJyZXN0IjpbIjEiLDMyLjMzXSwic2NhbGVzIjpbIjEiXSwid2lkdGhzIjpbMzIuMzMsMzIuMzNdLCJmaXJzdCI6W1sxMDMsIjEiLDMyLjMzXSxbMTExLCIxIiwzMi4zM10sWzExOSwiMSIsMzIuMzNdLFsxMjgsIjEiLDMyLjMzXSxbMTM2LCIxIiwzMi4zM10sWzE0NCwiMSIsMzIuMzNdXSwibGFzdCI6WzQ2OSwiMSIsMzIuMzNdfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-8e3c35d963cefe696f8e",
+          "file": "paths.probe.ts",
+          "line": 99,
+          "column": 9
+        },
+        {
+          "title": "press · dock seat held · no-preference",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1037,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PRESS {\"project\":\"chromium-phone\",\"control\":\"dock seat\",\"motion\":\"no-preference\",\"rest\":[\"1\",44],\"scales\":[\"1\",\"0.999976 0.999781\",\"0.999937 0.99934\",\"0.999893 0.998648\",\"0.99986 0.997722\",\"0.999846 0.996561\",\"0.999857 0.995516\",\"0.999908 0.993559\",\"0.999981 0.991814\",\"1.00006 0.9904\",\"1.00021 0.987986\",\"1.00035 0.986121\",\"1.0005 0.984143\",\"1.00062 0.982775\",\"1.00087 0.979908\",\"1.00102 0.978151\",\"1.00119 0.97618\",\"1.00134 0.974306\",\"1.00147 0.972567\",\"1.00181 0.968266\",\"1.00227 0.962414\",\"1.00279 0.955896\",\"1.00288 0.954699\",\"1.00298 0.953488\",\"1.00323 0.950595\",\"1.00332 0.949512\",\"1.00341 0.948486\",\"1.00351 0.947471\",\"1.00357 0.946773\",\"1.00369 0.945491\",\"1.00391 0.943115\",\"1.004 0.942268\",\"1.00416 0.940618\",\"1.00447 0.937401\",\"1.00474 0.93458\",\"1.0048 0.933972\",\"1.00494 0.932588\",\"1.00512 0.930701\",\"1.00529 0.929016\",\"1.00554 0.926459\",\"1.00569 0.924902\",\"1.00589 0.922906\"],\"widths\":[43.99,44.26],\"first\":[[105,\"1\",44],[114,\"1\",44],[122,\"0.999976 0.999781\",44],[130,\"0.999937 0.99934\",44],[139,\"0.999893 0.998648\",44],[147,\"0.99986 0.997722\",43.99]],\"last\":[455,\"1.00589 0.922906\",44.26]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:00:43.911Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "press",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0IjoiY2hyb21pdW0tcGhvbmUiLCJjb250cm9sIjoiZG9jayBzZWF0IiwibW90aW9uIjoibm8tcHJlZmVyZW5jZSIsInJlc3QiOlsiMSIsNDRdLCJzY2FsZXMiOlsiMSIsIjAuOTk5OTc2IDAuOTk5NzgxIiwiMC45OTk5MzcgMC45OTkzNCIsIjAuOTk5ODkzIDAuOTk4NjQ4IiwiMC45OTk4NiAwLjk5NzcyMiIsIjAuOTk5ODQ2IDAuOTk2NTYxIiwiMC45OTk4NTcgMC45OTU1MTYiLCIwLjk5OTkwOCAwLjk5MzU1OSIsIjAuOTk5OTgxIDAuOTkxODE0IiwiMS4wMDAwNiAwLjk5MDQiLCIxLjAwMDIxIDAuOTg3OTg2IiwiMS4wMDAzNSAwLjk4NjEyMSIsIjEuMDAwNSAwLjk4NDE0MyIsIjEuMDAwNjIgMC45ODI3NzUiLCIxLjAwMDg3IDAuOTc5OTA4IiwiMS4wMDEwMiAwLjk3ODE1MSIsIjEuMDAxMTkgMC45NzYxOCIsIjEuMDAxMzQgMC45NzQzMDYiLCIxLjAwMTQ3IDAuOTcyNTY3IiwiMS4wMDE4MSAwLjk2ODI2NiIsIjEuMDAyMjcgMC45NjI0MTQiLCIxLjAwMjc5IDAuOTU1ODk2IiwiMS4wMDI4OCAwLjk1NDY5OSIsIjEuMDAyOTggMC45NTM0ODgiLCIxLjAwMzIzIDAuOTUwNTk1IiwiMS4wMDMzMiAwLjk0OTUxMiIsIjEuMDAzNDEgMC45NDg0ODYiLCIxLjAwMzUxIDAuOTQ3NDcxIiwiMS4wMDM1NyAwLjk0Njc3MyIsIjEuMDAzNjkgMC45NDU0OTEiLCIxLjAwMzkxIDAuOTQzMTE1IiwiMS4wMDQgMC45NDIyNjgiLCIxLjAwNDE2IDAuOTQwNjE4IiwiMS4wMDQ0NyAwLjkzNzQwMSIsIjEuMDA0NzQgMC45MzQ1OCIsIjEuMDA0OCAwLjkzMzk3MiIsIjEuMDA0OTQgMC45MzI1ODgiLCIxLjAwNTEyIDAuOTMwNzAxIiwiMS4wMDUyOSAwLjkyOTAxNiIsIjEuMDA1NTQgMC45MjY0NTkiLCIxLjAwNTY5IDAuOTI0OTAyIiwiMS4wMDU4OSAwLjkyMjkwNiJdLCJ3aWR0aHMiOls0My45OSw0NC4yNl0sImZpcnN0IjpbWzEwNSwiMSIsNDRdLFsxMTQsIjEiLDQ0XSxbMTIyLCIwLjk5OTk3NiAwLjk5OTc4MSIsNDRdLFsxMzAsIjAuOTk5OTM3IDAuOTk5MzQiLDQ0XSxbMTM5LCIwLjk5OTg5MyAwLjk5ODY0OCIsNDRdLFsxNDcsIjAuOTk5ODYgMC45OTc3MjIiLDQzLjk5XV0sImxhc3QiOls0NTUsIjEuMDA1ODkgMC45MjI5MDYiLDQ0LjI2XX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-074866ab8fd0b5e02b13",
+          "file": "paths.probe.ts",
+          "line": 99,
+          "column": 9
+        },
+        {
+          "title": "press · Button held · no-preference",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1505,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PRESS {\"project\":\"chromium-phone\",\"control\":\"Button\",\"motion\":\"no-preference\",\"rest\":[\"1\",178.16],\"scales\":[\"1\",\"1.00009 0.999547\",\"1.00026 0.998803\",\"1.00051 0.997813\",\"1.00087 0.996548\",\"1.00131 0.995086\",\"1.00184 0.993396\",\"1.00244 0.991587\",\"1.00311 0.989658\",\"1.00382 0.987643\",\"1.00461 0.985481\",\"1.00514 0.984035\",\"1.00626 0.981045\",\"1.00698 0.979111\",\"1.00776 0.977068\",\"1.00851 0.975035\",\"1.00923 0.973104\",\"1.00994 0.971187\",\"1.01163 0.96661\",\"1.01389 0.960491\",\"1.01444 0.958997\",\"1.01579 0.955369\",\"1.0163 0.953998\",\"1.01679 0.952702\",\"1.01727 0.951417\",\"1.01773 0.950201\",\"1.01885 0.947249\",\"1.01928 0.946134\",\"1.01968 0.94508\",\"1.0206 0.942665\",\"1.02172 0.939747\",\"1.02217 0.938568\",\"1.02305 0.936288\",\"1.02418 0.933358\",\"1.02539 0.930211\",\"1.0266 0.927076\",\"1.02679 0.926597\",\"1.02725 0.925416\",\"1.02742 0.924974\",\"1.02782 0.923918\",\"1.02837 0.922507\"],\"widths\":[178.16,183.21],\"first\":[[104,\"1\",178.16],[113,\"1\",178.16],[121,\"1\",178.16],[129,\"1\",178.16],[138,\"1\",178.16],[145,\"1\",178.16]],\"last\":[488,\"1.02837 0.922507\",183.21]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:00:44.952Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "press",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0IjoiY2hyb21pdW0tcGhvbmUiLCJjb250cm9sIjoiQnV0dG9uIiwibW90aW9uIjoibm8tcHJlZmVyZW5jZSIsInJlc3QiOlsiMSIsMTc4LjE2XSwic2NhbGVzIjpbIjEiLCIxLjAwMDA5IDAuOTk5NTQ3IiwiMS4wMDAyNiAwLjk5ODgwMyIsIjEuMDAwNTEgMC45OTc4MTMiLCIxLjAwMDg3IDAuOTk2NTQ4IiwiMS4wMDEzMSAwLjk5NTA4NiIsIjEuMDAxODQgMC45OTMzOTYiLCIxLjAwMjQ0IDAuOTkxNTg3IiwiMS4wMDMxMSAwLjk4OTY1OCIsIjEuMDAzODIgMC45ODc2NDMiLCIxLjAwNDYxIDAuOTg1NDgxIiwiMS4wMDUxNCAwLjk4NDAzNSIsIjEuMDA2MjYgMC45ODEwNDUiLCIxLjAwNjk4IDAuOTc5MTExIiwiMS4wMDc3NiAwLjk3NzA2OCIsIjEuMDA4NTEgMC45NzUwMzUiLCIxLjAwOTIzIDAuOTczMTA0IiwiMS4wMDk5NCAwLjk3MTE4NyIsIjEuMDExNjMgMC45NjY2MSIsIjEuMDEzODkgMC45NjA0OTEiLCIxLjAxNDQ0IDAuOTU4OTk3IiwiMS4wMTU3OSAwLjk1NTM2OSIsIjEuMDE2MyAwLjk1Mzk5OCIsIjEuMDE2NzkgMC45NTI3MDIiLCIxLjAxNzI3IDAuOTUxNDE3IiwiMS4wMTc3MyAwLjk1MDIwMSIsIjEuMDE4ODUgMC45NDcyNDkiLCIxLjAxOTI4IDAuOTQ2MTM0IiwiMS4wMTk2OCAwLjk0NTA4IiwiMS4wMjA2IDAuOTQyNjY1IiwiMS4wMjE3MiAwLjkzOTc0NyIsIjEuMDIyMTcgMC45Mzg1NjgiLCIxLjAyMzA1IDAuOTM2Mjg4IiwiMS4wMjQxOCAwLjkzMzM1OCIsIjEuMDI1MzkgMC45MzAyMTEiLCIxLjAyNjYgMC45MjcwNzYiLCIxLjAyNjc5IDAuOTI2NTk3IiwiMS4wMjcyNSAwLjkyNTQxNiIsIjEuMDI3NDIgMC45MjQ5NzQiLCIxLjAyNzgyIDAuOTIzOTE4IiwiMS4wMjgzNyAwLjkyMjUwNyJdLCJ3aWR0aHMiOlsxNzguMTYsMTgzLjIxXSwiZmlyc3QiOltbMTA0LCIxIiwxNzguMTZdLFsxMTMsIjEiLDE3OC4xNl0sWzEyMSwiMSIsMTc4LjE2XSxbMTI5LCIxIiwxNzguMTZdLFsxMzgsIjEiLDE3OC4xNl0sWzE0NSwiMSIsMTc4LjE2XV0sImxhc3QiOls0ODgsIjEuMDI4MzcgMC45MjI1MDciLDE4My4yMV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-06db54824524d49c24a9",
+          "file": "paths.probe.ts",
+          "line": 99,
+          "column": 9
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-17T03:00:13.045Z",
+    "duration": 33454.359000000004,
+    "expected": 17,
+    "skipped": 1,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,30 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 18 tests using 1 worker
+
+  -   1 [webkit-phone] › docs/release-11.1.1/critic-3/probe/paths.probe.ts:40:9 › paths · Select · outside
+PATHS {"project":"webkit-phone","surface":"Select","path":"escape","rest":{"form":"sheet","surface":"opaque","plate":null,"bf":"none","bg":"color(srgb 0.994 0.96 0.926)","x":0,"y":615,"w":390,"h":229},"gone":true,"frames":14,"lastMs":133,"differs":13,"firstDiffer":{"t":18,"form":null,"surface":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.203993 0.148252 0.08296 / 0.22)","x":16,"y":610,"w":358},"rise":549,"largestStep":544,"xShift":161,"wShift":262,"table":[[1,1,615,1],[18,1,610,1.004],[26,1,66,1.004],[32,1,66,1.004],[40,1,66,1.004],[52,1,66,1.004],[62,1,66,1.004],[74,1,66,1.004],[82,1,66,1.004],[93,1,66,1.004],[103,1,66,1.004],[113,1,66,1.004],[123,1,66,1.004],[133,0.066,66,0.066]]}
+  ✓   2 [webkit-phone] › docs/release-11.1.1/critic-3/probe/paths.probe.ts:40:9 › paths · Select · escape (2.8s)
+  -   3 [webkit-phone] › docs/release-11.1.1/critic-3/probe/paths.probe.ts:40:9 › paths · Select · trigger
+PATHS {"project":"webkit-phone","surface":"Select","path":"current","rest":{"form":"sheet","surface":"opaque","plate":null,"bf":"none","bg":"color(srgb 0.994 0.96 0.926)","x":0,"y":615,"w":390,"h":229},"gone":true,"frames":19,"lastMs":169,"differs":14,"firstDiffer":{"t":50,"form":null,"surface":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.203993 0.148252 0.08296 / 0.22)","x":16,"y":610,"w":358},"rise":549,"largestStep":544,"xShift":161,"wShift":262,"table":[[7,1,615,1],[16,1,615,1],[18,1,615,1],[26,1,615,1],[31,1,615,1],[50,1,610,1.004],[58,1,66,1.004],[62,1,66,1.004],[68,1,66,1.004],[79,1,66,1.004],[88,1,66,1.004],[99,1,66,1.004],[108,1,66,1.004],[117,1,66,1.004],[129,1,66,1.004],[141,1,66,1.004],[149,1,66,1.004],[161,1,66,1.004],[169,0.315,66,0.316]]}
+  ✓   4 [webkit-phone] › docs/release-11.1.1/critic-3/probe/paths.probe.ts:40:9 › paths · Select · current (2.8s)
+PATHS {"project":"webkit-phone","surface":"Select","path":"other","rest":{"form":"sheet","surface":"opaque","plate":null,"bf":"none","bg":"color(srgb 0.994 0.96 0.926)","x":0,"y":615,"w":390,"h":229},"gone":true,"frames":16,"lastMs":159,"differs":13,"firstDiffer":{"t":41,"form":null,"surface":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.203993 0.148252 0.08296 / 0.22)","x":16,"y":610,"w":358},"rise":549,"largestStep":544,"xShift":151,"wShift":262,"table":[[6,1,615,1],[14,1,615,1],[19,1,615,1],[41,1,610,1.004],[53,1,66,1.004],[58,1,66,1.004],[65,1,66,1.004],[77,1,66,1.004],[86,1,66,1.004],[98,1,66,1.004],[107,1,66,1.004],[119,1,66,1.004],[128,1,66,1.004],[138,1,66,1.004],[149,0.736,66,0.739],[159,0.015,66,0.015]]}
+  ✓   5 [webkit-phone] › docs/release-11.1.1/critic-3/probe/paths.probe.ts:40:9 › paths · Select · other (2.7s)
+  -   6 [webkit-phone] › docs/release-11.1.1/critic-3/probe/paths.probe.ts:40:9 › paths · DropdownMenu · outside
+PATHS {"project":"webkit-phone","surface":"DropdownMenu","path":"escape","rest":{"form":null,"surface":"opaque","plate":null,"bf":"none","bg":"color(srgb 0.994 0.96 0.926)","x":155,"y":66,"w":208,"h":158},"gone":true,"frames":12,"lastMs":118,"differs":12,"firstDiffer":{"t":6,"form":null,"surface":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.203993 0.148252 0.08296 / 0.18)","x":155,"y":66,"w":208},"rise":0,"largestStep":0,"xShift":0,"wShift":0,"table":[[6,1,66,1],[18,1,66,1],[27,1,66,1],[37,1,66,1],[49,1,66,1],[56,1,66,1],[69,1,66,1],[78,1,66,1],[89,1,66,1],[99,1,66,1],[109,1,66,1],[118,0.315,66,0.315]]}
+  ✓   7 [webkit-phone] › docs/release-11.1.1/critic-3/probe/paths.probe.ts:40:9 › paths · DropdownMenu · escape (2.7s)
+  -   8 [webkit-phone] › docs/release-11.1.1/critic-3/probe/paths.probe.ts:40:9 › paths · DropdownMenu · trigger
+  -   9 [webkit-phone] › docs/release-11.1.1/critic-3/probe/paths.probe.ts:40:9 › paths · DropdownMenu · current
+PATHS {"project":"webkit-phone","surface":"DropdownMenu","path":"other","rest":{"form":null,"surface":"opaque","plate":null,"bf":"none","bg":"color(srgb 0.994 0.96 0.926)","x":155,"y":66,"w":208,"h":158},"gone":true,"frames":15,"lastMs":138,"differs":12,"firstDiffer":{"t":27,"form":null,"surface":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.203993 0.148252 0.08296 / 0.18)","x":155,"y":66,"w":208},"rise":0,"largestStep":0,"xShift":0,"wShift":0,"table":[[8,1,66,1],[17,1,66,1],[20,1,66,1],[27,1,66,1],[40,1,66,1],[48,1,66,1],[58,1,66,1],[71,1,66,1],[78,1,66,1],[90,1,66,1],[99,1,66,1],[110,1,66,1],[120,1,66,1],[130,1,66,1],[138,0.315,66,0.315]]}
+  ✓  10 [webkit-phone] › docs/release-11.1.1/critic-3/probe/paths.probe.ts:40:9 › paths · DropdownMenu · other (2.7s)
+  -  11 [webkit-phone] › docs/release-11.1.1/critic-3/probe/paths.probe.ts:99:9 › press · dock trigger (Select) held · reduce
+  -  12 [webkit-phone] › docs/release-11.1.1/critic-3/probe/paths.probe.ts:99:9 › press · dock trigger (menu) held · reduce
+  -  13 [webkit-phone] › docs/release-11.1.1/critic-3/probe/paths.probe.ts:99:9 › press · dock seat held · reduce
+  -  14 [webkit-phone] › docs/release-11.1.1/critic-3/probe/paths.probe.ts:99:9 › press · Button held · reduce
+  -  15 [webkit-phone] › docs/release-11.1.1/critic-3/probe/paths.probe.ts:99:9 › press · dock trigger (Select) held · no-preference
+  -  16 [webkit-phone] › docs/release-11.1.1/critic-3/probe/paths.probe.ts:99:9 › press · dock trigger (menu) held · no-preference
+  -  17 [webkit-phone] › docs/release-11.1.1/critic-3/probe/paths.probe.ts:99:9 › press · dock seat held · no-preference
+  -  18 [webkit-phone] › docs/release-11.1.1/critic-3/probe/paths.probe.ts:99:9 › press · Button held · no-preference
+
+  13 skipped
+  5 passed (18.5s)

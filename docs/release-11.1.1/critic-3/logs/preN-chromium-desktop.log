@@ -1,0 +1,54 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 3 tests using 1 worker
+
+  ✓  1 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:163:5 › fade · a dock Select appears and leaves on a fade (3.2s)
+  ✘  2 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:322:1 › still · a Slider holds still under reduced motion (1.8s)
+[WebServer] 9:08:22 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  3 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:516:1 › routes · a detented Sheet dragged off leaves from where the drag left it (3.8s)
+
+
+  1) [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:322:1 › still · a Slider holds still under reduced motion 
+
+    Error: the root changes on a zero clock {"clocks":{"root":"0.2s","track":"0.2s, 0.2s","fill":"0.3s, 0.21s, 0.2s","thumb":"0.12s"},"press":{"from":"none","to":"matrix(1, 0, 0, 0.97, 0, 0)","values":16,"between":16},"release":{"from":"matrix(1, 0, 0, 0.97, 0, 0)","to":"none","values":37,"between":35}}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      376 |     const at = JSON.stringify({ clocks, press: pressLeg, release: releaseLeg });
+      377 |     await info.attach("still", { body: at, contentType: "application/json" });
+    > 378 |     for (const [part, d] of Object.entries(clocks)) expect(zero(d), `the ${part} changes on a zero clock ${at}`).toBe(true);
+          |                                                                                                                  ^
+      379 |     if (pressLeg && releaseLeg) {
+      380 |         expect(pressLeg.to, `the press reached the fill ${at}`).not.toBe(pressLeg.from);
+      381 |         expect(releaseLeg.to, `the release returned the fill to rest ${at}`).toBe(pressLeg.from);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual/release-11-1-1-reduce.spec.ts:378:114
+
+    Error Context: tests-visual/test-results/release-11-1-1-reduce-stil-3c2d8--still-under-reduced-motion-chromium-desktop/error-context.md
+
+  2) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:516:1 › routes · a detented Sheet dragged off leaves from where the drag left it 
+
+    Error: no frame shows more than the drag left {"left":0.2,"highest":0.973,"rise":0.773,"lastSeen":0.01,"gone":true,"frames":[[-31,0.267],[-23,0.2],[-16,0.2],[-6,0.2],[2,0.2],[11,0.973],[19,0.945],[26,0.908],[36,0.871],[44,0.82],[52,0.773],[60,0.724],[69,0.679],[77,0.626],[86,0.582],[94,0.532],[102,0.489],[111,0.447],[119,0.407],[127,0.369],[136,0.334],[144,0.302],[152,0.271],[161,0.243],[169,0.217],[177,0.194],[186,0.172],[194,0.153]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.02
+    Received:    0.7729999999999999
+
+      572 |     expect(read.left, `the drag carried the sheet down ${at}`).toBeLessThan(0.6);
+      573 |     expect(read.gone, `the sheet leaves ${at}`).toBe(true);
+    > 574 |     expect(read.highest - read.left, `no frame shows more than the drag left ${at}`).toBeLessThanOrEqual(0.02);
+          |                                                                                      ^
+      575 |     expect(read.rise, `no frame rises from the one before ${at}`).toBeLessThanOrEqual(0.02);
+      576 |     expect(read.lastSeen ?? 0, `nearly gone by its last painted frame ${at}`).toBeLessThanOrEqual(0.05);
+      577 | });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual/release-11-1-1.spec.ts:574:86
+
+    Error Context: tests-visual/test-results/release-11-1-1-routes-·-a--d68a9-from-where-the-drag-left-it-chromium-desktop/error-context.md
+
+  2 failed
+    [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:322:1 › still · a Slider holds still under reduced motion 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:516:1 › routes · a detented Sheet dragged off leaves from where the drag left it 
+  1 passed (11.3s)

@@ -1,0 +1,29 @@
+published dist files 895 bytes 2696319 | tip dist files 900 bytes 2713950
+names (hash-normalised) in published and absent from tip: 0
+names added on tip: 5
+   + dist/components/_shared/disclosure/turn.d.ts
+   + dist/components/_shared/overlay/exit-press.d.ts
+   + dist/components/_shared/overlay/leave-HASH.d.ts
+   + dist/exit-press-HASH.js
+   + dist/leave-finished-HASH.js
+normalised names whose count differs: 0
+exports keys 70 70 removed [] added [] changed []
+== dist/components/_shared/overlay/index.d.ts: -0 +2
+== dist/components/dialog/DialogContent.vue.d.ts: -0 +2
+== dist/components/dialog/ModalScrim.vue.d.ts: -1 +3
+    - * long as reka's lock held it: while the scrim is present.
+== dist/components/menu/DropdownMenuContent.vue.d.ts: -1 +4
+    -    align: import("../_shared/overlay/index.js").FloatingAlign;
+== dist/components/popover/PopoverContent.vue.d.ts: -1 +4
+    -    align: import("../_shared/overlay/index.js").FloatingAlign;
+== dist/components/select/SelectContent.vue.d.ts: -1 +4
+    -    align: import("../_shared/overlay/index.js").FloatingAlign;
+== dist/components/sheet/SheetContent.vue.d.ts: -2 +4
+    -declare var __VLS_28: {};
+    -    default?: (props: typeof __VLS_28) => any;
+== dist/components/toast/Toast.vue.d.ts: -2 +7
+    -declare var __VLS_8: {};
+    -    default?: (props: typeof __VLS_8) => any;
+== dist/components/tooltip/TooltipContent.vue.d.ts: -1 +4
+    -    align: import("../_shared/overlay/index.js").FloatingAlign;
+declaration files 571 574 changed 9

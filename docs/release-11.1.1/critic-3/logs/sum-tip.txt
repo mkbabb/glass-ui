@@ -1,0 +1,65 @@
+tipA-chromium-desktop {'skipped': 9, 'passed': 25} tables=16
+   most in one 16.7 ms window 0.175 (routes · a detented Sheet leaves whole by outside)
+   largest first sample 0.071/7ms (routes · a CommandDialog keeps its list through it)
+   largest last sample 0.029/10ms (routes · a press on an open Popover's trigger clos)
+   longest hole 10ms (exit · Select leaves on the exit curve, shorter th); against direction outside turns: none
+tipA-chromium-phone {'passed': 32, 'skipped': 2} tables=15
+   most in one 16.7 ms window 0.172 (routes · a detented Sheet leaves whole by outside)
+   largest first sample 0.090/8ms (routes · a detented Sheet leaves whole by outside)
+   largest last sample 0.024/8ms (exit · Sheet right leaves on the exit curve, short)
+   longest hole 11ms (exit · DropdownMenu leaves on the exit curve, shor); against direction outside turns: none
+tipA-webkit-desktop {'skipped': 9, 'passed': 25} tables=16
+   most in one 16.7 ms window 0.181 (routes · a detented Sheet leaves whole by escape)
+   largest first sample 0.067/9ms (routes · a detented Sheet dragged off leaves from )
+   largest last sample 0.049/10ms (exit · Tooltip leaves on the exit curve, shorter t)
+   longest hole 13ms (exit · Select leaves on the exit curve, shorter th); against direction outside turns: none
+tipA-webkit-phone {'passed': 22, 'skipped': 12} tables=9
+   most in one 16.7 ms window 0.163 (routes · a detented Sheet leaves whole by escape)
+   largest first sample 0.082/9ms (routes · a detented Sheet leaves whole by escape)
+   largest last sample 0.050/11ms (routes · a CommandDialog keeps its list through it)
+   longest hole 13ms (exit · DropdownMenu leaves on the exit curve, shor); against direction outside turns: none
+tipB-chromium-desktop {'passed': 45, 'skipped': 1} tables=25
+   most in one 16.7 ms window 0.190 (expand · an ExpandableContainer reopened while it )
+   largest first sample 0.105/10ms (expand · an ExpandableContainer enters on a tween)
+   largest last sample 0.036/9ms (expand · an ExpandableContainer leaves on a tween )
+   longest hole 11ms (reverse · a Toast closed while it opens turns from); against direction outside turns: none
+tipB-chromium-phone {'passed': 35, 'skipped': 11} tables=20
+   most in one 16.7 ms window 0.177 (expand · an ExpandableContainer reopened while it )
+   largest first sample 0.102/10ms (reverse · a Collapsible reopened while it closes t)
+   largest last sample 0.033/9ms (expand · an ExpandableContainer leaves on a tween )
+   longest hole 10ms (reverse · a Select closed while it opens turns fro); against direction outside turns: none
+tipB-webkit-desktop {'passed': 45, 'skipped': 1} tables=25
+   most in one 16.7 ms window 0.182 (expand · an ExpandableContainer reopened while it )
+   largest first sample 0.120/12ms (expand · an ExpandableContainer enters on a tween)
+   largest last sample 0.049/10ms (tooltip · a hint handed to its neighbour fades, ou)
+   longest hole 13ms (reverse · a Select closed while it opens turns fro); against direction outside turns: none
+tipB-webkit-phone {'passed': 35, 'skipped': 11} tables=20
+   most in one 16.7 ms window 0.179 (expand · an ExpandableContainer reopened while it )
+   largest first sample 0.121/12ms (reverse · a Accordion reopened while it closes tur)
+   largest last sample 0.034/12ms (reverse · a Popover closed while it opens turns fr)
+   longest hole 17ms (reverse · a press on a leaving Sheet's trigger reo); against direction outside turns: none
+tipC-chromium-desktop {'passed': 44} tables=43
+   most in one 16.7 ms window 0.175 (standing · Accordion by trigger: no exit in under )
+   largest first sample 0.071/8ms (standing · CommandDialog by pick: no exit in under)
+   largest last sample 0.049/8ms (standing · ExpandableContainer by escape: no exit )
+   longest hole 11ms (standing · Select by outside: no exit in under two); against direction outside turns: none
+tipC-chromium-phone {'passed': 41, 'skipped': 3} tables=40
+   most in one 16.7 ms window 0.188 (standing · detented Sheet by outside: no exit in u)
+   largest first sample 0.109/7ms (standing · detented Sheet by outside: no exit in u)
+   largest last sample 0.051/8ms (standing · ExpandableContainer by close: no exit i)
+   longest hole 11ms (standing · Select by escape: no exit in under two ); against direction outside turns: none
+tipC-webkit-desktop {'passed': 44} tables=43
+   most in one 16.7 ms window 0.172 (standing · Collapsible by trigger: no exit in unde)
+   largest first sample 0.077/12ms (standing · Tooltip by away: no exit in under two f)
+   largest last sample 0.043/12ms (standing · Tooltip by escape: no exit in under two)
+   longest hole 13ms (standing · Select by outside: no exit in under two); against direction outside turns: none
+tipC-webkit-phone {'passed': 27, 'skipped': 17} tables=26
+   most in one 16.7 ms window 0.172 (standing · detented Sheet by escape: no exit in un)
+   largest first sample 0.071/10ms (standing · CommandDialog by pick: no exit in under)
+   largest last sample 0.036/12ms (standing · CommandDialog by escape: no exit in und)
+   longest hole 13ms (standing · DropdownMenu by escape: no exit in unde); against direction outside turns: none
+   FAILED: still · a Slider holds still under reduced motion
+tipD-chromium-desktop {'passed': 15, 'failed': 1} no frame tables
+tipD-chromium-phone {'passed': 15, 'skipped': 1} no frame tables
+tipD-webkit-desktop {'passed': 16} no frame tables
+tipD-webkit-phone {'passed': 15, 'skipped': 1} no frame tables

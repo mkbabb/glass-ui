@@ -1,0 +1,1962 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-1-1.config.ts",
+      "--project=webkit-desktop",
+      "--workers=1",
+      "-g",
+      "(reverse|tooltip|expand|leave) · "
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/logs/tipB-webkit-desktop.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "reverse · a Select closed while it opens turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2538,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:39:52.420Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuMzIzLCJ0dXJuZWRBdCI6MC4zODQsInNoYXJlIjowLjA1LCJlbmQiOjAsImZyYW1lcyI6W1stOSwwLjMyM10sWzAsMC4zODRdLFsxMSwwLjM4NF0sWzIzLDAuMzU5XSxbMzIsMC4zMzldLFs0MiwwLjMxNl0sWzUyLDAuMjkyXSxbNjEsMC4yNzFdLFs3NCwwLjI0MV0sWzgzLDAuMjJdLFs5MywwLjE5NV0sWzEwNSwwLjE2OV0sWzExNCwwLjE1MV0sWzEyNCwwLjEzMV0sWzEzNCwwLjExMl0sWzE0MywwLjA5Nl0sWzE1NSwwLjA3Nl0sWzE2NSwwLjA2Ml0sWzE3NSwwLjA0OV0sWzE4NSwwLjAzNl0sWzE5NSwwLjAyNl0sWzIwNSwwLjAxN10sWzIxNiwwLjAxXSxbMjI2LDAuMDA0XSxbMjM2LDBdLFsyNTQsMF0sWzI1NiwwXSxbMjY1LDBdLFsyNzYsMF0sWzI4OSwwXSxbMjk3LDBdLFszMDgsMF0sWzMxOCwwXSxbMzI3LDBdLFszMzksMF0sWzM0OCwwXSxbMzU5LDBdLFszNjksMF0sWzM3OSwwXSxbMzg5LDBdLFs0MDEsMF0sWzQxMCwwXSxbNDIwLDBdLFs0MzAsMF0sWzQ0MiwwXSxbNDUwLDBdLFs0NTksMF0sWzQ3MSwwXSxbNDgwLDBdLFs0OTEsMF0sWzUwMSwwXSxbNTEyLDBdLFs1MjAsMF0sWzUzMiwwXSxbNTQ0LDBdLFs1NTIsMF0sWzU2MywwXSxbNTczLDBdLFs1ODMsMF0sWzU5MywwXSxbNjA0LDBdLFs2MTMsMF0sWzYyNCwwXSxbNjM2LDBdLFs2NDQsMF0sWzY1NSwwXSxbNjY1LDBdLFs2NzUsMF0sWzY4NSwwXSxbNjk1LDBdLFs3MDUsMF0sWzcxNiwwXSxbNzI2LDBdLFs3MzYsMF0sWzc0NiwwXSxbNzU3LDBdLFs3NjUsMF0sWzc3NywwXSxbNzg3LDBdLFs3OTgsMF0sWzgwNiwwXSxbODE4LDBdLFs4MjgsMF0sWzgzOCwwXSxbODQ4LDBdLFs4NjAsMF0sWzg2OSwwXSxbODc5LDBdLFs4ODksMF0sWzkwMCwwXSxbOTEwLDBdLFs5MjAsMF0sWzkzMCwwXSxbOTQwLDBdLFs5NTEsMF0sWzk2MSwwXSxbOTcxLDBdLFs5ODEsMF0sWzk5MCwwXSxbMTAwMiwwXSxbMTAxMiwwXSxbMTAyMiwwXSxbMTAzMiwwXSxbMTA0MiwwXSxbMTA1MywwXSxbMTA2MywwXSxbMTA3MywwXSxbMTA4MywwXSxbMTA5MywwXSxbMTEwNSwwXSxbMTExNCwwXSxbMTEyNCwwXSxbMTEzNCwwXSxbMTE0NCwwXSxbMTE1NSwwXSxbMTE2NSwwXSxbMTE3NSwwXSxbMTE4NSwwXSxbMTE5NCwwXSxbMTIwNiwwXSxbMTIxNiwwXSxbMTIyNiwwXSxbMTIzNiwwXSxbMTI0NiwwXSxbMTI1NiwwXSxbMTI2NSwwXSxbMTI3OCwwXSxbMTI4NywwXSxbMTI5OCwwXSxbMTMwOCwwXSxbMTMxOCwwXSxbMTMyNiwwXSxbMTMzOCwwXSxbMTM0NywwXSxbMTM1OSwwXSxbMTM2OSwwXSxbMTM3OSwwXSxbMTM4OCwwXSxbMTQwMSwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-aa64edd5717cba7e090b",
+          "file": "release-11-1-1.spec.ts",
+          "line": 792,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Select reopened while it closes turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3253,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:39:55.102Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuODIsInR1cm5lZEF0IjowLjY0NSwic2hhcmUiOjAuMTMzLCJlbmQiOjEsImZyYW1lcyI6W1stMSwwLjgyXSxbOCwwLjc1Ml0sWzE4LDAuNjY4XSxbMTksMC42NjVdLFsyMSwwLjY0NV0sWzI3LDAuNjQ5XSxbMzksMC43MjZdLFs0OSwwLjgxM10sWzU5LDAuODgzXSxbNjgsMC45MjhdLFs3OSwwLjk4Ml0sWzkwLDFdLFsxMDIsMV0sWzExMCwxXSxbMTIwLDFdLFsxMzEsMV0sWzE0MSwxXSxbMTUxLDFdLFsxNjMsMV0sWzE3MSwxXSxbMTgwLDFdLFsxOTMsMV0sWzIwMiwxXSxbMjEwLDFdLFsyMjIsMV0sWzIzMywxXSxbMjQzLDFdLFsyNTIsMV0sWzI2NCwxXSxbMjczLDFdLFsyODQsMV0sWzI5NCwxXSxbMzA0LDFdLFszMTQsMV0sWzMyNCwxXSxbMzM1LDFdLFszNDUsMV0sWzM1NSwxXSxbMzY1LDFdLFszNzUsMV0sWzM4NiwxXSxbMzk2LDFdLFs0MDYsMV0sWzQxOCwxXSxbNDI3LDFdLFs0MzYsMV0sWzQ0OCwxXSxbNDU1LDFdLFs0NjgsMV0sWzQ3OCwxXSxbNDg4LDFdLFs0OTgsMV0sWzUwOCwxXSxbNTE4LDFdLFs1MjgsMV0sWzUzOSwxXSxbNTQ5LDFdLFs1NTksMV0sWzU2OSwxXSxbNTgwLDFdLFs1OTAsMV0sWzU5OSwxXSxbNjEyLDFdLFs2MjAsMV0sWzYyOSwxXSxbNjQyLDFdLFs2NTEsMV0sWzY2MCwxXSxbNjcyLDFdLFs2ODAsMV0sWzY5MiwxXSxbNzAyLDFdLFs3MTIsMV0sWzcyMiwxXSxbNzMzLDFdLFs3NDUsMV0sWzc1MywxXSxbNzYzLDFdLFs3NzMsMV0sWzc4NCwxXSxbNzk0LDFdLFs4MDQsMV0sWzgxNCwxXSxbODIzLDFdLFs4MzUsMV0sWzg0NSwxXSxbODU1LDFdLFs4NjQsMV0sWzg3NiwxXSxbODg2LDFdLFs4OTYsMV0sWzkwNiwxXSxbOTE2LDFdLFs5MjYsMV0sWzkzNSwxXSxbOTQ4LDFdLFs5NTcsMV0sWzk2NiwxXSxbOTc4LDFdLFs5ODgsMV0sWzk5OCwxXSxbMTAwOCwxXSxbMTAxOCwxXSxbMTAyOSwxXSxbMTAzOSwxXSxbMTA0OSwxXSxbMTA1OSwxXSxbMTA2OSwxXSxbMTA4MCwxXSxbMTA5MCwxXSxbMTA5OSwxXSxbMTExMiwxXSxbMTEyMSwxXSxbMTEzMSwxXSxbMTE0MCwxXSxbMTE1MywxXSxbMTE2MSwxXSxbMTE3MiwxXSxbMTE4MiwxXSxbMTE5MSwxXSxbMTIwNCwxXSxbMTIxMiwxXSxbMTIyNCwxXSxbMTIzMywxXSxbMTI0MywxXSxbMTI1MywxXSxbMTI2NSwxXSxbMTI3NCwxXSxbMTI4NCwxXSxbMTI5NCwxXSxbMTMwNCwxXSxbMTMxNCwxXSxbMTMyNSwxXSxbMTMzNSwxXSxbMTM0NSwxXSxbMTM1NSwxXSxbMTM2NSwxXSxbMTM3NiwxXSxbMTM4NiwxXSxbMTM5NiwxXSxbMTQwNiwxXSxbMTQxNiwxXSxbMTQyNywxXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-2629903b6b1ee7f777d1",
+          "file": "release-11-1-1.spec.ts",
+          "line": 802,
+          "column": 9
+        },
+        {
+          "title": "reverse · a DropdownMenu closed while it opens turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2340,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:39:58.359Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuMzc3LCJ0dXJuZWRBdCI6MC4zNzcsInNoYXJlIjowLjAzNywiZW5kIjowLCJmcmFtZXMiOltbLTIsMC4zNzddLFs4LDAuMzc3XSxbMTgsMC4zNTldLFsyOCwwLjM0XSxbMzksMC4zMTldLFs0OSwwLjI5OF0sWzU5LDAuMjc1XSxbNjksMC4yNTRdLFs3OSwwLjIzMl0sWzkwLDAuMjFdLFs5OCwwLjE5Ml0sWzExMCwwLjE2N10sWzEyMCwwLjE0N10sWzEzMSwwLjEyOF0sWzE0MSwwLjExXSxbMTUxLDAuMDkyXSxbMTYxLDAuMDc2XSxbMTcxLDAuMDYyXSxbMTgyLDAuMDQ4XSxbMTkxLDAuMDM2XSxbMjAyLDAuMDIzXSxbMjEyLDAuMDE0XSxbMjIyLDAuMDA1XSxbMjMzLDBdLFsyNDIsMF0sWzI1MSwwXSxbMjYzLDBdLFsyNzMsMF0sWzI4MywwXSxbMjk1LDBdLFszMDQsMF0sWzMxNCwwXSxbMzI0LDBdLFszMzMsMF0sWzM0NiwwXSxbMzUzLDBdLFszNjYsMF0sWzM3NSwwXSxbMzg2LDBdLFszOTYsMF0sWzQwNCwwXSxbNDE2LDBdLFs0MjYsMF0sWzQzNiwwXSxbNDQ4LDBdLFs0NTcsMF0sWzQ2NywwXSxbNDc4LDBdLFs0ODgsMF0sWzQ5OCwwXSxbNTA4LDBdLFs1MjAsMF0sWzUyOSwwXSxbNTM5LDBdLFs1NDgsMF0sWzU1OSwwXSxbNTY5LDBdLFs1ODAsMF0sWzU5MCwwXSxbNjAwLDBdLFs2MTAsMF0sWzYyMCwwXSxbNjMxLDBdLFs2NDAsMF0sWzY1MSwwXSxbNjYxLDBdLFs2NzEsMF0sWzY4MiwwXSxbNjkwLDBdLFs3MDIsMF0sWzcxMiwwXSxbNzIyLDBdLFs3MzQsMF0sWzc0MywwXSxbNzU1LDBdLFs3NjQsMF0sWzc3NSwwXSxbNzg0LDBdLFs3OTQsMF0sWzgwNCwwXSxbODE0LDBdLFs4MjUsMF0sWzgzNSwwXSxbODQ1LDBdLFs4NTUsMF0sWzg2NSwwXSxbODc2LDBdLFs4ODUsMF0sWzg5NCwwXSxbOTA3LDBdLFs5MTYsMF0sWzkyNywwXSxbOTM3LDBdLFs5NDcsMF0sWzk1NywwXSxbOTY4LDBdLFs5NzgsMF0sWzk4OCwwXSxbOTk4LDBdLFsxMDA4LDBdLFsxMDE4LDBdLFsxMDI5LDBdLFsxMDM5LDBdLFsxMDQ5LDBdLFsxMDU5LDBdLFsxMDY5LDBdLFsxMDgwLDBdLFsxMDg4LDBdLFsxMTAwLDBdLFsxMTA4LDBdLFsxMTIxLDBdLFsxMTMwLDBdLFsxMTM5LDBdLFsxMTUwLDBdLFsxMTYxLDBdLFsxMTcwLDBdLFsxMTgxLDBdLFsxMTkyLDBdLFsxMjAxLDBdLFsxMjExLDBdLFsxMjIzLDBdLFsxMjMyLDBdLFsxMjQyLDBdLFsxMjUzLDBdLFsxMjYyLDBdLFsxMjcyLDBdLFsxMjgyLDBdLFsxMjkzLDBdLFsxMzAyLDBdLFsxMzEzLDBdLFsxMzI1LDBdLFsxMzM1LDBdLFsxMzQ1LDBdLFsxMzUzLDBdLFsxMzY1LDBdLFsxMzc0LDBdLFsxMzg0LDBdLFsxMzk1LDBdLFsxNDA1LDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-a9e952074f1735fe5bc2",
+          "file": "release-11-1-1.spec.ts",
+          "line": 792,
+          "column": 9
+        },
+        {
+          "title": "reverse · a DropdownMenu reopened while it closes turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3250,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:40:00.704Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuODg3LCJ0dXJuZWRBdCI6MC43NjYsInNoYXJlIjowLjA4NywiZW5kIjoxLCJmcmFtZXMiOltbLTgsMC44ODddLFszLDAuODM1XSxbMTIsMC43OTRdLFsxMywwLjc4OV0sWzE2LDAuNzY2XSxbMjQsMC43NzFdLFszMywwLjgxOV0sWzQzLDAuODYyXSxbNTUsMC45MjRdLFs2MywwLjk2N10sWzc1LDFdLFs4NCwxXSxbOTYsMV0sWzEwNCwxXSxbMTE2LDFdLFsxMjUsMV0sWzEzNywxXSxbMTQ3LDFdLFsxNTcsMV0sWzE2NSwxXSxbMTc2LDFdLFsxODYsMV0sWzE5OCwxXSxbMjA4LDFdLFsyMTgsMV0sWzIyOCwxXSxbMjM3LDFdLFsyNDcsMV0sWzI1OSwxXSxbMjY3LDFdLFsyNzgsMV0sWzI5MCwxXSxbMzAwLDFdLFszMTAsMV0sWzMxOCwxXSxbMzI5LDFdLFszMzksMV0sWzM1MSwxXSxbMzYwLDFdLFszNjksMV0sWzM3OSwxXSxbMzkyLDFdLFs0MDAsMV0sWzQxMiwxXSxbNDIyLDFdLFs0MzIsMV0sWzQ0MiwxXSxbNDUyLDFdLFs0NjQsMV0sWzQ3MiwxXSxbNDgyLDFdLFs0OTIsMV0sWzUwNCwxXSxbNTE0LDFdLFs1MjMsMV0sWzUzNCwxXSxbNTQ0LDFdLFs1NTcsMV0sWzU2NCwxXSxbNTc0LDFdLFs1ODQsMV0sWzU5NCwxXSxbNjA2LDFdLFs2MTYsMV0sWzYyNSwxXSxbNjM1LDFdLFs2NDcsMV0sWzY1NSwxXSxbNjY3LDFdLFs2NzYsMV0sWzY4NiwxXSxbNjk2LDFdLFs3MDYsMV0sWzcxNywxXSxbNzI5LDFdLFs3MzgsMV0sWzc0NywxXSxbNzU5LDFdLFs3NjcsMV0sWzc4MCwxXSxbNzg4LDFdLFs3OTksMV0sWzgxMCwxXSxbODIwLDFdLFs4MjksMV0sWzgzOSwxXSxbODQ5LDFdLFs4NTksMV0sWzg2OSwxXSxbODgwLDFdLFs4OTAsMV0sWzkwMywxXSxbOTEyLDFdLFs5MjIsMV0sWzkzMiwxXSxbOTQyLDFdLFs5NTMsMV0sWzk2MywxXSxbOTczLDFdLFs5ODQsMV0sWzk5MiwxXSxbMTAwNCwxXSxbMTAxMiwxXSxbMTAyNSwxXSxbMTAzMywxXSxbMTA0MywxXSxbMTA1NSwxXSxbMTA2NCwxXSxbMTA3NCwxXSxbMTA4NCwxXSxbMTA5NiwxXSxbMTEwNSwxXSxbMTExNiwxXSxbMTEyNSwxXSxbMTEzNywxXSxbMTE0NywxXSxbMTE1NSwxXSxbMTE2NywxXSxbMTE3NiwxXSxbMTE4NiwxXSxbMTE5NywxXSxbMTIwNywxXSxbMTIxNywxXSxbMTIyOCwxXSxbMTIzNywxXSxbMTI0NywxXSxbMTI1NywxXSxbMTI2OSwxXSxbMTI3OCwxXSxbMTI4OCwxXSxbMTI5OCwxXSxbMTMxMCwxXSxbMTMyMCwxXSxbMTMyOSwxXSxbMTM0MSwxXSxbMTM1MSwxXSxbMTM1OSwxXSxbMTM3MSwxXSxbMTM4MCwxXSxbMTM5MCwxXSxbMTQwMCwxXSxbMTQxMiwxXSxbMTQyMiwxXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-1c32f2e474d7807714d2",
+          "file": "release-11-1-1.spec.ts",
+          "line": 802,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Popover closed while it opens turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2360,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:40:03.958Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNTczLCJ0dXJuZWRBdCI6MC41NzMsInNoYXJlIjowLjA3NiwiZW5kIjowLCJmcmFtZXMiOltbLTEsMC41NzNdLFs5LDAuNTczXSxbMTcsMC41NDldLFsyOSwwLjUwOF0sWzM5LDAuNDY1XSxbNDgsMC40MzJdLFs1OCwwLjM4OV0sWzcwLDAuMzM1XSxbODAsMC4yODldLFs5MCwwLjI0M10sWzk5LDAuMjAzXSxbMTA5LDAuMTU5XSxbMTIxLDAuMTA4XSxbMTMxLDAuMDY5XSxbMTM5LDAuMDM3XSxbMTUwLDAuMDA2XSxbMTYyLDBdLFsxNzAsMF0sWzE4MSwwXSxbMTkyLDBdLFsyMDEsMF0sWzIxMSwwXSxbMjIzLDBdLFsyMzMsMF0sWzI0MiwwXSxbMjUzLDBdLFsyNjQsMF0sWzI3MiwwXSxbMjgyLDBdLFsyOTMsMF0sWzMwMywwXSxbMzE1LDBdLFszMjMsMF0sWzMzNCwwXSxbMzQ0LDBdLFszNTQsMF0sWzM2NiwwXSxbMzc0LDBdLFszODYsMF0sWzM5NSwwXSxbNDA2LDBdLFs0MTUsMF0sWzQyNSwwXSxbNDM3LDBdLFs0NDYsMF0sWzQ1OCwwXSxbNDY3LDBdLFs0NzgsMF0sWzQ4OCwwXSxbNDk4LDBdLFs1MDksMF0sWzUxNywwXSxbNTI5LDBdLFs1MzcsMF0sWzU0OCwwXSxbNTYwLDBdLFs1NzAsMF0sWzU3OCwwXSxbNTg4LDBdLFs2MDAsMF0sWzYxMSwwXSxbNjE5LDBdLFs2MzEsMF0sWzY0MCwwXSxbNjUyLDBdLFs2NjAsMF0sWzY3MiwwXSxbNjgwLDBdLFs2OTIsMF0sWzcwMywwXSxbNzEzLDBdLFs3MjMsMF0sWzczMSwwXSxbNzQzLDBdLFs3NTIsMF0sWzc2NCwwXSxbNzc0LDBdLFs3ODIsMF0sWzc5MywwXSxbODA0LDBdLFs4MTYsMF0sWzgyNCwwXSxbODM0LDBdLFs4NDUsMF0sWzg1NCwwXSxbODY0LDBdLFs4NzcsMF0sWzg4NiwwXSxbODk2LDBdLFs5MDYsMF0sWzkxNSwwXSxbOTI3LDBdLFs5MzYsMF0sWzk0OCwwXSxbOTU2LDBdLFs5NjcsMF0sWzk3OCwwXSxbOTg3LDBdLFs5OTcsMF0sWzEwMDcsMF0sWzEwMTcsMF0sWzEwMjksMF0sWzEwMzksMF0sWzEwNDksMF0sWzEwNTgsMF0sWzEwNjksMF0sWzEwNzksMF0sWzEwOTAsMF0sWzEwOTksMF0sWzExMDksMF0sWzExMjEsMF0sWzExMjksMF0sWzExNDIsMF0sWzExNTIsMF0sWzExNjIsMF0sWzExNzIsMF0sWzExODIsMF0sWzExOTEsMF0sWzEyMDIsMF0sWzEyMTIsMF0sWzEyMjQsMF0sWzEyMzMsMF0sWzEyNDIsMF0sWzEyNTQsMF0sWzEyNjQsMF0sWzEyNzQsMF0sWzEyODQsMF0sWzEyOTYsMF0sWzEzMDUsMF0sWzEzMTUsMF0sWzEzMjUsMF0sWzEzMzUsMF0sWzEzNDYsMF0sWzEzNTYsMF0sWzEzNjYsMF0sWzEzNzYsMF0sWzEzODUsMF0sWzEzOTgsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-7127b71e00cc2af8daf2",
+          "file": "release-11-1-1.spec.ts",
+          "line": 792,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Popover reopened while it closes turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3215,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:40:06.324Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuOTA1LCJ0dXJuZWRBdCI6MC44MTMsInNoYXJlIjowLjA4NywiZW5kIjoxLCJmcmFtZXMiOltbLTYsMC45MDVdLFs0LDAuODcyXSxbMTYsMC44MjVdLFsxNywwLjgyMV0sWzE5LDAuODEzXSxbMjUsMC44MTNdLFszNSwwLjg3N10sWzQ1LDAuOTE3XSxbNTUsMC45NDZdLFs2NywwLjk3XSxbNzUsMC45ODFdLFs4NSwwLjk5MV0sWzk2LDAuOTk3XSxbMTA3LDFdLFsxMTcsMV0sWzEyNywxXSxbMTM3LDFdLFsxNDcsMV0sWzE1OCwxXSxbMTY3LDFdLFsxNzcsMV0sWzE4OSwxXSxbMTk4LDFdLFsyMDksMV0sWzIxOCwxXSxbMjI5LDFdLFsyMzksMV0sWzI0OCwxXSxbMjYwLDFdLFsyNzAsMV0sWzI3OSwxXSxbMjkxLDFdLFszMDAsMV0sWzMxMSwxXSxbMzIwLDFdLFszMjksMV0sWzM0MSwxXSxbMzUxLDFdLFszNjIsMV0sWzM3MiwxXSxbMzgyLDFdLFszOTIsMV0sWzQwMiwxXSxbNDEzLDFdLFs0MjMsMV0sWzQzMywxXSxbNDQzLDFdLFs0NTMsMV0sWzQ2MywxXSxbNDc0LDFdLFs0ODQsMV0sWzQ5NCwxXSxbNTA0LDFdLFs1MTUsMV0sWzUyNSwxXSxbNTM1LDFdLFs1NDQsMV0sWzU1NiwxXSxbNTY2LDFdLFs1NzYsMV0sWzU4NiwxXSxbNTk2LDFdLFs2MDcsMV0sWzYxNywxXSxbNjI3LDFdLFs2MzcsMV0sWzY0OSwxXSxbNjU2LDFdLFs2NjcsMV0sWzY3OSwxXSxbNjg4LDFdLFs2OTgsMV0sWzcwOSwxXSxbNzE5LDFdLFs3MjksMV0sWzczOSwxXSxbNzUxLDFdLFs3NjAsMV0sWzc3MCwxXSxbNzgwLDFdLFs3OTAsMV0sWzgwMiwxXSxbODExLDFdLFs4MjEsMV0sWzgzMSwxXSxbODQxLDFdLFs4NTIsMV0sWzg2MiwxXSxbODcyLDFdLFs4ODIsMV0sWzg5MiwxXSxbOTAzLDFdLFs5MTMsMV0sWzkyMywxXSxbOTMzLDFdLFs5NDMsMV0sWzk1NCwxXSxbOTYzLDFdLFs5NzQsMV0sWzk4NCwxXSxbOTk0LDFdLFsxMDAzLDFdLFsxMDE1LDFdLFsxMDI1LDFdLFsxMDM3LDFdLFsxMDQ1LDFdLFsxMDU4LDFdLFsxMDY2LDFdLFsxMDc2LDFdLFsxMDg2LDFdLFsxMDk1LDFdLFsxMTA3LDFdLFsxMTE3LDFdLFsxMTI3LDFdLFsxMTM3LDFdLFsxMTQ3LDFdLFsxMTU4LDFdLFsxMTY4LDFdLFsxMTc3LDFdLFsxMTg3LDFdLFsxMTk5LDFdLFsxMjA5LDFdLFsxMjE4LDFdLFsxMjI4LDFdLFsxMjQxLDFdLFsxMjUwLDFdLFsxMjYwLDFdLFsxMjY5LDFdLFsxMjgxLDFdLFsxMjkwLDFdLFsxMzAxLDFdLFsxMzA5LDFdLFsxMzIxLDFdLFsxMzMxLDFdLFsxMzQxLDFdLFsxMzUyLDFdLFsxMzYyLDFdLFsxMzcyLDFdLFsxMzgyLDFdLFsxMzkyLDFdLFsxNDAzLDFdLFsxNDEyLDFdLFsxNDIzLDFdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-ecec73c44aea49e37d23",
+          "file": "release-11-1-1.spec.ts",
+          "line": 802,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Toast closed while it opens turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2351,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:40:09.544Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNTM5LCJ0dXJuZWRBdCI6MC42MDcsInNoYXJlIjowLjA4NSwiZW5kIjowLCJmcmFtZXMiOltbLTExLDAuNTM5XSxbMCwwLjU3Nl0sWzIsMC41ODJdLFs5LDAuNjA3XSxbMjAsMC41OThdLFszMCwwLjU3OF0sWzM4LDAuNTU1XSxbNTAsMC41MTJdLFs2MCwwLjQ2OV0sWzcxLDAuNDIyXSxbODEsMC4zNzRdLFs5MSwwLjMyMV0sWzEwMSwwLjI3Nl0sWzExMiwwLjI0Nl0sWzEyMiwwLjIyOV0sWzEzMiwwLjIwNl0sWzE0MiwwLjE3OF0sWzE1MiwwLjE1XSxbMTYzLDAuMTJdLFsxNzMsMC4wODldLFsxODMsMC4wNl0sWzE5MywwLjAyOV0sWzIwMywwLjAwNV0sWzIxMiwwXSxbMjIyLDBdLFsyMzQsMF0sWzI0NCwwXSxbMjU1LDBdLFsyNjUsMF0sWzI3NSwwXSxbMjg1LDBdLFsyOTQsMF0sWzMwNiwwXSxbMzE0LDBdLFszMjYsMF0sWzMzNiwwXSxbMzQ2LDBdLFszNTYsMF0sWzM2NiwwXSxbMzc3LDBdLFszODcsMF0sWzM5NiwwXSxbNDA4LDBdLFs0MTgsMF0sWzQyOCwwXSxbNDM4LDBdLFs0NDgsMF0sWzQ1OSwwXSxbNDY5LDBdLFs0NzksMF0sWzQ4OSwwXSxbNDk5LDBdLFs1MTAsMF0sWzUxOSwwXSxbNTMxLDBdLFs1MzgsMF0sWzU1MCwwXSxbNTYxLDBdLFs1NzEsMF0sWzU4MCwwXSxbNTkzLDBdLFs2MDEsMF0sWzYxMiwwXSxbNjIyLDBdLFs2MzIsMF0sWzY0MSwwXSxbNjUyLDBdLFs2NjEsMF0sWzY3MSwwXSxbNjg0LDBdLFs2OTMsMF0sWzcwMywwXSxbNzE0LDBdLFs3MjQsMF0sWzczNCwwXSxbNzQ0LDBdLFs3NTUsMF0sWzc2NCwwXSxbNzc0LDBdLFs3ODQsMF0sWzc5NSwwXSxbODA1LDBdLFs4MTQsMF0sWzgyNiwwXSxbODM2LDBdLFs4NDYsMF0sWzg1NiwwXSxbODY3LDBdLFs4NzYsMF0sWzg4NywwXSxbODk3LDBdLFs5MDYsMF0sWzkxOCwwXSxbOTI4LDBdLFs5MzgsMF0sWzk0NywwXSxbOTU4LDBdLFs5NjksMF0sWzk3OSwwXSxbOTg4LDBdLFs5OTksMF0sWzEwMTAsMF0sWzEwMjAsMF0sWzEwMzAsMF0sWzEwNDIsMF0sWzEwNTAsMF0sWzEwNjEsMF0sWzEwNzAsMF0sWzEwODEsMF0sWzEwOTEsMF0sWzExMDEsMF0sWzExMTIsMF0sWzExMjIsMF0sWzExMzIsMF0sWzExNDIsMF0sWzExNTIsMF0sWzExNjQsMF0sWzExNzMsMF0sWzExODMsMF0sWzExOTMsMF0sWzEyMDQsMF0sWzEyMTQsMF0sWzEyMjQsMF0sWzEyMzQsMF0sWzEyNDQsMF0sWzEyNTUsMF0sWzEyNjUsMF0sWzEyNzMsMF0sWzEyODUsMF0sWzEyOTUsMF0sWzEzMDYsMF0sWzEzMTYsMF0sWzEzMjYsMF0sWzEzMzYsMF0sWzEzNDYsMF0sWzEzNTYsMF0sWzEzNjgsMF0sWzEzNzcsMF0sWzEzODksMF0sWzEzOTYsMF0sWzE0MDgsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-5f93e1f23b06f0582f07",
+          "file": "release-11-1-1.spec.ts",
+          "line": 792,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Tooltip closed while it opens turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2305,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:40:11.900Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuMjgxLCJ0dXJuZWRBdCI6MC4yODEsInNoYXJlIjowLjE1LCJlbmQiOjAsImZyYW1lcyI6W1stNCwwLjI4MV0sWzYsMC4yODFdLFsxNywwLjE5NV0sWzI3LDAuMTAxXSxbMzYsMC4wMjRdLFs0OCwwXSxbNTcsMF0sWzY3LDBdLFs3NywwXSxbODcsMF0sWzk3LDBdLFsxMDgsMF0sWzExOSwwXSxbMTI5LDBdLFsxMzcsMF0sWzE0OSwwXSxbMTYxLDBdLFsxNzAsMF0sWzE3OSwwXSxbMTkyLDBdLFsyMDAsMF0sWzIwOSwwXSxbMjIxLDBdLFsyMzEsMF0sWzI0MSwwXSxbMjUwLDBdLFsyNjIsMF0sWzI3MiwwXSxbMjgyLDBdLFsyOTIsMF0sWzMwMiwwXSxbMzEyLDBdLFszMjMsMF0sWzMzMywwXSxbMzQyLDBdLFszNTMsMF0sWzM2NCwwXSxbMzc0LDBdLFszODQsMF0sWzM5NCwwXSxbNDA1LDBdLFs0MTUsMF0sWzQyNSwwXSxbNDMzLDBdLFs0NDUsMF0sWzQ1NSwwXSxbNDY2LDBdLFs0NzYsMF0sWzQ4NiwwXSxbNDk2LDBdLFs1MDUsMF0sWzUxNywwXSxbNTI3LDBdLFs1MzcsMF0sWzU0NiwwXSxbNTU3LDBdLFs1NjYsMF0sWzU3OCwwXSxbNTg2LDBdLFs1OTgsMF0sWzYwOCwwXSxbNjE3LDBdLFs2MjksMF0sWzYzOCwwXSxbNjQ5LDBdLFs2NTksMF0sWzY3MSwwXSxbNjc4LDBdLFs2OTAsMF0sWzY5OSwwXSxbNzEwLDBdLFs3MjAsMF0sWzcyOSwwXSxbNzM5LDBdLFs3NTEsMF0sWzc2MCwwXSxbNzcyLDBdLFs3ODIsMF0sWzc5MCwwXSxbODAyLDBdLFs4MTEsMF0sWzgyMywwXSxbODMzLDBdLFs4NDMsMF0sWzg1MiwwXSxbODYzLDBdLFs4NzIsMF0sWzg4NCwwXSxbODkzLDBdLFs5MDMsMF0sWzkxNSwwXSxbOTIzLDBdLFs5MzUsMF0sWzk0MywwXSxbOTU1LDBdLFs5NjQsMF0sWzk3NiwwXSxbOTg1LDBdLFs5OTYsMF0sWzEwMDcsMF0sWzEwMTcsMF0sWzEwMjYsMF0sWzEwMzUsMF0sWzEwNDcsMF0sWzEwNTYsMF0sWzEwNjgsMF0sWzEwNzYsMF0sWzEwODgsMF0sWzEwOTcsMF0sWzExMDksMF0sWzExMTksMF0sWzExMjgsMF0sWzExMzcsMF0sWzExNDksMF0sWzExNTgsMF0sWzExNjksMF0sWzExNzksMF0sWzExODgsMF0sWzExOTksMF0sWzEyMDksMF0sWzEyMjEsMF0sWzEyMjksMF0sWzEyNDEsMF0sWzEyNTAsMF0sWzEyNjEsMF0sWzEyNzAsMF0sWzEyODEsMF0sWzEyOTAsMF0sWzEzMDIsMF0sWzEzMTMsMF0sWzEzMjMsMF0sWzEzMzMsMF0sWzEzNDMsMF0sWzEzNTMsMF0sWzEzNjQsMF0sWzEzNzQsMF0sWzEzODQsMF0sWzEzOTMsMF0sWzE0MDQsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-513bd21e40fd5c0e0d74",
+          "file": "release-11-1-1.spec.ts",
+          "line": 792,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Tooltip reopened while it closes turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3227,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:40:14.208Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNjcsInR1cm5lZEF0IjowLjQ4MSwic2hhcmUiOjAuMTQ5LCJlbmQiOjEsImZyYW1lcyI6W1stMiwwLjY3XSxbMTAsMC41NjddLFsxOCwwLjQ5XSxbMTksMC40ODFdLFszMCwwLjQ4MV0sWzM4LDAuNTExXSxbNDgsMC41NTZdLFs1OSwwLjYxMl0sWzcwLDAuNjc4XSxbNzksMC43MjRdLFs5MSwwLjc5Ml0sWzk5LDAuODM3XSxbMTA5LDAuODk2XSxbMTIwLDAuOTQ1XSxbMTMwLDAuOTg2XSxbMTQwLDFdLFsxNTIsMV0sWzE2MSwxXSxbMTcxLDFdLFsxODIsMV0sWzE5MywxXSxbMjAxLDFdLFsyMTEsMV0sWzIyNCwxXSxbMjMzLDFdLFsyNDIsMV0sWzI1MywxXSxbMjY1LDFdLFsyNzMsMV0sWzI4NSwxXSxbMjkzLDFdLFszMDQsMV0sWzMxNSwxXSxbMzI1LDFdLFszMzQsMV0sWzM0NiwxXSxbMzU4LDFdLFszNjUsMV0sWzM3NywxXSxbMzg3LDFdLFszOTUsMV0sWzQwNywxXSxbNDE3LDFdLFs0MjcsMV0sWzQzNiwxXSxbNDQ4LDFdLFs0NTgsMV0sWzQ2OSwxXSxbNDc5LDFdLFs0ODcsMV0sWzQ5NywxXSxbNTA4LDFdLFs1MjAsMV0sWzUyOCwxXSxbNTM4LDFdLFs1NTEsMV0sWzU1OSwxXSxbNTcwLDFdLFs1NzksMV0sWzU5MCwxXSxbNjAxLDFdLFs2MTAsMV0sWzYyMiwxXSxbNjMwLDFdLFs2NDIsMV0sWzY1MCwxXSxbNjYzLDFdLFs2NzIsMV0sWzY4NCwxXSxbNjkxLDFdLFs3MDIsMV0sWzcxMiwxXSxbNzI0LDFdLFs3MzIsMV0sWzc0MywxXSxbNzU0LDFdLFs3NjQsMV0sWzc3NSwxXSxbNzg0LDFdLFs3OTUsMV0sWzgwMywxXSxbODE0LDFdLFs4MjYsMV0sWzgzNiwxXSxbODQ0LDFdLFs4NTYsMV0sWzg2NywxXSxbODc2LDFdLFs4ODcsMV0sWzg5NywxXSxbOTA3LDFdLFs5MTYsMV0sWzkyNywxXSxbOTM4LDFdLFs5NDgsMV0sWzk1NywxXSxbOTY5LDFdLFs5NzksMV0sWzk4OSwxXSxbOTk5LDFdLFsxMDA3LDFdLFsxMDE4LDFdLFsxMDMwLDFdLFsxMDM4LDFdLFsxMDUwLDFdLFsxMDU4LDFdLFsxMDY5LDFdLFsxMDc5LDFdLFsxMDkxLDFdLFsxMDk5LDFdLFsxMTExLDFdLFsxMTIxLDFdLFsxMTMwLDFdLFsxMTQyLDFdLFsxMTUxLDFdLFsxMTYxLDFdLFsxMTczLDFdLFsxMTgyLDFdLFsxMTkxLDFdLFsxMjAzLDFdLFsxMjEzLDFdLFsxMjIyLDFdLFsxMjMzLDFdLFsxMjQ0LDFdLFsxMjU0LDFdLFsxMjY1LDFdLFsxMjc1LDFdLFsxMjgzLDFdLFsxMjk1LDFdLFsxMzA0LDFdLFsxMzE2LDFdLFsxMzI2LDFdLFsxMzM0LDFdLFsxMzQ2LDFdLFsxMzU1LDFdLFsxMzY3LDFdLFsxMzc1LDFdLFsxMzg2LDFdLFsxMzk2LDFdLFsxNDA2LDFdLFsxNDE4LDFdLFsxNDI2LDFdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-a0295f16c922d9864f7b",
+          "file": "release-11-1-1.spec.ts",
+          "line": 802,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Collapsible closed while it opens turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4195,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:40:17.440Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNDU2LCJ0dXJuZWRBdCI6MC43MTUsInNoYXJlIjowLjE2NCwiZW5kIjowLCJmcmFtZXMiOltbLTcsMC40NTZdLFsyLDAuNTM3XSxbMTMsMC42MjRdLFsyMiwwLjY4NV0sWzIzLDAuNjkxXSxbMjcsMC43MTVdLFszMSwwLjcxNV0sWzQzLDAuNTkyXSxbNTMsMC40OThdLFs2NCwwLjQwN10sWzc0LDAuMzM1XSxbODQsMC4yNzNdLFs5NCwwLjIyMl0sWzEwNCwwLjE3OV0sWzExNSwwLjE0MV0sWzEyNSwwLjExM10sWzEzNSwwLjA5XSxbMTQ1LDAuMDcxXSxbMTU2LDAuMDU1XSxbMTY2LDAuMDQzXSxbMTc2LDAuMDM0XSxbMTg2LDAuMDI3XSxbMTk2LDBdLFsyMDcsMF0sWzIxNywwXSxbMjI3LDBdLFsyMzcsMF0sWzI0NywwXSxbMjU3LDBdLFsyNjYsMF0sWzI3OCwwXSxbMjg2LDBdLFsyOTksMF0sWzMwOCwwXSxbMzIxLDBdLFszMjgsMF0sWzM0MCwwXSxbMzQ5LDBdLFszNjAsMF0sWzM3MCwwXSxbMzc4LDBdLFszOTAsMF0sWzQwMSwwXSxbNDExLDBdLFs0MjEsMF0sWzQzMSwwXSxbNDQxLDBdLFs0NTIsMF0sWzQ2MiwwXSxbNDcyLDBdLFs0ODIsMF0sWzQ5MiwwXSxbNTAyLDBdLFs1MTQsMF0sWzUyMywwXSxbNTMzLDBdLFs1NDMsMF0sWzU1MywwXSxbNTY0LDBdLFs1NzQsMF0sWzU4NCwwXSxbNTkzLDBdLFs2MDUsMF0sWzYxNSwwXSxbNjI1LDBdLFs2MzUsMF0sWzY0NSwwXSxbNjU2LDBdLFs2NjYsMF0sWzY3NiwwXSxbNjg0LDBdLFs2OTYsMF0sWzcwNywwXSxbNzE3LDBdLFs3MjcsMF0sWzczNywwXSxbNzQ3LDBdLFs3NTYsMF0sWzc2OCwwXSxbNzgwLDBdLFs3ODgsMF0sWzc5NywwXSxbODA5LDBdLFs4MTgsMF0sWzgzMCwwXSxbODM5LDBdLFs4NDgsMF0sWzg2MCwwXSxbODcwLDBdLFs4ODAsMF0sWzg5MCwwXSxbOTAxLDBdLFs5MTEsMF0sWzkyMCwwXSxbOTMyLDBdLFs5NDEsMF0sWzk1MiwwXSxbOTYyLDBdLFs5NzIsMF0sWzk4MiwwXSxbOTkxLDBdLFsxMDAzLDBdLFsxMDEzLDBdLFsxMDIyLDBdLFsxMDMzLDBdLFsxMDQzLDBdLFsxMDU2LDBdLFsxMDY0LDBdLFsxMDc0LDBdLFsxMDg0LDBdLFsxMDkzLDBdLFsxMTA1LDBdLFsxMTE1LDBdLFsxMTI1LDBdLFsxMTM0LDBdLFsxMTQ2LDBdLFsxMTU2LDBdLFsxMTY0LDBdLFsxMTc0LDBdLFsxMTg2LDBdLFsxMTk3LDBdLFsxMjA4LDBdLFsxMjE3LDBdLFsxMjI2LDBdLFsxMjM5LDBdLFsxMjQ4LDBdLFsxMjU4LDBdLFsxMjY4LDBdLFsxMjc5LDBdLFsxMjg4LDBdLFsxMjk5LDBdLFsxMzA5LDBdLFsxMzE5LDBdLFsxMzI5LDBdLFsxMzM5LDBdLFsxMzQ5LDBdLFsxMzYxLDBdLFsxMzY4LDBdLFsxMzgwLDBdLFsxMzkwLDBdLFsxNDAxLDBdLFsxNDExLDBdLFsxNDIxLDBdLFsxNDMxLDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-02c11a8d29187ca8a6de",
+          "file": "release-11-1-1.spec.ts",
+          "line": 792,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Collapsible reopened while it closes turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5126,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:40:21.640Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNTkyLCJ0dXJuZWRBdCI6MC4zNzYsInNoYXJlIjowLjE1MywiZW5kIjoxLCJmcmFtZXMiOltbLTEsMC41OTJdLFsxMSwwLjQ4XSxbMjEsMC4zOTldLFsyMiwwLjM5MV0sWzI0LDAuMzc2XSxbMzEsMC4zNzZdLFs0MSwwLjQ3M10sWzUyLDAuNTY4XSxbNjIsMC42NDRdLFs3MiwwLjcwOF0sWzgyLDAuNzYzXSxbOTMsMC44MTJdLFsxMDMsMC44NDldLFsxMTMsMC44NzldLFsxMjIsMC45MDFdLFsxMzQsMC45MjVdLFsxNDQsMC45NDFdLFsxNTMsMC45NTJdLFsxNjQsMC45NjNdLFsxNzQsMC45NzFdLFsxODYsMV0sWzE5NSwxXSxbMjA1LDFdLFsyMTUsMV0sWzIyNywxXSxbMjM2LDFdLFsyNDYsMV0sWzI1NiwxXSxbMjY2LDFdLFsyNzYsMV0sWzI4OCwxXSxbMjk3LDFdLFszMDcsMV0sWzMxNywxXSxbMzI3LDFdLFszMzksMV0sWzM0OCwxXSxbMzU4LDFdLFszNjgsMV0sWzM3OCwxXSxbMzg3LDFdLFszOTksMV0sWzQwOSwxXSxbNDE5LDFdLFs0MzAsMV0sWzQzOSwxXSxbNDQ5LDFdLFs0NjAsMV0sWzQ3MCwxXSxbNDgxLDFdLFs0OTEsMV0sWzUwMSwxXSxbNTExLDFdLFs1MjEsMV0sWzUzMSwxXSxbNTQyLDFdLFs1NTEsMV0sWzU2MywxXSxbNTcyLDFdLFs1ODIsMV0sWzU5MSwxXSxbNjAzLDFdLFs2MTMsMV0sWzYyMywxXSxbNjM0LDFdLFs2NDQsMV0sWzY1NCwxXSxbNjY0LDFdLFs2NzQsMV0sWzY4NCwxXSxbNjk2LDFdLFs3MDUsMV0sWzcxNSwxXSxbNzI1LDFdLFs3MzYsMV0sWzc0NiwxXSxbNzU2LDFdLFs3NjYsMV0sWzc3NSwxXSxbNzg4LDFdLFs3OTcsMV0sWzgwNywxXSxbODE3LDFdLFs4MjgsMV0sWzgzOCwxXSxbODQ4LDFdLFs4NTgsMV0sWzg2OCwxXSxbODc5LDFdLFs4ODksMV0sWzg5OCwxXSxbOTEwLDFdLFs5MTksMV0sWzkyOSwxXSxbOTM5LDFdLFs5NDksMV0sWzk2MSwxXSxbOTcwLDFdLFs5ODEsMV0sWzk5MSwxXSxbOTk5LDFdLFsxMDExLDFdLFsxMDIxLDFdLFsxMDMyLDFdLFsxMDQwLDFdLFsxMDUzLDFdLFsxMDY0LDFdLFsxMDcyLDFdLFsxMDg0LDFdLFsxMDkzLDFdLFsxMTA1LDFdLFsxMTEzLDFdLFsxMTIzLDFdLFsxMTM0LDFdLFsxMTQ1LDFdLFsxMTU0LDFdLFsxMTY1LDFdLFsxMTc2LDFdLFsxMTg1LDFdLFsxMTk3LDFdLFsxMjA1LDFdLFsxMjE1LDFdLFsxMjI2LDFdLFsxMjM2LDFdLFsxMjQ2LDFdLFsxMjU2LDFdLFsxMjY2LDFdLFsxMjc3LDFdLFsxMjg3LDFdLFsxMjk3LDFdLFsxMzA3LDFdLFsxMzE5LDFdLFsxMzI4LDFdLFsxMzM4LDFdLFsxMzQ3LDFdLFsxMzU4LDFdLFsxMzY4LDFdLFsxMzc5LDFdLFsxMzg5LDFdLFsxMzk5LDFdLFsxNDExLDFdLFsxNDE5LDFdLFsxNDMwLDFdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-e75e53ebbf48a29596d6",
+          "file": "release-11-1-1.spec.ts",
+          "line": 802,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Accordion closed while it opens turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4172,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:40:26.770Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNTI4LCJ0dXJuZWRBdCI6MC43MDksInNoYXJlIjowLjE2NCwiZW5kIjowLCJmcmFtZXMiOltbLTEsMC41MjhdLFsxMCwwLjYxNl0sWzIwLDAuNjg1XSxbMjEsMC42OTFdLFsyNCwwLjcwOV0sWzI5LDAuNzA5XSxbNDEsMC41ODddLFs1MSwwLjQ5M10sWzYwLDAuNDE4XSxbNzEsMC4zMzhdLFs4MiwwLjI3XSxbOTEsMC4yMjRdLFsxMDEsMC4xODFdLFsxMTMsMC4xMzldLFsxMjIsMC4xMTRdLFsxMzMsMC4wODldLFsxNDMsMC4wN10sWzE1MywwLjA1Nl0sWzE2MywwLjA0NF0sWzE3MiwwLjAzNV0sWzE4NCwwLjAyN10sWzE5NCwwXSxbMjAzLDBdLFsyMTUsMF0sWzIyNCwwXSxbMjMzLDBdLFsyNDUsMF0sWzI1NCwwXSxbMjY2LDBdLFsyNzQsMF0sWzI4NywwXSxbMjk1LDBdLFszMDYsMF0sWzMxNiwwXSxbMzI3LDBdLFszMzcsMF0sWzM0NywwXSxbMzU2LDBdLFszNjYsMF0sWzM3NSwwXSxbMzg4LDBdLFszOTcsMF0sWzQwOSwwXSxbNDE2LDBdLFs0MjksMF0sWzQzOSwwXSxbNDQ5LDBdLFs0NTgsMF0sWzQ2OCwwXSxbNDgwLDBdLFs0OTAsMF0sWzUwMCwwXSxbNTA4LDBdLFs1MjEsMF0sWzUzMSwwXSxbNTQxLDBdLFs1NTMsMF0sWzU2MSwwXSxbNTcxLDBdLFs1ODIsMF0sWzU5MiwwXSxbNjA0LDBdLFs2MTIsMF0sWzYyMiwwXSxbNjMzLDBdLFs2NDIsMF0sWzY1MywwXSxbNjY0LDBdLFs2NzMsMF0sWzY4NCwwXSxbNjk0LDBdLFs3MDQsMF0sWzcxNCwwXSxbNzI0LDBdLFs3MzcsMF0sWzc0MywwXSxbNzU2LDBdLFs3NjUsMF0sWzc3NCwwXSxbNzg2LDBdLFs3OTUsMF0sWzgwNSwwXSxbODE1LDBdLFs4MjcsMF0sWzgzNywwXSxbODQ3LDBdLFs4NTcsMF0sWzg2NywwXSxbODc5LDBdLFs4ODgsMF0sWzg5OCwwXSxbOTA4LDBdLFs5MTgsMF0sWzkyOSwwXSxbOTM5LDBdLFs5NDksMF0sWzk1OSwwXSxbOTcwLDBdLFs5NzksMF0sWzk5MSwwXSxbMTAwMCwwXSxbMTAxMSwwXSxbMTAxOSwwXSxbMTAzMSwwXSxbMTA0MCwwXSxbMTA1MiwwXSxbMTA2MSwwXSxbMTA3MiwwXSxbMTA4MiwwXSxbMTA5MCwwXSxbMTEwMiwwXSxbMTExMSwwXSxbMTEyMiwwXSxbMTEzMywwXSxbMTE0MywwXSxbMTE1MywwXSxbMTE2MiwwXSxbMTE3NCwwXSxbMTE4NCwwXSxbMTE5MywwXSxbMTIwMiwwXSxbMTIxNCwwXSxbMTIyNCwwXSxbMTIzNiwwXSxbMTI0NSwwXSxbMTI1NSwwXSxbMTI2NSwwXSxbMTI3NiwwXSxbMTI4NiwwXSxbMTI5NSwwXSxbMTMwNiwwXSxbMTMxNiwwXSxbMTMyNywwXSxbMTMzNywwXSxbMTM0NiwwXSxbMTM1OCwwXSxbMTM2NywwXSxbMTM3OCwwXSxbMTM4OCwwXSxbMTM5OCwwXSxbMTQwOCwwXSxbMTQxOCwwXSxbMTQyOSwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-44e529fdbfd34d9987fd",
+          "file": "release-11-1-1.spec.ts",
+          "line": 792,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Accordion reopened while it closes turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5109,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:40:30.945Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNTYzLCJ0dXJuZWRBdCI6MC4zNzYsInNoYXJlIjowLjE1NCwiZW5kIjoxLCJmcmFtZXMiOltbLTEsMC41NjNdLFs5LDAuNDcyXSxbMTgsMC4zOTldLFsxOSwwLjM5MV0sWzIxLDAuMzc2XSxbMzAsMC4zNzZdLFs0MCwwLjQ3M10sWzUwLDAuNTZdLFs2MiwwLjY1MV0sWzcxLDAuNzA4XSxbODEsMC43NjNdLFs5MSwwLjgwOF0sWzEwMSwwLjg0Nl0sWzExMSwwLjg3Nl0sWzEyMiwwLjkwNF0sWzEzMiwwLjkyM10sWzE0MiwwLjkzOV0sWzE1MywwLjk1M10sWzE2MiwwLjk2Ml0sWzE3NSwwLjk3Ml0sWzE4MywwLjk5M10sWzE5MiwxXSxbMjA0LDFdLFsyMTUsMV0sWzIyMywxXSxbMjM0LDFdLFsyNDQsMV0sWzI1NCwxXSxbMjY0LDFdLFsyNzcsMV0sWzI4NSwxXSxbMjk1LDFdLFszMDUsMV0sWzMxNSwxXSxbMzI2LDFdLFszMzYsMV0sWzM0NiwxXSxbMzU2LDFdLFszNjcsMV0sWzM3NywxXSxbMzg3LDFdLFszOTcsMV0sWzQwNywxXSxbNDE4LDFdLFs0MjgsMV0sWzQzOCwxXSxbNDQ4LDFdLFs0NTgsMV0sWzQ2OSwxXSxbNDc5LDFdLFs0ODksMV0sWzQ5OSwxXSxbNTA4LDFdLFs1MTksMV0sWzUzMCwxXSxbNTQwLDFdLFs1NTAsMV0sWzU2MSwxXSxbNTY5LDFdLFs1ODEsMV0sWzU5MSwxXSxbNjAxLDFdLFs2MTAsMV0sWzYyMiwxXSxbNjMyLDFdLFs2NDIsMV0sWzY1MiwxXSxbNjY0LDFdLFs2NzMsMV0sWzY4MywxXSxbNjkzLDFdLFs3MDIsMV0sWzcxNCwxXSxbNzI0LDFdLFs3MzQsMV0sWzc0NCwxXSxbNzU0LDFdLFs3NjUsMV0sWzc3NSwxXSxbNzg1LDFdLFs3OTcsMV0sWzgwNCwxXSxbODE2LDFdLFs4MjYsMV0sWzgzNiwxXSxbODQ2LDFdLFs4NTYsMV0sWzg2NywxXSxbODc3LDFdLFs4ODcsMV0sWzg5NywxXSxbOTA3LDFdLFs5MTgsMV0sWzkyOCwxXSxbOTM4LDFdLFs5NDgsMV0sWzk1OCwxXSxbOTY5LDFdLFs5NzksMV0sWzk4OSwxXSxbOTk5LDFdLFsxMDA5LDFdLFsxMDIwLDFdLFsxMDMwLDFdLFsxMDQwLDFdLFsxMDUwLDFdLFsxMDYwLDFdLFsxMDcyLDFdLFsxMDgxLDFdLFsxMDkxLDFdLFsxMTAyLDFdLFsxMTEyLDFdLFsxMTIyLDFdLFsxMTMzLDFdLFsxMTQzLDFdLFsxMTUyLDFdLFsxMTY1LDFdLFsxMTcxLDFdLFsxMTgzLDFdLFsxMTkzLDFdLFsxMjAyLDFdLFsxMjE0LDFdLFsxMjI0LDFdLFsxMjM0LDFdLFsxMjQ0LDFdLFsxMjU0LDFdLFsxMjY1LDFdLFsxMjc1LDFdLFsxMjg1LDFdLFsxMjk1LDFdLFsxMzA1LDFdLFsxMzE2LDFdLFsxMzI4LDFdLFsxMzM2LDFdLFsxMzQ2LDFdLFsxMzU2LDFdLFsxMzY2LDFdLFsxMzc4LDFdLFsxMzg3LDFdLFsxMzk3LDFdLFsxNDA4LDFdLFsxNDE2LDFdLFsxNDI4LDFdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-530c2358e75ae9c3a8a4",
+          "file": "release-11-1-1.spec.ts",
+          "line": 802,
+          "column": 9
+        },
+        {
+          "title": "reverse · a press on a leaving Dialog's trigger reopens it from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3280,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:40:36.057Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuODY3LCJ0dXJuZWRBdCI6MC44MDEsInNoYXJlIjowLjA0MSwiZW5kIjoxLCJmcmFtZXMiOltbLTgsMC44NjddLFs1LDAuODAxXSxbMTIsMC44MTddLFsyMywwLjgzXSxbMzUsMC44NTNdLFs0MywwLjg3N10sWzU1LDAuODkzXSxbNjMsMC45MTRdLFs3NCwwLjkyNl0sWzg0LDAuOTQxXSxbOTQsMC45NTJdLFsxMDQsMC45NjFdLFsxMTUsMC45NjhdLFsxMjUsMC45NzVdLFsxMzUsMC45OF0sWzE0NSwwLjk4NF0sWzE1NSwwLjk4OF0sWzE2NCwwLjk5XSxbMTc2LDAuOTkyXSxbMTg2LDAuOTk0XSxbMTk2LDAuOTk1XSxbMjA2LDAuOTk2XSxbMjE4LDAuOTk3XSxbMjI3LDAuOTk4XSxbMjM2LDAuOTk4XSxbMjQ3LDAuOTk5XSxbMjU3LDAuOTk5XSxbMjY4LDAuOTk5XSxbMjc3LDAuOTk5XSxbMjkwLDFdLFsyOTgsMV0sWzMwOCwxXSxbMzE5LDFdLFszMjgsMV0sWzMzOCwxXSxbMzUwLDFdLFszNTksMV0sWzM2OSwxXSxbMzgxLDFdLFszOTAsMV0sWzQwMCwxXSxbNDEwLDFdLFs0MjEsMV0sWzQzMSwxXSxbNDQxLDFdLFs0NTEsMV0sWzQ2MCwxXSxbNDcyLDFdLFs0ODIsMV0sWzQ5MiwxXSxbNTA0LDFdLFs1MTMsMV0sWzUyMywxXSxbNTMzLDFdLFs1NDMsMV0sWzU1MywxXSxbNTYyLDFdLFs1NzIsMV0sWzU4NCwxXSxbNTkzLDFdLFs2MDUsMV0sWzYxMywxXSxbNjI1LDFdLFs2MzUsMV0sWzY0NSwxXSxbNjU1LDFdLFs2NjUsMV0sWzY3NSwxXSxbNjg4LDFdLFs2OTYsMV0sWzcwNSwxXSxbNzE3LDFdLFs3MjcsMV0sWzczNywxXSxbNzQ3LDFdLFs3NjAsMV0sWzc2OCwxXSxbNzc4LDFdLFs3ODgsMV0sWzc5OCwxXSxbODA5LDFdLFs4MTgsMV0sWzgzMCwxXSxbODM4LDFdLFs4NTEsMV0sWzg2MCwxXSxbODcwLDFdLFs4ODAsMV0sWzg5MCwxXSxbOTAwLDFdLFs5MTEsMV0sWzkyMSwxXSxbOTMxLDFdLFs5NDEsMV0sWzk1MCwxXSxbOTYzLDFdLFs5NzIsMV0sWzk4MCwxXSxbOTkzLDFdLFsxMDAyLDFdLFsxMDEzLDFdLFsxMDIzLDFdLFsxMDMzLDFdLFsxMDQzLDFdLFsxMDUzLDFdLFsxMDY0LDFdLFsxMDcyLDFdLFsxMDg1LDFdLFsxMDk0LDFdLFsxMTA0LDFdLFsxMTE0LDFdLFsxMTI1LDFdLFsxMTM1LDFdLFsxMTQ1LDFdLFsxMTU1LDFdLFsxMTY1LDFdLFsxMTc3LDFdLFsxMTg1LDFdLFsxMTk3LDFdLFsxMjA3LDFdLFsxMjE3LDFdLFsxMjI3LDFdLFsxMjM3LDFdLFsxMjQ3LDFdLFsxMjU5LDFdLFsxMjY4LDFdLFsxMjc4LDFdLFsxMjg4LDFdLFsxMjk4LDFdLFsxMzA5LDFdLFsxMzE5LDFdLFsxMzI5LDFdLFsxMzM5LDFdLFsxMzQ5LDFdLFsxMzYwLDFdLFsxMzcwLDFdLFsxMzgwLDFdLFsxMzg5LDFdLFsxNDAwLDFdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-2a95d542f0465b7a5995",
+          "file": "release-11-1-1.spec.ts",
+          "line": 822,
+          "column": 5
+        },
+        {
+          "title": "reverse · a press on a leaving Sheet's trigger reopens it from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3281,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:40:39.342Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuODcyLCJ0dXJuZWRBdCI6MC44MzcsInNoYXJlIjowLjAyNiwiZW5kIjoxLCJmcmFtZXMiOltbLTYsMC44NzJdLFszLDAuODM3XSxbMTMsMC44NDJdLFsyNiwwLjg0OV0sWzM1LDAuODZdLFs0NSwwLjg3XSxbNTYsMC44ODFdLFs2NCwwLjg5M10sWzc2LDAuOTAzXSxbODUsMC45MTZdLFs5NywwLjkyNl0sWzEwNywwLjkzOV0sWzExNSwwLjk0OF0sWzEyNSwwLjk1Nl0sWzEzNywwLjk2NF0sWzE0NiwwLjk3Ml0sWzE1OCwwLjk3OF0sWzE2OCwwLjk4NV0sWzE3OCwwLjk5XSxbMTg3LDAuOTkzXSxbMTk5LDAuOTk3XSxbMjA5LDFdLFsyMjAsMV0sWzIyOSwxXSxbMjM5LDFdLFsyNTAsMV0sWzI2MCwxXSxbMjcwLDFdLFsyODAsMV0sWzI5MCwxXSxbMzAxLDFdLFszMTEsMV0sWzMyMCwxXSxbMzMwLDFdLFszNDIsMV0sWzM1MiwxXSxbMzYyLDFdLFszNzIsMV0sWzM4MCwxXSxbMzkyLDFdLFs0MDMsMV0sWzQxMywxXSxbNDIzLDFdLFs0MzUsMV0sWzQ0MywxXSxbNDU2LDFdLFs0NjIsMV0sWzQ3NCwxXSxbNDg0LDFdLFs0OTQsMV0sWzUwMywxXSxbNTE1LDFdLFs1MjUsMV0sWzUzNywxXSxbNTQ1LDFdLFs1NTYsMV0sWzU2NiwxXSxbNTc2LDFdLFs1ODYsMV0sWzU5NywxXSxbNjA3LDFdLFs2MTcsMV0sWzYyNiwxXSxbNjM3LDFdLFs2NDYsMV0sWzY1OCwxXSxbNjY4LDFdLFs2NzgsMV0sWzY4OCwxXSxbNjk5LDFdLFs3MDgsMV0sWzcyMCwxXSxbNzI4LDFdLFs3NDAsMV0sWzc1MCwxXSxbNzYwLDFdLFs3NzAsMV0sWzc4MCwxXSxbNzkwLDFdLFs4MDMsMV0sWzgxMSwxXSxbODIxLDFdLFs4MzEsMV0sWzg0NCwxXSxbODUyLDFdLFs4NjIsMV0sWzg3MiwxXSxbODgyLDFdLFs4OTUsMV0sWzkwMywxXSxbOTEzLDFdLFs5MjIsMV0sWzkzNSwxXSxbOTQ0LDFdLFs5NTYsMV0sWzk2NCwxXSxbOTc0LDFdLFs5ODYsMV0sWzk5NSwxXSxbMTAwNSwxXSxbMTAxNSwxXSxbMTAyNywxXSxbMTAzNSwxXSxbMTA0NiwxXSxbMTA1NiwxXSxbMTA2NiwxXSxbMTA3NiwxXSxbMTA4NiwxXSxbMTA5NywxXSxbMTEwNywxXSxbMTExOSwxXSxbMTEyNywxXSxbMTEzNywxXSxbMTE1MCwxXSxbMTE1OCwxXSxbMTE2OCwxXSxbMTE3OCwxXSxbMTE4OCwxXSxbMTE5OSwxXSxbMTIwNywxXSxbMTIxOSwxXSxbMTIyOSwxXSxbMTIzOSwxXSxbMTI1MCwxXSxbMTI2MCwxXSxbMTI3MiwxXSxbMTI4MCwxXSxbMTI5MSwxXSxbMTMwMywxXSxbMTMxMSwxXSxbMTMyMiwxXSxbMTMzMSwxXSxbMTM0MiwxXSxbMTM1MiwxXSxbMTM2MiwxXSxbMTM3MiwxXSxbMTM4MiwxXSxbMTM5MSwxXSxbMTQwMywxXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-cdf8c761280f76f86099",
+          "file": "release-11-1-1.spec.ts",
+          "line": 822,
+          "column": 5
+        },
+        {
+          "title": "reverse · a press on a leaving Select's trigger reopens it from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3307,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:40:42.627Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNzA0LCJ0dXJuZWRBdCI6MC43MDQsInNoYXJlIjowLjEyMiwiZW5kIjoxLCJmcmFtZXMiOltbLTEsMC43MDRdLFs4LDAuNzA0XSxbMjEsMC43OTJdLFszMSwwLjg3M10sWzM5LDAuOTE5XSxbNTEsMC45NzVdLFs2MCwxXSxbNzIsMV0sWzgyLDFdLFs5MiwxXSxbMTAxLDFdLFsxMTAsMV0sWzEyMywxXSxbMTMzLDFdLFsxNDMsMV0sWzE1NSwxXSxbMTYzLDFdLFsxNzQsMV0sWzE4MiwxXSxbMTkzLDFdLFsyMDQsMV0sWzIxNCwxXSxbMjIzLDFdLFsyMzUsMV0sWzI0MywxXSxbMjU1LDFdLFsyNjUsMV0sWzI3NCwxXSxbMjg2LDFdLFsyOTUsMV0sWzMwNiwxXSxbMzE2LDFdLFszMjcsMV0sWzMzNywxXSxbMzQ1LDFdLFszNTcsMV0sWzM2OCwxXSxbMzc4LDFdLFszODYsMV0sWzM5OCwxXSxbNDA4LDFdLFs0MTksMV0sWzQyOCwxXSxbNDM3LDFdLFs0NDksMV0sWzQ1OSwxXSxbNDY4LDFdLFs0ODAsMV0sWzQ5MCwxXSxbNTAwLDFdLFs1MDksMV0sWzUyMiwxXSxbNTMxLDFdLFs1NDEsMV0sWzU1MCwxXSxbNTYxLDFdLFs1NzIsMV0sWzU4MiwxXSxbNTkyLDFdLFs2MDIsMV0sWzYxMSwxXSxbNjI0LDFdLFs2MzIsMV0sWzY0MywxXSxbNjUzLDFdLFs2NjUsMV0sWzY3NCwxXSxbNjg0LDFdLFs2OTQsMV0sWzcwNCwxXSxbNzE1LDFdLFs3MjUsMV0sWzczNSwxXSxbNzQ1LDFdLFs3NTQsMV0sWzc2NiwxXSxbNzc1LDFdLFs3ODYsMV0sWzc5NiwxXSxbODA2LDFdLFs4MTcsMV0sWzgyNywxXSxbODM3LDFdLFs4NDcsMV0sWzg1NywxXSxbODY4LDFdLFs4NzgsMV0sWzg4OCwxXSxbODk4LDFdLFs5MDgsMV0sWzkxOSwxXSxbOTI5LDFdLFs5MzksMV0sWzk0OSwxXSxbOTYxLDFdLFs5NjgsMV0sWzk4MSwxXSxbOTkwLDFdLFsxMDAwLDFdLFsxMDExLDFdLFsxMDIxLDFdLFsxMDMxLDFdLFsxMDQxLDFdLFsxMDUxLDFdLFsxMDYyLDFdLFsxMDcxLDFdLFsxMDgzLDFdLFsxMDkyLDFdLFsxMTAyLDFdLFsxMTEzLDFdLFsxMTIzLDFdLFsxMTMzLDFdLFsxMTQzLDFdLFsxMTU1LDFdLFsxMTY0LDFdLFsxMTc0LDFdLFsxMTg0LDFdLFsxMTk0LDFdLFsxMjA0LDFdLFsxMjE1LDFdLFsxMjI1LDFdLFsxMjM1LDFdLFsxMjQ1LDFdLFsxMjU1LDFdLFsxMjY2LDFdLFsxMjc2LDFdLFsxMjg2LDFdLFsxMjk2LDFdLFsxMzA2LDFdLFsxMzE3LDFdLFsxMzI3LDFdLFsxMzM3LDFdLFsxMzQ3LDFdLFsxMzU3LDFdLFsxMzY4LDFdLFsxMzc3LDFdLFsxMzg4LDFdLFsxMzk4LDFdLFsxNDA4LDFdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-fe61967f081ddafe957e",
+          "file": "release-11-1-1.spec.ts",
+          "line": 822,
+          "column": 5
+        },
+        {
+          "title": "reverse · a press on the page while a sheet leaves reaches the page",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2425,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:40:45.938Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-fb3cf1d4fd245bff138d",
+          "file": "release-11-1-1.spec.ts",
+          "line": 842,
+          "column": 1
+        },
+        {
+          "title": "tooltip · a Tooltip enters on a tween",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1713,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:40:48.367Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "enter",
+                      "contentType": "application/json",
+                      "body": "eyJiZXR3ZWVuIjoxOSwic2hhcmUiOjAuMDk5LCJlbmQiOjEsImZyYW1lcyI6W1szLDBdLFsxMywwXSxbMTQsMF0sWzIzLDBdLFszMywwLjA0XSxbNDQsMC4wODJdLFs1NCwwLjEyN10sWzY0LDAuMTc2XSxbNzIsMC4yMTddLFs4NCwwLjI4MV0sWzk2LDAuMzQ3XSxbMTA1LDAuMzk4XSxbMTE1LDAuNDU0XSxbMTI0LDAuNTA2XSxbMTM2LDAuNTc0XSxbMTQ1LDAuNjMxXSxbMTU2LDAuNjg2XSxbMTY2LDAuNzQxXSxbMTc1LDAuNzg4XSxbMTg3LDAuODQ5XSxbMTk2LDAuODkxXSxbMjA5LDAuOTQ4XSxbMjE3LDAuOTc5XSxbMjI3LDFdLFsyMzgsMV0sWzI0NiwxXSxbMjU4LDFdLFsyNjcsMV0sWzI3OCwxXSxbMjg4LDFdLFsyOTcsMV0sWzMwOSwxXSxbMzE5LDFdLFszMjksMV0sWzM0MCwxXSxbMzQ4LDFdLFszNjAsMV0sWzM3MCwxXSxbMzc5LDFdLFszOTEsMV1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-26f2ac5dfae3a9d0a77a",
+          "file": "release-11-1-1.spec.ts",
+          "line": 881,
+          "column": 1
+        },
+        {
+          "title": "tooltip · a hint handed to its neighbour fades, incoming",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2316,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:40:50.083Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "handover",
+                      "contentType": "application/json",
+                      "body": "eyJiZXR3ZWVuIjoxOCwic2hhcmUiOjAuMSwiZW5kIjoxLCJmcmFtZXMiOltbMTEsMF0sWzIxLDBdLFszMSwwXSxbNDEsMF0sWzUxLDBdLFs2MiwwLjA0XSxbNzIsMC4wODJdLFs4MiwwLjEyN10sWzkyLDAuMTgxXSxbMTAyLDAuMjMzXSxbMTEyLDAuMjg2XSxbMTIxLDAuMzM2XSxbMTMzLDAuMzk4XSxbMTQzLDAuNDZdLFsxNTMsMC41MTddLFsxNjMsMC41OF0sWzE3MywwLjYyNV0sWzE4NCwwLjY4Nl0sWzE5NCwwLjc0MV0sWzIwNCwwLjc5M10sWzIxMywwLjgzOV0sWzIyNSwwLjg5Nl0sWzIzNSwwLjk0XSxbMjQ1LDAuOTgzXSxbMjU2LDFdLFsyNjcsMV0sWzI3NiwxXSxbMjg2LDFdLFsyOTYsMV0sWzMwNywxXSxbMzE3LDFdLFszMjcsMV0sWzMzNywxXSxbMzQ2LDFdLFszNTgsMV0sWzM2OCwxXSxbMzc3LDFdLFszODcsMV0sWzM5OSwxXSxbNDA5LDFdXSwic3RhdGVzIjpbIngtdG9vbHRpcDItY29udGVudDppbnN0YW50LW9wZW4iXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-74b5a50d532cca19535a",
+          "file": "release-11-1-1.spec.ts",
+          "line": 896,
+          "column": 5
+        },
+        {
+          "title": "tooltip · a hint handed to its neighbour fades, outgoing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2297,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:40:52.404Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "handover",
+                      "contentType": "application/json",
+                      "body": "eyJiZXR3ZWVuIjoxMSwic2hhcmUiOjAuMTY2LCJlbmQiOjAsImZyYW1lcyI6W1szLDFdLFsxMywxXSxbMjQsMV0sWzM0LDFdLFs0NCwwLjkzXSxbNTQsMC44NTNdLFs2MywwLjc3OF0sWzc1LDAuNjc5XSxbODUsMC41ODZdLFs5NSwwLjQ5XSxbMTA1LDAuMzg2XSxbMTE1LDAuMjk0XSxbMTI2LDAuMjA1XSxbMTM2LDAuMTIzXSxbMTQ2LDAuMDQ5XSxbMTU2LDBdLFsxNjYsMF0sWzE3NiwwXSxbMTg2LDBdLFsxOTgsMF0sWzIwNywwXSxbMjE4LDBdLFsyMjgsMF0sWzIzOCwwXSxbMjQ4LDBdLFsyNTgsMF0sWzI2OCwwXSxbMjgxLDBdLFsyODksMF0sWzMwMCwwXSxbMzA5LDBdLFszMjAsMF0sWzMzMCwwXSxbMzQwLDBdLFszNTIsMF0sWzM1OSwwXSxbMzcxLDBdLFszODEsMF0sWzM5MSwwXSxbNDAwLDBdXSwic3RhdGVzIjpbIngtdG9vbHRpcC1jb250ZW50Omluc3RhbnQtb3BlbiJdfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-b21d9fe139acbedf3222",
+          "file": "release-11-1-1.spec.ts",
+          "line": 896,
+          "column": 5
+        },
+        {
+          "title": "expand · an ExpandableContainer enters on a tween",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3870,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:40:54.705Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "enter",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MCwiYmV0d2VlbiI6MTksInNoYXJlIjowLjE1MywiZW5kIjoxLCJmcmFtZXMiOltbLTIsMF0sWzksMF0sWzE5LDBdLFsyMCwwXSxbMjIsMF0sWzI5LDBdLFs0MSwwLjEyXSxbNTAsMC4xOTNdLFs1OCwwLjI1M10sWzcxLDAuMzQ1XSxbODAsMC40MDddLFs5MCwwLjQ3NF0sWzEwMSwwLjU0NV0sWzExMSwwLjYwNl0sWzEyMSwwLjY2M10sWzEzMSwwLjcxNl0sWzE0MiwwLjc2OV0sWzE1MiwwLjgxMV0sWzE2MiwwLjg0OV0sWzE3MiwwLjg4Ml0sWzE4MiwwLjkxXSxbMTkzLDAuOTM2XSxbMjAzLDAuOTU1XSxbMjEzLDAuOTY5XSxbMjIzLDAuOThdLFsyMzQsMC45ODhdLFsyNDQsMV0sWzI1NCwxXSxbMjY0LDFdLFsyNzQsMV0sWzI4NSwxXSxbMjk0LDFdLFszMDYsMV0sWzMxNSwxXSxbMzI1LDFdLFszMzYsMV0sWzM0NiwxXSxbMzU3LDFdLFszNjYsMV0sWzM3NSwxXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-aaa5ad377a054961764e",
+          "file": "release-11-1-1.spec.ts",
+          "line": 989,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer leaves on a tween by exit",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4811,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:40:58.578Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MSwiYmV0d2VlbiI6MTEsInNoYXJlIjowLjE3LCJlbmQiOjAsImZyYW1lcyI6W1stNywxXSxbMywxXSxbMTMsMV0sWzE0LDFdLFsxNiwxXSxbMjQsMV0sWzM0LDAuOTE2XSxbNDMsMC44Ml0sWzUzLDAuNzIyXSxbNjYsMC41OTddLFs3NSwwLjUwOF0sWzg1LDAuNDE0XSxbOTUsMC4zMjddLFsxMDUsMC4yNDddLFsxMTcsMC4xNjJdLFsxMjYsMC4xMDhdLFsxMzUsMC4wNTZdLFsxNDYsMC4wMTRdLFsxNTYsMF0sWzE2NywwXSxbMTc1LDBdLFsxODcsMF0sWzE5NywwXSxbMjA3LDBdLFsyMTgsMF0sWzIyNywwXSxbMjM4LDBdLFsyNDgsMF0sWzI1OCwwXSxbMjY5LDBdLFsyNzksMF0sWzI4OSwwXSxbMjk5LDBdLFszMTEsMF0sWzMyMCwwXSxbMzMwLDBdLFszNDAsMF0sWzM1MCwwXSxbMzU5LDBdLFszNjksMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-8e017edf777272e50919",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1004,
+          "column": 5
+        },
+        {
+          "title": "expand · an ExpandableContainer leaves on a tween by escape",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4796,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:41:03.394Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MSwiYmV0d2VlbiI6MTIsInNoYXJlIjowLjE3MSwiZW5kIjowLCJmcmFtZXMiOltbLTQsMV0sWzYsMV0sWzE1LDAuOTI1XSxbMjUsMC44M10sWzM1LDAuNzE5XSxbNDYsMC42MTddLFs1NSwwLjUyOF0sWzY3LDAuNDE0XSxbNzYsMC4zMjddLFs4NywwLjI0N10sWzk3LDAuMTc2XSxbMTA3LDAuMTEzXSxbMTE3LDAuMDZdLFsxMjYsMC4wMjFdLFsxMzgsMF0sWzE0OCwwXSxbMTU4LDBdLFsxNjgsMF0sWzE3OCwwXSxbMTkxLDBdLFsxOTksMF0sWzIwOSwwXSxbMjE4LDBdLFsyMjksMF0sWzI0MCwwXSxbMjUwLDBdLFsyNTgsMF0sWzI3MCwwXSxbMjc5LDBdLFsyOTEsMF0sWzMwMSwwXSxbMzEzLDBdLFszMjEsMF0sWzMzMywwXSxbMzQyLDBdLFszNTAsMF0sWzM2MSwwXSxbMzczLDBdLFszODMsMF0sWzM5MywwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-5ac22b88b26e7404e8f1",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1004,
+          "column": 5
+        },
+        {
+          "title": "expand · an ExpandableContainer leaves on a tween by open",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4778,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:41:08.194Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MSwiYmV0d2VlbiI6MTEsInNoYXJlIjowLjE3MSwiZW5kIjowLCJmcmFtZXMiOltbLTYsMV0sWzUsMV0sWzE0LDAuOTI1XSxbMjQsMC44M10sWzM0LDAuNzE5XSxbNDUsMC42MTddLFs1NSwwLjUxOF0sWzY1LDAuNDIzXSxbNzUsMC4zMzVdLFs4NSwwLjI1NF0sWzk2LDAuMTc2XSxbMTA2LDAuMTEzXSxbMTE2LDAuMDZdLFsxMjYsMC4wMTddLFsxMzYsMF0sWzE0NywwXSxbMTU3LDBdLFsxNjcsMF0sWzE3NywwXSxbMTg2LDBdLFsxOTgsMF0sWzIwNiwwXSxbMjE3LDBdLFsyMjksMF0sWzIzOSwwXSxbMjQ5LDBdLFsyNTksMF0sWzI2OSwwXSxbMjc4LDBdLFsyOTAsMF0sWzMwMCwwXSxbMzEwLDBdLFszMTksMF0sWzMzMSwwXSxbMzQxLDBdLFszNTEsMF0sWzM1OSwwXSxbMzcyLDBdLFszODEsMF0sWzM5MiwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-5c079d02a1f19c769438",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1004,
+          "column": 5
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3957,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:41:12.976Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC40MDcsImJldHdlZW4iOjgsInNoYXJlIjowLjExOCwiZW5kIjowLCJmcmFtZXMiOltbLTksMC40MDddLFs1LDAuNDA3XSxbMTAsMC4zOF0sWzIyLDAuMjkzXSxbMzEsMC4yMzFdLFs0MiwwLjE2Nl0sWzUyLDAuMTExXSxbNjIsMC4wNl0sWzc0LDAuMDA1XSxbODIsMF0sWzk0LDBdLFsxMDMsMF0sWzExMiwwXSxbMTI0LDBdLFsxMzQsMF0sWzE0NCwwXSxbMTU0LDBdLFsxNjMsMF0sWzE3NCwwXSxbMTg1LDBdLFsxOTUsMF0sWzIwNCwwXSxbMjE3LDBdLFsyMjUsMF0sWzIzNiwwXSxbMjQ1LDBdLFsyNTcsMF0sWzI2NSwwXSxbMjc2LDBdLFsyODcsMF0sWzI5NiwwXSxbMzA4LDBdLFszMTcsMF0sWzMyNywwXSxbMzM4LDBdLFszNTAsMF0sWzM1OCwwXSxbMzY4LDBdLFszNzgsMF0sWzM4NywwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-de08d8fc3593b9696068",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1027,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer reopened while it leaves turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4868,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:41:16.937Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC41MTgsImJldHdlZW4iOjE2LCJzaGFyZSI6MC4xODIsImVuZCI6MSwiZnJhbWVzIjpbWy00LDAuNTE4XSxbNiwwLjQyM10sWzE2LDAuMzM1XSxbMTcsMC4zMjddLFsxOSwwLjMxXSxbMjYsMC4zMV0sWzM4LDAuNDUyXSxbNDYsMC41MjhdLFs1NywwLjYyNF0sWzY3LDAuNzAyXSxbNzcsMC43NzFdLFs4OSwwLjg0XSxbOTcsMC44NzldLFsxMDgsMC45MjFdLFsxMTgsMC45NTFdLFsxMjgsMC45NzJdLFsxMzgsMC45ODZdLFsxNDksMC45OTddLFsxNTksMV0sWzE3MCwxXSxbMTc5LDFdLFsxODksMV0sWzIwMCwxXSxbMjEwLDFdLFsyMjAsMV0sWzIzMCwxXSxbMjM5LDFdLFsyNTEsMV0sWzI2MSwxXSxbMjcxLDFdLFsyODAsMV0sWzI5MiwxXSxbMzAyLDFdLFszMTIsMV0sWzMyMiwxXSxbMzMyLDFdLFszNDIsMV0sWzM1MywxXSxbMzYzLDFdLFszNzMsMV1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-a29c83acd0aea8d8502d",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1044,
+          "column": 1
+        },
+        {
+          "title": "expand · Escape is live from the entrance's first frame",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1542,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:41:21.809Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-bd6f9ddae177d72c09f3",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1060,
+          "column": 1
+        },
+        {
+          "title": "leave · a Dialog says once that its leave has finished, after its last seen frame",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2936,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:41:23.355Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJldmVudHMiOlt7ImF0IjoxOTMsImtpbmQiOiJkaWFsb2ciLCJidWJibGVzIjp0cnVlLCJjb21wb3NlZCI6dHJ1ZX1dLCJsYXN0U2VlbiI6MTkyLCJlbWl0dGVkIjoxfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-44acc0aa7d6699b7674c",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1119,
+          "column": 5
+        },
+        {
+          "title": "leave · a Dialog closed and reopened mid-exit says nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2609,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:41:26.294Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-870a6445c65d95d6b67a",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1148,
+          "column": 5
+        },
+        {
+          "title": "leave · a Sheet says once that its leave has finished, after its last seen frame",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2924,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:41:28.907Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJldmVudHMiOlt7ImF0IjoyNjMsImtpbmQiOiJzaGVldCIsImJ1YmJsZXMiOnRydWUsImNvbXBvc2VkIjp0cnVlfV0sImxhc3RTZWVuIjoyNjIsImVtaXR0ZWQiOjF9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-952f2de157cc262fe5dc",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1119,
+          "column": 5
+        },
+        {
+          "title": "leave · a Sheet closed and reopened mid-exit says nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2600,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:41:31.835Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-ee9b40990a1f11b27c8d",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1148,
+          "column": 5
+        },
+        {
+          "title": "leave · a Popover says once that its leave has finished, after its last seen frame",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2930,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:41:34.438Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJldmVudHMiOlt7ImF0IjoyNjQsImtpbmQiOiJwb3BvdmVyIiwiYnViYmxlcyI6dHJ1ZSwiY29tcG9zZWQiOnRydWV9XSwibGFzdFNlZW4iOjI1NSwiZW1pdHRlZCI6MX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-16f73fdcede7e4d88a70",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1119,
+          "column": 5
+        },
+        {
+          "title": "leave · a Popover closed and reopened mid-exit says nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2596,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:41:37.372Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-8eafc91433abd8677f7e",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1148,
+          "column": 5
+        },
+        {
+          "title": "leave · a DropdownMenu says once that its leave has finished, after its last seen frame",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2953,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:41:39.971Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJldmVudHMiOlt7ImF0IjoyMzYsImtpbmQiOiJtZW51IiwiYnViYmxlcyI6dHJ1ZSwiY29tcG9zZWQiOnRydWV9XSwibGFzdFNlZW4iOjIyNCwiZW1pdHRlZCI6MX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-cf95fcc5b6508cb9f69e",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1119,
+          "column": 5
+        },
+        {
+          "title": "leave · a DropdownMenu closed and reopened mid-exit says nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2633,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:41:42.928Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-5c7e89a80b294a7d8558",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1148,
+          "column": 5
+        },
+        {
+          "title": "leave · a Select says once that its leave has finished, after its last seen frame",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2949,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:41:45.565Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJldmVudHMiOlt7ImF0IjoyMzcsImtpbmQiOiJzZWxlY3QiLCJidWJibGVzIjp0cnVlLCJjb21wb3NlZCI6dHJ1ZX1dLCJsYXN0U2VlbiI6MjI2LCJlbWl0dGVkIjoxfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-93486cf73fc6dbe76625",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1119,
+          "column": 5
+        },
+        {
+          "title": "leave · a Select closed and reopened mid-exit says nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2639,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:41:48.518Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-e1c7e1f2a5e6dfd662ff",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1148,
+          "column": 5
+        },
+        {
+          "title": "leave · a Tooltip says once that its leave has finished, after its last seen frame",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2949,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:41:51.163Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJldmVudHMiOlt7ImF0IjoxMzQsImtpbmQiOiJ0b29sdGlwIiwiYnViYmxlcyI6dHJ1ZSwiY29tcG9zZWQiOnRydWV9XSwibGFzdFNlZW4iOjEyMywiZW1pdHRlZCI6MX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-b67ccd1eb1c9314ab92c",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1119,
+          "column": 5
+        },
+        {
+          "title": "leave · a Tooltip closed and reopened mid-exit says nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2603,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:41:54.116Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-edded170dbbaf37a3296",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1148,
+          "column": 5
+        },
+        {
+          "title": "leave · a Toast says once that its leave has finished, after its last seen frame",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2940,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:41:56.722Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJldmVudHMiOlt7ImF0IjoyODEsImtpbmQiOiJ0b2FzdCIsImJ1YmJsZXMiOnRydWUsImNvbXBvc2VkIjp0cnVlfV0sImxhc3RTZWVuIjoyNzAsImVtaXR0ZWQiOm51bGx9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-0168fb377efc16f11596",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1119,
+          "column": 5
+        },
+        {
+          "title": "leave · a Toast closed and reopened mid-exit says nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a dismissed toast is not reopened",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1151,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 179,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:41:59.666Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a dismissed toast is not reopened",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1151,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-d0b750a422b9c4750517",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1148,
+          "column": 5
+        },
+        {
+          "title": "leave · a Popover inside a shadow root says so to its host",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3533,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:41:59.849Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJ3aW5kb3ciOlt7ImF0IjoyNDEwLCJraW5kIjoicG9wb3ZlciIsImJ1YmJsZXMiOnRydWUsImNvbXBvc2VkIjp0cnVlfV0sImhvc3QiOlt7ImF0IjoyNDEwLCJraW5kIjoicG9wb3ZlciIsImJ1YmJsZXMiOnRydWUsImNvbXBvc2VkIjp0cnVlfV0sImVtaXRzIjp7Imwtc2hhZG93IjoxfSwic2VlbkF0IjoyMzk5LCJtb3VudGVkIjpmYWxzZX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-67ef08ab328ea257f81b",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1223,
+          "column": 1
+        },
+        {
+          "title": "leave · a ContextMenu says once that its leave has finished, by escape",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3245,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:42:03.385Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJ3aW5kb3ciOlt7ImF0IjoyMjcyLjAwMDAwMDAwMDAwMDUsImtpbmQiOiJtZW51IiwiYnViYmxlcyI6dHJ1ZSwiY29tcG9zZWQiOnRydWV9XSwiaG9zdCI6W10sImVtaXRzIjp7ImN0eCI6MX0sInNlZW5BdCI6MjI2Mn0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-3b08f783fb70b0b47368",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1247,
+          "column": 5
+        },
+        {
+          "title": "leave · a ContextMenu says once that its leave has finished, by pick",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3255,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:42:06.635Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJ3aW5kb3ciOlt7ImF0IjoyMjkyLjAwMDAwMDAwMDAwMDUsImtpbmQiOiJtZW51IiwiYnViYmxlcyI6dHJ1ZSwiY29tcG9zZWQiOnRydWV9XSwiaG9zdCI6W10sImVtaXRzIjp7ImN0eCI6MX0sInNlZW5BdCI6MjI4M30="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-3e5ec6a658c6ae51eabe",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1247,
+          "column": 5
+        },
+        {
+          "title": "leave · a hover card says once that its leave has finished",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3488,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:42:09.894Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJ3aW5kb3ciOlt7ImF0IjoyMzAzLCJraW5kIjoiaG92ZXItY2FyZCIsImJ1YmJsZXMiOnRydWUsImNvbXBvc2VkIjp0cnVlfV0sImhvc3QiOltdLCJlbWl0cyI6eyJob3ZlciI6MX0sInNlZW5BdCI6MjI5Mn0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-beb5de98a2c1ee161cfa",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1265,
+          "column": 1
+        },
+        {
+          "title": "leave · a Dialog unmounted mid-exit says so once, at the unmount",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3178,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T01:42:13.385Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJ3aW5kb3ciOlt7ImF0IjoyMTgyLCJraW5kIjoiZGlhbG9nIiwiYnViYmxlcyI6dHJ1ZSwiY29tcG9zZWQiOnRydWV9XSwiaG9zdCI6W10sImVtaXRzIjp7ImRpYWxvZyI6MX0sImN1dCI6MjE4MX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-ada2227f89a8fc699a6b",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1283,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-17T01:39:51.408Z",
+    "duration": 145205.494,
+    "expected": 45,
+    "skipped": 1,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

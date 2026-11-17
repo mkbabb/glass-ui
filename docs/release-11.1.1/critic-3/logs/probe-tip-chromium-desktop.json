@@ -1,0 +1,948 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "docs/release-11.1.1/critic-3/probe/probe.config.ts",
+      "--project=chromium-desktop",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe/probe.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/logs/probe-tip-chromium-desktop.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "paths.probe.ts",
+      "file": "paths.probe.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "paths · Select · outside",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2549,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PATHS {\"project\":\"chromium-desktop\",\"surface\":\"Select\",\"path\":\"outside\",\"rest\":{\"form\":null,\"surface\":null,\"plate\":null,\"bf\":\"blur(20px) saturate(1.5)\",\"bg\":\"color(srgb 0.20397 0.148263 0.0829736 / 0.22)\",\"x\":679,\"y\":66,\"w\":128,\"h\":230},\"gone\":true,\"frames\":26,\"lastMs\":217,\"differs\":0,\"firstDiffer\":null,\"rise\":0,\"largestStep\":0,\"xShift\":0,\"wShift\":0,\"table\":[[9,0.969,66,0.969],[18,0.939,66,0.939],[26,0.906,66,0.906],[34,0.875,66,0.875],[43,0.835,66,0.835],[51,0.797,66,0.797],[59,0.758,66,0.758],[68,0.717,66,0.717],[76,0.677,66,0.677],[84,0.635,66,0.635],[93,0.592,66,0.592],[101,0.55,66,0.55],[109,0.506,66,0.506],[116,0.472,66,0.472],[126,0.42,66,0.42],[134,0.379,66,0.379],[143,0.337,66,0.337],[151,0.295,66,0.295],[159,0.255,66,0.255],[168,0.215,66,0.215],[176,0.177,66,0.177],[184,0.14,66,0.14],[193,0.104,66,0.104],[200,0.077,66,0.077],[210,0.039,66,0.039],[217,0.013,66,0.013]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:00:54.207Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "paths",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0IjoiY2hyb21pdW0tZGVza3RvcCIsInN1cmZhY2UiOiJTZWxlY3QiLCJwYXRoIjoib3V0c2lkZSIsInJlc3QiOnsiZm9ybSI6bnVsbCwic3VyZmFjZSI6bnVsbCwicGxhdGUiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTcgMC4xNDgyNjMgMC4wODI5NzM2IC8gMC4yMikiLCJ4Ijo2NzksInkiOjY2LCJ3IjoxMjgsImgiOjIzMH0sImdvbmUiOnRydWUsImZyYW1lcyI6MjYsImxhc3RNcyI6MjE3LCJkaWZmZXJzIjowLCJmaXJzdERpZmZlciI6bnVsbCwicmlzZSI6MCwibGFyZ2VzdFN0ZXAiOjAsInhTaGlmdCI6MCwid1NoaWZ0IjowLCJ0YWJsZSI6W1s5LDAuOTY5LDY2LDAuOTY5XSxbMTgsMC45MzksNjYsMC45MzldLFsyNiwwLjkwNiw2NiwwLjkwNl0sWzM0LDAuODc1LDY2LDAuODc1XSxbNDMsMC44MzUsNjYsMC44MzVdLFs1MSwwLjc5Nyw2NiwwLjc5N10sWzU5LDAuNzU4LDY2LDAuNzU4XSxbNjgsMC43MTcsNjYsMC43MTddLFs3NiwwLjY3Nyw2NiwwLjY3N10sWzg0LDAuNjM1LDY2LDAuNjM1XSxbOTMsMC41OTIsNjYsMC41OTJdLFsxMDEsMC41NSw2NiwwLjU1XSxbMTA5LDAuNTA2LDY2LDAuNTA2XSxbMTE2LDAuNDcyLDY2LDAuNDcyXSxbMTI2LDAuNDIsNjYsMC40Ml0sWzEzNCwwLjM3OSw2NiwwLjM3OV0sWzE0MywwLjMzNyw2NiwwLjMzN10sWzE1MSwwLjI5NSw2NiwwLjI5NV0sWzE1OSwwLjI1NSw2NiwwLjI1NV0sWzE2OCwwLjIxNSw2NiwwLjIxNV0sWzE3NiwwLjE3Nyw2NiwwLjE3N10sWzE4NCwwLjE0LDY2LDAuMTRdLFsxOTMsMC4xMDQsNjYsMC4xMDRdLFsyMDAsMC4wNzcsNjYsMC4wNzddLFsyMTAsMC4wMzksNjYsMC4wMzldLFsyMTcsMC4wMTMsNjYsMC4wMTNdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-2c2cc67a56d5dc9a5acb",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · Select · escape",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2445,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PATHS {\"project\":\"chromium-desktop\",\"surface\":\"Select\",\"path\":\"escape\",\"rest\":{\"form\":null,\"surface\":null,\"plate\":null,\"bf\":\"blur(20px) saturate(1.5)\",\"bg\":\"color(srgb 0.20397 0.148263 0.0829736 / 0.22)\",\"x\":679,\"y\":66,\"w\":128,\"h\":230},\"gone\":true,\"frames\":27,\"lastMs\":226,\"differs\":0,\"firstDiffer\":null,\"rise\":0,\"largestStep\":0,\"xShift\":0,\"wShift\":0,\"table\":[[9,1,66,1],[17,0.975,66,0.975],[26,0.945,66,0.945],[33,0.918,66,0.918],[43,0.877,66,0.877],[49,0.85,66,0.85],[59,0.805,66,0.805],[67,0.766,66,0.766],[76,0.726,66,0.726],[83,0.69,66,0.69],[93,0.642,66,0.642],[101,0.601,66,0.601],[109,0.558,66,0.558],[118,0.515,66,0.515],[126,0.472,66,0.472],[134,0.43,66,0.43],[143,0.387,66,0.387],[150,0.349,66,0.349],[159,0.302,66,0.302],[167,0.263,66,0.263],[176,0.223,66,0.223],[184,0.184,66,0.184],[192,0.147,66,0.147],[199,0.119,66,0.119],[209,0.078,66,0.078],[217,0.047,66,0.047],[226,0.018,66,0.018]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:00:56.848Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "paths",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0IjoiY2hyb21pdW0tZGVza3RvcCIsInN1cmZhY2UiOiJTZWxlY3QiLCJwYXRoIjoiZXNjYXBlIiwicmVzdCI6eyJmb3JtIjpudWxsLCJzdXJmYWNlIjpudWxsLCJwbGF0ZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5NyAwLjE0ODI2MyAwLjA4Mjk3MzYgLyAwLjIyKSIsIngiOjY3OSwieSI6NjYsInciOjEyOCwiaCI6MjMwfSwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjoyNywibGFzdE1zIjoyMjYsImRpZmZlcnMiOjAsImZpcnN0RGlmZmVyIjpudWxsLCJyaXNlIjowLCJsYXJnZXN0U3RlcCI6MCwieFNoaWZ0IjowLCJ3U2hpZnQiOjAsInRhYmxlIjpbWzksMSw2NiwxXSxbMTcsMC45NzUsNjYsMC45NzVdLFsyNiwwLjk0NSw2NiwwLjk0NV0sWzMzLDAuOTE4LDY2LDAuOTE4XSxbNDMsMC44NzcsNjYsMC44NzddLFs0OSwwLjg1LDY2LDAuODVdLFs1OSwwLjgwNSw2NiwwLjgwNV0sWzY3LDAuNzY2LDY2LDAuNzY2XSxbNzYsMC43MjYsNjYsMC43MjZdLFs4MywwLjY5LDY2LDAuNjldLFs5MywwLjY0Miw2NiwwLjY0Ml0sWzEwMSwwLjYwMSw2NiwwLjYwMV0sWzEwOSwwLjU1OCw2NiwwLjU1OF0sWzExOCwwLjUxNSw2NiwwLjUxNV0sWzEyNiwwLjQ3Miw2NiwwLjQ3Ml0sWzEzNCwwLjQzLDY2LDAuNDNdLFsxNDMsMC4zODcsNjYsMC4zODddLFsxNTAsMC4zNDksNjYsMC4zNDldLFsxNTksMC4zMDIsNjYsMC4zMDJdLFsxNjcsMC4yNjMsNjYsMC4yNjNdLFsxNzYsMC4yMjMsNjYsMC4yMjNdLFsxODQsMC4xODQsNjYsMC4xODRdLFsxOTIsMC4xNDcsNjYsMC4xNDddLFsxOTksMC4xMTksNjYsMC4xMTldLFsyMDksMC4wNzgsNjYsMC4wNzhdLFsyMTcsMC4wNDcsNjYsMC4wNDddLFsyMjYsMC4wMTgsNjYsMC4wMThdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-e78fa2f8b0b755cac9c2",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · Select · trigger",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2430,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PATHS {\"project\":\"chromium-desktop\",\"surface\":\"Select\",\"path\":\"trigger\",\"rest\":{\"form\":null,\"surface\":null,\"plate\":null,\"bf\":\"blur(20px) saturate(1.5)\",\"bg\":\"color(srgb 0.20397 0.148263 0.0829736 / 0.22)\",\"x\":679,\"y\":66,\"w\":128,\"h\":230},\"gone\":true,\"frames\":28,\"lastMs\":226,\"differs\":0,\"firstDiffer\":null,\"rise\":0,\"largestStep\":0,\"xShift\":0,\"wShift\":0,\"table\":[[1,1,66,1],[11,1,66,1],[19,0.975,66,0.975],[27,0.945,66,0.945],[35,0.913,66,0.913],[44,0.879,66,0.879],[52,0.842,66,0.842],[61,0.805,66,0.805],[69,0.766,66,0.766],[77,0.726,66,0.726],[86,0.685,66,0.685],[94,0.643,66,0.643],[102,0.601,66,0.601],[110,0.559,66,0.559],[119,0.515,66,0.515],[127,0.472,66,0.472],[136,0.43,66,0.43],[142,0.396,66,0.396],[153,0.343,66,0.343],[160,0.307,66,0.307],[169,0.262,66,0.262],[177,0.223,66,0.223],[186,0.184,66,0.184],[194,0.147,66,0.147],[202,0.111,66,0.111],[210,0.078,66,0.078],[218,0.049,66,0.049],[226,0.023,66,0.023]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:00:59.296Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "paths",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0IjoiY2hyb21pdW0tZGVza3RvcCIsInN1cmZhY2UiOiJTZWxlY3QiLCJwYXRoIjoidHJpZ2dlciIsInJlc3QiOnsiZm9ybSI6bnVsbCwic3VyZmFjZSI6bnVsbCwicGxhdGUiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTcgMC4xNDgyNjMgMC4wODI5NzM2IC8gMC4yMikiLCJ4Ijo2NzksInkiOjY2LCJ3IjoxMjgsImgiOjIzMH0sImdvbmUiOnRydWUsImZyYW1lcyI6MjgsImxhc3RNcyI6MjI2LCJkaWZmZXJzIjowLCJmaXJzdERpZmZlciI6bnVsbCwicmlzZSI6MCwibGFyZ2VzdFN0ZXAiOjAsInhTaGlmdCI6MCwid1NoaWZ0IjowLCJ0YWJsZSI6W1sxLDEsNjYsMV0sWzExLDEsNjYsMV0sWzE5LDAuOTc1LDY2LDAuOTc1XSxbMjcsMC45NDUsNjYsMC45NDVdLFszNSwwLjkxMyw2NiwwLjkxM10sWzQ0LDAuODc5LDY2LDAuODc5XSxbNTIsMC44NDIsNjYsMC44NDJdLFs2MSwwLjgwNSw2NiwwLjgwNV0sWzY5LDAuNzY2LDY2LDAuNzY2XSxbNzcsMC43MjYsNjYsMC43MjZdLFs4NiwwLjY4NSw2NiwwLjY4NV0sWzk0LDAuNjQzLDY2LDAuNjQzXSxbMTAyLDAuNjAxLDY2LDAuNjAxXSxbMTEwLDAuNTU5LDY2LDAuNTU5XSxbMTE5LDAuNTE1LDY2LDAuNTE1XSxbMTI3LDAuNDcyLDY2LDAuNDcyXSxbMTM2LDAuNDMsNjYsMC40M10sWzE0MiwwLjM5Niw2NiwwLjM5Nl0sWzE1MywwLjM0Myw2NiwwLjM0M10sWzE2MCwwLjMwNyw2NiwwLjMwN10sWzE2OSwwLjI2Miw2NiwwLjI2Ml0sWzE3NywwLjIyMyw2NiwwLjIyM10sWzE4NiwwLjE4NCw2NiwwLjE4NF0sWzE5NCwwLjE0Nyw2NiwwLjE0N10sWzIwMiwwLjExMSw2NiwwLjExMV0sWzIxMCwwLjA3OCw2NiwwLjA3OF0sWzIxOCwwLjA0OSw2NiwwLjA0OV0sWzIyNiwwLjAyMyw2NiwwLjAyM11dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-4a4006fa8184db777bde",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · Select · current",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2455,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PATHS {\"project\":\"chromium-desktop\",\"surface\":\"Select\",\"path\":\"current\",\"rest\":{\"form\":null,\"surface\":null,\"plate\":null,\"bf\":\"blur(20px) saturate(1.5)\",\"bg\":\"color(srgb 0.20397 0.148263 0.0829736 / 0.22)\",\"x\":679,\"y\":66,\"w\":128,\"h\":230},\"gone\":true,\"frames\":29,\"lastMs\":241,\"differs\":0,\"firstDiffer\":null,\"rise\":0,\"largestStep\":0,\"xShift\":0,\"wShift\":0,\"table\":[[7,1,66,1],[16,1,66,1],[24,1,66,1],[33,0.973,66,0.973],[41,0.944,66,0.944],[49,0.911,66,0.911],[57,0.878,66,0.878],[66,0.841,66,0.841],[74,0.803,66,0.803],[83,0.764,66,0.764],[91,0.724,66,0.724],[99,0.683,66,0.683],[107,0.645,66,0.645],[116,0.598,66,0.598],[123,0.563,66,0.563],[133,0.514,66,0.514],[141,0.47,66,0.47],[148,0.434,66,0.434],[158,0.384,66,0.384],[165,0.348,66,0.348],[175,0.301,66,0.301],[183,0.261,66,0.261],[191,0.222,66,0.222],[199,0.183,66,0.183],[207,0.15,66,0.15],[216,0.109,66,0.109],[224,0.077,66,0.077],[233,0.045,66,0.045],[241,0.016,66,0.016]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:01:01.730Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "paths",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0IjoiY2hyb21pdW0tZGVza3RvcCIsInN1cmZhY2UiOiJTZWxlY3QiLCJwYXRoIjoiY3VycmVudCIsInJlc3QiOnsiZm9ybSI6bnVsbCwic3VyZmFjZSI6bnVsbCwicGxhdGUiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTcgMC4xNDgyNjMgMC4wODI5NzM2IC8gMC4yMikiLCJ4Ijo2NzksInkiOjY2LCJ3IjoxMjgsImgiOjIzMH0sImdvbmUiOnRydWUsImZyYW1lcyI6MjksImxhc3RNcyI6MjQxLCJkaWZmZXJzIjowLCJmaXJzdERpZmZlciI6bnVsbCwicmlzZSI6MCwibGFyZ2VzdFN0ZXAiOjAsInhTaGlmdCI6MCwid1NoaWZ0IjowLCJ0YWJsZSI6W1s3LDEsNjYsMV0sWzE2LDEsNjYsMV0sWzI0LDEsNjYsMV0sWzMzLDAuOTczLDY2LDAuOTczXSxbNDEsMC45NDQsNjYsMC45NDRdLFs0OSwwLjkxMSw2NiwwLjkxMV0sWzU3LDAuODc4LDY2LDAuODc4XSxbNjYsMC44NDEsNjYsMC44NDFdLFs3NCwwLjgwMyw2NiwwLjgwM10sWzgzLDAuNzY0LDY2LDAuNzY0XSxbOTEsMC43MjQsNjYsMC43MjRdLFs5OSwwLjY4Myw2NiwwLjY4M10sWzEwNywwLjY0NSw2NiwwLjY0NV0sWzExNiwwLjU5OCw2NiwwLjU5OF0sWzEyMywwLjU2Myw2NiwwLjU2M10sWzEzMywwLjUxNCw2NiwwLjUxNF0sWzE0MSwwLjQ3LDY2LDAuNDddLFsxNDgsMC40MzQsNjYsMC40MzRdLFsxNTgsMC4zODQsNjYsMC4zODRdLFsxNjUsMC4zNDgsNjYsMC4zNDhdLFsxNzUsMC4zMDEsNjYsMC4zMDFdLFsxODMsMC4yNjEsNjYsMC4yNjFdLFsxOTEsMC4yMjIsNjYsMC4yMjJdLFsxOTksMC4xODMsNjYsMC4xODNdLFsyMDcsMC4xNSw2NiwwLjE1XSxbMjE2LDAuMTA5LDY2LDAuMTA5XSxbMjI0LDAuMDc3LDY2LDAuMDc3XSxbMjMzLDAuMDQ1LDY2LDAuMDQ1XSxbMjQxLDAuMDE2LDY2LDAuMDE2XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-8acf27a6cc18b358257f",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · Select · other",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2475,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PATHS {\"project\":\"chromium-desktop\",\"surface\":\"Select\",\"path\":\"other\",\"rest\":{\"form\":null,\"surface\":null,\"plate\":null,\"bf\":\"blur(20px) saturate(1.5)\",\"bg\":\"color(srgb 0.20397 0.148263 0.0829736 / 0.22)\",\"x\":679,\"y\":66,\"w\":128,\"h\":230},\"gone\":true,\"frames\":30,\"lastMs\":242,\"differs\":0,\"firstDiffer\":null,\"rise\":0,\"largestStep\":0,\"xShift\":10,\"wShift\":0,\"table\":[[2,1,66,1],[10,1,66,1],[18,1,66,1],[27,1,66,1],[35,0.973,66,0.973],[43,0.944,66,0.944],[52,0.912,66,0.912],[60,0.877,66,0.877],[68,0.841,66,0.841],[76,0.805,66,0.805],[85,0.764,66,0.764],[93,0.724,66,0.724],[102,0.683,66,0.683],[110,0.641,66,0.641],[118,0.599,66,0.599],[126,0.563,66,0.563],[135,0.512,66,0.512],[143,0.471,66,0.471],[152,0.428,66,0.428],[160,0.386,66,0.386],[168,0.343,66,0.343],[176,0.304,66,0.304],[185,0.261,66,0.261],[192,0.227,66,0.227],[201,0.185,66,0.185],[210,0.145,66,0.145],[218,0.111,66,0.111],[227,0.077,66,0.077],[234,0.051,66,0.051],[242,0.02,66,0.02]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:01:04.189Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "paths",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0IjoiY2hyb21pdW0tZGVza3RvcCIsInN1cmZhY2UiOiJTZWxlY3QiLCJwYXRoIjoib3RoZXIiLCJyZXN0Ijp7ImZvcm0iOm51bGwsInN1cmZhY2UiOm51bGwsInBsYXRlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk3IDAuMTQ4MjYzIDAuMDgyOTczNiAvIDAuMjIpIiwieCI6Njc5LCJ5Ijo2NiwidyI6MTI4LCJoIjoyMzB9LCJnb25lIjp0cnVlLCJmcmFtZXMiOjMwLCJsYXN0TXMiOjI0MiwiZGlmZmVycyI6MCwiZmlyc3REaWZmZXIiOm51bGwsInJpc2UiOjAsImxhcmdlc3RTdGVwIjowLCJ4U2hpZnQiOjEwLCJ3U2hpZnQiOjAsInRhYmxlIjpbWzIsMSw2NiwxXSxbMTAsMSw2NiwxXSxbMTgsMSw2NiwxXSxbMjcsMSw2NiwxXSxbMzUsMC45NzMsNjYsMC45NzNdLFs0MywwLjk0NCw2NiwwLjk0NF0sWzUyLDAuOTEyLDY2LDAuOTEyXSxbNjAsMC44NzcsNjYsMC44NzddLFs2OCwwLjg0MSw2NiwwLjg0MV0sWzc2LDAuODA1LDY2LDAuODA1XSxbODUsMC43NjQsNjYsMC43NjRdLFs5MywwLjcyNCw2NiwwLjcyNF0sWzEwMiwwLjY4Myw2NiwwLjY4M10sWzExMCwwLjY0MSw2NiwwLjY0MV0sWzExOCwwLjU5OSw2NiwwLjU5OV0sWzEyNiwwLjU2Myw2NiwwLjU2M10sWzEzNSwwLjUxMiw2NiwwLjUxMl0sWzE0MywwLjQ3MSw2NiwwLjQ3MV0sWzE1MiwwLjQyOCw2NiwwLjQyOF0sWzE2MCwwLjM4Niw2NiwwLjM4Nl0sWzE2OCwwLjM0Myw2NiwwLjM0M10sWzE3NiwwLjMwNCw2NiwwLjMwNF0sWzE4NSwwLjI2MSw2NiwwLjI2MV0sWzE5MiwwLjIyNyw2NiwwLjIyN10sWzIwMSwwLjE4NSw2NiwwLjE4NV0sWzIxMCwwLjE0NSw2NiwwLjE0NV0sWzIxOCwwLjExMSw2NiwwLjExMV0sWzIyNywwLjA3Nyw2NiwwLjA3N10sWzIzNCwwLjA1MSw2NiwwLjA1MV0sWzI0MiwwLjAyLDY2LDAuMDJdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-fabf01339d81b5e57b4d",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · DropdownMenu · outside",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2433,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PATHS {\"project\":\"chromium-desktop\",\"surface\":\"DropdownMenu\",\"path\":\"outside\",\"rest\":{\"form\":null,\"surface\":null,\"plate\":null,\"bf\":\"blur(20px) saturate(1.5)\",\"bg\":\"color(srgb 0.20397 0.148263 0.0829736 / 0.18)\",\"x\":683,\"y\":66,\"w\":208,\"h\":158},\"gone\":true,\"frames\":27,\"lastMs\":220,\"differs\":0,\"firstDiffer\":null,\"rise\":0,\"largestStep\":0,\"xShift\":0,\"wShift\":0,\"table\":[[3,1,66,1],[12,0.973,66,0.973],[20,0.943,66,0.943],[28,0.911,66,0.911],[37,0.876,66,0.876],[45,0.84,66,0.84],[53,0.803,66,0.803],[61,0.765,66,0.765],[69,0.728,66,0.728],[79,0.681,66,0.681],[87,0.641,66,0.641],[95,0.598,66,0.598],[103,0.556,66,0.556],[112,0.513,66,0.513],[120,0.47,66,0.47],[128,0.427,66,0.427],[137,0.385,66,0.385],[145,0.343,66,0.343],[153,0.301,66,0.301],[162,0.26,66,0.26],[170,0.221,66,0.221],[178,0.185,66,0.185],[187,0.145,66,0.145],[195,0.109,66,0.109],[203,0.076,66,0.076],[212,0.045,66,0.045],[220,0.016,66,0.016]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:01:06.669Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "paths",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0IjoiY2hyb21pdW0tZGVza3RvcCIsInN1cmZhY2UiOiJEcm9wZG93bk1lbnUiLCJwYXRoIjoib3V0c2lkZSIsInJlc3QiOnsiZm9ybSI6bnVsbCwic3VyZmFjZSI6bnVsbCwicGxhdGUiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTcgMC4xNDgyNjMgMC4wODI5NzM2IC8gMC4xOCkiLCJ4Ijo2ODMsInkiOjY2LCJ3IjoyMDgsImgiOjE1OH0sImdvbmUiOnRydWUsImZyYW1lcyI6MjcsImxhc3RNcyI6MjIwLCJkaWZmZXJzIjowLCJmaXJzdERpZmZlciI6bnVsbCwicmlzZSI6MCwibGFyZ2VzdFN0ZXAiOjAsInhTaGlmdCI6MCwid1NoaWZ0IjowLCJ0YWJsZSI6W1szLDEsNjYsMV0sWzEyLDAuOTczLDY2LDAuOTczXSxbMjAsMC45NDMsNjYsMC45NDNdLFsyOCwwLjkxMSw2NiwwLjkxMV0sWzM3LDAuODc2LDY2LDAuODc2XSxbNDUsMC44NCw2NiwwLjg0XSxbNTMsMC44MDMsNjYsMC44MDNdLFs2MSwwLjc2NSw2NiwwLjc2NV0sWzY5LDAuNzI4LDY2LDAuNzI4XSxbNzksMC42ODEsNjYsMC42ODFdLFs4NywwLjY0MSw2NiwwLjY0MV0sWzk1LDAuNTk4LDY2LDAuNTk4XSxbMTAzLDAuNTU2LDY2LDAuNTU2XSxbMTEyLDAuNTEzLDY2LDAuNTEzXSxbMTIwLDAuNDcsNjYsMC40N10sWzEyOCwwLjQyNyw2NiwwLjQyN10sWzEzNywwLjM4NSw2NiwwLjM4NV0sWzE0NSwwLjM0Myw2NiwwLjM0M10sWzE1MywwLjMwMSw2NiwwLjMwMV0sWzE2MiwwLjI2LDY2LDAuMjZdLFsxNzAsMC4yMjEsNjYsMC4yMjFdLFsxNzgsMC4xODUsNjYsMC4xODVdLFsxODcsMC4xNDUsNjYsMC4xNDVdLFsxOTUsMC4xMDksNjYsMC4xMDldLFsyMDMsMC4wNzYsNjYsMC4wNzZdLFsyMTIsMC4wNDUsNjYsMC4wNDVdLFsyMjAsMC4wMTYsNjYsMC4wMTZdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-b5a4ab88ee8e07df8d19",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · DropdownMenu · escape",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2418,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PATHS {\"project\":\"chromium-desktop\",\"surface\":\"DropdownMenu\",\"path\":\"escape\",\"rest\":{\"form\":null,\"surface\":null,\"plate\":null,\"bf\":\"blur(20px) saturate(1.5)\",\"bg\":\"color(srgb 0.20397 0.148263 0.0829736 / 0.18)\",\"x\":683,\"y\":66,\"w\":208,\"h\":158},\"gone\":true,\"frames\":27,\"lastMs\":221,\"differs\":0,\"firstDiffer\":null,\"rise\":0,\"largestStep\":0,\"xShift\":0,\"wShift\":0,\"table\":[[5,1,66,1],[13,0.973,66,0.973],[20,0.947,66,0.947],[30,0.911,66,0.911],[38,0.877,66,0.877],[46,0.844,66,0.844],[55,0.803,66,0.803],[63,0.765,66,0.765],[71,0.724,66,0.724],[80,0.683,66,0.683],[88,0.641,66,0.641],[96,0.599,66,0.599],[105,0.556,66,0.556],[113,0.513,66,0.513],[121,0.471,66,0.471],[130,0.428,66,0.428],[138,0.386,66,0.386],[146,0.344,66,0.344],[155,0.302,66,0.302],[163,0.261,66,0.261],[171,0.222,66,0.222],[180,0.183,66,0.183],[188,0.145,66,0.145],[196,0.11,66,0.11],[205,0.077,66,0.077],[213,0.046,66,0.046],[221,0.017,66,0.017]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:01:09.106Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "paths",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0IjoiY2hyb21pdW0tZGVza3RvcCIsInN1cmZhY2UiOiJEcm9wZG93bk1lbnUiLCJwYXRoIjoiZXNjYXBlIiwicmVzdCI6eyJmb3JtIjpudWxsLCJzdXJmYWNlIjpudWxsLCJwbGF0ZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5NyAwLjE0ODI2MyAwLjA4Mjk3MzYgLyAwLjE4KSIsIngiOjY4MywieSI6NjYsInciOjIwOCwiaCI6MTU4fSwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjoyNywibGFzdE1zIjoyMjEsImRpZmZlcnMiOjAsImZpcnN0RGlmZmVyIjpudWxsLCJyaXNlIjowLCJsYXJnZXN0U3RlcCI6MCwieFNoaWZ0IjowLCJ3U2hpZnQiOjAsInRhYmxlIjpbWzUsMSw2NiwxXSxbMTMsMC45NzMsNjYsMC45NzNdLFsyMCwwLjk0Nyw2NiwwLjk0N10sWzMwLDAuOTExLDY2LDAuOTExXSxbMzgsMC44NzcsNjYsMC44NzddLFs0NiwwLjg0NCw2NiwwLjg0NF0sWzU1LDAuODAzLDY2LDAuODAzXSxbNjMsMC43NjUsNjYsMC43NjVdLFs3MSwwLjcyNCw2NiwwLjcyNF0sWzgwLDAuNjgzLDY2LDAuNjgzXSxbODgsMC42NDEsNjYsMC42NDFdLFs5NiwwLjU5OSw2NiwwLjU5OV0sWzEwNSwwLjU1Niw2NiwwLjU1Nl0sWzExMywwLjUxMyw2NiwwLjUxM10sWzEyMSwwLjQ3MSw2NiwwLjQ3MV0sWzEzMCwwLjQyOCw2NiwwLjQyOF0sWzEzOCwwLjM4Niw2NiwwLjM4Nl0sWzE0NiwwLjM0NCw2NiwwLjM0NF0sWzE1NSwwLjMwMiw2NiwwLjMwMl0sWzE2MywwLjI2MSw2NiwwLjI2MV0sWzE3MSwwLjIyMiw2NiwwLjIyMl0sWzE4MCwwLjE4Myw2NiwwLjE4M10sWzE4OCwwLjE0NSw2NiwwLjE0NV0sWzE5NiwwLjExLDY2LDAuMTFdLFsyMDUsMC4wNzcsNjYsMC4wNzddLFsyMTMsMC4wNDYsNjYsMC4wNDZdLFsyMjEsMC4wMTcsNjYsMC4wMTddXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-3f5dbe9a4b24062ab4d7",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · DropdownMenu · trigger",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2436,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PATHS {\"project\":\"chromium-desktop\",\"surface\":\"DropdownMenu\",\"path\":\"trigger\",\"rest\":{\"form\":null,\"surface\":null,\"plate\":null,\"bf\":\"blur(20px) saturate(1.5)\",\"bg\":\"color(srgb 0.20397 0.148263 0.0829736 / 0.18)\",\"x\":683,\"y\":66,\"w\":208,\"h\":158},\"gone\":true,\"frames\":27,\"lastMs\":220,\"differs\":0,\"firstDiffer\":null,\"rise\":0,\"largestStep\":0,\"xShift\":0,\"wShift\":0,\"table\":[[3,1,66,1],[12,0.973,66,0.973],[20,0.944,66,0.944],[28,0.912,66,0.912],[36,0.882,66,0.882],[45,0.84,66,0.84],[53,0.803,66,0.803],[62,0.764,66,0.764],[70,0.724,66,0.724],[78,0.683,66,0.683],[87,0.642,66,0.642],[95,0.601,66,0.601],[103,0.557,66,0.557],[112,0.514,66,0.514],[120,0.471,66,0.471],[128,0.428,66,0.428],[137,0.386,66,0.386],[143,0.351,66,0.351],[153,0.302,66,0.302],[162,0.261,66,0.261],[170,0.221,66,0.221],[178,0.183,66,0.183],[187,0.145,66,0.145],[195,0.11,66,0.11],[203,0.077,66,0.077],[212,0.045,66,0.045],[220,0.017,66,0.017]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:01:11.530Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "paths",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0IjoiY2hyb21pdW0tZGVza3RvcCIsInN1cmZhY2UiOiJEcm9wZG93bk1lbnUiLCJwYXRoIjoidHJpZ2dlciIsInJlc3QiOnsiZm9ybSI6bnVsbCwic3VyZmFjZSI6bnVsbCwicGxhdGUiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTcgMC4xNDgyNjMgMC4wODI5NzM2IC8gMC4xOCkiLCJ4Ijo2ODMsInkiOjY2LCJ3IjoyMDgsImgiOjE1OH0sImdvbmUiOnRydWUsImZyYW1lcyI6MjcsImxhc3RNcyI6MjIwLCJkaWZmZXJzIjowLCJmaXJzdERpZmZlciI6bnVsbCwicmlzZSI6MCwibGFyZ2VzdFN0ZXAiOjAsInhTaGlmdCI6MCwid1NoaWZ0IjowLCJ0YWJsZSI6W1szLDEsNjYsMV0sWzEyLDAuOTczLDY2LDAuOTczXSxbMjAsMC45NDQsNjYsMC45NDRdLFsyOCwwLjkxMiw2NiwwLjkxMl0sWzM2LDAuODgyLDY2LDAuODgyXSxbNDUsMC44NCw2NiwwLjg0XSxbNTMsMC44MDMsNjYsMC44MDNdLFs2MiwwLjc2NCw2NiwwLjc2NF0sWzcwLDAuNzI0LDY2LDAuNzI0XSxbNzgsMC42ODMsNjYsMC42ODNdLFs4NywwLjY0Miw2NiwwLjY0Ml0sWzk1LDAuNjAxLDY2LDAuNjAxXSxbMTAzLDAuNTU3LDY2LDAuNTU3XSxbMTEyLDAuNTE0LDY2LDAuNTE0XSxbMTIwLDAuNDcxLDY2LDAuNDcxXSxbMTI4LDAuNDI4LDY2LDAuNDI4XSxbMTM3LDAuMzg2LDY2LDAuMzg2XSxbMTQzLDAuMzUxLDY2LDAuMzUxXSxbMTUzLDAuMzAyLDY2LDAuMzAyXSxbMTYyLDAuMjYxLDY2LDAuMjYxXSxbMTcwLDAuMjIxLDY2LDAuMjIxXSxbMTc4LDAuMTgzLDY2LDAuMTgzXSxbMTg3LDAuMTQ1LDY2LDAuMTQ1XSxbMTk1LDAuMTEsNjYsMC4xMV0sWzIwMywwLjA3Nyw2NiwwLjA3N10sWzIxMiwwLjA0NSw2NiwwLjA0NV0sWzIyMCwwLjAxNyw2NiwwLjAxN11dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-a033bb67fbd4563d66d2",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · DropdownMenu · current",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a menu has no current item",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe/paths.probe.ts",
+                    "line": 42,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 39,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:01:13.970Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a menu has no current item",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe/paths.probe.ts",
+                        "line": 42,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-12bf27186d1339b7314c",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · DropdownMenu · other",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2436,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PATHS {\"project\":\"chromium-desktop\",\"surface\":\"DropdownMenu\",\"path\":\"other\",\"rest\":{\"form\":null,\"surface\":null,\"plate\":null,\"bf\":\"blur(20px) saturate(1.5)\",\"bg\":\"color(srgb 0.20397 0.148263 0.0829736 / 0.18)\",\"x\":683,\"y\":66,\"w\":208,\"h\":158},\"gone\":true,\"frames\":29,\"lastMs\":237,\"differs\":0,\"firstDiffer\":null,\"rise\":0,\"largestStep\":0,\"xShift\":0,\"wShift\":0,\"table\":[[3,1,66,1],[13,1,66,1],[21,1,66,1],[29,0.973,66,0.973],[37,0.944,66,0.944],[44,0.917,66,0.917],[54,0.876,66,0.876],[62,0.841,66,0.841],[71,0.802,66,0.802],[79,0.764,66,0.764],[87,0.724,66,0.724],[96,0.683,66,0.683],[103,0.644,66,0.644],[112,0.602,66,0.602],[121,0.556,66,0.556],[129,0.513,66,0.513],[137,0.47,66,0.47],[146,0.428,66,0.428],[154,0.385,66,0.385],[162,0.343,66,0.343],[171,0.302,66,0.302],[179,0.26,66,0.26],[187,0.221,66,0.221],[196,0.182,66,0.182],[204,0.145,66,0.145],[211,0.115,66,0.115],[221,0.075,66,0.075],[228,0.048,66,0.048],[237,0.016,66,0.016]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:01:14.013Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "paths",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0IjoiY2hyb21pdW0tZGVza3RvcCIsInN1cmZhY2UiOiJEcm9wZG93bk1lbnUiLCJwYXRoIjoib3RoZXIiLCJyZXN0Ijp7ImZvcm0iOm51bGwsInN1cmZhY2UiOm51bGwsInBsYXRlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk3IDAuMTQ4MjYzIDAuMDgyOTczNiAvIDAuMTgpIiwieCI6NjgzLCJ5Ijo2NiwidyI6MjA4LCJoIjoxNTh9LCJnb25lIjp0cnVlLCJmcmFtZXMiOjI5LCJsYXN0TXMiOjIzNywiZGlmZmVycyI6MCwiZmlyc3REaWZmZXIiOm51bGwsInJpc2UiOjAsImxhcmdlc3RTdGVwIjowLCJ4U2hpZnQiOjAsIndTaGlmdCI6MCwidGFibGUiOltbMywxLDY2LDFdLFsxMywxLDY2LDFdLFsyMSwxLDY2LDFdLFsyOSwwLjk3Myw2NiwwLjk3M10sWzM3LDAuOTQ0LDY2LDAuOTQ0XSxbNDQsMC45MTcsNjYsMC45MTddLFs1NCwwLjg3Niw2NiwwLjg3Nl0sWzYyLDAuODQxLDY2LDAuODQxXSxbNzEsMC44MDIsNjYsMC44MDJdLFs3OSwwLjc2NCw2NiwwLjc2NF0sWzg3LDAuNzI0LDY2LDAuNzI0XSxbOTYsMC42ODMsNjYsMC42ODNdLFsxMDMsMC42NDQsNjYsMC42NDRdLFsxMTIsMC42MDIsNjYsMC42MDJdLFsxMjEsMC41NTYsNjYsMC41NTZdLFsxMjksMC41MTMsNjYsMC41MTNdLFsxMzcsMC40Nyw2NiwwLjQ3XSxbMTQ2LDAuNDI4LDY2LDAuNDI4XSxbMTU0LDAuMzg1LDY2LDAuMzg1XSxbMTYyLDAuMzQzLDY2LDAuMzQzXSxbMTcxLDAuMzAyLDY2LDAuMzAyXSxbMTc5LDAuMjYsNjYsMC4yNl0sWzE4NywwLjIyMSw2NiwwLjIyMV0sWzE5NiwwLjE4Miw2NiwwLjE4Ml0sWzIwNCwwLjE0NSw2NiwwLjE0NV0sWzIxMSwwLjExNSw2NiwwLjExNV0sWzIyMSwwLjA3NSw2NiwwLjA3NV0sWzIyOCwwLjA0OCw2NiwwLjA0OF0sWzIzNywwLjAxNiw2NiwwLjAxNl1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-762f2a32b399671e613e",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "press · dock trigger (Select) held · reduce",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1075,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PRESS {\"project\":\"chromium-desktop\",\"control\":\"dock trigger (Select)\",\"motion\":\"reduce\",\"rest\":[\"1\",86.27],\"scales\":[\"1\"],\"widths\":[86.27,86.27],\"first\":[[103,\"1\",86.27],[114,\"1\",86.27],[129,\"1\",86.27],[139,\"1\",86.27],[147,\"1\",86.27],[155,\"1\",86.27]],\"last\":[471,\"1\",86.27]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:01:16.453Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "press",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0IjoiY2hyb21pdW0tZGVza3RvcCIsImNvbnRyb2wiOiJkb2NrIHRyaWdnZXIgKFNlbGVjdCkiLCJtb3Rpb24iOiJyZWR1Y2UiLCJyZXN0IjpbIjEiLDg2LjI3XSwic2NhbGVzIjpbIjEiXSwid2lkdGhzIjpbODYuMjcsODYuMjddLCJmaXJzdCI6W1sxMDMsIjEiLDg2LjI3XSxbMTE0LCIxIiw4Ni4yN10sWzEyOSwiMSIsODYuMjddLFsxMzksIjEiLDg2LjI3XSxbMTQ3LCIxIiw4Ni4yN10sWzE1NSwiMSIsODYuMjddXSwibGFzdCI6WzQ3MSwiMSIsODYuMjddfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-4bd9746cef0dcca87171",
+          "file": "paths.probe.ts",
+          "line": 99,
+          "column": 9
+        },
+        {
+          "title": "press · dock trigger (menu) held · reduce",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1077,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PRESS {\"project\":\"chromium-desktop\",\"control\":\"dock trigger (menu)\",\"motion\":\"reduce\",\"rest\":[\"1\",34.97],\"scales\":[\"1\"],\"widths\":[34.97,34.97],\"first\":[[112,\"1\",34.97],[120,\"1\",34.97],[145,\"1\",34.97],[153,\"1\",34.97],[162,\"1\",34.97],[170,\"1\",34.97]],\"last\":[478,\"1\",34.97]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:01:17.531Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "press",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0IjoiY2hyb21pdW0tZGVza3RvcCIsImNvbnRyb2wiOiJkb2NrIHRyaWdnZXIgKG1lbnUpIiwibW90aW9uIjoicmVkdWNlIiwicmVzdCI6WyIxIiwzNC45N10sInNjYWxlcyI6WyIxIl0sIndpZHRocyI6WzM0Ljk3LDM0Ljk3XSwiZmlyc3QiOltbMTEyLCIxIiwzNC45N10sWzEyMCwiMSIsMzQuOTddLFsxNDUsIjEiLDM0Ljk3XSxbMTUzLCIxIiwzNC45N10sWzE2MiwiMSIsMzQuOTddLFsxNzAsIjEiLDM0Ljk3XV0sImxhc3QiOls0NzgsIjEiLDM0Ljk3XX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-d04a71d0decf64e09645",
+          "file": "paths.probe.ts",
+          "line": 99,
+          "column": 9
+        },
+        {
+          "title": "press · dock seat held · reduce",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1047,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PRESS {\"project\":\"chromium-desktop\",\"control\":\"dock seat\",\"motion\":\"reduce\",\"rest\":[\"1\",40],\"scales\":[\"1.0066 0.9156\"],\"widths\":[40.26,40.26],\"first\":[[112,\"1.0066 0.9156\",40.26],[120,\"1.0066 0.9156\",40.26],[128,\"1.0066 0.9156\",40.26],[137,\"1.0066 0.9156\",40.26],[145,\"1.0066 0.9156\",40.26],[153,\"1.0066 0.9156\",40.26]],\"last\":[453,\"1.0066 0.9156\",40.26]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:01:18.611Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "press",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0IjoiY2hyb21pdW0tZGVza3RvcCIsImNvbnRyb2wiOiJkb2NrIHNlYXQiLCJtb3Rpb24iOiJyZWR1Y2UiLCJyZXN0IjpbIjEiLDQwXSwic2NhbGVzIjpbIjEuMDA2NiAwLjkxNTYiXSwid2lkdGhzIjpbNDAuMjYsNDAuMjZdLCJmaXJzdCI6W1sxMTIsIjEuMDA2NiAwLjkxNTYiLDQwLjI2XSxbMTIwLCIxLjAwNjYgMC45MTU2Iiw0MC4yNl0sWzEyOCwiMS4wMDY2IDAuOTE1NiIsNDAuMjZdLFsxMzcsIjEuMDA2NiAwLjkxNTYiLDQwLjI2XSxbMTQ1LCIxLjAwNjYgMC45MTU2Iiw0MC4yNl0sWzE1MywiMS4wMDY2IDAuOTE1NiIsNDAuMjZdXSwibGFzdCI6WzQ1MywiMS4wMDY2IDAuOTE1NiIsNDAuMjZdfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-cf31b043a07d28c8b181",
+          "file": "paths.probe.ts",
+          "line": 99,
+          "column": 9
+        },
+        {
+          "title": "press · Button held · reduce",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1407,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PRESS {\"project\":\"chromium-desktop\",\"control\":\"Button\",\"motion\":\"reduce\",\"rest\":[\"1\",156.56],\"scales\":[\"1.0328 0.911\"],\"widths\":[161.7,161.7],\"first\":[[110,\"1.0328 0.911\",161.7],[120,\"1.0328 0.911\",161.7],[128,\"1.0328 0.911\",161.7],[137,\"1.0328 0.911\",161.7],[145,\"1.0328 0.911\",161.7],[153,\"1.0328 0.911\",161.7]],\"last\":[453,\"1.0328 0.911\",161.7]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:01:19.661Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "press",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0IjoiY2hyb21pdW0tZGVza3RvcCIsImNvbnRyb2wiOiJCdXR0b24iLCJtb3Rpb24iOiJyZWR1Y2UiLCJyZXN0IjpbIjEiLDE1Ni41Nl0sInNjYWxlcyI6WyIxLjAzMjggMC45MTEiXSwid2lkdGhzIjpbMTYxLjcsMTYxLjddLCJmaXJzdCI6W1sxMTAsIjEuMDMyOCAwLjkxMSIsMTYxLjddLFsxMjAsIjEuMDMyOCAwLjkxMSIsMTYxLjddLFsxMjgsIjEuMDMyOCAwLjkxMSIsMTYxLjddLFsxMzcsIjEuMDMyOCAwLjkxMSIsMTYxLjddLFsxNDUsIjEuMDMyOCAwLjkxMSIsMTYxLjddLFsxNTMsIjEuMDMyOCAwLjkxMSIsMTYxLjddXSwibGFzdCI6WzQ1MywiMS4wMzI4IDAuOTExIiwxNjEuN119"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-fe4f1a17a32396a5e4c1",
+          "file": "paths.probe.ts",
+          "line": 99,
+          "column": 9
+        },
+        {
+          "title": "press · dock trigger (Select) held · no-preference",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1088,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PRESS {\"project\":\"chromium-desktop\",\"control\":\"dock trigger (Select)\",\"motion\":\"no-preference\",\"rest\":[\"1\",86.27],\"scales\":[\"1\",\"0.998771\",\"0.99584\",\"0.991924\",\"0.987579\",\"0.98319\",\"0.978972\",\"0.975132\",\"0.971798\",\"0.968951\",\"0.96655\",\"0.964632\",\"0.963108\",\"0.961922\",\"0.961045\",\"0.96\"],\"widths\":[82.81,86.27],\"first\":[[103,\"1\",86.27],[114,\"1\",86.27],[130,\"1\",86.27],[147,\"0.998771\",86.16],[155,\"0.99584\",85.91],[163,\"0.991924\",85.57]],\"last\":[472,\"0.96\",82.81]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:01:21.072Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "press",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0IjoiY2hyb21pdW0tZGVza3RvcCIsImNvbnRyb2wiOiJkb2NrIHRyaWdnZXIgKFNlbGVjdCkiLCJtb3Rpb24iOiJuby1wcmVmZXJlbmNlIiwicmVzdCI6WyIxIiw4Ni4yN10sInNjYWxlcyI6WyIxIiwiMC45OTg3NzEiLCIwLjk5NTg0IiwiMC45OTE5MjQiLCIwLjk4NzU3OSIsIjAuOTgzMTkiLCIwLjk3ODk3MiIsIjAuOTc1MTMyIiwiMC45NzE3OTgiLCIwLjk2ODk1MSIsIjAuOTY2NTUiLCIwLjk2NDYzMiIsIjAuOTYzMTA4IiwiMC45NjE5MjIiLCIwLjk2MTA0NSIsIjAuOTYiXSwid2lkdGhzIjpbODIuODEsODYuMjddLCJmaXJzdCI6W1sxMDMsIjEiLDg2LjI3XSxbMTE0LCIxIiw4Ni4yN10sWzEzMCwiMSIsODYuMjddLFsxNDcsIjAuOTk4NzcxIiw4Ni4xNl0sWzE1NSwiMC45OTU4NCIsODUuOTFdLFsxNjMsIjAuOTkxOTI0Iiw4NS41N11dLCJsYXN0IjpbNDcyLCIwLjk2Iiw4Mi44MV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-ada45d0077c4341b0bfa",
+          "file": "paths.probe.ts",
+          "line": 99,
+          "column": 9
+        },
+        {
+          "title": "press · dock trigger (menu) held · no-preference",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1084,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PRESS {\"project\":\"chromium-desktop\",\"control\":\"dock trigger (menu)\",\"motion\":\"no-preference\",\"rest\":[\"1\",34.97],\"scales\":[\"1\",\"0.999189\",\"0.995797\",\"0.991973\",\"0.987577\",\"0.983136\",\"0.97897\",\"0.975173\",\"0.971797\",\"0.968949\",\"0.966574\",\"0.964631\",\"0.963107\",\"0.961934\",\"0.961044\",\"0.96\"],\"widths\":[33.57,34.97],\"first\":[[105,\"1\",34.97],[114,\"1\",34.97],[122,\"1\",34.97],[137,\"0.999189\",34.94],[147,\"0.995797\",34.82],[155,\"0.991973\",34.69]],\"last\":[464,\"0.96\",33.57]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:01:22.166Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "press",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0IjoiY2hyb21pdW0tZGVza3RvcCIsImNvbnRyb2wiOiJkb2NrIHRyaWdnZXIgKG1lbnUpIiwibW90aW9uIjoibm8tcHJlZmVyZW5jZSIsInJlc3QiOlsiMSIsMzQuOTddLCJzY2FsZXMiOlsiMSIsIjAuOTk5MTg5IiwiMC45OTU3OTciLCIwLjk5MTk3MyIsIjAuOTg3NTc3IiwiMC45ODMxMzYiLCIwLjk3ODk3IiwiMC45NzUxNzMiLCIwLjk3MTc5NyIsIjAuOTY4OTQ5IiwiMC45NjY1NzQiLCIwLjk2NDYzMSIsIjAuOTYzMTA3IiwiMC45NjE5MzQiLCIwLjk2MTA0NCIsIjAuOTYiXSwid2lkdGhzIjpbMzMuNTcsMzQuOTddLCJmaXJzdCI6W1sxMDUsIjEiLDM0Ljk3XSxbMTE0LCIxIiwzNC45N10sWzEyMiwiMSIsMzQuOTddLFsxMzcsIjAuOTk5MTg5IiwzNC45NF0sWzE0NywiMC45OTU3OTciLDM0LjgyXSxbMTU1LCIwLjk5MTk3MyIsMzQuNjldXSwibGFzdCI6WzQ2NCwiMC45NiIsMzMuNTddfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-fc70595e900c891b949c",
+          "file": "paths.probe.ts",
+          "line": 99,
+          "column": 9
+        },
+        {
+          "title": "press · dock seat held · no-preference",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1034,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PRESS {\"project\":\"chromium-desktop\",\"control\":\"dock seat\",\"motion\":\"no-preference\",\"rest\":[\"1\",40],\"scales\":[\"1\",\"0.999962 0.999566\",\"0.999917 0.998867\",\"0.999891 0.998144\",\"0.999868 0.996663\",\"0.99988 0.995369\",\"0.999924 0.993772\",\"0.999997 0.992021\",\"1.00009 0.990234\",\"1.00022 0.988285\",\"1.00036 0.986326\",\"1.00052 0.984297\",\"1.00068 0.982311\",\"1.00086 0.980292\",\"1.00103 0.978348\",\"1.00119 0.976453\",\"1.00134 0.974613\",\"1.00148 0.972824\",\"1.00182 0.968418\",\"1.00228 0.962507\",\"1.00279 0.956028\",\"1.00289 0.9548\",\"1.00299 0.953612\",\"1.00322 0.950809\",\"1.00332 0.949647\",\"1.00341 0.94864\",\"1.0035 0.947687\",\"1.0036 0.946653\",\"1.00368 0.945718\",\"1.0039 0.943416\",\"1.00398 0.942578\",\"1.00415 0.940834\",\"1.00445 0.937676\",\"1.00473 0.934825\",\"1.00479 0.934209\",\"1.0049 0.933106\",\"1.00512 0.930822\",\"1.00531 0.928831\",\"1.00552 0.926673\",\"1.00572 0.924674\",\"1.0059 0.922832\"],\"widths\":[39.99,40.24],\"first\":[[105,\"1\",40],[114,\"1\",40],[122,\"1\",40],[130,\"0.999962 0.999566\",40],[139,\"0.999917 0.998867\",40],[146,\"0.999891 0.998144\",40]],\"last\":[456,\"1.0059 0.922832\",40.24]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:01:23.255Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "press",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0IjoiY2hyb21pdW0tZGVza3RvcCIsImNvbnRyb2wiOiJkb2NrIHNlYXQiLCJtb3Rpb24iOiJuby1wcmVmZXJlbmNlIiwicmVzdCI6WyIxIiw0MF0sInNjYWxlcyI6WyIxIiwiMC45OTk5NjIgMC45OTk1NjYiLCIwLjk5OTkxNyAwLjk5ODg2NyIsIjAuOTk5ODkxIDAuOTk4MTQ0IiwiMC45OTk4NjggMC45OTY2NjMiLCIwLjk5OTg4IDAuOTk1MzY5IiwiMC45OTk5MjQgMC45OTM3NzIiLCIwLjk5OTk5NyAwLjk5MjAyMSIsIjEuMDAwMDkgMC45OTAyMzQiLCIxLjAwMDIyIDAuOTg4Mjg1IiwiMS4wMDAzNiAwLjk4NjMyNiIsIjEuMDAwNTIgMC45ODQyOTciLCIxLjAwMDY4IDAuOTgyMzExIiwiMS4wMDA4NiAwLjk4MDI5MiIsIjEuMDAxMDMgMC45NzgzNDgiLCIxLjAwMTE5IDAuOTc2NDUzIiwiMS4wMDEzNCAwLjk3NDYxMyIsIjEuMDAxNDggMC45NzI4MjQiLCIxLjAwMTgyIDAuOTY4NDE4IiwiMS4wMDIyOCAwLjk2MjUwNyIsIjEuMDAyNzkgMC45NTYwMjgiLCIxLjAwMjg5IDAuOTU0OCIsIjEuMDAyOTkgMC45NTM2MTIiLCIxLjAwMzIyIDAuOTUwODA5IiwiMS4wMDMzMiAwLjk0OTY0NyIsIjEuMDAzNDEgMC45NDg2NCIsIjEuMDAzNSAwLjk0NzY4NyIsIjEuMDAzNiAwLjk0NjY1MyIsIjEuMDAzNjggMC45NDU3MTgiLCIxLjAwMzkgMC45NDM0MTYiLCIxLjAwMzk4IDAuOTQyNTc4IiwiMS4wMDQxNSAwLjk0MDgzNCIsIjEuMDA0NDUgMC45Mzc2NzYiLCIxLjAwNDczIDAuOTM0ODI1IiwiMS4wMDQ3OSAwLjkzNDIwOSIsIjEuMDA0OSAwLjkzMzEwNiIsIjEuMDA1MTIgMC45MzA4MjIiLCIxLjAwNTMxIDAuOTI4ODMxIiwiMS4wMDU1MiAwLjkyNjY3MyIsIjEuMDA1NzIgMC45MjQ2NzQiLCIxLjAwNTkgMC45MjI4MzIiXSwid2lkdGhzIjpbMzkuOTksNDAuMjRdLCJmaXJzdCI6W1sxMDUsIjEiLDQwXSxbMTE0LCIxIiw0MF0sWzEyMiwiMSIsNDBdLFsxMzAsIjAuOTk5OTYyIDAuOTk5NTY2Iiw0MF0sWzEzOSwiMC45OTk5MTcgMC45OTg4NjciLDQwXSxbMTQ2LCIwLjk5OTg5MSAwLjk5ODE0NCIsNDBdXSwibGFzdCI6WzQ1NiwiMS4wMDU5IDAuOTIyODMyIiw0MC4yNF19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-8f6b501a69be5f5aa913",
+          "file": "paths.probe.ts",
+          "line": 99,
+          "column": 9
+        },
+        {
+          "title": "press · Button held · no-preference",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1457,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PRESS {\"project\":\"chromium-desktop\",\"control\":\"Button\",\"motion\":\"no-preference\",\"rest\":[\"1\",156.56],\"scales\":[\"1\",\"1.00009 0.999547\",\"1.00022 0.998973\",\"1.00051 0.997805\",\"1.00084 0.996645\",\"1.00127 0.995174\",\"1.00178 0.993576\",\"1.00239 0.991742\",\"1.00305 0.989827\",\"1.00377 0.987777\",\"1.00452 0.985716\",\"1.00529 0.983624\",\"1.00609 0.981482\",\"1.00688 0.9794\",\"1.00765 0.977348\",\"1.00842 0.975306\",\"1.00915 0.973324\",\"1.00985 0.971442\",\"1.01151 0.966937\",\"1.01379 0.960747\",\"1.01435 0.959245\",\"1.0149 0.957756\",\"1.01622 0.954201\",\"1.01671 0.952899\",\"1.01719 0.951636\",\"1.01765 0.950413\",\"1.01881 0.947361\",\"1.01921 0.946292\",\"1.01964 0.945185\",\"1.02063 0.942588\",\"1.02195 0.939125\",\"1.02218 0.938542\",\"1.02307 0.936231\",\"1.02414 0.933449\",\"1.02532 0.930394\",\"1.02651 0.927308\",\"1.0267 0.926822\",\"1.02716 0.925624\",\"1.02733 0.925185\",\"1.0277 0.924226\",\"1.02829 0.92271\"],\"widths\":[156.56,160.99],\"first\":[[105,\"1\",156.56],[113,\"1\",156.56],[121,\"1\",156.56],[130,\"1.00009 0.999547\",156.58],[137,\"1.00022 0.998973\",156.6],[147,\"1.00051 0.997805\",156.64]],\"last\":[454,\"1.02829 0.92271\",160.99]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:01:24.295Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "press",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0IjoiY2hyb21pdW0tZGVza3RvcCIsImNvbnRyb2wiOiJCdXR0b24iLCJtb3Rpb24iOiJuby1wcmVmZXJlbmNlIiwicmVzdCI6WyIxIiwxNTYuNTZdLCJzY2FsZXMiOlsiMSIsIjEuMDAwMDkgMC45OTk1NDciLCIxLjAwMDIyIDAuOTk4OTczIiwiMS4wMDA1MSAwLjk5NzgwNSIsIjEuMDAwODQgMC45OTY2NDUiLCIxLjAwMTI3IDAuOTk1MTc0IiwiMS4wMDE3OCAwLjk5MzU3NiIsIjEuMDAyMzkgMC45OTE3NDIiLCIxLjAwMzA1IDAuOTg5ODI3IiwiMS4wMDM3NyAwLjk4Nzc3NyIsIjEuMDA0NTIgMC45ODU3MTYiLCIxLjAwNTI5IDAuOTgzNjI0IiwiMS4wMDYwOSAwLjk4MTQ4MiIsIjEuMDA2ODggMC45Nzk0IiwiMS4wMDc2NSAwLjk3NzM0OCIsIjEuMDA4NDIgMC45NzUzMDYiLCIxLjAwOTE1IDAuOTczMzI0IiwiMS4wMDk4NSAwLjk3MTQ0MiIsIjEuMDExNTEgMC45NjY5MzciLCIxLjAxMzc5IDAuOTYwNzQ3IiwiMS4wMTQzNSAwLjk1OTI0NSIsIjEuMDE0OSAwLjk1Nzc1NiIsIjEuMDE2MjIgMC45NTQyMDEiLCIxLjAxNjcxIDAuOTUyODk5IiwiMS4wMTcxOSAwLjk1MTYzNiIsIjEuMDE3NjUgMC45NTA0MTMiLCIxLjAxODgxIDAuOTQ3MzYxIiwiMS4wMTkyMSAwLjk0NjI5MiIsIjEuMDE5NjQgMC45NDUxODUiLCIxLjAyMDYzIDAuOTQyNTg4IiwiMS4wMjE5NSAwLjkzOTEyNSIsIjEuMDIyMTggMC45Mzg1NDIiLCIxLjAyMzA3IDAuOTM2MjMxIiwiMS4wMjQxNCAwLjkzMzQ0OSIsIjEuMDI1MzIgMC45MzAzOTQiLCIxLjAyNjUxIDAuOTI3MzA4IiwiMS4wMjY3IDAuOTI2ODIyIiwiMS4wMjcxNiAwLjkyNTYyNCIsIjEuMDI3MzMgMC45MjUxODUiLCIxLjAyNzcgMC45MjQyMjYiLCIxLjAyODI5IDAuOTIyNzEiXSwid2lkdGhzIjpbMTU2LjU2LDE2MC45OV0sImZpcnN0IjpbWzEwNSwiMSIsMTU2LjU2XSxbMTEzLCIxIiwxNTYuNTZdLFsxMjEsIjEiLDE1Ni41Nl0sWzEzMCwiMS4wMDAwOSAwLjk5OTU0NyIsMTU2LjU4XSxbMTM3LCIxLjAwMDIyIDAuOTk4OTczIiwxNTYuNl0sWzE0NywiMS4wMDA1MSAwLjk5NzgwNSIsMTU2LjY0XV0sImxhc3QiOls0NTQsIjEuMDI4MjkgMC45MjI3MSIsMTYwLjk5XX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-7c4991ef53abd63e05ca",
+          "file": "paths.probe.ts",
+          "line": 99,
+          "column": 9
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-17T03:00:52.660Z",
+    "duration": 33140.425,
+    "expected": 17,
+    "skipped": 1,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,1068 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "docs/release-11.1.1/critic-3/probe/probe.config.ts",
+      "--project=webkit-phone",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe/probe.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/logs/probe-tip-webkit-phone.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "paths.probe.ts",
+      "file": "paths.probe.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "paths · Select · outside",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe/paths.probe.ts",
+                    "line": 43,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 294,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:02:08.092Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe/paths.probe.ts",
+                        "line": 43,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-bd88d2caa2c82fab9c95",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · Select · escape",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2775,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PATHS {\"project\":\"webkit-phone\",\"surface\":\"Select\",\"path\":\"escape\",\"rest\":{\"form\":\"sheet\",\"surface\":null,\"plate\":\"firm\",\"bf\":\"blur(22px) saturate(1.5)\",\"bg\":\"color(srgb 0.910327 0.874024 0.83671 / 0.727)\",\"x\":0,\"y\":615,\"w\":390,\"h\":229},\"gone\":true,\"frames\":23,\"lastMs\":226,\"differs\":0,\"firstDiffer\":null,\"rise\":0,\"largestStep\":14,\"xShift\":0,\"wShift\":0,\"table\":[[0,1,615,1],[12,1,615,1],[22,0.964,623,0.93],[32,0.927,632,0.86],[44,0.879,643,0.772],[53,0.844,651,0.712],[63,0.794,662,0.631],[73,0.747,673,0.558],[82,0.703,683,0.494],[94,0.643,697,0.414],[104,0.598,707,0.357],[114,0.541,720,0.293],[124,0.49,732,0.24],[134,0.438,744,0.192],[145,0.387,755,0.15],[155,0.337,767,0.113],[165,0.287,778,0.082],[177,0.229,791,0.053],[185,0.187,801,0.035],[196,0.143,811,0.02],[208,0.088,824,0.008],[216,0.058,831,0.003],[226,0.022,839,0]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:02:08.544Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "paths",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0Ijoid2Via2l0LXBob25lIiwic3VyZmFjZSI6IlNlbGVjdCIsInBhdGgiOiJlc2NhcGUiLCJyZXN0Ijp7ImZvcm0iOiJzaGVldCIsInN1cmZhY2UiOm51bGwsInBsYXRlIjoiZmlybSIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuOTEwMzI3IDAuODc0MDI0IDAuODM2NzEgLyAwLjcyNykiLCJ4IjowLCJ5Ijo2MTUsInciOjM5MCwiaCI6MjI5fSwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjoyMywibGFzdE1zIjoyMjYsImRpZmZlcnMiOjAsImZpcnN0RGlmZmVyIjpudWxsLCJyaXNlIjowLCJsYXJnZXN0U3RlcCI6MTQsInhTaGlmdCI6MCwid1NoaWZ0IjowLCJ0YWJsZSI6W1swLDEsNjE1LDFdLFsxMiwxLDYxNSwxXSxbMjIsMC45NjQsNjIzLDAuOTNdLFszMiwwLjkyNyw2MzIsMC44Nl0sWzQ0LDAuODc5LDY0MywwLjc3Ml0sWzUzLDAuODQ0LDY1MSwwLjcxMl0sWzYzLDAuNzk0LDY2MiwwLjYzMV0sWzczLDAuNzQ3LDY3MywwLjU1OF0sWzgyLDAuNzAzLDY4MywwLjQ5NF0sWzk0LDAuNjQzLDY5NywwLjQxNF0sWzEwNCwwLjU5OCw3MDcsMC4zNTddLFsxMTQsMC41NDEsNzIwLDAuMjkzXSxbMTI0LDAuNDksNzMyLDAuMjRdLFsxMzQsMC40MzgsNzQ0LDAuMTkyXSxbMTQ1LDAuMzg3LDc1NSwwLjE1XSxbMTU1LDAuMzM3LDc2NywwLjExM10sWzE2NSwwLjI4Nyw3NzgsMC4wODJdLFsxNzcsMC4yMjksNzkxLDAuMDUzXSxbMTg1LDAuMTg3LDgwMSwwLjAzNV0sWzE5NiwwLjE0Myw4MTEsMC4wMl0sWzIwOCwwLjA4OCw4MjQsMC4wMDhdLFsyMTYsMC4wNTgsODMxLDAuMDAzXSxbMjI2LDAuMDIyLDgzOSwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-31e0ef87915ddb0ab16b",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · Select · trigger",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe/paths.probe.ts",
+                    "line": 43,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 171,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:02:11.325Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe/paths.probe.ts",
+                        "line": 43,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-1a1c58a722915ae9a449",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · Select · current",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2655,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PATHS {\"project\":\"webkit-phone\",\"surface\":\"Select\",\"path\":\"current\",\"rest\":{\"form\":\"sheet\",\"surface\":null,\"plate\":\"firm\",\"bf\":\"blur(22px) saturate(1.5)\",\"bg\":\"color(srgb 0.910327 0.874024 0.83671 / 0.727)\",\"x\":0,\"y\":615,\"w\":390,\"h\":229},\"gone\":true,\"frames\":26,\"lastMs\":249,\"differs\":0,\"firstDiffer\":null,\"rise\":0,\"largestStep\":14,\"xShift\":0,\"wShift\":0,\"table\":[[2,1,615,1],[12,1,615,1],[23,1,615,1],[25,1,615,1],[33,1,615,1],[43,0.964,623,0.93],[53,0.927,632,0.86],[63,0.887,641,0.787],[74,0.844,651,0.712],[84,0.794,662,0.631],[94,0.747,673,0.558],[104,0.698,684,0.487],[114,0.648,696,0.42],[125,0.598,707,0.357],[135,0.541,720,0.293],[144,0.495,731,0.245],[156,0.433,745,0.188],[166,0.382,756,0.146],[176,0.332,768,0.11],[186,0.282,779,0.08],[196,0.234,790,0.055],[204,0.197,799,0.039],[217,0.143,811,0.02],[226,0.101,821,0.01],[237,0.058,831,0.003],[249,0.016,840,0]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:02:11.500Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "paths",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0Ijoid2Via2l0LXBob25lIiwic3VyZmFjZSI6IlNlbGVjdCIsInBhdGgiOiJjdXJyZW50IiwicmVzdCI6eyJmb3JtIjoic2hlZXQiLCJzdXJmYWNlIjpudWxsLCJwbGF0ZSI6ImZpcm0iLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjkxMDMyNyAwLjg3NDAyNCAwLjgzNjcxIC8gMC43MjcpIiwieCI6MCwieSI6NjE1LCJ3IjozOTAsImgiOjIyOX0sImdvbmUiOnRydWUsImZyYW1lcyI6MjYsImxhc3RNcyI6MjQ5LCJkaWZmZXJzIjowLCJmaXJzdERpZmZlciI6bnVsbCwicmlzZSI6MCwibGFyZ2VzdFN0ZXAiOjE0LCJ4U2hpZnQiOjAsIndTaGlmdCI6MCwidGFibGUiOltbMiwxLDYxNSwxXSxbMTIsMSw2MTUsMV0sWzIzLDEsNjE1LDFdLFsyNSwxLDYxNSwxXSxbMzMsMSw2MTUsMV0sWzQzLDAuOTY0LDYyMywwLjkzXSxbNTMsMC45MjcsNjMyLDAuODZdLFs2MywwLjg4Nyw2NDEsMC43ODddLFs3NCwwLjg0NCw2NTEsMC43MTJdLFs4NCwwLjc5NCw2NjIsMC42MzFdLFs5NCwwLjc0Nyw2NzMsMC41NThdLFsxMDQsMC42OTgsNjg0LDAuNDg3XSxbMTE0LDAuNjQ4LDY5NiwwLjQyXSxbMTI1LDAuNTk4LDcwNywwLjM1N10sWzEzNSwwLjU0MSw3MjAsMC4yOTNdLFsxNDQsMC40OTUsNzMxLDAuMjQ1XSxbMTU2LDAuNDMzLDc0NSwwLjE4OF0sWzE2NiwwLjM4Miw3NTYsMC4xNDZdLFsxNzYsMC4zMzIsNzY4LDAuMTFdLFsxODYsMC4yODIsNzc5LDAuMDhdLFsxOTYsMC4yMzQsNzkwLDAuMDU1XSxbMjA0LDAuMTk3LDc5OSwwLjAzOV0sWzIxNywwLjE0Myw4MTEsMC4wMl0sWzIyNiwwLjEwMSw4MjEsMC4wMV0sWzIzNywwLjA1OCw4MzEsMC4wMDNdLFsyNDksMC4wMTYsODQwLDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-064a389e4d24b6bb6ddc",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · Select · other",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2683,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PATHS {\"project\":\"webkit-phone\",\"surface\":\"Select\",\"path\":\"other\",\"rest\":{\"form\":\"sheet\",\"surface\":null,\"plate\":\"firm\",\"bf\":\"blur(22px) saturate(1.5)\",\"bg\":\"color(srgb 0.910327 0.874024 0.83671 / 0.727)\",\"x\":0,\"y\":615,\"w\":390,\"h\":229},\"gone\":true,\"frames\":27,\"lastMs\":254,\"differs\":0,\"firstDiffer\":null,\"rise\":0,\"largestStep\":14,\"xShift\":0,\"wShift\":0,\"table\":[[10,1,615,1],[20,1,615,1],[21,1,615,1],[25,1,615,1],[38,1,615,1],[47,0.968,622,0.936],[51,0.953,626,0.909],[61,0.916,634,0.838],[71,0.874,644,0.765],[83,0.822,656,0.675],[92,0.78,665,0.609],[102,0.732,676,0.536],[114,0.673,690,0.453],[123,0.633,699,0.401],[133,0.582,711,0.339],[143,0.526,724,0.276],[153,0.474,735,0.225],[163,0.423,747,0.179],[173,0.372,759,0.138],[184,0.317,771,0.1],[194,0.268,783,0.072],[204,0.22,794,0.048],[217,0.165,806,0.027],[225,0.126,815,0.016],[235,0.084,825,0.007],[245,0.047,833,0.002],[254,0.016,840,0]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:02:14.160Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "paths",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0Ijoid2Via2l0LXBob25lIiwic3VyZmFjZSI6IlNlbGVjdCIsInBhdGgiOiJvdGhlciIsInJlc3QiOnsiZm9ybSI6InNoZWV0Iiwic3VyZmFjZSI6bnVsbCwicGxhdGUiOiJmaXJtIiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC45MTAzMjcgMC44NzQwMjQgMC44MzY3MSAvIDAuNzI3KSIsIngiOjAsInkiOjYxNSwidyI6MzkwLCJoIjoyMjl9LCJnb25lIjp0cnVlLCJmcmFtZXMiOjI3LCJsYXN0TXMiOjI1NCwiZGlmZmVycyI6MCwiZmlyc3REaWZmZXIiOm51bGwsInJpc2UiOjAsImxhcmdlc3RTdGVwIjoxNCwieFNoaWZ0IjowLCJ3U2hpZnQiOjAsInRhYmxlIjpbWzEwLDEsNjE1LDFdLFsyMCwxLDYxNSwxXSxbMjEsMSw2MTUsMV0sWzI1LDEsNjE1LDFdLFszOCwxLDYxNSwxXSxbNDcsMC45NjgsNjIyLDAuOTM2XSxbNTEsMC45NTMsNjI2LDAuOTA5XSxbNjEsMC45MTYsNjM0LDAuODM4XSxbNzEsMC44NzQsNjQ0LDAuNzY1XSxbODMsMC44MjIsNjU2LDAuNjc1XSxbOTIsMC43OCw2NjUsMC42MDldLFsxMDIsMC43MzIsNjc2LDAuNTM2XSxbMTE0LDAuNjczLDY5MCwwLjQ1M10sWzEyMywwLjYzMyw2OTksMC40MDFdLFsxMzMsMC41ODIsNzExLDAuMzM5XSxbMTQzLDAuNTI2LDcyNCwwLjI3Nl0sWzE1MywwLjQ3NCw3MzUsMC4yMjVdLFsxNjMsMC40MjMsNzQ3LDAuMTc5XSxbMTczLDAuMzcyLDc1OSwwLjEzOF0sWzE4NCwwLjMxNyw3NzEsMC4xXSxbMTk0LDAuMjY4LDc4MywwLjA3Ml0sWzIwNCwwLjIyLDc5NCwwLjA0OF0sWzIxNywwLjE2NSw4MDYsMC4wMjddLFsyMjUsMC4xMjYsODE1LDAuMDE2XSxbMjM1LDAuMDg0LDgyNSwwLjAwN10sWzI0NSwwLjA0Nyw4MzMsMC4wMDJdLFsyNTQsMC4wMTYsODQwLDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-3fdbcfd23247718e2256",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · DropdownMenu · outside",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe/paths.probe.ts",
+                    "line": 43,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 189,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:02:16.847Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe/paths.probe.ts",
+                        "line": 43,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-b60c00e10d70d2ef6c3e",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · DropdownMenu · escape",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2665,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PATHS {\"project\":\"webkit-phone\",\"surface\":\"DropdownMenu\",\"path\":\"escape\",\"rest\":{\"form\":null,\"surface\":null,\"plate\":\"firm\",\"bf\":\"blur(22px) saturate(1.5)\",\"bg\":\"color(srgb 0.910327 0.874024 0.83671 / 0.727)\",\"x\":155,\"y\":66,\"w\":208,\"h\":158},\"gone\":true,\"frames\":22,\"lastMs\":219,\"differs\":0,\"firstDiffer\":null,\"rise\":0,\"largestStep\":0,\"xShift\":0,\"wShift\":0,\"table\":[[5,1,66,1],[15,0.964,66,0.964],[27,0.919,66,0.919],[35,0.887,66,0.887],[46,0.844,66,0.844],[56,0.794,66,0.794],[66,0.747,66,0.747],[76,0.698,66,0.698],[86,0.648,66,0.648],[96,0.603,66,0.603],[107,0.546,66,0.546],[116,0.5,66,0.5],[128,0.433,66,0.433],[138,0.387,66,0.387],[148,0.337,66,0.337],[158,0.287,66,0.287],[168,0.234,66,0.234],[178,0.187,66,0.187],[189,0.143,66,0.143],[199,0.101,66,0.101],[211,0.054,66,0.054],[219,0.026,66,0.026]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:02:17.040Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "paths",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0Ijoid2Via2l0LXBob25lIiwic3VyZmFjZSI6IkRyb3Bkb3duTWVudSIsInBhdGgiOiJlc2NhcGUiLCJyZXN0Ijp7ImZvcm0iOm51bGwsInN1cmZhY2UiOm51bGwsInBsYXRlIjoiZmlybSIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuOTEwMzI3IDAuODc0MDI0IDAuODM2NzEgLyAwLjcyNykiLCJ4IjoxNTUsInkiOjY2LCJ3IjoyMDgsImgiOjE1OH0sImdvbmUiOnRydWUsImZyYW1lcyI6MjIsImxhc3RNcyI6MjE5LCJkaWZmZXJzIjowLCJmaXJzdERpZmZlciI6bnVsbCwicmlzZSI6MCwibGFyZ2VzdFN0ZXAiOjAsInhTaGlmdCI6MCwid1NoaWZ0IjowLCJ0YWJsZSI6W1s1LDEsNjYsMV0sWzE1LDAuOTY0LDY2LDAuOTY0XSxbMjcsMC45MTksNjYsMC45MTldLFszNSwwLjg4Nyw2NiwwLjg4N10sWzQ2LDAuODQ0LDY2LDAuODQ0XSxbNTYsMC43OTQsNjYsMC43OTRdLFs2NiwwLjc0Nyw2NiwwLjc0N10sWzc2LDAuNjk4LDY2LDAuNjk4XSxbODYsMC42NDgsNjYsMC42NDhdLFs5NiwwLjYwMyw2NiwwLjYwM10sWzEwNywwLjU0Niw2NiwwLjU0Nl0sWzExNiwwLjUsNjYsMC41XSxbMTI4LDAuNDMzLDY2LDAuNDMzXSxbMTM4LDAuMzg3LDY2LDAuMzg3XSxbMTQ4LDAuMzM3LDY2LDAuMzM3XSxbMTU4LDAuMjg3LDY2LDAuMjg3XSxbMTY4LDAuMjM0LDY2LDAuMjM0XSxbMTc4LDAuMTg3LDY2LDAuMTg3XSxbMTg5LDAuMTQzLDY2LDAuMTQzXSxbMTk5LDAuMTAxLDY2LDAuMTAxXSxbMjExLDAuMDU0LDY2LDAuMDU0XSxbMjE5LDAuMDI2LDY2LDAuMDI2XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-5f092581c7ef5c832aa5",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · DropdownMenu · trigger",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe/paths.probe.ts",
+                    "line": 43,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 177,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:02:19.710Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe/paths.probe.ts",
+                        "line": 43,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-a4c17bbe742e2b27611c",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · DropdownMenu · current",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a menu has no current item",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe/paths.probe.ts",
+                    "line": 42,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 177,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:02:19.891Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a menu has no current item",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe/paths.probe.ts",
+                        "line": 42,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-87322d042486198fd410",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · DropdownMenu · other",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2662,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PATHS {\"project\":\"webkit-phone\",\"surface\":\"DropdownMenu\",\"path\":\"other\",\"rest\":{\"form\":null,\"surface\":null,\"plate\":\"firm\",\"bf\":\"blur(22px) saturate(1.5)\",\"bg\":\"color(srgb 0.910327 0.874024 0.83671 / 0.727)\",\"x\":155,\"y\":66,\"w\":208,\"h\":158},\"gone\":true,\"frames\":25,\"lastMs\":242,\"differs\":0,\"firstDiffer\":null,\"rise\":0,\"largestStep\":0,\"xShift\":0,\"wShift\":0,\"table\":[[8,1,66,1],[18,1,66,1],[21,1,66,1],[29,1,66,1],[38,0.968,66,0.968],[49,0.927,66,0.927],[59,0.891,66,0.891],[69,0.844,66,0.844],[79,0.799,66,0.799],[89,0.752,66,0.752],[99,0.703,66,0.703],[111,0.643,66,0.643],[120,0.603,66,0.603],[130,0.546,66,0.546],[140,0.495,66,0.495],[151,0.443,66,0.443],[159,0.397,66,0.397],[171,0.342,66,0.342],[181,0.287,66,0.287],[191,0.239,66,0.239],[202,0.192,66,0.192],[212,0.147,66,0.147],[221,0.105,66,0.105],[231,0.065,66,0.065],[242,0.026,66,0.026]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:02:20.072Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "paths",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0Ijoid2Via2l0LXBob25lIiwic3VyZmFjZSI6IkRyb3Bkb3duTWVudSIsInBhdGgiOiJvdGhlciIsInJlc3QiOnsiZm9ybSI6bnVsbCwic3VyZmFjZSI6bnVsbCwicGxhdGUiOiJmaXJtIiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC45MTAzMjcgMC44NzQwMjQgMC44MzY3MSAvIDAuNzI3KSIsIngiOjE1NSwieSI6NjYsInciOjIwOCwiaCI6MTU4fSwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjoyNSwibGFzdE1zIjoyNDIsImRpZmZlcnMiOjAsImZpcnN0RGlmZmVyIjpudWxsLCJyaXNlIjowLCJsYXJnZXN0U3RlcCI6MCwieFNoaWZ0IjowLCJ3U2hpZnQiOjAsInRhYmxlIjpbWzgsMSw2NiwxXSxbMTgsMSw2NiwxXSxbMjEsMSw2NiwxXSxbMjksMSw2NiwxXSxbMzgsMC45NjgsNjYsMC45NjhdLFs0OSwwLjkyNyw2NiwwLjkyN10sWzU5LDAuODkxLDY2LDAuODkxXSxbNjksMC44NDQsNjYsMC44NDRdLFs3OSwwLjc5OSw2NiwwLjc5OV0sWzg5LDAuNzUyLDY2LDAuNzUyXSxbOTksMC43MDMsNjYsMC43MDNdLFsxMTEsMC42NDMsNjYsMC42NDNdLFsxMjAsMC42MDMsNjYsMC42MDNdLFsxMzAsMC41NDYsNjYsMC41NDZdLFsxNDAsMC40OTUsNjYsMC40OTVdLFsxNTEsMC40NDMsNjYsMC40NDNdLFsxNTksMC4zOTcsNjYsMC4zOTddLFsxNzEsMC4zNDIsNjYsMC4zNDJdLFsxODEsMC4yODcsNjYsMC4yODddLFsxOTEsMC4yMzksNjYsMC4yMzldLFsyMDIsMC4xOTIsNjYsMC4xOTJdLFsyMTIsMC4xNDcsNjYsMC4xNDddLFsyMjEsMC4xMDUsNjYsMC4xMDVdLFsyMzEsMC4wNjUsNjYsMC4wNjVdLFsyNDIsMC4wMjYsNjYsMC4wMjZdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-1c1b1af93ee8cbee929f",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "press · dock trigger (Select) held · reduce",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen cannot hold a press",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe/paths.probe.ts",
+                    "line": 101,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 184,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:02:22.740Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen cannot hold a press",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe/paths.probe.ts",
+                        "line": 101,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-5c38b8c2e55a95004dda",
+          "file": "paths.probe.ts",
+          "line": 99,
+          "column": 9
+        },
+        {
+          "title": "press · dock trigger (menu) held · reduce",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen cannot hold a press",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe/paths.probe.ts",
+                    "line": 101,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 174,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:02:22.929Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen cannot hold a press",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe/paths.probe.ts",
+                        "line": 101,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-e49f1bd6df040ab86185",
+          "file": "paths.probe.ts",
+          "line": 99,
+          "column": 9
+        },
+        {
+          "title": "press · dock seat held · reduce",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen cannot hold a press",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe/paths.probe.ts",
+                    "line": 101,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 170,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:02:23.106Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen cannot hold a press",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe/paths.probe.ts",
+                        "line": 101,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-a36c3b8454b41f19b900",
+          "file": "paths.probe.ts",
+          "line": 99,
+          "column": 9
+        },
+        {
+          "title": "press · Button held · reduce",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen cannot hold a press",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe/paths.probe.ts",
+                    "line": 101,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 175,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:02:23.279Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen cannot hold a press",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe/paths.probe.ts",
+                        "line": 101,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-33f9973c63f4828b1a55",
+          "file": "paths.probe.ts",
+          "line": 99,
+          "column": 9
+        },
+        {
+          "title": "press · dock trigger (Select) held · no-preference",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen cannot hold a press",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe/paths.probe.ts",
+                    "line": 101,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 179,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:02:23.457Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen cannot hold a press",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe/paths.probe.ts",
+                        "line": 101,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-0ecdecb94274d76867b4",
+          "file": "paths.probe.ts",
+          "line": 99,
+          "column": 9
+        },
+        {
+          "title": "press · dock trigger (menu) held · no-preference",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen cannot hold a press",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe/paths.probe.ts",
+                    "line": 101,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 174,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:02:23.640Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen cannot hold a press",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe/paths.probe.ts",
+                        "line": 101,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-1a82ef8da6c1442d65da",
+          "file": "paths.probe.ts",
+          "line": 99,
+          "column": 9
+        },
+        {
+          "title": "press · dock seat held · no-preference",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen cannot hold a press",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe/paths.probe.ts",
+                    "line": 101,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 177,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:02:23.818Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen cannot hold a press",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe/paths.probe.ts",
+                        "line": 101,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-73fe6521369cd3c153e7",
+          "file": "paths.probe.ts",
+          "line": 99,
+          "column": 9
+        },
+        {
+          "title": "press · Button held · no-preference",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen cannot hold a press",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe/paths.probe.ts",
+                    "line": 101,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 177,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:02:23.998Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen cannot hold a press",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/probe/paths.probe.ts",
+                        "line": 101,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-40712f3aef996b893046",
+          "file": "paths.probe.ts",
+          "line": 99,
+          "column": 9
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-17T03:02:07.135Z",
+    "duration": 17091.328,
+    "expected": 5,
+    "skipped": 13,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

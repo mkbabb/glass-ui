@@ -1,0 +1,47 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 16 tests using 1 worker
+
+  ✓   1 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:99:1 › site · a site's own opacity fade keeps its clock under reduced motion (1.4s)
+  ✓   2 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:163:5 › fade · a Popover appears and leaves on a fade (2.8s)
+  ✓   3 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:163:5 › fade · a DropdownMenu appears and leaves on a fade (2.7s)
+  ✓   4 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:163:5 › fade · a dock Select appears and leaves on a fade (2.7s)
+  ✓   5 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:163:5 › fade · a plain Select appears and leaves on a fade (2.7s)
+  ✓   6 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:163:5 › fade · a Tooltip appears and leaves on a fade (2.7s)
+[WebServer] 8:32:23 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓   7 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:163:5 › fade · a Dialog appears and leaves on a fade (2.7s)
+[WebServer] 8:32:26 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓   8 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:163:5 › fade · a Sheet right appears and leaves on a fade (2.7s)
+[WebServer] 8:32:28 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓   9 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:163:5 › fade · a Sheet bottom appears and leaves on a fade (2.7s)
+  ✓  10 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:163:5 › fade · a Toast appears and leaves on a fade (2.7s)
+  ✓  11 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:163:5 › fade · a Collapsible appears and leaves on a fade (2.7s)
+  ✓  12 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:163:5 › fade · a Accordion appears and leaves on a fade (2.7s)
+  ✓  13 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:163:5 › fade · a ExpandableContainer appears and leaves on a fade (2.7s)
+  ✓  14 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:239:1 › fold · a dock unfolds and folds by cross-fading its faces, its box landing at once (2.7s)
+  ✓  15 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:258:1 › mark · a run's selected plate moves to a new seat by a cross-fade (1.8s)
+  ✘  16 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:322:1 › still · a Slider holds still under reduced motion (1.8s)
+
+
+  1) [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:322:1 › still · a Slider holds still under reduced motion 
+
+    Error: the press reached the fill {"clocks":{"root":"0s","track":"0s","fill":"0s","thumb":"0s"},"press":{"from":"none","to":"none","values":2,"between":60},"release":{"from":"none","to":"none","values":1,"between":0}}
+
+    expect(received).not.toBe(expected) // Object.is equality
+
+    Expected: not "none"
+
+      378 |     for (const [part, d] of Object.entries(clocks)) expect(zero(d), `the ${part} changes on a zero clock ${at}`).toBe(true);
+      379 |     if (pressLeg && releaseLeg) {
+    > 380 |         expect(pressLeg.to, `the press reached the fill ${at}`).not.toBe(pressLeg.from);
+          |                                                                     ^
+      381 |         expect(releaseLeg.to, `the release returned the fill to rest ${at}`).toBe(pressLeg.from);
+      382 |         expect(pressLeg.between, `the press takes no transform between rest and pressed ${at}`).toBe(0);
+      383 |         expect(releaseLeg.between, `the release takes no transform between pressed and rest ${at}`).toBe(0);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-reduce.spec.ts:380:69
+
+    Error Context: tests-visual/test-results/release-11-1-1-reduce-stil-3c2d8--still-under-reduced-motion-chromium-desktop/error-context.md
+
+  1 failed
+    [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:322:1 › still · a Slider holds still under reduced motion 
+  15 passed (42.0s)

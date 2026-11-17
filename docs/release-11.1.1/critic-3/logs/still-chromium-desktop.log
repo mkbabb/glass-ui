@@ -1,0 +1,40 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 12 tests using 1 worker
+
+  ✓   1 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:322:1 › still · a Slider holds still under reduced motion (1.8s)
+  ✓   2 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:322:1 › still · a Slider holds still under reduced motion (1.8s)
+  ✓   3 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:322:1 › still · a Slider holds still under reduced motion (1.8s)
+  ✓   4 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:322:1 › still · a Slider holds still under reduced motion (1.8s)
+  ✓   5 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:322:1 › still · a Slider holds still under reduced motion (1.8s)
+  ✓   6 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:322:1 › still · a Slider holds still under reduced motion (1.8s)
+  ✓   7 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:322:1 › still · a Slider holds still under reduced motion (1.8s)
+  ✓   8 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:322:1 › still · a Slider holds still under reduced motion (1.8s)
+  ✓   9 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:322:1 › still · a Slider holds still under reduced motion (1.8s)
+  ✓  10 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:322:1 › still · a Slider holds still under reduced motion (1.8s)
+  ✘  11 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:322:1 › still · a Slider holds still under reduced motion (1.8s)
+  ✓  12 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:322:1 › still · a Slider holds still under reduced motion (1.8s)
+
+
+  1) [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:322:1 › still · a Slider holds still under reduced motion 
+
+    Error: the press reached the fill {"clocks":{"root":"0s","track":"0s","fill":"0s","thumb":"0s"},"press":{"from":"matrix(1, 0, 0, 0.97, 0, 0)","to":"matrix(1, 0, 0, 0.97, 0, 0)","values":1,"between":0},"release":{"from":"matrix(1, 0, 0, 0.97, 0, 0)","to":"none","values":1,"between":0}}
+
+    expect(received).not.toBe(expected) // Object.is equality
+
+    Expected: not "matrix(1, 0, 0, 0.97, 0, 0)"
+
+      378 |     for (const [part, d] of Object.entries(clocks)) expect(zero(d), `the ${part} changes on a zero clock ${at}`).toBe(true);
+      379 |     if (pressLeg && releaseLeg) {
+    > 380 |         expect(pressLeg.to, `the press reached the fill ${at}`).not.toBe(pressLeg.from);
+          |                                                                     ^
+      381 |         expect(releaseLeg.to, `the release returned the fill to rest ${at}`).toBe(pressLeg.from);
+      382 |         expect(pressLeg.between, `the press takes no transform between rest and pressed ${at}`).toBe(0);
+      383 |         expect(releaseLeg.between, `the release takes no transform between pressed and rest ${at}`).toBe(0);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-reduce.spec.ts:380:69
+
+    Error Context: tests-visual/test-results/release-11-1-1-reduce-stil-3c2d8--still-under-reduced-motion-chromium-desktop-repeat10/error-context.md
+
+  1 failed
+    [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:322:1 › still · a Slider holds still under reduced motion 
+  11 passed (26.9s)

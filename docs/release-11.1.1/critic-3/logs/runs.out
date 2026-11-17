@@ -1,0 +1,58 @@
+head 3e306311f 19:46:47
+typecheck exit 0
+build exit 0
+verify:package exit 0
+demo:dist:build exit 0
+vitest exit 0
+pack exit 0
+PHASE-GATES-DONE 20:19:58
+20:21:18 tipA-chromium-phone exit 0 load=7.41 6.09 5.09
+20:23:14 tipB-chromium-phone exit 0 load=6.53 6.04 5.19
+20:25:25 tipC-chromium-phone exit 0 load=6.54 6.01 5.29
+20:26:09 tipD-chromium-phone exit 0 load=6.86 6.21 5.39
+20:27:23 tipA-chromium-desktop exit 0 load=7.19 6.43 5.54
+20:29:44 tipB-chromium-desktop exit 0 load=7.81 7.09 5.95
+20:32:05 tipC-chromium-desktop exit 0 load=9.04 7.82 6.42
+20:32:53 tipD-chromium-desktop exit 1 load=7.38 7.56 6.39
+20:33:58 tipA-webkit-phone exit 0 load=6.73 7.36 6.40
+20:36:05 tipB-webkit-phone exit 0 load=8.29 7.51 6.58
+20:37:42 tipC-webkit-phone exit 0 load=12.90 8.54 7.03
+20:38:28 tipD-webkit-phone exit 0 load=9.66 8.29 7.02
+20:39:50 tipA-webkit-desktop exit 0 load=5.98 7.51 6.84
+20:42:20 tipB-webkit-desktop exit 0 load=5.21 6.64 6.59
+20:45:10 tipC-webkit-desktop exit 0 load=7.52 7.06 6.77
+20:46:03 tipD-webkit-desktop exit 0 load=7.94 7.26 6.86
+PHASE-TIP-DONE 20:46:03
+20:47:35 redA-chromium-phone exit 1 load=6.99 7.14 6.85
+20:49:44 redB-chromium-phone exit 1 load=5.31 6.49 6.63
+20:50:32 redD-chromium-phone exit 1 load=5.02 6.24 6.53
+20:51:53 redA-chromium-desktop exit 1 load=5.76 6.23 6.50
+20:54:29 redB-chromium-desktop exit 1 load=7.46 6.72 6.64
+20:55:21 redD-chromium-desktop exit 1 load=7.28 6.78 6.67
+20:56:37 redA-webkit-phone exit 1 load=6.55 6.66 6.63
+20:59:28 redB-webkit-phone exit 1 load=12.02 8.62 7.41
+21:00:54 redD-webkit-phone exit 1 load=7.34 7.87 7.23
+21:02:55 redA-webkit-desktop exit 1 load=8.01 7.87 7.31
+21:06:21 redB-webkit-desktop exit 1 load=6.87 7.49 7.28
+21:07:57 redD-webkit-desktop exit 1 load=6.35 7.03 7.11
+PHASE-RED-DONE 21:07:57
+21:08:13 preN-chromium-phone exit 1 load=10.24 7.85 7.40
+21:08:29 preN-chromium-desktop exit 1 load=14.56 9.01 7.83
+21:09:08 preN-webkit-phone exit 1 load=12.66 9.20 7.95
+21:09:49 preN-webkit-desktop exit 1 load=15.88 10.46 8.47
+PHASE-PRE-DONE 21:09:49
+PHASE-REG-CH-DONE 21:31:52
+PHASE-REG-WK-DONE 21:58:17
+CHAIN1-DONE 21:58:17
+21:58:54 still-chromium-desktop exit 0 load=17.17 12.40 12.00  1 failed  11 passed (26.9s) 
+21:59:32 still-webkit-desktop exit 0 load=17.61 13.16 12.30  12 passed (32.8s) 
+22:00:12 probe-tip-chromium-phone exit 0 load=17.33 13.63 12.51
+22:00:52 probe-red-chromium-phone exit 0 load=14.82 13.55 12.54
+22:01:29 probe-tip-chromium-desktop exit 0 load=11.44 12.83 12.31
+22:02:06 probe-red-chromium-desktop exit 0 load=12.68 12.94 12.37
+22:02:29 probe-tip-webkit-phone exit 0 load=12.62 12.88 12.36
+22:02:53 probe-red-webkit-phone exit 0 load=13.16 13.00 12.42
+22:03:38 probe-tip-webkit-desktop exit 0 load=15.59 13.70 12.71
+22:04:22 probe-red-webkit-desktop exit 0 load=14.30 13.55 12.70
+CHAIN2-DONE 22:04:22
+FOLLOW-DONE 22:04:22

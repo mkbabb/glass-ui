@@ -1,0 +1,948 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "docs/release-11.1.1/critic-3/probe/probe.config.ts",
+      "--project=webkit-desktop",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/docs/release-11.1.1/critic-3/probe/probe.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/docs/release-11.1.1/critic-3/probe",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/docs/release-11.1.1/critic-3/probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/docs/release-11.1.1/critic-3/probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/docs/release-11.1.1/critic-3/probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/docs/release-11.1.1/critic-3/probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-3/logs/probe-red-webkit-desktop.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5352",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/",
+      "url": "http://localhost:5352",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "paths.probe.ts",
+      "file": "paths.probe.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "paths · Select · outside",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2961,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PATHS {\"project\":\"webkit-desktop\",\"surface\":\"Select\",\"path\":\"outside\",\"rest\":{\"form\":null,\"surface\":null,\"plate\":null,\"bf\":\"blur(20px) saturate(1.5)\",\"bg\":\"color(srgb 0.203993 0.148252 0.08296 / 0.22)\",\"x\":679,\"y\":66,\"w\":128,\"h\":230},\"gone\":true,\"frames\":12,\"lastMs\":121,\"differs\":0,\"firstDiffer\":null,\"rise\":0,\"largestStep\":0,\"xShift\":0,\"wShift\":0,\"table\":[[8,1,66,1],[19,1,66,1],[27,1,66,1],[37,1,66,1],[49,1,66,1],[61,1,66,1],[70,1,66,1],[78,1,66,1],[89,1,66,1],[101,1,66,1],[111,1,66,1],[121,0.229,66,0.229]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:03:40.791Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "paths",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0Ijoid2Via2l0LWRlc2t0b3AiLCJzdXJmYWNlIjoiU2VsZWN0IiwicGF0aCI6Im91dHNpZGUiLCJyZXN0Ijp7ImZvcm0iOm51bGwsInN1cmZhY2UiOm51bGwsInBsYXRlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4yMikiLCJ4Ijo2NzksInkiOjY2LCJ3IjoxMjgsImgiOjIzMH0sImdvbmUiOnRydWUsImZyYW1lcyI6MTIsImxhc3RNcyI6MTIxLCJkaWZmZXJzIjowLCJmaXJzdERpZmZlciI6bnVsbCwicmlzZSI6MCwibGFyZ2VzdFN0ZXAiOjAsInhTaGlmdCI6MCwid1NoaWZ0IjowLCJ0YWJsZSI6W1s4LDEsNjYsMV0sWzE5LDEsNjYsMV0sWzI3LDEsNjYsMV0sWzM3LDEsNjYsMV0sWzQ5LDEsNjYsMV0sWzYxLDEsNjYsMV0sWzcwLDEsNjYsMV0sWzc4LDEsNjYsMV0sWzg5LDEsNjYsMV0sWzEwMSwxLDY2LDFdLFsxMTEsMSw2NiwxXSxbMTIxLDAuMjI5LDY2LDAuMjI5XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-b00ad267f3ad671957c9",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · Select · escape",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2723,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PATHS {\"project\":\"webkit-desktop\",\"surface\":\"Select\",\"path\":\"escape\",\"rest\":{\"form\":null,\"surface\":null,\"plate\":null,\"bf\":\"blur(20px) saturate(1.5)\",\"bg\":\"color(srgb 0.203993 0.148252 0.08296 / 0.22)\",\"x\":679,\"y\":66,\"w\":128,\"h\":230},\"gone\":true,\"frames\":12,\"lastMs\":119,\"differs\":0,\"firstDiffer\":null,\"rise\":0,\"largestStep\":0,\"xShift\":0,\"wShift\":0,\"table\":[[7,1,66,1],[16,1,66,1],[26,1,66,1],[36,1,66,1],[45,1,66,1],[57,1,66,1],[67,1,66,1],[77,1,66,1],[87,1,66,1],[97,1,66,1],[107,1,66,1],[119,0.315,66,0.315]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:03:43.922Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "paths",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0Ijoid2Via2l0LWRlc2t0b3AiLCJzdXJmYWNlIjoiU2VsZWN0IiwicGF0aCI6ImVzY2FwZSIsInJlc3QiOnsiZm9ybSI6bnVsbCwic3VyZmFjZSI6bnVsbCwicGxhdGUiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjIyKSIsIngiOjY3OSwieSI6NjYsInciOjEyOCwiaCI6MjMwfSwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjoxMiwibGFzdE1zIjoxMTksImRpZmZlcnMiOjAsImZpcnN0RGlmZmVyIjpudWxsLCJyaXNlIjowLCJsYXJnZXN0U3RlcCI6MCwieFNoaWZ0IjowLCJ3U2hpZnQiOjAsInRhYmxlIjpbWzcsMSw2NiwxXSxbMTYsMSw2NiwxXSxbMjYsMSw2NiwxXSxbMzYsMSw2NiwxXSxbNDUsMSw2NiwxXSxbNTcsMSw2NiwxXSxbNjcsMSw2NiwxXSxbNzcsMSw2NiwxXSxbODcsMSw2NiwxXSxbOTcsMSw2NiwxXSxbMTA3LDEsNjYsMV0sWzExOSwwLjMxNSw2NiwwLjMxNV1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-71d0c64d014cd3464cc0",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · Select · trigger",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2697,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PATHS {\"project\":\"webkit-desktop\",\"surface\":\"Select\",\"path\":\"trigger\",\"rest\":{\"form\":null,\"surface\":null,\"plate\":null,\"bf\":\"blur(20px) saturate(1.5)\",\"bg\":\"color(srgb 0.203993 0.148252 0.08296 / 0.22)\",\"x\":679,\"y\":66,\"w\":128,\"h\":230},\"gone\":true,\"frames\":12,\"lastMs\":114,\"differs\":0,\"firstDiffer\":null,\"rise\":0,\"largestStep\":0,\"xShift\":0,\"wShift\":0,\"table\":[[7,1,66,1],[11,1,66,1],[24,1,66,1],[32,1,66,1],[43,1,66,1],[53,1,66,1],[63,1,66,1],[73,1,66,1],[84,1,66,1],[94,1,66,1],[104,1,66,1],[114,0.736,66,0.736]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:03:46.651Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "paths",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0Ijoid2Via2l0LWRlc2t0b3AiLCJzdXJmYWNlIjoiU2VsZWN0IiwicGF0aCI6InRyaWdnZXIiLCJyZXN0Ijp7ImZvcm0iOm51bGwsInN1cmZhY2UiOm51bGwsInBsYXRlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4yMikiLCJ4Ijo2NzksInkiOjY2LCJ3IjoxMjgsImgiOjIzMH0sImdvbmUiOnRydWUsImZyYW1lcyI6MTIsImxhc3RNcyI6MTE0LCJkaWZmZXJzIjowLCJmaXJzdERpZmZlciI6bnVsbCwicmlzZSI6MCwibGFyZ2VzdFN0ZXAiOjAsInhTaGlmdCI6MCwid1NoaWZ0IjowLCJ0YWJsZSI6W1s3LDEsNjYsMV0sWzExLDEsNjYsMV0sWzI0LDEsNjYsMV0sWzMyLDEsNjYsMV0sWzQzLDEsNjYsMV0sWzUzLDEsNjYsMV0sWzYzLDEsNjYsMV0sWzczLDEsNjYsMV0sWzg0LDEsNjYsMV0sWzk0LDEsNjYsMV0sWzEwNCwxLDY2LDFdLFsxMTQsMC43MzYsNjYsMC43MzZdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-d1d8e5b8bdd0e1f0fea6",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · Select · current",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2729,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PATHS {\"project\":\"webkit-desktop\",\"surface\":\"Select\",\"path\":\"current\",\"rest\":{\"form\":null,\"surface\":null,\"plate\":null,\"bf\":\"blur(20px) saturate(1.5)\",\"bg\":\"color(srgb 0.203993 0.148252 0.08296 / 0.22)\",\"x\":679,\"y\":66,\"w\":128,\"h\":230},\"gone\":true,\"frames\":16,\"lastMs\":138,\"differs\":0,\"firstDiffer\":null,\"rise\":0,\"largestStep\":0,\"xShift\":0,\"wShift\":0,\"table\":[[5,1,66,1],[15,1,66,1],[16,1,66,1],[19,1,66,1],[28,1,66,1],[35,1,66,1],[45,1,66,1],[58,1,66,1],[66,1,66,1],[78,1,66,1],[87,1,66,1],[95,1,66,1],[107,1,66,1],[116,1,66,1],[127,1,66,1],[138,0.558,66,0.558]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:03:49.353Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "paths",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0Ijoid2Via2l0LWRlc2t0b3AiLCJzdXJmYWNlIjoiU2VsZWN0IiwicGF0aCI6ImN1cnJlbnQiLCJyZXN0Ijp7ImZvcm0iOm51bGwsInN1cmZhY2UiOm51bGwsInBsYXRlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4yMikiLCJ4Ijo2NzksInkiOjY2LCJ3IjoxMjgsImgiOjIzMH0sImdvbmUiOnRydWUsImZyYW1lcyI6MTYsImxhc3RNcyI6MTM4LCJkaWZmZXJzIjowLCJmaXJzdERpZmZlciI6bnVsbCwicmlzZSI6MCwibGFyZ2VzdFN0ZXAiOjAsInhTaGlmdCI6MCwid1NoaWZ0IjowLCJ0YWJsZSI6W1s1LDEsNjYsMV0sWzE1LDEsNjYsMV0sWzE2LDEsNjYsMV0sWzE5LDEsNjYsMV0sWzI4LDEsNjYsMV0sWzM1LDEsNjYsMV0sWzQ1LDEsNjYsMV0sWzU4LDEsNjYsMV0sWzY2LDEsNjYsMV0sWzc4LDEsNjYsMV0sWzg3LDEsNjYsMV0sWzk1LDEsNjYsMV0sWzEwNywxLDY2LDFdLFsxMTYsMSw2NiwxXSxbMTI3LDEsNjYsMV0sWzEzOCwwLjU1OCw2NiwwLjU1OF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-e73f22ccaf59f2256164",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · Select · other",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2678,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PATHS {\"project\":\"webkit-desktop\",\"surface\":\"Select\",\"path\":\"other\",\"rest\":{\"form\":null,\"surface\":null,\"plate\":null,\"bf\":\"blur(20px) saturate(1.5)\",\"bg\":\"color(srgb 0.203993 0.148252 0.08296 / 0.22)\",\"x\":679,\"y\":66,\"w\":128,\"h\":230},\"gone\":true,\"frames\":16,\"lastMs\":146,\"differs\":0,\"firstDiffer\":null,\"rise\":0,\"largestStep\":0,\"xShift\":11,\"wShift\":0,\"table\":[[0,1,66,1],[12,1,66,1],[22,1,66,1],[25,1,66,1],[34,1,66,1],[44,1,66,1],[51,1,66,1],[63,1,66,1],[71,1,66,1],[83,1,66,1],[93,1,66,1],[103,1,66,1],[114,1,66,1],[124,1,66,1],[133,1,66,1],[146,0.315,66,0.315]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:03:52.087Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "paths",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0Ijoid2Via2l0LWRlc2t0b3AiLCJzdXJmYWNlIjoiU2VsZWN0IiwicGF0aCI6Im90aGVyIiwicmVzdCI6eyJmb3JtIjpudWxsLCJzdXJmYWNlIjpudWxsLCJwbGF0ZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMjIpIiwieCI6Njc5LCJ5Ijo2NiwidyI6MTI4LCJoIjoyMzB9LCJnb25lIjp0cnVlLCJmcmFtZXMiOjE2LCJsYXN0TXMiOjE0NiwiZGlmZmVycyI6MCwiZmlyc3REaWZmZXIiOm51bGwsInJpc2UiOjAsImxhcmdlc3RTdGVwIjowLCJ4U2hpZnQiOjExLCJ3U2hpZnQiOjAsInRhYmxlIjpbWzAsMSw2NiwxXSxbMTIsMSw2NiwxXSxbMjIsMSw2NiwxXSxbMjUsMSw2NiwxXSxbMzQsMSw2NiwxXSxbNDQsMSw2NiwxXSxbNTEsMSw2NiwxXSxbNjMsMSw2NiwxXSxbNzEsMSw2NiwxXSxbODMsMSw2NiwxXSxbOTMsMSw2NiwxXSxbMTAzLDEsNjYsMV0sWzExNCwxLDY2LDFdLFsxMjQsMSw2NiwxXSxbMTMzLDEsNjYsMV0sWzE0NiwwLjMxNSw2NiwwLjMxNV1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-f99652f741a4d751f9de",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · DropdownMenu · outside",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2634,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PATHS {\"project\":\"webkit-desktop\",\"surface\":\"DropdownMenu\",\"path\":\"outside\",\"rest\":{\"form\":null,\"surface\":null,\"plate\":null,\"bf\":\"blur(20px) saturate(1.5)\",\"bg\":\"color(srgb 0.203993 0.148252 0.08296 / 0.18)\",\"x\":684,\"y\":66,\"w\":208,\"h\":158},\"gone\":true,\"frames\":12,\"lastMs\":116,\"differs\":0,\"firstDiffer\":null,\"rise\":0,\"largestStep\":0,\"xShift\":0,\"wShift\":0,\"table\":[[4,1,66,1],[14,1,66,1],[24,1,66,1],[35,1,66,1],[45,1,66,1],[55,1,66,1],[65,1,66,1],[73,1,66,1],[85,1,66,1],[98,1,66,1],[106,1,66,1],[116,0.315,66,0.315]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:03:54.770Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "paths",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0Ijoid2Via2l0LWRlc2t0b3AiLCJzdXJmYWNlIjoiRHJvcGRvd25NZW51IiwicGF0aCI6Im91dHNpZGUiLCJyZXN0Ijp7ImZvcm0iOm51bGwsInN1cmZhY2UiOm51bGwsInBsYXRlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJ4Ijo2ODQsInkiOjY2LCJ3IjoyMDgsImgiOjE1OH0sImdvbmUiOnRydWUsImZyYW1lcyI6MTIsImxhc3RNcyI6MTE2LCJkaWZmZXJzIjowLCJmaXJzdERpZmZlciI6bnVsbCwicmlzZSI6MCwibGFyZ2VzdFN0ZXAiOjAsInhTaGlmdCI6MCwid1NoaWZ0IjowLCJ0YWJsZSI6W1s0LDEsNjYsMV0sWzE0LDEsNjYsMV0sWzI0LDEsNjYsMV0sWzM1LDEsNjYsMV0sWzQ1LDEsNjYsMV0sWzU1LDEsNjYsMV0sWzY1LDEsNjYsMV0sWzczLDEsNjYsMV0sWzg1LDEsNjYsMV0sWzk4LDEsNjYsMV0sWzEwNiwxLDY2LDFdLFsxMTYsMC4zMTUsNjYsMC4zMTVdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-2d6381d3a4891ef37207",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · DropdownMenu · escape",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2692,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PATHS {\"project\":\"webkit-desktop\",\"surface\":\"DropdownMenu\",\"path\":\"escape\",\"rest\":{\"form\":null,\"surface\":null,\"plate\":null,\"bf\":\"blur(20px) saturate(1.5)\",\"bg\":\"color(srgb 0.203993 0.148252 0.08296 / 0.18)\",\"x\":684,\"y\":66,\"w\":208,\"h\":158},\"gone\":true,\"frames\":13,\"lastMs\":123,\"differs\":0,\"firstDiffer\":null,\"rise\":0,\"largestStep\":0,\"xShift\":0,\"wShift\":0,\"table\":[[0,1,66,1],[10,1,66,1],[20,1,66,1],[29,1,66,1],[40,1,66,1],[51,1,66,1],[60,1,66,1],[69,1,66,1],[81,1,66,1],[91,1,66,1],[102,1,66,1],[112,1,66,1],[123,0.229,66,0.229]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:03:57.412Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "paths",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0Ijoid2Via2l0LWRlc2t0b3AiLCJzdXJmYWNlIjoiRHJvcGRvd25NZW51IiwicGF0aCI6ImVzY2FwZSIsInJlc3QiOnsiZm9ybSI6bnVsbCwic3VyZmFjZSI6bnVsbCwicGxhdGUiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsIngiOjY4NCwieSI6NjYsInciOjIwOCwiaCI6MTU4fSwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjoxMywibGFzdE1zIjoxMjMsImRpZmZlcnMiOjAsImZpcnN0RGlmZmVyIjpudWxsLCJyaXNlIjowLCJsYXJnZXN0U3RlcCI6MCwieFNoaWZ0IjowLCJ3U2hpZnQiOjAsInRhYmxlIjpbWzAsMSw2NiwxXSxbMTAsMSw2NiwxXSxbMjAsMSw2NiwxXSxbMjksMSw2NiwxXSxbNDAsMSw2NiwxXSxbNTEsMSw2NiwxXSxbNjAsMSw2NiwxXSxbNjksMSw2NiwxXSxbODEsMSw2NiwxXSxbOTEsMSw2NiwxXSxbMTAyLDEsNjYsMV0sWzExMiwxLDY2LDFdLFsxMjMsMC4yMjksNjYsMC4yMjldXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-8fc89592ba544c1f76ff",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · DropdownMenu · trigger",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2658,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PATHS {\"project\":\"webkit-desktop\",\"surface\":\"DropdownMenu\",\"path\":\"trigger\",\"rest\":{\"form\":null,\"surface\":null,\"plate\":null,\"bf\":\"blur(20px) saturate(1.5)\",\"bg\":\"color(srgb 0.203993 0.148252 0.08296 / 0.18)\",\"x\":684,\"y\":66,\"w\":208,\"h\":158},\"gone\":true,\"frames\":12,\"lastMs\":117,\"differs\":0,\"firstDiffer\":null,\"rise\":0,\"largestStep\":0,\"xShift\":0,\"wShift\":0,\"table\":[[5,1,66,1],[15,1,66,1],[25,1,66,1],[34,1,66,1],[46,1,66,1],[55,1,66,1],[67,1,66,1],[75,1,66,1],[84,1,66,1],[96,1,66,1],[107,1,66,1],[117,0.315,66,0.315]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:04:00.110Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "paths",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0Ijoid2Via2l0LWRlc2t0b3AiLCJzdXJmYWNlIjoiRHJvcGRvd25NZW51IiwicGF0aCI6InRyaWdnZXIiLCJyZXN0Ijp7ImZvcm0iOm51bGwsInN1cmZhY2UiOm51bGwsInBsYXRlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJ4Ijo2ODQsInkiOjY2LCJ3IjoyMDgsImgiOjE1OH0sImdvbmUiOnRydWUsImZyYW1lcyI6MTIsImxhc3RNcyI6MTE3LCJkaWZmZXJzIjowLCJmaXJzdERpZmZlciI6bnVsbCwicmlzZSI6MCwibGFyZ2VzdFN0ZXAiOjAsInhTaGlmdCI6MCwid1NoaWZ0IjowLCJ0YWJsZSI6W1s1LDEsNjYsMV0sWzE1LDEsNjYsMV0sWzI1LDEsNjYsMV0sWzM0LDEsNjYsMV0sWzQ2LDEsNjYsMV0sWzU1LDEsNjYsMV0sWzY3LDEsNjYsMV0sWzc1LDEsNjYsMV0sWzg0LDEsNjYsMV0sWzk2LDEsNjYsMV0sWzEwNywxLDY2LDFdLFsxMTcsMC4zMTUsNjYsMC4zMTVdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-a985b625931e38fad517",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · DropdownMenu · current",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a menu has no current item",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/docs/release-11.1.1/critic-3/probe/paths.probe.ts",
+                    "line": 42,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 200,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:04:02.772Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a menu has no current item",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/docs/release-11.1.1/critic-3/probe/paths.probe.ts",
+                        "line": 42,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-56ce4626d57fb0c98d20",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "paths · DropdownMenu · other",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2745,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PATHS {\"project\":\"webkit-desktop\",\"surface\":\"DropdownMenu\",\"path\":\"other\",\"rest\":{\"form\":null,\"surface\":null,\"plate\":null,\"bf\":\"blur(20px) saturate(1.5)\",\"bg\":\"color(srgb 0.203993 0.148252 0.08296 / 0.18)\",\"x\":684,\"y\":66,\"w\":208,\"h\":158},\"gone\":true,\"frames\":17,\"lastMs\":143,\"differs\":0,\"firstDiffer\":null,\"rise\":0,\"largestStep\":0,\"xShift\":0,\"wShift\":0,\"table\":[[0,1,66,1],[11,1,66,1],[20,1,66,1],[21,1,66,1],[23,1,66,1],[31,1,66,1],[41,1,66,1],[52,1,66,1],[62,1,66,1],[72,1,66,1],[82,1,66,1],[92,1,66,1],[101,1,66,1],[113,1,66,1],[123,1,66,1],[133,1,66,1],[143,0.229,66,0.229]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:04:02.978Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "paths",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0Ijoid2Via2l0LWRlc2t0b3AiLCJzdXJmYWNlIjoiRHJvcGRvd25NZW51IiwicGF0aCI6Im90aGVyIiwicmVzdCI6eyJmb3JtIjpudWxsLCJzdXJmYWNlIjpudWxsLCJwbGF0ZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwieCI6Njg0LCJ5Ijo2NiwidyI6MjA4LCJoIjoxNTh9LCJnb25lIjp0cnVlLCJmcmFtZXMiOjE3LCJsYXN0TXMiOjE0MywiZGlmZmVycyI6MCwiZmlyc3REaWZmZXIiOm51bGwsInJpc2UiOjAsImxhcmdlc3RTdGVwIjowLCJ4U2hpZnQiOjAsIndTaGlmdCI6MCwidGFibGUiOltbMCwxLDY2LDFdLFsxMSwxLDY2LDFdLFsyMCwxLDY2LDFdLFsyMSwxLDY2LDFdLFsyMywxLDY2LDFdLFszMSwxLDY2LDFdLFs0MSwxLDY2LDFdLFs1MiwxLDY2LDFdLFs2MiwxLDY2LDFdLFs3MiwxLDY2LDFdLFs4MiwxLDY2LDFdLFs5MiwxLDY2LDFdLFsxMDEsMSw2NiwxXSxbMTEzLDEsNjYsMV0sWzEyMywxLDY2LDFdLFsxMzMsMSw2NiwxXSxbMTQzLDAuMjI5LDY2LDAuMjI5XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-246ff093312893b5909a",
+          "file": "paths.probe.ts",
+          "line": 40,
+          "column": 9
+        },
+        {
+          "title": "press · dock trigger (Select) held · reduce",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1330,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PRESS {\"project\":\"webkit-desktop\",\"control\":\"dock trigger (Select)\",\"motion\":\"reduce\",\"rest\":[\"1\",87.14],\"scales\":[\"1\",\"0.96\"],\"widths\":[83.66,87.14],\"first\":[[108,\"1\",87.14],[135,\"0.96\",83.66],[140,\"0.96\",83.66],[149,\"0.96\",83.66],[159,\"0.96\",83.66],[169,\"0.96\",83.66]],\"last\":[486,\"0.96\",83.66]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:04:05.730Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "press",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0Ijoid2Via2l0LWRlc2t0b3AiLCJjb250cm9sIjoiZG9jayB0cmlnZ2VyIChTZWxlY3QpIiwibW90aW9uIjoicmVkdWNlIiwicmVzdCI6WyIxIiw4Ny4xNF0sInNjYWxlcyI6WyIxIiwiMC45NiJdLCJ3aWR0aHMiOls4My42Niw4Ny4xNF0sImZpcnN0IjpbWzEwOCwiMSIsODcuMTRdLFsxMzUsIjAuOTYiLDgzLjY2XSxbMTQwLCIwLjk2Iiw4My42Nl0sWzE0OSwiMC45NiIsODMuNjZdLFsxNTksIjAuOTYiLDgzLjY2XSxbMTY5LCIwLjk2Iiw4My42Nl1dLCJsYXN0IjpbNDg2LCIwLjk2Iiw4My42Nl19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-963a5aa15c86c19b78df",
+          "file": "paths.probe.ts",
+          "line": 99,
+          "column": 9
+        },
+        {
+          "title": "press · dock trigger (menu) held · reduce",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1337,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PRESS {\"project\":\"webkit-desktop\",\"control\":\"dock trigger (menu)\",\"motion\":\"reduce\",\"rest\":[\"1\",34.45],\"scales\":[\"1\",\"0.96\"],\"widths\":[33.08,34.45],\"first\":[[108,\"1\",34.45],[124,\"0.96\",33.08],[128,\"0.96\",33.08],[138,\"0.96\",33.08],[147,\"0.96\",33.08],[160,\"0.96\",33.08]],\"last\":[474,\"0.96\",33.08]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:04:07.064Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "press",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0Ijoid2Via2l0LWRlc2t0b3AiLCJjb250cm9sIjoiZG9jayB0cmlnZ2VyIChtZW51KSIsIm1vdGlvbiI6InJlZHVjZSIsInJlc3QiOlsiMSIsMzQuNDVdLCJzY2FsZXMiOlsiMSIsIjAuOTYiXSwid2lkdGhzIjpbMzMuMDgsMzQuNDVdLCJmaXJzdCI6W1sxMDgsIjEiLDM0LjQ1XSxbMTI0LCIwLjk2IiwzMy4wOF0sWzEyOCwiMC45NiIsMzMuMDhdLFsxMzgsIjAuOTYiLDMzLjA4XSxbMTQ3LCIwLjk2IiwzMy4wOF0sWzE2MCwiMC45NiIsMzMuMDhdXSwibGFzdCI6WzQ3NCwiMC45NiIsMzMuMDhdfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-a47d784265dcb0fa7e43",
+          "file": "paths.probe.ts",
+          "line": 99,
+          "column": 9
+        },
+        {
+          "title": "press · dock seat held · reduce",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1278,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PRESS {\"project\":\"webkit-desktop\",\"control\":\"dock seat\",\"motion\":\"reduce\",\"rest\":[\"1\",40],\"scales\":[\"1\",\"1.0066 0.9156\"],\"widths\":[40,40.26],\"first\":[[107,\"1\",40],[116,\"1.0066 0.9156\",40.26],[128,\"1.0066 0.9156\",40.26],[138,\"1.0066 0.9156\",40.26],[148,\"1.0066 0.9156\",40.26],[157,\"1.0066 0.9156\",40.26]],\"last\":[454,\"1.0066 0.9156\",40.26]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:04:08.405Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "press",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0Ijoid2Via2l0LWRlc2t0b3AiLCJjb250cm9sIjoiZG9jayBzZWF0IiwibW90aW9uIjoicmVkdWNlIiwicmVzdCI6WyIxIiw0MF0sInNjYWxlcyI6WyIxIiwiMS4wMDY2IDAuOTE1NiJdLCJ3aWR0aHMiOls0MCw0MC4yNl0sImZpcnN0IjpbWzEwNywiMSIsNDBdLFsxMTYsIjEuMDA2NiAwLjkxNTYiLDQwLjI2XSxbMTI4LCIxLjAwNjYgMC45MTU2Iiw0MC4yNl0sWzEzOCwiMS4wMDY2IDAuOTE1NiIsNDAuMjZdLFsxNDgsIjEuMDA2NiAwLjkxNTYiLDQwLjI2XSxbMTU3LCIxLjAwNjYgMC45MTU2Iiw0MC4yNl1dLCJsYXN0IjpbNDU0LCIxLjAwNjYgMC45MTU2Iiw0MC4yNl19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-1ddbb46acf26cee4b28f",
+          "file": "paths.probe.ts",
+          "line": 99,
+          "column": 9
+        },
+        {
+          "title": "press · Button held · reduce",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1682,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PRESS {\"project\":\"webkit-desktop\",\"control\":\"Button\",\"motion\":\"reduce\",\"rest\":[\"1\",162.94],\"scales\":[\"1\",\"1.0328 0.911\"],\"widths\":[162.94,168.28],\"first\":[[107,\"1\",162.94],[117,\"1.0328 0.911\",168.28],[127,\"1.0328 0.911\",168.28],[138,\"1.0328 0.911\",168.28],[148,\"1.0328 0.911\",168.28],[160,\"1.0328 0.911\",168.28]],\"last\":[463,\"1.0328 0.911\",168.28]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:04:09.687Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "press",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0Ijoid2Via2l0LWRlc2t0b3AiLCJjb250cm9sIjoiQnV0dG9uIiwibW90aW9uIjoicmVkdWNlIiwicmVzdCI6WyIxIiwxNjIuOTRdLCJzY2FsZXMiOlsiMSIsIjEuMDMyOCAwLjkxMSJdLCJ3aWR0aHMiOlsxNjIuOTQsMTY4LjI4XSwiZmlyc3QiOltbMTA3LCIxIiwxNjIuOTRdLFsxMTcsIjEuMDMyOCAwLjkxMSIsMTY4LjI4XSxbMTI3LCIxLjAzMjggMC45MTEiLDE2OC4yOF0sWzEzOCwiMS4wMzI4IDAuOTExIiwxNjguMjhdLFsxNDgsIjEuMDMyOCAwLjkxMSIsMTY4LjI4XSxbMTYwLCIxLjAzMjggMC45MTEiLDE2OC4yOF1dLCJsYXN0IjpbNDYzLCIxLjAzMjggMC45MTEiLDE2OC4yOF19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-4a57489e19680d22a350",
+          "file": "paths.probe.ts",
+          "line": 99,
+          "column": 9
+        },
+        {
+          "title": "press · dock trigger (Select) held · no-preference",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1406,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PRESS {\"project\":\"webkit-desktop\",\"control\":\"dock trigger (Select)\",\"motion\":\"no-preference\",\"rest\":[\"1\",87.14],\"scales\":[\"1\",\"0.99913\",\"0.997673\",\"0.995277\",\"0.990905\",\"0.984556\",\"0.980445\",\"0.974457\",\"0.970962\",\"0.967751\",\"0.965212\",\"0.963109\",\"0.961731\",\"0.96\"],\"widths\":[83.66,87.14],\"first\":[[107,\"1\",87.14],[130,\"1\",87.14],[137,\"0.99913\",87.06],[142,\"0.997673\",86.94],[148,\"0.995277\",86.73],[157,\"0.990905\",86.35]],\"last\":[475,\"0.96\",83.66]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:04:11.373Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "press",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0Ijoid2Via2l0LWRlc2t0b3AiLCJjb250cm9sIjoiZG9jayB0cmlnZ2VyIChTZWxlY3QpIiwibW90aW9uIjoibm8tcHJlZmVyZW5jZSIsInJlc3QiOlsiMSIsODcuMTRdLCJzY2FsZXMiOlsiMSIsIjAuOTk5MTMiLCIwLjk5NzY3MyIsIjAuOTk1Mjc3IiwiMC45OTA5MDUiLCIwLjk4NDU1NiIsIjAuOTgwNDQ1IiwiMC45NzQ0NTciLCIwLjk3MDk2MiIsIjAuOTY3NzUxIiwiMC45NjUyMTIiLCIwLjk2MzEwOSIsIjAuOTYxNzMxIiwiMC45NiJdLCJ3aWR0aHMiOls4My42Niw4Ny4xNF0sImZpcnN0IjpbWzEwNywiMSIsODcuMTRdLFsxMzAsIjEiLDg3LjE0XSxbMTM3LCIwLjk5OTEzIiw4Ny4wNl0sWzE0MiwiMC45OTc2NzMiLDg2Ljk0XSxbMTQ4LCIwLjk5NTI3NyIsODYuNzNdLFsxNTcsIjAuOTkwOTA1Iiw4Ni4zNV1dLCJsYXN0IjpbNDc1LCIwLjk2Iiw4My42Nl19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-f1434675d93be26f5c65",
+          "file": "paths.probe.ts",
+          "line": 99,
+          "column": 9
+        },
+        {
+          "title": "press · dock trigger (menu) held · no-preference",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1349,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PRESS {\"project\":\"webkit-desktop\",\"control\":\"dock trigger (menu)\",\"motion\":\"no-preference\",\"rest\":[\"1\",34.45],\"scales\":[\"1\",\"0.999682\",\"0.995719\",\"0.991928\",\"0.986678\",\"0.981451\",\"0.97709\",\"0.972061\",\"0.968638\",\"0.965905\",\"0.963797\",\"0.962229\",\"0.961018\",\"0.96\"],\"widths\":[33.08,34.45],\"first\":[[107,\"1\",34.45],[123,\"1\",34.45],[127,\"0.999682\",34.44],[140,\"0.995719\",34.31],[148,\"0.991928\",34.18],[158,\"0.986678\",33.99]],\"last\":[474,\"0.96\",33.08]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:04:12.783Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "press",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0Ijoid2Via2l0LWRlc2t0b3AiLCJjb250cm9sIjoiZG9jayB0cmlnZ2VyIChtZW51KSIsIm1vdGlvbiI6Im5vLXByZWZlcmVuY2UiLCJyZXN0IjpbIjEiLDM0LjQ1XSwic2NhbGVzIjpbIjEiLCIwLjk5OTY4MiIsIjAuOTk1NzE5IiwiMC45OTE5MjgiLCIwLjk4NjY3OCIsIjAuOTgxNDUxIiwiMC45NzcwOSIsIjAuOTcyMDYxIiwiMC45Njg2MzgiLCIwLjk2NTkwNSIsIjAuOTYzNzk3IiwiMC45NjIyMjkiLCIwLjk2MTAxOCIsIjAuOTYiXSwid2lkdGhzIjpbMzMuMDgsMzQuNDVdLCJmaXJzdCI6W1sxMDcsIjEiLDM0LjQ1XSxbMTIzLCIxIiwzNC40NV0sWzEyNywiMC45OTk2ODIiLDM0LjQ0XSxbMTQwLCIwLjk5NTcxOSIsMzQuMzFdLFsxNDgsIjAuOTkxOTI4IiwzNC4xOF0sWzE1OCwiMC45ODY2NzgiLDMzLjk5XV0sImxhc3QiOls0NzQsIjAuOTYiLDMzLjA4XX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-444a85204fea07de41d5",
+          "file": "paths.probe.ts",
+          "line": 99,
+          "column": 9
+        },
+        {
+          "title": "press · dock seat held · no-preference",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1261,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PRESS {\"project\":\"webkit-desktop\",\"control\":\"dock seat\",\"motion\":\"no-preference\",\"rest\":[\"1\",40],\"scales\":[\"1\",\"0.999972 0.999743\",\"0.999919 0.99911\",\"0.999853 0.997864\",\"0.999822 0.996382\",\"0.999833 0.994539\",\"0.999919 0.991552\",\"0.999999 0.989945\",\"1.000154 0.987405\",\"1.000381 0.984256\",\"1.000595 0.981586\",\"1.000825 0.978923\",\"1.001063 0.976301\",\"1.001329 0.973256\",\"1.001529 0.970825\",\"1.001684 0.968885\",\"1.002107 0.963608\",\"1.002721 0.955939\",\"1.00289 0.953898\",\"1.003028 0.95228\",\"1.003356 0.948451\",\"1.003479 0.947065\",\"1.003625 0.945482\",\"1.003705 0.944641\",\"1.003893 0.942681\",\"1.004165 0.939848\",\"1.004267 0.93883\",\"1.004537 0.936133\",\"1.004847 0.933034\",\"1.00492 0.932305\",\"1.005114 0.930373\",\"1.005314 0.928385\",\"1.005524 0.926303\",\"1.005789 0.923661\"],\"widths\":[39.99,40.23],\"first\":[[106,\"1\",40],[118,\"1\",40],[127,\"0.999972 0.999743\",40],[137,\"0.999919 0.99911\",40],[148,\"0.999853 0.997864\",39.99],[158,\"0.999822 0.996382\",39.99]],\"last\":[454,\"1.005789 0.923661\",40.23]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:04:14.138Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "press",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0Ijoid2Via2l0LWRlc2t0b3AiLCJjb250cm9sIjoiZG9jayBzZWF0IiwibW90aW9uIjoibm8tcHJlZmVyZW5jZSIsInJlc3QiOlsiMSIsNDBdLCJzY2FsZXMiOlsiMSIsIjAuOTk5OTcyIDAuOTk5NzQzIiwiMC45OTk5MTkgMC45OTkxMSIsIjAuOTk5ODUzIDAuOTk3ODY0IiwiMC45OTk4MjIgMC45OTYzODIiLCIwLjk5OTgzMyAwLjk5NDUzOSIsIjAuOTk5OTE5IDAuOTkxNTUyIiwiMC45OTk5OTkgMC45ODk5NDUiLCIxLjAwMDE1NCAwLjk4NzQwNSIsIjEuMDAwMzgxIDAuOTg0MjU2IiwiMS4wMDA1OTUgMC45ODE1ODYiLCIxLjAwMDgyNSAwLjk3ODkyMyIsIjEuMDAxMDYzIDAuOTc2MzAxIiwiMS4wMDEzMjkgMC45NzMyNTYiLCIxLjAwMTUyOSAwLjk3MDgyNSIsIjEuMDAxNjg0IDAuOTY4ODg1IiwiMS4wMDIxMDcgMC45NjM2MDgiLCIxLjAwMjcyMSAwLjk1NTkzOSIsIjEuMDAyODkgMC45NTM4OTgiLCIxLjAwMzAyOCAwLjk1MjI4IiwiMS4wMDMzNTYgMC45NDg0NTEiLCIxLjAwMzQ3OSAwLjk0NzA2NSIsIjEuMDAzNjI1IDAuOTQ1NDgyIiwiMS4wMDM3MDUgMC45NDQ2NDEiLCIxLjAwMzg5MyAwLjk0MjY4MSIsIjEuMDA0MTY1IDAuOTM5ODQ4IiwiMS4wMDQyNjcgMC45Mzg4MyIsIjEuMDA0NTM3IDAuOTM2MTMzIiwiMS4wMDQ4NDcgMC45MzMwMzQiLCIxLjAwNDkyIDAuOTMyMzA1IiwiMS4wMDUxMTQgMC45MzAzNzMiLCIxLjAwNTMxNCAwLjkyODM4NSIsIjEuMDA1NTI0IDAuOTI2MzAzIiwiMS4wMDU3ODkgMC45MjM2NjEiXSwid2lkdGhzIjpbMzkuOTksNDAuMjNdLCJmaXJzdCI6W1sxMDYsIjEiLDQwXSxbMTE4LCIxIiw0MF0sWzEyNywiMC45OTk5NzIgMC45OTk3NDMiLDQwXSxbMTM3LCIwLjk5OTkxOSAwLjk5OTExIiw0MF0sWzE0OCwiMC45OTk4NTMgMC45OTc4NjQiLDM5Ljk5XSxbMTU4LCIwLjk5OTgyMiAwLjk5NjM4MiIsMzkuOTldXSwibGFzdCI6WzQ1NCwiMS4wMDU3ODkgMC45MjM2NjEiLDQwLjIzXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-75c513a578e4b2933b6b",
+          "file": "paths.probe.ts",
+          "line": 99,
+          "column": 9
+        },
+        {
+          "title": "press · Button held · no-preference",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1670,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "PRESS {\"project\":\"webkit-desktop\",\"control\":\"Button\",\"motion\":\"no-preference\",\"rest\":[\"1\",162.94],\"scales\":[\"1\",\"1.000045 0.999739\",\"1.000198 0.998968\",\"1.000461 0.997861\",\"1.000873 0.996328\",\"1.001438 0.994412\",\"1.002031 0.992549\",\"1.003019 0.989587\",\"1.004138 0.986398\",\"1.005144 0.983626\",\"1.006188 0.980811\",\"1.007453 0.977447\",\"1.008323 0.975155\",\"1.009537 0.971943\",\"1.010493 0.969382\",\"1.011405 0.966924\",\"1.013562 0.961109\",\"1.016308 0.953708\",\"1.017112 0.951558\",\"1.018763 0.947145\",\"1.019338 0.945625\",\"1.019892 0.944169\",\"1.020528 0.942506\",\"1.021037 0.941185\",\"1.021524 0.939923\",\"1.022678 0.936937\",\"1.023101 0.935852\",\"1.024223 0.932979\",\"1.025511 0.929678\",\"1.026851 0.926243\",\"1.02812 0.922992\",\"1.028316 0.922495\",\"1.028503 0.922014\",\"1.029 0.920741\",\"1.029452 0.919581\"],\"widths\":[162.94,167.74],\"first\":[[105,\"1\",162.94],[116,\"1\",162.94],[125,\"1.000045 0.999739\",162.94],[136,\"1.000198 0.998968\",162.97],[146,\"1.000461 0.997861\",163.01],[156,\"1.000873 0.996328\",163.08]],\"last\":[460,\"1.029452 0.919581\",167.74]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:04:15.405Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "press",
+                      "contentType": "application/json",
+                      "body": "eyJwcm9qZWN0Ijoid2Via2l0LWRlc2t0b3AiLCJjb250cm9sIjoiQnV0dG9uIiwibW90aW9uIjoibm8tcHJlZmVyZW5jZSIsInJlc3QiOlsiMSIsMTYyLjk0XSwic2NhbGVzIjpbIjEiLCIxLjAwMDA0NSAwLjk5OTczOSIsIjEuMDAwMTk4IDAuOTk4OTY4IiwiMS4wMDA0NjEgMC45OTc4NjEiLCIxLjAwMDg3MyAwLjk5NjMyOCIsIjEuMDAxNDM4IDAuOTk0NDEyIiwiMS4wMDIwMzEgMC45OTI1NDkiLCIxLjAwMzAxOSAwLjk4OTU4NyIsIjEuMDA0MTM4IDAuOTg2Mzk4IiwiMS4wMDUxNDQgMC45ODM2MjYiLCIxLjAwNjE4OCAwLjk4MDgxMSIsIjEuMDA3NDUzIDAuOTc3NDQ3IiwiMS4wMDgzMjMgMC45NzUxNTUiLCIxLjAwOTUzNyAwLjk3MTk0MyIsIjEuMDEwNDkzIDAuOTY5MzgyIiwiMS4wMTE0MDUgMC45NjY5MjQiLCIxLjAxMzU2MiAwLjk2MTEwOSIsIjEuMDE2MzA4IDAuOTUzNzA4IiwiMS4wMTcxMTIgMC45NTE1NTgiLCIxLjAxODc2MyAwLjk0NzE0NSIsIjEuMDE5MzM4IDAuOTQ1NjI1IiwiMS4wMTk4OTIgMC45NDQxNjkiLCIxLjAyMDUyOCAwLjk0MjUwNiIsIjEuMDIxMDM3IDAuOTQxMTg1IiwiMS4wMjE1MjQgMC45Mzk5MjMiLCIxLjAyMjY3OCAwLjkzNjkzNyIsIjEuMDIzMTAxIDAuOTM1ODUyIiwiMS4wMjQyMjMgMC45MzI5NzkiLCIxLjAyNTUxMSAwLjkyOTY3OCIsIjEuMDI2ODUxIDAuOTI2MjQzIiwiMS4wMjgxMiAwLjkyMjk5MiIsIjEuMDI4MzE2IDAuOTIyNDk1IiwiMS4wMjg1MDMgMC45MjIwMTQiLCIxLjAyOSAwLjkyMDc0MSIsIjEuMDI5NDUyIDAuOTE5NTgxIl0sIndpZHRocyI6WzE2Mi45NCwxNjcuNzRdLCJmaXJzdCI6W1sxMDUsIjEiLDE2Mi45NF0sWzExNiwiMSIsMTYyLjk0XSxbMTI1LCIxLjAwMDA0NSAwLjk5OTczOSIsMTYyLjk0XSxbMTM2LCIxLjAwMDE5OCAwLjk5ODk2OCIsMTYyLjk3XSxbMTQ2LCIxLjAwMDQ2MSAwLjk5Nzg2MSIsMTYzLjAxXSxbMTU2LCIxLjAwMDg3MyAwLjk5NjMyOCIsMTYzLjA4XV0sImxhc3QiOls0NjAsIjEuMDI5NDUyIDAuOTE5NTgxIiwxNjcuNzRdfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9af77d9659e216c045a8-6ded72a8a688274f0450",
+          "file": "paths.probe.ts",
+          "line": 99,
+          "column": 9
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-17T03:03:39.200Z",
+    "duration": 37934.352000000006,
+    "expected": 17,
+    "skipped": 1,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,61 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 46 tests using 1 worker
+
+  ✓   1 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:792:9 › reverse · a Select closed while it opens turns from where it is (2.2s)
+  ✓   2 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:802:9 › reverse · a Select reopened while it closes turns from where it is (3.0s)
+  ✓   3 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:792:9 › reverse · a DropdownMenu closed while it opens turns from where it is (2.1s)
+  ✓   4 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:802:9 › reverse · a DropdownMenu reopened while it closes turns from where it is (3.0s)
+  ✓   5 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:792:9 › reverse · a Popover closed while it opens turns from where it is (2.1s)
+  ✓   6 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:802:9 › reverse · a Popover reopened while it closes turns from where it is (3.0s)
+  ✓   7 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:792:9 › reverse · a Toast closed while it opens turns from where it is (2.1s)
+  -   8 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:792:9 › reverse · a Tooltip closed while it opens turns from where it is
+  -   9 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:802:9 › reverse · a Tooltip reopened while it closes turns from where it is
+  ✓  10 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:792:9 › reverse · a Collapsible closed while it opens turns from where it is (4.0s)
+  ✓  11 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:802:9 › reverse · a Collapsible reopened while it closes turns from where it is (4.9s)
+  ✓  12 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:792:9 › reverse · a Accordion closed while it opens turns from where it is (4.0s)
+  ✓  13 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:802:9 › reverse · a Accordion reopened while it closes turns from where it is (4.9s)
+[WebServer] 8:21:56 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  14 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:822:5 › reverse · a press on a leaving Dialog's trigger reopens it from where it is (3.1s)
+[WebServer] 8:21:59 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  15 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:822:5 › reverse · a press on a leaving Sheet's trigger reopens it from where it is (3.1s)
+  ✓  16 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:822:5 › reverse · a press on a leaving Select's trigger reopens it from where it is (3.1s)
+[WebServer] 8:22:05 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  17 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:842:1 › reverse · a press on the page while a sheet leaves reaches the page (2.2s)
+  -  18 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:881:1 › tooltip · a Tooltip enters on a tween
+  -  19 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:896:5 › tooltip · a hint handed to its neighbour fades, incoming
+  -  20 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:896:5 › tooltip · a hint handed to its neighbour fades, outgoing
+  ✓  21 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:989:1 › expand · an ExpandableContainer enters on a tween (3.7s)
+  ✓  22 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:1004:5 › expand · an ExpandableContainer leaves on a tween by exit (4.6s)
+  ✓  23 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:1004:5 › expand · an ExpandableContainer leaves on a tween by escape (4.6s)
+  ✓  24 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:1004:5 › expand · an ExpandableContainer leaves on a tween by open (4.6s)
+  ✓  25 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:1027:1 › expand · an ExpandableContainer closed while it enters turns from where it is (3.7s)
+  ✓  26 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:1044:1 › expand · an ExpandableContainer reopened while it leaves turns from where it is (4.7s)
+  ✓  27 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:1060:1 › expand · Escape is live from the entrance's first frame (1.3s)
+[WebServer] 8:22:34 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  28 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:1119:5 › leave · a Dialog says once that its leave has finished, after its last seen frame (2.7s)
+[WebServer] 8:22:37 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  29 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:1148:5 › leave · a Dialog closed and reopened mid-exit says nothing (2.4s)
+[WebServer] 8:22:40 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  30 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:1119:5 › leave · a Sheet says once that its leave has finished, after its last seen frame (2.7s)
+[WebServer] 8:22:42 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  31 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:1148:5 › leave · a Sheet closed and reopened mid-exit says nothing (2.4s)
+  ✓  32 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:1119:5 › leave · a Popover says once that its leave has finished, after its last seen frame (2.7s)
+  ✓  33 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:1148:5 › leave · a Popover closed and reopened mid-exit says nothing (2.4s)
+  ✓  34 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:1119:5 › leave · a DropdownMenu says once that its leave has finished, after its last seen frame (2.7s)
+  ✓  35 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:1148:5 › leave · a DropdownMenu closed and reopened mid-exit says nothing (2.4s)
+  ✓  36 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:1119:5 › leave · a Select says once that its leave has finished, after its last seen frame (2.7s)
+  ✓  37 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:1148:5 › leave · a Select closed and reopened mid-exit says nothing (2.4s)
+  -  38 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:1119:5 › leave · a Tooltip says once that its leave has finished, after its last seen frame
+  -  39 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:1148:5 › leave · a Tooltip closed and reopened mid-exit says nothing
+  ✓  40 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:1119:5 › leave · a Toast says once that its leave has finished, after its last seen frame (2.7s)
+  -  41 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:1148:5 › leave · a Toast closed and reopened mid-exit says nothing
+  ✓  42 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:1223:1 › leave · a Popover inside a shadow root says so to its host (3.3s)
+  -  43 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:1247:5 › leave · a ContextMenu says once that its leave has finished, by escape
+  -  44 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:1247:5 › leave · a ContextMenu says once that its leave has finished, by pick
+  -  45 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:1265:1 › leave · a hover card says once that its leave has finished
+[WebServer] 8:23:07 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  46 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:1283:1 › leave · a Dialog unmounted mid-exit says so once, at the unmount (3.0s)
+
+  11 skipped
+  35 passed (1.8m)
