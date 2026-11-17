@@ -27,7 +27,8 @@
 //   w-fourier fourier's canvas dock: ControlsDock within="parent", Edit in #persistent-end
 //   w-daraksha daraksha's composition: the site dock and a ControlsDock at the foot's end
 //             corner, the page's controls contributed through DockOutlet, the theme seat last
-//   w-sci     sci-report's filters: ControlsDock collapse="closed", words in #collapsed
+//   w-sci     a ControlsDock of three controls at the window's top end, words in #collapsed (no site of its own: sci-report
+//             mounts no dock, RU-79 C7-6; MEASURE-8 H11 drops its collapse="closed", which the preset never took)
 // PROTOTYPE-3 cells (the spec after RULINGS-2, the rest of build step 7):
 //   w-g8      overlays from run seats: a menu, a hover popover, a dialog, a sheet;
 //             &press=1 opens the dock by press (expandOn="press")
@@ -40,7 +41,8 @@
 //   w-seatset the site dock with a seat added and removed by v-if, and a route that
 //             changes the seat set (G-4)
 //   w-color   value.js's Tools/Tool swap: a DockCrossfade of two faces in an open dock
-//   w-kfcode  keyframes's code-pane controls dock: within="parent", corner top-end
+//   w-kfcode  a ControlsDock cell (three controls; RULINGS-7 C7-6 calls it four-control), within="parent", corner top-end.
+//             Not keyframes's dock: its RibbonBar is a GlassDock :collapse="false" that never folds (RU-79 C7-6, H11)
 // MEASURE-3 cells (the five behaviours the second fold left unbuilt):
 //   w-many    O-358's dock: five tabs (the first current) and two avatar seats
 //   w-ctl6    a ControlsDock of six controls (the cap), at 360
@@ -464,7 +466,7 @@ const stageStyle = computed(() =>
         </GlassDock>
         <template v-if="ControlsDock && cell === 'w-ctl'">
             <div :class="within === 'parent' ? 'wi8-figure' : ''" data-testid="w-ctl-host">
-                <component :is="ControlsDock" data-testid="w-ctl" label="Figure controls" :corner="corner" :within="within" collapse="closed">
+                <component :is="ControlsDock" data-testid="w-ctl" label="Figure controls" :corner="corner" :within="within">
                     <DockControl aria-label="Table"><Table2 /></DockControl>
                     <DockControl aria-label="Filter"><Filter /></DockControl>
                     <DockControl aria-label="Palette"><Palette /></DockControl>
@@ -487,7 +489,7 @@ const stageStyle = computed(() =>
             <Slider v-model="volume" :min="0" :max="100" aria-label="Volume" style="inline-size: 120px" />
         </component>
         <template v-if="ControlsDock && cell === 'w-ctlout'">
-            <component :is="ControlsDock" id="wi8-controls" data-testid="w-ctlout" label="Page controls" collapse="closed">
+            <component :is="ControlsDock" id="wi8-controls" data-testid="w-ctlout" label="Page controls">
                 <DockControl aria-label="Theme" @click="toggleTheme"><Moon v-if="dark" /><Sun v-else /></DockControl>
                 <template #collapsed>
                     <SlidersHorizontal class="h-4 w-4" aria-hidden="true" />
@@ -517,7 +519,7 @@ const stageStyle = computed(() =>
             <DockControl aria-label="Settings"><Settings /></DockControl>
         </GlassDock>
         <div v-if="ControlsDock && cell === 'w-fourier'" class="wi8-figure wi8-canvas" data-testid="w-fourier-host">
-            <component :is="ControlsDock" data-testid="w-fourier" label="Canvas tools" within="parent" collapse="closed">
+            <component :is="ControlsDock" data-testid="w-fourier" label="Canvas tools" within="parent">
                 <DockControl aria-label="Layers"><Layers /></DockControl>
                 <DockControl aria-label="Palette"><Palette /></DockControl>
                 <DockControl aria-label="Filter"><Filter /></DockControl>
@@ -563,7 +565,7 @@ const stageStyle = computed(() =>
                 </component>
             </section>
         </template>
-        <component :is="ControlsDock" v-if="ControlsDock && cell === 'w-sci'" data-testid="w-sci" label="Filters" corner="top-end" collapse="closed">
+        <component :is="ControlsDock" v-if="ControlsDock && cell === 'w-sci'" data-testid="w-sci" label="Filters" corner="top-end">
             <DockControl aria-label="Sort"><BarChart3 /></DockControl>
             <DockControl aria-label="Filter"><Filter /></DockControl>
             <DockControl aria-label="Group"><Layers /></DockControl>
@@ -682,11 +684,11 @@ const stageStyle = computed(() =>
                     <BookOpen class="h-4 w-4" aria-hidden="true" />
                 </template>
             </GlassDock>
-            <component :is="ControlsDock" data-testid="w-two-a" label="Page controls" corner="bottom-end" :collapse="q.get('closed') ? 'closed' : undefined">
+            <component :is="ControlsDock" data-testid="w-two-a" label="Page controls" corner="bottom-end">
                 <DockControl aria-label="Grid"><Table2 /></DockControl>
                 <DockControl aria-label="Theme" @click="toggleTheme"><Moon v-if="dark" /><Sun v-else /></DockControl>
             </component>
-            <component :is="ControlsDock" data-testid="w-two-b" label="Filters" corner="top-end" :collapse="q.get('closed') ? 'closed' : undefined">
+            <component :is="ControlsDock" data-testid="w-two-b" label="Filters" corner="top-end">
                 <DockControl aria-label="Filter"><Filter /></DockControl>
                 <DockControl aria-label="Sort"><BarChart3 /></DockControl>
             </component>
@@ -914,7 +916,7 @@ const stageStyle = computed(() =>
                 <Home class="h-4 w-4" aria-hidden="true" />
             </template>
         </GlassDock>
-        <component :is="ControlsDock" v-if="ControlsDock && cell === 'w-ctl6'" data-testid="w-ctl6" label="Six controls" collapse="closed">
+        <component :is="ControlsDock" v-if="ControlsDock && cell === 'w-ctl6'" data-testid="w-ctl6" label="Six controls">
             <DockControl aria-label="Table"><Table2 /></DockControl>
             <DockControl aria-label="Filter"><Filter /></DockControl>
             <DockControl aria-label="Palette"><Palette /></DockControl>
@@ -936,7 +938,7 @@ const stageStyle = computed(() =>
         </GlassDock>
 
         <div v-if="ControlsDock && cell === 'w-kfcode'" class="wi8-figure" data-testid="w-kfcode-host">
-            <component :is="ControlsDock" data-testid="w-kfcode" label="Code actions" within="parent" corner="top-end" collapse="closed">
+            <component :is="ControlsDock" data-testid="w-kfcode" label="Code actions" within="parent" corner="top-end">
                 <DockControl aria-label="Copy"><Bookmark /></DockControl>
                 <DockControl aria-label="Format"><Type /></DockControl>
                 <DockControl aria-label="Run"><Play /></DockControl>
