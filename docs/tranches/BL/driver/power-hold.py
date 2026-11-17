@@ -4,8 +4,9 @@ owner's 60 W charger).
 
 Three runs, each with every descendant: the 11.1.1 release critic (approved 20:17), the dock
 pass (21:18) and the demo pass (00:20). All three pause at <= 40 % and resume at >= 80 %.
-On a fall of 15 minutes in a row the demo pass pauses first; a further 15 minutes of fall
-pauses the dock pass too. Both resume when the battery is >= 80 % and higher than 5 minutes
+On a fall of 15 minutes in a row while the battery is discharging the demo pass pauses
+first; a further 15 minutes of fall pauses the dock pass too. Both resume when the battery
+is >= 80 % and either not discharging (on AC, charging or held) or higher than 5 minutes
 before. Every 10 s; one printed line per change; paused pids appended to
 power-hold-pids.txt; state kept in power-hold-state.json across restarts. Ends when
 power-hold-RELEASE exists."""
@@ -16,7 +17,7 @@ LIST = os.path.join(HERE, "power-hold-pids.txt")
 STATE = os.path.join(HERE, "power-hold-state.json")
 RELEASE = os.path.join(HERE, "power-hold-RELEASE")
 DEMO = re.compile(r"glass-ui/\.claude/worktrees/bl/demo|\.p14/")
-CRITIC = re.compile(r"glass-ui/\.claude/worktrees/release-11\.1\.1")
+CRITIC = re.compile(r"glass-ui/\.claude/worktrees/(release-11\.1\.1|infra-deploy-asset-miss)")
 DOCK = re.compile(r"glass-ui/\.claude/worktrees/bl/dock/wi8|m7/")
 ME = os.getpid()
 LOW, HIGH = 40, 80
@@ -31,10 +32,16 @@ def table():
             rows.append((int(parts[0]), int(parts[1]), parts[2], parts[3]))
     return rows
 
-def battery():
+def power():
+    """(percent, draining). Draining only when pmset says `discharging`: on AC with
+    `not charging` macOS is holding the charge (2026-11-17 05:34: 98 to 94 % over an hour
+    on AC, drawing from AC Power), which is not the charger falling behind the load."""
     out = subprocess.run(["pmset", "-g", "batt"], capture_output=True, text=True).stdout
     m = re.search(r"(\d+)%", out)
-    return int(m.group(1)) if m else 100
+    return (int(m.group(1)) if m else 100), "discharging" in out
+
+def battery():
+    return power()[0]
 
 def trees(rows, pat):
     kids = {}
@@ -83,7 +90,8 @@ fall_level = saved.get("fall_level", 0)
 fall_since = saved.get("fall_since", None)
 print(f"start: battery {battery()} %, low hold {'on' if low_hold else 'off'}, fall level {fall_level}", flush=True)
 while not os.path.exists(RELEASE):
-    now, pct = time.time(), battery()
+    now = time.time()
+    pct, draining = power()
     history.append((now, pct))
     history = [(t, v) for t, v in history if now - t <= FALL_S + 60]
     if not low_hold and pct <= LOW:
@@ -94,16 +102,16 @@ while not os.path.exists(RELEASE):
         print(f"battery {pct} %: all three runs resume (>= {HIGH} %)", flush=True)
     window = [v for t, v in history if now - t <= FALL_S]
     old = [v for t, v in history if now - t >= FALL_S]
-    falling = bool(old) and all(b <= a for a, b in zip(window, window[1:])) and pct < old[-1]
+    falling = draining and bool(old) and all(b <= a for a, b in zip(window, window[1:])) and pct < old[-1]
     if falling and fall_level < 2 and (fall_since is None or now - fall_since >= FALL_S):
         fall_level += 1
         fall_since = now
         print(f"battery {pct} %: fell for 15 minutes in a row, {'the demo pass' if fall_level == 1 else 'the dock pass'} pauses", flush=True)
     elif fall_level:
         past = [v for t, v in history if now - t >= RISE_S]
-        if pct >= HIGH and past and pct > past[-1]:
+        if pct >= HIGH and (not draining or (past and pct > past[-1])):
             fall_level, fall_since = 0, None
-            print(f"battery {pct} %: rising again, the paused passes resume", flush=True)
+            print(f"battery {pct} %: {'on AC, not draining' if not draining else 'rising again'}, the paused passes resume", flush=True)
     rows = table()
     stat = {p: st for p, pp, st, c in rows}
     cmd = {p: c for p, pp, st, c in rows}
