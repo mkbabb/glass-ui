@@ -111,21 +111,18 @@ const leave = useLeaveFinished({
                 // base through the private floating-rung resolver — see the script block above
                 // (no quotes/parens detail here: this comment lives inside the binding attr).
                 surfaceClass('floating'),
-                // The toast MATERIALIZES on the ONE overlay register
-                // (`data-reveal=overlay`: scale-from 0.94 + decongest-blur + fade on the
-                // `--enter-overlay-clock`) — the SAME spring/transition contract the
-                // Dialog/Sheet/Popover ride (F20: the toast enters exactly like the refined
-                // dialog, no bespoke transient fork). It blooms FROM its own centre (law 18: an
-                // overlay GROWS from a seed, never slides in from a viewport edge), NOT the
-                // retired slide-in-from-viewport-edge. The reka `tw-animate-css`
-                // `data-[state=open]:animate-in` / `animate-out` / `slide-in-from-*-full` /
-                // `fade-out-80` chain + the own `transition-[opacity, transform]` are RETIRED
-                // (clean break, no alias) — `.glass-reveal` owns the data-state enter (via
-                // @starting-style, transform-origin center) AND the exit (the `glass-reveal-out`
-                // keyframe reka's usePresence awaits, on the tight overlay exit clock — fade-led
-                // and asymmetric per law 8). The swipe-drag gesture keeps its reka-driven
-                // `translate-x` (with `transition-none` during the active move); the reveal's own
-                // `translate` leg springs the cancel/settle back.
+                // The toast arrives on the ONE overlay register
+                // (`data-reveal=overlay`: a fade on the `--enter-overlay-clock`, with no
+                // scale and no blur) — the SAME transition contract the Dialog/Sheet/Popover
+                // ride (the toast enters exactly like the dialog, no bespoke transient fork).
+                // It fades in where it sits, never sliding in from a viewport edge. The reka
+                // `tw-animate-css` `data-[state=open]:animate-in` / `animate-out` /
+                // `slide-in-from-*-full` / `fade-out-80` chain + the own
+                // `transition-[opacity, transform]` are RETIRED (clean break, no alias) —
+                // `.glass-reveal` owns the data-state enter (via @starting-style), and the
+                // dismissal is `.glass-vaporize`'s (below). The swipe-drag gesture keeps its
+                // reka-driven `translate-x` (with `transition-none` during the active move);
+                // the reveal's own `translate` leg springs the cancel/settle back.
                 // The overlay-band golden padding ladder (inline anchor --spacing(6),
                 // block axis sqrt-phi *1.272) is the ONLY inline padding: the close mark
                 // straddles the corner rather than sitting inside the box, so the

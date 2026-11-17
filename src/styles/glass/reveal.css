@@ -116,8 +116,8 @@
     .glass-reveal[data-reveal="menu"] {
         --reveal-spring: var(--enter-menu-spring);
         --reveal-clock: var(--enter-menu-clock);
-        /* The exit reader of the row this register ENTERS on: the menu grows on the
-           `bloom` row (`glass-menu-grow` below), so it recedes on bloom's exit. */
+        /* The exit reader of the row this register ENTERS on: the menu's clip grows on
+           the `bloom` row (the menu rules below), so it recedes on bloom's exit. */
         --reveal-exit-clock: var(--spring-bloom-exit-duration);
         --glass-reveal-enter-scale: 1;
         --lq-stretch-x: 1;

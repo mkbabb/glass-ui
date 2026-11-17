@@ -535,8 +535,8 @@
      * the engine still requests the close. Below the floor the box stops shrinking, so the
      * plate slides by the difference instead: what shows of it is always the rung's share of
      * the viewport, and at 0 it is wholly past the edge when it unmounts, on every route
-     * that closes it and on the way in. The INLINE axis takes no floor this round; a narrow
-     * side rung clips along a different axis and rides the sheet family's next π. */
+     * that closes it and on the way in. The INLINE axis takes no floor: a narrow side rung
+     * clips along that axis. */
     :where(
         [data-slot="sheet-content"][data-detents][data-side="bottom"],
         [data-slot="sheet-content"][data-detents][data-side="top"]

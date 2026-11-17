@@ -135,25 +135,19 @@
 
 /* ── .glass-reveal exit ─────────────────────────────────────────────────────
  *
- * The reka-portaled-overlay (Dialog/Popover/DropdownMenu/…) EXIT MUST be a
- * @keyframes animation, NOT a CSS transition. reka-ui's `usePresence` gates the
- * unmount on `getComputedStyle(node).animationName`: it dispatches ANIMATION_OUT
- * and awaits `animationstart`/`animationend`, with NO `transitionend` path — so a
- * transition-only exit is torn down (~11ms, <1 frame) before it can paint. The Sheet
- * exit paints only because its `sheet-animate` (`animate-out`) is a keyframe reka can await;
- * this gives the `.glass-reveal` recipe (glass/reveal.css) the SAME kind.
+ * The reveal's own exit (glass/reveal.css, the closed state) is a set of transitions
+ * from wherever the surface stands, so a surface turned back mid-way turns from there.
+ * reka-ui's `usePresence` unmounts a closing node on `animationend` and has no
+ * `transitionend` path, so the closed state also runs `glass-reveal-hold` (below), which
+ * keeps the node mounted until the transitions have landed. The reveal runs no other
+ * exit keyframe.
  *
- * `glass-reveal-out` is the enter bloom REVERSED: scale 1 → (0.94 × squish),
- * opacity 1 → 0, filter blur(0) → blur — the SAME three coupled channels, on the
- * no-overshoot `--ease-out` clock (a closing surface must never overshoot past
- * gone). NO `translate` (the base/Dialog has none; a side
- * popover's slide-out stays a transition — a different property that coexists,
- * never clobbering a center Dialog's `-translate-x-1/2 -translate-y-1/2`). The
- * `to` values MIRROR the `.glass-reveal[data-state="closed"]` static end-state so
- * a non-supporting engine still lands correctly. Compositor-only (scale/opacity/
- * filter, so it never animates layout). The custom-property `var()`s
- * resolve on the animated `.glass-reveal` element (they are declared on its base
- * rule). */
+ * `glass-reveal-out` stays defined for a stylesheet that names it: scale 1 → (the
+ * register's enter scale × its squish), opacity 1 → 0 and filter blur(0) → its blur, all
+ * three across the whole clock, on the duration and curve of the rule that names it. NO
+ * `translate`, so it never clobbers a centred Dialog's translate. Compositor-only
+ * (scale, opacity and filter), so it never animates layout. The custom-property `var()`s
+ * resolve on the animated element. */
 @keyframes glass-reveal-out {
     from {
         scale: 1 1;
@@ -252,12 +246,10 @@
     }
 }
 
-/* The reduced-motion EXIT — fade ONLY (no transform/blur frames, the vestibular
- * floor, WCAG 2.3.3). Still a keyframe reka can await (a transition-only fade
- * would be torn down the same way, and the surface would vanish rather than fade),
- * so the fade PAINTS under `prefers-reduced-motion: reduce`. The reveal.css PRM
- * carve swaps `animation-name` to this while snapping scale/translate/filter to
- * their endpoints. */
+/* A fade only: opacity 1 → 0, with no transform or blur frames. The reveal does not run
+ * it: under reduced motion its closed state fades on an opacity transition, held for reka
+ * by `glass-reveal-hold` (glass/reveal.css). It stays defined for a stylesheet that names
+ * it. */
 @keyframes glass-reveal-out-reduced {
     from {
         opacity: 1;

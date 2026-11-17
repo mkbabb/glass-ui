@@ -15,9 +15,8 @@
    144ms` in its own stylesheet, keeps its clock under reduced motion with no
    `!important`, and a glass fade that must survive is a carve: an `!important`
    declaration in `components` (the reveal, glass/reveal.css; the Toast's dissolve,
-   glass/dissolve.css; the Vue fade classes, transitions.css), each a row of
-   docs/tranches/BJ/waves/BAND-FEEDBACK-MOTION.md §PRM-AUTHORIZED-SET. `[data-allow-motion]`
-   is not carved: a user who asks for reduced motion outranks a per-element allowance. */
+   glass/dissolve.css; the Vue fade classes, transitions.css). `[data-allow-motion]` is
+   not carved: a user who asks for reduced motion outranks a per-element allowance. */
 @layer reduced-motion {
     @media (prefers-reduced-motion: reduce) {
         *,

@@ -54,7 +54,6 @@ const SPRING_CSS = readStyle("tokens/scheme-spring.css");
 const REGISTERS_CSS = readStyle("tokens/motion-registers.css");
 const GLASS_CSS = readStyle("glass.css");
 const REVEAL_CSS = readStyle("glass/reveal.css");
-const A11Y_CSS = readStyle("utilities/a11y-overrides.css");
 
 const dissolveRoot = postcss.parse(DISSOLVE_CSS);
 
@@ -489,16 +488,10 @@ describe("the vaporize — composition with the reveal it does not replace", () 
         expect(declOf(inkCarve!, "animation-name")).toContain("glass-vaporize-ink-reduced");
 
         // MEMBERSHIP, ENUMERATED AND HASHED. A nonzero PRM clock is legitimate only
-        // while it is a row in the register `a11y-overrides.css` itself points at — read
-        // the pointer out of that file rather than restating the path here, so a stale
-        // pointer reds too. And the row's digest must be THIS carve's: an authorization
-        // that has drifted from the rule it authorizes is not an authorization.
-        const register = A11Y_CSS.match(/(docs\/[\w./-]+\.md)\s*§PRM-AUTHORIZED-SET/);
-        expect(
-            register,
-            "a11y-overrides.css no longer names its authorized-set register",
-        ).not.toBeNull();
-        const row = read(register![1])
+        // while it is a row in the authorized set, and the row's digest must be THIS
+        // carve's: an authorization that has drifted from the rule it authorizes is not
+        // an authorization.
+        const row = read("docs/tranches/BJ/waves/BAND-FEEDBACK-MOTION.md")
             .split("\n")
             .find(
                 (line) =>
