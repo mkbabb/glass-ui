@@ -3,7 +3,10 @@
 // switch and opens the code disclosure (and, on an editor page, a closed layer),
 // sampling the moving box every frame, and keeps every console error or warning
 // raised while doing so. On an overlay page it opens the overlay and reports its
-// plate's corners and its words' contrast.
+// plate's corners and its words' contrast. On the three pages that open a surface on
+// arrival (Dialog, Sheet, Menu) it takes the open crop (`-arrival`), closes the
+// surface, counts what is still open (`closed`, which must read 0) and takes the
+// closed crop (`-closed`) in place of the plain one.
 //
 // A leg is one monotone run of a sampled value (a fade out, a fade in, a height
 // travel). FORM.md line 15: every leg has a start and a stop, and no frame lands more
@@ -200,17 +203,31 @@ try {
                 await page.goto(BASE + route, { waitUntil: "load", timeout: 45000 });
                 await page.waitForSelector("#demo-main", { timeout: 15000 });
                 await sleep(2500);
-                if (CROPS) await page.screenshot({ path: path.join(OUT, `${slug(route)}-${cellId}.png` ) });
+                // Dialog, Sheet and Menu open on arrival: their first screen is the
+                // `-arrival` crop, and the page as a visitor who closed it sees it is
+                // the `-closed` crop below, so they take no plain crop (P15 item 5).
+                const arrival = { "/containers/dialog": 1, "/containers/sheet": 1, "/containers/dropdown-menu": 1 };
+                if (CROPS && !arrival[route]) await page.screenshot({ path: path.join(OUT, `${slug(route)}-${cellId}.png` ) });
 
                 // overlays: open on load, or opened by the stage's trigger
                 if (route.startsWith("/containers/")) {
-                    // Dialog, Sheet and Menu open on arrival: read what the page opened
-                    const arrival = { "/containers/dialog": 1, "/containers/sheet": 1, "/containers/dropdown-menu": 1 };
                     const shot = (await page.screenshot({ type: "png" })).toString("base64");
                     row.overlays = await page.evaluate(OVERLAY, { shotB64: shot });
                     if (CROPS && arrival[route]) fs.writeFileSync(path.join(OUT, `${slug(route)}-${cellId}-arrival.png`), Buffer.from(shot, "base64"));
                     if (route === "/containers/dropdown-menu") { await page.keyboard.press("Escape"); await sleep(600); }
                     await closeOverlays(page);
+                    if (arrival[route]) {
+                        // the scrim's exit, then the open surfaces: closeOverlays' own
+                        // predicate plus any visible menu
+                        await sleep(900);
+                        row.closed = await page.evaluate(() => {
+                            const vis = (e) => { const r = e.getBoundingClientRect(); return r.width > 8 && r.height > 8 && !e.closest("[data-story-card]"); };
+                            const modal = [...document.querySelectorAll('[role="dialog"], [role="alertdialog"], [data-state="open"][aria-modal="true"]')].filter(vis).length;
+                            const menus = [...document.querySelectorAll('[role="menu"]')].filter(vis).filter((e) => !e.closest(".demo-sidebar-rail") && !e.closest(".demo-bottom-dock")).length;
+                            return modal + menus + (getComputedStyle(document.body).pointerEvents === "none" ? 1 : 0);
+                        });
+                        if (CROPS) await page.screenshot({ path: path.join(OUT, `${slug(route)}-${cellId}-closed.png`) });
+                    }
                 }
 
                 // every variant switch, every option, then back to the first
@@ -285,10 +302,10 @@ try {
                 row.run = String(e?.message ?? e).slice(0, 200);
             } finally {
                 row.errors = errors;
-                row.pass = !row.run && errors.length === 0 && row.switches.every((s) => s.pass) && (row.code?.pass ?? true) && (row.layer?.pass ?? true) && !row.overflowAfterUse;
+                row.pass = !row.run && errors.length === 0 && row.switches.every((s) => s.pass) && (row.code?.pass ?? true) && (row.layer?.pass ?? true) && !row.overflowAfterUse && (row.closed == null || row.closed === 0);
                 rowsOut.write(JSON.stringify(row) + "\n");
                 const sw = row.switches.length ? `${row.switches.filter((s) => s.pass).length}/${row.switches.length} switches` : "no switch";
-                console.log(`${row.pass ? "pass" : "FAIL"} ${cellId} ${route} ${sw}; code ${row.code ? (row.code.pass ? "ok" : "FAIL") : "-"}; layer ${row.layer ? (row.layer.pass ? "ok" : "FAIL") : "-"}; console ${errors.length}${row.run ? "; run " + row.run : ""}${row.overflowAfterUse ? "; overflow" : ""}`);
+                console.log(`${row.pass ? "pass" : "FAIL"} ${cellId} ${route} ${sw}; code ${row.code ? (row.code.pass ? "ok" : "FAIL") : "-"}; layer ${row.layer ? (row.layer.pass ? "ok" : "FAIL") : "-"}; console ${errors.length}${row.closed != null ? `; closed ${row.closed}` : ""}${row.run ? "; run " + row.run : ""}${row.overflowAfterUse ? "; overflow" : ""}`);
                 await ctx.close().catch(() => {});
             }
         }
