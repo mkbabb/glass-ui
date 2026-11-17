@@ -189,10 +189,11 @@ const line = computed(() => {
     min-inline-size: 0;
 }
 
+/* The line takes no length of its own: it fills what the page leaves. */
 .rail-trend {
     flex: 1 1 0;
     min-block-size: 0;
-    container: rail-trend / size;
+    contain: size;
 }
 
 .rail-line {
@@ -211,14 +212,6 @@ const line = computed(() => {
     vector-effect: non-scaling-stroke;
 }
 
-/* Under 4rem of room (a card's context) the line would flatten; the figures are the
-   page there. */
-@container rail-trend (block-size < 4rem) {
-    .rail-line {
-        display: none;
-    }
-}
-
 .rail-crest {
     display: grid;
     place-items: center;
@@ -227,5 +220,13 @@ const line = computed(() => {
     font-family: var(--font-display);
     font-size: var(--text-subheading, 1.25rem);
     color: var(--foreground);
+}
+</style>
+
+<style>
+/* On its card the page has no height to fill: the figures are the page, and the line
+   and the gap above it go. */
+[data-card-specimen] .rail-trend {
+    display: none;
 }
 </style>
