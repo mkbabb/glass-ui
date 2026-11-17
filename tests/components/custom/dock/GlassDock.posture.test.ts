@@ -155,10 +155,15 @@ describe("useDockState — a press that ends without a release", () => {
 // W-I.8 RU-42: G-1 (f) on the unit, where WebKit's finger was only ever dispatched pointer
 // events. A tap opens by the clock; a finger then held down on a seat holds the dock past any
 // linger; at the lift the linger runs from the lift and starts when the lift's task ends, so the
-// tap's own focus on the seat (in that task) cannot cancel it. Plant: the linger scheduled in the
-// pointerup itself, before the tap's focus (the dock then never folds).
+// tap's own focus on the seat (in that task) cannot cancel it.
+// W-I.8 RU-73 (MEASURE-8 H3): the tap's focus is modelled as the tap gives it, a FocusEvent with the
+// seat as its target, and the witness runs both with it and with no event (RU-62's quiet return
+// reads the event's target). Its two plants (MEASURE-8 m8/plants8.py): the press hold removed (a held
+// finger no longer holds: RED at 9 s), and the linger timed from the press (RED: the dock folds at
+// the lift). RULINGS-4's plant, the linger scheduled in the pointerup itself, no longer bites under
+// RU-62's quiet return and is retired.
 describe("useDockState — G-1 (f): a held finger holds, the linger runs from the lift", () => {
-    it("holds while the finger is down and folds one linger after the lift, past the tap's focus", () => {
+    for (const tapFocus of [true, false]) it(`holds while the finger is down and folds one linger after the lift, past the tap's focus (${tapFocus ? "the tap's FocusEvent on the seat" : "no event"})`, () => {
         const { handle } = mountState({ collapseDelay: 1000 });
         const root = document.querySelector<HTMLElement>(".state-root")!;
         const seat = document.createElement("button");
@@ -176,7 +181,10 @@ describe("useDockState — G-1 (f): a held finger holds, the linger runs from th
         expect(handle.state.value, "a held finger holds").toBe("hover");
         // The lift: its pointerup, the tap's focus in the same task, then its click.
         seat.dispatchEvent(pointer("pointerup", { pointerType: "touch" }));
-        handle.onFocusIn();
+        if (tapFocus) {
+            seat.addEventListener("focusin", (ev) => handle.onFocusIn(ev as FocusEvent), { once: true });
+            seat.dispatchEvent(new FocusEvent("focusin", { bubbles: true }));
+        } else handle.onFocusIn();
         window.dispatchEvent(new Event("click"));
         vi.advanceTimersByTime(0);
         vi.advanceTimersByTime(900);
