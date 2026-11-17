@@ -1,21 +1,21 @@
 #!/usr/bin/env python3
-"""Power hold for the glass-ui session's runs (2026-11-16, gaggle-ff's battery rule on the
+"""Power hold for the glass-ui session's runs (2026-11-16/17, gaggle-ff's battery rule on the
 owner's 60 W charger).
 
-Every 10 s:
-- HELD trees (the demo pass) are paused (SIGSTOP), every descendant included, until
-  power-hold-RELEASE exists (a 90 W or larger charger is in).
-- The release critic (approved 20:17) and the dock pass (approved 21:18) run under the
-  40/80 rule: both pause at <= 40 % and resume at >= 80 %.
-- The dock pass also pauses when the battery has fallen for 15 minutes in a row, and
-  resumes only when the battery is >= 80 % and higher than 5 minutes before.
-Prints one line per change. Appends every paused pid to power-hold-pids.txt."""
-import os, re, signal, subprocess, time
+Three runs, each with every descendant: the 11.1.1 release critic (approved 20:17), the dock
+pass (21:18) and the demo pass (00:20). All three pause at <= 40 % and resume at >= 80 %.
+On a fall of 15 minutes in a row the demo pass pauses first; a further 15 minutes of fall
+pauses the dock pass too. Both resume when the battery is >= 80 % and higher than 5 minutes
+before. Every 10 s; one printed line per change; paused pids appended to
+power-hold-pids.txt; state kept in power-hold-state.json across restarts. Ends when
+power-hold-RELEASE exists."""
+import json, os, re, signal, subprocess, time
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 LIST = os.path.join(HERE, "power-hold-pids.txt")
+STATE = os.path.join(HERE, "power-hold-state.json")
 RELEASE = os.path.join(HERE, "power-hold-RELEASE")
-HELD = re.compile(r"glass-ui/\.claude/worktrees/bl/demo|\.p14/")
+DEMO = re.compile(r"glass-ui/\.claude/worktrees/bl/demo|\.p14/")
 CRITIC = re.compile(r"glass-ui/\.claude/worktrees/release-11\.1\.1")
 DOCK = re.compile(r"glass-ui/\.claude/worktrees/bl/dock/wi8|m7/")
 ME = os.getpid()
@@ -57,53 +57,59 @@ def record(p, c):
         with open(LIST, "a") as f:
             f.write(f"{p} {c[:140]}\n")
 
-def signal_all(pids, sig, stat, cmd, verb):
+def apply(pids, hold, stat, cmd):
+    sig, verb = (signal.SIGSTOP, "paused") if hold else (signal.SIGCONT, "resumed")
     for p in sorted(pids):
         st = stat.get(p, "Z")[:1]
         if st == "Z" or "Claude" in cmd.get(p, "") or cmd.get(p, "").startswith("claude"):
             continue
-        if (sig == signal.SIGSTOP and st == "T") or (sig == signal.SIGCONT and st != "T"):
+        if (hold and st == "T") or (not hold and st != "T"):
             continue
         try:
             os.kill(p, sig)
         except ProcessLookupError:
             continue
-        if sig == signal.SIGSTOP:
+        if hold:
             record(p, cmd[p])
         print(f"{verb} {p} {cmd[p][:100]}", flush=True)
 
-history = []  # (time, percent)
-low_hold = battery() <= LOW
-fall_hold = False
-print(f"start: battery {battery()} %, low hold {'on' if low_hold else 'off'}", flush=True)
+try:
+    saved = json.load(open(STATE))
+except Exception:
+    saved = {}
+history = [tuple(x) for x in saved.get("history", [])]
+low_hold = saved.get("low_hold", battery() <= LOW)
+fall_level = saved.get("fall_level", 0)
+fall_since = saved.get("fall_since", None)
+print(f"start: battery {battery()} %, low hold {'on' if low_hold else 'off'}, fall level {fall_level}", flush=True)
 while not os.path.exists(RELEASE):
     now, pct = time.time(), battery()
     history.append((now, pct))
     history = [(t, v) for t, v in history if now - t <= FALL_S + 60]
     if not low_hold and pct <= LOW:
         low_hold = True
-        print(f"battery {pct} %: both runs pause (<= {LOW} %)", flush=True)
+        print(f"battery {pct} %: all three runs pause (<= {LOW} %)", flush=True)
     elif low_hold and pct >= HIGH:
         low_hold = False
-        print(f"battery {pct} %: both runs resume (>= {HIGH} %)", flush=True)
+        print(f"battery {pct} %: all three runs resume (>= {HIGH} %)", flush=True)
     window = [v for t, v in history if now - t <= FALL_S]
     old = [v for t, v in history if now - t >= FALL_S]
     falling = bool(old) and all(b <= a for a, b in zip(window, window[1:])) and pct < old[-1]
-    if not fall_hold and falling:
-        fall_hold = True
-        print(f"battery {pct} %: fell for 15 minutes in a row, the dock pass pauses", flush=True)
-    elif fall_hold:
+    if falling and fall_level < 2 and (fall_since is None or now - fall_since >= FALL_S):
+        fall_level += 1
+        fall_since = now
+        print(f"battery {pct} %: fell for 15 minutes in a row, {'the demo pass' if fall_level == 1 else 'the dock pass'} pauses", flush=True)
+    elif fall_level:
         past = [v for t, v in history if now - t >= RISE_S]
         if pct >= HIGH and past and pct > past[-1]:
-            fall_hold = False
-            print(f"battery {pct} %: rising again, the dock pass resumes", flush=True)
+            fall_level, fall_since = 0, None
+            print(f"battery {pct} %: rising again, the paused passes resume", flush=True)
     rows = table()
     stat = {p: st for p, pp, st, c in rows}
     cmd = {p: c for p, pp, st, c in rows}
-    signal_all(trees(rows, HELD), signal.SIGSTOP, stat, cmd, "paused")
-    critic, dock = trees(rows, CRITIC), trees(rows, DOCK)
-    signal_all(critic, signal.SIGSTOP if low_hold else signal.SIGCONT, stat, cmd, "paused" if low_hold else "resumed")
-    hold_dock = low_hold or fall_hold
-    signal_all(dock, signal.SIGSTOP if hold_dock else signal.SIGCONT, stat, cmd, "paused" if hold_dock else "resumed")
+    apply(trees(rows, CRITIC), low_hold, stat, cmd)
+    apply(trees(rows, DOCK), low_hold or fall_level >= 2, stat, cmd)
+    apply(trees(rows, DEMO), low_hold or fall_level >= 1, stat, cmd)
+    json.dump({"history": history, "low_hold": low_hold, "fall_level": fall_level, "fall_since": fall_since}, open(STATE, "w"))
     time.sleep(10)
 print("hold released", flush=True)
