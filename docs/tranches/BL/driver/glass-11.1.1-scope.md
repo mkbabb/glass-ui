@@ -155,3 +155,10 @@ With `thumbAlignment: "contain"` reka-ui measures the thumb after mount and offs
 ## Added 2026-11-17: the disclosure turn, moved from 11.1.1 (fix 6's bisect, the orchestrator's ruling after it)
 
 11.1.1's row 5 made a disclosure reopened while it closes turn from the height it stands at (`useDisclosureTurn`, `001a726e8`). In Playwright WebKit 2287 at 390, on the exits page with the dock, the trigger rows and ExpandableContainer beside the disclosures, the turn's presence sets WebKit's GPU process into a slow state (66 to 82 % CPU against 5 to 29 %; frames 24 to 80 ms apart while a region moves) that starts at an ordinary close from rest and outlasts the page. Every form that keeps the claim stalls (the seek, a negative delay, turn keyframes); without the turn nothing stalls. 11.1.1 ships without it. Here: find the cause first, in fix 6's stall harness (`docs/release-11.1.1/fix-6/probe/stall-harness.ts`, `stall7.probe.ts`), then build a turn that keeps the claim and reads clean on that page in WebKit 390, with the GPU process's CPU during a reversal within v11.1.0's.
+
+## Added 2026-11-17: atlas's final-judge rows not in 11.1.1 (INBOUND O-397, O-399, O-400)
+
+From `sci-report/atlas/docs/tranches/U/design/LAST-TEN-GLASS-ROWS-2026-11-15.md` (steps and evidence there):
+- **O-397.** A focus ring follows the control's radius on every rounded control; witness on atlas's closed filter drawer at 360 light and on every glass control with a radius, both engines, RED on v11.1.0.
+- **O-399.** A Select inside a Sheet on a phone: its list does not cover the sheet it lives in with a second sheet, and whatever surface it opens names the field it sets (the trigger's label as the surface's accessible name and visible heading). Rule the form first (a sheet over a sheet, a popover inside it, or the list in place).
+- **O-400.** An OS colour-scheme flip: find what re-resolves in one long task (51 to 68 ms on atlas's /usf at 1440 and 390) and bring it under one frame's budget; and read, on 11.1.1, which of atlas's four reduced-motion cuts still cut (Filters open and close, the theme toggle, the side rail at 1440), curing the glass ones as a fade.
