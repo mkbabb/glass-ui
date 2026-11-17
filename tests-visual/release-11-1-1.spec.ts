@@ -456,19 +456,30 @@ for (const c of [
 }
 
 // ── routes ─────────────────────────────────────────────────────────────────────────
+/** The area of a frame's box inside the viewport. */
+function areaOnScreen(f: Frame, vw: { width: number; height: number }): number {
+    if (!f.present || !f.w || !f.h) return 0;
+    const w = Math.max(0, Math.min(f.x! + f.w, vw.width) - Math.max(f.x!, 0));
+    const h = Math.max(0, Math.min(f.y! + f.h, vw.height) - Math.max(f.y!, 0));
+    return w * h;
+}
+
 /** Opacity times the share of the box on screen. */
 function seenIn(vw: { width: number; height: number }) {
-    return (f: Frame) => {
-        if (!f.present || !f.w || !f.h) return 0;
-        const w = Math.max(0, Math.min(f.x! + f.w, vw.width) - Math.max(f.x!, 0));
-        const h = Math.max(0, Math.min(f.y! + f.h, vw.height) - Math.max(f.y!, 0));
-        return (f.op ?? 0) * ((w * h) / (f.w * f.h));
-    };
+    return (f: Frame) => (f.present && f.w && f.h ? (f.op ?? 0) * (areaOnScreen(f, vw) / (f.w * f.h)) : 0);
+}
+
+/** What is seen of a leaving surface: its opacity times its area on screen, as a share of
+ *  its area on screen at rest. A surface that shrinks before it slides off is read by the
+ *  area it gives up, not by the share of its own smaller box. */
+function seenFrom(vw: { width: number; height: number }, rest: Frame) {
+    const full = Math.max(1, areaOnScreen(rest, vw));
+    return (f: Frame) => (f.present ? ((f.op ?? 0) * areaOnScreen(f, vw)) / full : 0);
 }
 
 function judgeLeave(film: Film, vw: { width: number; height: number }) {
-    const seen = seenIn(vw);
     const { rest } = exitOf(film);
+    const seen = seenFrom(vw, rest);
     const after = film.frames.filter((f) => f.t >= film.mark);
     const goneIdx = after.findIndex((f) => seen(f) <= 0.01);
     const leaving = [{ ...rest, t: film.mark }, ...after.slice(0, goneIdx < 0 ? after.length : goneIdx + 1)];
@@ -1399,7 +1410,9 @@ test("leave · a Dialog unmounted mid-exit says so once, at the unmount", async 
 // ── standing ───────────────────────────────────────────────────────────────────────
 //   standing  every surface in the exits table, by every route it has: the exit is
 //             painted for more than two frames, and no frame carries more than a fifth
-//             of what is seen of it, nor (where it moves 16 px or more) of its travel.
+//             of what is seen of it (its opacity, times its area on screen and the share
+//             of its box its clip uncovers, against its area on screen at rest), nor
+//             (where it moves 16 px or more) of its travel.
 //             A route Playwright cannot drive in a form is skipped with its reason:
 //             WebKit's touchscreen.tap reaches no outside-press listener (so the outside
 //             route, and a trigger press that closes through that listener), and a
@@ -1536,9 +1549,12 @@ for (const c of standing) {
             await act(page, project);
             const film = await stopFilm(page, 1400);
             const vw = page.viewportSize()!;
-            const channel: Channel = c.height ? (f) => (f.present ? (f.h ?? 0) / rest.height : 0) : seenChannel(vw);
             const before = film.frames.filter((f) => f.t < film.mark);
             const start = before[before.length - 1];
+            const fromRest = seenFrom(vw, start);
+            const channel: Channel = c.height
+                ? (f) => (f.present ? (f.h ?? 0) / rest.height : 0)
+                : (f) => fromRest(f) * clipShare(f.clip, f.h ?? 0);
             const after = film.frames.filter((f) => f.t >= film.mark);
             const goneIdx = after.findIndex((f) => channel(f) <= 0.01);
             const leaving = [start, ...after.slice(0, goneIdx < 0 ? after.length : goneIdx + 1)];
