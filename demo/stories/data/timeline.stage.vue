@@ -59,7 +59,8 @@ const current = ref("build");
     block-size: 100%;
     padding: var(--sp-6) var(--sp-5);
 }
-/* The swap box clips, so its padding holds the end marks' overhang. */
+/* The swap box clips while its height travels, so its padding holds the end marks'
+   overhang. */
 .timeline-stage-swap {
     inline-size: min(100%, 60rem);
     padding: var(--sp-4) var(--sp-3);
