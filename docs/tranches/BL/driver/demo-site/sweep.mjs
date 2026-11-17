@@ -12,6 +12,15 @@
 // travel). FORM.md line 15: every leg has a start and a stop, and no frame lands more
 // than two fifths of the leg's travel.
 //
+// P17 adds the leave line: at each press, the stage swap's leaving pane's own opacity
+// transition is read off the pane as it starts (its keyframes, length and curve), and
+// that curve is stepped on a probe element at 60 frames a second, from every phase of
+// the first frame (0 to 16 ms in 1 ms): `leave` is the largest share of the fade that
+// one 60 Hz frame lands. A route passes when every leave it reads is 0.2 or less. The
+// sampled legs above read the same fade at the headless frame rate, where one late
+// frame after a press can land a large share of any curve; the leave line reads the
+// curve itself. The entering pane's fade is read the same way and reported, not graded.
+//
 // Machine law (~/.claude/CLAUDE.md): run only through `~/.claude/guard/guarded`, never
 // `--light`. Chromium headless shell; the flags `--use-angle=metal --enable-gpu
 // --ignore-gpu-blocklist` are the checker's named exception (canvases must render).
@@ -70,6 +79,62 @@ const RECORDER = () => {
             window.__rec.stop = () => { on = false; return samples; };
         },
         target: null,
+    };
+    // P17: the swap's leave and enter fades, read off the panes as they start.
+    window.__fade = {
+        arm() {
+            const before = new Set(document.querySelectorAll("#demo-main .stage-swap-pane"));
+            const seen = new WeakSet(document.getAnimations());
+            const got = { leave: [], enter: [] };
+            let frames = 0;
+            const take = (pane, kind) => {
+                for (const a of pane.getAnimations()) {
+                    if (seen.has(a)) continue;
+                    const kf = a.effect?.getKeyframes?.() ?? [];
+                    if (!kf.some((k) => "opacity" in k)) continue;
+                    seen.add(a);
+                    const t = a.effect.getTiming();
+                    got[kind].push({
+                        keyframes: kf.map((k) => ({ offset: k.offset ?? k.computedOffset, easing: k.easing ?? "linear", opacity: k.opacity })),
+                        duration: +t.duration || 0,
+                        easing: t.easing ?? "linear",
+                    });
+                }
+            };
+            const poll = () => {
+                for (const p of document.querySelectorAll("#demo-main .stage-swap-pane")) take(p, before.has(p) ? "leave" : "enter");
+                if (++frames < 90) requestAnimationFrame(poll);
+            };
+            requestAnimationFrame(poll);
+            window.__fade.read = () => {
+                const grid = (f) => {
+                    const probe = document.createElement("div");
+                    probe.style.cssText = "position:fixed;left:0;top:0;width:1px;height:1px;pointer-events:none;visibility:hidden";
+                    document.body.append(probe);
+                    try {
+                        const a = probe.animate(f.keyframes.map((k) => ({ offset: k.offset, easing: k.easing, opacity: k.opacity })), { duration: f.duration, easing: f.easing, fill: "both" });
+                        a.pause();
+                        const at = (ms) => { a.currentTime = Math.min(ms, f.duration); return parseFloat(getComputedStyle(probe).opacity); };
+                        const o0 = at(0), o1 = at(f.duration), travel = Math.abs(o1 - o0);
+                        if (!travel || !f.duration) return 0;
+                        let worst = 0;
+                        for (let ph = 0; ph <= 16; ph++) {
+                            let prev = o0;
+                            for (let ms = ph; ; ms += 1000 / 60) {
+                                const o = at(ms);
+                                worst = Math.max(worst, Math.abs(o - prev) / travel);
+                                prev = o;
+                                if (ms >= f.duration) break;
+                            }
+                        }
+                        a.cancel();
+                        return +worst.toFixed(3);
+                    } finally { probe.remove(); }
+                };
+                const out = (list) => list.map((f) => ({ ms: f.duration, curve: f.keyframes[0]?.easing !== "linear" ? f.keyframes[0].easing : f.easing, step: grid(f) }));
+                return { leave: out(got.leave), enter: out(got.enter) };
+            };
+        },
     };
 };
 
@@ -262,11 +327,13 @@ try {
                                 if (!reached) await t.click({ timeout: 4000 }).catch((e) => { missed = String(e.message).split("\n")[0]; });
                             }
                         };
+                        await page.evaluate(() => window.__fade.arm());
                         const s = await record(page, "swap", press, 1400);
+                        const fade = await page.evaluate(() => window.__fade.read());
                         if (missed) { row.switches.push({ label, option: i, pass: false, missed }); continue; }
                         const op = grade(legs(s.map((x) => x[0])), 0.05);
                         const ht = grade(legs(s.map((x) => x[1])), 2);
-                        row.switches.push({ label, option: i, opacity: op, height: ht, pass: op.pass && ht.pass, frames: s.length });
+                        row.switches.push({ label, option: i, opacity: op, height: ht, fade, pass: op.pass && ht.pass, frames: s.length });
                     }
                 }
 
@@ -302,10 +369,16 @@ try {
                 row.run = String(e?.message ?? e).slice(0, 200);
             } finally {
                 row.errors = errors;
-                row.pass = !row.run && errors.length === 0 && row.switches.every((s) => s.pass) && (row.code?.pass ?? true) && (row.layer?.pass ?? true) && !row.overflowAfterUse && (row.closed == null || row.closed === 0);
+                // P17: the largest 60 Hz step of any swap leave on the route (null: none read)
+                const leaves = row.switches.flatMap((s) => s.fade?.leave ?? []);
+                const enters = row.switches.flatMap((s) => s.fade?.enter ?? []);
+                row.leave = leaves.length ? { max: Math.max(...leaves.map((l) => l.step)), n: leaves.length, curves: [...new Set(leaves.map((l) => `${l.ms}ms ${l.curve}`))], pass: leaves.every((l) => l.step <= 0.2) } : null;
+                row.enter = enters.length ? { max: Math.max(...enters.map((l) => l.step)), n: enters.length, curves: [...new Set(enters.map((l) => `${l.ms}ms ${l.curve}`))] } : null;
+                row.pass = !row.run && errors.length === 0 && row.switches.every((s) => s.pass) && (row.code?.pass ?? true) && (row.layer?.pass ?? true) && !row.overflowAfterUse && (row.closed == null || row.closed === 0) && (row.leave?.pass ?? true);
                 rowsOut.write(JSON.stringify(row) + "\n");
                 const sw = row.switches.length ? `${row.switches.filter((s) => s.pass).length}/${row.switches.length} switches` : "no switch";
-                console.log(`${row.pass ? "pass" : "FAIL"} ${cellId} ${route} ${sw}; code ${row.code ? (row.code.pass ? "ok" : "FAIL") : "-"}; layer ${row.layer ? (row.layer.pass ? "ok" : "FAIL") : "-"}; console ${errors.length}${row.closed != null ? `; closed ${row.closed}` : ""}${row.run ? "; run " + row.run : ""}${row.overflowAfterUse ? "; overflow" : ""}`);
+                const lv = row.leave ? `; leave ${row.leave.pass ? "ok" : "FAIL"} ${row.leave.max} (${row.leave.n}, ${row.leave.curves.join(" | ")}); enter ${row.enter?.max ?? "-"}` : "";
+                console.log(`${row.pass ? "pass" : "FAIL"} ${cellId} ${route} ${sw}; code ${row.code ? (row.code.pass ? "ok" : "FAIL") : "-"}; layer ${row.layer ? (row.layer.pass ? "ok" : "FAIL") : "-"}; console ${errors.length}${row.closed != null ? `; closed ${row.closed}` : ""}${lv}${row.run ? "; run " + row.run : ""}${row.overflowAfterUse ? "; overflow" : ""}`);
                 await ctx.close().catch(() => {});
             }
         }
