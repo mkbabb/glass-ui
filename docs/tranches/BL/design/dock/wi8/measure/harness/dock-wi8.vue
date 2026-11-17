@@ -87,7 +87,13 @@ import {
     Repeat,
     Gauge,
     Copy,
+    Ellipsis,
+    Download,
+    ChevronDown,
+    Compass,
+    User,
 } from "@lucide/vue";
+import { DarkModeToggle } from "@glass/components/dark-mode-toggle";
 
 const { GlassDock, DockControl, DockSeparator, DockLayerGroup, DockLayer, DockCrossfade } = dock;
 const ControlsDock = (dock as Record<string, unknown>).ControlsDock as typeof GlassDock | undefined;
@@ -116,6 +122,17 @@ const wordsB = ref("bw");
 const GLYPH_IMG = "data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="#888"/></svg>');
 const wordsC = ref("all");
 const g8Pop = ref(false);
+// MEASURE-8 cells
+const fourierDock = ref<{ keepOpen(): void; release(): void } | null>(null);
+/** fourier's AppDock: an open Sections menu holds the dock (its own keepOpen/release, AppDock.vue holdDockWhileOpen). */
+function fourierHold(open: boolean): void {
+    if (open) fourierDock.value?.keepOpen();
+    else fourierDock.value?.release();
+}
+const fourierAbout = ref(false);
+const vjView = ref("mix");
+// value.js: `:collapse="isDesktop ? 'open' : false"` with isDesktop = (min-width: 1024px) (Dock.vue:105, :299)
+const vjDesktop = typeof matchMedia === "function" && matchMedia("(min-width: 1024px)").matches;
 
 const dark = ref(document.documentElement.classList.contains("dark"));
 function toggleTheme(): void {
@@ -927,6 +944,122 @@ const stageStyle = computed(() =>
                 </template>
             </component>
         </div>
+
+        <!-- MEASURE-8 cells (RULINGS-7, read-only compositions from the sites' trees as cited):
+             w-fourier-app  H2 (C7-8, O-380): fourier's AppDock (fourier-analysis origin/master 67a0c57,
+                            web/src/components/layout/AppDock.vue:239-361): collapse="closed", an About Popover with
+                            keep-dock-open on a DockTrigger, a Sections DropdownMenu :modal="false" whose open state takes
+                            the dock's keepOpen/release (holdDockWhileOpen), an account menu (UserSlugBar's DropdownMenu),
+                            the DarkModeToggle, separators between, and the ℱ mark in #collapsed
+             w-valuejs      H10 (C7-7, O-386): value.js's top dock (origin/master d7df97f9e, demo/shell/dock/Dock.vue:295-500):
+                            collapse="open" at 1024 px and over, false under (Dock.vue:105, :299), fit-content, a DockLayerGroup with no switcher holding the
+                            main row (a view DockTrigger for a Select, a DockControl, a DockTrigger for a menu, a DockControl),
+                            and the seal in #collapsed (a disc filling the summary pane with the view glyph over it)
+             w-atlas-preset the atlas session's cell (2026-11-17): a figure plate at 375 px (lt-integ-atlas 834c98b:
+                            ChartFrame.vue:486-540 the head, title then the control row with the legend at its start and the
+                            tools seat at its end; ChartFrame.css:83-137, :431-446; PlateDock.vue:282-300 the seat and its
+                            wrapper, :446-462 their CSS) with PlateDock's GlassDock moved onto ControlsDock: corner="top-end",
+                            within="parent", expand-on="hover" passed through (lt-integ's), the Table and Filters seats as its
+                            two controls (so it folds below 40rem), the More handle in #collapsed. Its parent is PlateDock's
+                            own seat (position: relative), which stays in the tools slot; &parent=plate puts it in the figure
+                            plate itself (position: relative) and takes the tools slot out of the head row (RU-86: "a move
+                            to the preset takes it out of that row") -->
+        <template v-if="cell === 'w-fourier-app'">
+            <header class="wi8-fourier-header">
+                <GlassDock ref="fourierDock" data-testid="w-fourier-app" class="app-dock" orientation="horizontal" shape="pill" collapse="closed" aria-label="App">
+                    <Popover v-model:open="fourierAbout" keep-dock-open>
+                        <DockTrigger for="popover" aria-label="About Fourier analysis" data-testid="w-fourier-app-about">
+                            <span style="font: 600 18px/1 Georgia, serif">ℱ</span>
+                        </DockTrigger>
+                        <PopoverContent align="start" data-testid="w-fourier-app-about-card" class="w-56 p-3"><p class="text-small">Orthogonal decomposition.</p></PopoverContent>
+                    </Popover>
+                    <DockSeparator />
+                    <DropdownMenu :modal="false" @update:open="fourierHold">
+                        <DockTrigger for="dropdown" aria-label="Sections: Animate" data-testid="w-fourier-app-nav">
+                            <Compass aria-hidden="true" />
+                            <ChevronDown aria-hidden="true" />
+                        </DockTrigger>
+                        <DropdownMenuContent align="start" data-testid="w-fourier-app-nav-menu">
+                            <DropdownMenuItem data-testid="w-fourier-app-nav-item">Animate</DropdownMenuItem>
+                            <DropdownMenuItem>Explore</DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                    <DockSeparator />
+                    <div class="contents" role="group" aria-label="Account">
+                        <DropdownMenu>
+                            <DockTrigger for="dropdown" aria-label="Account" data-testid="w-fourier-app-account"><User aria-hidden="true" /></DockTrigger>
+                            <DropdownMenuContent align="end"><DropdownMenuItem>Sign out</DropdownMenuItem></DropdownMenuContent>
+                        </DropdownMenu>
+                    </div>
+                    <DockSeparator />
+                    <DarkModeToggle data-testid="w-fourier-app-theme" />
+                    <template #collapsed>
+                        <span aria-hidden="true" data-testid="w-fourier-app-mark" style="font: 600 18px/1 Georgia, serif">ℱ</span>
+                    </template>
+                </GlassDock>
+            </header>
+            <p class="wi8-page" data-testid="w-fourier-app-page">The page under the dock.</p>
+        </template>
+        <template v-if="cell === 'w-valuejs'">
+            <GlassDock data-testid="w-valuejs" aria-label="value" :collapse="vjDesktop ? 'open' : false" :fit-content="true">
+                <DockLayerGroup v-model:active="vjView" :show-switcher="false">
+                    <DockLayer id="mix" label="Main">
+                        <Select v-model="wordsA">
+                            <DockTrigger for="select" aria-label="View" data-testid="w-valuejs-view"><SelectValue /></DockTrigger>
+                            <SelectContent><SelectItem value="day">Mix</SelectItem><SelectItem value="week">Palette</SelectItem></SelectContent>
+                        </Select>
+                        <DockControl aria-label="Action bar" data-testid="w-valuejs-actions"><SlidersHorizontal /></DockControl>
+                        <DropdownMenu>
+                            <DockTrigger for="dropdown" aria-label="Menu" data-testid="w-valuejs-menu"><Layers /></DockTrigger>
+                            <DropdownMenuContent><DropdownMenuItem>About</DropdownMenuItem></DropdownMenuContent>
+                        </DropdownMenu>
+                        <DockControl aria-label="Profile" data-testid="w-valuejs-profile"><User /></DockControl>
+                    </DockLayer>
+                </DockLayerGroup>
+                <template #collapsed>
+                    <div class="wi8-seal" data-testid="w-valuejs-seal"><span class="wi8-seal-wax"></span><Palette class="wi8-seal-ink" aria-hidden="true" /></div>
+                </template>
+            </GlassDock>
+            <p class="wi8-page">value.js's band under the dock.</p>
+        </template>
+        <template v-if="ControlsDock && cell === 'w-atlas-preset'">
+            <article class="wi8-plate" data-testid="w-atlas-plate">
+                <header class="wi8-plate-header">
+                    <div class="wi8-plate-title" data-testid="w-atlas-preset-title">Wages by region, 2019 to 2025</div>
+                    <div class="wi8-plate-controls" data-figure-dock-seat data-tools-seat="end">
+                        <div class="wi8-plate-view">
+                            <div class="wi8-plate-key" data-testid="w-atlas-preset-legend">
+                                <span class="wi8-key"><i style="background: #c2410c"></i>North-east</span>
+                                <span class="wi8-key"><i style="background: #2563eb"></i>South</span>
+                                <span class="wi8-key"><i style="background: #15803d"></i>West</span>
+                                <a href="#legend" data-testid="w-atlas-preset-link">sources</a>
+                            </div>
+                        </div>
+                        <div v-if="q.get('parent') !== 'plate'" class="wi8-plate-tools">
+                            <div class="wi8-plate-dock-seat" data-anchor="end">
+                                <div class="wi8-plate-dock" data-plate-dock>
+                                    <component :is="ControlsDock" data-testid="w-atlas-preset" label="Tools for Wages by region" corner="top-end" within="parent" expand-on="hover">
+                                        <DockControl aria-label="Table of Wages by region" data-testid="w-atlas-preset-table"><Table2 aria-hidden="true" /></DockControl>
+                                        <DockControl aria-label="Filters for Wages by region" data-testid="w-atlas-preset-filters"><SlidersHorizontal aria-hidden="true" /></DockControl>
+                                        <template #collapsed>
+                                            <span class="wi8-plate-handle" data-testid="w-atlas-preset-handle"><Ellipsis aria-hidden="true" /></span>
+                                        </template>
+                                    </component>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+                <div class="wi8-plate-body" data-testid="w-atlas-preset-body">the figure</div>
+                <component :is="ControlsDock" v-if="q.get('parent') === 'plate'" data-testid="w-atlas-preset" label="Tools for Wages by region" corner="top-end" within="parent" expand-on="hover">
+                    <DockControl aria-label="Table of Wages by region" data-testid="w-atlas-preset-table"><Table2 aria-hidden="true" /></DockControl>
+                    <DockControl aria-label="Filters for Wages by region" data-testid="w-atlas-preset-filters"><SlidersHorizontal aria-hidden="true" /></DockControl>
+                    <template #collapsed>
+                        <span class="wi8-plate-handle" data-testid="w-atlas-preset-handle"><Ellipsis aria-hidden="true" /></span>
+                    </template>
+                </component>
+            </article>
+        </template>
     </div>
 </template>
 
@@ -989,6 +1122,27 @@ const stageStyle = computed(() =>
     font: 600 12px/1 system-ui, sans-serif;
     background: color-mix(in oklab, currentColor 14%, transparent);
 }
+/* MEASURE-8 cells */
+.wi8-fourier-header { display: flex; justify-content: center; }
+.wi8-seal { display: grid; place-items: center; inline-size: 100%; block-size: 100%; border-radius: 9999px; }
+.wi8-seal-wax { grid-area: 1 / 1; inline-size: 100%; block-size: 100%; border-radius: 9999px; background: #b45309; }
+.wi8-seal-ink { grid-area: 1 / 1; inline-size: 55%; block-size: 55%; color: #fff; }
+/* the figure plate (ChartFrame.css .plate / .plate-header, lt-integ-atlas 834c98b) at a phone's width */
+.wi8-plate { position: relative; inline-size: min(100%, 720px); box-sizing: border-box; padding: 24px; border-radius: 16px; background: var(--card); color: var(--card-foreground, var(--foreground)); border: 1px solid color-mix(in oklab, var(--foreground) 14%, transparent); container: plate / inline-size; font: 14px/1.4 system-ui, sans-serif; }
+.wi8-plate-header { display: flex; flex-direction: column; align-items: stretch; gap: 20px; margin-block-end: 1rem; }
+.wi8-plate-title { font: 600 20px/1.25 system-ui, sans-serif; }
+.wi8-plate-controls { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.75rem 1rem; min-inline-size: 0; }
+.wi8-plate-view { display: flex; align-items: center; min-inline-size: 0; }
+.wi8-plate-key { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; font-size: 13px; }
+.wi8-key { display: inline-flex; align-items: center; gap: 5px; }
+.wi8-key i { inline-size: 10px; block-size: 10px; border-radius: 2px; display: inline-block; }
+.wi8-plate-tools { position: relative; display: flex; flex: none; align-items: center; gap: 0.75rem; margin-inline-start: auto; min-block-size: calc(2.75rem + 0.5rem); }
+.wi8-plate-dock-seat { position: relative; display: flex; justify-content: flex-end; min-block-size: 2.75rem; }
+.wi8-plate-dock { display: flex; justify-content: flex-end; min-inline-size: 44px; }
+.wi8-plate-handle { position: relative; display: grid; place-items: center; inline-size: 44px; block-size: 44px; border-radius: 50%; }
+.wi8-plate-handle svg { inline-size: 1.125rem; block-size: 1.125rem; }
+.wi8-plate-body { block-size: 220px; border-radius: 8px; background: repeating-linear-gradient(90deg, color-mix(in oklab, var(--foreground) 8%, transparent) 0 1px, transparent 1px 40px); }
+
 .wi8-next {
     font: 13px/1.4 system-ui, sans-serif;
     margin-top: 8px;
