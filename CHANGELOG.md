@@ -93,11 +93,15 @@ A patch on 11.1.0 about how surfaces leave. Nothing is removed or renamed.
   `--exit-curve`, and nothing travels: a surface is in its place and at its size from
   the first frame, and a folding dock takes its new size at once while its two faces
   cross-fade. A pressed control shows its press by colour, not by size: a `Button`, a
-  dock's seats, a menu or select row and the `Select`, menu and popover triggers seated
-  in a dock no longer shrink or stretch on a press, so what a trigger opens is placed
-  against it at rest. A pressed glass `Button` (the primary and secondary emphases)
-  darkens its plate a little, and a pressed menu or select row takes a fill a step
-  deeper than its highlight, under a finger as under a pointer.
+  dock's seats, a menu or select row, a command palette's `CommandItem`, a pressable
+  `Card`, a `SortableList` handle, the plate behind a `Dialog`'s close button and the
+  `Select`, menu and popover triggers seated in a dock no longer shrink or stretch on a
+  press, so what a trigger opens is placed against it at rest. A pressed glass `Button`
+  (the primary and secondary emphases) darkens its plate a little. A pressed menu or
+  select row or `CommandItem` takes a fill a step deeper than its highlight, under a
+  finger as under a pointer. A pressed `Card` deepens its fill a step past its hover, a
+  pressed `SortableList` handle fills behind its glyph, and the close button's plate
+  keeps its size on hover as well as on a press.
   Anything pressed through `useLiquidPress` does the same: it writes no `scale` under
   reduced motion unless it is given `respectReducedMotion: false`. The rule
   that stills motion under reduced motion now sits in its own cascade layer,
