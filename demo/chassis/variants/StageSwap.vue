@@ -68,8 +68,10 @@ async function onEnter(): Promise<void> {
 .stage-swap-enter-active {
     transition: opacity 200ms var(--ease-out);
 }
+/* The leave starts and stops at rest: at 60 frames a second no frame lands more than
+   a fifth of the fade. An ease-out leave this short lands two fifths in its first. */
 .stage-swap-leave-active {
-    transition: opacity 120ms var(--ease-out);
+    transition: opacity 120ms cubic-bezier(0.25, 0, 0.75, 1);
 }
 .stage-swap-enter-from,
 .stage-swap-leave-to {
