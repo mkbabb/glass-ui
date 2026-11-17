@@ -1,0 +1,9 @@
+/* MEASURE-7, RU-57 control row: v11.0.2's veil (the dock tier one step under the base rung, the folded plate on the wash
+   tier, no level, i.e. level 1; owner7.mjs TODAY's plate) with every word at full ink */
+:root {
+    --glass-veil-dock: calc(var(--glass-veil-base) - 1 * var(--glass-veil-step));
+}
+.glass-dock {
+    --glass-level: 1;
+    --dock-plate-collapsed-tier: var(--glass-veil-wash);
+}
