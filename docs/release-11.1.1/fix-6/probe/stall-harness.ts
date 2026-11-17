@@ -1,0 +1,149 @@
+// Fix seat 6, readings only: the exits harness's Collapsible and Accordion alone, in the
+// same container on the same busy ground, with no dock, no other surface and nothing
+// below them. `?plain` drops the container's `glass-quiet` class; `?with=` names the
+// exits harness's parts to add back: `dock` (its GlassDock with the Select and the
+// DropdownMenu, above), `expand` (its ExpandableContainer, below), `rows` (its two rows
+// of triggers, above the disclosures), `toaster` (its Toaster).
+import "../../demo/demo.css";
+import { createApp, h, ref } from "vue";
+
+import GlassDock from "../../src/components/dock/GlassDock.vue";
+import DockControl from "../../src/components/dock/DockControl.vue";
+import DockTrigger from "../../src/components/dock/DockTrigger.vue";
+import Select from "../../src/components/select/Select.vue";
+import SelectContent from "../../src/components/select/SelectContent.vue";
+import SelectItem from "../../src/components/select/SelectItem.vue";
+import SelectValue from "../../src/components/select/SelectValue.vue";
+import DropdownMenu from "../../src/components/menu/DropdownMenu.vue";
+import DropdownMenuContent from "../../src/components/menu/DropdownMenuContent.vue";
+import DropdownMenuItem from "../../src/components/menu/DropdownMenuItem.vue";
+import ExpandableContainer from "../../src/components/expandable-container/ExpandableContainer.vue";
+import SelectTrigger from "../../src/components/select/SelectTrigger.vue";
+import Popover from "../../src/components/popover/Popover.vue";
+import PopoverContent from "../../src/components/popover/PopoverContent.vue";
+import PopoverTrigger from "../../src/components/popover/PopoverTrigger.vue";
+import Tooltip from "../../src/components/tooltip/Tooltip.vue";
+import TooltipContent from "../../src/components/tooltip/TooltipContent.vue";
+import TooltipTrigger from "../../src/components/tooltip/TooltipTrigger.vue";
+import TooltipProvider from "../../src/components/tooltip/TooltipProvider.vue";
+import Dialog from "../../src/components/dialog/Dialog.vue";
+import DialogContent from "../../src/components/dialog/DialogContent.vue";
+import DialogTitle from "../../src/components/dialog/DialogTitle.vue";
+import SheetContent from "../../src/components/sheet/SheetContent.vue";
+import Toaster from "../../src/components/toast/Toaster.vue";
+import { toast } from "../../src/components/toast/use-toast";
+import { DialogTrigger } from "reka-ui";
+
+import Accordion from "../../src/components/accordion/Accordion.vue";
+import AccordionItem from "../../src/components/accordion/AccordionItem.vue";
+import AccordionTrigger from "../../src/components/accordion/AccordionTrigger.vue";
+import AccordionContent from "../../src/components/accordion/AccordionContent.vue";
+import Collapsible from "../../src/components/collapsible/Collapsible.vue";
+import CollapsibleTrigger from "../../src/components/collapsible/CollapsibleTrigger.vue";
+import CollapsibleContent from "../../src/components/collapsible/CollapsibleContent.vue";
+
+const params = new URLSearchParams(location.search);
+const plain = params.has("plain");
+const parts = (params.get("with") ?? "").split(",");
+const pages = ["Picker", "Palettes", "Gradient", "Mix", "Extract"];
+const view = ref("Picker");
+const open = ref(false);
+const expanded = ref(false);
+const plainPick = ref("Picker");
+const rung = ref(0.5);
+const presses = ref(0);
+document.body.style.cssText = [
+    "margin:0",
+    "min-height:100vh",
+    "background:repeating-linear-gradient(90deg,#000 0 14px,#fff 14px 28px,#e11 28px 42px,#13e 42px 56px,#fd0 56px 70px)",
+].join(";");
+const btn = "padding:10px 14px;background:#fff;color:#000;border-radius:8px;font:14px sans-serif";
+const lines = Array.from({ length: 6 }, (_, i) => h("p", { style: "margin:0;padding:4px 0" }, `Line ${i + 1} of the region.`));
+
+createApp({
+    setup: () => () =>
+        h("div", { style: "padding:16px 8px 900px;display:flex;flex-direction:column;align-items:center;gap:24px" }, [
+            parts.includes("dock")
+                ? h(
+                      GlassDock,
+                      { collapse: false, "aria-label": "Exits" },
+                      {
+                          default: () => [
+                              h(DockControl, { "aria-label": "Home" }, () => "⌂"),
+                              h(
+                                  Select,
+                                  {
+                                      modelValue: view.value,
+                                      open: open.value,
+                                      "onUpdate:open": (v: boolean) => (open.value = v),
+                                      "onUpdate:modelValue": (v: unknown) => (view.value = String(v)),
+                                  },
+                                  () => [
+                                      h(DockTrigger, { for: "select", "aria-label": "Select view" }, () => [h("span", view.value), h(SelectValue, { class: "sr-only" })]),
+                                      h(SelectContent, { class: "min-w-[12rem]" }, () => pages.map((p) => h(SelectItem, { value: p }, () => p))),
+                                  ],
+                              ),
+                              h(DropdownMenu, null, () => [
+                                  h(DockTrigger, { for: "dropdown", "aria-label": "Actions" }, () => "⋯"),
+                                  h(DropdownMenuContent, { align: "center", class: "w-52" }, () =>
+                                      ["Copy", "Share", "Archive"].map((t) => h(DropdownMenuItem, null, () => t)),
+                                  ),
+                              ]),
+                          ],
+                      },
+                  )
+                : null,
+            ...(parts.includes("rows")
+                ? [
+                      h("div", { style: "display:flex;flex-wrap:wrap;gap:8px;justify-content:center" }, [
+                          h(Popover, null, () => [h(PopoverTrigger, { style: btn }, () => "Popover"), h(PopoverContent, { class: "w-56" }, () => h("p", "A popover."))]),
+                          h(TooltipProvider, { delayDuration: 0 }, () =>
+                              ["", "2"].map((n) =>
+                                  h(Tooltip, { delayDuration: 0 }, {
+                                      default: () => [h(TooltipTrigger, { style: btn }, () => `Tooltip${n ? " " + n : ""}`), h(TooltipContent, null, () => `A hint${n ? " " + n : ""}`)],
+                                  }),
+                              ),
+                          ),
+                          h(Dialog, null, () => [h(DialogTrigger, { style: btn }, () => "Dialog"), h(DialogContent, null, () => [h(DialogTitle, () => "A dialog"), h("p", "Its body.")])]),
+                          ...(["right", "bottom", "top", "left"] as const).map((side) =>
+                              h(Dialog, null, () => [h(DialogTrigger, { style: btn }, () => `Sheet ${side}`), h(SheetContent, { side }, () => [h(DialogTitle, () => "A sheet"), h("p", "Its body.")])]),
+                          ),
+                          h(Dialog, null, () => [
+                              h(DialogTrigger, { style: btn }, () => "Detented"),
+                              h(SheetContent, { side: "bottom", detents: [0.5, 0.9], detent: rung.value, "onUpdate:detent": (v: number) => (rung.value = v) }, () => [h(DialogTitle, () => "A detented sheet"), h("p", "Its body.")]),
+                          ]),
+                      ]),
+                      h("div", { style: "display:flex;flex-wrap:wrap;gap:8px;justify-content:center" }, [
+                          h("button", { style: btn, onClick: () => toast({ title: "A toast", description: "Its body." }) }, "Toast"),
+                          h("button", { style: btn, onClick: () => toast({ title: "A brief toast", duration: 1800 }) }, "Brief toast"),
+                          h(Select, { modelValue: plainPick.value, "onUpdate:modelValue": (v: unknown) => (plainPick.value = String(v)) }, () => [
+                              h(SelectTrigger, { class: "w-40" }, () => h(SelectValue)),
+                              h(SelectContent, null, () => pages.map((p) => h(SelectItem, { value: p }, () => p))),
+                          ]),
+                          h("button", { style: btn, onClick: () => presses.value++ }, `Pressed ${presses.value}`),
+                      ]),
+                  ]
+                : []),
+            h("div", { class: plain ? undefined : "glass-quiet", style: "width:min(22rem,90vw);padding:8px 16px;border-radius:16px;background:#fff;color:#000" }, [
+                h(Collapsible, null, () => [
+                    h(CollapsibleTrigger, { "data-testid": "x-collapsible", style: btn }, () => "Collapsible"),
+                    h(CollapsibleContent, { "data-testid": "x-collapsible-content" }, () => lines),
+                ]),
+                h(Accordion, { type: "single", collapsible: true }, () => [
+                    h(AccordionItem, { value: "a" }, () => [
+                        h(AccordionTrigger, { "data-testid": "x-accordion" }, () => "Accordion"),
+                        h(AccordionContent, { "data-testid": "x-accordion-content" }, () => lines),
+                    ]),
+                ]),
+            ]),
+            parts.includes("expand")
+                ? h(
+                      ExpandableContainer,
+                      { open: expanded.value, "onUpdate:open": (v: boolean) => (expanded.value = v), style: "width:min(22rem,90vw)" },
+                      () => h("div", { style: "height:180px;border-radius:16px;background:#fff;color:#000;padding:16px" }, "A figure."),
+                  )
+                : null,
+            parts.includes("toaster") ? h(Toaster) : null,
+        ]),
+}).mount("#app");
+document.body.dataset.ready = "1";

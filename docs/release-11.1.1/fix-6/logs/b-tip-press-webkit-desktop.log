@@ -1,0 +1,30 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 1 test using 1 worker
+
+[WebServer] 6:52:11 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  1 [webkit-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:405:1 › press · a pressed control shows its press by colour, not by size, under reduced motion (10.6s)
+
+
+  1) [webkit-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:405:1 › press · a pressed control shows its press by colour, not by size, under reduced motion 
+
+    Error: the Dialog close plate's press is painted: a quarter of its crop changes colour {"Button":{"rest":71.64,"active":30,"scales":["1"],"transforms":["none"],"widths":[71.64],"fill":["oklab(0.673443 0.021093 0.074662 / 0.244) none","oklab(0.625821 0.019989 0.069606 / 0.2776) none"],"painted":0.705},"icon seat":{"rest":40,"active":30,"scales":["1"],"transforms":["none"],"widths":[40],"fill":["color(srgb 0.203993 0.148252 0.08296 / 0.14) none","oklab(0.257667 0.009006 0.023202 / 0.2002) none"],"painted":0.414},"tab seat":{"rest":51.73,"active":29,"scales":["1"],"transforms":["none"],"widths":[51.73],"fill":["color(srgb 0.203993 0.148252 0.08296 / 0.14) none","oklab(0.257667 0.009006 0.023202 / 0.2002) none"],"painted":0.68},"pressable Card":{"rest":79.59,"active":30,"scales":["1"],"transforms":["none"],"widths":[79.59],"fill":["color(srgb 0.203993 0.148252 0.08296 / 0.14) linear-gradient(oklch(0.216129 0.006249 56.035591 / 0.05), oklch(0.216129 0.006249 56.035591 / 0.05))","color(srgb 0.203993 0.148252 0.08296 / 0.14) linear-gradient(oklch(0.216129 0.006249 56.035591 / 0.1), oklch(0.216129 0.006249 56.035591 / 0.1))"],"painted":0.836},"SortableList handle":{"rest":32,"active":30,"scales":["none","1"],"transforms":["none"],"widths":[32],"fill":["rgba(0, 0, 0, 0) none","oklch(0.216129 0.006249 56.035591 / 0.12) none"],"painted":0.605},"menu row":{"rest":182,"active":30,"scales":["1"],"transforms":["none"],"widths":[182],"fill":["color(srgb 0.203993 0.148252 0.08296 / 0.1) none","color(srgb 0.203993 0.148252 0.08296 / 0.14) none"],"painted":0.577},"Dialog close plate":{"rest":44,"active":30,"scales":["1"],"transforms":["none"],"widths":[44],"fill":["oklab(0.216129 0.003491 0.005182 / 0.05) none","oklab(0.216129 0.003491 0.005182 / 0.12) none"],"painted":0.244}}
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 0.25
+    Received:    0.244
+
+      438 |         expect(Math.max(...r.widths.map((w) => Math.abs(w - r.rest))), `the ${name} keeps its width ${at}`).toBeLessThanOrEqual(0.5);
+      439 |         expect(r.fill[1], `the ${name}'s fill steps while it is held ${at}`).not.toBe(r.fill[0]);
+    > 440 |         expect(r.painted, `the ${name}'s press is painted: a quarter of its crop changes colour ${at}`).toBeGreaterThanOrEqual(0.25);
+          |                                                                                                         ^
+      441 |     }
+      442 | });
+      443 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1-reduce.spec.ts:440:105
+
+    Error Context: tests-visual/test-results/release-11-1-1-reduce-pres-c2d8b-y-size-under-reduced-motion-webkit-desktop/error-context.md
+
+  1 failed
+    [webkit-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:405:1 › press · a pressed control shows its press by colour, not by size, under reduced motion 

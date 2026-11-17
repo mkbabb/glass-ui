@@ -1,0 +1,467 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 20 tests using 1 worker
+
+  ✘   1 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.4s)
+  ✘   2 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.3s)
+  ✘   3 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.3s)
+  ✘   4 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.3s)
+  ✘   5 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.4s)
+  ✘   6 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.3s)
+  ✘   7 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.3s)
+  ✘   8 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.3s)
+  ✘   9 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.3s)
+  ✘  10 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.3s)
+  ✘  11 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.5s)
+  ✘  12 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.3s)
+  ✘  13 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.3s)
+  ✘  14 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.3s)
+  ✘  15 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.3s)
+  ✘  16 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.3s)
+  ✘  17 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.3s)
+  ✘  18 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.3s)
+  ✘  19 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.3s)
+  ✘  20 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.3s)
+
+
+  1) [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.446,"turnedAt":0,"share":0.446,"end":1,"hole":19,"frames":[[0,0.446],[7,0],[17,0.035],[27,0.113],[37,0.212],[48,0.327],[56,0.408],[67,0.511],[78,0.601],[88,0.672],[99,0.738],[107,0.778],[119,0.828],[129,0.862],[139,0.89],[150,0.914],[160,0.932],[170,0.946],[180,0.957],[190,0.967],[199,0.973],[211,1],[220,1],[232,1],[241,1],[250,1],[262,1],[272,1],[282,1],[291,1],[303,1],[311,1],[323,1],[331,1],[341,1],[354,1],[362,1],[374,1],[383,1],[395,1],[403,1],[414,1],[427,1],[435,1],[448,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.446
+
+      781 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      782 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 783 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      784 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      785 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      786 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:783:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:854:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-87c79-oses-turns-from-where-it-is-webkit-phone/error-context.md
+
+  2) [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.355,"turnedAt":0,"share":0.355,"end":1,"hole":21,"frames":[[0,0.355],[4,0],[15,0.041],[25,0.122],[35,0.222],[45,0.327],[55,0.427],[66,0.528],[76,0.609],[86,0.679],[96,0.738],[105,0.783],[117,0.832],[127,0.865],[137,0.892],[149,0.918],[159,0.935],[167,0.946],[176,0.956],[188,0.967],[200,0.976],[209,1],[219,1],[229,1],[239,1],[249,1],[260,1],[270,1],[280,1],[289,1],[300,1],[311,1],[321,1],[331,1],[341,1],[351,1],[362,1],[372,1],[380,1],[392,1],[401,1],[411,1],[422,1],[434,1],[443,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.355
+
+      781 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      782 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 783 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      784 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      785 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      786 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:783:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:854:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-87c79-oses-turns-from-where-it-is-webkit-phone-repeat1/error-context.md
+
+  3) [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.355,"turnedAt":0,"share":0.355,"end":1,"hole":13,"frames":[[0,0.355],[7,0],[17,0.035],[25,0.095],[38,0.222],[48,0.327],[58,0.427],[68,0.52],[79,0.609],[89,0.679],[99,0.738],[109,0.787],[119,0.828],[130,0.865],[140,0.892],[150,0.914],[160,0.932],[168,0.944],[181,0.958],[189,0.966],[201,0.974],[211,1],[221,1],[232,1],[242,1],[250,1],[263,1],[272,1],[281,1],[293,1],[303,1],[312,1],[324,1],[334,1],[344,1],[354,1],[364,1],[374,1],[383,1],[395,1],[407,1],[415,1],[424,1],[434,1],[444,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.355
+
+      781 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      782 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 783 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      784 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      785 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      786 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:783:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:854:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-87c79-oses-turns-from-where-it-is-webkit-phone-repeat2/error-context.md
+
+  4) [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.328,"turnedAt":0,"share":0.328,"end":1,"hole":12,"frames":[[0,0.328],[10,0],[22,0.047],[33,0.141],[42,0.233],[52,0.337],[61,0.427],[71,0.52],[83,0.616],[93,0.685],[104,0.748],[115,0.8],[123,0.832],[133,0.865],[142,0.89],[154,0.916],[163,0.932],[174,0.947],[185,0.959],[195,0.968],[205,0.975],[213,1],[225,1],[237,1],[246,1],[256,1],[266,1],[275,1],[287,1],[297,1],[307,1],[319,1],[327,1],[336,1],[348,1],[357,1],[370,1],[376,1],[389,1],[399,1],[409,1],[419,1],[429,1],[440,1],[449,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.328
+
+      781 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      782 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 783 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      784 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      785 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      786 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:783:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:854:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-87c79-oses-turns-from-where-it-is-webkit-phone-repeat3/error-context.md
+
+  5) [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.362,"turnedAt":0,"share":0.362,"end":1,"hole":12,"frames":[[0,0.362],[6,0],[15,0.028],[27,0.122],[37,0.222],[45,0.306],[56,0.418],[68,0.528],[78,0.609],[88,0.679],[98,0.738],[108,0.787],[118,0.828],[129,0.865],[139,0.892],[150,0.916],[159,0.932],[170,0.947],[179,0.957],[190,0.967],[202,0.976],[210,1],[221,1],[231,1],[240,1],[249,1],[260,1],[272,1],[281,1],[293,1],[301,1],[311,1],[323,1],[333,1],[343,1],[352,1],[364,1],[374,1],[384,1],[394,1],[403,1],[415,1],[423,1],[435,1],[444,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.362
+
+      781 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      782 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 783 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      784 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      785 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      786 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:783:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:854:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-87c79-oses-turns-from-where-it-is-webkit-phone-repeat4/error-context.md
+
+  6) [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.369,"turnedAt":0,"share":0.369,"end":1,"hole":12,"frames":[[0,0.369],[8,0],[18,0.035],[29,0.122],[40,0.233],[47,0.306],[58,0.418],[69,0.52],[80,0.609],[90,0.679],[101,0.743],[110,0.787],[120,0.828],[131,0.865],[140,0.89],[152,0.916],[161,0.932],[171,0.946],[182,0.958],[190,0.966],[202,0.974],[211,1],[223,1],[233,1],[242,1],[251,1],[263,1],[274,1],[284,1],[292,1],[304,1],[314,1],[323,1],[333,1],[345,1],[355,1],[365,1],[377,1],[385,1],[397,1],[405,1],[415,1],[427,1],[437,1],[445,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.369
+
+      781 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      782 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 783 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      784 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      785 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      786 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:783:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:854:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-87c79-oses-turns-from-where-it-is-webkit-phone-repeat5/error-context.md
+
+  7) [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.369,"turnedAt":0,"share":0.369,"end":1,"hole":13,"frames":[[0,0.369],[6,0],[17,0.041],[27,0.122],[37,0.222],[47,0.327],[57,0.427],[69,0.537],[78,0.609],[88,0.679],[98,0.738],[107,0.783],[119,0.832],[128,0.862],[140,0.895],[147,0.91],[158,0.93],[170,0.947],[180,0.958],[191,0.968],[200,0.974],[211,1],[221,1],[231,1],[241,1],[253,1],[262,1],[274,1],[282,1],[291,1],[303,1],[313,1],[323,1],[332,1],[344,1],[353,1],[365,1],[373,1],[384,1],[394,1],[405,1],[413,1],[425,1],[435,1],[445,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.369
+
+      781 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      782 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 783 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      784 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      785 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      786 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:783:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:854:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-87c79-oses-turns-from-where-it-is-webkit-phone-repeat6/error-context.md
+
+  8) [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.369,"turnedAt":0,"share":0.369,"end":1,"hole":12,"frames":[[0,0.369],[6,0],[15,0.028],[27,0.122],[36,0.212],[47,0.327],[58,0.437],[68,0.528],[78,0.609],[88,0.679],[100,0.748],[109,0.792],[119,0.832],[129,0.865],[139,0.892],[150,0.916],[160,0.934],[168,0.945],[180,0.958],[190,0.967],[201,0.975],[211,1],[221,1],[231,1],[242,1],[250,1],[262,1],[272,1],[282,1],[290,1],[301,1],[311,1],[323,1],[331,1],[342,1],[352,1],[364,1],[374,1],[384,1],[395,1],[405,1],[415,1],[425,1],[435,1],[444,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.369
+
+      781 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      782 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 783 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      784 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      785 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      786 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:783:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:854:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-87c79-oses-turns-from-where-it-is-webkit-phone-repeat7/error-context.md
+
+  9) [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.446,"turnedAt":0,"share":0.446,"end":1,"hole":13,"frames":[[0,0.446],[7,0],[17,0.035],[27,0.113],[37,0.212],[48,0.327],[58,0.427],[68,0.52],[77,0.594],[88,0.672],[99,0.738],[109,0.787],[119,0.828],[128,0.859],[140,0.892],[148,0.91],[161,0.934],[170,0.946],[179,0.956],[190,0.967],[201,0.974],[211,1],[222,1],[231,1],[240,1],[250,1],[261,1],[273,1],[282,1],[291,1],[302,1],[315,1],[323,1],[333,1],[344,1],[354,1],[364,1],[374,1],[384,1],[395,1],[403,1],[415,1],[424,1],[436,1],[446,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.446
+
+      781 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      782 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 783 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      784 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      785 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      786 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:783:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:854:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-87c79-oses-turns-from-where-it-is-webkit-phone-repeat8/error-context.md
+
+  10) [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.355,"turnedAt":0,"share":0.355,"end":1,"hole":13,"frames":[[0,0.355],[7,0],[17,0.035],[25,0.095],[37,0.212],[45,0.296],[57,0.418],[67,0.511],[80,0.616],[88,0.672],[98,0.732],[109,0.787],[119,0.828],[127,0.856],[137,0.885],[148,0.91],[160,0.932],[169,0.945],[181,0.958],[190,0.967],[202,0.975],[211,1],[220,1],[231,1],[241,1],[250,1],[262,1],[272,1],[282,1],[292,1],[303,1],[312,1],[323,1],[332,1],[344,1],[354,1],[364,1],[373,1],[385,1],[393,1],[406,1],[413,1],[426,1],[435,1],[445,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.355
+
+      781 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      782 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 783 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      784 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      785 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      786 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:783:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:854:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-87c79-oses-turns-from-where-it-is-webkit-phone-repeat9/error-context.md
+
+  11) [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.362,"turnedAt":0,"share":0.362,"end":1,"hole":12,"frames":[[0,0.362],[6,0],[16,0.035],[27,0.122],[37,0.222],[47,0.327],[57,0.427],[67,0.52],[77,0.601],[88,0.679],[98,0.738],[110,0.796],[118,0.828],[127,0.859],[139,0.892],[151,0.918],[159,0.932],[168,0.945],[180,0.958],[190,0.967],[199,0.974],[211,1],[220,1],[230,1],[241,1],[251,1],[261,1],[271,1],[280,1],[292,1],[302,1],[311,1],[323,1],[332,1],[343,1],[353,1],[363,1],[373,1],[384,1],[394,1],[402,1],[414,1],[423,1],[435,1],[445,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.362
+
+      781 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      782 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 783 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      784 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      785 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      786 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:783:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:854:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-87c79-oses-turns-from-where-it-is-webkit-phone-repeat10/error-context.md
+
+  12) [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.348,"turnedAt":0,"share":0.348,"end":1,"hole":16,"frames":[[0,0.348],[5,0],[15,0.035],[26,0.122],[37,0.233],[46,0.327],[56,0.427],[68,0.537],[77,0.609],[87,0.679],[97,0.738],[108,0.792],[118,0.832],[130,0.871],[138,0.892],[148,0.914],[159,0.934],[167,0.945],[179,0.958],[189,0.967],[199,0.974],[210,1],[220,1],[230,1],[242,1],[250,1],[263,1],[271,1],[279,1],[292,1],[301,1],[310,1],[322,1],[332,1],[342,1],[352,1],[361,1],[373,1],[383,1],[393,1],[403,1],[414,1],[424,1],[434,1],[446,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.348
+
+      781 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      782 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 783 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      784 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      785 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      786 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:783:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:854:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-87c79-oses-turns-from-where-it-is-webkit-phone-repeat11/error-context.md
+
+  13) [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.446,"turnedAt":0,"share":0.446,"end":1,"hole":17,"frames":[[0,0.446],[7,0],[18,0.041],[28,0.122],[38,0.222],[48,0.327],[56,0.408],[67,0.511],[79,0.609],[89,0.679],[99,0.738],[109,0.787],[119,0.828],[130,0.865],[140,0.892],[150,0.914],[160,0.932],[169,0.945],[179,0.956],[191,0.967],[201,0.974],[211,1],[223,1],[230,1],[241,1],[253,1],[262,1],[273,1],[283,1],[293,1],[303,1],[312,1],[324,1],[332,1],[344,1],[356,1],[365,1],[375,1],[385,1],[395,1],[404,1],[416,1],[426,1],[435,1],[447,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.446
+
+      781 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      782 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 783 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      784 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      785 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      786 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:783:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:854:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-87c79-oses-turns-from-where-it-is-webkit-phone-repeat12/error-context.md
+
+  14) [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.362,"turnedAt":0,"share":0.362,"end":1,"hole":12,"frames":[[0,0.362],[7,0],[15,0.023],[25,0.095],[36,0.201],[46,0.306],[58,0.427],[68,0.52],[78,0.601],[88,0.672],[99,0.738],[107,0.778],[119,0.828],[131,0.868],[139,0.89],[148,0.91],[160,0.932],[170,0.946],[180,0.957],[189,0.966],[201,0.974],[211,1],[223,1],[230,1],[242,1],[252,1],[262,1],[272,1],[282,1],[294,1],[303,1],[313,1],[323,1],[333,1],[344,1],[353,1],[365,1],[374,1],[382,1],[395,1],[405,1],[415,1],[425,1],[436,1],[445,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.362
+
+      781 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      782 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 783 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      784 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      785 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      786 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:783:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:854:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-87c79-oses-turns-from-where-it-is-webkit-phone-repeat13/error-context.md
+
+  15) [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.438,"turnedAt":0,"share":0.438,"end":1,"hole":13,"frames":[[0,0.438],[5,0],[16,0.041],[25,0.113],[37,0.233],[46,0.327],[56,0.427],[66,0.52],[76,0.601],[87,0.679],[97,0.738],[107,0.787],[116,0.825],[126,0.859],[138,0.892],[148,0.914],[158,0.932],[166,0.944],[179,0.958],[189,0.967],[199,0.974],[209,1],[220,1],[229,1],[238,1],[250,1],[260,1],[270,1],[281,1],[291,1],[301,1],[311,1],[321,1],[332,1],[342,1],[352,1],[362,1],[370,1],[383,1],[393,1],[403,1],[414,1],[423,1],[435,1],[444,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.438
+
+      781 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      782 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 783 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      784 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      785 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      786 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:783:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:854:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-87c79-oses-turns-from-where-it-is-webkit-phone-repeat14/error-context.md
+
+  16) [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.362,"turnedAt":0,"share":0.362,"end":1,"hole":17,"frames":[[0,0.362],[5,0],[17,0.047],[26,0.122],[38,0.243],[47,0.337],[55,0.418],[65,0.511],[77,0.609],[87,0.679],[98,0.743],[106,0.783],[118,0.832],[128,0.865],[138,0.892],[147,0.912],[159,0.934],[169,0.947],[180,0.959],[188,0.967],[198,0.974],[210,1],[220,1],[230,1],[240,1],[251,1],[261,1],[271,1],[280,1],[292,1],[300,1],[312,1],[324,1],[332,1],[342,1],[354,1],[363,1],[373,1],[384,1],[394,1],[404,1],[414,1],[424,1],[434,1],[443,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.362
+
+      781 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      782 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 783 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      784 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      785 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      786 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:783:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:854:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-87c79-oses-turns-from-where-it-is-webkit-phone-repeat15/error-context.md
+
+  17) [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.455,"turnedAt":0,"share":0.455,"end":1,"hole":13,"frames":[[0,0.455],[6,0],[18,0.047],[30,0.151],[39,0.243],[48,0.337],[60,0.456],[70,0.545],[79,0.616],[89,0.685],[101,0.754],[110,0.796],[121,0.839],[130,0.868],[140,0.895],[149,0.914],[161,0.935],[172,0.95],[182,0.96],[192,0.969],[202,0.976],[211,1],[223,1],[233,1],[241,1],[253,1],[264,1],[274,1],[282,1],[292,1],[304,1],[315,1],[327,1],[335,1],[346,1],[355,1],[366,1],[376,1],[386,1],[396,1],[406,1],[417,1],[427,1],[436,1],[448,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.455
+
+      781 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      782 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 783 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      784 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      785 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      786 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:783:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:854:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-87c79-oses-turns-from-where-it-is-webkit-phone-repeat16/error-context.md
+
+  18) [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.355,"turnedAt":0,"share":0.355,"end":1,"hole":13,"frames":[[0,0.355],[4,0],[15,0.041],[26,0.132],[36,0.233],[44,0.316],[54,0.418],[66,0.528],[77,0.616],[87,0.685],[97,0.743],[107,0.792],[116,0.828],[127,0.865],[139,0.897],[148,0.916],[156,0.93],[169,0.949],[178,0.958],[190,0.969],[199,0.975],[209,1],[219,1],[230,1],[239,1],[248,1],[260,1],[270,1],[279,1],[291,1],[302,1],[311,1],[321,1],[332,1],[341,1],[350,1],[361,1],[371,1],[383,1],[393,1],[403,1],[414,1],[424,1],[432,1],[444,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.355
+
+      781 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      782 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 783 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      784 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      785 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      786 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:783:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:854:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-87c79-oses-turns-from-where-it-is-webkit-phone-repeat17/error-context.md
+
+  19) [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.438,"turnedAt":0,"share":0.438,"end":1,"hole":18,"frames":[[0,0.438],[4,0],[16,0.047],[26,0.132],[36,0.233],[48,0.358],[56,0.437],[65,0.52],[77,0.616],[85,0.672],[97,0.743],[107,0.792],[116,0.828],[128,0.868],[140,0.899],[148,0.916],[159,0.935],[167,0.946],[179,0.959],[189,0.968],[199,0.975],[209,1],[220,1],[230,1],[240,1],[252,1],[260,1],[272,1],[281,1],[290,1],[301,1],[311,1],[322,1],[332,1],[342,1],[352,1],[363,1],[373,1],[383,1],[393,1],[402,1],[414,1],[424,1],[433,1],[444,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.438
+
+      781 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      782 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 783 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      784 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      785 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      786 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:783:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:854:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-87c79-oses-turns-from-where-it-is-webkit-phone-repeat18/error-context.md
+
+  20) [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.422,"turnedAt":0,"share":0.422,"end":1,"hole":12,"frames":[[0,0.422],[5,0],[16,0.041],[26,0.122],[36,0.222],[47,0.337],[57,0.437],[67,0.528],[79,0.624],[86,0.672],[97,0.738],[108,0.792],[118,0.832],[127,0.862],[136,0.887],[148,0.914],[160,0.935],[169,0.947],[177,0.956],[189,0.967],[199,0.974],[210,1],[220,1],[230,1],[240,1],[251,1],[261,1],[271,1],[281,1],[291,1],[301,1],[312,1],[322,1],[332,1],[342,1],[352,1],[363,1],[373,1],[383,1],[393,1],[404,1],[414,1],[423,1],[435,1],[444,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.422
+
+      781 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      782 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 783 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      784 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      785 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      786 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:783:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:854:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-87c79-oses-turns-from-where-it-is-webkit-phone-repeat19/error-context.md
+
+  20 failed
+    [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+    [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+    [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+    [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+    [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+    [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+    [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+    [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+    [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+    [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+    [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+    [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+    [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+    [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+    [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+    [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+    [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+    [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+    [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+    [webkit-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 

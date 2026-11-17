@@ -1,0 +1,30 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium-desktop] › release-11-1-1.spec.ts:928:1 › tooltip · a Tooltip enters on a tween (1.0m)
+
+
+  1) [chromium-desktop] › release-11-1-1.spec.ts:928:1 › tooltip · a Tooltip enters on a tween ─────
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.waitFor: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('body[data-ready=\'1\']')
+
+
+      26 | async function openHarness(page: Page, query = ""): Promise<void> {
+      27 |     await gotoReady(page, `${HARNESS}${query}`);
+    > 28 |     await page.locator("body[data-ready='1']").waitFor({ state: "attached" });
+         |                                                ^
+      29 |     await page.waitForTimeout(300);
+      30 | }
+      31 |
+        at openHarness (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:28:48)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:930:5
+
+    Error Context: test-results/release-11-1-1-tooltip-·-a-Tooltip-enters-on-a-tween-chromium-desktop/error-context.md
+
+  1 failed
+    [chromium-desktop] › release-11-1-1.spec.ts:928:1 › tooltip · a Tooltip enters on a tween ──────

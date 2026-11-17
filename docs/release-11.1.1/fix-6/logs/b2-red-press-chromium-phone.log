@@ -1,0 +1,30 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 1 test using 1 worker
+
+[WebServer] 6:59:55 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  1 [chromium-phone] › tests-visual/release-11-1-1-reduce.spec.ts:405:1 › press · a pressed control shows its press by colour, not by size, under reduced motion (14.5s)
+
+
+  1) [chromium-phone] › tests-visual/release-11-1-1-reduce.spec.ts:405:1 › press · a pressed control shows its press by colour, not by size, under reduced motion 
+
+    Error: the Button keeps scale 1 on every frame {"Button":{"rest":88.53,"active":17,"scales":["1","1.0328 0.911"],"transforms":["none"],"widths":[88.53,91.44],"fill":["oklab(0.673443 0.0210928 0.0746619 / 0.244) none","oklab(0.673443 0.0210928 0.0746619 / 0.244) none"],"painted":0.189},"icon seat":{"rest":44,"active":16,"scales":["1","1.0066 0.9156"],"transforms":["none"],"widths":[44,44.29],"fill":["rgba(0, 0, 0, 0) none","oklab(0.257667 0.00900921 0.023203 / 0.2002) none"],"painted":0.418},"tab seat":{"rest":47.69,"active":16,"scales":["1","0.96"],"transforms":["none"],"widths":[47.69,45.78],"fill":["rgba(0, 0, 0, 0) none","oklab(0.257667 0.00900921 0.023203 / 0.2002) none"],"painted":0.642},"pressable Card":{"rest":73.73,"active":18,"scales":["1","0.97"],"transforms":["none"],"widths":[73.73,71.52],"fill":["color(srgb 0.20397 0.148263 0.0829736 / 0.14) linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0))","color(srgb 0.20397 0.148263 0.0829736 / 0.14) linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0))"],"painted":0.167},"SortableList handle":{"rest":44,"active":17,"scales":["none","0.96"],"transforms":["none"],"widths":[44,42.24],"fill":["rgba(0, 0, 0, 0) none","rgba(0, 0, 0, 0) none"],"painted":0.012},"menu row":{"rest":182,"active":18,"scales":["1","0.97"],"transforms":["none"],"widths":[182,176.54],"fill":["rgba(0, 0, 0, 0) none","rgba(0, 0, 0, 0) none"],"painted":0.372},"Dialog close plate":{"rest":44,"active":19,"scales":["none","0.96"],"transforms":["none"],"widths":[44],"fill":["rgba(0, 0, 0, 0) none","oklab(0.216128 0.00350075 0.00518669 / 0.12) none"],"painted":0.597}}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      434 |     for (const [name, r] of Object.entries(reads)) {
+      435 |         expect(r.active, `the ${name} was held pressed ${at}`).toBeGreaterThan(0);
+    > 436 |         expect(r.scales.every(identity), `the ${name} keeps scale 1 on every frame ${at}`).toBe(true);
+          |                                                                                            ^
+      437 |         expect(r.transforms, `the ${name} takes no transform ${at}`).toEqual(["none"]);
+      438 |         expect(Math.max(...r.widths.map((w) => Math.abs(w - r.rest))), `the ${name} keeps its width ${at}`).toBeLessThanOrEqual(0.5);
+      439 |         expect(r.fill[1], `the ${name}'s fill steps while it is held ${at}`).not.toBe(r.fill[0]);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:436:92
+
+    Error Context: tests-visual/test-results/release-11-1-1-reduce-pres-c2d8b-y-size-under-reduced-motion-chromium-phone/error-context.md
+
+  1 failed
+    [chromium-phone] › tests-visual/release-11-1-1-reduce.spec.ts:405:1 › press · a pressed control shows its press by colour, not by size, under reduced motion 

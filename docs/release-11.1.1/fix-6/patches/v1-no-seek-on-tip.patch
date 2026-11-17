@@ -1,0 +1,10 @@
+--- a/src/components/_shared/disclosure/turn.ts	2026-11-17 06:05:55
++++ b/src/components/_shared/disclosure/turn.ts	2026-11-17 06:05:55
+@@ -27,6 +27,7 @@
+                 .find((a) => isDisclosureMotion(a) && a.playState === "running");
+             if (!running) return;
+             const from = el.getBoundingClientRect().height;
++            if (from >= 0) return;
+             // reka's content measures its size after the flip's render, in its own
+             // continuation of the same `nextTick`, with the animation off, and restores
+             // it: that restored keyframe is the one to seek. This watcher runs first (it

@@ -1,0 +1,559 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 24 tests using 1 worker
+
+  ✘   1 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Collapsible closed while it opens turns from where it is (4.5s)
+  ✘   2 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.4s)
+  ✘   3 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Accordion closed while it opens turns from where it is (4.5s)
+  ✘   4 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Accordion reopened while it closes turns from where it is (5.5s)
+  ✘   5 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Collapsible closed while it opens turns from where it is (4.6s)
+  ✘   6 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.5s)
+  ✘   7 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Accordion closed while it opens turns from where it is (4.5s)
+  ✘   8 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Accordion reopened while it closes turns from where it is (5.4s)
+  ✘   9 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Collapsible closed while it opens turns from where it is (4.6s)
+  ✘  10 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.4s)
+  ✘  11 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Accordion closed while it opens turns from where it is (4.4s)
+  ✘  12 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Accordion reopened while it closes turns from where it is (5.4s)
+  ✘  13 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Collapsible closed while it opens turns from where it is (4.5s)
+  ✘  14 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.4s)
+  ✘  15 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Accordion closed while it opens turns from where it is (4.5s)
+  ✘  16 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Accordion reopened while it closes turns from where it is (5.3s)
+  ✘  17 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Collapsible closed while it opens turns from where it is (4.5s)
+  ✘  18 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.4s)
+  ✘  19 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Accordion closed while it opens turns from where it is (4.5s)
+  ✘  20 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Accordion reopened while it closes turns from where it is (5.4s)
+  ✘  21 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Collapsible closed while it opens turns from where it is (4.5s)
+  ✘  22 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.4s)
+  ✘  23 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Accordion closed while it opens turns from where it is (4.5s)
+  ✘  24 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Accordion reopened while it closes turns from where it is (5.5s)
+
+
+  1) [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Collapsible closed while it opens turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.715,"turnedAt":1,"share":0.285,"end":0,"hole":13,"frames":[[0,0.715],[7,1],[16,0.971],[25,0.905],[34,0.819],[46,0.694],[56,0.592],[66,0.498],[75,0.422],[87,0.335],[97,0.273],[107,0.222],[117,0.179],[127,0.144],[137,0.115],[147,0.092],[156,0.075],[169,0.055],[178,0.045],[188,0.035],[199,0.027],[209,0],[219,0],[229,0],[238,0],[250,0],[260,0],[269,0],[280,0],[292,0],[301,0],[311,0],[321,0],[331,0],[341,0],[351,0],[361,0],[370,0],[382,0],[392,0],[403,0],[413,0],[423,0],[433,0],[443,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.285
+
+      815 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      816 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 817 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      818 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      819 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      820 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:817:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:873:13
+
+    Error Context: test-results/stall5.probe.ts-reverse-·--d0e11-pens-turns-from-where-it-is-webkit-phone/error-context.md
+
+  2) [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.355,"turnedAt":0,"share":0.355,"end":1,"hole":12,"frames":[[0,0.355],[5,0],[13,0.023],[25,0.113],[34,0.201],[45,0.316],[55,0.418],[64,0.502],[74,0.586],[86,0.672],[96,0.732],[106,0.783],[116,0.825],[127,0.862],[137,0.89],[147,0.912],[157,0.93],[168,0.946],[178,0.957],[188,0.967],[198,0.974],[208,1],[218,1],[230,1],[239,1],[249,1],[260,1],[270,1],[280,1],[290,1],[300,1],[310,1],[322,1],[331,1],[341,1],[351,1],[364,1],[372,1],[380,1],[391,1],[402,1],[413,1],[423,1],[433,1],[443,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.355
+
+      815 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      816 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 817 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      818 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      819 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      820 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:817:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:888:13
+
+    Error Context: test-results/stall5.probe.ts-reverse-·--4d10b-oses-turns-from-where-it-is-webkit-phone/error-context.md
+
+  3) [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Accordion closed while it opens turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.703,"turnedAt":1,"share":0.297,"end":0,"hole":13,"frames":[[0,0.703],[6,1],[16,0.965],[26,0.887],[36,0.788],[47,0.673],[57,0.573],[67,0.48],[76,0.406],[87,0.328],[98,0.262],[107,0.217],[119,0.168],[128,0.138],[138,0.11],[149,0.086],[159,0.068],[168,0.055],[179,0.042],[189,0.033],[199,0.026],[208,0],[220,0],[230,0],[241,0],[251,0],[261,0],[271,0],[281,0],[290,0],[302,0],[312,0],[321,0],[333,0],[342,0],[354,0],[363,0],[373,0],[383,0],[393,0],[404,0],[414,0],[424,0],[434,0],[445,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.297
+
+      815 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      816 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 817 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      818 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      819 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      820 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:817:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:873:13
+
+    Error Context: test-results/stall5.probe.ts-reverse-·--0fa5b-pens-turns-from-where-it-is-webkit-phone/error-context.md
+
+  4) [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Accordion reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.341,"turnedAt":0,"share":0.341,"end":1,"hole":12,"frames":[[0,0.341],[6,0],[13,0.018],[23,0.086],[34,0.191],[44,0.295],[54,0.398],[64,0.493],[75,0.586],[85,0.659],[95,0.721],[105,0.773],[115,0.817],[125,0.853],[134,0.88],[146,0.908],[155,0.925],[166,0.942],[176,0.954],[187,0.965],[197,0.972],[207,1],[216,1],[227,1],[237,1],[249,1],[258,1],[268,1],[280,1],[287,1],[298,1],[309,1],[317,1],[329,1],[340,1],[350,1],[360,1],[370,1],[381,1],[391,1],[401,1],[411,1],[421,1],[432,1],[442,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.341
+
+      815 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      816 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 817 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      818 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      819 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      820 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:817:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:888:13
+
+    Error Context: test-results/stall5.probe.ts-reverse-·--403af-oses-turns-from-where-it-is-webkit-phone/error-context.md
+
+  5) [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Collapsible closed while it opens turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.732,"turnedAt":0.971,"share":0.239,"end":0,"hole":13,"frames":[[0,0.732],[9,0.971],[20,0.887],[31,0.778],[41,0.673],[52,0.563],[61,0.48],[71,0.399],[82,0.321],[92,0.262],[101,0.217],[112,0.172],[121,0.141],[132,0.11],[144,0.084],[152,0.07],[163,0.054],[173,0.042],[184,0.033],[194,0.026],[205,0],[214,0],[223,0],[235,0],[244,0],[255,0],[265,0],[274,0],[286,0],[294,0],[304,0],[316,0],[326,0],[335,0],[345,0],[356,0],[367,0],[376,0],[388,0],[398,0],[407,0],[419,0],[428,0],[441,0],[448,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.239
+
+      815 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      816 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 817 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      818 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      819 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      820 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:817:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:873:13
+
+    Error Context: test-results/stall5.probe.ts-reverse-·--d0e11-pens-turns-from-where-it-is-webkit-phone-repeat1/error-context.md
+
+  6) [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.348,"turnedAt":0,"share":0.348,"end":1,"hole":13,"frames":[[0,0.348],[5,0],[15,0.035],[25,0.113],[35,0.212],[45,0.316],[55,0.418],[66,0.52],[76,0.601],[86,0.672],[96,0.732],[106,0.783],[116,0.825],[125,0.856],[138,0.892],[147,0.912],[158,0.932],[168,0.946],[178,0.957],[188,0.967],[198,0.974],[209,1],[219,1],[229,1],[239,1],[249,1],[260,1],[269,1],[279,1],[290,1],[300,1],[311,1],[320,1],[330,1],[342,1],[351,1],[362,1],[371,1],[382,1],[392,1],[403,1],[413,1],[423,1],[433,1],[442,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.348
+
+      815 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      816 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 817 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      818 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      819 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      820 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:817:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:888:13
+
+    Error Context: test-results/stall5.probe.ts-reverse-·--4d10b-oses-turns-from-where-it-is-webkit-phone-repeat1/error-context.md
+
+  7) [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Accordion closed while it opens turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.715,"turnedAt":1,"share":0.285,"end":0,"hole":13,"frames":[[0,0.715],[6,1],[15,0.971],[25,0.896],[33,0.819],[46,0.684],[55,0.592],[66,0.489],[76,0.406],[86,0.335],[96,0.273],[106,0.222],[117,0.175],[127,0.141],[136,0.115],[147,0.09],[158,0.07],[168,0.055],[176,0.046],[186,0.036],[199,0.026],[209,0],[219,0],[229,0],[238,0],[250,0],[260,0],[270,0],[280,0],[289,0],[300,0],[310,0],[319,0],[330,0],[342,0],[352,0],[362,0],[372,0],[381,0],[392,0],[402,0],[413,0],[425,0],[433,0],[443,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.285
+
+      815 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      816 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 817 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      818 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      819 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      820 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:817:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:873:13
+
+    Error Context: test-results/stall5.probe.ts-reverse-·--0fa5b-pens-turns-from-where-it-is-webkit-phone-repeat1/error-context.md
+
+  8) [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Accordion reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.391,"turnedAt":0,"share":0.391,"end":1,"hole":20,"frames":[[0,0.391],[8,0],[20,0.047],[29,0.122],[40,0.233],[50,0.337],[61,0.447],[71,0.537],[81,0.616],[89,0.672],[101,0.743],[112,0.796],[124,0.843],[134,0.874],[142,0.895],[152,0.916],[162,0.933],[174,0.95],[183,0.959],[195,0.97],[203,0.975],[213,1],[224,1],[235,1],[244,1],[254,1],[265,1],[275,1],[285,1],[295,1],[306,1],[316,1],[326,1],[336,1],[346,1],[357,1],[365,1],[378,1],[387,1],[399,1],[408,1],[418,1],[428,1],[438,1],[448,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.391
+
+      815 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      816 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 817 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      818 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      819 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      820 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:817:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:888:13
+
+    Error Context: test-results/stall5.probe.ts-reverse-·--403af-oses-turns-from-where-it-is-webkit-phone-repeat1/error-context.md
+
+  9) [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Collapsible closed while it opens turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.703,"turnedAt":1,"share":0.297,"end":0,"hole":13,"frames":[[0,0.703],[5,1],[17,0.953],[26,0.878],[37,0.767],[47,0.663],[58,0.553],[67,0.472],[79,0.376],[88,0.315],[100,0.246],[109,0.204],[119,0.164],[128,0.135],[141,0.1],[148,0.086],[160,0.065],[170,0.051],[180,0.04],[190,0.032],[201,0.024],[211,0],[221,0],[231,0],[241,0],[252,0],[262,0],[272,0],[282,0],[293,0],[303,0],[312,0],[323,0],[333,0],[343,0],[354,0],[364,0],[374,0],[384,0],[395,0],[405,0],[415,0],[425,0],[437,0],[446,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.297
+
+      815 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      816 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 817 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      818 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      819 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      820 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:817:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:873:13
+
+    Error Context: test-results/stall5.probe.ts-reverse-·--d0e11-pens-turns-from-where-it-is-webkit-phone-repeat2/error-context.md
+
+  10) [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.355,"turnedAt":0,"share":0.355,"end":1,"hole":12,"frames":[[0,0.355],[5,0],[15,0.035],[25,0.113],[37,0.233],[46,0.327],[54,0.408],[66,0.52],[75,0.594],[87,0.679],[97,0.738],[107,0.787],[117,0.828],[127,0.862],[138,0.892],[148,0.914],[158,0.932],[167,0.945],[177,0.956],[189,0.967],[200,0.975],[208,1],[220,1],[229,1],[240,1],[250,1],[262,1],[270,1],[280,1],[291,1],[300,1],[312,1],[321,1],[331,1],[342,1],[351,1],[363,1],[371,1],[382,1],[395,1],[403,1],[413,1],[423,1],[433,1],[444,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.355
+
+      815 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      816 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 817 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      818 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      819 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      820 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:817:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:888:13
+
+    Error Context: test-results/stall5.probe.ts-reverse-·--4d10b-oses-turns-from-where-it-is-webkit-phone-repeat2/error-context.md
+
+  11) [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Accordion closed while it opens turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.703,"turnedAt":1,"share":0.297,"end":0,"hole":12,"frames":[[0,0.703],[6,1],[16,0.965],[26,0.887],[37,0.778],[47,0.673],[57,0.573],[67,0.48],[76,0.406],[88,0.321],[98,0.262],[108,0.212],[118,0.171],[129,0.135],[139,0.108],[150,0.084],[159,0.068],[169,0.054],[180,0.041],[190,0.033],[200,0.026],[210,0],[221,0],[231,0],[241,0],[251,0],[261,0],[271,0],[282,0],[292,0],[302,0],[312,0],[322,0],[333,0],[343,0],[353,0],[364,0],[373,0],[383,0],[394,0],[404,0],[414,0],[425,0],[434,0],[443,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.297
+
+      815 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      816 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 817 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      818 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      819 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      820 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:817:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:873:13
+
+    Error Context: test-results/stall5.probe.ts-reverse-·--0fa5b-pens-turns-from-where-it-is-webkit-phone-repeat2/error-context.md
+
+  12) [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Accordion reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.315,"turnedAt":0,"share":0.315,"end":1,"hole":12,"frames":[[0,0.315],[9,0],[20,0.041],[30,0.122],[40,0.222],[50,0.327],[59,0.418],[69,0.511],[81,0.609],[91,0.679],[101,0.738],[113,0.796],[123,0.836],[132,0.865],[142,0.892],[151,0.912],[163,0.933],[174,0.949],[185,0.96],[195,0.969],[205,0.976],[214,1],[224,1],[234,1],[244,1],[252,1],[265,1],[275,1],[283,1],[295,1],[305,1],[316,1],[326,1],[336,1],[346,1],[356,1],[367,1],[375,1],[387,1],[397,1],[407,1],[418,1],[428,1],[438,1],[448,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.315
+
+      815 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      816 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 817 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      818 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      819 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      820 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:817:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:888:13
+
+    Error Context: test-results/stall5.probe.ts-reverse-·--403af-oses-turns-from-where-it-is-webkit-phone-repeat2/error-context.md
+
+  13) [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Collapsible closed while it opens turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.631,"turnedAt":1,"share":0.369,"end":0,"hole":12,"frames":[[0,0.631],[7,1],[16,0.971],[28,0.878],[38,0.778],[48,0.673],[58,0.573],[68,0.48],[80,0.384],[89,0.321],[99,0.262],[109,0.212],[120,0.168],[130,0.135],[140,0.108],[150,0.086],[160,0.068],[171,0.053],[181,0.041],[191,0.033],[201,0.026],[211,0],[222,0],[232,0],[242,0],[252,0],[264,0],[273,0],[283,0],[293,0],[303,0],[314,0],[324,0],[334,0],[344,0],[354,0],[364,0],[375,0],[385,0],[395,0],[405,0],[415,0],[426,0],[436,0],[445,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.369
+
+      815 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      816 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 817 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      818 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      819 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      820 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:817:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:873:13
+
+    Error Context: test-results/stall5.probe.ts-reverse-·--d0e11-pens-turns-from-where-it-is-webkit-phone-repeat3/error-context.md
+
+  14) [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.355,"turnedAt":0,"share":0.355,"end":1,"hole":12,"frames":[[0,0.355],[6,0],[15,0.028],[25,0.104],[35,0.201],[45,0.306],[56,0.418],[66,0.511],[76,0.594],[88,0.679],[97,0.732],[107,0.783],[117,0.825],[127,0.859],[137,0.887],[148,0.912],[158,0.93],[168,0.945],[178,0.956],[188,0.966],[199,0.974],[208,1],[220,1],[229,1],[239,1],[250,1],[260,1],[270,1],[280,1],[291,1],[301,1],[311,1],[321,1],[331,1],[343,1],[352,1],[362,1],[372,1],[382,1],[393,1],[403,1],[413,1],[423,1],[433,1],[444,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.355
+
+      815 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      816 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 817 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      818 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      819 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      820 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:817:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:888:13
+
+    Error Context: test-results/stall5.probe.ts-reverse-·--4d10b-oses-turns-from-where-it-is-webkit-phone-repeat3/error-context.md
+
+  15) [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Accordion closed while it opens turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.697,"turnedAt":1,"share":0.303,"end":0,"hole":12,"frames":[[0,0.697],[6,1],[17,0.959],[27,0.878],[37,0.778],[46,0.684],[58,0.563],[68,0.472],[78,0.391],[90,0.309],[98,0.262],[109,0.208],[119,0.168],[129,0.135],[139,0.108],[148,0.088],[160,0.066],[170,0.053],[180,0.041],[192,0.031],[200,0.026],[211,0],[221,0],[231,0],[241,0],[251,0],[262,0],[272,0],[282,0],[292,0],[302,0],[313,0],[323,0],[333,0],[341,0],[354,0],[364,0],[374,0],[384,0],[394,0],[404,0],[415,0],[425,0],[435,0],[445,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.303
+
+      815 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      816 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 817 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      818 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      819 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      820 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:817:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:873:13
+
+    Error Context: test-results/stall5.probe.ts-reverse-·--0fa5b-pens-turns-from-where-it-is-webkit-phone-repeat3/error-context.md
+
+  16) [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Accordion reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.384,"turnedAt":0,"share":0.384,"end":1,"hole":20,"frames":[[0,0.384],[10,0],[20,0.035],[30,0.113],[40,0.212],[52,0.337],[62,0.437],[70,0.511],[82,0.609],[92,0.679],[101,0.732],[111,0.783],[123,0.832],[132,0.862],[142,0.89],[155,0.918],[164,0.933],[173,0.946],[182,0.956],[194,0.967],[205,0.975],[215,1],[223,1],[235,1],[244,1],[256,1],[266,1],[276,1],[285,1],[297,1],[306,1],[315,1],[326,1],[337,1],[346,1],[356,1],[367,1],[377,1],[389,1],[399,1],[409,1],[417,1],[429,1],[439,1],[448,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.384
+
+      815 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      816 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 817 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      818 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      819 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      820 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:817:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:888:13
+
+    Error Context: test-results/stall5.probe.ts-reverse-·--403af-oses-turns-from-where-it-is-webkit-phone-repeat3/error-context.md
+
+  17) [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Collapsible closed while it opens turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.715,"turnedAt":1,"share":0.285,"end":0,"hole":12,"frames":[[0,0.715],[5,1],[15,0.965],[26,0.878],[36,0.778],[46,0.673],[56,0.573],[66,0.48],[75,0.406],[86,0.328],[98,0.257],[107,0.212],[117,0.172],[128,0.135],[138,0.108],[148,0.086],[158,0.068],[169,0.053],[178,0.042],[189,0.033],[199,0.026],[209,0],[221,0],[230,0],[240,0],[250,0],[260,0],[271,0],[281,0],[291,0],[301,0],[310,0],[320,0],[332,0],[343,0],[352,0],[362,0],[372,0],[381,0],[393,0],[403,0],[413,0],[423,0],[435,0],[444,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.285
+
+      815 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      816 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 817 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      818 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      819 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      820 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:817:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:873:13
+
+    Error Context: test-results/stall5.probe.ts-reverse-·--d0e11-pens-turns-from-where-it-is-webkit-phone-repeat4/error-context.md
+
+  18) [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.321,"turnedAt":0.035,"share":0.287,"end":1,"hole":13,"frames":[[0,0.321],[10,0.035],[19,0.104],[32,0.233],[40,0.316],[49,0.408],[61,0.52],[72,0.609],[80,0.665],[93,0.743],[102,0.787],[113,0.832],[123,0.865],[133,0.892],[143,0.914],[153,0.932],[162,0.945],[172,0.956],[184,0.967],[195,0.975],[204,1],[213,1],[223,1],[234,1],[243,1],[253,1],[263,1],[273,1],[284,1],[294,1],[305,1],[314,1],[325,1],[336,1],[346,1],[355,1],[365,1],[375,1],[386,1],[396,1],[408,1],[416,1],[426,1],[437,1],[448,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.287
+
+      815 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      816 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 817 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      818 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      819 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      820 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:817:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:888:13
+
+    Error Context: test-results/stall5.probe.ts-reverse-·--4d10b-oses-turns-from-where-it-is-webkit-phone-repeat4/error-context.md
+
+  19) [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Accordion closed while it opens turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.709,"turnedAt":1,"share":0.291,"end":0,"hole":12,"frames":[[0,0.709],[5,1],[15,0.965],[25,0.887],[35,0.788],[46,0.673],[55,0.582],[67,0.472],[76,0.399],[85,0.335],[97,0.262],[107,0.212],[117,0.171],[127,0.138],[138,0.108],[148,0.086],[157,0.07],[168,0.054],[178,0.042],[189,0.033],[198,0.026],[209,0],[218,0],[230,0],[240,0],[250,0],[260,0],[270,0],[280,0],[291,0],[301,0],[311,0],[321,0],[330,0],[342,0],[352,0],[362,0],[372,0],[382,0],[393,0],[403,0],[413,0],[425,0],[432,0],[445,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.291
+
+      815 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      816 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 817 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      818 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      819 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      820 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:817:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:873:13
+
+    Error Context: test-results/stall5.probe.ts-reverse-·--0fa5b-pens-turns-from-where-it-is-webkit-phone-repeat4/error-context.md
+
+  20) [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Accordion reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.341,"turnedAt":0,"share":0.341,"end":1,"hole":12,"frames":[[0,0.341],[6,0],[13,0.018],[25,0.104],[33,0.181],[43,0.285],[54,0.398],[64,0.493],[75,0.586],[84,0.652],[93,0.709],[105,0.773],[115,0.817],[125,0.853],[135,0.882],[146,0.908],[156,0.927],[166,0.942],[176,0.954],[187,0.965],[197,0.972],[207,1],[216,1],[228,1],[237,1],[248,1],[258,1],[267,1],[279,1],[289,1],[299,1],[308,1],[320,1],[329,1],[340,1],[350,1],[360,1],[370,1],[380,1],[391,1],[401,1],[411,1],[421,1],[432,1],[442,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.341
+
+      815 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      816 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 817 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      818 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      819 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      820 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:817:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:888:13
+
+    Error Context: test-results/stall5.probe.ts-reverse-·--403af-oses-turns-from-where-it-is-webkit-phone-repeat4/error-context.md
+
+  21) [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Collapsible closed while it opens turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.709,"turnedAt":1,"share":0.291,"end":0,"hole":13,"frames":[[0,0.709],[5,1],[17,0.953],[25,0.887],[36,0.778],[47,0.663],[57,0.563],[65,0.489],[75,0.406],[88,0.315],[96,0.268],[106,0.217],[117,0.172],[126,0.141],[138,0.108],[150,0.082],[157,0.07],[169,0.053],[178,0.042],[188,0.033],[200,0.025],[208,0],[220,0],[229,0],[241,0],[250,0],[262,0],[270,0],[281,0],[290,0],[302,0],[310,0],[322,0],[332,0],[343,0],[351,0],[363,0],[372,0],[382,0],[394,0],[403,0],[414,0],[423,0],[434,0],[443,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.291
+
+      815 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      816 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 817 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      818 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      819 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      820 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:817:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:873:13
+
+    Error Context: test-results/stall5.probe.ts-reverse-·--d0e11-pens-turns-from-where-it-is-webkit-phone-repeat5/error-context.md
+
+  22) [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.303,"turnedAt":0,"share":0.303,"end":1,"hole":12,"frames":[[0,0.303],[7,0],[17,0.035],[28,0.122],[38,0.222],[48,0.327],[58,0.427],[67,0.511],[79,0.609],[89,0.679],[99,0.738],[109,0.787],[118,0.825],[130,0.865],[138,0.887],[150,0.914],[160,0.932],[170,0.946],[181,0.958],[191,0.967],[203,0.976],[212,1],[221,1],[232,1],[242,1],[252,1],[262,1],[271,1],[283,1],[293,1],[303,1],[313,1],[322,1],[334,1],[344,1],[354,1],[364,1],[373,1],[385,1],[394,1],[405,1],[415,1],[425,1],[434,1],[446,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.303
+
+      815 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      816 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 817 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      818 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      819 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      820 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:817:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:888:13
+
+    Error Context: test-results/stall5.probe.ts-reverse-·--4d10b-oses-turns-from-where-it-is-webkit-phone-repeat5/error-context.md
+
+  23) [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Accordion closed while it opens turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.715,"turnedAt":1,"share":0.285,"end":0,"hole":13,"frames":[[0,0.715],[6,1],[17,0.959],[25,0.896],[35,0.799],[47,0.673],[57,0.573],[67,0.48],[78,0.391],[88,0.321],[98,0.262],[108,0.212],[118,0.171],[127,0.141],[139,0.108],[149,0.086],[159,0.068],[169,0.054],[180,0.041],[190,0.033],[200,0.026],[210,0],[220,0],[231,0],[241,0],[251,0],[261,0],[271,0],[282,0],[292,0],[302,0],[312,0],[322,0],[333,0],[343,0],[352,0],[363,0],[373,0],[386,0],[394,0],[404,0],[414,0],[423,0],[433,0],[446,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.285
+
+      815 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      816 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 817 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      818 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      819 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      820 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:817:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:873:13
+
+    Error Context: test-results/stall5.probe.ts-reverse-·--0fa5b-pens-turns-from-where-it-is-webkit-phone-repeat5/error-context.md
+
+  24) [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Accordion reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.321,"turnedAt":0,"share":0.321,"end":1,"hole":21,"frames":[[0,0.321],[9,0],[21,0.047],[30,0.122],[40,0.222],[51,0.337],[60,0.427],[70,0.52],[82,0.616],[91,0.679],[101,0.738],[110,0.783],[120,0.825],[133,0.868],[143,0.895],[153,0.916],[163,0.933],[173,0.947],[184,0.959],[194,0.968],[202,0.974],[214,1],[224,1],[235,1],[245,1],[255,1],[265,1],[276,1],[286,1],[296,1],[306,1],[314,1],[326,1],[337,1],[347,1],[357,1],[367,1],[378,1],[388,1],[398,1],[408,1],[418,1],[429,1],[439,1],[448,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.321
+
+      815 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      816 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 817 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      818 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      819 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      820 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:817:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:888:13
+
+    Error Context: test-results/stall5.probe.ts-reverse-·--403af-oses-turns-from-where-it-is-webkit-phone-repeat5/error-context.md
+
+  24 failed
+    [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Collapsible closed while it opens turns from where it is 
+    [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+    [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Accordion closed while it opens turns from where it is 
+    [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Accordion reopened while it closes turns from where it is 
+    [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Collapsible closed while it opens turns from where it is 
+    [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+    [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Accordion closed while it opens turns from where it is 
+    [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Accordion reopened while it closes turns from where it is 
+    [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Collapsible closed while it opens turns from where it is 
+    [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+    [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Accordion closed while it opens turns from where it is 
+    [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Accordion reopened while it closes turns from where it is 
+    [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Collapsible closed while it opens turns from where it is 
+    [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+    [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Accordion closed while it opens turns from where it is 
+    [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Accordion reopened while it closes turns from where it is 
+    [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Collapsible closed while it opens turns from where it is 
+    [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+    [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Accordion closed while it opens turns from where it is 
+    [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Accordion reopened while it closes turns from where it is 
+    [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Collapsible closed while it opens turns from where it is 
+    [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+    [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Accordion closed while it opens turns from where it is 
+    [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Accordion reopened while it closes turns from where it is 

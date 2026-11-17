@@ -1,0 +1,957 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-1-1.config.ts",
+      "--project=chromium-phone",
+      "--workers=1",
+      "-g",
+      "expand · an ExpandableContainer closed while it enters",
+      "--repeat-each=20"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 20,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-6/logs/d2-tip-expand-chromium-phone.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3863,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:48:59.946Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC40ODYsImJldHdlZW4iOjExLCJzaGFyZSI6MC4xMjEsImVuZCI6MCwiZnJhbWVzIjpbWy0xLDAuNDg2XSxbNSwwLjQ0N10sWzEzLDAuMzk1XSxbMjAsMC4zNDVdLFsyNywwLjI4OF0sWzM2LDAuMjI2XSxbNDEsMC4xOTFdLFs0OSwwLjE0MV0sWzU3LDAuMTAyXSxbNjQsMC4wNjRdLFs3NCwwLjAyMl0sWzc5LDAuMDAzXSxbODYsMF0sWzk1LDBdLFsxMDIsMF0sWzExMCwwXSxbMTE5LDBdLFsxMjcsMF0sWzEzNiwwXSxbMTQxLDBdLFsxNDksMF0sWzE1NywwXSxbMTY1LDBdLFsxNzMsMF0sWzE3OSwwXSxbMTg2LDBdLFsxOTQsMF0sWzIwMiwwXSxbMjA4LDBdLFsyMTYsMF0sWzIyMiwwXSxbMjMyLDBdLFsyMzksMF0sWzI0NiwwXSxbMjUzLDBdLFsyNjEsMF0sWzI2OSwwXSxbMjc5LDBdLFsyODgsMF0sWzI5OCwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-c6d20a4d59c9d4a96fcd",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3765,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:49:04.179Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC41MTEsImJldHdlZW4iOjExLCJzaGFyZSI6MC4xMjQsImVuZCI6MCwiZnJhbWVzIjpbWzAsMC41MTFdLFs3LDAuNDY4XSxbMTQsMC40MTldLFsyMCwwLjM3XSxbMjksMC4zMDNdLFszNywwLjI0NV0sWzQ1LDAuMTg3XSxbNTEsMC4xNTNdLFs1OSwwLjExXSxbNjUsMC4wNzhdLFs3NSwwLjAzMl0sWzgwLDAuMDEyXSxbODgsMF0sWzk2LDBdLFsxMDQsMF0sWzExMiwwXSxbMTE3LDBdLFsxMjYsMF0sWzEzMywwXSxbMTQwLDBdLFsxNDcsMF0sWzE1NCwwXSxbMTYyLDBdLFsxNzAsMF0sWzE3OSwwXSxbMTg0LDBdLFsxOTIsMF0sWzE5OSwwXSxbMjA4LDBdLFsyMTQsMF0sWzIyMSwwXSxbMjI5LDBdLFsyMzcsMF0sWzI0NSwwXSxbMjUxLDBdLFsyNTksMF0sWzI2NywwXSxbMjc1LDBdLFsyODAsMF0sWzI4OCwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-08eedd404a3881d6ed69",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3794,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:49:08.322Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC40NjQsImJldHdlZW4iOjEwLCJzaGFyZSI6MC4xMTksImVuZCI6MCwiZnJhbWVzIjpbWy01LDAuNDY0XSxbMiwwLjQyXSxbMTEsMC4zNjFdLFsxNiwwLjMyMl0sWzI1LDAuMjYxXSxbMzEsMC4yMTRdLFszOCwwLjE2OF0sWzQ3LDAuMTE5XSxbNTYsMC4wNzRdLFs2MSwwLjA0OV0sWzY5LDAuMDE2XSxbNzYsMF0sWzg0LDBdLFs5NSwwXSxbMTA1LDBdLFsxMTQsMF0sWzEyMiwwXSxbMTI4LDBdLFsxMzYsMF0sWzE0MywwXSxbMTUyLDBdLFsxNTcsMF0sWzE2NiwwXSxbMTcyLDBdLFsxODIsMF0sWzE5MCwwXSxbMTk4LDBdLFsyMDYsMF0sWzIxNSwwXSxbMjIyLDBdLFsyMzEsMF0sWzIzNiwwXSxbMjQzLDBdLFsyNTMsMF0sWzI2MywwXSxbMjcyLDBdLFsyODEsMF0sWzI5MCwwXSxbMjk1LDBdLFszMDMsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-772eebf04f878ed9a720",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3791,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:49:12.499Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC40ODgsImJldHdlZW4iOjExLCJzaGFyZSI6MC4xMjEsImVuZCI6MCwiZnJhbWVzIjpbWy0xLDAuNDg4XSxbNiwwLjQ0M10sWzEyLDAuMzk4XSxbMjEsMC4zMzddLFsyNywwLjI4OV0sWzM2LDAuMjI5XSxbNDUsMC4xNjldLFs1MSwwLjEzNV0sWzU4LDAuMDk1XSxbNjYsMC4wNTZdLFs3NCwwLjAyMV0sWzgwLDAuMDAxXSxbODcsMF0sWzk1LDBdLFsxMDMsMF0sWzExMiwwXSxbMTE3LDBdLFsxMjUsMF0sWzEzMywwXSxbMTQxLDBdLFsxNDksMF0sWzE1NywwXSxbMTY1LDBdLFsxNzQsMF0sWzE4MCwwXSxbMTg3LDBdLFsxOTUsMF0sWzIwMywwXSxbMjEyLDBdLFsyMTcsMF0sWzIyNCwwXSxbMjMzLDBdLFsyNDAsMF0sWzI0NywwXSxbMjU0LDBdLFsyNjIsMF0sWzI3MCwwXSxbMjc4LDBdLFsyODMsMF0sWzI5MiwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-3bf60ff020768f72ff9e",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3782,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:49:16.628Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC40NTcsImJldHdlZW4iOjEwLCJzaGFyZSI6MC4xMjMsImVuZCI6MCwiZnJhbWVzIjpbWy03LDAuNDU3XSxbMCwwLjUwM10sWzksMC40NDZdLFsxNiwwLjM5Nl0sWzI1LDAuMzI4XSxbMzYsMC4yNDldLFs0NCwwLjE5M10sWzU0LDAuMTMxXSxbNjMsMC4wODhdLFs3MCwwLjA1Ml0sWzgxLDAuMDA5XSxbODksMF0sWzk0LDBdLFsxMDMsMF0sWzExMCwwXSxbMTE1LDBdLFsxMjQsMF0sWzEzMSwwXSxbMTM4LDBdLFsxNDcsMF0sWzE1MywwXSxbMTYwLDBdLFsxNjksMF0sWzE3NiwwXSxbMTg0LDBdLFsxOTMsMF0sWzIwMSwwXSxbMjA5LDBdLFsyMTcsMF0sWzIyOCwwXSxbMjM4LDBdLFsyNDUsMF0sWzI1NSwwXSxbMjYxLDBdLFsyNjksMF0sWzI3NiwwXSxbMjgyLDBdLFsyOTEsMF0sWzI5OCwwXSxbMzA1LDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-346faade6092c33ef79b",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3817,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:49:20.756Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC40NjMsImJldHdlZW4iOjEwLCJzaGFyZSI6MC4xMTksImVuZCI6MCwiZnJhbWVzIjpbWy0xLDAuNDYzXSxbNywwLjQxMV0sWzE1LDAuMzU1XSxbMjMsMC4yOThdLFsyOSwwLjI1N10sWzM2LDAuMjFdLFs0NCwwLjE1NV0sWzUyLDAuMTExXSxbNTgsMC4wODNdLFs2NSwwLjA0N10sWzczLDAuMDE0XSxbODAsMF0sWzkwLDBdLFs5NSwwXSxbMTAzLDBdLFsxMTAsMF0sWzExOCwwXSxbMTI0LDBdLFsxMzIsMF0sWzEzOSwwXSxbMTQ2LDBdLFsxNTYsMF0sWzE2MSwwXSxbMTY5LDBdLFsxNzcsMF0sWzE4NSwwXSxbMTkwLDBdLFsxOTgsMF0sWzIwNiwwXSxbMjE0LDBdLFsyMjEsMF0sWzIzMSwwXSxbMjM4LDBdLFsyNDgsMF0sWzI1NSwwXSxbMjYyLDBdLFsyNjksMF0sWzI3NywwXSxbMjg1LDBdLFsyOTEsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-874e2448781188f525c0",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3803,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:49:24.961Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC40ODIsImJldHdlZW4iOjExLCJzaGFyZSI6MC4xMjEsImVuZCI6MCwiZnJhbWVzIjpbWy0xLDAuNDgyXSxbNiwwLjQzOF0sWzE1LDAuMzczXSxbMjIsMC4zMl0sWzMwLDAuMjY0XSxbMzUsMC4yMjhdLFs0MywwLjE3NF0sWzUxLDAuMTI3XSxbNTksMC4wODhdLFs2NCwwLjA2Ml0sWzczLDAuMDIyXSxbODAsMF0sWzg5LDBdLFs5NiwwXSxbMTAxLDBdLFsxMTAsMF0sWzExNiwwXSxbMTI1LDBdLFsxMzAsMF0sWzEzOSwwXSxbMTQ1LDBdLFsxNTQsMF0sWzE2MiwwXSxbMTY4LDBdLFsxNzcsMF0sWzE4MywwXSxbMTkxLDBdLFsyMDIsMF0sWzIxMSwwXSxbMjIwLDBdLFsyMjgsMF0sWzIzNCwwXSxbMjQzLDBdLFsyNTAsMF0sWzI1OCwwXSxbMjY2LDBdLFsyNzcsMF0sWzI4NiwwXSxbMjk0LDBdLFszMDIsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-8de7fb5e31ed85e45069",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3825,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:49:29.170Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC40NDYsImJldHdlZW4iOjksInNoYXJlIjowLjExOCwiZW5kIjowLCJmcmFtZXMiOltbLTYsMC40NDZdLFs0LDAuMzg0XSxbMTEsMC4zMzldLFsxOCwwLjI4OF0sWzI2LDAuMjMxXSxbMzQsMC4xNzZdLFs0NiwwLjExM10sWzU1LDAuMDY1XSxbNjUsMC4wMjJdLFs3MiwwXSxbODAsMF0sWzg4LDBdLFs5NiwwXSxbMTAzLDBdLFsxMTAsMF0sWzExNywwXSxbMTI1LDBdLFsxMzMsMF0sWzE0MSwwXSxbMTQ3LDBdLFsxNTUsMF0sWzE2MywwXSxbMTcxLDBdLFsxNzYsMF0sWzE4NCwwXSxbMTkyLDBdLFsxOTksMF0sWzIwOCwwXSxbMjE0LDBdLFsyMjEsMF0sWzIyOSwwXSxbMjM2LDBdLFsyNDIsMF0sWzI1MSwwXSxbMjU3LDBdLFsyNjYsMF0sWzI3NCwwXSxbMjgwLDBdLFsyODgsMF0sWzI5NSwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-bbba7c4e225ec525dab7",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3796,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:49:33.350Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC40NzEsImJldHdlZW4iOjExLCJzaGFyZSI6MC4xMjUsImVuZCI6MCwiZnJhbWVzIjpbWy03LDAuNDcxXSxbMCwwLjUyXSxbOCwwLjQ2OV0sWzE2LDAuNDExXSxbMjIsMC4zNjddLFszMSwwLjMwMV0sWzM4LDAuMjUxXSxbNDYsMC4xOTddLFs1NCwwLjE0N10sWzY0LDAuMDkxXSxbNzQsMC4wNDRdLFs4MywwLjAwOF0sWzkxLDBdLFs5OSwwXSxbMTA2LDBdLFsxMTMsMF0sWzExOCwwXSxbMTI2LDBdLFsxMzQsMF0sWzE0MiwwXSxbMTUwLDBdLFsxNTgsMF0sWzE2NywwXSxbMTc1LDBdLFsxODMsMF0sWzE5MywwXSxbMjAzLDBdLFsyMTIsMF0sWzIyMCwwXSxbMjI2LDBdLFsyMzMsMF0sWzI0MiwwXSxbMjQ5LDBdLFsyNTksMF0sWzI2NCwwXSxbMjcyLDBdLFsyNzksMF0sWzI4NiwwXSxbMjk0LDBdLFszMDAsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-913308bb6bb155a2b7f2",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3814,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:49:37.497Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC40ODMsImJldHdlZW4iOjEwLCJzaGFyZSI6MC4xMjEsImVuZCI6MCwiZnJhbWVzIjpbWy0zLDAuNDgzXSxbMywwLjQ0NV0sWzEyLDAuMzg1XSxbMjAsMC4zMjRdLFsyNywwLjI3NV0sWzM1LDAuMjE4XSxbNDMsMC4xNjZdLFs1MCwwLjEyN10sWzU4LDAuMDg3XSxbNjYsMC4wNDhdLFs3MywwLjAxNl0sWzgyLDBdLFs5MCwwXSxbOTYsMF0sWzEwMywwXSxbMTExLDBdLFsxMTksMF0sWzEyOCwwXSxbMTMzLDBdLFsxNDEsMF0sWzE0OSwwXSxbMTU3LDBdLFsxNjIsMF0sWzE2OSwwXSxbMTc3LDBdLFsxODYsMF0sWzE5NCwwXSxbMjAwLDBdLFsyMDgsMF0sWzIxNCwwXSxbMjI0LDBdLFsyMjksMF0sWzIzNywwXSxbMjQ1LDBdLFsyNTMsMF0sWzI2MSwwXSxbMjY3LDBdLFsyNzQsMF0sWzI4MiwwXSxbMjkwLDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-0492fcdbeafd23788bce",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3787,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:49:41.654Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC41MDYsImJldHdlZW4iOjExLCJzaGFyZSI6MC4xMjIsImVuZCI6MCwiZnJhbWVzIjpbWzAsMC41MDZdLFs3LDAuNDU5XSxbMTcsMC4zOTNdLFsyNSwwLjMzMl0sWzMzLDAuMjddLFs0MSwwLjIxMV0sWzQ4LDAuMTY3XSxbNTgsMC4xMDldLFs2MSwwLjA5NV0sWzcwLDAuMDUzXSxbNzYsMC4wMjVdLFs4NiwwXSxbOTEsMF0sWzk4LDBdLFsxMDYsMF0sWzExNSwwXSxbMTIzLDBdLFsxMjksMF0sWzEzNiwwXSxbMTQ0LDBdLFsxNTIsMF0sWzE1NywwXSxbMTY1LDBdLFsxNzEsMF0sWzE4MSwwXSxbMTg5LDBdLFsxOTQsMF0sWzIwMiwwXSxbMjEwLDBdLFsyMTgsMF0sWzIyMywwXSxbMjMxLDBdLFsyMzksMF0sWzI0NywwXSxbMjU1LDBdLFsyNjEsMF0sWzI2OCwwXSxbMjc2LDBdLFsyODQsMF0sWzI5MCwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-957d890f444de8443db9",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3784,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:49:45.798Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC40NTcsImJldHdlZW4iOjksInNoYXJlIjowLjExOCwiZW5kIjowLCJmcmFtZXMiOltbLTIsMC40NTddLFs1LDAuNDE3XSxbMTUsMC4zNDldLFsyMywwLjI5Ml0sWzMxLDAuMjM2XSxbMzYsMC4xOThdLFs0NCwwLjE1XSxbNTQsMC4wOThdLFs2NCwwLjA0OF0sWzczLDAuMDExXSxbODEsMF0sWzkwLDBdLFs5NSwwXSxbMTA0LDBdLFsxMTEsMF0sWzExOSwwXSxbMTI0LDBdLFsxMzIsMF0sWzE0MCwwXSxbMTQ4LDBdLFsxNTYsMF0sWzE2NiwwXSxbMTc2LDBdLFsxODQsMF0sWzE5MCwwXSxbMTk4LDBdLFsyMDYsMF0sWzIxNCwwXSxbMjIyLDBdLFsyMzEsMF0sWzIzOSwwXSxbMjQ4LDBdLFsyNTYsMF0sWzI2MiwwXSxbMjY5LDBdLFsyNzcsMF0sWzI4NSwwXSxbMjkxLDBdLFsyOTcsMF0sWzMwNiwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-b29ffaf513dca0839f4d",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3785,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:49:49.910Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC40MzEsImJldHdlZW4iOjEwLCJzaGFyZSI6MC4xMTUsImVuZCI6MCwiZnJhbWVzIjpbWy03LDAuNDMxXSxbMSwwLjM4M10sWzExLDAuMzA5XSxbMTcsMC4yNjldLFsyNiwwLjIwN10sWzMzLDAuMTYzXSxbMzksMC4xMjddLFs0NiwwLjA5Ml0sWzU1LDAuMDQ2XSxbNjEsMC4wMjFdLFs3MCwwXSxbNzUsMF0sWzgzLDBdLFs5MSwwXSxbOTksMF0sWzEwNiwwXSxbMTE1LDBdLFsxMjEsMF0sWzEyOSwwXSxbMTM2LDBdLFsxNDIsMF0sWzE1MCwwXSxbMTU4LDBdLFsxNjUsMF0sWzE3MywwXSxbMTg0LDBdLFsxOTMsMF0sWzIwMSwwXSxbMjExLDBdLFsyMTYsMF0sWzIyNSwwXSxbMjMxLDBdLFsyNDAsMF0sWzI0NSwwXSxbMjU0LDBdLFsyNjIsMF0sWzI2OSwwXSxbMjc1LDBdLFsyODMsMF0sWzI5MSwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-eb6de1310ee502f6baf6",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 13,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3813,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:49:54.125Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC40ODcsImJldHdlZW4iOjEwLCJzaGFyZSI6MC4xMjEsImVuZCI6MCwiZnJhbWVzIjpbWy01LDAuNDg3XSxbMywwLjQzOV0sWzEyLDAuMzczXSxbMjAsMC4zMTVdLFsyNywwLjI2OV0sWzM0LDAuMjE3XSxbNDAsMC4xNzRdLFs0NywwLjEzM10sWzU1LDAuMDk1XSxbNjIsMC4wNThdLFs3MSwwLjAyXSxbNzksMF0sWzg4LDBdLFs5NCwwXSxbMTA1LDBdLFsxMTMsMF0sWzExOCwwXSxbMTI2LDBdLFsxMzQsMF0sWzE0MiwwXSxbMTQ4LDBdLFsxNTUsMF0sWzE2MiwwXSxbMTcxLDBdLFsxNzksMF0sWzE4NSwwXSxbMTkzLDBdLFsyMDAsMF0sWzIwOCwwXSxbMjE0LDBdLFsyMjIsMF0sWzIzMCwwXSxbMjM3LDBdLFsyNDYsMF0sWzI1MiwwXSxbMjU5LDBdLFsyNjYsMF0sWzI3NSwwXSxbMjgxLDBdLFsyODksMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-86ffcb6b93d81f47d16b",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 14,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3807,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:49:58.317Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC40NTMsImJldHdlZW4iOjEyLCJzaGFyZSI6MC4xMjQsImVuZCI6MCwiZnJhbWVzIjpbWy04LDAuNDUzXSxbMSwwLjUwN10sWzksMC40NTldLFsxNCwwLjQxOV0sWzIzLDAuMzU1XSxbMjksMC4zMDldLFszNywwLjI1XSxbNDYsMC4xODldLFs1NCwwLjEzOF0sWzYyLDAuMDk5XSxbNjgsMC4wNjddLFs3NSwwLjAzNF0sWzg0LDAuMDAyXSxbODksMF0sWzk3LDBdLFsxMDQsMF0sWzExMiwwXSxbMTIwLDBdLFsxMjYsMF0sWzEzNCwwXSxbMTQyLDBdLFsxNTAsMF0sWzE1NSwwXSxbMTYzLDBdLFsxNzEsMF0sWzE3OSwwXSxbMTg3LDBdLFsxOTUsMF0sWzIwMiwwXSxbMjEyLDBdLFsyMjAsMF0sWzIyNiwwXSxbMjM0LDBdLFsyNDIsMF0sWzI0OSwwXSxbMjYwLDBdLFsyNjksMF0sWzI3OCwwXSxbMjg3LDBdLFsyOTMsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-48a47314638c16a245b3",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 15,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3768,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:50:02.440Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC40NzYsImJldHdlZW4iOjEwLCJzaGFyZSI6MC4xMjEsImVuZCI6MCwiZnJhbWVzIjpbWy0xLDAuNDc2XSxbOSwwLjQxNV0sWzE0LDAuMzc2XSxbMjQsMC4zMDddLFszMSwwLjI1Ml0sWzM3LDAuMjE0XSxbNDQsMC4xNjVdLFs1MSwwLjEyNl0sWzU5LDAuMDg0XSxbNjcsMC4wNDZdLFs3NiwwLjAxMV0sWzgzLDBdLFs5MCwwXSxbOTgsMF0sWzEwMywwXSxbMTExLDBdLFsxMTksMF0sWzEyNiwwXSxbMTMxLDBdLFsxNDEsMF0sWzE0NywwXSxbMTU1LDBdLFsxNjMsMF0sWzE3MiwwXSxbMTc4LDBdLFsxODYsMF0sWzE5MiwwXSxbMjAyLDBdLFsyMTEsMF0sWzIyMSwwXSxbMjMwLDBdLFsyMzgsMF0sWzI0NCwwXSxbMjUzLDBdLFsyNjAsMF0sWzI2NSwwXSxbMjc1LDBdLFsyODEsMF0sWzI4OSwwXSxbMjk3LDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-f4b39babcbdb80c8e92a",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3772,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:50:06.559Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC40OTcsImJldHdlZW4iOjExLCJzaGFyZSI6MC4xMjMsImVuZCI6MCwiZnJhbWVzIjpbWy00LDAuNDk3XSxbMiwwLjQ2XSxbMTAsMC40MDZdLFsxOCwwLjM0Nl0sWzIzLDAuMzA0XSxbMzIsMC4yNDJdLFszOSwwLjE5Nl0sWzQ3LDAuMTQ1XSxbNTUsMC4xMDJdLFs2MCwwLjA3NV0sWzY4LDAuMDM5XSxbNzYsMC4wMDhdLFs4NCwwXSxbOTIsMF0sWzk4LDBdLFsxMDUsMF0sWzExMywwXSxbMTIxLDBdLFsxMjYsMF0sWzEzMywwXSxbMTQyLDBdLFsxNTAsMF0sWzE1OSwwXSxbMTY2LDBdLFsxNzUsMF0sWzE4MywwXSxbMTkyLDBdLFsxOTgsMF0sWzIwNSwwXSxbMjEzLDBdLFsyMjEsMF0sWzIyNiwwXSxbMjM0LDBdLFsyNDIsMF0sWzI1MSwwXSxbMjU4LDBdLFsyNjMsMF0sWzI3MSwwXSxbMjc5LDBdLFsyODcsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-77c5a320b5baef2fc076",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 17,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3766,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:50:10.693Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC40NDksImJldHdlZW4iOjksInNoYXJlIjowLjExOCwiZW5kIjowLCJmcmFtZXMiOltbLTIsMC40NDldLFs1LDAuNDA3XSxbMTMsMC4zNTNdLFsyMywwLjI4M10sWzMxLDAuMjI3XSxbMzcsMC4xODhdLFs0NSwwLjEzNl0sWzUyLDAuMDk5XSxbNjMsMC4wNDZdLFs3MiwwLjAwOV0sWzgxLDBdLFs4OCwwXSxbOTcsMF0sWzEwNCwwXSxbMTExLDBdLFsxMTgsMF0sWzEyNSwwXSxbMTMzLDBdLFsxNDAsMF0sWzE0NywwXSxbMTU3LDBdLFsxNjcsMF0sWzE3NSwwXSxbMTg0LDBdLFsxOTMsMF0sWzE5OSwwXSxbMjA3LDBdLFsyMTUsMF0sWzIyMywwXSxbMjI4LDBdLFsyMzcsMF0sWzI0NCwwXSxbMjUyLDBdLFsyNjEsMF0sWzI2NSwwXSxbMjc1LDBdLFsyODIsMF0sWzI5MCwwXSxbMjk1LDBdLFszMDQsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-ea9aeba6ed2aca4b96b9",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 18,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3769,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:50:14.782Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC40NzQsImJldHdlZW4iOjEyLCJzaGFyZSI6MC4xMjUsImVuZCI6MCwiZnJhbWVzIjpbWy01LDAuNDc0XSxbMCwwLjUwOF0sWzgsMC40NjFdLFsxNiwwLjQwNF0sWzI0LDAuMzQyXSxbMzMsMC4yNzldLFszOCwwLjI0XSxbNDYsMC4xODhdLFs1NCwwLjEzOV0sWzYyLDAuMDk1XSxbNjcsMC4wNjhdLFs3NSwwLjAzNF0sWzgzLDAuMDAzXSxbOTAsMF0sWzk4LDBdLFsxMDcsMF0sWzExNSwwXSxbMTI0LDBdLFsxMzMsMF0sWzEzOCwwXSxbMTQ2LDBdLFsxNTQsMF0sWzE2MiwwXSxbMTY4LDBdLFsxNzUsMF0sWzE4MywwXSxbMTkxLDBdLFsxOTksMF0sWzIwNSwwXSxbMjEzLDBdLFsyMjEsMF0sWzIyOSwwXSxbMjM0LDBdLFsyNDIsMF0sWzI1MCwwXSxbMjU4LDBdLFsyNjYsMF0sWzI3MiwwXSxbMjc5LDBdLFsyODcsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-bff7d9d9567e64affe69",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 19,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3768,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:50:18.876Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC40NjEsImJldHdlZW4iOjEwLCJzaGFyZSI6MC4xMTgsImVuZCI6MCwiZnJhbWVzIjpbWy01LDAuNDYxXSxbMiwwLjQyMl0sWzgsMC4zNzhdLFsxOCwwLjMwNF0sWzIzLDAuMjddLFszMiwwLjIwN10sWzM5LDAuMTY1XSxbNDYsMC4xMjJdLFs1NSwwLjA3OF0sWzYxLDAuMDUxXSxbNjksMC4wMTRdLFs3NiwwXSxbODIsMF0sWzkwLDBdLFs5NiwwXSxbMTA0LDBdLFsxMTIsMF0sWzEyMSwwXSxbMTI3LDBdLFsxMzQsMF0sWzE0MywwXSxbMTQ3LDBdLFsxNTcsMF0sWzE2MywwXSxbMTcxLDBdLFsxNzgsMF0sWzE4OCwwXSxbMTkzLDBdLFsyMDIsMF0sWzIwOSwwXSxbMjE1LDBdLFsyMjIsMF0sWzIyOSwwXSxbMjM4LDBdLFsyNDYsMF0sWzI1MiwwXSxbMjYwLDBdLFsyNjcsMF0sWzI3NiwwXSxbMjgxLDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-9df21d0096bc7325ec5b",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-17T11:48:58.261Z",
+    "duration": 84532.574,
+    "expected": 20,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

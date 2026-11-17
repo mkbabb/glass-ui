@@ -1,0 +1,76 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 24 tests using 1 worker
+
+  ✓   1 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Collapsible closed while it opens turns from where it is (4.8s)
+  ✓   2 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.2s)
+  ✓   3 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Accordion closed while it opens turns from where it is (4.3s)
+  ✓   4 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Accordion reopened while it closes turns from where it is (5.2s)
+  ✓   5 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Collapsible closed while it opens turns from where it is (4.4s)
+  ✘   6 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Collapsible reopened while it closes turns from where it is (10.5s)
+  ✓   7 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Accordion closed while it opens turns from where it is (4.5s)
+  ✓   8 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Accordion reopened while it closes turns from where it is (5.2s)
+  ✓   9 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Collapsible closed while it opens turns from where it is (4.4s)
+  ✓  10 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.2s)
+  ✓  11 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Accordion closed while it opens turns from where it is (4.2s)
+  ✓  12 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Accordion reopened while it closes turns from where it is (5.1s)
+  ✓  13 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Collapsible closed while it opens turns from where it is (4.4s)
+  ✓  14 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.2s)
+  ✓  15 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Accordion closed while it opens turns from where it is (4.3s)
+  ✓  16 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Accordion reopened while it closes turns from where it is (5.2s)
+  ✓  17 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Collapsible closed while it opens turns from where it is (4.4s)
+  ✓  18 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.2s)
+  ✓  19 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Accordion closed while it opens turns from where it is (4.3s)
+  ✓  20 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Accordion reopened while it closes turns from where it is (5.2s)
+  ✓  21 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Collapsible closed while it opens turns from where it is (4.5s)
+  ✘  22 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Collapsible reopened while it closes turns from where it is (10.5s)
+  ✓  23 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:865:9 › reverse · a Accordion closed while it opens turns from where it is (4.4s)
+  ✓  24 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Accordion reopened while it closes turns from where it is (5.2s)
+
+
+  1) [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+
+    Error: the film is read: no hole of more than two frames before it comes to rest, in either of two films {"atTurn":0.08,"turnedAt":0.08,"share":0.162,"end":1,"hole":67,"frames":[[0,0.08],[42,0.08],[58,0.236],[90,0.548],[154,0.88],[221,0.975],[284,1],[348,1],[411,1],[416,1],[425,1],[436,1],[446,1],[454,1],[466,1],[477,1],[487,1],[497,1],[507,1],[517,1],[528,1],[538,1],[548,1],[557,1],[566,1],[578,1],[587,1],[598,1],[610,1],[619,1],[628,1],[640,1],[650,1],[660,1],[670,1],[679,1],[691,1],[701,1],[710,1],[721,1],[732,1],[740,1],[752,1],[761,1],[773,1],[783,1],[793,1],[803,1],[811,1],[823,1],[835,1],[844,1],[852,1],[862,1],[873,1],[883,1],[895,1],[905,1],[915,1],[927,1],[936,1],[946,1],[956,1],[966,1],[977,1],[1055,1],[1058,1],[1068,1],[1079,1],[1087,1],[1099,1],[1109,1],[1119,1],[1131,1],[1140,1],[1148,1],[1158,1],[1169,1],[1181,1],[1190,1],[1202,1],[1209,1],[1220,1],[1232,1],[1242,1],[1254,1],[1262,1],[1273,1],[1283,1],[1292,1],[1303,1],[1313,1],[1323,1],[1335,1],[1344,1],[1354,1],[1364,1],[1374,1],[1385,1],[1395,1],[1405,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 33.333333333333336
+    Received:    67
+
+      803 |     }
+      804 |     await info.attach("turn", { body: JSON.stringify(read), contentType: "application/json" });
+    > 805 |     expect(read.hole, `the film is read: no hole of more than two frames before it comes to rest, in either of two films ${JSON.stringify(read)}`).toBeLessThanOrEqual(HOLE);
+          |                                                                                                                                                    ^
+      806 |     return read;
+      807 | }
+      808 |
+        at filmAndReadTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:805:148)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:880:26
+
+    Error Context: test-results/stall5.probe.ts-reverse-·--4d10b-oses-turns-from-where-it-is-webkit-phone-repeat1/error-context.md
+
+  2) [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+
+    Error: the film is read: no hole of more than two frames before it comes to rest, in either of two films {"atTurn":0.078,"turnedAt":0.078,"share":0.164,"end":1,"hole":69,"frames":[[0,0.078],[42,0.078],[55,0.202],[89,0.537],[135,0.817],[199,0.958],[261,1],[320,1],[380,1],[383,1],[394,1],[404,1],[413,1],[425,1],[434,1],[445,1],[455,1],[465,1],[475,1],[484,1],[496,1],[506,1],[516,1],[526,1],[537,1],[547,1],[558,1],[567,1],[577,1],[588,1],[598,1],[608,1],[617,1],[629,1],[639,1],[647,1],[659,1],[669,1],[679,1],[691,1],[700,1],[710,1],[719,1],[731,1],[741,1],[751,1],[761,1],[771,1],[782,1],[790,1],[803,1],[812,1],[822,1],[831,1],[844,1],[852,1],[864,1],[873,1],[885,1],[894,1],[904,1],[914,1],[924,1],[935,1],[945,1],[955,1],[965,1],[977,1],[986,1],[1061,1],[1067,1],[1077,1],[1088,1],[1097,1],[1108,1],[1118,1],[1128,1],[1139,1],[1149,1],[1159,1],[1169,1],[1181,1],[1191,1],[1200,1],[1209,1],[1221,1],[1231,1],[1241,1],[1251,1],[1261,1],[1271,1],[1281,1],[1292,1],[1302,1],[1312,1],[1321,1],[1333,1],[1343,1],[1353,1],[1363,1],[1373,1],[1384,1],[1394,1],[1404,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 33.333333333333336
+    Received:    69
+
+      803 |     }
+      804 |     await info.attach("turn", { body: JSON.stringify(read), contentType: "application/json" });
+    > 805 |     expect(read.hole, `the film is read: no hole of more than two frames before it comes to rest, in either of two films ${JSON.stringify(read)}`).toBeLessThanOrEqual(HOLE);
+          |                                                                                                                                                    ^
+      806 |     return read;
+      807 | }
+      808 |
+        at filmAndReadTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:805:148)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall5.probe.ts:880:26
+
+    Error Context: test-results/stall5.probe.ts-reverse-·--4d10b-oses-turns-from-where-it-is-webkit-phone-repeat5/error-context.md
+
+  2 failed
+    [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+    [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall5.probe.ts:877:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+  22 passed (2.2m)

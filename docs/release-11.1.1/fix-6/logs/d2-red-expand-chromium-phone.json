@@ -1,0 +1,1537 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-1-1.config.ts",
+      "--project=chromium-phone",
+      "--workers=1",
+      "-g",
+      "expand · an ExpandableContainer closed while it enters",
+      "--repeat-each=20"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 20,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-6/logs/d2-red-expand-chromium-phone.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5352",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/",
+      "url": "http://localhost:5352",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3840,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.34,\"between\":1,\"share\":0.34,\"end\":0,\"frames\":[[-1,0.34],[7,0],[15,0],[23,0],[30,0],[38,0],[44,0],[52,0],[60,0],[68,0],[77,0],[83,0],[90,0],[98,0],[106,0],[113,0],[121,0],[128,0],[137,0],[145,0],[151,0],[158,0],[165,0],[175,0],[180,0],[188,0],[195,0],[204,0],[212,0],[217,0],[225,0],[233,0],[241,0],[247,0],[254,0],[262,0],[270,0],[278,0],[284,0],[292,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.34\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.34,\"between\":1,\"share\":0.34,\"end\":0,\"frames\":[[-1,0.34],[7,0],[15,0],[23,0],[30,0],[38,0],[44,0],[52,0],[60,0],[68,0],[77,0],[83,0],[90,0],[98,0],[106,0],[113,0],[121,0],[128,0],[137,0],[145,0],[151,0],[158,0],[165,0],[175,0],[180,0],[188,0],[195,0],[204,0],[212,0],[217,0],[225,0],[233,0],[241,0],[247,0],[254,0],[262,0],[270,0],[278,0],[284,0],[292,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.34\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 68,
+                      "line": 1088
+                    },
+                    "snippet": "  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 68,
+                        "line": 1088
+                      },
+                      "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.34,\"between\":1,\"share\":0.34,\"end\":0,\"frames\":[[-1,0.34],[7,0],[15,0],[23,0],[30,0],[38,0],[44,0],[52,0],[60,0],[68,0],[77,0],[83,0],[90,0],[98,0],[106,0],[113,0],[121,0],[128,0],[137,0],[145,0],[151,0],[158,0],[165,0],[175,0],[180,0],[188,0],[195,0],[204,0],[212,0],[217,0],[225,0],[233,0],[241,0],[247,0],[254,0],[262,0],[270,0],[278,0],[284,0],[292,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.34\u001b[39m\n\n  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:45:29.418Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC4zNCwiYmV0d2VlbiI6MSwic2hhcmUiOjAuMzQsImVuZCI6MCwiZnJhbWVzIjpbWy0xLDAuMzRdLFs3LDBdLFsxNSwwXSxbMjMsMF0sWzMwLDBdLFszOCwwXSxbNDQsMF0sWzUyLDBdLFs2MCwwXSxbNjgsMF0sWzc3LDBdLFs4MywwXSxbOTAsMF0sWzk4LDBdLFsxMDYsMF0sWzExMywwXSxbMTIxLDBdLFsxMjgsMF0sWzEzNywwXSxbMTQ1LDBdLFsxNTEsMF0sWzE1OCwwXSxbMTY1LDBdLFsxNzUsMF0sWzE4MCwwXSxbMTg4LDBdLFsxOTUsMF0sWzIwNCwwXSxbMjEyLDBdLFsyMTcsMF0sWzIyNSwwXSxbMjMzLDBdLFsyNDEsMF0sWzI0NywwXSxbMjU0LDBdLFsyNjIsMF0sWzI3MCwwXSxbMjc4LDBdLFsyODQsMF0sWzI5MiwwXV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-expand-·-an-50e01-ters-turns-from-where-it-is-chromium-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 68,
+                    "line": 1088
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-c6d20a4d59c9d4a96fcd",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3791,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.285,\"between\":1,\"share\":0.285,\"end\":0,\"frames\":[[-5,0.285],[3,0],[9,0],[16,0],[24,0],[32,0],[41,0],[46,0],[54,0],[62,0],[70,0],[76,0],[82,0],[91,0],[99,0],[107,0],[113,0],[119,0],[129,0],[137,0],[142,0],[149,0],[158,0],[166,0],[174,0],[180,0],[187,0],[195,0],[203,0],[209,0],[217,0],[225,0],[233,0],[240,0],[247,0],[254,0],[262,0],[270,0],[276,0],[282,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.285\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.285,\"between\":1,\"share\":0.285,\"end\":0,\"frames\":[[-5,0.285],[3,0],[9,0],[16,0],[24,0],[32,0],[41,0],[46,0],[54,0],[62,0],[70,0],[76,0],[82,0],[91,0],[99,0],[107,0],[113,0],[119,0],[129,0],[137,0],[142,0],[149,0],[158,0],[166,0],[174,0],[180,0],[187,0],[195,0],[203,0],[209,0],[217,0],[225,0],[233,0],[240,0],[247,0],[254,0],[262,0],[270,0],[276,0],[282,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.285\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 68,
+                      "line": 1088
+                    },
+                    "snippet": "  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 68,
+                        "line": 1088
+                      },
+                      "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.285,\"between\":1,\"share\":0.285,\"end\":0,\"frames\":[[-5,0.285],[3,0],[9,0],[16,0],[24,0],[32,0],[41,0],[46,0],[54,0],[62,0],[70,0],[76,0],[82,0],[91,0],[99,0],[107,0],[113,0],[119,0],[129,0],[137,0],[142,0],[149,0],[158,0],[166,0],[174,0],[180,0],[187,0],[195,0],[203,0],[209,0],[217,0],[225,0],[233,0],[240,0],[247,0],[254,0],[262,0],[270,0],[276,0],[282,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.285\u001b[39m\n\n  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:45:33.592Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC4yODUsImJldHdlZW4iOjEsInNoYXJlIjowLjI4NSwiZW5kIjowLCJmcmFtZXMiOltbLTUsMC4yODVdLFszLDBdLFs5LDBdLFsxNiwwXSxbMjQsMF0sWzMyLDBdLFs0MSwwXSxbNDYsMF0sWzU0LDBdLFs2MiwwXSxbNzAsMF0sWzc2LDBdLFs4MiwwXSxbOTEsMF0sWzk5LDBdLFsxMDcsMF0sWzExMywwXSxbMTE5LDBdLFsxMjksMF0sWzEzNywwXSxbMTQyLDBdLFsxNDksMF0sWzE1OCwwXSxbMTY2LDBdLFsxNzQsMF0sWzE4MCwwXSxbMTg3LDBdLFsxOTUsMF0sWzIwMywwXSxbMjA5LDBdLFsyMTcsMF0sWzIyNSwwXSxbMjMzLDBdLFsyNDAsMF0sWzI0NywwXSxbMjU0LDBdLFsyNjIsMF0sWzI3MCwwXSxbMjc2LDBdLFsyODIsMF1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-expand-·-an-50e01-ters-turns-from-where-it-is-chromium-phone-repeat1/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 68,
+                    "line": 1088
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-08eedd404a3881d6ed69",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3777,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.31,\"between\":1,\"share\":0.31,\"end\":0,\"frames\":[[-3,0.31],[5,0],[10,0],[18,0],[26,0],[34,0],[40,0],[46,0],[54,0],[64,0],[72,0],[80,0],[88,0],[97,0],[105,0],[111,0],[119,0],[125,0],[134,0],[140,0],[148,0],[156,0],[164,0],[172,0],[177,0],[184,0],[193,0],[207,0],[216,0],[225,0],[232,0],[242,0],[244,0],[253,0],[261,0],[269,0],[272,0],[281,0],[290,0],[298,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.31\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.31,\"between\":1,\"share\":0.31,\"end\":0,\"frames\":[[-3,0.31],[5,0],[10,0],[18,0],[26,0],[34,0],[40,0],[46,0],[54,0],[64,0],[72,0],[80,0],[88,0],[97,0],[105,0],[111,0],[119,0],[125,0],[134,0],[140,0],[148,0],[156,0],[164,0],[172,0],[177,0],[184,0],[193,0],[207,0],[216,0],[225,0],[232,0],[242,0],[244,0],[253,0],[261,0],[269,0],[272,0],[281,0],[290,0],[298,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.31\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 68,
+                      "line": 1088
+                    },
+                    "snippet": "  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 68,
+                        "line": 1088
+                      },
+                      "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.31,\"between\":1,\"share\":0.31,\"end\":0,\"frames\":[[-3,0.31],[5,0],[10,0],[18,0],[26,0],[34,0],[40,0],[46,0],[54,0],[64,0],[72,0],[80,0],[88,0],[97,0],[105,0],[111,0],[119,0],[125,0],[134,0],[140,0],[148,0],[156,0],[164,0],[172,0],[177,0],[184,0],[193,0],[207,0],[216,0],[225,0],[232,0],[242,0],[244,0],[253,0],[261,0],[269,0],[272,0],[281,0],[290,0],[298,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.31\u001b[39m\n\n  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:45:37.767Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC4zMSwiYmV0d2VlbiI6MSwic2hhcmUiOjAuMzEsImVuZCI6MCwiZnJhbWVzIjpbWy0zLDAuMzFdLFs1LDBdLFsxMCwwXSxbMTgsMF0sWzI2LDBdLFszNCwwXSxbNDAsMF0sWzQ2LDBdLFs1NCwwXSxbNjQsMF0sWzcyLDBdLFs4MCwwXSxbODgsMF0sWzk3LDBdLFsxMDUsMF0sWzExMSwwXSxbMTE5LDBdLFsxMjUsMF0sWzEzNCwwXSxbMTQwLDBdLFsxNDgsMF0sWzE1NiwwXSxbMTY0LDBdLFsxNzIsMF0sWzE3NywwXSxbMTg0LDBdLFsxOTMsMF0sWzIwNywwXSxbMjE2LDBdLFsyMjUsMF0sWzIzMiwwXSxbMjQyLDBdLFsyNDQsMF0sWzI1MywwXSxbMjYxLDBdLFsyNjksMF0sWzI3MiwwXSxbMjgxLDBdLFsyOTAsMF0sWzI5OCwwXV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-expand-·-an-50e01-ters-turns-from-where-it-is-chromium-phone-repeat2/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 68,
+                    "line": 1088
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-772eebf04f878ed9a720",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3783,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.292,\"between\":2,\"share\":0.329,\"end\":0,\"frames\":[[-4,0.292],[1,0.329],[9,0],[16,0],[24,0],[33,0],[38,0],[46,0],[54,0],[62,0],[67,0],[75,0],[82,0],[91,0],[99,0],[104,0],[111,0],[120,0],[128,0],[133,0],[141,0],[149,0],[157,0],[165,0],[171,0],[178,0],[186,0],[194,0],[200,0],[208,0],[216,0],[223,0],[232,0],[238,0],[245,0],[253,0],[261,0],[266,0],[274,0],[281,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.329\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.292,\"between\":2,\"share\":0.329,\"end\":0,\"frames\":[[-4,0.292],[1,0.329],[9,0],[16,0],[24,0],[33,0],[38,0],[46,0],[54,0],[62,0],[67,0],[75,0],[82,0],[91,0],[99,0],[104,0],[111,0],[120,0],[128,0],[133,0],[141,0],[149,0],[157,0],[165,0],[171,0],[178,0],[186,0],[194,0],[200,0],[208,0],[216,0],[223,0],[232,0],[238,0],[245,0],[253,0],[261,0],[266,0],[274,0],[281,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.329\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 68,
+                      "line": 1088
+                    },
+                    "snippet": "  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 68,
+                        "line": 1088
+                      },
+                      "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.292,\"between\":2,\"share\":0.329,\"end\":0,\"frames\":[[-4,0.292],[1,0.329],[9,0],[16,0],[24,0],[33,0],[38,0],[46,0],[54,0],[62,0],[67,0],[75,0],[82,0],[91,0],[99,0],[104,0],[111,0],[120,0],[128,0],[133,0],[141,0],[149,0],[157,0],[165,0],[171,0],[178,0],[186,0],[194,0],[200,0],[208,0],[216,0],[223,0],[232,0],[238,0],[245,0],[253,0],[261,0],[266,0],[274,0],[281,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.329\u001b[39m\n\n  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:45:41.913Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC4yOTIsImJldHdlZW4iOjIsInNoYXJlIjowLjMyOSwiZW5kIjowLCJmcmFtZXMiOltbLTQsMC4yOTJdLFsxLDAuMzI5XSxbOSwwXSxbMTYsMF0sWzI0LDBdLFszMywwXSxbMzgsMF0sWzQ2LDBdLFs1NCwwXSxbNjIsMF0sWzY3LDBdLFs3NSwwXSxbODIsMF0sWzkxLDBdLFs5OSwwXSxbMTA0LDBdLFsxMTEsMF0sWzEyMCwwXSxbMTI4LDBdLFsxMzMsMF0sWzE0MSwwXSxbMTQ5LDBdLFsxNTcsMF0sWzE2NSwwXSxbMTcxLDBdLFsxNzgsMF0sWzE4NiwwXSxbMTk0LDBdLFsyMDAsMF0sWzIwOCwwXSxbMjE2LDBdLFsyMjMsMF0sWzIzMiwwXSxbMjM4LDBdLFsyNDUsMF0sWzI1MywwXSxbMjYxLDBdLFsyNjYsMF0sWzI3NCwwXSxbMjgxLDBdXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-expand-·-an-50e01-ters-turns-from-where-it-is-chromium-phone-repeat3/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 68,
+                    "line": 1088
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-3bf60ff020768f72ff9e",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3789,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.306,\"between\":1,\"share\":0.306,\"end\":0,\"frames\":[[-2,0.306],[6,0],[15,0],[20,0],[28,0],[36,0],[43,0],[49,0],[56,0],[65,0],[73,0],[82,0],[87,0],[95,0],[101,0],[110,0],[117,0],[124,0],[132,0],[140,0],[148,0],[154,0],[162,0],[169,0],[178,0],[183,0],[190,0],[198,0],[207,0],[215,0],[223,0],[232,0],[240,0],[248,0],[254,0],[262,0],[269,0],[278,0],[283,0],[291,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.306\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.306,\"between\":1,\"share\":0.306,\"end\":0,\"frames\":[[-2,0.306],[6,0],[15,0],[20,0],[28,0],[36,0],[43,0],[49,0],[56,0],[65,0],[73,0],[82,0],[87,0],[95,0],[101,0],[110,0],[117,0],[124,0],[132,0],[140,0],[148,0],[154,0],[162,0],[169,0],[178,0],[183,0],[190,0],[198,0],[207,0],[215,0],[223,0],[232,0],[240,0],[248,0],[254,0],[262,0],[269,0],[278,0],[283,0],[291,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.306\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 68,
+                      "line": 1088
+                    },
+                    "snippet": "  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 68,
+                        "line": 1088
+                      },
+                      "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.306,\"between\":1,\"share\":0.306,\"end\":0,\"frames\":[[-2,0.306],[6,0],[15,0],[20,0],[28,0],[36,0],[43,0],[49,0],[56,0],[65,0],[73,0],[82,0],[87,0],[95,0],[101,0],[110,0],[117,0],[124,0],[132,0],[140,0],[148,0],[154,0],[162,0],[169,0],[178,0],[183,0],[190,0],[198,0],[207,0],[215,0],[223,0],[232,0],[240,0],[248,0],[254,0],[262,0],[269,0],[278,0],[283,0],[291,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.306\u001b[39m\n\n  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:45:46.031Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC4zMDYsImJldHdlZW4iOjEsInNoYXJlIjowLjMwNiwiZW5kIjowLCJmcmFtZXMiOltbLTIsMC4zMDZdLFs2LDBdLFsxNSwwXSxbMjAsMF0sWzI4LDBdLFszNiwwXSxbNDMsMF0sWzQ5LDBdLFs1NiwwXSxbNjUsMF0sWzczLDBdLFs4MiwwXSxbODcsMF0sWzk1LDBdLFsxMDEsMF0sWzExMCwwXSxbMTE3LDBdLFsxMjQsMF0sWzEzMiwwXSxbMTQwLDBdLFsxNDgsMF0sWzE1NCwwXSxbMTYyLDBdLFsxNjksMF0sWzE3OCwwXSxbMTgzLDBdLFsxOTAsMF0sWzE5OCwwXSxbMjA3LDBdLFsyMTUsMF0sWzIyMywwXSxbMjMyLDBdLFsyNDAsMF0sWzI0OCwwXSxbMjU0LDBdLFsyNjIsMF0sWzI2OSwwXSxbMjc4LDBdLFsyODMsMF0sWzI5MSwwXV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-expand-·-an-50e01-ters-turns-from-where-it-is-chromium-phone-repeat4/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 68,
+                    "line": 1088
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-346faade6092c33ef79b",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3775,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.274,\"between\":1,\"share\":0.274,\"end\":0,\"frames\":[[-2,0.274],[6,0],[14,0],[20,0],[28,0],[35,0],[42,0],[50,0],[60,0],[67,0],[76,0],[85,0],[90,0],[96,0],[106,0],[114,0],[122,0],[127,0],[135,0],[143,0],[151,0],[157,0],[164,0],[172,0],[180,0],[188,0],[197,0],[205,0],[213,0],[222,0],[227,0],[235,0],[243,0],[249,0],[257,0],[264,0],[272,0],[279,0],[287,0],[294,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.274\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.274,\"between\":1,\"share\":0.274,\"end\":0,\"frames\":[[-2,0.274],[6,0],[14,0],[20,0],[28,0],[35,0],[42,0],[50,0],[60,0],[67,0],[76,0],[85,0],[90,0],[96,0],[106,0],[114,0],[122,0],[127,0],[135,0],[143,0],[151,0],[157,0],[164,0],[172,0],[180,0],[188,0],[197,0],[205,0],[213,0],[222,0],[227,0],[235,0],[243,0],[249,0],[257,0],[264,0],[272,0],[279,0],[287,0],[294,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.274\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 68,
+                      "line": 1088
+                    },
+                    "snippet": "  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 68,
+                        "line": 1088
+                      },
+                      "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.274,\"between\":1,\"share\":0.274,\"end\":0,\"frames\":[[-2,0.274],[6,0],[14,0],[20,0],[28,0],[35,0],[42,0],[50,0],[60,0],[67,0],[76,0],[85,0],[90,0],[96,0],[106,0],[114,0],[122,0],[127,0],[135,0],[143,0],[151,0],[157,0],[164,0],[172,0],[180,0],[188,0],[197,0],[205,0],[213,0],[222,0],[227,0],[235,0],[243,0],[249,0],[257,0],[264,0],[272,0],[279,0],[287,0],[294,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.274\u001b[39m\n\n  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:45:50.166Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC4yNzQsImJldHdlZW4iOjEsInNoYXJlIjowLjI3NCwiZW5kIjowLCJmcmFtZXMiOltbLTIsMC4yNzRdLFs2LDBdLFsxNCwwXSxbMjAsMF0sWzI4LDBdLFszNSwwXSxbNDIsMF0sWzUwLDBdLFs2MCwwXSxbNjcsMF0sWzc2LDBdLFs4NSwwXSxbOTAsMF0sWzk2LDBdLFsxMDYsMF0sWzExNCwwXSxbMTIyLDBdLFsxMjcsMF0sWzEzNSwwXSxbMTQzLDBdLFsxNTEsMF0sWzE1NywwXSxbMTY0LDBdLFsxNzIsMF0sWzE4MCwwXSxbMTg4LDBdLFsxOTcsMF0sWzIwNSwwXSxbMjEzLDBdLFsyMjIsMF0sWzIyNywwXSxbMjM1LDBdLFsyNDMsMF0sWzI0OSwwXSxbMjU3LDBdLFsyNjQsMF0sWzI3MiwwXSxbMjc5LDBdLFsyODcsMF0sWzI5NCwwXV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-expand-·-an-50e01-ters-turns-from-where-it-is-chromium-phone-repeat5/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 68,
+                    "line": 1088
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-874e2448781188f525c0",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3789,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.316,\"between\":1,\"share\":0.316,\"end\":0,\"frames\":[[-1,0.316],[9,0],[14,0],[23,0],[29,0],[38,0],[43,0],[51,0],[58,0],[67,0],[75,0],[80,0],[87,0],[95,0],[104,0],[108,0],[117,0],[125,0],[133,0],[141,0],[149,0],[158,0],[166,0],[174,0],[180,0],[188,0],[196,0],[203,0],[209,0],[217,0],[225,0],[233,0],[241,0],[247,0],[254,0],[262,0],[270,0],[279,0],[287,0],[295,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.316\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.316,\"between\":1,\"share\":0.316,\"end\":0,\"frames\":[[-1,0.316],[9,0],[14,0],[23,0],[29,0],[38,0],[43,0],[51,0],[58,0],[67,0],[75,0],[80,0],[87,0],[95,0],[104,0],[108,0],[117,0],[125,0],[133,0],[141,0],[149,0],[158,0],[166,0],[174,0],[180,0],[188,0],[196,0],[203,0],[209,0],[217,0],[225,0],[233,0],[241,0],[247,0],[254,0],[262,0],[270,0],[279,0],[287,0],[295,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.316\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 68,
+                      "line": 1088
+                    },
+                    "snippet": "  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 68,
+                        "line": 1088
+                      },
+                      "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.316,\"between\":1,\"share\":0.316,\"end\":0,\"frames\":[[-1,0.316],[9,0],[14,0],[23,0],[29,0],[38,0],[43,0],[51,0],[58,0],[67,0],[75,0],[80,0],[87,0],[95,0],[104,0],[108,0],[117,0],[125,0],[133,0],[141,0],[149,0],[158,0],[166,0],[174,0],[180,0],[188,0],[196,0],[203,0],[209,0],[217,0],[225,0],[233,0],[241,0],[247,0],[254,0],[262,0],[270,0],[279,0],[287,0],[295,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.316\u001b[39m\n\n  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:45:54.269Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC4zMTYsImJldHdlZW4iOjEsInNoYXJlIjowLjMxNiwiZW5kIjowLCJmcmFtZXMiOltbLTEsMC4zMTZdLFs5LDBdLFsxNCwwXSxbMjMsMF0sWzI5LDBdLFszOCwwXSxbNDMsMF0sWzUxLDBdLFs1OCwwXSxbNjcsMF0sWzc1LDBdLFs4MCwwXSxbODcsMF0sWzk1LDBdLFsxMDQsMF0sWzEwOCwwXSxbMTE3LDBdLFsxMjUsMF0sWzEzMywwXSxbMTQxLDBdLFsxNDksMF0sWzE1OCwwXSxbMTY2LDBdLFsxNzQsMF0sWzE4MCwwXSxbMTg4LDBdLFsxOTYsMF0sWzIwMywwXSxbMjA5LDBdLFsyMTcsMF0sWzIyNSwwXSxbMjMzLDBdLFsyNDEsMF0sWzI0NywwXSxbMjU0LDBdLFsyNjIsMF0sWzI3MCwwXSxbMjc5LDBdLFsyODcsMF0sWzI5NSwwXV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-expand-·-an-50e01-ters-turns-from-where-it-is-chromium-phone-repeat6/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 68,
+                    "line": 1088
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-8de7fb5e31ed85e45069",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3773,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.276,\"between\":1,\"share\":0.276,\"end\":0,\"frames\":[[-5,0.276],[3,0],[11,0],[19,0],[28,0],[35,0],[43,0],[50,0],[58,0],[66,0],[74,0],[82,0],[88,0],[96,0],[103,0],[112,0],[117,0],[125,0],[133,0],[141,0],[148,0],[155,0],[162,0],[169,0],[179,0],[186,0],[195,0],[203,0],[210,0],[217,0],[225,0],[233,0],[239,0],[248,0],[255,0],[262,0],[269,0],[279,0],[284,0],[292,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.276\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.276,\"between\":1,\"share\":0.276,\"end\":0,\"frames\":[[-5,0.276],[3,0],[11,0],[19,0],[28,0],[35,0],[43,0],[50,0],[58,0],[66,0],[74,0],[82,0],[88,0],[96,0],[103,0],[112,0],[117,0],[125,0],[133,0],[141,0],[148,0],[155,0],[162,0],[169,0],[179,0],[186,0],[195,0],[203,0],[210,0],[217,0],[225,0],[233,0],[239,0],[248,0],[255,0],[262,0],[269,0],[279,0],[284,0],[292,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.276\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 68,
+                      "line": 1088
+                    },
+                    "snippet": "  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 68,
+                        "line": 1088
+                      },
+                      "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.276,\"between\":1,\"share\":0.276,\"end\":0,\"frames\":[[-5,0.276],[3,0],[11,0],[19,0],[28,0],[35,0],[43,0],[50,0],[58,0],[66,0],[74,0],[82,0],[88,0],[96,0],[103,0],[112,0],[117,0],[125,0],[133,0],[141,0],[148,0],[155,0],[162,0],[169,0],[179,0],[186,0],[195,0],[203,0],[210,0],[217,0],[225,0],[233,0],[239,0],[248,0],[255,0],[262,0],[269,0],[279,0],[284,0],[292,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.276\u001b[39m\n\n  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:45:58.383Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC4yNzYsImJldHdlZW4iOjEsInNoYXJlIjowLjI3NiwiZW5kIjowLCJmcmFtZXMiOltbLTUsMC4yNzZdLFszLDBdLFsxMSwwXSxbMTksMF0sWzI4LDBdLFszNSwwXSxbNDMsMF0sWzUwLDBdLFs1OCwwXSxbNjYsMF0sWzc0LDBdLFs4MiwwXSxbODgsMF0sWzk2LDBdLFsxMDMsMF0sWzExMiwwXSxbMTE3LDBdLFsxMjUsMF0sWzEzMywwXSxbMTQxLDBdLFsxNDgsMF0sWzE1NSwwXSxbMTYyLDBdLFsxNjksMF0sWzE3OSwwXSxbMTg2LDBdLFsxOTUsMF0sWzIwMywwXSxbMjEwLDBdLFsyMTcsMF0sWzIyNSwwXSxbMjMzLDBdLFsyMzksMF0sWzI0OCwwXSxbMjU1LDBdLFsyNjIsMF0sWzI2OSwwXSxbMjc5LDBdLFsyODQsMF0sWzI5MiwwXV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-expand-·-an-50e01-ters-turns-from-where-it-is-chromium-phone-repeat7/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 68,
+                    "line": 1088
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-bbba7c4e225ec525dab7",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3782,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.319,\"between\":1,\"share\":0.319,\"end\":0,\"frames\":[[-1,0.319],[6,0],[15,0],[23,0],[31,0],[37,0],[44,0],[50,0],[58,0],[64,0],[73,0],[81,0],[89,0],[98,0],[106,0],[114,0],[123,0],[129,0],[136,0],[144,0],[150,0],[158,0],[165,0],[173,0],[180,0],[189,0],[195,0],[202,0],[211,0],[218,0],[227,0],[235,0],[244,0],[252,0],[258,0],[265,0],[273,0],[281,0],[289,0],[295,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.319\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.319,\"between\":1,\"share\":0.319,\"end\":0,\"frames\":[[-1,0.319],[6,0],[15,0],[23,0],[31,0],[37,0],[44,0],[50,0],[58,0],[64,0],[73,0],[81,0],[89,0],[98,0],[106,0],[114,0],[123,0],[129,0],[136,0],[144,0],[150,0],[158,0],[165,0],[173,0],[180,0],[189,0],[195,0],[202,0],[211,0],[218,0],[227,0],[235,0],[244,0],[252,0],[258,0],[265,0],[273,0],[281,0],[289,0],[295,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.319\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 68,
+                      "line": 1088
+                    },
+                    "snippet": "  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 68,
+                        "line": 1088
+                      },
+                      "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.319,\"between\":1,\"share\":0.319,\"end\":0,\"frames\":[[-1,0.319],[6,0],[15,0],[23,0],[31,0],[37,0],[44,0],[50,0],[58,0],[64,0],[73,0],[81,0],[89,0],[98,0],[106,0],[114,0],[123,0],[129,0],[136,0],[144,0],[150,0],[158,0],[165,0],[173,0],[180,0],[189,0],[195,0],[202,0],[211,0],[218,0],[227,0],[235,0],[244,0],[252,0],[258,0],[265,0],[273,0],[281,0],[289,0],[295,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.319\u001b[39m\n\n  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:46:02.514Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC4zMTksImJldHdlZW4iOjEsInNoYXJlIjowLjMxOSwiZW5kIjowLCJmcmFtZXMiOltbLTEsMC4zMTldLFs2LDBdLFsxNSwwXSxbMjMsMF0sWzMxLDBdLFszNywwXSxbNDQsMF0sWzUwLDBdLFs1OCwwXSxbNjQsMF0sWzczLDBdLFs4MSwwXSxbODksMF0sWzk4LDBdLFsxMDYsMF0sWzExNCwwXSxbMTIzLDBdLFsxMjksMF0sWzEzNiwwXSxbMTQ0LDBdLFsxNTAsMF0sWzE1OCwwXSxbMTY1LDBdLFsxNzMsMF0sWzE4MCwwXSxbMTg5LDBdLFsxOTUsMF0sWzIwMiwwXSxbMjExLDBdLFsyMTgsMF0sWzIyNywwXSxbMjM1LDBdLFsyNDQsMF0sWzI1MiwwXSxbMjU4LDBdLFsyNjUsMF0sWzI3MywwXSxbMjgxLDBdLFsyODksMF0sWzI5NSwwXV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-expand-·-an-50e01-ters-turns-from-where-it-is-chromium-phone-repeat8/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 68,
+                    "line": 1088
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-913308bb6bb155a2b7f2",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3785,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.286,\"between\":1,\"share\":0.286,\"end\":0,\"frames\":[[-4,0.286],[4,0],[9,0],[18,0],[25,0],[32,0],[41,0],[48,0],[57,0],[66,0],[72,0],[82,0],[88,0],[94,0],[104,0],[112,0],[118,0],[130,0],[138,0],[149,0],[155,0],[166,0],[174,0],[181,0],[188,0],[196,0],[203,0],[212,0],[217,0],[225,0],[233,0],[241,0],[249,0],[257,0],[266,0],[274,0],[282,0],[291,0],[299,0],[307,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.286\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.286,\"between\":1,\"share\":0.286,\"end\":0,\"frames\":[[-4,0.286],[4,0],[9,0],[18,0],[25,0],[32,0],[41,0],[48,0],[57,0],[66,0],[72,0],[82,0],[88,0],[94,0],[104,0],[112,0],[118,0],[130,0],[138,0],[149,0],[155,0],[166,0],[174,0],[181,0],[188,0],[196,0],[203,0],[212,0],[217,0],[225,0],[233,0],[241,0],[249,0],[257,0],[266,0],[274,0],[282,0],[291,0],[299,0],[307,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.286\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 68,
+                      "line": 1088
+                    },
+                    "snippet": "  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 68,
+                        "line": 1088
+                      },
+                      "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.286,\"between\":1,\"share\":0.286,\"end\":0,\"frames\":[[-4,0.286],[4,0],[9,0],[18,0],[25,0],[32,0],[41,0],[48,0],[57,0],[66,0],[72,0],[82,0],[88,0],[94,0],[104,0],[112,0],[118,0],[130,0],[138,0],[149,0],[155,0],[166,0],[174,0],[181,0],[188,0],[196,0],[203,0],[212,0],[217,0],[225,0],[233,0],[241,0],[249,0],[257,0],[266,0],[274,0],[282,0],[291,0],[299,0],[307,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.286\u001b[39m\n\n  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:46:06.660Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC4yODYsImJldHdlZW4iOjEsInNoYXJlIjowLjI4NiwiZW5kIjowLCJmcmFtZXMiOltbLTQsMC4yODZdLFs0LDBdLFs5LDBdLFsxOCwwXSxbMjUsMF0sWzMyLDBdLFs0MSwwXSxbNDgsMF0sWzU3LDBdLFs2NiwwXSxbNzIsMF0sWzgyLDBdLFs4OCwwXSxbOTQsMF0sWzEwNCwwXSxbMTEyLDBdLFsxMTgsMF0sWzEzMCwwXSxbMTM4LDBdLFsxNDksMF0sWzE1NSwwXSxbMTY2LDBdLFsxNzQsMF0sWzE4MSwwXSxbMTg4LDBdLFsxOTYsMF0sWzIwMywwXSxbMjEyLDBdLFsyMTcsMF0sWzIyNSwwXSxbMjMzLDBdLFsyNDEsMF0sWzI0OSwwXSxbMjU3LDBdLFsyNjYsMF0sWzI3NCwwXSxbMjgyLDBdLFsyOTEsMF0sWzI5OSwwXSxbMzA3LDBdXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-expand-·-an-50e01-ters-turns-from-where-it-is-chromium-phone-repeat9/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 68,
+                    "line": 1088
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-0492fcdbeafd23788bce",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3789,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.246,\"between\":2,\"share\":0.295,\"end\":0,\"frames\":[[-6,0.246],[1,0.295],[9,0],[15,0],[22,0],[30,0],[38,0],[48,0],[53,0],[61,0],[68,0],[76,0],[83,0],[93,0],[101,0],[109,0],[119,0],[129,0],[138,0],[147,0],[152,0],[160,0],[168,0],[176,0],[182,0],[189,0],[197,0],[205,0],[212,0],[220,0],[227,0],[235,0],[243,0],[250,0],[260,0],[268,0],[276,0],[286,0],[295,0],[303,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.295\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.246,\"between\":2,\"share\":0.295,\"end\":0,\"frames\":[[-6,0.246],[1,0.295],[9,0],[15,0],[22,0],[30,0],[38,0],[48,0],[53,0],[61,0],[68,0],[76,0],[83,0],[93,0],[101,0],[109,0],[119,0],[129,0],[138,0],[147,0],[152,0],[160,0],[168,0],[176,0],[182,0],[189,0],[197,0],[205,0],[212,0],[220,0],[227,0],[235,0],[243,0],[250,0],[260,0],[268,0],[276,0],[286,0],[295,0],[303,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.295\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 68,
+                      "line": 1088
+                    },
+                    "snippet": "  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 68,
+                        "line": 1088
+                      },
+                      "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.246,\"between\":2,\"share\":0.295,\"end\":0,\"frames\":[[-6,0.246],[1,0.295],[9,0],[15,0],[22,0],[30,0],[38,0],[48,0],[53,0],[61,0],[68,0],[76,0],[83,0],[93,0],[101,0],[109,0],[119,0],[129,0],[138,0],[147,0],[152,0],[160,0],[168,0],[176,0],[182,0],[189,0],[197,0],[205,0],[212,0],[220,0],[227,0],[235,0],[243,0],[250,0],[260,0],[268,0],[276,0],[286,0],[295,0],[303,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.295\u001b[39m\n\n  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:46:10.812Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC4yNDYsImJldHdlZW4iOjIsInNoYXJlIjowLjI5NSwiZW5kIjowLCJmcmFtZXMiOltbLTYsMC4yNDZdLFsxLDAuMjk1XSxbOSwwXSxbMTUsMF0sWzIyLDBdLFszMCwwXSxbMzgsMF0sWzQ4LDBdLFs1MywwXSxbNjEsMF0sWzY4LDBdLFs3NiwwXSxbODMsMF0sWzkzLDBdLFsxMDEsMF0sWzEwOSwwXSxbMTE5LDBdLFsxMjksMF0sWzEzOCwwXSxbMTQ3LDBdLFsxNTIsMF0sWzE2MCwwXSxbMTY4LDBdLFsxNzYsMF0sWzE4MiwwXSxbMTg5LDBdLFsxOTcsMF0sWzIwNSwwXSxbMjEyLDBdLFsyMjAsMF0sWzIyNywwXSxbMjM1LDBdLFsyNDMsMF0sWzI1MCwwXSxbMjYwLDBdLFsyNjgsMF0sWzI3NiwwXSxbMjg2LDBdLFsyOTUsMF0sWzMwMywwXV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-expand-·-an-50e01-ters-turns-from-where-it-is-chromium-phone-repeat10/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 68,
+                    "line": 1088
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-957d890f444de8443db9",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3764,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.234,\"between\":1,\"share\":0.234,\"end\":0,\"frames\":[[-8,0.234],[3,0],[8,0],[15,0],[20,0],[27,0],[36,0],[43,0],[50,0],[60,0],[64,0],[72,0],[81,0],[89,0],[93,0],[103,0],[110,0],[117,0],[126,0],[131,0],[139,0],[147,0],[152,0],[159,0],[166,0],[176,0],[184,0],[192,0],[200,0],[209,0],[217,0],[225,0],[231,0],[237,0],[247,0],[255,0],[261,0],[273,0],[282,0],[290,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.234\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.234,\"between\":1,\"share\":0.234,\"end\":0,\"frames\":[[-8,0.234],[3,0],[8,0],[15,0],[20,0],[27,0],[36,0],[43,0],[50,0],[60,0],[64,0],[72,0],[81,0],[89,0],[93,0],[103,0],[110,0],[117,0],[126,0],[131,0],[139,0],[147,0],[152,0],[159,0],[166,0],[176,0],[184,0],[192,0],[200,0],[209,0],[217,0],[225,0],[231,0],[237,0],[247,0],[255,0],[261,0],[273,0],[282,0],[290,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.234\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 68,
+                      "line": 1088
+                    },
+                    "snippet": "  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 68,
+                        "line": 1088
+                      },
+                      "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.234,\"between\":1,\"share\":0.234,\"end\":0,\"frames\":[[-8,0.234],[3,0],[8,0],[15,0],[20,0],[27,0],[36,0],[43,0],[50,0],[60,0],[64,0],[72,0],[81,0],[89,0],[93,0],[103,0],[110,0],[117,0],[126,0],[131,0],[139,0],[147,0],[152,0],[159,0],[166,0],[176,0],[184,0],[192,0],[200,0],[209,0],[217,0],[225,0],[231,0],[237,0],[247,0],[255,0],[261,0],[273,0],[282,0],[290,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.234\u001b[39m\n\n  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:46:14.933Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC4yMzQsImJldHdlZW4iOjEsInNoYXJlIjowLjIzNCwiZW5kIjowLCJmcmFtZXMiOltbLTgsMC4yMzRdLFszLDBdLFs4LDBdLFsxNSwwXSxbMjAsMF0sWzI3LDBdLFszNiwwXSxbNDMsMF0sWzUwLDBdLFs2MCwwXSxbNjQsMF0sWzcyLDBdLFs4MSwwXSxbODksMF0sWzkzLDBdLFsxMDMsMF0sWzExMCwwXSxbMTE3LDBdLFsxMjYsMF0sWzEzMSwwXSxbMTM5LDBdLFsxNDcsMF0sWzE1MiwwXSxbMTU5LDBdLFsxNjYsMF0sWzE3NiwwXSxbMTg0LDBdLFsxOTIsMF0sWzIwMCwwXSxbMjA5LDBdLFsyMTcsMF0sWzIyNSwwXSxbMjMxLDBdLFsyMzcsMF0sWzI0NywwXSxbMjU1LDBdLFsyNjEsMF0sWzI3MywwXSxbMjgyLDBdLFsyOTAsMF1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-expand-·-an-50e01-ters-turns-from-where-it-is-chromium-phone-repeat11/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 68,
+                    "line": 1088
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-b29ffaf513dca0839f4d",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3792,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.238,\"between\":1,\"share\":0.238,\"end\":0,\"frames\":[[-6,0.238],[3,0],[10,0],[18,0],[26,0],[32,0],[42,0],[50,0],[55,0],[65,0],[72,0],[78,0],[88,0],[95,0],[102,0],[110,0],[117,0],[123,0],[132,0],[138,0],[146,0],[154,0],[165,0],[174,0],[182,0],[191,0],[198,0],[208,0],[216,0],[227,0],[236,0],[244,0],[254,0],[262,0],[267,0],[277,0],[284,0],[292,0],[298,0],[306,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.238\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.238,\"between\":1,\"share\":0.238,\"end\":0,\"frames\":[[-6,0.238],[3,0],[10,0],[18,0],[26,0],[32,0],[42,0],[50,0],[55,0],[65,0],[72,0],[78,0],[88,0],[95,0],[102,0],[110,0],[117,0],[123,0],[132,0],[138,0],[146,0],[154,0],[165,0],[174,0],[182,0],[191,0],[198,0],[208,0],[216,0],[227,0],[236,0],[244,0],[254,0],[262,0],[267,0],[277,0],[284,0],[292,0],[298,0],[306,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.238\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 68,
+                      "line": 1088
+                    },
+                    "snippet": "  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 68,
+                        "line": 1088
+                      },
+                      "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.238,\"between\":1,\"share\":0.238,\"end\":0,\"frames\":[[-6,0.238],[3,0],[10,0],[18,0],[26,0],[32,0],[42,0],[50,0],[55,0],[65,0],[72,0],[78,0],[88,0],[95,0],[102,0],[110,0],[117,0],[123,0],[132,0],[138,0],[146,0],[154,0],[165,0],[174,0],[182,0],[191,0],[198,0],[208,0],[216,0],[227,0],[236,0],[244,0],[254,0],[262,0],[267,0],[277,0],[284,0],[292,0],[298,0],[306,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.238\u001b[39m\n\n  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:46:19.548Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC4yMzgsImJldHdlZW4iOjEsInNoYXJlIjowLjIzOCwiZW5kIjowLCJmcmFtZXMiOltbLTYsMC4yMzhdLFszLDBdLFsxMCwwXSxbMTgsMF0sWzI2LDBdLFszMiwwXSxbNDIsMF0sWzUwLDBdLFs1NSwwXSxbNjUsMF0sWzcyLDBdLFs3OCwwXSxbODgsMF0sWzk1LDBdLFsxMDIsMF0sWzExMCwwXSxbMTE3LDBdLFsxMjMsMF0sWzEzMiwwXSxbMTM4LDBdLFsxNDYsMF0sWzE1NCwwXSxbMTY1LDBdLFsxNzQsMF0sWzE4MiwwXSxbMTkxLDBdLFsxOTgsMF0sWzIwOCwwXSxbMjE2LDBdLFsyMjcsMF0sWzIzNiwwXSxbMjQ0LDBdLFsyNTQsMF0sWzI2MiwwXSxbMjY3LDBdLFsyNzcsMF0sWzI4NCwwXSxbMjkyLDBdLFsyOTgsMF0sWzMwNiwwXV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-expand-·-an-50e01-ters-turns-from-where-it-is-chromium-phone-repeat12/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 68,
+                    "line": 1088
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-eb6de1310ee502f6baf6",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 13,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3790,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.268,\"between\":1,\"share\":0.268,\"end\":0,\"frames\":[[-6,0.268],[1,0],[10,0],[15,0],[24,0],[30,0],[39,0],[46,0],[53,0],[60,0],[68,0],[76,0],[82,0],[89,0],[97,0],[105,0],[113,0],[122,0],[130,0],[139,0],[147,0],[153,0],[160,0],[168,0],[176,0],[182,0],[189,0],[197,0],[205,0],[214,0],[219,0],[227,0],[235,0],[243,0],[251,0],[259,0],[268,0],[276,0],[282,0],[288,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.268\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.268,\"between\":1,\"share\":0.268,\"end\":0,\"frames\":[[-6,0.268],[1,0],[10,0],[15,0],[24,0],[30,0],[39,0],[46,0],[53,0],[60,0],[68,0],[76,0],[82,0],[89,0],[97,0],[105,0],[113,0],[122,0],[130,0],[139,0],[147,0],[153,0],[160,0],[168,0],[176,0],[182,0],[189,0],[197,0],[205,0],[214,0],[219,0],[227,0],[235,0],[243,0],[251,0],[259,0],[268,0],[276,0],[282,0],[288,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.268\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 68,
+                      "line": 1088
+                    },
+                    "snippet": "  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 68,
+                        "line": 1088
+                      },
+                      "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.268,\"between\":1,\"share\":0.268,\"end\":0,\"frames\":[[-6,0.268],[1,0],[10,0],[15,0],[24,0],[30,0],[39,0],[46,0],[53,0],[60,0],[68,0],[76,0],[82,0],[89,0],[97,0],[105,0],[113,0],[122,0],[130,0],[139,0],[147,0],[153,0],[160,0],[168,0],[176,0],[182,0],[189,0],[197,0],[205,0],[214,0],[219,0],[227,0],[235,0],[243,0],[251,0],[259,0],[268,0],[276,0],[282,0],[288,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.268\u001b[39m\n\n  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:46:23.657Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC4yNjgsImJldHdlZW4iOjEsInNoYXJlIjowLjI2OCwiZW5kIjowLCJmcmFtZXMiOltbLTYsMC4yNjhdLFsxLDBdLFsxMCwwXSxbMTUsMF0sWzI0LDBdLFszMCwwXSxbMzksMF0sWzQ2LDBdLFs1MywwXSxbNjAsMF0sWzY4LDBdLFs3NiwwXSxbODIsMF0sWzg5LDBdLFs5NywwXSxbMTA1LDBdLFsxMTMsMF0sWzEyMiwwXSxbMTMwLDBdLFsxMzksMF0sWzE0NywwXSxbMTUzLDBdLFsxNjAsMF0sWzE2OCwwXSxbMTc2LDBdLFsxODIsMF0sWzE4OSwwXSxbMTk3LDBdLFsyMDUsMF0sWzIxNCwwXSxbMjE5LDBdLFsyMjcsMF0sWzIzNSwwXSxbMjQzLDBdLFsyNTEsMF0sWzI1OSwwXSxbMjY4LDBdLFsyNzYsMF0sWzI4MiwwXSxbMjg4LDBdXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-expand-·-an-50e01-ters-turns-from-where-it-is-chromium-phone-repeat13/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 68,
+                    "line": 1088
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-86ffcb6b93d81f47d16b",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 14,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3779,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.271,\"between\":1,\"share\":0.271,\"end\":0,\"frames\":[[-4,0.271],[4,0],[11,0],[18,0],[26,0],[33,0],[39,0],[48,0],[55,0],[63,0],[68,0],[77,0],[84,0],[92,0],[101,0],[106,0],[114,0],[122,0],[130,0],[136,0],[143,0],[151,0],[159,0],[167,0],[173,0],[180,0],[188,0],[197,0],[205,0],[213,0],[221,0],[230,0],[236,0],[243,0],[251,0],[259,0],[267,0],[273,0],[281,0],[289,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.271\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.271,\"between\":1,\"share\":0.271,\"end\":0,\"frames\":[[-4,0.271],[4,0],[11,0],[18,0],[26,0],[33,0],[39,0],[48,0],[55,0],[63,0],[68,0],[77,0],[84,0],[92,0],[101,0],[106,0],[114,0],[122,0],[130,0],[136,0],[143,0],[151,0],[159,0],[167,0],[173,0],[180,0],[188,0],[197,0],[205,0],[213,0],[221,0],[230,0],[236,0],[243,0],[251,0],[259,0],[267,0],[273,0],[281,0],[289,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.271\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 68,
+                      "line": 1088
+                    },
+                    "snippet": "  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 68,
+                        "line": 1088
+                      },
+                      "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.271,\"between\":1,\"share\":0.271,\"end\":0,\"frames\":[[-4,0.271],[4,0],[11,0],[18,0],[26,0],[33,0],[39,0],[48,0],[55,0],[63,0],[68,0],[77,0],[84,0],[92,0],[101,0],[106,0],[114,0],[122,0],[130,0],[136,0],[143,0],[151,0],[159,0],[167,0],[173,0],[180,0],[188,0],[197,0],[205,0],[213,0],[221,0],[230,0],[236,0],[243,0],[251,0],[259,0],[267,0],[273,0],[281,0],[289,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.271\u001b[39m\n\n  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:46:27.766Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC4yNzEsImJldHdlZW4iOjEsInNoYXJlIjowLjI3MSwiZW5kIjowLCJmcmFtZXMiOltbLTQsMC4yNzFdLFs0LDBdLFsxMSwwXSxbMTgsMF0sWzI2LDBdLFszMywwXSxbMzksMF0sWzQ4LDBdLFs1NSwwXSxbNjMsMF0sWzY4LDBdLFs3NywwXSxbODQsMF0sWzkyLDBdLFsxMDEsMF0sWzEwNiwwXSxbMTE0LDBdLFsxMjIsMF0sWzEzMCwwXSxbMTM2LDBdLFsxNDMsMF0sWzE1MSwwXSxbMTU5LDBdLFsxNjcsMF0sWzE3MywwXSxbMTgwLDBdLFsxODgsMF0sWzE5NywwXSxbMjA1LDBdLFsyMTMsMF0sWzIyMSwwXSxbMjMwLDBdLFsyMzYsMF0sWzI0MywwXSxbMjUxLDBdLFsyNTksMF0sWzI2NywwXSxbMjczLDBdLFsyODEsMF0sWzI4OSwwXV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-expand-·-an-50e01-ters-turns-from-where-it-is-chromium-phone-repeat14/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 68,
+                    "line": 1088
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-48a47314638c16a245b3",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 15,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3811,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.347,\"between\":1,\"share\":0.347,\"end\":0,\"frames\":[[-1,0.347],[7,0],[15,0],[23,0],[29,0],[36,0],[44,0],[53,0],[58,0],[66,0],[73,0],[81,0],[90,0],[95,0],[103,0],[111,0],[117,0],[124,0],[132,0],[140,0],[148,0],[156,0],[162,0],[170,0],[177,0],[184,0],[191,0],[199,0],[206,0],[215,0],[222,0],[229,0],[236,0],[244,0],[251,0],[258,0],[265,0],[273,0],[281,0],[290,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.347\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.347,\"between\":1,\"share\":0.347,\"end\":0,\"frames\":[[-1,0.347],[7,0],[15,0],[23,0],[29,0],[36,0],[44,0],[53,0],[58,0],[66,0],[73,0],[81,0],[90,0],[95,0],[103,0],[111,0],[117,0],[124,0],[132,0],[140,0],[148,0],[156,0],[162,0],[170,0],[177,0],[184,0],[191,0],[199,0],[206,0],[215,0],[222,0],[229,0],[236,0],[244,0],[251,0],[258,0],[265,0],[273,0],[281,0],[290,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.347\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 68,
+                      "line": 1088
+                    },
+                    "snippet": "  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 68,
+                        "line": 1088
+                      },
+                      "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.347,\"between\":1,\"share\":0.347,\"end\":0,\"frames\":[[-1,0.347],[7,0],[15,0],[23,0],[29,0],[36,0],[44,0],[53,0],[58,0],[66,0],[73,0],[81,0],[90,0],[95,0],[103,0],[111,0],[117,0],[124,0],[132,0],[140,0],[148,0],[156,0],[162,0],[170,0],[177,0],[184,0],[191,0],[199,0],[206,0],[215,0],[222,0],[229,0],[236,0],[244,0],[251,0],[258,0],[265,0],[273,0],[281,0],[290,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.347\u001b[39m\n\n  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:46:31.865Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC4zNDcsImJldHdlZW4iOjEsInNoYXJlIjowLjM0NywiZW5kIjowLCJmcmFtZXMiOltbLTEsMC4zNDddLFs3LDBdLFsxNSwwXSxbMjMsMF0sWzI5LDBdLFszNiwwXSxbNDQsMF0sWzUzLDBdLFs1OCwwXSxbNjYsMF0sWzczLDBdLFs4MSwwXSxbOTAsMF0sWzk1LDBdLFsxMDMsMF0sWzExMSwwXSxbMTE3LDBdLFsxMjQsMF0sWzEzMiwwXSxbMTQwLDBdLFsxNDgsMF0sWzE1NiwwXSxbMTYyLDBdLFsxNzAsMF0sWzE3NywwXSxbMTg0LDBdLFsxOTEsMF0sWzE5OSwwXSxbMjA2LDBdLFsyMTUsMF0sWzIyMiwwXSxbMjI5LDBdLFsyMzYsMF0sWzI0NCwwXSxbMjUxLDBdLFsyNTgsMF0sWzI2NSwwXSxbMjczLDBdLFsyODEsMF0sWzI5MCwwXV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-expand-·-an-50e01-ters-turns-from-where-it-is-chromium-phone-repeat15/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 68,
+                    "line": 1088
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-f4b39babcbdb80c8e92a",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3769,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.275,\"between\":1,\"share\":0.275,\"end\":0,\"frames\":[[-5,0.275],[3,0],[8,0],[17,0],[24,0],[32,0],[41,0],[45,0],[54,0],[62,0],[69,0],[76,0],[83,0],[91,0],[98,0],[108,0],[113,0],[121,0],[128,0],[136,0],[142,0],[150,0],[158,0],[166,0],[174,0],[179,0],[187,0],[195,0],[203,0],[208,0],[216,0],[224,0],[232,0],[240,0],[245,0],[254,0],[262,0],[270,0],[275,0],[283,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.275\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.275,\"between\":1,\"share\":0.275,\"end\":0,\"frames\":[[-5,0.275],[3,0],[8,0],[17,0],[24,0],[32,0],[41,0],[45,0],[54,0],[62,0],[69,0],[76,0],[83,0],[91,0],[98,0],[108,0],[113,0],[121,0],[128,0],[136,0],[142,0],[150,0],[158,0],[166,0],[174,0],[179,0],[187,0],[195,0],[203,0],[208,0],[216,0],[224,0],[232,0],[240,0],[245,0],[254,0],[262,0],[270,0],[275,0],[283,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.275\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 68,
+                      "line": 1088
+                    },
+                    "snippet": "  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 68,
+                        "line": 1088
+                      },
+                      "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.275,\"between\":1,\"share\":0.275,\"end\":0,\"frames\":[[-5,0.275],[3,0],[8,0],[17,0],[24,0],[32,0],[41,0],[45,0],[54,0],[62,0],[69,0],[76,0],[83,0],[91,0],[98,0],[108,0],[113,0],[121,0],[128,0],[136,0],[142,0],[150,0],[158,0],[166,0],[174,0],[179,0],[187,0],[195,0],[203,0],[208,0],[216,0],[224,0],[232,0],[240,0],[245,0],[254,0],[262,0],[270,0],[275,0],[283,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.275\u001b[39m\n\n  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:46:36.004Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC4yNzUsImJldHdlZW4iOjEsInNoYXJlIjowLjI3NSwiZW5kIjowLCJmcmFtZXMiOltbLTUsMC4yNzVdLFszLDBdLFs4LDBdLFsxNywwXSxbMjQsMF0sWzMyLDBdLFs0MSwwXSxbNDUsMF0sWzU0LDBdLFs2MiwwXSxbNjksMF0sWzc2LDBdLFs4MywwXSxbOTEsMF0sWzk4LDBdLFsxMDgsMF0sWzExMywwXSxbMTIxLDBdLFsxMjgsMF0sWzEzNiwwXSxbMTQyLDBdLFsxNTAsMF0sWzE1OCwwXSxbMTY2LDBdLFsxNzQsMF0sWzE3OSwwXSxbMTg3LDBdLFsxOTUsMF0sWzIwMywwXSxbMjA4LDBdLFsyMTYsMF0sWzIyNCwwXSxbMjMyLDBdLFsyNDAsMF0sWzI0NSwwXSxbMjU0LDBdLFsyNjIsMF0sWzI3MCwwXSxbMjc1LDBdLFsyODMsMF1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-expand-·-an-50e01-ters-turns-from-where-it-is-chromium-phone-repeat16/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 68,
+                    "line": 1088
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-77c5a320b5baef2fc076",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 17,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3779,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.267,\"between\":1,\"share\":0.267,\"end\":0,\"frames\":[[-4,0.267],[4,0],[9,0],[17,0],[25,0],[33,0],[40,0],[47,0],[54,0],[62,0],[70,0],[76,0],[83,0],[91,0],[98,0],[108,0],[113,0],[120,0],[129,0],[137,0],[143,0],[150,0],[158,0],[166,0],[173,0],[179,0],[188,0],[195,0],[202,0],[208,0],[217,0],[223,0],[233,0],[241,0],[247,0],[254,0],[262,0],[270,0],[275,0],[283,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.267\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.267,\"between\":1,\"share\":0.267,\"end\":0,\"frames\":[[-4,0.267],[4,0],[9,0],[17,0],[25,0],[33,0],[40,0],[47,0],[54,0],[62,0],[70,0],[76,0],[83,0],[91,0],[98,0],[108,0],[113,0],[120,0],[129,0],[137,0],[143,0],[150,0],[158,0],[166,0],[173,0],[179,0],[188,0],[195,0],[202,0],[208,0],[217,0],[223,0],[233,0],[241,0],[247,0],[254,0],[262,0],[270,0],[275,0],[283,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.267\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 68,
+                      "line": 1088
+                    },
+                    "snippet": "  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 68,
+                        "line": 1088
+                      },
+                      "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.267,\"between\":1,\"share\":0.267,\"end\":0,\"frames\":[[-4,0.267],[4,0],[9,0],[17,0],[25,0],[33,0],[40,0],[47,0],[54,0],[62,0],[70,0],[76,0],[83,0],[91,0],[98,0],[108,0],[113,0],[120,0],[129,0],[137,0],[143,0],[150,0],[158,0],[166,0],[173,0],[179,0],[188,0],[195,0],[202,0],[208,0],[217,0],[223,0],[233,0],[241,0],[247,0],[254,0],[262,0],[270,0],[275,0],[283,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.267\u001b[39m\n\n  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:46:40.125Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC4yNjcsImJldHdlZW4iOjEsInNoYXJlIjowLjI2NywiZW5kIjowLCJmcmFtZXMiOltbLTQsMC4yNjddLFs0LDBdLFs5LDBdLFsxNywwXSxbMjUsMF0sWzMzLDBdLFs0MCwwXSxbNDcsMF0sWzU0LDBdLFs2MiwwXSxbNzAsMF0sWzc2LDBdLFs4MywwXSxbOTEsMF0sWzk4LDBdLFsxMDgsMF0sWzExMywwXSxbMTIwLDBdLFsxMjksMF0sWzEzNywwXSxbMTQzLDBdLFsxNTAsMF0sWzE1OCwwXSxbMTY2LDBdLFsxNzMsMF0sWzE3OSwwXSxbMTg4LDBdLFsxOTUsMF0sWzIwMiwwXSxbMjA4LDBdLFsyMTcsMF0sWzIyMywwXSxbMjMzLDBdLFsyNDEsMF0sWzI0NywwXSxbMjU0LDBdLFsyNjIsMF0sWzI3MCwwXSxbMjc1LDBdLFsyODMsMF1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-expand-·-an-50e01-ters-turns-from-where-it-is-chromium-phone-repeat17/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 68,
+                    "line": 1088
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-ea9aeba6ed2aca4b96b9",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 18,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3773,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.269,\"between\":1,\"share\":0.269,\"end\":0,\"frames\":[[-4,0.269],[5,0],[12,0],[18,0],[27,0],[33,0],[41,0],[49,0],[58,0],[63,0],[71,0],[77,0],[87,0],[92,0],[99,0],[108,0],[116,0],[123,0],[129,0],[136,0],[146,0],[154,0],[159,0],[167,0],[174,0],[182,0],[191,0],[197,0],[204,0],[212,0],[220,0],[226,0],[233,0],[241,0],[249,0],[258,0],[266,0],[274,0],[282,0],[291,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.269\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.269,\"between\":1,\"share\":0.269,\"end\":0,\"frames\":[[-4,0.269],[5,0],[12,0],[18,0],[27,0],[33,0],[41,0],[49,0],[58,0],[63,0],[71,0],[77,0],[87,0],[92,0],[99,0],[108,0],[116,0],[123,0],[129,0],[136,0],[146,0],[154,0],[159,0],[167,0],[174,0],[182,0],[191,0],[197,0],[204,0],[212,0],[220,0],[226,0],[233,0],[241,0],[249,0],[258,0],[266,0],[274,0],[282,0],[291,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.269\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 68,
+                      "line": 1088
+                    },
+                    "snippet": "  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 68,
+                        "line": 1088
+                      },
+                      "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.269,\"between\":1,\"share\":0.269,\"end\":0,\"frames\":[[-4,0.269],[5,0],[12,0],[18,0],[27,0],[33,0],[41,0],[49,0],[58,0],[63,0],[71,0],[77,0],[87,0],[92,0],[99,0],[108,0],[116,0],[123,0],[129,0],[136,0],[146,0],[154,0],[159,0],[167,0],[174,0],[182,0],[191,0],[197,0],[204,0],[212,0],[220,0],[226,0],[233,0],[241,0],[249,0],[258,0],[266,0],[274,0],[282,0],[291,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.269\u001b[39m\n\n  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:46:44.236Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC4yNjksImJldHdlZW4iOjEsInNoYXJlIjowLjI2OSwiZW5kIjowLCJmcmFtZXMiOltbLTQsMC4yNjldLFs1LDBdLFsxMiwwXSxbMTgsMF0sWzI3LDBdLFszMywwXSxbNDEsMF0sWzQ5LDBdLFs1OCwwXSxbNjMsMF0sWzcxLDBdLFs3NywwXSxbODcsMF0sWzkyLDBdLFs5OSwwXSxbMTA4LDBdLFsxMTYsMF0sWzEyMywwXSxbMTI5LDBdLFsxMzYsMF0sWzE0NiwwXSxbMTU0LDBdLFsxNTksMF0sWzE2NywwXSxbMTc0LDBdLFsxODIsMF0sWzE5MSwwXSxbMTk3LDBdLFsyMDQsMF0sWzIxMiwwXSxbMjIwLDBdLFsyMjYsMF0sWzIzMywwXSxbMjQxLDBdLFsyNDksMF0sWzI1OCwwXSxbMjY2LDBdLFsyNzQsMF0sWzI4MiwwXSxbMjkxLDBdXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-expand-·-an-50e01-ters-turns-from-where-it-is-chromium-phone-repeat18/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 68,
+                    "line": 1088
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-bff7d9d9567e64affe69",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 19,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3789,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.315,\"between\":1,\"share\":0.315,\"end\":0,\"frames\":[[-3,0.315],[5,0],[13,0],[20,0],[26,0],[34,0],[42,0],[50,0],[58,0],[64,0],[70,0],[79,0],[87,0],[93,0],[100,0],[108,0],[115,0],[125,0],[130,0],[138,0],[146,0],[154,0],[159,0],[167,0],[175,0],[182,0],[191,0],[196,0],[204,0],[212,0],[220,0],[226,0],[234,0],[241,0],[249,0],[258,0],[263,0],[271,0],[279,0],[286,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.315\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.315,\"between\":1,\"share\":0.315,\"end\":0,\"frames\":[[-3,0.315],[5,0],[13,0],[20,0],[26,0],[34,0],[42,0],[50,0],[58,0],[64,0],[70,0],[79,0],[87,0],[93,0],[100,0],[108,0],[115,0],[125,0],[130,0],[138,0],[146,0],[154,0],[159,0],[167,0],[175,0],[182,0],[191,0],[196,0],[204,0],[212,0],[220,0],[226,0],[234,0],[241,0],[249,0],[258,0],[263,0],[271,0],[279,0],[286,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.315\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 68,
+                      "line": 1088
+                    },
+                    "snippet": "  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 68,
+                        "line": 1088
+                      },
+                      "message": "Error: no frame carries more than a fifth {\"top\":1,\"atTurn\":0.315,\"between\":1,\"share\":0.315,\"end\":0,\"frames\":[[-3,0.315],[5,0],[13,0],[20,0],[26,0],[34,0],[42,0],[50,0],[58,0],[64,0],[70,0],[79,0],[87,0],[93,0],[100,0],[108,0],[115,0],[125,0],[130,0],[138,0],[146,0],[154,0],[159,0],[167,0],[175,0],[182,0],[191,0],[196,0],[204,0],[212,0],[220,0],[226,0],[234,0],[241,0],[249,0],[258,0],[263,0],[271,0],[279,0],[286,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.315\u001b[39m\n\n  1086 |     expect(read.atTurn, `the close lands mid-entrance ${at}`).toBeGreaterThan(0.02);\n  1087 |     expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 1088 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                    ^\n  1089 | });\n  1090 |\n  1091 | test(\"expand · an ExpandableContainer reopened while it leaves turns from where it is\", async ({ page }, info) => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1088:68"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T11:46:48.337Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC4zMTUsImJldHdlZW4iOjEsInNoYXJlIjowLjMxNSwiZW5kIjowLCJmcmFtZXMiOltbLTMsMC4zMTVdLFs1LDBdLFsxMywwXSxbMjAsMF0sWzI2LDBdLFszNCwwXSxbNDIsMF0sWzUwLDBdLFs1OCwwXSxbNjQsMF0sWzcwLDBdLFs3OSwwXSxbODcsMF0sWzkzLDBdLFsxMDAsMF0sWzEwOCwwXSxbMTE1LDBdLFsxMjUsMF0sWzEzMCwwXSxbMTM4LDBdLFsxNDYsMF0sWzE1NCwwXSxbMTU5LDBdLFsxNjcsMF0sWzE3NSwwXSxbMTgyLDBdLFsxOTEsMF0sWzE5NiwwXSxbMjA0LDBdLFsyMTIsMF0sWzIyMCwwXSxbMjI2LDBdLFsyMzQsMF0sWzI0MSwwXSxbMjQ5LDBdLFsyNTgsMF0sWzI2MywwXSxbMjcxLDBdLFsyNzksMF0sWzI4NiwwXV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-expand-·-an-50e01-ters-turns-from-where-it-is-chromium-phone-repeat19/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 68,
+                    "line": 1088
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-9df21d0096bc7325ec5b",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1074,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-17T11:45:27.804Z",
+    "duration": 84447.464,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 20,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,126 @@
+diff --git a/src/components/_shared/disclosure/disclosure.css b/src/components/_shared/disclosure/disclosure.css
+index 7e9b60dd2..fc1f0998a 100644
+--- a/src/components/_shared/disclosure/disclosure.css
++++ b/src/components/_shared/disclosure/disclosure.css
+@@ -26,6 +26,34 @@
+     }
+ }
+ 
++/* A region reversed mid-motion turns from where it stands. The turn (`turn.ts`) names one
++   of these inline, with the height and block padding the region stood at in
++   `--disclosure-turn-size` and `--disclosure-turn-pad`, so the new motion begins at its
++   own first stop, at that height, and ends where `disclosure-open` or `disclosure-close`
++   ends. */
++@keyframes disclosure-turn-open {
++    from {
++        block-size: var(--disclosure-turn-size);
++        padding-block: var(--disclosure-turn-pad);
++    }
++
++    to {
++        block-size: var(--disclosure-content-size);
++    }
++}
++
++@keyframes disclosure-turn-close {
++    from {
++        block-size: var(--disclosure-turn-size);
++        padding-block: var(--disclosure-turn-pad);
++    }
++
++    to {
++        block-size: 0;
++        padding-block: 0;
++    }
++}
++
+ @layer components {
+     .disclosure {
+         inline-size: 100%;
+diff --git a/src/components/_shared/disclosure/turn.ts b/src/components/_shared/disclosure/turn.ts
+index 41c65107f..f8306c735 100644
+--- a/src/components/_shared/disclosure/turn.ts
++++ b/src/components/_shared/disclosure/turn.ts
+@@ -1,58 +1,49 @@
+ import { nextTick, watch, type Ref } from "vue";
+ 
+-const isDisclosureMotion = (a: Animation): a is CSSAnimation =>
+-    a instanceof CSSAnimation && a.animationName.startsWith("disclosure-");
++const MOTIONS = ["disclosure-open", "disclosure-close", "disclosure-turn-open", "disclosure-turn-close"];
++
++const isHeightMotion = (a: Animation): a is CSSAnimation =>
++    a instanceof CSSAnimation && MOTIONS.includes(a.animationName);
+ 
+ /**
+  * A disclosure reversed mid-motion turns from the height it stands at.
+  *
+  * The region opens and closes on two keyframes (`disclosure-open`, `disclosure-close`),
+  * and a keyframe starts at its first stop, so a flip mid-motion would restart from the
+- * far end: the region empties or fills in one frame. When the state flips while one of
+- * them runs, this reads the height the region stands at before the flip and, in the same
+- * task, seeks the new keyframe to the moment it passes that height, so no frame paints
+- * the far end. The new motion then carries on from there on its own clock.
++ * far end: the region empties or fills in one frame. When the state flips while the
++ * region's height is moving, this reads the height and block padding it stands at
++ * before the flip and names, inline, the turn keyframe for the new direction
++ * (`disclosure-turn-open`, `disclosure-turn-close`), whose first stop is that height and
++ * padding. The new motion starts at its own beginning, from where the region stands, on
++ * the region's clock and curve. The keyframe is never seeked and never delayed.
+  *
+  * `open` is the root's open state; `id` names the content element.
+  */
+ export function useDisclosureTurn(open: Ref<boolean>, id: string): void {
+     watch(
+         open,
+-        () => {
++        (opening) => {
+             if (typeof document === "undefined") return;
+             const el = document.getElementById(id);
+             if (!el || typeof el.getAnimations !== "function") return;
+-            const running = el
++            const moving = el
+                 .getAnimations()
+-                .find((a) => isDisclosureMotion(a) && a.playState === "running");
+-            if (!running) return;
+-            const from = el.getBoundingClientRect().height;
++                .some((a) => isHeightMotion(a) && a.playState === "running");
++            if (!moving) return;
++            const size = `${el.getBoundingClientRect().height}px`;
++            const style = getComputedStyle(el);
++            const pad = `${style.paddingBlockStart} ${style.paddingBlockEnd}`;
+             // reka's content measures its size after the flip's render, in its own
+-            // continuation of the same `nextTick`, with the animation off, and restores
+-            // it: that restored keyframe is the one to seek. This watcher runs first (it
+-            // belongs to the wrapping component), so the seek waits one further step.
++            // continuation of the same `nextTick`, with the animation off, and then hands
++            // the animation name back to the stylesheet, which also clears a turn named
++            // on an earlier flip. This watcher runs first (it belongs to the wrapping
++            // component), so the turn is named one step further on.
+             void nextTick()
+                 .then(() => undefined)
+                 .then(() => {
+-                    const next = el
+-                        .getAnimations()
+-                        .find(
+-                            (a): a is CSSAnimation =>
+-                                isDisclosureMotion(a) && a !== running,
+-                        );
+-                    const end = Number(next?.effect?.getComputedTiming().endTime ?? 0);
+-                    if (!next || !(end > 0)) return;
+-                    const closing = next.animationName === "disclosure-close";
+-                    let lo = 0;
+-                    let hi = end;
+-                    for (let i = 0; i < 14; i++) {
+-                        const mid = (lo + hi) / 2;
+-                        next.currentTime = mid;
+-                        const h = el.getBoundingClientRect().height;
+-                        if (closing ? h > from : h < from) lo = mid;
+-                        else hi = mid;
+-                    }
+-                    next.currentTime = (lo + hi) / 2;
++                    el.style.setProperty("--disclosure-turn-size", size);
++                    el.style.setProperty("--disclosure-turn-pad", pad);
++                    el.style.animationName = opening ? "disclosure-turn-open" : "disclosure-turn-close";
+                 });
+         },
+         { flush: "pre" },

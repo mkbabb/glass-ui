@@ -1,0 +1,40 @@
+05:46:48 b-tip src@3d5026c92 exit 1 load=5.63 6.18 7.19  9 failed  15 passed (2.8m)  stall: closed: 0/12 films holed, 0/12 cells failed; reopen: 18/21 films holed, 9/12 cells failed;
+05:49:25 b-14 src@2d663038d exit 1 load=6.24 6.19 7.02  4 failed  20 passed (2.4m)  stall: closed: 0/12 films holed, 0/12 cells failed; reopen: 8/16 films holed, 4/12 cells failed;
+05:51:54 b-07 src@500df67da exit 1 load=4.70 5.60 6.65  2 failed  22 passed (2.2m)  stall: closed: 0/12 films holed, 0/12 cells failed; reopen: 4/14 films holed, 2/12 cells failed;
+05:54:17 b-04 src@22e65f1ba exit 1 load=7.02 5.95 6.61  24 failed  stall: closed: 0/12 films holed, 12/12 cells failed; reopen: 0/12 films holed, 12/12 cells failed;
+05:54:57 b-05 src@001a726e8 (wrapper stopped mid-run, summary by hand)  stall: 
+05:57:47 b-05 src@001a726e8 exit 1 load=7.80 7.44 7.14  6 failed  18 passed (2.5m)  stall: closed: 0/12 films holed, 0/12 cells failed; reopen: 12/18 films holed, 6/12 cells failed;
+06:00:19 b-c4-turn src@22e65f1ba + turn-on-c4.patch exit 1 load=5.79 6.71 6.89  2 failed  22 passed (2.1m)  stall: closed: 0/12 films holed, 0/12 cells failed; reopen: 4/14 films holed, 2/12 cells failed;
+06:02:42 b-tip-noturn src@3d5026c92 + no-turn-on-tip.patch exit 1 load=6.68 6.84 6.92  24 failed  stall: closed: 0/12 films holed, 12/12 cells failed; reopen: 0/12 films holed, 12/12 cells failed;
+06:05:07 s6-tip-firstload src@3d5026c92 grep "reverse · a (Accordion|Collapsible)" exit 1 load=6.24 6.53 6.77  2 failed  22 passed (2.0m)  stall: closed: 2/12 films holed, 0/12 cells failed; reopen: 6/12 films holed, 2/12 cells failed;
+06:08:12 v1-no-seek src@3d5026c92 + v1-no-seek-on-tip.patch exit 1 load=10.15 8.35 7.49  24 failed  stall: closed: 0/12 films holed, 12/12 cells failed; reopen: 0/12 films holed, 12/12 cells failed;
+06:13:27 cure1 src@3d5026c92 + cure-delay-on-tip.patch exit 1 load=6.11 6.68 6.94  2 failed  22 passed (2.1m)  stall: closed: 0/12 films holed, 0/12 cells failed; reopen: 4/14 films holed, 2/12 cells failed;
+06:16:57 b-tip-s src@3d5026c92 exit 1 load=5.89 6.09 6.61  4 failed  20 passed (2.3m)  stall: closed: 0/12 films holed, 0/12 cells failed; reopen: 8/16 films holed, 4/12 cells failed;
+06:21:18 v3-delay-arith src@3d5026c92 + v3-delay-arith-on-tip.patch exit 1 load=8.88 6.97 6.77  5 failed  19 passed (2.4m)  stall: closed: 0/12 films holed, 0/12 cells failed; reopen: 10/17 films holed, 5/12 cells failed;
+06:25:39 v4-turn-keyframes src@3d5026c92 + v4-turn-keyframes-on-tip.patch exit 1 load=6.94 6.82 6.75  3 failed  21 passed (2.2m)  stall: closed: 0/12 films holed, 0/12 cells failed; reopen: 6/15 films holed, 3/12 cells failed;
+06:29:54 s7-tip-minimal src@3d5026c92 grep "reverse · a (Accordion|Collapsible)" exit 0 load=6.35 6.51 6.62  24 passed (1.9m)  stall: closed: 0/12 films holed, 0/12 cells failed; reopen: 0/12 films holed, 0/12 cells failed;
+06:32:38 s7-tip-with-expand src@3d5026c92 grep "reverse · a (Accordion|Collapsible)" exit 0 load=4.88 5.90 6.35  24 passed (1.9m)  stall: closed: 0/12 films holed, 0/12 cells failed; reopen: 0/12 films holed, 0/12 cells failed;
+06:34:49 s7-tip-with-dock src@3d5026c92 grep "reverse · a (Accordion|Collapsible)" exit 0 load=6.00 6.21 6.42  24 passed (2.0m)  stall: closed: 0/12 films holed, 0/12 cells failed; reopen: 0/12 films holed, 0/12 cells failed;
+06:37:44 s7-tip-with-rows src@3d5026c92 grep "reverse · a (Accordion|Collapsible)" exit 0 load=5.50 5.81 6.21  24 passed (1.9m)  stall: closed: 0/12 films holed, 0/12 cells failed; reopen: 0/12 films holed, 0/12 cells failed;
+06:40:27 s7-tip-with-all src@3d5026c92 grep "reverse · a (Accordion|Collapsible)" exit 1 load=6.11 5.85 6.14  5 failed  19 passed (2.4m)  stall: closed: 0/12 films holed, 0/12 cells failed; reopen: 10/17 films holed, 5/12 cells failed;
+06:43:20 s7-tip-no-toaster src@3d5026c92 grep "reverse · a (Accordion|Collapsible)" exit 1 load=6.28 5.80 6.05  4 failed  20 passed (2.3m)  stall: closed: 0/12 films holed, 0/12 cells failed; reopen: 8/16 films holed, 4/12 cells failed;
+06:45:21 s7-tip-no-dock src@3d5026c92 grep "reverse · a (Accordion|Collapsible)" exit 0 load=6.76 6.19 6.17  24 passed (1.9m)  stall: closed: 0/12 films holed, 0/12 cells failed; reopen: 0/12 films holed, 0/12 cells failed;
+06:46:55 d2-red-expand-chromium-phone red chromium-phone exit 1 load=6.37 6.14 6.15  20 failed 
+06:48:57 d2-red-collreopen-webkit-phone red webkit-phone exit 1 load=6.27 6.25 6.19  20 failed 
+06:50:26 d2-tip-expand-chromium-phone branch chromium-phone exit 0 load=6.23 6.39 6.26  20 passed (1.4m) 
+06:50:48 b-red-press-chromium-phone red chromium-phone exit 1 load=6.14 6.36 6.25  1 failed 
+06:51:08 b-tip-press-chromium-phone branch chromium-phone exit 0 load=6.05 6.32 6.24  1 passed (15.7s) 
+06:51:24 b-red-press-chromium-desktop red chromium-desktop exit 1 load=5.49 6.19 6.19  1 failed 
+06:51:42 b-tip-press-chromium-desktop branch chromium-desktop exit 1 load=5.31 6.11 6.17  1 failed 
+06:52:00 b-red-press-webkit-desktop red webkit-desktop exit 1 load=5.29 6.05 6.14  1 failed 
+06:52:18 b-tip-press-webkit-desktop branch webkit-desktop exit 1 load=5.86 6.13 6.17  1 failed 
+CHAIN1-DONE 06:52:18
+06:54:36 s7-tip-dock-rows src@3d5026c92 grep "reverse · a (Accordion|Collapsible)" exit 0 load=8.10 6.79 6.42  24 passed (2.0m)  stall: closed: 0/12 films holed, 0/12 cells failed; reopen: 0/12 films holed, 0/12 cells failed;
+06:56:38 s7-tip-dock-expand src@3d5026c92 grep "reverse · a (Accordion|Collapsible)" exit 0 load=6.21 6.68 6.43  24 passed (1.9m)  stall: closed: 0/12 films holed, 0/12 cells failed; reopen: 0/12 films holed, 0/12 cells failed;
+CHAIN2-DONE 06:56:38
+06:58:09 b2-tip-press-chromium-desktop branch chromium-desktop exit 0 load=5.64 6.32 6.31  1 passed (11.9s) 
+06:58:27 b2-tip-press-webkit-desktop branch webkit-desktop exit 0 load=5.94 6.35 6.33  1 passed (11.9s) 
+06:58:47 b2-tip-press-chromium-phone branch chromium-phone exit 0 load=5.96 6.33 6.32  1 passed (15.8s) 
+06:59:23 b2-red-press-chromium-desktop red chromium-desktop exit 1 load=6.51 6.44 6.36  1 failed 
+06:59:41 b2-red-press-webkit-desktop red webkit-desktop exit 1 load=9.33 7.03 6.57  1 failed 
+07:00:01 b2-red-press-chromium-phone red chromium-phone exit 1 load=10.24 7.38 6.70  1 failed 

@@ -1,0 +1,40 @@
+diff --git a/src/components/accordion/AccordionContent.vue b/src/components/accordion/AccordionContent.vue
+index e87581208..b79e82f61 100644
+--- a/src/components/accordion/AccordionContent.vue
++++ b/src/components/accordion/AccordionContent.vue
+@@ -6,7 +6,6 @@ import {
+ } from "reka-ui";
+ import { cn } from "../_shared/class-names";
+ import { useDisclosureIds } from "../_shared/disclosure/disclosure-context";
+-import { useDisclosureTurn } from "../_shared/disclosure/turn";
+ 
+ export interface AccordionContentProps {
+     /** Keep the region mounted while closed, for measurement or external animation. */
+@@ -24,7 +23,6 @@ defineSlots<{ default?: () => unknown }>();
+ const ids = useDisclosureIds();
+ const rootContext = injectCollapsibleRootContext();
+ rootContext.contentId = ids.content;
+-useDisclosureTurn(rootContext.open, ids.content);
+ 
+ const attrs = useAttrs();
+ const forwardedAttrs = computed(() => {
+diff --git a/src/components/collapsible/CollapsibleContent.vue b/src/components/collapsible/CollapsibleContent.vue
+index fe8b16007..77285c9e2 100644
+--- a/src/components/collapsible/CollapsibleContent.vue
++++ b/src/components/collapsible/CollapsibleContent.vue
+@@ -6,7 +6,6 @@ import {
+ } from "reka-ui";
+ import { cn } from "../_shared/class-names";
+ import { useDisclosureIds } from "../_shared/disclosure/disclosure-context";
+-import { useDisclosureTurn } from "../_shared/disclosure/turn";
+ 
+ export interface CollapsibleContentProps {
+     /** Keep the region mounted while closed, for measurement or external animation. */
+@@ -24,7 +23,6 @@ defineSlots<{ default?: () => unknown }>();
+ const ids = useDisclosureIds();
+ const rootContext = injectCollapsibleRootContext();
+ rootContext.contentId = ids.content;
+-useDisclosureTurn(rootContext.open, ids.content);
+ 
+ const attrs = useAttrs();
+ const forwardedAttrs = computed(() => {

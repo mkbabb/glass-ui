@@ -1,0 +1,103 @@
+diff --git a/src/components/_shared/disclosure/turn.ts b/src/components/_shared/disclosure/turn.ts
+new file mode 100644
+index 000000000..2fc5de378
+--- /dev/null
++++ b/src/components/_shared/disclosure/turn.ts
+@@ -0,0 +1,57 @@
++import { nextTick, watch, type Ref } from "vue";
++
++const isDisclosureMotion = (a: Animation): a is CSSAnimation =>
++    a instanceof CSSAnimation && a.animationName.startsWith("disclosure-");
++
++/**
++ * A disclosure reversed mid-motion turns from the height it stands at.
++ *
++ * The region opens and closes on two keyframes (`disclosure-open`, `disclosure-close`),
++ * and a keyframe starts at its first stop, so a flip mid-motion would restart from the
++ * far end: the region empties or fills in one frame. When the state flips while one of
++ * them runs, this reads the height the region stands at before the flip and, in the same
++ * task, seeks the new keyframe to the moment it passes that height, so no frame paints
++ * the far end. The new motion then carries on from there on its own clock.
++ *
++ * `open` is the root's open state; `id` names the content element.
++ */
++export function useDisclosureTurn(open: Ref<boolean>, id: string): void {
++    watch(
++        open,
++        () => {
++            if (typeof document === "undefined") return;
++            const el = document.getElementById(id);
++            if (!el || typeof el.getAnimations !== "function") return;
++            const running = el
++                .getAnimations()
++                .find((a) => isDisclosureMotion(a) && a.playState === "running");
++            if (!running) return;
++            const from = el.getBoundingClientRect().height;
++            // reka's content measures its size after the flip's render, in its own
++            // continuation of the same `nextTick`, with the animation off, and restores
++            // it: that restored keyframe is the one to seek. This watcher runs first (it
++            // belongs to the wrapping component), so the seek waits one further step.
++            void nextTick()
++                .then(() => undefined)
++                .then(() => {
++                    const next = el
++                        .getAnimations()
++                        .find((a) => isDisclosureMotion(a) && a !== running);
++                    const end = Number(next?.effect?.getComputedTiming().endTime ?? 0);
++                    if (!next || !(end > 0)) return;
++                    const closing = next.animationName === "disclosure-close";
++                    let lo = 0;
++                    let hi = end;
++                    for (let i = 0; i < 14; i++) {
++                        const mid = (lo + hi) / 2;
++                        next.currentTime = mid;
++                        const h = el.getBoundingClientRect().height;
++                        if (closing ? h > from : h < from) lo = mid;
++                        else hi = mid;
++                    }
++                    next.currentTime = (lo + hi) / 2;
++                });
++        },
++        { flush: "pre" },
++    );
++}
+diff --git a/src/components/accordion/AccordionContent.vue b/src/components/accordion/AccordionContent.vue
+index b79e82f61..e87581208 100644
+--- a/src/components/accordion/AccordionContent.vue
++++ b/src/components/accordion/AccordionContent.vue
+@@ -6,6 +6,7 @@ import {
+ } from "reka-ui";
+ import { cn } from "../_shared/class-names";
+ import { useDisclosureIds } from "../_shared/disclosure/disclosure-context";
++import { useDisclosureTurn } from "../_shared/disclosure/turn";
+ 
+ export interface AccordionContentProps {
+     /** Keep the region mounted while closed, for measurement or external animation. */
+@@ -23,6 +24,7 @@ defineSlots<{ default?: () => unknown }>();
+ const ids = useDisclosureIds();
+ const rootContext = injectCollapsibleRootContext();
+ rootContext.contentId = ids.content;
++useDisclosureTurn(rootContext.open, ids.content);
+ 
+ const attrs = useAttrs();
+ const forwardedAttrs = computed(() => {
+diff --git a/src/components/collapsible/CollapsibleContent.vue b/src/components/collapsible/CollapsibleContent.vue
+index 77285c9e2..fe8b16007 100644
+--- a/src/components/collapsible/CollapsibleContent.vue
++++ b/src/components/collapsible/CollapsibleContent.vue
+@@ -6,6 +6,7 @@ import {
+ } from "reka-ui";
+ import { cn } from "../_shared/class-names";
+ import { useDisclosureIds } from "../_shared/disclosure/disclosure-context";
++import { useDisclosureTurn } from "../_shared/disclosure/turn";
+ 
+ export interface CollapsibleContentProps {
+     /** Keep the region mounted while closed, for measurement or external animation. */
+@@ -23,6 +24,7 @@ defineSlots<{ default?: () => unknown }>();
+ const ids = useDisclosureIds();
+ const rootContext = injectCollapsibleRootContext();
+ rootContext.contentId = ids.content;
++useDisclosureTurn(rootContext.open, ids.content);
+ 
+ const attrs = useAttrs();
+ const forwardedAttrs = computed(() => {

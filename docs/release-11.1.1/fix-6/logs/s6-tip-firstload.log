@@ -1,0 +1,76 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 24 tests using 1 worker
+
+  ✓   1 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall6.probe.ts:867:9 › reverse · a Collapsible closed while it opens turns from where it is (4.5s)
+  ✓   2 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall6.probe.ts:879:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.2s)
+  ✓   3 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall6.probe.ts:867:9 › reverse · a Accordion closed while it opens turns from where it is (4.3s)
+  ✓   4 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall6.probe.ts:879:9 › reverse · a Accordion reopened while it closes turns from where it is (5.2s)
+  ✓   5 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall6.probe.ts:867:9 › reverse · a Collapsible closed while it opens turns from where it is (4.5s)
+  ✘   6 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall6.probe.ts:879:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.5s)
+  ✓   7 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall6.probe.ts:867:9 › reverse · a Accordion closed while it opens turns from where it is (4.4s)
+  ✓   8 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall6.probe.ts:879:9 › reverse · a Accordion reopened while it closes turns from where it is (5.2s)
+  ✓   9 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall6.probe.ts:867:9 › reverse · a Collapsible closed while it opens turns from where it is (4.4s)
+  ✓  10 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall6.probe.ts:879:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.3s)
+  ✓  11 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall6.probe.ts:867:9 › reverse · a Accordion closed while it opens turns from where it is (4.3s)
+  ✓  12 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall6.probe.ts:879:9 › reverse · a Accordion reopened while it closes turns from where it is (5.4s)
+  ✓  13 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall6.probe.ts:867:9 › reverse · a Collapsible closed while it opens turns from where it is (4.5s)
+  ✓  14 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall6.probe.ts:879:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.2s)
+  ✓  15 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall6.probe.ts:867:9 › reverse · a Accordion closed while it opens turns from where it is (4.2s)
+  ✓  16 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall6.probe.ts:879:9 › reverse · a Accordion reopened while it closes turns from where it is (5.2s)
+  ✓  17 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall6.probe.ts:867:9 › reverse · a Collapsible closed while it opens turns from where it is (4.4s)
+  ✘  18 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall6.probe.ts:879:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.5s)
+  ✓  19 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall6.probe.ts:867:9 › reverse · a Accordion closed while it opens turns from where it is (4.4s)
+  ✓  20 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall6.probe.ts:879:9 › reverse · a Accordion reopened while it closes turns from where it is (5.3s)
+  ✓  21 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall6.probe.ts:867:9 › reverse · a Collapsible closed while it opens turns from where it is (4.5s)
+  ✓  22 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall6.probe.ts:879:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.5s)
+  ✓  23 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall6.probe.ts:867:9 › reverse · a Accordion closed while it opens turns from where it is (4.3s)
+  ✓  24 [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall6.probe.ts:879:9 › reverse · a Accordion reopened while it closes turns from where it is (5.2s)
+
+
+  1) [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall6.probe.ts:879:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+
+    Error: the second input lands mid-motion {"atTurn":0.036,"turnedAt":0.036,"share":0.144,"end":1,"hole":86,"frames":[[0,0.036],[79,0.036],[96,0.183],[169,0.779],[255,0.969],[343,1],[430,1],[516,1],[525,1],[535,1],[545,1],[555,1],[566,1],[575,1],[584,1],[596,1],[606,1],[616,1],[627,1],[637,1],[647,1],[657,1],[666,1],[676,1],[687,1],[699,1],[709,1],[719,1],[728,1],[740,1],[749,1],[759,1],[770,1],[780,1],[789,1],[799,1],[809,1],[820,1],[829,1],[841,1],[851,1],[861,1],[873,1],[882,1],[892,1]]}
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0.04
+    Received:   0.036
+
+      815 | function expectTurn(read: TurnRead, ends: "gone" | "open"): void {
+      816 |     const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 45) });
+    > 817 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+          |                                                                    ^
+      818 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+      819 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+      820 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall6.probe.ts:817:68)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall6.probe.ts:890:13
+
+    Error Context: test-results/stall6.probe.ts-reverse-·--1840e-oses-turns-from-where-it-is-webkit-phone-repeat1/error-context.md
+
+  2) [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall6.probe.ts:879:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+
+    Error: the second input lands mid-motion {"atTurn":0.024,"turnedAt":0.024,"share":0.142,"end":1,"hole":90,"frames":[[0,0.024],[86,0.024],[99,0.125],[173,0.755],[259,0.965],[342,1],[426,1],[507,1],[512,1],[517,1],[528,1],[539,1],[549,1],[562,1],[570,1],[580,1],[592,1],[600,1],[611,1],[621,1],[631,1],[641,1],[652,1],[662,1],[672,1],[681,1],[692,1],[703,1],[713,1],[724,1],[733,1],[743,1],[752,1],[764,1],[774,1],[784,1],[794,1],[804,1],[815,1],[823,1],[835,1],[845,1],[854,1],[866,1],[876,1]]}
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0.04
+    Received:   0.024
+
+      815 | function expectTurn(read: TurnRead, ends: "gone" | "open"): void {
+      816 |     const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 45) });
+    > 817 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+          |                                                                    ^
+      818 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+      819 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+      820 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall6.probe.ts:817:68)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix6-bisect/tree/docs/release-11.1.1/fix-6/probe/stall6.probe.ts:890:13
+
+    Error Context: test-results/stall6.probe.ts-reverse-·--1840e-oses-turns-from-where-it-is-webkit-phone-repeat4/error-context.md
+
+  2 failed
+    [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall6.probe.ts:879:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+    [webkit-phone] › docs/release-11.1.1/fix-6/probe/stall6.probe.ts:879:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+  22 passed (2.0m)
