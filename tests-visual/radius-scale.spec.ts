@@ -168,18 +168,22 @@ for (const theme of ["light", "dark"]) {
         });
 
         test("a SegmentedTabs strip wider than 20rem is a bar; a short one a stadium", async ({ page }) => {
+            const coarse = test.info().project.name === "coarse-touch";
             const wide = await shape(page, '[data-witness="strip-wide"]');
             expect(wide.w).toBeGreaterThan(320);
             expect(wide.shape).toBe("bar");
             const wideTab = await shape(page, '[data-witness="strip-wide"] .segmented-tab');
-            expect(wideTab.radius).toBe("12px");
+            // The bar's tab takes `--radius-bar` (12 px). Under a coarse pointer the bar
+            // keeps round ends: its corner is half the 44 px control floor, so the tab is
+            // a capsule.
+            expect(wideTab.radius).toBe(coarse ? "22px" : "12px");
+            if (coarse) expect(parseFloat(wideTab.radius)).toBeGreaterThanOrEqual(wideTab.h / 2 - 1);
             const short = await shape(page, '[data-witness="strip-short"]');
             expect(short.shape).toBeNull();
             const shortTab = await shape(page, '[data-witness="strip-short"] .segmented-tab');
             // The tab reads `--radius-tab` (1rem); a caption tab is about 33 px tall, so
             // its corner sits within 1 px of a full stadium. Under a coarse pointer the tab
             // grows to the 44 px control floor and its corner follows it, half of 44.
-            const coarse = test.info().project.name === "coarse-touch";
             expect(shortTab.radius).toBe(coarse ? "22px" : "16px");
             expect(parseFloat(shortTab.radius)).toBeGreaterThanOrEqual(shortTab.h / 2 - 1);
         });
