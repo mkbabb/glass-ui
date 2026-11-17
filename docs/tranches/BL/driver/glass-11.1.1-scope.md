@@ -144,3 +144,10 @@ With `thumbAlignment: "contain"` reka-ui measures the thumb after mount and offs
 ## Added 2026-11-17: the dock's reserve attribute is the dock's own (O-395, demo P15)
 
 `dock.css:260` takes `pointer-events` from any element on the page with `[data-reserve]`, a generic name a consumer can use for its own purpose (the demo did, and its Menu trigger stopped taking a press). The reserve becomes a dock-owned name (`data-glass-dock-reserve`), set only by the dock's reserved-footprint host, with no alias for the old one; atlas, value.js and hassio are told at publish if a grep of their trees finds the old attribute. Witness: an element outside any dock that carries `data-reserve` takes a click (RED on v11.1.0), and the reserved margin of a collapse-morphing dock still passes clicks through to the page while its plate and controls take them.
+
+## Added 2026-11-17: four of 11.1.1 critique 5's open gaps (release/11.1.1, `docs/release-11.1.1/critique-5.md`, gaps A, C, D, I)
+
+- **A.** A dock Select picked at 1440 hops 10 px sideways on its first exit frame (679 to 669) as the trigger's new label re-places the anchored plate; v11.1.0 does the same. The exit holds the plate where it stood at the pick. Witness: the plate's left edge on every exit frame equals its edge at the pick, both engines.
+- **C.** The Dialog leaves on three channels: opacity, a scale of about 5 % and an 11 px drop (the CommandDialog box goes 350 to 333 px wide at 390). Read with the specular and hover work under the motion law: rule whether a leaving Dialog keeps its size.
+- **D.** Under reduced motion a pressed glass Button shows its press by a fill step of about 2 to 3 L* (veil ink α 0.244 to 0.278). The step becomes as visible as a dock seat's press (α 0.20 and brightness 0.96). Witness: the press crop's changed share and its ΔL* against the dock seat's, both themes.
+- **I.** `release-11-0-1-critic-1`'s two light "capsule in paint" titles throw in `plateOf` in WebKit on both trees: the witness is fixed in 11.1.2's spec sweep.
