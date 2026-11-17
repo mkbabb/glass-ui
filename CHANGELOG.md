@@ -85,8 +85,11 @@ A patch on 11.1.0 about how surfaces leave. Nothing is removed or renamed.
   from one face to the other. Each now fades in and out over at most 200 ms on
   `--exit-curve`, and nothing travels: a surface is in its place and at its size from
   the first frame, and a folding dock takes its new size at once while its two faces
-  cross-fade. A `Select`, menu or popover trigger seated in a dock darkens on a press
-  without shrinking, so what it opens is placed against the trigger at rest. The rule
+  cross-fade. A pressed control shows its press by colour, not by size: a `Button`, a
+  dock's seats and the `Select`, menu and popover triggers seated in a dock no longer
+  shrink or stretch on a press, so what a trigger opens is placed against it at rest.
+  Anything pressed through `useLiquidPress` does the same: it writes no `scale` under
+  reduced motion unless it is given `respectReducedMotion: false`. The rule
   that stills motion under reduced motion now sits in its own cascade layer,
   `reduced-motion`, declared after `utilities`, as a plain declaration. Your own
   stylesheet's rule, such as `transition: opacity 144ms`, or a style set inline, now
@@ -130,11 +133,15 @@ A patch on 11.1.0 about how surfaces leave. Nothing is removed or renamed.
 ### Sizes
 
 - The dock entry (`@mkbabb/glass-ui/dock` with every chunk it imports), gzipped: 38,673
-  bytes in 11.0.2, 40,541 in 11.1.0 and 40,541 in this release. This patch adds nothing
+  bytes in 11.0.2, 40,541 in 11.1.0 and 40,533 in this release. This patch adds nothing
   to it.
 - The surfaces a dock opens grew with the leave event and the exits that turn back,
   gzipped, from 11.1.0: `dialog` 12,508 to 14,494 bytes, `select` 8,453 to 9,517,
   `popover` 8,663 to 9,385, `tooltip` 5,897 to 6,607 and `menu` 11,865 to 12,555.
+- These entries also grew by more than half a kilobyte, measured the same way, from
+  11.1.0: the root entry (`@mkbabb/glass-ui`) 104,776 to 108,713 bytes, `command`
+  16,804 to 18,864, `sheet` 14,306 to 16,337, `tabs` 19,091 to 20,154, `easing` 36,889
+  to 37,983, `motion` 12,599 to 13,509 and `toast` 5,093 to 5,879.
 
 ## 11.1.0 — 2026-11-15
 
