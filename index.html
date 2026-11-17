@@ -27,16 +27,47 @@
              ships). No external font-host preconnect/stylesheet wiring is
              needed; the demo dogfoods exactly what a consumer of
              `@mkbabb/glass-ui/styles/fonts` receives. -->
-        <!-- The faces are `font-display: optional`: a face is used only if it has
-             arrived by the first text layout, so the Latin text face is fetched
-             with the document rather than after the stylesheet. -->
-        <link
-            rel="preload"
-            as="font"
-            type="font/woff2"
-            crossorigin
-            href="/src/fonts/plus-jakarta-sans/plus-jakarta-sans-latin.woff2"
-        />
+        <!-- What the first screen paints: Latin text in the text face on every
+             route, and on some (the home page, the tables, the metrics) figures or
+             code in the mono face. No first screen uses a Latin-ext character. So
+             the two Latin faces are declared here
+             and their loads start as the head is parsed: the text face is
+             `font-display: optional`, used only if it has arrived by the first text
+             layout (in Chromium, before rendering begins), and the mono face is
+             `swap`, which paints the fallback until it arrives. No preload: a
+             preload is used only when its request mode matches the engine's own
+             font request, `cors` in Chromium and `no-cors` in WebKit, so one
+             preload tag is fetched twice by one engine or the other. The two
+             Latin-ext faces stay in demo.css. -->
+        <style>
+            @font-face {
+                font-family: "Plus Jakarta Sans";
+                font-style: normal;
+                font-weight: 200 800;
+                font-display: optional;
+                src: url("/src/fonts/plus-jakarta-sans/plus-jakarta-sans-latin.woff2")
+                    format("woff2");
+                unicode-range:
+                    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+                    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+                    U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+            }
+            @font-face {
+                font-family: "Fira Code";
+                font-style: normal;
+                font-weight: 300 700;
+                font-display: swap;
+                src: url("/src/fonts/fira-code/fira-code-latin.woff2") format("woff2");
+                unicode-range:
+                    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+                    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+                    U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+            }
+        </style>
+        <script>
+            document.fonts.load('1em "Plus Jakarta Sans"');
+            document.fonts.load('1em "Fira Code"');
+        </script>
 
         <!-- The /styles cascade is the one byte-complete union entry
              `@mkbabb/glass-ui/styles` (the minified cascade). The earlier
