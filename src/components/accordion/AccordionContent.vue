@@ -6,7 +6,6 @@ import {
 } from "reka-ui";
 import { cn } from "../_shared/class-names";
 import { useDisclosureIds } from "../_shared/disclosure/disclosure-context";
-import { useDisclosureTurn } from "../_shared/disclosure/turn";
 
 export interface AccordionContentProps {
     /** Keep the region mounted while closed, for measurement or external animation. */
@@ -24,7 +23,6 @@ defineSlots<{ default?: () => unknown }>();
 const ids = useDisclosureIds();
 const rootContext = injectCollapsibleRootContext();
 rootContext.contentId = ids.content;
-useDisclosureTurn(rootContext.open, ids.content);
 
 const attrs = useAttrs();
 const forwardedAttrs = computed(() => {

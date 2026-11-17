@@ -57,17 +57,15 @@ A patch on 11.1.0 about how surfaces leave. Nothing is removed or renamed.
 - **A surface turned back mid-way turns from where it is.** Closing a `Popover`,
   `DropdownMenu`, `Select` or `Toast` while it was still opening made it jump to fully
   open before it moved again, as did reopening a `Popover` or a tooltip while it was
-  leaving, and an `Accordion` or `Collapsible` reversed mid-way ran to its far end for a
-  frame before it turned. Each now carries on from the light and the height it had. The
-  popups' exits are transitions now, held for reka's presence by a keyframe that paints
-  nothing (`glass-reveal-hold`), so they no longer run `glass-reveal-out`, nor
-  `glass-reveal-out-reduced` under reduced motion or with `data-motion="off"`. Both are
-  still defined, but `glass-reveal-out` has a new shape: its opacity reaches 0 at the end
-  of its clock, where it used to reach it at 60%, so a stylesheet that names it now
-  fades across the whole clock. A press on the trigger of a `Dialog`, `Sheet` or
-  `Select` that is still leaving reopens it from where it stands, where the press used to
-  be swallowed, and a press on the page behind a leaving `Dialog` or `Sheet` now reaches
-  the page.
+  leaving. Each now carries on from the light it had. The popups' exits are transitions
+  now, held for reka's presence by a keyframe that paints nothing (`glass-reveal-hold`),
+  so they no longer run `glass-reveal-out`, nor `glass-reveal-out-reduced` under reduced
+  motion or with `data-motion="off"`. Both are still defined, but `glass-reveal-out` has
+  a new shape: its opacity reaches 0 at the end of its clock, where it used to reach it
+  at 60%, so a stylesheet that names it now fades across the whole clock. A press on the
+  trigger of a `Dialog`, `Sheet` or `Select` that is still leaving reopens it from where
+  it stands, where the press used to be swallowed, and a press on the page behind a
+  leaving `Dialog` or `Sheet` now reaches the page.
 
 - **Tooltips fade in.** A tooltip appeared whole in one frame, and moving the pointer to
   a neighbouring trigger swapped one hint for the other at once. A tooltip now fades in
