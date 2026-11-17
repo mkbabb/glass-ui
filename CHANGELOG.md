@@ -48,8 +48,11 @@ A patch on 11.1.0 about how surfaces leave. Nothing is removed or renamed.
   closed; it now carries on down from where the finger left it. A `CommandDialog`
   dropped its list in the first frame of its close, so the plate fell to its search
   field before it faded; the list now stays until the dialog is gone. Menus no longer
-  run the `glass-menu-grow` keyframes to open (the grow is a transition now, so it can
-  turn back); the keyframes are still defined for stylesheets that name them.
+  run keyframes to open or close: `glass-menu-grow` and `glass-menu-grow-up` gave way to
+  a transition, so an opening menu can turn back, and `glass-menu-recede` and
+  `glass-menu-recede-up` gave way to one for the close. All four are still defined for
+  stylesheets that name them, but the two recede keyframes no longer hold full opacity
+  until the last tenth of their clock; they now fade across all of it.
 
 - **A surface turned back mid-way turns from where it is.** Closing a `Popover`,
   `DropdownMenu`, `Select` or `Toast` while it was still opening made it jump to fully
@@ -57,10 +60,14 @@ A patch on 11.1.0 about how surfaces leave. Nothing is removed or renamed.
   leaving, and an `Accordion` or `Collapsible` reversed mid-way ran to its far end for a
   frame before it turned. Each now carries on from the light and the height it had. The
   popups' exits are transitions now, held for reka's presence by a keyframe that paints
-  nothing (`glass-reveal-hold`); the `glass-reveal-out` keyframe is still defined for
-  stylesheets that name it. A press on the trigger of a `Dialog`, `Sheet` or `Select`
-  that is still leaving reopens it from where it stands, where the press used to be
-  swallowed, and a press on the page behind a leaving sheet now reaches the page.
+  nothing (`glass-reveal-hold`), so they no longer run `glass-reveal-out`, nor
+  `glass-reveal-out-reduced` under reduced motion or with `data-motion="off"`. Both are
+  still defined, but `glass-reveal-out` has a new shape: its opacity reaches 0 at the end
+  of its clock, where it used to reach it at 60%, so a stylesheet that names it now
+  fades across the whole clock. A press on the trigger of a `Dialog`, `Sheet` or
+  `Select` that is still leaving reopens it from where it stands, where the press used to
+  be swallowed, and a press on the page behind a leaving `Dialog` or `Sheet` now reaches
+  the page.
 
 - **Tooltips fade in.** A tooltip appeared whole in one frame, and moving the pointer to
   a neighbouring trigger swapped one hint for the other at once. A tooltip now fades in
@@ -86,8 +93,11 @@ A patch on 11.1.0 about how surfaces leave. Nothing is removed or renamed.
   `--exit-curve`, and nothing travels: a surface is in its place and at its size from
   the first frame, and a folding dock takes its new size at once while its two faces
   cross-fade. A pressed control shows its press by colour, not by size: a `Button`, a
-  dock's seats and the `Select`, menu and popover triggers seated in a dock no longer
-  shrink or stretch on a press, so what a trigger opens is placed against it at rest.
+  dock's seats, a menu or select row and the `Select`, menu and popover triggers seated
+  in a dock no longer shrink or stretch on a press, so what a trigger opens is placed
+  against it at rest. A pressed glass `Button` (the primary and secondary emphases)
+  darkens its plate a little, and a pressed menu or select row takes a fill a step
+  deeper than its highlight, under a finger as under a pointer.
   Anything pressed through `useLiquidPress` does the same: it writes no `scale` under
   reduced motion unless it is given `respectReducedMotion: false`. The rule
   that stills motion under reduced motion now sits in its own cascade layer,
