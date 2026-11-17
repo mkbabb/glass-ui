@@ -1,0 +1,29 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium-phone] › tests-visual/release-11-1-1-reduce.spec.ts:326:1 › press · a pressed Button and dock seat keep their size under reduced motion (3.5s)
+
+
+  1) [chromium-phone] › tests-visual/release-11-1-1-reduce.spec.ts:326:1 › press · a pressed Button and dock seat keep their size under reduced motion 
+
+    Error: the Button keeps scale 1 on every frame {"Button":{"rest":88.53,"active":13,"scales":["1","1.0328 0.911"],"transforms":["none"],"widths":[88.53,91.44]},"icon seat":{"rest":44,"active":16,"scales":["1","1.0066 0.9156"],"transforms":["none"],"widths":[44,44.29]},"tab seat":{"rest":47.69,"active":17,"scales":["1","0.96"],"transforms":["none"],"widths":[47.69,45.78]}}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      379 |     for (const [name, r] of Object.entries(reads)) {
+      380 |         expect(r.active, `the ${name} was held pressed ${at}`).toBeGreaterThan(0);
+    > 381 |         expect(r.scales.every(identity), `the ${name} keeps scale 1 on every frame ${at}`).toBe(true);
+          |                                                                                            ^
+      382 |         expect(r.transforms, `the ${name} takes no transform ${at}`).toEqual(["none"]);
+      383 |         expect(Math.max(...r.widths.map((w) => Math.abs(w - r.rest))), `the ${name} keeps its width ${at}`).toBeLessThanOrEqual(0.5);
+      384 |     }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:381:92
+
+    Error Context: tests-visual/test-results/release-11-1-1-reduce-pres-1e075-r-size-under-reduced-motion-chromium-phone/error-context.md
+
+  1 failed
+    [chromium-phone] › tests-visual/release-11-1-1-reduce.spec.ts:326:1 › press · a pressed Button and dock seat keep their size under reduced motion 

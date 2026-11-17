@@ -1,0 +1,29 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 1 test using 1 worker
+
+  ✘  1 [webkit-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:387:1 › still · a Slider holds still under reduced motion (2.2s)
+
+
+  1) [webkit-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:387:1 › still · a Slider holds still under reduced motion 
+
+    Error: the root changes on a zero clock {"clocks":{"root":"0.2s","track":"0.2s, 0.2s","fill":"0.3s, 0.21s, 0.2s","thumb":"0.12s"},"runs":[{"value":"none","frames":10},{"value":"matrix(1, 0, 0, 1, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.998958, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.995778, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.992001, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.988024, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.984232, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.980528, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.977959, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.975192, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.973744, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.972213, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.971298, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.97, 0, 0)","frames":38},{"value":"matrix(1, 0, 0, 0.97009, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.970392, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.970835, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.97168, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.972811, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.97419, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.97686, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.9786, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.981839, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.984495, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.986905, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.988809, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.990966, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.992473, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.993756, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.99485, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.995871, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.996656, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.997327, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.997896, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.998378, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.998781, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.999115, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.999434, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.99962, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.99978, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.999893, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.999965, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.999996, 0, 0)","frames":1},{"value":"none","frames":29}]}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      433 |     const at = JSON.stringify({ clocks, runs });
+      434 |     await info.attach("still", { body: at, contentType: "application/json" });
+    > 435 |     for (const [part, d] of Object.entries(clocks)) expect(zero(d), `the ${part} changes on a zero clock ${at}`).toBe(true);
+          |                                                                                                                  ^
+      436 |     if (runs) {
+      437 |         expect(runs.length, `the fill holds rest, then the press, then rest, and no value between ${at}`).toBe(3);
+      438 |         expect(runs[1].value, `the press reached the fill ${at}`).not.toBe(runs[0].value);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual/release-11-1-1-reduce.spec.ts:435:114
+
+    Error Context: tests-visual/test-results/release-11-1-1-reduce-stil-3c2d8--still-under-reduced-motion-webkit-desktop/error-context.md
+
+  1 failed
+    [webkit-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:387:1 › still · a Slider holds still under reduced motion 

@@ -1,0 +1,29 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 1 test using 1 worker
+
+  ✘  1 [webkit-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:326:1 › press · a pressed Button and dock seat keep their size under reduced motion (3.2s)
+
+
+  1) [webkit-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:326:1 › press · a pressed Button and dock seat keep their size under reduced motion 
+
+    Error: the Button keeps scale 1 on every frame {"Button":{"rest":71.64,"active":29,"scales":["1","1.0328 0.911"],"transforms":["none"],"widths":[71.64,73.99]},"icon seat":{"rest":40,"active":30,"scales":["1","1.0066 0.9156"],"transforms":["none"],"widths":[40,40.26]},"tab seat":{"rest":51.73,"active":30,"scales":["1","0.96"],"transforms":["none"],"widths":[51.73,49.67]}}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      377 |     for (const [name, r] of Object.entries(reads)) {
+      378 |         expect(r.active, `the ${name} was held pressed ${at}`).toBeGreaterThan(0);
+    > 379 |         expect(r.scales.every(identity), `the ${name} keeps scale 1 on every frame ${at}`).toBe(true);
+          |                                                                                            ^
+      380 |         expect(r.transforms, `the ${name} takes no transform ${at}`).toEqual(["none"]);
+      381 |         expect(Math.max(...r.widths.map((w) => Math.abs(w - r.rest))), `the ${name} keeps its width ${at}`).toBeLessThanOrEqual(0.5);
+      382 |     }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:379:92
+
+    Error Context: tests-visual/test-results/release-11-1-1-reduce-pres-1e075-r-size-under-reduced-motion-webkit-desktop/error-context.md
+
+  1 failed
+    [webkit-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:326:1 › press · a pressed Button and dock seat keep their size under reduced motion 

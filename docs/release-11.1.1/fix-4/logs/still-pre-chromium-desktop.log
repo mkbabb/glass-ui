@@ -1,0 +1,29 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:387:1 › still · a Slider holds still under reduced motion (1.9s)
+
+
+  1) [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:387:1 › still · a Slider holds still under reduced motion 
+
+    Error: the root changes on a zero clock {"clocks":{"root":"0.2s","track":"0.2s, 0.2s","fill":"0.3s, 0.21s, 0.2s","thumb":"0.12s"},"runs":[{"value":"none","frames":11},{"value":"matrix(1, 0, 0, 1, 0, 0)","frames":2},{"value":"matrix(1, 0, 0, 0.999091, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.996869, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.993967, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.990669, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.987378, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.984215, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.981369, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.978838, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.976846, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.975143, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.973483, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.972339, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.971447, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.970781, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.97, 0, 0)","frames":46},{"value":"matrix(1, 0, 0, 0.970048, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.970219, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.970516, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.970972, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.971647, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.97256, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.973729, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.975252, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.97711, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.979193, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.981443, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.983705, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.98575, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.98773, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.989208, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.99086, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.99214, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.993273, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.994253, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.995113, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.995866, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.996535, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.997114, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.997626, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.998067, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.998454, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.998783, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.999064, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.999292, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.999502, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.999661, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.999785, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.999885, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.999949, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 0.999988, 0, 0)","frames":1},{"value":"matrix(1, 0, 0, 1, 0, 0)","frames":1},{"value":"none","frames":36}]}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      433 |     const at = JSON.stringify({ clocks, runs });
+      434 |     await info.attach("still", { body: at, contentType: "application/json" });
+    > 435 |     for (const [part, d] of Object.entries(clocks)) expect(zero(d), `the ${part} changes on a zero clock ${at}`).toBe(true);
+          |                                                                                                                  ^
+      436 |     if (runs) {
+      437 |         expect(runs.length, `the fill holds rest, then the press, then rest, and no value between ${at}`).toBe(3);
+      438 |         expect(runs[1].value, `the press reached the fill ${at}`).not.toBe(runs[0].value);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual/release-11-1-1-reduce.spec.ts:435:114
+
+    Error Context: tests-visual/test-results/release-11-1-1-reduce-stil-3c2d8--still-under-reduced-motion-chromium-desktop/error-context.md
+
+  1 failed
+    [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:387:1 › still · a Slider holds still under reduced motion 

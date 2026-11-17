@@ -1,0 +1,225 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-1-1.config.ts",
+      "--project=chromium-desktop",
+      "--workers=1",
+      "-g",
+      "still · "
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-4/logs/still-pre-chromium-desktop.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5353",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/",
+      "url": "http://localhost:5353",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1-reduce.spec.ts",
+      "file": "release-11-1-1-reduce.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "still · a Slider holds still under reduced motion",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1898,
+                  "error": {
+                    "message": "Error: the root changes on a zero clock {\"clocks\":{\"root\":\"0.2s\",\"track\":\"0.2s, 0.2s\",\"fill\":\"0.3s, 0.21s, 0.2s\",\"thumb\":\"0.12s\"},\"runs\":[{\"value\":\"none\",\"frames\":11},{\"value\":\"matrix(1, 0, 0, 1, 0, 0)\",\"frames\":2},{\"value\":\"matrix(1, 0, 0, 0.999091, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.996869, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.993967, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.990669, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.987378, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.984215, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.981369, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.978838, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.976846, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.975143, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.973483, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.972339, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.971447, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.970781, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.97, 0, 0)\",\"frames\":46},{\"value\":\"matrix(1, 0, 0, 0.970048, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.970219, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.970516, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.970972, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.971647, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.97256, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.973729, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.975252, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.97711, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.979193, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.981443, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.983705, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.98575, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.98773, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.989208, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.99086, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.99214, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.993273, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.994253, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.995113, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.995866, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.996535, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.997114, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.997626, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.998067, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.998454, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.998783, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.999064, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.999292, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.999502, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.999661, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.999785, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.999885, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.999949, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.999988, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 1, 0, 0)\",\"frames\":1},{\"value\":\"none\",\"frames\":36}]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: the root changes on a zero clock {\"clocks\":{\"root\":\"0.2s\",\"track\":\"0.2s, 0.2s\",\"fill\":\"0.3s, 0.21s, 0.2s\",\"thumb\":\"0.12s\"},\"runs\":[{\"value\":\"none\",\"frames\":11},{\"value\":\"matrix(1, 0, 0, 1, 0, 0)\",\"frames\":2},{\"value\":\"matrix(1, 0, 0, 0.999091, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.996869, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.993967, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.990669, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.987378, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.984215, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.981369, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.978838, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.976846, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.975143, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.973483, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.972339, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.971447, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.970781, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.97, 0, 0)\",\"frames\":46},{\"value\":\"matrix(1, 0, 0, 0.970048, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.970219, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.970516, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.970972, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.971647, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.97256, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.973729, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.975252, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.97711, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.979193, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.981443, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.983705, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.98575, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.98773, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.989208, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.99086, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.99214, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.993273, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.994253, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.995113, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.995866, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.996535, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.997114, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.997626, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.998067, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.998454, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.998783, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.999064, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.999292, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.999502, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.999661, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.999785, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.999885, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.999949, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.999988, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 1, 0, 0)\",\"frames\":1},{\"value\":\"none\",\"frames\":36}]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual/release-11-1-1-reduce.spec.ts:435:114",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                      "column": 114,
+                      "line": 435
+                    },
+                    "snippet": "  433 |     const at = JSON.stringify({ clocks, runs });\n  434 |     await info.attach(\"still\", { body: at, contentType: \"application/json\" });\n> 435 |     for (const [part, d] of Object.entries(clocks)) expect(zero(d), `the ${part} changes on a zero clock ${at}`).toBe(true);\n      |                                                                                                                  ^\n  436 |     if (runs) {\n  437 |         expect(runs.length, `the fill holds rest, then the press, then rest, and no value between ${at}`).toBe(3);\n  438 |         expect(runs[1].value, `the press reached the fill ${at}`).not.toBe(runs[0].value);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                        "column": 114,
+                        "line": 435
+                      },
+                      "message": "Error: the root changes on a zero clock {\"clocks\":{\"root\":\"0.2s\",\"track\":\"0.2s, 0.2s\",\"fill\":\"0.3s, 0.21s, 0.2s\",\"thumb\":\"0.12s\"},\"runs\":[{\"value\":\"none\",\"frames\":11},{\"value\":\"matrix(1, 0, 0, 1, 0, 0)\",\"frames\":2},{\"value\":\"matrix(1, 0, 0, 0.999091, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.996869, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.993967, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.990669, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.987378, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.984215, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.981369, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.978838, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.976846, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.975143, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.973483, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.972339, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.971447, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.970781, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.97, 0, 0)\",\"frames\":46},{\"value\":\"matrix(1, 0, 0, 0.970048, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.970219, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.970516, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.970972, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.971647, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.97256, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.973729, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.975252, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.97711, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.979193, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.981443, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.983705, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.98575, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.98773, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.989208, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.99086, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.99214, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.993273, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.994253, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.995113, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.995866, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.996535, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.997114, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.997626, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.998067, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.998454, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.998783, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.999064, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.999292, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.999502, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.999661, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.999785, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.999885, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.999949, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 0.999988, 0, 0)\",\"frames\":1},{\"value\":\"matrix(1, 0, 0, 1, 0, 0)\",\"frames\":1},{\"value\":\"none\",\"frames\":36}]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  433 |     const at = JSON.stringify({ clocks, runs });\n  434 |     await info.attach(\"still\", { body: at, contentType: \"application/json\" });\n> 435 |     for (const [part, d] of Object.entries(clocks)) expect(zero(d), `the ${part} changes on a zero clock ${at}`).toBe(true);\n      |                                                                                                                  ^\n  436 |     if (runs) {\n  437 |         expect(runs.length, `the fill holds rest, then the press, then rest, and no value between ${at}`).toBe(3);\n  438 |         expect(runs[1].value, `the press reached the fill ${at}`).not.toBe(runs[0].value);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual/release-11-1-1-reduce.spec.ts:435:114"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T03:29:27.855Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "still",
+                      "contentType": "application/json",
+                      "body": "eyJjbG9ja3MiOnsicm9vdCI6IjAuMnMiLCJ0cmFjayI6IjAuMnMsIDAuMnMiLCJmaWxsIjoiMC4zcywgMC4yMXMsIDAuMnMiLCJ0aHVtYiI6IjAuMTJzIn0sInJ1bnMiOlt7InZhbHVlIjoibm9uZSIsImZyYW1lcyI6MTF9LHsidmFsdWUiOiJtYXRyaXgoMSwgMCwgMCwgMSwgMCwgMCkiLCJmcmFtZXMiOjJ9LHsidmFsdWUiOiJtYXRyaXgoMSwgMCwgMCwgMC45OTkwOTEsIDAsIDApIiwiZnJhbWVzIjoxfSx7InZhbHVlIjoibWF0cml4KDEsIDAsIDAsIDAuOTk2ODY5LCAwLCAwKSIsImZyYW1lcyI6MX0seyJ2YWx1ZSI6Im1hdHJpeCgxLCAwLCAwLCAwLjk5Mzk2NywgMCwgMCkiLCJmcmFtZXMiOjF9LHsidmFsdWUiOiJtYXRyaXgoMSwgMCwgMCwgMC45OTA2NjksIDAsIDApIiwiZnJhbWVzIjoxfSx7InZhbHVlIjoibWF0cml4KDEsIDAsIDAsIDAuOTg3Mzc4LCAwLCAwKSIsImZyYW1lcyI6MX0seyJ2YWx1ZSI6Im1hdHJpeCgxLCAwLCAwLCAwLjk4NDIxNSwgMCwgMCkiLCJmcmFtZXMiOjF9LHsidmFsdWUiOiJtYXRyaXgoMSwgMCwgMCwgMC45ODEzNjksIDAsIDApIiwiZnJhbWVzIjoxfSx7InZhbHVlIjoibWF0cml4KDEsIDAsIDAsIDAuOTc4ODM4LCAwLCAwKSIsImZyYW1lcyI6MX0seyJ2YWx1ZSI6Im1hdHJpeCgxLCAwLCAwLCAwLjk3Njg0NiwgMCwgMCkiLCJmcmFtZXMiOjF9LHsidmFsdWUiOiJtYXRyaXgoMSwgMCwgMCwgMC45NzUxNDMsIDAsIDApIiwiZnJhbWVzIjoxfSx7InZhbHVlIjoibWF0cml4KDEsIDAsIDAsIDAuOTczNDgzLCAwLCAwKSIsImZyYW1lcyI6MX0seyJ2YWx1ZSI6Im1hdHJpeCgxLCAwLCAwLCAwLjk3MjMzOSwgMCwgMCkiLCJmcmFtZXMiOjF9LHsidmFsdWUiOiJtYXRyaXgoMSwgMCwgMCwgMC45NzE0NDcsIDAsIDApIiwiZnJhbWVzIjoxfSx7InZhbHVlIjoibWF0cml4KDEsIDAsIDAsIDAuOTcwNzgxLCAwLCAwKSIsImZyYW1lcyI6MX0seyJ2YWx1ZSI6Im1hdHJpeCgxLCAwLCAwLCAwLjk3LCAwLCAwKSIsImZyYW1lcyI6NDZ9LHsidmFsdWUiOiJtYXRyaXgoMSwgMCwgMCwgMC45NzAwNDgsIDAsIDApIiwiZnJhbWVzIjoxfSx7InZhbHVlIjoibWF0cml4KDEsIDAsIDAsIDAuOTcwMjE5LCAwLCAwKSIsImZyYW1lcyI6MX0seyJ2YWx1ZSI6Im1hdHJpeCgxLCAwLCAwLCAwLjk3MDUxNiwgMCwgMCkiLCJmcmFtZXMiOjF9LHsidmFsdWUiOiJtYXRyaXgoMSwgMCwgMCwgMC45NzA5NzIsIDAsIDApIiwiZnJhbWVzIjoxfSx7InZhbHVlIjoibWF0cml4KDEsIDAsIDAsIDAuOTcxNjQ3LCAwLCAwKSIsImZyYW1lcyI6MX0seyJ2YWx1ZSI6Im1hdHJpeCgxLCAwLCAwLCAwLjk3MjU2LCAwLCAwKSIsImZyYW1lcyI6MX0seyJ2YWx1ZSI6Im1hdHJpeCgxLCAwLCAwLCAwLjk3MzcyOSwgMCwgMCkiLCJmcmFtZXMiOjF9LHsidmFsdWUiOiJtYXRyaXgoMSwgMCwgMCwgMC45NzUyNTIsIDAsIDApIiwiZnJhbWVzIjoxfSx7InZhbHVlIjoibWF0cml4KDEsIDAsIDAsIDAuOTc3MTEsIDAsIDApIiwiZnJhbWVzIjoxfSx7InZhbHVlIjoibWF0cml4KDEsIDAsIDAsIDAuOTc5MTkzLCAwLCAwKSIsImZyYW1lcyI6MX0seyJ2YWx1ZSI6Im1hdHJpeCgxLCAwLCAwLCAwLjk4MTQ0MywgMCwgMCkiLCJmcmFtZXMiOjF9LHsidmFsdWUiOiJtYXRyaXgoMSwgMCwgMCwgMC45ODM3MDUsIDAsIDApIiwiZnJhbWVzIjoxfSx7InZhbHVlIjoibWF0cml4KDEsIDAsIDAsIDAuOTg1NzUsIDAsIDApIiwiZnJhbWVzIjoxfSx7InZhbHVlIjoibWF0cml4KDEsIDAsIDAsIDAuOTg3NzMsIDAsIDApIiwiZnJhbWVzIjoxfSx7InZhbHVlIjoibWF0cml4KDEsIDAsIDAsIDAuOTg5MjA4LCAwLCAwKSIsImZyYW1lcyI6MX0seyJ2YWx1ZSI6Im1hdHJpeCgxLCAwLCAwLCAwLjk5MDg2LCAwLCAwKSIsImZyYW1lcyI6MX0seyJ2YWx1ZSI6Im1hdHJpeCgxLCAwLCAwLCAwLjk5MjE0LCAwLCAwKSIsImZyYW1lcyI6MX0seyJ2YWx1ZSI6Im1hdHJpeCgxLCAwLCAwLCAwLjk5MzI3MywgMCwgMCkiLCJmcmFtZXMiOjF9LHsidmFsdWUiOiJtYXRyaXgoMSwgMCwgMCwgMC45OTQyNTMsIDAsIDApIiwiZnJhbWVzIjoxfSx7InZhbHVlIjoibWF0cml4KDEsIDAsIDAsIDAuOTk1MTEzLCAwLCAwKSIsImZyYW1lcyI6MX0seyJ2YWx1ZSI6Im1hdHJpeCgxLCAwLCAwLCAwLjk5NTg2NiwgMCwgMCkiLCJmcmFtZXMiOjF9LHsidmFsdWUiOiJtYXRyaXgoMSwgMCwgMCwgMC45OTY1MzUsIDAsIDApIiwiZnJhbWVzIjoxfSx7InZhbHVlIjoibWF0cml4KDEsIDAsIDAsIDAuOTk3MTE0LCAwLCAwKSIsImZyYW1lcyI6MX0seyJ2YWx1ZSI6Im1hdHJpeCgxLCAwLCAwLCAwLjk5NzYyNiwgMCwgMCkiLCJmcmFtZXMiOjF9LHsidmFsdWUiOiJtYXRyaXgoMSwgMCwgMCwgMC45OTgwNjcsIDAsIDApIiwiZnJhbWVzIjoxfSx7InZhbHVlIjoibWF0cml4KDEsIDAsIDAsIDAuOTk4NDU0LCAwLCAwKSIsImZyYW1lcyI6MX0seyJ2YWx1ZSI6Im1hdHJpeCgxLCAwLCAwLCAwLjk5ODc4MywgMCwgMCkiLCJmcmFtZXMiOjF9LHsidmFsdWUiOiJtYXRyaXgoMSwgMCwgMCwgMC45OTkwNjQsIDAsIDApIiwiZnJhbWVzIjoxfSx7InZhbHVlIjoibWF0cml4KDEsIDAsIDAsIDAuOTk5MjkyLCAwLCAwKSIsImZyYW1lcyI6MX0seyJ2YWx1ZSI6Im1hdHJpeCgxLCAwLCAwLCAwLjk5OTUwMiwgMCwgMCkiLCJmcmFtZXMiOjF9LHsidmFsdWUiOiJtYXRyaXgoMSwgMCwgMCwgMC45OTk2NjEsIDAsIDApIiwiZnJhbWVzIjoxfSx7InZhbHVlIjoibWF0cml4KDEsIDAsIDAsIDAuOTk5Nzg1LCAwLCAwKSIsImZyYW1lcyI6MX0seyJ2YWx1ZSI6Im1hdHJpeCgxLCAwLCAwLCAwLjk5OTg4NSwgMCwgMCkiLCJmcmFtZXMiOjF9LHsidmFsdWUiOiJtYXRyaXgoMSwgMCwgMCwgMC45OTk5NDksIDAsIDApIiwiZnJhbWVzIjoxfSx7InZhbHVlIjoibWF0cml4KDEsIDAsIDAsIDAuOTk5OTg4LCAwLCAwKSIsImZyYW1lcyI6MX0seyJ2YWx1ZSI6Im1hdHJpeCgxLCAwLCAwLCAxLCAwLCAwKSIsImZyYW1lcyI6MX0seyJ2YWx1ZSI6Im5vbmUiLCJmcmFtZXMiOjM2fV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual/test-results/release-11-1-1-reduce-stil-3c2d8--still-under-reduced-motion-chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                    "column": 114,
+                    "line": 435
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-a635a064b7ea0ee413cd",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 387,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-17T03:29:26.690Z",
+    "duration": 3182.023,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

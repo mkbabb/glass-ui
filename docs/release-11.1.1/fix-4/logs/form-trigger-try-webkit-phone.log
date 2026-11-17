@@ -1,0 +1,31 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 2 tests using 1 worker
+
+  ✘  1 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · trigger (2.7s)
+  ✓  2 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:102:5 › form · a dock DropdownMenu keeps its material through the exit · trigger (2.8s)
+
+
+  1) [webkit-phone] › tests-visual/release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · trigger 
+
+    Error: the surface unmounts after its exit
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      76 |         const { rest, exit, gone } = exitOf(film);
+      77 |         expect(rest, "the surface was open before the close").toBeTruthy();
+    > 78 |         expect(gone, "the surface unmounts after its exit").toBe(true);
+         |                                                             ^
+      79 |         if (isPhone(project)) expect(rest.form, "the phone Select opens as a sheet").toBe("sheet");
+      80 |         const report = exit.map((f) => ({ t: Math.round(f.t - film.mark), x: f.x, y: f.y, w: f.w, op: f.op, form: f.form, bf: f.bf, bg: f.bg }));
+      81 |         await info.attach("film", { body: JSON.stringify(report), contentType: "application/json" });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:78:61
+
+    Error Context: tests-visual/test-results/release-11-1-1-form-·-a-do-0a402-form-it-opened-in-·-trigger-webkit-phone/error-context.md
+
+  1 failed
+    [webkit-phone] › tests-visual/release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · trigger 
+  1 passed (8.0s)

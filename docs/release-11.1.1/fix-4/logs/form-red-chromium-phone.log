@@ -1,0 +1,207 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 10 tests using 1 worker
+
+  ✘   1 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · pick (2.4s)
+  ✘   2 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:102:5 › form · a dock DropdownMenu keeps its material through the exit · pick (2.3s)
+  ✘   3 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · outside (2.3s)
+  ✘   4 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:102:5 › form · a dock DropdownMenu keeps its material through the exit · outside (2.3s)
+  ✘   5 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · escape (2.3s)
+  ✘   6 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:102:5 › form · a dock DropdownMenu keeps its material through the exit · escape (2.3s)
+  ✘   7 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · trigger (2.3s)
+  ✘   8 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:102:5 › form · a dock DropdownMenu keeps its material through the exit · trigger (2.3s)
+  ✘   9 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · current (2.3s)
+  -  10 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:102:5 › form · a dock DropdownMenu keeps its material through the exit · current
+
+
+  1) [chromium-phone] › tests-visual/release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · pick 
+
+    Error: form on every exit frame [{"t":4,"x":0,"y":615,"w":390,"op":1,"form":"sheet","bf":"none","bg":"color(srgb 0.994 0.96 0.926)"},{"t":12,"x":0,"y":615,"w":390,"op":1,"form":"sheet","bf":"none","bg":"color(srgb 0.994 0.96 0.926)"},{"t":20,"x":0,"y":615,"w":390,"op":1,"form":"sheet","bf":"none","bg":"color(srgb 0.994 0.96 0.926)"},{"t":29,"x":16,"y":610,"w":358,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":37,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":45,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":53,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":62,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":70,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":77,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":87,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":95,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":104,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":112,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":120,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":129,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":137,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":0.911082,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":145,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":0.0445153,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"}]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "sheet"
+    Received: null
+
+      82 |         let prevY = rest.y!;
+      83 |         for (const f of exit) {
+    > 84 |             expect(f.form, `form on every exit frame ${JSON.stringify(report)}`).toBe(rest.form);
+         |                                                                                  ^
+      85 |             expect(f.surface, `material attribute on every exit frame`).toBe(rest.surface);
+      86 |             expect(f.bf, `backdrop on every exit frame ${JSON.stringify(report)}`).toBe(rest.bf);
+      87 |             expect(f.bg, `fill on every exit frame ${JSON.stringify(report)}`).toBe(rest.bg);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:84:82
+
+    Error Context: tests-visual/test-results/release-11-1-1-form-·-a-do-bbadc-he-form-it-opened-in-·-pick-chromium-phone/error-context.md
+
+  2) [chromium-phone] › tests-visual/release-11-1-1.spec.ts:102:5 › form · a dock DropdownMenu keeps its material through the exit · pick 
+
+    Error: material attribute +29 ms
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "opaque"
+    Received: null
+
+      118 |         for (const f of exit) {
+      119 |             const at = `+${Math.round(f.t - film.mark)} ms`;
+    > 120 |             expect(f.surface, `material attribute ${at}`).toBe(rest.surface);
+          |                                                           ^
+      121 |             expect(f.bf, `backdrop ${at}`).toBe(rest.bf);
+      122 |             expect(f.bg, `fill ${at}`).toBe(rest.bg);
+      123 |         }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:120:59
+
+    Error Context: tests-visual/test-results/release-11-1-1-form-·-a-do-b92ff-ial-through-the-exit-·-pick-chromium-phone/error-context.md
+
+  3) [chromium-phone] › tests-visual/release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · outside 
+
+    Error: form on every exit frame [{"t":9,"x":0,"y":615,"w":390,"op":1,"form":"sheet","bf":"none","bg":"color(srgb 0.994 0.96 0.926)"},{"t":18,"x":16,"y":610,"w":358,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":26,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":34,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":42,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":51,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":59,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":68,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":76,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":84,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":93,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":101,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":109,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":118,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":126,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":0.876253,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":134,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":0.043782,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"}]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "sheet"
+    Received: null
+
+      82 |         let prevY = rest.y!;
+      83 |         for (const f of exit) {
+    > 84 |             expect(f.form, `form on every exit frame ${JSON.stringify(report)}`).toBe(rest.form);
+         |                                                                                  ^
+      85 |             expect(f.surface, `material attribute on every exit frame`).toBe(rest.surface);
+      86 |             expect(f.bf, `backdrop on every exit frame ${JSON.stringify(report)}`).toBe(rest.bf);
+      87 |             expect(f.bg, `fill on every exit frame ${JSON.stringify(report)}`).toBe(rest.bg);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:84:82
+
+    Error Context: tests-visual/test-results/release-11-1-1-form-·-a-do-12479-form-it-opened-in-·-outside-chromium-phone/error-context.md
+
+  4) [chromium-phone] › tests-visual/release-11-1-1.spec.ts:102:5 › form · a dock DropdownMenu keeps its material through the exit · outside 
+
+    Error: material attribute +9 ms
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "opaque"
+    Received: null
+
+      118 |         for (const f of exit) {
+      119 |             const at = `+${Math.round(f.t - film.mark)} ms`;
+    > 120 |             expect(f.surface, `material attribute ${at}`).toBe(rest.surface);
+          |                                                           ^
+      121 |             expect(f.bf, `backdrop ${at}`).toBe(rest.bf);
+      122 |             expect(f.bg, `fill ${at}`).toBe(rest.bg);
+      123 |         }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:120:59
+
+    Error Context: tests-visual/test-results/release-11-1-1-form-·-a-do-f9776--through-the-exit-·-outside-chromium-phone/error-context.md
+
+  5) [chromium-phone] › tests-visual/release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · escape 
+
+    Error: form on every exit frame [{"t":9,"x":16,"y":610,"w":358,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":16,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":25,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":33,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":42,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":49,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":59,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":67,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":75,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":83,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":92,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":100,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":109,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":115,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":126,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":0.0375898,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"}]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "sheet"
+    Received: null
+
+      82 |         let prevY = rest.y!;
+      83 |         for (const f of exit) {
+    > 84 |             expect(f.form, `form on every exit frame ${JSON.stringify(report)}`).toBe(rest.form);
+         |                                                                                  ^
+      85 |             expect(f.surface, `material attribute on every exit frame`).toBe(rest.surface);
+      86 |             expect(f.bf, `backdrop on every exit frame ${JSON.stringify(report)}`).toBe(rest.bf);
+      87 |             expect(f.bg, `fill on every exit frame ${JSON.stringify(report)}`).toBe(rest.bg);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:84:82
+
+    Error Context: tests-visual/test-results/release-11-1-1-form-·-a-do-0bcc0--form-it-opened-in-·-escape-chromium-phone/error-context.md
+
+  6) [chromium-phone] › tests-visual/release-11-1-1.spec.ts:102:5 › form · a dock DropdownMenu keeps its material through the exit · escape 
+
+    Error: material attribute +1 ms
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "opaque"
+    Received: null
+
+      118 |         for (const f of exit) {
+      119 |             const at = `+${Math.round(f.t - film.mark)} ms`;
+    > 120 |             expect(f.surface, `material attribute ${at}`).toBe(rest.surface);
+          |                                                           ^
+      121 |             expect(f.bf, `backdrop ${at}`).toBe(rest.bf);
+      122 |             expect(f.bg, `fill ${at}`).toBe(rest.bg);
+      123 |         }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:120:59
+
+    Error Context: tests-visual/test-results/release-11-1-1-form-·-a-do-0ca6a-l-through-the-exit-·-escape-chromium-phone/error-context.md
+
+  7) [chromium-phone] › tests-visual/release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · trigger 
+
+    Error: form on every exit frame [{"t":3,"x":0,"y":615,"w":390,"op":1,"form":"sheet","bf":"none","bg":"color(srgb 0.994 0.96 0.926)"},{"t":11,"x":16,"y":610,"w":358,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":21,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":29,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":36,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":46,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":54,"x":162,"y":65.66666412353516,"w":128,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":62,"x":162.3333282470703,"y":65.66666412353516,"w":127.99998474121094,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":70,"x":162.3333282470703,"y":65.66666412353516,"w":127.99998474121094,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":79,"x":162.3333282470703,"y":65.66666412353516,"w":127.99998474121094,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":87,"x":162.6666717529297,"y":65.66666412353516,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":95,"x":162.6666717529297,"y":65.33333587646484,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":103,"x":162.6666717529297,"y":65.33333587646484,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":112,"x":163,"y":65.33333587646484,"w":128,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":120,"x":163,"y":65.33333587646484,"w":128,"op":0.640758,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":129,"x":163,"y":65.33333587646484,"w":128,"op":0.0187323,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"}]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "sheet"
+    Received: null
+
+      82 |         let prevY = rest.y!;
+      83 |         for (const f of exit) {
+    > 84 |             expect(f.form, `form on every exit frame ${JSON.stringify(report)}`).toBe(rest.form);
+         |                                                                                  ^
+      85 |             expect(f.surface, `material attribute on every exit frame`).toBe(rest.surface);
+      86 |             expect(f.bf, `backdrop on every exit frame ${JSON.stringify(report)}`).toBe(rest.bf);
+      87 |             expect(f.bg, `fill on every exit frame ${JSON.stringify(report)}`).toBe(rest.bg);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:84:82
+
+    Error Context: tests-visual/test-results/release-11-1-1-form-·-a-do-0a402-form-it-opened-in-·-trigger-chromium-phone/error-context.md
+
+  8) [chromium-phone] › tests-visual/release-11-1-1.spec.ts:102:5 › form · a dock DropdownMenu keeps its material through the exit · trigger 
+
+    Error: material attribute +17 ms
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "opaque"
+    Received: null
+
+      118 |         for (const f of exit) {
+      119 |             const at = `+${Math.round(f.t - film.mark)} ms`;
+    > 120 |             expect(f.surface, `material attribute ${at}`).toBe(rest.surface);
+          |                                                           ^
+      121 |             expect(f.bf, `backdrop ${at}`).toBe(rest.bf);
+      122 |             expect(f.bg, `fill ${at}`).toBe(rest.bg);
+      123 |         }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:120:59
+
+    Error Context: tests-visual/test-results/release-11-1-1-form-·-a-do-c2904--through-the-exit-·-trigger-chromium-phone/error-context.md
+
+  9) [chromium-phone] › tests-visual/release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · current 
+
+    Error: form on every exit frame [{"t":2,"x":0,"y":615,"w":390,"op":1,"form":"sheet","bf":"none","bg":"color(srgb 0.994 0.96 0.926)"},{"t":10,"x":0,"y":615,"w":390,"op":1,"form":"sheet","bf":"none","bg":"color(srgb 0.994 0.96 0.926)"},{"t":19,"x":0,"y":615,"w":390,"op":1,"form":"sheet","bf":"none","bg":"color(srgb 0.994 0.96 0.926)"},{"t":27,"x":0,"y":615,"w":390,"op":1,"form":"sheet","bf":"none","bg":"color(srgb 0.994 0.96 0.926)"},{"t":35,"x":16,"y":610,"w":358,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":44,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":52,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":59,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":69,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":77,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":85,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":94,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":102,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":110,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":119,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":127,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":135,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":144,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":0.914543,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"},{"t":152,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":0.044856,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.0829736 / 0.22)"}]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "sheet"
+    Received: null
+
+      82 |         let prevY = rest.y!;
+      83 |         for (const f of exit) {
+    > 84 |             expect(f.form, `form on every exit frame ${JSON.stringify(report)}`).toBe(rest.form);
+         |                                                                                  ^
+      85 |             expect(f.surface, `material attribute on every exit frame`).toBe(rest.surface);
+      86 |             expect(f.bf, `backdrop on every exit frame ${JSON.stringify(report)}`).toBe(rest.bf);
+      87 |             expect(f.bg, `fill on every exit frame ${JSON.stringify(report)}`).toBe(rest.bg);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:84:82
+
+    Error Context: tests-visual/test-results/release-11-1-1-form-·-a-do-e03ad-form-it-opened-in-·-current-chromium-phone/error-context.md
+
+  9 failed
+    [chromium-phone] › tests-visual/release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · pick 
+    [chromium-phone] › tests-visual/release-11-1-1.spec.ts:102:5 › form · a dock DropdownMenu keeps its material through the exit · pick 
+    [chromium-phone] › tests-visual/release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · outside 
+    [chromium-phone] › tests-visual/release-11-1-1.spec.ts:102:5 › form · a dock DropdownMenu keeps its material through the exit · outside 
+    [chromium-phone] › tests-visual/release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · escape 
+    [chromium-phone] › tests-visual/release-11-1-1.spec.ts:102:5 › form · a dock DropdownMenu keeps its material through the exit · escape 
+    [chromium-phone] › tests-visual/release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · trigger 
+    [chromium-phone] › tests-visual/release-11-1-1.spec.ts:102:5 › form · a dock DropdownMenu keeps its material through the exit · trigger 
+    [chromium-phone] › tests-visual/release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · current 
+  1 skipped
