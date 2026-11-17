@@ -27,7 +27,7 @@ on:
                 type: boolean
                 default: false
             ref:
-                description: "Build this ref in place of the tag. For the first deploy only: master carries v11.0.0's source plus this workflow, which the v11.0.0 tag lacks"
+                description: "Build this ref in place of the tag: a branch, a tag or a full 40-character SHA (a short SHA is fetched as a branch name and fails at checkout)"
                 required: false
                 type: string
                 default: ""

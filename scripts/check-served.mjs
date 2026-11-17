@@ -57,10 +57,13 @@ export function headerProblems({ index, asset, miss, missAgain }, csp) {
     if (index.headers.get("content-security-policy") !== csp) out.push("the index's CSP is not dist-demo/_headers'");
     if (!cacheControl(asset).includes("immutable")) out.push(`a hashed asset is not \`immutable\` (${cacheControl(asset) || "no Cache-Control"})`);
     if (miss.status !== 404) out.push(`a miss under /assets/ answered ${miss.status}, not 404`);
-    if (!/\bno-store\b/.test(cacheControl(miss)) || cacheControl(miss).includes("immutable"))
-        out.push(`a miss under /assets/ is cacheable (${cacheControl(miss) || "no Cache-Control"})`);
-    if (missAgain?.headers.get("cf-cache-status") === "HIT")
-        out.push("the edge cached a miss under /assets/ (cf-cache-status HIT on the second request): a zone Cache Rule overrides `no-store`");
+    const cacheable = !/\bno-store\b/.test(cacheControl(miss)) || cacheControl(miss).includes("immutable");
+    if (cacheable) out.push(`a miss under /assets/ is cacheable (${cacheControl(miss) || "no Cache-Control"})`);
+    // A HIT after a cacheable first answer is that answer cached (the line above names
+    // it; an older deployment still answering gives exactly this). After a `no-store`
+    // first answer it means the zone caches what the origin forbids.
+    else if (missAgain?.headers.get("cf-cache-status") === "HIT")
+        out.push("the edge cached a `no-store` miss under /assets/ (cf-cache-status HIT on the second request): a zone Cache Rule overrides the origin");
     return out;
 }
 

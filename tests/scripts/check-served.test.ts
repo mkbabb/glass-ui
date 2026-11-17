@@ -82,10 +82,20 @@ describe("headerProblems", () => {
         expect(headerProblems({ index, asset, miss, missAgain: dynamic }, CSP)).toEqual([]);
     });
 
-    it("fails a miss the edge answered from its cache the second time", () => {
+    it("fails a no-store miss the edge answered from its cache the second time", () => {
         const hit = res(404, { "cache-control": "no-store", "cf-cache-status": "HIT", age: "3" });
         expect(headerProblems({ index, asset, miss, missAgain: hit }, CSP)).toEqual([
-            "the edge cached a miss under /assets/ (cf-cache-status HIT on the second request): a zone Cache Rule overrides `no-store`",
+            "the edge cached a `no-store` miss under /assets/ (cf-cache-status HIT on the second request): a zone Cache Rule overrides the origin",
+        ]);
+    });
+
+    it("names a cacheable miss once, not again as a Cache Rule, when its second answer is a HIT", () => {
+        // the older deployment, still answering in the propagation window (run 44039354787, try 1)
+        const old = res(200, { "cache-control": IMMUTABLE, "content-type": "text/html; charset=utf-8" });
+        const hit = res(200, { "cache-control": IMMUTABLE, "cf-cache-status": "HIT" });
+        expect(headerProblems({ index, asset, miss: old, missAgain: hit }, CSP)).toEqual([
+            "a miss under /assets/ answered 200, not 404",
+            `a miss under /assets/ is cacheable (${IMMUTABLE})`,
         ]);
     });
 

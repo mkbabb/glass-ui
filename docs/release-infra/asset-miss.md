@@ -1,7 +1,7 @@
 # asset-miss: a chunk that is not there answers 404, uncached
 
-Branch `infra/deploy-asset-miss`. Not merged, not deployed. The deploy itself is
-`deploy-demo.md`.
+Merged to master 2026-11-17 and deployed the same day (run 44039354787, see "The
+first deploy" below). The deploy itself is `deploy-demo.md`.
 
 ## The fault
 
@@ -308,6 +308,32 @@ the evidence that production runs this handler:
   Purge), or purge them now.
 - That deep links still answer the index on Pages for real routes. The emulation
   shows all 79, and the check's deep-link probe asserts one per run.
+
+## The first deploy (2026-11-17)
+
+Run 44039354787 of `deploy-demo`, dispatched with `tag=v11.1.0` and `ref` the
+full SHA of master's merge of this branch. (`ref` needs the full 40 characters:
+run 44039202590, given a short SHA, failed at checkout, which fetched it as a
+branch name.)
+
+- `check-served --headers`, try 1: every asset served as built; the miss answered
+  200 with `immutable`, and HIT on the second request. That was the older
+  deployment still answering. The check named it a Cache Rule as well, which was
+  wrong: a HIT after a cacheable answer is that answer cached. Since then the
+  check reports the HIT only after a `no-store` first answer.
+- Try 2, 11 s later: `served-build PASS ... an immutable hit and a 404 no-store
+  miss the edge did not cache`.
+- From this Mac afterwards (`curl`, two requests each): a junk `/assets/*.js`
+  answered `404 text/html`, `no-store`, `cf-cache-status: BYPASS` both times;
+  `checks-B6psvwuG.js`, `chip-Ccgx14rN.js` and `nav-Baf9xD9D.js` answered
+  `200 application/javascript`, `immutable`, HIT; `/dock/nav` answered 200
+  html, `no-transform`, DYNAMIC.
+
+So production runs the 404 `no-store` swap, and the edge leaves a `no-store` 404
+uncached, which settles the first two items of "Only a real deploy shows". The
+runner's edge and this Mac's served the three chunks as JavaScript. Other edges
+that answered in the 06:48 window may still hold HTML for them, which only a purge
+of those three URLs clears for every visitor.
 
 [serving]: https://developers.cloudflare.com/pages/configuration/serving-pages/
 [headers]: https://developers.cloudflare.com/pages/configuration/headers/
