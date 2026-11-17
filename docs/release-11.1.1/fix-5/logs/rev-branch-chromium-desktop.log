@@ -1,0 +1,26 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 17 tests using 1 worker
+
+  ✓   1 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:828:9 › reverse · a Select closed while it opens turns from where it is (4.3s)
+  ✓   2 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:840:9 › reverse · a Select reopened while it closes turns from where it is (3.0s)
+  ✓   3 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:828:9 › reverse · a DropdownMenu closed while it opens turns from where it is (2.1s)
+  ✓   4 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:840:9 › reverse · a DropdownMenu reopened while it closes turns from where it is (3.0s)
+  ✓   5 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:828:9 › reverse · a Popover closed while it opens turns from where it is (2.1s)
+  ✓   6 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:840:9 › reverse · a Popover reopened while it closes turns from where it is (3.0s)
+  ✓   7 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:828:9 › reverse · a Toast closed while it opens turns from where it is (2.1s)
+  ✓   8 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:828:9 › reverse · a Tooltip closed while it opens turns from where it is (2.1s)
+  ✓   9 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:840:9 › reverse · a Tooltip reopened while it closes turns from where it is (3.0s)
+  ✓  10 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:828:9 › reverse · a Collapsible closed while it opens turns from where it is (3.9s)
+  ✓  11 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:840:9 › reverse · a Collapsible reopened while it closes turns from where it is (4.9s)
+  ✓  12 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:828:9 › reverse · a Accordion closed while it opens turns from where it is (4.0s)
+  ✓  13 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:840:9 › reverse · a Accordion reopened while it closes turns from where it is (4.9s)
+[WebServer] 1:53:38 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  14 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:862:5 › reverse · a press on a leaving Dialog's trigger reopens it from where it is (3.1s)
+[WebServer] 1:53:41 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  15 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:862:5 › reverse · a press on a leaving Sheet's trigger reopens it from where it is (3.1s)
+  ✓  16 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:862:5 › reverse · a press on a leaving Select's trigger reopens it from where it is (3.1s)
+[WebServer] 1:53:47 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  17 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:886:1 › reverse · a press on the page while a sheet leaves reaches the page (2.2s)
+
+  17 passed (55.9s)

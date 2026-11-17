@@ -1,0 +1,29 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium-phone] › tests-visual/release-11-1-1-reduce.spec.ts:398:1 › press · a pressed control shows its press by colour, not by size, under reduced motion (8.6s)
+
+
+  1) [chromium-phone] › tests-visual/release-11-1-1-reduce.spec.ts:398:1 › press · a pressed control shows its press by colour, not by size, under reduced motion 
+
+    Error: the Button keeps scale 1 on every frame {"Button":{"rest":88.53,"active":16,"scales":["1","1.0328 0.911"],"transforms":["none"],"widths":[88.53,91.44],"fill":["oklab(0.673443 0.0210928 0.0746619 / 0.244)","oklab(0.673443 0.0210928 0.0746619 / 0.244)"],"painted":0.189},"icon seat":{"rest":44,"active":16,"scales":["1","1.0066 0.9156"],"transforms":["none"],"widths":[44,44.29],"fill":["rgba(0, 0, 0, 0)","oklab(0.257667 0.00900921 0.023203 / 0.2002)"],"painted":0.418},"tab seat":{"rest":47.69,"active":17,"scales":["1","0.96"],"transforms":["none"],"widths":[47.69,45.78],"fill":["rgba(0, 0, 0, 0)","oklab(0.257667 0.00900921 0.023203 / 0.2002)"],"painted":0.642},"menu row":{"rest":182,"active":18,"scales":["1","0.97"],"transforms":["none"],"widths":[182,176.54],"fill":["rgba(0, 0, 0, 0)","rgba(0, 0, 0, 0)"],"painted":0.372}}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      415 |     for (const [name, r] of Object.entries(reads)) {
+      416 |         expect(r.active, `the ${name} was held pressed ${at}`).toBeGreaterThan(0);
+    > 417 |         expect(r.scales.every(identity), `the ${name} keeps scale 1 on every frame ${at}`).toBe(true);
+          |                                                                                            ^
+      418 |         expect(r.transforms, `the ${name} takes no transform ${at}`).toEqual(["none"]);
+      419 |         expect(Math.max(...r.widths.map((w) => Math.abs(w - r.rest))), `the ${name} keeps its width ${at}`).toBeLessThanOrEqual(0.5);
+      420 |         expect(r.fill[1], `the ${name}'s fill steps while it is held ${at}`).not.toBe(r.fill[0]);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:417:92
+
+    Error Context: tests-visual/test-results/release-11-1-1-reduce-pres-c2d8b-y-size-under-reduced-motion-chromium-phone/error-context.md
+
+  1 failed
+    [chromium-phone] › tests-visual/release-11-1-1-reduce.spec.ts:398:1 › press · a pressed control shows its press by colour, not by size, under reduced motion 

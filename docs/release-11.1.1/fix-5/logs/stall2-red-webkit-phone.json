@@ -1,0 +1,949 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/fix5-probe/probe.config.ts",
+      "--project=webkit-phone",
+      "--workers=1",
+      "--repeat-each=10",
+      "-g",
+      "late|reopen"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/fix5-probe/probe.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/fix5-probe",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/fix5-probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/fix5-probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 10,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/fix5-probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/fix5-probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-5/logs/stall2-red-webkit-phone.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5352",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/",
+      "url": "http://localhost:5352",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "stall.probe.ts",
+      "file": "stall.probe.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "stall · reopen",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3211,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:25:28.588Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "stall",
+                      "contentType": "application/json",
+                      "body": "eyJraW5kIjoicmVvcGVuIiwiaG9sZSI6MTUsImhvbGVGcmFtZSI6MSwiaG9sZUF0IjoxNzkwLCJpbnB1dHMiOltbInBvaW50ZXJkb3duIiwxOTAxLDEyXSxbImNsaWNrIiwxOTAyLDEyXSxbInBvaW50ZXJkb3duIiwxOTgzLDIyXSxbImNsaWNrIiwxOTg0LDIyXV0sImZyYW1lcyI6W1sxNzkwLDE3NF0sWzE4MDUsMTc0XSxbMTgxNSwxNzRdLFsxODI1LDE3NF0sWzE4MzUsMTc0XSxbMTg0NiwxNzRdLFsxODU2LDE3NF0sWzE4NjUsMTc0XSxbMTg3NywxNzRdLFsxODg3LDE3NF0sWzE4OTcsMTc0XSxbMTkwMCwxNzRdLFsxOTA3LDE3NF0sWzE5MTYsMTY5XSxbMTkyNywxNTQuNF0sWzE5MzgsMTM1LjNdLFsxOTQ4LDExNy4xXSxbMTk1NiwxMDNdLFsxOTY2LDg2LjddLFsxOTc4LDY5LjRdLFsxOTc5LDY4LjFdLFsxOTgyLDY0LjJdLFsxOTg3LDBdLFsxOTk5LDguMl0sWzIwMDksMjIuOV0sWzIwMTksNDAuNV0sWzIwMjksNTguN10sWzIwMzksNzZdLFsyMDUxLDk0LjldLFsyMDYwLDEwNy4zXSxbMjA2OSwxMTguMV0sWzIwODEsMTMwLjJdLFsyMDkwLDEzNy44XSxbMjEwMiwxNDZdLFsyMTExLDE1MS4xXSxbMjEyMiwxNTYuMV0sWzIxMzAsMTU5LjFdLFsyMTQyLDE2Mi43XSxbMjE1MiwxNjVdLFsyMTYyLDE2Ni45XSxbMjE3MiwxNjguNF0sWzIxODIsMTY5LjZdLFsyMTkxLDE3NF0sWzIyMDMsMTc0XSxbMjIxMiwxNzRdLFsyMjIzLDE3NF0sWzIyMzQsMTc0XSxbMjI0NCwxNzRdLFsyMjU0LDE3NF0sWzIyNjMsMTc0XSxbMjI3MiwxNzRdLFsyMjgzLDE3NF0sWzIyOTUsMTc0XSxbMjMwNywxNzRdLFsyMzE1LDE3NF0sWzIzMjUsMTc0XSxbMjMzNiwxNzRdLFsyMzQ2LDE3NF0sWzIzNTYsMTc0XSxbMjM2NiwxNzRdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2ce35b9f25d2921a03b2-0cc008d6d737879dbf76",
+          "file": "stall.probe.ts",
+          "line": 46,
+          "column": 5
+        },
+        {
+          "title": "stall · late",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3109,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:25:31.961Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "stall",
+                      "contentType": "application/json",
+                      "body": "eyJraW5kIjoibGF0ZSIsImhvbGUiOjE3LCJob2xlRnJhbWUiOjEsImhvbGVBdCI6MTc1MiwiaW5wdXRzIjpbWyJwb2ludGVyZG93biIsMTg1NCwxMV0sWyJjbGljayIsMTg1NSwxMV0sWyJwb2ludGVyZG93biIsMjAxOCwyOV0sWyJjbGljayIsMjAxOSwyOV1dLCJmcmFtZXMiOltbMTc1MiwxNzRdLFsxNzY5LDE3NF0sWzE3NzksMTc0XSxbMTc4OSwxNzRdLFsxNzk5LDE3NF0sWzE4MTAsMTc0XSxbMTgyMCwxNzRdLFsxODMwLDE3NF0sWzE4NDAsMTc0XSxbMTg1MCwxNzRdLFsxODUzLDE3NF0sWzE4NjAsMTc0XSxbMTg3MSwxNjYuOV0sWzE4ODEsMTUyLjhdLFsxODkxLDEzNS4zXSxbMTkwMSwxMTcuMV0sWzE5MTEsOTkuNl0sWzE5MjIsODIuMV0sWzE5MzIsNjguMV0sWzE5NDEsNTddLFsxOTUyLDQ1LjZdLFsxOTYyLDM3XSxbMTk3MywyOS4yXSxbMTk4MiwyMy45XSxbMTk5MSwxOS42XSxbMjAwNCwxNC42XSxbMjAxMywxMS44XSxbMjAxNCwxMS41XSxbMjAxNywxMC44XSxbMjAyMywwXSxbMjAzNCw3LjFdLFsyMDQ0LDIxLjJdLFsyMDU0LDM4LjddLFsyMDY0LDU2LjldLFsyMDc1LDc2XSxbMjA4NCw5MC40XSxbMjA5NSwxMDUuOV0sWzIxMDUsMTE4LjFdLFsyMTE1LDEyOC4zXSxbMjEyNSwxMzddLFsyMTM0LDE0My41XSxbMjE0NiwxNTAuNl0sWzIxNTYsMTU1LjNdLFsyMTY2LDE1OS4xXSxbMjE3NywxNjIuNF0sWzIxODcsMTY0LjhdLFsyMTk3LDE2Ni44XSxbMjIwOCwxNjguNF0sWzIyMTcsMTY5LjVdLFsyMjI2LDE3NF0sWzIyMzgsMTc0XSxbMjI0OCwxNzRdLFsyMjU4LDE3NF0sWzIyNjksMTc0XSxbMjI3OSwxNzRdLFsyMjg5LDE3NF0sWzIyOTksMTc0XSxbMjMwOSwxNzRdLFsyMzIwLDE3NF0sWzIzMjksMTc0XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2ce35b9f25d2921a03b2-cfde22104f3c061c68c9",
+          "file": "stall.probe.ts",
+          "line": 46,
+          "column": 5
+        },
+        {
+          "title": "stall · reopen",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3164,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:25:35.346Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "stall",
+                      "contentType": "application/json",
+                      "body": "eyJraW5kIjoicmVvcGVuIiwiaG9sZSI6MTYsImhvbGVGcmFtZSI6MSwiaG9sZUF0IjoxNzUzLCJpbnB1dHMiOltbInBvaW50ZXJkb3duIiwxODU1LDExXSxbImNsaWNrIiwxODU2LDExXSxbInBvaW50ZXJkb3duIiwxOTM3LDIxXSxbImNsaWNrIiwxOTM5LDIxXV0sImZyYW1lcyI6W1sxNzUzLDE3NF0sWzE3NjksMTc0XSxbMTc3OCwxNzRdLFsxNzkwLDE3NF0sWzE4MDAsMTc0XSxbMTgxMSwxNzRdLFsxODE4LDE3NF0sWzE4MzAsMTc0XSxbMTg0MCwxNzRdLFsxODUxLDE3NF0sWzE4NTQsMTc0XSxbMTg2MCwxNzRdLFsxODcyLDE2NS44XSxbMTg4MSwxNTIuOF0sWzE4OTEsMTM1LjNdLFsxOTAyLDExNS4zXSxbMTkxMCwxMDEuM10sWzE5MjIsODIuMV0sWzE5MzIsNjguMV0sWzE5MzMsNjYuN10sWzE5MzYsNjNdLFsxOTQyLDBdLFsxOTUxLDVdLFsxOTYyLDE5LjZdLFsxOTc0LDQwLjVdLFsxOTgzLDU2LjldLFsxOTk0LDc2XSxbMjAwNCw5MS45XSxbMjAxNCwxMDUuOV0sWzIwMjQsMTE4LjFdLFsyMDM0LDEyOC4zXSxbMjA0NSwxMzcuOF0sWzIwNTUsMTQ0LjhdLFsyMDY1LDE1MC42XSxbMjA3NSwxNTUuM10sWzIwODUsMTU5LjFdLFsyMDk2LDE2Mi40XSxbMjEwNiwxNjQuOF0sWzIxMTYsMTY2LjhdLFsyMTI2LDE2OC4zXSxbMjEzNiwxNjkuNV0sWzIxNDcsMTc0XSxbMjE1NywxNzRdLFsyMTY3LDE3NF0sWzIxNzYsMTc0XSxbMjE4NywxNzRdLFsyMTk4LDE3NF0sWzIyMDgsMTc0XSxbMjIxOCwxNzRdLFsyMjI4LDE3NF0sWzIyMzgsMTc0XSxbMjI0OSwxNzRdLFsyMjU5LDE3NF0sWzIyNjksMTc0XSxbMjI3OSwxNzRdLFsyMjg5LDE3NF0sWzIzMDAsMTc0XSxbMjMxMCwxNzRdLFsyMzIwLDE3NF0sWzIzMzAsMTc0XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2ce35b9f25d2921a03b2-781d3e642fc90fe11d39",
+          "file": "stall.probe.ts",
+          "line": 46,
+          "column": 5
+        },
+        {
+          "title": "stall · late",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3110,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:25:38.664Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "stall",
+                      "contentType": "application/json",
+                      "body": "eyJraW5kIjoibGF0ZSIsImhvbGUiOjEzLCJob2xlRnJhbWUiOjc2LCJob2xlQXQiOjI0NzAsImlucHV0cyI6W1sicG9pbnRlcmRvd24iLDE4NDQsMTJdLFsiY2xpY2siLDE4NDYsMTJdLFsicG9pbnRlcmRvd24iLDIwMDcsMzBdLFsiY2xpY2siLDIwMDgsMzBdXSwiZnJhbWVzIjpbWzE3MzgsMTc0XSxbMTc0NywxNzRdLFsxNzU3LDE3NF0sWzE3NjcsMTc0XSxbMTc3NywxNzRdLFsxNzg4LDE3NF0sWzE3OTgsMTc0XSxbMTgwNywxNzRdLFsxODE5LDE3NF0sWzE4MjksMTc0XSxbMTgzOSwxNzRdLFsxODQzLDE3NF0sWzE4NDgsMTc0XSxbMTg2MCwxNjUuOF0sWzE4NzAsMTUxLjFdLFsxODgwLDEzMy41XSxbMTg5MCwxMTUuM10sWzE5MDAsOThdLFsxOTEwLDgyLjFdLFsxOTIxLDY2LjddLFsxOTMxLDU0LjhdLFsxOTQxLDQ0LjddLFsxOTUxLDM2LjJdLFsxOTYxLDI5LjJdLFsxOTcyLDIyLjldLFsxOTgwLDE5LjFdLFsxOTkyLDE0LjZdLFsyMDAyLDExLjVdLFsyMDAzLDExLjNdLFsyMDA2LDEwLjVdLFsyMDEyLDBdLFsyMDIzLDcuMV0sWzIwMzMsMjEuMl0sWzIwNDMsMzguN10sWzIwNTMsNTYuOV0sWzIwNjMsNzQuM10sWzIwNzQsOTEuOV0sWzIwODQsMTA1LjldLFsyMDk0LDExOC4xXSxbMjEwNCwxMjguM10sWzIxMTQsMTM3XSxbMjEyMywxNDMuNV0sWzIxMzMsMTQ5LjVdLFsyMTQ1LDE1NS4zXSxbMjE1NCwxNTguN10sWzIxNjUsMTYyLjJdLFsyMTc2LDE2NC44XSxbMjE4NiwxNjYuOF0sWzIxOTYsMTY4LjNdLFsyMjA2LDE2OS41XSxbMjIxNywxNzRdLFsyMjI2LDE3NF0sWzIyMzcsMTc0XSxbMjI0NywxNzRdLFsyMjU3LDE3NF0sWzIyNjgsMTc0XSxbMjI3OCwxNzRdLFsyMjg4LDE3NF0sWzIyOTgsMTc0XSxbMjMwOCwxNzRdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2ce35b9f25d2921a03b2-702a210178a6d17e3590",
+          "file": "stall.probe.ts",
+          "line": 46,
+          "column": 5
+        },
+        {
+          "title": "stall · reopen",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3173,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:25:42.012Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "stall",
+                      "contentType": "application/json",
+                      "body": "eyJraW5kIjoicmVvcGVuIiwiaG9sZSI6MTMsImhvbGVGcmFtZSI6MSwiaG9sZUF0IjoxNzY0LCJpbnB1dHMiOltbInBvaW50ZXJkb3duIiwxODc0LDEzXSxbImNsaWNrIiwxODc1LDEzXSxbInBvaW50ZXJkb3duIiwxOTU1LDIzXSxbImNsaWNrIiwxOTU3LDIzXV0sImZyYW1lcyI6W1sxNzY0LDE3NF0sWzE3NzcsMTc0XSxbMTc4NiwxNzRdLFsxNzk4LDE3NF0sWzE4MDcsMTc0XSxbMTgxOCwxNzRdLFsxODI2LDE3NF0sWzE4MzksMTc0XSxbMTg0NywxNzRdLFsxODU5LDE3NF0sWzE4NjgsMTc0XSxbMTg2OSwxNzRdLFsxODczLDE3NF0sWzE4NzcsMTc0XSxbMTg4OSwxNjUuOF0sWzE4OTksMTUxLjFdLFsxOTA5LDEzMy41XSxbMTkxOSwxMTUuM10sWzE5MzAsOTYuM10sWzE5MzgsODMuNl0sWzE5NTAsNjYuN10sWzE5NTEsNjUuNV0sWzE5NTQsNjEuOF0sWzE5NTgsMF0sWzE5NjksNy4xXSxbMTk4MSwyNC42XSxbMTk5MSw0Mi4zXSxbMjAwMSw2MC40XSxbMjAxMiw3OS4zXSxbMjAyMiw5NC45XSxbMjAzMiwxMDguNV0sWzIwNDIsMTIwLjNdLFsyMDUyLDEzMC4yXSxbMjA2MiwxMzguNV0sWzIwNzMsMTQ2XSxbMjA4MywxNTEuNl0sWzIwOTMsMTU2LjFdLFsyMTAzLDE1OS44XSxbMjExMywxNjIuN10sWzIxMjQsMTY1LjNdLFsyMTMyLDE2Ni44XSxbMjE0NCwxNjguNl0sWzIxNTQsMTY5LjhdLFsyMTY0LDE3NF0sWzIxNzUsMTc0XSxbMjE4NSwxNzRdLFsyMTk1LDE3NF0sWzIyMDQsMTc0XSxbMjIxNSwxNzRdLFsyMjI2LDE3NF0sWzIyMzgsMTc0XSxbMjI0NSwxNzRdLFsyMjU2LDE3NF0sWzIyNjYsMTc0XSxbMjI3NywxNzRdLFsyMjg3LDE3NF0sWzIyOTgsMTc0XSxbMjMwNywxNzRdLFsyMzE2LDE3NF0sWzIzMjYsMTc0XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2ce35b9f25d2921a03b2-7060675a097c09a02b6a",
+          "file": "stall.probe.ts",
+          "line": 46,
+          "column": 5
+        },
+        {
+          "title": "stall · late",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3152,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:25:45.321Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "stall",
+                      "contentType": "application/json",
+                      "body": "eyJraW5kIjoibGF0ZSIsImhvbGUiOjE3LCJob2xlRnJhbWUiOjEsImhvbGVBdCI6MTc3MSwiaW5wdXRzIjpbWyJwb2ludGVyZG93biIsMTg4NSwxM10sWyJjbGljayIsMTg4NywxM10sWyJwb2ludGVyZG93biIsMjA0OCwzMV0sWyJjbGljayIsMjA0OSwzMV1dLCJmcmFtZXMiOltbMTc3MSwxNzRdLFsxNzg4LDE3NF0sWzE3OTgsMTc0XSxbMTgwOSwxNzRdLFsxODE3LDE3NF0sWzE4MjksMTc0XSxbMTg0MCwxNzRdLFsxODUwLDE3NF0sWzE4NjAsMTc0XSxbMTg3MCwxNzRdLFsxODc5LDE3NF0sWzE4ODAsMTc0XSxbMTg4NCwxNzRdLFsxODg5LDE3NF0sWzE5MDAsMTY2LjldLFsxOTExLDE1MS4xXSxbMTkxOSwxMzcuMV0sWzE5MzEsMTE1LjNdLFsxOTQxLDk4XSxbMTk1Miw4MC42XSxbMTk2Miw2Ni43XSxbMTk3Miw1NC44XSxbMTk4Miw0NC43XSxbMTk5MiwzNi4yXSxbMjAwMywyOC41XSxbMjAxMywyMi45XSxbMjAyMSwxOS4xXSxbMjAzMywxNC42XSxbMjA0MywxMS41XSxbMjA0NCwxMS4zXSxbMjA0NywxMC41XSxbMjA1NCwwXSxbMjA2NCw2XSxbMjA3MiwxNi41XSxbMjA4NCwzNi44XSxbMjA5NSw1Ni45XSxbMjEwNSw3NC4zXSxbMjExNSw5MC40XSxbMjEyNSwxMDQuNl0sWzIxMzUsMTE2LjldLFsyMTQ1LDEyNy40XSxbMjE1NiwxMzddLFsyMTY1LDE0My41XSxbMjE3NiwxNTBdLFsyMTg2LDE1NC44XSxbMjE5NSwxNTguNF0sWzIyMDgsMTYyLjRdLFsyMjE3LDE2NC42XSxbMjIyNSwxNjYuMl0sWzIyMzgsMTY4LjNdLFsyMjQ3LDE2OS40XSxbMjI1OCwxNzRdLFsyMjY4LDE3NF0sWzIyNzgsMTc0XSxbMjI4OCwxNzRdLFsyMjk3LDE3NF0sWzIzMDksMTc0XSxbMjMxOSwxNzRdLFsyMzI5LDE3NF0sWzIzMzksMTc0XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2ce35b9f25d2921a03b2-a6ba7d9c406861037d85",
+          "file": "stall.probe.ts",
+          "line": 46,
+          "column": 5
+        },
+        {
+          "title": "stall · reopen",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3167,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:25:48.727Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "stall",
+                      "contentType": "application/json",
+                      "body": "eyJraW5kIjoicmVvcGVuIiwiaG9sZSI6MTYsImhvbGVGcmFtZSI6MSwiaG9sZUF0IjoxNzU4LCJpbnB1dHMiOltbInBvaW50ZXJkb3duIiwxODU5LDExXSxbImNsaWNrIiwxODYxLDExXSxbInBvaW50ZXJkb3duIiwxOTQ0LDIxXSxbImNsaWNrIiwxOTQ1LDIxXV0sImZyYW1lcyI6W1sxNzU4LDE3NF0sWzE3NzQsMTc0XSxbMTc4NCwxNzRdLFsxNzk0LDE3NF0sWzE4MDYsMTc0XSxbMTgxNSwxNzRdLFsxODI1LDE3NF0sWzE4MzQsMTc0XSxbMTg0NSwxNzRdLFsxODU2LDE3NF0sWzE4NTksMTc0XSxbMTg2NiwxNzRdLFsxODc2LDE2OF0sWzE4ODcsMTUyLjhdLFsxODk3LDEzNS4zXSxbMTkwNSwxMjAuOF0sWzE5MTcsOTkuNl0sWzE5MjcsODMuNl0sWzE5MzgsNjguMV0sWzE5MzksNjYuN10sWzE5NDIsNjNdLFsxOTQ3LDBdLFsxOTU5LDguMl0sWzE5NjgsMjEuMl0sWzE5NzgsMzguN10sWzE5ODksNTguN10sWzE5OTksNzZdLFsyMDA5LDkxLjldLFsyMDE4LDEwNC42XSxbMjAzMCwxMTkuMl0sWzIwNDAsMTI5LjNdLFsyMDUwLDEzNy44XSxbMjA2MCwxNDQuOF0sWzIwNzAsMTUwLjZdLFsyMDc5LDE1NC44XSxbMjA5MSwxNTkuNF0sWzIxMDAsMTYyLjJdLFsyMTEwLDE2NC42XSxbMjEyMiwxNjYuOV0sWzIxMzEsMTY4LjNdLFsyMTQyLDE2OS42XSxbMjE1MiwxNzRdLFsyMTYyLDE3NF0sWzIxNzEsMTc0XSxbMjE4MywxNzRdLFsyMTkzLDE3NF0sWzIyMDMsMTc0XSxbMjIxMywxNzRdLFsyMjIzLDE3NF0sWzIyMzMsMTc0XSxbMjI0NCwxNzRdLFsyMjU0LDE3NF0sWzIyNjQsMTc0XSxbMjI3NCwxNzRdLFsyMjg1LDE3NF0sWzIyOTUsMTc0XSxbMjMwNSwxNzRdLFsyMzE1LDE3NF0sWzIzMjUsMTc0XSxbMjMzNiwxNzRdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2ce35b9f25d2921a03b2-8fc007dc39b84960f3f5",
+          "file": "stall.probe.ts",
+          "line": 46,
+          "column": 5
+        },
+        {
+          "title": "stall · late",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3122,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:25:52.031Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "stall",
+                      "contentType": "application/json",
+                      "body": "eyJraW5kIjoibGF0ZSIsImhvbGUiOjE3LCJob2xlRnJhbWUiOjEsImhvbGVBdCI6MTc1OSwiaW5wdXRzIjpbWyJwb2ludGVyZG93biIsMTg2MiwxMV0sWyJjbGljayIsMTg2MywxMV0sWyJwb2ludGVyZG93biIsMjAyNiwyOV0sWyJjbGljayIsMjAyNywyOV1dLCJmcmFtZXMiOltbMTc1OSwxNzRdLFsxNzc2LDE3NF0sWzE3ODcsMTc0XSxbMTc5NywxNzRdLFsxODA2LDE3NF0sWzE4MTgsMTc0XSxbMTgyNywxNzRdLFsxODM5LDE3NF0sWzE4NDgsMTc0XSxbMTg1OCwxNzRdLFsxODYxLDE3NF0sWzE4NjgsMTc0XSxbMTg3OCwxNjhdLFsxODg4LDE1NC40XSxbMTkwMCwxMzMuNV0sWzE5MDksMTE3LjFdLFsxOTE5LDk5LjZdLFsxOTI5LDgzLjZdLFsxOTQwLDY4LjFdLFsxOTUwLDU1LjldLFsxOTYwLDQ1LjZdLFsxOTcwLDM3XSxbMTk3OSwzMC41XSxbMTk5MSwyMy40XSxbMTk5OSwxOS42XSxbMjAxMCwxNS4zXSxbMjAyMSwxMS44XSxbMjAyMiwxMS41XSxbMjAyNSwxMC44XSxbMjAzMiwwXSxbMjA0Miw2XSxbMjA1MiwxOS42XSxbMjA2MiwzNi44XSxbMjA3Myw1Ni45XSxbMjA4Myw3NC4zXSxbMjA5Myw5MC40XSxbMjEwMywxMDQuNl0sWzIxMTMsMTE2LjldLFsyMTIyLDEyNi41XSxbMjEzNCwxMzddLFsyMTQ0LDE0NC4xXSxbMjE1MywxNDkuNV0sWzIxNjUsMTU1LjNdLFsyMTc0LDE1OC43XSxbMjE4NSwxNjIuMl0sWzIxOTQsMTY0LjRdLFsyMjAzLDE2Ni4yXSxbMjIxNSwxNjguMl0sWzIyMjUsMTY5LjRdLFsyMjM0LDE3NF0sWzIyNDYsMTc0XSxbMjI1NiwxNzRdLFsyMjY1LDE3NF0sWzIyNzYsMTc0XSxbMjI4NywxNzRdLFsyMjk1LDE3NF0sWzIzMDcsMTc0XSxbMjMxNywxNzRdLFsyMzI4LDE3NF0sWzIzMzgsMTc0XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2ce35b9f25d2921a03b2-a8dfb2c50ce07f7cc29a",
+          "file": "stall.probe.ts",
+          "line": 46,
+          "column": 5
+        },
+        {
+          "title": "stall · reopen",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3161,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:25:55.411Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "stall",
+                      "contentType": "application/json",
+                      "body": "eyJraW5kIjoicmVvcGVuIiwiaG9sZSI6MTgsImhvbGVGcmFtZSI6MSwiaG9sZUF0IjoxNzUyLCJpbnB1dHMiOltbInBvaW50ZXJkb3duIiwxODU1LDEyXSxbImNsaWNrIiwxODU3LDEyXSxbInBvaW50ZXJkb3duIiwxOTI4LDIxXSxbImNsaWNrIiwxOTI5LDIxXV0sImZyYW1lcyI6W1sxNzUyLDE3NF0sWzE3NzAsMTc0XSxbMTc3OCwxNzRdLFsxNzkwLDE3NF0sWzE4MDEsMTc0XSxbMTgxMSwxNzRdLFsxODIwLDE3NF0sWzE4MzEsMTc0XSxbMTg0MSwxNzRdLFsxODUyLDE3NF0sWzE4NTMsMTc0XSxbMTg1NSwxNzRdLFsxODYyLDE3NF0sWzE4NzIsMTY4XSxbMTg4MiwxNTQuNF0sWzE4OTIsMTM3LjFdLFsxOTAyLDExOC45XSxbMTkxMyw5OS42XSxbMTkyMyw4My42XSxbMTkyNCw4Mi4xXSxbMTkyNiw3OS4xXSxbMTkzMywwXSxbMTk0Myw2XSxbMTk1NCwyMS4yXSxbMTk2NCwzOC43XSxbMTk3Myw1NV0sWzE5ODIsNzFdLFsxOTkzLDg4LjldLFsyMDA2LDEwNy4zXSxbMjAxNSwxMTguMV0sWzIwMjcsMTMwLjJdLFsyMDM1LDEzN10sWzIwNDYsMTQ0LjhdLFsyMDU2LDE1MC42XSxbMjA2NSwxNTQuOF0sWzIwNzcsMTU5LjRdLFsyMDg2LDE2Mi4yXSxbMjA5NiwxNjQuNl0sWzIxMDcsMTY2LjhdLFsyMTE3LDE2OC4zXSxbMjEyNywxNjkuNV0sWzIxMzcsMTc0XSxbMjE0NywxNzRdLFsyMTU3LDE3NF0sWzIxNjgsMTc0XSxbMjE3OCwxNzRdLFsyMTg4LDE3NF0sWzIxOTksMTc0XSxbMjIwOSwxNzRdLFsyMjE5LDE3NF0sWzIyMjksMTc0XSxbMjIzOSwxNzRdLFsyMjUxLDE3NF0sWzIyNjAsMTc0XSxbMjI3MCwxNzRdLFsyMjgwLDE3NF0sWzIyOTAsMTc0XSxbMjMwMSwxNzRdLFsyMzExLDE3NF0sWzIzMjEsMTc0XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2ce35b9f25d2921a03b2-1fbf7f5d1c3ad3d306fc",
+          "file": "stall.probe.ts",
+          "line": 46,
+          "column": 5
+        },
+        {
+          "title": "stall · late",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3127,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:25:58.715Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "stall",
+                      "contentType": "application/json",
+                      "body": "eyJraW5kIjoibGF0ZSIsImhvbGUiOjE1LCJob2xlRnJhbWUiOjEsImhvbGVBdCI6MTc1MywiaW5wdXRzIjpbWyJwb2ludGVyZG93biIsMTg2NiwxM10sWyJjbGljayIsMTg2OCwxM10sWyJwb2ludGVyZG93biIsMjAyOCwzMV0sWyJjbGljayIsMjAyOSwzMV1dLCJmcmFtZXMiOltbMTc1MywxNzRdLFsxNzY4LDE3NF0sWzE3NzcsMTc0XSxbMTc4OSwxNzRdLFsxNzk3LDE3NF0sWzE4MDksMTc0XSxbMTgxOCwxNzRdLFsxODI5LDE3NF0sWzE4MzgsMTc0XSxbMTg0OSwxNzRdLFsxODU5LDE3NF0sWzE4NjAsMTc0XSxbMTg2NSwxNzRdLFsxODcwLDE3NF0sWzE4ODAsMTY4XSxbMTg5MCwxNTQuNF0sWzE4OTksMTM4LjldLFsxOTEwLDExOC45XSxbMTkyMSw5OS42XSxbMTkzMSw4My42XSxbMTk0MSw2OS40XSxbMTk1MSw1N10sWzE5NjEsNDYuNl0sWzE5NzIsMzddLFsxOTgyLDI5LjhdLFsxOTkyLDIzLjldLFsyMDAyLDE5LjFdLFsyMDEzLDE0LjldLFsyMDIyLDEyLjFdLFsyMDIzLDExLjhdLFsyMDI2LDExXSxbMjAzMywwXSxbMjA0Myw2XSxbMjA1MywxOS42XSxbMjA2NCwzOC43XSxbMjA3Miw1My4yXSxbMjA4NCw3NC4zXSxbMjA5NCw5MC40XSxbMjEwNCwxMDQuNl0sWzIxMTUsMTE4LjFdLFsyMTI1LDEyOC4zXSxbMjEzNSwxMzddLFsyMTQ1LDE0NC4xXSxbMjE1MywxNDldLFsyMTY2LDE1NS4zXSxbMjE3NiwxNTkuMV0sWzIxODQsMTYxLjZdLFsyMTk2LDE2NC42XSxbMjIwNiwxNjYuNl0sWzIyMTUsMTY4XSxbMjIyNywxNjkuNV0sWzIyMzYsMTc0XSxbMjI0OCwxNzRdLFsyMjU2LDE3NF0sWzIyNjgsMTc0XSxbMjI3OCwxNzRdLFsyMjg4LDE3NF0sWzIyOTgsMTc0XSxbMjMwOCwxNzRdLFsyMzE4LDE3NF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2ce35b9f25d2921a03b2-4208358cdea435aebe68",
+          "file": "stall.probe.ts",
+          "line": 46,
+          "column": 5
+        },
+        {
+          "title": "stall · reopen",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3173,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:26:02.089Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "stall",
+                      "contentType": "application/json",
+                      "body": "eyJraW5kIjoicmVvcGVuIiwiaG9sZSI6MTMsImhvbGVGcmFtZSI6MSwiaG9sZUF0IjoxNzYzLCJpbnB1dHMiOltbInBvaW50ZXJkb3duIiwxODcyLDEyXSxbImNsaWNrIiwxODc0LDEyXSxbInBvaW50ZXJkb3duIiwxOTU0LDIyXSxbImNsaWNrIiwxOTU1LDIyXV0sImZyYW1lcyI6W1sxNzYzLDE3NF0sWzE3NzYsMTc0XSxbMTc4NiwxNzRdLFsxNzk2LDE3NF0sWzE4MDcsMTc0XSxbMTgxNywxNzRdLFsxODI3LDE3NF0sWzE4MzcsMTc0XSxbMTg0OCwxNzRdLFsxODU4LDE3NF0sWzE4NjgsMTc0XSxbMTg3MSwxNzRdLFsxODc4LDE3NF0sWzE4ODgsMTY4XSxbMTg5OSwxNTIuOF0sWzE5MDksMTM1LjNdLFsxOTE5LDExNy4xXSxbMTkyOCwxMDEuM10sWzE5NDAsODIuMV0sWzE5NDksNjkuNF0sWzE5NTAsNjguMV0sWzE5NTMsNjQuMl0sWzE5NTgsMF0sWzE5NzAsOC4yXSxbMTk4MCwyMi45XSxbMTk5MCw0MC41XSxbMjAwMSw2MC40XSxbMjAxMiw3OS4zXSxbMjAyMSw5My40XSxbMjAzMCwxMDUuOV0sWzIwNDIsMTIwLjNdLFsyMDUxLDEyOS4zXSxbMjA2MywxMzkuM10sWzIwNzIsMTQ1LjRdLFsyMDgyLDE1MS4xXSxbMjA5MiwxNTUuN10sWzIxMDMsMTU5LjhdLFsyMTEzLDE2Mi43XSxbMjEyMywxNjVdLFsyMTMzLDE2Ni45XSxbMjE0MywxNjguNF0sWzIxNTQsMTY5LjhdLFsyMTY0LDE3NF0sWzIxNzIsMTc0XSxbMjE4NCwxNzRdLFsyMTk0LDE3NF0sWzIyMDUsMTc0XSxbMjIxNCwxNzRdLFsyMjI1LDE3NF0sWzIyMzUsMTc0XSxbMjI0NiwxNzRdLFsyMjU2LDE3NF0sWzIyNjgsMTc0XSxbMjI3NiwxNzRdLFsyMjg2LDE3NF0sWzIyOTcsMTc0XSxbMjMwNywxNzRdLFsyMzE3LDE3NF0sWzIzMjYsMTc0XSxbMjMzNSwxNzRdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2ce35b9f25d2921a03b2-0bf7431f24a79213ba32",
+          "file": "stall.probe.ts",
+          "line": 46,
+          "column": 5
+        },
+        {
+          "title": "stall · late",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3099,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:26:05.398Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "stall",
+                      "contentType": "application/json",
+                      "body": "eyJraW5kIjoibGF0ZSIsImhvbGUiOjE3LCJob2xlRnJhbWUiOjEsImhvbGVBdCI6MTc0OCwiaW5wdXRzIjpbWyJwb2ludGVyZG93biIsMTg1MCwxMl0sWyJjbGljayIsMTg1MSwxMl0sWyJwb2ludGVyZG93biIsMjAwNCwyOV0sWyJjbGljayIsMjAwNSwyOV1dLCJmcmFtZXMiOltbMTc0OCwxNzRdLFsxNzY1LDE3NF0sWzE3NzUsMTc0XSxbMTc4NSwxNzRdLFsxNzk1LDE3NF0sWzE4MDUsMTc0XSxbMTgxNiwxNzRdLFsxODI2LDE3NF0sWzE4MzYsMTc0XSxbMTg0NiwxNzRdLFsxODQ3LDE3NF0sWzE4NDksMTc0XSxbMTg1NiwxNzRdLFsxODY3LDE2Ni45XSxbMTg3NywxNTIuOF0sWzE4ODcsMTM1LjNdLFsxODk3LDExNy4xXSxbMTkwNyw5OS42XSxbMTkxOCw4Mi4xXSxbMTkyOCw2OC4xXSxbMTkzOCw1NS45XSxbMTk0OCw0NS42XSxbMTk1OCwzN10sWzE5NjksMjkuMl0sWzE5NzksMjMuNF0sWzE5ODgsMTkuMV0sWzE5OTksMTQuOV0sWzIwMDAsMTQuNl0sWzIwMDMsMTMuNl0sWzIwMDksMF0sWzIwMjAsNy4xXSxbMjAyOCwxOC4xXSxbMjA0MCwzOC43XSxbMjA1MCw1Ni45XSxbMjA2MSw3Nl0sWzIwNzEsOTEuOV0sWzIwODEsMTA1LjldLFsyMDkxLDExOC4xXSxbMjEwMSwxMjguM10sWzIxMTIsMTM3LjhdLFsyMTIyLDE0NC44XSxbMjEzMiwxNTAuNl0sWzIxNDIsMTU1LjNdLFsyMTUwLDE1OC40XSxbMjE2MywxNjIuNF0sWzIxNzMsMTY0LjhdLFsyMTgzLDE2Ni44XSxbMjE5MywxNjguM10sWzIyMDIsMTY5LjRdLFsyMjE0LDE3NF0sWzIyMjQsMTc0XSxbMjIzMiwxNzRdLFsyMjQ0LDE3NF0sWzIyNTQsMTc0XSxbMjI2NSwxNzRdLFsyMjc1LDE3NF0sWzIyODUsMTc0XSxbMjI5NSwxNzRdLFsyMzA1LDE3NF0sWzIzMTUsMTc0XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2ce35b9f25d2921a03b2-dbf287211071dee10a42",
+          "file": "stall.probe.ts",
+          "line": 46,
+          "column": 5
+        },
+        {
+          "title": "stall · reopen",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3158,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:26:08.747Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "stall",
+                      "contentType": "application/json",
+                      "body": "eyJraW5kIjoicmVvcGVuIiwiaG9sZSI6MTUsImhvbGVGcmFtZSI6MSwiaG9sZUF0IjoxNzYzLCJpbnB1dHMiOltbInBvaW50ZXJkb3duIiwxODYzLDEyXSxbImNsaWNrIiwxODY0LDEyXSxbInBvaW50ZXJkb3duIiwxOTM2LDIxXSxbImNsaWNrIiwxOTM4LDIxXV0sImZyYW1lcyI6W1sxNzYzLDE3NF0sWzE3NzgsMTc0XSxbMTc5MCwxNzRdLFsxNzk5LDE3NF0sWzE4MDksMTc0XSxbMTgxOSwxNzRdLFsxODMwLDE3NF0sWzE4NDAsMTc0XSxbMTg1MCwxNzRdLFsxODU4LDE3NF0sWzE4NTksMTc0XSxbMTg2MiwxNzRdLFsxODY5LDE3NF0sWzE4ODEsMTY1LjhdLFsxODkxLDE1MS4xXSxbMTkwMSwxMzMuNV0sWzE5MTEsMTE1LjNdLFsxOTIyLDk2LjNdLFsxOTMxLDgyLjFdLFsxOTMyLDgwLjZdLFsxOTM1LDc2LjJdLFsxOTQyLDBdLFsxOTUyLDZdLFsxOTYyLDE5LjZdLFsxOTcyLDM2LjhdLFsxOTg0LDU4LjddLFsxOTkzLDc0LjNdLFsyMDAzLDkwLjRdLFsyMDEzLDEwNC42XSxbMjAyNCwxMTguMV0sWzIwMzQsMTI4LjNdLFsyMDQ0LDEzN10sWzIwNTQsMTQ0LjFdLFsyMDY0LDE1MF0sWzIwNzYsMTU1LjddLFsyMDg0LDE1OC43XSxbMjA5NiwxNjIuNF0sWzIxMDUsMTY0LjZdLFsyMTE1LDE2Ni42XSxbMjEyNSwxNjguMl0sWzIxMzYsMTY5LjVdLFsyMTQ1LDE3NF0sWzIxNTYsMTc0XSxbMjE2NiwxNzRdLFsyMTc3LDE3NF0sWzIxODcsMTc0XSxbMjE5NywxNzRdLFsyMjA5LDE3NF0sWzIyMTgsMTc0XSxbMjIyOCwxNzRdLFsyMjM4LDE3NF0sWzIyNDgsMTc0XSxbMjI1OCwxNzRdLFsyMjY5LDE3NF0sWzIyNzksMTc0XSxbMjI4OSwxNzRdLFsyMjk5LDE3NF0sWzIzMDksMTc0XSxbMjMxOSwxNzRdLFsyMzI4LDE3NF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2ce35b9f25d2921a03b2-c104793a5ed258198971",
+          "file": "stall.probe.ts",
+          "line": 46,
+          "column": 5
+        },
+        {
+          "title": "stall · late",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3157,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:26:12.042Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "stall",
+                      "contentType": "application/json",
+                      "body": "eyJraW5kIjoibGF0ZSIsImhvbGUiOjE2LCJob2xlRnJhbWUiOjEsImhvbGVBdCI6MTc4MiwiaW5wdXRzIjpbWyJwb2ludGVyZG93biIsMTg4NSwxMl0sWyJjbGljayIsMTg4NywxMl0sWyJwb2ludGVyZG93biIsMjA0NiwzMF0sWyJjbGljayIsMjA0NywzMF1dLCJmcmFtZXMiOltbMTc4MiwxNzRdLFsxNzk4LDE3NF0sWzE4MDgsMTc0XSxbMTgxOCwxNzRdLFsxODI5LDE3NF0sWzE4MzksMTc0XSxbMTg1MSwxNzRdLFsxODU5LDE3NF0sWzE4NjgsMTc0XSxbMTg4MCwxNzRdLFsxODgxLDE3NF0sWzE4ODQsMTc0XSxbMTg4OSwxNzRdLFsxOTAxLDE2NS44XSxbMTkxMCwxNTIuOF0sWzE5MjIsMTMxLjddLFsxOTMxLDExNS4zXSxbMTk0MSw5OF0sWzE5NTEsODIuMV0sWzE5NjEsNjguMV0sWzE5NzEsNTUuOV0sWzE5ODIsNDQuN10sWzE5OTIsMzYuMl0sWzIwMDEsMjkuOF0sWzIwMTMsMjIuOV0sWzIwMjIsMTguN10sWzIwMzQsMTQuMl0sWzIwNDEsMTIuMV0sWzIwNDIsMTEuOF0sWzIwNDUsMTFdLFsyMDUzLDBdLFsyMDYzLDZdLFsyMDc0LDIxLjJdLFsyMDg0LDM4LjddLFsyMDk0LDU2LjldLFsyMTA0LDc0LjNdLFsyMTE0LDkwLjRdLFsyMTI1LDEwNS45XSxbMjEzNSwxMTguMV0sWzIxNDQsMTI3LjRdLFsyMTU2LDEzNy44XSxbMjE2NCwxNDMuNV0sWzIxNzYsMTUwLjZdLFsyMTg2LDE1NS4zXSxbMjE5NiwxNTkuMV0sWzIyMDUsMTYxLjldLFsyMjE2LDE2NC42XSxbMjIyNywxNjYuOF0sWzIyMzcsMTY4LjNdLFsyMjQ3LDE2OS41XSxbMjI1NywxNzRdLFsyMjY3LDE3NF0sWzIyNzksMTc0XSxbMjI4OCwxNzRdLFsyMjk4LDE3NF0sWzIzMDgsMTc0XSxbMjMxOCwxNzRdLFsyMzI3LDE3NF0sWzIzMzksMTc0XSxbMjM0OSwxNzRdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2ce35b9f25d2921a03b2-82dcb7e339fbbb1a850f",
+          "file": "stall.probe.ts",
+          "line": 46,
+          "column": 5
+        },
+        {
+          "title": "stall · reopen",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3192,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:26:15.447Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "stall",
+                      "contentType": "application/json",
+                      "body": "eyJraW5kIjoicmVvcGVuIiwiaG9sZSI6MTMsImhvbGVGcmFtZSI6MzgsImhvbGVBdCI6MjExOSwiaW5wdXRzIjpbWyJwb2ludGVyZG93biIsMTg4MiwxMl0sWyJjbGljayIsMTg4NCwxMl0sWyJwb2ludGVyZG93biIsMTk2MSwyMl0sWyJjbGljayIsMTk2MiwyMl1dLCJmcmFtZXMiOltbMTc2OSwxNzRdLFsxNzgxLDE3NF0sWzE3OTMsMTc0XSxbMTgwMywxNzRdLFsxODE0LDE3NF0sWzE4MjIsMTc0XSxbMTgzNCwxNzRdLFsxODQyLDE3NF0sWzE4NTQsMTc0XSxbMTg2NCwxNzRdLFsxODc1LDE3NF0sWzE4ODEsMTc0XSxbMTg4NSwxNzRdLFsxODk1LDE2OF0sWzE5MDUsMTU0LjRdLFsxOTE2LDEzNS4zXSxbMTkyNiwxMTcuMV0sWzE5MzQsMTAzXSxbMTk0Niw4My42XSxbMTk1NSw3MC43XSxbMTk1Niw2OS40XSxbMTk1OSw2NS41XSxbMTk2NywwXSxbMTk3Nyw2XSxbMTk4NywxOS42XSxbMTk5NywzNi44XSxbMjAwNyw1NV0sWzIwMTgsNzQuM10sWzIwMjcsODguOV0sWzIwMzgsMTA0LjZdLFsyMDQ4LDExNi45XSxbMjA1OCwxMjcuNF0sWzIwNjksMTM3XSxbMjA3OSwxNDQuMV0sWzIwODksMTUwXSxbMjA5OSwxNTQuOF0sWzIxMDgsMTU4LjRdLFsyMTE5LDE2MS45XSxbMjEzMiwxNjVdLFsyMTQwLDE2Ni42XSxbMjE1MCwxNjguMl0sWzIxNTksMTY5LjNdLFsyMTcxLDE3NF0sWzIxODEsMTc0XSxbMjE5MSwxNzRdLFsyMjAxLDE3NF0sWzIyMTIsMTc0XSxbMjIyMSwxNzRdLFsyMjMxLDE3NF0sWzIyNDIsMTc0XSxbMjI1MiwxNzRdLFsyMjYzLDE3NF0sWzIyNzQsMTc0XSxbMjI4MywxNzRdLFsyMjkzLDE3NF0sWzIzMDMsMTc0XSxbMjMxNCwxNzRdLFsyMzI0LDE3NF0sWzIzMzQsMTc0XSxbMjM0NCwxNzRdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2ce35b9f25d2921a03b2-b218eb2fd94c65c9a14b",
+          "file": "stall.probe.ts",
+          "line": 46,
+          "column": 5
+        },
+        {
+          "title": "stall · late",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3130,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:26:18.778Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "stall",
+                      "contentType": "application/json",
+                      "body": "eyJraW5kIjoibGF0ZSIsImhvbGUiOjE0LCJob2xlRnJhbWUiOjEsImhvbGVBdCI6MTc2MCwiaW5wdXRzIjpbWyJwb2ludGVyZG93biIsMTg3NCwxM10sWyJjbGljayIsMTg3NiwxM10sWyJwb2ludGVyZG93biIsMjAzNiwzMV0sWyJjbGljayIsMjAzNywzMV1dLCJmcmFtZXMiOltbMTc2MCwxNzRdLFsxNzc0LDE3NF0sWzE3ODYsMTc0XSxbMTc5NiwxNzRdLFsxODA1LDE3NF0sWzE4MTYsMTc0XSxbMTgyNiwxNzRdLFsxODM2LDE3NF0sWzE4NDYsMTc0XSxbMTg1NywxNzRdLFsxODY3LDE3NF0sWzE4NjgsMTc0XSxbMTg3MiwxNzRdLFsxODc3LDE3NF0sWzE4ODgsMTY2LjldLFsxODk4LDE1Mi44XSxbMTkwNywxMzcuMV0sWzE5MTksMTE1LjNdLFsxOTI4LDk5LjZdLFsxOTQwLDgwLjZdLFsxOTQ5LDY4LjFdLFsxOTU5LDU1LjldLFsxOTY5LDQ1LjZdLFsxOTc5LDM3XSxbMTk5MCwyOS4yXSxbMTk5OSwyMy45XSxbMjAwOSwxOS4xXSxbMjAyMCwxNC45XSxbMjAzMCwxMS44XSxbMjAzMSwxMS41XSxbMjAzNSwxMC41XSxbMjAzOSwwXSxbMjA1MSw4LjJdLFsyMDYxLDIyLjldLFsyMDcxLDQwLjVdLFsyMDgxLDU4LjddLFsyMDkyLDc3LjddLFsyMTAyLDkzLjRdLFsyMTExLDEwNS45XSxbMjEyMywxMjAuM10sWzIxMzIsMTI5LjNdLFsyMTQzLDEzOC41XSxbMjE1MywxNDUuNF0sWzIxNjMsMTUxLjFdLFsyMTczLDE1NS43XSxbMjE4MywxNTkuNF0sWzIxOTQsMTYyLjddLFsyMjA0LDE2NV0sWzIyMTMsMTY2LjhdLFsyMjI0LDE2OC40XSxbMjIzNCwxNjkuNl0sWzIyNDUsMTc0XSxbMjI1NSwxNzRdLFsyMjY1LDE3NF0sWzIyNzMsMTc0XSxbMjI4NCwxNzRdLFsyMjk1LDE3NF0sWzIzMDcsMTc0XSxbMjMxNiwxNzRdLFsyMzI2LDE3NF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2ce35b9f25d2921a03b2-039533306d5717022cac",
+          "file": "stall.probe.ts",
+          "line": 46,
+          "column": 5
+        },
+        {
+          "title": "stall · reopen",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3172,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:26:22.164Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "stall",
+                      "contentType": "application/json",
+                      "body": "eyJraW5kIjoicmVvcGVuIiwiaG9sZSI6MTUsImhvbGVGcmFtZSI6MSwiaG9sZUF0IjoxNzUxLCJpbnB1dHMiOltbInBvaW50ZXJkb3duIiwxODYyLDEyXSxbImNsaWNrIiwxODYzLDEyXSxbInBvaW50ZXJkb3duIiwxOTQ3LDIyXSxbImNsaWNrIiwxOTQ4LDIyXV0sImZyYW1lcyI6W1sxNzUxLDE3NF0sWzE3NjYsMTc0XSxbMTc3NiwxNzRdLFsxNzg2LDE3NF0sWzE3OTYsMTc0XSxbMTgwOCwxNzRdLFsxODE3LDE3NF0sWzE4MjcsMTc0XSxbMTgzNiwxNzRdLFsxODQ4LDE3NF0sWzE4NTgsMTc0XSxbMTg2MSwxNzRdLFsxODY4LDE3NF0sWzE4NzgsMTY4XSxbMTg4OCwxNTQuNF0sWzE4OTcsMTM4LjldLFsxOTA4LDExOC45XSxbMTkxOCwxMDEuM10sWzE5MjgsODUuMV0sWzE5NDAsNjguMV0sWzE5NDEsNjYuN10sWzE5NDUsNjEuOF0sWzE5NTAsMF0sWzE5NjAsNl0sWzE5NzAsMTkuNl0sWzE5ODAsMzYuOF0sWzE5OTAsNTVdLFsyMDAxLDc0LjNdLFsyMDExLDkwLjRdLFsyMDIxLDEwNC42XSxbMjAzMywxMTkuMl0sWzIwNDEsMTI3LjRdLFsyMDUwLDEzNS40XSxbMjA2MiwxNDQuMV0sWzIwNzEsMTQ5LjVdLFsyMDgzLDE1NS4zXSxbMjA5MiwxNTguN10sWzIxMDMsMTYyLjJdLFsyMTEzLDE2NC42XSxbMjEyMywxNjYuNl0sWzIxMzIsMTY4XSxbMjE0MiwxNjkuM10sWzIxNTQsMTc0XSxbMjE2MiwxNzRdLFsyMTc1LDE3NF0sWzIxODQsMTc0XSxbMjE5NSwxNzRdLFsyMjA1LDE3NF0sWzIyMTUsMTc0XSxbMjIyNSwxNzRdLFsyMjM0LDE3NF0sWzIyNDUsMTc0XSxbMjI1NCwxNzRdLFsyMjY2LDE3NF0sWzIyNzQsMTc0XSxbMjI4NywxNzRdLFsyMjk3LDE3NF0sWzIzMDcsMTc0XSxbMjMxNywxNzRdLFsyMzI3LDE3NF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2ce35b9f25d2921a03b2-41479831ec36f9d57299",
+          "file": "stall.probe.ts",
+          "line": 46,
+          "column": 5
+        },
+        {
+          "title": "stall · late",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3102,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:26:25.475Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "stall",
+                      "contentType": "application/json",
+                      "body": "eyJraW5kIjoibGF0ZSIsImhvbGUiOjEzLCJob2xlRnJhbWUiOjI1LCJob2xlQXQiOjE5NjgsImlucHV0cyI6W1sicG9pbnRlcmRvd24iLDE4NDksMTNdLFsiY2xpY2siLDE4NTEsMTNdLFsicG9pbnRlcmRvd24iLDIwMDYsMzBdLFsiY2xpY2siLDIwMDcsMzBdXSwiZnJhbWVzIjpbWzE3NDcsMTc0XSxbMTc1MywxNzRdLFsxNzY0LDE3NF0sWzE3NzYsMTc0XSxbMTc4NSwxNzRdLFsxNzk1LDE3NF0sWzE4MDYsMTc0XSxbMTgxNiwxNzRdLFsxODI2LDE3NF0sWzE4MzYsMTc0XSxbMTg0NSwxNzRdLFsxODQ2LDE3NF0sWzE4NDgsMTc0XSxbMTg1NiwxNzRdLFsxODY4LDE2NS44XSxbMTg3NywxNTIuOF0sWzE4ODcsMTM1LjNdLFsxODk3LDExNy4xXSxbMTkwOCw5OF0sWzE5MTgsODIuMV0sWzE5MjYsNzAuN10sWzE5MzcsNTddLFsxOTQ4LDQ1LjZdLFsxOTU5LDM2LjJdLFsxOTY4LDI5LjhdLFsxOTgxLDIyLjRdLFsxOTg5LDE4LjddLFsyMDAwLDE0LjZdLFsyMDAxLDE0LjJdLFsyMDA0LDEzLjNdLFsyMDA5LDBdLFsyMDIwLDcuMV0sWzIwMzIsMjQuNl0sWzIwNDAsMzguN10sWzIwNTEsNTguN10sWzIwNjEsNzZdLFsyMDcwLDkwLjRdLFsyMDgyLDEwNy4zXSxbMjA5MSwxMTguMV0sWzIxMDMsMTMwLjJdLFsyMTExLDEzN10sWzIxMjEsMTQ0LjFdLFsyMTMzLDE1MS4xXSxbMjE0MiwxNTUuM10sWzIxNTMsMTU5LjRdLFsyMTYzLDE2Mi40XSxbMjE3MywxNjQuOF0sWzIxODIsMTY2LjZdLFsyMTkzLDE2OC4zXSxbMjIwNCwxNjkuNl0sWzIyMTQsMTc0XSxbMjIyNCwxNzRdLFsyMjM0LDE3NF0sWzIyNDQsMTc0XSxbMjI1NSwxNzRdLFsyMjYzLDE3NF0sWzIyNzUsMTc0XSxbMjI4NSwxNzRdLFsyMjk2LDE3NF0sWzIzMDYsMTc0XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2ce35b9f25d2921a03b2-94c35352425aed70fb64",
+          "file": "stall.probe.ts",
+          "line": 46,
+          "column": 5
+        },
+        {
+          "title": "stall · reopen",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3151,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:26:28.853Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "stall",
+                      "contentType": "application/json",
+                      "body": "eyJraW5kIjoicmVvcGVuIiwiaG9sZSI6MTcsImhvbGVGcmFtZSI6MSwiaG9sZUF0IjoxNzQ2LCJpbnB1dHMiOltbInBvaW50ZXJkb3duIiwxODQ2LDEyXSxbImNsaWNrIiwxODQ4LDEyXSxbInBvaW50ZXJkb3duIiwxOTIxLDIxXSxbImNsaWNrIiwxOTIyLDIxXV0sImZyYW1lcyI6W1sxNzQ2LDE3NF0sWzE3NjMsMTc0XSxbMTc3MSwxNzRdLFsxNzgyLDE3NF0sWzE3OTQsMTc0XSxbMTgwNiwxNzRdLFsxODEzLDE3NF0sWzE4MjMsMTc0XSxbMTgzNSwxNzRdLFsxODQzLDE3NF0sWzE4NDQsMTc0XSxbMTg0NiwxNzRdLFsxODU1LDE3NF0sWzE4NjUsMTY4XSxbMTg3NSwxNTQuNF0sWzE4ODYsMTM1LjNdLFsxODk1LDExOC45XSxbMTkwNiw5OS42XSxbMTkxNiw4My42XSxbMTkxNyw4Mi4xXSxbMTkyMCw3Ny43XSxbMTkyNiwwXSxbMTkzNyw3LjFdLFsxOTQ1LDE4LjFdLFsxOTU2LDM2LjhdLFsxOTY1LDUzLjJdLFsxOTc3LDc0LjNdLFsxOTg4LDkxLjldLFsxOTk4LDEwNS45XSxbMjAwOCwxMTguMV0sWzIwMTgsMTI4LjNdLFsyMDI4LDEzN10sWzIwMzksMTQ0LjhdLFsyMDUxLDE1MS42XSxbMjA1OSwxNTUuM10sWzIwNjksMTU5LjFdLFsyMDgxLDE2Mi43XSxbMjA5MCwxNjQuOF0sWzIxMDAsMTY2LjhdLFsyMTEwLDE2OC4zXSxbMjEyMCwxNjkuNV0sWzIxMzAsMTc0XSxbMjE0MiwxNzRdLFsyMTUwLDE3NF0sWzIxNjEsMTc0XSxbMjE3MSwxNzRdLFsyMTgwLDE3NF0sWzIxOTIsMTc0XSxbMjIwMCwxNzRdLFsyMjEyLDE3NF0sWzIyMjIsMTc0XSxbMjIzMywxNzRdLFsyMjQzLDE3NF0sWzIyNTMsMTc0XSxbMjI2MywxNzRdLFsyMjczLDE3NF0sWzIyODUsMTc0XSxbMjI5NCwxNzRdLFsyMzA0LDE3NF0sWzIzMTMsMTc0XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2ce35b9f25d2921a03b2-76aba993cd324c226ee4",
+          "file": "stall.probe.ts",
+          "line": 46,
+          "column": 5
+        },
+        {
+          "title": "stall · late",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3108,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:26:32.150Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "stall",
+                      "contentType": "application/json",
+                      "body": "eyJraW5kIjoibGF0ZSIsImhvbGUiOjE1LCJob2xlRnJhbWUiOjEsImhvbGVBdCI6MTc0OCwiaW5wdXRzIjpbWyJwb2ludGVyZG93biIsMTg1OSwxMl0sWyJjbGljayIsMTg2MSwxMl0sWyJwb2ludGVyZG93biIsMjAxNSwyOV0sWyJjbGljayIsMjAxNiwyOV1dLCJmcmFtZXMiOltbMTc0OCwxNzRdLFsxNzYzLDE3NF0sWzE3NzIsMTc0XSxbMTc4NSwxNzRdLFsxNzk0LDE3NF0sWzE4MDMsMTc0XSxbMTgxNSwxNzRdLFsxODIzLDE3NF0sWzE4MzMsMTc0XSxbMTg0NSwxNzRdLFsxODU2LDE3NF0sWzE4NTgsMTc0XSxbMTg2NiwxNzRdLFsxODc2LDE2OF0sWzE4ODUsMTU1LjldLFsxODk4LDEzMy41XSxbMTkwNSwxMjAuOF0sWzE5MTUsMTAzXSxbMTkyNyw4My42XSxbMTkzNyw2OS40XSxbMTk0Niw1OC4yXSxbMTk1Nyw0Ni42XSxbMTk2OSwzNi4yXSxbMTk3OCwyOS44XSxbMTk4OCwyMy45XSxbMTk5OCwxOS4xXSxbMjAxMCwxNC42XSxbMjAxMSwxNC4yXSxbMjAxNCwxMy4zXSxbMjAxOSwwXSxbMjAyOCw1XSxbMjA0MCwyMS4yXSxbMjA0OSwzNi44XSxbMjA2MSw1OC43XSxbMjA3MCw3NC4zXSxbMjA4MCw5MC40XSxbMjA5MCwxMDQuNl0sWzIxMDAsMTE2LjldLFsyMTExLDEyOC4zXSxbMjEyMCwxMzYuMl0sWzIxMzEsMTQ0LjFdLFsyMTQxLDE1MF0sWzIxNTEsMTU0LjhdLFsyMTYyLDE1OS4xXSxbMjE3MiwxNjIuMl0sWzIxODIsMTY0LjZdLFsyMTkyLDE2Ni42XSxbMjIwMiwxNjguMl0sWzIyMTIsMTY5LjRdLFsyMjI0LDE3NF0sWzIyMzMsMTc0XSxbMjI0MywxNzRdLFsyMjU0LDE3NF0sWzIyNjQsMTc0XSxbMjI3NCwxNzRdLFsyMjg0LDE3NF0sWzIyOTQsMTc0XSxbMjMwMywxNzRdLFsyMzE0LDE3NF0sWzIzMjMsMTc0XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2ce35b9f25d2921a03b2-581e7af8d44ecae38c0b",
+          "file": "stall.probe.ts",
+          "line": 46,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-17T07:25:27.595Z",
+    "duration": 67715.253,
+    "expected": 20,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,948 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-5/probe/probe.config.ts",
+      "--project=webkit-phone",
+      "--workers=1",
+      "--repeat-each=10",
+      "heavy.probe.ts"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-5/probe/probe.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-5/probe",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-5/probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-5/probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/test-results",
+        "repeatEach": 10,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-5/probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-5/probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-5/logs/heavy-branch-webkit-phone.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "heavy.probe.ts",
+      "file": "heavy.probe.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "heavy · cell",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5310,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:27:28.798Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "heavy",
+                      "contentType": "application/json",
+                      "body": "eyJzZXR1cCI6ImNlbGwiLCJ0dXJuQXQiOjAuNDU1LCJob2xlcyI6W119"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c9ea3428d4797ba03537-46f5b1581a90c021a2fa",
+          "file": "heavy.probe.ts",
+          "line": 12,
+          "column": 5
+        },
+        {
+          "title": "heavy · bare",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3258,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:27:34.269Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "heavy",
+                      "contentType": "application/json",
+                      "body": "eyJzZXR1cCI6ImJhcmUiLCJ0dXJuQXQiOjAuNDU1LCJob2xlcyI6W119"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c9ea3428d4797ba03537-76c434d63eea2ab03467",
+          "file": "heavy.probe.ts",
+          "line": 12,
+          "column": 5
+        },
+        {
+          "title": "heavy · cell",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5261,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:27:37.771Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "heavy",
+                      "contentType": "application/json",
+                      "body": "eyJzZXR1cCI6ImNlbGwiLCJ0dXJuQXQiOjAuMzYyLCJob2xlcyI6W119"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c9ea3428d4797ba03537-18d951a72d0967960e9b",
+          "file": "heavy.probe.ts",
+          "line": 12,
+          "column": 5
+        },
+        {
+          "title": "heavy · bare",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3263,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:27:43.168Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "heavy",
+                      "contentType": "application/json",
+                      "body": "eyJzZXR1cCI6ImJhcmUiLCJ0dXJuQXQiOjAuMzY5LCJob2xlcyI6W119"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c9ea3428d4797ba03537-9bd8e6f96dcaba53358c",
+          "file": "heavy.probe.ts",
+          "line": 12,
+          "column": 5
+        },
+        {
+          "title": "heavy · cell",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5243,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:27:46.693Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "heavy",
+                      "contentType": "application/json",
+                      "body": "eyJzZXR1cCI6ImNlbGwiLCJ0dXJuQXQiOjAuMzYyLCJob2xlcyI6W119"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c9ea3428d4797ba03537-d2c45cc15d120821a62c",
+          "file": "heavy.probe.ts",
+          "line": 12,
+          "column": 5
+        },
+        {
+          "title": "heavy · bare",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3268,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:27:52.070Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "heavy",
+                      "contentType": "application/json",
+                      "body": "eyJzZXR1cCI6ImJhcmUiLCJ0dXJuQXQiOjAuMzYyLCJob2xlcyI6W119"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c9ea3428d4797ba03537-c49e7e94a5a711d83bab",
+          "file": "heavy.probe.ts",
+          "line": 12,
+          "column": 5
+        },
+        {
+          "title": "heavy · cell",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5249,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:27:55.582Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "heavy",
+                      "contentType": "application/json",
+                      "body": "eyJzZXR1cCI6ImNlbGwiLCJ0dXJuQXQiOjAuMzU1LCJob2xlcyI6W119"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c9ea3428d4797ba03537-39d9153c67d2e2930f83",
+          "file": "heavy.probe.ts",
+          "line": 12,
+          "column": 5
+        },
+        {
+          "title": "heavy · bare",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3258,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:28:00.969Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "heavy",
+                      "contentType": "application/json",
+                      "body": "eyJzZXR1cCI6ImJhcmUiLCJ0dXJuQXQiOjAuMzY5LCJob2xlcyI6W119"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c9ea3428d4797ba03537-50a2205a8da60927d86a",
+          "file": "heavy.probe.ts",
+          "line": 12,
+          "column": 5
+        },
+        {
+          "title": "heavy · cell",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5286,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:28:04.465Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "heavy",
+                      "contentType": "application/json",
+                      "body": "eyJzZXR1cCI6ImNlbGwiLCJ0dXJuQXQiOjAuMzY5LCJob2xlcyI6W119"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c9ea3428d4797ba03537-8ec3b4f27db40365ab96",
+          "file": "heavy.probe.ts",
+          "line": 12,
+          "column": 5
+        },
+        {
+          "title": "heavy · bare",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3281,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:28:09.888Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "heavy",
+                      "contentType": "application/json",
+                      "body": "eyJzZXR1cCI6ImJhcmUiLCJ0dXJuQXQiOjAuMzY5LCJob2xlcyI6W119"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c9ea3428d4797ba03537-1b74c329b185d9de4027",
+          "file": "heavy.probe.ts",
+          "line": 12,
+          "column": 5
+        },
+        {
+          "title": "heavy · cell",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5251,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:28:13.429Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "heavy",
+                      "contentType": "application/json",
+                      "body": "eyJzZXR1cCI6ImNlbGwiLCJ0dXJuQXQiOjAuNDU1LCJob2xlcyI6W119"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c9ea3428d4797ba03537-5a58b2bf1335b26dd501",
+          "file": "heavy.probe.ts",
+          "line": 12,
+          "column": 5
+        },
+        {
+          "title": "heavy · bare",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3270,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:28:18.828Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "heavy",
+                      "contentType": "application/json",
+                      "body": "eyJzZXR1cCI6ImJhcmUiLCJ0dXJuQXQiOjAuNDQ2LCJob2xlcyI6W119"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c9ea3428d4797ba03537-5315c2a42c470a47cb9e",
+          "file": "heavy.probe.ts",
+          "line": 12,
+          "column": 5
+        },
+        {
+          "title": "heavy · cell",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5261,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:28:22.351Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "heavy",
+                      "contentType": "application/json",
+                      "body": "eyJzZXR1cCI6ImNlbGwiLCJ0dXJuQXQiOjAuMzYyLCJob2xlcyI6W119"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c9ea3428d4797ba03537-1770b0c161a382e6a24a",
+          "file": "heavy.probe.ts",
+          "line": 12,
+          "column": 5
+        },
+        {
+          "title": "heavy · bare",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3285,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:28:27.751Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "heavy",
+                      "contentType": "application/json",
+                      "body": "eyJzZXR1cCI6ImJhcmUiLCJ0dXJuQXQiOjAuMzY5LCJob2xlcyI6W119"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c9ea3428d4797ba03537-509c7cb63aa06167026c",
+          "file": "heavy.probe.ts",
+          "line": 12,
+          "column": 5
+        },
+        {
+          "title": "heavy · cell",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5276,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:28:31.278Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "heavy",
+                      "contentType": "application/json",
+                      "body": "eyJzZXR1cCI6ImNlbGwiLCJ0dXJuQXQiOjAuNDQ2LCJob2xlcyI6W119"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c9ea3428d4797ba03537-2a161a8126b8304a9d99",
+          "file": "heavy.probe.ts",
+          "line": 12,
+          "column": 5
+        },
+        {
+          "title": "heavy · bare",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3279,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:28:36.701Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "heavy",
+                      "contentType": "application/json",
+                      "body": "eyJzZXR1cCI6ImJhcmUiLCJ0dXJuQXQiOjAuMzYyLCJob2xlcyI6W119"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c9ea3428d4797ba03537-b73f8bb15ac0be3a3c1a",
+          "file": "heavy.probe.ts",
+          "line": 12,
+          "column": 5
+        },
+        {
+          "title": "heavy · cell",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5273,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:28:40.232Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "heavy",
+                      "contentType": "application/json",
+                      "body": "eyJzZXR1cCI6ImNlbGwiLCJ0dXJuQXQiOjAuMzYyLCJob2xlcyI6W119"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c9ea3428d4797ba03537-d69f78f12b9772f228bd",
+          "file": "heavy.probe.ts",
+          "line": 12,
+          "column": 5
+        },
+        {
+          "title": "heavy · bare",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3273,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:28:45.645Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "heavy",
+                      "contentType": "application/json",
+                      "body": "eyJzZXR1cCI6ImJhcmUiLCJ0dXJuQXQiOjAuNDQ2LCJob2xlcyI6W119"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c9ea3428d4797ba03537-f6637574e6e9b4ad3934",
+          "file": "heavy.probe.ts",
+          "line": 12,
+          "column": 5
+        },
+        {
+          "title": "heavy · cell",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5266,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:28:49.163Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "heavy",
+                      "contentType": "application/json",
+                      "body": "eyJzZXR1cCI6ImNlbGwiLCJ0dXJuQXQiOjAuNDQ2LCJob2xlcyI6W119"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c9ea3428d4797ba03537-41e0594798eed3042cd2",
+          "file": "heavy.probe.ts",
+          "line": 12,
+          "column": 5
+        },
+        {
+          "title": "heavy · bare",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3273,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T07:28:54.574Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "heavy",
+                      "contentType": "application/json",
+                      "body": "eyJzZXR1cCI6ImJhcmUiLCJ0dXJuQXQiOjAuMzc2LCJob2xlcyI6W119"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c9ea3428d4797ba03537-475c54a5436e1773e90c",
+          "file": "heavy.probe.ts",
+          "line": 12,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-17T07:27:27.230Z",
+    "duration": 90667.843,
+    "expected": 20,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

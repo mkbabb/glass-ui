@@ -1,0 +1,225 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-1-1.config.ts",
+      "--project=chromium-desktop",
+      "--workers=1",
+      "-g",
+      "press · "
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-5/logs/press-red-chromium-desktop.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5352",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/",
+      "url": "http://localhost:5352",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1-reduce.spec.ts",
+      "file": "release-11-1-1-reduce.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "press · a pressed control shows its press by colour, not by size, under reduced motion",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5940,
+                  "error": {
+                    "message": "Error: the Button keeps scale 1 on every frame {\"Button\":{\"rest\":69.41,\"active\":42,\"scales\":[\"1\",\"1.0328 0.911\"],\"transforms\":[\"none\"],\"widths\":[69.41,71.68],\"fill\":[\"oklab(0.673443 0.0210928 0.0746619 / 0.244)\",\"oklab(0.673443 0.0210928 0.0746619 / 0.244)\"],\"painted\":0.234},\"icon seat\":{\"rest\":40,\"active\":40,\"scales\":[\"1\",\"1.0066 0.9156\"],\"transforms\":[\"none\"],\"widths\":[40,40.26],\"fill\":[\"color(srgb 0.20397 0.148263 0.0829736 / 0.14)\",\"oklab(0.257667 0.00900921 0.023203 / 0.2002)\"],\"painted\":0.398},\"tab seat\":{\"rest\":51.75,\"active\":39,\"scales\":[\"1\",\"0.96\"],\"transforms\":[\"none\"],\"widths\":[51.75,49.68],\"fill\":[\"color(srgb 0.20397 0.148263 0.0829736 / 0.14)\",\"oklab(0.257667 0.00900921 0.023203 / 0.2002)\"],\"painted\":0.704},\"menu row\":{\"rest\":182,\"active\":40,\"scales\":[\"1\",\"0.97\"],\"transforms\":[\"none\"],\"widths\":[182,176.54],\"fill\":[\"color(srgb 0.20397 0.148263 0.0829736 / 0.1)\",\"color(srgb 0.20397 0.148263 0.0829736 / 0.1)\"],\"painted\":0.183}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: the Button keeps scale 1 on every frame {\"Button\":{\"rest\":69.41,\"active\":42,\"scales\":[\"1\",\"1.0328 0.911\"],\"transforms\":[\"none\"],\"widths\":[69.41,71.68],\"fill\":[\"oklab(0.673443 0.0210928 0.0746619 / 0.244)\",\"oklab(0.673443 0.0210928 0.0746619 / 0.244)\"],\"painted\":0.234},\"icon seat\":{\"rest\":40,\"active\":40,\"scales\":[\"1\",\"1.0066 0.9156\"],\"transforms\":[\"none\"],\"widths\":[40,40.26],\"fill\":[\"color(srgb 0.20397 0.148263 0.0829736 / 0.14)\",\"oklab(0.257667 0.00900921 0.023203 / 0.2002)\"],\"painted\":0.398},\"tab seat\":{\"rest\":51.75,\"active\":39,\"scales\":[\"1\",\"0.96\"],\"transforms\":[\"none\"],\"widths\":[51.75,49.68],\"fill\":[\"color(srgb 0.20397 0.148263 0.0829736 / 0.14)\",\"oklab(0.257667 0.00900921 0.023203 / 0.2002)\"],\"painted\":0.704},\"menu row\":{\"rest\":182,\"active\":40,\"scales\":[\"1\",\"0.97\"],\"transforms\":[\"none\"],\"widths\":[182,176.54],\"fill\":[\"color(srgb 0.20397 0.148263 0.0829736 / 0.1)\",\"color(srgb 0.20397 0.148263 0.0829736 / 0.1)\"],\"painted\":0.183}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:417:92",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                      "column": 92,
+                      "line": 417
+                    },
+                    "snippet": "  415 |     for (const [name, r] of Object.entries(reads)) {\n  416 |         expect(r.active, `the ${name} was held pressed ${at}`).toBeGreaterThan(0);\n> 417 |         expect(r.scales.every(identity), `the ${name} keeps scale 1 on every frame ${at}`).toBe(true);\n      |                                                                                            ^\n  418 |         expect(r.transforms, `the ${name} takes no transform ${at}`).toEqual([\"none\"]);\n  419 |         expect(Math.max(...r.widths.map((w) => Math.abs(w - r.rest))), `the ${name} keeps its width ${at}`).toBeLessThanOrEqual(0.5);\n  420 |         expect(r.fill[1], `the ${name}'s fill steps while it is held ${at}`).not.toBe(r.fill[0]);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                        "column": 92,
+                        "line": 417
+                      },
+                      "message": "Error: the Button keeps scale 1 on every frame {\"Button\":{\"rest\":69.41,\"active\":42,\"scales\":[\"1\",\"1.0328 0.911\"],\"transforms\":[\"none\"],\"widths\":[69.41,71.68],\"fill\":[\"oklab(0.673443 0.0210928 0.0746619 / 0.244)\",\"oklab(0.673443 0.0210928 0.0746619 / 0.244)\"],\"painted\":0.234},\"icon seat\":{\"rest\":40,\"active\":40,\"scales\":[\"1\",\"1.0066 0.9156\"],\"transforms\":[\"none\"],\"widths\":[40,40.26],\"fill\":[\"color(srgb 0.20397 0.148263 0.0829736 / 0.14)\",\"oklab(0.257667 0.00900921 0.023203 / 0.2002)\"],\"painted\":0.398},\"tab seat\":{\"rest\":51.75,\"active\":39,\"scales\":[\"1\",\"0.96\"],\"transforms\":[\"none\"],\"widths\":[51.75,49.68],\"fill\":[\"color(srgb 0.20397 0.148263 0.0829736 / 0.14)\",\"oklab(0.257667 0.00900921 0.023203 / 0.2002)\"],\"painted\":0.704},\"menu row\":{\"rest\":182,\"active\":40,\"scales\":[\"1\",\"0.97\"],\"transforms\":[\"none\"],\"widths\":[182,176.54],\"fill\":[\"color(srgb 0.20397 0.148263 0.0829736 / 0.1)\",\"color(srgb 0.20397 0.148263 0.0829736 / 0.1)\"],\"painted\":0.183}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  415 |     for (const [name, r] of Object.entries(reads)) {\n  416 |         expect(r.active, `the ${name} was held pressed ${at}`).toBeGreaterThan(0);\n> 417 |         expect(r.scales.every(identity), `the ${name} keeps scale 1 on every frame ${at}`).toBe(true);\n      |                                                                                            ^\n  418 |         expect(r.transforms, `the ${name} takes no transform ${at}`).toEqual([\"none\"]);\n  419 |         expect(Math.max(...r.widths.map((w) => Math.abs(w - r.rest))), `the ${name} keeps its width ${at}`).toBeLessThanOrEqual(0.5);\n  420 |         expect(r.fill[1], `the ${name}'s fill steps while it is held ${at}`).not.toBe(r.fill[0]);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:417:92"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T06:45:57.010Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "press",
+                      "contentType": "application/json",
+                      "body": "eyJCdXR0b24iOnsicmVzdCI6NjkuNDEsImFjdGl2ZSI6NDIsInNjYWxlcyI6WyIxIiwiMS4wMzI4IDAuOTExIl0sInRyYW5zZm9ybXMiOlsibm9uZSJdLCJ3aWR0aHMiOls2OS40MSw3MS42OF0sImZpbGwiOlsib2tsYWIoMC42NzM0NDMgMC4wMjEwOTI4IDAuMDc0NjYxOSAvIDAuMjQ0KSIsIm9rbGFiKDAuNjczNDQzIDAuMDIxMDkyOCAwLjA3NDY2MTkgLyAwLjI0NCkiXSwicGFpbnRlZCI6MC4yMzR9LCJpY29uIHNlYXQiOnsicmVzdCI6NDAsImFjdGl2ZSI6NDAsInNjYWxlcyI6WyIxIiwiMS4wMDY2IDAuOTE1NiJdLCJ0cmFuc2Zvcm1zIjpbIm5vbmUiXSwid2lkdGhzIjpbNDAsNDAuMjZdLCJmaWxsIjpbImNvbG9yKHNyZ2IgMC4yMDM5NyAwLjE0ODI2MyAwLjA4Mjk3MzYgLyAwLjE0KSIsIm9rbGFiKDAuMjU3NjY3IDAuMDA5MDA5MjEgMC4wMjMyMDMgLyAwLjIwMDIpIl0sInBhaW50ZWQiOjAuMzk4fSwidGFiIHNlYXQiOnsicmVzdCI6NTEuNzUsImFjdGl2ZSI6MzksInNjYWxlcyI6WyIxIiwiMC45NiJdLCJ0cmFuc2Zvcm1zIjpbIm5vbmUiXSwid2lkdGhzIjpbNTEuNzUsNDkuNjhdLCJmaWxsIjpbImNvbG9yKHNyZ2IgMC4yMDM5NyAwLjE0ODI2MyAwLjA4Mjk3MzYgLyAwLjE0KSIsIm9rbGFiKDAuMjU3NjY3IDAuMDA5MDA5MjEgMC4wMjMyMDMgLyAwLjIwMDIpIl0sInBhaW50ZWQiOjAuNzA0fSwibWVudSByb3ciOnsicmVzdCI6MTgyLCJhY3RpdmUiOjQwLCJzY2FsZXMiOlsiMSIsIjAuOTciXSwidHJhbnNmb3JtcyI6WyJub25lIl0sIndpZHRocyI6WzE4MiwxNzYuNTRdLCJmaWxsIjpbImNvbG9yKHNyZ2IgMC4yMDM5NyAwLjE0ODI2MyAwLjA4Mjk3MzYgLyAwLjEpIiwiY29sb3Ioc3JnYiAwLjIwMzk3IDAuMTQ4MjYzIDAuMDgyOTczNiAvIDAuMSkiXSwicGFpbnRlZCI6MC4xODN9fQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-reduce-pres-c2d8b-y-size-under-reduced-motion-chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                    "column": 92,
+                    "line": 417
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-c996052857a5fd1bc70f",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 398,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-17T06:45:55.957Z",
+    "duration": 7105.931,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

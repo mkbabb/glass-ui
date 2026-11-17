@@ -1,0 +1,53 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 2 tests using 1 worker
+
+  ✘  1 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is (5.0s)
+  ✘  2 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Accordion reopened while it closes turns from where it is (4.9s)
+
+
+  1) [chromium-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.378,"turnedAt":0,"share":0.246,"end":1,"hole":10,"frames":[[0,0.378],[8,0],[15,0.019],[22,0.061],[29,0.125],[37,0.201],[45,0.289],[53,0.374],[59,0.427],[66,0.496],[74,0.565],[82,0.627],[87,0.66],[95,0.713],[103,0.757],[111,0.794],[120,0.828],[124,0.844],[133,0.872],[141,0.892],[149,0.91],[154,0.921],[161,0.932],[170,0.945],[177,0.953],[187,0.963],[192,0.967],[200,0.973],[207,0.998],[222,1],[229,1],[239,1],[247,1],[255,1],[264,1],[272,1],[280,1],[295,1],[304,1],[312,1],[317,1],[327,1],[333,1],[341,1],[349,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.246
+
+      781 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      782 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 783 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      784 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      785 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      786 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:783:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:854:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-87c79-oses-turns-from-where-it-is-chromium-phone/error-context.md
+
+  2) [chromium-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Accordion reopened while it closes turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.396,"turnedAt":0,"share":0.263,"end":1,"hole":10,"frames":[[0,0.396],[9,0],[14,0.012],[22,0.055],[29,0.113],[36,0.184],[43,0.263],[50,0.332],[58,0.411],[67,0.496],[75,0.565],[80,0.608],[88,0.661],[96,0.709],[104,0.756],[109,0.782],[117,0.815],[125,0.844],[133,0.869],[141,0.892],[147,0.905],[155,0.92],[162,0.933],[170,0.945],[175,0.95],[184,0.96],[191,0.966],[200,0.972],[208,0.995],[213,1],[221,1],[229,1],[237,1],[242,1],[250,1],[258,1],[265,1],[274,1],[280,1],[288,1],[296,1],[303,1],[309,1],[317,1],[324,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.263
+
+      781 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      782 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 783 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      784 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      785 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      786 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at expectTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:783:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:854:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-88999-oses-turns-from-where-it-is-chromium-phone/error-context.md
+
+  2 failed
+    [chromium-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+    [chromium-phone] › tests-visual/release-11-1-1.spec.ts:843:9 › reverse · a Accordion reopened while it closes turns from where it is 
