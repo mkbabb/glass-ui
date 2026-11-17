@@ -1,0 +1,30 @@
+18:15:21 dsel-probe-1 exit 0
+18:17:49 try-branch-cd exit 0
+18:18:18 w-branch-chromium-desktop exit 0
+18:18:23 w-tip-chromium-desktop exit 1
+18:18:40 w-red-chromium-desktop exit 1
+18:18:54 w-branch-chromium-phone exit 0
+18:18:59 w-tip-chromium-phone exit 1
+18:19:15 w-red-chromium-phone exit 1
+18:19:33 w-branch-webkit-desktop exit 0
+18:19:51 w-tip-webkit-desktop exit 1
+18:20:51 w-red-webkit-desktop exit 1
+18:21:02 w-branch-webkit-phone exit 0
+18:21:14 w-tip-webkit-phone exit 1
+18:21:43 w-red-webkit-phone exit 1
+18:21:52 dsel-branch-2 exit 0
+18:22:02 dsel-branch-3 exit 0
+18:22:27 w-tip-chromium-desktop exit 1
+18:22:41 w-tip-chromium-phone exit 1
+18:22:48 still-branch-chromium-desktop exit 0
+18:22:55 still-tip-chromium-desktop exit 1
+18:23:03 still-red-chromium-desktop exit 0
+18:23:11 still-branch-webkit-desktop exit 0
+18:23:19 still-tip-webkit-desktop exit 1
+18:23:27 still-red-webkit-desktop exit 0
+18:26:57 demo:dist:build exit 0
+18:28:23 vitest exit 0
+18:59:29 gate:exits exit 0
+19:22:45 reg ch killed by PID: its tree was SIGSTOPped from outside at about 19:05 (one event across sessions; not the guard), partB frozen after its first test
+19:34:37 reg (chain5) killed by PID: this workflow's background tasks were held stopped from outside the guard from about 19:05; the remaining earlier specs run in the foreground
+19:44:50 reg ch partB (foreground) killed by PID: held stopped like the background runs; the earlier specs are left for critic 3 after Chromium part A

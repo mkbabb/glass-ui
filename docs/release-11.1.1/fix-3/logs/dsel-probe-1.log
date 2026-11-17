@@ -1,0 +1,43 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for the 'webkit' lock
+
+Running 3 tests using 1 worker
+
+shipped events [["pointerdown",816334906431],["pointerup",816334906431],["click",816334906431]] 
+  [t, trigger scale, trigger left, trigger bottom, trigger w, plate opacity, plate left, plate top]
+  [108,"1",679.2,61.9,87.1]
+  [109,"1",679.2,61.9,87.1]
+  [113,"1",679.2,61.9,87.1]
+  [144,"0.96",680.9,61.2,83.7,0,681,65]
+  [155,"1",679.2,61.9,87.1,0.052,681,65]
+  [166,"1",679.2,61.9,87.1,0.086,679,66]
+  [169,"1",679.2,61.9,87.1,0.104,679,66]
+  [179,"1",679.2,61.9,87.1,0.151,679,66]
+  [189,"1",679.2,61.9,87.1,0.202,679,66]
+  ✓  1 [webkit-desktop] › docs/release-11.1.1/fix-3/probe/dsel.probe.ts:8:5 › dsel · shipped (1.8s)
+no-press-scale events [["pointerdown",816334906426],["pointerup",816334906426],["click",816334906426]] 
+  [t, trigger scale, trigger left, trigger bottom, trigger w, plate opacity, plate left, plate top]
+  [103,"1",679.2,61.9,87.1]
+  [104,"1",679.2,61.9,87.1]
+  [107,"1",679.2,61.9,87.1]
+  [138,"1",679.2,61.9,87.1,0,679,66]
+  [143,"1",679.2,61.9,87.1,0.025,679,66]
+  [150,"1",679.2,61.9,87.1,0.044,679,66]
+  [154,"1",679.2,61.9,87.1,0.06,679,66]
+  [163,"1",679.2,61.9,87.1,0.1,679,66]
+  [175,"1",679.2,61.9,87.1,0.156,679,66]
+  ✓  2 [webkit-desktop] › docs/release-11.1.1/fix-3/probe/dsel.probe.ts:8:5 › dsel · no-press-scale (1.5s)
+shipped-again events [["pointerdown",816334906425],["pointerup",816334906425],["click",816334906425]] 
+  [t, trigger scale, trigger left, trigger bottom, trigger w, plate opacity, plate left, plate top]
+  [89,"1",679.2,61.9,87.1]
+  [102,"1",679.2,61.9,87.1]
+  [106,"1",679.2,61.9,87.1]
+  [137,"0.96",680.9,61.2,83.7,0,681,65]
+  [143,"1",679.2,61.9,87.1,0.029,681,65]
+  [152,"1",679.2,61.9,87.1,0.056,679,66]
+  [162,"1",679.2,61.9,87.1,0.104,679,66]
+  [173,"1",679.2,61.9,87.1,0.151,679,66]
+  [181,"1",679.2,61.9,87.1,0.196,679,66]
+  ✓  3 [webkit-desktop] › docs/release-11.1.1/fix-3/probe/dsel.probe.ts:8:5 › dsel · shipped-again (1.5s)
+
+  3 passed (6.7s)

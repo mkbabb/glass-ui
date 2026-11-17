@@ -1,0 +1,55 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 3 tests using 1 worker
+
+  ✘  1 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:163:5 › fade · a dock Select appears and leaves on a fade (2.9s)
+  ✓  2 [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:322:1 › still · a Slider holds still under reduced motion (1.8s)
+[WebServer] 6:18:32 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  3 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:516:1 › routes · a detented Sheet dragged off leaves from where the drag left it (3.8s)
+
+
+  1) [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:163:5 › fade · a dock Select appears and leaves on a fade 
+
+    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":1,"stepped":[[32,1,681,65,128,230]],"from":0,"to":1},"out":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":1,"to":0},"leave":[]}
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 2
+    Received:    0
+
+      88 |
+      89 | function expectFade(leg: Leg, dir: "in" | "out", at: string): void {
+    > 90 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);
+         |                                                                            ^
+      91 |     expect(dir === "in" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);
+      92 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);
+      93 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);
+        at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:90:76)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:190:9
+
+    Error Context: tests-visual/test-results/release-11-1-1-reduce-fade-e4108-ppears-and-leaves-on-a-fade-chromium-desktop/error-context.md
+
+  2) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:516:1 › routes · a detented Sheet dragged off leaves from where the drag left it 
+
+    Error: no frame shows more than the drag left {"left":0.46,"highest":0.973,"rise":0.513,"lastSeen":0.46,"gone":true,"frames":[[-33,0.46],[-23,0.46],[-16,0.46],[-6,0.46],[1,0.46],[11,0.973],[19,0.937],[27,0.901],[36,0.858],[44,0.813],[52,0.765],[60,0.716],[68,0.671],[77,0.622],[85,0.57],[94,0.528],[102,0.482],[109,0.46],[119,0.46],[127,0.46],[136,0.46],[144,0.46],[152,0.46],[159,0.46],[168,0.46],[176,0.46],[185,0.46],[194,0.46]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.02
+    Received:    0.5129999999999999
+
+      572 |     expect(read.left, `the drag carried the sheet down ${at}`).toBeLessThan(0.6);
+      573 |     expect(read.gone, `the sheet leaves ${at}`).toBe(true);
+    > 574 |     expect(read.highest - read.left, `no frame shows more than the drag left ${at}`).toBeLessThanOrEqual(0.02);
+          |                                                                                      ^
+      575 |     expect(read.rise, `no frame rises from the one before ${at}`).toBeLessThanOrEqual(0.02);
+      576 |     expect(read.lastSeen ?? 0, `nearly gone by its last painted frame ${at}`).toBeLessThanOrEqual(0.05);
+      577 | });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:574:86
+
+    Error Context: tests-visual/test-results/release-11-1-1-routes-·-a--d68a9-from-where-the-drag-left-it-chromium-desktop/error-context.md
+
+  2 failed
+    [chromium-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:163:5 › fade · a dock Select appears and leaves on a fade 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:516:1 › routes · a detented Sheet dragged off leaves from where the drag left it 
+  1 passed (11.0s)

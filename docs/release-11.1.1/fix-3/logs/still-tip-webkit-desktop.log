@@ -1,0 +1,29 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 1 test using 1 worker
+
+  ✘  1 [webkit-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:322:1 › still · a Slider holds still under reduced motion (2.2s)
+
+
+  1) [webkit-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:322:1 › still · a Slider holds still under reduced motion 
+
+    Error: the root changes on a zero clock {"clocks":{"root":"0.2s","track":"0.2s, 0.2s","fill":"0.3s, 0.21s, 0.2s","thumb":"0.12s"},"press":{"from":"none","to":"matrix(1, 0, 0, 0.97, 0, 0)","values":13,"between":12},"release":{"from":"matrix(1, 0, 0, 0.97, 0, 0)","to":"none","values":31,"between":29}}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      376 |     const at = JSON.stringify({ clocks, press: pressLeg, release: releaseLeg });
+      377 |     await info.attach("still", { body: at, contentType: "application/json" });
+    > 378 |     for (const [part, d] of Object.entries(clocks)) expect(zero(d), `the ${part} changes on a zero clock ${at}`).toBe(true);
+          |                                                                                                                  ^
+      379 |     if (pressLeg && releaseLeg) {
+      380 |         expect(pressLeg.to, `the press reached the fill ${at}`).not.toBe(pressLeg.from);
+      381 |         expect(releaseLeg.to, `the release returned the fill to rest ${at}`).toBe(pressLeg.from);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/tip-235b80e/tree/tests-visual/release-11-1-1-reduce.spec.ts:378:114
+
+    Error Context: tests-visual/test-results/release-11-1-1-reduce-stil-3c2d8--still-under-reduced-motion-webkit-desktop/error-context.md
+
+  1 failed
+    [webkit-desktop] › tests-visual/release-11-1-1-reduce.spec.ts:322:1 › still · a Slider holds still under reduced motion 
