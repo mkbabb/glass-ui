@@ -8,6 +8,10 @@
 // span a drag maps against is the VIEWPORT — a constant, so the gesture needs no
 // `getBoundingClientRect` on any path at all.
 //
+// The open leg is the one place the size holds still: the box takes the rung it opens to
+// on its first frame (`size`) and the scalar says how much of it is up, so the sheet
+// rises into place by a translate with its head and its actions where they will rest.
+//
 // The scalar is a Vue ref bound through the render, not an inline style written onto a
 // live-resolved element. That is not a preference: the shipped engine wrote onto a root
 // it re-resolved every frame precisely because reka forwards its content through a
@@ -19,7 +23,7 @@
 // A leg change re-seats a fresh spring at the live `(value, velocity)`, so the
 // trajectory stays continuous across the register change.
 
-import { onScopeDispose, ref, watch, type Ref } from "vue";
+import { computed, onScopeDispose, ref, watch, type Ref } from "vue";
 import { SpringProgress } from "@mkbabb/keyframes.js";
 import { motionTempo } from "../../../composables/motion/core/motionTempo";
 import { springPreset } from "../../../composables/motion/spring/springPresets";
@@ -46,6 +50,12 @@ export interface UseSheetDetentsOptions {
 export interface UseSheetDetentsReturn {
     /** The live size fraction. Bound as `--detent-t`; also the scrim's input. */
     t: Readonly<Ref<number>>;
+    /**
+     * The fraction the box is sized at. While the sheet rises into place on its open leg
+     * it is the rung it rises to, and `t` is how much of that box is up; at any other
+     * time it is `t`.
+     */
+    size: Readonly<Ref<number>>;
     /** Mount hold — true until the dismissing spring reaches 0. */
     present: Readonly<Ref<boolean>>;
     /** True while a pointer drag is in flight. */
@@ -106,6 +116,11 @@ export function useSheetDetents(
     const { open, side, ladder, detent, requestClose } = options;
 
     const t = ref(0);
+    // The rung the box holds while the sheet rises into place, or null when the box is
+    // the scalar. The rise ends when its leg settles, on a drag or on a rung change; a
+    // close during the rise slides the box back down at that size.
+    const rising = ref<number | null>(null);
+    const size = computed(() => rising.value ?? t.value);
     const present = ref(open.value);
     const dragging = ref(false);
 
@@ -130,11 +145,16 @@ export function useSheetDetents(
 
     function onFrame(value: number) {
         t.value = value;
+        if (rising.value !== null && spring?.settled) rising.value = null;
         if (!open.value && spring?.target === 0 && spring.settled) present.value = false;
     }
 
-    /** Settle toward `fraction` on `nextLeg`, preserving the live (value, velocity). */
-    function settle(fraction: number, nextLeg: Leg) {
+    /**
+     * Settle toward `fraction` on `nextLeg`, preserving the live (value, velocity). With
+     * `hold`, the box keeps that rung's size while the scalar settles.
+     */
+    function settle(fraction: number, nextLeg: Leg, hold: number | null = null) {
+        rising.value = hold;
         const live = t.value;
         const velocity = spring?.velocity ?? 0;
         const s =
@@ -177,6 +197,7 @@ export function useSheetDetents(
         if (!from.closest(DRAG_HANDLES) && !scrollIsAtLeadingEdge(from, host)) return;
 
         spring?.stop();
+        rising.value = null;
         root = host;
         pointerId = event.pointerId;
         dragging.value = true;
@@ -251,17 +272,19 @@ export function useSheetDetents(
                     t.value = 0;
                     seatSpring("travel", 0, 0);
                 }
-                settle(seatedRung(), "travel");
+                const rung = seatedRung();
+                settle(rung, "travel", rung);
                 return;
             }
             if (!present.value) return;
             releaseDrag();
             if (!spring) {
                 t.value = 0;
+                rising.value = null;
                 present.value = false;
                 return;
             }
-            settle(0, "travel");
+            settle(0, "travel", rising.value);
             if (spring.settled) present.value = false;
         },
         { immediate: true, flush: "sync" },
@@ -282,5 +305,5 @@ export function useSheetDetents(
         spring = null;
     });
 
-    return { t, present, dragging, snapTo, onPointerdown };
+    return { t, size, present, dragging, snapTo, onPointerdown };
 }

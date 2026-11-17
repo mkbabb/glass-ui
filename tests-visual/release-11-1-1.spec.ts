@@ -651,14 +651,25 @@ for (const c of triggerCases) {
 }
 
 // ── sheet ──────────────────────────────────────────────────────────────────────────
-//   sheet  a detented bottom Sheet on the phone, by touch. A drag from its 0.5 rung up
-//          past the midpoint, let go at speed or at rest, springs on from where the
-//          finger left it: from the release no frame carries more than a fifth of the
-//          travel left, and the sheet settles on the 0.9 rung. The sheet reaches the 0.5
-//          rung by a first drag down from 0.9, so a spring has already settled on a rung.
+//   sheet  a detented bottom Sheet on the phone, by touch. It rises into place at its
+//          rung's size: opened to its 0.9 rung at 430 × 932, its block size reads one
+//          value on every frame of the rise; its head's top moves from the screen's edge
+//          to where it rests with no frame carrying more than a fifth of that travel, the
+//          first and the last frame included; and 120, 190, 250 and 400 ms after its
+//          state reads open, a tap at its close button's centre, where the frame then
+//          draws it, hits the button and closes the sheet, twenty times in twenty at
+//          each: the button is the element at the tap's point in the frame it is read
+//          from and the target of the tap's press and of its click (how far the button
+//          stands from its rest then, and where the press lands, are recorded). A drag
+//          from its 0.5 rung up past the midpoint, let go at speed or at rest, springs
+//          on from where the finger left it: from the release no frame carries more than
+//          a fifth of the travel left, and the sheet settles on the 0.9 rung. The sheet
+//          reaches the 0.5 rung by a first drag down from 0.9, so a spring has already
+//          settled on a rung.
 
 const SHEET_HARNESS = "/tests-visual/release-11-1-1/sheet-harness.html";
 const SHEET = '[data-testid="s-content"]';
+const SHEET_CLOSE = `${SHEET} [data-slot="dialog-close"]`;
 
 async function openSheetHarness(page: Page, query = ""): Promise<void> {
     await gotoReady(page, `${SHEET_HARNESS}${query}`);
@@ -707,6 +718,152 @@ async function stopSheetFilm(page: Page, ms: number): Promise<{ mark: number; fr
         return { mark: f.mark, frames: f.frames };
     });
 }
+
+const sheetGone = (page: Page) =>
+    page.waitForFunction((sel) => !document.querySelector(sel), SHEET, { timeout: 3000 });
+
+test("sheet · a detented Sheet rises into place at its rung's size", async ({ page }, info) => {
+    const project = info.project.name;
+    test.skip(!isPhone(project), "the phone form's, by touch");
+    test.setTimeout(300_000);
+    await page.setViewportSize({ width: 430, height: 932 });
+    await openSheetHarness(page);
+    const vh = 932;
+    const trigger = (await page.locator('[data-testid="s-open"]').boundingBox())!;
+    const tapTrigger = () => press(page, project, trigger.x + trigger.width / 2, trigger.y + trigger.height / 2);
+
+    // The rise, filmed from the tap.
+    await startSheetFilm(page);
+    await markSheetFilm(page);
+    await tapTrigger();
+    const film = await stopSheetFilm(page, 1400);
+    const rest = (await page.locator(SHEET_CLOSE).boundingBox())!;
+    const shown = film.frames.filter((f) => f.t >= film.mark && f.present && f.head !== undefined);
+    const restHead = shown[shown.length - 1].head!;
+    let last = shown.length - 1;
+    while (last > 0 && Math.abs(shown[last - 1].head! - restHead) <= 0.5) last--;
+    const rising = shown.slice(0, last + 1);
+    const heights = rising.map((f) => f.h!);
+    // The head starts at the screen's edge, one frame before the first it is painted in.
+    const series: [number, number][] = [[rising[0].t - 1000 / 60, vh], ...rising.map((f): [number, number] => [f.t, f.head!])];
+    const travel = vh - restHead;
+    const rise = {
+        heightSpread: +(Math.max(...heights) - Math.min(...heights)).toFixed(2),
+        firstHead: Math.round(rising[0].head!),
+        restHead: Math.round(restHead),
+        share: +worstFrameShare(series, travel).toFixed(3),
+        frames: series.map(([t, y], i) => [Math.round(t - film.mark), Math.round(y), i ? Math.round(rising[i - 1].h!) : null]),
+    };
+    await page.keyboard.press("Escape");
+    await sheetGone(page);
+    await page.waitForTimeout(500);
+
+    // atlas's sequence, read as the tap's outcome: at open plus each delay, the close
+    // button's centre where the next frame draws it, and a tap there. The tap hits when
+    // the button is the element at that point in that frame and the target of the tap's
+    // press and of its click. A finger's pointer is held by what it pressed, so its click
+    // goes there however the sheet has moved by then. Headless Chromium delivers the press
+    // a frame after the read, when the button has risen by that frame's travel, so the
+    // element at the press's own point, the frames between and the point's distance from
+    // the button are recorded with each tap.
+    type Heard = { type: string; target: boolean; point: boolean; frames: number; off: number };
+    type Tap = { openAt: number; frames: number; events: Heard[]; off: () => void };
+    const taps: { after: number; at: number; dy: number; events: string; hit: boolean; closed: boolean }[] = [];
+    for (const after of [120, 190, 250, 400])
+        for (let i = 0; i < 20; i++) {
+            await page.evaluate(
+                ({ sheet, close }) => {
+                    const tap: Tap = { openAt: 0, frames: -1, events: [], off: () => {} };
+                    (window as unknown as { __tap: Tap }).__tap = tap;
+                    const watch = new MutationObserver(() => {
+                        if (tap.openAt || !document.querySelector(`${sheet}[data-state="open"]`)) return;
+                        tap.openAt = performance.now();
+                        watch.disconnect();
+                    });
+                    watch.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ["data-state"] });
+                    const onButton = (n: unknown) => n instanceof Element && !!n.closest(close);
+                    const on = (e: Event) => {
+                        if (!tap.openAt) return;
+                        const { clientX, clientY } = e as MouseEvent;
+                        const b = document.querySelector(close)!.getBoundingClientRect();
+                        const off = Math.hypot(
+                            Math.max(0, b.left - clientX, clientX - b.right),
+                            Math.max(0, b.top - clientY, clientY - b.bottom),
+                        );
+                        tap.events.push({
+                            type: e.type,
+                            target: onButton(e.target),
+                            point: onButton(document.elementFromPoint(clientX, clientY)),
+                            frames: tap.frames,
+                            off: Math.round(off),
+                        });
+                    };
+                    for (const type of ["pointerdown", "click"]) addEventListener(type, on, { capture: true });
+                    tap.off = () => {
+                        for (const type of ["pointerdown", "click"]) removeEventListener(type, on, { capture: true });
+                    };
+                },
+                { sheet: SHEET, close: SHEET_CLOSE },
+            );
+            await tapTrigger();
+            const drawn = await page.evaluate(
+                async ({ close, after }) => {
+                    const tap = (window as unknown as { __tap: Tap }).__tap;
+                    while (!tap.openAt) await new Promise((r) => setTimeout(r, 2));
+                    await new Promise((r) => setTimeout(r, Math.max(0, tap.openAt + after - performance.now())));
+                    await new Promise((r) => requestAnimationFrame(() => setTimeout(r, 0)));
+                    const b = document.querySelector(close)!.getBoundingClientRect();
+                    const cx = b.left + b.width / 2;
+                    const cy = b.top + b.height / 2;
+                    const shown = !!document.elementFromPoint(cx, cy)?.closest(close);
+                    // The frames drawn from this read until the tap lands.
+                    tap.frames = 0;
+                    const count = () => {
+                        if (tap.events.length) return;
+                        tap.frames++;
+                        requestAnimationFrame(count);
+                    };
+                    requestAnimationFrame(count);
+                    return { at: Math.round(performance.now() - tap.openAt), y: b.top, cx, cy, shown };
+                },
+                { close: SHEET_CLOSE, after },
+            );
+            await press(page, project, drawn.cx, drawn.cy);
+            const closed = await page
+                .waitForFunction((sel) => document.querySelector(sel)?.getAttribute("data-state") !== "open", SHEET, { timeout: 800 })
+                .then(() => true)
+                .catch(() => false);
+            const heard = await page.evaluate(() => {
+                const tap = (window as unknown as { __tap: Tap }).__tap;
+                tap.off();
+                return tap.events;
+            });
+            if (!closed) await page.keyboard.press("Escape");
+            await sheetGone(page);
+            await page.waitForTimeout(400);
+            taps.push({
+                after,
+                at: drawn.at,
+                dy: +(drawn.y - rest.y).toFixed(1),
+                // Each event: its type, the button its target and at its point (1 or 0),
+                // the frames drawn since the read, the point's distance from the button.
+                events: heard.map((e) => `${e.type}:${+e.target}${+e.point}:f${e.frames}:${e.off}px`).join(" "),
+                hit: drawn.shown && heard.some((e) => e.type === "click") && heard.every((e) => e.target),
+                closed,
+            });
+        }
+    const read = { rise, taps };
+    await info.attach("sheet", { body: JSON.stringify(read), contentType: "application/json" });
+    const at = JSON.stringify({ ...rise, frames: rise.frames.slice(0, 50) });
+    expect(rise.heightSpread, `its block size reads one value on every frame of the rise ${at}`).toBeLessThanOrEqual(1);
+    expect(rise.share, `no frame carries more than a fifth of the head's travel, first and last included ${at}`).toBeLessThanOrEqual(0.2);
+    for (const after of [120, 190, 250, 400]) {
+        const these = taps.filter((r) => r.after === after);
+        const said = JSON.stringify(these.filter((r) => !r.hit || !r.closed));
+        expect(these.filter((r) => r.hit).length, `at open plus ${after} ms the tap hits the button, twenty in twenty ${said}`).toBe(20);
+        expect(these.filter((r) => r.closed).length, `and closes the sheet, twenty in twenty ${said}`).toBe(20);
+    }
+});
 
 /** Drags the sheet's grip by touch (Chromium's CDP touch input): `steps` moves of `px`
  *  (up when negative), one a frame, then, at rest, six still moves 20 ms apart. The

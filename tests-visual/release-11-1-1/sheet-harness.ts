@@ -1,5 +1,5 @@
-// One detented bottom Sheet on a busy ground, for the cells that read how it springs
-// after a drag. Its ladder is 0.5 and 0.9 and it opens at the rung the `rung` query
+// One detented bottom Sheet on a busy ground, for the cells that read how it rises and
+// how it springs after a drag. Its ladder is 0.5 and 0.9 and it opens at the rung the `rung` query
 // names (0.9 unless given). Its head is a DialogHeader (a drag handle, with
 // the sheet's close button beside it), then a body and a footer action. Imports are
 // relative to `src/`, so the file mounts unchanged on an older tree.

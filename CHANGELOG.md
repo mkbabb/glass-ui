@@ -48,7 +48,9 @@ A patch on 11.1.0 about how surfaces leave. Nothing is removed or renamed.
   closed; it now carries on down from where the finger left it. Dragged toward another
   rung once it had settled on one, it jumped back to the rung it had left in the frame
   after the finger lifted, then sprang to the new one; it now springs on from where the
-  finger left it, up or down, at the finger's speed. A `CommandDialog`
+  finger left it, up or down, at the finger's speed. It also opens at its rung's size: it
+  grew from a short strip at the foot of the screen to its rung, laying out its contents
+  again on every frame, and now rises into place whole from past the edge. A `CommandDialog`
   dropped its list in the first frame of its close, so the plate fell to its search
   field before it faded; the list now stays until the dialog is gone. Menus no longer
   run keyframes to open or close: `glass-menu-grow` and `glass-menu-grow-up` gave way to

@@ -159,9 +159,14 @@ const sheetDetents = useSheetDetents({
 
 const springStyle = computed<CSSProperties | undefined>(() => {
     if (!live.value) return undefined;
-    // A detented sheet is SIZED by its rung, so it publishes the scalar and translates
-    // nothing at all — the box the frost samples is stationary at every rung.
-    if (detented.value) return { "--detent-t": String(sheetDetents.t.value) };
+    // A detented sheet is SIZED by its rung, so it publishes the scalar and the size its
+    // box takes: the stylesheet translates only the part of the box that is not up, which
+    // is the rise into place on the open leg and the floor's slide below its smallest rung.
+    if (detented.value)
+        return {
+            "--detent-t": String(sheetDetents.t.value),
+            "--_detent-size": String(sheetDetents.size.value),
+        };
     // The slide rides the `translate` LONGHAND: an unclamped position drives a
     // side-keyed off-edge offset, and `p<0` overshoot IS the liquid settle.
     // `animation/transition: none` make the inline values the sole source. `transform`

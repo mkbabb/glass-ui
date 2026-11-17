@@ -535,13 +535,22 @@
      * the engine still requests the close. Below the floor the box stops shrinking, so the
      * plate slides by the difference instead: what shows of it is always the rung's share of
      * the viewport, and at 0 it is wholly past the edge when it unmounts, on every route
-     * that closes it and on the way in. The INLINE axis takes no floor: a narrow side rung
-     * clips along that axis. */
+     * that closes it. The INLINE axis takes no floor: a narrow side rung clips along that
+     * axis.
+     *
+     * On the way in the box takes the rung it opens to on its first frame
+     * (`--_detent-size`, written beside the scalar) and the same slide carries it in from
+     * past the edge: what shows is still the scalar's share of the viewport, and the head
+     * and its actions rise with the plate to where they rest. Unwritten, the size is the
+     * scalar. */
     :where(
         [data-slot="sheet-content"][data-detents][data-side="bottom"],
         [data-slot="sheet-content"][data-detents][data-side="top"]
     ) {
-        block-size: calc(clamp(0, var(--detent-t), 1) * 100dvh);
+        --_sheet-size: calc(
+            clamp(0, var(--_detent-size, var(--detent-t)), 1) * 100dvh
+        );
+        block-size: var(--_sheet-size);
         --_sheet-floor: calc(
             /* the plate: its own padding, and the one inner edge it draws */ 2 *
                 var(--space-family) + var(--sheet-seam-width) +
@@ -556,7 +565,8 @@
         max-block-size: 100dvh;
         --_sheet-below-floor: max(
             0px,
-            var(--_sheet-floor) - clamp(0, var(--detent-t), 1) * 100dvh
+            max(var(--_sheet-floor), var(--_sheet-size)) -
+                clamp(0, var(--detent-t), 1) * 100dvh
         );
     }
     :where([data-slot="sheet-content"][data-detents][data-side="bottom"]) {

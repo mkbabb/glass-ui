@@ -55,7 +55,10 @@ describe("gate:G-SHEET-REACH — a detent is a size, so the actions stay on the 
             "\n",
         );
         expect(block, "top/bottom detent arm must size its block axis").toMatch(
-            /block-size:\s*calc\([^;]*--detent-t/,
+            /block-size:\s*var\(--_sheet-size\)/,
+        );
+        expect(block, "the block axis is the published size, else the scalar").toMatch(
+            /--_sheet-size:\s*calc\([^;]*var\(--_detent-size, var\(--detent-t\)\)/,
         );
         const inline = rules(css, /\[data-detents\]\[data-side="(left|right)"\]/).join(
             "\n",
@@ -65,7 +68,7 @@ describe("gate:G-SHEET-REACH — a detent is a size, so the actions stay on the 
         );
     });
 
-    it("translates a detented sheet only below its floor — at every rung the box is stationary", () => {
+    it("translates a detented sheet only by what is not up — at every resting rung the box is stationary", () => {
         const sfc = read("src/components/sheet/SheetContent.vue");
         // The detented branch of the spring style publishes the scalar and returns.
         const branch = /if\s*\(detented\.value\)\s*return\s*\{([^}]*)\}/.exec(sfc);
@@ -74,12 +77,15 @@ describe("gate:G-SHEET-REACH — a detent is a size, so the actions stay on the 
             "the detented arm must have its own style branch",
         ).not.toBeNull();
         expect(branch![1]).toContain("--detent-t");
+        expect(branch![1]).toContain("--_detent-size");
         expect(branch![1]).not.toContain("translate");
         expect(branch![1]).not.toContain("transform");
 
-        // The stylesheet slides the plate by the share of the rung its floor will not
-        // shrink to, and by nothing at a rung at or above the floor: as the scalar runs to
-        // 0 on a close the plate leaves past the edge instead of unmounting half painted.
+        // The stylesheet slides the plate by the part of its box that is not up: the share
+        // of the rung its floor will not shrink to, the rung's box less the scalar while it
+        // rises into place, and nothing at a resting rung at or above the floor. As the
+        // scalar runs to 0 on a close the plate leaves past the edge instead of unmounting
+        // half painted.
         const css = read("src/components/sheet/styles.css");
         const detentRules = rules(css, /\[data-detents\]/).join("\n");
         expect(detentRules).not.toMatch(/\btransform\s*:/);
@@ -87,7 +93,7 @@ describe("gate:G-SHEET-REACH — a detent is a size, so the actions stay on the 
         expect(translates.length).toBe(2);
         for (const t of translates) expect(t).toContain("var(--_sheet-below-floor)");
         expect(detentRules).toMatch(
-            /--_sheet-below-floor:\s*max\(\s*0px,\s*var\(--_sheet-floor\)\s*-\s*clamp\(0, var\(--detent-t\), 1\) \* 100dvh\s*\)/,
+            /--_sheet-below-floor:\s*max\(\s*0px,\s*max\(var\(--_sheet-floor\), var\(--_sheet-size\)\)\s*-\s*clamp\(0, var\(--detent-t\), 1\) \* 100dvh\s*\)/,
         );
     });
 
