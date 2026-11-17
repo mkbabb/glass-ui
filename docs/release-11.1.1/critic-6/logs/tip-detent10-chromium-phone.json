@@ -1,0 +1,788 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "release-11-1-1.config.ts",
+      "--project=chromium-phone",
+      "--workers=1",
+      "-g",
+      "standing · detented Sheet",
+      "--repeat-each=10"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 10,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-6/logs/tip-detent10-chromium-phone.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5356",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5356",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "standing · detented Sheet by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3278,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T14:17:02.441Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjo0OSwic2hhcmUiOjAuMTYyLCJ0cmF2ZWwiOjQyMCwidHJhdmVsU2hhcmUiOjAuMTEzLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTcsMV0sWzEsMV0sWzEwLDFdLFsyNCwxXSxbMzIsMV0sWzM5LDFdLFs0OSwxXSxbNTIsMV0sWzYxLDFdLFs2OCwxXSxbNzcsMV0sWzg0LDFdLFs4OCwxXSxbOTcsMV0sWzEwNiwxXSxbMTEzLDFdLFsxMTksMV0sWzEyNywwLjk5Nl0sWzEzNSwwLjkxMV0sWzE0MywwLjgyNl0sWzE1MiwwLjc1M10sWzE1NywwLjY2OV0sWzE2NCwwLjYyNF0sWzE3MiwwLjU3MV0sWzE4MSwwLjUxXSxbMTg2LDAuNDUzXSxbMTkyLDAuNDIyXSxbMTk5LDAuMzg1XSxbMjA5LDAuMzQ1XSxbMjE2LDAuMjk5XSxbMjIyLDAuMjY5XSxbMjMxLDAuMjQzXSxbMjM4LDAuMjEyXSxbMjQ2LDAuMTg3XSxbMjUyLDAuMTY0XSxbMjU5LDAuMTQ4XSxbMjY3LDAuMTI5XSxbMjc1LDAuMTEyXSxbMjgyLDAuMDk3XSxbMjkyLDAuMDg0XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3122,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T14:17:09.326Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjo0NCwic2hhcmUiOjAuMTgzLCJ0cmF2ZWwiOjQyMSwidHJhdmVsU2hhcmUiOjAuMTA2LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTksMV0sWzUsMV0sWzEzLDFdLFsyMSwxXSxbMzMsMV0sWzQ0LDFdLFs1MiwxXSxbNTksMV0sWzY5LDFdLFs3NSwxXSxbODUsMV0sWzkzLDFdLFs5NywxXSxbMTA4LDFdLFsxMTQsMV0sWzEyMywxXSxbMTMzLDAuOTgzXSxbMTQxLDAuODc2XSxbMTQ4LDAuNzk1XSxbMTU4LDAuNzI3XSxbMTczLDAuNjQ1XSxbMTgxLDAuNTI3XSxbMTg4LDAuNDY3XSxbMTkzLDAuNDI3XSxbMjAxLDAuMzk4XSxbMjA3LDAuMzUxXSxbMjE0LDAuMzIxXSxbMjI0LDAuMjg4XSxbMjMyLDAuMjQ3XSxbMjQyLDAuMjE3XSxbMjUyLDAuMTg0XSxbMjYyLDAuMTU2XSxbMjY3LDAuMTNdLFsyNzYsMC4xMThdLFsyODMsMC4xXSxbMjkwLDAuMDg4XSxbMjk4LDAuMDc3XSxbMzA4LDAuMDY1XSxbMzE1LDAuMDUzXSxbMzI0LDAuMDQ1XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3063,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T14:17:15.921Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjo0NSwic2hhcmUiOjAuMTYzLCJ0cmF2ZWwiOjQyMCwidHJhdmVsU2hhcmUiOjAuMTIsImdvbmUiOnRydWUsImZyYW1lcyI6W1stNCwxXSxbNCwxXSxbMTMsMV0sWzIzLDFdLFszMiwxXSxbNDAsMV0sWzQ5LDFdLFs1NCwxXSxbNjQsMV0sWzcwLDFdLFs3OCwxXSxbODMsMV0sWzkyLDFdLFs5OCwxXSxbMTA1LDFdLFsxMTQsMV0sWzExOSwxXSxbMTI4LDFdLFsxMzUsMC45MjddLFsxNDMsMC44NTFdLFsxNTEsMC43NzJdLFsxNjIsMC42OThdLFsxNzAsMC42MDZdLFsxODAsMC41NDVdLFsxODgsMC40NzJdLFsxOTUsMC40Ml0sWzIwMiwwLjM4NF0sWzIxMSwwLjM0NF0sWzIyMSwwLjMwMl0sWzIzMCwwLjI1N10sWzIzOCwwLjIyM10sWzI0NywwLjE5NF0sWzI1NSwwLjE2OF0sWzI2MywwLjE0NV0sWzI3MiwwLjEyN10sWzI4MCwwLjEwNl0sWzI4OSwwLjA5MV0sWzMwMSwwLjA3Nl0sWzMwOCwwLjA2MV0sWzMxOCwwLjA1MV1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3076,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T14:17:22.359Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjo0Nywic2hhcmUiOjAuMTgzLCJ0cmF2ZWwiOjQyMSwidHJhdmVsU2hhcmUiOjAuMTI1LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTQsMV0sWzUsMV0sWzEzLDFdLFsyNCwxXSxbMzIsMV0sWzQxLDFdLFs1MSwxXSxbNTYsMV0sWzY2LDFdLFs3MiwxXSxbODEsMV0sWzg1LDFdLFs5NSwxXSxbMTAxLDFdLFsxMDgsMV0sWzExNiwxXSxbMTI1LDFdLFsxMzUsMC45NjNdLFsxNDUsMC44NTZdLFsxNTQsMC43NTRdLFsxNTksMC42NzZdLFsxNjgsMC42MzVdLFsxNzUsMC41NjRdLFsxODMsMC41MV0sWzE5MiwwLjQ1NF0sWzIwMiwwLjQwNF0sWzIxMiwwLjM0NV0sWzIyMCwwLjNdLFsyMjYsMC4yNjJdLFsyMzMsMC4yMzldLFsyNDAsMC4yMTJdLFsyNTAsMC4xODhdLFsyNTgsMC4xNjFdLFsyNjYsMC4xNF0sWzI3MiwwLjExOV0sWzI3OSwwLjEwN10sWzI4NiwwLjA5NF0sWzI5MywwLjA4M10sWzMwMCwwLjA3MV0sWzMwOSwwLjA2Ml1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3104,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T14:17:28.944Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjo0NSwic2hhcmUiOjAuMTcxLCJ0cmF2ZWwiOjQyMSwidHJhdmVsU2hhcmUiOjAuMTAxLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTQsMV0sWzMsMV0sWzExLDFdLFsxNiwxXSxbMjUsMV0sWzMwLDFdLFszOCwxXSxbNDQsMV0sWzUyLDFdLFs1OSwxXSxbNjcsMV0sWzc1LDFdLFs4NSwxXSxbOTYsMV0sWzEwNSwxXSxbMTE2LDFdLFsxMjYsMV0sWzEzNCwwLjkyOV0sWzE0MywwLjg0Ml0sWzE0OSwwLjc1Ml0sWzE1NiwwLjddLFsxNjQsMC42MzZdLFsxNzMsMC41NzVdLFsxODMsMC41MDldLFsxOTMsMC40NDJdLFsyMDIsMC4zODNdLFsyMTAsMC4zMzddLFsyMTksMC4yOTZdLFsyMzAsMC4yNTddLFsyMzgsMC4yMTRdLFsyNDQsMC4xODhdLFsyNTQsMC4xNzFdLFsyNjEsMC4xNDNdLFsyNjksMC4xMjddLFsyNzcsMC4xMDldLFsyODgsMC4wOTVdLFsyOTcsMC4wNzZdLFszMDYsMC4wNjNdLFszMTUsMC4wNTJdLFszMjQsMC4wNDJdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3089,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T14:17:35.589Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjo0Miwic2hhcmUiOjAuMTc2LCJ0cmF2ZWwiOjQyMSwidHJhdmVsU2hhcmUiOjAuMTE5LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTIsMV0sWzgsMV0sWzE1LDFdLFsyMywxXSxbMzAsMV0sWzQwLDFdLFs0NSwxXSxbNTQsMV0sWzYwLDFdLFs3MiwxXSxbODEsMV0sWzg5LDFdLFs5OCwxXSxbMTA3LDFdLFsxMTUsMV0sWzEyMiwxXSxbMTMwLDFdLFsxNDAsMC45MjldLFsxNTEsMC44MTldLFsxNjAsMC43MTddLFsxNzIsMC42MzddLFsxODEsMC41NDhdLFsxODksMC40ODNdLFsxOTksMC40MjhdLFsyMTAsMC4zNzFdLFsyMTksMC4zMTZdLFsyMjgsMC4yNzNdLFsyMzcsMC4yMzddLFsyNDIsMC4yMDZdLFsyNTIsMC4xOV0sWzI1OSwwLjE1OV0sWzI2OSwwLjE0Ml0sWzI3NywwLjExOF0sWzI4NSwwLjEwMl0sWzI5NCwwLjA4N10sWzMwOCwwLjA3M10sWzMxNywwLjA1NF0sWzMyNSwwLjA0NV0sWzMzMiwwLjAzN10sWzM0NiwwLjAzMV1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3052,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T14:17:42.104Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjo0Mywic2hhcmUiOjAuMTY4LCJ0cmF2ZWwiOjQyMSwidHJhdmVsU2hhcmUiOjAuMTA2LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTUsMV0sWzIsMV0sWzgsMV0sWzE2LDFdLFsyMiwxXSxbMzEsMV0sWzM5LDFdLFs0NywxXSxbNTYsMV0sWzY0LDFdLFs3MiwxXSxbODQsMV0sWzkzLDFdLFsxMDIsMV0sWzExMSwxXSxbMTE5LDFdLFsxMjYsMC45NjhdLFsxMzYsMC44OTRdLFsxNDcsMC43ODldLFsxNTYsMC42OTFdLFsxNjUsMC42MV0sWzE3MiwwLjU0M10sWzE4MywwLjQ5M10sWzE5NCwwLjQyNF0sWzIwMywwLjM1OF0sWzIxNCwwLjMxNV0sWzIyNCwwLjI2NV0sWzIzMSwwLjIyOF0sWzI0MSwwLjIwMV0sWzI1MSwwLjE3MV0sWzI2MSwwLjE0NF0sWzI3MCwwLjEyXSxbMjc2LDAuMTAxXSxbMjg1LDAuMDkxXSxbMjkyLDAuMDc1XSxbMzAxLDAuMDY2XSxbMzA3LDAuMDU0XSxbMzE4LDAuMDQ3XSxbMzI1LDAuMDM3XSxbMzM0LDAuMDMxXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3073,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T14:17:48.767Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjo0OCwic2hhcmUiOjAuMTg2LCJ0cmF2ZWwiOjQyMSwidHJhdmVsU2hhcmUiOjAuMTE3LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTIsMV0sWzEyLDFdLFsyNSwxXSxbMzUsMV0sWzQ1LDFdLFs1NSwxXSxbNjMsMV0sWzcxLDFdLFs3NiwxXSxbODMsMV0sWzg5LDFdLFs5OCwxXSxbMTA0LDFdLFsxMTQsMV0sWzEyMiwxXSxbMTI5LDFdLFsxMzYsMV0sWzE0MywwLjk3Nl0sWzE1MiwwLjg5OV0sWzE1OSwwLjgwMV0sWzE2NiwwLjczNF0sWzE3MiwwLjY3NV0sWzE3OSwwLjYyXSxbMTg4LDAuNTY1XSxbMTk2LDAuNTAyXSxbMjA1LDAuNDUxXSxbMjE0LDAuMzk0XSxbMjIzLDAuMzQ2XSxbMjMyLDAuM10sWzIzOCwwLjI2Ml0sWzI0NywwLjIzOV0sWzI1NCwwLjIwNl0sWzI2MiwwLjE4M10sWzI2NywwLjE2XSxbMjc2LDAuMTQ3XSxbMjgzLDAuMTI0XSxbMjkxLDAuMTA5XSxbMzAwLDAuMDk1XSxbMzEwLDAuMDhdLFszMTksMC4wNjRdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3071,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T14:17:55.202Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjo0OCwic2hhcmUiOjAuMTYzLCJ0cmF2ZWwiOjQyMSwidHJhdmVsU2hhcmUiOjAuMTA1LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTEsMV0sWzgsMV0sWzE2LDFdLFsyMiwxXSxbMjcsMV0sWzM0LDFdLFs0MSwxXSxbNDksMV0sWzU4LDFdLFs2NiwxXSxbNzYsMV0sWzgyLDFdLFs4OCwxXSxbOTcsMV0sWzEwOSwxXSxbMTIwLDFdLFsxMjksMV0sWzEzNiwwLjk1XSxbMTQ1LDAuODddLFsxNTIsMC43ODJdLFsxNjAsMC43MTldLFsxNjksMC42NDhdLFsxNzQsMC41NzRdLFsxODEsMC41MzVdLFsxOTAsMC40OV0sWzE5OCwwLjQyOF0sWzIwNywwLjM4Ml0sWzIxNSwwLjMzN10sWzIyMywwLjI5N10sWzIzMiwwLjI2MV0sWzI0MCwwLjIyOF0sWzI0NiwwLjE5OV0sWzI1MywwLjE4MV0sWzI2MSwwLjE2XSxbMjY4LDAuMTM4XSxbMjc1LDAuMTIyXSxbMjgzLDAuMTA4XSxbMjkwLDAuMDkzXSxbMjk4LDAuMDhdLFszMDYsMC4wNjhdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3065,
+                  "error": {
+                    "message": "Error: no frame carries more than a fifth of what is seen {\"painted\":48,\"share\":0.209,\"travel\":420,\"travelShare\":0.128,\"gone\":true,\"frames\":[[-5,1],[3,1],[8,1],[16,1],[22,1],[29,1],[37,1],[46,1],[51,1],[59,1],[66,1],[83,1],[91,1],[100,1],[108,1],[112,1],[121,1],[128,0.953],[136,0.874],[145,0.794],[161,0.712],[169,0.571],[177,0.515],[181,0.462],[190,0.434],[196,0.381],[204,0.352],[209,0.309],[218,0.286],[224,0.249],[233,0.227],[241,0.197],[246,0.172],[255,0.156],[262,0.135],[270,0.118],[275,0.102],[284,0.092],[291,0.078],[298,0.068]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.209\u001b[39m",
+                    "stack": "Error: no frame carries more than a fifth of what is seen {\"painted\":48,\"share\":0.209,\"travel\":420,\"travelShare\":0.128,\"gone\":true,\"frames\":[[-5,1],[3,1],[8,1],[16,1],[22,1],[29,1],[37,1],[46,1],[51,1],[59,1],[66,1],[83,1],[91,1],[100,1],[108,1],[112,1],[121,1],[128,0.953],[136,0.874],[145,0.794],[161,0.712],[169,0.571],[177,0.515],[181,0.462],[190,0.434],[196,0.381],[204,0.352],[209,0.309],[218,0.286],[224,0.249],[233,0.227],[241,0.197],[246,0.172],[255,0.156],[262,0.135],[270,0.118],[275,0.102],[284,0.092],[291,0.078],[298,0.068]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.209\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1523:92",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 92,
+                      "line": 1523
+                    },
+                    "snippet": "  1521 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n  1522 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 1523 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                            ^\n  1524 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  1525 |         });\n  1526 |     }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 92,
+                        "line": 1523
+                      },
+                      "message": "Error: no frame carries more than a fifth of what is seen {\"painted\":48,\"share\":0.209,\"travel\":420,\"travelShare\":0.128,\"gone\":true,\"frames\":[[-5,1],[3,1],[8,1],[16,1],[22,1],[29,1],[37,1],[46,1],[51,1],[59,1],[66,1],[83,1],[91,1],[100,1],[108,1],[112,1],[121,1],[128,0.953],[136,0.874],[145,0.794],[161,0.712],[169,0.571],[177,0.515],[181,0.462],[190,0.434],[196,0.381],[204,0.352],[209,0.309],[218,0.286],[224,0.249],[233,0.227],[241,0.197],[246,0.172],[255,0.156],[262,0.135],[270,0.118],[275,0.102],[284,0.092],[291,0.078],[298,0.068]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.209\u001b[39m\n\n  1521 |             expect(read.gone, `it leaves ${at}`).toBe(true);\n  1522 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 1523 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n       |                                                                                            ^\n  1524 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  1525 |         });\n  1526 |     }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1523:92"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T14:18:01.683Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjo0OCwic2hhcmUiOjAuMjA5LCJ0cmF2ZWwiOjQyMCwidHJhdmVsU2hhcmUiOjAuMTI4LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTUsMV0sWzMsMV0sWzgsMV0sWzE2LDFdLFsyMiwxXSxbMjksMV0sWzM3LDFdLFs0NiwxXSxbNTEsMV0sWzU5LDFdLFs2NiwxXSxbODMsMV0sWzkxLDFdLFsxMDAsMV0sWzEwOCwxXSxbMTEyLDFdLFsxMjEsMV0sWzEyOCwwLjk1M10sWzEzNiwwLjg3NF0sWzE0NSwwLjc5NF0sWzE2MSwwLjcxMl0sWzE2OSwwLjU3MV0sWzE3NywwLjUxNV0sWzE4MSwwLjQ2Ml0sWzE5MCwwLjQzNF0sWzE5NiwwLjM4MV0sWzIwNCwwLjM1Ml0sWzIwOSwwLjMwOV0sWzIxOCwwLjI4Nl0sWzIyNCwwLjI0OV0sWzIzMywwLjIyN10sWzI0MSwwLjE5N10sWzI0NiwwLjE3Ml0sWzI1NSwwLjE1Nl0sWzI2MiwwLjEzNV0sWzI3MCwwLjExOF0sWzI3NSwwLjEwMl0sWzI4NCwwLjA5Ml0sWzI5MSwwLjA3OF0sWzI5OCwwLjA2OF1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-standing-·--4a251-rames-no-frame-over-a-fifth-chromium-phone-repeat9/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 92,
+                    "line": 1523
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-9dad3220a1ee76a537ed",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1480,
+          "column": 9
+        },
+        {
+          "title": "standing · detented Sheet by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3063,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T14:17:05.835Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjo0NCwic2hhcmUiOjAuMTYsInRyYXZlbCI6NDIwLCJ0cmF2ZWxTaGFyZSI6MC4xMTUsImdvbmUiOnRydWUsImZyYW1lcyI6W1stMiwxXSxbMTIsMV0sWzIwLDFdLFsyOCwxXSxbMzMsMV0sWzM5LDFdLFs0OSwxXSxbNTUsMV0sWzYyLDFdLFs3MywxXSxbODQsMV0sWzkyLDFdLFsxMDQsMV0sWzExNCwxXSxbMTIzLDFdLFsxMzAsMC45NzZdLFsxMzcsMC45XSxbMTQ0LDAuODI3XSxbMTUzLDAuNzU2XSxbMTYwLDAuNjc4XSxbMTcyLDAuNjE0XSxbMTc5LDAuNTI4XSxbMTg4LDAuNDc0XSxbMTk3LDAuNDE4XSxbMjA4LDAuMzcxXSxbMjE4LDAuMzEyXSxbMjI2LDAuMjY5XSxbMjM4LDAuMjM2XSxbMjQ3LDAuMTkyXSxbMjU2LDAuMTY1XSxbMjY0LDAuMTQxXSxbMjcwLDAuMTI0XSxbMjc4LDAuMTA5XSxbMjg4LDAuMDk1XSxbMjk0LDAuMDc5XSxbMzAwLDAuMDY5XSxbMzA3LDAuMDZdLFszMTYsMC4wNTJdLFszMjQsMC4wNDJdLFszMzEsMC4wMzVdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3081,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T14:17:12.567Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjo0NCwic2hhcmUiOjAuMTgzLCJ0cmF2ZWwiOjQyMCwidHJhdmVsU2hhcmUiOjAuMTA3LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTEsMV0sWzUsMV0sWzExLDFdLFsxOSwxXSxbMjgsMV0sWzM3LDFdLFs0NiwxXSxbNTUsMV0sWzYxLDFdLFs2OSwxXSxbNzgsMV0sWzg2LDFdLFs5MywxXSxbMTAwLDFdLFsxMDgsMV0sWzExNSwxXSxbMTI0LDAuOTgyXSxbMTMxLDAuODhdLFsxMzksMC44MTFdLFsxNDcsMC43MzVdLFsxNTYsMC42NjVdLFsxNjQsMC41OTRdLFsxNzIsMC41M10sWzE4MSwwLjQ3Ml0sWzE4OSwwLjQxOF0sWzE5NSwwLjM3MV0sWzIwMywwLjM0XSxbMjExLDAuMzAzXSxbMjE3LDAuMjY4XSxbMjI3LDAuMjQxXSxbMjMzLDAuMjA1XSxbMjQwLDAuMTg3XSxbMjQ4LDAuMTY0XSxbMjYzLDAuMTQzXSxbMjcyLDAuMTA5XSxbMjgwLDAuMDkzXSxbMjg5LDAuMDc5XSxbMzAzLDAuMDY2XSxbMzExLDAuMDQ4XSxbMzIwLDAuMDQxXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3040,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T14:17:19.070Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjo0NCwic2hhcmUiOjAuMTU5LCJ0cmF2ZWwiOjQyMSwidHJhdmVsU2hhcmUiOjAuMTExLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTUsMV0sWzksMV0sWzE2LDFdLFsyNywxXSxbMzMsMV0sWzQzLDFdLFs0OCwxXSxbNTgsMV0sWzY0LDFdLFs3NiwxXSxbODQsMV0sWzk0LDFdLFsxMDAsMV0sWzEwNywxXSxbMTE2LDFdLFsxMjMsMV0sWzEzMCwwLjk0MV0sWzEzOCwwLjg2OF0sWzE0NywwLjc4NV0sWzE1NSwwLjcwNl0sWzE2MywwLjYzMl0sWzE3MiwwLjU3M10sWzE4MywwLjUwNV0sWzE5MiwwLjQzM10sWzIwNiwwLjM4Ml0sWzIxNCwwLjMwOV0sWzIyMSwwLjI3M10sWzIzMCwwLjI0NV0sWzIzOSwwLjIxXSxbMjQ2LDAuMTgyXSxbMjU2LDAuMTZdLFsyNjQsMC4xMzZdLFsyNjgsMC4xMTddLFsyNzYsMC4xMDhdLFsyODQsMC4wOTJdLFsyOTIsMC4wOF0sWzMwMCwwLjA2OF0sWzMxMSwwLjA1OF0sWzMyMCwwLjA0NF0sWzMyOSwwLjAzNl1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3070,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T14:17:25.513Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjo0Mywic2hhcmUiOjAuMTcsInRyYXZlbCI6NDIxLCJ0cmF2ZWxTaGFyZSI6MC4xMSwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjpbWy00LDFdLFsyLDFdLFsxNywxXSxbMjgsMV0sWzM2LDFdLFs0MywxXSxbNTAsMV0sWzU2LDFdLFs2NCwxXSxbNzEsMV0sWzc3LDFdLFs4MywxXSxbOTEsMV0sWzk5LDFdLFsxMDcsMV0sWzExNiwxXSxbMTIyLDAuOTQ4XSxbMTMyLDAuODc3XSxbMTM5LDAuNzc3XSxbMTUxLDAuNzE0XSxbMTYwLDAuNjExXSxbMTY5LDAuNTRdLFsxNzQsMC40NzldLFsxODQsMC40NDZdLFsxOTEsMC4zODVdLFsxOTksMC4zNV0sWzIwNywwLjMwNl0sWzIxNywwLjI3Ml0sWzIyNywwLjIzMl0sWzIzNCwwLjE5OV0sWzI0MiwwLjE3NV0sWzI1MSwwLjE1M10sWzI1OSwwLjEzMV0sWzI2OSwwLjExMl0sWzI3OCwwLjA5M10sWzI4OSwwLjA3N10sWzI5NywwLjA2Ml0sWzMwNiwwLjA1Ml0sWzMxNywwLjA0M10sWzMyNiwwLjAzM11dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3062,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T14:17:32.138Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjo0OCwic2hhcmUiOjAuMTg3LCJ0cmF2ZWwiOjQyMSwidHJhdmVsU2hhcmUiOjAuMTA5LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTYsMV0sWzEsMV0sWzgsMV0sWzE0LDFdLFsyMiwxXSxbMjgsMV0sWzM1LDFdLFs0NCwxXSxbNTEsMV0sWzU5LDFdLFs2NSwxXSxbNzQsMV0sWzgxLDFdLFs4OSwxXSxbOTUsMV0sWzEwMiwxXSxbMTEwLDFdLFsxMTgsMC45OTVdLFsxMjcsMC45XSxbMTMzLDAuODE1XSxbMTQwLDAuNzUyXSxbMTQ4LDAuNjg5XSxbMTU2LDAuNjI0XSxbMTYzLDAuNTU4XSxbMTY5LDAuNTFdLFsxNzcsMC40NjhdLFsxODcsMC40Ml0sWzE5MywwLjM2M10sWzIwMCwwLjMyOF0sWzIwOCwwLjI5NF0sWzIxNCwwLjI2M10sWzIyMiwwLjIzN10sWzIzMCwwLjIwOF0sWzIzNywwLjE4M10sWzI0NCwwLjE2Ml0sWzI1MSwwLjE0M10sWzI2MCwwLjEyNV0sWzI2NywwLjEwNl0sWzI3NCwwLjA5NF0sWzI4MiwwLjA4Ml1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3055,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T14:17:38.777Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjo0MSwic2hhcmUiOjAuMTY4LCJ0cmF2ZWwiOjQyMSwidHJhdmVsU2hhcmUiOjAuMTA4LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTEsMV0sWzcsMV0sWzEzLDFdLFsyMiwxXSxbMjgsMV0sWzM3LDFdLFs0NSwxXSxbNTMsMV0sWzYxLDFdLFs2OSwxXSxbODEsMV0sWzkxLDFdLFs5OSwxXSxbMTExLDFdLFsxMjAsMV0sWzEyOCwwLjk0OV0sWzEzOCwwLjg2N10sWzE0NiwwLjc2Nl0sWzE1NSwwLjY5Ml0sWzE2MywwLjYyMV0sWzE3MSwwLjU1Nl0sWzE4MiwwLjQ5N10sWzE5MiwwLjQyNV0sWzIwMCwwLjM3MV0sWzIxMCwwLjMyNV0sWzIyMSwwLjI4XSxbMjMwLDAuMjM2XSxbMjM4LDAuMjA1XSxbMjQ3LDAuMTc3XSxbMjU1LDAuMTU0XSxbMjYzLDAuMTMyXSxbMjcyLDAuMTE1XSxbMjgzLDAuMDk3XSxbMjkyLDAuMDc5XSxbMzAwLDAuMDY1XSxbMzExLDAuMDU0XSxbMzIwLDAuMDQyXSxbMzMwLDAuMDM0XSxbMzM4LDAuMDI3XSxbMzQ4LDAuMDIyXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3046,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T14:17:45.244Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjo0NSwic2hhcmUiOjAuMTk2LCJ0cmF2ZWwiOjQyMSwidHJhdmVsU2hhcmUiOjAuMTA1LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTEsMV0sWzcsMV0sWzE1LDFdLFsyMiwxXSxbMjgsMV0sWzM4LDFdLFs0MiwxXSxbNTIsMV0sWzU4LDFdLFs2NiwxXSxbNzQsMV0sWzgyLDFdLFs5MSwxXSxbOTgsMV0sWzEwOCwxXSxbMTE2LDFdLFsxMjcsMC45OTFdLFsxMzYsMC44NzJdLFsxNDUsMC43NzZdLFsxNTEsMC42OTVdLFsxNTksMC42NDRdLFsxNjYsMC41ODNdLFsxNzQsMC41M10sWzE4NCwwLjQ3MV0sWzE5MSwwLjQxM10sWzE5OSwwLjM3MV0sWzIwOCwwLjMzXSxbMjE2LDAuMjg1XSxbMjI3LDAuMjUzXSxbMjM2LDAuMjExXSxbMjQ1LDAuMTgxXSxbMjU2LDAuMTU1XSxbMjY1LDAuMTI5XSxbMjc0LDAuMTA5XSxbMjgzLDAuMDkyXSxbMjkxLDAuMDc3XSxbMzAwLDAuMDY1XSxbMzA4LDAuMDU0XSxbMzE0LDAuMDQ1XSxbMzIyLDAuMDM5XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3023,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T14:17:51.927Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjo0Miwic2hhcmUiOjAuMTc3LCJ0cmF2ZWwiOjQyMCwidHJhdmVsU2hhcmUiOjAuMTExLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTEsMV0sWzcsMV0sWzE0LDFdLFsyMiwxXSxbMzEsMV0sWzM5LDFdLFs0NywxXSxbNTYsMV0sWzY3LDFdLFs3NywxXSxbODYsMV0sWzk0LDFdLFsxMDYsMV0sWzExNiwxXSxbMTI0LDAuOTk2XSxbMTM2LDAuOTAyXSxbMTQ0LDAuNzg0XSxbMTU0LDAuNzA2XSxbMTU5LDAuNjE4XSxbMTY4LDAuNTgyXSxbMTc2LDAuNTE1XSxbMTg0LDAuNDU4XSxbMTkyLDAuNDEyXSxbMjAxLDAuMzY3XSxbMjEyLDAuMzJdLFsyMTksMC4yN10sWzIzMSwwLjI0XSxbMjQwLDAuMl0sWzI0OSwwLjE3XSxbMjU3LDAuMTQ2XSxbMjY3LDAuMTI2XSxbMjc1LDAuMTA1XSxbMjgyLDAuMDg5XSxbMjkyLDAuMDc4XSxbMzAyLDAuMDYzXSxbMzExLDAuMDUyXSxbMzIwLDAuMDQyXSxbMzI3LDAuMDM0XSxbMzM0LDAuMDI5XSxbMzQzLDAuMDI0XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3057,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T14:17:58.364Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjo0NCwic2hhcmUiOjAuMTg5LCJ0cmF2ZWwiOjQyMSwidHJhdmVsU2hhcmUiOjAuMTEyLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTgsMV0sWzcsMV0sWzE4LDFdLFsyOSwxXSxbNDEsMV0sWzQ5LDFdLFs1NywxXSxbNjUsMV0sWzcwLDFdLFs3NywxXSxbODQsMV0sWzkyLDFdLFs5NywxXSxbMTA0LDFdLFsxMTIsMV0sWzExOSwxXSxbMTI5LDAuOTZdLFsxMzksMC44NTddLFsxNDcsMC43NTRdLFsxNTcsMC42ODRdLFsxNjgsMC41OThdLFsxNzgsMC41MTddLFsxODcsMC40NTNdLFsxOTMsMC40XSxbMjAxLDAuMzYxXSxbMjA4LDAuMzI0XSxbMjE4LDAuMjldLFsyMjUsMC4yNDldLFsyMzAsMC4yMjJdLFsyMzYsMC4yMDRdLFsyNDcsMC4xODVdLFsyNTQsMC4xNTNdLFsyNjMsMC4xMzVdLFsyNzIsMC4xMTVdLFsyNzksMC4wOTddLFsyODcsMC4wODRdLFsyOTUsMC4wNzJdLFszMDAsMC4wNjFdLFszMDgsMC4wNTVdLFszMTcsMC4wNDZdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3069,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T14:18:05.074Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjo0NCwic2hhcmUiOjAuMTk1LCJ0cmF2ZWwiOjQyMSwidHJhdmVsU2hhcmUiOjAuMTA2LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTIsMV0sWzUsMV0sWzE0LDFdLFsyMywxXSxbMzIsMV0sWzQxLDFdLFs1MCwxXSxbNTksMV0sWzY0LDFdLFs3MiwxXSxbNzksMV0sWzg3LDFdLFs5OSwxXSxbMTA4LDFdLFsxMTYsMV0sWzEyNiwwLjk3Ml0sWzEzMiwwLjg2Ml0sWzE0MSwwLjgwOF0sWzE0OCwwLjcyNF0sWzE1NiwwLjY2Ml0sWzE2NCwwLjU5NV0sWzE3MiwwLjUzNF0sWzE4MCwwLjQ3Nl0sWzE4OCwwLjQyM10sWzIwMCwwLjM3N10sWzIwOSwwLjMxOV0sWzIxNywwLjI3NV0sWzIyNiwwLjI0M10sWzIzMiwwLjIwOV0sWzI0MSwwLjE5MV0sWzI0OCwwLjE2Ml0sWzI1NCwwLjE0M10sWzI2MywwLjEzXSxbMjY5LDAuMTFdLFsyNzcsMC4wOTddLFsyODYsMC4wODNdLFsyOTYsMC4wNzFdLFszMDQsMC4wNTddLFszMTMsMC4wNDhdLFszMjMsMC4wMzldXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-5a03dc0777d2279cb510",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1480,
+          "column": 9
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-17T14:17:00.722Z",
+    "duration": 67538.162,
+    "expected": 19,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

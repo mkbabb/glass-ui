@@ -1,0 +1,108 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for the 'webkit' lock
+
+Running 46 tests using 1 worker
+
+  ✓   1 [webkit-phone] › release-11-1-1.spec.ts:831:9 › reverse · a Select closed while it opens turns from where it is (2.6s)
+  ✓   2 [webkit-phone] › release-11-1-1.spec.ts:843:9 › reverse · a Select reopened while it closes turns from where it is (3.3s)
+  ✓   3 [webkit-phone] › release-11-1-1.spec.ts:831:9 › reverse · a DropdownMenu closed while it opens turns from where it is (2.4s)
+  ✓   4 [webkit-phone] › release-11-1-1.spec.ts:843:9 › reverse · a DropdownMenu reopened while it closes turns from where it is (3.3s)
+  ✓   5 [webkit-phone] › release-11-1-1.spec.ts:831:9 › reverse · a Popover closed while it opens turns from where it is (2.4s)
+  ✓   6 [webkit-phone] › release-11-1-1.spec.ts:843:9 › reverse · a Popover reopened while it closes turns from where it is (3.3s)
+  ✓   7 [webkit-phone] › release-11-1-1.spec.ts:831:9 › reverse · a Toast closed while it opens turns from where it is (2.4s)
+  -   8 [webkit-phone] › release-11-1-1.spec.ts:831:9 › reverse · a Tooltip closed while it opens turns from where it is
+  -   9 [webkit-phone] › release-11-1-1.spec.ts:843:9 › reverse · a Tooltip reopened while it closes turns from where it is
+  ✓  10 [webkit-phone] › release-11-1-1.spec.ts:831:9 › reverse · a Collapsible closed while it opens turns from where it is (4.2s)
+  ✘  11 [webkit-phone] › release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is (10.1s)
+  ✓  12 [webkit-phone] › release-11-1-1.spec.ts:831:9 › reverse · a Accordion closed while it opens turns from where it is (4.4s)
+  ✘  13 [webkit-phone] › release-11-1-1.spec.ts:843:9 › reverse · a Accordion reopened while it closes turns from where it is (10.0s)
+[WebServer] 8:57:02 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  14 [webkit-phone] › release-11-1-1.spec.ts:865:5 › reverse · a press on a leaving Dialog's trigger reopens it from where it is (3.4s)
+[WebServer] 8:57:05 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  15 [webkit-phone] › release-11-1-1.spec.ts:865:5 › reverse · a press on a leaving Sheet's trigger reopens it from where it is (3.3s)
+  ✓  16 [webkit-phone] › release-11-1-1.spec.ts:865:5 › reverse · a press on a leaving Select's trigger reopens it from where it is (3.3s)
+[WebServer] 8:57:12 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  17 [webkit-phone] › release-11-1-1.spec.ts:889:1 › reverse · a press on the page while a sheet leaves reaches the page (2.4s)
+  -  18 [webkit-phone] › release-11-1-1.spec.ts:928:1 › tooltip · a Tooltip enters on a tween
+  -  19 [webkit-phone] › release-11-1-1.spec.ts:943:5 › tooltip · a hint handed to its neighbour fades, incoming
+  -  20 [webkit-phone] › release-11-1-1.spec.ts:943:5 › tooltip · a hint handed to its neighbour fades, outgoing
+  ✓  21 [webkit-phone] › release-11-1-1.spec.ts:1036:1 › expand · an ExpandableContainer enters on a tween (3.9s)
+  ✓  22 [webkit-phone] › release-11-1-1.spec.ts:1051:5 › expand · an ExpandableContainer leaves on a tween by exit (4.8s)
+  ✓  23 [webkit-phone] › release-11-1-1.spec.ts:1051:5 › expand · an ExpandableContainer leaves on a tween by escape (4.8s)
+  ✓  24 [webkit-phone] › release-11-1-1.spec.ts:1051:5 › expand · an ExpandableContainer leaves on a tween by open (4.8s)
+  ✓  25 [webkit-phone] › release-11-1-1.spec.ts:1074:1 › expand · an ExpandableContainer closed while it enters turns from where it is (4.0s)
+  ✓  26 [webkit-phone] › release-11-1-1.spec.ts:1091:1 › expand · an ExpandableContainer reopened while it leaves turns from where it is (4.9s)
+  ✓  27 [webkit-phone] › release-11-1-1.spec.ts:1107:1 › expand · Escape is live from the entrance's first frame (1.5s)
+[WebServer] 8:57:44 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  28 [webkit-phone] › release-11-1-1.spec.ts:1166:5 › leave · a Dialog says once that its leave has finished, after its last seen frame (3.0s)
+[WebServer] 8:57:47 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  29 [webkit-phone] › release-11-1-1.spec.ts:1195:5 › leave · a Dialog closed and reopened mid-exit says nothing (2.6s)
+[WebServer] 8:57:49 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  30 [webkit-phone] › release-11-1-1.spec.ts:1166:5 › leave · a Sheet says once that its leave has finished, after its last seen frame (2.9s)
+[WebServer] 8:57:52 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  31 [webkit-phone] › release-11-1-1.spec.ts:1195:5 › leave · a Sheet closed and reopened mid-exit says nothing (2.6s)
+  ✓  32 [webkit-phone] › release-11-1-1.spec.ts:1166:5 › leave · a Popover says once that its leave has finished, after its last seen frame (2.9s)
+  ✓  33 [webkit-phone] › release-11-1-1.spec.ts:1195:5 › leave · a Popover closed and reopened mid-exit says nothing (2.6s)
+  ✓  34 [webkit-phone] › release-11-1-1.spec.ts:1166:5 › leave · a DropdownMenu says once that its leave has finished, after its last seen frame (3.0s)
+  ✓  35 [webkit-phone] › release-11-1-1.spec.ts:1195:5 › leave · a DropdownMenu closed and reopened mid-exit says nothing (2.6s)
+  ✓  36 [webkit-phone] › release-11-1-1.spec.ts:1166:5 › leave · a Select says once that its leave has finished, after its last seen frame (2.9s)
+  ✓  37 [webkit-phone] › release-11-1-1.spec.ts:1195:5 › leave · a Select closed and reopened mid-exit says nothing (2.6s)
+  -  38 [webkit-phone] › release-11-1-1.spec.ts:1166:5 › leave · a Tooltip says once that its leave has finished, after its last seen frame
+  -  39 [webkit-phone] › release-11-1-1.spec.ts:1195:5 › leave · a Tooltip closed and reopened mid-exit says nothing
+  ✓  40 [webkit-phone] › release-11-1-1.spec.ts:1166:5 › leave · a Toast says once that its leave has finished, after its last seen frame (3.0s)
+  -  41 [webkit-phone] › release-11-1-1.spec.ts:1195:5 › leave · a Toast closed and reopened mid-exit says nothing
+  ✓  42 [webkit-phone] › release-11-1-1.spec.ts:1270:1 › leave · a Popover inside a shadow root says so to its host (3.5s)
+  -  43 [webkit-phone] › release-11-1-1.spec.ts:1294:5 › leave · a ContextMenu says once that its leave has finished, by escape
+  -  44 [webkit-phone] › release-11-1-1.spec.ts:1294:5 › leave · a ContextMenu says once that its leave has finished, by pick
+  -  45 [webkit-phone] › release-11-1-1.spec.ts:1312:1 › leave · a hover card says once that its leave has finished
+[WebServer] 8:58:20 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  46 [webkit-phone] › release-11-1-1.spec.ts:1330:1 › leave · a Dialog unmounted mid-exit says so once, at the unmount (3.2s)
+
+
+  1) [webkit-phone] › release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+
+    Error: the film is read: no hole of more than two frames before it comes to rest, in either of two films {"atTurn":0.112,"turnedAt":0.112,"share":0.163,"end":1,"hole":60,"frames":[[0,0.112],[38,0.112],[52,0.253],[84,0.562],[135,0.846],[190,0.956],[245,1],[300,1],[355,1],[359,1],[369,1],[381,1],[390,1],[400,1],[410,1],[421,1],[430,1],[440,1],[451,1],[461,1],[470,1],[482,1],[494,1],[502,1],[512,1],[523,1],[532,1],[543,1],[553,1],[562,1],[574,1],[584,1],[594,1],[602,1],[615,1],[625,1],[635,1],[644,1],[655,1],[666,1],[676,1],[686,1],[694,1],[706,1],[717,1],[727,1],[738,1],[747,1],[757,1],[766,1],[778,1],[788,1],[798,1],[809,1],[818,1],[831,1],[839,1],[849,1],[859,1],[868,1],[880,1],[890,1],[898,1],[910,1],[921,1],[931,1],[941,1],[951,1],[962,1],[972,1],[981,1],[992,1],[1002,1],[1074,1],[1084,1],[1094,1],[1104,1],[1115,1],[1125,1],[1135,1],[1145,1],[1155,1],[1166,1],[1176,1],[1186,1],[1195,1],[1206,1],[1217,1],[1227,1],[1236,1],[1248,1],[1258,1],[1268,1],[1278,1],[1288,1],[1298,1],[1308,1],[1319,1],[1329,1],[1339,1],[1351,1],[1360,1],[1370,1],[1380,1],[1390,1],[1398,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 33.333333333333336
+    Received:    60
+
+      769 |     }
+      770 |     await info.attach("turn", { body: JSON.stringify(read), contentType: "application/json" });
+    > 771 |     expect(read.hole, `the film is read: no hole of more than two frames before it comes to rest, in either of two films ${JSON.stringify(read)}`).toBeLessThanOrEqual(HOLE);
+          |                                                                                                                                                    ^
+      772 |     return read;
+      773 | }
+      774 |
+        at filmAndReadTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:771:148)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:846:26
+
+    Error Context: test-results/release-11-1-1-reverse-·-a-87c79-oses-turns-from-where-it-is-webkit-phone/error-context.md
+
+  2) [webkit-phone] › release-11-1-1.spec.ts:843:9 › reverse · a Accordion reopened while it closes turns from where it is 
+
+    Error: the film is read: no hole of more than two frames before it comes to rest, in either of two films {"atTurn":0.191,"turnedAt":0.191,"share":0.168,"end":1,"hole":51,"frames":[[0,0.191],[13,0.191],[43,0.493],[86,0.783],[129,0.916],[175,0.972],[220,1],[264,1],[337,1],[341,1],[350,1],[362,1],[369,1],[381,1],[391,1],[402,1],[412,1],[423,1],[434,1],[443,1],[453,1],[463,1],[473,1],[483,1],[494,1],[504,1],[514,1],[525,1],[535,1],[545,1],[555,1],[564,1],[574,1],[586,1],[596,1],[606,1],[616,1],[626,1],[637,1],[647,1],[657,1],[667,1],[677,1],[687,1],[700,1],[708,1],[718,1],[728,1],[739,1],[749,1],[759,1],[771,1],[779,1],[790,1],[800,1],[810,1],[821,1],[830,1],[841,1],[850,1],[862,1],[871,1],[882,1],[891,1],[903,1],[911,1],[922,1],[933,1],[941,1],[953,1],[961,1],[974,1],[983,1],[994,1],[1004,1],[1014,1],[1024,1],[1035,1],[1044,1],[1053,1],[1065,1],[1076,1],[1086,1],[1094,1],[1106,1],[1115,1],[1127,1],[1137,1],[1146,1],[1158,1],[1167,1],[1178,1],[1188,1],[1198,1],[1207,1],[1218,1],[1229,1],[1239,1],[1250,1],[1258,1],[1269,1],[1280,1],[1290,1],[1300,1],[1309,1],[1321,1],[1330,1],[1342,1],[1351,1],[1360,1],[1372,1],[1382,1],[1392,1],[1402,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 33.333333333333336
+    Received:    51
+
+      769 |     }
+      770 |     await info.attach("turn", { body: JSON.stringify(read), contentType: "application/json" });
+    > 771 |     expect(read.hole, `the film is read: no hole of more than two frames before it comes to rest, in either of two films ${JSON.stringify(read)}`).toBeLessThanOrEqual(HOLE);
+          |                                                                                                                                                    ^
+      772 |     return read;
+      773 | }
+      774 |
+        at filmAndReadTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:771:148)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:846:26
+
+    Error Context: test-results/release-11-1-1-reverse-·-a-88999-oses-turns-from-where-it-is-webkit-phone/error-context.md
+
+  2 failed
+    [webkit-phone] › release-11-1-1.spec.ts:843:9 › reverse · a Collapsible reopened while it closes turns from where it is 
+    [webkit-phone] › release-11-1-1.spec.ts:843:9 › reverse · a Accordion reopened while it closes turns from where it is 
+  11 skipped
+  33 passed (2.2m)
