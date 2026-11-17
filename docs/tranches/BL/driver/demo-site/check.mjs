@@ -13,6 +13,13 @@
 // small fixes of P14-RULING.md items 3 and 5. `--plant t1` sets a 60-character
 // lede, so T1 can be seen to bite.
 //
+// P15-RULING.md adds: D1's no-sideways-scroll condition inside every context; D2 on
+// Canvas Tools (Draw) and nav's press on Settings, the recorder reading the score's
+// playhead, the tiles' left edges and the artboard layers' opacity; D5 on `/dock`
+// (every card shows its context outside the dock, one card holds the bar figure);
+// A2's trigger-top condition on Menu; A3 on Menu (the menu opens without focus on
+// every return to Dropdown, and a press on Options still takes focus into it).
+//
 // Machine law (~/.claude/CLAUDE.md): run only through `~/.claude/guard/guarded`, never
 // `--light` (it launches a browser). Chromium headless shell only. The launch flags
 // `--use-angle=metal --enable-gpu --ignore-gpu-blocklist` are the one named exception
@@ -468,6 +475,7 @@ const DOCK_ROUTES = {
     "/dock/nav": "tab",
     "/dock/rail": "section",
     "/dock/chrome": null,
+    "/dock/canvas-tools": "draw",
     "/dock/transport": "play",
     "/dock/pager": "next",
     "/dock/corner-controls": "shuffle",
@@ -498,9 +506,46 @@ const OPEN_SURFACES = () => {
         stageRect: sr ? { top: Math.round(sr.top), bottom: Math.round(sr.bottom) } : null,
         focusInSurface: [...dialogs, ...menus].some((e) => e.contains(a)),
         focusOnTrigger: !!trigger && a === trigger,
+        // P15 item 4: the trigger's top, so arrival and after-Escape can be compared
+        triggerTop: trigger ? +trigger.getBoundingClientRect().top.toFixed(1) : null,
+        // P15 A3: the variant option that holds focus, by its words
+        activeOption: a?.closest("#demo-main [data-story-variants]") ? a.textContent.trim() : null,
         active: a ? `${a.tagName.toLowerCase()}${a.textContent ? ` "${a.textContent.trim().slice(0, 20)}"` : ""}` : null,
     };
 };
+
+// A3 (P15 item 3): on Menu, after the page lines, press Context then Dropdown, twice.
+// Each return must open one menu inside the stage with focus left on the pressed
+// Dropdown option. Then Escape and a press on Options: focus goes into the menu.
+async function menuSwitch(page) {
+    const opts = page.locator('#demo-main [data-story-variants] [role="tablist"] button, #demo-main [data-story-variants] [role="group"] button');
+    const opt = (name) => opts.filter({ hasText: name }).first();
+    const menuOpen = () => page.evaluate(() => [...document.querySelectorAll('[role="menu"]')].some((e) => {
+        const r = e.getBoundingClientRect();
+        return r.width > 8 && r.height > 8 && !e.closest("[data-story-card]") && !e.closest(".demo-sidebar-rail") && !e.closest(".demo-bottom-dock");
+    }));
+    const returns = [];
+    try {
+        for (let i = 0; i < 2; i++) {
+            if (await menuOpen()) { await page.keyboard.press("Escape"); await sleep(700); }
+            await opt("Context").click({ timeout: 4000 });
+            await sleep(1000);
+            await opt("Dropdown").click({ timeout: 4000 });
+            await sleep(1400);
+            returns.push(await page.evaluate(OPEN_SURFACES));
+        }
+        await page.keyboard.press("Escape");
+        await sleep(700);
+        await page.locator("#demo-main [data-story-stage] button").filter({ hasText: "Options" }).first().click({ timeout: 4000 });
+        await sleep(800);
+        const press = await page.evaluate(OPEN_SURFACES);
+        await page.keyboard.press("Escape");
+        await sleep(500);
+        return { returns, press };
+    } catch (e) {
+        return { returns, press: null, missed: String(e?.message ?? e).split("\n")[0].slice(0, 160) };
+    }
+}
 
 // Arrival: read the surface the page opened, close it with Escape, read again.
 async function arrive(page) {
@@ -569,9 +614,39 @@ const P14READ = async ({ shotB64, route }) => {
                 for (let n = tw.nextNode(); n; n = tw.nextNode()) if (/[\p{L}\p{N}]/u.test(n.data) && visible(n.parentElement)) texts++;
             }
             const imgs = card ? [...card.querySelectorAll('[role="img"]')].filter(visible).length : 0;
-            return { card: !!card, texts, imgs };
+            // P15: no element inside the context scrolls sideways (the score's fit)
+            const wide = [...c.querySelectorAll("*")]
+                .filter((e) => e.clientWidth > 0 && e.scrollWidth > e.clientWidth + 1)
+                .map((e) => `${e.tagName.toLowerCase()}${typeof e.className === "string" && e.className ? "." + e.className.trim().split(/\s+/)[0] : ""} ${e.scrollWidth}/${e.clientWidth}`);
+            return { card: !!card, texts, imgs, wide };
         });
         out.d4 = [...ctxs[0].querySelectorAll('[data-slot="card-title"]')].filter(visible).map((t) => ({ text: t.textContent.trim(), cr: inkCr(t) }));
+    }
+
+    // D5 (P15): on /dock, each card's specimen shows its context outside the dock (a
+    // visible text run or a [role="img"]), and one card's specimen holds the bar figure
+    if (route === "/dock") {
+        out.d5 = [...main.querySelectorAll("[data-story-card]")].map((card) => {
+            const sp = card.querySelector("[data-card-specimen]");
+            let texts = 0;
+            if (sp) {
+                const tw = document.createTreeWalker(sp, NodeFilter.SHOW_TEXT);
+                for (let n = tw.nextNode(); n; n = tw.nextNode()) {
+                    const el = n.parentElement;
+                    if (!el || el.closest(".glass-dock") || !/[\p{L}\p{N}]/u.test(n.data) || !visible(el)) continue;
+                    const rg = document.createRange();
+                    rg.selectNodeContents(n);
+                    const q = rg.getBoundingClientRect();
+                    if (q.width >= 1 && q.height >= 1) texts++;
+                }
+            }
+            const imgs = sp ? [...sp.querySelectorAll('[role="img"]')].filter((e) => !e.closest(".glass-dock") && visible(e)).length : 0;
+            return {
+                label: card.querySelector("[data-route-label]")?.textContent.trim() ?? "",
+                texts, imgs,
+                bars: sp ? sp.querySelectorAll(".mini-bars").length > 0 : false,
+            };
+        });
     }
 
     if (route === "/data/metric") {
@@ -691,7 +766,10 @@ const CONTEXT_REC = () => {
         const t = c?.querySelector('[data-slot="card-title"]');
         const slide = c?.querySelector(".pager-slide > span");
         const bars = [...(c?.querySelectorAll(".mini-bar") ?? [])];
-        const head = c?.querySelector(".mini-playhead");
+        // P15: the score's playhead, the puzzle's tiles, the artboard's layers
+        const head = c?.querySelector(".music-staff__playhead");
+        const tiles = [...(c?.querySelectorAll(".scene-tile") ?? [])];
+        const layers = [...(c?.querySelectorAll(".artboard-layer") ?? [])];
         return {
             text: (c?.innerText ?? "").replace(/\s+/g, " ").trim(),
             titleOp: t ? parseFloat(getComputedStyle(t).opacity) : null,
@@ -699,6 +777,10 @@ const CONTEXT_REC = () => {
             bars: bars.map((b) => +b.getBoundingClientRect().height.toFixed(2)),
             barOps: bars.map((b) => +parseFloat(getComputedStyle(b).opacity).toFixed(3)),
             head: head ? +head.getBoundingClientRect().left.toFixed(2) : null,
+            // each tile followed by its own letter: a shuffle reorders the DOM, so an
+            // index would hop from one tile to another
+            tiles: tiles.map((e, i) => [e.textContent.trim() || String(i), +e.getBoundingClientRect().left.toFixed(2)]).sort((a, b) => (a[0] < b[0] ? -1 : 1)),
+            layerOps: layers.map((e) => +parseFloat(getComputedStyle(e).opacity).toFixed(3)),
         };
     };
     window.__p14 = { read, samples: [], on: false };
@@ -749,14 +831,18 @@ async function answers(page, route, cellId) {
     await page.evaluate(() => window.__p14.start());
     try {
         if (kind === "tab") {
-            const tab = dock.getByRole("button", { name: "People", exact: true });
-            if (await tab.count()) { await tab.first().click({ timeout: 4000 }); acted = "People"; }
+            // P15: People is nav's default page, so the press goes to Settings
+            const tab = dock.getByRole("button", { name: "Settings", exact: true });
+            if (await tab.count()) { await tab.first().click({ timeout: 4000 }); acted = "Settings"; }
             else {
                 await dock.getByRole("combobox", { name: "Pages" }).or(dock.locator('[aria-label="Pages"]')).first().click({ timeout: 4000 });
                 await sleep(500);
-                await page.getByRole("menuitemradio", { name: "People" }).first().click({ timeout: 4000 });
-                acted = "People (menu)";
+                await page.getByRole("menuitemradio", { name: "Settings" }).first().click({ timeout: 4000 });
+                acted = "Settings (menu)";
             }
+        } else if (kind === "draw") {
+            await dock.locator('[aria-label="Draw"]').first().click({ timeout: 4000 });
+            acted = "Draw";
         } else if (kind === "section") {
             const seat = dock.locator('[aria-label="Schools"]').first();
             try { await seat.click({ timeout: 2500 }); }
@@ -789,15 +875,18 @@ async function answers(page, route, cellId) {
         // stop the run so the page settles
         await dock.locator('[aria-label="Pause"]').first().click({ timeout: 2000 }).catch(() => {});
     }
-    const changed = before.text !== after.text || JSON.stringify(before.bars) !== JSON.stringify(after.bars) || JSON.stringify(before.barOps) !== JSON.stringify(after.barOps) || before.head !== after.head;
+    const same = (k) => JSON.stringify(before[k]) === JSON.stringify(after[k]);
+    const changed = before.text !== after.text || !same("bars") || !same("barOps") || before.head !== after.head || !same("tiles") || !same("layerOps");
     // grade every series that moved: the title's and the slide's opacity, each bar's
-    // height and opacity, the playhead
+    // height and opacity, the playhead, each tile's left edge, each layer's opacity
     const series = {};
     const pushS = (k, v) => { if (v == null) return; (series[k] ??= []).push(v); };
     for (const s of samples) {
         pushS("titleOp", s.titleOp); pushS("slideOp", s.slideOp); pushS("head", s.head);
         s.bars.forEach((h, i) => pushS(`bar${i}`, h));
         s.barOps.forEach((o, i) => pushS(`barOp${i}`, o));
+        s.tiles.forEach(([k, x]) => pushS(`tile:${k}`, x));
+        s.layerOps.forEach((o, i) => pushS(`layerOp${i}`, o));
     }
     const graded = [];
     for (const [k, v] of Object.entries(series)) {
@@ -817,10 +906,27 @@ function p14Rows(add, route, cell, m, p) {
         add("A1", menu ? "arrival: one menu inside the stage, focus outside it" : "arrival: one open dialog",
             menu ? A.menus === 1 && A.menuInStage === true && !A.focusInSurface : A.dialogs === 1,
             menu ? `menus ${A.menus} inStage ${A.menuInStage} menu ${JSON.stringify(A.menuRect)} stage ${JSON.stringify(A.stageRect)} focus ${A.active}` : `dialogs ${A.dialogs} focusIn ${A.focusInSurface}`);
-        add("A2", "after Escape: none open, focus on the trigger", B.dialogs === 0 && B.menus === 0 && B.focusOnTrigger, `dialogs ${B.dialogs} menus ${B.menus} focus ${B.active}`);
+        // P15 item 4: on Menu the trigger stays where it was at arrival
+        const still = !menu || (A.triggerTop != null && B.triggerTop != null && Math.abs(A.triggerTop - B.triggerTop) <= 1);
+        add("A2", menu ? "after Escape: none open, focus on the trigger, trigger top unchanged" : "after Escape: none open, focus on the trigger",
+            B.dialogs === 0 && B.menus === 0 && B.focusOnTrigger && still,
+            `dialogs ${B.dialogs} menus ${B.menus} focus ${B.active}${menu ? ` trigger top ${A.triggerTop} → ${B.triggerTop}` : ""}`);
+    }
+    if (p.a3) {
+        const ok = (s) => s.menus === 1 && s.menuInStage === true && s.activeOption === "Dropdown" && !s.focusInSurface;
+        const R3 = p.a3.returns;
+        add("A3", "each return to Dropdown: one menu in the stage, focus on the option; a press on Options takes focus in",
+            !p.a3.missed && R3.length === 2 && R3.every(ok) && !!p.a3.press?.focusInSurface,
+            `${R3.map((s, i) => `return ${i + 1}: menus ${s.menus} inStage ${s.menuInStage} focus ${s.active}`).join("; ")}; Options press: focusIn ${p.a3.press?.focusInSurface ?? "-"}${p.a3.missed ? `; missed: ${p.a3.missed}` : ""}`);
     }
     const r = p.read ?? {};
-    if (r.d1) add("D1", "the context holds a Card with text or a figure", r.d1.length >= 1 && r.d1.every((c) => c.card && (c.texts > 0 || c.imgs > 0)), JSON.stringify(r.d1));
+    if (r.d1) add("D1", "the context holds a Card with text or a figure, and nothing in it scrolls sideways", r.d1.length >= 1 && r.d1.every((c) => c.card && (c.texts > 0 || c.imgs > 0) && c.wide.length === 0), JSON.stringify(r.d1));
+    if (r.d5) {
+        const empty = r.d5.filter((c) => c.texts === 0 && c.imgs === 0);
+        const barred = r.d5.filter((c) => c.bars);
+        add("D5a", "every /dock card shows a text run or a figure outside its dock", r.d5.length > 0 && empty.length === 0, empty.length ? `empty: ${empty.map((c) => c.label).join(", ")}` : `${r.d5.length} cards`);
+        add("D5b", "exactly one /dock card holds the bar figure", barred.length === 1, `${barred.length}: ${barred.map((c) => c.label).join(", ")}`);
+    }
     if (r.d4) add("D4", "context title ≥ 4.5:1 (pixels)", r.d4.length ? r.d4.every((t) => t.cr >= 4.5) : null, r.d4.length ? r.d4.map((t) => `${t.text} ${t.cr}`).join("; ") : "no title");
     if (p.d2) add("D2", "the dock answers: the context changes, tweened", p.d2.changed && p.d2.tweened, `${p.d2.acted}; changed ${p.d2.changed}; legs ${p.d2.legs}; worst ${JSON.stringify(p.d2.worst)}; ${p.d2.before} → ${p.d2.after}`);
     if (p.d3) add("D3", "context rect fixed across dock states", p.d3.equal, `${p.d3.folds.join("/")} ${p.d3.states.map((s) => `${s.step}:${s.card}`).join(" ")}`);
@@ -961,6 +1067,7 @@ export async function run() {
                         p14.d3 = await independence(page);
                         p14.d2 = await answers(page, route, cellId);
                     }
+                    if (route === "/containers/dropdown-menu") p14.a3 = await menuSwitch(page);
                     const rows = rowsFor(route, cellId, m, errors, { tracks, face, p14 });
                     for (const r of rows) {
                         all.push(r);
