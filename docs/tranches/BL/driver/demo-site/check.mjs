@@ -20,6 +20,11 @@
 // A2's trigger-top condition on Menu; A3 on Menu (the menu opens without focus on
 // every return to Dropdown, and a press on Options still takes focus into it).
 //
+// P16 adds: D6 on `/dock/rail` (the section's page is filled: the share of its Card's
+// inner height left blank under its lowest content is at most 0.15); A4 on Dialog,
+// Sheet and Menu (after Escape, the trigger's focus ring, its border box grown by the
+// outline's offset and width, is clipped by no ancestor).
+//
 // Machine law (~/.claude/CLAUDE.md): run only through `~/.claude/guard/guarded`, never
 // `--light` (it launches a browser). Chromium headless shell only. The launch flags
 // `--use-angle=metal --enable-gpu --ignore-gpu-blocklist` are the one named exception
@@ -498,7 +503,40 @@ const OPEN_SURFACES = () => {
     };
     const a = document.activeElement;
     const trigger = stage?.querySelector("button") ?? null;
+    // P16 A4: the focused element's ring (its border box grown by the outline's offset
+    // and width) against every ancestor that clips it: overflow other than visible on
+    // an axis, or paint containment; a clip box is the padding box, grown by
+    // overflow-clip-margin where the overflow is clip
+    const ringOf = (el) => {
+        if (!el || el === document.body) return null;
+        const s = getComputedStyle(el);
+        const r = el.getBoundingClientRect();
+        const grow = s.outlineStyle !== "none" ? (parseFloat(s.outlineWidth) || 0) + (parseFloat(s.outlineOffset) || 0) : 0;
+        const ring = [r.left - grow, r.top - grow, r.right + grow, r.bottom + grow];
+        const clipped = [];
+        for (let e = el.parentElement; e; e = e.parentElement) {
+            const c = getComputedStyle(e);
+            const paint = /paint|strict|content/.test(c.contain);
+            const cx = paint || c.overflowX !== "visible", cy = paint || c.overflowY !== "visible";
+            if (!cx && !cy) continue;
+            const q = e.getBoundingClientRect();
+            const m = (ax) => ((ax === "x" ? c.overflowX : c.overflowY) === "clip" && !paint ? parseFloat(c.overflowClipMargin) || 0 : 0);
+            const box = [
+                q.left + parseFloat(c.borderLeftWidth) - m("x"), q.top + parseFloat(c.borderTopWidth) - m("y"),
+                q.right - parseFloat(c.borderRightWidth) + m("x"), q.bottom - parseFloat(c.borderBottomWidth) + m("y"),
+            ];
+            const out = (cx && (ring[0] < box[0] - 0.5 || ring[2] > box[2] + 0.5)) || (cy && (ring[1] < box[1] - 0.5 || ring[3] > box[3] + 0.5));
+            if (out) clipped.push(`${e.tagName.toLowerCase()}${typeof e.className === "string" && e.className.trim() ? "." + e.className.trim().split(/\s+/)[0] : ""} ${c.overflowX}/${c.overflowY} [${box.map((v) => Math.round(v)).join(",")}]`);
+        }
+        return {
+            visible: el.matches(":focus-visible") && s.outlineStyle !== "none" && grow > 0,
+            outline: `${s.outlineStyle} ${s.outlineWidth} offset ${s.outlineOffset}`,
+            ring: ring.map((v) => +v.toFixed(1)),
+            clipped,
+        };
+    };
     return {
+        ring: a === trigger ? ringOf(a) : null,
         dialogs: dialogs.length,
         menus: menus.length,
         menuInStage: menus.length ? menus.every(inStage) : null,
@@ -621,6 +659,32 @@ const P14READ = async ({ shotB64, route }) => {
             return { card: !!card, texts, imgs, wide };
         });
         out.d4 = [...ctxs[0].querySelectorAll('[data-slot="card-title"]')].filter(visible).map((t) => ({ text: t.textContent.trim(), cr: inkCr(t) }));
+    }
+
+    // D6 (P16): on the Rail, the share of the context Card's inner height (inside its
+    // padding) left blank under its lowest content: the title, each Metric, each
+    // visible figure (a line's painted box, not its frame)
+    if (route === "/dock/rail" && ctxs.length) {
+        const card = ctxs[0].querySelector('[data-slot="card"]');
+        const body = card?.querySelector(".scene-page-body");
+        if (card && body) {
+            const cr = card.getBoundingClientRect();
+            const cs = getComputedStyle(card), bs = getComputedStyle(body);
+            const parts = [...card.querySelectorAll('[data-slot="card-title"], .metric, [role="img"] polyline, [role="img"] path, table')].filter((e) => {
+                const r = e.getBoundingClientRect();
+                return r.width > 1 && r.height > 1 && (e.closest('[role="img"]') ?? e).checkVisibility({ opacityProperty: true, visibilityProperty: true });
+            });
+            const top = cr.top + parseFloat(cs.borderTopWidth) + parseFloat(bs.paddingTop);
+            const bottom = cr.bottom - parseFloat(cs.borderBottomWidth) - parseFloat(bs.paddingBottom);
+            const low = Math.max(top, ...parts.map((e) => e.getBoundingClientRect().bottom));
+            out.d6 = {
+                card: [cr.left, cr.top, cr.width, cr.height].map((v) => Math.round(v)),
+                inner: [Math.round(top), Math.round(bottom)],
+                low: Math.round(low),
+                parts: parts.length,
+                blank: +Math.max(0, (bottom - low) / (bottom - top)).toFixed(3),
+            };
+        }
     }
 
     // D5 (P15): on /dock, each card's specimen shows its context outside the dock (a
@@ -912,6 +976,13 @@ function p14Rows(add, route, cell, m, p) {
             B.dialogs === 0 && B.menus === 0 && B.focusOnTrigger && still,
             `dialogs ${B.dialogs} menus ${B.menus} focus ${B.active}${menu ? ` trigger top ${A.triggerTop} → ${B.triggerTop}` : ""}`);
     }
+    if (p.arrival) {
+        // P16 A4: after Escape, the trigger's focus ring is clipped by no ancestor
+        const G = p.arrival.after.ring;
+        add("A4", "after Escape: the trigger's focus ring draws whole (no ancestor clips it)",
+            !!G && G.visible && G.clipped.length === 0,
+            G ? `${G.visible ? "ring" : "no ring"} ${G.outline} [${G.ring.join(",")}]; ${G.clipped.length ? `clipped by ${G.clipped.join("; ")}` : "whole"}` : "focus not on the trigger");
+    }
     if (p.a3) {
         const ok = (s) => s.menus === 1 && s.menuInStage === true && s.activeOption === "Dropdown" && !s.focusInSurface;
         const R3 = p.a3.returns;
@@ -927,6 +998,7 @@ function p14Rows(add, route, cell, m, p) {
         add("D5a", "every /dock card shows a text run or a figure outside its dock", r.d5.length > 0 && empty.length === 0, empty.length ? `empty: ${empty.map((c) => c.label).join(", ")}` : `${r.d5.length} cards`);
         add("D5b", "exactly one /dock card holds the bar figure", barred.length === 1, `${barred.length}: ${barred.map((c) => c.label).join(", ")}`);
     }
+    if (r.d6) add("D6", "the Rail's page is filled: blank under its content ≤ 0.15 of the Card's inner height", r.d6.blank <= 0.15, `blank ${r.d6.blank}: inner ${r.d6.inner.join("-")}, content to ${r.d6.low}, ${r.d6.parts} parts, card ${r.d6.card.join(",")}`);
     if (r.d4) add("D4", "context title ≥ 4.5:1 (pixels)", r.d4.length ? r.d4.every((t) => t.cr >= 4.5) : null, r.d4.length ? r.d4.map((t) => `${t.text} ${t.cr}`).join("; ") : "no title");
     if (p.d2) add("D2", "the dock answers: the context changes, tweened", p.d2.changed && p.d2.tweened, `${p.d2.acted}; changed ${p.d2.changed}; legs ${p.d2.legs}; worst ${JSON.stringify(p.d2.worst)}; ${p.d2.before} → ${p.d2.after}`);
     if (p.d3) add("D3", "context rect fixed across dock states", p.d3.equal, `${p.d3.folds.join("/")} ${p.d3.states.map((s) => `${s.step}:${s.card}`).join(" ")}`);
