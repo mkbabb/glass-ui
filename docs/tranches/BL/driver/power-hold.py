@@ -4,10 +4,12 @@ owner's 60 W charger).
 
 Three runs, each with every descendant: the 11.1.1 release critic (approved 20:17), the dock
 pass (21:18) and the demo pass (00:20). All three pause at <= 40 % and resume at >= 80 %.
-On a fall of 15 minutes in a row while the battery is discharging the demo pass pauses
-first; a further 15 minutes of fall pauses the dock pass too. Both resume when the battery
-is >= 80 % and either not discharging (on AC, charging or held) or higher than 5 minutes
-before. Every 10 s; one printed line per change; paused pids appended to
+A drain is a fall of 3 points or more within 15 minutes, whatever pmset's label says (on the
+60 W charger a real drain reads "charging" and "drawing from AC Power": 76 to 19 % on
+2026-11-16 16:05 to 19:03). "AC attached; not charging" at >= 80 % is macOS holding the
+charge, never a drain (98 to 94 % on 2026-11-17 05:34 to 06:45). On a drain the demo pass
+pauses first; 15 minutes more of drain pauses the dock pass too. Both resume at >= 80 % when
+the battery is not draining. Every 10 s; one printed line per change; paused pids appended to
 power-hold-pids.txt; state kept in power-hold-state.json across restarts. Ends when
 power-hold-RELEASE exists."""
 import json, os, re, signal, subprocess, time
@@ -21,7 +23,7 @@ CRITIC = re.compile(r"glass-ui/\.claude/worktrees/(release-11\.1\.1|infra-deploy
 DOCK = re.compile(r"glass-ui/\.claude/worktrees/bl/dock/wi8|m7/")
 ME = os.getpid()
 LOW, HIGH = 40, 80
-FALL_S, RISE_S = 15 * 60, 5 * 60
+FALL_S, DRAIN_PTS = 15 * 60, 3
 
 def table():
     out = subprocess.run(["ps", "-Ao", "pid=,ppid=,stat=,command="], capture_output=True, text=True).stdout
@@ -33,12 +35,11 @@ def table():
     return rows
 
 def power():
-    """(percent, draining). Draining only when pmset says `discharging`: on AC with
-    `not charging` macOS is holding the charge (2026-11-17 05:34: 98 to 94 % over an hour
-    on AC, drawing from AC Power), which is not the charger falling behind the load."""
+    """(percent, held). Held: on AC, `not charging`, at >= 80 % (macOS holding the charge)."""
     out = subprocess.run(["pmset", "-g", "batt"], capture_output=True, text=True).stdout
     m = re.search(r"(\d+)%", out)
-    return (int(m.group(1)) if m else 100), "discharging" in out
+    pct = int(m.group(1)) if m else 100
+    return pct, ("not charging" in out and pct >= HIGH)
 
 def battery():
     return power()[0]
@@ -91,7 +92,7 @@ fall_since = saved.get("fall_since", None)
 print(f"start: battery {battery()} %, low hold {'on' if low_hold else 'off'}, fall level {fall_level}", flush=True)
 while not os.path.exists(RELEASE):
     now = time.time()
-    pct, draining = power()
+    pct, held = power()
     history.append((now, pct))
     history = [(t, v) for t, v in history if now - t <= FALL_S + 60]
     if not low_hold and pct <= LOW:
@@ -100,18 +101,15 @@ while not os.path.exists(RELEASE):
     elif low_hold and pct >= HIGH:
         low_hold = False
         print(f"battery {pct} %: all three runs resume (>= {HIGH} %)", flush=True)
-    window = [v for t, v in history if now - t <= FALL_S]
     old = [v for t, v in history if now - t >= FALL_S]
-    falling = draining and bool(old) and all(b <= a for a, b in zip(window, window[1:])) and pct < old[-1]
-    if falling and fall_level < 2 and (fall_since is None or now - fall_since >= FALL_S):
+    draining = not held and bool(old) and old[-1] - pct >= DRAIN_PTS
+    if draining and fall_level < 2 and (fall_since is None or now - fall_since >= FALL_S):
         fall_level += 1
         fall_since = now
-        print(f"battery {pct} %: fell for 15 minutes in a row, {'the demo pass' if fall_level == 1 else 'the dock pass'} pauses", flush=True)
-    elif fall_level:
-        past = [v for t, v in history if now - t >= RISE_S]
-        if pct >= HIGH and (not draining or (past and pct > past[-1])):
-            fall_level, fall_since = 0, None
-            print(f"battery {pct} %: {'on AC, not draining' if not draining else 'rising again'}, the paused passes resume", flush=True)
+        print(f"battery {pct} % ({old[-1] - pct} points in 15 minutes): {'the demo pass' if fall_level == 1 else 'the dock pass'} pauses", flush=True)
+    elif fall_level and pct >= HIGH and not draining:
+        fall_level, fall_since = 0, None
+        print(f"battery {pct} %: not draining{' (charge held on AC)' if held else ''}, the paused passes resume", flush=True)
     rows = table()
     stat = {p: st for p, pp, st, c in rows}
     cmd = {p: c for p, pp, st, c in rows}
