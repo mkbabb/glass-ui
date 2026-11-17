@@ -1,0 +1,207 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 10 tests using 1 worker
+
+  ✘   1 [webkit-phone] › release-11-1-1.spec.ts:1090:1 › reverse · a disclosure reopened while it closes finishes its reopen (10.5s)
+  ✘   2 [webkit-phone] › release-11-1-1.spec.ts:1090:1 › reverse · a disclosure reopened while it closes finishes its reopen (10.5s)
+  ✓   3 [webkit-phone] › release-11-1-1.spec.ts:1090:1 › reverse · a disclosure reopened while it closes finishes its reopen (10.3s)
+  ✘   4 [webkit-phone] › release-11-1-1.spec.ts:1090:1 › reverse · a disclosure reopened while it closes finishes its reopen (10.4s)
+  ✘   5 [webkit-phone] › release-11-1-1.spec.ts:1090:1 › reverse · a disclosure reopened while it closes finishes its reopen (10.2s)
+  ✘   6 [webkit-phone] › release-11-1-1.spec.ts:1090:1 › reverse · a disclosure reopened while it closes finishes its reopen (10.3s)
+  ✘   7 [webkit-phone] › release-11-1-1.spec.ts:1090:1 › reverse · a disclosure reopened while it closes finishes its reopen (10.3s)
+  ✘   8 [webkit-phone] › release-11-1-1.spec.ts:1090:1 › reverse · a disclosure reopened while it closes finishes its reopen (10.3s)
+  ✘   9 [webkit-phone] › release-11-1-1.spec.ts:1090:1 › reverse · a disclosure reopened while it closes finishes its reopen (10.2s)
+  ✘  10 [webkit-phone] › release-11-1-1.spec.ts:1090:1 › reverse · a disclosure reopened while it closes finishes its reopen (10.3s)
+
+
+  1) [webkit-phone] › release-11-1-1.spec.ts:1090:1 › reverse · a disclosure reopened while it closes finishes its reopen 
+
+    Error: Accordion: the film is read, with no hole of more than two frames before it rests {"name":"Accordion","hole":41,"end":1,"state":"open","frames":[[0,1],[10,1],[20,1],[30,1],[31,1],[34,1],[41,1],[51,0.965],[90,0.592],[126,0.303],[167,0.126],[168,0.123],[172,0.113],[183,0],[197,0.062],[227,0.358],[257,0.624],[298,0.839],[334,0.929],[373,0.972],[410,1],[447,1],[508,1],[511,1],[521,1],[531,1],[541,1],[551,1],[561,1],[571,1],[582,1],[591,1],[603,1],[613,1],[622,1],[633,1],[643,1],[654,1],[663,1],[674,1],[684,1],[694,1],[705,1],[715,1],[725,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 33.333333333333336
+    Received:    41
+
+      1116 |     for (const r of reads) {
+      1117 |         const at = JSON.stringify({ ...r, frames: r.frames.slice(0, 45) });
+    > 1118 |         expect(r.hole, `${r.name}: the film is read, with no hole of more than two frames before it rests ${at}`).toBeLessThanOrEqual(HOLE);
+           |                                                                                                                   ^
+      1119 |         expect(r.end, `${r.name}: it ends open ${at}`).toBeGreaterThan(0.95);
+      1120 |         expect(r.state, `${r.name}: it is open ${at}`).toBe("open");
+      1121 |     }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1118:115
+
+    Error Context: test-results/release-11-1-1-reverse-·-a-afe55--closes-finishes-its-reopen-webkit-phone/error-context.md
+
+  2) [webkit-phone] › release-11-1-1.spec.ts:1090:1 › reverse · a disclosure reopened while it closes finishes its reopen 
+
+    Error: Accordion: the film is read, with no hole of more than two frames before it rests {"name":"Accordion","hole":39,"end":1,"state":"open","frames":[[0,1],[11,1],[21,1],[32,1],[35,1],[42,1],[52,0.965],[91,0.592],[127,0.303],[164,0.138],[165,0.135],[168,0.126],[191,0],[218,0.181],[244,0.447],[269,0.652],[305,0.836],[339,0.924],[374,0.966],[408,1],[442,1],[500,1],[501,1],[506,1],[510,1],[521,1],[532,1],[541,1],[552,1],[562,1],[572,1],[583,1],[593,1],[603,1],[613,1],[622,1],[634,1],[644,1],[654,1],[664,1],[675,1],[685,1],[695,1],[705,1],[716,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 33.333333333333336
+    Received:    39
+
+      1116 |     for (const r of reads) {
+      1117 |         const at = JSON.stringify({ ...r, frames: r.frames.slice(0, 45) });
+    > 1118 |         expect(r.hole, `${r.name}: the film is read, with no hole of more than two frames before it rests ${at}`).toBeLessThanOrEqual(HOLE);
+           |                                                                                                                   ^
+      1119 |         expect(r.end, `${r.name}: it ends open ${at}`).toBeGreaterThan(0.95);
+      1120 |         expect(r.state, `${r.name}: it is open ${at}`).toBe("open");
+      1121 |     }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1118:115
+
+    Error Context: test-results/release-11-1-1-reverse-·-a-afe55--closes-finishes-its-reopen-webkit-phone-repeat1/error-context.md
+
+  3) [webkit-phone] › release-11-1-1.spec.ts:1090:1 › reverse · a disclosure reopened while it closes finishes its reopen 
+
+    Error: Accordion: the film is read, with no hole of more than two frames before it rests {"name":"Accordion","hole":48,"end":1,"state":"open","frames":[[0,1],[9,1],[21,1],[31,1],[34,1],[40,1],[51,0.959],[99,0.498],[143,0.208],[144,0.204],[147,0.191],[186,0],[204,0.095],[231,0.368],[278,0.738],[322,0.899],[365,0.963],[405,1],[477,1],[552,1],[561,1],[572,1],[582,1],[591,1],[602,1],[612,1],[623,1],[634,1],[642,1],[653,1],[664,1],[674,1],[683,1],[695,1],[704,1],[715,1],[725,1],[734,1],[745,1],[755,1],[765,1],[775,1],[785,1],[795,1],[807,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 33.333333333333336
+    Received:    48
+
+      1116 |     for (const r of reads) {
+      1117 |         const at = JSON.stringify({ ...r, frames: r.frames.slice(0, 45) });
+    > 1118 |         expect(r.hole, `${r.name}: the film is read, with no hole of more than two frames before it rests ${at}`).toBeLessThanOrEqual(HOLE);
+           |                                                                                                                   ^
+      1119 |         expect(r.end, `${r.name}: it ends open ${at}`).toBeGreaterThan(0.95);
+      1120 |         expect(r.state, `${r.name}: it is open ${at}`).toBe("open");
+      1121 |     }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1118:115
+
+    Error Context: test-results/release-11-1-1-reverse-·-a-afe55--closes-finishes-its-reopen-webkit-phone-repeat3/error-context.md
+
+  4) [webkit-phone] › release-11-1-1.spec.ts:1090:1 › reverse · a disclosure reopened while it closes finishes its reopen 
+
+    Error: Accordion: the film is read, with no hole of more than two frames before it rests {"name":"Accordion","hole":42,"end":1,"state":"open","frames":[[0,1],[10,1],[20,1],[25,1],[30,1],[40,0.965],[82,0.563],[122,0.262],[158,0.12],[159,0.118],[162,0.11],[173,0],[184,0.041],[210,0.285],[236,0.537],[272,0.773],[309,0.899],[347,0.958],[383,1],[421,1],[485,1],[490,1],[499,1],[510,1],[520,1],[530,1],[541,1],[550,1],[562,1],[571,1],[581,1],[591,1],[602,1],[612,1],[622,1],[633,1],[642,1],[654,1],[663,1],[674,1],[683,1],[694,1],[703,1],[714,1],[724,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 33.333333333333336
+    Received:    42
+
+      1116 |     for (const r of reads) {
+      1117 |         const at = JSON.stringify({ ...r, frames: r.frames.slice(0, 45) });
+    > 1118 |         expect(r.hole, `${r.name}: the film is read, with no hole of more than two frames before it rests ${at}`).toBeLessThanOrEqual(HOLE);
+           |                                                                                                                   ^
+      1119 |         expect(r.end, `${r.name}: it ends open ${at}`).toBeGreaterThan(0.95);
+      1120 |         expect(r.state, `${r.name}: it is open ${at}`).toBe("open");
+      1121 |     }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1118:115
+
+    Error Context: test-results/release-11-1-1-reverse-·-a-afe55--closes-finishes-its-reopen-webkit-phone-repeat4/error-context.md
+
+  5) [webkit-phone] › release-11-1-1.spec.ts:1090:1 › reverse · a disclosure reopened while it closes finishes its reopen 
+
+    Error: Accordion: the film is read, with no hole of more than two frames before it rests {"name":"Accordion","hole":49,"end":1,"state":"open","frames":[[0,1],[11,1],[21,1],[31,1],[36,1],[42,1],[51,0.971],[62,0.887],[86,0.642],[135,0.257],[177,0.103],[179,0.098],[183,0.09],[194,0],[212,0.095],[244,0.418],[275,0.672],[314,0.856],[355,0.944],[398,1],[439,1],[506,1],[510,1],[521,1],[532,1],[542,1],[551,1],[562,1],[572,1],[582,1],[592,1],[603,1],[612,1],[623,1],[634,1],[644,1],[654,1],[663,1],[674,1],[685,1],[695,1],[705,1],[715,1],[725,1],[736,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 33.333333333333336
+    Received:    49
+
+      1116 |     for (const r of reads) {
+      1117 |         const at = JSON.stringify({ ...r, frames: r.frames.slice(0, 45) });
+    > 1118 |         expect(r.hole, `${r.name}: the film is read, with no hole of more than two frames before it rests ${at}`).toBeLessThanOrEqual(HOLE);
+           |                                                                                                                   ^
+      1119 |         expect(r.end, `${r.name}: it ends open ${at}`).toBeGreaterThan(0.95);
+      1120 |         expect(r.state, `${r.name}: it is open ${at}`).toBe("open");
+      1121 |     }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1118:115
+
+    Error Context: test-results/release-11-1-1-reverse-·-a-afe55--closes-finishes-its-reopen-webkit-phone-repeat5/error-context.md
+
+  6) [webkit-phone] › release-11-1-1.spec.ts:1090:1 › reverse · a disclosure reopened while it closes finishes its reopen 
+
+    Error: Accordion: the film is read, with no hole of more than two frames before it rests {"name":"Accordion","hole":40,"end":1,"state":"open","frames":[[0,1],[10,1],[20,1],[30,1],[31,1],[34,1],[40,1],[50,0.965],[61,0.878],[98,0.507],[138,0.231],[139,0.227],[143,0.208],[176,0],[193,0.086],[202,0.171],[230,0.456],[256,0.665],[296,0.856],[335,0.941],[375,0.994],[417,1],[481,1],[549,1],[555,1],[561,1],[572,1],[581,1],[592,1],[601,1],[611,1],[622,1],[632,1],[642,1],[652,1],[664,1],[673,1],[682,1],[694,1],[703,1],[714,1],[724,1],[734,1],[744,1],[754,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 33.333333333333336
+    Received:    40
+
+      1116 |     for (const r of reads) {
+      1117 |         const at = JSON.stringify({ ...r, frames: r.frames.slice(0, 45) });
+    > 1118 |         expect(r.hole, `${r.name}: the film is read, with no hole of more than two frames before it rests ${at}`).toBeLessThanOrEqual(HOLE);
+           |                                                                                                                   ^
+      1119 |         expect(r.end, `${r.name}: it ends open ${at}`).toBeGreaterThan(0.95);
+      1120 |         expect(r.state, `${r.name}: it is open ${at}`).toBe("open");
+      1121 |     }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1118:115
+
+    Error Context: test-results/release-11-1-1-reverse-·-a-afe55--closes-finishes-its-reopen-webkit-phone-repeat6/error-context.md
+
+  7) [webkit-phone] › release-11-1-1.spec.ts:1090:1 › reverse · a disclosure reopened while it closes finishes its reopen 
+
+    Error: Accordion: the film is read, with no hole of more than two frames before it rests {"name":"Accordion","hole":42,"end":1,"state":"open","frames":[[0,1],[11,1],[21,1],[31,1],[32,1],[36,1],[41,1],[52,0.959],[94,0.553],[135,0.251],[172,0.113],[173,0.11],[174,0.108],[177,0.1],[200,0],[227,0.181],[253,0.447],[279,0.659],[315,0.839],[350,0.927],[384,0.967],[419,1],[454,1],[512,1],[521,1],[530,1],[542,1],[552,1],[562,1],[572,1],[582,1],[593,1],[603,1],[612,1],[623,1],[633,1],[644,1],[654,1],[663,1],[674,1],[684,1],[694,1],[706,1],[715,1],[725,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 33.333333333333336
+    Received:    42
+
+      1116 |     for (const r of reads) {
+      1117 |         const at = JSON.stringify({ ...r, frames: r.frames.slice(0, 45) });
+    > 1118 |         expect(r.hole, `${r.name}: the film is read, with no hole of more than two frames before it rests ${at}`).toBeLessThanOrEqual(HOLE);
+           |                                                                                                                   ^
+      1119 |         expect(r.end, `${r.name}: it ends open ${at}`).toBeGreaterThan(0.95);
+      1120 |         expect(r.state, `${r.name}: it is open ${at}`).toBe("open");
+      1121 |     }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1118:115
+
+    Error Context: test-results/release-11-1-1-reverse-·-a-afe55--closes-finishes-its-reopen-webkit-phone-repeat7/error-context.md
+
+  8) [webkit-phone] › release-11-1-1.spec.ts:1090:1 › reverse · a disclosure reopened while it closes finishes its reopen 
+
+    Error: Accordion: the film is read, with no hole of more than two frames before it rests {"name":"Accordion","hole":41,"end":1,"state":"open","frames":[[0,1],[10,1],[21,1],[22,1],[25,1],[30,1],[41,0.959],[82,0.563],[120,0.273],[157,0.123],[159,0.118],[163,0.108],[174,0],[187,0.054],[214,0.316],[240,0.562],[274,0.778],[310,0.899],[349,0.959],[387,1],[428,1],[499,1],[500,1],[506,1],[510,1],[520,1],[531,1],[541,1],[551,1],[561,1],[571,1],[582,1],[591,1],[602,1],[612,1],[622,1],[633,1],[643,1],[652,1],[663,1],[673,1],[683,1],[695,1],[704,1],[714,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 33.333333333333336
+    Received:    41
+
+      1116 |     for (const r of reads) {
+      1117 |         const at = JSON.stringify({ ...r, frames: r.frames.slice(0, 45) });
+    > 1118 |         expect(r.hole, `${r.name}: the film is read, with no hole of more than two frames before it rests ${at}`).toBeLessThanOrEqual(HOLE);
+           |                                                                                                                   ^
+      1119 |         expect(r.end, `${r.name}: it ends open ${at}`).toBeGreaterThan(0.95);
+      1120 |         expect(r.state, `${r.name}: it is open ${at}`).toBe("open");
+      1121 |     }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1118:115
+
+    Error Context: test-results/release-11-1-1-reverse-·-a-afe55--closes-finishes-its-reopen-webkit-phone-repeat8/error-context.md
+
+  9) [webkit-phone] › release-11-1-1.spec.ts:1090:1 › reverse · a disclosure reopened while it closes finishes its reopen 
+
+    Error: Accordion: the film is read, with no hole of more than two frames before it rests {"name":"Accordion","hole":46,"end":1,"state":"open","frames":[[0,1],[11,1],[20,1],[21,1],[24,1],[31,1],[41,0.965],[87,0.525],[131,0.222],[167,0.1],[168,0.098],[173,0.088],[183,0],[194,0.041],[223,0.316],[254,0.601],[296,0.832],[333,0.927],[374,0.972],[412,1],[447,1],[512,1],[520,1],[531,1],[541,1],[552,1],[561,1],[572,1],[581,1],[592,1],[602,1],[612,1],[623,1],[632,1],[642,1],[653,1],[664,1],[674,1],[683,1],[694,1],[705,1],[714,1],[725,1],[735,1],[745,1]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 33.333333333333336
+    Received:    46
+
+      1116 |     for (const r of reads) {
+      1117 |         const at = JSON.stringify({ ...r, frames: r.frames.slice(0, 45) });
+    > 1118 |         expect(r.hole, `${r.name}: the film is read, with no hole of more than two frames before it rests ${at}`).toBeLessThanOrEqual(HOLE);
+           |                                                                                                                   ^
+      1119 |         expect(r.end, `${r.name}: it ends open ${at}`).toBeGreaterThan(0.95);
+      1120 |         expect(r.state, `${r.name}: it is open ${at}`).toBe("open");
+      1121 |     }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1118:115
+
+    Error Context: test-results/release-11-1-1-reverse-·-a-afe55--closes-finishes-its-reopen-webkit-phone-repeat9/error-context.md
+
+  9 failed
+    [webkit-phone] › release-11-1-1.spec.ts:1090:1 › reverse · a disclosure reopened while it closes finishes its reopen 
+    [webkit-phone] › release-11-1-1.spec.ts:1090:1 › reverse · a disclosure reopened while it closes finishes its reopen 
+    [webkit-phone] › release-11-1-1.spec.ts:1090:1 › reverse · a disclosure reopened while it closes finishes its reopen 
+    [webkit-phone] › release-11-1-1.spec.ts:1090:1 › reverse · a disclosure reopened while it closes finishes its reopen 
+    [webkit-phone] › release-11-1-1.spec.ts:1090:1 › reverse · a disclosure reopened while it closes finishes its reopen 
+    [webkit-phone] › release-11-1-1.spec.ts:1090:1 › reverse · a disclosure reopened while it closes finishes its reopen 
+    [webkit-phone] › release-11-1-1.spec.ts:1090:1 › reverse · a disclosure reopened while it closes finishes its reopen 
+    [webkit-phone] › release-11-1-1.spec.ts:1090:1 › reverse · a disclosure reopened while it closes finishes its reopen 
+    [webkit-phone] › release-11-1-1.spec.ts:1090:1 › reverse · a disclosure reopened while it closes finishes its reopen 
+  1 passed (1.8m)

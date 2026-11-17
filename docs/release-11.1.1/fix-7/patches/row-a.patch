@@ -1,0 +1,352 @@
+diff --git a/src/components/sheet/SheetContent.vue b/src/components/sheet/SheetContent.vue
+index ea90e7c78..5cafb4fb1 100644
+--- a/src/components/sheet/SheetContent.vue
++++ b/src/components/sheet/SheetContent.vue
+@@ -159,9 +159,14 @@ const sheetDetents = useSheetDetents({
+ 
+ const springStyle = computed<CSSProperties | undefined>(() => {
+     if (!live.value) return undefined;
+-    // A detented sheet is SIZED by its rung, so it publishes the scalar and translates
+-    // nothing at all — the box the frost samples is stationary at every rung.
+-    if (detented.value) return { "--detent-t": String(sheetDetents.t.value) };
++    // A detented sheet is SIZED by its rung, so it publishes the scalar and the size its
++    // box takes: the stylesheet translates only the part of the box that is not up, which
++    // is the rise into place on the open leg and the floor's slide below its smallest rung.
++    if (detented.value)
++        return {
++            "--detent-t": String(sheetDetents.t.value),
++            "--_detent-size": String(sheetDetents.size.value),
++        };
+     // The slide rides the `translate` LONGHAND: an unclamped position drives a
+     // side-keyed off-edge offset, and `p<0` overshoot IS the liquid settle.
+     // `animation/transition: none` make the inline values the sole source. `transform`
+diff --git a/src/components/sheet/detents/use.ts b/src/components/sheet/detents/use.ts
+index 7a4da3268..9b45f1d89 100644
+--- a/src/components/sheet/detents/use.ts
++++ b/src/components/sheet/detents/use.ts
+@@ -8,6 +8,10 @@
+ // span a drag maps against is the VIEWPORT — a constant, so the gesture needs no
+ // `getBoundingClientRect` on any path at all.
+ //
++// The open leg is the one place the size holds still: the box takes the rung it opens to
++// on its first frame (`size`) and the scalar says how much of it is up, so the sheet
++// rises into place by a translate with its head and its actions where they will rest.
++//
+ // The scalar is a Vue ref bound through the render, not an inline style written onto a
+ // live-resolved element. That is not a preference: the shipped engine wrote onto a root
+ // it re-resolved every frame precisely because reka forwards its content through a
+@@ -19,7 +23,7 @@
+ // A leg change re-seats a fresh spring at the live `(value, velocity)`, so the
+ // trajectory stays continuous across the register change.
+ 
+-import { onScopeDispose, ref, watch, type Ref } from "vue";
++import { computed, onScopeDispose, ref, watch, type Ref } from "vue";
+ import { SpringProgress } from "@mkbabb/keyframes.js";
+ import { motionTempo } from "../../../composables/motion/core/motionTempo";
+ import { springPreset } from "../../../composables/motion/spring/springPresets";
+@@ -46,6 +50,12 @@ export interface UseSheetDetentsOptions {
+ export interface UseSheetDetentsReturn {
+     /** The live size fraction. Bound as `--detent-t`; also the scrim's input. */
+     t: Readonly<Ref<number>>;
++    /**
++     * The fraction the box is sized at. While the sheet rises into place on its open leg
++     * it is the rung it rises to, and `t` is how much of that box is up; at any other
++     * time it is `t`.
++     */
++    size: Readonly<Ref<number>>;
+     /** Mount hold — true until the dismissing spring reaches 0. */
+     present: Readonly<Ref<boolean>>;
+     /** True while a pointer drag is in flight. */
+@@ -106,6 +116,11 @@ export function useSheetDetents(
+     const { open, side, ladder, detent, requestClose } = options;
+ 
+     const t = ref(0);
++    // The rung the box holds while the sheet rises into place, or null when the box is
++    // the scalar. The rise ends when its leg settles, on a drag or on a rung change; a
++    // close during the rise slides the box back down at that size.
++    const rising = ref<number | null>(null);
++    const size = computed(() => rising.value ?? t.value);
+     const present = ref(open.value);
+     const dragging = ref(false);
+ 
+@@ -130,11 +145,16 @@ export function useSheetDetents(
+ 
+     function onFrame(value: number) {
+         t.value = value;
++        if (rising.value !== null && spring?.settled) rising.value = null;
+         if (!open.value && spring?.target === 0 && spring.settled) present.value = false;
+     }
+ 
+-    /** Settle toward `fraction` on `nextLeg`, preserving the live (value, velocity). */
+-    function settle(fraction: number, nextLeg: Leg) {
++    /**
++     * Settle toward `fraction` on `nextLeg`, preserving the live (value, velocity). With
++     * `hold`, the box keeps that rung's size while the scalar settles.
++     */
++    function settle(fraction: number, nextLeg: Leg, hold: number | null = null) {
++        rising.value = hold;
+         const live = t.value;
+         const velocity = spring?.velocity ?? 0;
+         const s =
+@@ -177,6 +197,7 @@ export function useSheetDetents(
+         if (!from.closest(DRAG_HANDLES) && !scrollIsAtLeadingEdge(from, host)) return;
+ 
+         spring?.stop();
++        rising.value = null;
+         root = host;
+         pointerId = event.pointerId;
+         dragging.value = true;
+@@ -251,17 +272,19 @@ export function useSheetDetents(
+                     t.value = 0;
+                     seatSpring("travel", 0, 0);
+                 }
+-                settle(seatedRung(), "travel");
++                const rung = seatedRung();
++                settle(rung, "travel", rung);
+                 return;
+             }
+             if (!present.value) return;
+             releaseDrag();
+             if (!spring) {
+                 t.value = 0;
++                rising.value = null;
+                 present.value = false;
+                 return;
+             }
+-            settle(0, "travel");
++            settle(0, "travel", rising.value);
+             if (spring.settled) present.value = false;
+         },
+         { immediate: true, flush: "sync" },
+@@ -282,5 +305,5 @@ export function useSheetDetents(
+         spring = null;
+     });
+ 
+-    return { t, present, dragging, snapTo, onPointerdown };
++    return { t, size, present, dragging, snapTo, onPointerdown };
+ }
+diff --git a/src/components/sheet/styles.css b/src/components/sheet/styles.css
+index f6b033497..24f38599b 100644
+--- a/src/components/sheet/styles.css
++++ b/src/components/sheet/styles.css
+@@ -535,13 +535,22 @@
+      * the engine still requests the close. Below the floor the box stops shrinking, so the
+      * plate slides by the difference instead: what shows of it is always the rung's share of
+      * the viewport, and at 0 it is wholly past the edge when it unmounts, on every route
+-     * that closes it and on the way in. The INLINE axis takes no floor: a narrow side rung
+-     * clips along that axis. */
++     * that closes it. The INLINE axis takes no floor: a narrow side rung clips along that
++     * axis.
++     *
++     * On the way in the box takes the rung it opens to on its first frame
++     * (`--_detent-size`, written beside the scalar) and the same slide carries it in from
++     * past the edge: what shows is still the scalar's share of the viewport, and the head
++     * and its actions rise with the plate to where they rest. Unwritten, the size is the
++     * scalar. */
+     :where(
+         [data-slot="sheet-content"][data-detents][data-side="bottom"],
+         [data-slot="sheet-content"][data-detents][data-side="top"]
+     ) {
+-        block-size: calc(clamp(0, var(--detent-t), 1) * 100dvh);
++        --_sheet-size: calc(
++            clamp(0, var(--_detent-size, var(--detent-t)), 1) * 100dvh
++        );
++        block-size: var(--_sheet-size);
+         --_sheet-floor: calc(
+             /* the plate: its own padding, and the one inner edge it draws */ 2 *
+                 var(--space-family) + var(--sheet-seam-width) +
+@@ -556,7 +565,8 @@
+         max-block-size: 100dvh;
+         --_sheet-below-floor: max(
+             0px,
+-            var(--_sheet-floor) - clamp(0, var(--detent-t), 1) * 100dvh
++            max(var(--_sheet-floor), var(--_sheet-size)) -
++                clamp(0, var(--detent-t), 1) * 100dvh
+         );
+     }
+     :where([data-slot="sheet-content"][data-detents][data-side="bottom"]) {
+diff --git a/tests/components/sheet/sheet-reach.test.ts b/tests/components/sheet/sheet-reach.test.ts
+index 6edda0f9c..c6959203d 100644
+--- a/tests/components/sheet/sheet-reach.test.ts
++++ b/tests/components/sheet/sheet-reach.test.ts
+@@ -55,7 +55,10 @@ describe("gate:G-SHEET-REACH — a detent is a size, so the actions stay on the
+             "\n",
+         );
+         expect(block, "top/bottom detent arm must size its block axis").toMatch(
+-            /block-size:\s*calc\([^;]*--detent-t/,
++            /block-size:\s*var\(--_sheet-size\)/,
++        );
++        expect(block, "the block axis is the published size, else the scalar").toMatch(
++            /--_sheet-size:\s*calc\([^;]*var\(--_detent-size, var\(--detent-t\)\)/,
+         );
+         const inline = rules(css, /\[data-detents\]\[data-side="(left|right)"\]/).join(
+             "\n",
+@@ -65,7 +68,7 @@ describe("gate:G-SHEET-REACH — a detent is a size, so the actions stay on the
+         );
+     });
+ 
+-    it("translates a detented sheet only below its floor — at every rung the box is stationary", () => {
++    it("translates a detented sheet only by what is not up — at every resting rung the box is stationary", () => {
+         const sfc = read("src/components/sheet/SheetContent.vue");
+         // The detented branch of the spring style publishes the scalar and returns.
+         const branch = /if\s*\(detented\.value\)\s*return\s*\{([^}]*)\}/.exec(sfc);
+@@ -74,12 +77,15 @@ describe("gate:G-SHEET-REACH — a detent is a size, so the actions stay on the
+             "the detented arm must have its own style branch",
+         ).not.toBeNull();
+         expect(branch![1]).toContain("--detent-t");
++        expect(branch![1]).toContain("--_detent-size");
+         expect(branch![1]).not.toContain("translate");
+         expect(branch![1]).not.toContain("transform");
+ 
+-        // The stylesheet slides the plate by the share of the rung its floor will not
+-        // shrink to, and by nothing at a rung at or above the floor: as the scalar runs to
+-        // 0 on a close the plate leaves past the edge instead of unmounting half painted.
++        // The stylesheet slides the plate by the part of its box that is not up: the share
++        // of the rung its floor will not shrink to, the rung's box less the scalar while it
++        // rises into place, and nothing at a resting rung at or above the floor. As the
++        // scalar runs to 0 on a close the plate leaves past the edge instead of unmounting
++        // half painted.
+         const css = read("src/components/sheet/styles.css");
+         const detentRules = rules(css, /\[data-detents\]/).join("\n");
+         expect(detentRules).not.toMatch(/\btransform\s*:/);
+@@ -87,7 +93,7 @@ describe("gate:G-SHEET-REACH — a detent is a size, so the actions stay on the
+         expect(translates.length).toBe(2);
+         for (const t of translates) expect(t).toContain("var(--_sheet-below-floor)");
+         expect(detentRules).toMatch(
+-            /--_sheet-below-floor:\s*max\(\s*0px,\s*var\(--_sheet-floor\)\s*-\s*clamp\(0, var\(--detent-t\), 1\) \* 100dvh\s*\)/,
++            /--_sheet-below-floor:\s*max\(\s*0px,\s*max\(var\(--_sheet-floor\), var\(--_sheet-size\)\)\s*-\s*clamp\(0, var\(--detent-t\), 1\) \* 100dvh\s*\)/,
+         );
+     });
+ 
+diff --git a/tests-visual/release-11-1-1.spec.ts b/tests-visual/release-11-1-1.spec.ts
+index b5808dd04..d2ece1bef 100644
+--- a/tests-visual/release-11-1-1.spec.ts
++++ b/tests-visual/release-11-1-1.spec.ts
+@@ -651,14 +651,22 @@ for (const c of triggerCases) {
+ }
+ 
+ // ── sheet ──────────────────────────────────────────────────────────────────────────
+-//   sheet  a detented bottom Sheet on the phone, by touch. A drag from its 0.5 rung up
+-//          past the midpoint, let go at speed or at rest, springs on from where the
+-//          finger left it: from the release no frame carries more than a fifth of the
+-//          travel left, and the sheet settles on the 0.9 rung. The sheet reaches the 0.5
+-//          rung by a first drag down from 0.9, so a spring has already settled on a rung.
++//   sheet  a detented bottom Sheet on the phone, by touch. It rises into place at its
++//          rung's size: opened to its 0.9 rung at 430 × 932, its block size reads one
++//          value on every frame of the rise; its head's top moves from the screen's edge
++//          to where it rests with no frame carrying more than a fifth of that travel, the
++//          first and the last frame included; and 190 ms after its state reads open, a
++//          tap at its close button's centre, where it is drawn then, lands on it and
++//          closes the sheet, twenty times in twenty (how far the button stands from its
++//          rest at that moment is recorded). A drag from its 0.5 rung up past the
++//          midpoint, let go at speed or at rest, springs on from where the finger left
++//          it: from the release no frame carries more than a fifth of the travel left,
++//          and the sheet settles on the 0.9 rung. The sheet reaches the 0.5 rung by a
++//          first drag down from 0.9, so a spring has already settled on a rung.
+ 
+ const SHEET_HARNESS = "/tests-visual/release-11-1-1/sheet-harness.html";
+ const SHEET = '[data-testid="s-content"]';
++const SHEET_CLOSE = `${SHEET} [data-slot="dialog-close"]`;
+ 
+ async function openSheetHarness(page: Page, query = ""): Promise<void> {
+     await gotoReady(page, `${SHEET_HARNESS}${query}`);
+@@ -708,6 +716,87 @@ async function stopSheetFilm(page: Page, ms: number): Promise<{ mark: number; fr
+     });
+ }
+ 
++const sheetGone = (page: Page) =>
++    page.waitForFunction((sel) => !document.querySelector(sel), SHEET, { timeout: 3000 });
++
++test("sheet · a detented Sheet rises into place at its rung's size", async ({ page }, info) => {
++    const project = info.project.name;
++    test.skip(!isPhone(project), "the phone form's, by touch");
++    await page.setViewportSize({ width: 430, height: 932 });
++    await openSheetHarness(page);
++    const vh = 932;
++    const trigger = (await page.locator('[data-testid="s-open"]').boundingBox())!;
++    const tapTrigger = () => press(page, project, trigger.x + trigger.width / 2, trigger.y + trigger.height / 2);
++
++    // The rise, filmed from the tap.
++    await startSheetFilm(page);
++    await markSheetFilm(page);
++    await tapTrigger();
++    const film = await stopSheetFilm(page, 1400);
++    const rest = (await page.locator(SHEET_CLOSE).boundingBox())!;
++    const shown = film.frames.filter((f) => f.t >= film.mark && f.present && f.head !== undefined);
++    const restHead = shown[shown.length - 1].head!;
++    let last = shown.length - 1;
++    while (last > 0 && Math.abs(shown[last - 1].head! - restHead) <= 0.5) last--;
++    const rising = shown.slice(0, last + 1);
++    const heights = rising.map((f) => f.h!);
++    // The head starts at the screen's edge, one frame before the first it is painted in.
++    const series: [number, number][] = [[rising[0].t - 1000 / 60, vh], ...rising.map((f): [number, number] => [f.t, f.head!])];
++    const travel = vh - restHead;
++    const rise = {
++        heightSpread: +(Math.max(...heights) - Math.min(...heights)).toFixed(2),
++        firstHead: Math.round(rising[0].head!),
++        restHead: Math.round(restHead),
++        share: +worstFrameShare(series, travel).toFixed(3),
++        frames: series.map(([t, y], i) => [Math.round(t - film.mark), Math.round(y), i ? Math.round(rising[i - 1].h!) : null]),
++    };
++    await page.keyboard.press("Escape");
++    await sheetGone(page);
++    await page.waitForTimeout(500);
++
++    // Atlas's sequence: 190 ms after the state reads open, the close button where it is
++    // drawn, then a tap at its centre.
++    const taps = [];
++    for (let i = 0; i < 20; i++) {
++        await page.evaluate((sheet) => {
++            const w = window as unknown as { __openAt: number; __watch: MutationObserver };
++            w.__openAt = 0;
++            w.__watch = new MutationObserver(() => {
++                if (!w.__openAt && document.querySelector(`${sheet}[data-state="open"]`)) w.__openAt = performance.now();
++            });
++            w.__watch.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ["data-state"] });
++        }, SHEET);
++        await tapTrigger();
++        const read = await page.evaluate(async (close) => {
++            const w = window as unknown as { __openAt: number; __watch: MutationObserver };
++            while (!w.__openAt) await new Promise((r) => setTimeout(r, 2));
++            w.__watch.disconnect();
++            await new Promise((r) => setTimeout(r, Math.max(0, w.__openAt + 190 - performance.now())));
++            const b = document.querySelector(close)!.getBoundingClientRect();
++            const cx = b.left + b.width / 2;
++            const cy = b.top + b.height / 2;
++            const hit = !!document.elementFromPoint(cx, cy)?.closest('[data-slot="dialog-close"]');
++            return { at: Math.round(performance.now() - w.__openAt), x: b.left, y: b.top, cx, cy, hit };
++        }, SHEET_CLOSE);
++        await press(page, project, read.cx, read.cy);
++        const closed = await page
++            .waitForFunction((sel) => document.querySelector(sel)?.getAttribute("data-state") !== "open", SHEET, { timeout: 800 })
++            .then(() => true)
++            .catch(() => false);
++        if (!closed) await page.keyboard.press("Escape");
++        await sheetGone(page);
++        await page.waitForTimeout(400);
++        taps.push({ at: read.at, dx: +(read.x - rest.x).toFixed(1), dy: +(read.y - rest.y).toFixed(1), hit: read.hit, closed });
++    }
++    const read = { rise, taps };
++    await info.attach("sheet", { body: JSON.stringify(read), contentType: "application/json" });
++    const at = JSON.stringify({ ...read, rise: { ...rise, frames: rise.frames.slice(0, 50) } });
++    expect(rise.heightSpread, `its block size reads one value on every frame of the rise ${at}`).toBeLessThanOrEqual(1);
++    expect(rise.share, `no frame carries more than a fifth of the head's travel, first and last included ${at}`).toBeLessThanOrEqual(0.2);
++    expect(taps.filter((r) => r.hit).length, `a tap at its centre finds the button, twenty in twenty ${at}`).toBe(20);
++    expect(taps.filter((r) => r.closed).length, `and the tap closes the sheet, twenty in twenty ${at}`).toBe(20);
++});
++
+ /** Drags the sheet's grip by touch (Chromium's CDP touch input): `steps` moves of `px`
+  *  (up when negative), one a frame, then, at rest, six still moves 20 ms apart. The
+  *  release is marked on the sheet film when one is running. */
+diff --git a/tests-visual/release-11-1-1/sheet-harness.ts b/tests-visual/release-11-1-1/sheet-harness.ts
+index 7ecb87674..bc32d54ab 100644
+--- a/tests-visual/release-11-1-1/sheet-harness.ts
++++ b/tests-visual/release-11-1-1/sheet-harness.ts
+@@ -1,5 +1,5 @@
+-// One detented bottom Sheet on a busy ground, for the cells that read how it springs
+-// after a drag. Its ladder is 0.5 and 0.9 and it opens at the rung the `rung` query
++// One detented bottom Sheet on a busy ground, for the cells that read how it rises and
++// how it springs after a drag. Its ladder is 0.5 and 0.9 and it opens at the rung the `rung` query
+ // names (0.9 unless given). Its head is a DialogHeader (a drag handle, with
+ // the sheet's close button beside it), then a body and a footer action. Imports are
+ // relative to `src/`, so the file mounts unchanged on an older tree.

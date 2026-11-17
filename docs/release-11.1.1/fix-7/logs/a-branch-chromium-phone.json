@@ -1,0 +1,334 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "release-11-1-1.config.ts",
+      "--project=chromium-phone",
+      "--workers=1",
+      "-g",
+      "sheet · "
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-7/logs/a-branch-chromium-phone.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "sheet · a detented Sheet rises into place at its rung's size",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 30867,
+                  "error": {
+                    "message": "Error: its block size reads one value on every frame of the rise {\"rise\":{\"heightSpread\":1.28,\"firstHead\":989,\"restHead\":150,\"share\":0.114,\"frames\":[[5,932,null],[22,989,839],[31,967,839],[38,939,839],[47,913,839],[55,873,839],[65,836,839],[73,791,839],[83,751,839],[94,700,839],[102,648,839],[109,609,839],[118,579,839],[123,541,839],[133,517,839],[137,480,839],[147,463,839],[153,429,839],[161,410,839],[169,385,839],[178,362,839],[185,337,839],[195,320,839],[199,298,839],[208,289,839],[215,273,839],[223,260,839],[231,248,839],[239,236,839],[245,225,839],[254,218,839],[261,209,839],[267,202,839],[275,197,839],[282,191,839],[290,186,839],[299,181,839],[303,176,839],[312,174,839],[321,170,839],[327,166,839],[335,164,839],[345,162,839],[351,159,839],[361,158,839],[369,156,839],[379,155,839],[389,153,839],[398,152,839],[404,151,839]]},\"taps\":[{\"at\":191,\"dx\":0,\"dy\":140.8,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":139.2,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":137.2,\"hit\":true,\"closed\":true},{\"at\":193,\"dx\":0,\"dy\":131.7,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":141.4,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":142.8,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":142,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":128.7,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":141.2,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":136,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":141.2,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":142,\"hit\":true,\"closed\":true},{\"at\":193,\"dx\":0,\"dy\":121.8,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":131.9,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":146.2,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":142.4,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":135.6,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":137.6,\"hit\":true,\"closed\":true},{\"at\":193,\"dx\":0,\"dy\":128.5,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":134.4,\"hit\":true,\"closed\":true}]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m1.28\u001b[39m",
+                    "stack": "Error: its block size reads one value on every frame of the rise {\"rise\":{\"heightSpread\":1.28,\"firstHead\":989,\"restHead\":150,\"share\":0.114,\"frames\":[[5,932,null],[22,989,839],[31,967,839],[38,939,839],[47,913,839],[55,873,839],[65,836,839],[73,791,839],[83,751,839],[94,700,839],[102,648,839],[109,609,839],[118,579,839],[123,541,839],[133,517,839],[137,480,839],[147,463,839],[153,429,839],[161,410,839],[169,385,839],[178,362,839],[185,337,839],[195,320,839],[199,298,839],[208,289,839],[215,273,839],[223,260,839],[231,248,839],[239,236,839],[245,225,839],[254,218,839],[261,209,839],[267,202,839],[275,197,839],[282,191,839],[290,186,839],[299,181,839],[303,176,839],[312,174,839],[321,170,839],[327,166,839],[335,164,839],[345,162,839],[351,159,839],[361,158,839],[369,156,839],[379,155,839],[389,153,839],[398,152,839],[404,151,839]]},\"taps\":[{\"at\":191,\"dx\":0,\"dy\":140.8,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":139.2,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":137.2,\"hit\":true,\"closed\":true},{\"at\":193,\"dx\":0,\"dy\":131.7,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":141.4,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":142.8,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":142,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":128.7,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":141.2,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":136,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":141.2,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":142,\"hit\":true,\"closed\":true},{\"at\":193,\"dx\":0,\"dy\":121.8,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":131.9,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":146.2,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":142.4,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":135.6,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":137.6,\"hit\":true,\"closed\":true},{\"at\":193,\"dx\":0,\"dy\":128.5,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":134.4,\"hit\":true,\"closed\":true}]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m1.28\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:792:98",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 98,
+                      "line": 792
+                    },
+                    "snippet": "  790 |     await info.attach(\"sheet\", { body: JSON.stringify(read), contentType: \"application/json\" });\n  791 |     const at = JSON.stringify({ ...read, rise: { ...rise, frames: rise.frames.slice(0, 50) } });\n> 792 |     expect(rise.heightSpread, `its block size reads one value on every frame of the rise ${at}`).toBeLessThanOrEqual(1);\n      |                                                                                                  ^\n  793 |     expect(rise.share, `no frame carries more than a fifth of the head's travel, first and last included ${at}`).toBeLessThanOrEqual(0.2);\n  794 |     const placed = taps.filter((r) => Math.abs(r.dx) <= 4 && Math.abs(r.dy) <= 4).length;\n  795 |     expect(placed, `at +190 ms the close button is within 4 px of where it rests, twenty in twenty ${at}`).toBe(20);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 98,
+                        "line": 792
+                      },
+                      "message": "Error: its block size reads one value on every frame of the rise {\"rise\":{\"heightSpread\":1.28,\"firstHead\":989,\"restHead\":150,\"share\":0.114,\"frames\":[[5,932,null],[22,989,839],[31,967,839],[38,939,839],[47,913,839],[55,873,839],[65,836,839],[73,791,839],[83,751,839],[94,700,839],[102,648,839],[109,609,839],[118,579,839],[123,541,839],[133,517,839],[137,480,839],[147,463,839],[153,429,839],[161,410,839],[169,385,839],[178,362,839],[185,337,839],[195,320,839],[199,298,839],[208,289,839],[215,273,839],[223,260,839],[231,248,839],[239,236,839],[245,225,839],[254,218,839],[261,209,839],[267,202,839],[275,197,839],[282,191,839],[290,186,839],[299,181,839],[303,176,839],[312,174,839],[321,170,839],[327,166,839],[335,164,839],[345,162,839],[351,159,839],[361,158,839],[369,156,839],[379,155,839],[389,153,839],[398,152,839],[404,151,839]]},\"taps\":[{\"at\":191,\"dx\":0,\"dy\":140.8,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":139.2,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":137.2,\"hit\":true,\"closed\":true},{\"at\":193,\"dx\":0,\"dy\":131.7,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":141.4,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":142.8,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":142,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":128.7,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":141.2,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":136,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":141.2,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":142,\"hit\":true,\"closed\":true},{\"at\":193,\"dx\":0,\"dy\":121.8,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":131.9,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":146.2,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":142.4,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":135.6,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":137.6,\"hit\":true,\"closed\":true},{\"at\":193,\"dx\":0,\"dy\":128.5,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":134.4,\"hit\":true,\"closed\":true}]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m1.28\u001b[39m\n\n  790 |     await info.attach(\"sheet\", { body: JSON.stringify(read), contentType: \"application/json\" });\n  791 |     const at = JSON.stringify({ ...read, rise: { ...rise, frames: rise.frames.slice(0, 50) } });\n> 792 |     expect(rise.heightSpread, `its block size reads one value on every frame of the rise ${at}`).toBeLessThanOrEqual(1);\n      |                                                                                                  ^\n  793 |     expect(rise.share, `no frame carries more than a fifth of the head's travel, first and last included ${at}`).toBeLessThanOrEqual(0.2);\n  794 |     const placed = taps.filter((r) => Math.abs(r.dx) <= 4 && Math.abs(r.dy) <= 4).length;\n  795 |     expect(placed, `at +190 ms the close button is within 4 px of where it rests, twenty in twenty ${at}`).toBe(20);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:792:98"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T16:01:06.545Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "sheet",
+                      "contentType": "application/json",
+                      "body": "eyJyaXNlIjp7ImhlaWdodFNwcmVhZCI6MS4yOCwiZmlyc3RIZWFkIjo5ODksInJlc3RIZWFkIjoxNTAsInNoYXJlIjowLjExNCwiZnJhbWVzIjpbWzUsOTMyLG51bGxdLFsyMiw5ODksODM5XSxbMzEsOTY3LDgzOV0sWzM4LDkzOSw4MzldLFs0Nyw5MTMsODM5XSxbNTUsODczLDgzOV0sWzY1LDgzNiw4MzldLFs3Myw3OTEsODM5XSxbODMsNzUxLDgzOV0sWzk0LDcwMCw4MzldLFsxMDIsNjQ4LDgzOV0sWzEwOSw2MDksODM5XSxbMTE4LDU3OSw4MzldLFsxMjMsNTQxLDgzOV0sWzEzMyw1MTcsODM5XSxbMTM3LDQ4MCw4MzldLFsxNDcsNDYzLDgzOV0sWzE1Myw0MjksODM5XSxbMTYxLDQxMCw4MzldLFsxNjksMzg1LDgzOV0sWzE3OCwzNjIsODM5XSxbMTg1LDMzNyw4MzldLFsxOTUsMzIwLDgzOV0sWzE5OSwyOTgsODM5XSxbMjA4LDI4OSw4MzldLFsyMTUsMjczLDgzOV0sWzIyMywyNjAsODM5XSxbMjMxLDI0OCw4MzldLFsyMzksMjM2LDgzOV0sWzI0NSwyMjUsODM5XSxbMjU0LDIxOCw4MzldLFsyNjEsMjA5LDgzOV0sWzI2NywyMDIsODM5XSxbMjc1LDE5Nyw4MzldLFsyODIsMTkxLDgzOV0sWzI5MCwxODYsODM5XSxbMjk5LDE4MSw4MzldLFszMDMsMTc2LDgzOV0sWzMxMiwxNzQsODM5XSxbMzIxLDE3MCw4MzldLFszMjcsMTY2LDgzOV0sWzMzNSwxNjQsODM5XSxbMzQ1LDE2Miw4MzldLFszNTEsMTU5LDgzOV0sWzM2MSwxNTgsODM5XSxbMzY5LDE1Niw4MzldLFszNzksMTU1LDgzOV0sWzM4OSwxNTMsODM5XSxbMzk4LDE1Miw4MzldLFs0MDQsMTUxLDgzOV0sWzQxMiwxNTEsODM5XSxbNDE5LDE1MCw4MzldLFs0MjcsMTUwLDgzOV0sWzQzNiwxNTAsODM5XSxbNDQyLDE1MCw4NDBdLFs0NDksMTQ5LDg0MF0sWzQ1NywxNDksODQwXSxbNDY2LDE0OSw4NDBdLFs0NzEsMTQ5LDg0MF0sWzQ4MCwxNDksODQwXSxbNDg3LDE0OSw4NDBdLFs0OTUsMTQ5LDg0MF0sWzUwMCwxNDksODQwXSxbNTA4LDE0OSw4NDBdLFs1MTYsMTQ5LDg0MF0sWzUyMywxNDksODQwXSxbNTMxLDE0OSw4NDBdLFs1MzksMTQ5LDg0MF0sWzU0NywxNDksODQwXSxbNTU3LDE0OSw4NDBdLFs1NjUsMTQ5LDg0MF0sWzU3NSwxNDksODQwXSxbNTgzLDE0OSw4NDBdLFs1OTQsMTUwLDg0MF0sWzYwMiwxNTAsODM5XSxbNjA4LDE1MCw4MzldLFs2MTcsMTUwLDgzOV0sWzYyNCwxNTAsODM5XV19LCJ0YXBzIjpbeyJhdCI6MTkxLCJkeCI6MCwiZHkiOjE0MC44LCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhdCI6MTkwLCJkeCI6MCwiZHkiOjEzOS4yLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhdCI6MTkxLCJkeCI6MCwiZHkiOjEzNy4yLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhdCI6MTkzLCJkeCI6MCwiZHkiOjEzMS43LCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhdCI6MTkwLCJkeCI6MCwiZHkiOjE0MS40LCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhdCI6MTkxLCJkeCI6MCwiZHkiOjE0Mi44LCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhdCI6MTkxLCJkeCI6MCwiZHkiOjE0MiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYXQiOjE5MCwiZHgiOjAsImR5IjoxMjguNywiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYXQiOjE5MSwiZHgiOjAsImR5IjoxNDEuMiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYXQiOjE5MCwiZHgiOjAsImR5IjoxMzYsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImF0IjoxOTAsImR4IjowLCJkeSI6MTQxLjIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImF0IjoxOTEsImR4IjowLCJkeSI6MTQyLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhdCI6MTkzLCJkeCI6MCwiZHkiOjEyMS44LCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhdCI6MTkxLCJkeCI6MCwiZHkiOjEzMS45LCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhdCI6MTkwLCJkeCI6MCwiZHkiOjE0Ni4yLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhdCI6MTkwLCJkeCI6MCwiZHkiOjE0Mi40LCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhdCI6MTkyLCJkeCI6MCwiZHkiOjEzNS42LCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhdCI6MTkyLCJkeCI6MCwiZHkiOjEzNy42LCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhdCI6MTkzLCJkeCI6MCwiZHkiOjEyOC41LCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhdCI6MTkwLCJkeCI6MCwiZHkiOjEzNC40LCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-sheet-·-a-d-cc72f-to-place-at-its-rung-s-size-chromium-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 98,
+                    "line": 792
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-f7524e160deeab7a2726",
+          "file": "release-11-1-1.spec.ts",
+          "line": 720,
+          "column": 1
+        },
+        {
+          "title": "sheet · a detented Sheet dragged up and let go at speed springs on from where the finger left it",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3535,
+                  "error": {
+                    "message": "Error: from the release no frame carries more than a fifth of the travel left {\"from\":222,\"end\":84,\"fromRung\":0.737,\"endRung\":0.9,\"share\":0.202,\"frames\":[[-1,222],[9,222],[14,222],[21,222],[30,205],[38,194],[44,185],[51,178],[59,169],[68,160],[76,151],[81,142],[89,137],[96,131],[104,125],[111,119],[118,115],[125,111],[133,107],[141,104],[148,100],[154,98],[163,96],[172,94],[177,92],[185,91],[193,89],[200,88],[209,87],[214,86],[222,86],[230,86],[237,85],[244,85],[251,85],[258,84],[266,84],[276,84],[280,84],[289,84]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.202\u001b[39m",
+                    "stack": "Error: from the release no frame carries more than a fifth of the travel left {\"from\":222,\"end\":84,\"fromRung\":0.737,\"endRung\":0.9,\"share\":0.202,\"frames\":[[-1,222],[9,222],[14,222],[21,222],[30,205],[38,194],[44,185],[51,178],[59,169],[68,160],[76,151],[81,142],[89,137],[96,131],[104,125],[111,119],[118,115],[125,111],[133,107],[141,104],[148,100],[154,98],[163,96],[172,94],[177,92],[185,91],[193,89],[200,88],[209,87],[214,86],[222,86],[230,86],[237,85],[244,85],[251,85],[258,84],[266,84],[276,84],[280,84],[289,84]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.202\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:848:108",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 108,
+                      "line": 848
+                    },
+                    "snippet": "  846 |         expect(read.fromRung, `the drag carried the sheet past the midpoint ${at}`).toBeGreaterThan(0.7);\n  847 |         expect(read.fromRung, `and short of the 0.9 rung ${at}`).toBeLessThan(0.88);\n> 848 |         expect(read.share, `from the release no frame carries more than a fifth of the travel left ${at}`).toBeLessThanOrEqual(0.2);\n      |                                                                                                            ^\n  849 |         expect(Math.abs(read.endRung - 0.9), `it settles on the 0.9 rung ${at}`).toBeLessThanOrEqual(0.01);\n  850 |     });\n  851 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 108,
+                        "line": 848
+                      },
+                      "message": "Error: from the release no frame carries more than a fifth of the travel left {\"from\":222,\"end\":84,\"fromRung\":0.737,\"endRung\":0.9,\"share\":0.202,\"frames\":[[-1,222],[9,222],[14,222],[21,222],[30,205],[38,194],[44,185],[51,178],[59,169],[68,160],[76,151],[81,142],[89,137],[96,131],[104,125],[111,119],[118,115],[125,111],[133,107],[141,104],[148,100],[154,98],[163,96],[172,94],[177,92],[185,91],[193,89],[200,88],[209,87],[214,86],[222,86],[230,86],[237,85],[244,85],[251,85],[258,84],[266,84],[276,84],[280,84],[289,84]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.202\u001b[39m\n\n  846 |         expect(read.fromRung, `the drag carried the sheet past the midpoint ${at}`).toBeGreaterThan(0.7);\n  847 |         expect(read.fromRung, `and short of the 0.9 rung ${at}`).toBeLessThan(0.88);\n> 848 |         expect(read.share, `from the release no frame carries more than a fifth of the travel left ${at}`).toBeLessThanOrEqual(0.2);\n      |                                                                                                            ^\n  849 |         expect(Math.abs(read.endRung - 0.9), `it settles on the 0.9 rung ${at}`).toBeLessThanOrEqual(0.01);\n  850 |     });\n  851 | }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:848:108"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T16:01:38.005Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "sheet",
+                      "contentType": "application/json",
+                      "body": "eyJmcm9tIjoyMjIsImVuZCI6ODQsImZyb21SdW5nIjowLjczNywiZW5kUnVuZyI6MC45LCJzaGFyZSI6MC4yMDIsImZyYW1lcyI6W1stMSwyMjJdLFs5LDIyMl0sWzE0LDIyMl0sWzIxLDIyMl0sWzMwLDIwNV0sWzM4LDE5NF0sWzQ0LDE4NV0sWzUxLDE3OF0sWzU5LDE2OV0sWzY4LDE2MF0sWzc2LDE1MV0sWzgxLDE0Ml0sWzg5LDEzN10sWzk2LDEzMV0sWzEwNCwxMjVdLFsxMTEsMTE5XSxbMTE4LDExNV0sWzEyNSwxMTFdLFsxMzMsMTA3XSxbMTQxLDEwNF0sWzE0OCwxMDBdLFsxNTQsOThdLFsxNjMsOTZdLFsxNzIsOTRdLFsxNzcsOTJdLFsxODUsOTFdLFsxOTMsODldLFsyMDAsODhdLFsyMDksODddLFsyMTQsODZdLFsyMjIsODZdLFsyMzAsODZdLFsyMzcsODVdLFsyNDQsODVdLFsyNTEsODVdLFsyNTgsODRdLFsyNjYsODRdLFsyNzYsODRdLFsyODAsODRdLFsyODksODRdXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-sheet-·-a-d-26991-om-where-the-finger-left-it-chromium-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 108,
+                    "line": 848
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-399bad30b5185917f238",
+          "file": "release-11-1-1.spec.ts",
+          "line": 801,
+          "column": 5
+        },
+        {
+          "title": "sheet · a detented Sheet dragged up and let go at rest springs on from where the finger left it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3643,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T16:01:41.972Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "sheet",
+                      "contentType": "application/json",
+                      "body": "eyJmcm9tIjoyMjIsImVuZCI6ODQsImZyb21SdW5nIjowLjczNywiZW5kUnVuZyI6MC45LCJzaGFyZSI6MC4xNywiZnJhbWVzIjpbWy0yLDIyMl0sWzMsMjIyXSxbMTMsMjIyXSxbMjAsMjIyXSxbMjksMjA1XSxbMzYsMTk0XSxbNDUsMTg2XSxbNTMsMTc0XSxbNjIsMTY2XSxbNjksMTU2XSxbNzQsMTQ4XSxbODQsMTQzXSxbOTAsMTM0XSxbOTcsMTI5XSxbMTAzLDEyM10sWzExMywxMTldLFsxMjAsMTEzXSxbMTI5LDEwOV0sWzEzNSwxMDVdLFsxNDUsMTAyXSxbMTU2LDk5XSxbMTYzLDk1XSxbMTY5LDkzXSxbMTc5LDkyXSxbMTg2LDkwXSxbMTk1LDg5XSxbMjAzLDg4XSxbMjA4LDg3XSxbMjE2LDg3XSxbMjI0LDg2XSxbMjMxLDg1XSxbMjM3LDg1XSxbMjQ2LDg1XSxbMjUzLDg1XSxbMjYyLDg0XSxbMjY5LDg0XSxbMjc0LDg0XSxbMjg0LDg0XSxbMjkwLDg0XSxbMjk4LDg0XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-16c732ef352dbd502c17",
+          "file": "release-11-1-1.spec.ts",
+          "line": 801,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-17T16:01:04.652Z",
+    "duration": 41097.045,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

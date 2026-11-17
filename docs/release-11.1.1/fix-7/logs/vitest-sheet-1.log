@@ -1,0 +1,190 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1
+
+ ❯ tests/components/sheet/sheet-reach.test.ts (15 tests | 2 failed) 20ms
+     × sizes the anchored axis off the rung scalar on BOTH axes 7ms
+     × translates a detented sheet only below its floor — at every rung the box is stationary 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/sheet/sheet-reach.test.ts > gate:G-SHEET-REACH — a detent is a size, so the actions stay on the edge > sizes the anchored axis off the rung scalar on BOTH axes
+AssertionError: top/bottom detent arm must size its block axis: expected '\n        height: 100dvh;\n        bo…' to match /block-size:\s*calc\([^;]*--detent-t/
+
+- Expected:
+/block-size:\s*calc\([^;]*--detent-t/
+
++ Received:
+"
+        height: 100dvh;
+        bottom: auto;
+    
+
+        height: 100dvh;
+        top: auto;
+    
+
+        --_sheet-size: calc(
+            clamp(0, var(--_detent-size, var(--detent-t)), 1) * 100dvh
+        );
+        block-size: var(--_sheet-size);
+        --_sheet-floor: calc(
+             2 *
+                var(--space-family) + var(--sheet-seam-width) +
+                 var(--touch-target) +
+                 2 * var(--space-body) +
+                
+                var(--space-body) + var(--sheet-seam-width) + 
+                1lh + 
+                var(--space-body) + var(--sheet-seam-width) + var(--touch-target)
+        );
+        min-block-size: var(--_sheet-floor);
+        max-block-size: 100dvh;
+        --_sheet-below-floor: max(
+            0px,
+            max(var(--_sheet-floor), var(--_sheet-size)) -
+                clamp(0, var(--detent-t), 1) * 100dvh
+        );
+    
+
+        translate: 0 var(--_sheet-below-floor);
+    
+
+        translate: 0 calc(-1 * var(--_sheet-below-floor));
+    "
+
+ ❯ tests/components/sheet/sheet-reach.test.ts:57:73
+     55|             "\n",
+     56|         );
+     57|         expect(block, "top/bottom detent arm must size its block axis"…
+       |                                                                         ^
+     58|             /block-size:\s*calc\([^;]*--detent-t/,
+     59|         );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/components/sheet/sheet-reach.test.ts > gate:G-SHEET-REACH — a detent is a size, so the actions stay on the edge > translates a detented sheet only below its floor — at every rung the box is stationary
+AssertionError: expected '\n        \n        --sheet-seam-widt…' to match /--_sheet-below-floor:\s*max\(\s*0px,\…/
+
+- Expected:
+/--_sheet-below-floor:\s*max\(\s*0px,\s*var\(--_sheet-floor\)\s*-\s*clamp\(0, var\(--detent-t\), 1\) \* 100dvh\s*\)/
+
++ Received:
+"
+        
+        --sheet-seam-width: 1px;
+        contain: layout paint;
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr);
+    
+
+        touch-action: none;
+    
+
+        display: flex;
+        flex-direction: column;
+        block-size: 100%;
+        min-block-size: 0;
+    
+
+        display: grid;
+        grid-template-rows: minmax(0, auto) minmax(1lh, 1fr) auto;
+        align-content: end;
+        min-block-size: 0;
+        gap: var(--space-body);
+    
+
+        min-block-size: 0;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    
+
+        
+        overflow: hidden;
+        padding-block-end: var(--space-body);
+        border-block-end: var(--sheet-seam-width) solid
+            oklch(from var(--glass-veil-ink) l c h / calc(var(--glass-veil-step) * 2));
+    
+
+        padding-block-start: var(--space-body);
+        border-block-start: var(--sheet-seam-width) solid
+            oklch(from var(--glass-veil-ink) l c h / calc(var(--glass-veil-step) * 2));
+    
+
+        
+        padding-inline-end: calc(var(--touch-target) + var(--space-atom));
+    
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-block-size: var(--touch-target);
+        cursor: grab;
+    
+
+        height: 100dvh;
+        bottom: auto;
+    
+
+        height: 100dvh;
+        top: auto;
+    
+
+        width: 100dvw;
+        left: auto;
+    
+
+        width: 100dvw;
+        right: auto;
+    
+
+        --_sheet-size: calc(
+            clamp(0, var(--_detent-size, var(--detent-t)), 1) * 100dvh
+        );
+        block-size: var(--_sheet-size);
+        --_sheet-floor: calc(
+             2 *
+                var(--space-family) + var(--sheet-seam-width) +
+                 var(--touch-target) +
+                 2 * var(--space-body) +
+                
+                var(--space-body) + var(--sheet-seam-width) + 
+                1lh + 
+                var(--space-body) + var(--sheet-seam-width) + var(--touch-target)
+        );
+        min-block-size: var(--_sheet-floor);
+        max-block-size: 100dvh;
+        --_sheet-below-floor: max(
+            0px,
+            max(var(--_sheet-floor), var(--_sheet-size)) -
+                clamp(0, var(--detent-t), 1) * 100dvh
+        );
+    
+
+        translate: 0 var(--_sheet-below-floor);
+    
+
+        translate: 0 calc(-1 * var(--_sheet-below-floor));
+    
+
+        width: calc(clamp(0, var(--detent-t), 1) * 100dvw);
+        max-width: 100dvw;
+        height: 100%;
+    "
+
+ ❯ tests/components/sheet/sheet-reach.test.ts:89:29
+     87|         expect(translates.length).toBe(2);
+     88|         for (const t of translates) expect(t).toContain("var(--_sheet-…
+     89|         expect(detentRules).toMatch(
+       |                             ^
+     90|             /--_sheet-below-floor:\s*max\(\s*0px,\s*var\(--_sheet-floo…
+     91|         );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed | 8 passed (9)
+      Tests  2 failed | 152 passed (154)
+   Start at  10:45:47
+   Duration  6.84s (transform 2.70s, setup 452ms, import 5.80s, tests 3.88s, environment 1.86s)
+

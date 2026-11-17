@@ -1,0 +1,305 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "release-11-1-1.config.ts",
+      "--project=chromium-phone",
+      "--workers=1",
+      "-g",
+      "sheet · "
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-7/logs/a2-branch-chromium-phone.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "sheet · a detented Sheet rises into place at its rung's size",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 31632,
+                  "error": {
+                    "message": "Error: and the tap closes the sheet, twenty in twenty {\"rise\":{\"heightSpread\":0,\"firstHead\":989,\"restHead\":150,\"share\":0.148,\"frames\":[[4,932,null],[20,989,839],[29,967,839],[37,942,839],[45,912,839],[62,877,839],[70,801,839],[79,758,839],[87,717,839],[95,676,839],[103,636,839],[112,599,839],[120,561,839],[129,525,839],[137,492,839],[145,462,839],[154,431,839],[162,403,839],[170,378,839],[179,356,839],[186,333,839],[195,314,839],[204,296,839],[211,278,839],[220,265,839],[228,251,839],[237,239,839],[245,227,839],[253,217,839],[262,209,839],[270,200,839],[278,194,839],[286,188,839],[295,182,839],[304,177,839],[312,173,839],[320,169,839],[329,166,839],[337,163,839],[345,161,839],[353,159,839],[361,157,839],[370,156,839],[379,154,839],[387,153,839],[395,152,839],[404,152,839],[411,151,839],[420,150,839]]},\"taps\":[{\"at\":191,\"dx\":0,\"dy\":128.9,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":144.7,\"hit\":true,\"closed\":false},{\"at\":192,\"dx\":0,\"dy\":127,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":128.1,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":128.1,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":144.5,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":129.6,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":128.1,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":127.9,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":144.7,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":145.5,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":128.1,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":129.7,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":142.4,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":144.3,\"hit\":true,\"closed\":true},{\"at\":193,\"dx\":0,\"dy\":128.7,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":127.9,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":144.5,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":144.5,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":144.5,\"hit\":true,\"closed\":true}]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m20\u001b[39m\nReceived: \u001b[31m19\u001b[39m",
+                    "stack": "Error: and the tap closes the sheet, twenty in twenty {\"rise\":{\"heightSpread\":0,\"firstHead\":989,\"restHead\":150,\"share\":0.148,\"frames\":[[4,932,null],[20,989,839],[29,967,839],[37,942,839],[45,912,839],[62,877,839],[70,801,839],[79,758,839],[87,717,839],[95,676,839],[103,636,839],[112,599,839],[120,561,839],[129,525,839],[137,492,839],[145,462,839],[154,431,839],[162,403,839],[170,378,839],[179,356,839],[186,333,839],[195,314,839],[204,296,839],[211,278,839],[220,265,839],[228,251,839],[237,239,839],[245,227,839],[253,217,839],[262,209,839],[270,200,839],[278,194,839],[286,188,839],[295,182,839],[304,177,839],[312,173,839],[320,169,839],[329,166,839],[337,163,839],[345,161,839],[353,159,839],[361,157,839],[370,156,839],[379,154,839],[387,153,839],[395,152,839],[404,152,839],[411,151,839],[420,150,839]]},\"taps\":[{\"at\":191,\"dx\":0,\"dy\":128.9,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":144.7,\"hit\":true,\"closed\":false},{\"at\":192,\"dx\":0,\"dy\":127,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":128.1,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":128.1,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":144.5,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":129.6,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":128.1,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":127.9,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":144.7,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":145.5,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":128.1,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":129.7,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":142.4,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":144.3,\"hit\":true,\"closed\":true},{\"at\":193,\"dx\":0,\"dy\":128.7,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":127.9,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":144.5,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":144.5,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":144.5,\"hit\":true,\"closed\":true}]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m20\u001b[39m\nReceived: \u001b[31m19\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:797:105",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 105,
+                      "line": 797
+                    },
+                    "snippet": "  795 |     expect(rise.share, `no frame carries more than a fifth of the head's travel, first and last included ${at}`).toBeLessThanOrEqual(0.2);\n  796 |     expect(taps.filter((r) => r.hit).length, `a tap at its centre finds the button, twenty in twenty ${at}`).toBe(20);\n> 797 |     expect(taps.filter((r) => r.closed).length, `and the tap closes the sheet, twenty in twenty ${at}`).toBe(20);\n      |                                                                                                         ^\n  798 | });\n  799 |\n  800 | /** Drags the sheet's grip by touch (Chromium's CDP touch input): `steps` moves of `px`"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 105,
+                        "line": 797
+                      },
+                      "message": "Error: and the tap closes the sheet, twenty in twenty {\"rise\":{\"heightSpread\":0,\"firstHead\":989,\"restHead\":150,\"share\":0.148,\"frames\":[[4,932,null],[20,989,839],[29,967,839],[37,942,839],[45,912,839],[62,877,839],[70,801,839],[79,758,839],[87,717,839],[95,676,839],[103,636,839],[112,599,839],[120,561,839],[129,525,839],[137,492,839],[145,462,839],[154,431,839],[162,403,839],[170,378,839],[179,356,839],[186,333,839],[195,314,839],[204,296,839],[211,278,839],[220,265,839],[228,251,839],[237,239,839],[245,227,839],[253,217,839],[262,209,839],[270,200,839],[278,194,839],[286,188,839],[295,182,839],[304,177,839],[312,173,839],[320,169,839],[329,166,839],[337,163,839],[345,161,839],[353,159,839],[361,157,839],[370,156,839],[379,154,839],[387,153,839],[395,152,839],[404,152,839],[411,151,839],[420,150,839]]},\"taps\":[{\"at\":191,\"dx\":0,\"dy\":128.9,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":144.7,\"hit\":true,\"closed\":false},{\"at\":192,\"dx\":0,\"dy\":127,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":128.1,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":128.1,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":144.5,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":129.6,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":128.1,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":127.9,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":144.7,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":145.5,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":128.1,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":129.7,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":142.4,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":144.3,\"hit\":true,\"closed\":true},{\"at\":193,\"dx\":0,\"dy\":128.7,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":127.9,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":144.5,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":144.5,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":144.5,\"hit\":true,\"closed\":true}]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m20\u001b[39m\nReceived: \u001b[31m19\u001b[39m\n\n  795 |     expect(rise.share, `no frame carries more than a fifth of the head's travel, first and last included ${at}`).toBeLessThanOrEqual(0.2);\n  796 |     expect(taps.filter((r) => r.hit).length, `a tap at its centre finds the button, twenty in twenty ${at}`).toBe(20);\n> 797 |     expect(taps.filter((r) => r.closed).length, `and the tap closes the sheet, twenty in twenty ${at}`).toBe(20);\n      |                                                                                                         ^\n  798 | });\n  799 |\n  800 | /** Drags the sheet's grip by touch (Chromium's CDP touch input): `steps` moves of `px`\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:797:105"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T16:16:22.863Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "sheet",
+                      "contentType": "application/json",
+                      "body": "eyJyaXNlIjp7ImhlaWdodFNwcmVhZCI6MCwiZmlyc3RIZWFkIjo5ODksInJlc3RIZWFkIjoxNTAsInNoYXJlIjowLjE0OCwiZnJhbWVzIjpbWzQsOTMyLG51bGxdLFsyMCw5ODksODM5XSxbMjksOTY3LDgzOV0sWzM3LDk0Miw4MzldLFs0NSw5MTIsODM5XSxbNjIsODc3LDgzOV0sWzcwLDgwMSw4MzldLFs3OSw3NTgsODM5XSxbODcsNzE3LDgzOV0sWzk1LDY3Niw4MzldLFsxMDMsNjM2LDgzOV0sWzExMiw1OTksODM5XSxbMTIwLDU2MSw4MzldLFsxMjksNTI1LDgzOV0sWzEzNyw0OTIsODM5XSxbMTQ1LDQ2Miw4MzldLFsxNTQsNDMxLDgzOV0sWzE2Miw0MDMsODM5XSxbMTcwLDM3OCw4MzldLFsxNzksMzU2LDgzOV0sWzE4NiwzMzMsODM5XSxbMTk1LDMxNCw4MzldLFsyMDQsMjk2LDgzOV0sWzIxMSwyNzgsODM5XSxbMjIwLDI2NSw4MzldLFsyMjgsMjUxLDgzOV0sWzIzNywyMzksODM5XSxbMjQ1LDIyNyw4MzldLFsyNTMsMjE3LDgzOV0sWzI2MiwyMDksODM5XSxbMjcwLDIwMCw4MzldLFsyNzgsMTk0LDgzOV0sWzI4NiwxODgsODM5XSxbMjk1LDE4Miw4MzldLFszMDQsMTc3LDgzOV0sWzMxMiwxNzMsODM5XSxbMzIwLDE2OSw4MzldLFszMjksMTY2LDgzOV0sWzMzNywxNjMsODM5XSxbMzQ1LDE2MSw4MzldLFszNTMsMTU5LDgzOV0sWzM2MSwxNTcsODM5XSxbMzcwLDE1Niw4MzldLFszNzksMTU0LDgzOV0sWzM4NywxNTMsODM5XSxbMzk1LDE1Miw4MzldLFs0MDQsMTUyLDgzOV0sWzQxMSwxNTEsODM5XSxbNDIwLDE1MCw4MzldXX0sInRhcHMiOlt7ImF0IjoxOTEsImR4IjowLCJkeSI6MTI4LjksImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImF0IjoxOTEsImR4IjowLCJkeSI6MTQ0LjcsImhpdCI6dHJ1ZSwiY2xvc2VkIjpmYWxzZX0seyJhdCI6MTkyLCJkeCI6MCwiZHkiOjEyNywiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYXQiOjE5MSwiZHgiOjAsImR5IjoxMjguMSwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYXQiOjE5MiwiZHgiOjAsImR5IjoxMjguMSwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYXQiOjE5MCwiZHgiOjAsImR5IjoxNDQuNSwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYXQiOjE5MSwiZHgiOjAsImR5IjoxMjkuNiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYXQiOjE5MiwiZHgiOjAsImR5IjoxMjguMSwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYXQiOjE5MSwiZHgiOjAsImR5IjoxMjcuOSwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYXQiOjE5MCwiZHgiOjAsImR5IjoxNDQuNywiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYXQiOjE5MCwiZHgiOjAsImR5IjoxNDUuNSwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYXQiOjE5MiwiZHgiOjAsImR5IjoxMjguMSwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYXQiOjE5MiwiZHgiOjAsImR5IjoxMjkuNywiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYXQiOjE5MSwiZHgiOjAsImR5IjoxNDIuNCwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYXQiOjE5MCwiZHgiOjAsImR5IjoxNDQuMywiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYXQiOjE5MywiZHgiOjAsImR5IjoxMjguNywiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYXQiOjE5MiwiZHgiOjAsImR5IjoxMjcuOSwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYXQiOjE5MSwiZHgiOjAsImR5IjoxNDQuNSwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYXQiOjE5MSwiZHgiOjAsImR5IjoxNDQuNSwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYXQiOjE5MSwiZHgiOjAsImR5IjoxNDQuNSwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9XX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-sheet-·-a-d-cc72f-to-place-at-its-rung-s-size-chromium-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 105,
+                    "line": 797
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-f7524e160deeab7a2726",
+          "file": "release-11-1-1.spec.ts",
+          "line": 722,
+          "column": 1
+        },
+        {
+          "title": "sheet · a detented Sheet dragged up and let go at speed springs on from where the finger left it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5260,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T16:16:55.037Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "sheet",
+                      "contentType": "application/json",
+                      "body": "eyJoYWxmIjowLjUsImZyb20iOjI0MiwiZW5kIjo4NCwiZnJvbVJ1bmciOjAuNzEzLCJlbmRSdW5nIjowLjksInNoYXJlIjowLjE1OSwiZnJhbWVzIjpbWy01LDI0Ml0sWzIsMjQyXSxbMTEsMjQyXSxbMTksMjI2XSxbMjgsMjE3XSxbMzcsMjA1XSxbNDUsMTk0XSxbNTMsMTgzXSxbNjIsMTcyXSxbNzAsMTYyXSxbNzcsMTUyXSxbODcsMTQ0XSxbOTQsMTM1XSxbMTAzLDEyOV0sWzExMiwxMjJdLFsxMjAsMTE2XSxbMTI4LDExMV0sWzEzNiwxMDddLFsxNDUsMTAzXSxbMTUzLDEwMF0sWzE2Miw5N10sWzE3MCw5NF0sWzE3OCw5Ml0sWzE4Niw5MV0sWzE5NCw4OV0sWzIwMyw4OF0sWzIxMSw4N10sWzIyMCw4Nl0sWzIyNyw4Nl0sWzIzNyw4NV0sWzI0NCw4NV0sWzI1Myw4NV0sWzI2MSw4NF0sWzI3MCw4NF0sWzI3OCw4NF0sWzI4Nyw4NF0sWzI5NSw4NF0sWzMwMyw4NF0sWzMxMiw4NF0sWzMyMCw4NF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-399bad30b5185917f238",
+          "file": "release-11-1-1.spec.ts",
+          "line": 826,
+          "column": 5
+        },
+        {
+          "title": "sheet · a detented Sheet dragged up and let go at rest springs on from where the finger left it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5349,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T16:17:00.392Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "sheet",
+                      "contentType": "application/json",
+                      "body": "eyJoYWxmIjowLjUsImZyb20iOjI0MiwiZW5kIjo4NCwiZnJvbVJ1bmciOjAuNzEzLCJlbmRSdW5nIjowLjksInNoYXJlIjowLjE2MSwiZnJhbWVzIjpbWy03LDI0Ml0sWzIsMjQyXSxbMTAsMjQyXSxbMTgsMjI3XSxbMjcsMjE3XSxbMzQsMjA2XSxbNDMsMTk1XSxbNTEsMTgzXSxbNjAsMTczXSxbNjgsMTYyXSxbNzYsMTUzXSxbODUsMTQ1XSxbOTMsMTM2XSxbMTAxLDEyOV0sWzExMCwxMjNdLFsxMTcsMTE2XSxbMTI3LDExMl0sWzEzNSwxMDddLFsxNDMsMTAzXSxbMTUyLDEwMF0sWzE2MCw5N10sWzE2OCw5NV0sWzE3Niw5Ml0sWzE4NCw5MV0sWzE5Myw4OV0sWzIwMSw4OF0sWzIwOSw4N10sWzIxOCw4Nl0sWzIyNiw4Nl0sWzIzNSw4NV0sWzI0Myw4NV0sWzI1Miw4NV0sWzI1OSw4NF0sWzI2Nyw4NF0sWzI3Niw4NF0sWzI4NSw4NF0sWzI5Myw4NF0sWzMwMiw4NF0sWzMxMCw4NF0sWzMxOCw4NF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-16c732ef352dbd502c17",
+          "file": "release-11-1-1.spec.ts",
+          "line": 826,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-17T16:16:21.255Z",
+    "duration": 44554.04,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

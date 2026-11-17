@@ -1,0 +1,333 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "release-11-1-1.config.ts",
+      "--project=webkit-phone",
+      "--workers=1",
+      "-g",
+      "sheet · "
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-7/logs/a-branch-webkit-phone.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "sheet · a detented Sheet rises into place at its rung's size",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 31319,
+                  "error": {
+                    "message": "Error: its block size reads one value on every frame of the rise {\"rise\":{\"heightSpread\":1.27,\"firstHead\":989,\"restHead\":150,\"share\":0.118,\"frames\":[[11,932,null],[28,989,839],[45,967,839],[54,910,839],[63,872,839],[66,831,839],[71,816,839],[83,792,839],[87,733,839],[92,713,839],[98,689,839],[108,660,839],[117,612,839],[127,572,839],[138,529,839],[148,485,839],[157,448,839],[169,417,839],[178,380,839],[188,354,839],[200,328,839],[210,301,839],[219,281,839],[230,264,839],[239,247,839],[250,234,839],[261,220,839],[271,209,839],[281,199,839],[290,191,839],[302,185,839],[312,178,839],[324,173,839],[333,168,839],[343,164,839],[353,161,839],[362,159,839],[372,157,839],[382,155,839],[393,154,839],[402,152,839],[413,152,839],[424,151,839],[433,150,839],[445,150,839],[457,149,840],[468,149,840],[479,149,840],[491,149,840],[496,149,840]]},\"taps\":[{\"at\":190,\"dx\":0,\"dy\":140.4,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":140.4,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":124.9,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":138.4,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":123.1,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":132.5,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":138.4,\"hit\":true,\"closed\":true},{\"at\":189,\"dx\":0,\"dy\":126.8,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":121.3,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":136.4,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":142.4,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":138.4,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":132.5,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":134.4,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":136.4,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":121.3,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":138.4,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":134.4,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":136.4,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":124.9,\"hit\":true,\"closed\":true}]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m1.27\u001b[39m",
+                    "stack": "Error: its block size reads one value on every frame of the rise {\"rise\":{\"heightSpread\":1.27,\"firstHead\":989,\"restHead\":150,\"share\":0.118,\"frames\":[[11,932,null],[28,989,839],[45,967,839],[54,910,839],[63,872,839],[66,831,839],[71,816,839],[83,792,839],[87,733,839],[92,713,839],[98,689,839],[108,660,839],[117,612,839],[127,572,839],[138,529,839],[148,485,839],[157,448,839],[169,417,839],[178,380,839],[188,354,839],[200,328,839],[210,301,839],[219,281,839],[230,264,839],[239,247,839],[250,234,839],[261,220,839],[271,209,839],[281,199,839],[290,191,839],[302,185,839],[312,178,839],[324,173,839],[333,168,839],[343,164,839],[353,161,839],[362,159,839],[372,157,839],[382,155,839],[393,154,839],[402,152,839],[413,152,839],[424,151,839],[433,150,839],[445,150,839],[457,149,840],[468,149,840],[479,149,840],[491,149,840],[496,149,840]]},\"taps\":[{\"at\":190,\"dx\":0,\"dy\":140.4,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":140.4,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":124.9,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":138.4,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":123.1,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":132.5,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":138.4,\"hit\":true,\"closed\":true},{\"at\":189,\"dx\":0,\"dy\":126.8,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":121.3,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":136.4,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":142.4,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":138.4,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":132.5,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":134.4,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":136.4,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":121.3,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":138.4,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":134.4,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":136.4,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":124.9,\"hit\":true,\"closed\":true}]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m1.27\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:792:98",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 98,
+                      "line": 792
+                    },
+                    "snippet": "  790 |     await info.attach(\"sheet\", { body: JSON.stringify(read), contentType: \"application/json\" });\n  791 |     const at = JSON.stringify({ ...read, rise: { ...rise, frames: rise.frames.slice(0, 50) } });\n> 792 |     expect(rise.heightSpread, `its block size reads one value on every frame of the rise ${at}`).toBeLessThanOrEqual(1);\n      |                                                                                                  ^\n  793 |     expect(rise.share, `no frame carries more than a fifth of the head's travel, first and last included ${at}`).toBeLessThanOrEqual(0.2);\n  794 |     const placed = taps.filter((r) => Math.abs(r.dx) <= 4 && Math.abs(r.dy) <= 4).length;\n  795 |     expect(placed, `at +190 ms the close button is within 4 px of where it rests, twenty in twenty ${at}`).toBe(20);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 98,
+                        "line": 792
+                      },
+                      "message": "Error: its block size reads one value on every frame of the rise {\"rise\":{\"heightSpread\":1.27,\"firstHead\":989,\"restHead\":150,\"share\":0.118,\"frames\":[[11,932,null],[28,989,839],[45,967,839],[54,910,839],[63,872,839],[66,831,839],[71,816,839],[83,792,839],[87,733,839],[92,713,839],[98,689,839],[108,660,839],[117,612,839],[127,572,839],[138,529,839],[148,485,839],[157,448,839],[169,417,839],[178,380,839],[188,354,839],[200,328,839],[210,301,839],[219,281,839],[230,264,839],[239,247,839],[250,234,839],[261,220,839],[271,209,839],[281,199,839],[290,191,839],[302,185,839],[312,178,839],[324,173,839],[333,168,839],[343,164,839],[353,161,839],[362,159,839],[372,157,839],[382,155,839],[393,154,839],[402,152,839],[413,152,839],[424,151,839],[433,150,839],[445,150,839],[457,149,840],[468,149,840],[479,149,840],[491,149,840],[496,149,840]]},\"taps\":[{\"at\":190,\"dx\":0,\"dy\":140.4,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":140.4,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":124.9,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":138.4,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":123.1,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":132.5,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":138.4,\"hit\":true,\"closed\":true},{\"at\":189,\"dx\":0,\"dy\":126.8,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":121.3,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":136.4,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":142.4,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":138.4,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":132.5,\"hit\":true,\"closed\":true},{\"at\":191,\"dx\":0,\"dy\":134.4,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":136.4,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":121.3,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":138.4,\"hit\":true,\"closed\":true},{\"at\":192,\"dx\":0,\"dy\":134.4,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":136.4,\"hit\":true,\"closed\":true},{\"at\":190,\"dx\":0,\"dy\":124.9,\"hit\":true,\"closed\":true}]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1\u001b[39m\nReceived:    \u001b[31m1.27\u001b[39m\n\n  790 |     await info.attach(\"sheet\", { body: JSON.stringify(read), contentType: \"application/json\" });\n  791 |     const at = JSON.stringify({ ...read, rise: { ...rise, frames: rise.frames.slice(0, 50) } });\n> 792 |     expect(rise.heightSpread, `its block size reads one value on every frame of the rise ${at}`).toBeLessThanOrEqual(1);\n      |                                                                                                  ^\n  793 |     expect(rise.share, `no frame carries more than a fifth of the head's travel, first and last included ${at}`).toBeLessThanOrEqual(0.2);\n  794 |     const placed = taps.filter((r) => Math.abs(r.dx) <= 4 && Math.abs(r.dy) <= 4).length;\n  795 |     expect(placed, `at +190 ms the close button is within 4 px of where it rests, twenty in twenty ${at}`).toBe(20);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:792:98"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T16:02:37.503Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "sheet",
+                      "contentType": "application/json",
+                      "body": "eyJyaXNlIjp7ImhlaWdodFNwcmVhZCI6MS4yNywiZmlyc3RIZWFkIjo5ODksInJlc3RIZWFkIjoxNTAsInNoYXJlIjowLjExOCwiZnJhbWVzIjpbWzExLDkzMixudWxsXSxbMjgsOTg5LDgzOV0sWzQ1LDk2Nyw4MzldLFs1NCw5MTAsODM5XSxbNjMsODcyLDgzOV0sWzY2LDgzMSw4MzldLFs3MSw4MTYsODM5XSxbODMsNzkyLDgzOV0sWzg3LDczMyw4MzldLFs5Miw3MTMsODM5XSxbOTgsNjg5LDgzOV0sWzEwOCw2NjAsODM5XSxbMTE3LDYxMiw4MzldLFsxMjcsNTcyLDgzOV0sWzEzOCw1MjksODM5XSxbMTQ4LDQ4NSw4MzldLFsxNTcsNDQ4LDgzOV0sWzE2OSw0MTcsODM5XSxbMTc4LDM4MCw4MzldLFsxODgsMzU0LDgzOV0sWzIwMCwzMjgsODM5XSxbMjEwLDMwMSw4MzldLFsyMTksMjgxLDgzOV0sWzIzMCwyNjQsODM5XSxbMjM5LDI0Nyw4MzldLFsyNTAsMjM0LDgzOV0sWzI2MSwyMjAsODM5XSxbMjcxLDIwOSw4MzldLFsyODEsMTk5LDgzOV0sWzI5MCwxOTEsODM5XSxbMzAyLDE4NSw4MzldLFszMTIsMTc4LDgzOV0sWzMyNCwxNzMsODM5XSxbMzMzLDE2OCw4MzldLFszNDMsMTY0LDgzOV0sWzM1MywxNjEsODM5XSxbMzYyLDE1OSw4MzldLFszNzIsMTU3LDgzOV0sWzM4MiwxNTUsODM5XSxbMzkzLDE1NCw4MzldLFs0MDIsMTUyLDgzOV0sWzQxMywxNTIsODM5XSxbNDI0LDE1MSw4MzldLFs0MzMsMTUwLDgzOV0sWzQ0NSwxNTAsODM5XSxbNDU3LDE0OSw4NDBdLFs0NjgsMTQ5LDg0MF0sWzQ3OSwxNDksODQwXSxbNDkxLDE0OSw4NDBdLFs0OTYsMTQ5LDg0MF0sWzUxMywxNDksODQwXSxbNTE5LDE0OSw4NDBdLFs1MjcsMTQ5LDg0MF0sWzUzNSwxNDksODQwXSxbNTQ3LDE0OSw4NDBdLFs1NTYsMTQ5LDg0MF0sWzU2NiwxNDksODQwXSxbNTc2LDE0OSw4NDBdLFs1ODgsMTQ5LDg0MF0sWzU5NywxNDksODQwXSxbNjA4LDE1MCw4MzldLFs2MTgsMTUwLDgzOV0sWzYzMCwxNTAsODM5XSxbNjM5LDE1MCw4MzldXX0sInRhcHMiOlt7ImF0IjoxOTAsImR4IjowLCJkeSI6MTQwLjQsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImF0IjoxOTIsImR4IjowLCJkeSI6MTQwLjQsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImF0IjoxOTIsImR4IjowLCJkeSI6MTI0LjksImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImF0IjoxOTEsImR4IjowLCJkeSI6MTM4LjQsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImF0IjoxOTEsImR4IjowLCJkeSI6MTIzLjEsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImF0IjoxOTAsImR4IjowLCJkeSI6MTMyLjUsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImF0IjoxOTIsImR4IjowLCJkeSI6MTM4LjQsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImF0IjoxODksImR4IjowLCJkeSI6MTI2LjgsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImF0IjoxOTEsImR4IjowLCJkeSI6MTIxLjMsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImF0IjoxOTAsImR4IjowLCJkeSI6MTM2LjQsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImF0IjoxOTIsImR4IjowLCJkeSI6MTQyLjQsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImF0IjoxOTAsImR4IjowLCJkeSI6MTM4LjQsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImF0IjoxOTIsImR4IjowLCJkeSI6MTMyLjUsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImF0IjoxOTEsImR4IjowLCJkeSI6MTM0LjQsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImF0IjoxOTAsImR4IjowLCJkeSI6MTM2LjQsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImF0IjoxOTIsImR4IjowLCJkeSI6MTIxLjMsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImF0IjoxOTAsImR4IjowLCJkeSI6MTM4LjQsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImF0IjoxOTIsImR4IjowLCJkeSI6MTM0LjQsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImF0IjoxOTAsImR4IjowLCJkeSI6MTM2LjQsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImF0IjoxOTAsImR4IjowLCJkeSI6MTI0LjksImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-sheet-·-a-d-cc72f-to-place-at-its-rung-s-size-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 98,
+                    "line": 792
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-b1755d39645e8c414061",
+          "file": "release-11-1-1.spec.ts",
+          "line": 720,
+          "column": 1
+        },
+        {
+          "title": "sheet · a detented Sheet dragged up and let go at speed springs on from where the finger left it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen can tap but not drag",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 804,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 376,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T16:03:09.454Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen can tap but not drag",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 804,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-2894e4c150eb48f37c30",
+          "file": "release-11-1-1.spec.ts",
+          "line": 801,
+          "column": 5
+        },
+        {
+          "title": "sheet · a detented Sheet dragged up and let go at rest springs on from where the finger left it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen can tap but not drag",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 804,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 210,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T16:03:10.051Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen can tap but not drag",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 804,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-df0f4bb1e08034f6ce6d",
+          "file": "release-11-1-1.spec.ts",
+          "line": 801,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-17T16:02:35.790Z",
+    "duration": 34536.361,
+    "expected": 0,
+    "skipped": 2,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

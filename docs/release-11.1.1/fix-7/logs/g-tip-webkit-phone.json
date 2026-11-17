@@ -1,0 +1,661 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "release-11-1-1.config.ts",
+      "--project=webkit-phone",
+      "--workers=1",
+      "-g",
+      "reverse · a disclosure reopened while it closes",
+      "--repeat-each=10"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/test-results",
+        "repeatEach": 10,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-7/logs/g-tip-webkit-phone.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5353",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/",
+      "url": "http://localhost:5353",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "reverse · a disclosure reopened while it closes finishes its reopen",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10351,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T16:03:59.642Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "reopen",
+                      "contentType": "application/json",
+                      "body": "W3sibmFtZSI6IkNvbGxhcHNpYmxlIiwiaG9sZSI6MTMsImVuZCI6MSwic3RhdGUiOiJvcGVuIiwiZnJhbWVzIjpbWzAsMV0sWzEzLDFdLFsyMSwxXSxbMzMsMV0sWzM0LDFdLFszNywxXSxbNDIsMV0sWzU0LDAuOTUzXSxbNjMsMC44NzhdLFs3MSwwLjc5OF0sWzgzLDAuNjczXSxbOTIsMC41ODJdLFsxMDQsMC40NzJdLFsxMTIsMC40MDZdLFsxMTMsMC4zOTldLFsxMTYsMC4zNzZdLFsxMjQsMF0sWzEzNCwwLjAzNV0sWzE0NCwwLjExM10sWzE1NSwwLjIyMl0sWzE2NSwwLjMyN10sWzE3NSwwLjQyN10sWzE4NywwLjUzN10sWzE5NSwwLjYwMV0sWzIwNiwwLjY3OV0sWzIxNiwwLjczOF0sWzIyOCwwLjc5Nl0sWzIzNywwLjgzMl0sWzI0NiwwLjg2Ml0sWzI1OCwwLjg5NV0sWzI2NywwLjkxNF0sWzI3OCwwLjkzNF0sWzI4NywwLjk0Nl0sWzI5NiwwLjk1Nl0sWzMwOCwwLjk2N10sWzMxOCwwLjk3NF0sWzMyOCwxXSxbMzM4LDFdLFszNDksMV0sWzM1OSwxXSxbMzY5LDFdLFszODAsMV0sWzM4OCwxXSxbNDAwLDFdLFs0MTAsMV0sWzQxOCwxXSxbNDMwLDFdLFs0MzksMV0sWzQ1MCwxXSxbNDYyLDFdLFs0NzEsMV0sWzQ4MCwxXSxbNDkyLDFdLFs1MDEsMV0sWzUxMywxXSxbNTIyLDFdLFs1MzMsMV0sWzU0MywxXSxbNTUyLDFdLFs1NjMsMV0sWzU3NSwxXSxbNTg0LDFdLFs1OTMsMV0sWzYwNCwxXSxbNjEyLDFdLFs2MjQsMV0sWzYzMywxXSxbNjQ1LDFdLFs2NTUsMV0sWzY2NSwxXSxbNjc1LDFdLFs2ODYsMV0sWzY5NiwxXSxbNzA2LDFdLFs3MTYsMV0sWzcyNiwxXSxbNzM3LDFdLFs3NDcsMV0sWzc1NywxXSxbNzY3LDFdLFs3NzcsMV0sWzc4NiwxXSxbNzk4LDFdLFs4MDYsMV0sWzgxNywxXSxbODI5LDFdLFs4MzksMV0sWzg0OSwxXSxbODYwLDFdLFs4NjksMV0sWzg4MCwxXSxbODkwLDFdLFs5MDAsMV0sWzkxMCwxXSxbOTIxLDFdLFs5MzEsMV0sWzk0MSwxXSxbOTUxLDFdLFs5NTksMV0sWzk3MSwxXSxbOTgxLDFdLFs5OTIsMV0sWzEwMDMsMV0sWzEwMTEsMV0sWzEwMjMsMV0sWzEwMzEsMV0sWzEwNDMsMV0sWzEwNTMsMV0sWzEwNjMsMV0sWzEwNzMsMV0sWzEwODUsMV0sWzEwOTQsMV0sWzExMDIsMV0sWzExMTQsMV0sWzExMjUsMV0sWzExMzUsMV0sWzExNDMsMV0sWzExNTUsMV0sWzExNjUsMV0sWzExNzUsMV0sWzExODcsMV0sWzExOTYsMV0sWzEyMDUsMV0sWzEyMTYsMV0sWzEyMjUsMV0sWzEyMzUsMV0sWzEyNDYsMV0sWzEyNTcsMV0sWzEyNjcsMV0sWzEyNzgsMV0sWzEyODcsMV0sWzEyOTksMV0sWzEzMDgsMV0sWzEzMTgsMV0sWzEzMjksMV0sWzEzMzcsMV0sWzEzNDksMV0sWzEzNTksMV0sWzEzNjksMV0sWzEzODAsMV0sWzEzOTAsMV0sWzEzOTgsMV0sWzE0MDksMV0sWzE0MTksMV0sWzE0MzEsMV0sWzE0NDAsMV0sWzE0NTEsMV0sWzE0NjAsMV0sWzE0NzAsMV0sWzE0ODIsMV0sWzE0OTIsMV0sWzE1MDIsMV0sWzE1MTIsMV0sWzE1MjEsMV1dfSx7Im5hbWUiOiJBY2NvcmRpb24iLCJob2xlIjoxMywiZW5kIjoxLCJzdGF0ZSI6Im9wZW4iLCJmcmFtZXMiOltbMCwxXSxbOSwxXSxbMTksMV0sWzI5LDFdLFszMywxXSxbMzgsMV0sWzUwLDAuOTUzXSxbNjAsMC44NjhdLFs2OSwwLjc3OF0sWzgxLDAuNjUzXSxbOTEsMC41NTNdLFs5OSwwLjQ4XSxbMTExLDAuMzg0XSxbMTEyLDAuMzc2XSxbMTE2LDAuMzQ4XSxbMTIxLDBdLFsxMzMsMC4wNDddLFsxNDMsMC4xMzJdLFsxNTIsMC4yMjJdLFsxNjMsMC4zMzddLFsxNzEsMC40MThdLFsxODMsMC41MjhdLFsxOTMsMC42MDldLFsyMDMsMC42NzldLFsyMTUsMC43NDhdLFsyMjQsMC43OTJdLFsyMzQsMC44MzJdLFsyNDQsMC44NjVdLFsyNTMsMC44OV0sWzI2NCwwLjkxNF0sWzI3NCwwLjkzMl0sWzI4MywwLjk0NV0sWzI5NCwwLjk1N10sWzMwMywwLjk2Nl0sWzMxMywwLjk3M10sWzMyNiwxXSxbMzM0LDFdLFszNDcsMV0sWzM1NiwxXSxbMzY2LDFdLFszNzUsMV0sWzM4NSwxXSxbMzk2LDFdLFs0MDcsMV0sWzQxNiwxXSxbNDI2LDFdLFs0MzYsMV0sWzQ0NiwxXSxbNDU5LDFdLFs0NjgsMV0sWzQ4MCwxXSxbNDg5LDFdLFs0OTgsMV0sWzUwOSwxXSxbNTE4LDFdLFs1MzAsMV0sWzU0MCwxXSxbNTQ4LDFdLFs1NjAsMV0sWzU2OSwxXSxbNTc5LDFdLFs1ODksMV0sWzYwMCwxXSxbNjExLDFdLFs2MjIsMV0sWzYzMSwxXSxbNjQxLDFdLFs2NTIsMV0sWzY2MSwxXSxbNjcxLDFdLFs2ODIsMV0sWzY5NCwxXSxbNzAyLDFdLFs3MTIsMV0sWzcyNCwxXSxbNzM0LDFdLFs3NDQsMV0sWzc1MywxXSxbNzYzLDFdLFs3NzUsMV0sWzc4NCwxXSxbNzk1LDFdLFs4MDUsMV0sWzgxNywxXSxbODI0LDFdLFs4MzYsMV0sWzg0NCwxXSxbODU2LDFdLFs4NjYsMV0sWzg3NSwxXSxbODg3LDFdLFs4OTYsMV0sWzkwNiwxXSxbOTE4LDFdLFs5MjYsMV0sWzkzNiwxXSxbOTQ4LDFdLFs5NTcsMV0sWzk2OSwxXSxbOTc3LDFdLFs5ODksMV0sWzk5OCwxXSxbMTAwOSwxXSxbMTAxOCwxXSxbMTAzMCwxXSxbMTA0MiwxXSxbMTA1MCwxXSxbMTA1OSwxXSxbMTA3MSwxXSxbMTA3OSwxXSxbMTA5MCwxXSxbMTEwMSwxXSxbMTExMSwxXSxbMTEyMiwxXSxbMTEzMiwxXSxbMTE0MCwxXSxbMTE1MiwxXSxbMTE2MiwxXSxbMTE3MSwxXSxbMTE4MiwxXSxbMTE5MSwxXSxbMTIwMiwxXSxbMTIxNCwxXSxbMTIyMywxXSxbMTIzMiwxXSxbMTI0NCwxXSxbMTI1NSwxXSxbMTI2NSwxXSxbMTI3MywxXSxbMTI4MywxXSxbMTI5NCwxXSxbMTMwNiwxXSxbMTMxNiwxXSxbMTMyNCwxXSxbMTMzNiwxXSxbMTM0NiwxXSxbMTM1NiwxXSxbMTM2NywxXSxbMTM3NiwxXSxbMTM4OCwxXSxbMTM5NywxXSxbMTQwNywxXSxbMTQxOSwxXSxbMTQyNywxXSxbMTQzOSwxXSxbMTQ0NywxXSxbMTQ1NywxXSxbMTQ2OSwxXSxbMTQ3NywxXSxbMTQ4OSwxXSxbMTQ5OSwxXSxbMTUwOCwxXSxbMTUxOCwxXV19XQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 10309,
+                  "error": {
+                    "message": "Error: Accordion: the film is read, with no hole of more than two frames before it rests {\"name\":\"Accordion\",\"hole\":52,\"end\":1,\"state\":\"open\",\"frames\":[[0,1],[10,1],[20,1],[21,1],[24,1],[30,1],[42,0.953],[94,0.455],[137,0.191],[138,0.187],[142,0.171],[185,0],[186,0.001],[231,0.378],[274,0.721],[320,0.897],[367,0.966],[411,1],[455,1],[530,1],[531,1],[536,1],[542,1],[551,1],[562,1],[574,1],[581,1],[593,1],[602,1],[613,1],[622,1],[632,1],[642,1],[652,1],[664,1],[673,1],[685,1],[695,1],[704,1],[716,1],[726,1],[734,1],[744,1],[757,1],[765,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m52\u001b[39m",
+                    "stack": "Error: Accordion: the film is read, with no hole of more than two frames before it rests {\"name\":\"Accordion\",\"hole\":52,\"end\":1,\"state\":\"open\",\"frames\":[[0,1],[10,1],[20,1],[21,1],[24,1],[30,1],[42,0.953],[94,0.455],[137,0.191],[138,0.187],[142,0.171],[185,0],[186,0.001],[231,0.378],[274,0.721],[320,0.897],[367,0.966],[411,1],[455,1],[530,1],[531,1],[536,1],[542,1],[551,1],[562,1],[574,1],[581,1],[593,1],[602,1],[613,1],[622,1],[632,1],[642,1],[652,1],[664,1],[673,1],[685,1],[695,1],[704,1],[716,1],[726,1],[734,1],[744,1],[757,1],[765,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m52\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.spec.ts:893:115",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 115,
+                      "line": 893
+                    },
+                    "snippet": "  891 |     for (const r of reads) {\n  892 |         const at = JSON.stringify({ ...r, frames: r.frames.slice(0, 45) });\n> 893 |         expect(r.hole, `${r.name}: the film is read, with no hole of more than two frames before it rests ${at}`).toBeLessThanOrEqual(HOLE);\n      |                                                                                                                   ^\n  894 |         expect(r.end, `${r.name}: it ends open ${at}`).toBeGreaterThan(0.95);\n  895 |         expect(r.state, `${r.name}: it is open ${at}`).toBe(\"open\");\n  896 |     }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 115,
+                        "line": 893
+                      },
+                      "message": "Error: Accordion: the film is read, with no hole of more than two frames before it rests {\"name\":\"Accordion\",\"hole\":52,\"end\":1,\"state\":\"open\",\"frames\":[[0,1],[10,1],[20,1],[21,1],[24,1],[30,1],[42,0.953],[94,0.455],[137,0.191],[138,0.187],[142,0.171],[185,0],[186,0.001],[231,0.378],[274,0.721],[320,0.897],[367,0.966],[411,1],[455,1],[530,1],[531,1],[536,1],[542,1],[551,1],[562,1],[574,1],[581,1],[593,1],[602,1],[613,1],[622,1],[632,1],[642,1],[652,1],[664,1],[673,1],[685,1],[695,1],[704,1],[716,1],[726,1],[734,1],[744,1],[757,1],[765,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m52\u001b[39m\n\n  891 |     for (const r of reads) {\n  892 |         const at = JSON.stringify({ ...r, frames: r.frames.slice(0, 45) });\n> 893 |         expect(r.hole, `${r.name}: the film is read, with no hole of more than two frames before it rests ${at}`).toBeLessThanOrEqual(HOLE);\n      |                                                                                                                   ^\n  894 |         expect(r.end, `${r.name}: it ends open ${at}`).toBeGreaterThan(0.95);\n  895 |         expect(r.state, `${r.name}: it is open ${at}`).toBe(\"open\");\n  896 |     }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.spec.ts:893:115"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T16:04:10.497Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "reopen",
+                      "contentType": "application/json",
+                      "body": "W3sibmFtZSI6IkNvbGxhcHNpYmxlIiwiaG9sZSI6MjAsImVuZCI6MSwic3RhdGUiOiJvcGVuIiwiZnJhbWVzIjpbWzAsMV0sWzEwLDFdLFsxOSwxXSxbMjMsMV0sWzI5LDFdLFszOSwwLjk2NV0sWzQ5LDAuODg3XSxbNjksMC42ODRdLFs3NywwLjYwMl0sWzg2LDAuNTE2XSxbOTQsMC40NDZdLFs5NiwwLjQzXSxbMTAwLDAuMzk5XSxbMTA0LDBdLFsxMTIsMC4wMjNdLFsxMjIsMC4wOTVdLFsxMzMsMC4yMDFdLFsxNDIsMC4yOTZdLFsxNTEsMC4zODhdLFsxNjIsMC40OTNdLFsxNzMsMC41ODZdLFsxODIsMC42NTJdLFsxOTIsMC43MTVdLFsyMDQsMC43NzhdLFsyMTQsMC44MjFdLFsyMjUsMC44NTldLFsyMzUsMC44ODddLFsyNDUsMC45MV0sWzI1NCwwLjkyN10sWzI2NSwwLjk0NF0sWzI3NCwwLjk1NF0sWzI4NCwwLjk2NF0sWzI5NCwwLjk3Ml0sWzMwNSwxXSxbMzE1LDFdLFszMjUsMV0sWzMzNiwxXSxbMzQ3LDFdLFszNTYsMV0sWzM2OCwxXSxbMzc2LDFdLFszODYsMV0sWzM5NywxXSxbNDA4LDFdLFs0MTksMV0sWzQyNywxXSxbNDM4LDFdLFs0NDgsMV0sWzQ1OSwxXSxbNDY4LDFdLFs0ODAsMV0sWzQ4OSwxXSxbNTAxLDFdLFs1MTAsMV0sWzUyMCwxXSxbNTI5LDFdLFs1MzksMV0sWzU1MSwxXSxbNTYwLDFdLFs1NjksMV0sWzU4MiwxXSxbNTkwLDFdLFs2MDIsMV0sWzYxMCwxXSxbNjIxLDFdLFs2MzIsMV0sWzY0MiwxXSxbNjUzLDFdLFs2NjUsMV0sWzY3MiwxXSxbNjg0LDFdLFs2OTIsMV0sWzcwNCwxXSxbNzE0LDFdLFs3MjQsMV0sWzczMywxXSxbNzQ1LDFdLFs3NTQsMV0sWzc2NSwxXSxbNzc1LDFdLFs3ODYsMV0sWzc5NCwxXSxbODA2LDFdLFs4MTUsMV0sWzgyNSwxXSxbODM3LDFdLFs4NDcsMV0sWzg1NywxXSxbODY3LDFdLFs4NzgsMV0sWzg4NiwxXSxbODk4LDFdLFs5MDcsMV0sWzkxNywxXSxbOTI5LDFdLFs5MzksMV0sWzk0OCwxXSxbOTYwLDFdLFs5NjksMV0sWzk4MSwxXSxbOTg5LDFdLFs5OTgsMV0sWzEwMDgsMV0sWzEwMjAsMV0sWzEwMjksMV0sWzEwNDAsMV0sWzEwNTEsMV0sWzEwNjAsMV0sWzEwNzEsMV0sWzEwODAsMV0sWzEwOTEsMV0sWzExMDAsMV0sWzExMTEsMV0sWzExMjEsMV0sWzExMzMsMV0sWzExNDEsMV0sWzExNTMsMV0sWzExNjMsMV0sWzExNzIsMV0sWzExODIsMV0sWzExOTQsMV0sWzEyMDMsMV0sWzEyMTQsMV0sWzEyMjUsMV0sWzEyMzQsMV0sWzEyNDMsMV0sWzEyNTMsMV0sWzEyNjUsMV0sWzEyNzQsMV0sWzEyODQsMV0sWzEyOTUsMV0sWzEzMDYsMV0sWzEzMTYsMV0sWzEzMjgsMV0sWzEzMzUsMV0sWzEzNDcsMV0sWzEzNTcsMV0sWzEzNjcsMV0sWzEzNzcsMV0sWzEzODksMV0sWzEzOTgsMV0sWzE0MDcsMV0sWzE0MTcsMV0sWzE0MjcsMV0sWzE0MzksMV0sWzE0NDgsMV0sWzE0NjAsMV0sWzE0NjksMV0sWzE0ODAsMV0sWzE0ODksMV0sWzE0OTksMV1dfSx7Im5hbWUiOiJBY2NvcmRpb24iLCJob2xlIjo1MiwiZW5kIjoxLCJzdGF0ZSI6Im9wZW4iLCJmcmFtZXMiOltbMCwxXSxbMTAsMV0sWzIwLDFdLFsyMSwxXSxbMjQsMV0sWzMwLDFdLFs0MiwwLjk1M10sWzk0LDAuNDU1XSxbMTM3LDAuMTkxXSxbMTM4LDAuMTg3XSxbMTQyLDAuMTcxXSxbMTg1LDBdLFsxODYsMC4wMDFdLFsyMzEsMC4zNzhdLFsyNzQsMC43MjFdLFszMjAsMC44OTddLFszNjcsMC45NjZdLFs0MTEsMV0sWzQ1NSwxXSxbNTMwLDFdLFs1MzEsMV0sWzUzNiwxXSxbNTQyLDFdLFs1NTEsMV0sWzU2MiwxXSxbNTc0LDFdLFs1ODEsMV0sWzU5MywxXSxbNjAyLDFdLFs2MTMsMV0sWzYyMiwxXSxbNjMyLDFdLFs2NDIsMV0sWzY1MiwxXSxbNjY0LDFdLFs2NzMsMV0sWzY4NSwxXSxbNjk1LDFdLFs3MDQsMV0sWzcxNiwxXSxbNzI2LDFdLFs3MzQsMV0sWzc0NCwxXSxbNzU3LDFdLFs3NjUsMV0sWzc3NywxXSxbNzg1LDFdLFs3OTYsMV0sWzgwOCwxXSxbODE2LDFdLFs4MjgsMV0sWzgzNiwxXSxbODQ4LDFdLFs4NTcsMV0sWzg2OCwxXSxbODc3LDFdLFs4ODcsMV0sWzg5OSwxXSxbOTA5LDFdLFs5MjAsMV0sWzkyOSwxXSxbOTQxLDFdLFs5NDksMV0sWzk2MCwxXSxbOTcxLDFdLFs5ODEsMV0sWzk5MCwxXSxbOTk5LDFdLFsxMDEyLDFdLFsxMDIwLDFdLFsxMDMwLDFdLFsxMDQyLDFdLFsxMDU0LDFdLFsxMDYyLDFdLFsxMDcxLDFdLFsxMDgzLDFdLFsxMDkxLDFdLFsxMTAzLDFdLFsxMTEzLDFdLFsxMTIzLDFdLFsxMTMzLDFdLFsxMTQzLDFdLFsxMTUzLDFdLFsxMTY1LDFdLFsxMTc1LDFdLFsxMTgzLDFdLFsxMTk1LDFdLFsxMjA3LDFdLFsxMjE1LDFdLFsxMjI0LDFdLFsxMjM1LDFdLFsxMjQ2LDFdLFsxMjU2LDFdLFsxMjY1LDFdLFsxMjc3LDFdLFsxMjg2LDFdLFsxMjk2LDFdLFsxMzA4LDFdLFsxMzE2LDFdLFsxMzI2LDFdLFsxMzM3LDFdLFsxMzQ3LDFdLFsxMzU4LDFdLFsxMzY3LDFdLFsxMzc5LDFdLFsxMzg3LDFdLFsxMzk5LDFdLFsxNDA4LDFdLFsxNDE4LDFdLFsxNDI5LDFdLFsxNDM5LDFdLFsxNDUxLDFdLFsxNDYwLDFdLFsxNDY5LDFdLFsxNDc5LDFdLFsxNDkxLDFdLFsxNTAxLDFdLFsxNTEyLDFdLFsxNTIxLDFdLFsxNTMzLDFdLFsxNTQyLDFdXX1d"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/test-results/release-11-1-1-reverse-·-a-afe55--closes-finishes-its-reopen-webkit-phone-repeat1/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 115,
+                    "line": 893
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 10364,
+                  "error": {
+                    "message": "Error: Accordion: the film is read, with no hole of more than two frames before it rests {\"name\":\"Accordion\",\"hole\":38,\"end\":1,\"state\":\"open\",\"frames\":[[0,1],[12,1],[21,1],[22,1],[24,1],[31,1],[40,0.971],[76,0.632],[114,0.315],[150,0.147],[151,0.144],[154,0.135],[162,0],[176,0.062],[201,0.306],[226,0.545],[259,0.764],[293,0.887],[326,0.947],[361,0.994],[396,1],[431,1],[489,1],[490,1],[496,1],[499,1],[511,1],[520,1],[532,1],[540,1],[553,1],[562,1],[572,1],[581,1],[592,1],[601,1],[613,1],[624,1],[632,1],[642,1],[654,1],[662,1],[674,1],[683,1],[693,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m38\u001b[39m",
+                    "stack": "Error: Accordion: the film is read, with no hole of more than two frames before it rests {\"name\":\"Accordion\",\"hole\":38,\"end\":1,\"state\":\"open\",\"frames\":[[0,1],[12,1],[21,1],[22,1],[24,1],[31,1],[40,0.971],[76,0.632],[114,0.315],[150,0.147],[151,0.144],[154,0.135],[162,0],[176,0.062],[201,0.306],[226,0.545],[259,0.764],[293,0.887],[326,0.947],[361,0.994],[396,1],[431,1],[489,1],[490,1],[496,1],[499,1],[511,1],[520,1],[532,1],[540,1],[553,1],[562,1],[572,1],[581,1],[592,1],[601,1],[613,1],[624,1],[632,1],[642,1],[654,1],[662,1],[674,1],[683,1],[693,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m38\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.spec.ts:893:115",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 115,
+                      "line": 893
+                    },
+                    "snippet": "  891 |     for (const r of reads) {\n  892 |         const at = JSON.stringify({ ...r, frames: r.frames.slice(0, 45) });\n> 893 |         expect(r.hole, `${r.name}: the film is read, with no hole of more than two frames before it rests ${at}`).toBeLessThanOrEqual(HOLE);\n      |                                                                                                                   ^\n  894 |         expect(r.end, `${r.name}: it ends open ${at}`).toBeGreaterThan(0.95);\n  895 |         expect(r.state, `${r.name}: it is open ${at}`).toBe(\"open\");\n  896 |     }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 115,
+                        "line": 893
+                      },
+                      "message": "Error: Accordion: the film is read, with no hole of more than two frames before it rests {\"name\":\"Accordion\",\"hole\":38,\"end\":1,\"state\":\"open\",\"frames\":[[0,1],[12,1],[21,1],[22,1],[24,1],[31,1],[40,0.971],[76,0.632],[114,0.315],[150,0.147],[151,0.144],[154,0.135],[162,0],[176,0.062],[201,0.306],[226,0.545],[259,0.764],[293,0.887],[326,0.947],[361,0.994],[396,1],[431,1],[489,1],[490,1],[496,1],[499,1],[511,1],[520,1],[532,1],[540,1],[553,1],[562,1],[572,1],[581,1],[592,1],[601,1],[613,1],[624,1],[632,1],[642,1],[654,1],[662,1],[674,1],[683,1],[693,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m38\u001b[39m\n\n  891 |     for (const r of reads) {\n  892 |         const at = JSON.stringify({ ...r, frames: r.frames.slice(0, 45) });\n> 893 |         expect(r.hole, `${r.name}: the film is read, with no hole of more than two frames before it rests ${at}`).toBeLessThanOrEqual(HOLE);\n      |                                                                                                                   ^\n  894 |         expect(r.end, `${r.name}: it ends open ${at}`).toBeGreaterThan(0.95);\n  895 |         expect(r.state, `${r.name}: it is open ${at}`).toBe(\"open\");\n  896 |     }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.spec.ts:893:115"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T16:04:21.325Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "reopen",
+                      "contentType": "application/json",
+                      "body": "W3sibmFtZSI6IkNvbGxhcHNpYmxlIiwiaG9sZSI6MjAsImVuZCI6MSwic3RhdGUiOiJvcGVuIiwiZnJhbWVzIjpbWzAsMV0sWzksMV0sWzIxLDFdLFsyOSwxXSxbMzMsMV0sWzQxLDFdLFs1MCwwLjk3MV0sWzU5LDAuOTA1XSxbNzksMC43MDRdLFs4NywwLjYyMl0sWzk2LDAuNTM1XSxbMTA0LDAuNDYzXSxbMTEyLDAuMzk5XSxbMTE0LDAuMzg0XSxbMTE4LDAuMzU1XSxbMTIzLDBdLFsxMzEsMC4wMjNdLFsxNDEsMC4wOTVdLFsxNTMsMC4yMTJdLFsxNjMsMC4zMTZdLFsxNzIsMC40MDhdLFsxODMsMC41MTFdLFsxOTQsMC42MDFdLFsyMDMsMC42NjVdLFsyMTQsMC43MzJdLFsyMjUsMC43ODddLFsyMzMsMC44MjFdLFsyNDMsMC44NTZdLFsyNTUsMC44OV0sWzI2NiwwLjkxNF0sWzI3NSwwLjkzXSxbMjg0LDAuOTQ0XSxbMjk2LDAuOTU3XSxbMzA0LDAuOTY1XSxbMzE2LDAuOTc0XSxbMzI1LDFdLFszMzUsMV0sWzM0NSwxXSxbMzU3LDFdLFszNjksMV0sWzM3NiwxXSxbMzg4LDFdLFszOTgsMV0sWzQwOCwxXSxbNDE5LDFdLFs0MjksMV0sWzQzOSwxXSxbNDQ3LDFdLFs0NTksMV0sWzQ2OSwxXSxbNDc5LDFdLFs0ODgsMV0sWzUwMCwxXSxbNTA4LDFdLFs1MjEsMV0sWzUzMSwxXSxbNTM5LDFdLFs1NDksMV0sWzU2MCwxXSxbNTcxLDFdLFs1ODMsMV0sWzU5MiwxXSxbNjAyLDFdLFs2MTEsMV0sWzYyMywxXSxbNjMzLDFdLFs2NDEsMV0sWzY1MSwxXSxbNjY0LDFdLFs2NzIsMV0sWzY4NCwxXSxbNjkyLDFdLFs3MDQsMV0sWzcxMywxXSxbNzIzLDFdLFs3MzUsMV0sWzc0NSwxXSxbNzU0LDFdLFs3NjYsMV0sWzc3NiwxXSxbNzg1LDFdLFs3OTYsMV0sWzgwNiwxXSxbODE3LDFdLFs4MjUsMV0sWzgzNywxXSxbODQ3LDFdLFs4NTYsMV0sWzg2OCwxXSxbODc2LDFdLFs4ODgsMV0sWzg5NiwxXSxbOTA4LDFdLFs5MTcsMV0sWzkyNywxXSxbOTM5LDFdLFs5NDksMV0sWzk1OCwxXSxbOTcwLDFdLFs5NzgsMV0sWzk5MCwxXSxbOTk5LDFdLFsxMDExLDFdLFsxMDE5LDFdLFsxMDMxLDFdLFsxMDQxLDFdLFsxMDUxLDFdLFsxMDYxLDFdLFsxMDcxLDFdLFsxMDgyLDFdLFsxMDkyLDFdLFsxMTAxLDFdLFsxMTEyLDFdLFsxMTIyLDFdLFsxMTMyLDFdLFsxMTQyLDFdLFsxMTU0LDFdLFsxMTYzLDFdLFsxMTc1LDFdLFsxMTgzLDFdLFsxMTkzLDFdLFsxMjA0LDFdLFsxMjEzLDFdLFsxMjI1LDFdLFsxMjMzLDFdLFsxMjQ1LDFdLFsxMjU0LDFdLFsxMjY0LDFdLFsxMjc0LDFdLFsxMjg0LDFdLFsxMjk2LDFdLFsxMzA4LDFdLFsxMzE3LDFdLFsxMzI1LDFdLFsxMzM1LDFdLFsxMzQ3LDFdLFsxMzU5LDFdLFsxMzY3LDFdLFsxMzc5LDFdLFsxMzg4LDFdLFsxMzk3LDFdLFsxNDA5LDFdLFsxNDE3LDFdLFsxNDI3LDFdLFsxNDM5LDFdLFsxNDQ4LDFdLFsxNDYwLDFdLFsxNDY5LDFdLFsxNDgyLDFdLFsxNDg5LDFdLFsxNDk5LDFdLFsxNTA5LDFdLFsxNTIxLDFdXX0seyJuYW1lIjoiQWNjb3JkaW9uIiwiaG9sZSI6MzgsImVuZCI6MSwic3RhdGUiOiJvcGVuIiwiZnJhbWVzIjpbWzAsMV0sWzEyLDFdLFsyMSwxXSxbMjIsMV0sWzI0LDFdLFszMSwxXSxbNDAsMC45NzFdLFs3NiwwLjYzMl0sWzExNCwwLjMxNV0sWzE1MCwwLjE0N10sWzE1MSwwLjE0NF0sWzE1NCwwLjEzNV0sWzE2MiwwXSxbMTc2LDAuMDYyXSxbMjAxLDAuMzA2XSxbMjI2LDAuNTQ1XSxbMjU5LDAuNzY0XSxbMjkzLDAuODg3XSxbMzI2LDAuOTQ3XSxbMzYxLDAuOTk0XSxbMzk2LDFdLFs0MzEsMV0sWzQ4OSwxXSxbNDkwLDFdLFs0OTYsMV0sWzQ5OSwxXSxbNTExLDFdLFs1MjAsMV0sWzUzMiwxXSxbNTQwLDFdLFs1NTMsMV0sWzU2MiwxXSxbNTcyLDFdLFs1ODEsMV0sWzU5MiwxXSxbNjAxLDFdLFs2MTMsMV0sWzYyNCwxXSxbNjMyLDFdLFs2NDIsMV0sWzY1NCwxXSxbNjYyLDFdLFs2NzQsMV0sWzY4MywxXSxbNjkzLDFdLFs3MDMsMV0sWzcxNSwxXSxbNzI1LDFdLFs3MzYsMV0sWzc0NSwxXSxbNzU0LDFdLFs3NjUsMV0sWzc3NywxXSxbNzg2LDFdLFs3OTgsMV0sWzgwNywxXSxbODE1LDFdLFs4MjgsMV0sWzgzNywxXSxbODQ3LDFdLFs4NjAsMV0sWzg2NiwxXSxbODc4LDFdLFs4ODcsMV0sWzg5NywxXSxbOTA3LDFdLFs5MTksMV0sWzkyOCwxXSxbOTQwLDFdLFs5NTAsMV0sWzk2MCwxXSxbOTcxLDFdLFs5ODAsMV0sWzk4OSwxXSxbMTAwMSwxXSxbMTAwOSwxXSxbMTAxOSwxXSxbMTAzMSwxXSxbMTA0MywxXSxbMTA1MSwxXSxbMTA2MSwxXSxbMTA3NCwxXSxbMTA4MiwxXSxbMTA5MiwxXSxbMTEwMiwxXSxbMTExMywxXSxbMTEyMywxXSxbMTEzMywxXSxbMTE0MywxXSxbMTE1NCwxXSxbMTE2MiwxXSxbMTE3NCwxXSxbMTE4NSwxXSxbMTE5NCwxXSxbMTI3MCwxXSxbMTI3NiwxXSxbMTI4NiwxXSxbMTI5NywxXSxbMTMwNywxXSxbMTMxNywxXSxbMTMyNywxXSxbMTMzOSwxXSxbMTM0OCwxXSxbMTM1OCwxXSxbMTM2OSwxXSxbMTM3OSwxXSxbMTM5MCwxXSxbMTM5OSwxXSxbMTQwOCwxXSxbMTQxNywxXSxbMTQyOSwxXSxbMTQzOCwxXSxbMTQ0OSwxXSxbMTQ2MiwxXSxbMTQ3MiwxXSxbMTQ4MCwxXSxbMTQ5MSwxXSxbMTUwMSwxXSxbMTUxMSwxXSxbMTUyMCwxXSxbMTUzMiwxXSxbMTU0MSwxXSxbMTU1MywxXSxbMTU2MCwxXV19XQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/test-results/release-11-1-1-reverse-·-a-afe55--closes-finishes-its-reopen-webkit-phone-repeat2/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 115,
+                    "line": 893
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 10296,
+                  "error": {
+                    "message": "Error: Accordion: the film is read, with no hole of more than two frames before it rests {\"name\":\"Accordion\",\"hole\":45,\"end\":1,\"state\":\"open\",\"frames\":[[0,1],[10,1],[22,1],[25,1],[31,1],[43,0.953],[74,0.653],[114,0.315],[153,0.138],[154,0.135],[158,0.123],[163,0],[184,0.122],[215,0.437],[245,0.679],[288,0.871],[331,0.952],[376,1],[421,1],[495,1],[502,1],[511,1],[522,1],[531,1],[541,1],[551,1],[563,1],[573,1],[583,1],[593,1],[605,1],[614,1],[623,1],[634,1],[643,1],[653,1],[665,1],[674,1],[685,1],[696,1],[706,1],[714,1],[726,1],[738,1],[745,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m45\u001b[39m",
+                    "stack": "Error: Accordion: the film is read, with no hole of more than two frames before it rests {\"name\":\"Accordion\",\"hole\":45,\"end\":1,\"state\":\"open\",\"frames\":[[0,1],[10,1],[22,1],[25,1],[31,1],[43,0.953],[74,0.653],[114,0.315],[153,0.138],[154,0.135],[158,0.123],[163,0],[184,0.122],[215,0.437],[245,0.679],[288,0.871],[331,0.952],[376,1],[421,1],[495,1],[502,1],[511,1],[522,1],[531,1],[541,1],[551,1],[563,1],[573,1],[583,1],[593,1],[605,1],[614,1],[623,1],[634,1],[643,1],[653,1],[665,1],[674,1],[685,1],[696,1],[706,1],[714,1],[726,1],[738,1],[745,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m45\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.spec.ts:893:115",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 115,
+                      "line": 893
+                    },
+                    "snippet": "  891 |     for (const r of reads) {\n  892 |         const at = JSON.stringify({ ...r, frames: r.frames.slice(0, 45) });\n> 893 |         expect(r.hole, `${r.name}: the film is read, with no hole of more than two frames before it rests ${at}`).toBeLessThanOrEqual(HOLE);\n      |                                                                                                                   ^\n  894 |         expect(r.end, `${r.name}: it ends open ${at}`).toBeGreaterThan(0.95);\n  895 |         expect(r.state, `${r.name}: it is open ${at}`).toBe(\"open\");\n  896 |     }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 115,
+                        "line": 893
+                      },
+                      "message": "Error: Accordion: the film is read, with no hole of more than two frames before it rests {\"name\":\"Accordion\",\"hole\":45,\"end\":1,\"state\":\"open\",\"frames\":[[0,1],[10,1],[22,1],[25,1],[31,1],[43,0.953],[74,0.653],[114,0.315],[153,0.138],[154,0.135],[158,0.123],[163,0],[184,0.122],[215,0.437],[245,0.679],[288,0.871],[331,0.952],[376,1],[421,1],[495,1],[502,1],[511,1],[522,1],[531,1],[541,1],[551,1],[563,1],[573,1],[583,1],[593,1],[605,1],[614,1],[623,1],[634,1],[643,1],[653,1],[665,1],[674,1],[685,1],[696,1],[706,1],[714,1],[726,1],[738,1],[745,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m45\u001b[39m\n\n  891 |     for (const r of reads) {\n  892 |         const at = JSON.stringify({ ...r, frames: r.frames.slice(0, 45) });\n> 893 |         expect(r.hole, `${r.name}: the film is read, with no hole of more than two frames before it rests ${at}`).toBeLessThanOrEqual(HOLE);\n      |                                                                                                                   ^\n  894 |         expect(r.end, `${r.name}: it ends open ${at}`).toBeGreaterThan(0.95);\n  895 |         expect(r.state, `${r.name}: it is open ${at}`).toBe(\"open\");\n  896 |     }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.spec.ts:893:115"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T16:04:32.273Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "reopen",
+                      "contentType": "application/json",
+                      "body": "W3sibmFtZSI6IkNvbGxhcHNpYmxlIiwiaG9sZSI6MTMsImVuZCI6MSwic3RhdGUiOiJvcGVuIiwiZnJhbWVzIjpbWzAsMV0sWzExLDFdLFsyMSwxXSxbMjIsMV0sWzI1LDFdLFszMSwxXSxbNDAsMC45NzFdLFs1MSwwLjg4N10sWzYyLDAuNzc4XSxbNzIsMC42NzNdLFs4MSwwLjU4Ml0sWzkzLDAuNDcyXSxbMTAxLDAuNDA2XSxbMTAzLDAuMzkxXSxbMTA3LDAuMzYyXSxbMTEyLDBdLFsxMjUsMC4wNTRdLFsxMzEsMC4xMDRdLFsxNDMsMC4yMjJdLFsxNTIsMC4zMTZdLFsxNjQsMC40MzddLFsxNzMsMC41Ml0sWzE4MiwwLjU5NF0sWzE5NCwwLjY3OV0sWzIwNSwwLjc0M10sWzIxNywwLjhdLFsyMjUsMC44MzJdLFsyMzUsMC44NjVdLFsyNDQsMC44OV0sWzI1NiwwLjkxNl0sWzI2NCwwLjkzXSxbMjc0LDAuOTQ1XSxbMjg1LDAuOTU3XSxbMjk3LDAuOTY4XSxbMzA3LDAuOTc1XSxbMzE4LDFdLFszMjcsMV0sWzMzNiwxXSxbMzQ3LDFdLFszNTgsMV0sWzM2NiwxXSxbMzc2LDFdLFszODgsMV0sWzM5NywxXSxbNDA3LDFdLFs0MTgsMV0sWzQzMCwxXSxbNDM5LDFdLFs0NDgsMV0sWzQ1OCwxXSxbNDcwLDFdLFs0NzgsMV0sWzQ5MCwxXSxbNTAwLDFdLFs1MTIsMV0sWzUyMSwxXSxbNTMwLDFdLFs1NDAsMV0sWzU1MSwxXSxbNTYyLDFdLFs1NzQsMV0sWzU4MSwxXSxbNTkxLDFdLFs2MDMsMV0sWzYxMywxXSxbNjIzLDFdLFs2MzMsMV0sWzY0MywxXSxbNjUzLDFdLFs2NjMsMV0sWzY3NSwxXSxbNjgzLDFdLFs2OTQsMV0sWzcwNSwxXSxbNzE0LDFdLFs3MjYsMV0sWzczNSwxXSxbNzQ0LDFdLFs3NTYsMV0sWzc2NCwxXSxbNzc0LDFdLFs3ODYsMV0sWzc5NiwxXSxbODA3LDFdLFs4MTUsMV0sWzgyNywxXSxbODM4LDFdLFs4NDgsMV0sWzg1NiwxXSxbODY2LDFdLFs4NzcsMV0sWzg4OCwxXSxbODk3LDFdLFs5MDcsMV0sWzkxOCwxXSxbOTMwLDFdLFs5MzksMV0sWzk1MCwxXSxbOTYwLDFdLFs5NjksMV0sWzk4MCwxXSxbOTkwLDFdLFs5OTksMV0sWzEwMDksMV0sWzEwMjAsMV0sWzEwMzAsMV0sWzEwNDEsMV0sWzEwNTAsMV0sWzEwNjMsMV0sWzEwNzAsMV0sWzEwODIsMV0sWzEwOTEsMV0sWzExMDMsMV0sWzExMTEsMV0sWzExMjMsMV0sWzExMzMsMV0sWzExNDMsMV0sWzExNTIsMV0sWzExNjQsMV0sWzExNzMsMV0sWzExODUsMV0sWzExOTMsMV0sWzEyMDQsMV0sWzEyMTQsMV0sWzEyMjQsMV0sWzEyMzQsMV0sWzEyNDYsMV0sWzEyNTUsMV0sWzEyNjUsMV0sWzEyNzQsMV0sWzEyODUsMV0sWzEyOTUsMV0sWzEzMDUsMV0sWzEzMTcsMV0sWzEzMjcsMV0sWzEzMzYsMV0sWzEzNDgsMV0sWzEzNTgsMV0sWzEzNjgsMV0sWzEzNzYsMV0sWzEzODgsMV0sWzEzOTcsMV0sWzE0MDcsMV0sWzE0MTksMV0sWzE0MjgsMV0sWzE0MzgsMV0sWzE0NTAsMV0sWzE0NjIsMV0sWzE0NjgsMV0sWzE0ODAsMV0sWzE0OTAsMV0sWzE0OTksMV0sWzE1MTEsMV1dfSx7Im5hbWUiOiJBY2NvcmRpb24iLCJob2xlIjo0NSwiZW5kIjoxLCJzdGF0ZSI6Im9wZW4iLCJmcmFtZXMiOltbMCwxXSxbMTAsMV0sWzIyLDFdLFsyNSwxXSxbMzEsMV0sWzQzLDAuOTUzXSxbNzQsMC42NTNdLFsxMTQsMC4zMTVdLFsxNTMsMC4xMzhdLFsxNTQsMC4xMzVdLFsxNTgsMC4xMjNdLFsxNjMsMF0sWzE4NCwwLjEyMl0sWzIxNSwwLjQzN10sWzI0NSwwLjY3OV0sWzI4OCwwLjg3MV0sWzMzMSwwLjk1Ml0sWzM3NiwxXSxbNDIxLDFdLFs0OTUsMV0sWzUwMiwxXSxbNTExLDFdLFs1MjIsMV0sWzUzMSwxXSxbNTQxLDFdLFs1NTEsMV0sWzU2MywxXSxbNTczLDFdLFs1ODMsMV0sWzU5MywxXSxbNjA1LDFdLFs2MTQsMV0sWzYyMywxXSxbNjM0LDFdLFs2NDMsMV0sWzY1MywxXSxbNjY1LDFdLFs2NzQsMV0sWzY4NSwxXSxbNjk2LDFdLFs3MDYsMV0sWzcxNCwxXSxbNzI2LDFdLFs3MzgsMV0sWzc0NSwxXSxbNzU3LDFdLFs3NjYsMV0sWzc3NiwxXSxbNzg3LDFdLFs3OTgsMV0sWzgwNiwxXSxbODE2LDFdLFs4MjgsMV0sWzgzOCwxXSxbODQ3LDFdLFs4NTksMV0sWzg2OCwxXSxbODgwLDFdLFs4ODksMV0sWzkwMSwxXSxbOTA5LDFdLFs5MjAsMV0sWzkzMCwxXSxbOTQwLDFdLFs5NTEsMV0sWzk2MSwxXSxbOTY5LDFdLFs5ODEsMV0sWzk5MCwxXSxbMTAwMSwxXSxbMTAxMCwxXSxbMTAyMiwxXSxbMTAzMiwxXSxbMTA0MiwxXSxbMTA1MywxXSxbMTA2MiwxXSxbMTA3MywxXSxbMTA4MiwxXSxbMTA5MywxXSxbMTEwMiwxXSxbMTExNCwxXSxbMTEyMywxXSxbMTEzMywxXSxbMTE0NCwxXSxbMTE1MywxXSxbMTE2NSwxXSxbMTE3NCwxXSxbMTE4NSwxXSxbMTI3MCwxXSxbMTI3NiwxXSxbMTI4NiwxXSxbMTI5OCwxXSxbMTMwOCwxXSxbMTMxOCwxXSxbMTMyNiwxXSxbMTMzOSwxXSxbMTM0NywxXSxbMTM1OSwxXSxbMTM2OSwxXSxbMTM3NywxXSxbMTM4OSwxXSxbMTM5OSwxXSxbMTQxMCwxXSxbMTQxOSwxXSxbMTQzMCwxXSxbMTQ0MCwxXSxbMTQ1MCwxXSxbMTQ2MiwxXSxbMTQ3MSwxXSxbMTQ4MCwxXSxbMTQ5MiwxXSxbMTUwMSwxXSxbMTUxMywxXSxbMTUyMiwxXSxbMTUzMSwxXSxbMTU0MywxXSxbMTU1MiwxXSxbMTU2NCwxXV19XQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/test-results/release-11-1-1-reverse-·-a-afe55--closes-finishes-its-reopen-webkit-phone-repeat3/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 115,
+                    "line": 893
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10275,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T16:04:43.077Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "reopen",
+                      "contentType": "application/json",
+                      "body": "W3sibmFtZSI6IkNvbGxhcHNpYmxlIiwiaG9sZSI6MjAsImVuZCI6MSwic3RhdGUiOiJvcGVuIiwiZnJhbWVzIjpbWzAsMV0sWzgsMV0sWzIwLDFdLFsyNCwxXSxbMzAsMV0sWzQwLDAuOTY1XSxbNDksMC44OTZdLFs2OSwwLjY5NF0sWzc4LDAuNjAyXSxbODUsMC41MzVdLFs5MywwLjQ2M10sWzEwMCwwLjQwNl0sWzEwMSwwLjM5OV0sWzEwNCwwLjM3Nl0sWzExMiwwXSxbMTIwLDAuMDIzXSxbMTMzLDAuMTIyXSxbMTQxLDAuMjAxXSxbMTUyLDAuMzE2XSxbMTYzLDAuNDI3XSxbMTcxLDAuNTAyXSxbMTgyLDAuNTk0XSxbMTkyLDAuNjY1XSxbMjA0LDAuNzM4XSxbMjEzLDAuNzgzXSxbMjI1LDAuODMyXSxbMjM0LDAuODYyXSxbMjQ2LDAuODk1XSxbMjU0LDAuOTEyXSxbMjYzLDAuOTI5XSxbMjc1LDAuOTQ2XSxbMjgzLDAuOTU1XSxbMjk2LDAuOTY3XSxbMzA1LDAuOTc0XSxbMzE2LDFdLFszMjcsMV0sWzMzNSwxXSxbMzQ3LDFdLFszNTcsMV0sWzM2NSwxXSxbMzc3LDFdLFszODYsMV0sWzM5OCwxXSxbNDA4LDFdLFs0MTYsMV0sWzQyNywxXSxbNDM4LDFdLFs0NDcsMV0sWzQ1OSwxXSxbNDcwLDFdLFs0NzksMV0sWzQ4OSwxXSxbNDk5LDFdLFs1MDgsMV0sWzUxOSwxXSxbNTI5LDFdLFs1NDEsMV0sWzU1MSwxXSxbNTYzLDFdLFs1NjksMV0sWzU4MSwxXSxbNTkxLDFdLFs2MDIsMV0sWzYxMywxXSxbNjIyLDFdLFs2MzIsMV0sWzY0NCwxXSxbNjUyLDFdLFs2NjIsMV0sWzY3NSwxXSxbNjgyLDFdLFs2OTQsMV0sWzcwMiwxXSxbNzE0LDFdLFs3MjMsMV0sWzczNSwxXSxbNzQ1LDFdLFs3NTUsMV0sWzc2NCwxXSxbNzc1LDFdLFs3ODUsMV0sWzc5NSwxXSxbODA3LDFdLFs4MTYsMV0sWzgyNiwxXSxbODM2LDFdLFs4NDYsMV0sWzg1NSwxXSxbODY3LDFdLFs4NzcsMV0sWzg4OCwxXSxbODk3LDFdLFs5MDgsMV0sWzkxNiwxXSxbOTI4LDFdLFs5MzcsMV0sWzk0OSwxXSxbOTYwLDFdLFs5NjksMV0sWzk3OCwxXSxbOTkwLDFdLFs5OTksMV0sWzEwMDksMV0sWzEwMTksMV0sWzEwMjksMV0sWzEwMzksMV0sWzEwNTAsMV0sWzEwNjEsMV0sWzEwNzEsMV0sWzEwODIsMV0sWzEwOTIsMV0sWzExMDIsMV0sWzExMTAsMV0sWzExMjIsMV0sWzExMzIsMV0sWzExNDMsMV0sWzExNTUsMV0sWzExNjEsMV0sWzExNzEsMV0sWzExODMsMV0sWzExOTIsMV0sWzEyMDMsMV0sWzEyMTMsMV0sWzEyMjMsMV0sWzEyMzMsMV0sWzEyNDMsMV0sWzEyNTUsMV0sWzEyNjUsMV0sWzEyNzQsMV0sWzEyODUsMV0sWzEyOTQsMV0sWzEzMDYsMV0sWzEzMTQsMV0sWzEzMjcsMV0sWzEzMzcsMV0sWzEzNDcsMV0sWzEzNTcsMV0sWzEzNjYsMV0sWzEzNzgsMV0sWzEzODYsMV0sWzEzOTYsMV0sWzE0MDcsMV0sWzE0MTgsMV0sWzE0MjgsMV0sWzE0MzcsMV0sWzE0NDksMV0sWzE0NTcsMV0sWzE0NjksMV0sWzE0ODEsMV0sWzE0ODgsMV0sWzE0OTksMV0sWzE1MTAsMV1dfSx7Im5hbWUiOiJBY2NvcmRpb24iLCJob2xlIjoxMiwiZW5kIjoxLCJzdGF0ZSI6Im9wZW4iLCJmcmFtZXMiOltbMCwxXSxbOSwxXSxbMTksMV0sWzMwLDFdLFszMSwxXSxbMzQsMV0sWzQxLDFdLFs1MSwwLjk2NV0sWzU5LDAuOTA1XSxbNzEsMC43ODhdLFs4MSwwLjY4NF0sWzkwLDAuNTkyXSxbMTAyLDAuNDhdLFsxMTAsMC40MTRdLFsxMTEsMC40MDZdLFsxMTYsMC4zNjldLFsxMjIsMF0sWzEzNCwwLjA0N10sWzE0MywwLjEyMl0sWzE1NCwwLjIzM10sWzE2MywwLjMyN10sWzE3MywwLjQyN10sWzE4NCwwLjUyOF0sWzE5NCwwLjYwOV0sWzIwNCwwLjY3OV0sWzIxMywwLjczMl0sWzIyNCwwLjc4N10sWzIzNCwwLjgyOF0sWzI0NiwwLjg2OF0sWzI1NSwwLjg5Ml0sWzI2MywwLjkxXSxbMjc1LDAuOTMyXSxbMjg2LDAuOTQ3XSxbMjk2LDAuOTU4XSxbMzA2LDAuOTY3XSxbMzE3LDAuOTc1XSxbMzI2LDFdLFszMzcsMV0sWzM0NywxXSxbMzU3LDFdLFszNjksMV0sWzM3NiwxXSxbMzg4LDFdLFszOTgsMV0sWzQwOCwxXSxbNDIwLDFdLFs0MjgsMV0sWzQzOSwxXSxbNDQ5LDFdLFs0NTksMV0sWzQ2OCwxXSxbNDgwLDFdLFs0ODgsMV0sWzQ5OCwxXSxbNTEwLDFdLFs1MjAsMV0sWzUzMSwxXSxbNTQxLDFdLFs1NDksMV0sWzU2MSwxXSxbNTcxLDFdLFs1ODIsMV0sWzU5MiwxXSxbNjAyLDFdLFs2MTIsMV0sWzYyMiwxXSxbNjMzLDFdLFs2NDEsMV0sWzY1MywxXSxbNjYzLDFdLFs2NzUsMV0sWzY4NCwxXSxbNjk0LDFdLFs3MDQsMV0sWzcxNiwxXSxbNzIzLDFdLFs3MzUsMV0sWzc0NSwxXSxbNzU1LDFdLFs3NjUsMV0sWzc3NSwxXSxbNzg0LDFdLFs3OTYsMV0sWzgwNiwxXSxbODE1LDFdLFs4MjUsMV0sWzgzNywxXSxbODQ1LDFdLFs4NTUsMV0sWzg2NSwxXSxbODc3LDFdLFs4ODcsMV0sWzg5NywxXSxbOTA5LDFdLFs5MTgsMV0sWzkyNywxXSxbOTM5LDFdLFs5NTAsMV0sWzk1OSwxXSxbOTY4LDFdLFs5ODAsMV0sWzk5MCwxXSxbMTAwMSwxXSxbMTAxMCwxXSxbMTAyMCwxXSxbMTAzMSwxXSxbMTA0MSwxXSxbMTA1MCwxXSxbMTA2MCwxXSxbMTA3MSwxXSxbMTA4MCwxXSxbMTA5MCwxXSxbMTEwMiwxXSxbMTExMiwxXSxbMTEyMywxXSxbMTEzMiwxXSxbMTE0MywxXSxbMTE1MywxXSxbMTE2MywxXSxbMTE3MiwxXSxbMTE4NCwxXSxbMTE5MiwxXSxbMTIwNCwxXSxbMTIxMywxXSxbMTIyNCwxXSxbMTIzNSwxXSxbMTI0NSwxXSxbMTI1NSwxXSxbMTI2NCwxXSxbMTI3NiwxXSxbMTI4NCwxXSxbMTI5NiwxXSxbMTMwNiwxXSxbMTMxNywxXSxbMTMyNSwxXSxbMTMzNSwxXSxbMTM0NywxXSxbMTM1NywxXSxbMTM2NiwxXSxbMTM3OCwxXSxbMTM4OCwxXSxbMTM5OCwxXSxbMTQwOCwxXSxbMTQxOCwxXSxbMTQyNywxXSxbMTQzOSwxXSxbMTQ0OCwxXSxbMTQ1OSwxXSxbMTQ2OSwxXSxbMTQ4MCwxXSxbMTQ5MCwxXSxbMTUwMCwxXSxbMTUxMSwxXSxbMTUyMSwxXV19XQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 10271,
+                  "error": {
+                    "message": "Error: Accordion: the film is read, with no hole of more than two frames before it rests {\"name\":\"Accordion\",\"hole\":42,\"end\":1,\"state\":\"open\",\"frames\":[[0,1],[11,1],[21,1],[29,1],[30,1],[32,1],[41,1],[51,0.965],[88,0.612],[124,0.315],[158,0.154],[159,0.15],[162,0.141],[172,0],[185,0.054],[210,0.295],[234,0.528],[270,0.769],[309,0.902],[346,0.958],[388,1],[433,1],[503,1],[511,1],[519,1],[531,1],[541,1],[551,1],[560,1],[572,1],[581,1],[591,1],[601,1],[613,1],[621,1],[633,1],[642,1],[655,1],[664,1],[674,1],[684,1],[695,1],[705,1],[713,1],[724,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m42\u001b[39m",
+                    "stack": "Error: Accordion: the film is read, with no hole of more than two frames before it rests {\"name\":\"Accordion\",\"hole\":42,\"end\":1,\"state\":\"open\",\"frames\":[[0,1],[11,1],[21,1],[29,1],[30,1],[32,1],[41,1],[51,0.965],[88,0.612],[124,0.315],[158,0.154],[159,0.15],[162,0.141],[172,0],[185,0.054],[210,0.295],[234,0.528],[270,0.769],[309,0.902],[346,0.958],[388,1],[433,1],[503,1],[511,1],[519,1],[531,1],[541,1],[551,1],[560,1],[572,1],[581,1],[591,1],[601,1],[613,1],[621,1],[633,1],[642,1],[655,1],[664,1],[674,1],[684,1],[695,1],[705,1],[713,1],[724,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m42\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.spec.ts:893:115",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 115,
+                      "line": 893
+                    },
+                    "snippet": "  891 |     for (const r of reads) {\n  892 |         const at = JSON.stringify({ ...r, frames: r.frames.slice(0, 45) });\n> 893 |         expect(r.hole, `${r.name}: the film is read, with no hole of more than two frames before it rests ${at}`).toBeLessThanOrEqual(HOLE);\n      |                                                                                                                   ^\n  894 |         expect(r.end, `${r.name}: it ends open ${at}`).toBeGreaterThan(0.95);\n  895 |         expect(r.state, `${r.name}: it is open ${at}`).toBe(\"open\");\n  896 |     }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 115,
+                        "line": 893
+                      },
+                      "message": "Error: Accordion: the film is read, with no hole of more than two frames before it rests {\"name\":\"Accordion\",\"hole\":42,\"end\":1,\"state\":\"open\",\"frames\":[[0,1],[11,1],[21,1],[29,1],[30,1],[32,1],[41,1],[51,0.965],[88,0.612],[124,0.315],[158,0.154],[159,0.15],[162,0.141],[172,0],[185,0.054],[210,0.295],[234,0.528],[270,0.769],[309,0.902],[346,0.958],[388,1],[433,1],[503,1],[511,1],[519,1],[531,1],[541,1],[551,1],[560,1],[572,1],[581,1],[591,1],[601,1],[613,1],[621,1],[633,1],[642,1],[655,1],[664,1],[674,1],[684,1],[695,1],[705,1],[713,1],[724,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m42\u001b[39m\n\n  891 |     for (const r of reads) {\n  892 |         const at = JSON.stringify({ ...r, frames: r.frames.slice(0, 45) });\n> 893 |         expect(r.hole, `${r.name}: the film is read, with no hole of more than two frames before it rests ${at}`).toBeLessThanOrEqual(HOLE);\n      |                                                                                                                   ^\n  894 |         expect(r.end, `${r.name}: it ends open ${at}`).toBeGreaterThan(0.95);\n  895 |         expect(r.state, `${r.name}: it is open ${at}`).toBe(\"open\");\n  896 |     }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.spec.ts:893:115"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T16:04:53.851Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "reopen",
+                      "contentType": "application/json",
+                      "body": "W3sibmFtZSI6IkNvbGxhcHNpYmxlIiwiaG9sZSI6MjEsImVuZCI6MSwic3RhdGUiOiJvcGVuIiwiZnJhbWVzIjpbWzAsMV0sWzksMV0sWzIyLDFdLFszMCwxXSxbMzEsMV0sWzM0LDFdLFs0MCwxXSxbNTIsMC45NTNdLFs2MSwwLjg3OF0sWzgyLDAuNjYzXSxbOTAsMC41ODJdLFs5OCwwLjUwN10sWzEwNiwwLjQzOF0sWzEwNywwLjQzXSxbMTEyLDAuMzkxXSxbMTEzLDAuMzg0XSxbMTI0LDBdLFsxMzMsMC4wMjhdLFsxNDIsMC4wOTVdLFsxNTQsMC4yMTJdLFsxNjMsMC4zMDZdLFsxNzUsMC40MjddLFsxODMsMC41MDJdLFsxOTYsMC42MDldLFsyMDUsMC42NzJdLFsyMTUsMC43MzJdLFsyMjYsMC43ODddLFsyMzYsMC44MjhdLFsyNDYsMC44NjJdLFsyNTUsMC44ODddLFsyNjcsMC45MTRdLFsyNzcsMC45MzJdLFsyODcsMC45NDZdLFsyOTYsMC45NTZdLFszMDgsMC45NjddLFszMTgsMC45NzRdLFszMzAsMV0sWzM0MCwxXSxbMzQ4LDFdLFszNTksMV0sWzM2NywxXSxbMzc5LDFdLFszODksMV0sWzM5OSwxXSxbNDEwLDFdLFs0MjAsMV0sWzQzMCwxXSxbNDQwLDFdLFs0NTAsMV0sWzQ1OSwxXSxbNDcxLDFdLFs0ODEsMV0sWzQ5MiwxXSxbNTAxLDFdLFs1MTAsMV0sWzUyMSwxXSxbNTMwLDFdLFs1NDAsMV0sWzU1MSwxXSxbNTYyLDFdLFs1NzMsMV0sWzU4MywxXSxbNTkyLDFdLFs2MDMsMV0sWzYxMywxXSxbNjIyLDFdLFs2MzQsMV0sWzY0NCwxXSxbNjU0LDFdLFs2NjQsMV0sWzY3NSwxXSxbNjg1LDFdLFs2OTYsMV0sWzcwNSwxXSxbNzE0LDFdLFs3MjUsMV0sWzczNSwxXSxbNzQ2LDFdLFs3NTUsMV0sWzc2NywxXSxbNzc1LDFdLFs3ODcsMV0sWzc5NywxXSxbODA3LDFdLFs4MTgsMV0sWzgyOCwxXSxbODM4LDFdLFs4NTAsMV0sWzg1NywxXSxbODY5LDFdLFs4NzgsMV0sWzg4OCwxXSxbODk3LDFdLFs5MDgsMV0sWzkxOSwxXSxbOTI4LDFdLFs5MzgsMV0sWzk1MCwxXSxbOTYwLDFdLFs5NjksMV0sWzk4MCwxXSxbOTkyLDFdLFsxMDAwLDFdLFsxMDEyLDFdLFsxMDIyLDFdLFsxMDMxLDFdLFsxMDQyLDFdLFsxMDUxLDFdLFsxMDYyLDFdLFsxMDcyLDFdLFsxMDgzLDFdLFsxMDkzLDFdLFsxMTAxLDFdLFsxMTE0LDFdLFsxMTI0LDFdLFsxMTM0LDFdLFsxMTQ0LDFdLFsxMTU0LDFdLFsxMTY1LDFdLFsxMTc1LDFdLFsxMTgzLDFdLFsxMTk1LDFdLFsxMjA1LDFdLFsxMjE1LDFdLFsxMjI2LDFdLFsxMjM0LDFdLFsxMjQ2LDFdLFsxMjU1LDFdLFsxMjY3LDFdLFsxMjc3LDFdLFsxMjg3LDFdLFsxMjk2LDFdLFsxMzA4LDFdLFsxMzE2LDFdLFsxMzI3LDFdLFsxMzM3LDFdLFsxMzQ4LDFdLFsxMzYwLDFdLFsxMzY4LDFdLFsxMzc3LDFdLFsxMzg3LDFdLFsxMzk5LDFdLFsxNDA5LDFdLFsxNDE5LDFdLFsxNDI5LDFdLFsxNDM4LDFdLFsxNDUwLDFdLFsxNDU5LDFdLFsxNDcxLDFdLFsxNDc5LDFdLFsxNDkxLDFdLFsxNTAwLDFdLFsxNTEwLDFdLFsxNTIyLDFdXX0seyJuYW1lIjoiQWNjb3JkaW9uIiwiaG9sZSI6NDIsImVuZCI6MSwic3RhdGUiOiJvcGVuIiwiZnJhbWVzIjpbWzAsMV0sWzExLDFdLFsyMSwxXSxbMjksMV0sWzMwLDFdLFszMiwxXSxbNDEsMV0sWzUxLDAuOTY1XSxbODgsMC42MTJdLFsxMjQsMC4zMTVdLFsxNTgsMC4xNTRdLFsxNTksMC4xNV0sWzE2MiwwLjE0MV0sWzE3MiwwXSxbMTg1LDAuMDU0XSxbMjEwLDAuMjk1XSxbMjM0LDAuNTI4XSxbMjcwLDAuNzY5XSxbMzA5LDAuOTAyXSxbMzQ2LDAuOTU4XSxbMzg4LDFdLFs0MzMsMV0sWzUwMywxXSxbNTExLDFdLFs1MTksMV0sWzUzMSwxXSxbNTQxLDFdLFs1NTEsMV0sWzU2MCwxXSxbNTcyLDFdLFs1ODEsMV0sWzU5MSwxXSxbNjAxLDFdLFs2MTMsMV0sWzYyMSwxXSxbNjMzLDFdLFs2NDIsMV0sWzY1NSwxXSxbNjY0LDFdLFs2NzQsMV0sWzY4NCwxXSxbNjk1LDFdLFs3MDUsMV0sWzcxMywxXSxbNzI0LDFdLFs3MzQsMV0sWzc0NiwxXSxbNzU1LDFdLFs3NjgsMV0sWzc3NSwxXSxbNzg3LDFdLFs3OTYsMV0sWzgwOCwxXSxbODE3LDFdLFs4MjYsMV0sWzgzNiwxXSxbODQ2LDFdLFs4NTgsMV0sWzg2OCwxXSxbODc3LDFdLFs4ODgsMV0sWzg5NywxXSxbOTA5LDFdLFs5MTksMV0sWzkyNywxXSxbOTM5LDFdLFs5NTEsMV0sWzk2MCwxXSxbOTY4LDFdLFs5ODAsMV0sWzk4OSwxXSxbMTAwMSwxXSxbMTAwOSwxXSxbMTAyMSwxXSxbMTAzMSwxXSxbMTA0MywxXSxbMTA1MSwxXSxbMTA2MSwxXSxbMTA3MiwxXSxbMTA4MSwxXSxbMTA5MSwxXSxbMTEwMywxXSxbMTExMywxXSxbMTEyMiwxXSxbMTEzNCwxXSxbMTE0MywxXSxbMTE1MiwxXSxbMTE2NCwxXSxbMTE3MywxXSxbMTE4NSwxXSxbMTE5NywxXSxbMTIwNCwxXSxbMTIxMywxXSxbMTIyNSwxXSxbMTMwNiwxXSxbMTMwNywxXSxbMTMxNywxXSxbMTMyNywxXSxbMTMzNywxXSxbMTM0OCwxXSxbMTM1NiwxXSxbMTM2OCwxXSxbMTM3OCwxXSxbMTM4NywxXSxbMTM5OSwxXSxbMTQwNywxXSxbMTQxOSwxXSxbMTQzMSwxXSxbMTQzOSwxXSxbMTQ0OCwxXSxbMTQ2MCwxXSxbMTQ2OCwxXSxbMTQ4MCwxXSxbMTQ4OSwxXSxbMTUwMSwxXSxbMTUxMSwxXSxbMTUyMSwxXSxbMTUzMCwxXSxbMTU0MSwxXSxbMTU1MCwxXSxbMTU2MiwxXV19XQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/test-results/release-11-1-1-reverse-·-a-afe55--closes-finishes-its-reopen-webkit-phone-repeat5/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 115,
+                    "line": 893
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 10342,
+                  "error": {
+                    "message": "Error: Accordion: the film is read, with no hole of more than two frames before it rests {\"name\":\"Accordion\",\"hole\":44,\"end\":1,\"state\":\"open\",\"frames\":[[0,1],[10,1],[21,1],[25,1],[33,1],[42,0.971],[86,0.553],[127,0.251],[163,0.115],[164,0.113],[167,0.105],[175,0],[190,0.07],[217,0.337],[243,0.578],[281,0.805],[318,0.914],[356,0.965],[394,1],[433,1],[504,1],[512,1],[522,1],[533,1],[543,1],[554,1],[562,1],[574,1],[584,1],[594,1],[604,1],[613,1],[625,1],[634,1],[646,1],[655,1],[664,1],[676,1],[686,1],[695,1],[706,1],[717,1],[725,1],[736,1],[747,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m44\u001b[39m",
+                    "stack": "Error: Accordion: the film is read, with no hole of more than two frames before it rests {\"name\":\"Accordion\",\"hole\":44,\"end\":1,\"state\":\"open\",\"frames\":[[0,1],[10,1],[21,1],[25,1],[33,1],[42,0.971],[86,0.553],[127,0.251],[163,0.115],[164,0.113],[167,0.105],[175,0],[190,0.07],[217,0.337],[243,0.578],[281,0.805],[318,0.914],[356,0.965],[394,1],[433,1],[504,1],[512,1],[522,1],[533,1],[543,1],[554,1],[562,1],[574,1],[584,1],[594,1],[604,1],[613,1],[625,1],[634,1],[646,1],[655,1],[664,1],[676,1],[686,1],[695,1],[706,1],[717,1],[725,1],[736,1],[747,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m44\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.spec.ts:893:115",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 115,
+                      "line": 893
+                    },
+                    "snippet": "  891 |     for (const r of reads) {\n  892 |         const at = JSON.stringify({ ...r, frames: r.frames.slice(0, 45) });\n> 893 |         expect(r.hole, `${r.name}: the film is read, with no hole of more than two frames before it rests ${at}`).toBeLessThanOrEqual(HOLE);\n      |                                                                                                                   ^\n  894 |         expect(r.end, `${r.name}: it ends open ${at}`).toBeGreaterThan(0.95);\n  895 |         expect(r.state, `${r.name}: it is open ${at}`).toBe(\"open\");\n  896 |     }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 115,
+                        "line": 893
+                      },
+                      "message": "Error: Accordion: the film is read, with no hole of more than two frames before it rests {\"name\":\"Accordion\",\"hole\":44,\"end\":1,\"state\":\"open\",\"frames\":[[0,1],[10,1],[21,1],[25,1],[33,1],[42,0.971],[86,0.553],[127,0.251],[163,0.115],[164,0.113],[167,0.105],[175,0],[190,0.07],[217,0.337],[243,0.578],[281,0.805],[318,0.914],[356,0.965],[394,1],[433,1],[504,1],[512,1],[522,1],[533,1],[543,1],[554,1],[562,1],[574,1],[584,1],[594,1],[604,1],[613,1],[625,1],[634,1],[646,1],[655,1],[664,1],[676,1],[686,1],[695,1],[706,1],[717,1],[725,1],[736,1],[747,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m44\u001b[39m\n\n  891 |     for (const r of reads) {\n  892 |         const at = JSON.stringify({ ...r, frames: r.frames.slice(0, 45) });\n> 893 |         expect(r.hole, `${r.name}: the film is read, with no hole of more than two frames before it rests ${at}`).toBeLessThanOrEqual(HOLE);\n      |                                                                                                                   ^\n  894 |         expect(r.end, `${r.name}: it ends open ${at}`).toBeGreaterThan(0.95);\n  895 |         expect(r.state, `${r.name}: it is open ${at}`).toBe(\"open\");\n  896 |     }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.spec.ts:893:115"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T16:05:04.704Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "reopen",
+                      "contentType": "application/json",
+                      "body": "W3sibmFtZSI6IkNvbGxhcHNpYmxlIiwiaG9sZSI6MjIsImVuZCI6MSwic3RhdGUiOiJvcGVuIiwiZnJhbWVzIjpbWzAsMV0sWzExLDFdLFsyMCwxXSxbMzIsMV0sWzMzLDFdLFszOSwxXSxbNDMsMV0sWzUyLDAuOTcxXSxbNjIsMC44OTZdLFs4NCwwLjY3M10sWzkzLDAuNTgyXSxbMTAzLDAuNDg5XSxbMTE0LDAuMzk5XSxbMTIzLDAuMzM1XSxbMTI0LDAuMzI4XSxbMTMzLDAuMjczXSxbMTM2LDAuMjU3XSxbMTQ0LDBdLFsxNTMsMC4wMjhdLFsxNjUsMC4xMjJdLFsxNzUsMC4yMjJdLFsxODMsMC4zMDZdLFsxOTQsMC40MThdLFsyMDUsMC41Ml0sWzIxNSwwLjYwMV0sWzIyNywwLjY4NV0sWzIzOCwwLjc0OF0sWzI0OCwwLjc5Nl0sWzI1OSwwLjgzOV0sWzI3MCwwLjg3NF0sWzI3NywwLjg5Ml0sWzI4NywwLjkxNF0sWzI5OCwwLjkzNF0sWzMwOCwwLjk0N10sWzMxOCwwLjk1OF0sWzMyOSwwLjk2OF0sWzMzOSwwLjk3NV0sWzM0OCwxXSxbMzU4LDFdLFszNjgsMV0sWzM3OSwxXSxbMzkwLDFdLFszOTgsMV0sWzQwOSwxXSxbNDIwLDFdLFs0MjksMV0sWzQ0MCwxXSxbNDUwLDFdLFs0NjAsMV0sWzQ3MSwxXSxbNDgxLDFdLFs0ODksMV0sWzUwMiwxXSxbNTExLDFdLFs1MjEsMV0sWzUzMSwxXSxbNTQyLDFdLFs1NTIsMV0sWzU2MywxXSxbNTcyLDFdLFs1ODQsMV0sWzU5MywxXSxbNjA0LDFdLFs2MTQsMV0sWzYyMywxXSxbNjM1LDFdLFs2NDQsMV0sWzY1MywxXSxbNjY1LDFdLFs2NzUsMV0sWzY4NCwxXSxbNjk2LDFdLFs3MDUsMV0sWzcxNSwxXSxbNzI0LDFdLFs3MzUsMV0sWzc0NywxXSxbNzU2LDFdLFs3NjcsMV0sWzc3NywxXSxbNzg2LDFdLFs3OTgsMV0sWzgwOCwxXSxbODE3LDFdLFs4MjksMV0sWzgzOCwxXSxbODQ5LDFdLFs4NTksMV0sWzg2OCwxXSxbODc3LDFdLFs4ODksMV0sWzg5OCwxXSxbOTEwLDFdLFs5MTksMV0sWzkyOCwxXSxbOTM4LDFdLFs5NTAsMV0sWzk2MCwxXSxbOTczLDFdLFs5ODAsMV0sWzk5MSwxXSxbMTAwMSwxXSxbMTAxMSwxXSxbMTAyMCwxXSxbMTAzMiwxXSxbMTA0MSwxXSxbMTA1MiwxXSxbMTA2MSwxXSxbMTA3MywxXSxbMTA4MywxXSxbMTA5MywxXSxbMTEwNSwxXSxbMTExNCwxXSxbMTEyNCwxXSxbMTEzNCwxXSxbMTE0NCwxXSxbMTE1NiwxXSxbMTE2NSwxXSxbMTE3NCwxXSxbMTE4NCwxXSxbMTE5NiwxXSxbMTIwNiwxXSxbMTIxNiwxXSxbMTIyNSwxXSxbMTIzNiwxXSxbMTI0OCwxXSxbMTI1NSwxXSxbMTI2NSwxXSxbMTI3NywxXSxbMTI4NiwxXSxbMTI5OCwxXSxbMTMwNiwxXSxbMTMxOCwxXSxbMTMyNywxXSxbMTMzOSwxXSxbMTM0NywxXSxbMTM1OSwxXSxbMTM2OCwxXSxbMTM3OSwxXSxbMTM4OSwxXSxbMTM5OSwxXSxbMTQxMCwxXSxbMTQxOSwxXSxbMTQzMSwxXSxbMTQzOSwxXSxbMTQ1MiwxXSxbMTQ1OSwxXSxbMTQ3MSwxXSxbMTQ3OSwxXSxbMTQ5MSwxXSxbMTUwMCwxXSxbMTUxMiwxXSxbMTUyMiwxXSxbMTUzMiwxXSxbMTU0MSwxXV19LHsibmFtZSI6IkFjY29yZGlvbiIsImhvbGUiOjQ0LCJlbmQiOjEsInN0YXRlIjoib3BlbiIsImZyYW1lcyI6W1swLDFdLFsxMCwxXSxbMjEsMV0sWzI1LDFdLFszMywxXSxbNDIsMC45NzFdLFs4NiwwLjU1M10sWzEyNywwLjI1MV0sWzE2MywwLjExNV0sWzE2NCwwLjExM10sWzE2NywwLjEwNV0sWzE3NSwwXSxbMTkwLDAuMDddLFsyMTcsMC4zMzddLFsyNDMsMC41NzhdLFsyODEsMC44MDVdLFszMTgsMC45MTRdLFszNTYsMC45NjVdLFszOTQsMV0sWzQzMywxXSxbNTA0LDFdLFs1MTIsMV0sWzUyMiwxXSxbNTMzLDFdLFs1NDMsMV0sWzU1NCwxXSxbNTYyLDFdLFs1NzQsMV0sWzU4NCwxXSxbNTk0LDFdLFs2MDQsMV0sWzYxMywxXSxbNjI1LDFdLFs2MzQsMV0sWzY0NiwxXSxbNjU1LDFdLFs2NjQsMV0sWzY3NiwxXSxbNjg2LDFdLFs2OTUsMV0sWzcwNiwxXSxbNzE3LDFdLFs3MjUsMV0sWzczNiwxXSxbNzQ3LDFdLFs3NTgsMV0sWzc2NiwxXSxbNzc5LDFdLFs3ODgsMV0sWzc5NywxXSxbODA4LDFdLFs4MTcsMV0sWzgyOSwxXSxbODM3LDFdLFs4NDksMV0sWzg1OSwxXSxbODcwLDFdLFs4NzgsMV0sWzg4OSwxXSxbOTAwLDFdLFs5MTAsMV0sWzkyMCwxXSxbOTMyLDFdLFs5NDEsMV0sWzk1MCwxXSxbOTYyLDFdLFs5NzIsMV0sWzk4MSwxXSxbOTkyLDFdLFsxMDAyLDFdLFsxMDE0LDFdLFsxMDIxLDFdLFsxMDMzLDFdLFsxMDQzLDFdLFsxMDU0LDFdLFsxMDYyLDFdLFsxMDcyLDFdLFsxMDgyLDFdLFsxMDk0LDFdLFsxMTA0LDFdLFsxMTEzLDFdLFsxMTI1LDFdLFsxMTM1LDFdLFsxMTQzLDFdLFsxMTU1LDFdLFsxMTY2LDFdLFsxMTc4LDFdLFsxMTg2LDFdLFsxMjY0LDFdLFsxMjY2LDFdLFsxMjc4LDFdLFsxMjg4LDFdLFsxMzAwLDFdLFsxMzA3LDFdLFsxMzE3LDFdLFsxMzI5LDFdLFsxMzM4LDFdLFsxMzUwLDFdLFsxMzU4LDFdLFsxMzcwLDFdLFsxMzgwLDFdLFsxMzg5LDFdLFsxNDAwLDFdLFsxNDEwLDFdLFsxNDE5LDFdLFsxNDI5LDFdLFsxNDQxLDFdLFsxNDUwLDFdLFsxNDYwLDFdLFsxNDcyLDFdLFsxNDgyLDFdLFsxNDkyLDFdLFsxNTA0LDFdLFsxNTEzLDFdLFsxNTIzLDFdLFsxNTMzLDFdLFsxNTQ0LDFdLFsxNTUzLDFdLFsxNTYzLDFdLFsxNTcyLDFdXX1d"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/test-results/release-11-1-1-reverse-·-a-afe55--closes-finishes-its-reopen-webkit-phone-repeat6/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 115,
+                    "line": 893
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10387,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T16:05:15.593Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "reopen",
+                      "contentType": "application/json",
+                      "body": "W3sibmFtZSI6IkNvbGxhcHNpYmxlIiwiaG9sZSI6MTMsImVuZCI6MSwic3RhdGUiOiJvcGVuIiwiZnJhbWVzIjpbWzAsMV0sWzExLDFdLFsyMSwxXSxbMjUsMV0sWzMwLDFdLFs0MiwwLjk1M10sWzUwLDAuODg3XSxbNjAsMC43ODhdLFs3MiwwLjY2M10sWzgwLDAuNTgyXSxbOTAsMC40ODldLFsxMDMsMC4zODRdLFsxMDQsMC4zNzZdLFsxMDgsMC4zNDhdLFsxMTMsMF0sWzEyMiwwLjAyOF0sWzEzNCwwLjEyMl0sWzE0MywwLjIxMl0sWzE1MiwwLjMwNl0sWzE2MywwLjQxOF0sWzE3NSwwLjUyOF0sWzE4NCwwLjYwMV0sWzE5NCwwLjY3Ml0sWzIwNCwwLjczMl0sWzIxNCwwLjc4M10sWzIyMywwLjgyMV0sWzIzNSwwLjg2Ml0sWzI0NCwwLjg4N10sWzI1NiwwLjkxNF0sWzI2NSwwLjkzXSxbMjc2LDAuOTQ2XSxbMjg2LDAuOTU3XSxbMjk1LDAuOTY2XSxbMzA2LDAuOTc0XSxbMzE1LDFdLFszMjUsMV0sWzMzNywxXSxbMzQ3LDFdLFszNTcsMV0sWzM2OCwxXSxbMzc3LDFdLFszODgsMV0sWzM5NywxXSxbNDA5LDFdLFs0MTksMV0sWzQyNywxXSxbNDM5LDFdLFs0NDgsMV0sWzQ1OCwxXSxbNDY4LDFdLFs0NzksMV0sWzQ5MSwxXSxbNDk5LDFdLFs1MTEsMV0sWzUxOSwxXSxbNTMyLDFdLFs1NDEsMV0sWzU1MSwxXSxbNTYwLDFdLFs1NzEsMV0sWzU4MCwxXSxbNTkxLDFdLFs2MDMsMV0sWzYxMywxXSxbNjIyLDFdLFs2MzQsMV0sWzY0MiwxXSxbNjUzLDFdLFs2NjQsMV0sWzY3NSwxXSxbNjgzLDFdLFs2OTUsMV0sWzcwMywxXSxbNzE1LDFdLFs3MjUsMV0sWzczNCwxXSxbNzQ2LDFdLFs3NTUsMV0sWzc2NCwxXSxbNzc2LDFdLFs3ODYsMV0sWzc5OCwxXSxbODA1LDFdLFs4MTUsMV0sWzgyNywxXSxbODM3LDFdLFs4NDcsMV0sWzg1NywxXSxbODY4LDFdLFs4NzYsMV0sWzg4NywxXSxbODk3LDFdLFs5MDksMV0sWzkxOSwxXSxbOTI4LDFdLFs5MzksMV0sWzk0OCwxXSxbOTU4LDFdLFs5NzAsMV0sWzk3OSwxXSxbOTg5LDFdLFsxMDAwLDFdLFsxMDExLDFdLFsxMDE5LDFdLFsxMDMxLDFdLFsxMDQwLDFdLFsxMDUyLDFdLFsxMDYwLDFdLFsxMDcwLDFdLFsxMDgyLDFdLFsxMDkxLDFdLFsxMTAxLDFdLFsxMTEyLDFdLFsxMTIyLDFdLFsxMTMyLDFdLFsxMTQ0LDFdLFsxMTUyLDFdLFsxMTYyLDFdLFsxMTc0LDFdLFsxMTgzLDFdLFsxMTk0LDFdLFsxMjA1LDFdLFsxMjE1LDFdLFsxMjI1LDFdLFsxMjM1LDFdLFsxMjQ0LDFdLFsxMjU3LDFdLFsxMjY0LDFdLFsxMjc0LDFdLFsxMjg3LDFdLFsxMjk3LDFdLFsxMzA2LDFdLFsxMzE1LDFdLFsxMzI3LDFdLFsxMzM3LDFdLFsxMzQ4LDFdLFsxMzU3LDFdLFsxMzY5LDFdLFsxMzc4LDFdLFsxMzg4LDFdLFsxMzk5LDFdLFsxNDA5LDFdLFsxNDE5LDFdLFsxNDI4LDFdLFsxNDQwLDFdLFsxNDUwLDFdLFsxNDU4LDFdLFsxNDY4LDFdLFsxNDgwLDFdLFsxNDg5LDFdLFsxNTAxLDFdLFsxNTEwLDFdXX0seyJuYW1lIjoiQWNjb3JkaW9uIiwiaG9sZSI6MTEsImVuZCI6MSwic3RhdGUiOiJvcGVuIiwiZnJhbWVzIjpbWzAsMV0sWzExLDFdLFsyMSwxXSxbMjUsMV0sWzMyLDFdLFs0MiwwLjk2NV0sWzUyLDAuODg3XSxbNjIsMC43ODhdLFs3MiwwLjY4NF0sWzgzLDAuNTczXSxbOTQsMC40NzJdLFsxMDMsMC4zOTldLFsxMDQsMC4zOTFdLFsxMTIsMC4zMzVdLFsxMTMsMC4zMjhdLFsxMjMsMF0sWzEzMywwLjAzNV0sWzE0MywwLjExM10sWzE1NCwwLjIyMl0sWzE2MywwLjMxNl0sWzE3NCwwLjQyN10sWzE4NSwwLjUyOF0sWzE5NSwwLjYwOV0sWzIwNSwwLjY3OV0sWzIxNCwwLjczMl0sWzIyNSwwLjc4N10sWzIzNSwwLjgyOF0sWzI0NiwwLjg2NV0sWzI1NSwwLjg5XSxbMjY2LDAuOTE0XSxbMjc3LDAuOTMzXSxbMjg3LDAuOTQ3XSxbMjk3LDAuOTU4XSxbMzA4LDAuOTY4XSxbMzE3LDAuOTc0XSxbMzI3LDFdLFszMzgsMV0sWzM0NywxXSxbMzU4LDFdLFszNjgsMV0sWzM3OCwxXSxbMzg5LDFdLFszOTksMV0sWzQwOCwxXSxbNDE5LDFdLFs0MjksMV0sWzQ0MCwxXSxbNDUwLDFdLFs0NjAsMV0sWzQ3MCwxXSxbNDc5LDFdLFs0OTEsMV0sWzUwMCwxXSxbNTExLDFdLFs1MjEsMV0sWzUzMSwxXSxbNTQyLDFdLFs1NTEsMV0sWzU2MywxXSxbNTcyLDFdLFs1ODIsMV0sWzU5MiwxXSxbNjAzLDFdLFs2MTMsMV0sWzYyMywxXSxbNjMzLDFdLFs2NDQsMV0sWzY1MywxXSxbNjY0LDFdLFs2NzMsMV0sWzY4NSwxXSxbNjk1LDFdLFs3MDYsMV0sWzcxNSwxXSxbNzI1LDFdLFs3MzUsMV0sWzc0NiwxXSxbNzU2LDFdLFs3NjYsMV0sWzc3NiwxXSxbNzg3LDFdLFs3OTcsMV0sWzgwNiwxXSxbODE2LDFdLFs4MjYsMV0sWzgzOCwxXSxbODQ4LDFdLFs4NTksMV0sWzg2NywxXSxbODc4LDFdLFs4ODksMV0sWzg5OSwxXSxbOTA5LDFdLFs5MTksMV0sWzkyOSwxXSxbOTQwLDFdLFs5NTAsMV0sWzk2MCwxXSxbOTcwLDFdLFs5ODEsMV0sWzk5MCwxXSxbMTAwMSwxXSxbMTAxMSwxXSxbMTAyMSwxXSxbMTAzMiwxXSxbMTA0MiwxXSxbMTA1MiwxXSxbMTA2MiwxXSxbMTA3MiwxXSxbMTA4MywxXSxbMTA5MywxXSxbMTEwMywxXSxbMTExMywxXSxbMTEyMywxXSxbMTEzMywxXSxbMTE0NSwxXSxbMTE1NCwxXSxbMTE2NCwxXSxbMTE3NSwxXSxbMTE4NSwxXSxbMTE5NSwxXSxbMTIwNSwxXSxbMTIxNSwxXSxbMTIyNiwxXSxbMTIzNSwxXSxbMTI0NSwxXSxbMTI1NiwxXSxbMTI2NiwxXSxbMTI3NywxXSxbMTI4NywxXSxbMTI5NywxXSxbMTMwNywxXSxbMTMxNywxXSxbMTMyOCwxXSxbMTMzOCwxXSxbMTM0OCwxXSxbMTM1OCwxXSxbMTM2OCwxXSxbMTM4MCwxXSxbMTQxNywxXSxbMTQxOCwxXSxbMTQyMCwxXSxbMTQzMCwxXSxbMTQ2OCwxXSxbMTQ5NiwxXSxbMTUyMCwxXSxbMTUyMywxXV19XQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 10564,
+                  "error": {
+                    "message": "Error: Accordion: the film is read, with no hole of more than two frames before it rests {\"name\":\"Accordion\",\"hole\":50,\"end\":1,\"state\":\"open\",\"frames\":[[0,1],[11,1],[22,1],[25,1],[31,1],[42,0.959],[86,0.535],[130,0.227],[132,0.217],[136,0.199],[174,0],[195,0.122],[208,0.254],[242,0.578],[292,0.85],[338,0.947],[382,1],[427,1],[499,1],[501,1],[511,1],[522,1],[532,1],[542,1],[552,1],[563,1],[573,1],[582,1],[593,1],[603,1],[613,1],[624,1],[634,1],[643,1],[654,1],[665,1],[675,1],[685,1],[696,1],[705,1],[716,1],[726,1],[736,1],[746,1],[756,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m50\u001b[39m",
+                    "stack": "Error: Accordion: the film is read, with no hole of more than two frames before it rests {\"name\":\"Accordion\",\"hole\":50,\"end\":1,\"state\":\"open\",\"frames\":[[0,1],[11,1],[22,1],[25,1],[31,1],[42,0.959],[86,0.535],[130,0.227],[132,0.217],[136,0.199],[174,0],[195,0.122],[208,0.254],[242,0.578],[292,0.85],[338,0.947],[382,1],[427,1],[499,1],[501,1],[511,1],[522,1],[532,1],[542,1],[552,1],[563,1],[573,1],[582,1],[593,1],[603,1],[613,1],[624,1],[634,1],[643,1],[654,1],[665,1],[675,1],[685,1],[696,1],[705,1],[716,1],[726,1],[736,1],[746,1],[756,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m50\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.spec.ts:893:115",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 115,
+                      "line": 893
+                    },
+                    "snippet": "  891 |     for (const r of reads) {\n  892 |         const at = JSON.stringify({ ...r, frames: r.frames.slice(0, 45) });\n> 893 |         expect(r.hole, `${r.name}: the film is read, with no hole of more than two frames before it rests ${at}`).toBeLessThanOrEqual(HOLE);\n      |                                                                                                                   ^\n  894 |         expect(r.end, `${r.name}: it ends open ${at}`).toBeGreaterThan(0.95);\n  895 |         expect(r.state, `${r.name}: it is open ${at}`).toBe(\"open\");\n  896 |     }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 115,
+                        "line": 893
+                      },
+                      "message": "Error: Accordion: the film is read, with no hole of more than two frames before it rests {\"name\":\"Accordion\",\"hole\":50,\"end\":1,\"state\":\"open\",\"frames\":[[0,1],[11,1],[22,1],[25,1],[31,1],[42,0.959],[86,0.535],[130,0.227],[132,0.217],[136,0.199],[174,0],[195,0.122],[208,0.254],[242,0.578],[292,0.85],[338,0.947],[382,1],[427,1],[499,1],[501,1],[511,1],[522,1],[532,1],[542,1],[552,1],[563,1],[573,1],[582,1],[593,1],[603,1],[613,1],[624,1],[634,1],[643,1],[654,1],[665,1],[675,1],[685,1],[696,1],[705,1],[716,1],[726,1],[736,1],[746,1],[756,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m50\u001b[39m\n\n  891 |     for (const r of reads) {\n  892 |         const at = JSON.stringify({ ...r, frames: r.frames.slice(0, 45) });\n> 893 |         expect(r.hole, `${r.name}: the film is read, with no hole of more than two frames before it rests ${at}`).toBeLessThanOrEqual(HOLE);\n      |                                                                                                                   ^\n  894 |         expect(r.end, `${r.name}: it ends open ${at}`).toBeGreaterThan(0.95);\n  895 |         expect(r.state, `${r.name}: it is open ${at}`).toBe(\"open\");\n  896 |     }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.spec.ts:893:115"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T16:05:26.606Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "reopen",
+                      "contentType": "application/json",
+                      "body": "W3sibmFtZSI6IkNvbGxhcHNpYmxlIiwiaG9sZSI6MTQsImVuZCI6MSwic3RhdGUiOiJvcGVuIiwiZnJhbWVzIjpbWzAsMV0sWzEwLDFdLFsyMCwxXSxbMjQsMV0sWzMwLDFdLFs0MCwwLjk2NV0sWzUxLDAuODc4XSxbNjAsMC43ODhdLFs3MSwwLjY3M10sWzgxLDAuNTczXSxbOTIsMC40NzJdLFsxMDIsMC4zOTFdLFsxMDMsMC4zODRdLFsxMDgsMC4zNDhdLFsxMTQsMF0sWzEyMiwwLjAyM10sWzEzMiwwLjA5NV0sWzE0MiwwLjE5MV0sWzE1MywwLjMwNl0sWzE2MywwLjQwOF0sWzE3MywwLjUwMl0sWzE4NCwwLjU5NF0sWzE5NCwwLjY2NV0sWzIwNSwwLjczMl0sWzIxNCwwLjc3OF0sWzIyNCwwLjgyMV0sWzIzNSwwLjg1OV0sWzI0NiwwLjg5XSxbMjU3LDAuOTE0XSxbMjY0LDAuOTI3XSxbMjc4LDAuOTQ3XSxbMjg2LDAuOTU2XSxbMjk4LDAuOTY3XSxbMzA2LDAuOTczXSxbMzE5LDFdLFszMjYsMV0sWzMzNywxXSxbMzQ3LDFdLFszNTYsMV0sWzM2NywxXSxbMzc4LDFdLFszODgsMV0sWzM5NywxXSxbNDA4LDFdLFs0MTgsMV0sWzQyOCwxXSxbNDM4LDFdLFs0NDksMV0sWzQ1OSwxXSxbNDY5LDFdLFs0NzksMV0sWzQ5MCwxXSxbNDk5LDFdLFs1MTAsMV0sWzUyMCwxXSxbNTMxLDFdLFs1NDEsMV0sWzU1MSwxXSxbNTYxLDFdLFs1NzEsMV0sWzU4MSwxXSxbNTkxLDFdLFs2MDMsMV0sWzYxMiwxXSxbNjIyLDFdLFs2MzIsMV0sWzY0MiwxXSxbNjUzLDFdLFs2NjQsMV0sWzY3MywxXSxbNjgzLDFdLFs2OTMsMV0sWzcwNCwxXSxbNzEzLDFdLFs3MjQsMV0sWzczNSwxXSxbNzQ1LDFdLFs3NTUsMV0sWzc2NiwxXSxbNzc1LDFdLFs3ODUsMV0sWzc5NiwxXSxbODA1LDFdLFs4MTUsMV0sWzgyNywxXSxbODM2LDFdLFs4NDcsMV0sWzg1NywxXSxbODY3LDFdLFs4NzcsMV0sWzg4OCwxXSxbODk4LDFdLFs5MDcsMV0sWzkxOSwxXSxbOTI4LDFdLFs5NDAsMV0sWzk0OSwxXSxbOTYwLDFdLFs5NjgsMV0sWzk4MCwxXSxbOTkwLDFdLFs5OTksMV0sWzEwMTAsMV0sWzEwMjAsMV0sWzEwMzEsMV0sWzEwNDAsMV0sWzEwNTEsMV0sWzEwNjEsMV0sWzEwNzEsMV0sWzEwODIsMV0sWzEwOTEsMV0sWzExMDIsMV0sWzExMTIsMV0sWzExMjIsMV0sWzExMzMsMV0sWzExNDIsMV0sWzExNTIsMV0sWzExNjMsMV0sWzExNzMsMV0sWzExODMsMV0sWzExOTQsMV0sWzEyMDQsMV0sWzEyMTMsMV0sWzEyMjUsMV0sWzEyMzUsMV0sWzEyNDUsMV0sWzEyNTUsMV0sWzEyNjUsMV0sWzEyNzUsMV0sWzEyODUsMV0sWzEyOTYsMV0sWzEzMDUsMV0sWzEzMTYsMV0sWzEzMjcsMV0sWzEzMzcsMV0sWzEzNDcsMV0sWzEzNTYsMV0sWzEzNjcsMV0sWzEzNzcsMV0sWzEzODgsMV0sWzEzOTgsMV0sWzE0MDgsMV0sWzE0MTksMV0sWzE0MjgsMV0sWzE0MzgsMV0sWzE0NDksMV0sWzE0NTksMV0sWzE0NjksMV0sWzE0NzksMV0sWzE0OTAsMV0sWzE1MDAsMV0sWzE1MTAsMV1dfSx7Im5hbWUiOiJBY2NvcmRpb24iLCJob2xlIjo1MCwiZW5kIjoxLCJzdGF0ZSI6Im9wZW4iLCJmcmFtZXMiOltbMCwxXSxbMTEsMV0sWzIyLDFdLFsyNSwxXSxbMzEsMV0sWzQyLDAuOTU5XSxbODYsMC41MzVdLFsxMzAsMC4yMjddLFsxMzIsMC4yMTddLFsxMzYsMC4xOTldLFsxNzQsMF0sWzE5NSwwLjEyMl0sWzIwOCwwLjI1NF0sWzI0MiwwLjU3OF0sWzI5MiwwLjg1XSxbMzM4LDAuOTQ3XSxbMzgyLDFdLFs0MjcsMV0sWzQ5OSwxXSxbNTAxLDFdLFs1MTEsMV0sWzUyMiwxXSxbNTMyLDFdLFs1NDIsMV0sWzU1MiwxXSxbNTYzLDFdLFs1NzMsMV0sWzU4MiwxXSxbNTkzLDFdLFs2MDMsMV0sWzYxMywxXSxbNjI0LDFdLFs2MzQsMV0sWzY0MywxXSxbNjU0LDFdLFs2NjUsMV0sWzY3NSwxXSxbNjg1LDFdLFs2OTYsMV0sWzcwNSwxXSxbNzE2LDFdLFs3MjYsMV0sWzczNiwxXSxbNzQ2LDFdLFs3NTYsMV0sWzc2NywxXSxbNzc3LDFdLFs3ODcsMV0sWzc5OCwxXSxbODA3LDFdLFs4MTksMV0sWzgyNywxXSxbODM4LDFdLFs4NDksMV0sWzg1OCwxXSxbODY4LDFdLFs4NzksMV0sWzg4OSwxXSxbODk5LDFdLFs5MDksMV0sWzkyMCwxXSxbOTI5LDFdLFs5NDAsMV0sWzk1MCwxXSxbOTYwLDFdLFs5NzAsMV0sWzk4MSwxXSxbOTkxLDFdLFsxMDAxLDFdLFsxMDExLDFdLFsxMDIyLDFdLFsxMDMyLDFdLFsxMDQyLDFdLFsxMDUyLDFdLFsxMDYzLDFdLFsxMDczLDFdLFsxMDgyLDFdLFsxMDkzLDFdLFsxMTAzLDFdLFsxMTE0LDFdLFsxMTI0LDFdLFsxMjEzLDFdLFsxMjE1LDFdLFsxMjI2LDFdLFsxMjM2LDFdLFsxMjQ2LDFdLFsxMjU2LDFdLFsxMjY3LDFdLFsxMjc2LDFdLFsxMjg3LDFdLFsxMjk3LDFdLFsxMzA3LDFdLFsxMzE4LDFdLFsxMzI3LDFdLFsxMzM3LDFdLFsxMzQ5LDFdLFsxMzU5LDFdLFsxMzY5LDFdLFsxMzc4LDFdLFsxMzkwLDFdLFsxMzk5LDFdLFsxNDEwLDFdLFsxNDIwLDFdLFsxNDMwLDFdLFsxNDQwLDFdLFsxNDUxLDFdLFsxNDYxLDFdLFsxNDcwLDFdLFsxNDgwLDFdLFsxNDkxLDFdLFsxNTAxLDFdLFsxNTEyLDFdLFsxNTIyLDFdLFsxNTMyLDFdLFsxNTQyLDFdXX1d"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/test-results/release-11-1-1-reverse-·-a-afe55--closes-finishes-its-reopen-webkit-phone-repeat8/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 115,
+                    "line": 893
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 10360,
+                  "error": {
+                    "message": "Error: Accordion: the film is read, with no hole of more than two frames before it rests {\"name\":\"Accordion\",\"hole\":56,\"end\":1,\"state\":\"open\",\"frames\":[[0,1],[11,1],[22,1],[23,1],[26,1],[31,1],[40,0.971],[96,0.446],[147,0.157],[149,0.15],[151,0.144],[195,0],[215,0.113],[242,0.388],[288,0.743],[337,0.912],[387,0.973],[436,1],[484,1],[564,1],[571,1],[582,1],[592,1],[603,1],[613,1],[624,1],[633,1],[643,1],[654,1],[663,1],[673,1],[683,1],[695,1],[705,1],[714,1],[725,1],[734,1],[745,1],[755,1],[766,1],[776,1],[786,1],[797,1],[807,1],[817,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m56\u001b[39m",
+                    "stack": "Error: Accordion: the film is read, with no hole of more than two frames before it rests {\"name\":\"Accordion\",\"hole\":56,\"end\":1,\"state\":\"open\",\"frames\":[[0,1],[11,1],[22,1],[23,1],[26,1],[31,1],[40,0.971],[96,0.446],[147,0.157],[149,0.15],[151,0.144],[195,0],[215,0.113],[242,0.388],[288,0.743],[337,0.912],[387,0.973],[436,1],[484,1],[564,1],[571,1],[582,1],[592,1],[603,1],[613,1],[624,1],[633,1],[643,1],[654,1],[663,1],[673,1],[683,1],[695,1],[705,1],[714,1],[725,1],[734,1],[745,1],[755,1],[766,1],[776,1],[786,1],[797,1],[807,1],[817,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m56\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.spec.ts:893:115",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 115,
+                      "line": 893
+                    },
+                    "snippet": "  891 |     for (const r of reads) {\n  892 |         const at = JSON.stringify({ ...r, frames: r.frames.slice(0, 45) });\n> 893 |         expect(r.hole, `${r.name}: the film is read, with no hole of more than two frames before it rests ${at}`).toBeLessThanOrEqual(HOLE);\n      |                                                                                                                   ^\n  894 |         expect(r.end, `${r.name}: it ends open ${at}`).toBeGreaterThan(0.95);\n  895 |         expect(r.state, `${r.name}: it is open ${at}`).toBe(\"open\");\n  896 |     }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 115,
+                        "line": 893
+                      },
+                      "message": "Error: Accordion: the film is read, with no hole of more than two frames before it rests {\"name\":\"Accordion\",\"hole\":56,\"end\":1,\"state\":\"open\",\"frames\":[[0,1],[11,1],[22,1],[23,1],[26,1],[31,1],[40,0.971],[96,0.446],[147,0.157],[149,0.15],[151,0.144],[195,0],[215,0.113],[242,0.388],[288,0.743],[337,0.912],[387,0.973],[436,1],[484,1],[564,1],[571,1],[582,1],[592,1],[603,1],[613,1],[624,1],[633,1],[643,1],[654,1],[663,1],[673,1],[683,1],[695,1],[705,1],[714,1],[725,1],[734,1],[745,1],[755,1],[766,1],[776,1],[786,1],[797,1],[807,1],[817,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.333333333333336\u001b[39m\nReceived:    \u001b[31m56\u001b[39m\n\n  891 |     for (const r of reads) {\n  892 |         const at = JSON.stringify({ ...r, frames: r.frames.slice(0, 45) });\n> 893 |         expect(r.hole, `${r.name}: the film is read, with no hole of more than two frames before it rests ${at}`).toBeLessThanOrEqual(HOLE);\n      |                                                                                                                   ^\n  894 |         expect(r.end, `${r.name}: it ends open ${at}`).toBeGreaterThan(0.95);\n  895 |         expect(r.state, `${r.name}: it is open ${at}`).toBe(\"open\");\n  896 |     }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.spec.ts:893:115"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T16:05:37.799Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "reopen",
+                      "contentType": "application/json",
+                      "body": "W3sibmFtZSI6IkNvbGxhcHNpYmxlIiwiaG9sZSI6MjAsImVuZCI6MSwic3RhdGUiOiJvcGVuIiwiZnJhbWVzIjpbWzAsMV0sWzExLDFdLFsyMSwxXSxbMjIsMV0sWzI2LDFdLFszMSwxXSxbNDEsMC45NjVdLFs1MiwwLjg3OF0sWzcyLDAuNjczXSxbODAsMC41OTJdLFs4NywwLjUyNV0sWzk2LDAuNDQ2XSxbMTAzLDAuMzkxXSxbMTA0LDAuMzg0XSxbMTA5LDAuMzQ4XSxbMTE0LDBdLFsxMjMsMC4wMjhdLFsxMzMsMC4xMDRdLFsxNDQsMC4yMTJdLFsxNTQsMC4zMTZdLFsxNjUsMC40MjddLFsxNzQsMC41MTFdLFsxODQsMC41OTRdLFsxOTUsMC42NzJdLFsyMDUsMC43MzJdLFsyMTYsMC43ODddLFsyMjYsMC44MjhdLFsyMzYsMC44NjJdLFsyNDYsMC44OV0sWzI1NSwwLjkxXSxbMjY2LDAuOTNdLFsyNzcsMC45NDZdLFsyODcsMC45NTddLFsyOTcsMC45NjddLFszMDcsMC45NzRdLFszMTcsMV0sWzMyNywxXSxbMzM3LDFdLFszNDcsMV0sWzM1OCwxXSxbMzY4LDFdLFszNzgsMV0sWzM4OSwxXSxbMzk5LDFdLFs0MDksMV0sWzQxOSwxXSxbNDI5LDFdLFs0MzksMV0sWzQ0OSwxXSxbNDU5LDFdLFs0NzAsMV0sWzQ4MCwxXSxbNDkxLDFdLFs1MDEsMV0sWzUxMCwxXSxbNTIxLDFdLFs1MzEsMV0sWzU0MSwxXSxbNTUyLDFdLFs1NjIsMV0sWzU3MiwxXSxbNTgyLDFdLFs1OTMsMV0sWzYwMywxXSxbNjEzLDFdLFs2MjMsMV0sWzYzMywxXSxbNjQ0LDFdLFs2NTQsMV0sWzY2NSwxXSxbNjc0LDFdLFs2ODUsMV0sWzY5NCwxXSxbNzA0LDFdLFs3MTUsMV0sWzcyNSwxXSxbNzM1LDFdLFs3NDUsMV0sWzc1NiwxXSxbNzY1LDFdLFs3NzYsMV0sWzc4NywxXSxbNzk3LDFdLFs4MDYsMV0sWzgxOCwxXSxbODI3LDFdLFs4MzgsMV0sWzg0OCwxXSxbODU4LDFdLFs4NjksMV0sWzg3OCwxXSxbODg5LDFdLFs4OTksMV0sWzkwOSwxXSxbOTE5LDFdLFs5MzAsMV0sWzk0MCwxXSxbOTQ5LDFdLFs5NjAsMV0sWzk3MCwxXSxbOTgxLDFdLFs5OTAsMV0sWzEwMDEsMV0sWzEwMTEsMV0sWzEwMjAsMV0sWzEwMzEsMV0sWzEwNDIsMV0sWzEwNTIsMV0sWzEwNjIsMV0sWzEwNzIsMV0sWzEwODMsMV0sWzEwOTIsMV0sWzExMDMsMV0sWzExMTMsMV0sWzExMjMsMV0sWzExMzUsMV0sWzExNDQsMV0sWzExNTQsMV0sWzExNjMsMV0sWzExNzQsMV0sWzExODUsMV0sWzExOTUsMV0sWzEyMDUsMV0sWzEyMTUsMV0sWzEyMjUsMV0sWzEyMzYsMV0sWzEyNDYsMV0sWzEyNTYsMV0sWzEyNjYsMV0sWzEyNzYsMV0sWzEyODgsMV0sWzEyOTYsMV0sWzEzMDgsMV0sWzEzMTcsMV0sWzEzMjcsMV0sWzEzMzgsMV0sWzEzNDcsMV0sWzEzNTksMV0sWzEzNjcsMV0sWzEzNzgsMV0sWzEzODksMV0sWzEzOTgsMV0sWzE0MDksMV0sWzE0MTksMV0sWzE0MjksMV0sWzE0MzksMV0sWzE0NDksMV0sWzE0NjAsMV0sWzE0NzAsMV0sWzE0ODEsMV0sWzE0OTAsMV0sWzE1MDIsMV0sWzE1MTAsMV1dfSx7Im5hbWUiOiJBY2NvcmRpb24iLCJob2xlIjo1NiwiZW5kIjoxLCJzdGF0ZSI6Im9wZW4iLCJmcmFtZXMiOltbMCwxXSxbMTEsMV0sWzIyLDFdLFsyMywxXSxbMjYsMV0sWzMxLDFdLFs0MCwwLjk3MV0sWzk2LDAuNDQ2XSxbMTQ3LDAuMTU3XSxbMTQ5LDAuMTVdLFsxNTEsMC4xNDRdLFsxOTUsMF0sWzIxNSwwLjExM10sWzI0MiwwLjM4OF0sWzI4OCwwLjc0M10sWzMzNywwLjkxMl0sWzM4NywwLjk3M10sWzQzNiwxXSxbNDg0LDFdLFs1NjQsMV0sWzU3MSwxXSxbNTgyLDFdLFs1OTIsMV0sWzYwMywxXSxbNjEzLDFdLFs2MjQsMV0sWzYzMywxXSxbNjQzLDFdLFs2NTQsMV0sWzY2MywxXSxbNjczLDFdLFs2ODMsMV0sWzY5NSwxXSxbNzA1LDFdLFs3MTQsMV0sWzcyNSwxXSxbNzM0LDFdLFs3NDUsMV0sWzc1NSwxXSxbNzY2LDFdLFs3NzYsMV0sWzc4NiwxXSxbNzk3LDFdLFs4MDcsMV0sWzgxNywxXSxbODI3LDFdLFs4MzcsMV0sWzg0OCwxXSxbODU3LDFdLFs4NjgsMV0sWzg3OCwxXSxbODg5LDFdLFs4OTksMV0sWzkwOSwxXSxbOTE4LDFdLFs5MjksMV0sWzkzOSwxXSxbOTQ5LDFdLFs5NTksMV0sWzk3MCwxXSxbOTc5LDFdLFs5OTAsMV0sWzEwMDAsMV0sWzEwMTAsMV0sWzEwMjEsMV0sWzEwMzEsMV0sWzEwNDEsMV0sWzEwNTIsMV0sWzEwNjEsMV0sWzEwNzIsMV0sWzEwODEsMV0sWzEwOTMsMV0sWzExMDMsMV0sWzExMTMsMV0sWzExMjMsMV0sWzExMzMsMV0sWzExNDQsMV0sWzExNTMsMV0sWzExNjQsMV0sWzExNzMsMV0sWzExODQsMV0sWzExOTUsMV0sWzEyMDUsMV0sWzEyMTUsMV0sWzEyMjQsMV0sWzEyMzUsMV0sWzEyNDUsMV0sWzEyNTYsMV0sWzEyNjYsMV0sWzEyNzUsMV0sWzEyODYsMV0sWzEyOTYsMV0sWzEzMDcsMV0sWzEzMTcsMV0sWzEzMjYsMV0sWzEzMzcsMV0sWzEzNDgsMV0sWzEzNTcsMV0sWzEzNjgsMV0sWzEzNzgsMV0sWzEzODksMV0sWzEzOTksMV0sWzE0MDksMV0sWzE0MTgsMV0sWzE0MjksMV0sWzE0NDAsMV0sWzE0NTAsMV0sWzE0NjAsMV0sWzE0NzAsMV0sWzE0ODAsMV0sWzE0OTAsMV0sWzE1MDEsMV0sWzE1MTEsMV0sWzE1MjEsMV0sWzE1MzEsMV0sWzE1NDIsMV0sWzE1NTEsMV1dfV0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/test-results/release-11-1-1-reverse-·-a-afe55--closes-finishes-its-reopen-webkit-phone-repeat9/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 115,
+                    "line": 893
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-4ada96303872cb18e71d",
+          "file": "release-11-1-1.spec.ts",
+          "line": 865,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-17T16:03:57.958Z",
+    "duration": 110460.923,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 7,
+    "flaky": 0
+  }
+}

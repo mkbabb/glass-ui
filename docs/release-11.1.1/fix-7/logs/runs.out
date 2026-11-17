@@ -1,0 +1,31 @@
+10:40:59 sync-tip 89ced3151
+CHAIN1-START 10:41:09
+10:43:16 b1-tip-webkit-phone-1 tip@89ced3151 webkit-phone [1] exit 0 127s load=9.78 8.73 8.88  11 skipped  32 passed (1.9m) 
+10:46:12 b1-tip-webkit-phone-2 tip@89ced3151 webkit-phone [1] exit 0 176s load=11.39 10.06 9.41  11 skipped  32 passed (2.0m) 
+10:50:12 b1-tip-webkit-phone-3 tip@89ced3151 webkit-phone [1] exit 0 240s load=7.36 8.82 9.02  11 skipped  32 passed (1.9m) 
+10:52:02 b1-tip-chromium-phone tip@89ced3151 chromium-phone [1] exit 0 110s load=9.42 9.04 9.07  11 skipped  32 passed (1.7m) 
+10:54:16 b1-tip-chromium-desktop tip@89ced3151 chromium-desktop [1] exit 0 134s load=8.67 8.68 8.91  1 skipped  42 passed (2.1m) 
+10:56:41 b1-tip-webkit-desktop tip@89ced3151 webkit-desktop [1] exit 0 145s load=10.47 9.48 9.19  1 skipped  42 passed (2.3m) 
+10:58:58 b1-red-webkit-phone red webkit-phone [1] exit 1 137s load=9.47 9.48 9.23  25 failed  11 skipped  7 passed (2.2m) 
+11:01:00 b1-red-chromium-phone red chromium-phone [1] exit 1 122s load=10.48 9.75 9.35  26 failed  11 skipped  6 passed (2.0m) 
+CHAIN1-DONE 11:01:00
+CHAIN2-START 11:01:03
+11:01:50 a-branch-chromium-phone branch chromium-phone [sheet · ] exit 1 47s load=11.05 10.07 9.49  2 failed  1 passed (41.1s) 
+11:02:34 a-red-chromium-phone red chromium-phone [sheet · ] exit 1 44s load=9.95 9.94 9.48  2 failed  1 passed (40.1s) 
+11:03:14 a-branch-webkit-phone branch webkit-phone [sheet · ] exit 1 40s load=9.94 9.96 9.51  1 failed  2 skipped 
+11:03:54 a-red-webkit-phone red webkit-phone [sheet · ] exit 1 40s load=9.75 9.94 9.52  1 failed  2 skipped 
+CHAIN2-DONE 11:03:54
+CHAIN3-START 11:03:57
+11:05:52 g-tip-webkit-phone tip@89ced3151 webkit-phone [reverse · a disclosure reopened while it closes] exit 1 115s load=10.73 10.19 9.66  7 failed  3 passed (1.8m) 
+11:07:48 g-red-webkit-phone red webkit-phone [reverse · a disclosure reopened while it closes] exit 1 116s load=7.94 9.44 9.44  9 failed  1 passed (1.8m) 
+11:09:38 g-tip-chromium-phone tip@89ced3151 chromium-phone [reverse · a disclosure reopened while it closes] exit 0 110s load=13.00 10.60 9.88  10 passed (1.7m) 
+11:11:31 g-red-chromium-phone red chromium-phone [reverse · a disclosure reopened while it closes] exit 0 113s load=12.67 11.35 10.27  10 passed (1.8m) 
+CHAIN3-DONE 11:11:31
+CHAIN4-START 11:12:45
+11:14:24 g2-branch-webkit-phone branch webkit-phone [reverse · a disclosure reopened while it closes] exit 1 99s load=15.71 12.95 11.09  1 failed  9 passed (1.0m) 
+11:16:20 g2-red-webkit-phone red webkit-phone [reverse · a disclosure reopened while it closes] exit 0 116s load=10.84 12.53 11.19  10 passed (59.8s) 
+11:17:10 a2-branch-chromium-phone branch chromium-phone [sheet · ] exit 1 50s load=16.50 13.97 11.81  1 failed  2 passed (44.6s) 
+11:18:05 a2-red-chromium-phone red chromium-phone [sheet · ] exit 143 55s load=14.44 13.90 11.92  3 failed 
+11:18:05 a2-branch-webkit-phone branch webkit-phone [sheet · ] exit 75 0s load=14.44 13.90 11.92 
+11:18:05 a2-red-webkit-phone red webkit-phone [sheet · ] exit 75 0s load=14.44 13.90 11.92 
+CHAIN4-DONE 11:18:05
