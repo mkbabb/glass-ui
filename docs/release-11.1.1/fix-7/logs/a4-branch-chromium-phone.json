@@ -1,0 +1,225 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "release-11-1-1.config.ts",
+      "--project=chromium-phone",
+      "--workers=1",
+      "-g",
+      "sheet · a detented Sheet rises"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-7/logs/a4-branch-chromium-phone.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "sheet · a detented Sheet rises into place at its rung's size",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 112059,
+                  "error": {
+                    "message": "Error: at open plus 120 ms the tap hits the button, twenty in twenty [{\"after\":120,\"at\":126,\"dy\":310.3,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":126,\"dy\":306.3,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":126,\"dy\":309.9,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":128,\"dy\":309.2,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":127,\"dy\":309.9,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":128,\"dy\":307.4,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":127,\"dy\":309.5,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":128,\"dy\":310.3,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":126,\"dy\":309.9,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":127,\"dy\":310.3,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":127,\"dy\":309.9,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":125,\"dy\":311,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":128,\"dy\":309.9,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":128,\"dy\":309.5,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":127,\"dy\":309.9,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":129,\"dy\":309.5,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":128,\"dy\":309.9,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":128,\"dy\":309.9,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":128,\"dy\":309.9,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":127,\"dy\":308.4,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true}]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m20\u001b[39m\nReceived: \u001b[31m0\u001b[39m",
+                    "stack": "Error: at open plus 120 ms the tap hits the button, twenty in twenty [{\"after\":120,\"at\":126,\"dy\":310.3,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":126,\"dy\":306.3,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":126,\"dy\":309.9,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":128,\"dy\":309.2,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":127,\"dy\":309.9,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":128,\"dy\":307.4,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":127,\"dy\":309.5,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":128,\"dy\":310.3,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":126,\"dy\":309.9,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":127,\"dy\":310.3,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":127,\"dy\":309.9,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":125,\"dy\":311,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":128,\"dy\":309.9,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":128,\"dy\":309.5,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":127,\"dy\":309.9,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":129,\"dy\":309.5,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":128,\"dy\":309.9,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":128,\"dy\":309.9,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":128,\"dy\":309.9,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":127,\"dy\":308.4,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true}]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m20\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:838:129",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 129,
+                      "line": 838
+                    },
+                    "snippet": "  836 |         const these = taps.filter((r) => r.after === after);\n  837 |         const said = JSON.stringify(these.filter((r) => !r.hit || !r.closed));\n> 838 |         expect(these.filter((r) => r.hit).length, `at open plus ${after} ms the tap hits the button, twenty in twenty ${said}`).toBe(20);\n      |                                                                                                                                 ^\n  839 |         expect(these.filter((r) => r.closed).length, `and closes the sheet, twenty in twenty ${said}`).toBe(20);\n  840 |     }\n  841 | });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 129,
+                        "line": 838
+                      },
+                      "message": "Error: at open plus 120 ms the tap hits the button, twenty in twenty [{\"after\":120,\"at\":126,\"dy\":310.3,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":126,\"dy\":306.3,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":126,\"dy\":309.9,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":128,\"dy\":309.2,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":127,\"dy\":309.9,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":128,\"dy\":307.4,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":127,\"dy\":309.5,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":128,\"dy\":310.3,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":126,\"dy\":309.9,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":127,\"dy\":310.3,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":127,\"dy\":309.9,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":125,\"dy\":311,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":128,\"dy\":309.9,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":128,\"dy\":309.5,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":127,\"dy\":309.9,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":129,\"dy\":309.5,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":128,\"dy\":309.9,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":128,\"dy\":309.9,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":128,\"dy\":309.9,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true},{\"after\":120,\"at\":127,\"dy\":308.4,\"events\":\"pointerdown:10 click:11\",\"hit\":false,\"closed\":true}]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m20\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n\n  836 |         const these = taps.filter((r) => r.after === after);\n  837 |         const said = JSON.stringify(these.filter((r) => !r.hit || !r.closed));\n> 838 |         expect(these.filter((r) => r.hit).length, `at open plus ${after} ms the tap hits the button, twenty in twenty ${said}`).toBe(20);\n      |                                                                                                                                 ^\n  839 |         expect(these.filter((r) => r.closed).length, `and closes the sheet, twenty in twenty ${said}`).toBe(20);\n  840 |     }\n  841 | });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:838:129"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T16:43:23.335Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "sheet",
+                      "contentType": "application/json",
+                      "body": "eyJyaXNlIjp7ImhlaWdodFNwcmVhZCI6MCwiZmlyc3RIZWFkIjo5ODksInJlc3RIZWFkIjoxNTAsInNoYXJlIjowLjEwNSwiZnJhbWVzIjpbWy0zLDkzMixudWxsXSxbMTQsOTg5LDgzOV0sWzIyLDk2Nyw4MzldLFszMSw5NDQsODM5XSxbMzgsOTExLDgzOV0sWzQ3LDg4MCw4MzldLFs1NSw4MzksODM5XSxbNjQsODAxLDgzOV0sWzcyLDc2MCw4MzldLFs4MCw3MTksODM5XSxbODgsNjgwLDgzOV0sWzk3LDYzOSw4MzldLFsxMDUsNjAwLDgzOV0sWzExNCw1NjMsODM5XSxbMTIyLDUyNiw4MzldLFsxMzAsNDkzLDgzOV0sWzEzOCw0NjEsODM5XSxbMTQ3LDQzMyw4MzldLFsxNTUsNDA1LDgzOV0sWzE2MywzNzksODM5XSxbMTcyLDM1Niw4MzldLFsxODAsMzM0LDgzOV0sWzE4OCwzMTUsODM5XSxbMTk3LDI5Nyw4MzldLFsyMDYsMjgwLDgzOV0sWzIxNCwyNjMsODM5XSxbMjIxLDI1MCw4MzldLFsyMzAsMjM5LDgzOV0sWzIzOSwyMjgsODM5XSxbMjQ3LDIxNyw4MzldLFsyNTUsMjA5LDgzOV0sWzI2MywyMDEsODM5XSxbMjcyLDE5NCw4MzldLFsyODEsMTg4LDgzOV0sWzI4OSwxODIsODM5XSxbMjk3LDE3Nyw4MzldLFszMDUsMTczLDgzOV0sWzMxNCwxNzAsODM5XSxbMzIxLDE2Niw4MzldLFszMzEsMTY0LDgzOV0sWzMzOCwxNjEsODM5XSxbMzQ2LDE1OSw4MzldLFszNTUsMTU3LDgzOV0sWzM2MywxNTYsODM5XSxbMzcyLDE1NCw4MzldLFszODEsMTUzLDgzOV0sWzM4OSwxNTIsODM5XSxbMzk3LDE1Miw4MzldLFs0MDUsMTUxLDgzOV0sWzQxNCwxNTAsODM5XV19LCJ0YXBzIjpbeyJhZnRlciI6MTIwLCJhdCI6MTI2LCJkeSI6MzEwLjMsImV2ZW50cyI6InBvaW50ZXJkb3duOjEwIGNsaWNrOjExIiwiaGl0IjpmYWxzZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjoxMjAsImF0IjoxMjYsImR5IjozMDYuMywiZXZlbnRzIjoicG9pbnRlcmRvd246MTAgY2xpY2s6MTEiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjEyMCwiYXQiOjEyNiwiZHkiOjMwOS45LCJldmVudHMiOiJwb2ludGVyZG93bjoxMCBjbGljazoxMSIsImhpdCI6ZmFsc2UsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MTIwLCJhdCI6MTI4LCJkeSI6MzA5LjIsImV2ZW50cyI6InBvaW50ZXJkb3duOjEwIGNsaWNrOjExIiwiaGl0IjpmYWxzZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjoxMjAsImF0IjoxMjcsImR5IjozMDkuOSwiZXZlbnRzIjoicG9pbnRlcmRvd246MTAgY2xpY2s6MTEiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjEyMCwiYXQiOjEyOCwiZHkiOjMwNy40LCJldmVudHMiOiJwb2ludGVyZG93bjoxMCBjbGljazoxMSIsImhpdCI6ZmFsc2UsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MTIwLCJhdCI6MTI3LCJkeSI6MzA5LjUsImV2ZW50cyI6InBvaW50ZXJkb3duOjEwIGNsaWNrOjExIiwiaGl0IjpmYWxzZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjoxMjAsImF0IjoxMjgsImR5IjozMTAuMywiZXZlbnRzIjoicG9pbnRlcmRvd246MTAgY2xpY2s6MTEiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjEyMCwiYXQiOjEyNiwiZHkiOjMwOS45LCJldmVudHMiOiJwb2ludGVyZG93bjoxMCBjbGljazoxMSIsImhpdCI6ZmFsc2UsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MTIwLCJhdCI6MTI3LCJkeSI6MzEwLjMsImV2ZW50cyI6InBvaW50ZXJkb3duOjEwIGNsaWNrOjExIiwiaGl0IjpmYWxzZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjoxMjAsImF0IjoxMjcsImR5IjozMDkuOSwiZXZlbnRzIjoicG9pbnRlcmRvd246MTAgY2xpY2s6MTEiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjEyMCwiYXQiOjEyNSwiZHkiOjMxMSwiZXZlbnRzIjoicG9pbnRlcmRvd246MTAgY2xpY2s6MTEiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjEyMCwiYXQiOjEyOCwiZHkiOjMwOS45LCJldmVudHMiOiJwb2ludGVyZG93bjoxMCBjbGljazoxMSIsImhpdCI6ZmFsc2UsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MTIwLCJhdCI6MTI4LCJkeSI6MzA5LjUsImV2ZW50cyI6InBvaW50ZXJkb3duOjEwIGNsaWNrOjExIiwiaGl0IjpmYWxzZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjoxMjAsImF0IjoxMjcsImR5IjozMDkuOSwiZXZlbnRzIjoicG9pbnRlcmRvd246MTAgY2xpY2s6MTEiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjEyMCwiYXQiOjEyOSwiZHkiOjMwOS41LCJldmVudHMiOiJwb2ludGVyZG93bjoxMCBjbGljazoxMSIsImhpdCI6ZmFsc2UsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MTIwLCJhdCI6MTI4LCJkeSI6MzA5LjksImV2ZW50cyI6InBvaW50ZXJkb3duOjEwIGNsaWNrOjExIiwiaGl0IjpmYWxzZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjoxMjAsImF0IjoxMjgsImR5IjozMDkuOSwiZXZlbnRzIjoicG9pbnRlcmRvd246MTAgY2xpY2s6MTEiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjEyMCwiYXQiOjEyOCwiZHkiOjMwOS45LCJldmVudHMiOiJwb2ludGVyZG93bjoxMCBjbGljazoxMSIsImhpdCI6ZmFsc2UsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MTIwLCJhdCI6MTI3LCJkeSI6MzA4LjQsImV2ZW50cyI6InBvaW50ZXJkb3duOjEwIGNsaWNrOjExIiwiaGl0IjpmYWxzZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjoxOTAsImF0IjoxOTQsImR5IjoxMjcuOSwiZXZlbnRzIjoicG9pbnRlcmRvd246MTEgY2xpY2s6MTEiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MTkwLCJhdCI6MTk5LCJkeSI6MTEyLjksImV2ZW50cyI6InBvaW50ZXJkb3duOjExIGNsaWNrOjExIiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjE5MCwiYXQiOjE5NSwiZHkiOjEyOS4yLCJldmVudHMiOiJwb2ludGVyZG93bjoxMSBjbGljazoxMSIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjoxOTAsImF0IjoxOTUsImR5IjoxMjguMSwiZXZlbnRzIjoicG9pbnRlcmRvd246MTEgY2xpY2s6MTEiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MTkwLCJhdCI6MTk1LCJkeSI6MTI4LjEsImV2ZW50cyI6InBvaW50ZXJkb3duOjExIGNsaWNrOjExIiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjE5MCwiYXQiOjE5NSwiZHkiOjEyNi40LCJldmVudHMiOiJwb2ludGVyZG93bjoxMSBjbGljazoxMSIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjoxOTAsImF0IjoxOTQsImR5IjoxMjguMSwiZXZlbnRzIjoicG9pbnRlcmRvd246MTEgY2xpY2s6MTEiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MTkwLCJhdCI6MjAwLCJkeSI6MTEzLjIsImV2ZW50cyI6InBvaW50ZXJkb3duOjExIGNsaWNrOjExIiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjE5MCwiYXQiOjE5MiwiZHkiOjEyOS44LCJldmVudHMiOiJwb2ludGVyZG93bjoxMSBjbGljazoxMSIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjoxOTAsImF0IjoxOTMsImR5IjoxMjguMSwiZXZlbnRzIjoicG9pbnRlcmRvd246MTEgY2xpY2s6MTEiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MTkwLCJhdCI6MTk0LCJkeSI6MTI4LjEsImV2ZW50cyI6InBvaW50ZXJkb3duOjExIGNsaWNrOjExIiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjE5MCwiYXQiOjIwMCwiZHkiOjExMy4xLCJldmVudHMiOiJwb2ludGVyZG93bjoxMSBjbGljazoxMSIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjoxOTAsImF0IjoxOTQsImR5IjoxMjcuNywiZXZlbnRzIjoicG9pbnRlcmRvd246MTEgY2xpY2s6MTEiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MTkwLCJhdCI6MTkzLCJkeSI6MTI2LjgsImV2ZW50cyI6InBvaW50ZXJkb3duOjExIGNsaWNrOjExIiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjE5MCwiYXQiOjE5NCwiZHkiOjEyOC4xLCJldmVudHMiOiJwb2ludGVyZG93bjoxMSBjbGljazoxMSIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjoxOTAsImF0IjoxOTYsImR5IjoxMjguMSwiZXZlbnRzIjoicG9pbnRlcmRvd246MTEgY2xpY2s6MTEiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MTkwLCJhdCI6MTk0LCJkeSI6MTI4LjMsImV2ZW50cyI6InBvaW50ZXJkb3duOjExIGNsaWNrOjExIiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjE5MCwiYXQiOjIwMSwiZHkiOjExMy4yLCJldmVudHMiOiJwb2ludGVyZG93bjoxMSBjbGljazoxMSIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjoxOTAsImF0IjoxOTUsImR5IjoxMjcsImV2ZW50cyI6InBvaW50ZXJkb3duOjExIGNsaWNrOjExIiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjE5MCwiYXQiOjE5NCwiZHkiOjEyOC4zLCJldmVudHMiOiJwb2ludGVyZG93bjoxMSBjbGljazoxMSIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjoyNTAsImF0IjoyNTIsImR5Ijo0OS45LCJldmVudHMiOiJwb2ludGVyZG93bjoxMSBjbGljazoxMSIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjoyNTAsImF0IjoyNTMsImR5Ijo1MCwiZXZlbnRzIjoicG9pbnRlcmRvd246MTEgY2xpY2s6MTEiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MjUwLCJhdCI6MjUyLCJkeSI6NTAuMiwiZXZlbnRzIjoicG9pbnRlcmRvd246MTEgY2xpY2s6MTEiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MjUwLCJhdCI6MjUzLCJkeSI6NDkuNiwiZXZlbnRzIjoicG9pbnRlcmRvd246MTEgY2xpY2s6MTEiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MjUwLCJhdCI6MjUyLCJkeSI6NDkuNywiZXZlbnRzIjoicG9pbnRlcmRvd246MTEgY2xpY2s6MTEiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MjUwLCJhdCI6MjUyLCJkeSI6NTAsImV2ZW50cyI6InBvaW50ZXJkb3duOjExIGNsaWNrOjExIiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjI1MCwiYXQiOjI2MCwiZHkiOjQzLjIsImV2ZW50cyI6InBvaW50ZXJkb3duOjExIGNsaWNrOjExIiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjI1MCwiYXQiOjI2MCwiZHkiOjQzLjIsImV2ZW50cyI6InBvaW50ZXJkb3duOjExIGNsaWNrOjExIiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjI1MCwiYXQiOjI1MywiZHkiOjUwLjksImV2ZW50cyI6InBvaW50ZXJkb3duOjExIGNsaWNrOjExIiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjI1MCwiYXQiOjI2MSwiZHkiOjQyLjcsImV2ZW50cyI6InBvaW50ZXJkb3duOjExIGNsaWNrOjExIiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjI1MCwiYXQiOjI1MywiZHkiOjUwLjIsImV2ZW50cyI6InBvaW50ZXJkb3duOjExIGNsaWNrOjExIiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjI1MCwiYXQiOjI1MiwiZHkiOjUwLjksImV2ZW50cyI6InBvaW50ZXJkb3duOjExIGNsaWNrOjExIiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjI1MCwiYXQiOjI1OSwiZHkiOjQyLjcsImV2ZW50cyI6InBvaW50ZXJkb3duOjExIGNsaWNrOjExIiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjI1MCwiYXQiOjI1NCwiZHkiOjQ5LjcsImV2ZW50cyI6InBvaW50ZXJkb3duOjExIGNsaWNrOjExIiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjI1MCwiYXQiOjI1MiwiZHkiOjUwLjEsImV2ZW50cyI6InBvaW50ZXJkb3duOjExIGNsaWNrOjExIiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjI1MCwiYXQiOjI2MCwiZHkiOjQzLjIsImV2ZW50cyI6InBvaW50ZXJkb3duOjExIGNsaWNrOjExIiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjI1MCwiYXQiOjI1MywiZHkiOjUwLjEsImV2ZW50cyI6InBvaW50ZXJkb3duOjExIGNsaWNrOjExIiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjI1MCwiYXQiOjI1MywiZHkiOjUwLjEsImV2ZW50cyI6InBvaW50ZXJkb3duOjExIGNsaWNrOjExIiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjI1MCwiYXQiOjI2MCwiZHkiOjQzLjMsImV2ZW50cyI6InBvaW50ZXJkb3duOjExIGNsaWNrOjExIiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjI1MCwiYXQiOjI1MywiZHkiOjUwLjQsImV2ZW50cyI6InBvaW50ZXJkb3duOjExIGNsaWNrOjExIiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjQwMCwiYXQiOjQwOSwiZHkiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjExIGNsaWNrOjExIiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjQwMCwiYXQiOjQwNiwiZHkiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjExIGNsaWNrOjExIiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjQwMCwiYXQiOjQxMSwiZHkiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjExIGNsaWNrOjExIiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjQwMCwiYXQiOjQwMiwiZHkiOjAuMiwiZXZlbnRzIjoicG9pbnRlcmRvd246MTEgY2xpY2s6MTEiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6NDAwLCJhdCI6NDA4LCJkeSI6MCwiZXZlbnRzIjoicG9pbnRlcmRvd246MTEgY2xpY2s6MTEiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6NDAwLCJhdCI6NDA0LCJkeSI6MC4yLCJldmVudHMiOiJwb2ludGVyZG93bjoxMSBjbGljazoxMSIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjo0MDAsImF0Ijo0MDIsImR5IjowLjIsImV2ZW50cyI6InBvaW50ZXJkb3duOjExIGNsaWNrOjExIiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjQwMCwiYXQiOjQwOSwiZHkiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjExIGNsaWNrOjExIiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjQwMCwiYXQiOjQwOSwiZHkiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjExIGNsaWNrOjExIiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjQwMCwiYXQiOjQwMiwiZHkiOjAuMiwiZXZlbnRzIjoicG9pbnRlcmRvd246MTEgY2xpY2s6MTEiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6NDAwLCJhdCI6NDAzLCJkeSI6MC4yLCJldmVudHMiOiJwb2ludGVyZG93bjoxMSBjbGljazoxMSIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjo0MDAsImF0Ijo0MDksImR5IjowLCJldmVudHMiOiJwb2ludGVyZG93bjoxMSBjbGljazoxMSIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjo0MDAsImF0Ijo0MTEsImR5IjowLCJldmVudHMiOiJwb2ludGVyZG93bjoxMSBjbGljazoxMSIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjo0MDAsImF0Ijo0MDIsImR5IjowLjMsImV2ZW50cyI6InBvaW50ZXJkb3duOjExIGNsaWNrOjExIiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjQwMCwiYXQiOjQwNCwiZHkiOjAuMiwiZXZlbnRzIjoicG9pbnRlcmRvd246MTEgY2xpY2s6MTEiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6NDAwLCJhdCI6NDAyLCJkeSI6MC4yLCJldmVudHMiOiJwb2ludGVyZG93bjoxMSBjbGljazoxMSIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjo0MDAsImF0Ijo0MDEsImR5IjowLjIsImV2ZW50cyI6InBvaW50ZXJkb3duOjExIGNsaWNrOjExIiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjQwMCwiYXQiOjQwMywiZHkiOjAuMiwiZXZlbnRzIjoicG9pbnRlcmRvd246MTEgY2xpY2s6MTEiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6NDAwLCJhdCI6NDEwLCJkeSI6MCwiZXZlbnRzIjoicG9pbnRlcmRvd246MTEgY2xpY2s6MTEiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6NDAwLCJhdCI6NDAzLCJkeSI6MC4yLCJldmVudHMiOiJwb2ludGVyZG93bjoxMSBjbGljazoxMSIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-sheet-·-a-d-cc72f-to-place-at-its-rung-s-size-chromium-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 129,
+                    "line": 838
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-f7524e160deeab7a2726",
+          "file": "release-11-1-1.spec.ts",
+          "line": 724,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-17T16:43:22.268Z",
+    "duration": 113246.646,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

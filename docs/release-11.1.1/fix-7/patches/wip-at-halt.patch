@@ -1,0 +1,266 @@
+diff --git a/src/components/sheet/detents/use.ts b/src/components/sheet/detents/use.ts
+index 9b45f1d89..e964b74e5 100644
+--- a/src/components/sheet/detents/use.ts
++++ b/src/components/sheet/detents/use.ts
+@@ -22,10 +22,16 @@
+ // are room-sized growth (`bloom`), rung-to-rung travel is coordinated travel (`dock`).
+ // A leg change re-seats a fresh spring at the live `(value, velocity)`, so the
+ // trajectory stays continuous across the register change.
++//
++// REDUCED MOTION: the spring lands the box on its rung at once, and the sheet fades in
++// and out instead, over the travel row's exit clock held to at most `--duration-fast`,
++// on `--exit-curve`, as a sliding sheet does. The box holds its rung while it fades out.
+ 
+ import { computed, onScopeDispose, ref, watch, type Ref } from "vue";
+ import { SpringProgress } from "@mkbabb/keyframes.js";
+ import { motionTempo } from "../../../composables/motion/core/motionTempo";
++import { readReducedMotion } from "../../../composables/motion/core/useReducedMotion";
++import { readExitClock, runExitClock } from "../../../composables/motion/spring/exitClock";
+ import { springPreset } from "../../../composables/motion/spring/springPresets";
+ import { nearestRung, resolveRelease } from "./projection";
+ import type { SidePlacement } from "../motion";
+@@ -56,6 +62,8 @@ export interface UseSheetDetentsReturn {
+      * time it is `t`.
+      */
+     size: Readonly<Ref<number>>;
++    /** The sheet's opacity while it fades in or out under reduced motion; null otherwise. */
++    opacity: Readonly<Ref<number | null>>;
+     /** Mount hold — true until the dismissing spring reaches 0. */
+     present: Readonly<Ref<boolean>>;
+     /** True while a pointer drag is in flight. */
+@@ -123,6 +131,25 @@ export function useSheetDetents(
+     const size = computed(() => rising.value ?? t.value);
+     const present = ref(open.value);
+     const dragging = ref(false);
++    const opacity = ref<number | null>(null);
++    let stopFade = () => {};
++
++    /** Under reduced motion, fades the sheet from `from` to `to`, then calls `done`. False
++     *  where motion is not reduced or no stylesheet resolves the clock. */
++    function fade(to: 0 | 1, from: number, done: () => void): boolean {
++        if (!readReducedMotion()) return false;
++        const clock = readExitClock(LEG_PRESET.travel, true);
++        if (!clock || typeof requestAnimationFrame !== "function") return false;
++        stopFade();
++        opacity.value = from;
++        stopFade = runExitClock(clock, (k) => (opacity.value = from + (to - from) * k), done);
++        return true;
++    }
++
++    function clearFade() {
++        stopFade();
++        opacity.value = null;
++    }
+ 
+     let spring: SpringProgress | null = null;
+     let leg: Leg | null = null;
+diff --git a/src/composables/motion/spring/useSpringMount.ts b/src/composables/motion/spring/useSpringMount.ts
+index 3aea6f9b4..3ddecf8d9 100644
+--- a/src/composables/motion/spring/useSpringMount.ts
++++ b/src/composables/motion/spring/useSpringMount.ts
+@@ -39,6 +39,7 @@ import {
+     type Ref,
+ } from "vue";
+ import { useSpring, type SpringRef } from "./useSpring";
++import { readExitClock, runExitClock } from "./exitClock";
+ 
+ import { springPreset, type SpringPresetName } from "./springPresets";
+ 
+@@ -120,52 +121,12 @@ export interface SpringMountRef {
+  *  position settle threshold, under a pixel for any surface shorter than 1,000 px). */
+ const EXIT_EDGE = 1e-3;
+ 
+-/** A CSS `cubic-bezier()` as a function of progress, or linear for `linear`. */
+-function bezierOf(timing: string): ((k: number) => number) | null {
+-    if (timing.trim() === "linear") return (k) => k;
+-    const m = /cubic-bezier\(([^)]+)\)/.exec(timing);
+-    if (!m) return null;
+-    const [x1, y1, x2, y2] = m[1].split(",").map(Number);
+-    const at = (a: number, b: number, t: number) => 3 * (1 - t) ** 2 * t * a + 3 * (1 - t) * t * t * b + t ** 3;
+-    return (k) => {
+-        let lo = 0;
+-        let hi = 1;
+-        for (let i = 0; i < 30; i++) {
+-            const mid = (lo + hi) / 2;
+-            if (at(x1, x2, mid) < k) lo = mid;
+-            else hi = mid;
+-        }
+-        return at(y1, y2, (lo + hi) / 2);
+-    };
+-}
+-
+ /** How much longer than its row's exit clock a mounted surface takes to leave. The
+  *  `present` row's exit is the generator's 0.12 s floor, which a centred modal plate
+  *  crosses in too few frames to read; it leaves in 1.5 times that, about 180 ms, still
+  *  well inside its entrance. The other rows leave on their own clock. */
+ const MOUNT_EXIT_STRETCH: Partial<Record<SpringPreset, number>> = { present: 1.5 };
+ 
+-const msOf = (duration: string): number =>
+-    duration.endsWith("ms") ? parseFloat(duration) : parseFloat(duration) * 1000;
+-
+-/** The row's exit clock (ms) and the exit curve, read from the stylesheet. Under reduced
+- *  motion the clock is held to at most `--duration-fast`. */
+-function readExit(
+-    preset: SpringPreset,
+-    reduced: boolean,
+-): { ms: number; ease: (k: number) => number } | null {
+-    if (typeof document === "undefined" || !document.body) return null;
+-    const probe = document.createElement("div");
+-    probe.style.cssText = `position:absolute;visibility:hidden;transition-duration:var(--spring-${preset}-exit-duration);transition-timing-function:var(--exit-curve);animation-duration:var(--duration-fast)`;
+-    document.body.appendChild(probe);
+-    const cs = getComputedStyle(probe);
+-    const exitMs = msOf(cs.transitionDuration.trim()) * (MOUNT_EXIT_STRETCH[preset] ?? 1);
+-    const ms = reduced ? Math.min(exitMs, msOf(cs.animationDuration.trim())) : exitMs;
+-    const ease = bezierOf(cs.transitionTimingFunction);
+-    probe.remove();
+-    return ms > 0 && ease ? { ms, ease } : null;
+-}
+-
+ export function useSpringMount(options: UseSpringMountOptions): SpringMountRef {
+     const presetName = options.preset ?? "panel";
+     const preset = SPRING_PRESETS[presetName];
+@@ -201,11 +162,7 @@ export function useSpringMount(options: UseSpringMountOptions): SpringMountRef {
+ 
+     // The exit tween's position while it runs; null when the spring owns the position.
+     const exitPosition = ref<number | null>(null);
+-    let exitFrame = 0;
+-    const stopExit = () => {
+-        if (exitFrame) cancelAnimationFrame(exitFrame);
+-        exitFrame = 0;
+-    };
++    let stopExit = () => {};
+     const reducedMotion = () =>
+         options.respectReducedMotion !== false &&
+         typeof window !== "undefined" &&
+@@ -216,32 +173,21 @@ export function useSpringMount(options: UseSpringMountOptions): SpringMountRef {
+     function tween(to: 0 | 1): boolean {
+         const reduced = reducedMotion();
+         if (to === 0 && !reduced) return false;
+-        const exit = readExit(presetName, reduced);
++        const exit = readExitClock(presetName, reduced, MOUNT_EXIT_STRETCH[presetName]);
+         if (!exit || typeof requestAnimationFrame !== "function") return false;
+         stopExit();
+         const from = exitPosition.value ?? spring.value.value;
+-        // The clock advances by at most one 60 Hz frame per frame, so a long frame (a pick
+-        // that navigates, a list that re-renders) slows the exit rather than skipping a
+-        // stretch of it; on steady frames it runs on the exit clock.
+-        let last: number | null = null;
+-        let elapsed = 0;
+         exitPosition.value = from;
+         // The spring heads for the same end underneath, so a reversal retargets it.
+         target.value = to;
+-        const step = (now: number) => {
+-            if (last !== null) elapsed += Math.min(now - last, 1000 / 60);
+-            last = now;
+-            const k = Math.min(1, elapsed / exit.ms);
+-            exitPosition.value = from + (to - from) * exit.ease(k);
+-            if (k < 1) {
+-                exitFrame = requestAnimationFrame(step);
+-                return;
+-            }
+-            exitFrame = 0;
+-            spring.reset(to, 0);
+-            exitPosition.value = null;
+-        };
+-        exitFrame = requestAnimationFrame(step);
++        stopExit = runExitClock(
++            exit,
++            (k) => (exitPosition.value = from + (to - from) * k),
++            () => {
++                spring.reset(to, 0);
++                exitPosition.value = null;
++            },
++        );
+         return true;
+     }
+ 
+diff --git a/tests-visual/release-11-1-1-reduce.spec.ts b/tests-visual/release-11-1-1-reduce.spec.ts
+index fad66f5e0..bc7cb534f 100644
+--- a/tests-visual/release-11-1-1-reduce.spec.ts
++++ b/tests-visual/release-11-1-1-reduce.spec.ts
+@@ -149,6 +149,7 @@ const surfaces: Surface[] = [
+     { name: "Dialog", says: true, content: '[data-testid="x-dialog-content"]', enter: tap('[data-testid="x-dialog"]'), leave: escape },
+     { name: "Sheet right", says: true, content: '[data-testid="x-sheet-right-content"]', enter: tap('[data-testid="x-sheet-right"]'), leave: escape },
+     { name: "Sheet bottom", says: true, content: '[data-testid="x-sheet-bottom-content"]', enter: tap('[data-testid="x-sheet-bottom"]'), leave: escape },
++    { name: "detented Sheet", says: true, content: '[data-testid="x-detent-content"]', enter: tap('[data-testid="x-detent"]'), leave: escape },
+     {
+         name: "Toast",
+         content: '[data-slot="toast"]',
+diff --git a/tests-visual/release-11-1-1.spec.ts b/tests-visual/release-11-1-1.spec.ts
+index 65288fef6..2fb43b769 100644
+--- a/tests-visual/release-11-1-1.spec.ts
++++ b/tests-visual/release-11-1-1.spec.ts
+@@ -938,7 +938,9 @@ for (const release of ["at speed", "at rest"] as const) {
+ //            box its clip uncovers and the share on screen) moves no more than a fifth in
+ //            one frame after the turn, and it ends where the second input sent it. A
+ //            trigger pressed while a Dialog, a Sheet or a Select leaves reopens it, and a
+-//            press on the page while a sheet leaves reaches the page. A turn is read on
++//            press on the page while a sheet leaves reaches the page. A Toast is closed
++//            when its entrance has run a twentieth of its own clock, so the close lands
++//            early in its light whatever the engine's pace. A turn is read on
+ //            the frame clock, from the last frame painted before the page took the second
+ //            input; a film with a hole of more than two frames before the surface comes
+ //            to rest is not read either way, and the cell films it once more. An
+@@ -990,8 +992,9 @@ type Turn = {
+     film?: string;
+     open: (page: Page, project: string) => Promise<void>;
+     close: (page: Page, project: string) => Promise<void>;
+-    /** ms after the first input at which the second lands, mid-motion. */
+-    at: number;
++    /** When the second input lands, mid-motion: ms after the first, or a share of the
++     *  entrance's own clock (its opacity transition's elapsed time over its duration). */
++    at: number | { clock: number };
+     /** A disclosure is read by its height. */
+     height?: boolean;
+     desktopOnly?: boolean;
+@@ -1091,7 +1094,7 @@ const turns: Turn[] = [
+         film: '[data-slot="toast"] > div',
+         open: tap('[data-testid="x-toast"]'),
+         close: tapNow('[data-slot="toast"] button[aria-label="Dismiss"]'),
+-        at: 110,
++        at: { clock: 0.05 },
+         only: "close",
+     },
+     { name: "Tooltip", content: '[data-testid="x-tooltip-content"]', open: hover('[data-testid="x-tooltip"]'), close: away, at: 60, desktopOnly: true },
+@@ -1106,12 +1109,38 @@ const accordion: Turn = {
+     height: true,
+ };
+ 
+-async function filmTurn(page: Page, project: string, c: Turn, first: "open" | "close", wait: number): Promise<Film> {
++/** Waits on the page until the entrance of `content` has run `share` of its own clock,
++ *  then marks the turn there. */
++async function markTurnAtClock(page: Page, content: string, share: number): Promise<void> {
++    await page.evaluate(
++        async ({ content, share }) => {
++            const t0 = performance.now();
++            for (;;) {
++                const fade = document
++                    .querySelector(content)
++                    ?.getAnimations()
++                    .find((a) => (a as unknown as { transitionProperty?: string }).transitionProperty === "opacity");
++                const duration = Number(fade?.effect?.getComputedTiming().duration ?? 0);
++                if (fade && duration > 0 && Number(fade.currentTime ?? 0) / duration >= share) {
++                    (window as unknown as { __turn: () => void }).__turn();
++                    return;
++                }
++                if (performance.now() - t0 > 3000) throw new Error(`${content} ran no entrance clock to ${share}`);
++                await new Promise((r) => requestAnimationFrame(r));
++            }
++        },
++        { content, share },
++    );
++}
++
++async function filmTurn(page: Page, project: string, c: Turn, first: "open" | "close", wait: Turn["at"]): Promise<Film> {
+     await startFilm(page, c.film ?? c.content);
+     await markFilm(page);
+     await (first === "open" ? c.open : c.close)(page, project);
+-    await page.waitForTimeout(wait);
+-    await markTurn(page);
++    if (typeof wait === "number") {
++        await page.waitForTimeout(wait);
++        await markTurn(page);
++    } else await markTurnAtClock(page, c.content, wait.clock);
+     await (first === "open" ? c.close : c.open)(page, project);
+     return stopFilm(page, 1400);
+ }
