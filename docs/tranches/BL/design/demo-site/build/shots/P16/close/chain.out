@@ -1,0 +1,55 @@
+07:28:04 tip run: build typecheck check sweep webkit wkcheck lift contact vitest railfade on 1a423c80d
+07:28:04 start build.txt
+07:28:10 end build.txt rc=0
+07:28:10 start typecheck.txt
+07:28:19 end typecheck.txt rc=0
+07:28:19 start typecheck-test.txt
+07:28:29 end typecheck-test.txt rc=2
+07:28:30 preview up (guard pid 95245)
+07:28:30 start check-d1440.txt
+07:33:56 end check-d1440.txt rc=0
+07:33:56 start check-l1440.txt
+07:39:14 end check-l1440.txt rc=0
+07:39:14 start check-m390.txt
+07:44:25 end check-m390.txt rc=0
+.p16/tip.sh: line 47: 95245 Killed: 9               "$G" --timeout 90 -- npx vite preview --config vite.local-cache.config.ts --host 127.0.0.1 --port 5471 --strictPort > "$T/preview.log" 2>&1 < /dev/null
+07:44:28 preview stopped (guard pid 95245), KILL for 95245
+07:44:29 preview up (guard pid 19173)
+07:44:29 start sweep-d1440.txt
+07:53:06 end sweep-d1440.txt rc=0
+07:53:06 start sweep-l1440.txt
+08:01:36 end sweep-l1440.txt rc=0
+08:01:36 start sweep-m390.txt
+08:09:59 end sweep-m390.txt rc=0
+.p16/tip.sh: line 47: 19173 Killed: 9               "$G" --timeout 90 -- npx vite preview --config vite.local-cache.config.ts --host 127.0.0.1 --port 5471 --strictPort > "$T/preview.log" 2>&1 < /dev/null
+08:10:02 preview stopped (guard pid 19173), KILL for 19173
+08:10:03 preview up (guard pid 80729)
+08:10:03 start webkit-l1440.txt
+08:11:36 end webkit-l1440.txt rc=0
+08:11:36 start webkit-m390.txt
+08:12:54 end webkit-m390.txt rc=0
+.p16/tip.sh: line 47: 80729 Killed: 9               "$G" --timeout 90 -- npx vite preview --config vite.local-cache.config.ts --host 127.0.0.1 --port 5471 --strictPort > "$T/preview.log" 2>&1 < /dev/null
+08:12:58 preview stopped (guard pid 80729), KILL for 80729
+08:12:59 preview up (guard pid 89204)
+08:12:59 start check-webkit-l1440.txt
+08:13:38 end check-webkit-l1440.txt rc=0
+08:13:38 start check-webkit-m390.txt
+08:14:18 end check-webkit-m390.txt rc=0
+.p16/tip.sh: line 47: 89204 Killed: 9               "$G" --timeout 90 -- npx vite preview --config vite.local-cache.config.ts --host 127.0.0.1 --port 5471 --strictPort > "$T/preview.log" 2>&1 < /dev/null
+08:14:21 preview stopped (guard pid 89204), KILL for 89204
+08:14:22 preview up (guard pid 91785)
+08:14:22 start lift-tip.txt
+08:24:24 end lift-tip.txt rc=0
+.p16/tip.sh: line 47: 91785 Killed: 9               "$G" --timeout 90 -- npx vite preview --config vite.local-cache.config.ts --host 127.0.0.1 --port 5471 --strictPort > "$T/preview.log" 2>&1 < /dev/null
+08:24:27 preview stopped (guard pid 91785), KILL for 91785
+08:24:27 start contact.txt
+08:24:39 end contact.txt rc=0
+08:24:39 start vitest.txt
+08:24:52 end vitest.txt rc=1
+08:24:53 preview up (guard pid 14643)
+08:24:53 start railfade.txt
+08:25:21 end railfade.txt rc=0
+.p16/tip.sh: line 47: 14643 Killed: 9               "$G" --timeout 90 -- npx vite preview --config vite.local-cache.config.ts --host 127.0.0.1 --port 5471 --strictPort > "$T/preview.log" 2>&1 < /dev/null
+08:25:25 preview stopped (guard pid 14643), KILL for 14643
+08:25:25 tip run done
+chain rc=0
