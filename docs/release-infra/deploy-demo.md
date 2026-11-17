@@ -62,7 +62,9 @@ wins where the two differ. The shape copies daraksha's
 8. **Lineage.** `wrangler pages deployment list --environment=production` must
    contain the short SHA (catches the Preview-that-exits-0 trap).
 9. **Served build.** `node scripts/check-served.mjs "$ORIGIN" --headers` (12 tries,
-   10 s apart, rides out edge propagation).
+   10 s apart, rides out edge propagation). It also asserts a deep link, an
+   `immutable` hit and a 404 `no-store` miss, and names a script answered 200
+   text/html as `html-for-js` (`asset-miss.md`).
 
 **Live, after a deploy (local).** The workflow runs no browser. The live assert (no
 console error, no CSP violation, no third-party request) is a local command, run
@@ -86,8 +88,11 @@ a header, no `set -x` is used, and GitHub masks secret values in logs anyway.
 
 **The hashed directory, read from the build.** `dist-demo/` is `index.html`,
 `assets/` and `_headers`. `assets/` holds 362 files (291 js, 67 css, 4 woff2).
-There is no `404.html`, so there is no `_redirects`: Pages serves `index.html`
-for unknown paths, and the router's catch-all renders `NotFound.vue`.
+There is no top-level `404.html` and no `_redirects`: Pages serves `index.html`
+for unknown paths, and the router's catch-all renders `NotFound.vue`. Since
+2026-11-17 the build also writes `assets/404.html`, so a miss under `/assets/`
+answers 404 with `no-store` instead of the index with `immutable`
+(`asset-miss.md`).
 
 **Why the hash is computed.** The dark-mode stamp (`vite.dark-stamp.ts`) is an
 inline `<head>` script. A hand-pasted hash would drift whenever
@@ -181,14 +186,14 @@ Each path is traced through the release-line step:
 | `v11.1.0`, registry lagging | `v11.1.0` | polls until `latest == 11.1.0` (≤ 5 min), then deploys; if it never appears, a loud green skip |
 | tag ≠ package.json | e.g. `v11.1.0` vs `11.0.0` | `deploy SKIPPED` (release.yml already fails this case) |
 | dispatch `tag=master` | `master` | the regex fails: skip |
-| dispatch `tag=<a release at or after the first one that carries this wave> rollback=true` | that tag | deploys the old tree, no npm check. An older tag (e.g. `v11.0.0`: `git ls-tree v11.0.0 -- demo/_headers scripts/check-served.mjs` lists nothing) fails red at the `_headers` test |
+| dispatch `tag=<a release at or after the first one that carries this wave> rollback=true` | that tag | deploys the old tree, no npm check. An older tag (e.g. `v11.0.0`: `git ls-tree v11.0.0 -- demo/_headers scripts/check-served.mjs` lists nothing) fails red at the `_headers` test; a tag from before `asset-miss.md` fails red at the `assets/404.html` test |
 | two release runs finish close together (a `v10` publish, then `latest`) | different tags | different concurrency groups: neither cancels the other; the `v10` one skips, the `latest` one deploys |
 | secrets absent | — | build runs, then `deploy SKIPPED`, green; project, deploy, domain and asserts are all gated off |
 | project already exists | — | create's "already exists" is accepted |
 | deploy lands as Preview | — | `--branch=master` prevents it; the lineage step fails red if no Production deployment carries the SHA |
 | project subdomain unreadable | — | the host step fails red; nothing runs against a guessed host |
 | domain not attached | — | the domain step warns and never fails; asserts run against the project's pages.dev host |
-| stale edge / chunk not propagated | — | check-served retries 12 × 10 s, then fails red |
+| stale edge / chunk not propagated | — | check-served retries 12 × 10 s, then fails red; a chunk an edge cached as HTML is named `html-for-js` and needs a purge (`asset-miss.md`) |
 | re-run of a deploy | same TAG | idempotent: create says exists, a new Production deployment of the same SHA |
 
 
