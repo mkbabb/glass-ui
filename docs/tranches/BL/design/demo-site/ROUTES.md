@@ -113,12 +113,12 @@ Textarea was both a route and a tab of another route.
 
 An overlay's stage holds its trigger, centred, and the real overlay opens over the stage. Popover,
 menu and tooltip are open on load where the component allows it without taking focus; Dialog and
-Sheet open on a press.
+Sheet open on arrival, modal and closable, and again on each switch.
 
 | Route | Fate | Component shown | Stage | Variants | Words | Reason |
 |---|---|---|---|---|---|---|
-| `/containers/dialog` | KEEP | Dialog | tall | switch: Free · Deliberate · Locked; switch: Scrim (3) | 50 | absorbs Overlays & Scrims |
-| `/containers/sheet` | KEEP | Sheet | tall | switch: Edge (4); switch: Detents | 50 | 190 words today |
+| `/containers/dialog` | KEEP | Dialog | fit | switch: Free · Deliberate · Locked; switch: Scrim (3) | 50 | absorbs Overlays & Scrims |
+| `/containers/sheet` | KEEP | Sheet | fit | switch: Edge (4); switch: Detents | 50 | 190 words today |
 | `/containers/popover` | KEEP | Popover | tall | switch: Press · Hover · Hover card | 40 | the four floating-panel pages become this and Tooltip |
 | `/containers/dropdown-menu` | KEEP, titled "Menu" | Menu | tall | switch: Dropdown · Context | 40 | one menu, two ways to open it |
 | `/containers/context-menu` | MERGE → `/containers/dropdown-menu` | | | | | the same menu opened by a right press |
@@ -190,7 +190,7 @@ field.
 
 | Route | Fate | Component shown | Stage | Variants | Words | Reason |
 |---|---|---|---|---|---|---|
-| `/data/table` | KEEP | Table | tall | none | 30 | |
+| `/data/table` | KEEP | Table | fit | none | 30 | |
 | `/data/data-table` | KEEP | DataTable | tall | switch: Loaded · Loading · Empty · Error | 40 | |
 | `/data/sortable-list` | KEEP | SortableList | tall | none | 30 | 2 % component in the fold today |
 | `/data/infinite-scroll` | KEEP | InfiniteScroll, scrolling inside the stage | tall | none | 30 | 1 % component in the fold today |
