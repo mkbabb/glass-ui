@@ -1,12 +1,11 @@
 <script setup lang="ts">
 // A small bar figure: one bar per value, scaled to the largest. A change of values
-// tweens each bar's height; a change of count fades bars in and out. With `played`
-// (0 to 1) a playhead stands at that point and the bars past it dim; both tween.
+// tweens each bar's height; a change of count fades bars in and out.
 import { computed } from "vue";
 
 const props = withDefaults(
-    defineProps<{ values: readonly number[]; label: string; log?: boolean; played?: number }>(),
-    { log: false, played: undefined },
+    defineProps<{ values: readonly number[]; label: string; log?: boolean }>(),
+    { log: false },
 );
 
 const heights = computed(() => {
@@ -23,21 +22,14 @@ const heights = computed(() => {
                 v-for="(h, i) in heights"
                 :key="i"
                 class="mini-bar"
-                :class="{ 'mini-bar--ahead': played !== undefined && i / heights.length >= played }"
                 :style="{ blockSize: `${(h * 100).toFixed(2)}%` }"
             />
         </TransitionGroup>
-        <span
-            v-if="played !== undefined"
-            class="mini-playhead"
-            :style="{ insetInlineStart: `${(Math.min(1, Math.max(0, played)) * 100).toFixed(2)}%` }"
-        />
     </div>
 </template>
 
 <style scoped>
 .mini-bars {
-    position: relative;
     display: flex;
     align-items: flex-end;
     gap: 3%;
@@ -55,23 +47,8 @@ const heights = computed(() => {
         opacity var(--duration-normal) var(--ease-out);
 }
 
-.mini-bar--ahead {
-    opacity: 0.35;
-}
-
-.mini-playhead {
-    position: absolute;
-    inset-block: 0;
-    inline-size: 2px;
-    margin-inline-start: -1px;
-    border-radius: 1px;
-    background-color: var(--foreground);
-    transition: inset-inline-start var(--duration-normal) var(--ease-out);
-}
-
 @media (prefers-reduced-motion: reduce) {
-    .mini-bar,
-    .mini-playhead {
+    .mini-bar {
         transition: none;
     }
 }

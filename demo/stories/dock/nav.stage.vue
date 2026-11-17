@@ -1,8 +1,8 @@
 <script setup lang="ts">
 // Site navigation: page tabs, a separator, then the theme and Find at the end. Under
 // 30rem of stage the tabs become one menu naming the current page. The page above the
-// dock is the current tab's: its title and its bars follow each press.
-import { computed, ref } from "vue";
+// dock is the current tab's: a press cross-fades its title and its rows together.
+import { ref } from "vue";
 import { BarChart3, ChevronDown, Home, Search, Settings, Users } from "@lucide/vue";
 import { DockControl, DockSeparator, GlassDock } from "@glass/components/dock";
 import { DockTrigger } from "@glass/components/dock/trigger";
@@ -13,9 +13,11 @@ import {
     DropdownMenuRadioItem,
 } from "@glass/components/menu";
 import { DarkModeToggle } from "@glass/components/dark-mode-toggle";
+import { Avatar, AvatarFallback } from "@glass/components/avatar";
+import { Badge } from "@glass/components/badge";
+import { StatusDot } from "@glass/components/status-dot";
 import DockScene from "./_parts/DockScene.vue";
 import ScenePage from "./_parts/ScenePage.vue";
-import MiniBars from "./_parts/MiniBars.vue";
 
 withDefaults(defineProps<{ icons?: boolean }>(), { icons: false });
 
@@ -26,24 +28,62 @@ const PAGES = [
     { id: "settings", label: "Settings", icon: Settings },
 ] as const;
 
-// Each page's own figure, so a new tab tweens the bars.
-const VALUES: Record<string, readonly number[]> = {
-    home: [14, 22, 18, 30, 26, 34, 29, 38],
-    reports: [42, 35, 48, 40, 56, 51, 63, 58],
-    people: [8, 11, 10, 14, 13, 17, 19, 18],
-    settings: [30, 30, 24, 24, 18, 18, 12, 12],
-};
+// Each page's own rows.
+const HOME = [
+    { name: "Inbox", count: 12 },
+    { name: "Tasks", count: 4 },
+    { name: "Mentions", count: 2 },
+] as const;
+const REPORTS = [
+    { name: "Q2", figure: "41.2k" },
+    { name: "Q3", figure: "48.0k" },
+    { name: "Q4", figure: "55.6k" },
+] as const;
+const PEOPLE = ["Ada", "Grace", "Emmy", "Katherine"] as const;
+const SETTINGS = [
+    { name: "Sync", on: true },
+    { name: "Backups", on: true },
+    { name: "Alerts", on: false },
+] as const;
 
-const page = ref<string>("reports");
+const page = ref<string>("people");
 const label = (id: string) => PAGES.find((p) => p.id === id)?.label ?? "";
-const values = computed(() => VALUES[page.value] ?? []);
 </script>
 
 <template>
     <DockScene place="bottom">
         <template #context>
             <ScenePage shape="column" :title="label(page)">
-                <MiniBars :values="values" :label="label(page)" />
+                <Transition name="fade" mode="out-in">
+                    <ul :key="page" class="nav-rows">
+                        <template v-if="page === 'people'">
+                            <li v-for="name in PEOPLE" :key="name" class="nav-row nav-row--person">
+                                <Avatar decorative size="sm">
+                                    <AvatarFallback>{{ name[0] }}</AvatarFallback>
+                                </Avatar>
+                                {{ name }}
+                            </li>
+                        </template>
+                        <template v-else-if="page === 'home'">
+                            <li v-for="row in HOME" :key="row.name" class="nav-row">
+                                {{ row.name }}
+                                <Badge variant="secondary" size="sm" class="tabular-nums">{{ row.count }}</Badge>
+                            </li>
+                        </template>
+                        <template v-else-if="page === 'reports'">
+                            <li v-for="row in REPORTS" :key="row.name" class="nav-row">
+                                {{ row.name }}
+                                <span class="tabular-nums">{{ row.figure }}</span>
+                            </li>
+                        </template>
+                        <template v-else>
+                            <li v-for="row in SETTINGS" :key="row.name" class="nav-row">
+                                {{ row.name }}
+                                <StatusDot :state="row.on ? 'online' : 'idle'" size="md" motion="off" :label="row.on ? 'On' : 'Off'" />
+                            </li>
+                        </template>
+                    </ul>
+                </Transition>
             </ScenePage>
         </template>
         <template #default="{ narrow }">
@@ -97,6 +137,29 @@ const values = computed(() => VALUES[page.value] ?? []);
 </template>
 
 <style scoped>
+/* The page's rows sit on a gap, with no rules between them. */
+.nav-rows {
+    display: grid;
+    gap: var(--sp-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--type-body);
+    line-height: var(--type-leading-body);
+    color: var(--foreground);
+}
+
+.nav-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-3);
+}
+
+.nav-row--person {
+    justify-content: flex-start;
+}
+
 /* An icon and a word in one seat, a small gap between them. */
 .seat-face {
     display: inline-flex;

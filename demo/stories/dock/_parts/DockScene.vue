@@ -56,8 +56,10 @@ const narrow = computed(() => width.value > 0 && width.value < 480);
 }
 
 /* One track the size of the context, so a Card's percentage width reads the context
-   and never the Card's own content (WebKit sized an implicit track to it). */
+   and never the Card's own content (WebKit sized an implicit track to it). The
+   context is a container, so what it holds can answer its width. */
 .scene-context {
+    container: scene-context / inline-size;
     display: grid;
     grid-template: minmax(0, 1fr) / minmax(0, 1fr);
     place-items: center;
