@@ -1,0 +1,11 @@
+== g2-clock 03:41:55 (load { 6.02 7.08 7.69 })
+applied g2-clock - G-2: the loop's clock started at the trigger (the first frame advances 33 ms)
+{"cell":"1440-fine-light","rows":"p3-fold-pill-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":232,"firstChange":252.9,"lastChange":1344.2,"screencast":null,"consoleErrors":0}
+{"cell":"1440-fine-light","rows":"p3-fold-pill-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":173,"firstChange":239,"lastChange":1342,"screencast":null,"consoleErrors":0}
+reverted g2-clock
+-- judge
+p3-fold-pill-fine | wi8 | chromium | 1440-fine-light | load 6.25/6.25 | f32-f78 346ms | L 76px first 16% max 16% last 0.08px; R 76px first 16% max 16% last 0.08px | op60 0.42 | out 0px | FAIL: L from rest 16.0% > 1.1% at 6.9 ms; L step 16.0% > 6.6% (f33, 6.9 ms); R from rest 16.0% > 1.1% at 6.9 ms; R step 16.0% > 6.6% (f33, 6.9 ms); opacity 0.42 in 60 Hz at summary f32; summary fade lasts 60 ms
+p3-fold-pill-fine | wi8 | chromium | 1440-fine-light | load 6.25/6.25 | f132-f177 346ms | L 76px first 16% max 16% last 0.08px; R 76px first 16% max 16% last 0.08px | op60 0.36 | out 0px | FAIL: L from rest 16.0% > 1.8% at 9.0 ms; L step 16.0% > 8.7% (f133, 9.0 ms); R from rest 16.0% > 1.8% at 9.0 ms; R step 16.0% > 8.7% (f133, 9.0 ms); full fade lasts 60 ms; seat#0 fade lasts 60 ms (+3)
+p3-fold-pill-fine | wi8 | webkit | 1440-fine-light | load 5.56/5.6 | f22-f56 348ms | L 76px first 16% max 16% last 0.02px; R 76px first 16% max 16% last 0.01px | op60 0.29 | out 0px | FAIL: L from rest 16.0% > 2.2% at 10.0 ms; L step 16.0% > 9.6% (f23, 10.0 ms); R from rest 16.0% > 2.2% at 10.0 ms; R step 16.0% > 9.6% (f23, 10.0 ms); summary fade lasts 59 ms
+p3-fold-pill-fine | wi8 | webkit | 1440-fine-light | load 5.56/5.6 | f97-f131 349ms | L 76px first 16% max 16% last 0.14px; R 76px first 16% max 16% last 0.14px | op60 0.29 | out 0px | FAIL: L from rest 16.0% > 3.1% at 12.0 ms; L step 16.0% > 11.5% (f98, 12.0 ms); R from rest 16.0% > 3.1% at 12.0 ms; R step 16.0% > 11.5% (f98, 12.0 ms); full fade lasts 61 ms; seat#0 fade lasts 61 ms (+3)
+== done 03:43:38

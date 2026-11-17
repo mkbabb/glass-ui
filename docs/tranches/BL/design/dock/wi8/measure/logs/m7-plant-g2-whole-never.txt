@@ -1,0 +1,13 @@
+== g2-whole-never 04:22:50 (load { 6.08 6.93 7.98 })
+applied g2-whole-never - G-2 (RU-27): the whole-seat flag never set
+{"cell":"390-coarse-light","rows":"p3-fold-many-coarse.wi8.chromium.390-coarse-light.rows.json","strips":[],"frames":226,"firstChange":96.7,"lastChange":1292,"screencast":null,"consoleErrors":0}
+{"cell":"360-coarse-light","rows":"p3-fold-many-c360.wi8.chromium.360-coarse-light.rows.json","strips":[],"frames":225,"firstChange":89.5,"lastChange":1275,"screencast":null,"consoleErrors":0}
+{"cell":"390-coarse-light","rows":"p3-fold-many-coarse.wi8.webkit.390-coarse-light.rows.json","strips":[],"frames":163,"firstChange":64,"lastChange":1261,"screencast":null,"consoleErrors":0}
+{"cell":"360-coarse-light","rows":"p3-fold-many-c360.wi8.webkit.360-coarse-light.rows.json","strips":[],"frames":163,"firstChange":64,"lastChange":1244,"screencast":null,"consoleErrors":0}
+reverted g2-whole-never
+-- judge
+p3-fold-many-c360 | chromium | 360-coarse-light | curve 0.02 | held 0 | whole {"row":120,"fits":false,"whole":5,"of":7,"partial":[12],"absent":1,"ext":296,"over":84,"room":344,"offset":0,"focused":false} | touch true | FAIL: at open rest: row 120: a run that does not fit has a partial seat [12] (+1 rests)
+p3-fold-many-c360 | webkit | 360-coarse-light | curve 0.02 | held 0 | whole {"row":83,"fits":false,"whole":5,"of":7,"partial":[12],"absent":1,"ext":296,"over":84,"room":344,"offset":0,"focused":false} | touch true | FAIL: at open rest: row 83: a run that does not fit has a partial seat [12] (+1 rests)
+p3-fold-many-coarse | chromium | 390-coarse-light | curve 0.02 | held 0 | whole {"row":120,"fits":false,"whole":5,"of":7,"partial":[42],"absent":1,"ext":326,"over":54,"room":374,"offset":0,"focused":false} | touch true | FAIL: at open rest: row 120: a run that does not fit has a partial seat [42] (+1 rests)
+p3-fold-many-coarse | webkit | 390-coarse-light | curve 0.02 | held 0 | whole {"row":85,"fits":false,"whole":5,"of":7,"partial":[42],"absent":1,"ext":326,"over":54,"room":374,"offset":0,"focused":false} | touch true | FAIL: at open rest: row 85: a run that does not fit has a partial seat [42] (+1 rests)
+== done 04:27:28

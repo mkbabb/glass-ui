@@ -1,0 +1,15 @@
+== g2-room 04:30:42 (load { 12.15 9.06 8.45 })
+applied g2-room - G-2 (RU-36): a room change put on the spring (the seated branch removed for it)
+{"cell":"1440-fine-light","rows":"p5-many-lift-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":352,"firstChange":61.8,"lastChange":2229.8,"screencast":null,"consoleErrors":0}
+{"cell":"1440-fine-light","rows":"p5-many-lift-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":282,"firstChange":57,"lastChange":2456,"screencast":null,"consoleErrors":0}
+reverted g2-room
+-- judge
+p5-many-lift-fine | chromium | 1440-fine-light | curve 0 | held 0 | whole {"row":351,"fits":false,"whole":5,"of":7,"partial":[],"absent":2,"ext":304,"over":72,"room":304,"offset":0,"focused":false} | lift 7 | cap plate 31 hidden 0 | FAIL: the host's cap lifted: every seat shows 7 rows after the change (bound 2); the host's cap returned: the plate is at layout 31 rows after the change (bound 2)
+p5-many-lift-fine | webkit | 1440-fine-light | curve 0.01 | held 0 | whole {"row":281,"fits":false,"whole":5,"of":7,"partial":[],"absent":2,"ext":304,"over":72,"room":304,"offset":0,"focused":false} | lift 5 | cap plate 23 hidden 0 | FAIL: the host's cap lifted: every seat shows 5 rows after the change (bound 2); the host's cap returned: the plate is at layout 23 rows after the change (bound 2)
+p5-many-lift-fine | wi8 | chromium | 1440-fine-light | load 11.5/11.5 | f54-f105 379ms | L 124px first 1.2% max 6.5% last 0.25px; R 124px first 1.2% max 6.5% last 0.25px | op60 0.23 | out 0px | pass
+p5-many-lift-fine | wi8 | chromium | 1440-fine-light | load 11.5/11.5 | f159-f193 256ms | L 24px first 1.6% max 6.8% last 0.16px; R 24px first 1.6% max 6.8% last 0.15px | op60 0 | out 0px | FAIL: a resize moves the plate on 33 rows
+p5-many-lift-fine | wi8 | chromium | 1440-fine-light | load 11.5/11.5 | f255-f290 259ms | L 24px first 0.7% max 6.9% last 0.12px; R 24px first 0.6% max 6.9% last 0.13px | op60 0 | out 0px | FAIL: a resize moves the plate on 34 rows
+p5-many-lift-fine | wi8 | webkit | 1440-fine-light | load 10.82/10.82 | f40-f78 388ms | L 124px first 1.6% max 10% last 0.25px; R 124px first 1.6% max 10% last 0.25px | op60 0.18 | out 0px | pass
+p5-many-lift-fine | wi8 | webkit | 1440-fine-light | load 10.82/10.82 | f119-f144 257ms | L 24px first 2.3% max 8.5% last 0.19px; R 24px first 2.4% max 8.6% last 0.18px | op60 0 | out 0px | FAIL: a resize moves the plate on 24 rows
+p5-many-lift-fine | wi8 | webkit | 1440-fine-light | load 10.82/10.82 | f200-f225 256ms | L 24px first 2.3% max 9.6% last 0.22px; R 24px first 2.3% max 9.6% last 0.22px | op60 0 | out 0px | FAIL: a resize moves the plate on 24 rows
+== done 04:31:07

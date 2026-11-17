@@ -1,0 +1,9 @@
+== g4-openseat 04:27:59 (load { 8.37 7.68 7.97 })
+applied g4-openseat - G-4 (RU-28): the open seat's width rule restored (three pitches)
+{"cell":"1440-fine-light","rows":"p3-seat-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":464,"firstChange":230.9,"lastChange":2996.7,"screencast":null,"consoleErrors":0}
+{"cell":"1440-fine-light","rows":"p3-seat-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":371,"firstChange":216,"lastChange":3264,"screencast":null,"consoleErrors":0}
+reverted g4-openseat
+-- judge
+p3-seat-fine | chromium | 1440-fine-light | curve 0.01 | held 96 | whole {"row":463,"fits":true,"whole":5,"of":5,"partial":[],"absent":0,"ext":423,"over":0,"room":1424,"offset":0,"focused":false} | openSeat 96 | FAIL: a unit moves 96.00 px in the window's first row (seat#0 row 143); a change of open seat moves a box 96.00 px in one row (seat#1 width, row 239)
+p3-seat-fine | webkit | 1440-fine-light | curve 0 | held 96 | whole {"row":370,"fits":true,"whole":5,"of":5,"partial":[],"absent":0,"ext":423,"over":0,"room":1424,"offset":0,"focused":false} | openSeat 96 | FAIL: a unit moves 96.00 px in the window's first row (seat#0 row 120); a change of open seat moves a box 96.00 px in one row (seat#1 width, row 189)
+== done 04:28:27

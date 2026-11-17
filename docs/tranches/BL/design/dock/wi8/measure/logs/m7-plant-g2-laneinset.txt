@@ -1,0 +1,11 @@
+== g2-laneinset 04:28:31 (load { 8.05 7.68 7.96 })
+applied g2-laneinset - G-2 (RU-25): a lane inset 12 px inside the plate's edge on a side with no neighbour
+{"cell":"1440-fine-light","rows":"p3-fold-pill-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":236,"firstChange":249.1,"lastChange":1436.6,"screencast":null,"consoleErrors":0}
+{"cell":"1440-fine-light","rows":"p3-fold-pill-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":200,"firstChange":233,"lastChange":1622,"screencast":null,"consoleErrors":0}
+reverted g2-laneinset
+-- judge
+p3-fold-pill-fine | wi8 | chromium | 1440-fine-light | load 8.27/8.27 | f30-f79 383ms | L 76px first 1.2% max 6.8% last 0.08px; R 76px first 1.3% max 6.8% last 0.08px | op60 0.24 | out 0px | FAIL: a region's clip is off its lane in 48 region-rows, up to 12.02 px (layers f44)
+p3-fold-pill-fine | wi8 | chromium | 1440-fine-light | load 8.27/8.27 | f134-f183 385ms | L 76px first 0.6% max 7.1% last 0.06px; R 76px first 0.6% max 7.1% last 0.06px | op60 0.25 | out 0px | FAIL: a region's clip is off its lane in 48 region-rows, up to 12.00 px (layers f169)
+p3-fold-pill-fine | wi8 | webkit | 1440-fine-light | load 8.09/8.09 | f21-f59 387ms | L 76px first 1.9% max 10% last 0.06px; R 76px first 2% max 10% last 0.07px | op60 0.18 | out 0px | FAIL: a region's clip is off its lane in 37 region-rows, up to 12.01 px (layers f30)
+p3-fold-pill-fine | wi8 | webkit | 1440-fine-light | load 8.09/8.09 | f120-f158 387ms | L 76px first 1.9% max 10% last 0.02px; R 76px first 2% max 10% last 0.01px | op60 0.18 | out 0px | FAIL: a region's clip is off its lane in 37 region-rows, up to 12.01 px (layers f141)
+== done 04:28:54

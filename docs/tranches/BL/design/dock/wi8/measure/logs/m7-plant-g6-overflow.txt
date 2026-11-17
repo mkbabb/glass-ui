@@ -1,0 +1,21 @@
+== g6-overflow 04:35:59 (load { 5.50 7.13 7.74 })
+applied g6-overflow - G-6 / RU-52: the cure removed (a fitting run a scroll port again, reach spending its reserve)
+{"cell":"1440-fine-light","rows":"p3-hover-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":1238,"firstChange":235,"lastChange":9130.9,"screencast":null,"consoleErrors":0}
+{"cell":"390-fine-light","rows":"p4-hover-390.wi8.chromium.390-fine-light.rows.json","strips":[],"frames":1224,"firstChange":229.9,"lastChange":9139.2,"screencast":null,"consoleErrors":0}
+{"cell":"1440-fine-light","rows":"p4-hover-key.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":408,"firstChange":83.2,"lastChange":457.3,"screencast":null,"consoleErrors":0}
+{"cell":"1440-fine-light","rows":"p6-press-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":752,"firstChange":238.2,"lastChange":6059.9,"screencast":null,"consoleErrors":0}
+{"cell":"1440-fine-light","rows":"p3-hover-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":986,"firstChange":219,"lastChange":9297,"screencast":null,"consoleErrors":0}
+{"cell":"390-fine-light","rows":"p4-hover-390.wi8.webkit.390-fine-light.rows.json","strips":[],"frames":967,"firstChange":211,"lastChange":9078,"screencast":null,"consoleErrors":0}
+{"cell":"1440-fine-light","rows":"p4-hover-key.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":322,"firstChange":68,"lastChange":3089,"screencast":null,"consoleErrors":0}
+{"cell":"1440-fine-light","rows":"p6-press-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":593,"firstChange":220,"lastChange":6043,"screencast":null,"consoleErrors":0}
+reverted g6-overflow
+-- judge
+pass p3-hover-fine.wi8.chromium.1440-fine-light.rows.json: rows 1103, largest box change 0.00 px (-), folded rows 0
+pass p3-hover-fine.wi8.webkit.1440-fine-light.rows.json: rows 866, largest box change 0.00 px (-), folded rows 0
+pass p4-hover-390.wi8.chromium.390-fine-light.rows.json: rows 1093, largest box change 0.00 px (-), folded rows 0
+pass p4-hover-390.wi8.webkit.390-fine-light.rows.json: rows 865, largest box change 0.00 px (-), folded rows 0
+pass p4-hover-key.wi8.chromium.1440-fine-light.rows.json: rows 298, largest box change 0.00 px (-), folded rows 0
+FAIL p4-hover-key.wi8.webkit.1440-fine-light.rows.json: rows 239, largest box change 4.00 px (seat#0 row 183), folded rows 0
+FAIL p6-press-fine.wi8.chromium.1440-fine-light.rows.json: rows 626, largest box change 4.00 px (seat#4 row 746), folded rows 0
+FAIL p6-press-fine.wi8.webkit.1440-fine-light.rows.json: rows 491, largest box change 4.00 px (seat#4 row 587), folded rows 0
+== done 04:38:01

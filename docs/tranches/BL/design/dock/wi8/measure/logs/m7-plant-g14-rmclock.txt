@@ -1,0 +1,36 @@
+== g14-rmclock 04:20:23 (load { 6.98 7.76 8.44 })
+applied g14-rmclock - G-14: reduced motion's clocks 300 ms, not 100 (a restated unit witness)
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8
+
+ ❯ tests/components/custom/dock/GlassDock.motion-parity.test.ts (5 tests | 1 failed) 42ms
+     × settles an active morph immediately when reduced motion becomes preferred 5ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/custom/dock/GlassDock.motion-parity.test.ts > GlassDock isTransitioning — spring-settle source > settles an active morph immediately when reduced motion becomes preferred
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/components/custom/dock/GlassDock.motion-parity.test.ts:224:40
+    222|             await vi.advanceTimersByTimeAsync(140);
+    223|
+    224|             expect(vm.isTransitioning).toBe(false);
+       |                                        ^
+    225|             expect(root.hasAttribute("data-morphing")).toBe(false);
+    226|             expect((root as HTMLElement).style.getPropertyValue("--doc…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+   Start at  04:20:27
+   Duration  649ms (transform 255ms, setup 43ms, import 268ms, tests 42ms, environment 195ms)
+
+reverted g14-rmclock

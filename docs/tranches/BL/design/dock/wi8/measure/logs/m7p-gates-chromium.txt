@@ -1,0 +1,20 @@
+## G-10: 44/44 segments pass over 18 scenarios (0 with a failing segment); blank rows max 0
+   turns: p3-swap-layers-rm:leave 6.1/rev -<=-ms, p3-swap-xf-rm:leave 8.6/rev -<=-ms
+## G-2: 104/110 segments pass over 56 scenarios (6 with a failing segment); blank rows max 1
+   turns: p3-fold-ctlout-coarse:leave 9/rev -<=-ms, p3-fold-daraksha-coarse:leave 7.9/rev -<=-ms
+   10 × seat#n fade lasts n ms   e.g. p3-fold-ctl-te-parent-coarse 390-coarse-light: seat#0 fade lasts 74 ms
+   3 × full fade lasts n ms   e.g. p3-fold-ctl-te-parent-coarse 390-coarse-light: full fade lasts 74 ms
+   3 × summary fade lasts n ms   e.g. p3-fold-ctl6-c360 360-coarse-light: summary fade lasts 73 ms
+   failing: p3-fold-ctl-te-parent-coarse, p3-fold-ctl6-c360, p3-fold-rim-coarse, p3-fold-two-fine, p3-fold-wide-dark, p3-fold-wide-fine
+## G-3: 16/18 segments pass over 12 scenarios (2 with a failing segment); blank rows max 1
+   turns: p3-rev-fold-25-press:leave 7.6/rev 29.2<=34.8ms, p3-rev-fold-25-ptr:leave 7.3/rev 30.7<=36.2ms, p3-rev-fold-50-press:leave 7.9/rev 20.7<=24.5ms, p3-rev-fold-50-ptr:leave 4.4/rev 21.2<=25.5ms, p3-rev-fold-75-press:leave 8.5/rev 15.5<=14.5ms, p3-rev-fold-75-ptr:leave 8.3/rev 15.9<=13.2ms, p3-rev-unfold-25-esc:leave 7.8/rev 32.1<=34.7ms, p3-rev-unfold-25-out:leave 7.3/rev 31.7<=37.2ms, p3-rev-unfold-50-esc:leave 5.6/rev 21.1<=27ms, p3-rev-unfold-50-out:leave 5.6/rev 21.2<=27.2ms, p3-rev-unfold-75-esc:leave 7.7/rev 7.7<=16.6ms, p3-rev-unfold-75-out:leave 10.3/rev 10.3<=15.4ms
+   2 × a seat that meets its lane is hidden in n unit-rows   e.g. p3-rev-fold-25-press 1440-fine-light: a seat that meets its lane is hidden in 1 unit-rows (seat#3 f152 meets its lane by 0.5 px)
+   failing: p3-rev-fold-25-press, p3-rev-fold-25-ptr
+## G-4: 41/43 segments pass over 16 scenarios (2 with a failing segment); blank rows max 1
+   turns: p3-swap-fold-during:leave -/rev -<=-ms, p3-swap-layers-coarse:leave 24.4/rev 14.6<=22.2ms, p3-swap-layers-dark:leave 17.1/rev 17.1<=22.4ms, p3-swap-layers-fine:leave 16.2/rev 16.2<=21ms, p3-swap-return-15:leave 8.2/rev 30.3<=38.9ms, p3-swap-return-30:leave 6.7/rev 22<=24.4ms, p3-swap-return-60:leave 8.4/rev -<=-ms, p3-swap-xf-coarse:leave 15.4/rev -<=-ms, p3-swap-xf-dark:leave 22/rev -<=-ms, p3-swap-xf-fine:leave 16.1/rev -<=-ms, p4-swap-layers-rtl-fine:leave 14.8/rev 23.6<=20.1ms
+   2 × face#n fade lasts n ms   e.g. p3-swap-xf-coarse 390-coarse-light: face#0 fade lasts 74 ms
+   failing: p3-swap-xf-coarse, p3-swap-xf-fine
+## G-6: 3/3 segments pass over 3 scenarios (0 with a failing segment); blank rows max 1
+## G-9: 3/3 segments pass over 2 scenarios (0 with a failing segment); blank rows max 0
+   turns: p3-scope-rev:leave 6/rev 29.1<=32ms
+## other: 3/3 segments pass over 1 scenarios (0 with a failing segment); blank rows max 1

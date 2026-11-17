@@ -1,0 +1,9 @@
+== g4-join 03:49:00 (load { 10.65 8.02 7.74 })
+applied g4-join - G-4 (a control joins or leaves): the records ignored
+{"cell":"1440-fine-light","rows":"p3-seatset-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":372,"firstChange":233.4,"lastChange":2595.6,"screencast":null,"consoleErrors":0}
+{"cell":"1440-fine-light","rows":"p3-seatset-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":294,"firstChange":215,"lastChange":2592,"screencast":null,"consoleErrors":0}
+reverted g4-join
+-- judge
+p3-seatset-fine | chromium | 1440-fine-light | curve 0.01 | held 0 | join {"step":1,"cuts":2,"fades":"in 8ms out 6ms"} | whole {"row":371,"fits":true,"whole":3,"of":3,"partial":[],"absent":0,"ext":160,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: joining seat steps 1.00 in 16.7 ms; joining seat cut in 2 rows; joining seat fade in 8ms (bound 75 ms); joining seat fade out 6ms (bound 75 ms)
+p3-seatset-fine | webkit | 1440-fine-light | curve 0 | held 0 | join {"step":1,"cuts":2,"fades":"in 10ms out 11ms"} | whole {"row":293,"fits":true,"whole":3,"of":3,"partial":[],"absent":0,"ext":160,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: joining seat steps 1.00 in 16.7 ms; joining seat cut in 2 rows; joining seat fade in 10ms (bound 75 ms); joining seat fade out 11ms (bound 75 ms)
+== done 03:51:38

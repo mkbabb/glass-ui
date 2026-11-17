@@ -4,7 +4,7 @@
 #     <server> <engine> <minutes> <done> <command...>
 # server: dev (the worktree's dev server, m6/devserve.sh on 5402, this seat's pages copied in), preview (the pass's
 # build, vite preview of dist-wi8 on 5401) or none; engine: chromium, webkit (run under `--exclusive webkit`), gpu
-# (Chromium with `--cpu-cores 0`) or light; done: a path relative to the harness directory that exists, non-empty, once
+# (Chromium with `--cpu-cores 0`), light, or raw (a script that guards its own runs, not wrapped); done: a path relative to the harness directory that exists, non-empty, once
 # the item is read (a JSON log with "cells": [] or "summary": {"cells": 0} counts as not read), or `-` (always run).
 # An item not read after its run is run again, up to six times (a run paused past its timeout is killed on resume). The server is started when an item needs it and is
 # not answering, under its own guarded run, and stopped at the end. Every run, retry and skip is logged with the load.
@@ -73,7 +73,9 @@ for srv, eng, mins, done, cmd in items:
             time.sleep(30); continue
         flags = {"webkit": ["--exclusive", "webkit"], "gpu": ["--cpu-cores", "0"], "light": ["--light"]}.get(eng, [])
         log(f"run {attempt} [{eng}] {cmd[:150]}")
-        r = subprocess.run([G, *flags, "--timeout", mins, "--", "sh", "-c", cmd], cwd=H, env={**os.environ, "PORT": "5402" if srv == "dev" else "5401"})
+        # raw: a script that runs its own heavy steps under the guard (g14plantrun7.sh, g16.sh), so it is not wrapped again
+        argv = ["sh", "-c", cmd] if eng == "raw" else [G, *flags, "--timeout", mins, "--", "sh", "-c", cmd]
+        r = subprocess.run(argv, cwd=H, env={**os.environ, "PORT": "5402" if srv == "dev" else "5401"})
         if read(done) or done == "-":
             log(f"read rc={r.returncode} {done}"); break
         log(f"NOT READ rc={r.returncode} {done}")

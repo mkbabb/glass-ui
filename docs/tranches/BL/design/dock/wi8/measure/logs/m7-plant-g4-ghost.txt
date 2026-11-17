@@ -1,0 +1,13 @@
+== g4-ghost 03:56:08 (load { 14.21 10.26 8.73 })
+applied g4-ghost - G-4 (a control leaves): the removed control held inside the run's scroll port
+{"cell":"1440-fine-light","rows":"p3-seatset-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":411,"firstChange":235.7,"lastChange":3121.6,"screencast":null,"consoleErrors":0}
+{"cell":"390-coarse-light","rows":"p3-seatset-coarse.wi8.chromium.390-coarse-light.rows.json","strips":[],"frames":289,"firstChange":81.4,"lastChange":2035.7,"screencast":null,"consoleErrors":0}
+{"cell":"1440-fine-light","rows":"p3-seatset-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":342,"firstChange":212,"lastChange":3079,"screencast":null,"consoleErrors":0}
+{"cell":"390-coarse-light","rows":"p3-seatset-coarse.wi8.webkit.390-coarse-light.rows.json","strips":[],"frames":237,"firstChange":61,"lastChange":2021,"screencast":null,"consoleErrors":0}
+reverted g4-ghost
+-- judge
+p3-seatset-coarse | chromium | 390-coarse-light | curve 0.01 | held 0 | ghost {"rows":9,"hidden":0} | join {"step":0.29,"cuts":0,"fades":"in 182ms out 88ms"} | whole {"row":288,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":224,"over":0,"room":374,"offset":0,"focused":false} | touch true | pass
+p3-seatset-coarse | webkit | 390-coarse-light | curve 0.02 | held 0 | ghost {"rows":8,"hidden":0} | join {"step":0.31,"cuts":0,"fades":"in 174ms out 91ms"} | whole {"row":236,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":224,"over":0,"room":374,"offset":0,"focused":false} | touch true | pass
+p3-seatset-fine | chromium | 1440-fine-light | curve 0 | held 0 | ghost {"rows":40,"hidden":0} | join {"step":0.3,"cuts":0,"fades":"in 191ms out 84ms"} | whole {"row":410,"fits":true,"whole":3,"of":3,"partial":[],"absent":0,"ext":160,"over":0,"room":1424,"offset":0,"focused":false} | pass
+p3-seatset-fine | webkit | 1440-fine-light | curve 0 | held 0 | ghost {"rows":32,"hidden":0} | join {"step":0.32,"cuts":0,"fades":"in 183ms out 82ms"} | whole {"row":341,"fits":true,"whole":3,"of":3,"partial":[],"absent":0,"ext":160,"over":0,"room":1424,"offset":0,"focused":false} | pass
+== done 03:56:52

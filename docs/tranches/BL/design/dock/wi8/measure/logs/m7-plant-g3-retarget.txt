@@ -1,0 +1,21 @@
+== g3-retarget 04:29:46 (load { 8.92 8.07 8.08 })
+applied g3-retarget - G-3 (RU-42): a retarget mid-travel held four rows
+{"cell":"1440-fine-light","rows":"p3-rev-fold-25-ptr.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":252,"firstChange":235.1,"lastChange":1497.3,"screencast":null,"consoleErrors":0}
+{"cell":"1440-fine-light","rows":"p3-rev-fold-50-ptr.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":260,"firstChange":227.9,"lastChange":1486.9,"screencast":null,"consoleErrors":0}
+{"cell":"1440-fine-light","rows":"p3-rev-unfold-50-out.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":152,"firstChange":232.4,"lastChange":682.3,"screencast":null,"consoleErrors":0}
+{"cell":"1440-fine-light","rows":"p3-rev-fold-25-ptr.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":229,"firstChange":214,"lastChange":1835,"screencast":null,"consoleErrors":0}
+{"cell":"1440-fine-light","rows":"p3-rev-fold-50-ptr.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":219,"firstChange":222,"lastChange":1732,"screencast":null,"consoleErrors":0}
+{"cell":"1440-fine-light","rows":"p3-rev-unfold-50-out.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":119,"firstChange":220,"lastChange":687,"screencast":null,"consoleErrors":0}
+reverted g3-retarget
+-- judge
+p3-rev-fold-25-ptr | wi8 | chromium | 1440-fine-light | load 8.84/8.84 | f28-f81 417ms | L 76px first 0.7% max 7% last 0.05px; R 76px first 0.7% max 7% last 0.04px | op60 0.24 | out 0px | pass
+p3-rev-fold-25-ptr | wi8 | chromium | 1440-fine-light | load 8.84/8.84 | f135-f188 429ms | L 30.2px first 0.7% max 7.7% last 0.14px; R 30.2px first 0.7% max 7.7% last 0.14px | op60 0.26 | out 0px | FAIL: a seat that meets its lane is hidden in 30 unit-rows (seat#3 f158 shows again)
+p3-rev-fold-25-ptr | wi8 | webkit | 1440-fine-light | load 9.83/9.83 | f19-f61 430ms | L 76px first 1.6% max 9.6% last 0.17px; R 76px first 1.6% max 9.6% last 0.17px | op60 0.17 | out 0px | pass
+p3-rev-fold-25-ptr | wi8 | webkit | 1440-fine-light | load 9.83/9.83 | f119-f163 448ms | L 30.3px first 2.3% max 9.5% last 0.11px; R 30.3px first 2.3% max 9.5% last 0.11px | op60 0.17 | out 0px | FAIL: a seat that meets its lane is hidden in 24 unit-rows (seat#3 f139 shows again)
+p3-rev-fold-50-ptr | wi8 | chromium | 1440-fine-light | load 8.85/8.85 | f27-f80 409ms | L 76px first 1.4% max 7.1% last 0.08px; R 76px first 1.4% max 7.1% last 0.08px | op60 0.25 | out 0px | pass
+p3-rev-fold-50-ptr | wi8 | chromium | 1440-fine-light | load 8.85/8.85 | f133-f192 450ms | L 45.8px first 0.8% max 7.7% last 0.03px; R 45.8px first 0.8% max 7.7% last 0.03px | op60 0.26 | out 0px | pass
+p3-rev-fold-50-ptr | wi8 | webkit | 1440-fine-light | load 10.75/10.75 | f20-f62 428ms | L 76px first 2.7% max 9.7% last 0.02px; R 76px first 2.7% max 9.7% last 0.01px | op60 0.26 | out 0px | pass
+p3-rev-fold-50-ptr | wi8 | webkit | 1440-fine-light | load 10.75/10.75 | f122-f169 479ms | L 46.4px first 3.2% max 8.8% last 0.06px; R 46.4px first 3.2% max 8.8% last 0.06px | op60 0.16 | out 0px | pass
+p3-rev-unfold-50-out | wi8 | chromium | 1440-fine-light | load 9.56/9.56 | f29-f86 462ms | L 44.2px first 1.5% max 6.9% last 0.06px; R 44.2px first 1.5% max 6.9% last 0.07px | op60 0.25 | out 0px | pass
+p3-rev-unfold-50-out | wi8 | webkit | 1440-fine-light | load 11.17/11.17 | f20-f67 480ms | L 46.4px first 3.2% max 9.9% last 0.11px; R 46.4px first 3.2% max 9.9% last 0.11px | op60 0.18 | out 0px | pass
+== done 04:30:39

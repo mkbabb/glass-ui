@@ -1,0 +1,9 @@
+== g2-held 03:55:42 (load { 11.44 9.43 8.40 })
+applied g2-held - G-2 (from rest): a leaving face sized by its border box as its content box
+{"cell":"1440-fine-light","rows":"p3-fold-pill-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":217,"firstChange":256.6,"lastChange":1444.5,"screencast":null,"consoleErrors":0}
+{"cell":"1440-fine-light","rows":"p3-fold-pill-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":200,"firstChange":233,"lastChange":1622,"screencast":null,"consoleErrors":0}
+reverted g2-held
+-- judge
+p3-fold-pill-fine | chromium | 1440-fine-light | curve 0.02 | held 4 | whole {"row":126,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":208,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: a unit moves 4.00 px in the window's first row (seat#0 row 127)
+p3-fold-pill-fine | webkit | 1440-fine-light | curve 0.01 | held 4 | whole {"row":120,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":208,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: a unit moves 4.00 px in the window's first row (seat#0 row 121)
+== done 03:56:04

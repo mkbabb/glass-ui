@@ -1,0 +1,598 @@
+== fits 04:55:56
+applied fits: data-run-fits never written
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 8 tests using 1 worker
+
+  ✘  1 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:732:5 › critique 2, coarse phone › e4 at 390: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring (2.7s)
+  ✘  2 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:732:5 › e4 at 1440: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring (2.2s)
+  ✘  3 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1228:5 › critique 5, coarse phone › k3 at 320: a capped dock whose seats all show holds the fit law and rests round (1.1s)
+  ✓  4 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1228:5 › critique 5, coarse phone › k3 at 306, unsized tab glyphs: a capped dock whose seats all show holds the fit law and rests round (1.5s)
+  ✘  5 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1228:5 › k3 at 320: a capped dock whose seats all show holds the fit law and rests round (1.1s)
+  ✘  6 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1228:5 › k3 at 306, unsized tab glyphs: a capped dock whose seats all show holds the fit law and rests round (1.2s)
+  ✘  7 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1453:5 › critique 7, coarse phone › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge (14.7s)
+  ✘  8 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1453:5 › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge (14.6s)
+
+
+  1) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:732:5 › critique 2, coarse phone › e4 at 390: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring 
+
+    Error: 390 capped 4 px under 328.09375: every seat shows ({"fits":false,"span":202,"port":206,"range":4,"ring":4,"over":0,"radii":["30px","30px","30px","30px"],"round":true})
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      2371 | async function expectFitting(page: Page, cell: string): Promise<void> {
+      2372 |     const r = await fitRead(page);
+    > 2373 |     expect(r.fits, `${cell}: every seat shows (${JSON.stringify(r)})`).toBe(true);
+           |                                                                        ^
+      2374 |     expect(fitLaw(r), `${cell}: the fit law (${JSON.stringify(r)})`).toEqual([]);
+      2375 | }
+      2376 |
+        at expectFitting (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:2373:72)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:743:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-2--b956f-d-keeps-the-end-seat-s-ring-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:732:5 › e4 at 1440: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring 
+
+    Error: 1440 capped 4 px under 324.78125: every seat shows ({"fits":false,"span":207,"port":210,"range":5,"ring":4,"over":1,"radii":["28px","28px","28px","28px"],"round":true})
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      2371 | async function expectFitting(page: Page, cell: string): Promise<void> {
+      2372 |     const r = await fitRead(page);
+    > 2373 |     expect(r.fits, `${cell}: every seat shows (${JSON.stringify(r)})`).toBe(true);
+           |                                                                        ^
+      2374 |     expect(fitLaw(r), `${cell}: the fit law (${JSON.stringify(r)})`).toEqual([]);
+      2375 | }
+      2376 |
+        at expectFitting (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:2373:72)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:743:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-e4-at-1440--76718-d-keeps-the-end-seat-s-ring-chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1228:5 › critique 5, coarse phone › k3 at 320: a capped dock whose seats all show holds the fit law and rests round 
+
+    Error: 320 rest: every seat shows ({"fits":false,"span":300,"port":304,"range":4,"ring":4,"over":0,"radii":["30px","30px","30px","30px"],"round":true})
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      2371 | async function expectFitting(page: Page, cell: string): Promise<void> {
+      2372 |     const r = await fitRead(page);
+    > 2373 |     expect(r.fits, `${cell}: every seat shows (${JSON.stringify(r)})`).toBe(true);
+           |                                                                        ^
+      2374 |     expect(fitLaw(r), `${cell}: the fit law (${JSON.stringify(r)})`).toEqual([]);
+      2375 | }
+      2376 |
+        at expectFitting (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:2373:72)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:1245:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-5--71d3c-the-fit-law-and-rests-round-chromium-headless-new/error-context.md
+
+  4) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1228:5 › k3 at 320: a capped dock whose seats all show holds the fit law and rests round 
+
+    Error: 320 rest: every seat shows ({"fits":false,"span":292,"port":300,"range":0,"ring":4,"over":0,"radii":["28px","28px","28px","28px"],"round":true})
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      2371 | async function expectFitting(page: Page, cell: string): Promise<void> {
+      2372 |     const r = await fitRead(page);
+    > 2373 |     expect(r.fits, `${cell}: every seat shows (${JSON.stringify(r)})`).toBe(true);
+           |                                                                        ^
+      2374 |     expect(fitLaw(r), `${cell}: the fit law (${JSON.stringify(r)})`).toEqual([]);
+      2375 | }
+      2376 |
+        at expectFitting (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:2373:72)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:1245:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-k3-at-320-a-13047-the-fit-law-and-rests-round-chromium-headless-new/error-context.md
+
+  5) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1228:5 › k3 at 306, unsized tab glyphs: a capped dock whose seats all show holds the fit law and rests round 
+
+    Error: 320 rest: every seat shows ({"fits":false,"span":286,"port":290,"range":4,"ring":4,"over":0,"radii":["28px","28px","28px","28px"],"round":true})
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      2371 | async function expectFitting(page: Page, cell: string): Promise<void> {
+      2372 |     const r = await fitRead(page);
+    > 2373 |     expect(r.fits, `${cell}: every seat shows (${JSON.stringify(r)})`).toBe(true);
+           |                                                                        ^
+      2374 |     expect(fitLaw(r), `${cell}: the fit law (${JSON.stringify(r)})`).toEqual([]);
+      2375 | }
+      2376 |
+        at expectFitting (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:2373:72)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:1245:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-k3-at-306-u-985a9-the-fit-law-and-rests-round-chromium-headless-new/error-context.md
+
+  6) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1453:5 › critique 7, coarse phone › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge 
+
+    Error: no row whose seats fit scrolls past the ring floor, and the flag is the span
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 154
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 4,
+    +     "port": 304,
+    +     "radii": Array [
+    +       "34px",
+    +       "34px",
+    +       "34px",
+    +       "34px",
+    +     ],
+    +     "range": 8,
+    +     "ring": 0,
+    +     "round": true,
+    +     "span": 304,
+    +     "stageH": 344,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 308,
+    +     "radii": Array [
+    +       "34px",
+    +       "34px",
+    +       "34px",
+    +       "34px",
+    +     ],
+    +     "range": 4,
+    +     "ring": 0,
+    +     "round": true,
+    +     "span": 304,
+    +     "stageH": 348,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 312,
+    +     "radii": Array [
+    +       "34px",
+    +       "34px",
+    +       "34px",
+    +       "34px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": true,
+    +     "span": 304,
+    +     "stageH": 352,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 316,
+    +     "radii": Array [
+    +       "34px",
+    +       "34px",
+    +       "34px",
+    +       "34px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": true,
+    +     "span": 304,
+    +     "stageH": 356,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 320,
+    +     "radii": Array [
+    +       "34px",
+    +       "34px",
+    +       "34px",
+    +       "34px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": true,
+    +     "span": 304,
+    +     "stageH": 360,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 324,
+    +     "radii": Array [
+    +       "34px",
+    +       "34px",
+    +       "34px",
+    +       "34px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": true,
+    +     "span": 304,
+    +     "stageH": 364,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 328,
+    +     "radii": Array [
+    +       "34px",
+    +       "34px",
+    +       "34px",
+    +       "34px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": true,
+    +     "span": 304,
+    +     "stageH": 368,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 332,
+    +     "radii": Array [
+    +       "34px",
+    +       "34px",
+    +       "34px",
+    +       "34px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": true,
+    +     "span": 304,
+    +     "stageH": 372,
+    +   },
+    + ]
+
+      1465 |         }
+      1466 |         expect(fitted, "the sweep crosses the fit edge").toBeGreaterThan(2);
+    > 1467 |         expect(bad, "no row whose seats fit scrolls past the ring floor, and the flag is the span").toEqual([]);
+           |                                                                                                     ^
+      1468 |     });
+      1469 | }
+      1470 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:1467:101
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-7--e7014-ortfall-across-the-fit-edge-chromium-headless-new/error-context.md
+
+  7) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1453:5 › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge 
+
+    Error: no row whose seats fit scrolls past the ring floor, and the flag is the span
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 268
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 4,
+    +     "port": 280,
+    +     "radii": Array [
+    +       "32px",
+    +       "32px",
+    +       "32px",
+    +       "32px",
+    +     ],
+    +     "range": 8,
+    +     "ring": 0,
+    +     "round": true,
+    +     "span": 280,
+    +     "stageH": 320,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 284,
+    +     "radii": Array [
+    +       "32px",
+    +       "32px",
+    +       "32px",
+    +       "32px",
+    +     ],
+    +     "range": 4,
+    +     "ring": 0,
+    +     "round": true,
+    +     "span": 280,
+    +     "stageH": 324,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 288,
+    +     "radii": Array [
+    +       "32px",
+    +       "32px",
+    +       "32px",
+    +       "32px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": true,
+    +     "span": 280,
+    +     "stageH": 328,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 292,
+    +     "radii": Array [
+    +       "32px",
+    +       "32px",
+    +       "32px",
+    +       "32px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": true,
+    +     "span": 280,
+    +     "stageH": 332,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 296,
+    +     "radii": Array [
+    +       "32px",
+    +       "32px",
+    +       "32px",
+    +       "32px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": true,
+    +     "span": 280,
+    +     "stageH": 336,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 300,
+    +     "radii": Array [
+    +       "32px",
+    +       "32px",
+    +       "32px",
+    +       "32px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": true,
+    +     "span": 280,
+    +     "stageH": 340,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 304,
+    +     "radii": Array [
+    +       "32px",
+    +       "32px",
+    +       "32px",
+    +       "32px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": true,
+    +     "span": 280,
+    +     "stageH": 344,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 308,
+    +     "radii": Array [
+    +       "32px",
+    +       "32px",
+    +       "32px",
+    +       "32px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": true,
+    +     "span": 280,
+    +     "stageH": 348,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 312,
+    +     "radii": Array [
+    +       "32px",
+    +       "32px",
+    +       "32px",
+    +       "32px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": true,
+    +     "span": 280,
+    +     "stageH": 352,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 316,
+    +     "radii": Array [
+    +       "32px",
+    +       "32px",
+    +       "32px",
+    +       "32px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": true,
+    +     "span": 280,
+    +     "stageH": 356,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 320,
+    +     "radii": Array [
+    +       "32px",
+    +       "32px",
+    +       "32px",
+    +       "32px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": true,
+    +     "span": 280,
+    +     "stageH": 360,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 324,
+    +     "radii": Array [
+    +       "32px",
+    +       "32px",
+    +       "32px",
+    +       "32px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": true,
+    +     "span": 280,
+    +     "stageH": 364,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 328,
+    +     "radii": Array [
+    +       "32px",
+    +       "32px",
+    +       "32px",
+    +       "32px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": true,
+    +     "span": 280,
+    +     "stageH": 368,
+    +   },
+    +   Object {
+    +     "fits": false,
+    +     "law": Array [
+    +       "flag is not the span",
+    +     ],
+    +     "over": 0,
+    +     "port": 332,
+    +     "radii": Array [
+    +       "32px",
+    +       "32px",
+    +       "32px",
+    +       "32px",
+    +     ],
+    +     "range": 0,
+    +     "ring": 0,
+    +     "round": true,
+    +     "span": 280,
+    +     "stageH": 372,
+    +   },
+    + ]
+
+      1465 |         }
+      1466 |         expect(fitted, "the sweep crosses the fit edge").toBeGreaterThan(2);
+    > 1467 |         expect(bad, "no row whose seats fit scrolls past the ring floor, and the flag is the span").toEqual([]);
+           |                                                                                                     ^
+      1468 |     });
+      1469 | }
+      1470 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/tests-visual/release-10-1-5.spec.ts:1467:101
+
+    Error Context: tests-visual/test-results/release-10-1-5-m2-a-vertic-516f6-ortfall-across-the-fit-edge-chromium-headless-new/error-context.md
+
+  7 failed
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:732:5 › critique 2, coarse phone › e4 at 390: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:732:5 › e4 at 1440: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1228:5 › critique 5, coarse phone › k3 at 320: a capped dock whose seats all show holds the fit law and rests round 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1228:5 › k3 at 320: a capped dock whose seats all show holds the fit law and rests round 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1228:5 › k3 at 306, unsized tab glyphs: a capped dock whose seats all show holds the fit law and rests round 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1453:5 › critique 7, coarse phone › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1453:5 › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge 
+  1 passed (43.0s)
+rc=1
+reverted fits
