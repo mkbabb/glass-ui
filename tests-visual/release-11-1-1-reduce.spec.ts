@@ -13,6 +13,10 @@
 //            box landing at once
 //   mark     a navigation run's selected plate moves to a new seat by a cross-fade:
 //            no painted plate travels, and the new seat's plate fades in
+//   press    a pressed control shows its press by colour, not by size: a Button, a dock's
+//            icon seat and a dock's tab seat, each held pressed by a finger at the phone
+//            form (Chromium, through CDP) and by the mouse at the desktop form, keep
+//            scale 1 and their width on every frame of the hold
 //   still    a Slider holds still: its root, track, fill and thumb change on a zero
 //            clock, and with the mouse its fill holds three runs of one value through a
 //            held press and its release, rest, pressed, rest, with no value between
@@ -317,6 +321,67 @@ test("mark · a run's selected plate moves to a new seat by a cross-fade", async
     expect(legs.travel, `no painted plate travels ${at}`).toBe(0);
     expectFade(legs.in, "in", `new seat ${at}`);
     expectFade(legs.out, "out", `old seat ${at}`);
+});
+
+test("press · a pressed Button and dock seat keep their size under reduced motion", async ({ page }, info) => {
+    const project = info.project.name;
+    test.skip(project === "webkit-phone", "Playwright WebKit's touchscreen taps but cannot hold a press; the press is read at 1440");
+    await open(page, REDUCE);
+    const controls = { Button: '[data-testid="r-button"]', "icon seat": '[data-testid="r-press-icon"]', "tab seat": '[data-testid="r-press-tab"]' };
+    const cdp = isPhone(project) ? await page.context().newCDPSession(page) : null;
+    const reads: Record<string, { rest: number; active: number; scales: string[]; transforms: string[]; widths: number[] }> = {};
+    for (const [name, sel] of Object.entries(controls)) {
+        const box = (await page.locator(sel).boundingBox())!;
+        const x = box.x + box.width / 2;
+        const y = box.y + box.height / 2;
+        // Every frame of the hold: the computed scale and transform, the painted width,
+        // and whether the control is pressed (`:active`), so a press that never landed
+        // cannot read as one that kept its size.
+        await page.evaluate((sel) => {
+            const el = document.querySelector(sel)!;
+            const film = { frames: [] as [string, string, number, boolean][], stop: false };
+            (window as unknown as { __hold: typeof film }).__hold = film;
+            const tick = () => {
+                const cs = getComputedStyle(el);
+                film.frames.push([cs.scale, cs.transform, el.getBoundingClientRect().width, el.matches(":active")]);
+                if (!film.stop) requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+        }, sel);
+        await page.waitForTimeout(80);
+        // A finger held 500 ms through Chromium's gesture pipeline, which presses the
+        // control (`:active`) as a touch screen does; raw touch events do not.
+        const hold = cdp ? cdp.send("Input.synthesizeTapGesture", { x, y, duration: 500, gestureSourceType: "touch" }) : null;
+        if (!hold) {
+            await page.mouse.move(x, y);
+            await page.mouse.down();
+        }
+        await page.waitForTimeout(300);
+        const frames = await page.evaluate(() => {
+            const film = (window as unknown as { __hold: { frames: [string, string, number, boolean][]; stop: boolean } }).__hold;
+            film.stop = true;
+            return film.frames;
+        });
+        if (hold) await hold;
+        else await page.mouse.up();
+        await page.waitForTimeout(300);
+        reads[name] = {
+            rest: +box.width.toFixed(2),
+            active: frames.filter((f) => f[3]).length,
+            scales: [...new Set(frames.map((f) => f[0]))],
+            transforms: [...new Set(frames.map((f) => f[1]))],
+            widths: [...new Set(frames.map((f) => +f[2].toFixed(2)))],
+        };
+    }
+    const at = JSON.stringify(reads);
+    await info.attach("press", { body: at, contentType: "application/json" });
+    const identity = (s: string) => s === "none" || s.split(" ").every((v) => parseFloat(v) === 1);
+    for (const [name, r] of Object.entries(reads)) {
+        expect(r.active, `the ${name} was held pressed ${at}`).toBeGreaterThan(0);
+        expect(r.scales.every(identity), `the ${name} keeps scale 1 on every frame ${at}`).toBe(true);
+        expect(r.transforms, `the ${name} takes no transform ${at}`).toEqual(["none"]);
+        expect(Math.max(...r.widths.map((w) => Math.abs(w - r.rest))), `the ${name} keeps its width ${at}`).toBeLessThanOrEqual(0.5);
+    }
 });
 
 test("still · a Slider holds still under reduced motion", async ({ page }, info) => {

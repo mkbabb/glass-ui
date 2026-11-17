@@ -10,7 +10,6 @@ import { Primitive } from "reka-ui";
 import { cn } from "../_shared/class-names";
 import { vSpecular } from "../../composables/glass";
 import { useLiquidPress } from "../../composables/motion/spring/useLiquidPress";
-import { springPreset } from "../../composables/motion/spring/springPresets";
 import { DOCK_SEAT_ATTR } from "./constants";
 
 /**
@@ -129,23 +128,20 @@ const hostAttrs = computed(() =>
 // The ONE interruptible spring-press (the icon shape). `useLiquidPress` composes
 // its private spring driver reaches kf `SpringProgress`, so a rapid re-press
 // re-seats the LIVE (position, velocity) — the iOS velocity-continuous contract.
-// It reads the `press` SPRING_PRESETS row and writes `--dock-press-t` the
-// dock-controls CSS reads to couple darken/specular to the spring physics. The
-// CSS `:active` register stays the no-JS, PRM floor; `useLiquidPress` is
-// PRM-instant + compositor-only. The tab shape reads its own CSS press register.
-const PRESS = springPreset("press");
+// It rides the `press` SPRING_PRESETS row (its default) on the squishy register (its
+// default) and writes `--dock-press-t` the dock-controls CSS reads to couple
+// darken/specular to the spring physics. The CSS `:active` register stays the no-JS
+// floor; `useLiquidPress` is compositor-only, and under reduced motion writes no
+// scale. The tab shape reads its own CSS press register.
 const press = useLiquidPress({
     disabled: () => props.disabled || isTab.value,
-    squish: true,
-    response: PRESS.response,
-    dampingFraction: PRESS.dampingFraction,
     pressVar: "--dock-press-t",
     shrinkDepth: 0.04,
     maxStretch: 1.03,
 });
 
 const hostStyle = computed<CSSProperties>(() =>
-    isTab.value ? {} : { ...press.pressStyle.value },
+    isTab.value ? {} : press.pressStyle.value,
 );
 
 function blockDisabledActivation(event: MouseEvent): void {

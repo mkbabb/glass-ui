@@ -89,6 +89,14 @@
             scale: var(--scale-press-dock);
         }
 
+        /* Under reduced motion a press darkens the tab and does not shrink it, where
+           the scale would land at once. */
+        @media (prefers-reduced-motion: reduce) {
+            &:active:not(:disabled):not([aria-disabled="true"]) {
+                scale: 1;
+            }
+        }
+
         /* [2026-08-25 · BK #47 W2-W9 CURE] ~~`&:focus:not(:focus-visible) {
            box-shadow: none; }`~~ — the THIRD site of the same struck class as the
            icon-button's and the trigger family's, and the only one where the dead half

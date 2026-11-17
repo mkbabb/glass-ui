@@ -13,9 +13,10 @@
 //     surface CSS reads for a sub-perceptual brightness/specular leg — ONE drive, both
 //     legs, on the SAME `--spring-press` clock — the row that owns the touch answer.
 //   • PRM-INSTANT — `useSpring`'s `respectReducedMotion` (the kf `SpringProgress` PRM
-//     snap) snaps the value to its endpoint with zero in-between transform frames, so
-//     under reduce the press FUNCTIONS (the scale arrives, the gesture confirms) with
-//     the physics off. The wrapper inherits it.
+//     snap) snaps the value to its endpoint with zero in-between frames. Under reduce
+//     `pressStyle` writes no `scale`: a scale that lands at once is a jump, so the
+//     pressed control keeps its size and the press var, stepped to 1, shows the press by
+//     colour alone.
 //   • COMPOSITOR-ONLY — `pressStyle` writes `scale` + the `--press-t` custom property
 //     only; never a layout property. The CSS `.tap-squish` `:active` scale remains the
 //     no-JS/SSR floor; the JS reciprocal deform is the enhancement.
@@ -120,7 +121,8 @@ export interface UseLiquidPressReturn {
     };
     /**
      * The coupled press style — the ONE `:style` object a consumer binds. Carries the
-     * reciprocal X/Y `scale` (engaged only past `engageThreshold`) AND the `pressVar`
+     * reciprocal X/Y `scale` (engaged only past `engageThreshold`, and never under
+     * reduced motion while the press respects it) AND the `pressVar`
      * 0..1 drive scalar the surface CSS reads for the brightness/specular leg.
      * Compositor-only (`scale` + a custom property — never a layout property).
      */
@@ -156,16 +158,11 @@ export function useLiquidPress(
 
     // The spring press driver — interruptible by construction (the kf SpringProgress
     // target re-seat carries velocity), PRM-aware (respectReducedMotion snaps the value).
-    const press = useSpringPress({
-        response: options.response,
-        dampingFraction: options.dampingFraction,
-        initial: options.initial,
-        initialVelocity: options.initialVelocity,
-        settleThreshold: options.settleThreshold,
-        velocitySettleThreshold: options.velocitySettleThreshold,
-        respectReducedMotion: options.respectReducedMotion,
-        onValue: options.onValue,
-    });
+    // It reads its own options off this object and nothing else.
+    const press = useSpringPress(options);
+    // Whether the press began under reduced motion while it respects it: it then writes
+    // no scale. Read as each press begins.
+    const reduced = ref(false);
 
     // The volume-preserving reciprocal squish — SQUISH-ONLY (a press surface has no size
     // span), so it reads the spring value as the `"linear"`-law travel fraction, capped
@@ -209,6 +206,10 @@ export function useLiquidPress(
     const isDisabled = (): boolean => Boolean(toValue(options.disabled));
     const activate = (): void => {
         if (isDisabled()) return;
+        reduced.value =
+            options.respectReducedMotion !== false &&
+            typeof matchMedia === "function" &&
+            matchMedia("(prefers-reduced-motion: reduce)").matches;
         if (squishOn) {
             const el = options.el?.value;
             pressWeight = el ? motionWeightOf(el).weight : MOTION_WEIGHT_REST;
@@ -285,8 +286,9 @@ export function useLiquidPress(
         // sub-perceptual threshold) — at rest the inline `scale` is OMITTED so the
         // surface's hover/rest transforms win unimpeded. The inline value wins over a CVA
         // `active:scale-*` utility while pressed (the single-source press), then yields
-        // back to the cascade as it settles — no desync, no double-apply.
-        if (t > engageThreshold) {
+        // back to the cascade as it settles — no desync, no double-apply. Under reduced
+        // motion it is never emitted, and the control keeps its size.
+        if (t > engageThreshold && !reduced.value) {
             style.scale = `${scaleX} ${scaleY}`;
         }
         return style;

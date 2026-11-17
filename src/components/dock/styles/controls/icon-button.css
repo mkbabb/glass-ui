@@ -152,6 +152,15 @@
             scale: var(--scale-press-dock);
         }
 
+        /* Under reduced motion a press darkens the seat and does not shrink it, where
+           the scale would land at once. The armed press writes no scale there either
+           (`useLiquidPress`). */
+        @media (prefers-reduced-motion: reduce) {
+            &:active:not(:disabled):not([data-press-armed]):not([aria-disabled="true"]) {
+                scale: 1;
+            }
+        }
+
         /* The four-state DISABLED register. A boundary nav control
            (prev/next at the first/last item) stays PRESENT but disabled so the row
            geometry holds (never DOM-absent — the "flaky" read). It dims to the shared
