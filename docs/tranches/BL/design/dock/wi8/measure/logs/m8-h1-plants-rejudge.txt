@@ -1,0 +1,45 @@
+== g3-retarget
+p3-rev-fold-25-ptr | wi8 | chromium | 1440-fine-light | load 8.84/8.84 | f28-f81ut 0px | pass
+p3-rev-fold-25-ptr | wi8 | chromium | 1440-fine-light | load 8.84/8.84 | f135-f10 0.26 | out 0px | pass
+p3-rev-fold-25-ptr | wi8 | webkit | 1440-fine-light | load 9.83/9.83 | f19-f61 4 out 0px | pass
+p3-rev-fold-25-ptr | wi8 | webkit | 1440-fine-light | load 9.83/9.83 | f119-f1630.17 | out 0px | pass
+p3-rev-fold-50-ptr | wi8 | chromium | 1440-fine-light | load 8.85/8.85 | f27-f80 | out 0px | pass
+p3-rev-fold-50-ptr | wi8 | chromium | 1440-fine-light | load 8.85/8.85 | f133-f10 0.26 | out 0px | pass
+p3-rev-fold-50-ptr | wi8 | webkit | 1440-fine-light | load 10.75/10.75 | f20-f62 | out 0px | pass
+p3-rev-fold-50-ptr | wi8 | webkit | 1440-fine-light | load 10.75/10.75 | f122-f10 0.16 | out 0px | pass
+p3-rev-unfold-50-out | wi8 | chromium | 1440-fine-light | load 9.56/9.56 | f29-f0 0.25 | out 0px | pass
+p3-rev-unfold-50-out | wi8 | webkit | 1440-fine-light | load 11.17/11.17 | f20-f0 0.18 | out 0px | pass
+== g2-laneinset
+p3-fold-pill-fine | wi8 | chromium | 1440-fine-light | load 8.27/8.27 | f30-f79 | out 0px | FAIL: a region's clip is off its lane in 48 region-rows, up to 12.02 px (layers f44)
+p3-fold-pill-fine | wi8 | chromium | 1440-fine-light | load 8.27/8.27 | f134-f185 | out 0px | FAIL: a region's clip is off its lane in 48 region-rows, up to 12.00 px (layers f169)
+p3-fold-pill-fine | wi8 | webkit | 1440-fine-light | load 8.09/8.09 | f21-f59 380px | FAIL: a region's clip is off its lane in 37 region-rows, up to 12.01 px (layers f30)
+p3-fold-pill-fine | wi8 | webkit | 1440-fine-light | load 8.09/8.09 | f120-f158 t 0px | FAIL: a region's clip is off its lane in 37 region-rows, up to 12.01 px (layers f141)
+== g2-lane
+p3-fold-outlet-fine | wi8 | chromium | 1440-fine-light | load 12.16/11.67 | f31-.25 | out 0px | pass
+p3-fold-outlet-fine | wi8 | chromium | 1440-fine-light | load 12.16/11.67 | f135 0.25 | out 0px | pass
+p3-fold-outlet-fine | wi8 | webkit | 1440-fine-light | load 12.45/12.45 | f21-f5 | out 0px | pass
+p3-fold-outlet-fine | wi8 | webkit | 1440-fine-light | load 12.45/12.45 | f119-f17 | out 0px | pass
+p3-region-fine | wi8 | chromium | 1440-fine-light | load 12.19/12.19 | f27-f73 3 0px | pass
+p3-region-fine | wi8 | chromium | 1440-fine-light | load 12.19/12.19 | f124-f153out 0px | pass
+p3-region-fine | wi8 | chromium | 1440-fine-light | load 12.19/12.19 | f201-f231out 0px | pass
+p3-region-fine | wi8 | chromium | 1440-fine-light | load 12.19/12.19 | f281-f327 | out 0px | pass
+p3-region-fine | wi8 | chromium | 1440-fine-light | load 12.19/12.19 | f390-f420out 0px | pass
+p3-region-fine | wi8 | chromium | 1440-fine-light | load 12.19/12.19 | f469-f500ut 0px | pass
+p3-region-fine | wi8 | webkit | 1440-fine-light | load 11.66/12.09 | f20-f58 389px | pass
+p3-region-fine | wi8 | webkit | 1440-fine-light | load 11.66/12.09 | f103-f128 2ut 0px | pass
+p3-region-fine | wi8 | webkit | 1440-fine-light | load 11.66/12.09 | f168-f193 20px | pass
+p3-region-fine | wi8 | webkit | 1440-fine-light | load 11.66/12.09 | f234-f272 3 out 0px | pass
+p3-region-fine | wi8 | webkit | 1440-fine-light | load 11.66/12.09 | f321-f346 2t 0px | pass
+p3-region-fine | wi8 | webkit | 1440-fine-light | load 11.66/12.09 | f387-f412 2 0px | pass
+p3-region-rm | wi8 | chromium | 1440-fine-light-rm | load 12.08/12.08 | f24-f38 t 0px | pass
+p3-region-rm | wi8 | chromium | 1440-fine-light-rm | load 12.08/12.08 | f91-f92  | pass
+p3-region-rm | wi8 | chromium | 1440-fine-light-rm | load 12.08/12.08 | f141-f14px | pass
+p3-region-rm | wi8 | chromium | 1440-fine-light-rm | load 12.08/12.08 | f189-f20out 0px | pass
+p3-region-rm | wi8 | chromium | 1440-fine-light-rm | load 12.08/12.08 | f263-f260px | pass
+p3-region-rm | wi8 | chromium | 1440-fine-light-rm | load 12.08/12.08 | f314-f31px | pass
+p3-region-rm | wi8 | webkit | 1440-fine-light-rm | load 12.72/12.66 | f19-f31 120px | pass
+p3-region-rm | wi8 | webkit | 1440-fine-light-rm | load 12.72/12.66 | f80-f81 9m pass
+p3-region-rm | wi8 | webkit | 1440-fine-light-rm | load 12.72/12.66 | f120-f121 x | pass
+p3-region-rm | wi8 | webkit | 1440-fine-light-rm | load 12.72/12.66 | f162-f173 t 0px | pass
+p3-region-rm | wi8 | webkit | 1440-fine-light-rm | load 12.72/12.66 | f222-f223 x | pass
+p3-region-rm | wi8 | webkit | 1440-fine-light-rm | load 12.72/12.66 | f263-f264 x | pass
