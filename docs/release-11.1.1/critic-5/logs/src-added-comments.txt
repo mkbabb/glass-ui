@@ -1,0 +1,219 @@
++/* Under reduced motion the region does not grow or shrink: it is at its full size from
++/**
++ * A disclosure reversed mid-motion turns from the height it stands at.
++ *
++ * The region opens and closes on two keyframes (`disclosure-open`, `disclosure-close`),
++ * and a keyframe starts at its first stop, so a flip mid-motion would restart from the
++ * far end: the region empties or fills in one frame. When the state flips while one of
++ * them runs, this reads the height the region stands at before the flip and, in the same
++ * task, seeks the new keyframe to the moment it passes that height, so no frame paints
++ * the far end. The new motion then carries on from there on its own clock.
++ *
++ * `open` is the root's open state; `id` names the content element.
++ */
++            // reka's content measures its size after the flip's render, in its own
++            // continuation of the same `nextTick`, with the animation off, and restores
++            // it: that restored keyframe is the one to seek. This watcher runs first (it
++            // belongs to the wrapping component), so the seek waits one further step.
++        /* The press keeps the row's size here (`.interactive-item`), so it shows as a
++/**
++ * The page takes presses while a surface leaves.
++ *
++ * A closed surface stays mounted through its exit, and with it reka's dismissable layer,
++ * which (for a modal surface or a listbox) sets `pointer-events: none` on `body` and
++ * dismisses on any press outside it. During the exit that swallowed the press that
++ * should reopen the surface from its trigger, or reach the page behind a leaving sheet,
++ * and a touch reopen was dismissed again by its own click.
++ *
++ * `blockOutside` is what the layer's `disableOutsidePointerEvents` should be: the
++ * surface's own setting while it is open, false once it has closed. `letThrough` goes
++ * first in the layer's `pointerDownOutside`: a press that began while the surface was
++ * already closed is not a dismissal (a dismissal is a press on an open surface; this one
++ * may be reopening it), so it prevents the dismissal and returns true.
++ */
++/** The surfaces that announce the end of their leave, as `detail.kind` names them. */
++/** The name of the event, the same on every surface: the Vue emit and the DOM event. */
++/** reka-ui's `Presence` dispatches this, without bubbling, on the node it is about to
++ *  unmount once its exit has ended (and on an unmount with no exit). */
++/**
++ * Announces that a surface's leave has finished: once per close, after the exit's last
++ * frame, as a Vue emit (`leave-finished`) and as a DOM `CustomEvent` of the same name
++ * from the content element, bubbling and composed (so a listener on a shadow host
++ * hears it), with the surface's kind in `detail`. A close reversed by a reopen
++ * announces nothing; an exit cut short by an unmount announces at the unmount.
++ *
++ * The content element carries `attrs` (a key this reads it back by). The end of the
++ * leave is the moment reka's `Presence` lets the content go, which every surface here
++ * mounts through: its exit animation (or the hold that keeps it through its exit
++ * transitions, or the spring's mount hold) has ended, and the node is still in the
++ * document, so the event bubbles to the page.
++ */
++    /* The content is where the component mounts it (in the page, or inside a shadow
++    /* reka's event does not bubble out of a shadow root, so the listener sits on the
++        // The Presence node is the content element itself, or the popper wrapper round it.
++ * what the reader was choosing for, so it covers the page as a sheet. A sheet covers
++ * more of the page than an anchored popup, so it wears the firm plate (`data-plate=
++ * "firm"`, glass/surface-axis.css): the overlay rung's glass, firmed toward the card so
++ * its rows read over any ground. The width is a fact of the viewport, read here once for
++ * every overlay that has a sheet form; no content component carries a material prop
++ * for it.
++ * listener; it is read synchronously on open, before the content renders. On close the
++ * listener goes and the form stays: a surface leaves in the form it opened in, so its
++ * exit plays on the same box, side and material it entered on. The next open reads the
++ * query again.
++    /* Under reduced motion a press keeps the box's size (`useLiquidPress` writes no
++/* A palette inside a dialog closes with the dialog, and reka unmounts a closed combobox's
++    // Under reduced motion the position is a fade's clock: the plate keeps its size.
++// Once the exit has finished, the plate says so (`_shared/overlay/leave-finished.ts`).
++// The forwarded emits carry the leave emit as a listener; on reka's content it would
++// land on the element and answer the DOM event of the same name a second time.
++// The exit takes no press: once closed, the layer stops blocking the page and an outside
++// press that began after the close dismisses nothing, so the trigger can reopen the
++// surface mid-exit and the page behind it stays live (`_shared/overlay/exit-press.ts`).
++ * long as reka's lock held it: while the scrim is present. It takes presses only while
++ * the dialog is open: through the exit a press reaches the page, or the trigger that
++ * reopens the dialog.
++// It rides the `press` SPRING_PRESETS row (its default) on the squishy register (its
++// default) and writes `--dock-press-t` the dock-controls CSS reads to couple
++// darken/specular to the spring physics. The CSS `:active` register stays the no-JS
++// floor; `useLiquidPress` is compositor-only, and under reduced motion writes no
++// scale. The tab shape reads its own CSS press register.
++        /* Under reduced motion a press darkens the seat and does not shrink it, where
++        /* Under reduced motion a press darkens the tab and does not shrink it, where
++    /* Under reduced motion a press darkens the trigger and does not shrink it, as
++    /* Under reduced motion a posture or face change cross-fades. The box lands at once
++    /* Under reduced motion the mark does not travel: it is not drawn, and the selected
++/*
++ * THE WAY IN AND THE WAY OUT. `open` is the reader's intent; `placed` is where the
++ * subtree is. Opening places it in the fullscreen overlay at once and the overlay
++ * enters on its transitions (`styles.css`). Closing leaves it placed, marked
++ * `data-leaving`, while the overlay leaves on the same channels in reverse; it goes
++ * back to its in-flow place when the overlay's own transitions have finished. A reopen
++ * during the exit (or a close during the entrance) turns the transitions around from
++ * where they stand, and the subtree never moves. Escape is registered the moment
++ * `open` turns true, so it is live from the entrance's first frame.
++ */
++/* After the render that marks the exit, the overlay's transitions exist; the subtree
++/* THE WAY IN. The expanded panel grows out of the rect it was promoted from: scale
++ * 0.78 → 1 on `--spring-dock`, transform and opacity ONLY, never an animated box, as the
++ * scrim fades in under it.
++ * the same frame, so nothing is seen to vanish.
++ *
++ * THE WAY OUT is the same channels in reverse, on the dock row's exit clock and the
++ * exit curve, while the root is marked `data-leaving`; the component moves the subtree
++ * home when they have finished. Both legs are transitions, so a reversal mid-way turns
++ * from where it stands. The two keyframes below are the earlier form of the same
++ * motion, kept for stylesheets that name them. */
++    /* A leaving overlay takes no press: one on the page beneath it, or on whatever
++        /* The spatial leg drops; the arrival and the departure still read. A 0.12s
++         * opacity fade is the house's reduced rung, not a cut, which would have the room
++         * appear and vanish with no event at all. The clocks are `!important` so the
++         * reduced-motion fallback, a later layer, does not zero them. */
++/* Once the exit has finished, the menu says so (`_shared/overlay/leave-finished.ts`). */
++/* Once the exit has finished, the panel says so (`_shared/overlay/leave-finished.ts`);
++ * opening upward, at full width, on the firm plate; the anchored form keeps the
++ * floating plate.
++/* The exit takes no press: once closed, the listbox stops blocking the page and a press
++/* Once the exit has finished, the listbox says so (`_shared/overlay/leave-finished.ts`). */
++    // Under reduced motion the position is a fade's clock: the sheet stays where it rests
++    // and its opacity carries the entrance and the exit. A drag still moves it.
++// Once the exit has finished, the sheet says so (`_shared/overlay/leave-finished.ts`).
++// The forwarded emits carry the leave emit as a listener; on reka's content it would
++// land on the element and answer the DOM event of the same name a second time.
++// The exit takes no press: once closed, the layer stops blocking the page and an outside
++// press that began after the close dismisses nothing, so the trigger can reopen the
++// surface mid-exit and the page behind it stays live (`_shared/overlay/exit-press.ts`).
++        // The drag wrote the scalar past the spring, so the spring is seated where the
++        // finger left the sheet, moving as the finger moved: the settle, or the close,
++        // runs on from there instead of from the rung the drag started at.
++ * its edge. Above the floor (below) nothing translates.
++     * `0` remains legal as the DISMISSAL endpoint: the rung scalar still resolves onto it and
++     * the engine still requests the close. Below the floor the box stops shrinking, so the
++     * plate slides by the difference instead: what shows of it is always the rung's share of
++     * the viewport, and at 0 it is wholly past the edge when it unmounts, on every route
++     * that closes it and on the way in. The INLINE axis takes no floor this round; a narrow
++     * side rung clips along a different axis and rides the sheet family's next π. */
++/* Under reduced motion the slider is still: every part changes on a zero clock, so the
++    /* Unset rather than `false`, so the open state below can tell a held prop from none. */
++/* Once its dismissal has finished, the toast says so (`_shared/overlay/leave-finished.ts`).
++    /* THE ON-STATE CARRIES ON INK AND FILL, AT THE ITEM'S ONE WEIGHT. A bolder
++/* Once the exit has finished, the hint says so (`_shared/overlay/leave-finished.ts`). */
++//     snap) snaps the value to its endpoint with zero in-between frames. Under reduce
++//     `pressStyle` writes no `scale`: a scale that lands at once is a jump, so the
++//     pressed control keeps its size and the press var, stepped to 1, shows the press by
++//     colour alone.
++     * reciprocal X/Y `scale` (engaged only past `engageThreshold`, and never under
++     * reduced motion while the press respects it) AND the `pressVar`
++    // It reads its own options off this object and nothing else.
++    // Whether the press began under reduced motion while it respects it: it then writes
++    // no scale. Read as each press begins.
++        // back to the cascade as it settles — no desync, no double-apply. Under reduced
++        // motion it is never emitted, and the control keeps its size.
++// REDUCED MOTION: the entrance and the exit are a tween of the position on `--exit-curve`
++// over the row's exit clock held to at most `--duration-fast` (200 ms), which the host
++// reads as an opacity fade with no travel. A drag still tracks the pointer, and its
++// release snaps (`useSpring`'s `respectReducedMotion`).
++//
++// THE EXIT is not the spring. A close that is not a drag release rides the floating
++// surfaces' exit: the position tweens from where it is to 1 over the row's exit clock
++// (`--spring-<row>-exit-duration`, 0.6 × its entrance) on `--exit-curve`, both read from
++// the stylesheet at the close, so the Dialog and Sheet leave on the same curve as every
++// popup and sooner than they arrived. A reopen during the exit hands the position back
++// to the spring, which turns from where the surface is. Where the stylesheet resolves no
++// exit clock (no library CSS loaded), the spring rides the exit as it rides the entrance.
++/** A CSS `cubic-bezier()` as a function of progress, or linear for `linear`. */
++/** How much longer than its row's exit clock a mounted surface takes to leave. The
++ *  `present` row's exit is the generator's 0.12 s floor, which a centred modal plate
++ *  crosses in too few frames to read; it leaves in 1.5 times that, about 180 ms, still
++ *  well inside its entrance. The other rows leave on their own clock. */
++/** The row's exit clock (ms) and the exit curve, read from the stylesheet. Under reduced
++ *  motion the clock is held to at most `--duration-fast`. */
++    // The exit tween's position while it runs; null when the spring owns the position.
++    /** Tweens the position from where it is to `to` on the exit clock. The exit always
++     *  takes it; the entrance only under reduced motion, where it is the fade. */
++        // The clock advances by at most one 60 Hz frame per frame, so a long frame (a pick
++        // that navigates, a list that re-renders) slows the exit rather than skipping a
++        // stretch of it; on steady frames it runs on the exit clock.
++        // The spring heads for the same end underneath, so a reversal retargets it.
++    /* Opacity and geometry share the exit clock: the light is on screen until the
++     * clock ends, so no frame of a short exit carries most of it. */
++/* The reveal's exit hold (glass/reveal.css, the closed state). The exit itself is a
++ * set of transitions; this keyframe paints nothing and only runs for the exit's clock,
++ * so reka's `usePresence`, which unmounts on `animationend`, keeps the node until the
++ * transitions have landed. */
++ * The close runs the same clip back into the strip as the plate fades, both across the
++ * whole exit clock. */
++ * `!important` IS WHAT DELIVERS THAT CONTRACT. The universal reduced-motion fallback
++ * (`utilities/a11y-overrides.css`) is a normal declaration in the last layer, so it
++ * beats every normal clock glass declares; an `!important` one beats it. The name list
++ * is `!important` too, so no other reduced-motion rule renames the root's keyframes. The
++ * clock is the dismissal's own, held to at most `--duration-fast` (200 ms) on the
++ * dismissal's `--exit-curve`.
++ * Without it the surface vanishes on a 0.01ms keyframe. This carve is the
++ * The overlay register (a Popover's panel, a hover card, a Toast) moves on opacity
++ * and its side's slide alone, in and out: its scale and blur knobs are neutral. The
++ * tooltip register keeps a slight scale on the way in. The recipe's channels:
++        /* The fade's curve on the way in. */
++        /* The exit reader of the row this register ENTERS on: the menu grows on the
++        /* A hint is all fade: it comes in on the exit's own even curve, so no frame of
++    /* OPEN — the settled, bloomed-in state, keyed on every open state reka writes
++        /* The exit is opacity and the side's few pixels of slide, nothing else: the
++        /* The exit is a TRANSITION on every channel, from wherever the surface stands:
++    /* A plate on the trigger's top side grows upward, so its travelling edge is the top. */
++    /* Only the clip travels on the way in; the other channels move only when the menu
++    /* The sheet form leaves the way a sheet does: it slides down past the foot of the
++        /* The exit fades ONLY: the hold keyframe keeps the node for reka while the
++ * trigger; the surface fades, never flies, never disappears). The fade rides
++ * `--exit-curve` over at most `--duration-fast` (200 ms) both ways: an exit whose
++ * register clock is shorter keeps it. The side slide does not travel either: a closing
++ * surface keeps its place under the fade. The clocks are
++ * `!important`: the reduced-motion fallback (utilities/a11y-overrides.css) is a later
++ * layer and zeroes every normal clock, so a fade that survives says so. The closed
++ * state restates its hold keyframe's duration for the same reason, or reka would unmount
++ * the surface at once. */
++            /* The exit fades ONLY (no transform/blur frames — the vestibular floor): one
++    /* ── firm — the glass of a popup at sheet width ─────────────────────────────
++/* `reduced-motion` comes last: it holds only the reduced-motion fallback
++    /* The exit curve. No overshoot, so it never passes gone, and no front-load: its
++/* ── Reduced motion: the instant fallback, in its own last layer ───────────────
++    /* Only a pointer that hovers lifts it: on touch a tap leaves `:hover` set, and

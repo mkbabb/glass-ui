@@ -1,0 +1,102 @@
+G/G -/- G/G -/- | round · a compact SegmentedTabs strip is round-ended on touch
+R/G -/- R/G -/- | round · a wide SegmentedTabs strip is round-ended on touch
+R/G R/G R/G R/G | weight · selecting a word-labelled ToggleGroupItem moves no item box
+R/G -/- R/G -/- | lift · a scale-on-hover element returns to rest after a tap
+R/G G/G R/G G/G | form · a dock Select leaves in the form it opened in · pick
+R/G G/G R/G G/G | form · a dock DropdownMenu keeps its material through the exit · pick
+R/G G/G -/- G/G | form · a dock Select leaves in the form it opened in · outside
+R/G G/G -/- G/G | form · a dock DropdownMenu keeps its material through the exit · outside
+R/G G/G R/G G/G | form · a dock Select leaves in the form it opened in · escape
+R/G G/G R/G G/G | form · a dock DropdownMenu keeps its material through the exit · escape
+R/G G/G -/- G/G | form · a dock Select leaves in the form it opened in · trigger
+R/G G/G R/G G/G | form · a dock DropdownMenu keeps its material through the exit · trigger
+R/G G/G R/G G/G | form · a dock Select leaves in the form it opened in · current
+-/- -/- -/- -/- | form · a dock DropdownMenu keeps its material through the exit · current
+R/G -/- R/G -/- | glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · light
+R/G -/- R/G -/- | glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · dark
+G/G -/- -/- -/- | glass · a phone Select is solid under reduced transparency
+R/G -/- R/G -/- | glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · light
+R/G -/- R/G -/- | glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · dark
+G/G -/- -/- -/- | glass · a phone dock DropdownMenu is solid under reduced transparency
+R/G R/G R/G R/G | exit · Select leaves on the exit curve, shorter than it entered
+R/G R/G R/G R/G | exit · DropdownMenu leaves on the exit curve, shorter than it entered
+R/G R/G R/G R/G | exit · Popover leaves on the exit curve, shorter than it entered
+-/- R/G -/- R/G | exit · Tooltip leaves on the exit curve, shorter than it entered
+R/G R/G R/G R/G | exit · Dialog leaves on the exit curve, shorter than it entered
+R/G R/G R/G R/G | exit · Sheet right leaves on the exit curve, shorter than it entered
+R/G R/G R/G R/G | exit · Sheet bottom leaves on the exit curve, shorter than it entered
+R/G R/G R/G R/G | exit · a Popover enters and leaves on opacity and its slide alone
+-/- R/G -/- R/G | exit · a Tooltip leaves on opacity and its slide alone
+R/G R/G R/G R/G | routes · a detented Sheet leaves whole by escape
+R/G R/G -/- R/G | routes · a detented Sheet leaves whole by outside
+R/G R/G -/- R/G | routes · a detented Sheet dragged off leaves from where the drag left it
+R/G R/G R/G R/G | routes · a CommandDialog keeps its list through its exit by pick
+R/G R/G R/G R/G | routes · a CommandDialog keeps its list through its exit by escape
+R/G R/G -/- R/G | routes · a CommandDialog keeps its list through its exit by outside
+R/G R/G -/- R/G | routes · a press on an open Select's trigger closes it once
+R/G R/G -/- R/G | routes · a press on an open DropdownMenu's trigger closes it once
+R/G R/G -/- R/G | routes · a press on an open Popover's trigger closes it once
+R/G R/G R/G R/G | reverse · a Select closed while it opens turns from where it is
+R/G R/G R/G R/G | reverse · a Select reopened while it closes turns from where it is
+R/G R/G R/G R/G | reverse · a DropdownMenu closed while it opens turns from where it is
+G/G G/G G/G G/G | reverse · a DropdownMenu reopened while it closes turns from where it is
+R/G R/G R/G R/G | reverse · a Popover closed while it opens turns from where it is
+R/G R/G R/G R/G | reverse · a Popover reopened while it closes turns from where it is
+R/G R/G R/G R/G | reverse · a Toast closed while it opens turns from where it is
+-/- R/G -/- R/G | reverse · a Tooltip closed while it opens turns from where it is
+-/- R/G -/- R/G | reverse · a Tooltip reopened while it closes turns from where it is
+R/G R/G R/G R/G | reverse · a Collapsible closed while it opens turns from where it is
+R/G R/G R/G R/G | reverse · a Collapsible reopened while it closes turns from where it is
+R/G R/G R/G R/G | reverse · a Accordion closed while it opens turns from where it is
+R/G R/G R/G R/G | reverse · a Accordion reopened while it closes turns from where it is
+R/G R/G R/G R/G | reverse · a press on a leaving Dialog's trigger reopens it from where it is
+R/G R/G R/G R/G | reverse · a press on a leaving Sheet's trigger reopens it from where it is
+R/G R/G R/G R/G | reverse · a press on a leaving Select's trigger reopens it from where it is
+R/G R/G R/G R/G | reverse · a press on the page while a sheet leaves reaches the page
+-/- R/G -/- R/G | tooltip · a Tooltip enters on a tween
+-/- R/G -/- R/G | tooltip · a hint handed to its neighbour fades, incoming
+-/- R/G -/- R/G | tooltip · a hint handed to its neighbour fades, outgoing
+G/G G/G G/G G/G | expand · an ExpandableContainer enters on a tween
+R/G R/G R/G R/G | expand · an ExpandableContainer leaves on a tween by exit
+R/G R/G R/G R/G | expand · an ExpandableContainer leaves on a tween by escape
+R/G R/G R/G R/G | expand · an ExpandableContainer leaves on a tween by open
+G/G R/G R/G R/G | expand · an ExpandableContainer closed while it enters turns from where it is
+R/G R/G R/G R/G | expand · an ExpandableContainer reopened while it leaves turns from where it is
+G/G G/G G/G G/G | expand · Escape is live from the entrance's first frame
+R/G R/G R/G R/G | leave · a Dialog says once that its leave has finished, after its last seen frame
+R/G R/G R/G R/G | leave · a Dialog closed and reopened mid-exit says nothing
+R/G R/G R/G R/G | leave · a Sheet says once that its leave has finished, after its last seen frame
+R/G R/G R/G R/G | leave · a Sheet closed and reopened mid-exit says nothing
+R/G R/G R/G R/G | leave · a Popover says once that its leave has finished, after its last seen frame
+G/G G/G G/G G/G | leave · a Popover closed and reopened mid-exit says nothing
+R/G R/G R/G R/G | leave · a DropdownMenu says once that its leave has finished, after its last seen frame
+G/G G/G G/G G/G | leave · a DropdownMenu closed and reopened mid-exit says nothing
+R/G R/G R/G R/G | leave · a Select says once that its leave has finished, after its last seen frame
+R/G R/G G/G R/G | leave · a Select closed and reopened mid-exit says nothing
+-/- R/G -/- R/G | leave · a Tooltip says once that its leave has finished, after its last seen frame
+-/- G/G -/- G/G | leave · a Tooltip closed and reopened mid-exit says nothing
+R/G R/G R/G R/G | leave · a Toast says once that its leave has finished, after its last seen frame
+-/- -/- -/- -/- | leave · a Toast closed and reopened mid-exit says nothing
+R/G R/G R/G R/G | leave · a Popover inside a shadow root says so to its host
+-/- R/G -/- R/G | leave · a ContextMenu says once that its leave has finished, by escape
+-/- R/G -/- R/G | leave · a ContextMenu says once that its leave has finished, by pick
+-/- R/G -/- R/G | leave · a hover card says once that its leave has finished
+R/G R/G R/G R/G | leave · a Dialog unmounted mid-exit says so once, at the unmount
+R/G R/G R/G R/G | site · a site's own opacity fade keeps its clock under reduced motion
+R/G R/G R/G R/G | fade · a Popover appears and leaves on a fade
+R/G R/G R/G R/G | fade · a DropdownMenu appears and leaves on a fade
+R/G R/G R/G R/G | fade · a dock Select appears and leaves on a fade
+R/G R/G R/G R/G | fade · a plain Select appears and leaves on a fade
+-/- R/G -/- R/G | fade · a Tooltip appears and leaves on a fade
+R/G R/G R/G R/G | fade · a Dialog appears and leaves on a fade
+R/G R/G R/G R/G | fade · a Sheet right appears and leaves on a fade
+R/G R/G R/G R/G | fade · a Sheet bottom appears and leaves on a fade
+R/G R/G R/G R/G | fade · a Toast appears and leaves on a fade
+R/G R/G R/G R/G | fade · a Collapsible appears and leaves on a fade
+R/G R/G R/G R/G | fade · a Accordion appears and leaves on a fade
+R/G R/G R/G R/G | fade · a ExpandableContainer appears and leaves on a fade
+R/G R/G R/G R/G | fold · a dock unfolds and folds by cross-fading its faces, its box landing at once
+R/G R/G R/G R/G | mark · a run's selected plate moves to a new seat by a cross-fade
+R/G R/G -/- R/G | press · a pressed control shows its press by colour, not by size, under reduced motion
+G/G G/G G/G G/G | still · a Slider holds still under reduced motion
+{'G/G': 50, '-/-': 64, 'R/G': 290}

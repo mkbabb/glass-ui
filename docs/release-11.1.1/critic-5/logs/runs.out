@@ -1,0 +1,52 @@
+head fa26a442f 03:17:25
+typecheck exit 0
+build exit 0
+verify:package exit 0
+demo:dist:build exit 0
+vitest exit 0
+pack exit 0
+PHASE-GATES-DONE 03:19:57
+03:21:28 tipA-chromium-phone exit 0 load=9.50 8.98 7.75  3 skipped  35 passed (1.4m) 
+03:23:26 tipB-chromium-phone exit 0 load=8.71 8.80 7.83  11 skipped  35 passed (1.9m) 
+03:25:40 tipC-chromium-phone exit 0 load=8.63 8.92 8.03  3 skipped  41 passed (2.1m) 
+03:26:33 tipD-chromium-phone exit 0 load=9.23 9.08 8.15  1 skipped  16 passed (47.1s) 
+03:27:54 tipA-chromium-desktop exit 0 load=9.71 9.31 8.32  10 skipped  28 passed (1.3m) 
+03:30:18 tipB-chromium-desktop exit 0 load=8.40 8.96 8.33  1 skipped  45 passed (2.3m) 
+03:32:40 tipC-chromium-desktop exit 0 load=10.22 9.16 8.48  44 passed (2.3m) 
+03:33:34 tipD-chromium-desktop exit 0 load=10.61 9.40 8.61  17 passed (48.3s) 
+03:39:00 tipA-webkit-phone exit 0 load=5.93 7.31 7.87  14 skipped  24 passed (1.1m) 
+03:41:26 tipB-webkit-phone exit 0 load=6.58 7.29 7.79  11 skipped  35 passed (2.0m) 
+03:43:27 tipC-webkit-phone exit 0 load=5.56 6.79 7.53  17 skipped  27 passed (1.6m) 
+03:44:22 tipD-webkit-phone exit 0 load=5.28 6.50 7.37  2 skipped  15 passed (42.3s) 
+03:45:59 tipA-webkit-desktop exit 0 load=7.16 6.83 7.41  10 skipped  28 passed (1.4m) 
+03:48:44 tipB-webkit-desktop exit 0 load=9.64 7.67 7.62  1 skipped  45 passed (2.5m) 
+03:51:25 tipC-webkit-desktop exit 0 load=9.54 8.30 7.88  44 passed (2.4m) 
+03:52:32 tipD-webkit-desktop exit 0 load=7.05 7.83 7.73  17 passed (53.2s) 
+PHASE-TIP-DONE 03:52:32
+03:54:15 redA-chromium-phone exit 1 load=9.86 8.46 7.98  32 failed  3 skipped  3 passed (1.6m) 
+03:56:28 redB-chromium-phone exit 1 load=13.92 10.41 8.82  29 failed  11 skipped  6 passed (2.1m) 
+03:57:27 redD-chromium-phone exit 1 load=11.77 10.43 8.93  15 failed  1 skipped  1 passed (53.5s) 
+03:58:55 redA-chromium-desktop exit 1 load=12.10 10.89 9.25  19 failed  10 skipped  9 passed (1.4m) 
+04:01:35 redB-chromium-desktop exit 1 load=8.82 10.65 9.49  39 failed  1 skipped  6 passed (2.6m) 
+04:02:34 redD-chromium-desktop exit 1 load=9.25 10.63 9.57  16 failed  1 passed (54.2s) 
+04:04:15 redA-webkit-phone exit 1 load=12.09 11.09 9.86  23 failed  14 skipped  1 passed (1.4m) 
+04:06:38 redB-webkit-phone exit 1 load=9.11 10.73 9.95  29 failed  11 skipped  6 passed (2.3m) 
+04:08:56 redD-webkit-phone exit 1 load=8.25 9.73 9.65  14 failed  2 skipped  1 passed (51.2s) 
+04:10:47 redA-webkit-desktop exit 1 load=8.67 9.36 9.51  19 failed  10 skipped  9 passed (1.6m) 
+04:13:51 redB-webkit-desktop exit 1 load=5.77 7.69 8.77  39 failed  1 skipped  6 passed (2.9m) 
+04:15:05 redD-webkit-desktop exit 1 load=6.28 7.50 8.62  16 failed  1 passed (1.0m) 
+PHASE-RED-DONE 04:15:05
+04:17:34 tipB2-webkit-phone exit 1 load=7.35 7.77 8.56  2 failed  11 skipped  33 passed (2.2m) 
+04:19:42 tipB3-webkit-phone exit 0 load=8.41 8.07 8.57  11 skipped  35 passed (2.1m) 
+04:22:20 tipB4-webkit-phone exit 0 load=6.15 7.05 8.06  11 skipped  35 passed (2.0m) 
+PHASE-B-REPEAT-DONE 04:22:20
+CHAIN1-DONE 04:22:20
+04:27:09 stall5-webkit-phone exit 0 load=8.52 7.66 7.99  12 failed  28 passed (4.4m) 
+PHASE-PROBE-DONE 04:27:09
+PHASE-REG-CH-DONE 04:53:51
+PHASE-REG-WK-DONE 05:24:12
+CHAIN2-DONE 05:24:12
+CHAIN3-DONE 05:24:12
+05:29:35 stall5-red-webkit-phone exit 0  38 failed  2 passed (3.6m) 
+CHAIN4-DONE 05:29:35
+CHAIN5-DONE 05:34:00
