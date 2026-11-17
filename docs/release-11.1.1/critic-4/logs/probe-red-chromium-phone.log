@@ -1,0 +1,10 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 2 tests using 1 worker
+
+colour chromium-phone {"Button":{"restMean":[215,203.4,185.3],"heldMean":[215.7,204.4,186.9],"changedShare":0.189,"restCs":{"bg":"oklab(0.673443 0.0210928 0.0746619 / 0.244)","filter":"none","shadow":"rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0","scale":"1","pressT":"","dockPressT":"0","active":false},"heldCs":{"bg":"oklab(0.673443 0.0210928 0.0746619 / 0.244)","filter":"none","shadow":"rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0","scale":"1.0328 0.911","pressT":"","dockPressT":"0","active":true}},"icon seat":{"restMean":[213.2,207.2,196.3],"heldMean":[199.5,193.2,181.9],"changedShare":0.418,"restCs":{"bg":"rgba(0, 0, 0, 0)","filter":"brightness(1)","shadow":"none","scale":"1","pressT":"","dockPressT":"0","active":false},"heldCs":{"bg":"oklab(0.257667 0.00900921 0.023203 / 0.2002)","filter":"brightness(0.96)","shadow":"none","scale":"1.0066 0.9156","pressT":"","dockPressT":"1","active":true}},"tab seat":{"restMean":[205.4,199.6,189.1],"heldMean":[185.5,179.1,168],"changedShare":0.642,"restCs":{"bg":"rgba(0, 0, 0, 0)","filter":"none","shadow":"none","scale":"1","pressT":"","dockPressT":"0","active":false},"heldCs":{"bg":"oklab(0.257667 0.00900921 0.023203 / 0.2002)","filter":"none","shadow":"none","scale":"0.96","pressT":"","dockPressT":"0","active":true}}}
+  ✓  1 [chromium-phone] › docs/release-11.1.1/critic-4/probe/press.probe.ts:45:1 › colour · a held press under reduced motion (5.8s)
+  -  2 [chromium-phone] › docs/release-11.1.1/critic-4/probe/press.probe.ts:75:1 › row · a held press on a menu row under reduced motion
+
+  1 skipped
+  1 passed (7.6s)

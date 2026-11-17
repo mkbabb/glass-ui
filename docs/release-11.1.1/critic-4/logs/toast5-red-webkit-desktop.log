@@ -1,0 +1,146 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for the 'webkit' lock
+
+Running 6 tests using 1 worker
+
+  ✘  1 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:790:9 › reverse · a Toast closed while it opens turns from where it is (2.7s)
+  ✘  2 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:790:9 › reverse · a Toast closed while it opens turns from where it is (2.6s)
+  ✘  3 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:790:9 › reverse · a Toast closed while it opens turns from where it is (2.6s)
+  ✘  4 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:790:9 › reverse · a Toast closed while it opens turns from where it is (2.7s)
+  ✘  5 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:790:9 › reverse · a Toast closed while it opens turns from where it is (2.6s)
+  ✘  6 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:790:9 › reverse · a Toast closed while it opens turns from where it is (2.6s)
+
+
+  1) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:790:9 › reverse · a Toast closed while it opens turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.556,"turnedAt":1,"share":0.37,"end":0,"frames":[[-8,0.556],[4,0.595],[12,1],[24,0.756],[33,0.627],[43,0.531],[56,0.446],[65,0.393],[77,0.351],[86,0.327],[96,0.309],[105,0.302],[116,0.247],[126,0.175],[137,0.12],[145,0.089],[157,0.055],[166,0.036],[178,0.019],[188,0.008],[198,0.002],[208,0],[218,0],[227,0],[239,0],[247,0],[260,0],[269,0],[280,0],[290,0],[300,0],[309,0],[319,0],[331,0],[339,0],[352,0],[361,0],[371,0],[382,0],[392,0],[402,0],[412,0],[423,0],[432,0],[444,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.37
+
+      740 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      741 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 742 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      743 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      744 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      745 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:742:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:796:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-96d04-pens-turns-from-where-it-is-webkit-desktop/error-context.md
+
+  2) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:790:9 › reverse · a Toast closed while it opens turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.566,"turnedAt":1,"share":0.381,"end":0,"frames":[[-6,0.566],[2,0.592],[3,0.595],[13,1],[24,0.771],[33,0.639],[45,0.523],[54,0.465],[66,0.398],[74,0.361],[84,0.332],[95,0.311],[107,0.301],[116,0.256],[126,0.181],[135,0.133],[148,0.086],[156,0.062],[168,0.036],[176,0.021],[188,0.008],[198,0.002],[208,0],[217,0],[229,0],[239,0],[249,0],[260,0],[268,0],[280,0],[289,0],[300,0],[309,0],[319,0],[331,0],[341,0],[351,0],[360,0],[370,0],[380,0],[392,0],[401,0],[412,0],[421,0],[431,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.381
+
+      740 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      741 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 742 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      743 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      744 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      745 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:742:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:796:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-96d04-pens-turns-from-where-it-is-webkit-desktop-repeat1/error-context.md
+
+  3) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:790:9 › reverse · a Toast closed while it opens turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.539,"turnedAt":1,"share":0.366,"end":0,"frames":[[-10,0.539],[1,0.576],[5,0.589],[11,1],[24,0.741],[31,0.639],[43,0.523],[53,0.452],[63,0.403],[73,0.358],[85,0.325],[94,0.31],[103,0.302],[115,0.256],[123,0.194],[135,0.124],[145,0.086],[154,0.06],[165,0.038],[176,0.02],[186,0.008],[196,0.002],[205,0],[216,0],[225,0],[237,0],[247,0],[255,0],[266,0],[276,0],[287,0],[298,0],[308,0],[318,0],[327,0],[339,0],[347,0],[358,0],[368,0],[379,0],[389,0],[400,0],[410,0],[419,0],[431,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.366
+
+      740 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      741 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 742 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      743 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      744 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      745 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:742:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:796:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-96d04-pens-turns-from-where-it-is-webkit-desktop-repeat2/error-context.md
+
+  4) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:790:9 › reverse · a Toast closed while it opens turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.556,"turnedAt":1,"share":0.352,"end":0,"frames":[[-6,0.556],[4,0.589],[5,0.592],[15,1],[24,0.787],[35,0.65],[46,0.531],[57,0.452],[67,0.398],[77,0.358],[86,0.334],[96,0.314],[108,0.302],[118,0.256],[127,0.194],[139,0.129],[149,0.089],[157,0.062],[169,0.036],[178,0.021],[189,0.009],[200,0.003],[210,0],[219,0],[230,0],[239,0],[249,0],[261,0],[270,0],[280,0],[290,0],[302,0],[312,0],[320,0],[330,0],[342,0],[351,0],[362,0],[372,0],[383,0],[391,0],[403,0],[415,0],[422,0],[433,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.352
+
+      740 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      741 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 742 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      743 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      744 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      745 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:742:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:796:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-96d04-pens-turns-from-where-it-is-webkit-desktop-repeat3/error-context.md
+
+  5) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:790:9 › reverse · a Toast closed while it opens turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.569,"turnedAt":1,"share":0.313,"end":0,"frames":[[-3,0.569],[3,0.589],[9,1],[15,0.839],[27,0.662],[37,0.557],[48,0.478],[56,0.423],[68,0.369],[77,0.34],[89,0.314],[99,0.304],[109,0.3],[118,0.207],[130,0.138],[138,0.108],[150,0.068],[158,0.046],[169,0.027],[178,0.014],[190,0.005],[202,0],[209,0],[221,0],[230,0],[241,0],[252,0],[261,0],[273,0],[282,0],[293,0],[302,0],[314,0],[322,0],[335,0],[343,0],[355,0],[364,0],[372,0],[383,0],[394,0],[406,0],[413,0],[423,0],[435,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.313
+
+      740 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      741 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 742 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      743 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      744 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      745 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:742:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:796:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-96d04-pens-turns-from-where-it-is-webkit-desktop-repeat4/error-context.md
+
+  6) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:790:9 › reverse · a Toast closed while it opens turns from where it is 
+
+    Error: no frame after the turn moves more than a fifth {"atTurn":0.563,"turnedAt":1,"share":0.287,"end":0,"frames":[[-3,0.563],[3,0.582],[9,1],[18,0.804],[30,0.639],[39,0.549],[51,0.458],[59,0.408],[69,0.369],[81,0.329],[89,0.314],[99,0.303],[109,0.287],[122,0.187],[132,0.133],[142,0.093],[152,0.06],[162,0.038],[171,0.024],[181,0.012],[193,0.003],[203,0],[212,0],[224,0],[234,0],[242,0],[253,0],[264,0],[275,0],[285,0],[294,0],[305,0],[315,0],[324,0],[336,0],[346,0],[356,0],[366,0],[377,0],[386,0],[395,0],[406,0],[416,0],[426,0],[436,0]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.287
+
+      740 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);
+      741 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);
+    > 742 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                 ^
+      743 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeGreaterThan(0.02);
+      744 |     expect(read.turnedAt, `it turns short of the end it was heading for ${at}`).toBeLessThan(0.98);
+      745 |     if (ends === "gone") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);
+        at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:742:81)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:796:13
+
+    Error Context: tests-visual/test-results/release-11-1-1-reverse-·-a-96d04-pens-turns-from-where-it-is-webkit-desktop-repeat5/error-context.md
+
+  6 failed
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:790:9 › reverse · a Toast closed while it opens turns from where it is 
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:790:9 › reverse · a Toast closed while it opens turns from where it is 
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:790:9 › reverse · a Toast closed while it opens turns from where it is 
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:790:9 › reverse · a Toast closed while it opens turns from where it is 
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:790:9 › reverse · a Toast closed while it opens turns from where it is 
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:790:9 › reverse · a Toast closed while it opens turns from where it is 

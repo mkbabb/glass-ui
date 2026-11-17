@@ -1,0 +1,1958 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-1-1.config.ts",
+      "--project=chromium-phone",
+      "--workers=1",
+      "-g",
+      "standing · "
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-4/logs/tipC-chromium-phone.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "standing · Select by pick: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3193,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:19:45.995Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyOCwic2hhcmUiOjAuMTI0LCJ0cmF2ZWwiOjIxMiwidHJhdmVsU2hhcmUiOjAuMDkyLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTYsMV0sWzEsMV0sWzEwLDFdLFsxOCwxXSxbMjcsMV0sWzM0LDFdLFs0NCwwLjk0MV0sWzUyLDAuODg3XSxbNjAsMC44MjVdLFs2OSwwLjc2NF0sWzc3LDAuNzAyXSxbODUsMC42MzldLFs5NCwwLjU3OV0sWzEwMiwwLjUxOV0sWzExMCwwLjQ2Ml0sWzExOSwwLjQwNl0sWzEyNywwLjM1NF0sWzEzNSwwLjMwNV0sWzE0MywwLjI2XSxbMTUyLDAuMjE4XSxbMTYwLDAuMThdLFsxNjksMC4xNDZdLFsxNzcsMC4xMTVdLFsxODUsMC4wODldLFsxOTQsMC4wNjZdLFsyMDIsMC4wNDddLFsyMTAsMC4wMzNdLFsyMTksMC4wMl0sWzIyNywwLjAxMV0sWzIzNSwwLjAwNV1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-eb99ca9ee04f919aca8f",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · Select by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3059,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:19:49.295Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNSwic2hhcmUiOjAuMTI0LCJ0cmF2ZWwiOjIxMiwidHJhdmVsU2hhcmUiOjAuMDkzLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTEsMV0sWzcsMV0sWzE1LDFdLFsyMywwLjk1MV0sWzMyLDAuODldLFs0MCwwLjgzMV0sWzQ4LDAuNzc0XSxbNTYsMC43MTldLFs2NiwwLjY0M10sWzc0LDAuNTg1XSxbODIsMC41MjldLFs5MSwwLjQ2Nl0sWzk5LDAuNDEyXSxbMTA3LDAuMzU5XSxbMTE1LDAuMzFdLFsxMjQsMC4yNjRdLFsxMzIsMC4yMjJdLFsxMzksMC4xOV0sWzE0OSwwLjE0OV0sWzE1NywwLjExOF0sWzE2NSwwLjA5M10sWzE3NCwwLjA2OF0sWzE4MiwwLjA0OV0sWzE5MSwwLjAzM10sWzE5OSwwLjAyMV0sWzIwNywwLjAxMl0sWzIxNiwwLjAwNl1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-88d82de0c3d6f039faef",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · Select by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3049,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:19:52.359Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNCwic2hhcmUiOjAuMTI0LCJ0cmF2ZWwiOjIxMSwidHJhdmVsU2hhcmUiOjAuMDkzLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTIsMV0sWzYsMV0sWzE0LDAuOTQ3XSxbMjEsMC45MDJdLFszMSwwLjgyOV0sWzM5LDAuNzddLFs0OCwwLjcwOF0sWzU2LDAuNjQ1XSxbNjQsMC41ODVdLFs3MywwLjUyNV0sWzgxLDAuNDY3XSxbODksMC40MTFdLFs5NiwwLjM2N10sWzEwNiwwLjMwOF0sWzExNCwwLjI2NF0sWzEyMywwLjIyMV0sWzEzMSwwLjE4M10sWzEzOSwwLjE0OV0sWzE0OCwwLjExOF0sWzE1NiwwLjA5MV0sWzE2NCwwLjA2OF0sWzE3MywwLjA0OV0sWzE4MSwwLjAzNF0sWzE4OSwwLjAyMV0sWzE5OCwwLjAxMl0sWzIwNiwwLjAwNl1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-e93241d2aceb80f2ba03",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · Select by trigger: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3089,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:19:55.413Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNywic2hhcmUiOjAuMTI0LCJ0cmF2ZWwiOjIxMSwidHJhdmVsU2hhcmUiOjAuMDkzLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTEsMV0sWzcsMV0sWzE1LDFdLFsyNCwxXSxbMzIsMV0sWzQwLDAuOTQ4XSxbNDksMC44OV0sWzU3LDAuODMxXSxbNjUsMC43N10sWzc0LDAuNzA3XSxbODIsMC42NDVdLFs5MCwwLjU5XSxbOTksMC41MjNdLFsxMDcsMC40NjddLFsxMTUsMC40MTFdLFsxMjIsMC4zNjddLFsxMzIsMC4zMDldLFsxNDAsMC4yNjRdLFsxNDksMC4yMjJdLFsxNTcsMC4xODNdLFsxNjUsMC4xNDhdLFsxNzQsMC4xMThdLFsxODEsMC4wOTVdLFsxOTEsMC4wNjhdLFsxOTksMC4wNDldLFsyMDcsMC4wMzNdLFsyMTUsMC4wMjFdLFsyMjQsMC4wMTJdLFsyMzIsMC4wMDZdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-f572d7717eae27795cfd",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · DropdownMenu by pick: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3083,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:19:58.507Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozMCwic2hhcmUiOjAuMTM0LCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTYsMV0sWzEsMV0sWzExLDFdLFsxOSwxXSxbMjcsMV0sWzM2LDFdLFs0NCwwLjk3M10sWzUyLDAuOTQ1XSxbNjAsMC45MTZdLFs2OSwwLjg3Nl0sWzc3LDAuODQxXSxbODYsMC44MDNdLFs5NCwwLjczOV0sWzEwMiwwLjY3Ml0sWzExMSwwLjYwNV0sWzExOSwwLjU0MV0sWzEyNywwLjQ4XSxbMTM2LDAuNDIyXSxbMTQ0LDAuMzY4XSxbMTUyLDAuMzE3XSxbMTYxLDAuMjddLFsxNjksMC4yMjddLFsxNzcsMC4xODhdLFsxODYsMC4xNTJdLFsxOTQsMC4xMjFdLFsyMDIsMC4wOTZdLFsyMTEsMC4wNzFdLFsyMTksMC4wNTFdLFsyMjcsMC4wMzVdLFsyMzYsMC4wMjFdLFsyNDMsMC4wMTJdLFsyNTIsMC4wMDRdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-490280c8aec589ef3ac3",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · DropdownMenu by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3074,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:20:01.596Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNywic2hhcmUiOjAuMTMyLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTIsMV0sWzYsMV0sWzE1LDFdLFsyMiwwLjk3Nl0sWzMxLDAuOTQ0XSxbMzksMC45MTVdLFs0OCwwLjg3N10sWzU1LDAuODQ3XSxbNjUsMC44MDVdLFs3MywwLjc0MV0sWzgwLDAuNjgyXSxbOTAsMC42MDhdLFs5NiwwLjU1NV0sWzEwNiwwLjQ4Ml0sWzExNSwwLjQyNF0sWzEyMywwLjM2OV0sWzEzMSwwLjMyMl0sWzE0MCwwLjI3XSxbMTQ4LDAuMjI4XSxbMTU2LDAuMTg4XSxbMTY1LDAuMTUzXSxbMTcyLDAuMTI0XSxbMTgwLDAuMDk4XSxbMTkwLDAuMDcxXSxbMTk4LDAuMDUxXSxbMjA2LDAuMDM1XSxbMjE1LDAuMDIyXSxbMjIzLDAuMDExXSxbMjMxLDAuMDA0XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-d8ad364a16751d1e9796",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · DropdownMenu by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3056,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:20:04.676Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNiwic2hhcmUiOjAuMTM0LCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTcsMV0sWzEsMV0sWzksMC45NzRdLFsxOCwwLjk0NF0sWzI2LDAuOTEzXSxbMzUsMC44NzddLFs0MywwLjg0MV0sWzUxLDAuODAzXSxbNTksMC43NDFdLFs2OCwwLjY3XSxbNzYsMC42MDVdLFs4NCwwLjU0M10sWzkzLDAuNDhdLFsxMDEsMC40MjNdLFsxMDksMC4zNjhdLFsxMTgsMC4zMTddLFsxMjYsMC4yNjldLFsxMzQsMC4yMjddLFsxNDMsMC4xODhdLFsxNTEsMC4xNTJdLFsxNTksMC4xMjFdLFsxNjgsMC4wOTRdLFsxNzYsMC4wNzFdLFsxODQsMC4wNTFdLFsxOTIsMC4wMzZdLFsyMDEsMC4wMjJdLFsyMDksMC4wMTFdLFsyMTgsMC4wMDRdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-530559453532fe7bdd4c",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · DropdownMenu by trigger: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3076,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:20:07.737Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozMCwic2hhcmUiOjAuMDg2LCJ0cmF2ZWwiOjEsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTYsMV0sWzMsMV0sWzEzLDFdLFsyMCwxXSxbMzAsMV0sWzM3LDAuOTc1XSxbNDUsMC45NDldLFs1NCwwLjkxM10sWzYxLDAuODg2XSxbNzEsMC44NDFdLFs3OSwwLjgwNl0sWzg2LDAuNzczXSxbOTYsMC43MjRdLFsxMDQsMC42ODhdLFsxMTMsMC42NDRdLFsxMjEsMC42MDFdLFsxMjgsMC41NjVdLFsxMzYsMC41MjNdLFsxNDYsMC40NzNdLFsxNTQsMC40MjldLFsxNjMsMC4zODddLFsxNzEsMC4zNDVdLFsxNzgsMC4zMTJdLFsxODgsMC4yNjFdLFsxOTYsMC4yMjRdLFsyMDQsMC4xODVdLFsyMTMsMC4xNDddLFsyMjEsMC4xMTJdLFsyMjksMC4wNzhdLFsyMzYsMC4wNTJdLFsyNDYsMC4wMTddLFsyNTQsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-fffcb193ab6a720ff6f0",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · plain Select by pick: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3099,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:20:10.818Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyOCwic2hhcmUiOjAuMTI0LCJ0cmF2ZWwiOjIxMiwidHJhdmVsU2hhcmUiOjAuMDkzLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTcsMV0sWzAsMV0sWzEwLDFdLFsxOCwxXSxbMjcsMV0sWzM0LDFdLFs0NCwwLjkzN10sWzUyLDAuODgzXSxbNTksMC44M10sWzY5LDAuNzU5XSxbNzcsMC42OTldLFs4NSwwLjYzN10sWzkzLDAuNTc2XSxbMTAwLDAuNTI2XSxbMTEwLDAuNDU2XSxbMTE4LDAuNDA0XSxbMTI3LDAuMzUyXSxbMTM1LDAuMzAyXSxbMTQyLDAuMjYzXSxbMTUyLDAuMjE1XSxbMTYwLDAuMTc4XSxbMTY4LDAuMTQ0XSxbMTc3LDAuMTE0XSxbMTg1LDAuMDg3XSxbMTkyLDAuMDY5XSxbMjAwLDAuMDVdLFsyMTAsMC4wMzFdLFsyMTgsMC4wMl0sWzIyNywwLjAxMV0sWzIzNCwwLjAwNl1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-98a23e54953e7e39a4d9",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · plain Select by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3066,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:20:13.922Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNSwic2hhcmUiOjAuMTI0LCJ0cmF2ZWwiOjIxMSwidHJhdmVsU2hhcmUiOjAuMDkzLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTYsMV0sWzQsMV0sWzEyLDFdLFsyMCwwLjk0N10sWzI3LDAuOV0sWzM3LDAuODI4XSxbNDUsMC43NzJdLFs1NCwwLjcwNV0sWzYyLDAuNjQ2XSxbNjksMC41OTRdLFs3OSwwLjUyNF0sWzg3LDAuNDY2XSxbOTUsMC40MTFdLFsxMDQsMC4zNTldLFsxMTIsMC4zMDldLFsxMjAsMC4yNjNdLFsxMjgsMC4yMjJdLFsxMzcsMC4xODNdLFsxNDQsMC4xNTRdLFsxNTQsMC4xMTddLFsxNjIsMC4wOTFdLFsxNzAsMC4wNjhdLFsxNzgsMC4wNDldLFsxODcsMC4wMzNdLFsxOTUsMC4wMjFdLFsyMDQsMC4wMTJdLFsyMTIsMC4wMDZdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-fedb822df02df6c6bb1a",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · plain Select by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3080,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:20:16.993Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNCwic2hhcmUiOjAuMTI0LCJ0cmF2ZWwiOjIxMSwidHJhdmVsU2hhcmUiOjAuMDkzLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTYsMV0sWzMsMV0sWzExLDAuOTQ3XSxbMTksMC44OV0sWzI4LDAuODMxXSxbMzYsMC43N10sWzQ0LDAuNzA3XSxbNTMsMC42NDVdLFs2MSwwLjU4NF0sWzY5LDAuNTI0XSxbNzgsMC40NjddLFs4NiwwLjQxMV0sWzk0LDAuMzU5XSxbMTAzLDAuMzFdLFsxMTEsMC4yNjRdLFsxMTksMC4yMjJdLFsxMjgsMC4xODNdLFsxMzYsMC4xNDldLFsxNDQsMC4xMThdLFsxNTMsMC4wOTFdLFsxNjAsMC4wNzJdLFsxNjksMC4wNDldLFsxNzgsMC4wMzNdLFsxODYsMC4wMjJdLFsxOTQsMC4wMTJdLFsyMDMsMC4wMDZdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-7ab37d586af41e61bc86",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · Popover by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3066,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:20:20.077Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozMCwic2hhcmUiOjAuMDc2LCJ0cmF2ZWwiOjgsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTEsMV0sWzksMV0sWzE3LDAuOTc4XSxbMjQsMC45NTZdLFszNCwwLjkyM10sWzQyLDAuODk0XSxbNTEsMC44NjNdLFs1OSwwLjgzXSxbNjcsMC43OTZdLFs3NSwwLjc2M10sWzg0LDAuNzI1XSxbOTIsMC42OTNdLFsxMDEsMC42NTJdLFsxMDcsMC42MjNdLFsxMTgsMC41NzZdLFsxMjYsMC41NF0sWzEzNCwwLjUwMV0sWzE0MiwwLjQ2M10sWzE0OSwwLjQzMl0sWzE1OSwwLjM4OF0sWzE2NywwLjM1MV0sWzE3NCwwLjMxOV0sWzE4NCwwLjI3Nl0sWzE5MiwwLjI0Ml0sWzIwMSwwLjIwNl0sWzIwOSwwLjE3Ml0sWzIxNywwLjE0XSxbMjI0LDAuMTE0XSxbMjM0LDAuMDc3XSxbMjQyLDAuMDUxXSxbMjUxLDAuMDI1XSxbMjU5LDAuMDAxXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-b58770eccedfcc36331a",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · Popover by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3050,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:20:23.148Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozMCwic2hhcmUiOjAuMDc2LCJ0cmF2ZWwiOjgsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTEsMV0sWzksMV0sWzE3LDAuOTc4XSxbMjYsMC45NTJdLFszNCwwLjkyNF0sWzQxLDAuODk4XSxbNTEsMC44NjJdLFs1OSwwLjgzMV0sWzY3LDAuNzk2XSxbNzUsMC43NjRdLFs4NCwwLjcyNl0sWzkyLDAuNjldLFsxMDEsMC42NTNdLFsxMDksMC42MTVdLFsxMTcsMC41NzhdLFsxMjUsMC41NDRdLFsxMzQsMC41MDFdLFsxNDIsMC40NjRdLFsxNTEsMC40MjVdLFsxNTksMC4zODhdLFsxNjYsMC4zNTZdLFsxNzYsMC4zMTJdLFsxODQsMC4yNzddLFsxOTEsMC4yNDhdLFsyMDEsMC4yMDVdLFsyMDksMC4xNzNdLFsyMTcsMC4xNF0sWzIyNiwwLjEwOV0sWzIzNCwwLjA3OV0sWzI0MiwwLjA1XSxbMjUxLDAuMDI0XSxbMjU5LDAuMDAxXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-91aff043fca026a9f56f",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · Popover by trigger: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3048,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:20:26.204Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozMywic2hhcmUiOjAuMDc2LCJ0cmF2ZWwiOjgsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTEsMV0sWzksMV0sWzE3LDFdLFsyNSwxXSxbMzMsMV0sWzQyLDAuOTc3XSxbNDksMC45NTVdLFs1OSwwLjkyMl0sWzY3LDAuODkzXSxbNzUsMC44NjFdLFs4MywwLjgyOV0sWzkwLDAuODAxXSxbMTAwLDAuNzU5XSxbMTA4LDAuNzI3XSxbMTE3LDAuNjg3XSxbMTI1LDAuNjUxXSxbMTMyLDAuNjJdLFsxNDIsMC41NzZdLFsxNTAsMC41MzhdLFsxNTgsMC41XSxbMTY3LDAuNDYyXSxbMTczLDAuNDMyXSxbMTgzLDAuMzg3XSxbMTkyLDAuMzQ5XSxbMjAwLDAuMzEyXSxbMjA4LDAuMjc1XSxbMjE3LDAuMjRdLFsyMjUsMC4yMDVdLFsyMzIsMC4xNzZdLFsyNDIsMC4xMzhdLFsyNDksMC4xMTJdLFsyNTksMC4wNzddLFsyNjcsMC4wNV0sWzI3NSwwLjAyNF0sWzI4MywwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-081a5400540518616861",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · Popover by focus: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3046,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:20:29.256Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozMCwic2hhcmUiOjAuMDc2LCJ0cmF2ZWwiOjgsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTQsMV0sWzUsMV0sWzE1LDAuOTcyXSxbMjMsMC45NDddLFszMSwwLjkxOV0sWzM5LDAuODg5XSxbNDgsMC44NTddLFs1NiwwLjgyN10sWzY1LDAuNzldLFs3MywwLjc1Nl0sWzgxLDAuNzJdLFs4OCwwLjY4OF0sWzk4LDAuNjQ1XSxbMTA2LDAuNjA5XSxbMTE0LDAuNTcxXSxbMTIyLDAuNTM2XSxbMTMxLDAuNDk0XSxbMTM5LDAuNDU3XSxbMTQ4LDAuNDE5XSxbMTU2LDAuMzgxXSxbMTY0LDAuMzQ0XSxbMTczLDAuMzA3XSxbMTgwLDAuMjc1XSxbMTkwLDAuMjM0XSxbMTk4LDAuMjAxXSxbMjA2LDAuMTY5XSxbMjE1LDAuMTM0XSxbMjIxLDAuMTA5XSxbMjMxLDAuMDcyXSxbMjM5LDAuMDQ2XSxbMjQ2LDAuMDI1XSxbMjU2LDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-d1815a44bac1ca8fddca",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · Tooltip by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a Tooltip does not open on touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1433,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 36,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:20:32.306Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a Tooltip does not open on touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1433,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-9a1bea04bfb4c16fa816",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · Tooltip by away: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a Tooltip does not open on touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1433,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 33,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:20:32.346Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a Tooltip does not open on touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1433,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-ef0d63673109b35b96cb",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · Tooltip by trigger: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a Tooltip does not open on touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1433,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 31,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:20:32.382Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a Tooltip does not open on touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1433,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-9bce375b65997af469a2",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · brief Toast by timeout: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3017,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:20:32.417Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoxMDgsInNoYXJlIjowLjEzMiwidHJhdmVsIjowLCJ0cmF2ZWxTaGFyZSI6bnVsbCwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjpbWy02LDFdLFswLDFdLFsxMSwxXSxbMTgsMV0sWzI3LDFdLFszNCwxXSxbNDMsMV0sWzUwLDFdLFs1OSwxXSxbNjcsMV0sWzc3LDFdLFs4NSwxXSxbOTQsMV0sWzEwMSwxXSxbMTEwLDFdLFsxMTgsMV0sWzEyNywxXSxbMTM1LDFdLFsxNDQsMV0sWzE1MSwxXSxbMTYwLDFdLFsxNjgsMV0sWzE3NywxXSxbMTg1LDFdLFsxOTQsMV0sWzIwMiwxXSxbMjEwLDFdLFsyMTgsMV0sWzIyNywxXSxbMjM1LDFdLFsyNDQsMV0sWzI1MiwxXSxbMjU5LDFdLFsyNjksMV0sWzI3NywxXSxbMjg0LDFdLFsyOTQsMV0sWzMwMCwxXSxbMzA5LDFdLFszMTksMV1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-1e6a20b7134e6a486c38",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · Dialog by close: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3057,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:20:35.438Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNiwic2hhcmUiOjAuMTA3LCJ0cmF2ZWwiOjksInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTEsMV0sWzksMV0sWzE3LDFdLFsyNCwxXSxbMzQsMV0sWzQyLDFdLFs1MSwwLjk2OF0sWzU5LDAuOTNdLFs2NywwLjg4OV0sWzc2LDAuODQ1XSxbODQsMC43OThdLFs5MiwwLjc1XSxbMTAxLDAuN10sWzEwOSwwLjY0OV0sWzExNywwLjU5N10sWzEyNiwwLjU0NF0sWzEzNCwwLjQ5Ml0sWzE0MiwwLjQzOF0sWzE1MCwwLjM4Nl0sWzE1OCwwLjM0MV0sWzE2OCwwLjI5Ml0sWzE3NiwwLjIzMl0sWzE4NCwwLjE4Nl0sWzE5MiwwLjE0XSxbMjAxLDAuMDk3XSxbMjA5LDAuMDU3XSxbMjE3LDAuMDJdLFsyMjYsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-8d6d507809acb6d39f32",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · Dialog by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3060,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:20:38.500Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNCwic2hhcmUiOjAuMTA4LCJ0cmF2ZWwiOjksInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTMsMV0sWzcsMV0sWzE0LDFdLFsyNCwxXSxbMzIsMC45NTldLFs0MCwwLjkyM10sWzQ5LDAuODgxXSxbNTcsMC44MzddLFs2NSwwLjc4OV0sWzc0LDAuNzQxXSxbODIsMC42OTFdLFs5MSwwLjY0MV0sWzk5LDAuNTg2XSxbMTA2LDAuNTM0XSxbMTE0LDAuNDg4XSxbMTI0LDAuNDM1XSxbMTMyLDAuMzc1XSxbMTQwLDAuMzI1XSxbMTQ5LDAuMjc0XSxbMTU3LDAuMjI0XSxbMTY1LDAuMTc3XSxbMTczLDAuMTMyXSxbMTgyLDAuMDkxXSxbMTkwLDAuMDQ5XSxbMTk5LDAuMDE0XSxbMjA3LDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-aca777fa1352a4c95b73",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · Dialog by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3011,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:20:41.564Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyMywic2hhcmUiOjAuMTA2LCJ0cmF2ZWwiOjksInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTYsMV0sWzIsMV0sWzEwLDFdLFsxOSwwLjk2OV0sWzI2LDAuOTI4XSxbMzYsMC44OTJdLFs0NCwwLjg0Ml0sWzUyLDAuNzk3XSxbNjAsMC43NDhdLFs2OSwwLjY5OV0sWzc3LDAuNjQ3XSxbODUsMC41OTRdLFs5NCwwLjU0M10sWzEwMiwwLjQ4OV0sWzExMCwwLjQzN10sWzExOSwwLjM4NF0sWzEyNywwLjMzMl0sWzEzNCwwLjI4MV0sWzE0NCwwLjIzN10sWzE1MiwwLjE4M10sWzE1OSwwLjEzOF0sWzE2OSwwLjEwMV0sWzE3NywwLjA1NF0sWzE4NSwwLjAxOV0sWzE5MywwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-b1d7421c3d4a5db39940",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet right by close: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3056,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:20:44.578Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozNCwic2hhcmUiOjAuMDc4LCJ0cmF2ZWwiOjI4NywidHJhdmVsU2hhcmUiOjAuMDgsImdvbmUiOnRydWUsImZyYW1lcyI6W1stMSwxXSxbOCwxXSxbMTYsMV0sWzI0LDFdLFszMSwxXSxbNDEsMV0sWzQ5LDAuOTcyXSxbNTgsMC45NDddLFs2NiwwLjkxOF0sWzc0LDAuODg5XSxbODMsMC44NTddLFs4OSwwLjgyNF0sWzEwMCwwLjc5N10sWzEwNywwLjc1NF0sWzExNSwwLjcyMV0sWzEyNCwwLjY4OF0sWzEzMywwLjY0Nl0sWzE0MSwwLjYwOF0sWzE0OSwwLjU3MV0sWzE1OCwwLjUzM10sWzE2NiwwLjQ5NV0sWzE3NCwwLjQ1N10sWzE4MywwLjQxOV0sWzE5MSwwLjM4MV0sWzE5OSwwLjM0NF0sWzIwOCwwLjMwNl0sWzIxNiwwLjI3XSxbMjI0LDAuMjM1XSxbMjMzLDAuMl0sWzI0MSwwLjE2N10sWzI0OSwwLjEzNF0sWzI1OCwwLjEwM10sWzI2NiwwLjA3NF0sWzI3NCwwLjA0Nl0sWzI4MywwLjAyXSxbMjkwLDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-6ac41d99506dca116059",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet right by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3023,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:20:47.638Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozMiwic2hhcmUiOjAuMDgxLCJ0cmF2ZWwiOjI5MiwidHJhdmVsU2hhcmUiOjAuMDgxLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTcsMV0sWzIsMV0sWzEwLDFdLFsxOCwxXSxbMjcsMC45NzddLFszNSwwLjk1MV0sWzQzLDAuOTIzXSxbNTIsMC44OTNdLFs2MCwwLjg2Ml0sWzY4LDAuODI5XSxbNzcsMC43OTZdLFs4NSwwLjc2MV0sWzkzLDAuNzI1XSxbMTAyLDAuNjg5XSxbMTA5LDAuNjUyXSxbMTE5LDAuNjIxXSxbMTI3LDAuNTc2XSxbMTM1LDAuNTM4XSxbMTQzLDAuNV0sWzE1MSwwLjQ2M10sWzE2MCwwLjQyNl0sWzE2OCwwLjM4Nl0sWzE3NywwLjM0OV0sWzE4NSwwLjMxMl0sWzE5NCwwLjI3Nl0sWzIwMiwwLjI0XSxbMjEwLDAuMjA2XSxbMjE4LDAuMTcyXSxbMjI2LDAuMTM5XSxbMjM1LDAuMTA5XSxbMjQzLDAuMDc3XSxbMjUyLDAuMDUxXSxbMjYwLDAuMDI0XSxbMjY4LDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-9dadfe194110c5e48c09",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet right by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3011,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:20:50.665Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozMSwic2hhcmUiOjAuMDc4LCJ0cmF2ZWwiOjI5MiwidHJhdmVsU2hhcmUiOjAuMDc4LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTEsMV0sWzksMV0sWzE3LDFdLFsyNiwwLjk3OF0sWzM0LDAuOTUxXSxbNDIsMC45MjRdLFs1MCwwLjg5NF0sWzU5LDAuODYzXSxbNjcsMC44M10sWzc1LDAuNzk2XSxbODQsMC43NjJdLFs5MiwwLjcyNl0sWzEwMSwwLjY5XSxbMTA5LDAuNjUyXSxbMTE3LDAuNjE1XSxbMTI1LDAuNTc4XSxbMTM0LDAuNTRdLFsxNDIsMC41MDJdLFsxNTEsMC40NjNdLFsxNTgsMC40MjVdLFsxNjcsMC4zOTFdLFsxNzUsMC4zNV0sWzE4MywwLjMxNl0sWzE5MiwwLjI4XSxbMjAxLDAuMjQxXSxbMjA5LDAuMjA1XSxbMjE3LDAuMTczXSxbMjI1LDAuMTRdLFsyMzQsMC4xMDldLFsyNDIsMC4wNzldLFsyNTEsMC4wNTJdLFsyNTksMC4wMjRdLFsyNjcsMC4wMDFdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-d766f46b1d226405b49c",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet bottom by close: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3060,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:20:53.681Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozNSwic2hhcmUiOjAuMDc4LCJ0cmF2ZWwiOjg4LCJ0cmF2ZWxTaGFyZSI6MC4wNzksImdvbmUiOnRydWUsImZyYW1lcyI6W1stOSwxXSxbMSwxXSxbOSwxXSxbMTcsMV0sWzI2LDFdLFszNCwxXSxbNDEsMV0sWzUxLDAuOTgxXSxbNTksMC45NDldLFs2NywwLjkyM10sWzc2LDAuODkzXSxbODQsMC44NjJdLFs5MiwwLjgyOV0sWzEwMSwwLjc5NV0sWzEwOSwwLjc2XSxbMTE3LDAuNzI1XSxbMTI2LDAuNjg4XSxbMTM0LDAuNjUxXSxbMTQyLDAuNjE0XSxbMTUxLDAuNTc2XSxbMTU5LDAuNTM4XSxbMTY3LDAuNV0sWzE3NSwwLjQ2Ml0sWzE4NCwwLjQyOF0sWzE5MiwwLjM4NV0sWzIwMSwwLjM0OV0sWzIwOSwwLjMxMl0sWzIxNywwLjI3NV0sWzIyNiwwLjI0XSxbMjM0LDAuMjA1XSxbMjQyLDAuMTcxXSxbMjUxLDAuMTM5XSxbMjU5LDAuMTA3XSxbMjY3LDAuMDc3XSxbMjc2LDAuMDVdLFsyODMsMC4wMjRdLFsyOTMsMC4wMDNdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-535b81bd04435f2722fe",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet bottom by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3042,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:20:56.746Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozMiwic2hhcmUiOjAuMDg1LCJ0cmF2ZWwiOjg5LCJ0cmF2ZWxTaGFyZSI6MC4wODUsImdvbmUiOnRydWUsImZyYW1lcyI6W1stMSwxXSxbNiwxXSxbMTYsMV0sWzI0LDFdLFszMywwLjk3N10sWzQxLDAuOTUxXSxbNDksMC45MjNdLFs1OCwwLjg5M10sWzY2LDAuODYyXSxbNzQsMC44MjldLFs4MywwLjc5NV0sWzkxLDAuNzZdLFs5OSwwLjcyNV0sWzEwOCwwLjY4OF0sWzExNSwwLjY1MV0sWzEyNCwwLjYxNl0sWzEzMywwLjU3Nl0sWzE0MSwwLjUzOF0sWzE0OSwwLjVdLFsxNTYsMC40NjNdLFsxNjYsMC40M10sWzE3NCwwLjM4NV0sWzE4MywwLjM0OV0sWzE4OSwwLjMxMl0sWzE5OSwwLjI4M10sWzIwOCwwLjI0XSxbMjE2LDAuMjA1XSxbMjI0LDAuMTcyXSxbMjMzLDAuMTM5XSxbMjQxLDAuMTA3XSxbMjQ4LDAuMDc3XSxbMjU4LDAuMDUzXSxbMjY2LDAuMDIzXSxbMjczLDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-1e665c4db68bdaa7a6a0",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet bottom by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3051,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:20:59.792Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozMSwic2hhcmUiOjAuMDc2LCJ0cmF2ZWwiOjg2LCJ0cmF2ZWxTaGFyZSI6MC4wNzgsImdvbmUiOnRydWUsImZyYW1lcyI6W1stNCwxXSxbNCwxXSxbMTIsMV0sWzIxLDAuOTc3XSxbMjksMC45NTFdLFszNiwwLjkyM10sWzQ2LDAuODk4XSxbNTQsMC44NjJdLFs2MiwwLjgyOV0sWzcxLDAuNzk2XSxbNzksMC43Nl0sWzg3LDAuNzI1XSxbOTYsMC42ODldLFsxMDQsMC42NTFdLFsxMTIsMC42MTRdLFsxMjEsMC41NzddLFsxMjksMC41MzhdLFsxMzcsMC41XSxbMTQ2LDAuNDYyXSxbMTU0LDAuNDI0XSxbMTYyLDAuMzg3XSxbMTcxLDAuMzQ5XSxbMTc5LDAuMzEyXSxbMTg3LDAuMjc1XSxbMTk1LDAuMjRdLFsyMDQsMC4yMDhdLFsyMTIsMC4xNzNdLFsyMjEsMC4xMzldLFsyMjksMC4xMDhdLFsyMzcsMC4wNzddLFsyNDYsMC4wNV0sWzI1NCwwLjAyNF0sWzI2MiwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-724f77a6447e06c9ab79",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet top by close: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3087,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:21:02.848Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozNSwic2hhcmUiOjAuMDg0LCJ0cmF2ZWwiOjg3LCJ0cmF2ZWxTaGFyZSI6MC4wODUsImdvbmUiOnRydWUsImZyYW1lcyI6W1stNywxXSxbMiwxXSxbMTAsMV0sWzE4LDFdLFsyNiwxXSxbMzQsMV0sWzQ0LDFdLFs1MSwwLjk3MV0sWzYwLDAuOTVdLFs2OCwwLjkxN10sWzc3LDAuODg4XSxbODUsMC44NTZdLFs5MywwLjgyNF0sWzEwMiwwLjc4OV0sWzExMCwwLjc1NV0sWzExOCwwLjcxOV0sWzEyNywwLjY4M10sWzEzNSwwLjY0NV0sWzE0MywwLjYwN10sWzE1MiwwLjU3XSxbMTU5LDAuNTMyXSxbMTY5LDAuNDk4XSxbMTc3LDAuNDU1XSxbMTg0LDAuNDE4XSxbMTk0LDAuMzg2XSxbMjAyLDAuMzQyXSxbMjEwLDAuMzA2XSxbMjE3LDAuMjddLFsyMjcsMC4yNDFdLFsyMzUsMC4xOTldLFsyNDMsMC4xNjZdLFsyNTIsMC4xMzNdLFsyNjAsMC4xMDJdLFsyNjgsMC4wNzNdLFsyNzcsMC4wNDVdLFsyODUsMC4wMl0sWzI5MywwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-cba5dc5aff28c6941808",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet top by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3018,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:21:05.939Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozMiwic2hhcmUiOjAuMDgxLCJ0cmF2ZWwiOjg2LCJ0cmF2ZWxTaGFyZSI6MC4wODMsImdvbmUiOnRydWUsImZyYW1lcyI6W1stNywxXSxbMywxXSxbMTEsMV0sWzIwLDFdLFsyNywwLjk3Nl0sWzM2LDAuOTUyXSxbNDUsMC45MjJdLFs1MywwLjg5M10sWzYxLDAuODYxXSxbNzAsMC44MzJdLFs3OCwwLjc5NF0sWzg1LDAuNzZdLFs5MywwLjcyOF0sWzEwMywwLjY5NV0sWzExMSwwLjY1MV0sWzEyMCwwLjYxNF0sWzEyOCwwLjU3Nl0sWzEzNSwwLjUzOF0sWzE0NSwwLjUwNV0sWzE1MywwLjQ2Ml0sWzE2MSwwLjQyNF0sWzE3MCwwLjM4Nl0sWzE3OCwwLjM0OV0sWzE4NSwwLjMxM10sWzE5NSwwLjI4XSxbMjAzLDAuMjM5XSxbMjExLDAuMjA1XSxbMjIwLDAuMTcxXSxbMjI4LDAuMTM4XSxbMjM2LDAuMTA3XSxbMjQ1LDAuMDc3XSxbMjUzLDAuMDVdLFsyNjEsMC4wMjNdLFsyNzAsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-c59798a9318ccc86bf86",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet top by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3013,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:21:08.960Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozMSwic2hhcmUiOjAuMDg3LCJ0cmF2ZWwiOjg3LCJ0cmF2ZWxTaGFyZSI6MC4wODksImdvbmUiOnRydWUsImZyYW1lcyI6W1stNSwxXSxbMSwxXSxbMTEsMV0sWzE4LDAuOTcxXSxbMjgsMC45NDldLFszNSwwLjkxN10sWzQ0LDAuODkzXSxbNTIsMC44NTddLFs1OSwwLjgyOF0sWzY5LDAuNzk2XSxbNzgsMC43NThdLFs4NSwwLjcxOV0sWzk1LDAuNjg5XSxbMTAzLDAuNjQ0XSxbMTA5LDAuNjA4XSxbMTIwLDAuNTc4XSxbMTI4LDAuNTMxXSxbMTM2LDAuNDk0XSxbMTQzLDAuNDU2XSxbMTUxLDAuNDI0XSxbMTYwLDAuMzg3XSxbMTcwLDAuMzQ5XSxbMTc3LDAuMzA1XSxbMTg2LDAuMjcxXSxbMTkzLDAuMjM0XSxbMjAzLDAuMjA2XSxbMjEwLDAuMTY2XSxbMjE4LDAuMTM3XSxbMjI4LDAuMTA2XSxbMjM1LDAuMDcyXSxbMjQ0LDAuMDQ5XSxbMjUzLDAuMDJdLFsyNjEsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-1498f461292c8be0c16f",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet left by close: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3033,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:21:11.977Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozNSwic2hhcmUiOjAuMDgzLCJ0cmF2ZWwiOjI4NywidHJhdmVsU2hhcmUiOjAuMDg1LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTcsMV0sWzIsMV0sWzExLDFdLFsyMCwxXSxbMjgsMV0sWzM1LDFdLFs0MywxXSxbNTQsMC45NzhdLFs2MCwwLjk0Nl0sWzcwLDAuOTI0XSxbNzgsMC44ODhdLFs4NiwwLjg1OV0sWzk0LDAuODI4XSxbMTAyLDAuNzk2XSxbMTEyLDAuNzZdLFsxMjAsMC43MTldLFsxMjcsMC42ODRdLFsxMzUsMC42NTRdLFsxNDUsMC42MTZdLFsxNTIsMC41N10sWzE2MiwwLjUzOF0sWzE3MCwwLjQ5NF0sWzE3OCwwLjQ1OF0sWzE4NiwwLjQxOV0sWzE5NCwwLjM4Ml0sWzIwMywwLjM0OF0sWzIxMSwwLjMwOF0sWzIxOCwwLjI3MV0sWzIyNywwLjI0Ml0sWzIzNywwLjIwNl0sWzI0NSwwLjE2Nl0sWzI1MywwLjEzNV0sWzI2MiwwLjEwM10sWzI2OCwwLjA3NF0sWzI3OCwwLjA1MV0sWzI4NiwwLjAyXSxbMjk1LDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-ae01a8838d28af776b94",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet left by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3020,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:21:15.013Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozMiwic2hhcmUiOjAuMDgxLCJ0cmF2ZWwiOjI5MiwidHJhdmVsU2hhcmUiOjAuMDgxLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTQsMV0sWzUsMV0sWzEyLDFdLFsyMSwxXSxbMjksMC45NzJdLFszNiwwLjk0OF0sWzQ2LDAuOTI0XSxbNTUsMC44OV0sWzYzLDAuODU3XSxbNzEsMC44MjRdLFs3OSwwLjc5MV0sWzg3LDAuNzU2XSxbOTUsMC43MjVdLFsxMDUsMC42OV0sWzExMiwwLjY0NV0sWzEyMSwwLjYxNF0sWzEyOSwwLjU3XSxbMTM4LDAuNTMzXSxbMTQ2LDAuNDk1XSxbMTU1LDAuNDU3XSxbMTYzLDAuNDE5XSxbMTcxLDAuMzgxXSxbMTgwLDAuMzQ0XSxbMTg4LDAuMzA3XSxbMTk2LDAuMjcxXSxbMjA1LDAuMjM1XSxbMjEzLDAuMl0sWzIyMSwwLjE2N10sWzIzMCwwLjEzNF0sWzIzNiwwLjEwM10sWzI0NywwLjA3OV0sWzI1NCwwLjA0NV0sWzI2MiwwLjAyXSxbMjcxLDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-7cea87e24f25122b8e3f",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · Sheet left by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3007,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:21:18.036Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjozMSwic2hhcmUiOjAuMDgsInRyYXZlbCI6Mjg2LCJ0cmF2ZWxTaGFyZSI6MC4wODIsImdvbmUiOnRydWUsImZyYW1lcyI6W1stNywxXSxbMCwxXSxbOCwxXSxbMTksMC45NzddLFsyNywwLjk0NV0sWzM0LDAuOTE4XSxbNDIsMC44OTFdLFs1MiwwLjg2Ml0sWzYwLDAuODIzXSxbNjgsMC43OV0sWzc1LDAuNzU1XSxbODUsMC43MjZdLFs5MywwLjY4MV0sWzEwMiwwLjY0Nl0sWzExMCwwLjYwOF0sWzExOCwwLjU3XSxbMTI3LDAuNTMyXSxbMTM0LDAuNDk1XSxbMTQ0LDAuNDZdLFsxNTIsMC40MTddLFsxNTksMC4zODFdLFsxNjksMC4zNDhdLFsxNzcsMC4zMDZdLFsxODUsMC4yN10sWzE5MywwLjIzNF0sWzIwMiwwLjE5OV0sWzIxMCwwLjE2Nl0sWzIxOCwwLjEzNl0sWzIyNiwwLjEwMl0sWzIzNSwwLjA3NV0sWzI0MywwLjA0N10sWzI1MiwwLjAyMl0sWzI2MCwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-f20d44ed0e4c5c2434e5",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · detented Sheet by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3044,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:21:21.047Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjo0NSwic2hhcmUiOjAuMTc3LCJ0cmF2ZWwiOjQyMSwidHJhdmVsU2hhcmUiOjAuMTAxLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbMCwxXSxbOCwxXSxbMTUsMV0sWzI0LDFdLFszMywxXSxbNDAsMV0sWzQ4LDFdLFs1NywxXSxbNjYsMV0sWzc0LDFdLFs4MywxXSxbOTEsMV0sWzk4LDFdLFsxMDgsMV0sWzExNiwxXSxbMTI1LDFdLFsxMzMsMC45ODVdLFsxNDEsMC44OTRdLFsxNTAsMC44MDhdLFsxNTgsMC43MjhdLFsxNjYsMC42NTVdLFsxNzUsMC41ODddLFsxODMsMC41MjRdLFsxOTAsMC40NjhdLFsxOTksMC40MjJdLFsyMDcsMC4zNjldLFsyMTcsMC4zMjhdLFsyMjUsMC4yODVdLFsyMzIsMC4yNTFdLFsyNDEsMC4yMjFdLFsyNDksMC4xOTFdLFsyNTcsMC4xNjldLFsyNjYsMC4xNDZdLFsyNzUsMC4xMjRdLFsyODMsMC4xMDZdLFsyOTEsMC4wOV0sWzMwMCwwLjA3Nl0sWzMwOCwwLjA2NV0sWzMxNSwwLjA1NF0sWzMyNCwwLjA0N11dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-9dad3220a1ee76a537ed",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · detented Sheet by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3012,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:21:24.096Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjo0NSwic2hhcmUiOjAuMTcxLCJ0cmF2ZWwiOjQyMCwidHJhdmVsU2hhcmUiOjAuMTA1LCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTgsMV0sWzEsMV0sWzgsMV0sWzE2LDFdLFsyNiwxXSxbMzQsMV0sWzQxLDFdLFs0OSwxXSxbNTksMV0sWzY3LDFdLFs3NiwxXSxbODIsMV0sWzkzLDFdLFs5OSwxXSxbMTA3LDFdLFsxMTYsMV0sWzEyNSwxXSxbMTMzLDAuOTExXSxbMTQxLDAuODI1XSxbMTQ5LDAuNzUyXSxbMTU5LDAuNjc2XSxbMTY3LDAuNTk0XSxbMTc0LDAuNTMyXSxbMTg0LDAuNDgzXSxbMTkyLDAuNDE5XSxbMjAwLDAuMzc0XSxbMjA5LDAuMzMyXSxbMjE2LDAuMjldLFsyMjYsMC4yNl0sWzIzNCwwLjIyMV0sWzI0MiwwLjE5NF0sWzI0OSwwLjE2OV0sWzI1OCwwLjE1XSxbMjY2LDAuMTI5XSxbMjc1LDAuMTFdLFsyODQsMC4wOTNdLFsyOTIsMC4wNzhdLFszMDEsMC4wNjZdLFszMDgsMC4wNTVdLFszMTcsMC4wNDddXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-5a03dc0777d2279cb510",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · Toast by close: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3054,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:21:27.111Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNywic2hhcmUiOjAuMTMyLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTQsMV0sWzYsMV0sWzEyLDFdLFsyMiwxXSxbMzAsMV0sWzM4LDAuOTU1XSxbNDUsMC45MTFdLFs1NiwwLjgzOV0sWzYyLDAuNzkxXSxbNzIsMC43MTVdLFs3OSwwLjY1N10sWzg3LDAuNTkzXSxbOTcsMC41MTddLFsxMDUsMC40NTNdLFsxMTMsMC40MDFdLFsxMjEsMC4zNDhdLFsxMjksMC4zMDJdLFsxMzcsMC4yODJdLFsxNDYsMC4yNl0sWzE1NCwwLjIzNF0sWzE2NCwwLjIwMl0sWzE3MSwwLjE3Nl0sWzE3OSwwLjE0OV0sWzE4OSwwLjExNV0sWzE5NiwwLjA5MV0sWzIwNSwwLjA2Ml0sWzIxMiwwLjAzOV0sWzIyMiwwLjAxM10sWzIzMCwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-fe4839e27a75b1ae3456",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · Collapsible by trigger: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3062,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:21:30.169Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyOCwic2hhcmUiOjAuMTczLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTcsMV0sWzIsMV0sWzEyLDFdLFsyMCwxXSxbMjcsMV0sWzM3LDFdLFs0NSwwLjk3OF0sWzUzLDAuOTJdLFs2MSwwLjg0M10sWzY4LDAuNzddLFs3OCwwLjY2N10sWzg2LDAuNTg2XSxbOTUsMC41MDddLFsxMDMsMC40MzZdLFsxMTAsMC4zODFdLFsxMTgsMC4zMjVdLFsxMjgsMC4yNjRdLFsxMzUsMC4yMjldLFsxNDUsMC4xODZdLFsxNTMsMC4xNThdLFsxNjEsMC4xM10sWzE3MCwwLjEwOF0sWzE3OCwwLjA4OV0sWzE4NiwwLjA3NF0sWzE5NCwwLjA2MV0sWzIwMiwwLjA1Ml0sWzIxMiwwLjA0XSxbMjE5LDAuMDM0XSxbMjI4LDAuMDI3XSxbMjM2LDAuMDAzXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-d6f79773f677586a12a6",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · Accordion by trigger: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3072,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:21:33.237Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyOCwic2hhcmUiOjAuMTcyLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJnb25lIjp0cnVlLCJmcmFtZXMiOltbLTIsMV0sWzgsMV0sWzE1LDFdLFsyMywxXSxbMzMsMV0sWzQwLDAuOTg0XSxbNDksMC45MjddLFs1NiwwLjg1OV0sWzY1LDAuNzddLFs3MywwLjY4NV0sWzgzLDAuNTgzXSxbOTEsMC41MTVdLFs5OCwwLjQ0OF0sWzEwNywwLjM4M10sWzExNSwwLjMyNF0sWzEyNSwwLjI2NF0sWzEzMywwLjIyNF0sWzE0MCwwLjE5MV0sWzE1MCwwLjE1NV0sWzE1OCwwLjEzMV0sWzE2NywwLjEwN10sWzE3MywwLjA5Ml0sWzE4MywwLjA3NF0sWzE5MSwwLjA2MV0sWzIwMCwwLjA1XSxbMjA3LDAuMDQyXSxbMjE3LDAuMDMzXSxbMjIzLDAuMDI4XSxbMjMyLDAuMDFdLFsyNDAsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-4a46ce3b6429a20db7ce",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · ExpandableContainer by close: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3057,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:21:36.315Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoxOCwic2hhcmUiOjAuMTUxLCJ0cmF2ZWwiOjkyLCJ0cmF2ZWxTaGFyZSI6MC4xNTEsImdvbmUiOnRydWUsImZyYW1lcyI6W1stNCwxXSxbNSwxXSxbMTQsMV0sWzIxLDFdLFszMSwxXSxbMzgsMC45NTldLFs0OCwwLjg5NV0sWzU2LDAuODMxXSxbNjQsMC43NjRdLFs3MywwLjY5Ml0sWzgxLDAuNjE4XSxbODksMC41NDNdLFs5NywwLjQ3XSxbMTA1LDAuNDAxXSxbMTE0LDAuMzIzXSxbMTIxLDAuMjU4XSxbMTI5LDAuMTldLFsxMzksMC4xMTRdLFsxNDYsMC4wNjZdLFsxNTYsMC4wMDRdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-305c92e0273c30d3e0f4",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · ExpandableContainer by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3029,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:21:39.376Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoxNSwic2hhcmUiOjAuMTUxLCJ0cmF2ZWwiOjkzLCJ0cmF2ZWxTaGFyZSI6MC4xNTEsImdvbmUiOnRydWUsImZyYW1lcyI6W1stMSwxXSxbOCwxXSxbMTcsMC45NDVdLFsyNCwwLjldLFszMywwLjgzMl0sWzQxLDAuNzYyXSxbNTAsMC42ODNdLFs1NywwLjYyNV0sWzY3LDAuNTMzXSxbNzUsMC40Nl0sWzgzLDAuMzldLFs5MSwwLjMyNF0sWzk5LDAuMjUyXSxbMTA5LDAuMTcyXSxbMTE2LDAuMTE4XSxbMTI1LDAuMDU0XSxbMTM0LDAuMDAxXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-f0fc7b6c5885695c0ecc",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · CommandDialog by pick: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3045,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:21:42.409Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNywic2hhcmUiOjAuMTEyLCJ0cmF2ZWwiOjExLCJ0cmF2ZWxTaGFyZSI6bnVsbCwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjpbWzAsMV0sWzksMV0sWzE2LDFdLFsyNiwxXSxbMzQsMV0sWzQyLDFdLFs0OSwxXSxbNTgsMC45NzRdLFs2NywwLjkzNF0sWzc1LDAuODkxXSxbODMsMC44NDVdLFs5MywwLjgwMl0sWzk5LDAuNzQ4XSxbMTA5LDAuNzA3XSxbMTE2LDAuNjQ5XSxbMTI0LDAuNjA0XSxbMTMzLDAuNTUyXSxbMTQzLDAuNDk4XSxbMTUxLDAuNDM1XSxbMTU5LDAuMzg1XSxbMTY3LDAuMzMyXSxbMTc2LDAuMjgyXSxbMTg0LDAuMjMyXSxbMTkyLDAuMTg3XSxbMTk5LDAuMTQxXSxbMjA5LDAuMTAzXSxbMjE2LDAuMDU2XSxbMjI1LDAuMDI2XSxbMjMzLDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-94f08781ed5506cb4871",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · CommandDialog by outside: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2869,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:21:45.458Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyNSwic2hhcmUiOjAuMTA4LCJ0cmF2ZWwiOjExLCJ0cmF2ZWxTaGFyZSI6bnVsbCwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjpbWy0yLDFdLFs3LDFdLFsxNSwxXSxbMjQsMV0sWzMxLDFdLFs0MCwwLjk2OV0sWzQ5LDAuOTI5XSxbNTcsMC44ODhdLFs2NSwwLjg0NF0sWzc0LDAuNzk4XSxbODIsMC43NDldLFs5MCwwLjY5OV0sWzk5LDAuNjQ3XSxbMTA3LDAuNTk2XSxbMTE0LDAuNTQzXSxbMTIyLDAuNDk2XSxbMTMxLDAuNDQ3XSxbMTM5LDAuMzkxXSxbMTQ4LDAuMzRdLFsxNTcsMC4yODZdLFsxNjUsMC4yMzJdLFsxNzQsMC4xODVdLFsxODEsMC4xMzldLFsxODksMC4xMDJdLFsxOTksMC4wNTldLFsyMDcsMC4wMTldLFsyMTQsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-a943c4e1be48a66adf89",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        },
+        {
+          "title": "standing · CommandDialog by escape: no exit in under two frames, no frame over a fifth",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2892,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:21:48.331Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "standing",
+                      "contentType": "application/json",
+                      "body": "eyJwYWludGVkIjoyMywic2hhcmUiOjAuMTExLCJ0cmF2ZWwiOjExLCJ0cmF2ZWxTaGFyZSI6bnVsbCwiZ29uZSI6dHJ1ZSwiZnJhbWVzIjpbWy0yLDFdLFs3LDFdLFsxNiwxXSxbMjMsMC45Nl0sWzMyLDAuOTMxXSxbNDEsMC44ODZdLFs0OSwwLjgzNl0sWzU4LDAuNzldLFs2NiwwLjc0MV0sWzc1LDAuNjk0XSxbODIsMC42MzldLFs5MSwwLjU5MV0sWzk4LDAuNTM0XSxbMTA3LDAuNDldLFsxMTUsMC40MzVdLFsxMjMsMC4zODZdLFsxMzMsMC4zMzNdLFsxNDAsMC4yNzJdLFsxNTAsMC4yMzFdLFsxNTcsMC4xNzZdLFsxNjYsMC4xMzddLFsxNzQsMC4wODldLFsxODMsMC4wNTNdLFsxOTAsMC4wMTRdLFsxOTgsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-53b718f4a3ddb5d6e08c",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1431,
+          "column": 9
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-17T04:19:44.898Z",
+    "duration": 126368.387,
+    "expected": 41,
+    "skipped": 3,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

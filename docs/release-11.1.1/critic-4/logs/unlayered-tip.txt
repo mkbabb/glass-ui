@@ -1,0 +1,22 @@
+src/components/slider/styles.css	.glass-slider	transition: color var(--duration-fast) var(--ease-standard)	-	
+src/components/slider/styles.css	.slider-track	transition: background var(--duration-fast) var(--ease-standard), border-color var(--duratio	-	
+src/components/slider/styles.css	.slider-thumb	transition: transform var(--spring-press-duration) var(--spring-press)	-	
+src/components/slider/styles.css	.glass-slider[data-held] .slider-range,
+.glass-slider:active .slider-range	transition: transform var(--spring-press-duration) var(--spring-press)	-	
+src/components/slider/styles.css	.glass-slider:not(:active):not([data-held]) .slider-range	transition: transform var(--duration-normal) var(--ease-cartoon-punch), --glass-veil-rung va	-	
+src/components/slider/styles.css	.glass-loupe	transition: scale var(--spring-present-duration) var(--spring-present), opacity var(--spring	-	
+src/components/slider/styles.css	.glass-loupe:not([data-engaged])	transition: scale var(--spring-present-exit-duration) var(--ease-standard), opacity var(--sp	-	
+src/components/slider/styles.css	.glass-loupe-clone	transition: filter var(--duration-normal) var(--ease-standard)	-	
+src/components/slider/styles.css	.glass-slider,
+    .slider-track,
+    .slider-thumb,
+    .glass-slider[data-held] .slider-range,
+    .glass-slider:active .slider-range,
+    .glass-slider:not(:active):not([data-held]) .slider-range,
+    .glass-loupe,
+    .glass-loupe:not([data-engaged]),
+    .glass-loupe-clone	transition-duration: 0s	(prefers-reduced-motion: reduce)	still
+src/styles/utilities/btn.css	utility	transition: scale var(--spring-press-duration) var(--spring-press)	-	
+src/styles/utilities/btn.css	utility	transition-property: background-color, color, box-shadow, border-color	-	
+src/styles/utilities/btn.css	utility	transition-duration: var(--duration-control)	-	
+src/styles/utilities/btn.css	utility	transition: rotate var(--spring-present-duration) var(--ease-cartoon-punch)	-	

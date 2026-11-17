@@ -1,0 +1,244 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "docs/release-11.1.1/critic-4/probe/probe.config.ts",
+      "--project=chromium-phone",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/docs/release-11.1.1/critic-4/probe/probe.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/docs/release-11.1.1/critic-4/probe",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/docs/release-11.1.1/critic-4/probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/docs/release-11.1.1/critic-4/probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/docs/release-11.1.1/critic-4/probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/docs/release-11.1.1/critic-4/probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-4/logs/probe-red-chromium-phone.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5352",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/",
+      "url": "http://localhost:5352",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "press.probe.ts",
+      "file": "press.probe.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "colour · a held press under reduced motion",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5761,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "colour chromium-phone {\"Button\":{\"restMean\":[215,203.4,185.3],\"heldMean\":[215.7,204.4,186.9],\"changedShare\":0.189,\"restCs\":{\"bg\":\"oklab(0.673443 0.0210928 0.0746619 / 0.244)\",\"filter\":\"none\",\"shadow\":\"rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0\",\"scale\":\"1\",\"pressT\":\"\",\"dockPressT\":\"0\",\"active\":false},\"heldCs\":{\"bg\":\"oklab(0.673443 0.0210928 0.0746619 / 0.244)\",\"filter\":\"none\",\"shadow\":\"rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0\",\"scale\":\"1.0328 0.911\",\"pressT\":\"\",\"dockPressT\":\"0\",\"active\":true}},\"icon seat\":{\"restMean\":[213.2,207.2,196.3],\"heldMean\":[199.5,193.2,181.9],\"changedShare\":0.418,\"restCs\":{\"bg\":\"rgba(0, 0, 0, 0)\",\"filter\":\"brightness(1)\",\"shadow\":\"none\",\"scale\":\"1\",\"pressT\":\"\",\"dockPressT\":\"0\",\"active\":false},\"heldCs\":{\"bg\":\"oklab(0.257667 0.00900921 0.023203 / 0.2002)\",\"filter\":\"brightness(0.96)\",\"shadow\":\"none\",\"scale\":\"1.0066 0.9156\",\"pressT\":\"\",\"dockPressT\":\"1\",\"active\":true}},\"tab seat\":{\"restMean\":[205.4,199.6,189.1],\"heldMean\":[185.5,179.1,168],\"changedShare\":0.642,\"restCs\":{\"bg\":\"rgba(0, 0, 0, 0)\",\"filter\":\"none\",\"shadow\":\"none\",\"scale\":\"1\",\"pressT\":\"\",\"dockPressT\":\"0\",\"active\":false},\"heldCs\":{\"bg\":\"oklab(0.257667 0.00900921 0.023203 / 0.2002)\",\"filter\":\"none\",\"shadow\":\"none\",\"scale\":\"0.96\",\"pressT\":\"\",\"dockPressT\":\"0\",\"active\":true}}}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T06:20:42.751Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "colour",
+                      "contentType": "application/json",
+                      "body": "eyJCdXR0b24iOnsicmVzdE1lYW4iOlsyMTUsMjAzLjQsMTg1LjNdLCJoZWxkTWVhbiI6WzIxNS43LDIwNC40LDE4Ni45XSwiY2hhbmdlZFNoYXJlIjowLjE4OSwicmVzdENzIjp7ImJnIjoib2tsYWIoMC42NzM0NDMgMC4wMjEwOTI4IDAuMDc0NjYxOSAvIDAuMjQ0KSIsImZpbHRlciI6Im5vbmUiLCJzaGFkb3ciOiJyZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMSkgMHB4IDFweCAwcHggMHB4IGluc2V0LCBjb2xvcihzcmdiIDAiLCJzY2FsZSI6IjEiLCJwcmVzc1QiOiIiLCJkb2NrUHJlc3NUIjoiMCIsImFjdGl2ZSI6ZmFsc2V9LCJoZWxkQ3MiOnsiYmciOiJva2xhYigwLjY3MzQ0MyAwLjAyMTA5MjggMC4wNzQ2NjE5IC8gMC4yNDQpIiwiZmlsdGVyIjoibm9uZSIsInNoYWRvdyI6InJnYmEoMjU1LCAyNTUsIDI1NSwgMC4xKSAwcHggMXB4IDBweCAwcHggaW5zZXQsIGNvbG9yKHNyZ2IgMCIsInNjYWxlIjoiMS4wMzI4IDAuOTExIiwicHJlc3NUIjoiIiwiZG9ja1ByZXNzVCI6IjAiLCJhY3RpdmUiOnRydWV9fSwiaWNvbiBzZWF0Ijp7InJlc3RNZWFuIjpbMjEzLjIsMjA3LjIsMTk2LjNdLCJoZWxkTWVhbiI6WzE5OS41LDE5My4yLDE4MS45XSwiY2hhbmdlZFNoYXJlIjowLjQxOCwicmVzdENzIjp7ImJnIjoicmdiYSgwLCAwLCAwLCAwKSIsImZpbHRlciI6ImJyaWdodG5lc3MoMSkiLCJzaGFkb3ciOiJub25lIiwic2NhbGUiOiIxIiwicHJlc3NUIjoiIiwiZG9ja1ByZXNzVCI6IjAiLCJhY3RpdmUiOmZhbHNlfSwiaGVsZENzIjp7ImJnIjoib2tsYWIoMC4yNTc2NjcgMC4wMDkwMDkyMSAwLjAyMzIwMyAvIDAuMjAwMikiLCJmaWx0ZXIiOiJicmlnaHRuZXNzKDAuOTYpIiwic2hhZG93Ijoibm9uZSIsInNjYWxlIjoiMS4wMDY2IDAuOTE1NiIsInByZXNzVCI6IiIsImRvY2tQcmVzc1QiOiIxIiwiYWN0aXZlIjp0cnVlfX0sInRhYiBzZWF0Ijp7InJlc3RNZWFuIjpbMjA1LjQsMTk5LjYsMTg5LjFdLCJoZWxkTWVhbiI6WzE4NS41LDE3OS4xLDE2OF0sImNoYW5nZWRTaGFyZSI6MC42NDIsInJlc3RDcyI6eyJiZyI6InJnYmEoMCwgMCwgMCwgMCkiLCJmaWx0ZXIiOiJub25lIiwic2hhZG93Ijoibm9uZSIsInNjYWxlIjoiMSIsInByZXNzVCI6IiIsImRvY2tQcmVzc1QiOiIwIiwiYWN0aXZlIjpmYWxzZX0sImhlbGRDcyI6eyJiZyI6Im9rbGFiKDAuMjU3NjY3IDAuMDA5MDA5MjEgMC4wMjMyMDMgLyAwLjIwMDIpIiwiZmlsdGVyIjoibm9uZSIsInNoYWRvdyI6Im5vbmUiLCJzY2FsZSI6IjAuOTYiLCJwcmVzc1QiOiIiLCJkb2NrUHJlc3NUIjoiMCIsImFjdGl2ZSI6dHJ1ZX19fQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "17a38c245b5caa261ddc-e321c03fe174a6aaee74",
+          "file": "press.probe.ts",
+          "line": 45,
+          "column": 1
+        },
+        {
+          "title": "row · a held press on a menu row under reduced motion",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "read at 1440 with the mouse",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/docs/release-11.1.1/critic-4/probe/press.probe.ts",
+                    "line": 77,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 37,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T06:20:48.618Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "read at 1440 with the mouse",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/docs/release-11.1.1/critic-4/probe/press.probe.ts",
+                        "line": 77,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "17a38c245b5caa261ddc-a40afa1b62121ef48258",
+          "file": "press.probe.ts",
+          "line": 75,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-17T06:20:41.066Z",
+    "duration": 7633.619000000001,
+    "expected": 1,
+    "skipped": 1,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

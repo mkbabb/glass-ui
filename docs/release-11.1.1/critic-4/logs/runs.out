@@ -1,0 +1,62 @@
+head 753101207 23:13:59
+typecheck exit 0
+build exit 0
+verify:package exit 0
+demo:dist:build exit 0
+vitest exit 0
+pack exit 0
+PHASE-GATES-DONE 23:16:17
+23:17:47 tipA-chromium-phone exit 0 load=13.56 12.53 10.49  3 skipped  35 passed (1.4m) 
+23:19:44 tipB-chromium-phone exit 0 load=8.78 11.13 10.21  11 skipped  35 passed (1.9m) 
+23:21:55 tipC-chromium-phone exit 0 load=10.46 10.87 10.23  3 skipped  41 passed (2.1m) 
+23:22:42 tipD-chromium-phone exit 0 load=10.48 10.77 10.22  1 skipped  16 passed (41.7s) 
+23:24:03 tipA-chromium-desktop exit 0 load=17.12 12.52 10.91  10 skipped  28 passed (1.3m) 
+23:26:24 tipB-chromium-desktop exit 0 load=9.10 11.18 10.63  1 skipped  45 passed (2.3m) 
+23:28:45 tipC-chromium-desktop exit 0 load=7.20 9.88 10.21  44 passed (2.3m) 
+23:29:35 tipD-chromium-desktop exit 0 load=6.52 9.31 9.97  17 passed (44.7s) 
+23:31:48 tipA-webkit-phone exit 0 load=9.68 9.36 9.87  14 skipped  24 passed (1.1m) 
+23:33:57 tipB-webkit-phone exit 1 load=12.15 10.04 10.04  1 failed  11 skipped  34 passed (2.1m) 
+23:35:38 tipC-webkit-phone exit 0 load=10.87 10.23 10.12  17 skipped  27 passed (1.6m) 
+23:36:26 tipD-webkit-phone exit 0 load=10.47 10.17 10.10  2 skipped  15 passed (43.4s) 
+23:37:55 tipA-webkit-desktop exit 0 load=9.36 9.87 9.99  10 skipped  28 passed (1.4m) 
+23:45:05 tipB-webkit-desktop exit 0 load=7.73 8.12 8.99  1 skipped  45 passed (2.4m) 
+23:49:09 tipC-webkit-desktop exit 0 load=9.93 10.20 9.79  44 passed (2.5m) 
+23:50:04 tipD-webkit-desktop exit 0 load=12.42 11.00 10.12  17 passed (50.2s) 
+PHASE-TIP-DONE 23:50:04
+23:51:45 redA-chromium-phone exit 1 load=11.49 11.08 10.24  32 failed  3 skipped  3 passed (1.6m) 
+23:53:56 redB-chromium-phone exit 1 load=9.63 10.45 10.10  30 failed  11 skipped  5 passed (2.1m) 
+23:54:49 redD-chromium-phone exit 1 load=7.78 9.84 9.89  15 failed  1 skipped  1 passed (47.1s) 
+23:56:19 redA-chromium-desktop exit 1 load=8.51 9.61 9.80  19 failed  10 skipped  9 passed (1.4m) 
+23:58:58 redB-chromium-desktop exit 1 load=8.78 9.31 9.65  40 failed  1 skipped  5 passed (2.6m) 
+23:59:55 redD-chromium-desktop exit 1 load=8.92 9.22 9.59  16 failed  1 passed (51.3s) 
+00:01:18 redA-webkit-phone exit 1 load=7.05 8.57 9.30  23 failed  14 skipped  1 passed (1.3m) 
+00:04:28 redB-webkit-phone exit 1 load=8.96 8.72 9.21  29 failed  11 skipped  6 passed (2.3m) 
+00:06:09 redD-webkit-phone exit 1 load=12.02 9.46 9.41  14 failed  2 skipped  1 passed (51.0s) 
+00:09:07 redA-webkit-desktop exit 1 load=10.54 9.71 9.51  19 failed  10 skipped  9 passed (1.6m) 
+00:13:16 redB-webkit-desktop exit 1 load=10.01 9.56 9.46  37 failed  1 skipped  8 passed (2.9m) 
+00:15:31 redD-webkit-desktop exit 1 load=6.76 8.64 9.12  16 failed  1 passed (58.1s) 
+PHASE-RED-DONE 00:15:31
+00:16:24 still20-chromium-desktop exit 0 load=9.23 8.91 9.18  20 passed (46.6s) 
+00:17:05 still10-webkit-desktop exit 0 load=9.83 9.22 9.28  10 passed (27.6s) 
+PHASE-STILL-DONE 00:17:05
+PHASE-REG-CH-DONE 00:42:26
+PHASE-REG-WK-DONE 01:11:27
+CHAIN1-DONE 01:11:27
+01:12:28 reg-red-radius done
+01:15:57 rev10-webkit-phone exit 1 load=10.05 7.86 7.99  7 failed  33 passed (3.4m) 
+01:19:23 rev10-webkit-desktop exit 0 load=13.47 10.12 8.90  40 passed (3.3m) 
+01:19:55 toast5-red-webkit-desktop exit 1 load=12.91 10.33 9.02  6 failed 
+01:20:27 toast5-tip-webkit-desktop exit 0 load=13.06 10.61 9.17  6 passed (20.3s) 
+01:20:40 probe-tip-chromium-phone exit 0 load=15.04 11.18 9.40
+01:20:52 probe-red-chromium-phone exit 0 load=13.49 10.98 9.34
+01:21:04 probe-tip-chromium-desktop exit 0 load=13.99 11.22 9.46
+01:21:16 probe-red-chromium-desktop exit 0 load=13.23 11.15 9.45
+01:21:55 probe-tip-webkit-desktop exit 0 load=11.18 10.85 9.42
+01:23:11 probe-red-webkit-desktop exit 0 load=8.26 9.96 9.20
+CHAIN2-DONE 01:23:11
+01:24:37 reopen1-tip-webkit-phone exit 0 load=10.85 10.17 9.33  10 passed (57.3s) 
+01:25:43 reopen1-red-webkit-phone exit 1 load=13.04 10.88 9.66  10 failed 
+01:26:47 reopen2-tip-webkit-phone exit 0 load=13.90 11.55 9.99  10 passed (57.2s) 
+01:27:54 reopen2-red-webkit-phone exit 1 load=16.78 13.13 10.72  10 failed 
+01:29:44 reopen-tip-chromium-phone exit 0 load=13.58 13.37 11.12  20 passed (1.8m) 
+CHAIN3-DONE 01:29:44

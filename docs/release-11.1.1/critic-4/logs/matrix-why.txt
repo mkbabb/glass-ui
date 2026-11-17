@@ -1,0 +1,392 @@
+G/G -/- G/G -/- | round · a compact SegmentedTabs strip is round-ended on touch
+R/G -/- R/G -/- | round · a wide SegmentedTabs strip is round-ended on touch
+         chromium-phone    Error: strip: corner 15 on a 50 px box [{"what":"strip","h":50,"r":15},{"what":"plate","h":44,"r":12},{"what":"tab 0","h":44,"r":12},{"what":"tab 1","
+         webkit-phone      Error: strip: corner 15 on a 50 px box [{"what":"strip","h":50,"r":15},{"what":"plate","h":44,"r":12},{"what":"tab 0","h":44,"r":12},{"what":"tab 1","
+R/G R/G R/G R/G | weight · selecting a word-labelled ToggleGroupItem moves no item box
+         chromium-phone    Error: selected: every item where it was
+         chromium-desktop  Error: selected: every item where it was
+         webkit-phone      Error: selected: every item where it was
+         webkit-desktop    Error: selected: every item where it was
+R/G -/- R/G -/- | lift · a scale-on-hover element returns to rest after a tap
+         chromium-phone    Error: scale after the tap: 1.08
+         webkit-phone      Error: scale after the tap: 1.08
+R/G G/G R/G G/G | form · a dock Select leaves in the form it opened in · pick
+         chromium-phone    Error: form on every exit frame [{"t":5,"x":0,"y":615,"w":390,"op":1,"form":"sheet","bf":"none","bg":"color(srgb 0.994 0.96 0.926)"},{"t":15,"x":0,"y"
+         webkit-phone      Error: form on every exit frame [{"t":1,"x":0,"y":615,"w":390,"op":1,"form":"sheet","bf":"none","bg":"color(srgb 0.994 0.96 0.926)"},{"t":11,"x":0,"y"
+R/G G/G R/G G/G | form · a dock DropdownMenu keeps its material through the exit · pick
+         chromium-phone    Error: material attribute +30 ms
+         webkit-phone      Error: material attribute +35 ms
+R/G G/G -/- G/G | form · a dock Select leaves in the form it opened in · outside
+         chromium-phone    Error: form on every exit frame [{"t":2,"x":0,"y":615,"w":390,"op":1,"form":"sheet","bf":"none","bg":"color(srgb 0.994 0.96 0.926)"},{"t":11,"x":16,"y
+R/G G/G -/- G/G | form · a dock DropdownMenu keeps its material through the exit · outside
+         chromium-phone    Error: material attribute +17 ms
+R/G G/G R/G G/G | form · a dock Select leaves in the form it opened in · escape
+         chromium-phone    Error: form on every exit frame [{"t":5,"x":16,"y":610,"w":358,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.20397 0.148263 0.
+         webkit-phone      Error: form on every exit frame [{"t":16,"x":16,"y":610,"w":358,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)","bg":"color(srgb 0.203993 0.148252 
+R/G G/G R/G G/G | form · a dock DropdownMenu keeps its material through the exit · escape
+         chromium-phone    Error: material attribute +10 ms
+         webkit-phone      Error: material attribute +8 ms
+R/G G/G -/- G/G | form · a dock Select leaves in the form it opened in · trigger
+         chromium-phone    Error: form on every exit frame [{"t":3,"x":0,"y":615,"w":390,"op":1,"form":"sheet","bf":"none","bg":"color(srgb 0.994 0.96 0.926)"},{"t":8,"x":16,"y"
+R/G G/G R/G G/G | form · a dock DropdownMenu keeps its material through the exit · trigger
+         chromium-phone    Error: material attribute +14 ms
+         webkit-phone      Error: material attribute +10 ms
+R/G G/G R/G G/G | form · a dock Select leaves in the form it opened in · current
+         chromium-phone    Error: form on every exit frame [{"t":3,"x":0,"y":615,"w":390,"op":1,"form":"sheet","bf":"none","bg":"color(srgb 0.994 0.96 0.926)"},{"t":7,"x":0,"y":
+         webkit-phone      Error: form on every exit frame [{"t":1,"x":0,"y":615,"w":390,"op":1,"form":"sheet","bf":"none","bg":"color(srgb 0.994 0.96 0.926)"},{"t":12,"x":0,"y"
+-/- -/- -/- -/- | form · a dock DropdownMenu keeps its material through the exit · current
+R/G -/- R/G -/- | glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · light
+         chromium-phone    Error: the plate blurs its backdrop
+         webkit-phone      Error: the plate blurs its backdrop
+R/G -/- R/G -/- | glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · dark
+         chromium-phone    Error: the plate blurs its backdrop
+         webkit-phone      Error: the plate blurs its backdrop
+G/G -/- -/- -/- | glass · a phone Select is solid under reduced transparency
+R/G -/- R/G -/- | glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · light
+         chromium-phone    Error: the plate blurs its backdrop
+         webkit-phone      Error: the plate blurs its backdrop
+R/G -/- R/G -/- | glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · dark
+         chromium-phone    Error: the plate blurs its backdrop
+         webkit-phone      Error: the plate blurs its backdrop
+G/G -/- -/- -/- | glass · a phone dock DropdownMenu is solid under reduced transparency
+R/G R/G R/G R/G | exit · Select leaves on the exit curve, shorter than it entered
+         chromium-phone    Error: no frame takes more than a fifth of what is seen {"entrance":409,"exit":133,"painted":17,"seenShare":0.779,"curve":"cubic-bezier(0, 0, 0.2, 1)"
+         chromium-desktop  Error: no frame takes more than a fifth of what is seen {"entrance":427,"exit":121,"painted":16,"seenShare":1,"curve":"cubic-bezier(0, 0, 0.2, 1)","st
+         webkit-phone      Error: no frame takes more than a fifth of what is seen {"entrance":413,"exit":141,"painted":13,"seenShare":0.877,"curve":"cubic-bezier(0, 0, 0.2, 1)"
+         webkit-desktop    Error: no frame takes more than a fifth of what is seen {"entrance":420,"exit":132,"painted":12,"seenShare":0.794,"curve":"cubic-bezier(0, 0, 0.2, 1)"
+R/G R/G R/G R/G | exit · DropdownMenu leaves on the exit curve, shorter than it entered
+         chromium-phone    Error: no frame takes more than a fifth of what is seen {"entrance":409,"exit":125,"painted":16,"seenShare":0.77,"curve":"cubic-bezier(0, 0, 0.2, 1)",
+         chromium-desktop  Error: no frame takes more than a fifth of what is seen {"entrance":422,"exit":123,"painted":16,"seenShare":1,"curve":"cubic-bezier(0, 0, 0.2, 1)","st
+         webkit-phone      Error: no frame takes more than a fifth of what is seen {"entrance":403,"exit":128,"painted":12,"seenShare":0.794,"curve":"cubic-bezier(0, 0, 0.2, 1)"
+         webkit-desktop    Error: no frame takes more than a fifth of what is seen {"entrance":412,"exit":133,"painted":13,"seenShare":0.833,"curve":"cubic-bezier(0, 0, 0.2, 1)"
+R/G R/G R/G R/G | exit · Popover leaves on the exit curve, shorter than it entered
+         chromium-phone    Error: no frame takes more than a fifth of what is seen {"entrance":487,"exit":146,"painted":18,"seenShare":0.292,"curve":"cubic-bezier(0, 0, 0.2, 1)"
+         chromium-desktop  Error: no frame takes more than a fifth of what is seen {"entrance":480,"exit":134,"painted":18,"seenShare":0.297,"curve":"cubic-bezier(0, 0, 0.2, 1)"
+         webkit-phone      Error: no frame takes more than a fifth of what is seen {"entrance":486,"exit":142,"painted":14,"seenShare":0.31,"curve":"cubic-bezier(0, 0, 0.2, 1)",
+         webkit-desktop    Error: no frame takes more than a fifth of what is seen {"entrance":493,"exit":141,"painted":13,"seenShare":0.31,"curve":"cubic-bezier(0, 0, 0.2, 1)",
+-/- R/G -/- R/G | exit · Tooltip leaves on the exit curve, shorter than it entered
+         chromium-desktop  Error: no frame takes more than a fifth of what is seen {"entrance":200,"exit":73,"painted":9,"seenShare":0.497,"curve":"cubic-bezier(0, 0, 0.2, 1)","
+         webkit-desktop    Error: no frame takes more than a fifth of what is seen {"entrance":200,"exit":73,"painted":7,"seenShare":0.524,"curve":"cubic-bezier(0, 0, 0.2, 1)","
+R/G R/G R/G R/G | exit · Dialog leaves on the exit curve, shorter than it entered
+         chromium-phone    Error: the exit follows the exit curve {"entrance":255,"exit":228,"painted":30,"seenShare":0.171,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.389,"t
+         chromium-desktop  Error: the exit follows the exit curve {"entrance":238,"exit":231,"painted":30,"seenShare":0.184,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.377,"t
+         webkit-phone      Error: the exit follows the exit curve {"entrance":259,"exit":230,"painted":22,"seenShare":0.174,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.362,"t
+         webkit-desktop    Error: the exit follows the exit curve {"entrance":258,"exit":243,"painted":24,"seenShare":0.18,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.365,"tr
+R/G R/G R/G R/G | exit · Sheet right leaves on the exit curve, shorter than it entered
+         chromium-phone    Error: the exit follows the exit curve {"entrance":607,"exit":202,"painted":26,"seenShare":0.131,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.107,"t
+         chromium-desktop  Error: the exit follows the exit curve {"entrance":642,"exit":207,"painted":27,"seenShare":0.129,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.113,"t
+         webkit-phone      Error: the exit follows the exit curve {"entrance":623,"exit":209,"painted":20,"seenShare":0.129,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.105,"t
+         webkit-desktop    Error: the exit follows the exit curve {"entrance":661,"exit":212,"painted":20,"seenShare":0.131,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.104,"t
+R/G R/G R/G R/G | exit · Sheet bottom leaves on the exit curve, shorter than it entered
+         chromium-phone    Error: the exit follows the exit curve {"entrance":465,"exit":200,"painted":27,"seenShare":0.122,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.121,"t
+         chromium-desktop  Error: the exit follows the exit curve {"entrance":473,"exit":210,"painted":27,"seenShare":0.119,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.122,"t
+         webkit-phone      Error: the exit follows the exit curve {"entrance":469,"exit":207,"painted":20,"seenShare":0.149,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.098,"t
+         webkit-desktop    Error: the exit follows the exit curve {"entrance":478,"exit":214,"painted":21,"seenShare":0.123,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.095,"t
+R/G R/G R/G R/G | exit · a Popover enters and leaves on opacity and its slide alone
+         chromium-phone    Error: no scale entrance +32 ms [{"t":32,"scale":"0.9964 0.8883","filter":"blur(6px)"},{"t":41,"scale":"0.996433 0.889314","filter":"blur(5.54355px)"}
+         chromium-desktop  Error: no scale entrance +36 ms [{"t":36,"scale":"0.9964 0.8883","filter":"blur(6px)"},{"t":57,"scale":"0.9964 0.8883","filter":"blur(6px)"},{"t":64,"
+         webkit-phone      Error: no scale entrance +41 ms [{"t":41,"scale":"0.996404 0.888418","filter":"blur(5.938436px)"},{"t":44,"scale":"0.996415 0.888772","filter":"blur(5
+         webkit-desktop    Error: no scale entrance +38 ms [{"t":38,"scale":"0.9964 0.8883","filter":"blur(6px)"},{"t":44,"scale":"0.996423 0.889009","filter":"blur(5.669386px)"
+-/- R/G -/- R/G | exit · a Tooltip leaves on opacity and its slide alone
+         chromium-desktop  Error: no scale exit +11 ms [{"t":-6,"scale":"1","filter":"blur(0px)"},{"t":11,"scale":"1.0111 0.967201","filter":"blur(0px)"},{"t":19,"scale":"1.0141
+         webkit-desktop    Error: no scale exit +2 ms [{"t":2,"scale":"1.00101 0.997016","filter":"blur(0px)"},{"t":14,"scale":"1.009105 0.973088","filter":"blur(0px)"},{"t":23,
+R/G R/G R/G R/G | routes · a detented Sheet leaves whole by escape
+         chromium-phone    Error: no frame takes more than a fifth of what is seen [[0,1,422],[6,1,411],[15,1,399],[23,1,383],[29,1,365],[36,1,353],[44,1,337],[51,1,315],[60,1,2
+         chromium-desktop  Error: no frame takes more than a fifth of what is seen [[0,1,450],[2,1,450],[8,1,438],[16,1,428],[23,1,414],[32,1,398],[37,1,377],[46,1,364],[51,1,34
+         webkit-phone      Error: no frame takes more than a fifth of what is seen [[0,1,422],[4,1,422],[13,1,411],[23,1,397],[33,1,378],[42,1,356],[54,1,335],[64,1,306],[74,1,2
+         webkit-desktop    Error: no frame takes more than a fifth of what is seen [[0,1,450],[8,1,450],[18,1,438],[28,1,422],[38,1,401],[48,1,378],[59,1,352],[68,1,323],[79,1,2
+R/G R/G -/- R/G | routes · a detented Sheet leaves whole by outside
+         chromium-phone    Error: no frame takes more than a fifth of what is seen [[0,1,422],[3,1,422],[12,1,422],[21,1,411],[29,1,398],[36,1,384],[43,1,368],[51,1,352],[60,1,3
+         chromium-desktop  Error: no frame takes more than a fifth of what is seen [[0,1,450],[3,1,450],[11,1,438],[19,1,425],[30,1,410],[37,1,387],[45,1,368],[53,1,349],[59,1,3
+         webkit-desktop    Error: no frame takes more than a fifth of what is seen [[0,1,450],[10,1,450],[20,1,438],[31,1,422],[41,1,399],[51,1,375],[61,1,350],[71,1,323],[82,1,
+R/G R/G -/- R/G | routes · a detented Sheet dragged off leaves from where the drag left it
+         chromium-phone    Error: no frame shows more than the drag left {"left":0.405,"highest":0.973,"rise":0.568,"lastSeen":0.405,"gone":true,"frames":[[-27,0.405],[-19,0.405
+         chromium-desktop  Error: no frame shows more than the drag left {"left":0.46,"highest":0.973,"rise":0.513,"lastSeen":0.46,"gone":true,"frames":[[-29,0.46],[-21,0.46],[-
+         webkit-desktop    Error: no frame shows more than the drag left {"left":0.46,"highest":0.973,"rise":0.513,"lastSeen":0.46,"gone":true,"frames":[[-33,0.46],[-23,0.46],[-
+R/G R/G R/G R/G | routes · a CommandDialog keeps its list through its exit by pick
+         chromium-phone    Error: the list is mounted while the plate is seen [[0,1,435],[3,1,435],[11,1,435],[19,1,435],[28,1,435],[33,1,435],[41,1,435],[48,1,435],[57,1,51],[7
+         chromium-desktop  Error: the list is mounted while the plate is seen [[0,1,435],[7,1,435],[17,1,435],[21,1,435],[30,1,51],[52,0.917,51],[58,0.703,50],[66,0.64,50],[74,0
+         webkit-phone      Error: the list is mounted while the plate is seen [[0,1,435],[8,1,435],[18,1,435],[19,1,435],[24,1,435],[56,1,51],[70,0.917,51],[79,0.781,50],[91,0.6
+         webkit-desktop    Error: the list is mounted while the plate is seen [[0,1,435],[2,1,435],[11,1,435],[21,1,435],[22,1,435],[26,1,435],[30,1,435],[60,1,51],[71,0.917,51]
+R/G R/G R/G R/G | routes · a CommandDialog keeps its list through its exit by escape
+         chromium-phone    Error: the list is mounted while the plate is seen [[0,1,435],[8,1,51],[16,0.917,51],[21,0.844,51],[29,0.785,50],[37,0.706,50],[44,0.625,50],[53,0.555
+         chromium-desktop  Error: the list is mounted while the plate is seen [[0,1,435],[0,1,435],[10,1,51],[23,0.917,51],[31,0.792,50],[38,0.712,50],[48,0.641,50],[52,0.543,50
+         webkit-phone      Error: the list is mounted while the plate is seen [[0,1,435],[26,1,51],[37,0.917,51],[43,0.812,51],[55,0.75,50],[64,0.625,50],[74,0.538,50],[84,0.449
+         webkit-desktop    Error: the list is mounted while the plate is seen [[0,1,435],[33,1,51],[46,0.917,51],[50,0.792,50],[59,0.75,50],[68,0.656,50],[78,0.566,50],[90,0.474
+R/G R/G -/- R/G | routes · a CommandDialog keeps its list through its exit by outside
+         chromium-phone    Error: the list is mounted while the plate is seen [[0,1,435],[6,1,435],[12,1,435],[21,1,435],[26,1,435],[33,1,51],[58,0.917,51],[62,0.671,50],[72,0.6
+         chromium-desktop  Error: the list is mounted while the plate is seen [[0,1,435],[2,1,51],[19,0.917,51],[27,0.746,50],[37,0.663,50],[45,0.57,50],[53,0.495,50],[59,0.424,
+         webkit-desktop    Error: the list is mounted while the plate is seen [[0,1,435],[32,1,51],[44,0.917,51],[51,0.802,50],[60,0.729,50],[70,0.635,50],[82,0.538,50],[90,0.43
+R/G R/G -/- R/G | routes · a press on an open Select's trigger closes it once
+         chromium-phone    Error: no frame takes more than a fifth of what is seen [[0,1,229],[3,1,229],[10,1,230],[13,1,230],[17,1,230],[25,1,230],[31,1,230],[37,1,230],[44,1,2
+         chromium-desktop  Error: no frame takes more than a fifth of what is seen [[0,1,230],[2,1,230],[12,1,230],[15,1,230],[23,1,230],[29,1,230],[36,1,230],[44,1,230],[52,1,2
+         webkit-desktop    Error: no frame takes more than a fifth of what is seen [[0,1,230],[1,1,230],[11,1,230],[23,1,230],[32,1,230],[44,1,230],[52,1,230],[64,1,230],[73,1,2
+R/G R/G -/- R/G | routes · a press on an open DropdownMenu's trigger closes it once
+         chromium-phone    Error: no frame takes more than a fifth of what is seen [[0,1,158],[2,1,158],[11,1,158],[16,1,158],[25,1,158],[32,1,158],[38,1,158],[45,1,158],[53,1,1
+         chromium-desktop  Error: no frame takes more than a fifth of what is seen [[0,1,158],[4,1,158],[12,1,158],[20,1,158],[29,1,158],[38,1,158],[46,1,158],[51,1,158],[59,1,1
+         webkit-desktop    Error: no frame takes more than a fifth of what is seen [[0,1,158],[8,1,158],[18,1,158],[27,1,158],[38,1,158],[47,1,158],[59,1,158],[69,1,158],[78,1,1
+R/G R/G -/- R/G | routes · a press on an open Popover's trigger closes it once
+         chromium-phone    Error: no frame takes more than a fifth of what is seen [[0,1,50],[2,1,50],[11,1,50],[19,0.807,49],[28,0.668,49],[36,0.556,48],[42,0.49,48],[49,0.413,
+         chromium-desktop  Error: no frame takes more than a fifth of what is seen [[0,1,54],[3,1,54],[12,0.798,53],[17,0.707,53],[25,0.598,52],[32,0.506,52],[39,0.429,51],[47,0
+         webkit-desktop    Error: no frame takes more than a fifth of what is seen [[0,1,54],[3,1,54],[12,0.797,53],[24,0.61,52],[32,0.511,52],[44,0.39,51],[54,0.307,51],[64,0.2
+R/G R/G R/G R/G | reverse · a Select closed while it opens turns from where it is
+         chromium-phone    Error: no frame after the turn moves more than a fifth {"atTurn":0.418,"turnedAt":1,"share":0.286,"end":0,"frames":[[-3,0.418],[4,1],[14,0.889],[19,0.
+         chromium-desktop  Error: no frame after the turn moves more than a fifth {"atTurn":0.417,"turnedAt":1,"share":0.275,"end":0,"frames":[[-1,0.417],[6,1],[15,0.905],[22,0.
+         webkit-phone      Error: no frame after the turn moves more than a fifth {"atTurn":0.337,"turnedAt":1,"share":0.614,"end":0,"frames":[[-2,0.337],[16,1],[22,0.964],[27,0
+         webkit-desktop    Error: no frame after the turn moves more than a fifth {"atTurn":0.481,"turnedAt":1,"share":0.369,"end":0,"frames":[[-1,0.481],[7,1],[17,0.88],[27,0.7
+R/G R/G R/G R/G | reverse · a Select reopened while it closes turns from where it is
+         chromium-phone    Error: it turns short of the end it was heading for {"atTurn":0.432,"turnedAt":0,"share":0.179,"end":0,"frames":[[-8,0.432],[0,0.365],[8,0.309],[17,0.
+         chromium-desktop  Error: no frame after the turn moves more than a fifth {"atTurn":0.474,"turnedAt":0,"share":0.291,"end":0,"frames":[[-4,0.474],[4,0.403],[12,0.341],[2
+         webkit-phone      Error: no frame after the turn moves more than a fifth {"atTurn":0.435,"turnedAt":0,"share":0.267,"end":1,"frames":[[-2,0.435],[6,0.368],[18,0.288],[2
+         webkit-desktop    Error: no frame after the turn moves more than a fifth {"atTurn":0.485,"turnedAt":0,"share":0.287,"end":0,"frames":[[-6,0.485],[4,0.397],[14,0.326],[1
+R/G R/G R/G R/G | reverse · a DropdownMenu closed while it opens turns from where it is
+         chromium-phone    Error: no frame after the turn moves more than a fifth {"atTurn":0.57,"turnedAt":1,"share":0.267,"end":0,"frames":[[-2,0.57],[7,1],[13,1],[22,0.829],[
+         chromium-desktop  Error: no frame after the turn moves more than a fifth {"atTurn":0.45,"turnedAt":1,"share":0.347,"end":0,"frames":[[-1,0.45],[4,1],[13,0.966],[19,0.86
+         webkit-phone      Error: no frame after the turn moves more than a fifth {"atTurn":0.475,"turnedAt":1,"share":0.486,"end":0,"frames":[[-6,0.475],[5,1],[12,1],[22,0.809]
+         webkit-desktop    Error: no frame after the turn moves more than a fifth {"atTurn":0.556,"turnedAt":1,"share":0.342,"end":0,"frames":[[-1,0.556],[10,1],[19,0.966],[30,0
+G/G R/G G/G G/G | reverse · a DropdownMenu reopened while it closes turns from where it is
+         chromium-desktop  Error: no frame after the turn moves more than a fifth {"atTurn":0.602,"turnedAt":0.227,"share":0.289,"end":1,"frames":[[-4,0.602],[5,0.514],[10,0.468
+R/G R/G R/G R/G | reverse · a Popover closed while it opens turns from where it is
+         chromium-phone    Error: no frame after the turn moves more than a fifth {"atTurn":0.588,"turnedAt":1,"share":0.311,"end":0,"frames":[[-1,0.588],[9,1],[14,0.878],[20,0.
+         chromium-desktop  Error: no frame after the turn moves more than a fifth {"atTurn":0.548,"turnedAt":1,"share":0.329,"end":0,"frames":[[0,0.548],[10,1],[18,0.816],[27,0.
+         webkit-phone      Error: no frame after the turn moves more than a fifth {"atTurn":0.56,"turnedAt":1,"share":0.336,"end":0,"frames":[[-7,0.56],[4,1],[12,0.797],[22,0.63
+         webkit-desktop    Error: no frame after the turn moves more than a fifth {"atTurn":0.55,"turnedAt":0.761,"share":0.242,"end":0,"frames":[[-11,0.55],[0,0.586],[11,0.761]
+R/G R/G R/G R/G | reverse · a Popover reopened while it closes turns from where it is
+         chromium-phone    Error: no frame after the turn moves more than a fifth {"atTurn":0.415,"turnedAt":0.197,"share":0.637,"end":1,"frames":[[-5,0.415],[0,0.367],[8,0.308]
+         chromium-desktop  Error: no frame after the turn moves more than a fifth {"atTurn":0.374,"turnedAt":0.252,"share":0.608,"end":1,"frames":[[-1,0.374],[5,0.32],[15,0.252]
+         webkit-phone      Error: no frame after the turn moves more than a fifth {"atTurn":0.5,"turnedAt":0.293,"share":0.655,"end":1,"frames":[[-7,0.5],[4,0.39],[12,0.323],[13
+         webkit-desktop    Error: no frame after the turn moves more than a fifth {"atTurn":0.489,"turnedAt":0.293,"share":0.621,"end":1,"frames":[[-5,0.489],[4,0.399],[14,0.315
+R/G R/G R/G G/G | reverse · a Toast closed while it opens turns from where it is
+         chromium-phone    Error: no frame after the turn moves more than a fifth {"atTurn":0.583,"turnedAt":1,"share":0.353,"end":0,"frames":[[-1,0.583],[8,0.611],[19,1],[28,0.
+         chromium-desktop  Error: no frame after the turn moves more than a fifth {"atTurn":0.516,"turnedAt":1,"share":0.349,"end":0,"frames":[[-8,0.516],[0,0.545],[8,1],[15,1],
+         webkit-phone      Error: no frame after the turn moves more than a fifth {"atTurn":0.55,"turnedAt":1,"share":0.375,"end":0,"frames":[[-9,0.55],[2,0.586],[3,0.589],[11,1
+-/- R/G -/- R/G | reverse · a Tooltip closed while it opens turns from where it is
+         chromium-desktop  Error: the second input lands mid-motion {"atTurn":1,"turnedAt":1,"share":0.448,"end":0,"frames":[[0,1],[6,1],[13,0.73],[22,0.467],[34,0.266],[42,0.16
+         webkit-desktop    Error: the second input lands mid-motion {"atTurn":1,"turnedAt":1,"share":0.513,"end":0,"frames":[[-7,1],[5,1],[13,0.671],[25,0.384],[34,0.242],[46,0.
+-/- R/G -/- R/G | reverse · a Tooltip reopened while it closes turns from where it is
+         chromium-desktop  Error: no frame after the turn moves more than a fifth {"atTurn":0.081,"turnedAt":0.02,"share":0.733,"end":1,"frames":[[-1,0.081],[4,0.051],[12,0.02],
+         webkit-desktop    Error: no frame after the turn moves more than a fifth {"atTurn":0.107,"turnedAt":0.009,"share":0.838,"end":1,"frames":[[-3,0.107],[7,0.045],[17,0.011
+R/G R/G R/G R/G | reverse · a Collapsible closed while it opens turns from where it is
+         chromium-phone    Error: no frame after the turn moves more than a fifth {"atTurn":0.463,"turnedAt":1,"share":0.356,"end":0,"frames":[[-1,0.463],[7,0.532],[14,0.591],[1
+         chromium-desktop  Error: no frame after the turn moves more than a fifth {"atTurn":0.451,"turnedAt":1,"share":0.444,"end":0,"frames":[[-3,0.451],[5,0.526],[13,0.591],[2
+         webkit-phone      Error: no frame after the turn moves more than a fifth {"atTurn":0.528,"turnedAt":1,"share":0.337,"end":0,"frames":[[-2,0.528],[9,0.616],[19,0.685],[2
+         webkit-desktop    Error: no frame after the turn moves more than a fifth {"atTurn":0.418,"turnedAt":1,"share":0.415,"end":0,"frames":[[-4,0.418],[5,0.502],[16,0.594],[1
+R/G R/G R/G R/G | reverse · a Collapsible reopened while it closes turns from where it is
+         chromium-phone    Error: no frame after the turn moves more than a fifth {"atTurn":0.614,"turnedAt":0,"share":0.376,"end":1,"frames":[[-2,0.614],[4,0.553],[13,0.474],[2
+         chromium-desktop  Error: no frame after the turn moves more than a fifth {"atTurn":0.56,"turnedAt":0,"share":0.451,"end":1,"frames":[[-1,0.56],[4,0.511],[12,0.441],[20,
+         webkit-phone      Error: no frame after the turn moves more than a fifth {"atTurn":0.642,"turnedAt":0,"share":0.288,"end":1,"frames":[[-8,0.642],[1,0.553],[10,0.472],[2
+         webkit-desktop    Error: no frame after the turn moves more than a fifth {"atTurn":0.573,"turnedAt":0,"share":0.393,"end":1,"frames":[[-1,0.573],[10,0.472],[19,0.399],[
+R/G R/G R/G R/G | reverse · a Accordion closed while it opens turns from where it is
+         chromium-phone    Error: no frame after the turn moves more than a fifth {"atTurn":0.474,"turnedAt":1,"share":0.285,"end":0,"frames":[[-6,0.474],[1,0.538],[9,0.602],[15
+         chromium-desktop  Error: no frame after the turn moves more than a fifth {"atTurn":0.505,"turnedAt":1,"share":0.389,"end":0,"frames":[[-1,0.505],[5,0.561],[12,0.613],[2
+         webkit-phone      Error: no frame after the turn moves more than a fifth {"atTurn":0.511,"turnedAt":1,"share":0.332,"end":0,"frames":[[-1,0.511],[10,0.601],[20,0.672],[
+         webkit-desktop    Error: no frame after the turn moves more than a fifth {"atTurn":0.418,"turnedAt":1,"share":0.362,"end":0,"frames":[[-9,0.418],[1,0.511],[13,0.609],[2
+R/G R/G R/R R/G | reverse · a Accordion reopened while it closes turns from where it is
+         chromium-phone    Error: no frame after the turn moves more than a fifth {"atTurn":0.566,"turnedAt":0,"share":0.406,"end":1,"frames":[[-2,0.566],[6,0.489],[12,0.441],[1
+         chromium-desktop  Error: no frame after the turn moves more than a fifth {"atTurn":0.59,"turnedAt":0,"share":0.377,"end":1,"frames":[[-2,0.59],[8,0.495],[16,0.429],[22,
+         webkit-phone      Error: no frame after the turn moves more than a fifth {"atTurn":0.673,"turnedAt":0,"share":0.421,"end":1,"frames":[[-9,0.673],[1,0.573],[11,0.48],[21
+         webkit-desktop    Error: no frame after the turn moves more than a fifth {"atTurn":0.673,"turnedAt":0,"share":0.421,"end":1,"frames":[[-7,0.673],[2,0.582],[13,0.48],[22
+R/G R/G R/G R/G | reverse · a press on a leaving Dialog's trigger reopens it from where it is
+         chromium-phone    Error: it turns short of the end it was heading for {"atTurn":0.534,"turnedAt":0,"share":0.158,"end":0,"frames":[[-7,0.534],[3,0.433],[11,0.361],[19,0
+         chromium-desktop  Error: it turns short of the end it was heading for {"atTurn":0.535,"turnedAt":0,"share":0.124,"end":0,"frames":[[-3,0.535],[3,0.468],[9,0.417],[19,0.
+         webkit-phone      Error: it turns short of the end it was heading for {"atTurn":0.585,"turnedAt":0,"share":0.156,"end":0,"frames":[[-7,0.585],[5,0.519],[14,0.417],[23,0
+         webkit-desktop    Error: it turns short of the end it was heading for {"atTurn":0.605,"turnedAt":0,"share":0.151,"end":0,"frames":[[-7,0.605],[3,0.51],[13,0.425],[23,0.
+R/G R/G R/G R/G | reverse · a press on a leaving Sheet's trigger reopens it from where it is
+         chromium-phone    Error: it turns short of the end it was heading for {"atTurn":0.813,"turnedAt":0,"share":0.132,"end":0,"frames":[[-9,0.813],[0,0.764],[5,0.701],[14,0.
+         chromium-desktop  Error: it turns short of the end it was heading for {"atTurn":0.717,"turnedAt":0,"share":0.13,"end":0,"frames":[[-2,0.717],[6,0.656],[17,0.597],[27,0.
+         webkit-phone      Error: it turns short of the end it was heading for {"atTurn":0.799,"turnedAt":0,"share":0.135,"end":0,"frames":[[-8,0.799],[2,0.745],[13,0.674],[25,0
+         webkit-desktop    Error: it turns short of the end it was heading for {"atTurn":0.738,"turnedAt":0,"share":0.13,"end":0,"frames":[[-2,0.738],[10,0.667],[19,0.582],[29,0
+R/G R/G R/G R/G | reverse · a press on a leaving Select's trigger reopens it from where it is
+         chromium-phone    Error: no frame after the turn moves more than a fifth {"atTurn":0.314,"turnedAt":0,"share":0.23,"end":0,"frames":[[-2,0.314],[7,0.265],[11,0],[21,0],
+         chromium-desktop  Error: no frame after the turn moves more than a fifth {"atTurn":0.366,"turnedAt":0,"share":0.254,"end":0,"frames":[[-7,0.366],[1,0],[10,0],[17,0],[27
+         webkit-phone      Error: no frame after the turn moves more than a fifth {"atTurn":0.361,"turnedAt":0,"share":0.312,"end":1,"frames":[[-1,0.361],[12,0],[18,0.005],[28,0
+         webkit-desktop    Error: no frame after the turn moves more than a fifth {"atTurn":0.456,"turnedAt":0,"share":0.4,"end":0,"frames":[[-10,0.456],[1,0.367],[9,0],[29,0],[
+R/G R/G R/G R/G | reverse · a press on the page while a sheet leaves reaches the page
+         chromium-phone    Error: the press reached the page
+         chromium-desktop  Error: the press reached the page
+         webkit-phone      Error: the press reached the page
+         webkit-desktop    Error: the press reached the page
+-/- R/G -/- R/G | tooltip · a Tooltip enters on a tween
+         chromium-desktop  Error: more than two frames between gone and whole {"between":0,"share":0.737,"end":1,"frames":[[2,0],[10,0],[17,0],[25,1],[41,1],[48,1],[54,1],[61,1]
+         webkit-desktop    Error: more than two frames between gone and whole {"between":0,"share":0.926,"end":1,"frames":[[7,0],[17,0],[18,0],[29,1],[36,1],[48,1],[58,1],[66,1]
+-/- R/G -/- R/G | tooltip · a hint handed to its neighbour fades, incoming
+         chromium-desktop  Error: more than two frames between gone and whole {"between":0,"share":0.963,"end":1,"frames":[[2,0],[10,0],[17,0],[25,0],[34,1],[41,1],[48,1],[55,1]
+         webkit-desktop    Error: more than two frames between gone and whole {"between":0,"share":0.926,"end":1,"frames":[[11,0],[21,0],[31,0],[42,0],[52,1],[60,1],[72,1],[80,1
+-/- R/G -/- R/G | tooltip · a hint handed to its neighbour fades, outgoing
+         chromium-desktop  Error: no frame carries more than a fifth {"between":7,"share":0.532,"end":0,"frames":[[1,1],[9,1],[17,1],[23,1],[29,0.724],[35,0.549],[41,0.419],[49,
+         webkit-desktop    Error: no frame carries more than a fifth {"between":5,"share":0.513,"end":0,"frames":[[6,1],[16,1],[25,1],[37,1],[48,0.558],[57,0.384],[66,0.242],[76
+G/G G/G G/G G/G | expand · an ExpandableContainer enters on a tween
+R/G R/G R/G R/G | expand · an ExpandableContainer leaves on a tween by exit
+         chromium-phone    Error: more than two frames between whole and gone {"top":1,"atTurn":1,"between":0,"share":0.911,"end":0,"frames":[[-6,1],[2,1],[11,1],[15,1],[22,0],[
+         chromium-desktop  Error: more than two frames between whole and gone {"top":1,"atTurn":1,"between":0,"share":0.906,"end":0,"frames":[[-6,1],[2,1],[12,1],[20,0],[26,0],[
+         webkit-phone      Error: more than two frames between whole and gone {"top":1,"atTurn":1,"between":0,"share":0.98,"end":0,"frames":[[-7,1],[3,1],[14,1],[24,1],[25,1],[2
+         webkit-desktop    Error: more than two frames between whole and gone {"top":1,"atTurn":1,"between":0,"share":0.926,"end":0,"frames":[[-6,1],[4,1],[14,1],[16,1],[24,0],[
+R/G R/G R/G R/G | expand · an ExpandableContainer leaves on a tween by escape
+         chromium-phone    Error: more than two frames between whole and gone {"top":1,"atTurn":1,"between":0,"share":0.675,"end":0,"frames":[[-5,1],[3,0],[12,0],[20,0],[25,0],[
+         chromium-desktop  Error: more than two frames between whole and gone {"top":1,"atTurn":1,"between":0,"share":0.936,"end":0,"frames":[[-7,1],[1,0],[10,0],[16,0],[24,0],[
+         webkit-phone      Error: more than two frames between whole and gone {"top":1,"atTurn":1,"between":0,"share":0.98,"end":0,"frames":[[-5,1],[7,0],[12,0],[24,0],[33,0],[4
+         webkit-desktop    Error: more than two frames between whole and gone {"top":1,"atTurn":1,"between":0,"share":0.833,"end":0,"frames":[[-6,1],[7,0],[14,0],[26,0],[35,0],[
+R/G R/G R/G R/G | expand · an ExpandableContainer leaves on a tween by open
+         chromium-phone    Error: more than two frames between whole and gone {"top":1,"atTurn":0,"between":0,"share":0,"end":0,"frames":[[-1,0],[9,0],[17,0],[25,0],[33,0],[43,0
+         chromium-desktop  Error: more than two frames between whole and gone {"top":1,"atTurn":0,"between":0,"share":0,"end":0,"frames":[[-3,0],[6,0],[13,0],[23,0],[28,0],[36,0
+         webkit-phone      Error: more than two frames between whole and gone {"top":1,"atTurn":1,"between":0,"share":0.926,"end":0,"frames":[[-4,1],[8,0],[14,0],[25,0],[34,0],[
+         webkit-desktop    Error: more than two frames between whole and gone {"top":1,"atTurn":1,"between":0,"share":0.833,"end":0,"frames":[[-7,1],[6,0],[13,0],[25,0],[33,0],[
+R/G R/G R/G G/G | expand · an ExpandableContainer closed while it enters turns from where it is
+         chromium-phone    Error: no frame carries more than a fifth {"top":1,"atTurn":0.333,"between":1,"share":0.226,"end":0,"frames":[[-2,0.333],[5,0],[13,0],[22,0],[28,0],[3
+         chromium-desktop  Error: no frame carries more than a fifth {"top":1,"atTurn":0.334,"between":1,"share":0.251,"end":0,"frames":[[-4,0.334],[3,0],[11,0],[19,0],[28,0],[3
+         webkit-phone      Error: no frame carries more than a fifth {"top":1,"atTurn":0.263,"between":1,"share":0.219,"end":0,"frames":[[-6,0.263],[9,0],[14,0],[23,0],[33,0],[4
+R/G R/G R/G R/G | expand · an ExpandableContainer reopened while it leaves turns from where it is
+         chromium-phone    Error: the reopen lands mid-exit {"top":1,"atTurn":0,"between":27,"share":0.123,"end":1,"frames":[[-6,0],[2,0],[9,0],[15,0],[24,0],[32,0.008],[38,0.02
+         chromium-desktop  Error: the reopen lands mid-exit {"top":1,"atTurn":0,"between":26,"share":0.124,"end":1,"frames":[[-7,0],[2,0],[12,0],[18,0],[25,0],[33,0.008],[41,0.0
+         webkit-phone      Error: the reopen lands mid-exit {"top":1,"atTurn":0,"between":19,"share":0.123,"end":1,"frames":[[-6,0],[2,0],[14,0],[23,0],[24,0],[27,0],[35,0],[44,
+         webkit-desktop    Error: the reopen lands mid-exit {"top":1,"atTurn":0,"between":19,"share":0.123,"end":1,"frames":[[-6,0],[2,0],[14,0],[23,0],[25,0],[33,0],[44,0.015],
+G/G G/G G/G G/G | expand · Escape is live from the entrance's first frame
+R/G R/G R/G R/G | leave · a Dialog says once that its leave has finished, after its last seen frame
+         chromium-phone    Error: one event {"events":[],"lastSeen":319,"emitted":null}
+         chromium-desktop  Error: one event {"events":[],"lastSeen":317,"emitted":null}
+         webkit-phone      Error: one event {"events":[],"lastSeen":321,"emitted":null}
+         webkit-desktop    Error: one event {"events":[],"lastSeen":323,"emitted":null}
+R/G R/G R/G R/G | leave · a Dialog closed and reopened mid-exit says nothing
+         chromium-phone    Error: it is open again
+         chromium-desktop  Error: it is open again
+         webkit-phone      Error: it is open again
+         webkit-desktop    Error: it is open again
+R/G R/G R/G R/G | leave · a Sheet says once that its leave has finished, after its last seen frame
+         chromium-phone    Error: one event {"events":[],"lastSeen":208,"emitted":null}
+         chromium-desktop  Error: one event {"events":[],"lastSeen":205,"emitted":null}
+         webkit-phone      Error: one event {"events":[],"lastSeen":210,"emitted":null}
+         webkit-desktop    Error: one event {"events":[],"lastSeen":211,"emitted":null}
+R/G R/G R/G R/G | leave · a Sheet closed and reopened mid-exit says nothing
+         chromium-phone    Error: it is open again
+         chromium-desktop  Error: it is open again
+         webkit-phone      Error: it is open again
+         webkit-desktop    Error: it is open again
+R/G R/G R/G R/G | leave · a Popover says once that its leave has finished, after its last seen frame
+         chromium-phone    Error: one event {"events":[],"lastSeen":147,"emitted":null}
+         chromium-desktop  Error: one event {"events":[],"lastSeen":144,"emitted":null}
+         webkit-phone      Error: one event {"events":[],"lastSeen":145,"emitted":null}
+         webkit-desktop    Error: one event {"events":[],"lastSeen":139,"emitted":null}
+G/G G/G G/G G/G | leave · a Popover closed and reopened mid-exit says nothing
+R/G R/G R/G R/G | leave · a DropdownMenu says once that its leave has finished, after its last seen frame
+         chromium-phone    Error: one event {"events":[],"lastSeen":114,"emitted":null}
+         chromium-desktop  Error: one event {"events":[],"lastSeen":116,"emitted":null}
+         webkit-phone      Error: one event {"events":[],"lastSeen":120,"emitted":null}
+         webkit-desktop    Error: one event {"events":[],"lastSeen":110,"emitted":null}
+G/G G/G G/G G/G | leave · a DropdownMenu closed and reopened mid-exit says nothing
+R/G R/G R/G R/G | leave · a Select says once that its leave has finished, after its last seen frame
+         chromium-phone    Error: one event {"events":[],"lastSeen":130,"emitted":null}
+         chromium-desktop  Error: one event {"events":[],"lastSeen":126,"emitted":null}
+         webkit-phone      Error: one event {"events":[],"lastSeen":130,"emitted":null}
+         webkit-desktop    Error: one event {"events":[],"lastSeen":123,"emitted":null}
+R/G R/G G/G R/G | leave · a Select closed and reopened mid-exit says nothing
+         chromium-phone    Error: it is open again
+         chromium-desktop  Error: it is open again
+         webkit-desktop    Error: it is open again
+-/- R/G -/- R/G | leave · a Tooltip says once that its leave has finished, after its last seen frame
+         chromium-desktop  Error: one event {"events":[],"lastSeen":73,"emitted":null}
+         webkit-desktop    Error: one event {"events":[],"lastSeen":67,"emitted":null}
+-/- G/G -/- G/G | leave · a Tooltip closed and reopened mid-exit says nothing
+R/G R/G R/G R/G | leave · a Toast says once that its leave has finished, after its last seen frame
+         chromium-phone    Error: one event {"events":[],"lastSeen":269,"emitted":null}
+         chromium-desktop  Error: one event {"events":[],"lastSeen":265,"emitted":null}
+         webkit-phone      Error: one event {"events":[],"lastSeen":272,"emitted":null}
+         webkit-desktop    Error: one event {"events":[],"lastSeen":271,"emitted":null}
+-/- -/- -/- -/- | leave · a Toast closed and reopened mid-exit says nothing
+R/G R/G R/G R/G | leave · a Popover inside a shadow root says so to its host
+         chromium-phone    Error: one event {"window":[],"host":[],"emits":{},"seenAt":2258.6,"mounted":false}
+         chromium-desktop  Error: one event {"window":[],"host":[],"emits":{},"seenAt":2270.1,"mounted":false}
+         webkit-phone      Error: one event {"window":[],"host":[],"emits":{},"seenAt":2282,"mounted":false}
+         webkit-desktop    Error: one event {"window":[],"host":[],"emits":{},"seenAt":2317,"mounted":false}
+-/- R/G -/- R/G | leave · a ContextMenu says once that its leave has finished, by escape
+         chromium-desktop  Error: one event {"window":[],"host":[],"emits":{},"seenAt":2169.2}
+         webkit-desktop    Error: one event {"window":[],"host":[],"emits":{},"seenAt":2194}
+-/- R/G -/- R/G | leave · a ContextMenu says once that its leave has finished, by pick
+         chromium-desktop  Error: one event {"window":[],"host":[],"emits":{},"seenAt":2169.8}
+         webkit-desktop    Error: one event {"window":[],"host":[],"emits":{},"seenAt":2200}
+-/- R/G -/- R/G | leave · a hover card says once that its leave has finished
+         chromium-desktop  Error: one event {"window":[],"host":[],"emits":{},"seenAt":2186.3}
+         webkit-desktop    Error: one event {"window":[],"host":[],"emits":{},"seenAt":2190}
+R/G R/G R/G R/G | leave · a Dialog unmounted mid-exit says so once, at the unmount
+         chromium-phone    Error: one event {"window":[],"host":[],"emits":{},"cut":2175.800000011921}
+         chromium-desktop  Error: one event {"window":[],"host":[],"emits":{},"cut":2191.0999999940395}
+         webkit-phone      Error: one event {"window":[],"host":[],"emits":{},"cut":2220}
+         webkit-desktop    Error: one event {"window":[],"host":[],"emits":{},"cut":2205}
+R/G R/G R/G R/G | site · a site's own opacity fade keeps its clock under reduced motion
+         chromium-phone    Error: its computed clock {"duration":"0s","fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":1,"to":0}
+         chromium-desktop  Error: its computed clock {"duration":"0s","fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":1,"to":0}
+         webkit-phone      Error: its computed clock {"duration":"0s","fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":1,"to":0}
+         webkit-desktop    Error: its computed clock {"duration":"0s","fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":1,"to":0}
+R/G R/G R/G R/G | fade · a Popover appears and leaves on a fade
+         chromium-phone    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+         chromium-desktop  Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+         webkit-phone      Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+         webkit-desktop    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+R/G R/G R/G R/G | fade · a DropdownMenu appears and leaves on a fade
+         chromium-phone    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+         chromium-desktop  Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+         webkit-phone      Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+         webkit-desktop    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+R/G R/G R/G R/G | fade · a dock Select appears and leaves on a fade
+         chromium-phone    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+         chromium-desktop  Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":1,"stepped":[[26,1,681,65,128,230]],"fro
+         webkit-phone      Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+         webkit-desktop    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":2,"stepped":[[63,1,681,65,128,230],[71,1
+R/G R/G R/G R/G | fade · a plain Select appears and leaves on a fade
+         chromium-phone    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+         chromium-desktop  Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+         webkit-phone      Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+         webkit-desktop    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+-/- R/G -/- R/G | fade · a Tooltip appears and leaves on a fade
+         chromium-desktop  Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+         webkit-desktop    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+R/G R/G R/G R/G | fade · a Dialog appears and leaves on a fade
+         chromium-phone    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+         chromium-desktop  Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+         webkit-phone      Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+         webkit-desktop    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+R/G R/G R/G R/G | fade · a Sheet right appears and leaves on a fade
+         chromium-phone    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+         chromium-desktop  Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+         webkit-phone      Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+         webkit-desktop    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+R/G R/G R/G R/G | fade · a Sheet bottom appears and leaves on a fade
+         chromium-phone    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+         chromium-desktop  Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+         webkit-phone      Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+         webkit-desktop    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+R/G R/G R/G R/G | fade · a Toast appears and leaves on a fade
+         chromium-phone    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+         chromium-desktop  Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+         webkit-phone      Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+         webkit-desktop    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+R/G R/G R/G R/G | fade · a Collapsible appears and leaves on a fade
+         chromium-phone    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":1,"stepped":[[47,1,37,421,317,0]],"from"
+         chromium-desktop  Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":1,"stepped":[[30,1,561,265,318,0]],"from
+         webkit-phone      Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":1,"stepped":[[37,1,37,421,317,0]],"from"
+         webkit-desktop    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":1,"stepped":[[35,1,561,265,318,0]],"from
+R/G R/G R/G R/G | fade · a Accordion appears and leaves on a fade
+         chromium-phone    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":1,"stepped":[[35,1,37,477,317,0]],"from"
+         chromium-desktop  Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":1,"stepped":[[43,1,561,325,318,0]],"from
+         webkit-phone      Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":1,"stepped":[[41,1,37,477,317,0]],"from"
+         webkit-desktop    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":1,"stepped":[[38,1,561,325,318,0]],"from
+R/G R/G R/G R/G | fade · a ExpandableContainer appears and leaves on a fade
+         chromium-phone    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+         chromium-desktop  Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+         webkit-phone      Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+         webkit-desktop    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"
+R/G R/G R/G R/G | fold · a dock unfolds and folds by cross-fading its faces, its box landing at once
+         chromium-phone    Error: in: the fade spans at least two frames unfold {"unfold":{"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0
+         chromium-desktop  Error: in: the fade spans at least two frames unfold {"unfold":{"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0
+         webkit-phone      Error: in: the fade spans at least two frames unfold {"unfold":{"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0
+         webkit-desktop    Error: in: the fade spans at least two frames unfold {"unfold":{"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0
+R/G R/G R/G R/G | mark · a run's selected plate moves to a new seat by a cross-fade
+         chromium-phone    Error: no painted plate travels {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":0},"out":{"fading":0,"ris
+         chromium-desktop  Error: no painted plate travels {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":0},"out":{"fading":0,"ris
+         webkit-phone      Error: no painted plate travels {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":0},"out":{"fading":0,"ris
+         webkit-desktop    Error: no painted plate travels {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":0},"out":{"fading":0,"ris
+R/G R/G -/- R/G | press · a pressed Button and dock seat keep their size under reduced motion
+         chromium-phone    Error: the Button keeps scale 1 on every frame {"Button":{"rest":88.53,"active":16,"scales":["1","1.0328 0.911"],"transforms":["none"],"widths":[88.53
+         chromium-desktop  Error: the Button keeps scale 1 on every frame {"Button":{"rest":69.41,"active":41,"scales":["1","1.0328 0.911"],"transforms":["none"],"widths":[69.41
+         webkit-desktop    Error: the Button keeps scale 1 on every frame {"Button":{"rest":71.64,"active":29,"scales":["1","1.0328 0.911"],"transforms":["none"],"widths":[71.64
+G/G G/G G/G G/G | still · a Slider holds still under reduced motion
+{'G/G': 50, '-/-': 64, 'R/G': 289, 'R/R': 1}

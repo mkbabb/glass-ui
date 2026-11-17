@@ -1,0 +1,11 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for the 'webkit' lock
+
+Running 2 tests using 1 worker
+
+colour webkit-desktop {"Button":{"restMean":[210.6,200.5,185.9],"heldMean":[211.5,201.7,187.5],"changedShare":0.209,"restCs":{"bg":"oklab(0.673443 0.021093 0.074662 / 0.244)","filter":"none","shadow":"rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0","scale":"1","pressT":"","dockPressT":"0","active":false},"heldCs":{"bg":"oklab(0.673443 0.021093 0.074662 / 0.244)","filter":"none","shadow":"rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0","scale":"1.0328 0.911","pressT":"","dockPressT":"0","active":true}},"icon seat":{"restMean":[202.3,196.5,187.5],"heldMean":[198.7,193.3,184],"changedShare":0.409,"restCs":{"bg":"color(srgb 0.203993 0.148252 0.08296 / 0.14)","filter":"brightness(1)","shadow":"none","scale":"1","pressT":"","dockPressT":"0","active":false},"heldCs":{"bg":"oklab(0.257667 0.009006 0.023202 / 0.2002)","filter":"brightness(0.96)","shadow":"none","scale":"1.0066 0.9156","pressT":"","dockPressT":"1","active":true}},"tab seat":{"restMean":[189.3,183.1,174.3],"heldMean":[184.6,179,169.7],"changedShare":0.764,"restCs":{"bg":"color(srgb 0.203993 0.148252 0.08296 / 0.14)","filter":"none","shadow":"none","scale":"1","pressT":"","dockPressT":"0","active":false},"heldCs":{"bg":"oklab(0.257667 0.009006 0.023202 / 0.2002)","filter":"none","shadow":"none","scale":"0.96","pressT":"","dockPressT":"0","active":true}}}
+  ✓  1 [webkit-desktop] › docs/release-11.1.1/critic-4/probe/press.probe.ts:45:1 › colour · a held press under reduced motion (4.5s)
+row webkit-desktop {"rest":182,"runs":[{"v":"1 w=182 active=false","n":9},{"v":"0.97 w=176.54 active=true","n":31}]}
+  ✓  2 [webkit-desktop] › docs/release-11.1.1/critic-4/probe/press.probe.ts:75:1 › row · a held press on a menu row under reduced motion (2.0s)
+
+  2 passed (8.3s)

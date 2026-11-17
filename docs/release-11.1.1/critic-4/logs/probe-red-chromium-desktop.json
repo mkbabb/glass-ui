@@ -1,0 +1,234 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "docs/release-11.1.1/critic-4/probe/probe.config.ts",
+      "--project=chromium-desktop",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/docs/release-11.1.1/critic-4/probe/probe.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/docs/release-11.1.1/critic-4/probe",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/docs/release-11.1.1/critic-4/probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/docs/release-11.1.1/critic-4/probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/docs/release-11.1.1/critic-4/probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/docs/release-11.1.1/critic-4/probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-4/logs/probe-red-chromium-desktop.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5352",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/",
+      "url": "http://localhost:5352",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "press.probe.ts",
+      "file": "press.probe.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "colour · a held press under reduced motion",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4056,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "colour chromium-desktop {\"Button\":{\"restMean\":[212.4,201.1,183.8],\"heldMean\":[212.9,202.1,185.5],\"changedShare\":0.234,\"restCs\":{\"bg\":\"oklab(0.673443 0.0210928 0.0746619 / 0.244)\",\"filter\":\"none\",\"shadow\":\"rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0\",\"scale\":\"1\",\"pressT\":\"\",\"dockPressT\":\"0\",\"active\":false},\"heldCs\":{\"bg\":\"oklab(0.673443 0.0210928 0.0746619 / 0.244)\",\"filter\":\"none\",\"shadow\":\"rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0\",\"scale\":\"1.0328 0.911\",\"pressT\":\"\",\"dockPressT\":\"0\",\"active\":true}},\"icon seat\":{\"restMean\":[202.8,196.1,185.2],\"heldMean\":[199.7,193.3,182.2],\"changedShare\":0.398,\"restCs\":{\"bg\":\"color(srgb 0.20397 0.148263 0.0829736 / 0.14)\",\"filter\":\"brightness(1)\",\"shadow\":\"none\",\"scale\":\"1\",\"pressT\":\"\",\"dockPressT\":\"0\",\"active\":false},\"heldCs\":{\"bg\":\"oklab(0.257667 0.00900921 0.023203 / 0.2002)\",\"filter\":\"brightness(0.96)\",\"shadow\":\"none\",\"scale\":\"1.0066 0.9156\",\"pressT\":\"\",\"dockPressT\":\"1\",\"active\":true}},\"tab seat\":{\"restMean\":[189.3,182.2,171.7],\"heldMean\":[184.7,178.2,167.3],\"changedShare\":0.761,\"restCs\":{\"bg\":\"color(srgb 0.20397 0.148263 0.0829736 / 0.14)\",\"filter\":\"none\",\"shadow\":\"none\",\"scale\":\"1\",\"pressT\":\"\",\"dockPressT\":\"0\",\"active\":false},\"heldCs\":{\"bg\":\"oklab(0.257667 0.00900921 0.023203 / 0.2002)\",\"filter\":\"none\",\"shadow\":\"none\",\"scale\":\"0.96\",\"pressT\":\"\",\"dockPressT\":\"0\",\"active\":true}}}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T06:21:07.290Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "colour",
+                      "contentType": "application/json",
+                      "body": "eyJCdXR0b24iOnsicmVzdE1lYW4iOlsyMTIuNCwyMDEuMSwxODMuOF0sImhlbGRNZWFuIjpbMjEyLjksMjAyLjEsMTg1LjVdLCJjaGFuZ2VkU2hhcmUiOjAuMjM0LCJyZXN0Q3MiOnsiYmciOiJva2xhYigwLjY3MzQ0MyAwLjAyMTA5MjggMC4wNzQ2NjE5IC8gMC4yNDQpIiwiZmlsdGVyIjoibm9uZSIsInNoYWRvdyI6InJnYmEoMjU1LCAyNTUsIDI1NSwgMC4xKSAwcHggMXB4IDBweCAwcHggaW5zZXQsIGNvbG9yKHNyZ2IgMCIsInNjYWxlIjoiMSIsInByZXNzVCI6IiIsImRvY2tQcmVzc1QiOiIwIiwiYWN0aXZlIjpmYWxzZX0sImhlbGRDcyI6eyJiZyI6Im9rbGFiKDAuNjczNDQzIDAuMDIxMDkyOCAwLjA3NDY2MTkgLyAwLjI0NCkiLCJmaWx0ZXIiOiJub25lIiwic2hhZG93IjoicmdiYSgyNTUsIDI1NSwgMjU1LCAwLjEpIDBweCAxcHggMHB4IDBweCBpbnNldCwgY29sb3Ioc3JnYiAwIiwic2NhbGUiOiIxLjAzMjggMC45MTEiLCJwcmVzc1QiOiIiLCJkb2NrUHJlc3NUIjoiMCIsImFjdGl2ZSI6dHJ1ZX19LCJpY29uIHNlYXQiOnsicmVzdE1lYW4iOlsyMDIuOCwxOTYuMSwxODUuMl0sImhlbGRNZWFuIjpbMTk5LjcsMTkzLjMsMTgyLjJdLCJjaGFuZ2VkU2hhcmUiOjAuMzk4LCJyZXN0Q3MiOnsiYmciOiJjb2xvcihzcmdiIDAuMjAzOTcgMC4xNDgyNjMgMC4wODI5NzM2IC8gMC4xNCkiLCJmaWx0ZXIiOiJicmlnaHRuZXNzKDEpIiwic2hhZG93Ijoibm9uZSIsInNjYWxlIjoiMSIsInByZXNzVCI6IiIsImRvY2tQcmVzc1QiOiIwIiwiYWN0aXZlIjpmYWxzZX0sImhlbGRDcyI6eyJiZyI6Im9rbGFiKDAuMjU3NjY3IDAuMDA5MDA5MjEgMC4wMjMyMDMgLyAwLjIwMDIpIiwiZmlsdGVyIjoiYnJpZ2h0bmVzcygwLjk2KSIsInNoYWRvdyI6Im5vbmUiLCJzY2FsZSI6IjEuMDA2NiAwLjkxNTYiLCJwcmVzc1QiOiIiLCJkb2NrUHJlc3NUIjoiMSIsImFjdGl2ZSI6dHJ1ZX19LCJ0YWIgc2VhdCI6eyJyZXN0TWVhbiI6WzE4OS4zLDE4Mi4yLDE3MS43XSwiaGVsZE1lYW4iOlsxODQuNywxNzguMiwxNjcuM10sImNoYW5nZWRTaGFyZSI6MC43NjEsInJlc3RDcyI6eyJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5NyAwLjE0ODI2MyAwLjA4Mjk3MzYgLyAwLjE0KSIsImZpbHRlciI6Im5vbmUiLCJzaGFkb3ciOiJub25lIiwic2NhbGUiOiIxIiwicHJlc3NUIjoiIiwiZG9ja1ByZXNzVCI6IjAiLCJhY3RpdmUiOmZhbHNlfSwiaGVsZENzIjp7ImJnIjoib2tsYWIoMC4yNTc2NjcgMC4wMDkwMDkyMSAwLjAyMzIwMyAvIDAuMjAwMikiLCJmaWx0ZXIiOiJub25lIiwic2hhZG93Ijoibm9uZSIsInNjYWxlIjoiMC45NiIsInByZXNzVCI6IiIsImRvY2tQcmVzc1QiOiIwIiwiYWN0aXZlIjp0cnVlfX19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "17a38c245b5caa261ddc-3503fb6c111b07bb2d94",
+          "file": "press.probe.ts",
+          "line": 45,
+          "column": 1
+        },
+        {
+          "title": "row · a held press on a menu row under reduced motion",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1729,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "row chromium-desktop {\"rest\":182,\"runs\":[{\"v\":\"1 w=182 active=false\",\"n\":12},{\"v\":\"0.97 w=176.54 active=true\",\"n\":38}]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T06:21:11.454Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "row",
+                      "contentType": "application/json",
+                      "body": "eyJyZXN0IjoxODIsInJ1bnMiOlt7InYiOiIxIHc9MTgyIGFjdGl2ZT1mYWxzZSIsIm4iOjEyfSx7InYiOiIwLjk3IHc9MTc2LjU0IGFjdGl2ZT10cnVlIiwibiI6Mzh9XX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "17a38c245b5caa261ddc-c9967767fe7fff47cd68",
+          "file": "press.probe.ts",
+          "line": 75,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-17T06:21:05.715Z",
+    "duration": 7515.497,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

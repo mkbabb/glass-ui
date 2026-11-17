@@ -1,0 +1,61 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 46 tests using 1 worker
+
+  ✓   1 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:790:9 › reverse · a Select closed while it opens turns from where it is (2.2s)
+  ✓   2 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:800:9 › reverse · a Select reopened while it closes turns from where it is (3.0s)
+  ✓   3 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:790:9 › reverse · a DropdownMenu closed while it opens turns from where it is (2.1s)
+  ✓   4 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:800:9 › reverse · a DropdownMenu reopened while it closes turns from where it is (3.0s)
+  ✓   5 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:790:9 › reverse · a Popover closed while it opens turns from where it is (2.2s)
+  ✓   6 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:800:9 › reverse · a Popover reopened while it closes turns from where it is (3.0s)
+  ✓   7 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:790:9 › reverse · a Toast closed while it opens turns from where it is (2.1s)
+  ✓   8 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:790:9 › reverse · a Tooltip closed while it opens turns from where it is (2.1s)
+  ✓   9 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:800:9 › reverse · a Tooltip reopened while it closes turns from where it is (3.0s)
+  ✓  10 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:790:9 › reverse · a Collapsible closed while it opens turns from where it is (3.9s)
+  ✓  11 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:800:9 › reverse · a Collapsible reopened while it closes turns from where it is (4.9s)
+  ✓  12 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:790:9 › reverse · a Accordion closed while it opens turns from where it is (3.9s)
+  ✓  13 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:800:9 › reverse · a Accordion reopened while it closes turns from where it is (4.9s)
+[WebServer] 11:24:46 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  14 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:820:5 › reverse · a press on a leaving Dialog's trigger reopens it from where it is (3.1s)
+[WebServer] 11:24:49 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  15 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:820:5 › reverse · a press on a leaving Sheet's trigger reopens it from where it is (3.1s)
+  ✓  16 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:820:5 › reverse · a press on a leaving Select's trigger reopens it from where it is (3.1s)
+[WebServer] 11:24:56 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  17 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:840:1 › reverse · a press on the page while a sheet leaves reaches the page (2.2s)
+  ✓  18 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:879:1 › tooltip · a Tooltip enters on a tween (1.5s)
+  ✓  19 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:894:5 › tooltip · a hint handed to its neighbour fades, incoming (2.1s)
+  ✓  20 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:894:5 › tooltip · a hint handed to its neighbour fades, outgoing (2.1s)
+  ✓  21 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:987:1 › expand · an ExpandableContainer enters on a tween (3.7s)
+  ✓  22 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1002:5 › expand · an ExpandableContainer leaves on a tween by exit (4.6s)
+  ✓  23 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1002:5 › expand · an ExpandableContainer leaves on a tween by escape (4.6s)
+  ✓  24 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1002:5 › expand · an ExpandableContainer leaves on a tween by open (4.6s)
+  ✓  25 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1025:1 › expand · an ExpandableContainer closed while it enters turns from where it is (3.7s)
+  ✓  26 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1042:1 › expand · an ExpandableContainer reopened while it leaves turns from where it is (4.6s)
+  ✓  27 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1058:1 › expand · Escape is live from the entrance's first frame (1.3s)
+[WebServer] 11:25:31 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  28 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1117:5 › leave · a Dialog says once that its leave has finished, after its last seen frame (2.7s)
+[WebServer] 11:25:34 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  29 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1146:5 › leave · a Dialog closed and reopened mid-exit says nothing (2.4s)
+[WebServer] 11:25:36 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  30 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1117:5 › leave · a Sheet says once that its leave has finished, after its last seen frame (2.7s)
+[WebServer] 11:25:39 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  31 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1146:5 › leave · a Sheet closed and reopened mid-exit says nothing (2.4s)
+  ✓  32 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1117:5 › leave · a Popover says once that its leave has finished, after its last seen frame (2.7s)
+  ✓  33 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1146:5 › leave · a Popover closed and reopened mid-exit says nothing (2.4s)
+  ✓  34 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1117:5 › leave · a DropdownMenu says once that its leave has finished, after its last seen frame (2.8s)
+  ✓  35 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1146:5 › leave · a DropdownMenu closed and reopened mid-exit says nothing (2.4s)
+  ✓  36 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1117:5 › leave · a Select says once that its leave has finished, after its last seen frame (2.7s)
+  ✓  37 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1146:5 › leave · a Select closed and reopened mid-exit says nothing (2.4s)
+  ✓  38 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1117:5 › leave · a Tooltip says once that its leave has finished, after its last seen frame (2.7s)
+  ✓  39 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1146:5 › leave · a Tooltip closed and reopened mid-exit says nothing (2.4s)
+  ✓  40 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1117:5 › leave · a Toast says once that its leave has finished, after its last seen frame (2.8s)
+  -  41 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1146:5 › leave · a Toast closed and reopened mid-exit says nothing
+  ✓  42 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1221:1 › leave · a Popover inside a shadow root says so to its host (3.4s)
+  ✓  43 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1245:5 › leave · a ContextMenu says once that its leave has finished, by escape (3.1s)
+  ✓  44 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1245:5 › leave · a ContextMenu says once that its leave has finished, by pick (3.1s)
+  ✓  45 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1263:1 › leave · a hover card says once that its leave has finished (3.3s)
+[WebServer] 11:26:18 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  46 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:1281:1 › leave · a Dialog unmounted mid-exit says so once, at the unmount (3.0s)
+
+  1 skipped
+  45 passed (2.3m)

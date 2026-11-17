@@ -1,0 +1,836 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-1-1.config.ts",
+      "--project=chromium-desktop",
+      "--workers=1",
+      "-g",
+      "(site|fade|fold|mark|press|still) · "
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-4/logs/tipD-chromium-desktop.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1-reduce.spec.ts",
+      "file": "release-11-1-1-reduce.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "site · a site's own opacity fade keeps its clock under reduced motion",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1366,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:28:47.592Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "site",
+                      "contentType": "application/json",
+                      "body": "eyJkdXJhdGlvbiI6IjAuMTQ0cyIsImZhZGluZyI6MTYsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MTQyLCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjEsInRvIjowfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-9593e010257066acea19",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 103,
+          "column": 1
+        },
+        {
+          "title": "fade · a Popover appears and leaves on a fade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2751,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:28:49.060Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjIzLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MywiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjIzLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbOV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-686ebcc06303144e5828",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 167,
+          "column": 5
+        },
+        {
+          "title": "fade · a DropdownMenu appears and leaves on a fade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2719,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:28:51.814Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjIzLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjIzLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MSwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbMTddfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-92f228d056966832eb5d",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 167,
+          "column": 5
+        },
+        {
+          "title": "fade · a dock Select appears and leaves on a fade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2709,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:28:54.537Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjIzLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjIzLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MSwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbMThdfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-87ba125ced20c28f69ba",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 167,
+          "column": 5
+        },
+        {
+          "title": "fade · a plain Select appears and leaves on a fade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2711,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:28:57.250Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjIzLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MywiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjIzLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbMTddfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-1895d99c1b79c09871fc",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 167,
+          "column": 5
+        },
+        {
+          "title": "fade · a Tooltip appears and leaves on a fade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2693,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:28:59.966Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjIzLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjEzLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjExNywiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbOV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-376538ab26b14bac5fd5",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 167,
+          "column": 5
+        },
+        {
+          "title": "fade · a Dialog appears and leaves on a fade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2710,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:29:02.663Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjIwLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE2OCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjIxLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE3NSwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbMV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-a8f3fc4ba24732dc8806",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 167,
+          "column": 5
+        },
+        {
+          "title": "fade · a Sheet right appears and leaves on a fade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2723,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:29:05.378Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjIyLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE4NSwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjIzLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbMl19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-4cf7218610484061d728",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 167,
+          "column": 5
+        },
+        {
+          "title": "fade · a Sheet bottom appears and leaves on a fade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2725,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:29:08.109Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjIyLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE4MiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjIzLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbMl19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-069f09c849d8d4967eec",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 167,
+          "column": 5
+        },
+        {
+          "title": "fade · a Toast appears and leaves on a fade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2715,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:29:10.841Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjIzLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MSwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjE4LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE1MCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbNTddfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-454d7a8460d38143e567",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 167,
+          "column": 5
+        },
+        {
+          "title": "fade · a Collapsible appears and leaves on a fade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2722,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:29:13.560Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjIzLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjIzLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjIwMSwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-d6abb2c81249034710e2",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 167,
+          "column": 5
+        },
+        {
+          "title": "fade · a Accordion appears and leaves on a fade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2720,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:29:16.285Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjIzLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjIzLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MSwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-f3d9430a5032a669fcfd",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 167,
+          "column": 5
+        },
+        {
+          "title": "fade · a ExpandableContainer appears and leaves on a fade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2714,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:29:19.008Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjE0LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjExNywiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjE0LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjExNywiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-e4f221fe48984c315487",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 167,
+          "column": 5
+        },
+        {
+          "title": "fold · a dock unfolds and folds by cross-fading its faces, its box landing at once",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2686,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:29:21.726Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fold",
+                      "contentType": "application/json",
+                      "body": "eyJ1bmZvbGQiOnsiaW4iOnsiZmFkaW5nIjoyMywicmlzZXMiOnRydWUsImZhbGxzIjp0cnVlLCJzcGFuIjoxOTIsImJveFN0ZXBzIjowLCJzdGVwcGVkIjpbXSwiZnJvbSI6MCwidG8iOjF9LCJvdXQiOnsiZmFkaW5nIjoyMywicmlzZXMiOnRydWUsImZhbGxzIjp0cnVlLCJzcGFuIjoxOTIsImJveFN0ZXBzIjowLCJzdGVwcGVkIjpbXSwiZnJvbSI6MSwidG8iOjB9fSwiZm9sZCI6eyJpbiI6eyJmYWRpbmciOjIzLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjIzLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH19fQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-ce589b1f1412287cacbc",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 243,
+          "column": 1
+        },
+        {
+          "title": "mark · a run's selected plate moves to a new seat by a cross-fade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1776,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:29:24.416Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "mark",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjIzLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MywiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MC4xOH0sIm91dCI6eyJmYWRpbmciOjIzLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MywiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLjE4LCJ0byI6MH0sInRyYXZlbCI6MH0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-791e379ad45c9dfafcc3",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 262,
+          "column": 1
+        },
+        {
+          "title": "press · a pressed Button and dock seat keep their size under reduced motion",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2651,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:29:26.196Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "press",
+                      "contentType": "application/json",
+                      "body": "eyJCdXR0b24iOnsicmVzdCI6NjkuNDEsImFjdGl2ZSI6MzYsInNjYWxlcyI6WyIxIl0sInRyYW5zZm9ybXMiOlsibm9uZSJdLCJ3aWR0aHMiOls2OS40MV19LCJpY29uIHNlYXQiOnsicmVzdCI6NDAsImFjdGl2ZSI6MzYsInNjYWxlcyI6WyIxIl0sInRyYW5zZm9ybXMiOlsibm9uZSJdLCJ3aWR0aHMiOls0MF19LCJ0YWIgc2VhdCI6eyJyZXN0Ijo1MS43NSwiYWN0aXZlIjozNiwic2NhbGVzIjpbIjEiXSwidHJhbnNmb3JtcyI6WyJub25lIl0sIndpZHRocyI6WzUxLjc1XX19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-02e0401bfdc7213c42df",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 326,
+          "column": 1
+        },
+        {
+          "title": "still · a Slider holds still under reduced motion",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1831,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-17T04:29:28.850Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "still",
+                      "contentType": "application/json",
+                      "body": "eyJjbG9ja3MiOnsicm9vdCI6IjBzIiwidHJhY2siOiIwcyIsImZpbGwiOiIwcyIsInRodW1iIjoiMHMifSwicnVucyI6W3sidmFsdWUiOiJub25lIiwiZnJhbWVzIjoxMX0seyJ2YWx1ZSI6Im1hdHJpeCgxLCAwLCAwLCAwLjk3LCAwLCAwKSIsImZyYW1lcyI6NjB9LHsidmFsdWUiOiJub25lIiwiZnJhbWVzIjo3M31dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-a635a064b7ea0ee413cd",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 387,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-17T04:28:46.023Z",
+    "duration": 44703.501,
+    "expected": 17,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
