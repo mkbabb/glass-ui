@@ -85,11 +85,13 @@ A patch on 11.1.0 about how surfaces leave. Nothing is removed or renamed.
   keyframes; both are still defined for stylesheets that name them.
 
 - **Reduced motion is a fade.** With reduced motion turned on, popovers, menus, selects,
-  tooltips, toasts, dialogs and sheets appeared and vanished in a single frame, an
+  tooltips, dialogs, sheets and an `ExpandableContainer`'s overlay appeared and vanished
+  in a single frame, a toast appeared in one (it already faded as it left), an
   `Accordion` or `Collapsible` region snapped open and shut, and the dock's fold jumped
   from one face to the other. Each now fades in and out over at most 200 ms on
-  `--exit-curve`, and nothing travels: a surface is in its place and at its size from
-  the first frame, and a folding dock takes its new size at once while its two faces
+  `--exit-curve`, an `ExpandableContainer` over 120 ms, and a toast's fade out keeps to
+  200 ms as well. Nothing travels: a surface is in its place and at its size from the
+  first frame, and a folding dock takes its new size at once while its two faces
   cross-fade. A pressed control shows its press by colour, not by size: a `Button`, a
   dock's seats, a menu or select row, a command palette's `CommandItem`, a pressable
   `Card`, a `SortableList` handle, the plate behind a `Dialog`'s close button and the
@@ -99,9 +101,10 @@ A patch on 11.1.0 about how surfaces leave. Nothing is removed or renamed.
   select row or `CommandItem` takes a fill a step deeper than its highlight, under a
   finger as under a pointer. A pressed `Card` deepens its fill a step past its hover, a
   pressed `SortableList` handle fills behind its glyph, and the close button's plate
-  keeps its size on hover as well as on a press.
-  Anything pressed through `useLiquidPress` does the same: it writes no `scale` under
-  reduced motion unless it is given `respectReducedMotion: false`. The rule
+  keeps its size on hover as well as on a press. The `.interactive-item` utility class
+  no longer shrinks what wears it to 97% on a press, so an element of your own that
+  composes it keeps its size too, and anything pressed through `useLiquidPress` writes
+  no `scale` unless it is given `respectReducedMotion: false`. The rule
   that stills motion under reduced motion now sits in its own cascade layer,
   `reduced-motion`, declared after `utilities`, as a plain declaration. Your own
   stylesheet's rule, such as `transition: opacity 144ms`, or a style set inline, now
