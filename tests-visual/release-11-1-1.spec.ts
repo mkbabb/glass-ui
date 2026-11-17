@@ -650,6 +650,131 @@ for (const c of triggerCases) {
     });
 }
 
+// ── sheet ──────────────────────────────────────────────────────────────────────────
+//   sheet  a detented bottom Sheet on the phone, by touch. A drag from its 0.5 rung up
+//          past the midpoint, let go at speed or at rest, springs on from where the
+//          finger left it: from the release no frame carries more than a fifth of the
+//          travel left, and the sheet settles on the 0.9 rung. The sheet reaches the 0.5
+//          rung by a first drag down from 0.9, so a spring has already settled on a rung.
+
+const SHEET_HARNESS = "/tests-visual/release-11-1-1/sheet-harness.html";
+const SHEET = '[data-testid="s-content"]';
+
+async function openSheetHarness(page: Page, query = ""): Promise<void> {
+    await gotoReady(page, `${SHEET_HARNESS}${query}`);
+    await page.locator("body[data-ready='1']").waitFor({ state: "attached" });
+    await page.waitForTimeout(300);
+}
+
+type SheetSample = { t: number; present: boolean; y?: number; h?: number; head?: number };
+
+/** Samples the sheet's box and its head's top every frame from now until `stop`. */
+async function startSheetFilm(page: Page): Promise<void> {
+    await page.evaluate(
+        ({ sheet }) => {
+            const w = window as unknown as { __sheet: { t0: number; mark: number; stop: boolean; frames: SheetSample[] } };
+            const film = { t0: performance.now(), mark: -1, stop: false, frames: [] as SheetSample[] };
+            w.__sheet = film;
+            const tick = (frameTime: number) => {
+                const el = document.querySelector(sheet);
+                const t = frameTime - film.t0;
+                if (!el) film.frames.push({ t, present: false });
+                else {
+                    const r = el.getBoundingClientRect();
+                    const head = el.querySelector('[data-slot="dialog-header"]')?.getBoundingClientRect();
+                    film.frames.push({ t, present: true, y: r.top, h: r.height, head: head?.top });
+                }
+                if (!film.stop) requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+        },
+        { sheet: SHEET },
+    );
+    await page.waitForTimeout(80);
+}
+
+const markSheetFilm = (page: Page) =>
+    page.evaluate(() => {
+        const f = (window as unknown as { __sheet: { t0: number; mark: number } }).__sheet;
+        f.mark = performance.now() - f.t0;
+    });
+
+async function stopSheetFilm(page: Page, ms: number): Promise<{ mark: number; frames: SheetSample[] }> {
+    await page.waitForTimeout(ms);
+    return page.evaluate(() => {
+        const f = (window as unknown as { __sheet: { mark: number; stop: boolean; frames: SheetSample[] } }).__sheet;
+        f.stop = true;
+        return { mark: f.mark, frames: f.frames };
+    });
+}
+
+/** Drags the sheet's grip by touch (Chromium's CDP touch input): `steps` moves of `px`
+ *  (up when negative), one a frame, then, at rest, six still moves 20 ms apart. The
+ *  release is marked on the sheet film when one is running. */
+async function dragGrip(page: Page, steps: number, px: number, atRest: boolean, mark = false): Promise<void> {
+    const grip = (await page.locator(`${SHEET} [data-slot="sheet-detent-handle"]`).boundingBox())!;
+    const x = grip.x + grip.width / 2;
+    const y0 = grip.y + grip.height / 2;
+    const cdp = await page.context().newCDPSession(page);
+    const touch = (type: string, y?: number) =>
+        cdp.send("Input.dispatchTouchEvent", { type, touchPoints: y === undefined ? [] : [{ x, y, id: 1 }] } as never);
+    await touch("touchStart", y0);
+    for (let i = 1; i <= steps; i++) {
+        await touch("touchMove", y0 + i * px);
+        await page.waitForTimeout(16);
+    }
+    if (atRest)
+        for (let i = 0; i < 6; i++) {
+            await touch("touchMove", y0 + steps * px);
+            await page.waitForTimeout(20);
+        }
+    if (mark) await markSheetFilm(page);
+    await touch("touchEnd");
+    await cdp.detach();
+}
+
+for (const release of ["at speed", "at rest"] as const) {
+    test(`sheet · a detented Sheet dragged up and let go ${release} springs on from where the finger left it`, async ({ page }, info) => {
+        const project = info.project.name;
+        test.skip(!isPhone(project), "the phone form's, by touch");
+        test.skip(project === "webkit-phone", "Playwright WebKit's touchscreen can tap but not drag");
+        await openSheetHarness(page);
+        await pressOn(page, project, '[data-testid="s-open"]');
+        await page.locator(`${SHEET}[data-state="open"]`).waitFor();
+        await page.waitForTimeout(1200);
+        const vh = page.viewportSize()!.height;
+        // Down from 0.9 past the midpoint, let go at rest: it settles on the 0.5 rung.
+        await dragGrip(page, 12, 22, true);
+        await page.waitForTimeout(1200);
+        const half = (vh - (await page.locator(SHEET).boundingBox())!.y) / vh;
+        // Then up from 0.5 by twelve steps of 15 px, past the midpoint and short of 0.9.
+        await startSheetFilm(page);
+        await dragGrip(page, 12, -15, release === "at rest", true);
+        const film = await stopSheetFilm(page, 1400);
+        const before = film.frames.filter((f) => f.t < film.mark && f.present);
+        const after = film.frames.filter((f) => f.t >= film.mark && f.present);
+        const from = before[before.length - 1].y!;
+        const end = after[after.length - 1].y!;
+        const series: [number, number][] = [before[before.length - 1], ...after].map((f) => [f.t, f.y!]);
+        const read = {
+            half: +half.toFixed(3),
+            from: Math.round(from),
+            end: Math.round(end),
+            fromRung: +((vh - from) / vh).toFixed(3),
+            endRung: +((vh - end) / vh).toFixed(3),
+            share: +worstFrameShare(series, Math.abs(from - end)).toFixed(3),
+            frames: series.map(([t, y]) => [Math.round(t - film.mark), Math.round(y)]).slice(0, 40),
+        };
+        const at = JSON.stringify(read);
+        await info.attach("sheet", { body: at, contentType: "application/json" });
+        expect(Math.abs(read.half - 0.5), `the first drag left the sheet on its 0.5 rung ${at}`).toBeLessThanOrEqual(0.01);
+        expect(read.fromRung, `the drag carried the sheet past the midpoint ${at}`).toBeGreaterThan(0.7);
+        expect(read.fromRung, `and short of the 0.9 rung ${at}`).toBeLessThan(0.88);
+        expect(read.share, `from the release no frame carries more than a fifth of the travel left ${at}`).toBeLessThanOrEqual(0.2);
+        expect(Math.abs(read.endRung - 0.9), `it settles on the 0.9 rung ${at}`).toBeLessThanOrEqual(0.01);
+    });
+}
+
 // ── reverse ────────────────────────────────────────────────────────────────────────
 //   reverse  a surface closed while it opens, or reopened while it closes, turns from
 //            where it stands: what is seen of it (its opacity, times the share of its

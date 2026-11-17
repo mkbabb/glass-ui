@@ -11,7 +11,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 GUARD="$HOME/.claude/guard/guarded"
 parts=(
-    "(form|glass|exit|routes|round|weight|lift) · "
+    "(form|glass|exit|routes|round|weight|lift|sheet) · "
     "(reverse|tooltip|expand|leave) · "
     "standing · "
     "(site|fade|fold|mark|press|still) · "
