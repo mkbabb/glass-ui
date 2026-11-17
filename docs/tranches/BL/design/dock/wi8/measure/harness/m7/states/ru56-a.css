@@ -1,0 +1,7 @@
+/* MEASURE-7, RU-56 candidate a: hover 10 %, current 20 %, press 28 % of the dock's ink over the plate, on .glass-dock */
+.glass-dock {
+    --dock-control-hover-bg: color-mix(in oklab, var(--dock-fg-on-aurora) 10%, transparent);
+    --dock-control-active-bg: color-mix(in oklab, var(--dock-fg-on-aurora) 20%, transparent);
+    --dock-control-press-bg: color-mix(in oklab, var(--dock-fg-on-aurora) 28%, transparent);
+    --glass-capsule-fill: color-mix(in oklab, var(--dock-fg-on-aurora) 20%, transparent);
+}

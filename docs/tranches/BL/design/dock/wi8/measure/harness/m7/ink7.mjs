@@ -1,7 +1,7 @@
 // ink7.mjs <port> <tag> [--engine chromium|webkit] [--pages a,b] [--css file --label name] [--shots dir] [--base log]:
 // MEASURE-7, G-15 with RU-56's and RU-57's clauses as amended (fold 6: R-1, R-2, C6-M2, C6-M3, C-7). ink.mjs (P3's
 // instrument, unchanged: every word 4.5:1 and every glyph 3:1 against what is painted behind it) on the ten
-// compositions and the loose cell, folded and open, dark and light, over the stage's field and a flat ground, at 1440,
+// compositions and the loose cell, folded and open, dark and light, over the stage's field and a flat ground, at 1440 (or --w),
 // and on each cell four readings more, all from screenshots of the page (no getContext on a live canvas):
 //   mark    each current mark in an open dock (a seat with aria-current or data-active, a selected segment) against the
 //           ground it sits on: the modal colour of its box against the modal colour of a 2 px ring 2 px outside it,
@@ -27,6 +27,8 @@ const PAGES = (val("--pages", "") || "nav,chrome,rail,figure-tools,dials,canvas-
 const SHOTS = val("--shots", null);
 const CSS = val("--css", null) ? readFileSync(val("--css"), "utf8") : "";
 const LABEL = val("--label", "build");
+// --w 390: the same cells at 390 by 844 with a coarse pointer (RU-57 as amended: the ladder is also read at 390).
+const VW = +val("--w", "1440");
 const BASE = val("--base", null) && existsSync(val("--base")) ? JSON.parse(readFileSync(val("--base"), "utf8")) : null;
 const HOVER_MIN = +val("--hover", "1.2");
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -142,7 +144,7 @@ const fieldUnder = async (p, boxes) => {
     await sleep(80);
     return r;
 };
-const out = { engine, label: LABEL, css: CSS, hoverMin: HOVER_MIN, cells: [] };
+const out = { engine, label: LABEL, width: VW, css: CSS, hoverMin: HOVER_MIN, cells: [] };
 let browser;
 const baseMark = (page, ground, scheme, dock, name) => {
     if (!BASE) return null;
@@ -153,15 +155,16 @@ const baseMark = (page, ground, scheme, dock, name) => {
 try {
     browser = await pw[engine].launch({ headless: true, ...(engine === "chromium" ? { args: ["--use-angle=metal", "--enable-gpu-rasterization"] } : { executablePath: `${process.env.HOME}/Library/Caches/ms-playwright/webkit-2287/pw_run.sh` }) });
     for (const page of PAGES) for (const ground of ["field", "flat"]) for (const scheme of ["dark", "light"]) {
-        const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1, colorScheme: scheme });
+        const ctx = await browser.newContext({ viewport: { width: VW, height: VW < 800 ? 844 : 900 }, deviceScaleFactor: 1, colorScheme: scheme, ...(VW < 800 ? { hasTouch: true, ...(engine === "chromium" ? { isMobile: true } : {}) } : {}) });
         if (CSS) await ctx.addInitScript((css) => { addEventListener("DOMContentLoaded", () => { const st = document.createElement("style"); st.setAttribute("data-g15-state", ""); st.textContent = css; document.head.appendChild(st); }); }, CSS);
         try {
             const p = await ctx.newPage();
             const errors = [];
             p.on("pageerror", (e) => errors.push(String(e.message).slice(0, 160)));
             await p.goto(`http://127.0.0.1:${port}/?c=dock-comp&page=${page}&ground=${ground}${scheme === "dark" ? "&scheme=dark" : ""}`);
-            await p.waitForFunction(() => window.__animReady === true, null, { timeout: 15000 }).catch(() => {});
-            await p.waitForSelector(page === "loose" ? "[data-testid=loose-row]" : "[data-story-stage] .glass-dock", { timeout: 15000 });
+            // 60 s: a dev server compiles the page on its first request (MEASURE-7 reads token states on one).
+            await p.waitForFunction(() => window.__animReady === true, null, { timeout: 60000 }).catch(() => {});
+            await p.waitForSelector(page === "loose" ? "[data-testid=loose-row]" : "[data-story-stage] .glass-dock", { timeout: 60000 });
             await sleep(2500);
             await p.mouse.move(2, 2);
             await sleep(400);
@@ -191,7 +194,11 @@ try {
             const docks = await p.evaluate(() => [...document.querySelectorAll("[data-story-stage] .glass-dock")].map((d) => d.getAttribute("aria-label")));
             for (let k = 0; k < docks.length; k++) {
                 const box = await p.evaluate((k) => { const d = document.querySelectorAll("[data-story-stage] .glass-dock")[k]; const r = d.getBoundingClientRect(); return { x: r.x + r.width / 2, y: r.y + r.height / 2, top: r.y, open: d.classList.contains("expanded") }; }, k);
-                if (!box.open) {
+                if (!box.open && VW < 800) {
+                    // RU-59 at 390: a tap on the folded face, never the dock's centre (a seat on an icon dock)
+                    const fb = await p.evaluate((k) => { const f = document.querySelectorAll("[data-story-stage] .glass-dock")[k].querySelector(".dock-layer--summary"); const r = f?.getBoundingClientRect(); return r && r.width > 2 ? { x: r.x + r.width / 2, y: r.y + r.height / 2 } : null; }, k);
+                    if (fb) { await p.touchscreen.tap(fb.x, fb.y); await sleep(900); }
+                } else if (!box.open) {
                     await p.mouse.move(box.x - 6, box.y); await p.mouse.move(box.x, box.y, { steps: 3 }); await sleep(900);
                     const open = await p.evaluate((k) => document.querySelectorAll("[data-story-stage] .glass-dock")[k].classList.contains("expanded"), k);
                     if (!open) { await p.mouse.click(box.x, box.y); await sleep(900); }
@@ -226,7 +233,7 @@ try {
                 out.cells.push({ page, ground, scheme, scheme_read: sch, posture: "open", dock: docks[k], opened: isOpen, n: r.ink.length, min: r.ink.length ? Math.min(...r.ink.map((x) => x.cr)) : null, fails: r.ink.filter((x) => !x.pass), all: r.ink, marks, hover: hov, markFails, hoverFails, plate: pf2 });
                 if (SHOTS && k === 0) await p.screenshot({ path: `${SHOTS}/${tag}-${engine}-${page}-${ground}-${scheme}-open.png` });
                 await p.keyboard.press("Escape").catch(() => {});
-                await p.mouse.click(4, 890); await p.mouse.move(2, 2); await sleep(500);
+                await p.mouse.click(4, VW < 800 ? 830 : 890); await p.mouse.move(2, 2); await sleep(500);
             }
             if (errors.length) out.cells.push({ page, ground, scheme, errors });
         } finally {

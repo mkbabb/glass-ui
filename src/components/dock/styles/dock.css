@@ -219,6 +219,19 @@
         --glass-level: 0.4;
     }
 
+    /* W-I.8 RU-56: inside a dock the current seat's fill, a hovered seat's fill and a segmented
+       control's selected mark are the dock's own ink over whatever the plate is, so they keep
+       their distance from the plate at any level and in both schemes. Three steps in rising
+       strength: hover, current, press. The `:root` lines (tokens/sizing.css) stay for a
+       DockControl outside any dock. */
+    .glass-dock {
+        --dock-control-hover-bg: color-mix(in oklab, var(--dock-fg-on-aurora, var(--foreground)) 10%, transparent);
+        --dock-control-active-bg: color-mix(in oklab, var(--dock-fg-on-aurora, var(--foreground)) 20%, transparent);
+        --dock-control-press-bg: color-mix(in oklab, var(--dock-fg-on-aurora, var(--foreground)) 28%, transparent);
+        --glass-capsule-fill: var(--dock-control-active-bg);
+    }
+    /* RU-56 end */
+
     /* When a consumer needs the control run to be a real box (a scroll port lands here at
        ), it stays `overflow: visible` on the cross axis — never a clip. */
     .glass-dock > .dock-controls {
