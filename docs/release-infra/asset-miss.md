@@ -70,11 +70,12 @@ change.
   free and unlimited". The advanced-mode page does not say whether
   `env.ASSETS.fetch()` applies `_headers`.
 
-The docs give a 404 for misses under `/assets/` with static config: a nested
-`assets/404.html` is the closest 404 page for those paths, and there is still no
-top-level one, so every other path keeps the SPA fallback. They do not say what
-Cache-Control a 404 carries. Read alone, the `/assets/*` rule would reach it by
-path.
+The docs do not cover this build's case, a nested `assets/404.html` with no
+top-level one. Read literally, the SPA paragraph would serve the root for
+`/assets/x.js` too, since there is no top-level `404.html`. Nor do they say what
+Cache-Control a 404 carries; read alone, the `/assets/*` rule would reach it by
+path. The fix rests on the handler's code below and on the emulation that runs it,
+and each deploy's `check-served --headers` asserts it on production.
 
 The asset handler does say. `packages/pages-shared/asset-server/handler.ts` in
 cloudflare/workers-sdk is "used internally to power Wrangler and Cloudflare
@@ -93,9 +94,17 @@ if (responseWithHeaders.status === 404) {
 ```
 
 That landed in workers-sdk #5875, "Don't cache 404s from the asset-server"
-(2024-05-21). The same file's `notFound()` walks from the request's directory up
-to `/404.html`, and serves `/index.html` with a 200 only when it finds none.
-That matches the docs' wording.
+(2024-05-21). The same file's `notFound()` first looks the URL up in the asset
+preservation cache, then walks from the request's directory up to `/404.html`,
+and serves `/index.html` with a 200 only when it finds none. The handler, unlike
+the docs, takes the nearest `404.html` in any directory as the 404 page whether
+or not a top-level one exists.
+
+The preservation cache holds only files that an earlier deployment served at that
+exact URL (`serveAsset` with `preserve: true` writes it), so a hashed name that a
+past build really had keeps answering its old file, which is the cache's purpose.
+A name no deployment ever served, such as the check's
+`served-check-miss-<ts>.js`, goes on to the walk.
 
 ## The mechanism
 
@@ -113,13 +122,18 @@ emits `dist-demo/assets/404.html`:
   The handler swaps the `/assets/*` `immutable` for `no-store`, and no cache
   keeps `no-store` ([default cache behavior][cache]: not cached when
   "`Cache-Control` is set to `private`, `no-store`, `no-cache`, or `max-age=0`").
-  The other `_headers` (the CSP, `nosniff`, `Referrer-Policy`) still apply.
+  The handler deletes every Cache-Control on a 404, so the miss also loses the
+  `/*` rule's `no-transform`; `demo/_headers`' comment says so. The CSP,
+  `nosniff` and `Referrer-Policy` still apply. No page loads the 404 page as a
+  document; a visitor who opens a missing `/assets/` URL directly gets 85 bytes
+  the edge may rewrite.
 - Every real hashed file is served as before, with `public, max-age=31536000,
   immutable, no-transform`.
 - Every other path has no closer `404.html` and no top-level one, so it gets the
   SPA index with a 200, as today.
-- `demo/_headers` is unchanged, so `dist-demo/_headers` is too, CSP included.
-  There is no `_redirects`, `_routes.json` or `_worker.js`.
+- `demo/_headers` changes only in its comment, so the rules and the CSP in
+  `dist-demo/_headers` are unchanged. There is no `_redirects`, `_routes.json` or
+  `_worker.js`.
 
 The page is HTML because Pages serves its own type for it. A module import fails
 on the 404 before it looks at the type.
@@ -127,6 +141,18 @@ on the 404 before it looks at the type.
 `deploy-demo.yml` fails the build step if `dist-demo/assets/404.html` is not
 written, as it does for `_headers`. A rollback to a tag from before this change
 fails red there.
+
+### Rolling back this change
+
+If the fix itself misbehaves on production (deep links stop answering the index,
+say), revert its commits on master and dispatch `deploy-demo` with
+`tag=<the current release>` and `ref=<the revert's sha>`. The revert takes the
+build-step test with it, and the release-line check still compares the tag with
+npm `latest`. To deploy an older release's tree as it was, dispatch the workflow
+from that tag (`gh workflow run deploy-demo.yml --ref v11.1.0 -f tag=v11.1.0
+-f rollback=true`): that tag's own `deploy-demo.yml` runs, and it has no
+`assets/404.html` test. `v11.0.1` is the oldest tag that carries the workflow.
+Either way the site is back to the SPA answer for a miss, and the fault with it.
 
 ### Client routes
 
@@ -184,7 +210,10 @@ If `html-for-js` is still there on the last try, the run ends with its own
 a deep link (`/served-check/<ts>`), which must answer the built index with a
 200. Under `--headers`, which only Pages satisfies, a hashed `.js` must carry
 `immutable`, and `/assets/served-check-miss-<ts>.js` must answer 404 with
-`no-store` and no `immutable`. `assets/404.html` is left out of the asset
+`no-store` and no `immutable`. The check then asks for the same miss again, and a
+`cf-cache-status: HIT` on that second answer fails the run: the edge cached a
+`no-store` 404, so a zone Cache Rule overrides the origin, and this fix does not
+hold at that edge. `assets/404.html` is left out of the asset
 census. It is the miss page, not a hashed file, and Pages answers it at
 `/assets/404`.
 
@@ -213,7 +242,7 @@ only.
 | The named mode bites | the same against a copy without `chip-Ccgx14rN.js` on :5214 | exit 1, `html-for-js 1 (chip-Ccgx14rN.js)` and the `::error title=html-for-js::` line |
 | `--headers` under `vite preview` | `check-served.mjs http://localhost:5213/ --tries 1 --headers` | red as expected: `vite preview` reads no `_headers` and has no 404 walk (`a miss under /assets/ answered 200, not 404`) |
 | Workflow | `actionlint .github/workflows/deploy-demo.yml` | exit 0 |
-| Gate suites | `vitest run tests/gates tests/scripts tests/demo --maxWorkers=2` | 177 passed, 24 failed. 23 open files under `docs/tranches/`, which this sparse worktree leaves out. 1 needs the library `dist/` ("build dist first"). None touches this change |
+| Gate suites | `vitest run tests/gates tests/scripts tests/demo --maxWorkers=2` | 177 passed, 24 failed, 1 expected fail. 23 failures (22 in gate-register, 1 in ci-sparse-checkout) open 5 files under `docs/tranches/`, which this sparse worktree leaves out. 1 needs the library `dist/` ("build dist first"). None touches this change |
 
 ### Pages' own handler, on this build
 
@@ -222,8 +251,10 @@ only.
 cloudflare/workers-sdk at `5f05841d4d4a4a67fee5ddc0150309b5ed782069`, bundles them
 with the repo's rolldown, and serves the given dist through `generateHandler()`
 with its `_headers`. It asks for all 79 client routes, three hits, three misses
-and three more paths, and asserts the contract. There is no preservation cache,
-no early hints and no encodings. Those paths do not touch a miss.
+and three more paths, and asserts the contract. It runs with no preservation
+cache, no early hints and no encodings. Production consults the preservation
+cache on every miss, before the 404 walk; the emulation's misses are names no
+deployment served, which that cache never holds (see "What the docs say").
 
 After (this branch's `dist-demo`): exit 0, `asset-miss contract holds: 88 requests (79 client routes)`.
 
@@ -260,9 +291,12 @@ the evidence that production runs this handler:
 - That production Pages runs the 404 `no-store` swap, which developers.cloudflare.com
   does not document. The next deploy's `check-served --headers` asserts it, and
   goes red with `a miss under /assets/ is cacheable (…)` if not.
-- That the edge really skips a 404 `no-store` for a `.js` URL (a MISS that stays
-  a MISS). This depends on babb.dev having no Cache Rule that overrides origin
-  Cache-Control, which can't be read from here.
+- That the edge really skips a 404 `no-store` for a `.js` URL. This depends on
+  babb.dev having no Cache Rule that overrides origin Cache-Control, which can't
+  be read from here. `/` and `/forms/checks` answer `cf-cache-status: DYNAMIC`
+  twice in a row, so there is no blanket Cache Everything rule; one scoped to
+  `/assets/*` would not show there. Each deploy's check asks for its miss twice
+  and fails on a HIT.
 - The first deploy that carries this. Its old deployment has no
   `assets/404.html`, so an edge still on it can hand out a new chunk as cached
   HTML one last time. If that deploy's check names `html-for-js`, purge those

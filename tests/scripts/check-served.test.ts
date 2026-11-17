@@ -75,6 +75,20 @@ describe("headerProblems", () => {
         expect(headerProblems({ index, asset, miss: kept }, CSP)).toEqual([`a miss under /assets/ is cacheable (${IMMUTABLE})`]);
     });
 
+    it("passes a second request for the miss that the edge did not cache", () => {
+        const again = res(404, { "cache-control": "no-store", "cf-cache-status": "MISS" });
+        expect(headerProblems({ index, asset, miss, missAgain: again }, CSP)).toEqual([]);
+        const dynamic = res(404, { "cache-control": "no-store", "cf-cache-status": "DYNAMIC" });
+        expect(headerProblems({ index, asset, miss, missAgain: dynamic }, CSP)).toEqual([]);
+    });
+
+    it("fails a miss the edge answered from its cache the second time", () => {
+        const hit = res(404, { "cache-control": "no-store", "cf-cache-status": "HIT", age: "3" });
+        expect(headerProblems({ index, asset, miss, missAgain: hit }, CSP)).toEqual([
+            "the edge cached a miss under /assets/ (cf-cache-status HIT on the second request): a zone Cache Rule overrides `no-store`",
+        ]);
+    });
+
     it("fails a hit that lost immutable", () => {
         const plain = res(200, { "cache-control": "public, max-age=0, must-revalidate" });
         expect(headerProblems({ index, asset: plain, miss }, CSP)).toEqual([

@@ -87,7 +87,8 @@ a header, no `set -x` is used, and GitHub masks secret values in logs anyway.
 ```
 
 **The hashed directory, read from the build.** `dist-demo/` is `index.html`,
-`assets/` and `_headers`. `assets/` holds 362 files (291 js, 67 css, 4 woff2).
+`assets/` and `_headers`. On 2026-11-17 `assets/` held 422 hashed files (314 js,
+104 css, 4 woff2) and `404.html`.
 There is no top-level `404.html` and no `_redirects`: Pages serves `index.html`
 for unknown paths, and the router's catch-all renders `NotFound.vue`. Since
 2026-11-17 the build also writes `assets/404.html`, so a miss under `/assets/`
@@ -186,7 +187,7 @@ Each path is traced through the release-line step:
 | `v11.1.0`, registry lagging | `v11.1.0` | polls until `latest == 11.1.0` (≤ 5 min), then deploys; if it never appears, a loud green skip |
 | tag ≠ package.json | e.g. `v11.1.0` vs `11.0.0` | `deploy SKIPPED` (release.yml already fails this case) |
 | dispatch `tag=master` | `master` | the regex fails: skip |
-| dispatch `tag=<a release at or after the first one that carries this wave> rollback=true` | that tag | deploys the old tree, no npm check. An older tag (e.g. `v11.0.0`: `git ls-tree v11.0.0 -- demo/_headers scripts/check-served.mjs` lists nothing) fails red at the `_headers` test; a tag from before `asset-miss.md` fails red at the `assets/404.html` test |
+| dispatch `tag=<a release at or after the first one that carries this wave> rollback=true` | that tag | deploys the old tree, no npm check. An older tag (e.g. `v11.0.0`: `git ls-tree v11.0.0 -- demo/_headers scripts/check-served.mjs` lists nothing) fails red at the `_headers` test; a tag from before `asset-miss.md` fails red at the `assets/404.html` test. To deploy such a tag anyway, dispatch from its own ref (`gh workflow run deploy-demo.yml --ref <tag> -f tag=<tag> -f rollback=true`, `v11.0.1` or later), or revert on master and dispatch `ref=<the revert>` (`asset-miss.md`, "Rolling back this change") |
 | two release runs finish close together (a `v10` publish, then `latest`) | different tags | different concurrency groups: neither cancels the other; the `v10` one skips, the `latest` one deploys |
 | secrets absent | — | build runs, then `deploy SKIPPED`, green; project, deploy, domain and asserts are all gated off |
 | project already exists | — | create's "already exists" is accepted |

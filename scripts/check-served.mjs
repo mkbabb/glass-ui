@@ -8,8 +8,9 @@
 //
 // --headers also asserts what only Pages does (`vite preview` reads no _headers and
 // has no nearest-404.html walk): the index carries dist-demo/_headers' CSP and
-// `no-transform`, a hashed asset carries `immutable`, and a path under /assets/ that
-// matches no file answers 404 with `no-store` (docs/release-infra/asset-miss.md).
+// `no-transform`, a hashed asset carries `immutable`, a path under /assets/ that
+// matches no file answers 404 with `no-store`, and asking for it again is not a
+// cf-cache-status HIT (docs/release-infra/asset-miss.md).
 //
 // Each asset that is not served as built is named by its mode. `html-for-js` is a
 // script answered 200 text/html: the SPA index, served by an edge that did not have
@@ -45,8 +46,12 @@ export function summarize(unserved) {
         .join("; ");
 }
 
-/** The Pages-only contract: the index's headers, a hit's `immutable`, a miss's 404 + `no-store`. */
-export function headerProblems({ index, asset, miss }, csp) {
+/**
+ * The Pages-only contract: the index's headers, a hit's `immutable`, a miss's 404 +
+ * `no-store`, and the same miss asked again not answered from the edge's cache (a zone
+ * Cache Rule can override origin Cache-Control; only a second request shows it).
+ */
+export function headerProblems({ index, asset, miss, missAgain }, csp) {
     const out = [];
     if (!cacheControl(index).includes("no-transform")) out.push("no `no-transform` on the index");
     if (index.headers.get("content-security-policy") !== csp) out.push("the index's CSP is not dist-demo/_headers'");
@@ -54,6 +59,8 @@ export function headerProblems({ index, asset, miss }, csp) {
     if (miss.status !== 404) out.push(`a miss under /assets/ answered ${miss.status}, not 404`);
     if (!/\bno-store\b/.test(cacheControl(miss)) || cacheControl(miss).includes("immutable"))
         out.push(`a miss under /assets/ is cacheable (${cacheControl(miss) || "no Cache-Control"})`);
+    if (missAgain?.headers.get("cf-cache-status") === "HIT")
+        out.push("the edge cached a miss under /assets/ (cf-cache-status HIT on the second request): a zone Cache Rule overrides `no-store`");
     return out;
 }
 
@@ -105,9 +112,12 @@ async function main(args) {
         const problems = [deepLinkProblem(deep, await deep.text(), built)].filter(Boolean);
         if (!checkHeaders) return problems;
         const asset = await get(`assets/${files.find((f) => f.endsWith(".js"))}`);
-        const miss = await get(`assets/served-check-miss-${Date.now()}.js`);
+        const missPath = `assets/served-check-miss-${Date.now()}.js`;
+        const miss = await get(missPath);
         await Promise.all([asset.arrayBuffer(), miss.arrayBuffer()]);
-        return [...problems, ...headerProblems({ index, asset, miss }, csp)];
+        const missAgain = await get(missPath);
+        await missAgain.arrayBuffer();
+        return [...problems, ...headerProblems({ index, asset, miss, missAgain }, csp)];
     }
 
     let last = [];
@@ -121,7 +131,7 @@ async function main(args) {
                 last = await unservedAssets();
                 const problems = await siteProblems(res);
                 if (last.length === 0 && problems.length === 0) {
-                    console.log(`served-build PASS: ${origin} serves the built asset set (${built.size} in the index, ${files.length} in ${DIST}/assets) and a deep link${checkHeaders ? ", with the built headers, an immutable hit and a 404 no-store miss" : ""}`);
+                    console.log(`served-build PASS: ${origin} serves the built asset set (${built.size} in the index, ${files.length} in ${DIST}/assets) and a deep link${checkHeaders ? ", with the built headers, an immutable hit and a 404 no-store miss the edge did not cache" : ""}`);
                     process.exit(0);
                 }
                 const assets = last.length ? `${last.length} of ${files.length} assets not served as built: ${summarize(last)}` : "every asset served as built";

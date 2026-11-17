@@ -5,7 +5,8 @@
 # Manual dispatch names a tag; `rollback` redeploys an older tag (it skips the
 # `latest` check). Only a tag that carries this workflow, demo/_headers,
 # scripts/check-served.mjs and the assets/404.html plugin can deploy: an older tag
-# fails red at the build's file tests.
+# fails red at the build's file tests (to deploy one anyway, see "Rolling back this
+# change" in docs/release-infra/asset-miss.md).
 # No browser runs here: the live assert (`scripts/check-live.mjs`) is a local command run
 # through the guard after a deploy. Record: docs/release-infra/deploy-demo.md.
 name: deploy-demo

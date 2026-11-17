@@ -10,6 +10,9 @@
 // power Wrangler and Cloudflare Pages", its README). It runs here with no preservation
 // cache and no early hints (no `caches`), plain content (no encodings) and `_headers`
 // parsed by the small reader below, which covers the syntax demo/_headers uses.
+// Production's notFound() looks a miss up in the preservation cache before its 404
+// walk; that cache holds only URLs an earlier deployment served as files, and the
+// misses asked for here are names no deployment served.
 import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { dirname, join, resolve } from "node:path";

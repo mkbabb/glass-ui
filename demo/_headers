@@ -3,8 +3,10 @@
 # script-src placeholder with the sha256 of each inline <script> in the built
 # index.html (the dark-mode stamp), so the CSP never drifts from the bytes it guards.
 #
-# Every response carries `no-transform`: the edge may not rewrite the HTML, so no
-# analytics beacon is injected. scripts/check-live.mjs proves it after each deploy.
+# Every response but a 404 carries `no-transform`: the edge may not rewrite the HTML,
+# so no analytics beacon is injected. scripts/check-live.mjs proves it after each
+# deploy. Pages replaces a 404's Cache-Control with `no-store`, and the only 404 here
+# is a miss under /assets/, answered by assets/404.html (docs/release-infra/asset-miss.md).
 # style-src allows inline styles: reka-ui's SelectViewport injects a <style> each
 # time a Select opens (the scrollbar-hiding rule for [data-reka-select-viewport]).
 # Pages merges every matching rule, so a hashed asset gets `immutable` and `no-transform`.
