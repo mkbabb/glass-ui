@@ -40,7 +40,9 @@ const cells = [
     ["w-flow", ""],
     ["w-ctl", "&corner=bottom-end"],
     ["w-seat", ""],
-].filter(([id]) => !CELLS || CELLS.includes(id));
+    // MEASURE-7 step 6: RU-61's prototype cell, read only when asked (--cells w-inflow); not one of G-11's four
+    ["w-inflow", "", true],
+].filter(([id, , only]) => (CELLS ? CELLS.includes(id) : !only));
 const results = {};
 let browser;
 try {

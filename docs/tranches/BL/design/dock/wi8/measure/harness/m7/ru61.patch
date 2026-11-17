@@ -1,0 +1,55 @@
+diff --git a/src/components/dock/composables/useDockBody.ts b/src/components/dock/composables/useDockBody.ts
+index dab137f7e..41a7cbc87 100644
+--- a/src/components/dock/composables/useDockBody.ts
++++ b/src/components/dock/composables/useDockBody.ts
+@@ -218,6 +218,8 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
+     let raf: number | null = null;
+     let last: number | null = null;
+     let inFlow = false;
++    /** RU-61 (prototype): the open in-flow root's negative margin is written. */
++    let overMargin = false;
+     let wroteMargin = false;
+     const settleCbs: Array<() => void> = [];
+     let scopeEl: HTMLElement | null | undefined;
+@@ -720,9 +722,31 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
+             // RU-54: a deciding frame is the named flag frame (RU-53's bound of four), whether or not a flag moved.
+             if (POSE && (fitMoved || inset !== null || fitFresh)) performance.mark("dock:reread", { detail: { fit: fitMoved || fitFresh, decided: fitFresh, inset: fitFresh ? fitHeld?.inset : inset, fits: plan?.fits ?? null, whole: plan?.whole ?? null } });
+         }
++        // RU-61 (prototype): the fold's trigger takes the in-flow margin off before the folded layout is read.
++        const opening = o.expanded() && lastPosture === false;
++        if (!o.expanded() && overMargin) {
++            el.style.removeProperty("margin-inline-start");
++            el.style.removeProperty("margin-inline-end");
++            overMargin = false;
++        }
+         // RU-53: the carrier's read of the root, named, so a fold frame's first forced layout is told from a flag's.
+         if (POSE) performance.mark("dock:rect");
+-        const next = rectOf(el);
++        let next = rectOf(el);
++        // RU-61 (prototype): an in-flow dock lies over its row. On the open trigger the root takes a negative margin
++        // on the side away from its anchor, what the open posture adds, so no neighbour's box changes.
++        if (opening && layout && !o.vertical() && /^(static|relative|sticky)$/.test(getComputedStyle(el).position)) {
++            const dw = next.r - next.l - (layout.r - layout.l);
++            if (dw > 0.5) {
++                const an = el.getAttribute("data-anchor");
++                const s0 = an === "end" ? dw : an === "start" ? 0 : dw / 2;
++                const e0 = dw - s0;
++                if (s0) el.style.marginInlineStart = `${(-s0).toFixed(3)}px`;
++                if (e0) el.style.marginInlineEnd = `${(-e0).toFixed(3)}px`;
++                overMargin = true;
++                if (POSE) performance.mark("dock:rect", { detail: { over: true } });
++                if (s0) next = rectOf(el);
++            }
++        }
+         // RU-54: the key's extents as the decision left them, read in the layout rectOf just took.
+         if (fitFresh && fitKey) {
+             const r = roomOf(el);
+@@ -1207,7 +1231,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
+         }
+ 
+         // An in-flow dock: its following neighbours track the painted bottom edge.
+-        if (inFlow && !o.vertical()) {
++        if (inFlow && !o.vertical() && !overMargin) {
+             const mb = edge.b.d;
+             if (Math.abs(mb) > 0.01) {
+                 el.style.marginBlockEnd = `${mb}px`;

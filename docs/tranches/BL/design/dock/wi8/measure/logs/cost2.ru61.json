@@ -1,0 +1,564 @@
+{
+ "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Max, Unspecified Version)",
+ "w-inflow@1x": {
+  "nodesFolded": 36,
+  "nodesOpen": 36,
+  "framesWithRaf": 102,
+  "layoutsPerFrameMax": 3,
+  "layoutsPerFrameMedian": 1,
+  "dirtyPerLayoutMax": 43,
+  "layoutMsMax": 0.18,
+  "rafMsMedian": 0.121,
+  "rafMsMax": 0.984,
+  "elementsStyledUnfold": 5,
+  "elementsStyledFold": [
+   "dock-layer dock-layer--summary is-active:29",
+   "dock-layer dock-layer--full dock-run:59",
+   "glass-dock horizontal shape-pill collaps:72",
+   "dock-plate:43",
+   "dock-layers:75"
+  ],
+  "rest": {
+   "rafCalls": 0,
+   "mutations": 0,
+   "runningAnimations": 0,
+   "animTargets": []
+  },
+  "seatChangeElementsStyled": null,
+  "layoutsBy": {
+   "(frame, not forced)": 75,
+   "bcr@useDockBody.ts?t=1794892219535:59": 3,
+   "resolveBackdropRgba@backdropLuminanceSample.ts:164": 2,
+   "fitRun@useDockBody.ts?t=1794892219535:528": 1
+  },
+  "framesOver1Layout": 1,
+  "triggerFrames": [
+   {
+    "layouts": 3,
+    "bound": 4,
+    "over": false,
+    "layoutMs": 0.274,
+    "named": [
+     "read:0.204",
+     "rect:0.051",
+     "rect:0.019"
+    ],
+    "stacks": [
+     "read: fitRun@useDockBody.ts:528:20 < sync@useDockBody.ts:741:22 < watch.flush@GlassDock.vue:323:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZfHMujb9.js:1909:17 < callWithAsyncErrorHandling@vue.runtime.esm-bundler-ZfHMujb9.js:1916:15",
+     "rect: bcr@useDockBody.ts:59:15 < rectOf@useDockBody.ts:71:12 < sync@useDockBody.ts:780:14 < watch.flush@GlassDock.vue:323:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZfHMujb9.js:1909:17",
+     "rect: bcr@useDockBody.ts:59:15 < rectOf@useDockBody.ts:71:12 < sync@useDockBody.ts:793:20 < watch.flush@GlassDock.vue:323:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZfHMujb9.js:1909:17"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": []
+   },
+   {
+    "layouts": 3,
+    "bound": 3,
+    "over": false,
+    "layoutMs": 0.178,
+    "named": [
+     "rect:0.098",
+     "after the carrier:0.038",
+     "frame:0.042"
+    ],
+    "stacks": [
+     "rect: bcr@useDockBody.ts:59:15 < rectOf@useDockBody.ts:71:12 < sync@useDockBody.ts:780:14 < watch.flush@GlassDock.vue:323:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZfHMujb9.js:1909:17",
+     "after the carrier: (no stack)",
+     "frame: resolveBackdropRgba@backdropLuminanceSample.ts:164:18 < resolveUnderlayRgb@backdropLuminanceSample.ts:200:15 < sampleNow@useGlassBackdropLuminance.ts:172:68 < (anon)@useGlassBackdropLuminance.ts:268:45 < flush@useResizeObserver.ts:40:3"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": []
+   }
+  ],
+  "longestLayoutMs": 0.204,
+  "medianLayoutAfterTriggerMs": 0.029,
+  "traceEventKinds": {
+   "Layout": 81,
+   "FireAnimationFrame": 103,
+   "UpdateLayoutTree": 96
+  }
+ },
+ "w-inflow@4x": {
+  "nodesFolded": 36,
+  "nodesOpen": 36,
+  "framesWithRaf": 103,
+  "layoutsPerFrameMax": 3,
+  "layoutsPerFrameMedian": 1,
+  "dirtyPerLayoutMax": 43,
+  "layoutMsMax": 0.934,
+  "rafMsMedian": 0.217,
+  "rafMsMax": 3.781,
+  "elementsStyledUnfold": 5,
+  "elementsStyledFold": [
+   "dock-layer dock-layer--summary is-active:29",
+   "dock-layer dock-layer--full dock-run:64",
+   "glass-dock horizontal shape-pill collaps:78",
+   "dock-plate:46",
+   "dock-layers:81"
+  ],
+  "rest": {
+   "rafCalls": 0,
+   "mutations": 0,
+   "runningAnimations": 0,
+   "animTargets": []
+  },
+  "seatChangeElementsStyled": null,
+  "layoutsBy": {
+   "(frame, not forced)": 77,
+   "bcr@useDockBody.ts?t=1794892219535:59": 3,
+   "resolveBackdropRgba@backdropLuminanceSample.ts:164": 2,
+   "fitRun@useDockBody.ts?t=1794892219535:528": 1
+  },
+  "framesOver1Layout": 1,
+  "triggerFrames": [
+   {
+    "layouts": 3,
+    "bound": 4,
+    "over": false,
+    "layoutMs": 0.603,
+    "named": [
+     "read:0.543",
+     "rect:0.044",
+     "rect:0.016"
+    ],
+    "stacks": [
+     "read: fitRun@useDockBody.ts:528:20 < sync@useDockBody.ts:741:22 < watch.flush@GlassDock.vue:323:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZfHMujb9.js:1909:17 < callWithAsyncErrorHandling@vue.runtime.esm-bundler-ZfHMujb9.js:1916:15",
+     "rect: bcr@useDockBody.ts:59:15 < rectOf@useDockBody.ts:71:12 < sync@useDockBody.ts:780:14 < watch.flush@GlassDock.vue:323:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZfHMujb9.js:1909:17",
+     "rect: bcr@useDockBody.ts:59:15 < rectOf@useDockBody.ts:71:12 < sync@useDockBody.ts:793:20 < watch.flush@GlassDock.vue:323:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZfHMujb9.js:1909:17"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": []
+   },
+   {
+    "layouts": 4,
+    "bound": 3,
+    "over": true,
+    "layoutMs": 0.563,
+    "named": [
+     "rect:0.443",
+     "after the carrier:0.047",
+     "frame:0.036",
+     "frame:0.037"
+    ],
+    "stacks": [
+     "rect: bcr@useDockBody.ts:59:15 < rectOf@useDockBody.ts:71:12 < sync@useDockBody.ts:780:14 < watch.flush@GlassDock.vue:323:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZfHMujb9.js:1909:17",
+     "after the carrier: (no stack)",
+     "frame: resolveBackdropRgba@backdropLuminanceSample.ts:164:18 < resolveUnderlayRgb@backdropLuminanceSample.ts:200:15 < sampleNow@useGlassBackdropLuminance.ts:172:68 < (anon)@useGlassBackdropLuminance.ts:268:45 < flush@useResizeObserver.ts:40:3",
+     "frame: (no stack)"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": []
+   }
+  ],
+  "longestLayoutMs": 1.002,
+  "medianLayoutAfterTriggerMs": 0.038,
+  "traceEventKinds": {
+   "Layout": 83,
+   "FireAnimationFrame": 104,
+   "UpdateLayoutTree": 100
+  }
+ },
+ "w-inflow@4x#1": {
+  "nodesFolded": 36,
+  "nodesOpen": 36,
+  "framesWithRaf": 102,
+  "layoutsPerFrameMax": 3,
+  "layoutsPerFrameMedian": 1,
+  "dirtyPerLayoutMax": 43,
+  "layoutMsMax": 0.907,
+  "rafMsMedian": 0.285,
+  "rafMsMax": 5.709,
+  "elementsStyledUnfold": 5,
+  "elementsStyledFold": [
+   "dock-layer dock-layer--summary is-active:29",
+   "dock-layer dock-layer--full dock-run:62",
+   "glass-dock horizontal shape-pill collaps:76",
+   "dock-plate:43",
+   "dock-layers:78"
+  ],
+  "rest": {
+   "rafCalls": 0,
+   "mutations": 0,
+   "runningAnimations": 0,
+   "animTargets": []
+  },
+  "seatChangeElementsStyled": null,
+  "layoutsBy": {
+   "(frame, not forced)": 76,
+   "bcr@useDockBody.ts?t=1794892219535:59": 3,
+   "resolveBackdropRgba@backdropLuminanceSample.ts:164": 2,
+   "fitRun@useDockBody.ts?t=1794892219535:528": 1
+  },
+  "framesOver1Layout": 1,
+  "triggerFrames": [
+   {
+    "layouts": 3,
+    "bound": 4,
+    "over": false,
+    "layoutMs": 1.717,
+    "named": [
+     "read:1.61",
+     "rect:0.076",
+     "rect:0.031"
+    ],
+    "stacks": [
+     "read: fitRun@useDockBody.ts:528:20 < sync@useDockBody.ts:741:22 < watch.flush@GlassDock.vue:323:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZfHMujb9.js:1909:17 < callWithAsyncErrorHandling@vue.runtime.esm-bundler-ZfHMujb9.js:1916:15",
+     "rect: bcr@useDockBody.ts:59:15 < rectOf@useDockBody.ts:71:12 < sync@useDockBody.ts:780:14 < watch.flush@GlassDock.vue:323:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZfHMujb9.js:1909:17",
+     "rect: bcr@useDockBody.ts:59:15 < rectOf@useDockBody.ts:71:12 < sync@useDockBody.ts:793:20 < watch.flush@GlassDock.vue:323:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZfHMujb9.js:1909:17"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": []
+   },
+   {
+    "layouts": 4,
+    "bound": 3,
+    "over": true,
+    "layoutMs": 0.793,
+    "named": [
+     "rect:0.567",
+     "after the carrier:0.05",
+     "frame:0.044",
+     "frame:0.132"
+    ],
+    "stacks": [
+     "rect: bcr@useDockBody.ts:59:15 < rectOf@useDockBody.ts:71:12 < sync@useDockBody.ts:780:14 < watch.flush@GlassDock.vue:323:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZfHMujb9.js:1909:17",
+     "after the carrier: (no stack)",
+     "frame: resolveBackdropRgba@backdropLuminanceSample.ts:164:18 < resolveUnderlayRgb@backdropLuminanceSample.ts:200:15 < sampleNow@useGlassBackdropLuminance.ts:172:68 < (anon)@useGlassBackdropLuminance.ts:268:45 < flush@useResizeObserver.ts:40:3",
+     "frame: (no stack)"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": []
+   }
+  ],
+  "longestLayoutMs": 1.61,
+  "medianLayoutAfterTriggerMs": 0.036,
+  "traceEventKinds": {
+   "Layout": 82,
+   "FireAnimationFrame": 103,
+   "UpdateLayoutTree": 99
+  }
+ },
+ "w-inflow@4x#2": {
+  "nodesFolded": 36,
+  "nodesOpen": 36,
+  "framesWithRaf": 103,
+  "layoutsPerFrameMax": 3,
+  "layoutsPerFrameMedian": 1,
+  "dirtyPerLayoutMax": 43,
+  "layoutMsMax": 1.853,
+  "rafMsMedian": 0.272,
+  "rafMsMax": 3.82,
+  "elementsStyledUnfold": 5,
+  "elementsStyledFold": [
+   "dock-layer dock-layer--summary is-active:29",
+   "dock-layer dock-layer--full dock-run:63",
+   "glass-dock horizontal shape-pill collaps:76",
+   "dock-plate:43",
+   "dock-layers:78"
+  ],
+  "rest": {
+   "rafCalls": 0,
+   "mutations": 0,
+   "runningAnimations": 0,
+   "animTargets": []
+  },
+  "seatChangeElementsStyled": null,
+  "layoutsBy": {
+   "(frame, not forced)": 76,
+   "bcr@useDockBody.ts?t=1794892219535:59": 3,
+   "fitRun@useDockBody.ts?t=1794892219535:528": 1,
+   "resolveBackdropRgba@backdropLuminanceSample.ts:164": 1
+  },
+  "framesOver1Layout": 1,
+  "triggerFrames": [
+   {
+    "layouts": 3,
+    "bound": 4,
+    "over": false,
+    "layoutMs": 1.154,
+    "named": [
+     "read:1.08",
+     "rect:0.055",
+     "rect:0.019"
+    ],
+    "stacks": [
+     "read: fitRun@useDockBody.ts:528:20 < sync@useDockBody.ts:741:22 < watch.flush@GlassDock.vue:323:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZfHMujb9.js:1909:17 < callWithAsyncErrorHandling@vue.runtime.esm-bundler-ZfHMujb9.js:1916:15",
+     "rect: bcr@useDockBody.ts:59:15 < rectOf@useDockBody.ts:71:12 < sync@useDockBody.ts:780:14 < watch.flush@GlassDock.vue:323:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZfHMujb9.js:1909:17",
+     "rect: bcr@useDockBody.ts:59:15 < rectOf@useDockBody.ts:71:12 < sync@useDockBody.ts:793:20 < watch.flush@GlassDock.vue:323:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZfHMujb9.js:1909:17"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": []
+   },
+   {
+    "layouts": 3,
+    "bound": 3,
+    "over": false,
+    "layoutMs": 1.811,
+    "named": [
+     "rect:0.855",
+     "after the carrier:0.922",
+     "frame:0.034"
+    ],
+    "stacks": [
+     "rect: bcr@useDockBody.ts:59:15 < rectOf@useDockBody.ts:71:12 < sync@useDockBody.ts:780:14 < watch.flush@GlassDock.vue:323:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZfHMujb9.js:1909:17",
+     "after the carrier: (no stack)",
+     "frame: (no stack)"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": []
+   }
+  ],
+  "longestLayoutMs": 1.08,
+  "medianLayoutAfterTriggerMs": 0.036,
+  "traceEventKinds": {
+   "Layout": 81,
+   "FireAnimationFrame": 104,
+   "UpdateLayoutTree": 96
+  }
+ },
+ "w-inflow@4x#3": {
+  "nodesFolded": 36,
+  "nodesOpen": 36,
+  "framesWithRaf": 104,
+  "layoutsPerFrameMax": 3,
+  "layoutsPerFrameMedian": 1,
+  "dirtyPerLayoutMax": 43,
+  "layoutMsMax": 0.872,
+  "rafMsMedian": 0.128,
+  "rafMsMax": 4.166,
+  "elementsStyledUnfold": 5,
+  "elementsStyledFold": [
+   "dock-layer dock-layer--summary is-active:30",
+   "dock-layer dock-layer--full dock-run:64",
+   "glass-dock horizontal shape-pill collaps:78",
+   "dock-plate:44",
+   "dock-layers:80"
+  ],
+  "rest": {
+   "rafCalls": 0,
+   "mutations": 0,
+   "runningAnimations": 0,
+   "animTargets": []
+  },
+  "seatChangeElementsStyled": null,
+  "layoutsBy": {
+   "(frame, not forced)": 77,
+   "bcr@useDockBody.ts?t=1794892219535:59": 3,
+   "fitRun@useDockBody.ts?t=1794892219535:528": 1,
+   "resolveBackdropRgba@backdropLuminanceSample.ts:164": 1
+  },
+  "framesOver1Layout": 1,
+  "triggerFrames": [
+   {
+    "layouts": 3,
+    "bound": 4,
+    "over": false,
+    "layoutMs": 1.857,
+    "named": [
+     "read:0.603",
+     "rect:0.403",
+     "rect:0.851"
+    ],
+    "stacks": [
+     "read: fitRun@useDockBody.ts:528:20 < sync@useDockBody.ts:741:22 < watch.flush@GlassDock.vue:323:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZfHMujb9.js:1909:17 < callWithAsyncErrorHandling@vue.runtime.esm-bundler-ZfHMujb9.js:1916:15",
+     "rect: bcr@useDockBody.ts:59:15 < rectOf@useDockBody.ts:71:12 < sync@useDockBody.ts:780:14 < watch.flush@GlassDock.vue:323:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZfHMujb9.js:1909:17",
+     "rect: bcr@useDockBody.ts:59:15 < rectOf@useDockBody.ts:71:12 < sync@useDockBody.ts:793:20 < watch.flush@GlassDock.vue:323:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZfHMujb9.js:1909:17"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": []
+   },
+   {
+    "layouts": 3,
+    "bound": 3,
+    "over": false,
+    "layoutMs": 0.879,
+    "named": [
+     "rect:0.612",
+     "after the carrier:0.042",
+     "frame:0.225"
+    ],
+    "stacks": [
+     "rect: bcr@useDockBody.ts:59:15 < rectOf@useDockBody.ts:71:12 < sync@useDockBody.ts:780:14 < watch.flush@GlassDock.vue:323:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZfHMujb9.js:1909:17",
+     "after the carrier: (no stack)",
+     "frame: (no stack)"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": []
+   }
+  ],
+  "longestLayoutMs": 0.872,
+  "medianLayoutAfterTriggerMs": 0.032,
+  "traceEventKinds": {
+   "Layout": 82,
+   "FireAnimationFrame": 105,
+   "UpdateLayoutTree": 100
+  }
+ },
+ "w-inflow@4x#4": {
+  "nodesFolded": 36,
+  "nodesOpen": 36,
+  "framesWithRaf": 103,
+  "layoutsPerFrameMax": 3,
+  "layoutsPerFrameMedian": 1,
+  "dirtyPerLayoutMax": 43,
+  "layoutMsMax": 0.924,
+  "rafMsMedian": 0.128,
+  "rafMsMax": 4.178,
+  "elementsStyledUnfold": 5,
+  "elementsStyledFold": [
+   "dock-layer dock-layer--summary is-active:29",
+   "dock-layer dock-layer--full dock-run:65",
+   "glass-dock horizontal shape-pill collaps:78",
+   "dock-plate:44",
+   "dock-layers:80"
+  ],
+  "rest": {
+   "rafCalls": 0,
+   "mutations": 0,
+   "runningAnimations": 0,
+   "animTargets": []
+  },
+  "seatChangeElementsStyled": null,
+  "layoutsBy": {
+   "(frame, not forced)": 75,
+   "bcr@useDockBody.ts?t=1794892219535:59": 3,
+   "resolveBackdropRgba@backdropLuminanceSample.ts:164": 2,
+   "fitRun@useDockBody.ts?t=1794892219535:528": 1
+  },
+  "framesOver1Layout": 1,
+  "triggerFrames": [
+   {
+    "layouts": 3,
+    "bound": 4,
+    "over": false,
+    "layoutMs": 1.529,
+    "named": [
+     "read:0.952",
+     "rect:0.555",
+     "rect:0.022"
+    ],
+    "stacks": [
+     "read: fitRun@useDockBody.ts:528:20 < sync@useDockBody.ts:741:22 < watch.flush@GlassDock.vue:323:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZfHMujb9.js:1909:17 < callWithAsyncErrorHandling@vue.runtime.esm-bundler-ZfHMujb9.js:1916:15",
+     "rect: bcr@useDockBody.ts:59:15 < rectOf@useDockBody.ts:71:12 < sync@useDockBody.ts:780:14 < watch.flush@GlassDock.vue:323:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZfHMujb9.js:1909:17",
+     "rect: bcr@useDockBody.ts:59:15 < rectOf@useDockBody.ts:71:12 < sync@useDockBody.ts:793:20 < watch.flush@GlassDock.vue:323:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZfHMujb9.js:1909:17"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": []
+   },
+   {
+    "layouts": 4,
+    "bound": 3,
+    "over": true,
+    "layoutMs": 0.9,
+    "named": [
+     "rect:0.092",
+     "after the carrier:0.745",
+     "frame:0.031",
+     "frame:0.032"
+    ],
+    "stacks": [
+     "rect: bcr@useDockBody.ts:59:15 < rectOf@useDockBody.ts:71:12 < sync@useDockBody.ts:780:14 < watch.flush@GlassDock.vue:323:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZfHMujb9.js:1909:17",
+     "after the carrier: (no stack)",
+     "frame: resolveBackdropRgba@backdropLuminanceSample.ts:164:18 < resolveUnderlayRgb@backdropLuminanceSample.ts:200:15 < sampleNow@useGlassBackdropLuminance.ts:172:68 < (anon)@useGlassBackdropLuminance.ts:268:45 < flush@useResizeObserver.ts:40:3",
+     "frame: (no stack)"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": []
+   }
+  ],
+  "longestLayoutMs": 0.952,
+  "medianLayoutAfterTriggerMs": 0.033,
+  "traceEventKinds": {
+   "Layout": 81,
+   "FireAnimationFrame": 104,
+   "UpdateLayoutTree": 97
+  }
+ },
+ "summary": {
+  "w-inflow": {
+   "longest4x": [
+    0.872,
+    0.952,
+    1.002,
+    1.08,
+    1.61
+   ],
+   "medianOfLongest4x": 1.002,
+   "medianLayoutAfterTrigger4x": 0.036
+  }
+ },
+ "g11": {
+  "triggerFrames": 12,
+  "over": [
+   "w-inflow@4x: 4 > 3 [rect:0.443, after the carrier:0.047, frame:0.036, frame:0.037]",
+   "w-inflow@4x#1: 4 > 3 [rect:0.567, after the carrier:0.05, frame:0.044, frame:0.132]",
+   "w-inflow@4x#4: 4 > 3 [rect:0.092, after the carrier:0.745, frame:0.031, frame:0.032]"
+  ],
+  "byCount": {
+   "3": 9,
+   "4": 3
+  },
+  "rest": {
+   "w-inflow@1x": {
+    "rafCalls": 0,
+    "mutations": 0,
+    "runningAnimations": 0,
+    "animTargets": []
+   },
+   "w-inflow@4x": {
+    "rafCalls": 0,
+    "mutations": 0,
+    "runningAnimations": 0,
+    "animTargets": []
+   },
+   "w-inflow@4x#1": {
+    "rafCalls": 0,
+    "mutations": 0,
+    "runningAnimations": 0,
+    "animTargets": []
+   },
+   "w-inflow@4x#2": {
+    "rafCalls": 0,
+    "mutations": 0,
+    "runningAnimations": 0,
+    "animTargets": []
+   },
+   "w-inflow@4x#3": {
+    "rafCalls": 0,
+    "mutations": 0,
+    "runningAnimations": 0,
+    "animTargets": []
+   },
+   "w-inflow@4x#4": {
+    "rafCalls": 0,
+    "mutations": 0,
+    "runningAnimations": 0,
+    "animTargets": []
+   }
+  }
+ }
+}
