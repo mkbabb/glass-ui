@@ -59,6 +59,16 @@
             opacity var(--dock-motion-fast);
     }
 
+    /* W-I.8 step 7 (the trigger's seat): a trigger in a run is a seat of the run, so by default it
+       takes the run's seat height (Home Assistant's GlassTabs, LF-11: a 148 by 31 trigger beside
+       44 px seats). A site's `--dock-trigger-min-height` still outranks it. Its padding stays the
+       density's `--dock-trigger-padding-*`, which every dock sets, so no default can sit under a
+       site's value there. */
+    .glass-dock .dock-run :is(.dock-trigger, .dock-select-trigger, .dock-dropdown-trigger) {
+        min-height: var(--dock-trigger-min-height, var(--dock-control-size));
+    }
+    /* trigger seat end */
+
     /* The pickers move OFF the opaque `--muted` flat plate onto the
        glass-translucent FAMILY hover token (the dock substrate shows through, not a
        solid cream rectangle over the glass — the loudest "not right" tell). hover ≠

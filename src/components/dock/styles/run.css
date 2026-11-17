@@ -472,6 +472,18 @@
         scroll-snap-align: start;
     }
 
+    /* W-I.8 step 7 (the group as a frame): a direct child of the run with role="group" is a frame
+       too, and its seats are the snap targets (gregg's PageDock: as one snap area wider than the
+       port, its group pinned WebKit's run at 0). */
+    .glass-dock :where(.dock-layers) > .dock-run > [role="group"] {
+        scroll-snap-align: none;
+    }
+
+    .glass-dock :where(.dock-layers) > .dock-run > [role="group"] > * {
+        scroll-snap-align: start;
+    }
+    /* group frame end */
+
     /* ── THE VERTICAL DOCK — the same lattice, rotated ───────────────────────────
        [2026-08-24 · BK #47 W3 · G-ONE-NAME] The struck noun does not reappear here —
        not even to be defined. BK #72's canon reserves it for the HAIRLINE that sits

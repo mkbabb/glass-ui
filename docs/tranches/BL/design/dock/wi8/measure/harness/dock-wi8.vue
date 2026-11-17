@@ -689,6 +689,27 @@ const stageStyle = computed(() =>
             </div>
             <div data-testid="w-inflow-below" style="margin-top: 12px; padding: 8px 12px; border: 1px solid currentColor">the figure below</div>
         </template>
+        <!-- MEASURE-7 step 7, the two small adds, each with its site's cell:
+             w-trig    Home Assistant's GlassTabs (LF-11): a worded DockTrigger (a Select) in the run beside icon seats
+             w-group   gregg's PageDock: a direct child of the run with role="group" holding the seats, in a run capped
+                       to overflow; WebKit pinned the row at 0 (the group was one snap area wider than the port) -->
+        <template v-if="cell === 'w-trig'">
+            <GlassDock data-testid="w-trig" aria-label="tiles" :collapse="false">
+                <DockControl aria-label="Home" data-testid="w-trig-seat"><Home /></DockControl>
+                <Select v-model="wordsA">
+                    <DockTrigger for="select" aria-label="Range" data-testid="w-trig-trigger"><SelectValue /></DockTrigger>
+                    <SelectContent><SelectItem value="day">Day</SelectItem><SelectItem value="week">Week</SelectItem></SelectContent>
+                </Select>
+                <DockControl aria-label="Library"><Library /></DockControl>
+            </GlassDock>
+        </template>
+        <template v-if="cell === 'w-group'">
+            <GlassDock data-testid="w-group" aria-label="pages" :collapse="false" style="max-inline-size: 220px">
+                <div role="group" aria-label="Jump to a section" data-testid="w-group-frame" style="display: flex; gap: var(--dock-run-gap, 0.5rem)">
+                    <DockControl v-for="p in longSeats" :key="p.id" shape="tab" :data-testid="`w-group-${p.id}`">{{ p.label }}</DockControl>
+                </div>
+            </GlassDock>
+        </template>
         <!-- MEASURE-7 (RU-61's prototype cells, from the sites' source as USAGE.md reads it):
              w-atlas   atlas's figure head row: a title, the legend (words and a link) and PlateDock, anchor="end" with
                        its Table seat in #persistent (PlateDock.vue:150-156)
