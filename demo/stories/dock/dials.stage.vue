@@ -9,6 +9,7 @@ import { DockControl, DockSeparator, GlassDock } from "@glass/components/dock";
 import { DockTrigger } from "@glass/components/dock/trigger";
 import { Select, SelectContent, SelectItem, SelectValue } from "@glass/components/select";
 import { SegmentedTabs } from "@glass/components/tabs";
+import { Card } from "@glass/components/card";
 import DockScene from "./_parts/DockScene.vue";
 import MiniBars from "./_parts/MiniBars.vue";
 
@@ -88,9 +89,9 @@ const figureLabel = computed(
                     </DockControl>
                 </div>
             </GlassDock>
-            <div class="dials-figure">
+            <Card class="dials-figure">
                 <MiniBars :values="values" :log="scale === 'log'" :label="figureLabel" />
-            </div>
+            </Card>
         </div>
     </DockScene>
 </template>
@@ -120,18 +121,12 @@ const figureLabel = computed(
     text-align: center;
 }
 
+/* The figure the dials filter, on a library Card. */
 .dials-figure {
     box-sizing: border-box;
     inline-size: 100%;
     block-size: 14rem;
     padding: var(--sp-4);
-    border-radius: var(--radius-2xl);
-    border: 1px solid var(--glass-border-quiet);
-    background-color: color-mix(in srgb, var(--card) 72%, transparent);
-}
-
-.dark .dials-figure {
-    background-color: color-mix(in srgb, var(--foreground) 8%, transparent);
 }
 
 @container (inline-size < 30rem) {

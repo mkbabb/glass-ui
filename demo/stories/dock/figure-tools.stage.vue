@@ -1,11 +1,11 @@
 <script setup lang="ts">
 // Three figures, each with its tools dock at the end of its header. The table seat
-// stays; the rest opens on a press only, so a pointer passing over opens none.
+// stays; the rest opens on a press only, so a pointer passing over opens none. Each
+// figure is a line of its eight quarters; Table view cross-fades it to the last four.
 import { reactive } from "vue";
 import { ChevronDown, Download, Maximize2, MoreHorizontal, SlidersHorizontal, Table2 } from "@lucide/vue";
 import { DockControl, GlassDock } from "@glass/components/dock";
 import { Card, CardContent, CardTitle } from "@glass/components/card";
-import MiniBars from "./_parts/MiniBars.vue";
 
 withDefaults(defineProps<{ face?: "handle" | "words" }>(), { face: "handle" });
 
@@ -18,6 +18,13 @@ const SERIES: Record<(typeof FIGURES)[number], number[]> = {
 };
 const QUARTERS = ["Q1", "Q2", "Q3", "Q4"];
 const table = reactive<Record<string, boolean>>({});
+
+// The line's points on a 70 by 28 board: one step per quarter, scaled to the largest
+// value, with a point of air above and below.
+const points = (values: readonly number[]): string => {
+    const max = Math.max(...values, 1e-9);
+    return values.map((v, i) => `${i * 10},${(27 - (v / max) * 26).toFixed(2)}`).join(" ");
+};
 </script>
 
 <template>
@@ -68,7 +75,15 @@ const table = reactive<Record<string, boolean>>({});
                         </div>
                     </dl>
                     <div v-else class="figure-chart">
-                        <MiniBars :values="SERIES[f]" :label="`${f} by quarter`" />
+                        <svg
+                            class="figure-line"
+                            role="img"
+                            :aria-label="`${f} by quarter`"
+                            viewBox="0 0 70 28"
+                            preserveAspectRatio="none"
+                        >
+                            <polyline :points="points(SERIES[f])" />
+                        </svg>
                     </div>
                 </Transition>
             </CardContent>
@@ -120,6 +135,22 @@ const table = reactive<Record<string, boolean>>({});
 
 .figure-chart {
     block-size: 7rem;
+}
+
+.figure-line {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    overflow: visible;
+}
+
+.figure-line polyline {
+    fill: none;
+    stroke: var(--foreground);
+    stroke-width: 2;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
 }
 
 .figure-rows {

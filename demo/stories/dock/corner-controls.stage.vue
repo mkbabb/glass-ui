@@ -1,18 +1,18 @@
 <script setup lang="ts">
 // A page's controls in its bottom corner. One action is a plain capsule; several fold
-// behind a glyph that opens on a press, as a column under 30rem. Shuffle reorders the
-// figure's bars; Undo puts back the order before the last shuffle.
+// behind a glyph that opens on a press, as a column under 30rem. The puzzle above
+// spells a word at rest: Shuffle slides its tiles to new places; Undo slides them back
+// to the order before the last shuffle.
 import { ref } from "vue";
 import { Share2, Shuffle, SlidersHorizontal, Undo2 } from "@lucide/vue";
 import { DockControl, GlassDock } from "@glass/components/dock";
 import DockScene from "./_parts/DockScene.vue";
 import ScenePage from "./_parts/ScenePage.vue";
-import MiniBars from "./_parts/MiniBars.vue";
 
 withDefaults(defineProps<{ several?: boolean }>(), { several: false });
 
-const order = ref<number[]>([12, 28, 19, 40, 33, 24, 47, 15, 36, 22]);
-const history: number[][] = [];
+const order = ref<string[]>(["P", "L", "A", "N", "E", "T", "S"]);
+const history: string[][] = [];
 
 // A seeded shuffle, so the run is the same on every load; it never returns the order
 // it was given.
@@ -20,7 +20,7 @@ let seed = 7;
 const rand = (): number => ((seed = (seed * 16807) % 2147483647) - 1) / 2147483646;
 function shuffle(): void {
     const prev = order.value;
-    let next: number[];
+    let next: string[];
     do {
         next = prev.slice();
         for (let i = next.length - 1; i > 0; i--) {
@@ -41,7 +41,11 @@ function undo(): void {
     <DockScene place="bottom-end">
         <template #context>
             <ScenePage shape="figure">
-                <MiniBars :values="order" label="Order" />
+                <div class="puzzle">
+                    <TransitionGroup name="tile" tag="div" class="puzzle-row">
+                        <span v-for="letter in order" :key="letter" class="scene-tile">{{ letter }}</span>
+                    </TransitionGroup>
+                </div>
             </ScenePage>
         </template>
         <template #default="{ narrow }">
@@ -83,6 +87,45 @@ function undo(): void {
 </template>
 
 <style scoped>
+/* Seven square tiles in a row, each a fill mixed from the ink with its letter knocked
+   out in the display face; the row answers its own width. */
+.puzzle {
+    container-type: inline-size;
+    display: grid;
+    place-items: center;
+    block-size: 100%;
+}
+
+.puzzle-row {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: var(--sp-2);
+    inline-size: min(100%, 34rem);
+}
+
+.scene-tile {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 1;
+    border-radius: var(--radius-md);
+    background-color: color-mix(in srgb, var(--foreground) 85%, transparent);
+    color: var(--background);
+    font-family: var(--font-display);
+    font-size: min(5.5cqi, 2.4rem);
+    line-height: 1;
+}
+
+/* A shuffle slides each tile from its old place to its new one. */
+.tile-move {
+    transition: transform var(--duration-normal) var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .tile-move {
+        transition: none;
+    }
+}
+
 /* An icon and a word in one seat, a small gap between them. */
 .seat-face {
     display: inline-flex;

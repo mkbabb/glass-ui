@@ -4,7 +4,8 @@
 // grid area as the dock and kept clear of the dock's edge by one clearance. The context
 // reads the dock's state, never its box: a dock that outgrows the clearance overlaps
 // it, as a floating dock overlaps a page. `narrow` (under 30rem of stage width) is
-// handed to both slots for the phone forms.
+// handed to both slots for the phone forms. The context is hidden and inert: nothing
+// in it takes focus or a press, whatever component it holds.
 import { computed, useTemplateRef } from "vue";
 import { useElementSize } from "@vueuse/core";
 
@@ -19,7 +20,7 @@ const narrow = computed(() => width.value > 0 && width.value < 480);
 
 <template>
     <div ref="el" class="scene" :data-place="place">
-        <div v-if="$slots.context" class="scene-context" aria-hidden="true">
+        <div v-if="$slots.context" class="scene-context" aria-hidden="true" inert>
             <slot name="context" :narrow="narrow" />
         </div>
         <div class="scene-dock">
@@ -55,8 +56,10 @@ const narrow = computed(() => width.value > 0 && width.value < 480);
 }
 
 /* One track the size of the context, so a Card's percentage width reads the context
-   and never the Card's own content (WebKit sized an implicit track to it). */
+   and never the Card's own content (WebKit sized an implicit track to it). The
+   context is a container, so what it holds can answer its width. */
 .scene-context {
+    container: scene-context / inline-size;
     display: grid;
     grid-template: minmax(0, 1fr) / minmax(0, 1fr);
     place-items: center;
