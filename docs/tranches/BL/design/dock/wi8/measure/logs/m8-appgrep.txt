@@ -1,0 +1,232 @@
+# RU-86's table at its refs
+#   daraksha origin/master 919090cc4
+#   fourier origin/master 67a0c57ec
+#   atlas-rc HEAD 88bde3b35
+#   lt-integ HEAD 834c98b24
+#   glass HEAD 3a923d2ea
+
+## ControlsDock
+  daraksha src/shell/ControlsSeat.vue:98-113  at its ref
+      98|         <GlassDock v-if="!fold" ref="dock" :collapse="false" fit-content :aria-label="label">
+      99|             <slot></slot>
+     100|         </GlassDock>
+     101|         <GlassDock
+     102|             v-else
+     103|             ref="dock"
+     104|             collapse="closed"
+     105|             expand-on="press"
+     106|             :orientation="column ? 'vertical' : 'horizontal'"
+     107|             :collapsed-label="label"
+     108|         >
+     109|             <template #collapsed>
+     110|                 <PageIcon :name="page" />
+     111|             </template>
+     112|             <slot></slot>
+     113|         </GlassDock>
+  daraksha src/shell/ControlsSeat.vue:6-7  at its ref
+       6|  * default slot); the site places only the box, and the dock centres itself in it. Glass ships this
+       7|  * composition as a named piece in 11.2.0: REPLACE THIS FILE'S DOCK WITH IT THEN.
+  fourier web/src/components/shared/StageDock.vue:88-110  at its ref
+      88|         <GlassDock v-if="!fold" ref="dock" :collapse="false" fit-content :aria-label="label">
+      89|             <slot :hold="hold" :column="column" />
+      90|         </GlassDock>
+      91|         <GlassDock
+      92|             v-else
+      93|             ref="dock"
+      94|             collapse="closed"
+      95|             expand-on="press"
+      96|             fit-content
+      97|             :orientation="column ? 'vertical' : 'horizontal'"
+      98|             :collapsed-label="label"
+      99|             :aria-label="label"
+     100|         >
+     101|             <template #collapsed>
+     102|                 <slot name="collapsed" />
+     103|             </template>
+     104|             <slot :hold="hold" :column="column" />
+     105|             <!-- A seat that must outlive the fold (the workspace's Edit contour,
+     106|                  the editor's one door in and out): glass's never-inert region. -->
+     107|             <template v-if="$slots['persistent-end']" #persistent-end>
+     108|                 <slot name="persistent-end" :column="column" />
+     109|             </template>
+     110|         </GlassDock>
+  fourier web/src/components/shared/StageDock.vue:17-18  at its ref
+      17|  * seat that opened it is still there when it closes. When glass ships this
+      18|  * composition as a named piece, this file gives way to it.
+  fourier web/src/components/visualization/EditorControlsDock.vue:88  at its ref
+      88|     <GlassDock ref="dock" fit-content>
+
+## label
+  daraksha src/shell/ControlsSeat.vue:46  at its ref
+      46|     label: string;
+  daraksha src/pages/ColourPage.vue:213  at its ref
+     213|         <ControlsSeat page="colour" label="Colour: controls" :held="open">
+  daraksha src/pages/MotionPage.vue:116  at its ref
+     116|         <ControlsSeat page="motion" label="Motion: controls">
+  daraksha src/pages/NamePage.vue:45  at its ref
+      45|         <ControlsSeat page="name" label="Name: controls">
+  daraksha src/pages/PortraitsPage.vue:508  at its ref
+     508|         <ControlsSeat page="portraits" label="Portraits: controls" fold :held="galleryOpen">
+  daraksha src/scripture/ReaderDock.vue:145  at its ref
+     145|     <ControlsSeat page="scripture" label="Qur'an: controls" fold :held="picking">
+  fourier web/src/components/shared/StageDock.vue:25  at its ref
+      25|     label: string;
+  fourier web/src/components/shared/StageDock.vue:98-99  at its ref
+      98|             :collapsed-label="label"
+      99|             :aria-label="label"
+
+## corner
+  daraksha src/shell/ControlsSeat.vue:126-128  at its ref
+     126|     position: fixed;
+     127|     inset-block-start: max(var(--phi-space-n2), env(safe-area-inset-top));
+     128|     inset-inline-end: max(var(--gutter, 1rem), env(safe-area-inset-right));
+  fourier web/src/components/shared/StageDock.vue:115-117  at its ref
+     115| /* The box only: the host places it at its stage's top-right corner; the dock
+     116|    holds to the box's end edge, so it grows leftward (a row) or downward (a
+     117|    column) from the corner. */
+
+## within
+  daraksha src/shell/ControlsSeat.vue:126-128  at its ref
+     126|     position: fixed;
+     127|     inset-block-start: max(var(--phi-space-n2), env(safe-area-inset-top));
+     128|     inset-inline-end: max(var(--gutter, 1rem), env(safe-area-inset-right));
+  fourier web/src/components/shared/StageDock.vue:115-117  at its ref
+     115| /* The box only: the host places it at its stage's top-right corner; the dock
+     116|    holds to the box's end edge, so it grows leftward (a row) or downward (a
+     117|    column) from the corner. */
+  fourier web/src/components/equation/PlotToolsDock.vue:43-46  at its ref
+      43|     <!-- A fixed seat the size of the folded dock: the dock floats from its
+      44|          top-right corner, so the open row (or a phone's column) overlays the
+      45|          card instead of growing the header row it sits in. -->
+      46|     <div class="plot-tools-seat">
+
+## #default (ControlsDock)
+  fourier web/src/components/shared/StageDock.vue:89  at its ref
+      89|             <slot :hold="hold" :column="column" />
+  fourier web/src/components/shared/StageDock.vue:104  at its ref
+     104|             <slot :hold="hold" :column="column" />
+
+## #collapsed (ControlsDock)
+  daraksha src/shell/ControlsSeat.vue:109  at its ref
+     109|             <template #collapsed>
+  fourier web/src/components/shared/StageDock.vue:101-103  at its ref
+     101|             <template #collapsed>
+     102|                 <slot name="collapsed" />
+     103|             </template>
+  fourier web/src/components/visualization/CanvasControlsDock.vue:63-68  at its ref
+      63|         <template #collapsed>
+      64|             <span class="summary-glyph-wrap">
+      65|                 <Ellipsis class="dock-summary-glyph" aria-hidden="true" />
+      66|                 <StatusDot v-if="viewOffDefault" class="view-dot" state="active" size="sm" motion="off" />
+      67|             </span>
+      68|         </template>
+  fourier web/src/components/equation/PlotToolsDock.vue:48-53  at its ref
+      48|         <template #collapsed>
+      49|             <span class="summary-glyph-wrap">
+      50|                 <Ellipsis class="dock-summary-glyph" aria-hidden="true" />
+      51|                 <StatusDot v-if="!showOriginal || !showHarmonics" class="view-dot" state="active" size="sm" motion="off" />
+      52|             </span>
+      53|         </template>
+  fourier web/src/components/visualization/EditorControlsDock.vue:157  at its ref
+     157|         <template #collapsed>
+  atlas-rc src/charts/frame/PlateDock.vue:171  at its ref
+     171|             <template #collapsed>
+  lt-integ src/charts/frame/PlateDock.vue:359  at its ref
+     359|             <template #collapsed>
+
+## #persistent (ControlsDock)
+  fourier web/src/components/visualization/EditorControlsDock.vue:124  at its ref
+     124|         <template #persistent>
+  atlas-rc src/charts/frame/PlateDock.vue:157  at its ref
+     157|             <template v-if="view" #persistent>
+  lt-integ src/charts/frame/PlateDock.vue:312  at its ref
+     312|             <template v-if="view || enlarge || slots.lead" #persistent>
+
+## #persistent-end (ControlsDock)
+  fourier web/src/components/shared/StageDock.vue:107-109  at its ref
+     107|             <template v-if="$slots['persistent-end']" #persistent-end>
+     108|                 <slot name="persistent-end" :column="column" />
+     109|             </template>
+  fourier web/src/components/visualization/CanvasControlsDock.vue:104-114  at its ref
+     104|         <template #persistent-end="{ column }">
+     105|             <template v-if="isFullscreen && $slots['page-tools']">
+     106|                 <slot name="page-tools" :column="column" />
+     107|                 <DockSeparator />
+     108|             </template>
+     109|             <Tooltip v-if="hasContour" text="Edit contour" :side="column ? 'left' : 'bottom'">
+     110|                 <DockControl aria-label="Edit contour" :active="isEditing" @click="emit('toggleEdit')">
+     111|                     <Pencil />
+     112|                 </DockControl>
+     113|             </Tooltip>
+     114|         </template>
+
+## DockOutlet
+  daraksha src/name/NameDock.vue:67  at its ref
+      67|     <Teleport defer to="#dock-page">
+  daraksha src/portraits/PortraitsDock.vue:61  at its ref
+      61|     <Teleport defer to="#dock-page">
+  daraksha src/scripture/ReaderDock.vue:117  at its ref
+     117|     <Teleport defer to="#dock-page">
+  daraksha src/pages/MotionPage.vue:95  at its ref
+      95|         <Teleport defer to="#dock-persistent-end">
+  daraksha src/shell/SiteDock.vue:233  at its ref
+     233|                     <div id="dock-persistent-end" class="contents"></div>
+  daraksha src/shell/SiteDock.vue:270  at its ref
+     270|                         <div id="dock-page" class="contents"></div>
+
+## to
+  daraksha src/name/NameDock.vue:67  at its ref
+      67|     <Teleport defer to="#dock-page">
+  daraksha src/portraits/PortraitsDock.vue:61  at its ref
+      61|     <Teleport defer to="#dock-page">
+  daraksha src/scripture/ReaderDock.vue:117  at its ref
+     117|     <Teleport defer to="#dock-page">
+  daraksha src/pages/MotionPage.vue:95  at its ref
+      95|         <Teleport defer to="#dock-persistent-end">
+  glass src/components/dock/GlassDock.vue:222  at its ref
+     222|     dockRegistry.set(id, {
+
+## region
+  daraksha src/pages/MotionPage.vue:95  at its ref
+      95|         <Teleport defer to="#dock-persistent-end">
+
+## #default (DockOutlet)
+  daraksha src/name/NameDock.vue:67  at its ref
+      67|     <Teleport defer to="#dock-page">
+  daraksha src/portraits/PortraitsDock.vue:61  at its ref
+      61|     <Teleport defer to="#dock-page">
+  daraksha src/scripture/ReaderDock.vue:117  at its ref
+     117|     <Teleport defer to="#dock-page">
+  daraksha src/pages/MotionPage.vue:95  at its ref
+      95|         <Teleport defer to="#dock-persistent-end">
+
+## run
+  lt-integ src/charts/frame/PlateDock.vue:298  at its ref (in the tag its line opens, to :311)
+     298|         <GlassDock
+     299|             ref="dock"
+     300|             orientation="horizontal"
+     301|             collapse="closed"
+     302|             expand-on="hover"
+     303|             :hover-intent="HOVER_INTENT_MS"
+     304|             run="plain"
+     305|             :anchor="anchor ?? 'end'"
+     306|             :collapsed-label="`Tools for ${title}`"
+     307|             backdrop-mode="static"
+     308|             shape="pill"
+     309|             data-preset="cockpit"
+     310|             class="plate-dock__dock"
+     311|         >
+
+## #rim
+  fourier web/src/components/layout/AppDock.vue:371-373  at its ref
+     371|         <Teleport v-if="dockEl && pageScroll.progress.value !== null" :to="dockEl">
+     372|             <ScrollProgressRim :value="pageScroll.progress.value" :stops="pageScroll.progressStops.value" class="dock-progress" />
+     373|         </Teleport>
+
+## controlCount (exposed)
+  glass src/components/dock/ControlsDock.vue:53  at its ref
+      53|         const n = dockRef.value?.controlCount ?? 0;
+  glass src/components/dock/ControlsDock.vue:59  at its ref
+      59|     const mounted = dockRef.value?.controlCount;
+
+# 0 cited line(s) not at their ref

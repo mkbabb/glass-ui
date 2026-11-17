@@ -842,21 +842,20 @@ const stageStyle = computed(() =>
             <button type="button" data-testid="w-words-longer" style="margin-top: 24px" @click="wordsB = wordsB === 'bw' ? 'cbw' : 'bw'">longer</button>
         </template>
         <!-- MEASURE-7 (RU-55, RU-58, RU-65): w-glyphs, G-13's two census lines. An icon dock whose seats hold each of
-             the four glyph forms unsized (a lucide svg, an img, a picture, a [data-dock-glyph] mark) and a labelled icon
-             seat (o1's form), and a tab dock whose seats hold the same four forms beside a word. -->
+             the glyph forms unsized (a lucide svg, an img, a picture) and a labelled icon seat (o1's form), and a tab dock
+             whose seats hold the same forms beside a word. MEASURE-8 H12 (RU-87): the [data-dock-glyph] mark cells are
+             gone with the attribute; three forms. -->
         <template v-if="cell === 'w-glyphs'">
             <GlassDock data-testid="w-glyphs-icon" aria-label="icons" :collapse="false">
                 <DockControl aria-label="svg" data-glyph="svg"><Home /></DockControl>
                 <DockControl aria-label="img" data-glyph="img"><img :src="GLYPH_IMG" alt="" /></DockControl>
                 <DockControl aria-label="picture" data-glyph="picture"><picture><img :src="GLYPH_IMG" alt="" style="inline-size: 100%; block-size: 100%" /></picture></DockControl>
-                <DockControl aria-label="mark" data-glyph="mark"><span data-dock-glyph style="background: currentColor; border-radius: 50%"></span></DockControl>
                 <DockControl compact aria-label="Focus" data-glyph="svg" data-worded=""><Home /><span>Focus</span></DockControl>
             </GlassDock>
             <GlassDock data-testid="w-glyphs-tab" aria-label="tabs" :collapse="false">
-                <DockControl shape="tab" data-glyph="svg" data-worded=""><Home /><span>Home</span></DockControl>
-                <DockControl shape="tab" data-glyph="img" data-worded=""><img :src="GLYPH_IMG" alt="" /><span>Image</span></DockControl>
-                <DockControl shape="tab" data-glyph="picture" data-worded=""><picture><img :src="GLYPH_IMG" alt="" style="inline-size: 100%; block-size: 100%" /></picture><span>Picture</span></DockControl>
-                <DockControl shape="tab" data-glyph="mark" data-worded=""><span data-dock-glyph style="background: currentColor; border-radius: 50%"></span><span>Mark</span></DockControl>
+                <DockControl shape="tab" data-glyph="svg" data-worded=""><Home /><span class="dock-word">Home</span></DockControl>
+                <DockControl shape="tab" data-glyph="img" data-worded=""><img :src="GLYPH_IMG" alt="" /><span class="dock-word">Image</span></DockControl>
+                <DockControl shape="tab" data-glyph="picture" data-worded=""><picture><img :src="GLYPH_IMG" alt="" style="inline-size: 100%; block-size: 100%" /></picture><span class="dock-word">Picture</span></DockControl>
             </GlassDock>
         </template>
         <!-- MEASURE-7 (RU-54, C6-M8): w-pwords, a dock capped by its stage whose #persistent seat is a worded Select
