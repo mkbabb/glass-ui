@@ -14,8 +14,8 @@
 //   mark     a navigation run's selected plate moves to a new seat by a cross-fade:
 //            no painted plate travels, and the new seat's plate fades in
 //   still    a Slider holds still: its root, track, fill and thumb change on a zero
-//            clock, and with the mouse its fill's press and release land at once,
-//            taking no transform between the two
+//            clock, and with the mouse its fill holds three runs of one value through a
+//            held press and its release, rest, pressed, rest, with no value between
 import { expect, test, type Page } from "@playwright/test";
 import { gotoReady, isPhone, markFilm, press, pressOn, startFilm, stopFilm, type Film, type Frame } from "./release-11-1-1/film";
 
@@ -328,58 +328,49 @@ test("still · a Slider holds still under reduced motion", async ({ page }, info
         return { root: read(el), track: read(el.querySelector(".slider-track")), fill: read(el.querySelector(".slider-range")), thumb: read(el.querySelector(".slider-thumb")) };
     });
     const zero = (d: string) => d.split(",").every((v) => parseFloat(v) === 0);
-    // A held press and its release, filmed on the fill: the transform before the input,
-    // the one the leg ends on, how many values it took and how many frames held a value
-    // other than those two. A held press needs a mouse; at the phone form the clocks are
-    // the read.
-    type Leg = { from: string; to: string; values: number; between: number };
-    let pressLeg: Leg | null = null;
-    let releaseLeg: Leg | null = null;
+    // A held press and its release, filmed on the fill from rest to rest. The film is
+    // judged by the order of the values it holds, with no mark on the input: the frames
+    // fall into runs of one value each, and a still press is three runs, rest, pressed,
+    // rest. A held press needs a mouse; at the phone form the clocks are the read.
+    let runs: { value: string; frames: number }[] | null = null;
     if (!isPhone(project)) {
-        await page.evaluate(() => {
-            const w = window as unknown as { __fill: { frames: [number, string][]; stop: boolean; down: number; up: number } };
-            const fill = document.querySelector('[data-testid="r-slider"] .slider-range')!;
-            const film = { frames: [] as [number, string][], stop: false, down: -1, up: -1 };
-            w.__fill = film;
-            const t0 = performance.now();
-            const tick = (now: number) => {
-                film.frames.push([now - t0, getComputedStyle(fill).transform]);
-                if (!film.stop) requestAnimationFrame(tick);
-            };
-            requestAnimationFrame(tick);
-            (window as unknown as { __fillMark: (k: "down" | "up") => void }).__fillMark = (k) => (film[k] = performance.now() - t0);
-        });
         const box = (await page.locator(root).boundingBox())!;
         await page.mouse.move(box.x + box.width * 0.4, box.y + box.height / 2);
         await page.waitForTimeout(80);
-        await page.evaluate(() => (window as unknown as { __fillMark: (k: string) => void }).__fillMark("down"));
+        await page.evaluate(() => {
+            const w = window as unknown as { __fill: { frames: string[]; stop: boolean } };
+            const fill = document.querySelector('[data-testid="r-slider"] .slider-range')!;
+            const film = { frames: [] as string[], stop: false };
+            w.__fill = film;
+            const tick = () => {
+                film.frames.push(getComputedStyle(fill).transform);
+                if (!film.stop) requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+        });
+        await page.waitForTimeout(80);
         await page.mouse.down();
         await page.waitForTimeout(500);
-        await page.evaluate(() => (window as unknown as { __fillMark: (k: string) => void }).__fillMark("up"));
         await page.mouse.up();
         await page.waitForTimeout(600);
-        const film = await page.evaluate(() => {
-            const f = (window as unknown as { __fill: { frames: [number, string][]; stop: boolean; down: number; up: number } }).__fill;
+        const frames = await page.evaluate(() => {
+            const f = (window as unknown as { __fill: { frames: string[]; stop: boolean } }).__fill;
             f.stop = true;
-            return f;
+            return f.frames;
         });
-        const leg = (from: number, to: number) => {
-            const before = film.frames.filter(([t]) => t < from);
-            const start = before[before.length - 1][1];
-            const values = film.frames.filter(([t]) => t >= from && t < to).map(([, v]) => v);
-            const end = values[values.length - 1];
-            return { from: start, to: end, values: new Set(values).size, between: values.filter((v) => v !== start && v !== end).length };
-        };
-        pressLeg = leg(film.down, film.up);
-        releaseLeg = leg(film.up, Infinity);
+        runs = [];
+        for (const value of frames) {
+            const last = runs[runs.length - 1];
+            if (last && last.value === value) last.frames++;
+            else runs.push({ value, frames: 1 });
+        }
     }
-    const at = JSON.stringify({ clocks, press: pressLeg, release: releaseLeg });
+    const at = JSON.stringify({ clocks, runs });
     await info.attach("still", { body: at, contentType: "application/json" });
     for (const [part, d] of Object.entries(clocks)) expect(zero(d), `the ${part} changes on a zero clock ${at}`).toBe(true);
-    if (pressLeg && releaseLeg) {
-        expect(pressLeg.to, `the press reached the fill ${at}`).not.toBe(pressLeg.from);
-        expect(releaseLeg.to, `the release returned the fill to rest ${at}`).toBe(pressLeg.from);
-        expect(pressLeg.between, `the press takes no transform between rest and pressed ${at}`).toBe(0);
-        expect(releaseLeg.between, `the release takes no transform between pressed and rest ${at}`).toBe(0);
+    if (runs) {
+        expect(runs.length, `the fill holds rest, then the press, then rest, and no value between ${at}`).toBe(3);
+        expect(runs[1].value, `the press reached the fill ${at}`).not.toBe(runs[0].value);
+        expect(runs[2].value, `the release returned the fill to rest ${at}`).toBe(runs[0].value);
     }
 });
