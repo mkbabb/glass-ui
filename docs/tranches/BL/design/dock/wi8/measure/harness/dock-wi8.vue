@@ -119,7 +119,8 @@ const g8Select = ref("a");
 const wordsA = ref("day");
 const wordsB = ref("bw");
 /** MEASURE-7 w-glyphs: an unsized picture glyph (a disc), as a site's own image would be. */
-const GLYPH_IMG = "data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="#888"/></svg>');
+// MEASURE-8 H7 (RU-83, Q17): a picture, not a grey dot: a small landscape (sky, sun, two hills), 24 by 24 as before
+const GLYPH_IMG = "data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5b8fd6"/><stop offset="1" stop-color="#cfe3f5"/></linearGradient></defs><rect width="24" height="24" rx="5" fill="url(#s)"/><circle cx="17" cy="7.5" r="3" fill="#f5c542"/><path d="M0 17 Q6 10 12 16 T24 14 V24 H0Z" fill="#4d8a4a"/><path d="M0 20 Q8 15 16 20 T24 19 V24 H0Z" fill="#2f6b35"/></svg>');
 const wordsC = ref("all");
 const g8Pop = ref(false);
 // MEASURE-8 cells
