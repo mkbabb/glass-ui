@@ -116,7 +116,8 @@ async function closeOverlays(page) {
             }) || getComputedStyle(document.body).pointerEvents === "none",
         );
         if (!open) return;
-        await page.keyboard.press("Escape");
+        if (i < 2) await page.keyboard.press("Escape");
+        else await page.locator('[role="dialog"][data-state="open"] [data-slot="dialog-footer"] button').last().click({ timeout: 3000 }).catch(() => {});
         await sleep(600);
     }
 }
@@ -203,14 +204,12 @@ try {
 
                 // overlays: open on load, or opened by the stage's trigger
                 if (route.startsWith("/containers/")) {
-                    const press = { "/containers/dialog": 1, "/containers/sheet": 1, "/containers/dropdown-menu": 1 };
-                    if (press[route]) {
-                        const t = page.locator("#demo-main [data-story-stage] button").first();
-                        if (await t.count()) { await t.click(); await sleep(900); }
-                    }
+                    // Dialog, Sheet and Menu open on arrival: read what the page opened
+                    const arrival = { "/containers/dialog": 1, "/containers/sheet": 1, "/containers/dropdown-menu": 1 };
                     const shot = (await page.screenshot({ type: "png" })).toString("base64");
                     row.overlays = await page.evaluate(OVERLAY, { shotB64: shot });
-                    if (CROPS && press[route]) await page.screenshot({ path: path.join(OUT, `${slug(route)}-${cellId}-open.png`) });
+                    if (CROPS && arrival[route]) fs.writeFileSync(path.join(OUT, `${slug(route)}-${cellId}-arrival.png`), Buffer.from(shot, "base64"));
+                    if (route === "/containers/dropdown-menu") { await page.keyboard.press("Escape"); await sleep(600); }
                     await closeOverlays(page);
                 }
 

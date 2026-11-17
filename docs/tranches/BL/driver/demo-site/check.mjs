@@ -6,6 +6,13 @@
 // (`data-story-header`, `data-story-stage`, `data-story-variants`, `data-story-code`);
 // a route without them is an unrebuilt page and gets the render checks only.
 //
+// Beyond FORM.md's lines: T1 (the lede is not cut) on every route; D1-D4 on the six
+// dock routes whose stage carries a context (a Card the dock acts on); the arrival
+// step on Dialog, Sheet and Menu (read the surface the page opens, close it with
+// Escape, then run the page lines); and the reads for the Fourier notice and the
+// small fixes of P14-RULING.md items 3 and 5. `--plant t1` sets a 60-character
+// lede, so T1 can be seen to bite.
+//
 // Machine law (~/.claude/CLAUDE.md): run only through `~/.claude/guard/guarded`, never
 // `--light` (it launches a browser). Chromium headless shell only. The launch flags
 // `--use-angle=metal --enable-gpu --ignore-gpu-blocklist` are the one named exception
@@ -21,7 +28,7 @@
 // was taught to skip something can be seen still to bite: `b2` two overlapping visible
 // runs in the header (beside a clipped pair that must not count), `l4` a blurb paragraph
 // in the first card's body, `dock` a square corner on the first dock in a card.
-import { chromium } from "playwright";
+import { chromium, webkit } from "playwright";
 import fs from "node:fs";
 
 const args = Object.fromEntries(
@@ -41,6 +48,12 @@ const BUDGET = Object.fromEntries(
 );
 const OUT = args.out ? fs.createWriteStream(args.out, { flags: "a" }) : null;
 const PLANTS = (args.plant ?? "").split(",").filter(Boolean);
+// P14: `--nogpu 1` removes navigator.gpu before any page script runs (item 3's
+// renderer-missing witness); `--engine webkit` runs Playwright WebKit (headless, no
+// flags) for the same witness, under `guarded --exclusive webkit`.
+const NOGPU = args.nogpu === "1";
+const ENGINE = args.engine ?? "chromium";
+const NOGPU_INIT = `try { delete Navigator.prototype.gpu; } catch {}`;
 
 // ---------- planted faults (see the usage note) ----------
 const PLANT = (plants) => {
@@ -62,6 +75,10 @@ const PLANT = (plants) => {
         const p = document.createElement("p");
         p.textContent = "A planted blurb under the card title.";
         card.append(p);
+    }
+    if (plants.includes("t1")) {
+        const lede = document.querySelector("#demo-main p.story-header-lede");
+        if (lede) lede.textContent = "A planted lede of sixty characters that does not fit a line.";
     }
     if (plants.includes("dock")) {
         const plate = document.querySelector("#demo-main [data-story-card] .glass-dock > .dock-plate");
@@ -349,7 +366,11 @@ const MEASURE = async ({ shotB64, vw, vh }) => {
         };
     }
 
+    // a component page's lede, or a landing's (the hero's)
+    const ledeP = main?.querySelector("p.story-header-lede, p.story-hero-lede") ?? null;
     return {
+        ledeFits: ledeP ? ledeP.scrollWidth <= ledeP.clientWidth : null,
+        ledeScroll: ledeP ? [ledeP.scrollWidth, ledeP.clientWidth] : null,
         marked: !!(header && stage),
         title, lede,
         ledeWords: words(lede),
@@ -441,6 +462,390 @@ async function titleFace(ctx, page) {
     }
 }
 
+// ---------- P14: the ruling's added lines ----------
+const ARRIVAL_ROUTES = ["/containers/dialog", "/containers/sheet", "/containers/dropdown-menu"];
+const DOCK_ROUTES = {
+    "/dock/nav": "tab",
+    "/dock/rail": "section",
+    "/dock/chrome": null,
+    "/dock/transport": "play",
+    "/dock/pager": "next",
+    "/dock/corner-controls": "shuffle",
+};
+
+// The open surfaces on the page (outside landing cards and the shell's docks).
+const OPEN_SURFACES = () => {
+    const vis = (e) => {
+        const r = e.getBoundingClientRect();
+        return r.width > 8 && r.height > 8 && !e.closest("[data-story-card]");
+    };
+    const stage = document.querySelector("#demo-main [data-story-stage]");
+    const sr = stage?.getBoundingClientRect() ?? null;
+    const dialogs = [...document.querySelectorAll('[role="dialog"][data-state="open"], [role="alertdialog"][data-state="open"]')].filter(vis);
+    const menus = [...document.querySelectorAll('[role="menu"]')].filter(vis).filter((e) => !e.closest(".demo-sidebar-rail") && !e.closest(".demo-bottom-dock"));
+    const inStage = (e) => {
+        if (!sr) return false;
+        const r = e.getBoundingClientRect();
+        return r.left >= sr.left - 0.5 && r.right <= sr.right + 0.5 && r.top >= sr.top - 0.5 && r.bottom <= sr.bottom + 0.5;
+    };
+    const a = document.activeElement;
+    const trigger = stage?.querySelector("button") ?? null;
+    return {
+        dialogs: dialogs.length,
+        menus: menus.length,
+        menuInStage: menus.length ? menus.every(inStage) : null,
+        menuRect: menus[0] ? (({ top, bottom, left, right }) => ({ top: Math.round(top), bottom: Math.round(bottom), left: Math.round(left), right: Math.round(right) }))(menus[0].getBoundingClientRect()) : null,
+        stageRect: sr ? { top: Math.round(sr.top), bottom: Math.round(sr.bottom) } : null,
+        focusInSurface: [...dialogs, ...menus].some((e) => e.contains(a)),
+        focusOnTrigger: !!trigger && a === trigger,
+        active: a ? `${a.tagName.toLowerCase()}${a.textContent ? ` "${a.textContent.trim().slice(0, 20)}"` : ""}` : null,
+    };
+};
+
+// Arrival: read the surface the page opened, close it with Escape, read again.
+async function arrive(page) {
+    const at = await page.evaluate(OPEN_SURFACES);
+    await page.keyboard.press("Escape");
+    await sleep(900);
+    const after = await page.evaluate(OPEN_SURFACES);
+    return { at, after };
+}
+
+// In-page reads for D1, D4 and items 3 and 5. Pixels come from the page screenshot.
+const P14READ = async ({ shotB64, route }) => {
+    const bin = Uint8Array.from(atob(shotB64), (c) => c.charCodeAt(0));
+    const bmp = await createImageBitmap(new Blob([bin], { type: "image/png" }));
+    const cv = new OffscreenCanvas(bmp.width, bmp.height);
+    const cx = cv.getContext("2d", { willReadFrequently: true });
+    cx.drawImage(bmp, 0, 0);
+    const img = cx.getImageData(0, 0, bmp.width, bmp.height);
+    const px = (x, y) => {
+        const i = (Math.round(y) * img.width + Math.round(x)) * 4;
+        return [img.data[i], img.data[i + 1], img.data[i + 2]];
+    };
+    const lin = (c) => ((c /= 255) <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
+    const L = (p) => 0.2126 * lin(p[0]) + 0.7152 * lin(p[1]) + 0.0722 * lin(p[2]);
+    const CR = (a, b) => { const x = L(a), y = L(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
+    const bgOf = (r) => {
+        const bins = new Map();
+        for (let y = Math.max(0, r.top | 0); y < Math.min(img.height, Math.ceil(r.bottom)); y++)
+            for (let x = Math.max(0, (r.left | 0) - 2); x < Math.min(img.width, Math.ceil(r.right) + 2); x++) {
+                const i = (y * img.width + x) * 4, k = (img.data[i] >> 4) * 256 + (img.data[i + 1] >> 4) * 16 + (img.data[i + 2] >> 4);
+                const b = bins.get(k) || [0, 0, 0, 0]; b[0] += img.data[i]; b[1] += img.data[i + 1]; b[2] += img.data[i + 2]; b[3]++; bins.set(k, b);
+            }
+        let best = null; for (const b of bins.values()) if (!best || b[3] > best[3]) best = b;
+        return best ? [best[0] / best[3], best[1] / best[3], best[2] / best[3]] : null;
+    };
+    // A run's ink from the pixels: the glyph pixel furthest from its own background.
+    const inkCr = (el) => {
+        const rg = document.createRange(); rg.selectNodeContents(el);
+        const q = rg.getBoundingClientRect();
+        if (q.width < 2 || q.height < 2) return null;
+        const b = bgOf(q); if (!b) return null;
+        let best = 1;
+        for (let y = Math.max(0, q.top | 0); y < Math.min(img.height, Math.ceil(q.bottom)); y++)
+            for (let x = Math.max(0, q.left | 0); x < Math.min(img.width, Math.ceil(q.right)); x++) {
+                const i = (y * img.width + x) * 4;
+                best = Math.max(best, CR([img.data[i], img.data[i + 1], img.data[i + 2]], b));
+            }
+        return +best.toFixed(2);
+    };
+    const visible = (e) => {
+        const r = e.getBoundingClientRect();
+        return r.width > 1 && r.height > 1 && e.checkVisibility({ opacityProperty: true, visibilityProperty: true });
+    };
+    const main = document.querySelector("#demo-main");
+    const stage = main?.querySelector("[data-story-stage]");
+    const out = {};
+
+    // D1 and D4: the dock's context
+    const ctxs = [...(main?.querySelectorAll(".scene-context") ?? [])].filter((c) => !c.closest("[data-story-card]"));
+    if (ctxs.length) {
+        out.d1 = ctxs.map((c) => {
+            const card = c.querySelector('[data-slot="card"]');
+            let texts = 0;
+            if (card) {
+                const tw = document.createTreeWalker(card, NodeFilter.SHOW_TEXT);
+                for (let n = tw.nextNode(); n; n = tw.nextNode()) if (/[\p{L}\p{N}]/u.test(n.data) && visible(n.parentElement)) texts++;
+            }
+            const imgs = card ? [...card.querySelectorAll('[role="img"]')].filter(visible).length : 0;
+            return { card: !!card, texts, imgs };
+        });
+        out.d4 = [...ctxs[0].querySelectorAll('[data-slot="card-title"]')].filter(visible).map((t) => ({ text: t.textContent.trim(), cr: inkCr(t) }));
+    }
+
+    if (route === "/data/metric") {
+        const row = [...main.querySelectorAll(".story-variant-row")].find((r) => r.querySelector(".story-variant-label")?.textContent.trim() === "Layouts");
+        const items = row?.querySelector(".story-variant-items");
+        const kids = items ? [...items.children] : [];
+        const tops = kids.map((k) => Math.round(k.getBoundingClientRect().top * 10) / 10);
+        const rowH = row ? row.getBoundingClientRect().height : 0;
+        const tallest = Math.max(...kids.map((k) => k.getBoundingClientRect().height), 0);
+        out.metric = {
+            children: kids.length,
+            tops,
+            topsSpread: tops.length ? +(Math.max(...tops) - Math.min(...tops)).toFixed(1) : null,
+            rowH: Math.round(rowH), tallest: Math.round(tallest),
+            ledgerW: kids[1] ? Math.round(kids[1].getBoundingClientRect().width) : null,
+            stageDash: (stage?.innerText ?? "").includes("—"),
+        };
+    }
+    if (route === "/foundations/paper-glass") {
+        const article = main.querySelector("article");
+        out.paper = {
+            rows: main.querySelectorAll("[data-story-variants] .story-variant-row").length,
+            labels: [...main.querySelectorAll("[data-story-variants] .story-variant-label")].map((l) => l.textContent.trim()),
+            docksInArticle: article ? article.querySelectorAll(".glass-dock").length : null,
+        };
+    }
+    if (route === "/foundations/radii") {
+        out.radii = [...main.querySelectorAll(".radii-plate")].map((t) => {
+            const r = t.getBoundingClientRect();
+            const c = px(r.left + r.width / 2, r.top + r.height / 2);
+            const beside = px(r.left - 8, r.top + r.height / 2);
+            return { w: Math.round(r.width), centre: c, beside, cr: +CR(c, beside).toFixed(2) };
+        });
+    }
+    if (route === "/data/table") {
+        const sr = stage.getBoundingClientRect();
+        const inside = (e) => { if (!e) return null; const r = e.getBoundingClientRect(); return r.top >= sr.top - 0.5 && r.bottom <= sr.bottom + 0.5 && r.left >= sr.left - 0.5 && r.right <= sr.right + 0.5; };
+        const rows = stage.querySelectorAll("tbody tr");
+        out.table = { caption: inside(stage.querySelector("caption")), total: inside(rows[rows.length - 1]), totalText: rows[rows.length - 1]?.innerText.replace(/\s+/g, " ").trim() ?? null };
+    }
+    if (route === "/display/buttons") {
+        const rows = [...main.querySelectorAll("[data-story-variants] .story-variant-row")];
+        const by = (l) => rows.find((r) => r.querySelector(".story-variant-label")?.textContent.trim() === l);
+        const states = by("States"), icons = by("Icon only");
+        out.buttons = {
+            rows: rows.length,
+            states: states ? states.querySelectorAll(".story-variant-items > button, .story-variant-items > *").length : null,
+            icons: icons ? icons.querySelectorAll(".story-variant-items > *").length : null,
+            iconLabels: icons ? [...icons.querySelectorAll(".story-variant-items > *")].map((b) => b.getAttribute("aria-label")) : null,
+            iconEmphases: icons ? [...icons.querySelectorAll(".story-variant-items > *")].map((b) => b.dataset.emphasis ?? null) : null,
+        };
+    }
+    if (route === "/substrates/fourier-field" || route === "/substrates" || route === "/") {
+        // the Fourier notice only (other cards carry live regions of their own)
+        const statuses = [...document.querySelectorAll('#demo-main .fourier-notice[role="status"]')].filter((s) => s.closest("[data-story-stage]") || s.closest("[data-story-card]"));
+        out.fourier = {
+            statuses: statuses.map((s) => ({ text: s.textContent.trim(), where: s.closest("[data-story-card]") ? "card" : "stage", cr: inkCr(s) })),
+            pause: document.querySelectorAll('#demo-main [data-story-stage] .substrate-pause').length,
+        };
+    }
+    if (route === "/containers") {
+        const open = [...document.querySelectorAll('[role="dialog"][data-state="open"], [role="menu"], [role="alertdialog"]')].filter((e) => {
+            const r = e.getBoundingClientRect();
+            return r.width > 8 && r.height > 8 && !e.closest(".demo-sidebar-rail") && !e.closest(".demo-bottom-dock");
+        });
+        out.containersOpen = open.length;
+    }
+    return out;
+};
+
+// D3: the context's rect at rest, with the dock opened by hover, folded by a press
+// elsewhere, and with the dock's element set to display: none.
+async function independence(page) {
+    const read = () => page.evaluate(() => {
+        const c = document.querySelector("#demo-main [data-story-stage] .scene-context");
+        const card = c?.querySelector('[data-slot="card"]');
+        const dock = document.querySelector("#demo-main [data-story-stage] .scene-dock .glass-dock");
+        const R = (e) => { if (!e) return null; const r = e.getBoundingClientRect(); return [r.left, r.top, r.width, r.height].map((v) => Math.round(v)).join(","); };
+        return { ctx: R(c), card: R(card), dock: dock ? (dock.classList.contains("collapsed") ? "folded" : "open") : null, dockBox: R(dock) };
+    });
+    const states = [];
+    states.push({ step: "rest", ...(await read()) });
+    const box = await page.locator("#demo-main [data-story-stage] .scene-dock .glass-dock").first().boundingBox();
+    if (box) {
+        await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+        await sleep(1200);
+        states.push({ step: "hover", ...(await read()) });
+    }
+    // a press outside the dock (the page title) folds a dock that starts open
+    const h1 = await page.locator("#demo-main [data-story-header] h1").first().boundingBox();
+    if (h1) {
+        await page.mouse.move(h1.x + 4, h1.y + 4);
+        await page.mouse.down();
+        await page.mouse.up();
+        await sleep(1400);
+        states.push({ step: "press-out", ...(await read()) });
+    }
+    await page.evaluate(() => {
+        const dock = document.querySelector("#demo-main [data-story-stage] .scene-dock .glass-dock");
+        if (dock) dock.style.setProperty("display", "none", "important");
+    });
+    await sleep(300);
+    states.push({ step: "display-none", ...(await read()) });
+    await page.evaluate(() => {
+        const dock = document.querySelector("#demo-main [data-story-stage] .scene-dock .glass-dock");
+        if (dock) dock.style.removeProperty("display");
+    });
+    await sleep(600);
+    const ctxSet = new Set(states.map((s) => s.ctx)), cardSet = new Set(states.map((s) => s.card));
+    return { equal: ctxSet.size === 1 && cardSet.size === 1, folds: [...new Set(states.map((s) => s.dock))], states };
+}
+
+// D2: the dock answers. A recorder samples the context every frame through one press.
+const CONTEXT_REC = () => {
+    const read = () => {
+        const c = document.querySelector("#demo-main [data-story-stage] .scene-context");
+        const t = c?.querySelector('[data-slot="card-title"]');
+        const slide = c?.querySelector(".pager-slide > span");
+        const bars = [...(c?.querySelectorAll(".mini-bar") ?? [])];
+        const head = c?.querySelector(".mini-playhead");
+        return {
+            text: (c?.innerText ?? "").replace(/\s+/g, " ").trim(),
+            titleOp: t ? parseFloat(getComputedStyle(t).opacity) : null,
+            slideOp: slide ? parseFloat(getComputedStyle(slide).opacity) : null,
+            bars: bars.map((b) => +b.getBoundingClientRect().height.toFixed(2)),
+            barOps: bars.map((b) => +parseFloat(getComputedStyle(b).opacity).toFixed(3)),
+            head: head ? +head.getBoundingClientRect().left.toFixed(2) : null,
+        };
+    };
+    window.__p14 = { read, samples: [], on: false };
+    window.__p14.start = () => {
+        window.__p14.samples = []; window.__p14.on = true;
+        const tick = () => { if (!window.__p14.on) return; window.__p14.samples.push(read()); requestAnimationFrame(tick); };
+        requestAnimationFrame(tick);
+    };
+    window.__p14.stop = () => { window.__p14.on = false; return window.__p14.samples; };
+};
+
+function legsOf(series) {
+    const out = [];
+    let i = 0;
+    while (i < series.length - 1) {
+        while (i < series.length - 1 && Math.abs(series[i + 1] - series[i]) < 1e-4) i++;
+        if (i >= series.length - 1) break;
+        const dir = Math.sign(series[i + 1] - series[i]);
+        let j = i + 1;
+        while (j < series.length - 1) {
+            const d = series[j + 1] - series[j];
+            if (Math.abs(d) < 1e-4) {
+                let k = j + 1;
+                while (k < series.length - 1 && Math.abs(series[k + 1] - series[k]) < 1e-4) k++;
+                if (k < series.length - 1 && Math.sign(series[k + 1] - series[k]) === dir) { j = k; continue; }
+                break;
+            }
+            if (Math.sign(d) !== dir) break;
+            j++;
+        }
+        const travel = Math.abs(series[j] - series[i]);
+        let maxStep = 0;
+        for (let k = i; k < j; k++) maxStep = Math.max(maxStep, Math.abs(series[k + 1] - series[k]));
+        out.push({ frames: j - i, travel: +travel.toFixed(3), step: travel ? +(maxStep / travel).toFixed(3) : 0 });
+        i = j;
+    }
+    return out;
+}
+
+async function answers(page, route, cellId) {
+    await page.evaluate(CONTEXT_REC);
+    const before = await page.evaluate(() => window.__p14.read());
+    const dock = page.locator("#demo-main [data-story-stage] .scene-dock");
+    const kind = DOCK_ROUTES[route];
+    if (!kind) return null;
+    const ms = kind === "play" ? 2600 : 1400;
+    let acted = null;
+    await page.evaluate(() => window.__p14.start());
+    try {
+        if (kind === "tab") {
+            const tab = dock.getByRole("button", { name: "People", exact: true });
+            if (await tab.count()) { await tab.first().click({ timeout: 4000 }); acted = "People"; }
+            else {
+                await dock.getByRole("combobox", { name: "Pages" }).or(dock.locator('[aria-label="Pages"]')).first().click({ timeout: 4000 });
+                await sleep(500);
+                await page.getByRole("menuitemradio", { name: "People" }).first().click({ timeout: 4000 });
+                acted = "People (menu)";
+            }
+        } else if (kind === "section") {
+            const seat = dock.locator('[aria-label="Schools"]').first();
+            try { await seat.click({ timeout: 2500 }); }
+            catch {
+                const box = await dock.locator(".glass-dock").first().boundingBox();
+                if (box) await page.mouse.move(box.x + box.width / 2, box.y + 20);
+                await sleep(900);
+                if (!(await seat.isVisible())) await dock.locator('[aria-label="Open sections"]').first().click({ timeout: 2500 }).catch(() => {});
+                await sleep(700);
+                await seat.click({ timeout: 4000 });
+            }
+            acted = "Schools";
+        } else if (kind === "next") {
+            await dock.locator('[aria-label="Next page"]').first().click({ timeout: 4000 });
+            acted = "Next";
+        } else if (kind === "play") {
+            await dock.locator('[aria-label="Play"]').first().click({ timeout: 4000 });
+            acted = "Play, 2 s";
+        } else if (kind === "shuffle") {
+            await dock.getByRole("button", { name: "Shuffle" }).first().click({ timeout: 4000 });
+            acted = "Shuffle";
+        }
+    } catch (e) {
+        acted = `missed: ${String(e.message).split("\n")[0].slice(0, 120)}`;
+    }
+    await sleep(ms);
+    const samples = await page.evaluate(() => window.__p14.stop());
+    const after = await page.evaluate(() => window.__p14.read());
+    if (kind === "play") {
+        // stop the run so the page settles
+        await dock.locator('[aria-label="Pause"]').first().click({ timeout: 2000 }).catch(() => {});
+    }
+    const changed = before.text !== after.text || JSON.stringify(before.bars) !== JSON.stringify(after.bars) || JSON.stringify(before.barOps) !== JSON.stringify(after.barOps) || before.head !== after.head;
+    // grade every series that moved: the title's and the slide's opacity, each bar's
+    // height and opacity, the playhead
+    const series = {};
+    const pushS = (k, v) => { if (v == null) return; (series[k] ??= []).push(v); };
+    for (const s of samples) {
+        pushS("titleOp", s.titleOp); pushS("slideOp", s.slideOp); pushS("head", s.head);
+        s.bars.forEach((h, i) => pushS(`bar${i}`, h));
+        s.barOps.forEach((o, i) => pushS(`barOp${i}`, o));
+    }
+    const graded = [];
+    for (const [k, v] of Object.entries(series)) {
+        const min = /Op/.test(k) ? 0.05 : 2;
+        for (const l of legsOf(v)) if (l.travel >= min) graded.push({ series: k, ...l });
+    }
+    const tweened = graded.length > 0 && graded.every((l) => l.frames >= 2 && l.step <= 0.4);
+    return { acted, changed, tweened, legs: graded.length, worst: graded.sort((a, b) => b.step - a.step).slice(0, 3), frames: samples.length, before: before.text.slice(0, 40), after: after.text.slice(0, 40) };
+}
+
+function p14Rows(add, route, cell, m, p) {
+    add("T1", "lede not cut", m.ledeFits, m.ledeScroll ? m.ledeScroll.join("/") : "no lede");
+    if (!p) return;
+    if (p.arrival) {
+        const A = p.arrival.at, B = p.arrival.after;
+        const menu = route === "/containers/dropdown-menu";
+        add("A1", menu ? "arrival: one menu inside the stage, focus outside it" : "arrival: one open dialog",
+            menu ? A.menus === 1 && A.menuInStage === true && !A.focusInSurface : A.dialogs === 1,
+            menu ? `menus ${A.menus} inStage ${A.menuInStage} menu ${JSON.stringify(A.menuRect)} stage ${JSON.stringify(A.stageRect)} focus ${A.active}` : `dialogs ${A.dialogs} focusIn ${A.focusInSurface}`);
+        add("A2", "after Escape: none open, focus on the trigger", B.dialogs === 0 && B.menus === 0 && B.focusOnTrigger, `dialogs ${B.dialogs} menus ${B.menus} focus ${B.active}`);
+    }
+    const r = p.read ?? {};
+    if (r.d1) add("D1", "the context holds a Card with text or a figure", r.d1.length >= 1 && r.d1.every((c) => c.card && (c.texts > 0 || c.imgs > 0)), JSON.stringify(r.d1));
+    if (r.d4) add("D4", "context title ≥ 4.5:1 (pixels)", r.d4.length ? r.d4.every((t) => t.cr >= 4.5) : null, r.d4.length ? r.d4.map((t) => `${t.text} ${t.cr}`).join("; ") : "no title");
+    if (p.d2) add("D2", "the dock answers: the context changes, tweened", p.d2.changed && p.d2.tweened, `${p.d2.acted}; changed ${p.d2.changed}; legs ${p.d2.legs}; worst ${JSON.stringify(p.d2.worst)}; ${p.d2.before} → ${p.d2.after}`);
+    if (p.d3) add("D3", "context rect fixed across dock states", p.d3.equal, `${p.d3.folds.join("/")} ${p.d3.states.map((s) => `${s.step}:${s.card}`).join(" ")}`);
+    if (r.metric) {
+        const M = r.metric;
+        add("5a", "Layouts: two children, one top, one line", cell === "m390" ? null : M.children === 2 && M.topsSpread <= 1 && M.rowH <= M.tallest + 1, `tops ${M.tops.join("/")} rowH ${M.rowH} tallest ${M.tallest} ledger ${M.ledgerW}px`);
+        add("5b", "stage holds no dash", !M.stageDash, M.stageDash ? "dash" : "none");
+    }
+    if (r.paper) add("5c", "two variant rows, no dock in the article", r.paper.rows === 2 && r.paper.docksInArticle === 0, `${r.paper.rows} [${r.paper.labels.join("|")}] docks ${r.paper.docksInArticle} words ${m.pageWords}`);
+    if (r.radii) add("5d", "each tile ≥ 3:1 against the plate", r.radii.length === 7 && r.radii.every((t) => t.cr >= 3), r.radii.map((t) => t.cr).join(" "));
+    if (r.table) add("5f", "caption and total row inside the stage", r.table.caption === true && r.table.total === true, `caption ${r.table.caption} total ${r.table.total} (${r.table.totalText})`);
+    if (r.buttons) {
+        const B = r.buttons;
+        add("5h", "States 3, Icon only 3 labelled, 3 rows", B.rows === 3 && B.states === 3 && B.icons === 3 && B.iconLabels.every(Boolean), `rows ${B.rows} states ${B.states} icons ${B.icons} [${B.iconEmphases?.join("|")}] labels ${B.iconLabels?.every(Boolean)}`);
+    }
+    if (r.fourier && p.gpu) add("3", "GPU lane: no notice; pause shown on the page", r.fourier.statuses.length === 0 && (route !== "/substrates/fourier-field" || r.fourier.pause === 1), `notices ${r.fourier.statuses.length} pause ${r.fourier.pause}`);
+    if (r.fourier && !p.gpu && route !== "/") {
+        const SENT = "This browser cannot draw the Fourier field.";
+        const where = route === "/substrates" ? "card" : "stage";
+        const mine = r.fourier.statuses.filter((x) => x.where === where);
+        add("3", `no GPU: one notice in the ${where}, ≥ 4.5:1, no pause`, mine.length === 1 && mine[0].text === SENT && (mine[0].cr === null || mine[0].cr >= 4.5) && r.fourier.pause === 0, `${mine.map((x) => `"${x.text}" ${x.cr ?? "below the first screen, ink not read"}`).join("; ") || "none"} pause ${r.fourier.pause}`);
+    }
+    if (r.containersOpen != null) add("2.4", "cards mount no open surface", r.containersOpen === 0, r.containersOpen);
+}
+
 function rowsFor(route, cell, m, errors, extra) {
     const W = cell === "m390";
     const budget = Math.min(60, BUDGET[route] ?? 60);
@@ -474,6 +879,7 @@ function rowsFor(route, cell, m, errors, extra) {
     add("C1", m.landing ? "one live field; shell static where cards draw" : "exactly one live canvas", canvasLine, `shell ${C.shell} stage ${C.stage} card ${C.card} other ${C.other}`);
     if (!m.marked) {
         dockRow();
+        p14Rows(add, route, cell, m, extra?.p14);
         return R;
     }
     const editorPage = !!m.editor;
@@ -503,16 +909,19 @@ function rowsFor(route, cell, m, errors, extra) {
     }
     if (extra?.tracks) add("B1", "every button inside its track", extra.tracks.inside === extra.tracks.buttons, `${extra.tracks.inside}/${extra.tracks.buttons}`);
     if (m.overlaps) add("B2", "no text runs overlap", m.overlaps.length === 0, m.overlaps.slice(0, 3).join("; ") || 0);
+    p14Rows(add, route, cell, m, extra?.p14);
     return R;
 }
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 export async function run() {
-    const browser = await chromium.launch({
-        headless: true,
-        args: ["--use-angle=metal", "--enable-gpu", "--ignore-gpu-blocklist"],
-    });
+    const browser = ENGINE === "webkit"
+        ? await webkit.launch({ headless: true })
+        : await chromium.launch({
+              headless: true,
+              args: ["--use-angle=metal", "--enable-gpu", "--ignore-gpu-blocklist"],
+          });
     const all = [];
     try {
         for (const cellId of CELL_IDS) {
@@ -524,6 +933,7 @@ export async function run() {
                 const errors = [];
                 try {
                     await ctx.addInitScript(INIT(C.scheme));
+                    if (NOGPU) await ctx.addInitScript(NOGPU_INIT);
                     const page = await ctx.newPage();
                     page.on("console", (msg) => {
                         if (msg.type() === "error" || msg.type() === "warning") errors.push(`${msg.type()}: ${msg.text().slice(0, 160)}`);
@@ -532,23 +942,31 @@ export async function run() {
                     await page.goto(BASE + route, { waitUntil: "load", timeout: 45000 });
                     await page.waitForSelector("#demo-main", { timeout: 15000 });
                     await sleep(2500);
+                    const p14 = {};
+                    if (ARRIVAL_ROUTES.includes(route)) p14.arrival = await arrive(page);
                     if (PLANTS.length) await page.evaluate(PLANT, PLANTS);
                     const shot = (await page.screenshot({ type: "png" })).toString("base64");
                     const m = await page.evaluate(MEASURE, { shotB64: shot, vw: C.viewport.width, vh: C.viewport.height });
                     const tracks = route === "/display/buttons" ? await page.evaluate(TRACKS) : null;
-                    const face = await titleFace(ctx, page);
+                    const face = ENGINE === "webkit" ? null : await titleFace(ctx, page);
+                    p14.read = await page.evaluate(P14READ, { shotB64: shot, route });
+                    p14.gpu = await page.evaluate(() => "gpu" in navigator && !!navigator.gpu);
                     // open the code disclosure, to load it with its console clean
                     const codeBtn = page.locator("[data-story-code] button").first();
                     if (await codeBtn.count()) {
                         await codeBtn.click();
                         await sleep(600);
                     }
-                    const rows = rowsFor(route, cellId, m, errors, { tracks, face });
+                    if (route in DOCK_ROUTES) {
+                        p14.d3 = await independence(page);
+                        p14.d2 = await answers(page, route, cellId);
+                    }
+                    const rows = rowsFor(route, cellId, m, errors, { tracks, face, p14 });
                     for (const r of rows) {
                         all.push(r);
                         OUT?.write(JSON.stringify(r) + "\n");
                     }
-                    OUT?.write(JSON.stringify({ route, cell: cellId, measure: { ...m, contrast: m.contrast.slice(0, 8) } }) + "\n");
+                    OUT?.write(JSON.stringify({ route, cell: cellId, measure: { ...m, contrast: m.contrast.slice(0, 8) }, p14 }) + "\n");
                 } catch (e) {
                     const r = { route, cell: cellId, line: "run", name: "render", pass: "FAIL", value: String(e?.message ?? e).slice(0, 200) };
                     all.push(r);
