@@ -130,15 +130,21 @@ export function exitOf(film: Film): { rest: Frame; exit: Frame[]; gone: boolean 
 }
 
 /** The largest share of a channel's travel that one frame at 60 Hz carries, over a list
- *  of [ms, value] samples (a sample after the surface is gone reads 0). Each sample is
- *  compared with the first one at least a frame later and the change is scaled to one
- *  frame, so an engine's uneven callback times do not read as steps; a removal still
- *  reads whole, since it lands within a frame or two of the last painted value. */
+ *  of [ms, value] samples (a sample after the surface is gone reads 0). A change between
+ *  two consecutive samples no more than a frame apart is read whole: it was painted in
+ *  one frame. A change that spans more than a frame is scaled to one frame: between two
+ *  consecutive samples across a late callback, and from each sample to the first one at
+ *  least a frame later, so an engine's uneven callback times do not read as steps and
+ *  several small steps inside one frame add up; a removal still reads whole, since it
+ *  lands within a frame or two of the last painted value. */
 export function worstFrameShare(samples: [number, number][], travel: number): number {
     if (travel <= 0) return 0;
     const frame = 1000 / 60;
     let worst = 0;
     for (let i = 0; i < samples.length - 1; i++) {
+        const step = Math.abs(samples[i + 1][1] - samples[i][1]) / travel;
+        const gap = samples[i + 1][0] - samples[i][0];
+        worst = Math.max(worst, gap <= frame ? step : step * (frame / gap));
         let j = i + 1;
         while (j + 1 < samples.length && samples[j][0] - samples[i][0] < frame) j++;
         const dt = Math.max(frame, samples[j][0] - samples[i][0]);
