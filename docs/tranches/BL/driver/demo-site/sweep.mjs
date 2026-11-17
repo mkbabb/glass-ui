@@ -64,7 +64,11 @@ const RECORDER = () => {
                 if (kind === "swap") {
                     const pane = document.querySelector("#demo-main [data-story-stage] .stage-swap-pane, #demo-main .stage-swap-pane");
                     const box = pane?.parentElement;
-                    return [pane ? parseFloat(getComputedStyle(pane).opacity) : 0, box ? box.getBoundingClientRect().height : 0];
+                    // the fade: the pane's own opacity, or (P17 on) that of a part the
+                    // swap fades by its own opacity
+                    const f = pane && window.__fade.of(pane);
+                    const op = pane ? parseFloat(getComputedStyle(f?.effect?.target ?? pane).opacity) : 0;
+                    return [op, box ? box.getBoundingClientRect().height : 0];
                 }
                 const el = document.querySelector(window.__rec.target);
                 return [el ? el.getBoundingClientRect().height : 0];
@@ -80,19 +84,24 @@ const RECORDER = () => {
         },
         target: null,
     };
-    // P17: the swap's leave and enter fades, read off the panes as they start.
+    // P17: the swap's leave and enter fades, read off the panes as they start: the
+    // pane's own opacity transition, or the fades the swap runs on the parts it moves
+    // by their own opacity (animations named `stage-swap-fade`).
+    const swapFades = (pane) => pane.getAnimations({ subtree: true }).filter((a) =>
+        a.id === "stage-swap-fade" || (a.effect?.target === pane && (a.effect.getKeyframes?.() ?? []).some((k) => "opacity" in k)));
     window.__fade = {
+        of: (pane) => swapFades(pane).find((a) => a.playState !== "finished" || a.effect?.getTiming?.().fill === "forwards") ?? null,
         arm() {
             const before = new Set(document.querySelectorAll("#demo-main .stage-swap-pane"));
             const seen = new WeakSet(document.getAnimations());
             const got = { leave: [], enter: [] };
             let frames = 0;
             const take = (pane, kind) => {
-                for (const a of pane.getAnimations()) {
-                    if (seen.has(a)) continue;
-                    const kf = a.effect?.getKeyframes?.() ?? [];
-                    if (!kf.some((k) => "opacity" in k)) continue;
-                    seen.add(a);
+                // one read per pane and kind: every part of one fade runs the same curve
+                const fresh = swapFades(pane).filter((a) => !seen.has(a));
+                fresh.forEach((a) => seen.add(a));
+                for (const a of fresh.slice(0, 1)) {
+                    const kf = a.effect.getKeyframes();
                     const t = a.effect.getTiming();
                     got[kind].push({
                         keyframes: kf.map((k) => ({ offset: k.offset ?? k.computedOffset, easing: k.easing ?? "linear", opacity: k.opacity })),
