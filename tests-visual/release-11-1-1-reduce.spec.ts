@@ -14,13 +14,16 @@
 //   mark     a navigation run's selected plate moves to a new seat by a cross-fade:
 //            no painted plate travels, and the new seat's plate fades in
 //   press    a pressed control shows its press by colour, not by size: a Button, a dock's
-//            icon seat and a dock's tab seat, each held pressed by a finger at the phone
-//            form (Chromium, through CDP) and by the mouse at the desktop form, keep
-//            scale 1 and their width on every frame of the hold
+//            icon seat, a dock's tab seat and a menu row, each held pressed by a finger at
+//            the phone form (Chromium, through CDP) and by the mouse at the desktop form,
+//            keep scale 1 and their width on every frame of the hold, and the held
+//            control's fill differs from its fill at rest, a quarter of its crop or more
+//            changing colour
 //   still    a Slider holds still: its root, track, fill and thumb change on a zero
 //            clock, and with the mouse its fill holds three runs of one value through a
 //            held press and its release, rest, pressed, rest, with no value between
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type CDPSession, type Page } from "@playwright/test";
+import { PNG } from "pngjs";
 import { gotoReady, isPhone, markFilm, press, pressOn, startFilm, stopFilm, type Film, type Frame } from "./release-11-1-1/film";
 
 const EXITS = "/tests-visual/release-11-1-1/exits-harness.html";
@@ -323,56 +326,89 @@ test("mark · a run's selected plate moves to a new seat by a cross-fade", async
     expectFade(legs.out, "out", `old seat ${at}`);
 });
 
-test("press · a pressed Button and dock seat keep their size under reduced motion", async ({ page }, info) => {
+/** The share of a crop's pixels whose colour moved by more than 12 (the sum of the three
+ *  channels' changes, out of 765) between two screenshots of the same box. */
+function changedShare(a: Buffer, b: Buffer): number {
+    const [pa, pb] = [PNG.sync.read(a), PNG.sync.read(b)];
+    if (pa.width !== pb.width || pa.height !== pb.height) return -1;
+    let moved = 0;
+    for (let i = 0; i < pa.data.length; i += 4) {
+        const d = Math.abs(pa.data[i] - pb.data[i]) + Math.abs(pa.data[i + 1] - pb.data[i + 1]) + Math.abs(pa.data[i + 2] - pb.data[i + 2]);
+        if (d > 12) moved++;
+    }
+    return +(moved / (pa.width * pa.height)).toFixed(3);
+}
+
+type PressRead = { rest: number; active: number; scales: string[]; transforms: string[]; widths: number[]; fill: [string, string]; painted: number };
+
+/** Holds a press on `sel` for 300 ms, filming every frame of the hold, and screenshots
+ *  the control at rest and held. With the mouse the pointer rests on the control first,
+ *  so the held crop differs from a hovered one by the press alone. */
+async function holdPress(page: Page, sel: string, cdp: CDPSession | null): Promise<PressRead> {
+    await page.locator(sel).first().scrollIntoViewIfNeeded();
+    const box = (await page.locator(sel).first().boundingBox())!;
+    const x = box.x + box.width / 2;
+    const y = box.y + box.height / 2;
+    const clip = { x: box.x - 2, y: box.y - 2, width: box.width + 4, height: box.height + 4 };
+    if (!cdp) await page.mouse.move(x, y);
+    await page.waitForTimeout(300);
+    const restShot = await page.screenshot({ clip });
+    const restFill = await page.locator(sel).first().evaluate((el) => getComputedStyle(el).backgroundColor);
+    // Every frame of the hold: the computed scale and transform, the painted width,
+    // and whether the control is pressed (`:active`), so a press that never landed
+    // cannot read as one that kept its size.
+    await page.evaluate((sel) => {
+        const el = document.querySelector(sel)!;
+        const film = { frames: [] as [string, string, number, boolean][], stop: false };
+        (window as unknown as { __hold: typeof film }).__hold = film;
+        const tick = () => {
+            const cs = getComputedStyle(el);
+            film.frames.push([cs.scale, cs.transform, el.getBoundingClientRect().width, el.matches(":active")]);
+            if (!film.stop) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+    }, sel);
+    await page.waitForTimeout(80);
+    // A finger held through Chromium's gesture pipeline, which presses the control
+    // (`:active`) as a touch screen does; raw touch events do not.
+    const hold = cdp ? cdp.send("Input.synthesizeTapGesture", { x, y, duration: 900, gestureSourceType: "touch" }) : null;
+    if (!hold) await page.mouse.down();
+    await page.waitForTimeout(300);
+    const frames = await page.evaluate(() => {
+        const film = (window as unknown as { __hold: { frames: [string, string, number, boolean][]; stop: boolean } }).__hold;
+        film.stop = true;
+        return film.frames;
+    });
+    const heldShot = await page.screenshot({ clip });
+    const heldFill = await page.locator(sel).first().evaluate((el) => getComputedStyle(el).backgroundColor);
+    if (hold) await hold;
+    else await page.mouse.up();
+    await page.waitForTimeout(300);
+    return {
+        rest: +box.width.toFixed(2),
+        active: frames.filter((f) => f[3]).length,
+        scales: [...new Set(frames.map((f) => f[0]))],
+        transforms: [...new Set(frames.map((f) => f[1]))],
+        widths: [...new Set(frames.map((f) => +f[2].toFixed(2)))],
+        fill: [restFill, heldFill],
+        painted: changedShare(restShot, heldShot),
+    };
+}
+
+test("press · a pressed control shows its press by colour, not by size, under reduced motion", async ({ page }, info) => {
     const project = info.project.name;
     test.skip(project === "webkit-phone", "Playwright WebKit's touchscreen taps but cannot hold a press; the press is read at 1440");
     await open(page, REDUCE);
-    const controls = { Button: '[data-testid="r-button"]', "icon seat": '[data-testid="r-press-icon"]', "tab seat": '[data-testid="r-press-tab"]' };
     const cdp = isPhone(project) ? await page.context().newCDPSession(page) : null;
-    const reads: Record<string, { rest: number; active: number; scales: string[]; transforms: string[]; widths: number[] }> = {};
-    for (const [name, sel] of Object.entries(controls)) {
-        const box = (await page.locator(sel).boundingBox())!;
-        const x = box.x + box.width / 2;
-        const y = box.y + box.height / 2;
-        // Every frame of the hold: the computed scale and transform, the painted width,
-        // and whether the control is pressed (`:active`), so a press that never landed
-        // cannot read as one that kept its size.
-        await page.evaluate((sel) => {
-            const el = document.querySelector(sel)!;
-            const film = { frames: [] as [string, string, number, boolean][], stop: false };
-            (window as unknown as { __hold: typeof film }).__hold = film;
-            const tick = () => {
-                const cs = getComputedStyle(el);
-                film.frames.push([cs.scale, cs.transform, el.getBoundingClientRect().width, el.matches(":active")]);
-                if (!film.stop) requestAnimationFrame(tick);
-            };
-            requestAnimationFrame(tick);
-        }, sel);
-        await page.waitForTimeout(80);
-        // A finger held 500 ms through Chromium's gesture pipeline, which presses the
-        // control (`:active`) as a touch screen does; raw touch events do not.
-        const hold = cdp ? cdp.send("Input.synthesizeTapGesture", { x, y, duration: 500, gestureSourceType: "touch" }) : null;
-        if (!hold) {
-            await page.mouse.move(x, y);
-            await page.mouse.down();
-        }
-        await page.waitForTimeout(300);
-        const frames = await page.evaluate(() => {
-            const film = (window as unknown as { __hold: { frames: [string, string, number, boolean][]; stop: boolean } }).__hold;
-            film.stop = true;
-            return film.frames;
-        });
-        if (hold) await hold;
-        else await page.mouse.up();
-        await page.waitForTimeout(300);
-        reads[name] = {
-            rest: +box.width.toFixed(2),
-            active: frames.filter((f) => f[3]).length,
-            scales: [...new Set(frames.map((f) => f[0]))],
-            transforms: [...new Set(frames.map((f) => f[1]))],
-            widths: [...new Set(frames.map((f) => +f[2].toFixed(2)))],
-        };
-    }
+    const reads: Record<string, PressRead> = {};
+    const controls = { Button: '[data-testid="r-button"]', "icon seat": '[data-testid="r-press-icon"]', "tab seat": '[data-testid="r-press-tab"]' };
+    for (const [name, sel] of Object.entries(controls)) reads[name] = await holdPress(page, sel, cdp);
+    // A menu row, in the dock's DropdownMenu.
+    await open(page, EXITS);
+    await pressOn(page, project, '[data-testid="x-menu"]');
+    await page.locator('[data-testid="x-menu-content"][data-state="open"]').waitFor();
+    await page.waitForTimeout(500);
+    reads["menu row"] = await holdPress(page, '[data-testid="x-item-Share"]', cdp);
     const at = JSON.stringify(reads);
     await info.attach("press", { body: at, contentType: "application/json" });
     const identity = (s: string) => s === "none" || s.split(" ").every((v) => parseFloat(v) === 1);
@@ -381,6 +417,8 @@ test("press · a pressed Button and dock seat keep their size under reduced moti
         expect(r.scales.every(identity), `the ${name} keeps scale 1 on every frame ${at}`).toBe(true);
         expect(r.transforms, `the ${name} takes no transform ${at}`).toEqual(["none"]);
         expect(Math.max(...r.widths.map((w) => Math.abs(w - r.rest))), `the ${name} keeps its width ${at}`).toBeLessThanOrEqual(0.5);
+        expect(r.fill[1], `the ${name}'s fill steps while it is held ${at}`).not.toBe(r.fill[0]);
+        expect(r.painted, `the ${name}'s press is painted: a quarter of its crop changes colour ${at}`).toBeGreaterThanOrEqual(0.25);
     }
 });
 

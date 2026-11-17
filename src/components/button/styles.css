@@ -227,6 +227,18 @@
         );
     }
 
+    /* Under reduced motion a press keeps the box's size (`useLiquidPress` writes no
+       scale there), so the glass arms show it as a fill step: the plate takes one rung
+       more of its veil ink while pressed. */
+    @media (prefers-reduced-motion: reduce) {
+        .button:is([data-emphasis="primary"], [data-emphasis="secondary"]):active:not(
+                :disabled,
+                [aria-disabled="true"]
+            ) {
+            --glass-veil-rung: calc(var(--glass-veil-rest) + var(--glass-veil-step));
+        }
+    }
+
     /* ── The box axis — four rungs, one derived pad, one gap pair, three type faces ── */
     .button[data-size="xs"] {
         --button-size: var(--control-h-xs);

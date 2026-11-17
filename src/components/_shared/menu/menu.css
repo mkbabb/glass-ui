@@ -100,6 +100,13 @@
                 border-color var(--engage-control-engage-release) var(--ease-standard),
                 box-shadow var(--engage-control-engage-release) var(--ease-standard);
         }
+
+        /* The press keeps the row's size here (`.interactive-item`), so it shows as a
+           fill step: the row takes the plate one rung above its highlight while pressed,
+           under a finger as under a pointer. */
+        .glass-menu-row:active:not([data-disabled]) {
+            background: var(--glass-plate-resting);
+        }
     }
 }
 

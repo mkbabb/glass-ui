@@ -333,9 +333,11 @@
         scale: var(--scale-press);
     }
     @media (prefers-reduced-motion: reduce) {
-        .tap-squish:not([data-press-armed]):active {
+        .tap-squish:not([data-press-armed]):active,
+        .interactive-item:active {
             /* Reset to the longhand identity (not `transform: none`) so the
-               press scale is neutralized under PRM. */
+               press scale is neutralized under PRM. A menu row shows its press by
+               its fill there (components/_shared/menu/menu.css). */
             scale: 1;
         }
     }

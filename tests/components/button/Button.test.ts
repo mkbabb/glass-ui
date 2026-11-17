@@ -272,8 +272,21 @@ describe("Button §5 STATE — three states that differ", () => {
     it("the surface cross-fade survives reduced motion", () => {
         // HEAD zeroed the WHOLE list under PRM on a component that declared no
         // transition of its own, so the rule existed only to clobber the composed
-        // surface legs that `base.css`'s own doctrine says survive PRM.
-        expect(live(STYLES)).not.toMatch(/prefers-reduced-motion/);
+        // surface legs that `base.css`'s own doctrine says survive PRM. The one
+        // reduced-motion rule here re-points the press's fill and leaves the list alone.
+        const css = live(STYLES);
+        const prm = [...css.matchAll(/@media \(prefers-reduced-motion: reduce\)/g)].map((m) => {
+            let depth = 0;
+            const open = css.indexOf("{", m.index);
+            for (let i = open; i < css.length; i++) {
+                if (css[i] === "{") depth++;
+                if (css[i] === "}" && --depth === 0) return css.slice(open, i + 1);
+            }
+            return css.slice(open);
+        });
+        expect(prm).toHaveLength(1);
+        expect(prm[0]).not.toMatch(/transition/);
+        expect(prm[0]).toMatch(/--glass-veil-rung:/);
         const base = live(STYLES).match(/\.button\s*\{([\s\S]*?)\n    \}/);
         expect(base![1]).toMatch(/transition:[\s\S]*background-color/);
         expect(base![1]).toMatch(/scale var\(--spring-press-duration\)/);
