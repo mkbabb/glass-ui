@@ -4,11 +4,13 @@
 // webkit`). Every cell films the surface frame by frame from just before the closing
 // input until it is gone.
 //
-//   form   a Select seated in a GlassDock, closed by a pick, a press outside and Escape,
-//          leaves in the form it opened in: on the phone the sheet keeps its full width,
-//          its side, its material and its place on every frame of the exit, and moves
-//          only downward, no further in one frame than its own height; a DropdownMenu
-//          seated in the dock keeps its material on every frame of its exit
+//   form   a Select seated in a GlassDock, closed by a pick of another item, a press
+//          outside, Escape, a press on its trigger and a press on the item already
+//          chosen, leaves in the form it opened in: on the phone the sheet keeps its full
+//          width, its side, its material (attribute, backdrop and fill) and its place on
+//          every frame of the exit, and moves only downward, no further in one frame than
+//          its own height; a DropdownMenu seated in the dock, closed by the same paths but
+//          the chosen item, keeps its material on every frame of its exit
 //   glass  on the phone a Select's sheet and a dock's DropdownMenu are glass (a backdrop
 //          blur, a fill that lets the ground through, no blur nested inside), and the
 //          highlighted row and a plain row read at 4.5:1 against every painted pixel
@@ -27,60 +29,62 @@ async function openHarness(page: Page, query = ""): Promise<void> {
     await page.waitForTimeout(300);
 }
 
-type Route = "pick" | "outside" | "escape";
+// A pick is a tap on another item; "current" a tap on the item already chosen.
+type Route = "pick" | "outside" | "escape" | "trigger" | "current";
 
-async function closeBy(page: Page, project: string, route: Route, pickSelector: string): Promise<void> {
-    if (route === "pick") await pressOn(page, project, pickSelector);
+type Popup = { trigger: string; content: string; pick: string; current?: string };
+
+async function closeBy(page: Page, project: string, route: Route, popup: Popup, trigger: { x: number; y: number }): Promise<void> {
+    if (route === "pick") await pressOn(page, project, popup.pick);
+    else if (route === "current") await pressOn(page, project, popup.current!);
+    else if (route === "trigger") await press(page, project, trigger.x, trigger.y);
     else if (route === "outside") await press(page, project, 195, 300);
     else await page.keyboard.press("Escape");
 }
 
-async function filmClose(
-    page: Page,
-    project: string,
-    trigger: string,
-    content: string,
-    route: Route,
-    pick: string,
-): Promise<Film> {
-    await pressOn(page, project, trigger);
-    await page.locator(`${content}[data-state="open"]`).waitFor();
+async function filmClose(page: Page, project: string, popup: Popup, route: Route): Promise<Film> {
+    // The trigger's centre, read at rest before it opens: the second tap lands there.
+    const box = (await page.locator(popup.trigger).boundingBox())!;
+    await pressOn(page, project, popup.trigger);
+    await page.locator(`${popup.content}[data-state="open"]`).waitFor();
     await page.waitForTimeout(700);
-    await startFilm(page, content);
+    await startFilm(page, popup.content);
     await markFilm(page);
-    await closeBy(page, project, route, pick);
+    await closeBy(page, project, route, popup, { x: box.x + box.width / 2, y: box.y + box.height / 2 });
     return stopFilm(page, 900);
 }
 
-const routes: Route[] = ["pick", "outside", "escape"];
+const routes: Route[] = ["pick", "outside", "escape", "trigger", "current"];
+
+const dockSelect: Popup = {
+    trigger: '[data-testid="x-select"]',
+    content: '[data-testid="x-select-content"]',
+    pick: '[data-testid="x-opt-Gradient"]',
+    current: '[data-testid="x-opt-Picker"]',
+};
+const dockMenu: Popup = { trigger: '[data-testid="x-menu"]', content: '[data-testid="x-menu-content"]', pick: '[data-testid="x-item-Share"]' };
 
 for (const route of routes) {
     test(`form · a dock Select leaves in the form it opened in · ${route}`, async ({ page }, info) => {
         const project = info.project.name;
         test.skip(
-            project === "webkit-phone" && route === "outside",
-            "Playwright WebKit's touchscreen.tap reaches no outside-press listener; the route is read at 1440",
+            project === "webkit-phone" && (route === "outside" || route === "trigger"),
+            "Playwright WebKit's touchscreen.tap reaches no outside-press listener, and a Select's trigger is outside its content; the route is read at 1440",
         );
         await openHarness(page);
-        const film = await filmClose(
-            page,
-            project,
-            '[data-testid="x-select"]',
-            '[data-testid="x-select-content"]',
-            route,
-            '[data-testid="x-opt-Gradient"]',
-        );
+        const film = await filmClose(page, project, dockSelect, route);
         const { rest, exit, gone } = exitOf(film);
         expect(rest, "the surface was open before the close").toBeTruthy();
         expect(gone, "the surface unmounts after its exit").toBe(true);
         if (isPhone(project)) expect(rest.form, "the phone Select opens as a sheet").toBe("sheet");
-        const report = exit.map((f) => ({ t: Math.round(f.t - film.mark), x: f.x, y: f.y, w: f.w, op: f.op, form: f.form, bf: f.bf }));
+        const report = exit.map((f) => ({ t: Math.round(f.t - film.mark), x: f.x, y: f.y, w: f.w, op: f.op, form: f.form, bf: f.bf, bg: f.bg }));
         await info.attach("film", { body: JSON.stringify(report), contentType: "application/json" });
         let prevY = rest.y!;
         for (const f of exit) {
             expect(f.form, `form on every exit frame ${JSON.stringify(report)}`).toBe(rest.form);
             expect(f.surface, `material attribute on every exit frame`).toBe(rest.surface);
-            expect(f.bf, `backdrop on every exit frame`).toBe(rest.bf);
+            expect(f.bf, `backdrop on every exit frame ${JSON.stringify(report)}`).toBe(rest.bf);
+            expect(f.bg, `fill on every exit frame ${JSON.stringify(report)}`).toBe(rest.bg);
             // The anchored form follows its trigger, whose label a pick rewrites; the sheet
             // holds the screen's edge.
             expect(Math.abs(f.x! - rest.x!), `x holds ${JSON.stringify(report)}`).toBeLessThanOrEqual(isPhone(project) ? 1 : 12);
@@ -97,19 +101,13 @@ for (const route of routes) {
 
     test(`form · a dock DropdownMenu keeps its material through the exit · ${route}`, async ({ page }, info) => {
         const project = info.project.name;
+        test.skip(route === "current", "a menu has no chosen item");
         test.skip(
             project === "webkit-phone" && route === "outside",
             "Playwright WebKit's touchscreen.tap reaches no outside-press listener; the route is read at 1440",
         );
         await openHarness(page);
-        const film = await filmClose(
-            page,
-            project,
-            '[data-testid="x-menu"]',
-            '[data-testid="x-menu-content"]',
-            route,
-            '[data-testid="x-item-Share"]',
-        );
+        const film = await filmClose(page, project, dockMenu, route);
         const { rest, exit, gone } = exitOf(film);
         expect(rest).toBeTruthy();
         expect(gone).toBe(true);
