@@ -938,7 +938,9 @@ for (const release of ["at speed", "at rest"] as const) {
 //            box its clip uncovers and the share on screen) moves no more than a fifth in
 //            one frame after the turn, and it ends where the second input sent it. A
 //            trigger pressed while a Dialog, a Sheet or a Select leaves reopens it, and a
-//            press on the page while a sheet leaves reaches the page. A turn is read on
+//            press on the page while a sheet leaves reaches the page. A Toast is closed
+//            when its entrance has run a twentieth of its own clock, so the close lands
+//            early in its light whatever the engine's pace. A turn is read on
 //            the frame clock, from the last frame painted before the page took the second
 //            input; a film with a hole of more than two frames before the surface comes
 //            to rest is not read either way, and the cell films it once more. An
@@ -990,8 +992,9 @@ type Turn = {
     film?: string;
     open: (page: Page, project: string) => Promise<void>;
     close: (page: Page, project: string) => Promise<void>;
-    /** ms after the first input at which the second lands, mid-motion. */
-    at: number;
+    /** When the second input lands, mid-motion: ms after the first, or a share of the
+     *  entrance's own clock (its opacity transition's elapsed time over its duration). */
+    at: number | { clock: number };
     /** A disclosure is read by its height. */
     height?: boolean;
     desktopOnly?: boolean;
@@ -1091,7 +1094,7 @@ const turns: Turn[] = [
         film: '[data-slot="toast"] > div',
         open: tap('[data-testid="x-toast"]'),
         close: tapNow('[data-slot="toast"] button[aria-label="Dismiss"]'),
-        at: 110,
+        at: { clock: 0.05 },
         only: "close",
     },
     { name: "Tooltip", content: '[data-testid="x-tooltip-content"]', open: hover('[data-testid="x-tooltip"]'), close: away, at: 60, desktopOnly: true },
@@ -1106,12 +1109,38 @@ const accordion: Turn = {
     height: true,
 };
 
-async function filmTurn(page: Page, project: string, c: Turn, first: "open" | "close", wait: number): Promise<Film> {
+/** Waits on the page until the entrance of `content` has run `share` of its own clock,
+ *  then marks the turn there. */
+async function markTurnAtClock(page: Page, content: string, share: number): Promise<void> {
+    await page.evaluate(
+        async ({ content, share }) => {
+            const t0 = performance.now();
+            for (;;) {
+                const fade = document
+                    .querySelector(content)
+                    ?.getAnimations()
+                    .find((a) => (a as unknown as { transitionProperty?: string }).transitionProperty === "opacity");
+                const duration = Number(fade?.effect?.getComputedTiming().duration ?? 0);
+                if (fade && duration > 0 && Number(fade.currentTime ?? 0) / duration >= share) {
+                    (window as unknown as { __turn: () => void }).__turn();
+                    return;
+                }
+                if (performance.now() - t0 > 3000) throw new Error(`${content} ran no entrance clock to ${share}`);
+                await new Promise((r) => requestAnimationFrame(r));
+            }
+        },
+        { content, share },
+    );
+}
+
+async function filmTurn(page: Page, project: string, c: Turn, first: "open" | "close", wait: Turn["at"]): Promise<Film> {
     await startFilm(page, c.film ?? c.content);
     await markFilm(page);
     await (first === "open" ? c.open : c.close)(page, project);
-    await page.waitForTimeout(wait);
-    await markTurn(page);
+    if (typeof wait === "number") {
+        await page.waitForTimeout(wait);
+        await markTurn(page);
+    } else await markTurnAtClock(page, c.content, wait.clock);
     await (first === "open" ? c.close : c.open)(page, project);
     return stopFilm(page, 1400);
 }
