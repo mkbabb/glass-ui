@@ -1,0 +1,188 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "docs/release-11.1.1/fix-7/probe/probe.config.ts",
+      "--project=chromium-phone",
+      "--workers=1",
+      "-g",
+      "hit · "
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-7/probe/probe.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-7/probe",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-7/probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-7/probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-7/probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-7/probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-7/logs/hit1-branch-chromium-phone.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5354",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5354",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "hit.probe.ts",
+      "file": "hit.probe.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "hit · what lies at the close button's centre in the rise",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 17693,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-18T17:12:32.399Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "hit",
+                      "contentType": "application/json",
+                      "body": "W3siYWZ0ZXIiOjYwLCJhdCI6NjYsImJ0biI6WzY3Myw3MTcsMzk1LDY5NV0sInNoZWV0IjpbNjYwLDE0OTksIjBweCA1NjYuODExcHgiLCI4MzguNzk3cHgiLCIiLGZhbHNlXSwic3RhY2siOlsicGF0aCA2OTEuLjY5OSBwZT1hdXRvIHo9YXV0byIsInN2ZyA2ODcuLjcwMyBwZT1hdXRvIHo9YXV0byIsImJ1dHRvbltkaWFsb2ctY2xvc2VdIDY3My4uNzE3IHBlPWF1dG8gej1hdXRvIiwiZGl2W3NoZWV0LWRldGVudC1oYW5kbGVdIDY3My4uNzE3IHBlPWF1dG8gej1hdXRvIiwiZGl2W3NoZWV0LWNvbnRlbnRdI3MtY29udGVudCA2NjAuLjE0OTkgcGU9YXV0byB6PTE0MCJdfSx7ImFmdGVyIjo2MCwiYXQiOjY4LCJidG4iOls2NzcsNzIxLDM5NSw2OTldLCJzaGVldCI6WzY2NCwxNTAzLCIwcHggNTcxLjI0OHB4IiwiODM4Ljc5N3B4IiwiIixmYWxzZV0sInN0YWNrIjpbInBhdGggNjk1Li43MDMgcGU9YXV0byB6PWF1dG8iLCJzdmcgNjkxLi43MDcgcGU9YXV0byB6PWF1dG8iLCJidXR0b25bZGlhbG9nLWNsb3NlXSA2NzcuLjcyMSBwZT1hdXRvIHo9YXV0byIsImRpdltzaGVldC1kZXRlbnQtaGFuZGxlXSA2NzcuLjcyMSBwZT1hdXRvIHo9YXV0byIsImRpdltzaGVldC1jb250ZW50XSNzLWNvbnRlbnQgNjY0Li4xNTAzIHBlPWF1dG8gej0xNDAiXX0seyJhZnRlciI6NjAsImF0Ijo2NywiYnRuIjpbNjc2LDcyMCwzOTUsNjk4XSwic2hlZXQiOls2NjMsMTUwMiwiMHB4IDU2OS43NjlweCIsIjgzOC43OTdweCIsIiIsZmFsc2VdLCJzdGFjayI6WyJwYXRoIDY5NC4uNzAyIHBlPWF1dG8gej1hdXRvIiwic3ZnIDY5MC4uNzA2IHBlPWF1dG8gej1hdXRvIiwiYnV0dG9uW2RpYWxvZy1jbG9zZV0gNjc2Li43MjAgcGU9YXV0byB6PWF1dG8iLCJkaXZbc2hlZXQtZGV0ZW50LWhhbmRsZV0gNjc2Li43MjAgcGU9YXV0byB6PWF1dG8iLCJkaXZbc2hlZXQtY29udGVudF0jcy1jb250ZW50IDY2My4uMTUwMiBwZT1hdXRvIHo9MTQwIl19LHsiYWZ0ZXIiOjkwLCJhdCI6MTAyLCJidG4iOls1MTQsNTU4LDM5NSw1MzZdLCJzaGVldCI6WzUwMSwxMzQwLCIwcHggNDA3LjUyNHB4IiwiODM4Ljc5N3B4IiwiIixmYWxzZV0sInN0YWNrIjpbInBhdGggNTMyLi41NDAgcGU9YXV0byB6PWF1dG8iLCJzdmcgNTI4Li41NDQgcGU9YXV0byB6PWF1dG8iLCJidXR0b25bZGlhbG9nLWNsb3NlXSA1MTQuLjU1OCBwZT1hdXRvIHo9YXV0byIsImRpdltzaGVldC1kZXRlbnQtaGFuZGxlXSA1MTQuLjU1OCBwZT1hdXRvIHo9YXV0byIsImRpdltzaGVldC1jb250ZW50XSNzLWNvbnRlbnQgNTAxLi4xMzQwIHBlPWF1dG8gej0xNDAiXX0seyJhZnRlciI6OTAsImF0IjoxMDEsImJ0biI6WzUxNiw1NjAsMzk1LDUzOF0sInNoZWV0IjpbNTAzLDEzNDIsIjBweCA0MTAuMTI4cHgiLCI4MzguNzk3cHgiLCIiLGZhbHNlXSwic3RhY2siOlsicGF0aCA1MzQuLjU0MiBwZT1hdXRvIHo9YXV0byIsInN2ZyA1MzAuLjU0NiBwZT1hdXRvIHo9YXV0byIsImJ1dHRvbltkaWFsb2ctY2xvc2VdIDUxNi4uNTYwIHBlPWF1dG8gej1hdXRvIiwiZGl2W3NoZWV0LWRldGVudC1oYW5kbGVdIDUxNi4uNTYwIHBlPWF1dG8gej1hdXRvIiwiZGl2W3NoZWV0LWNvbnRlbnRdI3MtY29udGVudCA1MDMuLjEzNDIgcGU9YXV0byB6PTE0MCJdfSx7ImFmdGVyIjo5MCwiYXQiOjk1LCJidG4iOls1NTMsNTk3LDM5NSw1NzVdLCJzaGVldCI6WzU0MCwxMzc5LCIwcHggNDQ3LjA1M3B4IiwiODM4Ljc5N3B4IiwiIixmYWxzZV0sInN0YWNrIjpbInBhdGggNTcxLi41NzkgcGU9YXV0byB6PWF1dG8iLCJzdmcgNTY3Li41ODMgcGU9YXV0byB6PWF1dG8iLCJidXR0b25bZGlhbG9nLWNsb3NlXSA1NTMuLjU5NyBwZT1hdXRvIHo9YXV0byIsImRpdltzaGVldC1kZXRlbnQtaGFuZGxlXSA1NTMuLjU5NyBwZT1hdXRvIHo9YXV0byIsImRpdltzaGVldC1jb250ZW50XSNzLWNvbnRlbnQgNTQwLi4xMzc5IHBlPWF1dG8gej0xNDAiXX0seyJhZnRlciI6MTIwLCJhdCI6MTI3LCJidG4iOls0MTYsNDYwLDM5NSw0MzhdLCJzaGVldCI6WzQwMywxMjQyLCIwcHggMzA5LjUzOXB4IiwiODM4Ljc5N3B4IiwiIixmYWxzZV0sInN0YWNrIjpbInBhdGggNDM0Li40NDIgcGU9YXV0byB6PWF1dG8iLCJzdmcgNDMwLi40NDYgcGU9YXV0byB6PWF1dG8iLCJidXR0b25bZGlhbG9nLWNsb3NlXSA0MTYuLjQ2MCBwZT1hdXRvIHo9YXV0byIsImRpdltzaGVldC1kZXRlbnQtaGFuZGxlXSA0MTYuLjQ2MCBwZT1hdXRvIHo9YXV0byIsImRpdltzaGVldC1jb250ZW50XSNzLWNvbnRlbnQgNDAzLi4xMjQyIHBlPWF1dG8gej0xNDAiXX0seyJhZnRlciI6MTIwLCJhdCI6MTI3LCJidG4iOls0MTcsNDYxLDM5NSw0MzldLCJzaGVldCI6WzQwNCwxMjQzLCIwcHggMzExLjAwMnB4IiwiODM4Ljc5N3B4IiwiIixmYWxzZV0sInN0YWNrIjpbInBhdGggNDM1Li40NDMgcGU9YXV0byB6PWF1dG8iLCJzdmcgNDMxLi40NDcgcGU9YXV0byB6PWF1dG8iLCJidXR0b25bZGlhbG9nLWNsb3NlXSA0MTcuLjQ2MSBwZT1hdXRvIHo9YXV0byIsImRpdltzaGVldC1kZXRlbnQtaGFuZGxlXSA0MTcuLjQ2MSBwZT1hdXRvIHo9YXV0byIsImRpdltzaGVldC1jb250ZW50XSNzLWNvbnRlbnQgNDA0Li4xMjQzIHBlPWF1dG8gej0xNDAiXX0seyJhZnRlciI6MTIwLCJhdCI6MTI3LCJidG4iOls0MTYsNDYwLDM5NSw0MzhdLCJzaGVldCI6WzQwMywxMjQyLCIwcHggMzA5LjUzOXB4IiwiODM4Ljc5N3B4IiwiIixmYWxzZV0sInN0YWNrIjpbInBhdGggNDM0Li40NDIgcGU9YXV0byB6PWF1dG8iLCJzdmcgNDMwLi40NDYgcGU9YXV0byB6PWF1dG8iLCJidXR0b25bZGlhbG9nLWNsb3NlXSA0MTYuLjQ2MCBwZT1hdXRvIHo9YXV0byIsImRpdltzaGVldC1kZXRlbnQtaGFuZGxlXSA0MTYuLjQ2MCBwZT1hdXRvIHo9YXV0byIsImRpdltzaGVldC1jb250ZW50XSNzLWNvbnRlbnQgNDAzLi4xMjQyIHBlPWF1dG8gej0xNDAiXX0seyJhZnRlciI6MTUwLCJhdCI6MTYxLCJidG4iOlszMTAsMzU0LDM5NSwzMzJdLCJzaGVldCI6WzI5NywxMTM2LCIwcHggMjAzLjkzNHB4IiwiODM4Ljc5N3B4IiwiIixmYWxzZV0sInN0YWNrIjpbInBhdGggMzI4Li4zMzYgcGU9YXV0byB6PWF1dG8iLCJzdmcgMzI0Li4zNDAgcGU9YXV0byB6PWF1dG8iLCJidXR0b25bZGlhbG9nLWNsb3NlXSAzMTAuLjM1NCBwZT1hdXRvIHo9YXV0byIsImRpdltzaGVldC1kZXRlbnQtaGFuZGxlXSAzMTAuLjM1NCBwZT1hdXRvIHo9YXV0byIsImRpdltzaGVldC1jb250ZW50XSNzLWNvbnRlbnQgMjk3Li4xMTM2IHBlPWF1dG8gej0xNDAiXX0seyJhZnRlciI6MTUwLCJhdCI6MTU4LCJidG4iOlszMDgsMzUyLDM5NSwzMzBdLCJzaGVldCI6WzI5NSwxMTM0LCIwcHggMjAyLjA0OXB4IiwiODM4Ljc5N3B4IiwiIixmYWxzZV0sInN0YWNrIjpbInBhdGggMzI2Li4zMzQgcGU9YXV0byB6PWF1dG8iLCJzdmcgMzIyLi4zMzggcGU9YXV0byB6PWF1dG8iLCJidXR0b25bZGlhbG9nLWNsb3NlXSAzMDguLjM1MiBwZT1hdXRvIHo9YXV0byIsImRpdltzaGVldC1kZXRlbnQtaGFuZGxlXSAzMDguLjM1MiBwZT1hdXRvIHo9YXV0byIsImRpdltzaGVldC1jb250ZW50XSNzLWNvbnRlbnQgMjk1Li4xMTM0IHBlPWF1dG8gej0xNDAiXX0seyJhZnRlciI6MTUwLCJhdCI6MTUyLCJidG4iOlszMzQsMzc4LDM5NSwzNTZdLCJzaGVldCI6WzMyMSwxMTYwLCIwcHggMjI3LjU5OHB4IiwiODM4Ljc5N3B4IiwiIixmYWxzZV0sInN0YWNrIjpbInBhdGggMzUyLi4zNjAgcGU9YXV0byB6PWF1dG8iLCJzdmcgMzQ4Li4zNjQgcGU9YXV0byB6PWF1dG8iLCJidXR0b25bZGlhbG9nLWNsb3NlXSAzMzQuLjM3OCBwZT1hdXRvIHo9YXV0byIsImRpdltzaGVldC1kZXRlbnQtaGFuZGxlXSAzMzQuLjM3OCBwZT1hdXRvIHo9YXV0byIsImRpdltzaGVldC1jb250ZW50XSNzLWNvbnRlbnQgMzIxLi4xMTYwIHBlPWF1dG8gej0xNDAiXX0seyJhZnRlciI6MTkwLCJhdCI6MTkzLCJidG4iOlsyMzUsMjc5LDM5NSwyNTddLCJzaGVldCI6WzIyMiwxMDYwLCIwcHggMTI4LjQ5MXB4IiwiODM4Ljc5N3B4IiwiIixmYWxzZV0sInN0YWNrIjpbInBhdGggMjUzLi4yNjEgcGU9YXV0byB6PWF1dG8iLCJzdmcgMjQ5Li4yNjUgcGU9YXV0byB6PWF1dG8iLCJidXR0b25bZGlhbG9nLWNsb3NlXSAyMzUuLjI3OSBwZT1hdXRvIHo9YXV0byIsImRpdltzaGVldC1kZXRlbnQtaGFuZGxlXSAyMzUuLjI3OSBwZT1hdXRvIHo9YXV0byIsImRpdltzaGVldC1jb250ZW50XSNzLWNvbnRlbnQgMjIyLi4xMDYwIHBlPWF1dG8gej0xNDAiXX0seyJhZnRlciI6MTkwLCJhdCI6MTkyLCJidG4iOlsyMzMsMjc3LDM5NSwyNTVdLCJzaGVldCI6WzIyMCwxMDU5LCIwcHggMTI3LjE3N3B4IiwiODM4Ljc5N3B4IiwiIixmYWxzZV0sInN0YWNrIjpbInBhdGggMjUxLi4yNTkgcGU9YXV0byB6PWF1dG8iLCJzdmcgMjQ3Li4yNjMgcGU9YXV0byB6PWF1dG8iLCJidXR0b25bZGlhbG9nLWNsb3NlXSAyMzMuLjI3NyBwZT1hdXRvIHo9YXV0byIsImRpdltzaGVldC1kZXRlbnQtaGFuZGxlXSAyMzMuLjI3NyBwZT1hdXRvIHo9YXV0byIsImRpdltzaGVldC1jb250ZW50XSNzLWNvbnRlbnQgMjIwLi4xMDU5IHBlPWF1dG8gej0xNDAiXX0seyJhZnRlciI6MTkwLCJhdCI6MTk0LCJidG4iOlsyMzQsMjc4LDM5NSwyNTZdLCJzaGVldCI6WzIyMSwxMDYwLCIwcHggMTI3LjkyN3B4IiwiODM4Ljc5N3B4IiwiIixmYWxzZV0sInN0YWNrIjpbInBhdGggMjUyLi4yNjAgcGU9YXV0byB6PWF1dG8iLCJzdmcgMjQ4Li4yNjQgcGU9YXV0byB6PWF1dG8iLCJidXR0b25bZGlhbG9nLWNsb3NlXSAyMzQuLjI3OCBwZT1hdXRvIHo9YXV0byIsImRpdltzaGVldC1kZXRlbnQtaGFuZGxlXSAyMzQuLjI3OCBwZT1hdXRvIHo9YXV0byIsImRpdltzaGVldC1jb250ZW50XSNzLWNvbnRlbnQgMjIxLi4xMDYwIHBlPWF1dG8gej0xNDAiXX1d"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5be1a38966fdefe8e098-b9fcf8b8b55463e5512a",
+          "file": "hit.probe.ts",
+          "line": 10,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-18T17:12:30.844Z",
+    "duration": 19678.056,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

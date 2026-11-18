@@ -1,0 +1,28 @@
+diff --git a/tests-visual/release-11-1-1.spec.ts b/tests-visual/release-11-1-1.spec.ts
+index 2fb43b769..a583393ae 100644
+--- a/tests-visual/release-11-1-1.spec.ts
++++ b/tests-visual/release-11-1-1.spec.ts
+@@ -838,8 +838,12 @@ test("sheet · a detented Sheet rises into place at its rung's size", async ({ p
+                 tap.off();
+                 return tap.events;
+             });
+-            if (!closed) await page.keyboard.press("Escape");
+-            await sheetGone(page);
++            const hit = drawn.shown && heard.some((e) => e.type === "click") && heard.every((e) => e.target);
++            // A press that lands on the head catches the moving sheet and settles it on the
++            // nearest rung, which the harness keeps; after one, the harness is opened again
++            // so the next tap opens to the 0.9 rung.
++            if (closed && hit) await sheetGone(page);
++            else await openSheetHarness(page);
+             await page.waitForTimeout(400);
+             taps.push({
+                 after,
+@@ -848,7 +852,7 @@ test("sheet · a detented Sheet rises into place at its rung's size", async ({ p
+                 // Each event: its type, the button its target and at its point (1 or 0),
+                 // the frames drawn since the read, the point's distance from the button.
+                 events: heard.map((e) => `${e.type}:${+e.target}${+e.point}:f${e.frames}:${e.off}px`).join(" "),
+-                hit: drawn.shown && heard.some((e) => e.type === "click") && heard.every((e) => e.target),
++                hit,
+                 closed,
+             });
+         }
