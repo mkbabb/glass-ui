@@ -39,6 +39,7 @@ import {
     type Ref,
 } from "vue";
 import { useSpring, type SpringRef } from "./useSpring";
+import { readExitClock, runExitClock } from "./exitClock";
 
 import { springPreset, type SpringPresetName } from "./springPresets";
 
@@ -120,51 +121,11 @@ export interface SpringMountRef {
  *  position settle threshold, under a pixel for any surface shorter than 1,000 px). */
 const EXIT_EDGE = 1e-3;
 
-/** A CSS `cubic-bezier()` as a function of progress, or linear for `linear`. */
-function bezierOf(timing: string): ((k: number) => number) | null {
-    if (timing.trim() === "linear") return (k) => k;
-    const m = /cubic-bezier\(([^)]+)\)/.exec(timing);
-    if (!m) return null;
-    const [x1, y1, x2, y2] = m[1].split(",").map(Number);
-    const at = (a: number, b: number, t: number) => 3 * (1 - t) ** 2 * t * a + 3 * (1 - t) * t * t * b + t ** 3;
-    return (k) => {
-        let lo = 0;
-        let hi = 1;
-        for (let i = 0; i < 30; i++) {
-            const mid = (lo + hi) / 2;
-            if (at(x1, x2, mid) < k) lo = mid;
-            else hi = mid;
-        }
-        return at(y1, y2, (lo + hi) / 2);
-    };
-}
-
 /** How much longer than its row's exit clock a mounted surface takes to leave. The
  *  `present` row's exit is the generator's 0.12 s floor, which a centred modal plate
  *  crosses in too few frames to read; it leaves in 1.5 times that, about 180 ms, still
  *  well inside its entrance. The other rows leave on their own clock. */
 const MOUNT_EXIT_STRETCH: Partial<Record<SpringPreset, number>> = { present: 1.5 };
-
-const msOf = (duration: string): number =>
-    duration.endsWith("ms") ? parseFloat(duration) : parseFloat(duration) * 1000;
-
-/** The row's exit clock (ms) and the exit curve, read from the stylesheet. Under reduced
- *  motion the clock is held to at most `--duration-fast`. */
-function readExit(
-    preset: SpringPreset,
-    reduced: boolean,
-): { ms: number; ease: (k: number) => number } | null {
-    if (typeof document === "undefined" || !document.body) return null;
-    const probe = document.createElement("div");
-    probe.style.cssText = `position:absolute;visibility:hidden;transition-duration:var(--spring-${preset}-exit-duration);transition-timing-function:var(--exit-curve);animation-duration:var(--duration-fast)`;
-    document.body.appendChild(probe);
-    const cs = getComputedStyle(probe);
-    const exitMs = msOf(cs.transitionDuration.trim()) * (MOUNT_EXIT_STRETCH[preset] ?? 1);
-    const ms = reduced ? Math.min(exitMs, msOf(cs.animationDuration.trim())) : exitMs;
-    const ease = bezierOf(cs.transitionTimingFunction);
-    probe.remove();
-    return ms > 0 && ease ? { ms, ease } : null;
-}
 
 export function useSpringMount(options: UseSpringMountOptions): SpringMountRef {
     const presetName = options.preset ?? "panel";
@@ -201,11 +162,7 @@ export function useSpringMount(options: UseSpringMountOptions): SpringMountRef {
 
     // The exit tween's position while it runs; null when the spring owns the position.
     const exitPosition = ref<number | null>(null);
-    let exitFrame = 0;
-    const stopExit = () => {
-        if (exitFrame) cancelAnimationFrame(exitFrame);
-        exitFrame = 0;
-    };
+    let stopExit = () => {};
     const reducedMotion = () =>
         options.respectReducedMotion !== false &&
         typeof window !== "undefined" &&
@@ -216,32 +173,21 @@ export function useSpringMount(options: UseSpringMountOptions): SpringMountRef {
     function tween(to: 0 | 1): boolean {
         const reduced = reducedMotion();
         if (to === 0 && !reduced) return false;
-        const exit = readExit(presetName, reduced);
+        const exit = readExitClock(presetName, reduced, MOUNT_EXIT_STRETCH[presetName]);
         if (!exit || typeof requestAnimationFrame !== "function") return false;
         stopExit();
         const from = exitPosition.value ?? spring.value.value;
-        // The clock advances by at most one 60 Hz frame per frame, so a long frame (a pick
-        // that navigates, a list that re-renders) slows the exit rather than skipping a
-        // stretch of it; on steady frames it runs on the exit clock.
-        let last: number | null = null;
-        let elapsed = 0;
         exitPosition.value = from;
         // The spring heads for the same end underneath, so a reversal retargets it.
         target.value = to;
-        const step = (now: number) => {
-            if (last !== null) elapsed += Math.min(now - last, 1000 / 60);
-            last = now;
-            const k = Math.min(1, elapsed / exit.ms);
-            exitPosition.value = from + (to - from) * exit.ease(k);
-            if (k < 1) {
-                exitFrame = requestAnimationFrame(step);
-                return;
-            }
-            exitFrame = 0;
-            spring.reset(to, 0);
-            exitPosition.value = null;
-        };
-        exitFrame = requestAnimationFrame(step);
+        stopExit = runExitClock(
+            exit,
+            (k) => (exitPosition.value = from + (to - from) * k),
+            () => {
+                spring.reset(to, 0);
+                exitPosition.value = null;
+            },
+        );
         return true;
     }
 

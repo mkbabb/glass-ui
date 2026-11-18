@@ -22,10 +22,17 @@
 // are room-sized growth (`bloom`), rung-to-rung travel is coordinated travel (`dock`).
 // A leg change re-seats a fresh spring at the live `(value, velocity)`, so the
 // trajectory stays continuous across the register change.
+//
+// REDUCED MOTION: the spring lands the box on its rung at once, and the sheet fades in
+// and out instead, over the travel row's exit clock held to at most `--duration-fast`,
+// on `--exit-curve`, as a sliding sheet does. The box holds where it stands while it
+// fades out.
 
 import { computed, onScopeDispose, ref, watch, type Ref } from "vue";
 import { SpringProgress } from "@mkbabb/keyframes.js";
 import { motionTempo } from "../../../composables/motion/core/motionTempo";
+import { readReducedMotion } from "../../../composables/motion/core/useReducedMotion";
+import { readExitClock, runExitClock } from "../../../composables/motion/spring/exitClock";
 import { springPreset } from "../../../composables/motion/spring/springPresets";
 import { nearestRung, resolveRelease } from "./projection";
 import type { SidePlacement } from "../motion";
@@ -56,7 +63,10 @@ export interface UseSheetDetentsReturn {
      * time it is `t`.
      */
     size: Readonly<Ref<number>>;
-    /** Mount hold — true until the dismissing spring reaches 0. */
+    /** The sheet's opacity while it fades in or out under reduced motion; null otherwise. */
+    opacity: Readonly<Ref<number | null>>;
+    /** Mount hold — true until the close has run: the dismissing spring reaching 0, or
+     *  the fade out under reduced motion. */
     present: Readonly<Ref<boolean>>;
     /** True while a pointer drag is in flight. */
     dragging: Readonly<Ref<boolean>>;
@@ -123,6 +133,37 @@ export function useSheetDetents(
     const size = computed(() => rising.value ?? t.value);
     const present = ref(open.value);
     const dragging = ref(false);
+    const opacity = ref<number | null>(null);
+    // Where the running fade heads, or null when none runs.
+    let fadeTo: 0 | 1 | null = null;
+    let stopFade = () => {};
+
+    /** Under reduced motion, fades the sheet to `to` from the opacity it shows, then calls
+     *  `done`. False where motion is not reduced or no stylesheet resolves the clock. */
+    function fade(to: 0 | 1, done: () => void): boolean {
+        if (!readReducedMotion()) return false;
+        const clock = readExitClock(LEG_PRESET.travel, true);
+        if (!clock || typeof requestAnimationFrame !== "function") return false;
+        stopFade();
+        const from = opacity.value ?? 1 - to;
+        fadeTo = to;
+        opacity.value = from;
+        stopFade = runExitClock(
+            clock,
+            (k) => (opacity.value = from + (to - from) * k),
+            () => {
+                fadeTo = null;
+                done();
+            },
+        );
+        return true;
+    }
+
+    function clearFade() {
+        stopFade();
+        fadeTo = null;
+        opacity.value = null;
+    }
 
     let spring: SpringProgress | null = null;
     let leg: Leg | null = null;
@@ -166,6 +207,29 @@ export function useSheetDetents(
 
     function snapTo(fraction: number) {
         settle(nearestRung(fraction, ladder()), "rung");
+    }
+
+    /**
+     * The close. Under reduced motion the box stays where it stands and the sheet fades
+     * out, then the scalar goes to 0 and the mount is released; otherwise the scalar
+     * settles to 0 on the travel leg.
+     */
+    function leave() {
+        if (fadeTo === 0) return;
+        const faded = fade(0, () => {
+            spring?.dispose();
+            spring = null;
+            leg = null;
+            rising.value = null;
+            t.value = 0;
+            present.value = false;
+        });
+        if (faded) {
+            spring?.stop();
+            return;
+        }
+        settle(0, "travel", rising.value);
+        if (spring?.settled) present.value = false;
     }
 
     /** The rung an open sheet seats at: the model's, else the ladder's fullest. */
@@ -244,7 +308,7 @@ export function useSheetDetents(
         seatSpring(target === 0 ? "travel" : "rung", t.value, velocity);
         if (target === 0) {
             requestClose();
-            settle(0, "travel");
+            leave();
             return;
         }
         settle(target, "rung");
@@ -274,18 +338,19 @@ export function useSheetDetents(
                 }
                 const rung = seatedRung();
                 settle(rung, "travel", rung);
+                if (!fade(1, () => (opacity.value = null))) clearFade();
                 return;
             }
             if (!present.value) return;
             releaseDrag();
             if (!spring) {
+                clearFade();
                 t.value = 0;
                 rising.value = null;
                 present.value = false;
                 return;
             }
-            settle(0, "travel", rising.value);
-            if (spring.settled) present.value = false;
+            leave();
         },
         { immediate: true, flush: "sync" },
     );
@@ -301,9 +366,10 @@ export function useSheetDetents(
 
     onScopeDispose(() => {
         releaseDrag();
+        stopFade();
         spring?.dispose();
         spring = null;
     });
 
-    return { t, size, present, dragging, snapTo, onPointerdown };
+    return { t, size, opacity, present, dragging, snapTo, onPointerdown };
 }

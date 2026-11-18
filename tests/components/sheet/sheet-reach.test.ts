@@ -71,7 +71,7 @@ describe("gate:G-SHEET-REACH — a detent is a size, so the actions stay on the 
     it("translates a detented sheet only by what is not up — at every resting rung the box is stationary", () => {
         const sfc = read("src/components/sheet/SheetContent.vue");
         // The detented branch of the spring style publishes the scalar and returns.
-        const branch = /if\s*\(detented\.value\)\s*return\s*\{([^}]*)\}/.exec(sfc);
+        const branch = /if\s*\(detented\.value\)\s*\{[^{}]*return\s*\{([^}]*)\}/.exec(sfc);
         expect(
             branch,
             "the detented arm must have its own style branch",

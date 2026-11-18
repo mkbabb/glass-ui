@@ -149,6 +149,7 @@ const surfaces: Surface[] = [
     { name: "Dialog", says: true, content: '[data-testid="x-dialog-content"]', enter: tap('[data-testid="x-dialog"]'), leave: escape },
     { name: "Sheet right", says: true, content: '[data-testid="x-sheet-right-content"]', enter: tap('[data-testid="x-sheet-right"]'), leave: escape },
     { name: "Sheet bottom", says: true, content: '[data-testid="x-sheet-bottom-content"]', enter: tap('[data-testid="x-sheet-bottom"]'), leave: escape },
+    { name: "detented Sheet", says: true, content: '[data-testid="x-detent-content"]', enter: tap('[data-testid="x-detent"]'), leave: escape },
     {
         name: "Toast",
         content: '[data-slot="toast"]',
