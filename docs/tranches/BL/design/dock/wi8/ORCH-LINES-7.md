@@ -18,6 +18,14 @@ The owner's founding words for this redesign are "Dock seems like a mess with al
 
 Line 4 had the plate take the first rung that passes G-15, from the glass end. RULINGS-7 shows G-15 passes no rung in both engines; it excludes rungs and cannot pick one. RU-67's rule stands in its place: light takes level 1, and dark takes the level at which the dark dock hides as much of a patterned page as the light dock does, read on the grid ground (H6), both engines, with today's dock from v11.0.2's tree beside it. Dark 0.7 holds until H6 reads. G-15 still excludes: a rung that fails it is not taken, and if the rung RU-67 picks fails G-15, the pass reports that and question 21's default applies (keep the dock glass and the words readable, the selected patch fainter).
 
+## 4. The dock's corner is one value on every frame of a morph (added 2026-11-18, atlas's G1)
+
+atlas reads its open home rail (72x531) morphing to the disc (44x44) on its production build: the dock's `border-top-left-radius` reads two values on every frame of the move (`36px 80.4px` on a 167x553 box at 323 ms, `36px 265.5px` on the finished disc from 760 to about 1031 ms), the open rail's half sizes held as an elliptical corner, so the rail turns elliptical and the disc is drawn as a narrow slot for about 300 ms (`sci-report/atlas/docs/tranches/U/design/OWNER-1117-GLASS-ROWS.md`, G1, with its probe `/Users/mkbabb/Programming/.u-build/out/lt/look/h1-atlas/bin/h15c.mjs`). The owner: "the dock expands into an ellipse, which is not correct". It is the owner's law that docks are full pills.
+
+- The SOURCE seat reads it first, on the merged tree, in Chromium 1440 light (one run): a dock morphing from an open rail to its disc and back (the harness's home-rail cell, or the nearest), the corner and the box read on every frame. If the corner is ever two values, or one that is not at least half the box's smaller side, find what writes it and cure it so that the corner is the stadium on every frame (one value, at least half the smaller side), in the morph the redesign keeps. Witness RED on v11.1.0's tree and GREEN on the tip, both engines. If the merged tree never shows it, record the reading and the glass version atlas's production carries, and stop the item.
+- The MEASURE seat reads the same cell in both engines, both schemes.
+- This is not a redesign: no ruling changes; a cure that takes more than the corner goes back to the next ruling round.
+
 ## The owner's questions
 
 Questions 10, 12, 14 and 18 to 21 carry their defaults; the work goes on with them, and each answer the owner gives replaces its default.
