@@ -5,13 +5,12 @@
 // when the new content can be taller than the box; at rest a focus ring or a shadow
 // on what it holds draws whole.
 //
-// A glass surface fades by its own opacity. In Chromium an ancestor whose opacity is
-// below 1, or that carries a clip-path, stops a backdrop-filter sampling what lies
-// behind that ancestor, so a pane faded whole shows its glass unfrosted for the whole
-// fade and frosts it in one frame when the fade ends. The fade therefore moves each
-// glass element, and each part that holds no glass, and passes through the bare
-// wrappers between them; the travel's clip is an overflow clip where the engine has
-// overflow-clip-margin.
+// The fade moves the stage's one element, the pane's child, by its own opacity, so the
+// content fades as one layer and no part shows through another. In Chromium an
+// ancestor whose opacity is below 1 stops a backdrop-filter sampling what lies behind
+// that ancestor: glass that is the stage's element frosts through the whole fade, and
+// glass inside a wrapper shows unfrosted until the fade ends, as when the pane faded.
+// The travel's clip is an overflow clip where the engine has overflow-clip-margin.
 import { nextTick, ref, watch } from "vue";
 
 const props = defineProps<{ swapKey: string }>();
@@ -35,66 +34,29 @@ watch(
     { flush: "pre" },
 );
 
-const isGlass = (el: Element): boolean => {
-    const bf = getComputedStyle(el).backdropFilter;
-    return !!bf && bf !== "none";
-};
+// What a fade moves: the stage's element, or the pane when the stage puts more than one.
+const layer = (pane: Element): Element => (pane.childElementCount === 1 ? pane.firstElementChild! : pane);
 
-const hasText = (el: Element): boolean =>
-    [...el.childNodes].some((n) => n.nodeType === Node.TEXT_NODE && /\S/.test(n.textContent ?? ""));
-
-// A wrapper paints nothing of its own: no fill, image, edge, shadow, text or pseudo-element.
-function isBare(el: Element): boolean {
-    const cs = getComputedStyle(el);
-    const clear = (c: string) => c === "transparent" || /^rgba\(.*,\s*0\)$/.test(c);
-    const edge = ["Top", "Right", "Bottom", "Left"].some(
-        (k) => parseFloat(cs.getPropertyValue(`border-${k.toLowerCase()}-width`)) > 0,
-    );
-    const pseudo = ["::before", "::after"].some((p) => !/^(none|normal)$/.test(getComputedStyle(el, p).content));
-    return clear(cs.backgroundColor) && cs.backgroundImage === "none" && !edge && cs.boxShadow === "none" && !hasText(el) && !pseudo;
-}
-
-// What a fade moves inside a pane: each glass element, each part that holds no glass,
-// and the pane itself when it holds no glass or carries text of its own.
-function fadeTargets(pane: Element): Element[] {
-    const glass = [...pane.querySelectorAll("*")].filter(isGlass);
-    if (!glass.length || hasText(pane)) return [pane];
-    const holds = new Set<Element>();
-    for (const g of glass) for (let a = g.parentElement; a && a !== pane; a = a.parentElement) holds.add(a);
-    const out: Element[] = [];
-    const walk = (el: Element): void => {
-        for (const c of el.children) {
-            const through = getComputedStyle(c).display === "contents" || (holds.has(c) && !isGlass(c) && isBare(c));
-            if (through) walk(c);
-            else out.push(c);
-        }
-    };
-    walk(pane);
-    return out;
-}
-
-// A leave fades each target from where it stands (mid-fade if a switch lands during
-// one) to 0 and holds there until the pane is removed; an enter fades from 0 to what
-// the target would show without it, so a part's own entrance runs inside the fade.
-function fade(targets: Element[], to: "out" | "in", timing: { duration: number; easing: string }): Promise<unknown> {
-    const runs = targets.map((el) => {
-        const now = parseFloat(getComputedStyle(el).opacity);
-        fading.get(el)?.cancel();
-        const frames = to === "out" ? [{ opacity: now }, { opacity: 0 }] : [{ offset: 0, opacity: 0 }];
-        const run = el.animate(frames, { ...timing, fill: to === "out" ? "forwards" : "none", id: "stage-swap-fade" });
-        fading.set(el, run);
-        return run.finished;
-    });
-    return Promise.allSettled(runs);
+// A leave fades the layer from where it stands (mid-fade if a switch lands during one)
+// to 0 and holds there until the pane is removed; an enter fades from 0 to what the
+// layer would show without it, so its own entrance runs inside the fade.
+function fade(pane: Element, to: "out" | "in", timing: { duration: number; easing: string }): Promise<unknown> {
+    const el = layer(pane);
+    const now = parseFloat(getComputedStyle(el).opacity);
+    fading.get(el)?.cancel();
+    const frames = to === "out" ? [{ opacity: now }, { opacity: 0 }] : [{ offset: 0, opacity: 0 }];
+    const run = el.animate(frames, { ...timing, fill: to === "out" ? "forwards" : "none", id: "stage-swap-fade" });
+    fading.set(el, run);
+    return run.finished.catch(() => undefined);
 }
 
 function onLeave(el: Element, done: () => void): void {
-    void fade(fadeTargets(el), "out", LEAVE).then(done);
+    void fade(el, "out", LEAVE).then(done);
 }
 
 function onEnter(el: Element, done: () => void): void {
     const easing = getComputedStyle(el).getPropertyValue("--ease-out").trim() || "ease-out";
-    void fade(fadeTargets(el), "in", { duration: ENTER_MS, easing }).then(done);
+    void fade(el, "in", { duration: ENTER_MS, easing }).then(done);
     void travelTo();
 }
 
