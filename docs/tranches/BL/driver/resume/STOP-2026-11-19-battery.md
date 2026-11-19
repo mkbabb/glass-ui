@@ -9,3 +9,5 @@ Resume when the Mac holds its charge (80 % or more and not falling), the power h
 3. **Demo P17 close:** `Workflow({scriptPath: "docs/tranches/BL/driver/demo-p17-close.js", resumeFromRunId: "wf_dac9f195-7ba", args: <driver/resume/demo-p17-close-after-pause.json>})`. bl/demo at 4e8686d1d, pushed; items 2 and 3 uncommitted, saved as `.p17/close/wip-at-battery.patch`.
 
 Owed after 11.1.1 lands: atlas's tarball to `/Users/mkbabb/Programming/.u-build/inbound-glass/` with its commit; the publish notices (value.js, atlas, Home Assistant, Gregg, gaggle).
+
+Also owed when the machine holds its charge: atlas's G3 to G15 (INBOUND O-413) read and placed with an adversarial verify per group, as Home Assistant's round 13 was (`docs/tranches/BL/audit/hassio-r13/triage.js` is the model), then the version list sent to sci-report-5f. Dock pass 8's source seat reads ORCH-LINES-7 line 4 as restated on 2026-11-19 (the card and rounded shapes, not the pill).
