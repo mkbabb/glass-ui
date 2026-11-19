@@ -21,6 +21,12 @@
 // frame after a press can land a large share of any curve; the leave line reads the
 // curve itself. The entering pane's fade is read the same way and reported, not graded.
 //
+// P17's close adds the enter line: per switch, the sampled fade's rising leg (the new
+// pane fading in, read every headless frame) and its largest step as a share of its
+// travel; `enterLeg` holds the route's first switch, where the new pane is styled and
+// laid out for the first time, and the largest of all. A route passes when every enter
+// leg it reads steps 0.2 or less, as a leave does.
+//
 // Machine law (~/.claude/CLAUDE.md): run only through `~/.claude/guard/guarded`, never
 // `--light`. Chromium headless shell; the flags `--use-angle=metal --enable-gpu
 // --ignore-gpu-blocklist` are the checker's named exception (canvases must render).
@@ -342,7 +348,9 @@ try {
                         if (missed) { row.switches.push({ label, option: i, pass: false, missed }); continue; }
                         const op = grade(legs(s.map((x) => x[0])), 0.05);
                         const ht = grade(legs(s.map((x) => x[1])), 2);
-                        row.switches.push({ label, option: i, opacity: op, height: ht, fade, pass: op.pass && ht.pass, frames: s.length });
+                        const ups = op.legs.filter((l) => l.to > l.from);
+                        const enterStep = ups.length ? Math.max(...ups.map((l) => l.step)) : null;
+                        row.switches.push({ label, option: i, opacity: op, height: ht, fade, enterStep, pass: op.pass && ht.pass, frames: s.length });
                     }
                 }
 
@@ -383,10 +391,14 @@ try {
                 const enters = row.switches.flatMap((s) => s.fade?.enter ?? []);
                 row.leave = leaves.length ? { max: Math.max(...leaves.map((l) => l.step)), n: leaves.length, curves: [...new Set(leaves.map((l) => `${l.ms}ms ${l.curve}`))], pass: leaves.every((l) => l.step <= 0.2) } : null;
                 row.enter = enters.length ? { max: Math.max(...enters.map((l) => l.step)), n: enters.length, curves: [...new Set(enters.map((l) => `${l.ms}ms ${l.curve}`))] } : null;
-                row.pass = !row.run && errors.length === 0 && row.switches.every((s) => s.pass) && (row.code?.pass ?? true) && (row.layer?.pass ?? true) && !row.overflowAfterUse && (row.closed == null || row.closed === 0) && (row.leave?.pass ?? true);
+                // the close: the sampled enter leg's largest step, the first switch's and all
+                const ent = row.switches.map((s) => s.enterStep).filter((x) => x != null);
+                row.enterLeg = ent.length ? { first: ent[0], max: Math.max(...ent), n: ent.length, pass: ent.every((x) => x <= 0.2) } : null;
+                row.pass = !row.run && errors.length === 0 && row.switches.every((s) => s.pass) && (row.code?.pass ?? true) && (row.layer?.pass ?? true) && !row.overflowAfterUse && (row.closed == null || row.closed === 0) && (row.leave?.pass ?? true) && (row.enterLeg?.pass ?? true);
                 rowsOut.write(JSON.stringify(row) + "\n");
                 const sw = row.switches.length ? `${row.switches.filter((s) => s.pass).length}/${row.switches.length} switches` : "no switch";
-                const lv = row.leave ? `; leave ${row.leave.pass ? "ok" : "FAIL"} ${row.leave.max} (${row.leave.n}, ${row.leave.curves.join(" | ")}); enter ${row.enter?.max ?? "-"}` : "";
+                const lv = (row.leave ? `; leave ${row.leave.pass ? "ok" : "FAIL"} ${row.leave.max} (${row.leave.n}, ${row.leave.curves.join(" | ")}); enter ${row.enter?.max ?? "-"}` : "")
+                    + (row.enterLeg ? `; enter leg ${row.enterLeg.pass ? "ok" : "FAIL"} ${row.enterLeg.max} (first ${row.enterLeg.first}, ${row.enterLeg.n})` : "");
                 console.log(`${row.pass ? "pass" : "FAIL"} ${cellId} ${route} ${sw}; code ${row.code ? (row.code.pass ? "ok" : "FAIL") : "-"}; layer ${row.layer ? (row.layer.pass ? "ok" : "FAIL") : "-"}; console ${errors.length}${row.closed != null ? `; closed ${row.closed}` : ""}${lv}${row.run ? "; run " + row.run : ""}${row.overflowAfterUse ? "; overflow" : ""}`);
                 await ctx.close().catch(() => {});
             }
