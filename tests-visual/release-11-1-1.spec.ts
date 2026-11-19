@@ -660,7 +660,10 @@ for (const c of triggerCases) {
 //          draws it, hits the button and closes the sheet, twenty times in twenty at
 //          each: the button is the element at the tap's point in the frame it is read
 //          from and the target of the tap's press and of its click (how far the button
-//          stands from its rest then, and where the press lands, are recorded). A drag
+//          stands from its rest then, and where the press lands, are recorded). A press
+//          that misses because it lands where the button no longer stands, a later frame
+//          having moved it, was aimed at a frame already gone: it is recorded and the tap
+//          is taken again, at most twenty times. A drag
 //          from its 0.5 rung up past the midpoint, let go at speed or at rest, springs
 //          on from where the finger left it: from the release no frame carries more than
 //          a fifth of the travel left, and the sheet settles on the 0.9 rung. The sheet
@@ -765,12 +768,14 @@ test("sheet · a detented Sheet rises into place at its rung's size", async ({ p
     // goes there however the sheet has moved by then. Headless Chromium delivers the press
     // a frame after the read, when the button has risen by that frame's travel, so the
     // element at the press's own point, the frames between and the point's distance from
-    // the button are recorded with each tap.
+    // the button are recorded with each tap. A press that misses the button with its point
+    // outside the button's box when it lands met a later frame than the one it was aimed
+    // at; it counts as aimed late, and the tap is taken again.
     type Heard = { type: string; target: boolean; point: boolean; frames: number; off: number };
     type Tap = { openAt: number; frames: number; events: Heard[]; off: () => void };
-    const taps: { after: number; at: number; dy: number; events: string; hit: boolean; closed: boolean }[] = [];
+    const taps: { after: number; aimed: boolean; at: number; dy: number; events: string; hit: boolean; closed: boolean }[] = [];
     for (const after of [120, 190, 250, 400])
-        for (let i = 0; i < 20; i++) {
+        for (let aimed = 0, late = 0; aimed < 20 && late < 20; ) {
             await page.evaluate(
                 ({ sheet, close }) => {
                     const tap: Tap = { openAt: 0, frames: -1, events: [], off: () => {} };
@@ -838,17 +843,26 @@ test("sheet · a detented Sheet rises into place at its rung's size", async ({ p
                 tap.off();
                 return tap.events;
             });
-            if (!closed) await page.keyboard.press("Escape");
-            await sheetGone(page);
+            const hit = drawn.shown && heard.some((e) => e.type === "click") && heard.every((e) => e.target);
+            const down = heard.find((e) => e.type === "pointerdown");
+            const onTime = hit || !down || down.off === 0;
+            if (onTime) aimed++;
+            else late++;
+            // A press that lands on the head catches the moving sheet and settles it on the
+            // nearest rung, which the harness keeps; after one, the harness is opened again
+            // so the next tap opens to the 0.9 rung.
+            if (closed && hit) await sheetGone(page);
+            else await openSheetHarness(page);
             await page.waitForTimeout(400);
             taps.push({
                 after,
+                aimed: onTime,
                 at: drawn.at,
                 dy: +(drawn.y - rest.y).toFixed(1),
                 // Each event: its type, the button its target and at its point (1 or 0),
                 // the frames drawn since the read, the point's distance from the button.
                 events: heard.map((e) => `${e.type}:${+e.target}${+e.point}:f${e.frames}:${e.off}px`).join(" "),
-                hit: drawn.shown && heard.some((e) => e.type === "click") && heard.every((e) => e.target),
+                hit,
                 closed,
             });
         }
@@ -858,8 +872,9 @@ test("sheet · a detented Sheet rises into place at its rung's size", async ({ p
     expect(rise.heightSpread, `its block size reads one value on every frame of the rise ${at}`).toBeLessThanOrEqual(1);
     expect(rise.share, `no frame carries more than a fifth of the head's travel, first and last included ${at}`).toBeLessThanOrEqual(0.2);
     for (const after of [120, 190, 250, 400]) {
-        const these = taps.filter((r) => r.after === after);
-        const said = JSON.stringify(these.filter((r) => !r.hit || !r.closed));
+        const these = taps.filter((r) => r.after === after && r.aimed);
+        const said = JSON.stringify(taps.filter((r) => r.after === after && (!r.aimed || !r.hit || !r.closed)));
+        expect(these.length, `at open plus ${after} ms twenty presses land where the frame draws the button ${said}`).toBe(20);
         expect(these.filter((r) => r.hit).length, `at open plus ${after} ms the tap hits the button, twenty in twenty ${said}`).toBe(20);
         expect(these.filter((r) => r.closed).length, `and closes the sheet, twenty in twenty ${said}`).toBe(20);
     }
