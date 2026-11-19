@@ -1,0 +1,285 @@
+b/src/components/_shared/disclosure/disclosure.css: /* Under reduced motion the region does not grow or shrink: it is at its full size from
+b/src/components/_shared/menu/menu.css:         /* The press keeps the row's size here (`.interactive-item`), so it shows as a
+b/src/components/_shared/overlay/exit-press.ts: /**
+b/src/components/_shared/overlay/exit-press.ts:  * The page takes presses while a surface leaves.
+b/src/components/_shared/overlay/exit-press.ts:  *
+b/src/components/_shared/overlay/exit-press.ts:  * A closed surface stays mounted through its exit, and with it reka's dismissable layer,
+b/src/components/_shared/overlay/exit-press.ts:  * which (for a modal surface or a listbox) sets `pointer-events: none` on `body` and
+b/src/components/_shared/overlay/exit-press.ts:  * dismisses on any press outside it. During the exit that swallowed the press that
+b/src/components/_shared/overlay/exit-press.ts:  * should reopen the surface from its trigger, or reach the page behind a leaving sheet,
+b/src/components/_shared/overlay/exit-press.ts:  * and a touch reopen was dismissed again by its own click.
+b/src/components/_shared/overlay/exit-press.ts:  *
+b/src/components/_shared/overlay/exit-press.ts:  * `blockOutside` is what the layer's `disableOutsidePointerEvents` should be: the
+b/src/components/_shared/overlay/exit-press.ts:  * surface's own setting while it is open, false once it has closed. `letThrough` goes
+b/src/components/_shared/overlay/exit-press.ts:  * first in the layer's `pointerDownOutside`: a press that began while the surface was
+b/src/components/_shared/overlay/exit-press.ts:  * already closed is not a dismissal (a dismissal is a press on an open surface; this one
+b/src/components/_shared/overlay/exit-press.ts:  * may be reopening it), so it prevents the dismissal and returns true.
+b/src/components/_shared/overlay/exit-press.ts:  */
+b/src/components/_shared/overlay/leave-finished.ts: /** The surfaces that announce the end of their leave, as `detail.kind` names them. */
+b/src/components/_shared/overlay/leave-finished.ts: /** The name of the event, the same on every surface: the Vue emit and the DOM event. */
+b/src/components/_shared/overlay/leave-finished.ts: /** reka-ui's `Presence` dispatches this, without bubbling, on the node it is about to
+b/src/components/_shared/overlay/leave-finished.ts:  *  unmount once its exit has ended (and on an unmount with no exit). */
+b/src/components/_shared/overlay/leave-finished.ts: /**
+b/src/components/_shared/overlay/leave-finished.ts:  * Announces that a surface's leave has finished: once per close, after the exit's last
+b/src/components/_shared/overlay/leave-finished.ts:  * frame, as a Vue emit (`leave-finished`) and as a DOM `CustomEvent` of the same name
+b/src/components/_shared/overlay/leave-finished.ts:  * from the content element, bubbling and composed (so a listener on a shadow host
+b/src/components/_shared/overlay/leave-finished.ts:  * hears it), with the surface's kind in `detail`. A close reversed by a reopen
+b/src/components/_shared/overlay/leave-finished.ts:  * announces nothing; an exit cut short by an unmount announces at the unmount.
+b/src/components/_shared/overlay/leave-finished.ts:  *
+b/src/components/_shared/overlay/leave-finished.ts:  * The content element carries `attrs` (a key this reads it back by). The end of the
+b/src/components/_shared/overlay/leave-finished.ts:  * leave is the moment reka's `Presence` lets the content go, which every surface here
+b/src/components/_shared/overlay/leave-finished.ts:  * mounts through: its exit animation (or the hold that keeps it through its exit
+b/src/components/_shared/overlay/leave-finished.ts:  * transitions, or the spring's mount hold) has ended, and the node is still in the
+b/src/components/_shared/overlay/leave-finished.ts:  * document, so the event bubbles to the page.
+b/src/components/_shared/overlay/leave-finished.ts:  */
+b/src/components/_shared/overlay/leave-finished.ts:     /* The content is where the component mounts it (in the page, or inside a shadow
+b/src/components/_shared/overlay/leave-finished.ts:     /* reka's event does not bubble out of a shadow root, so the listener sits on the
+b/src/components/_shared/overlay/leave-finished.ts:         // The Presence node is the content element itself, or the popper wrapper round it.
+b/src/components/_shared/overlay/sheet-width.ts:  * what the reader was choosing for, so it covers the page as a sheet. A sheet covers
+b/src/components/_shared/overlay/sheet-width.ts:  * more of the page than an anchored popup, so it wears the firm plate (`data-plate=
+b/src/components/_shared/overlay/sheet-width.ts:  * "firm"`, glass/surface-axis.css): the overlay rung's glass, firmed toward the card so
+b/src/components/_shared/overlay/sheet-width.ts:  * its rows read over any ground. The width is a fact of the viewport, read here once for
+b/src/components/_shared/overlay/sheet-width.ts:  * every overlay that has a sheet form; no content component carries a material prop
+b/src/components/_shared/overlay/sheet-width.ts:  * for it.
+b/src/components/_shared/overlay/sheet-width.ts:  * listener; it is read synchronously on open, before the content renders. On close the
+b/src/components/_shared/overlay/sheet-width.ts:  * listener goes and the form stays: a surface leaves in the form it opened in, so its
+b/src/components/_shared/overlay/sheet-width.ts:  * exit plays on the same box, side and material it entered on. The next open reads the
+b/src/components/_shared/overlay/sheet-width.ts:  * query again.
+b/src/components/button/styles.css:     /* Under reduced motion a press keeps the box's size (`useLiquidPress` writes no
+b/src/components/card/styles.css:     /* Under reduced motion a press keeps the card's size, where the scale would land at
+b/src/components/command/CommandList.vue: /* A palette inside a dialog closes with the dialog, and reka unmounts a closed combobox's
+b/src/components/dialog/DialogContent.vue:     // Under reduced motion the position is a fade's clock: the plate keeps its size.
+b/src/components/dialog/DialogContent.vue: // Once the exit has finished, the plate says so (`_shared/overlay/leave-finished.ts`).
+b/src/components/dialog/DialogContent.vue: // The forwarded emits carry the leave emit as a listener; on reka's content it would
+b/src/components/dialog/DialogContent.vue: // land on the element and answer the DOM event of the same name a second time.
+b/src/components/dialog/DialogContent.vue: // The exit takes no press: once closed, the layer stops blocking the page and an outside
+b/src/components/dialog/DialogContent.vue: // press that began after the close dismisses nothing, so the trigger can reopen the
+b/src/components/dialog/DialogContent.vue: // surface mid-exit and the page behind it stays live (`_shared/overlay/exit-press.ts`).
+b/src/components/dialog/ModalScrim.vue:  * long as reka's lock held it: while the scrim is present. It takes presses only while
+b/src/components/dialog/ModalScrim.vue:  * the dialog is open: through the exit a press reaches the page, or the trigger that
+b/src/components/dialog/ModalScrim.vue:  * reopens the dialog.
+b/src/components/dialog/styles.css:         /* The close button's plate keeps its size, where a scale would land at once, so its
+b/src/components/dock/DockControl.vue: // It rides the `press` SPRING_PRESETS row (its default) on the squishy register (its
+b/src/components/dock/DockControl.vue: // default) and writes `--dock-press-t` the dock-controls CSS reads to couple
+b/src/components/dock/DockControl.vue: // darken/specular to the spring physics. The CSS `:active` register stays the no-JS
+b/src/components/dock/DockControl.vue: // floor; `useLiquidPress` is compositor-only, and under reduced motion writes no
+b/src/components/dock/DockControl.vue: // scale. The tab shape reads its own CSS press register.
+b/src/components/dock/styles/controls/icon-button.css:         /* Under reduced motion a press darkens the seat and does not shrink it, where
+b/src/components/dock/styles/controls/tab-button.css:         /* Under reduced motion a press darkens the tab and does not shrink it, where
+b/src/components/dock/styles/controls/triggers.css:     /* Under reduced motion a press darkens the trigger and does not shrink it, as
+b/src/components/dock/styles/layers.css:     /* Under reduced motion a posture or face change cross-fades. The box lands at once
+b/src/components/dock/styles/run.css:     /* Under reduced motion the mark does not travel: it is not drawn, and the selected
+b/src/components/expandable-container/ExpandableContainer.vue: /*
+b/src/components/expandable-container/ExpandableContainer.vue:  * THE WAY IN AND THE WAY OUT. `open` is the reader's intent; `placed` is where the
+b/src/components/expandable-container/ExpandableContainer.vue:  * subtree is. Opening places it in the fullscreen overlay at once and the overlay
+b/src/components/expandable-container/ExpandableContainer.vue:  * enters on its transitions (`styles.css`). Closing leaves it placed, marked
+b/src/components/expandable-container/ExpandableContainer.vue:  * `data-leaving`, while the overlay leaves on the same channels in reverse; it goes
+b/src/components/expandable-container/ExpandableContainer.vue:  * back to its in-flow place when the overlay's own transitions have finished. A reopen
+b/src/components/expandable-container/ExpandableContainer.vue:  * during the exit (or a close during the entrance) turns the transitions around from
+b/src/components/expandable-container/ExpandableContainer.vue:  * where they stand, and the subtree never moves. Escape is registered the moment
+b/src/components/expandable-container/ExpandableContainer.vue:  * `open` turns true, so it is live from the entrance's first frame.
+b/src/components/expandable-container/ExpandableContainer.vue:  */
+b/src/components/expandable-container/ExpandableContainer.vue: /* After the render that marks the exit, the overlay's transitions exist; the subtree
+b/src/components/expandable-container/styles.css: /* THE WAY IN. The expanded panel grows out of the rect it was promoted from: scale
+b/src/components/expandable-container/styles.css:  * 0.78 → 1 on `--spring-dock`, transform and opacity ONLY, never an animated box, as the
+b/src/components/expandable-container/styles.css:  * scrim fades in under it.
+b/src/components/expandable-container/styles.css:  * the same frame, so nothing is seen to vanish.
+b/src/components/expandable-container/styles.css:  *
+b/src/components/expandable-container/styles.css:  * THE WAY OUT is the same channels in reverse, on the dock row's exit clock and the
+b/src/components/expandable-container/styles.css:  * exit curve, while the root is marked `data-leaving`; the component moves the subtree
+b/src/components/expandable-container/styles.css:  * home when they have finished. Both legs are transitions, so a reversal mid-way turns
+b/src/components/expandable-container/styles.css:  * from where it stands. The two keyframes below are the earlier form of the same
+b/src/components/expandable-container/styles.css:  * motion, kept for stylesheets that name them. */
+b/src/components/expandable-container/styles.css:     /* A leaving overlay takes no press: one on the page beneath it, or on whatever
+b/src/components/expandable-container/styles.css:         /* The spatial leg drops; the arrival and the departure still read. A 0.12s
+b/src/components/expandable-container/styles.css:          * opacity fade is the house's reduced rung, not a cut, which would have the room
+b/src/components/expandable-container/styles.css:          * appear and vanish with no event at all. The clocks are `!important` so the
+b/src/components/expandable-container/styles.css:          * reduced-motion fallback, a later layer, does not zero them. */
+b/src/components/menu/DropdownMenuContent.vue: /* Once the exit has finished, the menu says so (`_shared/overlay/leave-finished.ts`). */
+b/src/components/popover/PopoverContent.vue: /* Once the exit has finished, the panel says so (`_shared/overlay/leave-finished.ts`);
+b/src/components/select/SelectContent.vue:  * opening upward, at full width, on the firm plate; the anchored form keeps the
+b/src/components/select/SelectContent.vue:  * floating plate.
+b/src/components/select/SelectContent.vue: /* The exit takes no press: once closed, the listbox stops blocking the page and a press
+b/src/components/select/SelectContent.vue: /* Once the exit has finished, the listbox says so (`_shared/overlay/leave-finished.ts`). */
+b/src/components/sheet/SheetContent.vue:     // A detented sheet is SIZED by its rung, so it publishes the scalar and the size its
+b/src/components/sheet/SheetContent.vue:     // box takes: the stylesheet translates only the part of the box that is not up, which
+b/src/components/sheet/SheetContent.vue:     // is the rise into place on the open leg and the floor's slide below its smallest rung.
+b/src/components/sheet/SheetContent.vue:     // Under reduced motion its opacity carries the entrance and the exit.
+b/src/components/sheet/SheetContent.vue:     // Under reduced motion the position is a fade's clock: the sheet stays where it rests
+b/src/components/sheet/SheetContent.vue:     // and its opacity carries the entrance and the exit. A drag still moves it.
+b/src/components/sheet/SheetContent.vue: // Once the exit has finished, the sheet says so (`_shared/overlay/leave-finished.ts`).
+b/src/components/sheet/SheetContent.vue: // The forwarded emits carry the leave emit as a listener; on reka's content it would
+b/src/components/sheet/SheetContent.vue: // land on the element and answer the DOM event of the same name a second time.
+b/src/components/sheet/SheetContent.vue: // The exit takes no press: once closed, the layer stops blocking the page and an outside
+b/src/components/sheet/SheetContent.vue: // press that began after the close dismisses nothing, so the trigger can reopen the
+b/src/components/sheet/SheetContent.vue: // surface mid-exit and the page behind it stays live (`_shared/overlay/exit-press.ts`).
+b/src/components/sheet/detents/use.ts: // The open leg is the one place the size holds still: the box takes the rung it opens to
+b/src/components/sheet/detents/use.ts: // on its first frame (`size`) and the scalar says how much of it is up, so the sheet
+b/src/components/sheet/detents/use.ts: // rises into place by a translate with its head and its actions where they will rest.
+b/src/components/sheet/detents/use.ts: //
+b/src/components/sheet/detents/use.ts: //
+b/src/components/sheet/detents/use.ts: // REDUCED MOTION: the spring lands the box on its rung at once, and the sheet fades in
+b/src/components/sheet/detents/use.ts: // and out instead, over the travel row's exit clock held to at most `--duration-fast`,
+b/src/components/sheet/detents/use.ts: // on `--exit-curve`, as a sliding sheet does. The box holds where it stands while it
+b/src/components/sheet/detents/use.ts: // fades out.
+b/src/components/sheet/detents/use.ts:     /**
+b/src/components/sheet/detents/use.ts:      * The fraction the box is sized at. While the sheet rises into place on its open leg
+b/src/components/sheet/detents/use.ts:      * it is the rung it rises to, and `t` is how much of that box is up; at any other
+b/src/components/sheet/detents/use.ts:      * time it is `t`.
+b/src/components/sheet/detents/use.ts:      */
+b/src/components/sheet/detents/use.ts:     /** The sheet's opacity while it fades in or out under reduced motion; null otherwise. */
+b/src/components/sheet/detents/use.ts:     /** Mount hold — true until the close has run: the dismissing spring reaching 0, or
+b/src/components/sheet/detents/use.ts:      *  the fade out under reduced motion. */
+b/src/components/sheet/detents/use.ts:     // The rung the box holds while the sheet rises into place, or null when the box is
+b/src/components/sheet/detents/use.ts:     // the scalar. The rise ends when its leg settles, on a drag or on a rung change; a
+b/src/components/sheet/detents/use.ts:     // close during the rise slides the box back down at that size.
+b/src/components/sheet/detents/use.ts:     // Where the running fade heads, or null when none runs.
+b/src/components/sheet/detents/use.ts:     /** Under reduced motion, fades the sheet to `to` from the opacity it shows, then calls
+b/src/components/sheet/detents/use.ts:      *  `done`. False where motion is not reduced or no stylesheet resolves the clock. */
+b/src/components/sheet/detents/use.ts:     /**
+b/src/components/sheet/detents/use.ts:      * Settle toward `fraction` on `nextLeg`, preserving the live (value, velocity). With
+b/src/components/sheet/detents/use.ts:      * `hold`, the box keeps that rung's size while the scalar settles.
+b/src/components/sheet/detents/use.ts:      */
+b/src/components/sheet/detents/use.ts:     /**
+b/src/components/sheet/detents/use.ts:      * The close. Under reduced motion the box stays where it stands and the sheet fades
+b/src/components/sheet/detents/use.ts:      * out, then the scalar goes to 0 and the mount is released; otherwise the scalar
+b/src/components/sheet/detents/use.ts:      * settles to 0 on the travel leg.
+b/src/components/sheet/detents/use.ts:      */
+b/src/components/sheet/detents/use.ts:         // The drag wrote the scalar past the spring, so the spring is seated where the
+b/src/components/sheet/detents/use.ts:         // finger left the sheet, moving as the finger moved: the settle, or the close,
+b/src/components/sheet/detents/use.ts:         // runs on from there instead of from the rung the drag started at.
+b/src/components/sheet/styles.css:  * its edge. Above the floor (below) nothing translates.
+b/src/components/sheet/styles.css:      * `0` remains legal as the DISMISSAL endpoint: the rung scalar still resolves onto it and
+b/src/components/sheet/styles.css:      * the engine still requests the close. Below the floor the box stops shrinking, so the
+b/src/components/sheet/styles.css:      * plate slides by the difference instead: what shows of it is always the rung's share of
+b/src/components/sheet/styles.css:      * the viewport, and at 0 it is wholly past the edge when it unmounts, on every route
+b/src/components/sheet/styles.css:      * that closes it. The INLINE axis takes no floor: a narrow side rung clips along that
+b/src/components/sheet/styles.css:      * axis.
+b/src/components/sheet/styles.css:      *
+b/src/components/sheet/styles.css:      * On the way in the box takes the rung it opens to on its first frame
+b/src/components/sheet/styles.css:      * (`--_detent-size`, written beside the scalar) and the same slide carries it in from
+b/src/components/sheet/styles.css:      * past the edge: what shows is still the scalar's share of the viewport, and the head
+b/src/components/sheet/styles.css:      * and its actions rise with the plate to where they rest. Unwritten, the size is the
+b/src/components/sheet/styles.css:      * scalar. */
+b/src/components/slider/styles.css: /* Under reduced motion the slider is still: every part changes on a zero clock, so the
+b/src/components/sortable-list/styles.css:     /* Under reduced motion a press keeps the grip's size, where the scale would land at
+b/src/components/toast/Toast.vue:     /* Unset rather than `false`, so the open state below can tell a held prop from none. */
+b/src/components/toast/Toast.vue: /* Once its dismissal has finished, the toast says so (`_shared/overlay/leave-finished.ts`).
+b/src/components/toast/Toast.vue:                 // The toast arrives on the ONE overlay register
+b/src/components/toast/Toast.vue:                 // (`data-reveal=overlay`: a fade on the `--enter-overlay-clock`, with no
+b/src/components/toast/Toast.vue:                 // scale and no blur) — the SAME transition contract the Dialog/Sheet/Popover
+b/src/components/toast/Toast.vue:                 // ride (the toast enters exactly like the dialog, no bespoke transient fork).
+b/src/components/toast/Toast.vue:                 // It fades in where it sits, never sliding in from a viewport edge. The reka
+b/src/components/toast/Toast.vue:                 // `tw-animate-css` `data-[state=open]:animate-in` / `animate-out` /
+b/src/components/toast/Toast.vue:                 // `slide-in-from-*-full` / `fade-out-80` chain + the own
+b/src/components/toast/Toast.vue:                 // `transition-[opacity, transform]` are RETIRED (clean break, no alias) —
+b/src/components/toast/Toast.vue:                 // `.glass-reveal` owns the data-state enter (via @starting-style), and the
+b/src/components/toast/Toast.vue:                 // dismissal is `.glass-vaporize`'s (below). The swipe-drag gesture keeps its
+b/src/components/toast/Toast.vue:                 // reka-driven `translate-x` (with `transition-none` during the active move);
+b/src/components/toast/Toast.vue:                 // the reveal's own `translate` leg springs the cancel/settle back.
+b/src/components/toggle-group/styles.css:     /* THE ON-STATE CARRIES ON INK AND FILL, AT THE ITEM'S ONE WEIGHT. A bolder
+b/src/components/tooltip/TooltipContent.vue: /* Once the exit has finished, the hint says so (`_shared/overlay/leave-finished.ts`). */
+b/src/composables/motion/spring/exitClock.ts: // The clock a mounted surface leaves on, read from the stylesheet at the close: its row's
+b/src/composables/motion/spring/exitClock.ts: // exit duration (`--spring-<row>-exit-duration`, 0.6 × its entrance) on `--exit-curve`.
+b/src/composables/motion/spring/exitClock.ts: // Under reduced motion it is held to at most `--duration-fast` (200 ms), and it carries
+b/src/composables/motion/spring/exitClock.ts: // the entrance's fade as well as the exit. The spring mount kernel and the sheet's detent
+b/src/composables/motion/spring/exitClock.ts: // engine both run on it.
+b/src/composables/motion/spring/exitClock.ts:     /** The run's length in ms. */
+b/src/composables/motion/spring/exitClock.ts:     /** The exit curve as a function of progress. */
+b/src/composables/motion/spring/exitClock.ts: /** A CSS `cubic-bezier()` as a function of progress, or linear for `linear`. */
+b/src/composables/motion/spring/exitClock.ts: /** The row's exit clock, `stretch` times its duration, and the exit curve, read from the
+b/src/composables/motion/spring/exitClock.ts:  *  stylesheet. Under reduced motion the clock is held to at most `--duration-fast`. Null
+b/src/composables/motion/spring/exitClock.ts:  *  where no stylesheet resolves them. */
+b/src/composables/motion/spring/exitClock.ts: /** Runs the clock, calling `frame` with its eased progress on every animation frame and
+b/src/composables/motion/spring/exitClock.ts:  *  `done` after the last. It advances by at most one 60 Hz frame per frame, so a long
+b/src/composables/motion/spring/exitClock.ts:  *  frame (a pick that navigates, a list that re-renders) slows the run rather than
+b/src/composables/motion/spring/exitClock.ts:  *  skipping a stretch of it; on steady frames it keeps the clock. Returns its stop. */
+b/src/composables/motion/spring/useLiquidPress.ts: //     snap) snaps the value to its endpoint with zero in-between frames. Under reduce
+b/src/composables/motion/spring/useLiquidPress.ts: //     `pressStyle` writes no `scale`: a scale that lands at once is a jump, so the
+b/src/composables/motion/spring/useLiquidPress.ts: //     pressed control keeps its size and the press var, stepped to 1, shows the press by
+b/src/composables/motion/spring/useLiquidPress.ts: //     colour alone.
+b/src/composables/motion/spring/useLiquidPress.ts:      * reciprocal X/Y `scale` (engaged only past `engageThreshold`, and never under
+b/src/composables/motion/spring/useLiquidPress.ts:      * reduced motion while the press respects it) AND the `pressVar`
+b/src/composables/motion/spring/useLiquidPress.ts:     // It reads its own options off this object and nothing else.
+b/src/composables/motion/spring/useLiquidPress.ts:     // Whether the press began under reduced motion while it respects it: it then writes
+b/src/composables/motion/spring/useLiquidPress.ts:     // no scale. Read as each press begins.
+b/src/composables/motion/spring/useLiquidPress.ts:         // back to the cascade as it settles — no desync, no double-apply. Under reduced
+b/src/composables/motion/spring/useLiquidPress.ts:         // motion it is never emitted, and the control keeps its size.
+b/src/composables/motion/spring/useSpringMount.ts: // REDUCED MOTION: the entrance and the exit are a tween of the position on `--exit-curve`
+b/src/composables/motion/spring/useSpringMount.ts: // over the row's exit clock held to at most `--duration-fast` (200 ms), which the host
+b/src/composables/motion/spring/useSpringMount.ts: // reads as an opacity fade with no travel. A drag still tracks the pointer, and its
+b/src/composables/motion/spring/useSpringMount.ts: // release snaps (`useSpring`'s `respectReducedMotion`).
+b/src/composables/motion/spring/useSpringMount.ts: //
+b/src/composables/motion/spring/useSpringMount.ts: // THE EXIT is not the spring. A close that is not a drag release rides the floating
+b/src/composables/motion/spring/useSpringMount.ts: // surfaces' exit: the position tweens from where it is to 1 over the row's exit clock
+b/src/composables/motion/spring/useSpringMount.ts: // (`--spring-<row>-exit-duration`, 0.6 × its entrance) on `--exit-curve`, both read from
+b/src/composables/motion/spring/useSpringMount.ts: // the stylesheet at the close, so the Dialog and Sheet leave on the same curve as every
+b/src/composables/motion/spring/useSpringMount.ts: // popup and sooner than they arrived. A reopen during the exit hands the position back
+b/src/composables/motion/spring/useSpringMount.ts: // to the spring, which turns from where the surface is. Where the stylesheet resolves no
+b/src/composables/motion/spring/useSpringMount.ts: // exit clock (no library CSS loaded), the spring rides the exit as it rides the entrance.
+b/src/composables/motion/spring/useSpringMount.ts: /** How much longer than its row's exit clock a mounted surface takes to leave. The
+b/src/composables/motion/spring/useSpringMount.ts:  *  `present` row's exit is the generator's 0.12 s floor, which a centred modal plate
+b/src/composables/motion/spring/useSpringMount.ts:  *  crosses in too few frames to read; it leaves in 1.5 times that, about 180 ms, still
+b/src/composables/motion/spring/useSpringMount.ts:  *  well inside its entrance. The other rows leave on their own clock. */
+b/src/composables/motion/spring/useSpringMount.ts:     // The exit tween's position while it runs; null when the spring owns the position.
+b/src/composables/motion/spring/useSpringMount.ts:     /** Tweens the position from where it is to `to` on the exit clock. The exit always
+b/src/composables/motion/spring/useSpringMount.ts:      *  takes it; the entrance only under reduced motion, where it is the fade. */
+b/src/composables/motion/spring/useSpringMount.ts:         // The spring heads for the same end underneath, so a reversal retargets it.
+b/src/styles/animations.css:  * The reveal's own exit (glass/reveal.css, the closed state) is a set of transitions
+b/src/styles/animations.css:  * from wherever the surface stands, so a surface turned back mid-way turns from there.
+b/src/styles/animations.css:  * reka-ui's `usePresence` unmounts a closing node on `animationend` and has no
+b/src/styles/animations.css:  * `transitionend` path, so the closed state also runs `glass-reveal-hold` (below), which
+b/src/styles/animations.css:  * keeps the node mounted until the transitions have landed. The reveal runs no other
+b/src/styles/animations.css:  * exit keyframe.
+b/src/styles/animations.css:  * `glass-reveal-out` stays defined for a stylesheet that names it: scale 1 → (the
+b/src/styles/animations.css:  * register's enter scale × its squish), opacity 1 → 0 and filter blur(0) → its blur, all
+b/src/styles/animations.css:  * three across the whole clock, on the duration and curve of the rule that names it. NO
+b/src/styles/animations.css:  * `translate`, so it never clobbers a centred Dialog's translate. Compositor-only
+b/src/styles/animations.css:  * (scale, opacity and filter), so it never animates layout. The custom-property `var()`s
+b/src/styles/animations.css:  * resolve on the animated element. */
+b/src/styles/animations.css:     /* Opacity and geometry share the exit clock: the light is on screen until the
+b/src/styles/animations.css:      * clock ends, so no frame of a short exit carries most of it. */
+b/src/styles/animations.css: /* The reveal's exit hold (glass/reveal.css, the closed state). The exit itself is a
+b/src/styles/animations.css:  * set of transitions; this keyframe paints nothing and only runs for the exit's clock,
+b/src/styles/animations.css:  * so reka's `usePresence`, which unmounts on `animationend`, keeps the node until the
+b/src/styles/animations.css:  * transitions have landed. */
+b/src/styles/animations.css:  * The close runs the same clip back into the strip as the plate fades, both across the
+b/src/styles/animations.css:  * whole exit clock. */
+b/src/styles/animations.css: /* A fade only: opacity 1 → 0, with no transform or blur frames. The reveal does not run
+b/src/styles/animations.css:  * it: under reduced motion its closed state fades on an opacity transition, held for reka
+b/src/styles/animations.css:  * by `glass-reveal-hold` (glass/reveal.css). It stays defined for a stylesheet that names
+b/src/styles/animations.css:  * it. */
+b/src/styles/glass/dissolve.css:  * `!important` IS WHAT DELIVERS THAT CONTRACT. The universal reduced-motion fallback
+b/src/styles/glass/dissolve.css:  * (`utilities/a11y-overrides.css`) is a normal declaration in the last layer, so it
+b/src/styles/glass/dissolve.css:  * beats every normal clock glass declares; an `!important` one beats it. The name list
+b/src/styles/glass/dissolve.css:  * is `!important` too, so no other reduced-motion rule renames the root's keyframes. The
+b/src/styles/glass/dissolve.css:  * clock is the dismissal's own, held to at most `--duration-fast` (200 ms) on the
+b/src/styles/glass/dissolve.css:  * dismissal's `--exit-curve`.
+b/src/styles/glass/dissolve.css:  * Without it the surface vanishes on a 0.01ms keyframe. This carve is the
+b/src/styles/glass/reveal.css:  * The overlay register (a Popover's panel, a hover card, a Toast) moves on opacity
+b/src/styles/glass/reveal.css:  * and its side's slide alone, in and out: its scale and blur knobs are neutral. The
+b/src/styles/glass/reveal.css:  * tooltip register keeps a slight scale on the way in. The recipe's channels:
+b/src/styles/glass/reveal.css:         /* The fade's curve on the way in. */
+b/src/styles/glass/reveal.css:         /* The exit reader of the row this register ENTERS on: the menu's clip grows on
+b/src/styles/glass/reveal.css:         /* A hint is all fade: it comes in on the exit's own even curve, so no frame of
+b/src/styles/glass/reveal.css:     /* OPEN — the settled, bloomed-in state, keyed on every open state reka writes
+b/src/styles/glass/reveal.css:         /* The exit is opacity and the side's few pixels of slide, nothing else: the
+b/src/styles/glass/reveal.css:         /* The exit is a TRANSITION on every channel, from wherever the surface stands:
+b/src/styles/glass/reveal.css:     /* A plate on the trigger's top side grows upward, so its travelling edge is the top. */
+b/src/styles/glass/reveal.css:     /* Only the clip travels on the way in; the other channels move only when the menu
+b/src/styles/glass/reveal.css:     /* The sheet form leaves the way a sheet does: it slides down past the foot of the
+b/src/styles/glass/reveal.css:         /* The exit fades ONLY: the hold keyframe keeps the node for reka while the
+b/src/styles/glass/reveal.css:  * trigger; the surface fades, never flies, never disappears). The fade rides
+b/src/styles/glass/reveal.css:  * `--exit-curve` over at most `--duration-fast` (200 ms) both ways: an exit whose
+b/src/styles/glass/reveal.css:  * register clock is shorter keeps it. The side slide does not travel either: a closing
+b/src/styles/glass/reveal.css:  * surface keeps its place under the fade. The clocks are
+b/src/styles/glass/reveal.css:  * `!important`: the reduced-motion fallback (utilities/a11y-overrides.css) is a later
+b/src/styles/glass/reveal.css:  * layer and zeroes every normal clock, so a fade that survives says so. The closed
+b/src/styles/glass/reveal.css:  * state restates its hold keyframe's duration for the same reason, or reka would unmount
+b/src/styles/glass/reveal.css:  * the surface at once. */
+b/src/styles/glass/reveal.css:             /* The exit fades ONLY (no transform/blur frames — the vestibular floor): one
+b/src/styles/glass/surface-axis.css:     /* ── firm — the glass of a popup at sheet width ─────────────────────────────
+b/src/styles/index.css: /* `reduced-motion` comes last: it holds only the reduced-motion fallback
+b/src/styles/tokens/motion-registers.css:     /* The exit curve. No overshoot, so it never passes gone, and no front-load: its
+b/src/styles/utilities/a11y-overrides.css: /* ── Reduced motion: the instant fallback, in its own last layer ───────────────
+b/src/styles/utilities/btn.css:     /* Only a pointer that hovers lifts it: on touch a tap leaves `:hover` set, and
