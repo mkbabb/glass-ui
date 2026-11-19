@@ -97,7 +97,13 @@ export async function startFilm(page: Page, selector: string, also = ""): Promis
         for (const type of ["pointerdown", "pointermove", "mousedown", "mousemove", "touchstart", "keydown", "click"])
             addEventListener(type, onInput, { capture: true });
     }, { selector, also });
-    await page.waitForTimeout(80);
+    await firstFrame(page, "__film");
+}
+
+/** Resolves once the page's film at `window[key]` holds its first frame, so the mark or
+ *  the input that follows comes after a filmed frame however late the page draws. */
+export async function firstFrame(page: Page, key: string): Promise<void> {
+    await page.waitForFunction((key) => (window as unknown as Record<string, { frames: unknown[] }>)[key].frames.length > 0, key);
 }
 
 export async function markFilm(page: Page): Promise<void> {
@@ -119,10 +125,15 @@ export async function stopFilm(page: Page, ms: number): Promise<Film> {
 }
 
 /** The last open frame before the action, and every frame after it while the surface
- *  is mounted and still painted. */
+ *  is mounted and still painted. A film with no frame of the surface before its mark
+ *  fails by name. */
 export function exitOf(film: Film): { rest: Frame; exit: Frame[]; gone: boolean } {
     const before = film.frames.filter((f) => f.t < film.mark && f.present);
     const rest = before[before.length - 1];
+    if (!rest) {
+        const first = film.frames.slice(0, 4).map((f) => [Math.round(f.t), f.present]);
+        throw new Error(`the film holds no frame of the surface before its mark ${JSON.stringify({ mark: Math.round(film.mark), first })}`);
+    }
     const after = film.frames.filter((f) => f.t >= film.mark);
     const exit = after.filter((f) => f.present && (f.op ?? 0) > 0.01);
     const gone = after.length > 0 && !after[after.length - 1].present;

@@ -19,7 +19,7 @@
 //          Playwright WebKit paints no backdrop blur, so there the material is read from
 //          computed style and the contrast is recorded, not judged
 import { expect, test, type Page } from "@playwright/test";
-import { exitOf, gotoReady, isPhone, markFilm, markTurn, press, pressOn, startFilm, stopFilm, worstFrameShare, type Film, type Frame } from "./release-11-1-1/film";
+import { exitOf, firstFrame, gotoReady, isPhone, markFilm, markTurn, press, pressOn, startFilm, stopFilm, worstFrameShare, type Film, type Frame } from "./release-11-1-1/film";
 
 const HARNESS = "/tests-visual/release-11-1-1/exits-harness.html";
 
@@ -74,7 +74,6 @@ for (const route of routes) {
         await openHarness(page);
         const film = await filmClose(page, project, dockSelect, route);
         const { rest, exit, gone } = exitOf(film);
-        expect(rest, "the surface was open before the close").toBeTruthy();
         expect(gone, "the surface unmounts after its exit").toBe(true);
         if (isPhone(project)) expect(rest.form, "the phone Select opens as a sheet").toBe("sheet");
         const report = exit.map((f) => ({ t: Math.round(f.t - film.mark), x: f.x, y: f.y, w: f.w, op: f.op, form: f.form, bf: f.bf, bg: f.bg }));
@@ -109,7 +108,6 @@ for (const route of routes) {
         await openHarness(page);
         const film = await filmClose(page, project, dockMenu, route);
         const { rest, exit, gone } = exitOf(film);
-        expect(rest).toBeTruthy();
         expect(gone).toBe(true);
         await info.attach("film", {
             body: JSON.stringify(exit.map((f) => ({ t: Math.round(f.t - film.mark), op: f.op, surface: f.surface, bf: f.bf }))),
@@ -704,7 +702,7 @@ async function startSheetFilm(page: Page): Promise<void> {
         },
         { sheet: SHEET },
     );
-    await page.waitForTimeout(80);
+    await firstFrame(page, "__sheet");
 }
 
 const markSheetFilm = (page: Page) =>

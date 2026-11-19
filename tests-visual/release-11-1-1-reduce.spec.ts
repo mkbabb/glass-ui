@@ -25,7 +25,7 @@
 //            held press and its release, rest, pressed, rest, with no value between
 import { expect, test, type CDPSession, type Page } from "@playwright/test";
 import { PNG } from "pngjs";
-import { gotoReady, isPhone, markFilm, press, pressOn, startFilm, stopFilm, type Film, type Frame } from "./release-11-1-1/film";
+import { firstFrame, gotoReady, isPhone, markFilm, press, pressOn, startFilm, stopFilm, type Film, type Frame } from "./release-11-1-1/film";
 
 const EXITS = "/tests-visual/release-11-1-1/exits-harness.html";
 const REDUCE = "/tests-visual/release-11-1-1/reduce-harness.html";
@@ -226,7 +226,7 @@ async function filmFold(page: Page, act: () => Promise<void>): Promise<{ mark: n
         requestAnimationFrame(tick);
         (window as unknown as { __foldMark: () => void }).__foldMark = () => (fold.mark = performance.now() - t0);
     });
-    await page.waitForTimeout(80);
+    await firstFrame(page, "__fold");
     await page.evaluate(() => (window as unknown as { __foldMark: () => void }).__foldMark());
     await act();
     await page.waitForTimeout(800);
@@ -301,7 +301,7 @@ test("mark · a run's selected plate moves to a new seat by a cross-fade", async
         requestAnimationFrame(tick);
         (window as unknown as { __runMark: () => void }).__runMark = () => (film.mark = performance.now() - t0);
     });
-    await page.waitForTimeout(80);
+    await firstFrame(page, "__run");
     await page.evaluate(() => (window as unknown as { __runMark: () => void }).__runMark());
     await pressOn(page, project, '[data-testid="r-seat-3"]');
     await page.waitForTimeout(800);
@@ -376,7 +376,7 @@ async function holdPress(page: Page, sel: string, cdp: CDPSession | null, pseudo
         };
         requestAnimationFrame(tick);
     }, { sel, pseudo });
-    await page.waitForTimeout(80);
+    await firstFrame(page, "__hold");
     // A finger held through Chromium's gesture pipeline, which presses the control
     // (`:active`) as a touch screen does; raw touch events do not.
     const hold = cdp ? cdp.send("Input.synthesizeTapGesture", { x, y, duration: 900, gestureSourceType: "touch" }) : null;
@@ -471,7 +471,7 @@ test("still · a Slider holds still under reduced motion", async ({ page }, info
             };
             requestAnimationFrame(tick);
         });
-        await page.waitForTimeout(80);
+        await firstFrame(page, "__fill");
         await page.mouse.down();
         await page.waitForTimeout(500);
         await page.mouse.up();
