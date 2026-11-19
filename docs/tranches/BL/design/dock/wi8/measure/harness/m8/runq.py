@@ -75,7 +75,11 @@ for line in open(qf):
     items.append((srv, eng, mins, done, cmd))
 if any(i[0] == "dev" for i in items): pages()
 log(f"queue {qf}: {len(items)} items")
+STOP = os.path.join(H, "m8", "q", "STOP")
 for srv, eng, mins, done, cmd in items:
+    # a STOP file beside the queues ends the queue before its next item, with its servers stopped (MEASURE-8's resume)
+    if os.path.exists(STOP):
+        log(f"stopped before {cmd[:80]} (m8/q/STOP)"); break
     if read(done):
         log(f"skip (read) {done}"); continue
     for attempt in range(1, 7):
