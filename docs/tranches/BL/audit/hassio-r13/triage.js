@@ -1,0 +1,35 @@
+export const meta = {
+  name: 'hassio-r13-asks-triage',
+  description: 'Place Home Assistant round 13 asks (LF-14 to LF-40, less 26 and 32, plus amendments) against glass-ui: read each ask, check source and booked rows, place in a release; an adversarial verify per group (read-only, Opus)',
+  phases: [{ title: 'Place' }, { title: 'Verify' }],
+}
+const G = '/Users/mkbabb/Programming/glass-ui'
+const REL = G + '/.claude/worktrees/release-11.1.1'
+const T6 = '/Users/mkbabb/Programming/hassio-config-worktrees/apx-ui-r13/docs/restart/apotheosis/tranches/T6'
+const OID = 'Assert your model id from your own system identity first (expect claude-opus-5-5); if you are not Opus, say so and stop.'
+const RO = 'You read and judge; you change no file in any repo, run no build, test or browser, and send no message. Never run find, du, rg, tree or ls -R over /, ~, /Users or /Volumes; search only inside the paths named here.'
+const CTX = 'The asks come from the Home Assistant dashboard (consumer of glass-ui 11.1.0, uses each part as it is, no shims). Its send list is ' + T6 + '/r13/asks/SEND.md; amendments in ' + T6 + '/r13/asks/AMENDS.md. glass-ui read LF-1 to LF-13 earlier: see the O-377a row in ' + G + '/docs/tranches/BL/audit/INBOUND.md (and O-377, O-361). '
+  + 'Where things stand in glass-ui: master at ' + G + ' carries 11.1.0 plus docs; 11.1.1 (the exits patch, list frozen: surfaces leave on a tween, turn from where they are, fade under reduced motion; plus atlas rows on the detented Sheet) is being built on ' + REL + ' (branch release/11.1.1; read its CHANGELOG.md top section and docs/release-11.1.1/*.md); 11.1.2\'s scope is ' + G + '/docs/tranches/BL/driver/glass-11.1.1-scope.md (despite its name); 11.2.0 is the dock redesign (' + G + '/docs/tranches/BL/design/dock/wi8/RULINGS-7.md, "After the fold: the final lists"); 12.0.0 carries removals (' + G + '/docs/tranches/BL/PLAN.md). Recent rows to dedupe against: INBOUND O-361 to O-407 (atlas O-396 to O-400 include a square focus ring O-397 and a Select inside a Sheet O-399; value.js O-403 to O-407). '
+  + 'Release rule: a patch (11.1.2) takes a defect cure that removes no export or token and changes no default a consumer chose; a new prop, a new part, a new token or a changed default is a minor (11.2.0 for the dock; otherwise 11.3.0 unless it is small, additive and belongs with a part 11.2.0 already touches); a removal or rename is 12.0.0. 11.1.1 takes nothing new unless it is already built there (say so with the commit). '
+  + 'For each ask: read its file in full; read the glass source it names at master (and on release/11.1.1 if that part changed there); decide whether it is a glass defect, a glass feature, already cured (where, with commit or file:line), the consumer\'s own (say why), a duplicate of a booked row (which), or a question for the owner (a default or a look only he can choose). Cite file:line for every claim about glass code.'
+const ITEM = { type: 'object', properties: {
+  id: { type: 'string' }, title: { type: 'string' },
+  verdict: { type: 'string', enum: ['glass defect', 'glass feature', 'already cured', 'consumer side', 'duplicate', 'owner question', 'withdrawn or amended'] },
+  release: { type: 'string', enum: ['11.1.1 (built)', '11.1.2', '11.2.0', '11.3.0', '12.0.0', 'none'] },
+  dedupe_of: { type: 'string' }, evidence: { type: 'string' },
+  row: { type: 'string', description: 'one INBOUND row body: what the ask is, the reading, where it lands; no internal jargon beyond row ids' },
+  reply: { type: 'string', description: 'one plain outward line for the dashboard: what glass will do and in which version, or why not' } },
+  required: ['id', 'title', 'verdict', 'release', 'evidence', 'row', 'reply'] }
+const PS = { type: 'object', properties: { model_id: { type: 'string' }, items: { type: 'array', items: ITEM } }, required: ['model_id', 'items'] }
+const VS = { type: 'object', properties: { model_id: { type: 'string' }, items: { type: 'array', items: ITEM }, changed: { type: 'array', items: { type: 'string' } } }, required: ['model_id', 'items', 'changed'] }
+const GROUPS = [
+  { key: 'sheets-dialogs', files: ['r13/asks/glass-ui-lf38-silent-sheet.md', 'r13/asks/glass-ui-lf40-select-in-sheet.md', 'r12/asks/glass-ui-lf15-dialog-two-lenses.md', 'r12/asks/glass-ui-lf16-sheet-gestures.md', 'r12/asks/glass-ui-lf17-light-dialog-plate.md', 'r12/asks/glass-ui-lf10-dialog-corner.md (already read as part of O-377a: re-place it as a pair with LF-27)', 'r13/asks/glass-ui-lf27-card-room-rung.md', 'r13/asks/glass-ui-lf35-close-glyph.md'] },
+  { key: 'controls', files: ['r13/asks/glass-ui-lf28-switch-in-dark.md', 'r12/asks/glass-ui-lf25-disabled-switch.md', 'r12/asks/glass-ui-lf18-capsule-thumb-on-a-fill.md', 'r12/asks/glass-ui-lf19-choice-stages.md', 'r12/asks/glass-ui-lf20-toggle-activation.md', 'r13/asks/glass-ui-lf31-toggle-group-widths.md', 'r13/asks/glass-ui-lf34-unpicked-toggle-contrast.md', 'r13/asks/glass-ui-lf39-focus-ring.md', 'r13/asks/glass-ui-lf36-pressable-row.md', 'r13/asks/glass-ui-lf37-settings-row.md'] },
+  { key: 'data-display-dock', files: ['r13/asks/glass-ui-lf29-metric-fits-box.md', 'r13/asks/glass-ui-lf33-metric-face.md', 'r12/asks/glass-ui-lf21-metric-degree-unit.md', 'r12/asks/glass-ui-lf22-avatar-status-glyph.md', 'r12/asks/glass-ui-lf23-progress-window.md', 'r12/asks/glass-ui-lf24-ring-meter.md', 'r13/asks/glass-ui-lf30-avatar-dock-seat.md', 'r12/asks/glass-ui-lf14-open-seat-content-start.md', 'r13/asks/AMENDS.md (LF-1 gains the --spacing gap, LF-2 the 44 px floor, LF-26 withdrawn: place the two amendments against LF-1 and LF-2\'s O-377a placement, and record LF-26 as withdrawn)'] },
+]
+const RUN = GROUPS.filter(g => !(args && args.only) || args.only.includes(g.key))
+const out = await pipeline(RUN,
+  g => agent(OID + '\n' + RO + '\n\n' + CTX + '\n\nYour asks (paths under ' + T6 + '/), one item each:\n- ' + g.files.join('\n- ') + '\n\nReturn the schema with one item per ask, in this order.', { label: 'place:' + g.key, phase: 'Place', model: 'opus', schema: PS }),
+  (p, g) => p && agent(OID + '\n' + RO + '\n\n' + CTX + '\n\nYou are an ADVERSARIAL verifier. Another seat placed these asks (paths under ' + T6 + '/: ' + g.files.join('; ') + '). Its placements:\n' + JSON.stringify(p.items, null, 1) + '\n\nTry to refute each placement: re-read the ask and the cited glass code yourself; check every "already cured" against the cited commit or line on the named tree; check every duplicate against the booked row\'s text; check the release against the release rule (a default or look change is never a patch; a defect cure that adds a prop is not a patch); check the consumer-side verdicts are not glass faults the consumer would need a shim for. Correct what does not hold and keep what does. Return every item (corrected or kept) and list in `changed` each id you changed with the reason.', { label: 'verify:' + g.key, phase: 'Verify', model: 'opus', schema: VS })
+)
+return out.map((v, i) => ({ group: RUN[i].key, verified: v }))
