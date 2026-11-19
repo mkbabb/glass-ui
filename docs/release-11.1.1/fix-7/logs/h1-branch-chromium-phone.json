@@ -1,0 +1,225 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "release-11-1-1.config.ts",
+      "--project=chromium-phone",
+      "--workers=1",
+      "-g",
+      "sheet · a detented Sheet rises"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-7/logs/h1-branch-chromium-phone.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "sheet · a detented Sheet rises into place at its rung's size",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 149223,
+                  "error": {
+                    "message": "Error: at open plus 120 ms the tap hits the button, twenty in twenty [{\"after\":120,\"at\":125,\"dy\":312.1,\"events\":\"pointerdown:00:f2:161px click:00:f2:161px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":130,\"dy\":279.5,\"events\":\"pointerdown:00:f2:144px click:00:f2:144px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":123,\"dy\":307.4,\"events\":\"pointerdown:00:f2:158px click:00:f2:159px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":131,\"dy\":279.9,\"events\":\"pointerdown:00:f2:145px click:00:f2:145px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":129,\"dy\":278.9,\"events\":\"pointerdown:00:f2:143px click:00:f2:143px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":130,\"dy\":279.5,\"events\":\"pointerdown:00:f2:145px click:00:f2:145px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":123,\"dy\":306.6,\"events\":\"pointerdown:00:f2:158px click:00:f2:159px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":123,\"dy\":306.6,\"events\":\"pointerdown:00:f2:158px click:00:f2:158px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":130,\"dy\":279.5,\"events\":\"pointerdown:00:f2:145px click:00:f2:145px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":131,\"dy\":280.6,\"events\":\"pointerdown:00:f2:145px click:00:f2:146px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":132,\"dy\":281.6,\"events\":\"pointerdown:00:f2:146px click:00:f2:146px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":127,\"dy\":312.5,\"events\":\"pointerdown:00:f2:162px click:00:f2:162px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":126,\"dy\":308.1,\"events\":\"pointerdown:00:f3:174px click:00:f3:174px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":126,\"dy\":309.5,\"events\":\"pointerdown:00:f3:174px click:00:f3:175px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":126,\"dy\":309.5,\"events\":\"pointerdown:00:f3:174px click:00:f3:175px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":127,\"dy\":282.3,\"events\":\"pointerdown:00:f2:148px click:00:f2:147px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":141,\"dy\":252.9,\"events\":\"pointerdown:00:f3:154px click:00:f3:154px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":127,\"dy\":279.9,\"events\":\"pointerdown:00:f3:171px click:00:f3:170px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":130,\"dy\":281.3,\"events\":\"pointerdown:00:f3:160px click:00:f3:159px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":130,\"dy\":280.6,\"events\":\"pointerdown:00:f3:159px click:00:f3:159px\",\"hit\":false,\"closed\":false}]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m20\u001b[39m\nReceived: \u001b[31m0\u001b[39m",
+                    "stack": "Error: at open plus 120 ms the tap hits the button, twenty in twenty [{\"after\":120,\"at\":125,\"dy\":312.1,\"events\":\"pointerdown:00:f2:161px click:00:f2:161px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":130,\"dy\":279.5,\"events\":\"pointerdown:00:f2:144px click:00:f2:144px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":123,\"dy\":307.4,\"events\":\"pointerdown:00:f2:158px click:00:f2:159px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":131,\"dy\":279.9,\"events\":\"pointerdown:00:f2:145px click:00:f2:145px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":129,\"dy\":278.9,\"events\":\"pointerdown:00:f2:143px click:00:f2:143px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":130,\"dy\":279.5,\"events\":\"pointerdown:00:f2:145px click:00:f2:145px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":123,\"dy\":306.6,\"events\":\"pointerdown:00:f2:158px click:00:f2:159px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":123,\"dy\":306.6,\"events\":\"pointerdown:00:f2:158px click:00:f2:158px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":130,\"dy\":279.5,\"events\":\"pointerdown:00:f2:145px click:00:f2:145px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":131,\"dy\":280.6,\"events\":\"pointerdown:00:f2:145px click:00:f2:146px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":132,\"dy\":281.6,\"events\":\"pointerdown:00:f2:146px click:00:f2:146px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":127,\"dy\":312.5,\"events\":\"pointerdown:00:f2:162px click:00:f2:162px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":126,\"dy\":308.1,\"events\":\"pointerdown:00:f3:174px click:00:f3:174px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":126,\"dy\":309.5,\"events\":\"pointerdown:00:f3:174px click:00:f3:175px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":126,\"dy\":309.5,\"events\":\"pointerdown:00:f3:174px click:00:f3:175px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":127,\"dy\":282.3,\"events\":\"pointerdown:00:f2:148px click:00:f2:147px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":141,\"dy\":252.9,\"events\":\"pointerdown:00:f3:154px click:00:f3:154px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":127,\"dy\":279.9,\"events\":\"pointerdown:00:f3:171px click:00:f3:170px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":130,\"dy\":281.3,\"events\":\"pointerdown:00:f3:160px click:00:f3:159px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":130,\"dy\":280.6,\"events\":\"pointerdown:00:f3:159px click:00:f3:159px\",\"hit\":false,\"closed\":false}]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m20\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:874:129",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 129,
+                      "line": 874
+                    },
+                    "snippet": "  872 |         const these = taps.filter((r) => r.after === after);\n  873 |         const said = JSON.stringify(these.filter((r) => !r.hit || !r.closed));\n> 874 |         expect(these.filter((r) => r.hit).length, `at open plus ${after} ms the tap hits the button, twenty in twenty ${said}`).toBe(20);\n      |                                                                                                                                 ^\n  875 |         expect(these.filter((r) => r.closed).length, `and closes the sheet, twenty in twenty ${said}`).toBe(20);\n  876 |     }\n  877 | });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 129,
+                        "line": 874
+                      },
+                      "message": "Error: at open plus 120 ms the tap hits the button, twenty in twenty [{\"after\":120,\"at\":125,\"dy\":312.1,\"events\":\"pointerdown:00:f2:161px click:00:f2:161px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":130,\"dy\":279.5,\"events\":\"pointerdown:00:f2:144px click:00:f2:144px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":123,\"dy\":307.4,\"events\":\"pointerdown:00:f2:158px click:00:f2:159px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":131,\"dy\":279.9,\"events\":\"pointerdown:00:f2:145px click:00:f2:145px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":129,\"dy\":278.9,\"events\":\"pointerdown:00:f2:143px click:00:f2:143px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":130,\"dy\":279.5,\"events\":\"pointerdown:00:f2:145px click:00:f2:145px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":123,\"dy\":306.6,\"events\":\"pointerdown:00:f2:158px click:00:f2:159px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":123,\"dy\":306.6,\"events\":\"pointerdown:00:f2:158px click:00:f2:158px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":130,\"dy\":279.5,\"events\":\"pointerdown:00:f2:145px click:00:f2:145px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":131,\"dy\":280.6,\"events\":\"pointerdown:00:f2:145px click:00:f2:146px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":132,\"dy\":281.6,\"events\":\"pointerdown:00:f2:146px click:00:f2:146px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":127,\"dy\":312.5,\"events\":\"pointerdown:00:f2:162px click:00:f2:162px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":126,\"dy\":308.1,\"events\":\"pointerdown:00:f3:174px click:00:f3:174px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":126,\"dy\":309.5,\"events\":\"pointerdown:00:f3:174px click:00:f3:175px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":126,\"dy\":309.5,\"events\":\"pointerdown:00:f3:174px click:00:f3:175px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":127,\"dy\":282.3,\"events\":\"pointerdown:00:f2:148px click:00:f2:147px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":141,\"dy\":252.9,\"events\":\"pointerdown:00:f3:154px click:00:f3:154px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":127,\"dy\":279.9,\"events\":\"pointerdown:00:f3:171px click:00:f3:170px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":130,\"dy\":281.3,\"events\":\"pointerdown:00:f3:160px click:00:f3:159px\",\"hit\":false,\"closed\":false},{\"after\":120,\"at\":130,\"dy\":280.6,\"events\":\"pointerdown:00:f3:159px click:00:f3:159px\",\"hit\":false,\"closed\":false}]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m20\u001b[39m\nReceived: \u001b[31m0\u001b[39m\n\n  872 |         const these = taps.filter((r) => r.after === after);\n  873 |         const said = JSON.stringify(these.filter((r) => !r.hit || !r.closed));\n> 874 |         expect(these.filter((r) => r.hit).length, `at open plus ${after} ms the tap hits the button, twenty in twenty ${said}`).toBe(20);\n      |                                                                                                                                 ^\n  875 |         expect(these.filter((r) => r.closed).length, `and closes the sheet, twenty in twenty ${said}`).toBe(20);\n  876 |     }\n  877 | });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:874:129"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-19T17:32:42.852Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "sheet",
+                      "contentType": "application/json",
+                      "body": "eyJyaXNlIjp7ImhlaWdodFNwcmVhZCI6MCwiZmlyc3RIZWFkIjo5ODksInJlc3RIZWFkIjoxNTAsInNoYXJlIjowLjE0NCwiZnJhbWVzIjpbWy0yLDkzMixudWxsXSxbMTUsOTg5LDgzOV0sWzIzLDk2Nyw4MzldLFszMSw5NDIsODM5XSxbNDAsOTE0LDgzOV0sWzU2LDg3Niw4MzldLFs2NCw4MDMsODM5XSxbNzMsNzYwLDgzOV0sWzgyLDcxOCw4MzldLFs5MCw2NzUsODM5XSxbOTgsNjM2LDgzOV0sWzEwNyw1OTcsODM5XSxbMTE1LDU2MCw4MzldLFsxMjMsNTI1LDgzOV0sWzEzMSw0OTEsODM5XSxbMTM5LDQ2Miw4MzldLFsxNDgsNDMyLDgzOV0sWzE1Nyw0MDMsODM5XSxbMTY0LDM3OCw4MzldLFsxNzMsMzU3LDgzOV0sWzE4MSwzMzMsODM5XSxbMTg5LDMxMyw4MzldLFsxOTgsMjk2LDgzOV0sWzIwNiwyNzgsODM5XSxbMjE0LDI2NSw4MzldLFsyMjMsMjUxLDgzOV0sWzIzMSwyMzgsODM5XSxbMjQwLDIyNyw4MzldLFsyNDgsMjE3LDgzOV0sWzI1NiwyMDgsODM5XSxbMjY0LDIwMCw4MzldLFsyNzIsMTk0LDgzOV0sWzI4MiwxODgsODM5XSxbMjg5LDE4Miw4MzldLFsyOTgsMTc3LDgzOV0sWzMwNywxNzMsODM5XSxbMzE1LDE2OSw4MzldLFszMjIsMTY2LDgzOV0sWzMzMSwxNjQsODM5XSxbMzQwLDE2MSw4MzldLFszNDcsMTU5LDgzOV0sWzM1NywxNTcsODM5XSxbMzY1LDE1Niw4MzldLFszNzMsMTU0LDgzOV0sWzM4MSwxNTMsODM5XSxbMzkwLDE1Miw4MzldLFszOTgsMTUyLDgzOV0sWzQwNywxNTEsODM5XSxbNDE0LDE1MCw4MzldXX0sInRhcHMiOlt7ImFmdGVyIjoxMjAsImF0IjoxMjUsImR5IjozMTIuMSwiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6ZjI6MTYxcHggY2xpY2s6MDA6ZjI6MTYxcHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoxMjAsImF0IjoxMzAsImR5IjoyNzkuNSwiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6ZjI6MTQ0cHggY2xpY2s6MDA6ZjI6MTQ0cHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoxMjAsImF0IjoxMjMsImR5IjozMDcuNCwiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6ZjI6MTU4cHggY2xpY2s6MDA6ZjI6MTU5cHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoxMjAsImF0IjoxMzEsImR5IjoyNzkuOSwiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6ZjI6MTQ1cHggY2xpY2s6MDA6ZjI6MTQ1cHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoxMjAsImF0IjoxMjksImR5IjoyNzguOSwiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6ZjI6MTQzcHggY2xpY2s6MDA6ZjI6MTQzcHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoxMjAsImF0IjoxMzAsImR5IjoyNzkuNSwiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6ZjI6MTQ1cHggY2xpY2s6MDA6ZjI6MTQ1cHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoxMjAsImF0IjoxMjMsImR5IjozMDYuNiwiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6ZjI6MTU4cHggY2xpY2s6MDA6ZjI6MTU5cHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoxMjAsImF0IjoxMjMsImR5IjozMDYuNiwiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6ZjI6MTU4cHggY2xpY2s6MDA6ZjI6MTU4cHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoxMjAsImF0IjoxMzAsImR5IjoyNzkuNSwiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6ZjI6MTQ1cHggY2xpY2s6MDA6ZjI6MTQ1cHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoxMjAsImF0IjoxMzEsImR5IjoyODAuNiwiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6ZjI6MTQ1cHggY2xpY2s6MDA6ZjI6MTQ2cHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoxMjAsImF0IjoxMzIsImR5IjoyODEuNiwiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6ZjI6MTQ2cHggY2xpY2s6MDA6ZjI6MTQ2cHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoxMjAsImF0IjoxMjcsImR5IjozMTIuNSwiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6ZjI6MTYycHggY2xpY2s6MDA6ZjI6MTYycHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoxMjAsImF0IjoxMjYsImR5IjozMDguMSwiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6ZjM6MTc0cHggY2xpY2s6MDA6ZjM6MTc0cHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoxMjAsImF0IjoxMjYsImR5IjozMDkuNSwiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6ZjM6MTc0cHggY2xpY2s6MDA6ZjM6MTc1cHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoxMjAsImF0IjoxMjYsImR5IjozMDkuNSwiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6ZjM6MTc0cHggY2xpY2s6MDA6ZjM6MTc1cHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoxMjAsImF0IjoxMjcsImR5IjoyODIuMywiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6ZjI6MTQ4cHggY2xpY2s6MDA6ZjI6MTQ3cHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoxMjAsImF0IjoxNDEsImR5IjoyNTIuOSwiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6ZjM6MTU0cHggY2xpY2s6MDA6ZjM6MTU0cHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoxMjAsImF0IjoxMjcsImR5IjoyNzkuOSwiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6ZjM6MTcxcHggY2xpY2s6MDA6ZjM6MTcwcHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoxMjAsImF0IjoxMzAsImR5IjoyODEuMywiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6ZjM6MTYwcHggY2xpY2s6MDA6ZjM6MTU5cHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoxMjAsImF0IjoxMzAsImR5IjoyODAuNiwiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6ZjM6MTU5cHggY2xpY2s6MDA6ZjM6MTU5cHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoxOTAsImF0IjoxOTksImR5IjoxMTQuMywiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6ZjI6NjFweCBjbGljazowMDpmMjo2MHB4IiwiaGl0IjpmYWxzZSwiY2xvc2VkIjpmYWxzZX0seyJhZnRlciI6MTkwLCJhdCI6MTk4LCJkeSI6MTI4LjEsImV2ZW50cyI6InBvaW50ZXJkb3duOjAwOmYzOjc0cHggY2xpY2s6MDA6ZjM6NzRweCIsImhpdCI6ZmFsc2UsImNsb3NlZCI6ZmFsc2V9LHsiYWZ0ZXIiOjE5MCwiYXQiOjE5OCwiZHkiOjExMy44LCJldmVudHMiOiJwb2ludGVyZG93bjowMDpmMzo2MHB4IGNsaWNrOjAwOmYzOjYwcHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoxOTAsImF0IjoxOTgsImR5IjoxMTIuOSwiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6ZjI6NTlweCBjbGljazowMDpmMjo1OXB4IiwiaGl0IjpmYWxzZSwiY2xvc2VkIjpmYWxzZX0seyJhZnRlciI6MTkwLCJhdCI6MjAzLCJkeSI6NDQ1LjcsImV2ZW50cyI6InBvaW50ZXJkb3duOjAwOmYzOjI0MnB4IGNsaWNrOjAwOmYzOjI0MnB4IiwiaGl0IjpmYWxzZSwiY2xvc2VkIjpmYWxzZX0seyJhZnRlciI6MTkwLCJhdCI6MTk0LCJkeSI6MTEyLjYsImV2ZW50cyI6InBvaW50ZXJkb3duOjAwOmYyOjU0cHggY2xpY2s6MDA6ZjI6NTRweCIsImhpdCI6ZmFsc2UsImNsb3NlZCI6ZmFsc2V9LHsiYWZ0ZXIiOjE5MCwiYXQiOjE5NiwiZHkiOjExMi45LCJldmVudHMiOiJwb2ludGVyZG93bjowMDpmMjo1OXB4IGNsaWNrOjAwOmYyOjU5cHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoxOTAsImF0IjoxOTYsImR5IjoxMTIuNywiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6ZjM6NjRweCBjbGljazowMDpmMzo2NHB4IiwiaGl0IjpmYWxzZSwiY2xvc2VkIjpmYWxzZX0seyJhZnRlciI6MTkwLCJhdCI6MTk3LCJkeSI6MTEzLjEsImV2ZW50cyI6InBvaW50ZXJkb3duOjAwOmYzOjY0cHggY2xpY2s6MDA6ZjM6NjRweCIsImhpdCI6ZmFsc2UsImNsb3NlZCI6ZmFsc2V9LHsiYWZ0ZXIiOjE5MCwiYXQiOjE5NywiZHkiOjExMi43LCJldmVudHMiOiJwb2ludGVyZG93bjowMDpmMzo1OXB4IGNsaWNrOjAwOmYzOjU5cHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoxOTAsImF0IjoxOTUsImR5IjoxNjQuOCwiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6ZjI6OTNweCBjbGljazowMDpmMjo5M3B4IiwiaGl0IjpmYWxzZSwiY2xvc2VkIjpmYWxzZX0seyJhZnRlciI6MTkwLCJhdCI6MTk3LCJkeSI6MTEzLjQsImV2ZW50cyI6InBvaW50ZXJkb3duOjAwOmYzOjY0cHggY2xpY2s6MDA6ZjM6NjVweCIsImhpdCI6ZmFsc2UsImNsb3NlZCI6ZmFsc2V9LHsiYWZ0ZXIiOjE5MCwiYXQiOjE5NSwiZHkiOjExMi43LCJldmVudHMiOiJwb2ludGVyZG93bjowMDpmMzo1OXB4IGNsaWNrOjAwOmYzOjU5cHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoxOTAsImF0IjoyMDEsImR5IjoxODAuNSwiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6ZjM6MTA5cHggY2xpY2s6MDA6ZjM6MTA5cHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoxOTAsImF0IjoyMDIsImR5IjoxMTMuMSwiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6ZjM6NjRweCBjbGljazowMDpmMzo2NHB4IiwiaGl0IjpmYWxzZSwiY2xvc2VkIjpmYWxzZX0seyJhZnRlciI6MTkwLCJhdCI6MTk5LCJkeSI6MTEzLjIsImV2ZW50cyI6InBvaW50ZXJkb3duOjAwOmYyOjYwcHggY2xpY2s6MDA6ZjI6NTlweCIsImhpdCI6ZmFsc2UsImNsb3NlZCI6ZmFsc2V9LHsiYWZ0ZXIiOjE5MCwiYXQiOjE5NywiZHkiOjE2Mi43LCJldmVudHMiOiJwb2ludGVyZG93bjowMDpmMzo5MHB4IGNsaWNrOjAwOmYzOjkwcHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoxOTAsImF0IjoyMDMsImR5IjoxMTMuMiwiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6ZjI6NTRweCBjbGljazowMDpmMjo1NXB4IiwiaGl0IjpmYWxzZSwiY2xvc2VkIjpmYWxzZX0seyJhZnRlciI6MTkwLCJhdCI6MTk4LCJkeSI6MjA1LjYsImV2ZW50cyI6InBvaW50ZXJkb3duOjAwOmYyOjEwN3B4IGNsaWNrOjAwOmYyOjEwN3B4IiwiaGl0IjpmYWxzZSwiY2xvc2VkIjpmYWxzZX0seyJhZnRlciI6MTkwLCJhdCI6MTk4LCJkeSI6MTQzLjksImV2ZW50cyI6InBvaW50ZXJkb3duOjAwOmYyOjc5cHggY2xpY2s6MDA6ZjI6NzlweCIsImhpdCI6ZmFsc2UsImNsb3NlZCI6ZmFsc2V9LHsiYWZ0ZXIiOjI1MCwiYXQiOjI1NiwiZHkiOjg3LjcsImV2ZW50cyI6InBvaW50ZXJkb3duOjAwOmYyOjQzcHggY2xpY2s6MDA6ZjI6NDNweCIsImhpdCI6ZmFsc2UsImNsb3NlZCI6ZmFsc2V9LHsiYWZ0ZXIiOjI1MCwiYXQiOjI2MywiZHkiOjM3LjIsImV2ZW50cyI6InBvaW50ZXJkb3duOjAwOmYzOjEwcHggY2xpY2s6MDA6ZjM6OXB4IiwiaGl0IjpmYWxzZSwiY2xvc2VkIjpmYWxzZX0seyJhZnRlciI6MjUwLCJhdCI6MjYyLCJkeSI6MzcuMiwiZXZlbnRzIjoicG9pbnRlcmRvd246MTA6ZjI6OHB4IGNsaWNrOjExOmYyOjBweCIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjoyNTAsImF0IjoyNTgsImR5Ijo4Ny43LCJldmVudHMiOiJwb2ludGVyZG93bjowMDpmMzo0M3B4IGNsaWNrOjAwOmYzOjQzcHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoyNTAsImF0IjoyNTgsImR5Ijo1Ny40LCJldmVudHMiOiJwb2ludGVyZG93bjowMDpmMjoyM3B4IGNsaWNrOjAwOmYyOjIzcHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoyNTAsImF0IjoyNjAsImR5Ijo2Ni43LCJldmVudHMiOiJwb2ludGVyZG93bjowMDpmMjoyOXB4IGNsaWNrOjAwOmYyOjI5cHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoyNTAsImF0IjoyNTgsImR5Ijo0My42LCJldmVudHMiOiJwb2ludGVyZG93bjowMDpmMjoxM3B4IGNsaWNrOjAwOmYyOjEzcHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoyNTAsImF0IjoyNTksImR5Ijo0My45LCJldmVudHMiOiJwb2ludGVyZG93bjowMDpmMjoxM3B4IGNsaWNrOjAwOmYyOjEzcHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoyNTAsImF0IjoyNTUsImR5Ijo0My4yLCJldmVudHMiOiJwb2ludGVyZG93bjowMDpmMjoxM3B4IGNsaWNrOjAwOmYyOjEycHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoyNTAsImF0IjoyNTksImR5Ijo0My4yLCJldmVudHMiOiJwb2ludGVyZG93bjowMDpmMzoxNHB4IGNsaWNrOjAwOmYzOjE0cHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoyNTAsImF0IjoyNTcsImR5Ijo0My4zLCJldmVudHMiOiJwb2ludGVyZG93bjowMDpmMjoxMXB4IGNsaWNrOjAwOmYyOjExcHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoyNTAsImF0IjoyNjEsImR5Ijo0My4yLCJldmVudHMiOiJwb2ludGVyZG93bjowMDpmMzoxNHB4IGNsaWNrOjAwOmYzOjE0cHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoyNTAsImF0IjoyODUsImR5Ijo0My40LCJldmVudHMiOiJwb2ludGVyZG93bjowMDpmMjoxM3B4IGNsaWNrOjAwOmYyOjEzcHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjoyNTAsImF0IjoyNjUsImR5IjozNi45LCJldmVudHMiOiJwb2ludGVyZG93bjoxMDpmMjo2cHggY2xpY2s6MTE6ZjI6MHB4IiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjI1MCwiYXQiOjI2NCwiZHkiOjQzLjIsImV2ZW50cyI6InBvaW50ZXJkb3duOjAwOmYyOjEycHggY2xpY2s6MDA6ZjI6MTJweCIsImhpdCI6ZmFsc2UsImNsb3NlZCI6ZmFsc2V9LHsiYWZ0ZXIiOjI1MCwiYXQiOjMwMywiZHkiOjE4LjgsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYzOjBweCBjbGljazoxMTpmMzowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MjUwLCJhdCI6MjYwLCJkeSI6NDkuNSwiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6ZjM6MTdweCBjbGljazowMDpmMzoxN3B4IiwiaGl0IjpmYWxzZSwiY2xvc2VkIjpmYWxzZX0seyJhZnRlciI6MjUwLCJhdCI6MjY1LCJkeSI6NDkuOCwiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6ZjM6MTdweCBjbGljazowMDpmMzoxN3B4IiwiaGl0IjpmYWxzZSwiY2xvc2VkIjpmYWxzZX0seyJhZnRlciI6MjUwLCJhdCI6MjYxLCJkeSI6NDMuMiwiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6ZjI6MTNweCBjbGljazowMDpmMjoxMnB4IiwiaGl0IjpmYWxzZSwiY2xvc2VkIjpmYWxzZX0seyJhZnRlciI6MjUwLCJhdCI6MjcxLCJkeSI6MzcuMiwiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6ZjM6MTBweCBjbGljazowMDpmMzo5cHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOmZhbHNlfSx7ImFmdGVyIjo0MDAsImF0Ijo0MTcsImR5IjowLCJldmVudHMiOiJwb2ludGVyZG93bjoxMTpmMjowcHggY2xpY2s6MTE6ZjI6MHB4IiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjQwMCwiYXQiOjQwMywiZHkiOjAuMiwiZXZlbnRzIjoicG9pbnRlcmRvd246MTE6ZjI6MHB4IGNsaWNrOjExOmYyOjBweCIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjo0MDAsImF0Ijo0MTEsImR5IjowLCJldmVudHMiOiJwb2ludGVyZG93bjoxMTpmMjowcHggY2xpY2s6MTE6ZjI6MHB4IiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjQwMCwiYXQiOjQxNCwiZHkiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYyOjBweCBjbGljazoxMTpmMjowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6NDAwLCJhdCI6NDEwLCJkeSI6MywiZXZlbnRzIjoicG9pbnRlcmRvd246MTE6ZjM6MHB4IGNsaWNrOjExOmYzOjBweCIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjo0MDAsImF0Ijo0MTEsImR5IjowLCJldmVudHMiOiJwb2ludGVyZG93bjoxMTpmMjowcHggY2xpY2s6MTE6ZjI6MHB4IiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjQwMCwiYXQiOjQxOCwiZHkiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYyOjBweCBjbGljazoxMTpmMjowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6NDAwLCJhdCI6NDEyLCJkeSI6MjMuMSwiZXZlbnRzIjoicG9pbnRlcmRvd246MTE6ZjI6MHB4IGNsaWNrOjExOmYyOjBweCIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjo0MDAsImF0Ijo0MTAsImR5IjowLjcsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYyOjBweCBjbGljazoxMTpmMjowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6NDAwLCJhdCI6NDM0LCJkeSI6MCwiZXZlbnRzIjoicG9pbnRlcmRvd246MTE6ZjI6MHB4IGNsaWNrOjExOmYyOjBweCIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjo0MDAsImF0Ijo0MTAsImR5IjowLCJldmVudHMiOiJwb2ludGVyZG93bjoxMTpmMjowcHggY2xpY2s6MTE6ZjI6MHB4IiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjQwMCwiYXQiOjQwOSwiZHkiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmY0OjBweCBjbGljazoxMTpmNDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6NDAwLCJhdCI6NDExLCJkeSI6MCwiZXZlbnRzIjoicG9pbnRlcmRvd246MTE6ZjI6MHB4IGNsaWNrOjExOmYyOjBweCIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjo0MDAsImF0Ijo0MTAsImR5IjowLCJldmVudHMiOiJwb2ludGVyZG93bjoxMTpmMjowcHggY2xpY2s6MTE6ZjI6MHB4IiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjQwMCwiYXQiOjQwOCwiZHkiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYyOjBweCBjbGljazoxMTpmMjowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6NDAwLCJhdCI6NDA0LCJkeSI6MC4yLCJldmVudHMiOiJwb2ludGVyZG93bjoxMTpmMjowcHggY2xpY2s6MTE6ZjI6MHB4IiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjQwMCwiYXQiOjQxMSwiZHkiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYzOjBweCBjbGljazoxMTpmMzowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6NDAwLCJhdCI6NDE5LCJkeSI6MCwiZXZlbnRzIjoicG9pbnRlcmRvd246MTE6ZjI6MHB4IGNsaWNrOjExOmYyOjBweCIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjo0MDAsImF0Ijo0MDYsImR5IjowLCJldmVudHMiOiJwb2ludGVyZG93bjoxMTpmMzowcHggY2xpY2s6MTE6ZjM6MHB4IiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjQwMCwiYXQiOjQwNCwiZHkiOjAuMiwiZXZlbnRzIjoicG9pbnRlcmRvd246MTE6ZjI6MHB4IGNsaWNrOjExOmYyOjBweCIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-sheet-·-a-d-cc72f-to-place-at-its-rung-s-size-chromium-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 129,
+                    "line": 874
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-f7524e160deeab7a2726",
+          "file": "release-11-1-1.spec.ts",
+          "line": 725,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-19T17:32:41.012Z",
+    "duration": 151265.106,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

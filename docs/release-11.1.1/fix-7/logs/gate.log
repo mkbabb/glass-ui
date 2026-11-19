@@ -1,0 +1,188 @@
+
+> @mkbabb/glass-ui-tests-visual@0.0.0 gate:exits
+> bash release-11-1-1/gate.sh
+
+== exits · chromium-phone · (form|glass|exit|routes|round|weight|lift|sheet) ·  · port 5354
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795109271 slope=39.9/s inuse=223307 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 41 tests using 1 worker
+
+  ✓   1 [chromium-phone] › release-11-1-1-controls.spec.ts:22:5 › round · a compact SegmentedTabs strip is round-ended on touch (837ms)
+  ✓   2 [chromium-phone] › release-11-1-1-controls.spec.ts:22:5 › round · a wide SegmentedTabs strip is round-ended on touch (640ms)
+  ✓   3 [chromium-phone] › release-11-1-1-controls.spec.ts:46:1 › weight · selecting a word-labelled ToggleGroupItem moves no item box (1.5s)
+  ✓   4 [chromium-phone] › release-11-1-1-controls.spec.ts:69:1 › lift · a scale-on-hover element returns to rest after a tap (1.4s)
+  ✓   5 [chromium-phone] › release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · pick (2.5s)
+  ✓   6 [chromium-phone] › release-11-1-1.spec.ts:102:5 › form · a dock DropdownMenu keeps its material through the exit · pick (2.4s)
+  ✓   7 [chromium-phone] › release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · outside (2.4s)
+  ✓   8 [chromium-phone] › release-11-1-1.spec.ts:102:5 › form · a dock DropdownMenu keeps its material through the exit · outside (2.4s)
+  ✓   9 [chromium-phone] › release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · escape (2.4s)
+  ✓  10 [chromium-phone] › release-11-1-1.spec.ts:102:5 › form · a dock DropdownMenu keeps its material through the exit · escape (2.3s)
+  ✓  11 [chromium-phone] › release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · trigger (2.4s)
+  ✓  12 [chromium-phone] › release-11-1-1.spec.ts:102:5 › form · a dock DropdownMenu keeps its material through the exit · trigger (2.4s)
+  ✓  13 [chromium-phone] › release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · current (2.4s)
+  -  14 [chromium-phone] › release-11-1-1.spec.ts:102:5 › form · a dock DropdownMenu keeps its material through the exit · current
+  ✓  15 [chromium-phone] › release-11-1-1.spec.ts:206:9 › glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · light (2.2s)
+  ✓  16 [chromium-phone] › release-11-1-1.spec.ts:206:9 › glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · dark (2.2s)
+  ✓  17 [chromium-phone] › release-11-1-1.spec.ts:243:5 › glass · a phone Select is solid under reduced transparency (1.3s)
+  ✓  18 [chromium-phone] › release-11-1-1.spec.ts:206:9 › glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · light (1.9s)
+  ✓  19 [chromium-phone] › release-11-1-1.spec.ts:206:9 › glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · dark (1.8s)
+  ✓  20 [chromium-phone] › release-11-1-1.spec.ts:243:5 › glass · a phone dock DropdownMenu is solid under reduced transparency (1.3s)
+  ✓  21 [chromium-phone] › release-11-1-1.spec.ts:312:5 › exit · Select leaves on the exit curve, shorter than it entered (3.4s)
+  ✓  22 [chromium-phone] › release-11-1-1.spec.ts:312:5 › exit · DropdownMenu leaves on the exit curve, shorter than it entered (3.4s)
+  ✓  23 [chromium-phone] › release-11-1-1.spec.ts:312:5 › exit · Popover leaves on the exit curve, shorter than it entered (3.4s)
+  -  24 [chromium-phone] › release-11-1-1.spec.ts:312:5 › exit · Tooltip leaves on the exit curve, shorter than it entered
+[WebServer] 3:55:24 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  25 [chromium-phone] › release-11-1-1.spec.ts:312:5 › exit · Dialog leaves on the exit curve, shorter than it entered (3.4s)
+[WebServer] 3:55:27 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  26 [chromium-phone] › release-11-1-1.spec.ts:312:5 › exit · Sheet right leaves on the exit curve, shorter than it entered (3.4s)
+[WebServer] 3:55:30 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  27 [chromium-phone] › release-11-1-1.spec.ts:312:5 › exit · Sheet bottom leaves on the exit curve, shorter than it entered (3.4s)
+  ✓  28 [chromium-phone] › release-11-1-1.spec.ts:441:5 › exit · a Popover enters and leaves on opacity and its slide alone (2.3s)
+  -  29 [chromium-phone] › release-11-1-1.spec.ts:441:5 › exit · a Tooltip leaves on opacity and its slide alone
+[WebServer] 3:55:36 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  30 [chromium-phone] › release-11-1-1.spec.ts:499:5 › routes · a detented Sheet leaves whole by escape (3.5s)
+[WebServer] 3:55:40 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  31 [chromium-phone] › release-11-1-1.spec.ts:499:5 › routes · a detented Sheet leaves whole by outside (3.5s)
+[WebServer] 3:55:43 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  32 [chromium-phone] › release-11-1-1.spec.ts:525:1 › routes · a detented Sheet dragged off leaves from where the drag left it (3.8s)
+  ✘  33 [chromium-phone] › release-11-1-1.spec.ts:589:5 › routes · a CommandDialog keeps its list through its exit by pick (4.4s)
+  ✓  34 [chromium-phone] › release-11-1-1.spec.ts:589:5 › routes · a CommandDialog keeps its list through its exit by escape (2.6s)
+  ✓  35 [chromium-phone] › release-11-1-1.spec.ts:589:5 › routes · a CommandDialog keeps its list through its exit by outside (2.5s)
+  ✓  36 [chromium-phone] › release-11-1-1.spec.ts:623:5 › routes · a press on an open Select's trigger closes it once (2.4s)
+  ✓  37 [chromium-phone] › release-11-1-1.spec.ts:623:5 › routes · a press on an open DropdownMenu's trigger closes it once (2.5s)
+  ✓  38 [chromium-phone] › release-11-1-1.spec.ts:623:5 › routes · a press on an open Popover's trigger closes it once (2.5s)
+[WebServer] 3:56:04 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:07 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:08 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:10 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:11 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:12 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:13 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:14 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:16 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:17 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:18 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:19 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:21 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:22 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:23 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:25 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:26 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:28 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:29 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:31 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:33 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:34 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:35 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:36 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:38 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:40 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:41 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:44 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:45 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:46 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:47 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:49 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:50 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:52 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:53 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:54 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:55 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:56 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:58 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:56:59 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:01 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:02 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:03 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:05 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:06 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:07 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:09 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:11 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:12 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:13 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:15 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:16 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:18 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:19 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:20 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:22 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:23 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:25 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:26 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:27 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:29 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:30 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:32 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:33 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:35 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:36 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:38 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:40 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:41 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:43 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:44 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:45 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:47 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:48 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:50 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:51 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:53 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:55 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:56 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:58 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:57:59 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:58:01 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:58:03 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:58:04 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:58:06 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:58:07 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:58:09 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:58:11 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:58:12 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:58:14 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:58:16 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:58:17 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:58:19 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:58:20 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:58:22 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:58:24 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:58:25 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:58:27 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 3:58:28 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  39 [chromium-phone] › release-11-1-1.spec.ts:728:1 › sheet · a detented Sheet rises into place at its rung's size (2.4m)
+[WebServer] 3:58:32 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  40 [chromium-phone] › release-11-1-1.spec.ts:909:5 › sheet · a detented Sheet dragged up and let go at speed springs on from where the finger left it (6.7s)
+[WebServer] 3:58:38 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  41 [chromium-phone] › release-11-1-1.spec.ts:909:5 › sheet · a detented Sheet dragged up and let go at rest springs on from where the finger left it (7.0s)
+
+
+  1) [chromium-phone] › release-11-1-1.spec.ts:589:5 › routes · a CommandDialog keeps its list through its exit by pick 
+
+    TypeError: Cannot read properties of undefined (reading 'present')
+
+      459 | /** The area of a frame's box inside the viewport. */
+      460 | function areaOnScreen(f: Frame, vw: { width: number; height: number }): number {
+    > 461 |     if (!f.present || !f.w || !f.h) return 0;
+          |            ^
+      462 |     const w = Math.max(0, Math.min(f.x! + f.w, vw.width) - Math.max(f.x!, 0));
+      463 |     const h = Math.max(0, Math.min(f.y! + f.h, vw.height) - Math.max(f.y!, 0));
+      464 |     return w * h;
+        at areaOnScreen (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:461:12)
+        at seenFrom (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:476:30)
+        at judgeLeave (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:482:18)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:603:22
+
+    Error Context: test-results/release-11-1-1-routes-·-a--79dcb-st-through-its-exit-by-pick-chromium-phone/error-context.md
+
+  1 failed
+    [chromium-phone] › release-11-1-1.spec.ts:589:5 › routes · a CommandDialog keeps its list through its exit by pick 
+  3 skipped
+  37 passed (4.2m)
+npm error Lifecycle script `gate:exits` failed with error:
+npm error code 1
+npm error path /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual
+npm error workspace @mkbabb/glass-ui-tests-visual@0.0.0
+npm error location /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual
+npm error command failed
+npm error command sh -c bash release-11-1-1/gate.sh

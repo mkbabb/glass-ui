@@ -66,3 +66,38 @@ CHAIN11-START 12:31:03
 12:32:09 t1-branch-chromium-phone branch chromium-phone [reverse · a Toast closed while it opens] exit 0 30s load=7.30 7.26 7.80  10 passed (26.1s) 
 12:32:40 t1-red-chromium-phone red chromium-phone [reverse · a Toast closed while it opens] exit 1 31s load=7.64 7.37 7.82  10 failed 
 12:38:28 a9-branch-chromium-phone branch chromium-phone [sheet · a detented Sheet rises] exit 1 348s load=6.92 7.48 7.70  3 failed 
+CHAIN13-START 12:32:39
+12:35:20 h1-branch-chromium-phone branch chromium-phone [sheet · a detented Sheet rises] exit 1 161s load=43.80 23.97 12.80  1 failed 
+12:40:52 h1-branch-webkit-phone branch webkit-phone [sheet · a detented Sheet rises] exit 1 332s load=33.62 33.76 21.42  1 failed 
+CHAIN13-DONE 12:40:53
+CHAIN14-START 12:43:18
+12:45:58 h2-branch-chromium-phone branch chromium-phone [sheet · a detented Sheet rises] exit 1 160s load=31.68 35.99 26.43  1 failed 
+12:50:58 h2-branch-webkit-phone branch webkit-phone [sheet · a detented Sheet rises] exit 0 300s load=53.47 42.17 31.85  1 passed (2.2m) 
+12:56:57 h2-red-chromium-phone red chromium-phone [sheet · a detented Sheet rises] exit 1 359s load=32.41 39.83 34.88  1 failed 
+12:59:20 h2-red-webkit-phone red webkit-phone [sheet · a detented Sheet rises] exit 1 143s load=49.38 41.57 36.21  1 failed 
+CHAIN14-DONE 12:59:20
+CHAIN16-START 13:08:59
+14:12:02 CHAIN16 stopped before its first run: the 1-minute load stayed 34 to 79 from 13:09 to 14:12
+CHAIN17-START 14:12:34
+14:12:36 sync-tip cc0384d4e
+14:24:33 rm2-tip-chromium-phone tip@cc0384d4e chromium-phone [fade · a detented Sheet] exit 0 717s load=31.83 47.10 48.52  1 passed (5.0s) 
+14:24:47 rm2-tip-webkit-phone tip@cc0384d4e webkit-phone [fade · a detented Sheet] exit 0 14s load=43.24 48.84 49.11  1 passed (6.6s) 
+14:27:38 rm2-red-chromium-phone red chromium-phone [fade · a detented Sheet] exit 1 171s load=32.88 44.21 47.25  1 failed 
+14:27:49 rm2-red-webkit-phone red webkit-phone [fade · a detented Sheet] exit 1 11s load=32.51 43.77 47.06  1 failed 
+14:29:56 h3-tip-webkit-phone tip@cc0384d4e webkit-phone [sheet · a detented Sheet rises] exit 0 127s load=38.17 42.02 45.88  1 passed (2.0m) 
+14:36:03 h3-red-webkit-phone red webkit-phone [sheet · a detented Sheet rises] exit 1 367s load=50.34 42.49 44.15  1 failed 
+15:27:48 h3-red-chromium-phone red chromium-phone [sheet · a detented Sheet rises] exit 1 3105s load=25.78 65.33 69.72  1 failed 
+15:30:35 h3-tip-chromium-phone tip@cc0384d4e chromium-phone [sheet · a detented Sheet rises] exit 1 167s load=39.17 54.44 64.40  1 failed 
+15:34:25 b2-tip-webkit-phone-1 tip@cc0384d4e webkit-phone [1] exit 1 230s load=31.92 43.32 57.18  2 failed  11 skipped  30 passed (2.6m) 
+15:37:39 b2-tip-webkit-phone-2 tip@cc0384d4e webkit-phone [1] exit 1 193s load=44.41 43.87 54.68  2 failed  11 skipped  30 passed (3.0m) 
+15:40:49 b2-tip-webkit-phone-3 tip@cc0384d4e webkit-phone [1] exit 0 190s load=26.26 36.13 49.28  11 skipped  32 passed (2.0m) 
+15:45:44 d20-tip-chromium-phone tip@cc0384d4e chromium-phone [(standing · detented Sheet|routes · a detented Sheet leaves whole)] exit 0 295s load=25.49 33.10 44.31  80 passed (4.8m) 
+15:53:53 d20-red-chromium-phone red chromium-phone [(standing · detented Sheet|routes · a detented Sheet leaves whole)] exit 1 489s load=27.76 36.61 41.67  80 failed 
+CHAIN17-DONE 15:53:53
+CHAIN19-START 15:54:01
+15:58:56 gate done: 15:58:56 gate exit 0 cc0384d4e
+CHAIN18-START 15:58:57
+15:59:21 chain19 and chain18 stopped: gate.sh logged exit 0 for a failed gate (the code was read after $(date) had run); the gate's first part failed (gate.log)
+CHAIN20-START 16:00:06
+16:37:44 chain20 stopped by this seat: from about 16:00 its gate part (chromium-phone part 1) and guard were held in the stopped state (T) by something outside this seat, re-stopped within about 10 s of each SIGCONT; the tree was ended by SIGTERM to the guard
+16:41:36 the stops are the owner's power hold (docs/tranches/BL/driver/power-hold.py in the main checkout): it pauses every process of the release-11.1.1 worktree's runs at a battery of 40 % or less and resumes them at 80 %; the battery read 19 to 25 %, charging, under load; this seat's frozen gate part was ended by SIGKILL and its work stops here
