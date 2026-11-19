@@ -162,3 +162,14 @@ From `sci-report/atlas/docs/tranches/U/design/LAST-TEN-GLASS-ROWS-2026-11-15.md`
 - **O-397.** A focus ring follows the control's radius on every rounded control; witness on atlas's closed filter drawer at 360 light and on every glass control with a radius, both engines, RED on v11.1.0.
 - **O-399.** A Select inside a Sheet on a phone: its list does not cover the sheet it lives in with a second sheet, and whatever surface it opens names the field it sets (the trigger's label as the surface's accessible name and visible heading). Rule the form first (a sheet over a sheet, a popover inside it, or the list in place).
 - **O-400.** An OS colour-scheme flip: find what re-resolves in one long task (51 to 68 ms on atlas's /usf at 1440 and 390) and bring it under one frame's budget; and read, on 11.1.1, which of atlas's four reduced-motion cuts still cut (Filters open and close, the theme toggle, the side rail at 1440), curing the glass ones as a fade.
+
+## Added 2026-11-19: Home Assistant's round 13 rows for 11.1.2 (INBOUND O-412)
+
+Readings, citations and witnesses in `docs/tranches/BL/audit/hassio-r13/PLACED.md` and the verified JSON beside it.
+- **LF-38** is O-358 (already this release's first accessibility row): hassio's recording test is a second witness.
+- **LF-40** is O-399: hassio's wish (an anchored list, or the list in place in the sheet's body) sits beside atlas's for the form ruling.
+- **LF-17** joins O-390: the light glass Dialog's plate lightens until its words, muted lines and the labelled separator's word read 4.5:1 over a light page (pure black reads only 3.9:1 on today's plate). O-390(e)'s dark pool under the plate (LF-15) is carried here from the INBOUND row, since this file's (e) line names only the ink.
+- **LF-10:** the Dialog draws the 24 px corner the radius rules give it, published as the Sheet publishes its own; CommandDialog takes it; a nested Card keeps 16.
+- **LF-25:** a disabled Switch's thumb plate, shadow and face fill recede with its ink; the same cell reads an unchecked Checkbox.
+- **LF-39** is O-337's 3:1 floor: its witness adds a tinted card and a glass sheet in dark, with hassio's U2 table beside it.
+- **LF-16's defect parts:** every side's anchored corners square (the cascade race with `.glass-floating`'s radius), the bottom sheet pads for the home-bar safe area (the CHANGELOG tells hosts to drop their own pad), a touch no longer leaves the hover lit, and a fling the host refuses springs back instead of leaving the sheet mounted, modal and invisible.
