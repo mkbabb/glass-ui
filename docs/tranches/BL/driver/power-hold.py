@@ -18,9 +18,14 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 LIST = os.path.join(HERE, "power-hold-pids.txt")
 STATE = os.path.join(HERE, "power-hold-state.json")
 RELEASE = os.path.join(HERE, "power-hold-RELEASE")
-DEMO = re.compile(r"glass-ui/\.claude/worktrees/bl/demo|\.p14/")
-CRITIC = re.compile(r"glass-ui/\.claude/worktrees/(release-11\.1\.1|infra-deploy-asset-miss)")
-DOCK = re.compile(r"glass-ui/\.claude/worktrees/bl/dock/wi8|m7/")
+# Each run is named by its worktree's absolute path, never by a relative fragment: a bare
+# `m7/` once matched another session's command and froze its Home Assistant process
+# (2026-11-19). A root is a process whose command names the path, or a Claude shell whose
+# working directory is inside it; the tree is the root and its descendants.
+WT = "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/"
+DEMO = (WT + "bl/demo",)
+CRITIC = (WT + "release-11.1.1",)
+DOCK = (WT + "bl/dock/wi8",)
 ME = os.getpid()
 LOW, HIGH = 40, 80
 FALL_S, DRAIN_PTS = 15 * 60, 3
@@ -44,11 +49,30 @@ def power():
 def battery():
     return power()[0]
 
-def trees(rows, pat):
+def cwds(rows):
+    """Working directories of the Claude shells (the snapshot zsh each Bash call runs in)."""
+    shells = [str(p) for p, pp, st, c in rows if "shell-snapshots/snapshot-zsh" in c]
+    if not shells:
+        return {}
+    out = subprocess.run(["lsof", "-a", "-d", "cwd", "-Fn", "-p", ",".join(shells)],
+                         capture_output=True, text=True).stdout
+    found, pid = {}, None
+    for line in out.splitlines():
+        if line.startswith("p"):
+            pid = int(line[1:])
+        elif line.startswith("n") and pid is not None:
+            found[pid] = line[1:]
+    return found
+
+def inside(path, roots):
+    return any(path == r or path.startswith(r + "/") for r in roots)
+
+def trees(rows, roots, cwd):
     kids = {}
     for p, pp, st, c in rows:
         kids.setdefault(pp, []).append(p)
-    seen, stack = set(), [p for p, pp, st, c in rows if pat.search(c) and "power-hold" not in c]
+    seen, stack = set(), [p for p, pp, st, c in rows if "power-hold" not in c
+                          and (any(r in c for r in roots) or inside(cwd.get(p, ""), roots))]
     while stack:
         p = stack.pop()
         if p in seen or p == ME:
@@ -113,9 +137,10 @@ while not os.path.exists(RELEASE):
     rows = table()
     stat = {p: st for p, pp, st, c in rows}
     cmd = {p: c for p, pp, st, c in rows}
-    apply(trees(rows, CRITIC), low_hold, stat, cmd)
-    apply(trees(rows, DOCK), low_hold or fall_level >= 2, stat, cmd)
-    apply(trees(rows, DEMO), low_hold or fall_level >= 1, stat, cmd)
+    cwd = cwds(rows)
+    apply(trees(rows, CRITIC, cwd), low_hold, stat, cmd)
+    apply(trees(rows, DOCK, cwd), low_hold or fall_level >= 2, stat, cmd)
+    apply(trees(rows, DEMO, cwd), low_hold or fall_level >= 1, stat, cmd)
     json.dump({"history": history, "low_hold": low_hold, "fall_level": fall_level, "fall_since": fall_since}, open(STATE, "w"))
     time.sleep(10)
 print("hold released", flush=True)
