@@ -1,0 +1,11 @@
+# Stop for the battery, 2026-11-19 17:03
+
+The battery fell from 81 % at 12:26 to 14 % at 17:03 while the Mac read "charging" on AC (load 10 to 15; CrowdStrike at about 250 % CPU, gaggle builds, Home Assistant runs). The power hold paused the demo pass at 12:59, the dock pass at 13:10 and every glass run at 16:00 (40 %). At 14 % the orchestrator stopped glass's runs and the hold outright, so a shutdown loses nothing. No process of glass's is left running or frozen.
+
+Resume when the Mac holds its charge (80 % or more and not falling), the power hold first (`python3 docs/tranches/BL/driver/power-hold.py`, in the background):
+
+1. **11.1.1:** `Workflow({scriptPath: "docs/tranches/BL/driver/glass-11.1.1-exits.js", resumeFromRunId: "wf_7b4b4753-433", args: <driver/resume/glass-11.1.1-after-zone-stop.json>})`. The run finished at round 8 (fix seat 8 not measured: it committed its cure 02dd6a7cb and record a476d0cba, then waited on the hold). The args now carry a RESUME note for fix-1111-8 and lastRound 10, so rounds 1 to 7 and critique 7 replay from cache and fix seat 8 reruns to measure. release/11.1.1 at a476d0cba, pushed.
+2. **Dock pass 8:** `Workflow({scriptPath: "docs/tranches/BL/driver/dock-pass-8.js", resumeFromRunId: "wf_e0aa83eb-d6e", args: <driver/resume/dock-pass-8-after-pause.json>})`. bl/dock/wi8 at db66eeb0e, pushed; logs uncommitted in the tree.
+3. **Demo P17 close:** `Workflow({scriptPath: "docs/tranches/BL/driver/demo-p17-close.js", resumeFromRunId: "wf_dac9f195-7ba", args: <driver/resume/demo-p17-close-after-pause.json>})`. bl/demo at 4e8686d1d, pushed; items 2 and 3 uncommitted, saved as `.p17/close/wip-at-battery.patch`.
+
+Owed after 11.1.1 lands: atlas's tarball to `/Users/mkbabb/Programming/.u-build/inbound-glass/` with its commit; the publish notices (value.js, atlas, Home Assistant, Gregg, gaggle).
