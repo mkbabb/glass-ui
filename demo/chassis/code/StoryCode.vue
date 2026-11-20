@@ -1,17 +1,37 @@
 <script setup lang="ts">
 // StoryCode: the page's one usage snippet, closed by default under "Code". The
-// disclosure opens and closes by the library Collapsible's own tween.
+// disclosure opens and closes by the library Collapsible's own tween. The code face
+// loads when "Code" is first pointed at, focused or pressed. Its arrival restyles the
+// page in WebKit, one long frame, and a long frame inside the open lands much of it in
+// one step; so the first open waits for the face and two frames after it.
+import { ref } from "vue";
 import { ChevronDown } from "@lucide/vue";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@glass/components/collapsible";
 import CodeBlock from "./CodeBlock.vue";
+import { loadCodeFace } from "./code-face";
 
 defineProps<{ code: string; lang?: string }>();
+
+const open = ref(false);
+let ready: Promise<unknown> | undefined;
+function prepare(): Promise<unknown> {
+    ready ??= loadCodeFace().then(
+        () => new Promise((done) => requestAnimationFrame(() => requestAnimationFrame(done))),
+    );
+    return ready;
+}
+async function setOpen(next: boolean): Promise<void> {
+    if (next) await prepare();
+    open.value = next;
+}
 </script>
 
 <template>
-    <Collapsible v-slot="{ open }" class="story-code" data-story-code>
+    <Collapsible :open="open" class="story-code" data-story-code @update:open="setOpen">
         <CollapsibleTrigger
             class="story-code-trigger focus-ring interactive-item transition-control"
+            @pointerenter="prepare"
+            @focus="prepare"
         >
             Code
             <span class="story-code-chevron" :data-open="open || undefined" aria-hidden="true">

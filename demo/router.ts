@@ -6,6 +6,7 @@ import {
     cardsSetCode,
     firstStoryPath,
 } from "./stories/manifest";
+import { loadCodeFace } from "./chassis/code/code-face";
 
 /**
  * Routes are derived from the manifest: `/`, a `/:category` section page per category
@@ -92,8 +93,7 @@ export const router = createRouter({
 // Pre-resolve each lazy route chunk before the View Transition update callback so
 // snapshot capture never includes an unresolved component. Warm chunks resolve
 // synchronously after the first visit. A page whose first screen sets the code face
-// waits for that face too, so its first frame paints in it, not in the fallback (a
-// document with no font set, the tests' DOM, has no face to wait for).
+// waits for that face too, so its first frame paints in it, not in the fallback.
 router.beforeResolve(async (to) => {
     const loads: Promise<unknown>[] = to.matched
         .map((r) => r.components?.default)
@@ -101,7 +101,7 @@ router.beforeResolve(async (to) => {
             (c): c is () => Promise<unknown> => typeof c === "function",
         )
         .map((c) => c());
-    if (to.meta.codeFace && "fonts" in document) loads.push(document.fonts.load('1em "Fira Code"'));
+    if (to.meta.codeFace) loads.push(loadCodeFace());
     await Promise.all(loads.map((l) => l.catch(() => undefined)));
     return true;
 });
