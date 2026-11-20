@@ -33,9 +33,12 @@
 // One browser per run, a new context per route and cell, all closed in `finally`.
 // Pixels come from page.screenshot; no getContext is called on a page canvas.
 //
+// `--engine webkit` runs the same sweep in Playwright WebKit (headless, no flags), under
+// `guarded --exclusive webkit`.
+//
 // usage: node sweep.mjs --base http://127.0.0.1:5451 --routes /a,/b --out <dir>
-//        [--cells d1440,l1440,m390] [--crops 1]
-import { chromium } from "playwright";
+//        [--cells d1440,l1440,m390] [--crops 1] [--engine chromium|webkit]
+import { chromium, webkit } from "playwright";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -50,6 +53,7 @@ const ROUTES = (args.routes ?? "/").split(",");
 const CELL_IDS = (args.cells ?? "d1440,l1440,m390").split(",");
 const OUT = args.out;
 const CROPS = args.crops !== "0";
+const ENGINE = args.engine ?? "chromium";
 fs.mkdirSync(OUT, { recursive: true });
 const rowsOut = fs.createWriteStream(path.join(OUT, "sweep.jsonl"), { flags: "a" });
 
@@ -266,14 +270,16 @@ const OVERLAY = async ({ shotB64 }) => {
     });
 };
 
-const browser = await chromium.launch({ headless: true, args: ["--use-angle=metal", "--enable-gpu", "--ignore-gpu-blocklist"] });
+const browser = ENGINE === "webkit"
+    ? await webkit.launch({ headless: true })
+    : await chromium.launch({ headless: true, args: ["--use-angle=metal", "--enable-gpu", "--ignore-gpu-blocklist"] });
 try {
     for (const cellId of CELL_IDS) {
         const C = CELLS[cellId];
         for (const route of ROUTES) {
             const ctx = await browser.newContext({ viewport: C.viewport, colorScheme: C.scheme, hasTouch: C.touch, isMobile: C.touch, deviceScaleFactor: 1 });
             const errors = [];
-            const row = { route, cell: cellId, switches: [], code: null, layer: null, overlays: null };
+            const row = { route, cell: cellId, engine: ENGINE, switches: [], code: null, layer: null, overlays: null };
             try {
                 await ctx.addInitScript(`try { localStorage.setItem("vueuse-color-scheme", ${JSON.stringify(C.scheme)}); } catch {}`);
                 await ctx.addInitScript(RECORDER);
