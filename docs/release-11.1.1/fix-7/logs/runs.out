@@ -101,3 +101,16 @@ CHAIN18-START 15:58:57
 CHAIN20-START 16:00:06
 16:37:44 chain20 stopped by this seat: from about 16:00 its gate part (chromium-phone part 1) and guard were held in the stopped state (T) by something outside this seat, re-stopped within about 10 s of each SIGCONT; the tree was ended by SIGTERM to the guard
 16:41:36 the stops are the owner's power hold (docs/tranches/BL/driver/power-hold.py in the main checkout): it pauses every process of the release-11.1.1 worktree's runs at a battery of 40 % or less and resumes them at 80 %; the battery read 19 to 25 %, charging, under load; this seat's frozen gate part was ended by SIGKILL and its work stops here
+19:51:16 sync-tip 02dd6a7cb
+19:51:41 f8-w-tip-chromium-phone tip@02dd6a7cb chromium-phone [routes · a CommandDialog keeps its list through its exit] exit 0 16s load=12.79 61.62 55.54  3 passed (9.6s) 
+19:51:57 f8-w-red-chromium-phone red chromium-phone [routes · a CommandDialog keeps its list through its exit] exit 1 16s load=18.04 59.65 54.98  3 failed 
+19:52:11 f8-w-tip-chromium-desktop tip@02dd6a7cb chromium-desktop [routes · a CommandDialog keeps its list through its exit] exit 0 14s load=21.18 58.96 54.79  3 passed (9.3s) 
+19:52:28 f8-w-red-chromium-desktop red chromium-desktop [routes · a CommandDialog keeps its list through its exit] exit 1 17s load=24.79 57.33 54.30  3 failed 
+19:52:44 f8-w-tip-webkit-desktop tip@02dd6a7cb webkit-desktop [routes · a CommandDialog keeps its list through its exit] exit 0 16s load=24.65 55.66 53.75  3 passed (11.0s) 
+19:53:07 f8-w-red-webkit-desktop red webkit-desktop [routes · a CommandDialog keeps its list through its exit] exit 1 23s load=24.14 53.61 53.06  3 failed 
+19:53:21 f8-w-tip-webkit-phone tip@02dd6a7cb webkit-phone [routes · a CommandDialog keeps its list through its exit] exit 0 14s load=22.61 51.83 52.44  1 skipped  2 passed (8.7s) 
+19:53:35 f8-w-red-webkit-phone red webkit-phone [routes · a CommandDialog keeps its list through its exit] exit 1 14s load=21.26 50.10 51.81  2 failed  1 skipped 
+20:29:57 f8-b-tip-webkit-phone-1 tip@02dd6a7cb webkit-phone [1] exit 0 116s load=21.01 14.11 15.79  11 skipped  32 passed (1.8m) 
+20:33:34 f8-b-tip-webkit-phone-2 tip@02dd6a7cb webkit-phone [1] exit 0 112s load=8.90 12.73 14.92  11 skipped  32 passed (1.8m) 
+20:35:28 f8-b-tip-webkit-phone-3 tip@02dd6a7cb webkit-phone [1] exit 0 114s load=9.14 12.15 14.45  11 skipped  32 passed (1.8m) 
+20:37:31 f8-h-tip-chromium-phone tip@02dd6a7cb chromium-phone [sheet · a detented Sheet rises] exit 0 123s load=25.65 17.27 16.18  1 passed (2.0m) 
