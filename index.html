@@ -32,7 +32,9 @@
              So the two Latin faces are declared here. The text face is
              `font-display: optional`, used only if it has arrived by the first
              text layout (in Chromium, before rendering begins), so its load
-             starts as the head is parsed. The code face is `swap`: a page whose
+             starts as the head is parsed. Where it arrives too late, WebKit
+             counts the face as failed and rejects the load; the page keeps the
+             fallback, so the rejection is caught. The code face is `swap`: a page whose
              first screen sets it is declared in its route row (`codeFace`), and
              the router renders that page once the face has loaded; elsewhere the
              face loads when code first appears. No preload: a preload is used
@@ -66,7 +68,7 @@
             }
         </style>
         <script>
-            document.fonts.load('1em "Plus Jakarta Sans"');
+            document.fonts.load('1em "Plus Jakarta Sans"').catch(() => {});
         </script>
 
         <!-- The /styles cascade is the one byte-complete union entry
