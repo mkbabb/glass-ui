@@ -173,3 +173,15 @@ Readings, citations and witnesses in `docs/tranches/BL/audit/hassio-r13/PLACED.m
 - **LF-25:** a disabled Switch's thumb plate, shadow and face fill recede with its ink; the same cell reads an unchecked Checkbox.
 - **LF-39** is O-337's 3:1 floor: its witness adds a tinted card and a glass sheet in dark, with hassio's U2 table beside it.
 - **LF-16's defect parts:** every side's anchored corners square (the cascade race with `.glass-floating`'s radius), the bottom sheet pads for the home-bar safe area (the CHANGELOG tells hosts to drop their own pad), a touch no longer leaves the hover lit, and a fling the host refuses springs back instead of leaving the sheet mounted, modal and invisible.
+
+## Added 2026-11-19 evening: atlas's G3 to G15 and value.js's design study (INBOUND O-413, O-414)
+
+Readings, citations and witnesses in `docs/tranches/BL/audit/triage-1119/PLACED.md` and the verified JSON beside it. New to this release (the rest of those rows' 11.1.2 parts are rows already booked here: O-381(b), O-350(9), O-292a rows 13 and 17, O-293(c), O-337, O-393, O-361 L3, O-349(3), O-298, O-347):
+- **The held Slider fill (study G1 (a)):** the fill stops stretching and squeezing while held, so its end stays under the finger (the open remainder of O-280 and O-283 above).
+- **Escape on a press-opened dock (study G16):** a dock opened with `expand-on="press"` folds on Escape while focus is on the page, after an open menu has taken its own Escape.
+- **Rings (study G11):** the scroller and SegmentedTabs take glass's ring at 3:1 following their shape; a dock list opened by a pointer stops ringing its row; a dock trigger keeps no ring after a mouse pick. Joined to the O-337 ring row.
+- **Select's stepped shadow (study G12):** the Select's plate drops the stamp and matches the menu's, with the chevron row O-292a.
+- **The dialog's Close (study G13):** it paints above the body and stays in view while a scrolling dialog's body scrolls, and the body reserves its corner when there is no header; alongside O-341's close rework.
+- **Witnesses added:** the dock's fold as a second cell of O-361 L3 (a tap-outside fold at 390 under 4x throttle, no step over the spring's own between the first two painted frames, RED on v11.1.0); study G4 (4) as an at-rest cell of the dock row with the same cause; `.command__input` takes the field-text floor as the field recipes do (atlas G7's hardening of O-352's cell).
+
+**Orchestrator ruling, 2026-11-19:** O-339a's "the Slider's fill takes the accent by default" leaves 11.1.2. The owner's order of 2026-11-19 (O-408) rebuilds the Slider with no visible thumb and the fill's capped end as the grip; the fill's colour is decided once, with that form, in 11.3.0. A default look moves in a minor.
