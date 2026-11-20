@@ -11,7 +11,13 @@ charge, never a drain (98 to 94 % on 2026-11-17 05:34 to 06:45). On a drain the 
 pauses first; 15 minutes more of drain pauses the dock pass too. Both resume at >= 80 % when
 the battery is not draining. Every 10 s; one printed line per change; paused pids appended to
 power-hold-pids.txt; state kept in power-hold-state.json across restarts. Ends when
-power-hold-RELEASE exists."""
+power-hold-RELEASE exists.
+
+2026-11-19 19:47, the owner's order after a reboot at 33 % on the charger ("Continue. Re-deploy all
+workflows."): a level alone no longer pauses anything. Every run pauses at <= 20 % while the battery
+falls, or at <= 10 % whatever it does; all resume at >= 30 % once it is not falling. A drain still
+pauses the demo pass, then the dock pass 15 minutes later; both resume once the battery has not
+fallen over the last 15 minutes. The owner's to reverse."""
 import json, os, re, signal, subprocess, time
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -27,7 +33,7 @@ DEMO = (WT + "bl/demo",)
 CRITIC = (WT + "release-11.1.1",)
 DOCK = (WT + "bl/dock/wi8",)
 ME = os.getpid()
-LOW, HIGH = 40, 80
+LOW, FLOOR, HIGH = 20, 10, 30
 FALL_S, DRAIN_PTS = 15 * 60, 3
 
 def table():
@@ -110,7 +116,7 @@ try:
 except Exception:
     saved = {}
 history = [tuple(x) for x in saved.get("history", [])]
-low_hold = saved.get("low_hold", battery() <= LOW)
+low_hold = saved.get("low_hold", battery() <= FLOOR)
 fall_level = saved.get("fall_level", 0)
 fall_since = saved.get("fall_since", None)
 print(f"start: battery {battery()} %, low hold {'on' if low_hold else 'off'}, fall level {fall_level}", flush=True)
@@ -119,19 +125,20 @@ while not os.path.exists(RELEASE):
     pct, held = power()
     history.append((now, pct))
     history = [(t, v) for t, v in history if now - t <= FALL_S + 60]
-    if not low_hold and pct <= LOW:
-        low_hold = True
-        print(f"battery {pct} %: all three runs pause (<= {LOW} %)", flush=True)
-    elif low_hold and pct >= HIGH:
-        low_hold = False
-        print(f"battery {pct} %: all three runs resume (>= {HIGH} %)", flush=True)
     old = [v for t, v in history if now - t >= FALL_S]
     draining = not held and bool(old) and old[-1] - pct >= DRAIN_PTS
+    falling = bool(old) and pct < old[-1]
+    if not low_hold and (pct <= FLOOR or (pct <= LOW and draining)):
+        low_hold = True
+        print(f"battery {pct} %: all three runs pause (<= {LOW} % and falling, or <= {FLOOR} %)", flush=True)
+    elif low_hold and pct >= HIGH and not falling:
+        low_hold = False
+        print(f"battery {pct} %: all three runs resume (>= {HIGH} %, not falling)", flush=True)
     if draining and fall_level < 2 and (fall_since is None or now - fall_since >= FALL_S):
         fall_level += 1
         fall_since = now
         print(f"battery {pct} % ({old[-1] - pct} points in 15 minutes): {'the demo pass' if fall_level == 1 else 'the dock pass'} pauses", flush=True)
-    elif fall_level and pct >= HIGH and not draining:
+    elif fall_level and bool(old) and not falling:
         fall_level, fall_since = 0, None
         print(f"battery {pct} %: not draining{' (charge held on AC)' if held else ''}, the paused passes resume", flush=True)
     rows = table()
