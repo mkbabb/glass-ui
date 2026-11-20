@@ -47,7 +47,21 @@ function fade(pane: Element, to: "out" | "in", timing: { duration: number; easin
     const frames = to === "out" ? [{ opacity: now }, { opacity: 0 }] : [{ offset: 0, opacity: 0 }];
     const run = el.animate(frames, { ...timing, fill: to === "out" ? "forwards" : "none", id: "stage-swap-fade" });
     fading.set(el, run);
+    if (to === "in") afterPaint(run);
     return run.finished.catch(() => undefined);
+}
+
+// The frames that first style, lay out and paint a new pane can run long on its first
+// visit, and an animation started before them lands their share in one step. So the
+// enter's fade and travel hold at their start until two frames have begun since the
+// pane went in, and play from there.
+function afterPaint(run: Animation): void {
+    run.pause();
+    requestAnimationFrame(() =>
+        requestAnimationFrame(() => {
+            if (run.playState === "paused") run.play();
+        }),
+    );
 }
 
 function onLeave(el: Element, done: () => void): void {
@@ -74,6 +88,7 @@ async function travelTo(): Promise<void> {
         duration,
         easing: "cubic-bezier(0.2, 0, 0, 1)",
     });
+    afterPaint(run);
     travel = run;
     travelling.value = true;
     const settle = (): void => {
