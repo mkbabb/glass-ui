@@ -1,153 +1,23 @@
-/* Dock box-size morph styles — the deformation-free scale, the rigid-content
- * counter-scale, and the dock's motion-weight pin.
- *
- * [2026-08-25 · BK #47 W5 CUT] ~~"Dock arbitrary-shape morph styles" — the shape as a
- * SCALAR PARAMETER: a `--dock-shape-from`/`--dock-shape-to` corner LERP, an OPT-IN
- * `--dock-shape-clip-from`/`--dock-shape-clip-to` silhouette LERP, so the dock FLOWS
- * between arbitrary silhouettes (a teardrop, a tall column) as one liquid-glass
- * surface.~~ — THE ARBITRARY-SHAPE REGISTER IS STRUCK, and it is struck as DEAD
- * ARITHMETIC rather than as a retune.
- *
- * Measured on disk before the strike, not argued: the four tokens had ZERO setters
- * anywhere — the only declarations in the repo were density.css's own, which set them
- * to exactly the defaults this file already read. So `--dock-shape-from` ≡
- * `--dock-shape-to` ≡ `--radius-dock`, and the corner LERP computed
- * `r + (r − r)·t` — the identity, at every t, for every consumer, since the register
- * shipped. The clip pair was `none`/`none` at both endpoints, so the silhouette LERP
- * and both of its `[data-morphing]` forks resolved `clip-path: none` unconditionally:
- * three rules and a custom property to arrive at the initial value.
- *
- * A parameter with one reachable value is not a parameter; it is a static declaration
- * wearing the costume of a knob, and it costs the corner its single authority. THE
- * DOCK'S CORNER GRAMMAR NOW HAS ONE OWNER PER BOX: `.glass-dock` carries a static
- * `--radius-dock`, and the ONLY animated radius in the band is W5's cut cap on
- * `.dock-plate` (run.css) — which is the whole point of the strike, since a live
- * identity-LERP on the shell is a second claimant on "what shapes the dock's corner"
- * that no rule could ever win against and no reader could ever tell was inert.
- *
- * Clean break, no alias (MEMORY: no backwards compat). Migration: NONE — zero setters
- * existed to migrate. If an arbitrary silhouette is ever wanted it returns as a
- * designed facility with a paint acceptance behind it, not a resurrected knob.
- *
- * THE COMPOSITOR FLOOR (apple-ios27.md §3.1 + motion-canon P5) is unchanged and still
- * holds: the footprint is reached by the reserved-`scale()` morph (layers.css,
- * byte-untouched here), NEVER a per-frame size lerp. `proof:no-layout-animation` holds.
+/* The dock's resting corner and its motion-weight pin. Every size and its travel are the
+ * carrier's (useDockBody): the plate's insets and corner are written per frame, and nothing
+ * in the dock is scaled mid-travel (W-I.8, RU-13).
  *
  * @import-ed by dock.css in cascade order, in the SAME `@layer components`. */
 
-/* The cartoon-punch channel is RETIRED (clean break,
-   no alias). `@property --dock-punch-stretch`, the `[data-punching]` driver, and the
-   per-child punch counter-scale are DEFINITION-ABSENT: the dock morph carries ONE
-   deformation-free box-size scale off `--dock-size-scale` (the box RESERVES its
-   expanded footprint, the visible size rides `scale: var(--dock-size-scale)` from
-   `transform-origin: center`), and the liquid weight lives in the DOCK spring's own
-   overshoot-recovery tail (DOCK-LADDER §8), not a second parallel punch transition on
-   a wrong clock. The orientation/fission `--stretch` squish is likewise gone with its
-   V↔H-goo owner — the scale is a pure size morph, ONE compositor
-   channel, ONE clock. */
-
 @layer components {
-    /* ── The dock's resting corner — ONE static declaration ───────────────────────
-       [2026-08-25 · BK #47 W5 CUT] ~~`border-radius: calc(from + (to − from) * t)`
-       reading the `--dock-shape-from`/`--dock-shape-to` pair on `--dock-expand-t`~~ —
-       COLLAPSED TO THE VALUE IT ALWAYS COMPUTED. Both tokens resolved `--radius-dock`
-       for every consumer that ever shipped (zero setters, measured), so the subtraction
-       was `r − r` and the whole `calc()` was `r` at every scalar value. Deleting it
-       changes no rendered pixel; it changes who is allowed to claim the corner.
-
-       This remains the SINGLE resting-radius authority for the shell — shell.css still
-       carries no `border-radius` for the dock (no duplicate, clean break). The one
-       ANIMATED radius in the band is now W5's cut cap, and it lives on `.dock-plate`
-       (run.css), a different box: the plate reports "there is more that way" by dropping
-       two rungs down the 4 · 10 · 16 · 24 · stadium series at whichever edge still
-       hides content. Shell corner static, plate corner scroll-driven, one owner each —
-       which is exactly the separation the identity-lerp blurred, because a rule that
-       animates and a rule that cannot be seen to animate are indistinguishable from
-       the outside until someone sets a token and discovers the design. */
+    /* The shell's one resting-radius declaration (shell.css carries none). The plate's
+       corner is written by the carrier and, on a run that hides seats, cut by run.css. */
     .glass-dock {
         border-radius: var(--radius-dock);
     }
 
-    /* [2026-08-25 · BK #47 W5 CUT] ~~THE ARBITRARY SILHOUETTE — the OPT-IN `clip-path`
-       lerp (A1): `--dock-shape-clip` resolved from a `--dock-shape-clip-from`/
-       `--dock-shape-clip-to` pair, with `[data-morphing]` and
-       `[data-morphing]:where(.expanded, .always-expanded)` forks crossing at the
-       midpoint so a teardrop/blob flowed into a pill.~~ — THREE RULES DELETED.
-
-       Both endpoints were `none` with zero setters, so every branch of the fork
-       resolved `clip-path: none` — the property's initial value, reached by way of a
-       custom property and a state fork. Unsetting it is byte-identical in paint and
-       strictly clearer in source. It also retires one of the band's remaining state-class
-       selectors (the `:where(.expanded, .always-expanded)` fork), which is W1 SURFACE's
-       ledger, not this wave's — recorded so the count is not double-claimed.
-
-       The clip that IS load-bearing is untouched and lives elsewhere: the L0
-       `.dock-plate` owns the visible extent and its own clip (dock.css), and the box
-       clips only on its morph axis while `[data-morphing]` is set (shell.css, the morph
-       clip). Striking this register does not
-       remove a clip from the dock; it removes a second, inert claimant to one. */
-
-    /* ── The box-size morph — the deformation-FREE convex-blend scale ─────────────
-       The visible box size rides ONE factor:
-       `--dock-size-scale` (layers.css — the ratio-FREE convex blend of the two
-       measure-ONCE endpoints, BOUNDED [0.06, 1] by construction, grown from
-       `transform-origin: center`). The scale is a PURE size morph on ONE compositor
-       channel — NOT a multi-factor product: no `--stretch` squish, no
-       `--dock-punch-stretch` cartoon-punch, no reciprocal cross-axis deformation, no
-       `[data-punching]` co-driver (clean break; `--stretch` and the punch channel are
-       DEFINITION-ABSENT). Scoped to
-       `[data-morphing]` (a morph-transient); at settle the attr clears → `scale:
-       none` over the TRUE box. Horizontal scales the inline axis; vertical the block
-       axis (the cross axis stays 1 — the size morph moves the footprint, it does not
-       pinch). The liquid weight lives in the DOCK spring's own overshoot tail
-       (DOCK-LADDER §8), not a second parallel punch clock. */
-    /* W-I.8: the root scale is deleted; the carrier writes the plate's insets. */
-
-    /* ── RIGID CONTENT over the morphing box ───────────────
-       The box-scale rule above scales the WHOLE `.glass-dock` subtree — including the
-       glyphs — by `--dock-size-scale` on the morph axis. The two `.dock-controls`
-       children (`.dock-persistent` + `.dock-layers`) carry the PER-FRAME INVERSE of
-       that size factor so the composited glyph reads its intrinsic 1:1 aspect in every
-       frame while the box scales the footprint. A child multiplies its parent's
-       `scale`, so `1 / max(--dock-size-scale, 0.06)` on the morph axis exactly cancels
-       the box's morph-axis scale (→ 1); the cross axis stays 1 (the box no longer
-       reciprocal-squishes, so the child carries no cross-axis counter — the +48.8%
-       `(--stretch × --dock-punch-stretch)²` residual the deformation zoo introduced is
-       structurally gone with it).
-
-       The `max(…, 0.06)` guard matches the layers.css `--dock-size-scale` clamp floor
-       exactly (a math fence, not a masking fallback). ~~The children default
-       `transform-origin: 50% 50%`, the SAME centre the root scales from~~ — [2026-10-28 ·
-       10.1.3 · O-110] each child scales about its own measured `--dock-morph-origin`
-       (dockMorphMeasure's `anchor`): the layers about the root's origin, so the two
-       scales cancel and the pane lays out where it rests; a persistent region about the
-       point that holds the box it painted before the morph. SCOPED to
-       `[data-morphing]` (the residual transform lives ONLY mid-morph); at settle the
-       attr clears → both rules drop to `scale: none` over the TRUE box, content
-       byte-rigid, ZERO compositing cost at rest (`proof:no-layout-animation` holds). */
-    /* W-I.8: the regions' counter-scales are deleted; they move by translate. */
-
-    /* ── The dock is a LOUD MOTION DRIVER (design §L4) ──────────────────────────
-       The dock pins `--motion-weight: 1` on its own scope so the descendant control
-       motion (the glass-atom / btn cartoon-press punch recipes, which read
-       `--motion-weight` for their amplitude) reads at the full loud register inside
-       the dock chrome. The dock's OWN cartoon box-punch is gone (`--dock-punch-stretch` is
-       DEFINITION-ABSENT), so this pin now serves ONLY the
-       descendant register; the PRM carve below still collapses the loud weight to 0
-       under reduce (the cards.css / glass-atom.css pattern — descendant motion
-       confirms without the cartoon overshoot). */
+    /* The dock pins `--motion-weight: 1` on its own scope, so the descendant control motion
+       that reads it for its amplitude reads at the full register inside the dock;
+       reduced motion takes it to 0. */
     .glass-dock {
         --motion-weight: 1;
     }
 
-    /* ── The dock cast
-       is RETIRED ───────────────────────────────────────────────────────────────
-       The kinetic `.cartoon-cast` offset-shadow CHILD is GONE from the dock; the
-       dock's elevation is carried by `--shadow-dock` (the omni drop-shadow painted
-       from the dock box, so it escapes the radius correctly + in-gamut) +
-       `--glass-key` (the cel rim) — both KEPT. The shared `.cartoon-cast` base rule
-       (cards.css) + its glass-atom consumers are untouched — only the
-       DOCK cast is retired. */
     @media (prefers-reduced-motion: reduce) {
         .glass-dock {
             --motion-weight: 0;

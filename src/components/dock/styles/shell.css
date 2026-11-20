@@ -56,77 +56,20 @@
             )
             saturate(1.2);
         --dock-surface-blur: var(--glass-blur-resting);
-        /* ~~Vertical-dock max-block + horizontal max-inline caps live as semantic
-           tokens… the appropriate axis container scrolls with a mask-fade. Consumers
-           override per-instance by setting `--dock-max-block-size` /
-           `--dock-max-inline-size`.~~ — [2026-08-24 · BK #47 W3 LATTICE] TRUTHED on two
-           counts, both of which this wave made false.
-
-           ONE CAP, NOT A PAIR: `--dock-max-inline-size` is deleted with the strike
-           below; only the BLOCK cap survives, and only on the vertical dock, where it
-           is what hands the run a bounded extent to scroll inside.
-
-           AND NO MASK-FADE ON EITHER AXIS: both edge fades died in this wave on their
-           own measurements — 0/255 over 40px (not received as a cue) while erasing an
-           active edge item to visFrac 0.24 (a real legibility cost). The truncation cue
-           is the plate's terminal cut cap (W5, run.css), which is silhouette-level and
-           independent of the port width. A doc that keeps promising a fade teaches a
-           surface no longer on disk. */
+        /* One cap, the vertical dock's block cap, hands the run a bounded extent to
+           scroll inside; no edge fades on either axis. The truncation cue is the plate's
+           terminal cut cap (run.css). */
         --dock-separator-height: calc(var(--dock-h, var(--size-icon-btn)) * 0.5);
-        /* ~~`--dock-collapsed-hover-scale: var(--scale-hover-dock);`~~ —
-           [2026-08-24 · BK #47 W7 MORPH] struck with its ONE consumer (morph.css, where
-           the ground is recorded in full): the collapsed hover pre-scale ran the box
-           56 → 61.6 and then snapped back un-tweened 54ms before the expand, because the
-           rule carrying it was guarded `:not([data-morphing])` and stopped matching the
-           instant the morph it preceded began. `--scale-hover-dock` itself is a
-           tokens-file name whose last readers (the icon and tab hover lifts) went at
-           U/B8r I-2, so the token is deleted with them. */
-        /* The spring-keyed child stagger knobs. `--dock-stagger-window-size`
-           is the fraction of the morph each child reveals over. Consumers retune the
-           cascade feel per instance.
-
-           `--dock-stagger-step` is the per-child onset BEAT: each
-           successive control's reveal starts this fraction-of-morph later than the
-           one before it, so the row fills edge-in. ONE token × the child's distance
-           from its nearer edge replaces the hand-typed 0.08/0.16/0.24/0.32/0.4 onset
-           ladder [2026-09-22 · O-32 §4.3 L-23: the onset is `step × min(distance from
-           the nearer edge, 3)`, maximum 0.24, both ends bounded — the
-           `step × (childIndex − 1)` / `step × 5` sentences are struck; the ladder
-           itself lives in layers.css]. 0.08 = ~5% of the
-           ~0.32s morph between items — inside Emil Kowalski's 30–60ms stagger band,
-           never the >100ms "slideshow" register. The onset rides the NORMALIZED
-           morph progress (`--dock-expand-t`), NOT a wall-clock timer, so a fast
-           flick and a slow hover-open both choreograph correctly and an interrupted
-           morph orphans no timers.
-
-           The window is 0.4. The per-child onset peaks at
-           `step × 3 = 0.24` (the deep middle), so with the 0.4 window the LAST detail
-           child finishes at `0.24 + 0.4 = 0.64` [2026-09-22 · L-23: was `0.40 + 0.4 =
-           0.80` under the struck index ladder] (the iOS front-loaded register: stagger
-           the EXPANDING detail, never the persistent/summary glyph). A wider 0.55
-           window would push the middle child to `0.24 + 0.55 = 0.79` of the morph —
-           barely visible until four fifths through (the "shrunken icon does not appear
-           for a while" tail). The step (0.08, Kowalski's band) is the beat; the window is the tuned
-           span. The summary/persistent glyph is front-loaded
-           structurally (onset 0, scalar-keyed below). */
+        /* The stagger knobs have no reader since the per-child stagger was deleted (R-3). */
         --dock-stagger-window-size: 0.4;
         --dock-stagger-step: 0.08;
-        /* The big-dock card-shell radius (default --radius-dock-card =
-           --radius-3xl). ~~`--dock-tile-min` is the grid tile minimum (auto-fill
-           track floor)~~ — [2026-08-12 · BK #47 W1 SURFACE] struck with the `layout`
-           prop that was its only consumer. */
+        /* The big-dock card-shell radius (default --radius-dock-card = --radius-3xl). */
         --dock-card-radius: var(--radius-dock-card);
         position: relative;
         /* The explicit local stack contains the L0 plate's negative z-index without
-           leaving the backdrop plate under an identity transform at rest. Morph and
-           collapsed-hover scales arm only on their state selectors.
-           [2026-08-12 · BK #47 W1 SURFACE] ~~fixed/sticky dock helpers below raise
-           this same stack onto `--z-dock`~~ — struck with the `position` prop. */
+           leaving the backdrop plate under an identity transform at rest. */
         z-index: 0;
-        /* [2026-08-12 · BK #47 W1 SURFACE] The centring `.dock-inline` register — the
-           default `position` the prop resolved to on every dock that never set it —
-           folds here as the base. A dock is centred in its own flow box, full stop;
-           there is no second positioning register to pick from. */
+        /* A dock is centred in its own flow box. */
         margin: 0 auto;
         /* The dock self-darkens over light backdrops with NO consumer opt-in (a dock
            floats over arbitrary — frequently light — page content), and it does so
@@ -171,13 +114,7 @@
 
            WHY NOT size: `container-type: inline-size` applies `contain: inline-size`.
            The default free-floating dock must stay shrink-to-fit — size containment
-           defeats intrinsic sizing and collapses it to a sliver. ~~which is opt-in on
-           the `containerName` host below~~ — [2026-08-10 · BK #47 W1] there is no
-           opt-in host: the `containerName` prop is absent from `DockProps` and no
-           `container-type` is declared anywhere in `src/components/dock/**`. The two
-           `@container dock` consumers this sentence pointed at are DELETED at
-           density.css (o19 A-17 G-6, producer-or-delete). Size containment is now
-           refused unconditionally, which is what the tree always did. */
+           defeats intrinsic sizing and collapses it to a sliver. */
         contain: layout style;
         display: inline-flex;
         align-items: center;
@@ -189,50 +126,13 @@
            active layer overflowing (the 3.3.0 regression — every horizontal dock,
            collapsed AND always-expanded, rendered as a sliver). The default
            free-floating dock shrink-wraps to its content (making containment a default
-           silently broke dock sizing for the common case).
-
-           ~~The `dock`-named container is now OPT-IN via the `containerName` prop: a
-           consumer embedding the dock in a width-CONSTRAINED host (a 320px sidebar)
-           sets `containerName="dock"` to get the descendant container-query reads (the
-           audacious-label compression below), trading shrink-to-fit for the
-           host-constrained width it already has there.~~ — [2026-08-10 · BK #47 W1]
-           STRUCK AS NEVER-TRUE, not as newly-retired. `DockProps` has enumerated 14
-           members for the life of this file and `containerName` was never one of them,
-           so the opt-in this paragraph promised had no way to be taken. The paragraph
-           was the sole documentation of a prop that does not exist, and the demo
-           repeated it to users (`demo/stories/dock/overview.vue:447`, `:503` — routed
-           to the consumer addendum, out of Lane α's fence). */
-        /* The base corner is the shape register's token lerp (dock/shape.css, the single radius authority). */
+           silently broke dock sizing for the common case). */
+        /* The base corner is shape.css's (the single radius authority). */
         white-space: nowrap;
-        /* ~~`max-inline-size: var(--dock-max-inline-size);`~~ — THE CONSUMER CAP,
-           [2026-08-24 · BK #47 W3 LATTICE] DELETED, and it is the one deletion in this
-           wave that changes what a dock is allowed to be rather than how it is measured.
-
-           The cap was `overflow.css`'s PRECONDITION, not a layout preference. That file
-           asked "does the row fit?" and needed a box that could be too small for its
-           content in order for the question to have a `false` branch; `min(80vw, 64rem)`
-           manufactured one. Under the lattice the question is never asked — the run is
-           `overflow: auto` unconditionally and the engine scrolls it exactly when there
-           is something to scroll — so the cap's only surviving job was to squeeze.
-
-           And squeeze it did, measurably, on the viewport the budget law was written
-           for: at 393px `80vw` is **314px**, NARROWER than the 377px plate GF-DOCK
-           measured, so the cap was clamping the dock BELOW the width the viewport
-           actually offered while the counted chrome (236–281px of it) and the run
-           competed inside the remainder — which is precisely how the run reached
-           `clientWidth: 0`. A root cap makes chrome and lattice fight over an arbitrary
-           box; the budget law makes the run absorb the REAL leftover. The two cannot
-           both hold, which is why G-DOCK-BUDGET's stated mutation is "restore the
-           consumer cap → RED".
-
-           `--dock-max-block-size` SURVIVES and is not the same thing (see the vertical
-           block below): a column cap hands the run its scrollable block extent, which is
-           the lattice working, where an inline cap took the extent away.
-
-           The token's own declaration (`src/styles/tokens/offsets.css:33,40`) and the
-           one demo site that sets it (`demo/stories/dock/overflow.vue:67`) are OUTSIDE
-           Lane α's fence and are routed to a marked consumer addendum — that story
-           forces its overflow through the cap and owes a real width constraint instead. */
+        /* No inline cap: the run is `overflow: auto` and absorbs the real leftover
+           (G-DOCK-BUDGET's mutation, "restore the consumer cap → RED"). The vertical
+           dock's `--dock-max-block-size` is a different thing: it hands the run its
+           scrollable block extent. */
         padding: var(--dock-padding-block, 0.375rem) var(--dock-padding-inline, 0.5rem);
         /* The GLASS SURFACE (background + backdrop-filter + border)
            MOVED off `.glass-dock` onto the L0 `.dock-plate` (dock/dock.css), which owns
@@ -347,36 +247,10 @@
        (the `overflow-clip-margin` band-aid retired with the aperture).
        The geometric inset (the 80%-of-cell plate) is the lozenge guard. */
 
-    /* ~~the AT-REST block-axis scroll port on the dock ROOT
-       (`.glass-dock.vertical.{always-,}expanded:not([data-morphing])` — `overflow-y:
-       auto` + `scrollbar-width: none` + `overscroll-behavior-y: contain` + its
-       `::-webkit-scrollbar` hide), and the `<FadingScroll>` soft edge on it (the
-       `mask-image` reading `--fade-start`/`--fade-end` off `scroll(self block)`)~~ —
-       [2026-08-24 · BK #47 W3 LATTICE] BOTH STRUCK. The CONTRACT above survives whole
-       and is strictly better served; what changes is WHICH box scrolls.
-
-       THE PORT MOVED, and the move is a defect fix, not a relocation. Scrolling the
-       dock ROOT scrolls everything the root contains — including `.dock-persistent`
-       and `.dock-persistent-end`, the always-present leading aperture and trailing
-       utility group. A column that scrolls its trailing utilities out of the viewport is
-       the F27 complaint (291px hidden at 1440×420, 6 of 13 items entirely below the
-       plate), not the cure for it. Under the lattice the port is the RUN
-       (`.dock-run`, run.css) — `overflow-y: auto` + `scroll-snap-type: y mandatory` +
-       `scroll-padding-block: P/2` + `touch-action: pan-y` + `overscroll-behavior:
-       contain` — so the counted chrome stays pinned and only the seats travel.
-       `--dock-max-block-size` still caps the column here; the run is the sole
-       `flex: 1 1 auto` member under that cap (the budget law), which is what hands it
-       the leftover block extent to scroll. A consumer setting the cap gets the same
-       viewport-anchored scrollable palette, with its utilities still reachable.
-
-       THE FADE DIED ON ITS MEASUREMENTS, not on tidiness. The mask reads 0/255 over
-       40px — it is not visible as a cue — while it erases an ACTIVE item at the edge to
-       visFrac 0.24, which is a legibility COST paid for a cue that is not being
-       received. Its replacement is the plate's terminal cut cap (W5): silhouette-level,
-       port-width-independent, one radius pair instead of two scroll-driven keyframe
-       animations on the frosted box. Both edge fades in the dock (this one and the
-       inline one that died with `overflow.css`) go together — there is no half-state
-       where one axis feathers and the other caps. */
+    /* The vertical dock's scroll port is the RUN (`.dock-run`, run.css), never the root,
+       so the persistent regions stay pinned and only the seats travel; the column cap
+       (`--dock-max-block-size`) hands the run its leftover block extent. No edge fade:
+       the truncation cue is the plate's cut cap. */
 
     /* The paper-grain `::after` lives on `.dock-plate::after` (dock/dock.css): the
        grain belongs on the glass SURFACE, which is the plate. */
@@ -406,29 +280,10 @@
         /* overflow on the block (morph) axis is the data-morphing-gated clip
            shell above; the cross axis stays visible there. */
         padding: var(--dock-padding-block, 0.375rem);
-        /* The stale "a vertical dock is ALWAYS-EXPANDED
-           (no collapse↔expand morph)" assumption is RETIRED (it was false since
-           vertical-collapse shipped: `alwaysExpanded` defaults FALSE, so a vertical
-           dock genuinely collapses its `block-size`). The vertical plate's
-           bg/border/padding/radius now MORPH on the SAME `--dock-expand-t` scalar
-           the horizontal chrome rides (the morph.css `.glass-dock.vertical` interp +
-           padding axis-inverse + the radius arm below) — the chrome follows the
-           box-size morph, no discrete snap. NO root CSS-transition on the morph-
-           chrome props is re-added (a `transition: padding/background/border-color`
-           arm is the second-clock smell the single-scalar rebuild forbids — the
-           `--dock-expand-t` interp is the single authority). KEPT: the press-squish
-           (`transform`) and the box-shadow fade — interaction polish on the vertical
-           dock, NOT the morph chrome.
-
-           [2026-10-28 · 10.1.3 · O-110, critique-4 D-2] ~~`scale
-           var(--dock-motion-resize)`~~ and the `[data-morphing]` rule that held it off
-           — the `scale` leg had no at-rest writer (the hover pre-scale it eased was
-           struck at BK #47 W7, morph.css), so its one remaining input was the morph's
-           own release: at settle `[data-morphing]` cleared, the morph's `scale: 1 0.32`
-           dropped to `none` with the leg re-armed in the same style change, and the
-           settled collapsed box eased back from a third of its height (the anchored
-           edge jumped ~36 px, then re-grew over ~200 ms). The morph is `scale`'s only
-           owner, so no transition on it remains. */
+        /* The vertical dock collapses on its block axis like any other; its chrome follows
+           the carrier's travel. KEPT: the press-squish (`transform`) and the box-shadow
+           fade, interaction polish, not posture chrome. Nothing in the dock transitions
+           `scale`. */
         transition:
             box-shadow var(--dock-motion-standard),
             transform var(--dock-motion-resize);
@@ -539,13 +394,4 @@
        live `variant="instrument-strip"` call-site in src/ or demo/, the chassis
        paint has zero consumers. The cross-repo consumer dashboard cockpit
        re-pins in its own migration (recorded in MIGRATION.md). */
-
-    /* ~~`.glass-dock:where(.fixed)` z-index lift · `.dock-inline` centring ·
-       `.dock-sticky` sticky register~~ — [2026-08-12 · BK #47 W1 SURFACE] the three
-       positioning registers are STRUCK with the `position` prop that emitted them
-       (`fixed` also emitted four Tailwind utilities inline). `position` had ZERO call
-       sites in this tree, and `inline` — the default every dock silently took — was
-       only ever `margin: 0 auto`, now folded into the base `.glass-dock` block above.
-       A consumer who needs a pinned dock writes the position on the dock; it is one
-       declaration, and it was never the dock's to own. */
 }

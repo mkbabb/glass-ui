@@ -39,8 +39,6 @@ export { default as DockControl } from "./DockControl.vue";
 // `.dock-separator` was axis-blind). Reads the dock orientation via
 // useOptionalDockContext and paints perpendicular to the layout axis (vertical
 // hairline in a row dock, horizontal rule in a column dock).
-// [2026-08-12 · BK #47 W1 SURFACE] ~~full-row section break in a grid dock~~ — the
-// `layout="grid"` tile panel is struck with its prop.
 export { default as DockSeparator } from "./DockSeparator.vue";
 // Re-export composable types so consumers can
 // type wrappers around the published surface. `UseDockStateOptions`

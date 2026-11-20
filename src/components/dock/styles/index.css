@@ -79,23 +79,10 @@
    dock cascade — a net-new surface around the byte-untouched useDockCtaReceive morph. */
 @import "./cta-seat.css";
 
-/* The SINGLE morph scalar. The dock morph orchestrator writes it once per frame
-   to the `.glass-dock` root; EVERY morph axis (box size, padding, radius, scale,
-   background/border color, child stagger) is a pure `calc()` read off it — one
-   driver, one clock, on every engine (the View-Transitions collapse fork is
-   retired). `@property`-registered `<number>` so it interpolates COMPOSITED, not
-   discretely (an UNregistered custom property jumps + animates on the main
-   thread). `initial-value:0` = the collapsed-progress floor.
-
-   `inherits:true` (NOT false) — the SOTA inheritance-bomb guard is specifically
-   "never write the scalar to `:root`" (a whole-document subtree recalc per frame
-   over 1300+ elements). The scalar is written LOCALLY on the small `.glass-dock`
-   subtree, and its CONSUMERS are DESCENDANTS (`.dock-layers` sizing, the active
-   pane's child stagger, and `.dock-face-content` clipping) that read it via inheritance, so it MUST
-   inherit. Writing one inheriting var over a ~10–20-element dock subtree is the
-   established local-subtree scalar pattern (a `.dock-layers`-scoped write); the
-   bomb only fires from a `:root` write, which never happens here. The root-chrome
-   reads (padding/bg/border) sit on the same element it is written to. */
+/* The posture travel's progress, 0 to 1 (W-I.8 R-10). The carrier writes it on the
+   `.glass-dock` root each frame of a posture travel, so a reversal reads 1 − t where it
+   turns. `inherits: true`: its readers are descendants of the small dock subtree, and it
+   is never written to `:root`. `initial-value: 0` is the collapsed-progress floor. */
 @property --dock-morph-t {
     syntax: "<number>";
     inherits: true;
@@ -135,10 +122,9 @@
    derived axis) so its `calc()` re-resolves per-element when `--dock-local-scale`
    shifts. ADDITIVE ONLY: `initial-value: 1` is the identity, so at the default
    `--dock-local-scale: 1` the resolved `--dock-scale` is unchanged (no
-   rung re-tune); the `@media (pointer: coarse)` re-declare (~~overflow.css~~ —
-   [2026-08-24 · BK #47 W2 SCALE] `density.css`, and it is no longer the
-   `:root`-EQUIVALENT re-resolve: it now re-declares `--dock-scale` to the dock-local
-   IDENTITY `var(--dock-mobile-scale, 1)`, striking the ×1.17 coarse inflation) STAYS,
+   rung re-tune); the `@media (pointer: coarse)` re-declare (density.css, which
+   re-declares `--dock-scale` to the dock-local identity `var(--dock-mobile-scale, 1)`)
+   STAYS,
    and this registration is the complementary non-`:root`-scope thread — a consumer
    `--dock-local-scale` override on a dock scope still re-evaluates the `:root` calc at
    FINE pointer, which is the case this registration was minted for. DOCK_SPRING is
@@ -237,43 +223,11 @@
 
     /* Shared four-state contract — the focus-visible ring + disabled paint are
        identical across every dock control, so they are expressed ONCE here as a
-       comma group over the control family rather than copied per rule-set. The
-       group keeps full class+pseudo specificity (NOT `:where()`, which would
-       zero the class and let a per-control :hover box-shadow override the focus
-       ring). Per-control transition extensions (the box-shadow fade on
-       focus-visible) stay with their own selectors in dock-controls.css where
-       they differ.
-
-       [2026-08-24 · BK #47 W8 MATERIAL] THE RING LEAVES `box-shadow` FOR `outline`, and
-       the reason is a collision rather than a preference.
-
-       ~~`box-shadow: var(--dock-ring); outline: none;`~~ — `box-shadow` is ONE property
-       and the dock was asking it to carry two independent facts: this focus ring, and
-       every control's own hover/press/selected elevation. A single property cannot hold
-       two states, so whichever rule wins the cascade ERASES the other — which is why the
-       comment above has to explain that the group deliberately keeps class specificity
-       "NOT `:where()`, which would … let a per-control :hover box-shadow override the
-       focus ring". That paragraph is the defect describing its own workaround: the
-       specificity ladder exists to stop a hover from deleting a keyboard user's focus
-       ring, and it only holds until the next control ships a more specific hover.
-
-       `outline` is a DIFFERENT property. It composes with any elevation instead of
-       competing with it, it is what forced-colors mode actually honours (a `box-shadow`
-       ring vanishes entirely under a forced-colors palette — a total loss of focus
-       visibility, not a degraded one), and `outline-offset` seats it OUTSIDE the control
-       box so it never overlaps the glyph it surrounds. The old `outline: none` was
-       therefore not a tidy-up beside the shadow: it was the line that removed the only
-       channel a high-contrast user had.
-
-       THE REGISTER SURVIVES, RE-EXPRESSED. `--dock-ring` was a whole `box-shadow` LIST,
-       which is the only shape a shadow ring can take; an outline takes three separate
-       terms, so the one register becomes the `--dock-ring-{width,offset,color}` trio
-       declared above. A consumer still retunes every dock ring from one place and now
-       retunes each term independently instead of re-authoring a two-stop shadow string.
-       `--dock-ring` itself (`src/styles/tokens/sizing.css:255`) is left standing: it is
-       outside Lane α's fence and `dark-mode-toggle.css:31` still reads it as a fallback.
-       Its orphaning-or-retarget rides the marked addendum with the rest of W8's
-       tokens-file half. */
+       comma group over the control family rather than copied per rule-set. The ring
+       rides `outline`, not `box-shadow`: it composes with every control's own elevation
+       instead of competing with it, forced-colors mode honours it, and `outline-offset`
+       seats it outside the control box. A consumer retunes it through the
+       `--dock-ring-{width,offset,color}` trio. */
     .dock-icon-button:focus-visible,
     .dock-tab-button:focus-visible,
     .dock-select-trigger:focus-visible,
@@ -283,11 +237,7 @@
     }
 
     /* The ACTIVE SEAT yields to consumer indicator content — a control hosting the
-       consumer's own indicator suppresses the dock ring so that content reads.
-       [2026-08-24 · BK #47 W8 MATERIAL] Re-pointed with the ring: ~~`box-shadow:
-       none`~~ suppressed a ring that no longer rides `box-shadow`, so it would have
-       yielded nothing while still deleting whatever elevation the control carried. A
-       yield must name the property the ring is actually on. */
+       consumer's own indicator suppresses the dock ring so that content reads. */
     .glass-dock [data-ring-yield]:focus-visible {
         outline: none;
     }

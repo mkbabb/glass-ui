@@ -11,8 +11,7 @@
 //                  `wrap` reflow register and its `.dock-overflow-wrap` recipe go.
 //   `collapseDelay` — one idle window for every dock (`DOCK_COLLAPSE_DELAY_MS`);
 //                  a per-dock delay is a knob no dock in this tree ever moved off the constant.
-//   `search`     — the `#search` slot IS the opt-in; a boolean gating a named slot is
-//                  a second switch for one fact. `useDockSearch` stays exported.
+//   `search`     — the dock has no search slot (RULINGS-6 removed it with `useDockSearch`).
 //   `position`   — zero call sites; `.dock-inline`'s centring folds onto `.glass-dock`.
 //   `size`       — one density (the shipped `md` rung) is now the base; `[data-preset]`
 //                  remains the geometry override for a consumer that needs another.
@@ -149,16 +148,6 @@ export function useDockShellProps(props: DockProps): DockShellProps {
     const shape = computed(() => props.shape ?? "pill");
     /* The single layout axis. */
     const orientation = computed(() => props.orientation ?? "horizontal");
-    /* ~~`scrollClass` — `dock-scroll-x` on a horizontal dock, `null` on a vertical one
-       (whose block-axis port lived in shell.css)~~ — [2026-08-24 · BK #47 W3 LATTICE]
-       STRUCK. The class was an AXIS SELECTOR for a scroll port that lived in two homes:
-       `overflow.css` opened the inline track under `.dock-scroll-x`, `shell.css` opened
-       the block one on the dock root, and the class told the cascade which. Under the
-       lattice there is ONE port on ONE element (`.dock-run`, run.css) and it opens on
-       both axes from the orientation already on the root — so the class selected
-       between two things that no longer differ. Its whole reach was self-contained
-       (overflow.css, this computed, the GlassDock binding, one test row); nothing
-       outside the dock ever read it. */
     /* `collapse: false` is the ONE force-pinned pole. */
     const alwaysExpanded = computed(() => props.collapse === false);
     /* Mount pole for a collapsible dock — inert on the pinned pole, so the SFC

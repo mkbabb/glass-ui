@@ -221,7 +221,6 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
     let inFlow = false;
     let wroteMargin = false;
     const settleCbs: Array<() => void> = [];
-    let scopeEl: HTMLElement | null | undefined;
     let ro: ResizeObserver | null = null;
     let mo: MutationObserver | null = null;
 
@@ -981,7 +980,6 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             return;
         }
         if (raf === null) {
-            scopeEl = undefined;
             last = inFrame ? (document.timeline.currentTime as number | null) : null;
             raf = requestAnimationFrame(frame);
         }
@@ -1058,11 +1056,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
     function writeExpandT(): void {
         const el = root();
         if (!el) return;
-        const v = e.toFixed(4);
-        el.style.setProperty("--dock-expand-t", v);
-        // C-16: the scope element is found once per travel (start, rest), not each frame.
-        if (scopeEl === undefined) scopeEl = el.parentElement?.closest<HTMLElement>("[data-dock-scope]") ?? null;
-        scopeEl?.style.setProperty("--dock-expand-t", v);
+        el.style.setProperty("--dock-expand-t", e.toFixed(4));
     }
 
     function write(): void {
@@ -1234,7 +1228,6 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         }
         e = lastPosture ? 1 : 0;
         writeExpandT();
-        scopeEl = undefined;
         if (plate) {
             plate.style.removeProperty("inset");
             plate.style.removeProperty("border-radius");

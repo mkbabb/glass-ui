@@ -1,49 +1,19 @@
-/* Dock single-scalar morph styles.
+/* Dock posture styles.
  *
- * This partial owns the dock's
- * DYNAMIC chrome: the `--dock-expand-t` directional expanded-ness derivation,
- * the one-layer plate INK lerp on the ONE `--dock-morph-t` clock, the collapsed/summary
- * state (the proportioned pill + the
- * summary glyph reveal), and the held / open-descendant RIM response (the held BODY
- * response is the grasp register's, glass/grasp.css). The static structural
- * surface (root, clip, variants, persistent) lives in dock/shell.css; the dock's
- * foreground legibility lives in dock/adaptive-legibility.css.
+ * This partial owns the dock's posture chrome: the `--dock-expand-t` rest values, the
+ * plate ink between its two postures, the collapsed/summary state (the proportioned pill
+ * and the summary glyph), and the held / open-descendant RIM response (the held BODY
+ * response is the grasp register's, glass/grasp.css). The static structural surface
+ * (root, variants, persistent) lives in dock/shell.css; the dock's foreground legibility
+ * lives in dock/adaptive-legibility.css. Every size and its travel are the carrier's
+ * (useDockBody).
  *
- * @import-ed by dock.css in cascade order, in the SAME `@layer components` — the
- * carve is isomorphic (same layer, same source order → ZERO visual delta). */
+ * @import-ed by dock.css in cascade order, in the SAME `@layer components`. */
 
 @layer components {
-    /* The root chrome morphs off the SINGLE `--dock-morph-t` scalar, NOT a
-       CSS transition (a `padding/scale/radius` + `background/border-color` transition
-       list would run TWO curves on TWO durations). `--dock-expand-t` is the directional
-       expanded-ness (0 = collapsed look, 1 = expanded look) derived from the
-       per-swap morph scalar + the synchronously-set `.expanded`/`.collapsed` class:
-       the box width AND the root padding/radius plus flat-layer opacity move on ONE clock. The
-       per-frame writes drive the registered `<number>` scalar; the `calc()` reads
-       below interpolate composited. Under PRM the spring's `respectReducedMotion`
-       settles instantly (the scalar jumps 0→1 in one frame → the chrome snaps). */
-
-    /* `--dock-expand-t` — the directional expanded-ness. `--dock-morph-t` is a
-       REGISTERED `@property` (initial-value 0), so it is NEVER guaranteed-invalid:
-       `var(--dock-morph-t, 1)` reads 0 at REST (the fallback is DEAD), which would
-       resolve every expanded dock to expand-t 0 → the collapsed resting look (the
-       pill-radius + collapsed bg/border/padding regression). So the resting value is
-       stated STATICALLY per class, and ONLY while a morph is in flight
-       (`[data-morphing]` armed by the dock morph orchestrator and cleared on settle)
-       does expand-t track the live spring scalar. The class is ALREADY the END state
-       during the morph, so the read resolves the correct in-flight blend (collapse
-       1→0 via `1 - t`; expand 0→1 via `t`); on settle `[data-morphing]` clears and
-       expand-t snaps to the exact class endpoint. */
-    /* The `--dock-expand-t` directional derivation is
-       ORIENTATION-AGNOSTIC. The derivation reads the per-swap morph scalar + the
-       synchronously-set `.expanded`/`.collapsed` class — there is NO axis in this
-       blend (a `t`-vs-`1-t` directional read), so the `:not(.vertical)` qualifier is
-       DROPPED here. A collapsing VERTICAL dock now derives the same in-flight
-       expand-t (the box-size arm `layers.css` already morphs `block-size` on
-       `--dock-morph-t`; this gives the chrome the matching directional scalar). The
-       earlier "a vertical dock is ALWAYS-EXPANDED" assumption is retired since
-       vertical-collapse shipped — `alwaysExpanded` defaults false (GlassDock.vue),
-       so a genuinely-collapsing vertical dock gets its chrome on the ONE clock. */
+    /* `--dock-expand-t`, the directional expanded-ness (0 = collapsed look, 1 = expanded
+       look), rests at the posture class's value; the carrier writes it inline every frame
+       of a travel (W-I.8 R-10). */
     .glass-dock.expanded,
     .glass-dock.always-expanded {
         --dock-expand-t: 1;
@@ -52,10 +22,6 @@
     .glass-dock.collapsed {
         --dock-expand-t: 0;
     }
-
-    /* Only the outer collapsed/expanded pair arms `[data-morphing]`. Controlled
-       face changes run inside DockCrossfade and leave the shell endpoint alone. */
-    /* W-I.8 R-10: the carrier writes --dock-expand-t inline every frame; it rests at 0 or 1. */
 
     /* NO FILTER ON AN ANCESTOR OF A LENS — the #47 (GF-DOCK) fence. A `filter` on
        `.glass-dock` — or on ANY ancestor of a backdrop-filtered box (`.dock-plate`, the
@@ -68,15 +34,7 @@
        (useElementMorph.ts:229, useLiquidReveal.ts:74, useDockCtaReceive.ts:245
        `blur ?? 4`) is live, invisible to this fence, and owned by the motion rows. */
 
-    /* ~~The padding morph is split out + scoped `:not(.dock-overflow-wrap)` so the
-       wrap variant's own padding rules are NOT clobbered by this higher-specificity
-       longhand~~ — [2026-08-12 · BK #47 W1 SURFACE] the wrap variant is struck with
-       the `overflow` prop, so there is nothing to except and the qualifier goes.
-       Specificity falls (0,2,0) → (0,1,0) on the horizontal arm; it beats nothing it
-       did not already beat, because the only rule it ever needed to yield to was the
-       wrap recipe that no longer exists.
-
-       The LAYOUT-ISOLATION fix: the collapse↔expand morph is
+    /* The LAYOUT-ISOLATION fix: the collapse↔expand morph is
        an INLINE-WIDTH aperture by contract ("horizontal docks animate width"), so
        the BLOCK axis MUST be invariant across the morph — otherwise the dock's
        outer height shrinks ~4px on collapse (the collapsed-pad 0.25rem vs the
@@ -132,10 +90,7 @@
        consumer `--dock-collapsed-padding` handle) so the height-pinned-cross collapsed
        pill is SYMMETRIC. Specificity 0,2,0 source-order after shell.css's static
        `.glass-dock.vertical` padding so this wins at equal specificity; at the rest
-       endpoints `--dock-expand-t` is the class value so the look is exact.
-       [2026-08-12 · BK #47 W1 SURFACE] ~~Scoped to the NON-scroll/non-wrap vertical
-       dock~~ — the `:not(.dock-overflow-wrap)` arm is struck with the `overflow`
-       prop; the rule stays (0,2,0), the same tie source order already resolved. */
+       endpoints `--dock-expand-t` is the class value so the look is exact. */
     .glass-dock.vertical {
         --dock-pad-collapsed: max(
             var(--dock-padding-inline, 0.5rem),
@@ -321,56 +276,7 @@
         min-height: 1rem;
     }
 
-    /* The collapsed-hover scale rides the unified dock spring vocabulary.
-       The `scale var(--dock-motion-resize)` arm was added to the `.glass-dock`
-       root transition above, so this hover scale settles on the SAME spring curve
-       the expand morph uses — a collapsed→hover→expand gesture is one continuous
-       spring, not a `scale`-ease handed off to the width-spring. The hover scale
-       and the press squish (`--scale-press-dock`) are now one register on the dock
-       surface.
-
-       The `scale` arm is GATED on `:not([data-morphing])` (the
-       collapse-onset scale-pop fix, C2-2). `.collapsed` flips on SYNCHRONOUSLY when
-       a hovered dock begins collapsing, but the box is still painted at EXPANDED
-       width for the morph's leading frames (the `onSwap` pin + 1-rAF measure-defer
-       in useDockMorph.ts). The bare `.collapsed:hover { scale: 1.1 }` multiplied
-       that transient ~535px box, painting a ±24-34px right-edge pop (the user's
-       "flashing"). Scoping the SCALE to `:not([data-morphing])` makes the +1.1 lift
-       apply ONLY at rest (the box is the 54px circle then) — during `[data-morphing]`
-       the hover scale is inert, mirroring the shipped `--dock-expand-t`
-       `[data-morphing]` precedent above (morph.css:46-53). The surface arms
-       (background/border/shadow) stay on the bare `:hover` (they don't multiply
-       geometry, so a hovered collapse keeps its hover read without the pop). */
-
-    /* NO collapsed-hover surface lift. The rule that sat here declared the plate's
-       COLLAPSED endpoints byte-for-byte as `shell.css` already declares them, and its
-       EXPANDED endpoints are unread while `--dock-expand-t` is pinned at 0 — which it
-       is, on a collapsed dock. It painted identity at rest under a "surface lift"
-       comment. Nothing replaces it: a collapsed-dock hover rung is in no spec, and
-       inventing one to make the comment true is how a register acquires a state nobody
-       designed. The collapsed dock's hover read is its `box-shadow` elevation (above).
-       ~~and its scale lift (below)~~ — [2026-08-24 · BK #47 W7 MORPH] struck with the
-       rule it pointed at. */
-
-    /* ~~`.glass-dock.collapsed:hover:not([data-morphing]) { scale:
-       var(--dock-collapsed-hover-scale); will-change: transform; }`~~ —
-       [2026-08-24 · BK #47 W7 MORPH] THE HOVER PRE-SCALE, DELETED. It is the one motion
-       in the dock that actively fights the motion it precedes, and the `:not(...)` guard
-       that reads as a safeguard is in fact the mechanism of the defect.
-
-       TRACED: hovering a collapsed dock ran the box 56 → 61.6 on `scale`. Then the
-       approach became an expand, `[data-morphing]` landed on the root, and this rule
-       STOPPED MATCHING — so the 1.10 factor reverted to 1 in a single un-tweened frame,
-       54ms before the aperture morph began. The user sees a grow, a snap back, and then
-       the real grow: three events for one intention, the middle one uncommanded.
-
-       There is no retune of it. A pre-scale on the box the morph is about to re-size is
-       a second owner of one geometry, and the guard exists precisely because the two
-       owners cannot both hold — which is the argument for having one. Hover on a
-       collapsed dock now reads on `box-shadow` elevation alone (above), a channel that
-       does not multiply geometry and therefore survives the handoff into the morph
-       instead of being cancelled by it. `--dock-collapsed-hover-scale` is struck at its
-       declaration (shell.css) with this, its only consumer. */
+    /* Nothing in the dock scales on hover. */
 
     /* Held-state substrate response.
      *

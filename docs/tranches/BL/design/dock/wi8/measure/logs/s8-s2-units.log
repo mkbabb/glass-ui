@@ -1,0 +1,64 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8
+
+ ❯ tests/gates/overfit-structure.test.ts (15 tests | 2 failed) 103ms
+     × every runtime export is reachable — no export leaks (zero external site AND unpublished) 20ms
+     × zero `void`-kept dead arrays 11ms
+(node:72868) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/gates/overfit-structure.test.ts > gate:G-OVERFIT — EXPORT-REACH arm (the TS twin of orphan-css-partial) > every runtime export is reachable — no export leaks (zero external site AND unpublished)
+AssertionError: 2 runtime export(s) are referenced nowhere outside their own module AND ship on no published subpath. An unreachable export is not API — make it module-private or delete it:
+  src/components/dock/composables/dockRegistry.ts :: dockOutletWants
+  src/components/dock/composables/useDockBody.ts :: DOCK_BODY_KEY: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "src/components/dock/composables/dockRegistry.ts :: dockOutletWants",
++   "src/components/dock/composables/useDockBody.ts :: DOCK_BODY_KEY",
++ ]
+
+ ❯ tests/gates/overfit-structure.test.ts:237:11
+    235|             `${offenders.length} runtime export(s) are referenced nowh…
+    236|                 `An unreachable export is not API — make it module-pri…
+    237|         ).toEqual([]);
+       |           ^
+    238|     });
+    239|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/gates/overfit-structure.test.ts > gate:G-OVERFIT — NO-SHIM arm (the no-legacy edict, enforced) > zero `void`-kept dead arrays
+AssertionError: `void x;` reads as a USE to both the unused check and the bundler's DCE, so it converts dead code into shipped bytes:
+  src/components/dock/composables/useDockBody.ts :: void t;: expected [ Array(1) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "src/components/dock/composables/useDockBody.ts :: void t;",
++ ]
+
+ ❯ tests/gates/overfit-structure.test.ts:386:11
+    384|             `\`void x;\` reads as a USE to both the unused check and t…
+    385|                 `into shipped bytes:\n  ${offenders.join("\n  ")}`,
+    386|         ).toEqual([]);
+       |           ^
+    387|     });
+    388|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed | 42 passed (43)
+      Tests  2 failed | 389 passed | 2 expected fail (393)
+   Start at  22:16:47
+   Duration  59.38s (transform 6.25s, setup 5.46s, import 35.12s, tests 31.70s, environment 27.75s)
+
+rc=1

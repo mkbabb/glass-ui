@@ -15,10 +15,8 @@
         flex-shrink: 0;
         /* inline-absorb: the `--dock-tab-h` density-keyed height
            knob (parallel to DockIconButton's --dock-control-size). The
-           density rungs that set `--dock-tab-h` per tier live in dock.css
-           (the density block on `.glass-dock`; [2026-08-12 · BK #47 W1 SURFACE]
-           ~~the `.glass-dock[data-size="…"]` blocks~~ — one rung now), NOT utilities.css, so
-           there is no cascade-order split-brain. When a parent <GlassDock size="…">
+           density rung that sets `--dock-tab-h` lives in dock.css (the density block on
+           `.glass-dock`), NOT utilities.css, so there is no cascade-order split-brain. When a parent <GlassDock size="…">
            sets `--dock-tab-h`, the tab-button reserves that row even when
            the glyph + padding sum would ride lower. Falls through to
            `--dock-tab-min-height` (kept for audacious-tier callers) and
@@ -79,24 +77,13 @@
             }
         }
 
-        /* The iOS press darken-plus-shrink (see the icon-button). */
+        /* The iOS press darken-plus-shrink (see the icon-button; inside a dock, dock.css's). */
         &:active:not(:disabled):not([aria-disabled="true"]) {
-            background: var(--dock-control-press-bg);
             scale: var(--scale-press-dock);
         }
-
-        /* [2026-08-25 · BK #47 W2-W9 CURE] ~~`&:focus:not(:focus-visible) {
-           box-shadow: none; }`~~ — the THIRD site of the same struck class as the
-           icon-button's and the trigger family's, and the only one where the dead half
-           was the ENTIRE rule, so the rule goes with it rather than being left as an
-           empty block. Post-W8 the ring rides `outline`, so this suppressed nothing;
-           the active rule below paints `background` + `color` only, so it deleted
-           nothing either. Struck for the same reason as the trigger family's: a
-           suppressor with no subject is a trap armed for whoever gives the tab an
-           active elevation next. Recorded here because the adjudicated residue
-           enumerated the two sites that were VISIBLE before the band walk went
-           recursive; this one is the same defect and would have made the strike a
-           subset of its own class. */
+        &:active:not(:disabled):not([aria-disabled="true"]):where(:not(.glass-dock *)) {
+            background: var(--dock-control-press-bg);
+        }
 
         /* focus-visible ring + disabled paint hoisted to the shared `:where()`
            group in dock.css. */
@@ -163,9 +150,8 @@
     }
 
     /* RU-45: a glyph beside a word is sized from the word, 1.5 em, not from the seat. RU-55
-       (RU-65): in the four forms the icon seat sizes, a direct svg, img or picture, or any
-       direct child marked `data-dock-glyph` (a site's own icon element). */
-    .dock-tab-button > :is(svg, img, picture, [data-dock-glyph]) {
+       (RU-65, RU-87): in the three forms the icon seat sizes, a direct svg, img or picture. */
+    .dock-tab-button > :is(svg, img, picture) {
         width: 1.5em;
         height: 1.5em;
         flex-shrink: 0;

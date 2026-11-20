@@ -259,14 +259,22 @@
 
     /* W-I.8 RU-56: inside a dock the current seat's fill, a hovered seat's fill and a segmented
        control's selected mark are the dock's own ink over whatever the plate is, so they keep
-       their distance from the plate at any level and in both schemes. Three steps in rising
-       strength: hover, current, press. The `:root` lines (tokens/sizing.css) stay for a
+       their distance from the plate at any level and in both schemes. Two steps in rising
+       strength, hover and current. The `:root` lines (tokens/sizing.css) stay for a
        DockControl outside any dock. */
     .glass-dock {
         --dock-control-hover-bg: color-mix(in oklab, var(--dock-fg-on-aurora, var(--foreground)) 10%, transparent);
         --dock-control-active-bg: color-mix(in oklab, var(--dock-fg-on-aurora, var(--foreground)) 20%, transparent);
-        --dock-control-press-bg: color-mix(in oklab, var(--dock-fg-on-aurora, var(--foreground)) 28%, transparent);
         --glass-capsule-fill: var(--dock-control-active-bg);
+    }
+
+    /* R7-6 (RU-68): inside a dock a press is the seat's press scale over its own fill and 2 %
+       of the ink, not a step of its own; the seats' `:active` fills are for a seat outside. */
+    .glass-dock :is(.dock-icon-button, .dock-tab-button, .dock-trigger):active:not(:disabled):not([aria-disabled="true"]) {
+        background-image: linear-gradient(
+            color-mix(in oklab, var(--dock-fg-on-aurora, var(--foreground)) 2%, transparent),
+            color-mix(in oklab, var(--dock-fg-on-aurora, var(--foreground)) 2%, transparent)
+        );
     }
     /* RU-56 end */
 

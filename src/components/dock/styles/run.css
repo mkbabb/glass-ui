@@ -88,10 +88,7 @@
        ×1.17). See density.css's coarse register. */
     .glass-dock {
         --dock-seat: var(--dock-control-size);
-        /* [2026-08-24 · BK #47 W9 PROPORTION] The RUN's gap takes the proportion target
-           — 0.5rem (8px), from ~~`var(--dock-layer-gap, 0.375rem)`~~ (6px) — and it
-           takes it HERE, on the run's own token, which is the whole reason W3 declared
-           a second name for a number that was identical at the time.
+        /* The RUN's gap is 0.5rem (8px), on the run's own token.
 
            `--dock-layer-gap` is the DOCK FAMILY's gap: it spaces the persistent
            regions, the layer group, the switcher, the stack. Retuning it to hit the
@@ -292,12 +289,8 @@
            reads by exactly the ring's extent, and the equal negative `margin-block` hands
            the growth straight back to the parent, so the run's OUTER box, the seats' own
            positions and the whole lattice are byte-unchanged — only the clip rectangle
-           moves. ~~That paragraph holds on EVERY run.~~ — [2026-08-29 · BK π-RERUN-R2] It
-           holds only on a run whose cross size is AUTO, and the re-capture measured the
-           two that are not (see `box-sizing` directly below): a padding reserve on a
-           border box someone else has already fixed eats the CONTENT box instead of
-           growing the padding box, and the negative margin then only shifts the box. The
-           declaration below is what makes the paragraph true as written.
+           moves. On a run whose cross size is fixed elsewhere, a padding reserve would eat
+           the content box instead; the `box-sizing` declaration below covers that case.
            Nothing above clips it back: `.glass-dock` is `overflow: visible`
            (shell.css) with its aperture deleted, which the census corroborates by finding
            persistent-region seats unclipped. The 4px lands inside the dock's own
@@ -408,12 +401,9 @@
        port a morph moves). The run's border box is fixed by its margins, not its
        padding, so shrinking the padding leaves the port where it is. Under
        `data-run-fits` each end's reserve is the smaller of the reserve and half the room
-       the seats leave, `--dock-run-room-block` (dockMorphMeasure.ts, from the same
+       the seats leave, `--dock-run-room-block` (the carrier, useDockBody.ts, from the same
        reading that sets the flag), so the flag and `scrollHeight = clientHeight` are one
-       fact. The flag and the room are the expanded run's reading at rest, held through
-       every morph (`publishYield`), so the yield the run rests in is the yield it morphs
-       in: no seat moves when a morph starts or settles, and the panes the morph moves
-       never see the run's padding change under them. With less than a ring's room at
+       fact. With less than a ring's room at
        each end a focused end seat's ring paints past the padding, since the run is not a
        scroll port (RU-52). */
     .glass-dock.vertical[data-run-fits] :where(.dock-layers) > .dock-run {
@@ -824,8 +814,8 @@
        does not release what it last resolved: when a scrolled run's overflow vanishes
        (a rotation, a resize, a lifted cap, seats leaving), Chromium keeps the leading
        arm at progress 1 and WebKit keeps whichever arm last resolved, so the plate
-       rests cut with nothing to scroll. `data-run-fits` (dockMorphMeasure.ts, the one
-       reading of "the seats fit the port") takes both the plate's and the run's
+       rests cut with nothing to scroll. `data-run-fits` (the carrier's one reading of
+       "the seats fit the port") takes both the plate's and the run's
        scroll-driven animations off, so a run that hides nothing paints its rest corner
        and clips square. When the seats overflow again the animations re-apply and bind
        to the timeline afresh. A collapsed dock's run is not the visible run, so it

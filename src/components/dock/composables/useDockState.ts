@@ -22,11 +22,6 @@ export interface UseDockStateOptions {
      *  hover, focus-in and idle-timer writers are inert, and focus leaving the dock
      *  and its portals collapses it. */
     expandOn?: Ref<DockExpandOn> | DockExpandOn;
-    /* ~~`interaction`: `"manual"` suppresses every environmental writer at BOTH
-       poles, leaving only `expand()`/`collapse()` — the consumer owns posture~~ —
-       [2026-08-12 · BK #47 W1 SURFACE] STRUCK with the `interaction` dock prop. The
-       pole turned this state machine off wholesale; `expand()`/`collapse()` are
-       exposed regardless, so a consumer that drives posture still drives it. */
     /** Mount-only posture for a collapsible dock. */
     initialExpanded?: boolean;
     /** Ref that suppresses click-away during an active dock animation. */
@@ -84,8 +79,6 @@ export interface UseDockStateReturn {
     expand: () => void;
     /** Imperative close — forces `state = "collapsed"` (no-op when `alwaysExpanded`). */
     collapse: () => void;
-    /** W-I.8: the declared pinned state. */
-    setPinned: (v: boolean) => void;
 }
 
 /**
@@ -738,18 +731,6 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         state.value = "pinned";
         syncDerived();
     }
-    function setPinned(v: boolean) {
-        if (isQuiet()) return;
-        if (v && state.value !== "pinned") {
-            clearTimer();
-            clearHoverIntent();
-            state.value = "pinned";
-            syncDerived();
-        } else if (!v && state.value === "pinned") {
-            state.value = pointerInside ? "hover" : "collapsed";
-            syncDerived();
-        }
-    }
     function onTouchLift(e: PointerEvent) {
         lastPointerType = e.pointerType;
         if (e.type === "pointerdown") dismissedUnderPointer = false;
@@ -900,6 +881,5 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         release,
         expand,
         collapse,
-        setPinned,
     };
 }

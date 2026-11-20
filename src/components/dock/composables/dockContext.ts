@@ -42,11 +42,6 @@ export type DockHoldKind = "morph" | "grasp";
 export interface DockContext {
     id: string;
     orientation: ComputedRef<DockOrientation>;
-    /* ~~`layout`: in-cap arrangement (`linear` row/column vs `grid` tile panel),
-       read by `<DockSeparator>` for the grid section break~~ —
-       [2026-08-12 · BK #47 W1 SURFACE] STRUCK with the `layout` dock prop. The
-       member was WRITE-ONLY on every tree that shipped (`grep` for a reader:
-       zero), and the grid panel it described is gone. */
     /**
      * Acquire a hold token; suppresses timer-based collapse. `kind` defaults to
      * `"morph"` (posture only). Pass `"grasp"` for a live pointer hold — it takes
@@ -96,8 +91,8 @@ export const useOptionalDockContext = ctx.useOptional;
 /**
  * THE FACE. The seats the collapse takes away are the ones authored in the dock's
  * default slot: `<GlassDock>` renders that slot, and only that slot, inside
- * `<DockFace>`, which adds no DOM. `#persistent`, `#persistent-end`, `#collapsed` and
- * `#search` stay painted and live in the collapsed posture, so an overlay opened
+ * `<DockFace>`, which adds no DOM. `#persistent`, `#persistent-end` and `#collapsed`
+ * stay painted and live in the collapsed posture, so an overlay opened
  * from them is not the collapse's to close (O-102 (3) names the expanded UI's
  * dropdowns). Where a control was authored is a fact of the component tree, so it is
  * read by injection, the way the dock context itself is, and never off the DOM.

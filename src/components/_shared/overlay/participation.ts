@@ -17,18 +17,16 @@ import {
 /**
  * ══ THE ONE KEEP-OPEN TOKEN ══
  *
- * Four sites used to hand-roll the same six lines: a boolean `isHeld`, an
- * acquire guarded on it, a release guarded on it, and a teardown that had to
- * remember to release — `Popover.vue`, `DockLayerGroup.vue`, `useDockSearch.ts`
- * and `useDockHold.ts`. Four copies of a discipline is four chances to leak a
- * token, and a leaked token is a dock that never idle-collapses again for the
+ * Sites used to hand-roll the same six lines: a boolean `isHeld`, an acquire
+ * guarded on it, a release guarded on it, and a teardown that had to remember to
+ * release — `Popover.vue`, `DockLayerGroup.vue` and `useDockHold.ts`. Each copy of a
+ * discipline is a chance to leak a token, and a leaked token is a dock that never idle-collapses again for the
  * life of the page. The dock context's `keepOpen`/`release` pair is already a
  * REF-COUNT; what was duplicated is the *token* — the guarantee that one holder
  * takes exactly one count and gives it back exactly once, including on unmount.
  *
  * `target` is a getter rather than a value so a holder can sit above the thing
- * it holds (`useDockSearch` drives its own dock state object; a Popover reads an
- * optional context that may be absent entirely). A null target is not an error:
+ * it holds (a Popover reads an optional context that may be absent entirely). A null target is not an error:
  * the flag still flips, because whether the holder is holding is a fact about
  * the holder, not about whether a dock happened to be listening.
  */
