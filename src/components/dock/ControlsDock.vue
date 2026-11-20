@@ -4,7 +4,6 @@
 // It renders one GlassDock and adds nothing to the DOM. Its run is plain (no scroll, no
 // snap, no scroll timeline) and has no current page, so no open seat and no mark.
 import { Comment, Fragment, Text, useAttrs, useTemplateRef, watchEffect, type Slots, type VNode } from "vue";
-import { useMediaQuery } from "@vueuse/core";
 import GlassDock from "./GlassDock.vue";
 import DockSeparator from "./DockSeparator.vue";
 import type { DockCollapse } from "./composables/useDockShellProps";
@@ -23,12 +22,12 @@ const props = withDefaults(
     { corner: "bottom-end", within: "viewport" },
 );
 // [W-I.8, RULINGS-6] `collapse`, `pinned` and `update:pinned` are deleted: no site passed
-// them. The preset decides its own fold: never with one control, on a phone with more.
+// them. The preset decides its own fold: never with one control, at every width with more
+// (RU-79).
 const attrs = useAttrs();
-const phone = useMediaQuery("(max-width: 40rem)");
 /* RU-18 (C2-11): a controls dock whose run holds one control is that control, at rest,
    and never folds: no folded face, no linger, no travel. A second control (an outlet's,
-   say) grows it by R-5, and from then it folds as `collapse` says.
+   say) grows it by R-5, and from then it folds.
    What counts is a control: any child of the run, a glass seat or not (a slider, a
    consumer's own element), a DockSeparator aside. Once the dock is mounted the count is
    the run's own (GlassDock's `controlCount`, which includes contributed controls);
@@ -58,7 +57,7 @@ if (import.meta.env.DEV) {
 function collapseFor(slots: Slots): DockCollapse {
     const mounted = dockRef.value?.controlCount;
     const count = mounted !== undefined && mounted > 0 ? mounted : authored(slots.default?.() ?? []);
-    return count === 1 ? false : phone.value ? "closed" : false;
+    return count === 1 ? false : "closed";
 }
 </script>
 

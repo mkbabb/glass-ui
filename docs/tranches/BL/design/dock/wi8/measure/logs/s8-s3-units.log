@@ -1,0 +1,219 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8
+
+ ❯ tests/gates/overfit-structure.test.ts (15 tests | 2 failed) 43ms
+     × every runtime export is reachable — no export leaks (zero external site AND unpublished) 8ms
+     × zero `void`-kept dead arrays 4ms
+file:///Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/scripts/verify-export-types.mjs:1065
+    if (failures.length) throw new Error(`Invalid package artifact:\n${failures.join("\n")}`);
+                               ^
+
+Error: Invalid package artifact:
+G-NO-ORPHAN-EXPORT: exports../styles/font-files: package omits ./dist/styles/font-files.css
+.published-roster: 1 published name(s) left the emitted roster with no MIGRATION.md row: theme --radius-stadium
+    at verifyExportTypes (file:///Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/scripts/verify-export-types.mjs:1065:32)
+    at file:///Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/[eval1]:3:40
+    at ModuleJob.run (node:internal/modules/esm/module_job:437:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:249:26)
+    at async ModuleLoader.executeModuleJob (node:internal/modules/esm/loader:246:20)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v26.0.0
+file:///Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/scripts/verify-export-types.mjs:1065
+    if (failures.length) throw new Error(`Invalid package artifact:\n${failures.join("\n")}`);
+                               ^
+
+Error: Invalid package artifact:
+G-NO-ORPHAN-EXPORT: exports../styles/font-files: package omits ./dist/styles/font-files.css
+.published-roster: 1 published name(s) left the emitted roster with no MIGRATION.md row: theme --radius-stadium
+    at verifyExportTypes (file:///Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/scripts/verify-export-types.mjs:1065:32)
+    at file:///Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/[eval1]:3:40
+    at ModuleJob.run (node:internal/modules/esm/module_job:437:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:249:26)
+    at async ModuleLoader.executeModuleJob (node:internal/modules/esm/loader:246:20)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v26.0.0
+ ❯ tests/public-surface.spec.ts (100 tests | 3 failed) 3321ms
+     × G-NO-ORPHAN-EXPORT: the committed .published-roster equals the emitted roster 708ms
+     × ships exactly the style closure, the chunk sheets and the two generated members 225ms
+     × walks every shipped sheet from an export or a published chunk (U/B7b X3) 386ms
+(node:81510) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/public-surface.spec.ts > Row 8 package falsifiers > G-NO-ORPHAN-EXPORT: the committed .published-roster equals the emitted roster
+Error: Command failed: /opt/homebrew/Cellar/node/26.0.0/bin/node --input-type=module -e 
+            import { verifyExportTypes } from "file:///Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/scripts/verify-export-types.mjs";
+            console.log(JSON.stringify(verifyExportTypes({}).roster));
+        
+file:///Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/scripts/verify-export-types.mjs:1065
+    if (failures.length) throw new Error(`Invalid package artifact:\n${failures.join("\n")}`);
+                               ^
+
+Error: Invalid package artifact:
+G-NO-ORPHAN-EXPORT: exports../styles/font-files: package omits ./dist/styles/font-files.css
+.published-roster: 1 published name(s) left the emitted roster with no MIGRATION.md row: theme --radius-stadium
+    at verifyExportTypes (file:///Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/scripts/verify-export-types.mjs:1065:32)
+    at file:///Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/[eval1]:3:40
+    at ModuleJob.run (node:internal/modules/esm/module_job:437:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:249:26)
+    at async ModuleLoader.executeModuleJob (node:internal/modules/esm/loader:246:20)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v26.0.0
+
+ ❯ verifyExportTypes scripts/verify-export-types.mjs:1065:32
+ ❯ [eval1]:3:40
+ ❯ runVerifierProbe tests/public-surface.spec.ts:65:12
+     63|
+     64| function runVerifierProbe(probe: string, ...args: string[]): string {
+     65|     return execFileSync(process.execPath, ["--input-type=module", "-e"…
+       |            ^
+     66|         cwd: process.cwd(),
+     67|         encoding: "utf8",
+ ❯ tests/public-surface.spec.ts:1002:35
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  tests/public-surface.spec.ts > Row 8 built-artifact acceptance > ships exactly the style closure, the chunk sheets and the two generated members
+AssertionError: expected [ 'aurora.css', 'blob.css', …(146) ] to deeply equal [ 'aurora.css', 'blob.css', …(149) ]
+
+- Expected
++ Received
+
+@@ -43,11 +43,10 @@
+    "components/music-staff/styles.css",
+    "components/scroll-progress-rim/styles.css",
+    "components/sheet/styles.css",
+    "components/slider/styles.css",
+    "components/sortable-list/styles.css",
+-   "components/table/styles.css",
+    "components/tabs/styles/drag.css",
+    "components/tabs/styles/segmented.css",
+    "configurator.css",
+    "constellation.css",
+    "control.css",
+@@ -65,11 +64,10 @@
+    "separator.css",
+    "status-dot.css",
+    "styles/accessibility.css",
+    "styles/animations.css",
+    "styles/components.css",
+-   "styles/font-files.css",
+    "styles/fonts.css",
+    "styles/glass-specular-track.css",
+    "styles/glass.css",
+    "styles/glass/a11y-fallback.css",
+    "styles/glass/control-bit.css",
+@@ -97,11 +95,10 @@
+    "styles/glass/surfaces-pager.css",
+    "styles/glass/surfaces.css",
+    "styles/glass/track-flow.css",
+    "styles/glass/value-marks.css",
+    "styles/glass/veil.css",
+-   "styles/glass/viz-enter.css",
+    "styles/index.css",
+    "styles/paper.css",
+    "styles/scroll-choreography.css",
+    "styles/scroll-chrome.css",
+    "styles/scroll-driven.css",
+
+ ❯ tests/public-surface.spec.ts:1058:37
+    1056|         ]);
+    1057|         const shipped = new Set(filesUnder("dist").filter((file) => fi…
+    1058|         expect([...shipped].sort()).toEqual([...expected].sort());
+       |                                     ^
+    1059|     });
+    1060|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  tests/public-surface.spec.ts > Row 8 built-artifact acceptance > walks every shipped sheet from an export or a published chunk (U/B7b X3)
+Error: Command failed: /opt/homebrew/Cellar/node/26.0.0/bin/node --input-type=module -e 
+            import { verifyExportTypes } from "file:///Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/scripts/verify-export-types.mjs";
+            console.log(JSON.stringify(verifyExportTypes({}).css));
+        
+file:///Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/scripts/verify-export-types.mjs:1065
+    if (failures.length) throw new Error(`Invalid package artifact:\n${failures.join("\n")}`);
+                               ^
+
+Error: Invalid package artifact:
+G-NO-ORPHAN-EXPORT: exports../styles/font-files: package omits ./dist/styles/font-files.css
+.published-roster: 1 published name(s) left the emitted roster with no MIGRATION.md row: theme --radius-stadium
+    at verifyExportTypes (file:///Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/scripts/verify-export-types.mjs:1065:32)
+    at file:///Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/[eval1]:3:40
+    at ModuleJob.run (node:internal/modules/esm/module_job:437:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:249:26)
+    at async ModuleLoader.executeModuleJob (node:internal/modules/esm/loader:246:20)
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v26.0.0
+
+ ❯ verifyExportTypes scripts/verify-export-types.mjs:1065:32
+ ❯ [eval1]:3:40
+ ❯ runVerifierProbe tests/public-surface.spec.ts:65:12
+     63|
+     64| function runVerifierProbe(probe: string, ...args: string[]): string {
+     65|     return execFileSync(process.execPath, ["--input-type=module", "-e"…
+       |            ^
+     66|         cwd: process.cwd(),
+     67|         encoding: "utf8",
+ ❯ tests/public-surface.spec.ts:1099:27
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  tests/gates/overfit-structure.test.ts > gate:G-OVERFIT — EXPORT-REACH arm (the TS twin of orphan-css-partial) > every runtime export is reachable — no export leaks (zero external site AND unpublished)
+AssertionError: 2 runtime export(s) are referenced nowhere outside their own module AND ship on no published subpath. An unreachable export is not API — make it module-private or delete it:
+  src/components/dock/composables/dockRegistry.ts :: dockOutletWants
+  src/components/dock/composables/useDockBody.ts :: DOCK_BODY_KEY: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "src/components/dock/composables/dockRegistry.ts :: dockOutletWants",
++   "src/components/dock/composables/useDockBody.ts :: DOCK_BODY_KEY",
++ ]
+
+ ❯ tests/gates/overfit-structure.test.ts:237:11
+    235|             `${offenders.length} runtime export(s) are referenced nowh…
+    236|                 `An unreachable export is not API — make it module-pri…
+    237|         ).toEqual([]);
+       |           ^
+    238|     });
+    239|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  tests/gates/overfit-structure.test.ts > gate:G-OVERFIT — NO-SHIM arm (the no-legacy edict, enforced) > zero `void`-kept dead arrays
+AssertionError: `void x;` reads as a USE to both the unused check and the bundler's DCE, so it converts dead code into shipped bytes:
+  src/components/dock/composables/useDockBody.ts :: void t;: expected [ Array(1) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "src/components/dock/composables/useDockBody.ts :: void t;",
++ ]
+
+ ❯ tests/gates/overfit-structure.test.ts:386:11
+    384|             `\`void x;\` reads as a USE to both the unused check and t…
+    385|                 `into shipped bytes:\n  ${offenders.join("\n  ")}`,
+    386|         ).toEqual([]);
+       |           ^
+    387|     });
+    388|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  2 failed | 42 passed (44)
+      Tests  5 failed | 486 passed | 2 expected fail (493)
+   Start at  22:19:23
+   Duration  24.30s (transform 3.05s, setup 2.06s, import 13.21s, tests 16.60s, environment 9.62s)
+
+rc=1
