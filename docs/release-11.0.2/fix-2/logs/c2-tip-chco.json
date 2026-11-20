@@ -1,0 +1,1118 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/playwright.config.ts",
+      "release-11-0-2.spec.ts",
+      "--grep",
+      "slider · |edge · a host|blob · through|transition · |fold · a ",
+      "--project=chromium-headless-new",
+      "--project=coarse-touch",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-5.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/docs/release-11.0.2/fix-2/logs/c2-tip-chco.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5341",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/",
+      "url": "http://localhost:5341",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-0-2.spec.ts",
+      "file": "release-11-0-2.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "slider · a scrubber's thumb reads on its track and its fill at 0, 50 and 100 (sm)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "slider",
+                  "description": "[{\"where\":\"light default @0\",\"thumb\":25.493400000000005,\"fill\":null,\"track\":246.9238},{\"where\":\"light default @50\",\"thumb\":25.493400000000005,\"fill\":216.59720000000004,\"track\":246.9238},{\"where\":\"light default @100\",\"thumb\":25.493400000000005,\"fill\":216.59720000000004,\"track\":null},{\"where\":\"light violet @0\",\"thumb\":25.493400000000005,\"fill\":null,\"track\":246.9238},{\"where\":\"light violet @50\",\"thumb\":25.493400000000005,\"fill\":111.57120000000003,\"track\":246.9238},{\"where\":\"light violet @100\",\"thumb\":25.493400000000005,\"fill\":111.57120000000003,\"track\":null},{\"where\":\"dark default @0\",\"thumb\":229.63380000000004,\"fill\":null,\"track\":19.2808},{\"where\":\"dark default @50\",\"thumb\":229.63380000000004,\"fill\":60.31229999999999,\"track\":19.2808},{\"where\":\"dark default @100\",\"thumb\":229.63380000000004,\"fill\":60.31229999999999,\"track\":null},{\"where\":\"dark violet @0\",\"thumb\":229.63380000000004,\"fill\":null,\"track\":19.2808},{\"where\":\"dark violet @50\",\"thumb\":229.63380000000004,\"fill\":83.856,\"track\":19.2808},{\"where\":\"dark violet @100\",\"thumb\":229.63380000000004,\"fill\":83.856,\"track\":null}]"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4430,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-13T05:34:11.415Z",
+                  "annotations": [
+                    {
+                      "type": "slider",
+                      "description": "[{\"where\":\"light default @0\",\"thumb\":25.493400000000005,\"fill\":null,\"track\":246.9238},{\"where\":\"light default @50\",\"thumb\":25.493400000000005,\"fill\":216.59720000000004,\"track\":246.9238},{\"where\":\"light default @100\",\"thumb\":25.493400000000005,\"fill\":216.59720000000004,\"track\":null},{\"where\":\"light violet @0\",\"thumb\":25.493400000000005,\"fill\":null,\"track\":246.9238},{\"where\":\"light violet @50\",\"thumb\":25.493400000000005,\"fill\":111.57120000000003,\"track\":246.9238},{\"where\":\"light violet @100\",\"thumb\":25.493400000000005,\"fill\":111.57120000000003,\"track\":null},{\"where\":\"dark default @0\",\"thumb\":229.63380000000004,\"fill\":null,\"track\":19.2808},{\"where\":\"dark default @50\",\"thumb\":229.63380000000004,\"fill\":60.31229999999999,\"track\":19.2808},{\"where\":\"dark default @100\",\"thumb\":229.63380000000004,\"fill\":60.31229999999999,\"track\":null},{\"where\":\"dark violet @0\",\"thumb\":229.63380000000004,\"fill\":null,\"track\":19.2808},{\"where\":\"dark violet @50\",\"thumb\":229.63380000000004,\"fill\":83.856,\"track\":19.2808},{\"where\":\"dark violet @100\",\"thumb\":229.63380000000004,\"fill\":83.856,\"track\":null}]"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-1493387a02abf1ce05f0",
+          "file": "release-11-0-2.spec.ts",
+          "line": 214,
+          "column": 5
+        },
+        {
+          "title": "slider · a scrubber's thumb reads on its track and its fill at 0, 50 and 100 (md)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "slider",
+                  "description": "[{\"where\":\"light default @0\",\"thumb\":25.493400000000012,\"fill\":null,\"track\":246.9238000000001},{\"where\":\"light default @50\",\"thumb\":25.493400000000012,\"fill\":216.59720000000013,\"track\":246.9238000000001},{\"where\":\"light default @100\",\"thumb\":25.493400000000012,\"fill\":216.59720000000013,\"track\":null},{\"where\":\"light violet @0\",\"thumb\":25.493400000000012,\"fill\":null,\"track\":246.9238000000001},{\"where\":\"light violet @50\",\"thumb\":25.493400000000012,\"fill\":111.5712000000001,\"track\":246.9238000000001},{\"where\":\"light violet @100\",\"thumb\":25.493400000000012,\"fill\":111.5712000000001,\"track\":null},{\"where\":\"dark default @0\",\"thumb\":229.63379999999972,\"fill\":null,\"track\":19.2808},{\"where\":\"dark default @50\",\"thumb\":229.63379999999972,\"fill\":59.6679,\"track\":19.208600000000008},{\"where\":\"dark default @100\",\"thumb\":229.63379999999972,\"fill\":59.81230000000004,\"track\":null},{\"where\":\"dark violet @0\",\"thumb\":229.63379999999972,\"fill\":null,\"track\":19.2808},{\"where\":\"dark violet @50\",\"thumb\":229.63379999999972,\"fill\":83.85599999999985,\"track\":19.208600000000008},{\"where\":\"dark violet @100\",\"thumb\":229.63379999999972,\"fill\":83.85599999999985,\"track\":null}]"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4228,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-13T05:34:16.032Z",
+                  "annotations": [
+                    {
+                      "type": "slider",
+                      "description": "[{\"where\":\"light default @0\",\"thumb\":25.493400000000012,\"fill\":null,\"track\":246.9238000000001},{\"where\":\"light default @50\",\"thumb\":25.493400000000012,\"fill\":216.59720000000013,\"track\":246.9238000000001},{\"where\":\"light default @100\",\"thumb\":25.493400000000012,\"fill\":216.59720000000013,\"track\":null},{\"where\":\"light violet @0\",\"thumb\":25.493400000000012,\"fill\":null,\"track\":246.9238000000001},{\"where\":\"light violet @50\",\"thumb\":25.493400000000012,\"fill\":111.5712000000001,\"track\":246.9238000000001},{\"where\":\"light violet @100\",\"thumb\":25.493400000000012,\"fill\":111.5712000000001,\"track\":null},{\"where\":\"dark default @0\",\"thumb\":229.63379999999972,\"fill\":null,\"track\":19.2808},{\"where\":\"dark default @50\",\"thumb\":229.63379999999972,\"fill\":59.6679,\"track\":19.208600000000008},{\"where\":\"dark default @100\",\"thumb\":229.63379999999972,\"fill\":59.81230000000004,\"track\":null},{\"where\":\"dark violet @0\",\"thumb\":229.63379999999972,\"fill\":null,\"track\":19.2808},{\"where\":\"dark violet @50\",\"thumb\":229.63379999999972,\"fill\":83.85599999999985,\"track\":19.208600000000008},{\"where\":\"dark violet @100\",\"thumb\":229.63379999999972,\"fill\":83.85599999999985,\"track\":null}]"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-e77dcafbf5c5166cf22d",
+          "file": "release-11-0-2.spec.ts",
+          "line": 214,
+          "column": 5
+        },
+        {
+          "title": "slider · a scrubber's thumb reads on its track and its fill at 0, 50 and 100 (lg)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "slider",
+                  "description": "[{\"where\":\"light default @0\",\"thumb\":25.49339999999994,\"fill\":null,\"track\":246.92380000000003},{\"where\":\"light default @50\",\"thumb\":25.49339999999994,\"fill\":216.59720000000013,\"track\":246.92380000000003},{\"where\":\"light default @100\",\"thumb\":25.49339999999994,\"fill\":216.59720000000013,\"track\":null},{\"where\":\"light violet @0\",\"thumb\":25.49339999999994,\"fill\":null,\"track\":246.92380000000003},{\"where\":\"light violet @50\",\"thumb\":25.49339999999994,\"fill\":111.57120000000022,\"track\":246.92380000000003},{\"where\":\"light violet @100\",\"thumb\":25.49339999999994,\"fill\":111.57120000000022,\"track\":null},{\"where\":\"dark default @0\",\"thumb\":229.63379999999972,\"fill\":null,\"track\":19.2808},{\"where\":\"dark default @50\",\"thumb\":229.63379999999972,\"fill\":59.56160000000003,\"track\":19.20859999999997},{\"where\":\"dark default @100\",\"thumb\":229.63379999999972,\"fill\":59.70600000000008,\"track\":null},{\"where\":\"dark violet @0\",\"thumb\":229.63379999999972,\"fill\":null,\"track\":19.2808},{\"where\":\"dark violet @50\",\"thumb\":229.63379999999972,\"fill\":83.85599999999981,\"track\":19.20859999999997},{\"where\":\"dark violet @100\",\"thumb\":229.63379999999972,\"fill\":83.85599999999981,\"track\":null}]"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4167,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-13T05:34:20.267Z",
+                  "annotations": [
+                    {
+                      "type": "slider",
+                      "description": "[{\"where\":\"light default @0\",\"thumb\":25.49339999999994,\"fill\":null,\"track\":246.92380000000003},{\"where\":\"light default @50\",\"thumb\":25.49339999999994,\"fill\":216.59720000000013,\"track\":246.92380000000003},{\"where\":\"light default @100\",\"thumb\":25.49339999999994,\"fill\":216.59720000000013,\"track\":null},{\"where\":\"light violet @0\",\"thumb\":25.49339999999994,\"fill\":null,\"track\":246.92380000000003},{\"where\":\"light violet @50\",\"thumb\":25.49339999999994,\"fill\":111.57120000000022,\"track\":246.92380000000003},{\"where\":\"light violet @100\",\"thumb\":25.49339999999994,\"fill\":111.57120000000022,\"track\":null},{\"where\":\"dark default @0\",\"thumb\":229.63379999999972,\"fill\":null,\"track\":19.2808},{\"where\":\"dark default @50\",\"thumb\":229.63379999999972,\"fill\":59.56160000000003,\"track\":19.20859999999997},{\"where\":\"dark default @100\",\"thumb\":229.63379999999972,\"fill\":59.70600000000008,\"track\":null},{\"where\":\"dark violet @0\",\"thumb\":229.63379999999972,\"fill\":null,\"track\":19.2808},{\"where\":\"dark violet @50\",\"thumb\":229.63379999999972,\"fill\":83.85599999999981,\"track\":19.20859999999997},{\"where\":\"dark violet @100\",\"thumb\":229.63379999999972,\"fill\":83.85599999999981,\"track\":null}]"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-f1ae23401139925e2833",
+          "file": "release-11-0-2.spec.ts",
+          "line": 214,
+          "column": 5
+        },
+        {
+          "title": "slider · the thumb paints --foreground by default and --slider-thumb-bg when set",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "slider",
+                  "description": "{\"ink\":\"rgb(28, 25, 23)\",\"unset\":\"rgb(28, 25, 23)\",\"set\":\"rgb(200, 30, 60)\"}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 470,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-13T05:34:24.441Z",
+                  "annotations": [
+                    {
+                      "type": "slider",
+                      "description": "{\"ink\":\"rgb(28, 25, 23)\",\"unset\":\"rgb(28, 25, 23)\",\"set\":\"rgb(200, 30, 60)\"}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-636f9261d1b844fa3e63",
+          "file": "release-11-0-2.spec.ts",
+          "line": 235,
+          "column": 1
+        },
+        {
+          "title": "edge · a host's --dock-plate-expanded-border and --dock-plate-collapsed-border still colour the plate edge",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "edge",
+                  "description": "{\"library\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.08)\"},\"both\":{\"collapsed\":\"color(srgb 0 0 0.784314 / 0.501961)\",\"expanded\":\"color(srgb 0.784314 0 0 / 0.501961)\"},\"expandedOnly\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.784314 0 0 / 0.501961)\"},\"collapsedOnly\":{\"collapsed\":\"color(srgb 0 0 0.784314 / 0.501961)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.08)\"},\"red\":\"rgba(200, 0, 0, 0.5)\",\"blue\":\"rgba(0, 0, 200, 0.5)\"}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 567,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-13T05:34:24.916Z",
+                  "annotations": [
+                    {
+                      "type": "edge",
+                      "description": "{\"library\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.08)\"},\"both\":{\"collapsed\":\"color(srgb 0 0 0.784314 / 0.501961)\",\"expanded\":\"color(srgb 0.784314 0 0 / 0.501961)\"},\"expandedOnly\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.784314 0 0 / 0.501961)\"},\"collapsedOnly\":{\"collapsed\":\"color(srgb 0 0 0.784314 / 0.501961)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.08)\"},\"red\":\"rgba(200, 0, 0, 0.5)\",\"blue\":\"rgba(0, 0, 200, 0.5)\"}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-af520a8c7c48ba97fa71",
+          "file": "release-11-0-2.spec.ts",
+          "line": 308,
+          "column": 1
+        },
+        {
+          "title": "blob · through a sweep, a drag and a release the body's drawn reach stays inside its box",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "blob",
+                  "description": "{\"box\":{\"x\":128,\"y\":128,\"width\":384,\"height\":384},\"rest\":{\"peak\":0.16929166666666667,\"draws\":157},\"peak\":0.2766633845034698,\"draws\":442}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3571,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-13T05:34:25.487Z",
+                  "annotations": [
+                    {
+                      "type": "blob",
+                      "description": "{\"box\":{\"x\":128,\"y\":128,\"width\":384,\"height\":384},\"rest\":{\"peak\":0.16929166666666667,\"draws\":157},\"peak\":0.2766633845034698,\"draws\":442}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-7c4f78e24e5e0027da48",
+          "file": "release-11-0-2.spec.ts",
+          "line": 553,
+          "column": 1
+        },
+        {
+          "title": "transition · a control slotted into a dock's run keeps its own transition",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "transition",
+                  "description": "{\"inside\":{\"property\":\"background-color\",\"duration\":\"0.4s\"},\"outside\":{\"property\":\"background-color\",\"duration\":\"0.4s\"},\"icon\":{\"property\":\"background-color, color, scale, opacity, box-shadow, inline-size, block-size\",\"duration\":\"0.2s, 0.2s, 0.12s, 0.2s, 0.2s, 0.21s, 0.21s\"},\"tween\":{\"inside\":\"rgb(93, 102, 167)\",\"outside\":\"rgb(90, 103, 170)\"}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3160,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-13T05:34:29.064Z",
+                  "annotations": [
+                    {
+                      "type": "transition",
+                      "description": "{\"inside\":{\"property\":\"background-color\",\"duration\":\"0.4s\"},\"outside\":{\"property\":\"background-color\",\"duration\":\"0.4s\"},\"icon\":{\"property\":\"background-color, color, scale, opacity, box-shadow, inline-size, block-size\",\"duration\":\"0.2s, 0.2s, 0.12s, 0.2s, 0.2s, 0.21s, 0.21s\"},\"tween\":{\"inside\":\"rgb(93, 102, 167)\",\"outside\":\"rgb(90, 103, 170)\"}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-1b8b32902b58af950e21",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1125,
+          "column": 1
+        },
+        {
+          "title": "fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "fold",
+                  "description": "{\"worst\":{\"out\":0,\"step\":0.30273700000000003},\"fails\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11139,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-13T05:34:32.230Z",
+                  "annotations": [
+                    {
+                      "type": "fold",
+                      "description": "{\"worst\":{\"out\":0,\"step\":0.30273700000000003},\"fails\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-a1efabe92958906d3985",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1211,
+          "column": 9
+        },
+        {
+          "title": "fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 390",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "fold",
+                  "description": "{\"worst\":{\"out\":0,\"step\":0.18707000000000007},\"fails\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11066,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-13T05:34:43.374Z",
+                  "annotations": [
+                    {
+                      "type": "fold",
+                      "description": "{\"worst\":{\"out\":0,\"step\":0.18707000000000007},\"fails\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-0a9842794bf1a0ad1dfd",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1211,
+          "column": 9
+        },
+        {
+          "title": "fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "fold",
+                  "description": "{\"worst\":{\"out\":0,\"step\":0.20577500000000004},\"fails\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11103,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-13T05:34:54.445Z",
+                  "annotations": [
+                    {
+                      "type": "fold",
+                      "description": "{\"worst\":{\"out\":0,\"step\":0.20577500000000004},\"fails\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-38fd04bb48dcd42cef5f",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1211,
+          "column": 9
+        },
+        {
+          "title": "fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 390",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "fold",
+                  "description": "{\"worst\":{\"out\":0,\"step\":0.19639000000000006},\"fails\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11146,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-13T05:35:05.554Z",
+                  "annotations": [
+                    {
+                      "type": "fold",
+                      "description": "{\"worst\":{\"out\":0,\"step\":0.19639000000000006},\"fails\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-a87b5b436e197335aad6",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1211,
+          "column": 9
+        },
+        {
+          "title": "slider · a scrubber's thumb reads on its track and its fill at 0, 50 and 100 (sm)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "slider",
+                  "description": "[{\"where\":\"light default @0\",\"thumb\":25.493400000000005,\"fill\":null,\"track\":246.9238},{\"where\":\"light default @50\",\"thumb\":25.493400000000005,\"fill\":216.59720000000004,\"track\":246.9238},{\"where\":\"light default @100\",\"thumb\":25.493400000000005,\"fill\":216.59720000000004,\"track\":null},{\"where\":\"light violet @0\",\"thumb\":25.493400000000005,\"fill\":null,\"track\":246.9238},{\"where\":\"light violet @50\",\"thumb\":25.493400000000005,\"fill\":111.57120000000003,\"track\":246.9238},{\"where\":\"light violet @100\",\"thumb\":25.493400000000005,\"fill\":111.57120000000003,\"track\":null},{\"where\":\"dark default @0\",\"thumb\":229.63380000000004,\"fill\":null,\"track\":19.2808},{\"where\":\"dark default @50\",\"thumb\":229.63380000000004,\"fill\":60.31229999999999,\"track\":19.2808},{\"where\":\"dark default @100\",\"thumb\":229.63380000000004,\"fill\":60.31229999999999,\"track\":null},{\"where\":\"dark violet @0\",\"thumb\":229.63380000000004,\"fill\":null,\"track\":19.2808},{\"where\":\"dark violet @50\",\"thumb\":229.63380000000004,\"fill\":83.856,\"track\":19.2808},{\"where\":\"dark violet @100\",\"thumb\":229.63380000000004,\"fill\":83.856,\"track\":null}]"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3954,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-13T05:35:17.033Z",
+                  "annotations": [
+                    {
+                      "type": "slider",
+                      "description": "[{\"where\":\"light default @0\",\"thumb\":25.493400000000005,\"fill\":null,\"track\":246.9238},{\"where\":\"light default @50\",\"thumb\":25.493400000000005,\"fill\":216.59720000000004,\"track\":246.9238},{\"where\":\"light default @100\",\"thumb\":25.493400000000005,\"fill\":216.59720000000004,\"track\":null},{\"where\":\"light violet @0\",\"thumb\":25.493400000000005,\"fill\":null,\"track\":246.9238},{\"where\":\"light violet @50\",\"thumb\":25.493400000000005,\"fill\":111.57120000000003,\"track\":246.9238},{\"where\":\"light violet @100\",\"thumb\":25.493400000000005,\"fill\":111.57120000000003,\"track\":null},{\"where\":\"dark default @0\",\"thumb\":229.63380000000004,\"fill\":null,\"track\":19.2808},{\"where\":\"dark default @50\",\"thumb\":229.63380000000004,\"fill\":60.31229999999999,\"track\":19.2808},{\"where\":\"dark default @100\",\"thumb\":229.63380000000004,\"fill\":60.31229999999999,\"track\":null},{\"where\":\"dark violet @0\",\"thumb\":229.63380000000004,\"fill\":null,\"track\":19.2808},{\"where\":\"dark violet @50\",\"thumb\":229.63380000000004,\"fill\":83.856,\"track\":19.2808},{\"where\":\"dark violet @100\",\"thumb\":229.63380000000004,\"fill\":83.856,\"track\":null}]"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-42aca160a1c74c165efd",
+          "file": "release-11-0-2.spec.ts",
+          "line": 214,
+          "column": 5
+        },
+        {
+          "title": "slider · a scrubber's thumb reads on its track and its fill at 0, 50 and 100 (md)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "slider",
+                  "description": "[{\"where\":\"light default @0\",\"thumb\":25.493400000000012,\"fill\":null,\"track\":246.9238000000001},{\"where\":\"light default @50\",\"thumb\":25.493400000000012,\"fill\":216.59720000000013,\"track\":246.9238000000001},{\"where\":\"light default @100\",\"thumb\":25.493400000000012,\"fill\":216.59720000000013,\"track\":null},{\"where\":\"light violet @0\",\"thumb\":25.493400000000012,\"fill\":null,\"track\":246.9238000000001},{\"where\":\"light violet @50\",\"thumb\":25.493400000000012,\"fill\":111.5712000000001,\"track\":246.9238000000001},{\"where\":\"light violet @100\",\"thumb\":25.493400000000012,\"fill\":111.5712000000001,\"track\":null},{\"where\":\"dark default @0\",\"thumb\":229.63379999999972,\"fill\":null,\"track\":19.2808},{\"where\":\"dark default @50\",\"thumb\":229.63379999999972,\"fill\":59.81230000000004,\"track\":19.2808},{\"where\":\"dark default @100\",\"thumb\":229.63379999999972,\"fill\":59.81230000000004,\"track\":null},{\"where\":\"dark violet @0\",\"thumb\":229.63379999999972,\"fill\":null,\"track\":19.2808},{\"where\":\"dark violet @50\",\"thumb\":229.63379999999972,\"fill\":83.85599999999985,\"track\":19.2808},{\"where\":\"dark violet @100\",\"thumb\":229.63379999999972,\"fill\":83.85599999999985,\"track\":null}]"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3876,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-13T05:35:21.098Z",
+                  "annotations": [
+                    {
+                      "type": "slider",
+                      "description": "[{\"where\":\"light default @0\",\"thumb\":25.493400000000012,\"fill\":null,\"track\":246.9238000000001},{\"where\":\"light default @50\",\"thumb\":25.493400000000012,\"fill\":216.59720000000013,\"track\":246.9238000000001},{\"where\":\"light default @100\",\"thumb\":25.493400000000012,\"fill\":216.59720000000013,\"track\":null},{\"where\":\"light violet @0\",\"thumb\":25.493400000000012,\"fill\":null,\"track\":246.9238000000001},{\"where\":\"light violet @50\",\"thumb\":25.493400000000012,\"fill\":111.5712000000001,\"track\":246.9238000000001},{\"where\":\"light violet @100\",\"thumb\":25.493400000000012,\"fill\":111.5712000000001,\"track\":null},{\"where\":\"dark default @0\",\"thumb\":229.63379999999972,\"fill\":null,\"track\":19.2808},{\"where\":\"dark default @50\",\"thumb\":229.63379999999972,\"fill\":59.81230000000004,\"track\":19.2808},{\"where\":\"dark default @100\",\"thumb\":229.63379999999972,\"fill\":59.81230000000004,\"track\":null},{\"where\":\"dark violet @0\",\"thumb\":229.63379999999972,\"fill\":null,\"track\":19.2808},{\"where\":\"dark violet @50\",\"thumb\":229.63379999999972,\"fill\":83.85599999999985,\"track\":19.2808},{\"where\":\"dark violet @100\",\"thumb\":229.63379999999972,\"fill\":83.85599999999985,\"track\":null}]"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-2242febab354133fb3b4",
+          "file": "release-11-0-2.spec.ts",
+          "line": 214,
+          "column": 5
+        },
+        {
+          "title": "slider · a scrubber's thumb reads on its track and its fill at 0, 50 and 100 (lg)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "slider",
+                  "description": "[{\"where\":\"light default @0\",\"thumb\":25.49339999999994,\"fill\":null,\"track\":246.92380000000003},{\"where\":\"light default @50\",\"thumb\":25.49339999999994,\"fill\":216.59720000000013,\"track\":246.92380000000003},{\"where\":\"light default @100\",\"thumb\":25.49339999999994,\"fill\":216.59720000000013,\"track\":null},{\"where\":\"light violet @0\",\"thumb\":25.49339999999994,\"fill\":null,\"track\":246.92380000000003},{\"where\":\"light violet @50\",\"thumb\":25.49339999999994,\"fill\":111.57120000000022,\"track\":246.92380000000003},{\"where\":\"light violet @100\",\"thumb\":25.49339999999994,\"fill\":111.57120000000022,\"track\":null},{\"where\":\"dark default @0\",\"thumb\":229.63379999999972,\"fill\":null,\"track\":19.2808},{\"where\":\"dark default @50\",\"thumb\":229.63379999999972,\"fill\":59.70600000000008,\"track\":19.2808},{\"where\":\"dark default @100\",\"thumb\":229.63379999999972,\"fill\":59.70600000000008,\"track\":null},{\"where\":\"dark violet @0\",\"thumb\":229.63379999999972,\"fill\":null,\"track\":19.2808},{\"where\":\"dark violet @50\",\"thumb\":229.63379999999972,\"fill\":83.85599999999981,\"track\":19.2808},{\"where\":\"dark violet @100\",\"thumb\":229.63379999999972,\"fill\":83.85599999999981,\"track\":null}]"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3950,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-13T05:35:24.979Z",
+                  "annotations": [
+                    {
+                      "type": "slider",
+                      "description": "[{\"where\":\"light default @0\",\"thumb\":25.49339999999994,\"fill\":null,\"track\":246.92380000000003},{\"where\":\"light default @50\",\"thumb\":25.49339999999994,\"fill\":216.59720000000013,\"track\":246.92380000000003},{\"where\":\"light default @100\",\"thumb\":25.49339999999994,\"fill\":216.59720000000013,\"track\":null},{\"where\":\"light violet @0\",\"thumb\":25.49339999999994,\"fill\":null,\"track\":246.92380000000003},{\"where\":\"light violet @50\",\"thumb\":25.49339999999994,\"fill\":111.57120000000022,\"track\":246.92380000000003},{\"where\":\"light violet @100\",\"thumb\":25.49339999999994,\"fill\":111.57120000000022,\"track\":null},{\"where\":\"dark default @0\",\"thumb\":229.63379999999972,\"fill\":null,\"track\":19.2808},{\"where\":\"dark default @50\",\"thumb\":229.63379999999972,\"fill\":59.70600000000008,\"track\":19.2808},{\"where\":\"dark default @100\",\"thumb\":229.63379999999972,\"fill\":59.70600000000008,\"track\":null},{\"where\":\"dark violet @0\",\"thumb\":229.63379999999972,\"fill\":null,\"track\":19.2808},{\"where\":\"dark violet @50\",\"thumb\":229.63379999999972,\"fill\":83.85599999999981,\"track\":19.2808},{\"where\":\"dark violet @100\",\"thumb\":229.63379999999972,\"fill\":83.85599999999981,\"track\":null}]"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-0846040d643e36f8df8e",
+          "file": "release-11-0-2.spec.ts",
+          "line": 214,
+          "column": 5
+        },
+        {
+          "title": "slider · the thumb paints --foreground by default and --slider-thumb-bg when set",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "slider",
+                  "description": "{\"ink\":\"rgb(28, 25, 23)\",\"unset\":\"rgb(28, 25, 23)\",\"set\":\"rgb(200, 30, 60)\"}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 448,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-13T05:35:28.935Z",
+                  "annotations": [
+                    {
+                      "type": "slider",
+                      "description": "{\"ink\":\"rgb(28, 25, 23)\",\"unset\":\"rgb(28, 25, 23)\",\"set\":\"rgb(200, 30, 60)\"}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-e14200a3e3d9df2c6f7b",
+          "file": "release-11-0-2.spec.ts",
+          "line": 235,
+          "column": 1
+        },
+        {
+          "title": "edge · a host's --dock-plate-expanded-border and --dock-plate-collapsed-border still colour the plate edge",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "edge",
+                  "description": "{\"library\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.08)\"},\"both\":{\"collapsed\":\"color(srgb 0 0 0.784314 / 0.501961)\",\"expanded\":\"color(srgb 0.784314 0 0 / 0.501961)\"},\"expandedOnly\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.784314 0 0 / 0.501961)\"},\"collapsedOnly\":{\"collapsed\":\"color(srgb 0 0 0.784314 / 0.501961)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.08)\"},\"red\":\"rgba(200, 0, 0, 0.5)\",\"blue\":\"rgba(0, 0, 200, 0.5)\"}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 584,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-13T05:35:29.389Z",
+                  "annotations": [
+                    {
+                      "type": "edge",
+                      "description": "{\"library\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.08)\"},\"both\":{\"collapsed\":\"color(srgb 0 0 0.784314 / 0.501961)\",\"expanded\":\"color(srgb 0.784314 0 0 / 0.501961)\"},\"expandedOnly\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.784314 0 0 / 0.501961)\"},\"collapsedOnly\":{\"collapsed\":\"color(srgb 0 0 0.784314 / 0.501961)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.08)\"},\"red\":\"rgba(200, 0, 0, 0.5)\",\"blue\":\"rgba(0, 0, 200, 0.5)\"}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-b2d67dd5dc1fe2a1992d",
+          "file": "release-11-0-2.spec.ts",
+          "line": 308,
+          "column": 1
+        },
+        {
+          "title": "blob · through a sweep, a drag and a release the body's drawn reach stays inside its box",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "blob",
+                  "description": "{\"box\":{\"x\":128,\"y\":128,\"width\":384,\"height\":384},\"rest\":{\"peak\":0.16929166666666667,\"draws\":161},\"peak\":0.2885783436571168,\"draws\":450}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3513,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-13T05:35:29.979Z",
+                  "annotations": [
+                    {
+                      "type": "blob",
+                      "description": "{\"box\":{\"x\":128,\"y\":128,\"width\":384,\"height\":384},\"rest\":{\"peak\":0.16929166666666667,\"draws\":161},\"peak\":0.2885783436571168,\"draws\":450}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-ed8d36e086473749d5e1",
+          "file": "release-11-0-2.spec.ts",
+          "line": 553,
+          "column": 1
+        },
+        {
+          "title": "transition · a control slotted into a dock's run keeps its own transition",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "hover is a fine-pointer state",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "line": 1126,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 40,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-13T05:35:33.498Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "hover is a fine-pointer state",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "line": 1126,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-2a9739645e07da03e60a",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1125,
+          "column": 1
+        },
+        {
+          "title": "fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "fold",
+                  "description": "{\"worst\":{\"out\":0,\"step\":0.19167999999999996},\"fails\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11105,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-13T05:35:33.543Z",
+                  "annotations": [
+                    {
+                      "type": "fold",
+                      "description": "{\"worst\":{\"out\":0,\"step\":0.19167999999999996},\"fails\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-935f35936c369331a6fe",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1211,
+          "column": 9
+        },
+        {
+          "title": "fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 390",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "fold",
+                  "description": "{\"worst\":{\"out\":0,\"step\":0.20623600000000003},\"fails\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11067,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-13T05:35:44.653Z",
+                  "annotations": [
+                    {
+                      "type": "fold",
+                      "description": "{\"worst\":{\"out\":0,\"step\":0.20623600000000003},\"fails\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-10417a9f8f6760821e27",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1211,
+          "column": 9
+        },
+        {
+          "title": "fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 1440",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "fold",
+                  "description": "{\"worst\":{\"out\":0,\"step\":0.201523},\"fails\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11085,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-13T05:35:55.724Z",
+                  "annotations": [
+                    {
+                      "type": "fold",
+                      "description": "{\"worst\":{\"out\":0,\"step\":0.201523},\"fails\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-2939233e3c9bd229fcda",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1211,
+          "column": 9
+        },
+        {
+          "title": "fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 390",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "fold",
+                  "description": "{\"worst\":{\"out\":0,\"step\":0.17993100000000006},\"fails\":[]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "coarse-touch",
+              "projectName": "coarse-touch",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11095,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-13T05:36:06.814Z",
+                  "annotations": [
+                    {
+                      "type": "fold",
+                      "description": "{\"worst\":{\"out\":0,\"step\":0.17993100000000006},\"fails\":[]}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-c8c76df26b43af8bbd7e",
+          "file": "release-11-0-2.spec.ts",
+          "line": 1211,
+          "column": 9
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-13T05:34:09.687Z",
+    "duration": 128307.94900000001,
+    "expected": 21,
+    "skipped": 1,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

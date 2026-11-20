@@ -37,7 +37,7 @@ export const ROUTE_LABEL_NAME = "gl-route-label";
 export const ROUTE_WINDOW_ATTR = "data-route-window";
 /** The attribute a source marks its label with, read before the mutation. */
 export const ROUTE_LABEL_ATTR = "data-route-label";
-/** The root property the `lateral` class reads its push direction from. */
+/** The root property the `lateral` class reads its swap direction from. */
 export const ROUTE_DIRECTION_PROP = "--route-direction";
 
 export interface RouteTransitionOptions {
@@ -55,7 +55,7 @@ export interface RouteTransitionOptions {
      * callback — the last moment before the new state is snapshotted.
      */
     target?: () => HTMLElement | null;
-    /** `lateral` only: +1 forward, −1 back, 0 unknown (the push degrades to a fade). */
+    /** `lateral` only: +1 forward, −1 back, 0 unknown (the arriving card does not travel). */
     direction?: number;
 }
 

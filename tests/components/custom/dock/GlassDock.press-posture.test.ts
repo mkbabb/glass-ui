@@ -4,6 +4,11 @@
 // hit-tested, so a persistent seat on the open side moved out from under the pointer
 // and the engine sent the click elsewhere. A focus-in (or a hover-intent dwell) that
 // lands while a press is in flight now waits for the press to resolve.
+//
+// 11.1.0: a press on a persistent seat is the seat's own act and never expands the dock
+// (the owner's ruling for daraksha's site dock). What the press deferred now lapses with
+// it, so these presses resolve with the dock still collapsed; the deferral itself still
+// holds every expand until the press resolves, so nothing moves under the pointer.
 
 import { mount } from "@vue/test-utils";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -39,7 +44,7 @@ describe("GlassDock — a press holds the posture until it resolves", () => {
         document.body.innerHTML = "";
     });
 
-    it("a focus-in during a press expands the dock only when the press's click arrives", async () => {
+    it("a focus-in during a seat press never expands the dock, before or after the click", async () => {
         const { wrapper, root, seat, onSeat } = mountDock();
         expect(root.classes()).toContain("collapsed");
 
@@ -51,11 +56,11 @@ describe("GlassDock — a press holds the posture until it resolves", () => {
         await seat.trigger("pointerup", { button: 0, pointerType: "mouse" });
         await seat.trigger("click");
         expect(onSeat).toHaveBeenCalledOnce();
-        expect(root.classes(), "the press resolved: the focus's expand runs").toContain("expanded");
+        expect(root.classes(), "the press resolved: the seat's press expands nothing").toContain("collapsed");
         wrapper.unmount();
     });
 
-    it("a touch press waits past its pointerup for the tap's click", async () => {
+    it("a touch press holds past its pointerup to the tap's click, which expands nothing", async () => {
         const { wrapper, root, seat, onSeat } = mountDock();
 
         await seat.trigger("pointerdown", { button: 0, pointerType: "touch" });
@@ -69,7 +74,7 @@ describe("GlassDock — a press holds the posture until it resolves", () => {
 
         await seat.trigger("click");
         expect(onSeat).toHaveBeenCalledOnce();
-        expect(root.classes()).toContain("expanded");
+        expect(root.classes()).toContain("collapsed");
         wrapper.unmount();
     });
 
@@ -88,13 +93,22 @@ describe("GlassDock — a press holds the posture until it resolves", () => {
         wrapper.unmount();
     });
 
-    it("a touch press with no tap lets go at its pointerup: a later hover dwell expands", async () => {
+    // The tap's own compatibility hover is the seat's too: the seat's claim lasts until the
+    // pointer leaves the dock, so the dwell it starts never expands.
+    it("a touch press with no tap lets go at its pointerup, and its compatibility hover expands nothing", async () => {
         const { wrapper, root, seat } = mountDock();
 
         await seat.trigger("pointerdown", { button: 0, pointerType: "touch" });
         await seat.trigger("pointerup", { button: 0, pointerType: "touch" });
         await root.trigger("mouseenter");
         // W-I.8 R-2 (RU-3), restated: the dwell counts from the first real move.
+        root.element.dispatchEvent(new MouseEvent("pointermove", { bubbles: true, clientX: 1 + Math.random() * 999, clientY: 10 }));
+        await new Promise((resolve) => setTimeout(resolve, HOVER_INTENT_MS + 20));
+        await wrapper.vm.$nextTick();
+        expect(root.classes()).toContain("collapsed");
+        // Once the pointer has left, a fresh hover is the dock's again.
+        await root.trigger("mouseleave");
+        await root.trigger("mouseenter");
         root.element.dispatchEvent(new MouseEvent("pointermove", { bubbles: true, clientX: 1 + Math.random() * 999, clientY: 10 }));
         await new Promise((resolve) => setTimeout(resolve, HOVER_INTENT_MS + 20));
         await wrapper.vm.$nextTick();
@@ -122,7 +136,7 @@ describe("GlassDock — a press holds the posture until it resolves", () => {
         wrapper.unmount();
     });
 
-    it("a mouse press that produces no click resolves when its pointerup task ends", async () => {
+    it("a mouse press that produces no click resolves when its pointerup task ends, expanding nothing", async () => {
         const { wrapper, root, seat } = mountDock();
 
         await seat.trigger("pointerdown", { button: 0, pointerType: "mouse" });
@@ -132,7 +146,7 @@ describe("GlassDock — a press holds the posture until it resolves", () => {
         expect(root.classes()).toContain("collapsed");
         await new Promise((resolve) => setTimeout(resolve, 0));
         await wrapper.vm.$nextTick();
-        expect(root.classes()).toContain("expanded");
+        expect(root.classes()).toContain("collapsed");
         wrapper.unmount();
     });
 

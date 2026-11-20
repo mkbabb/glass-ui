@@ -1,0 +1,673 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-0-2.config.ts",
+      "release-11-0-2.spec.ts",
+      "--grep",
+      "edge ·",
+      "--project=webkit",
+      "--project=webkit-2311",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-0-2.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-5.spec.ts",
+          "slider-forced-colors.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-2311",
+        "name": "webkit-2311",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-0-2.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/docs/release-11.0.2/fix-4/logs/d1-pre-wkw3.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5341",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/",
+      "url": "http://localhost:5341",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-0-2.spec.ts",
+      "file": "release-11-0-2.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "edge · a GlassDock page opens and stays alive",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "edge",
+                  "description": "{\"crashed\":false,\"border\":\"color(srgb 0.11 0.098 0.09 / 0.08)\"}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2427,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T01:17:13.108Z",
+                  "annotations": [
+                    {
+                      "type": "edge",
+                      "description": "{\"crashed\":false,\"border\":\"color(srgb 0.11 0.098 0.09 / 0.08)\"}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-63936b2b85229133d78d",
+          "file": "release-11-0-2.spec.ts",
+          "line": 318,
+          "column": 1
+        },
+        {
+          "title": "edge · the plate edge computes 11.0.0's colour at t = 0, 0.5 and 1",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the 11.0.0 reference form is the one WebKit cannot compute",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "line": 338,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 232,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T01:17:15.682Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the 11.0.0 reference form is the one WebKit cannot compute",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "line": 338,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-a1f9dcb353b9626fd185",
+          "file": "release-11-0-2.spec.ts",
+          "line": 337,
+          "column": 1
+        },
+        {
+          "title": "edge · a host's --dock-plate-expanded-border and --dock-plate-collapsed-border still colour the plate edge",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "edge",
+                  "description": "{\"library\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.08)\"},\"both\":{\"collapsed\":\"color(srgb 0 0 0.784314 / 0.5)\",\"expanded\":\"color(srgb 0.784314 0 0 / 0.5)\"},\"expandedOnly\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.784314 0 0 / 0.5)\"},\"collapsedOnly\":{\"collapsed\":\"color(srgb 0 0 0.784314 / 0.5)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.08)\"},\"red\":\"rgba(200, 0, 0, 0.5)\",\"blue\":\"rgba(0, 0, 200, 0.5)\"}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 827,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T01:17:15.921Z",
+                  "annotations": [
+                    {
+                      "type": "edge",
+                      "description": "{\"library\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.08)\"},\"both\":{\"collapsed\":\"color(srgb 0 0 0.784314 / 0.5)\",\"expanded\":\"color(srgb 0.784314 0 0 / 0.5)\"},\"expandedOnly\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.784314 0 0 / 0.5)\"},\"collapsedOnly\":{\"collapsed\":\"color(srgb 0 0 0.784314 / 0.5)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.08)\"},\"red\":\"rgba(200, 0, 0, 0.5)\",\"blue\":\"rgba(0, 0, 200, 0.5)\"}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-aeb9501bc768fd3e7882",
+          "file": "release-11-0-2.spec.ts",
+          "line": 368,
+          "column": 1
+        },
+        {
+          "title": "edge · a host's --glass-border-dock colours the expanded edge",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "edge",
+                  "description": "{\"crashed\":false,\"library\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"literal\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"half\":\"color(srgb 0.01 0.579319 0.008182 / 0.275)\",\"expanded\":\"color(srgb 0 0.627451 0 / 0.5)\"},\"mixed\":{\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.55)\",\"half\":\"color(srgb 0.11 0.098 0.09 / 0.3)\",\"ref\":\"color(srgb 0.11 0.098 0.09 / 0.55)\"},\"green\":\"rgba(0, 160, 0, 0.5)\"}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1160,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T01:17:16.752Z",
+                  "annotations": [
+                    {
+                      "type": "edge",
+                      "description": "{\"crashed\":false,\"library\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"literal\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"half\":\"color(srgb 0.01 0.579319 0.008182 / 0.275)\",\"expanded\":\"color(srgb 0 0.627451 0 / 0.5)\"},\"mixed\":{\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.55)\",\"half\":\"color(srgb 0.11 0.098 0.09 / 0.3)\",\"ref\":\"color(srgb 0.11 0.098 0.09 / 0.55)\"},\"green\":\"rgba(0, 160, 0, 0.5)\"}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-615842bec3d9bdcae62e",
+          "file": "release-11-0-2.spec.ts",
+          "line": 428,
+          "column": 1
+        },
+        {
+          "title": "edge · a host's --glass-border-floating colours the folded edge and a held or static dock's edge",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "edge",
+                  "description": "{\"crashed\":false,\"library\":\"color(srgb 0.11 0.098 0.09 / 0.08)\",\"literal\":{\"live\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"half\":\"color(srgb 0.11 0.098 0.09 / 0.065)\"},\"held\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.05)\"},\"statik\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.05)\"},\"ref\":\"rgba(200, 0, 0, 0.5)\"},\"mixed\":{\"live\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"half\":\"color(srgb 0.11 0.098 0.09 / 0.065)\"},\"held\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.05)\"},\"statik\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.05)\"},\"ref\":\"color(srgb 0.11 0.098 0.09 / 0.55)\"}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1128,
+                  "error": {
+                    "message": "Error: literal, live dock, t = 0: 28.05,24.990000000000002,22.95,0.05 against 200,0,0,0.5\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1.5\u001b[39m\nReceived:   \u001b[31m171.95\u001b[39m",
+                    "stack": "Error: literal, live dock, t = 0: 28.05,24.990000000000002,22.95,0.05 against 200,0,0,0.5\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1.5\u001b[39m\nReceived:   \u001b[31m171.95\u001b[39m\n    at near (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:546:49)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:555:9",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                      "column": 49,
+                      "line": 546
+                    },
+                    "snippet": "  544 |     const near = (a: number[], b: number[], what: string) => {\n  545 |         const d = Math.max(...a.slice(0, 3).map((v, i) => Math.abs(v - b[i]!)), Math.abs(a[3]! - b[3]!) * 255);\n> 546 |         expect(d, `${what}: ${a} against ${b}`).toBeLessThan(1.5);\n      |                                                 ^\n  547 |     };\n  548 |     // The even mix of two colours in srgb, interpolated premultiplied.\n  549 |     const half = (x: number[], y: number[]) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "column": 49,
+                        "line": 546
+                      },
+                      "message": "Error: literal, live dock, t = 0: 28.05,24.990000000000002,22.95,0.05 against 200,0,0,0.5\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1.5\u001b[39m\nReceived:   \u001b[31m171.95\u001b[39m\n\n  544 |     const near = (a: number[], b: number[], what: string) => {\n  545 |         const d = Math.max(...a.slice(0, 3).map((v, i) => Math.abs(v - b[i]!)), Math.abs(a[3]! - b[3]!) * 255);\n> 546 |         expect(d, `${what}: ${a} against ${b}`).toBeLessThan(1.5);\n      |                                                 ^\n  547 |     };\n  548 |     // The even mix of two colours in srgb, interpolated premultiplied.\n  549 |     const half = (x: number[], y: number[]) => {\n    at near (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:546:49)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:555:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T01:17:17.918Z",
+                  "annotations": [
+                    {
+                      "type": "edge",
+                      "description": "{\"crashed\":false,\"library\":\"color(srgb 0.11 0.098 0.09 / 0.08)\",\"literal\":{\"live\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"half\":\"color(srgb 0.11 0.098 0.09 / 0.065)\"},\"held\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.05)\"},\"statik\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.05)\"},\"ref\":\"rgba(200, 0, 0, 0.5)\"},\"mixed\":{\"live\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"half\":\"color(srgb 0.11 0.098 0.09 / 0.065)\"},\"held\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.05)\"},\"statik\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.05)\"},\"ref\":\"color(srgb 0.11 0.098 0.09 / 0.55)\"}}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results/release-11-0-2-edge-·-a-ho-92859--held-or-static-dock-s-edge-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "column": 49,
+                    "line": 546
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-ff7242d0b230d8e12ede",
+          "file": "release-11-0-2.spec.ts",
+          "line": 490,
+          "column": 1
+        },
+        {
+          "title": "edge · a GlassDock page opens and stays alive",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "edge",
+                  "description": "{\"crashed\":false,\"border\":\"color(srgb 0.11 0.098 0.09 / 0.08)\"}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2600,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T01:17:19.397Z",
+                  "annotations": [
+                    {
+                      "type": "edge",
+                      "description": "{\"crashed\":false,\"border\":\"color(srgb 0.11 0.098 0.09 / 0.08)\"}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-b1f40c2710a5aa407574",
+          "file": "release-11-0-2.spec.ts",
+          "line": 318,
+          "column": 1
+        },
+        {
+          "title": "edge · the plate edge computes 11.0.0's colour at t = 0, 0.5 and 1",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the 11.0.0 reference form is the one WebKit cannot compute",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "line": 338,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 198,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T01:17:22.315Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the 11.0.0 reference form is the one WebKit cannot compute",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "line": 338,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-620a1bbd21a12bcf617d",
+          "file": "release-11-0-2.spec.ts",
+          "line": 337,
+          "column": 1
+        },
+        {
+          "title": "edge · a host's --dock-plate-expanded-border and --dock-plate-collapsed-border still colour the plate edge",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "edge",
+                  "description": "{\"library\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.08)\"},\"both\":{\"collapsed\":\"color(srgb 0 0 0.784314 / 0.5)\",\"expanded\":\"color(srgb 0.784314 0 0 / 0.5)\"},\"expandedOnly\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.784314 0 0 / 0.5)\"},\"collapsedOnly\":{\"collapsed\":\"color(srgb 0 0 0.784314 / 0.5)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.08)\"},\"red\":\"rgba(200, 0, 0, 0.5)\",\"blue\":\"rgba(0, 0, 200, 0.5)\"}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 795,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T01:17:22.520Z",
+                  "annotations": [
+                    {
+                      "type": "edge",
+                      "description": "{\"library\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.08)\"},\"both\":{\"collapsed\":\"color(srgb 0 0 0.784314 / 0.5)\",\"expanded\":\"color(srgb 0.784314 0 0 / 0.5)\"},\"expandedOnly\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.784314 0 0 / 0.5)\"},\"collapsedOnly\":{\"collapsed\":\"color(srgb 0 0 0.784314 / 0.5)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.08)\"},\"red\":\"rgba(200, 0, 0, 0.5)\",\"blue\":\"rgba(0, 0, 200, 0.5)\"}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-d7262a1968abfaa8ac8e",
+          "file": "release-11-0-2.spec.ts",
+          "line": 368,
+          "column": 1
+        },
+        {
+          "title": "edge · a host's --glass-border-dock colours the expanded edge",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "edge",
+                  "description": "{\"crashed\":false,\"library\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"literal\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"half\":\"color(srgb 0.01 0.579319 0.008182 / 0.275)\",\"expanded\":\"color(srgb 0 0.627451 0 / 0.5)\"},\"mixed\":{\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.55)\",\"half\":\"color(srgb 0.11 0.098 0.09 / 0.3)\",\"ref\":\"color(srgb 0.11 0.098 0.09 / 0.55)\"},\"green\":\"rgba(0, 160, 0, 0.5)\"}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1087,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T01:17:23.322Z",
+                  "annotations": [
+                    {
+                      "type": "edge",
+                      "description": "{\"crashed\":false,\"library\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"literal\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"half\":\"color(srgb 0.01 0.579319 0.008182 / 0.275)\",\"expanded\":\"color(srgb 0 0.627451 0 / 0.5)\"},\"mixed\":{\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.55)\",\"half\":\"color(srgb 0.11 0.098 0.09 / 0.3)\",\"ref\":\"color(srgb 0.11 0.098 0.09 / 0.55)\"},\"green\":\"rgba(0, 160, 0, 0.5)\"}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-95afb4a2dec1cea95559",
+          "file": "release-11-0-2.spec.ts",
+          "line": 428,
+          "column": 1
+        },
+        {
+          "title": "edge · a host's --glass-border-floating colours the folded edge and a held or static dock's edge",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "edge",
+                  "description": "{\"crashed\":false,\"library\":\"color(srgb 0.11 0.098 0.09 / 0.08)\",\"literal\":{\"live\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"half\":\"color(srgb 0.11 0.098 0.09 / 0.065)\"},\"held\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.05)\"},\"statik\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.05)\"},\"ref\":\"rgba(200, 0, 0, 0.5)\"},\"mixed\":{\"live\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"half\":\"color(srgb 0.11 0.098 0.09 / 0.065)\"},\"held\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.05)\"},\"statik\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.05)\"},\"ref\":\"color(srgb 0.11 0.098 0.09 / 0.55)\"}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1093,
+                  "error": {
+                    "message": "Error: literal, live dock, t = 0: 28.05,24.990000000000002,22.95,0.05 against 200,0,0,0.5\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1.5\u001b[39m\nReceived:   \u001b[31m171.95\u001b[39m",
+                    "stack": "Error: literal, live dock, t = 0: 28.05,24.990000000000002,22.95,0.05 against 200,0,0,0.5\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1.5\u001b[39m\nReceived:   \u001b[31m171.95\u001b[39m\n    at near (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:546:49)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:555:9",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                      "column": 49,
+                      "line": 546
+                    },
+                    "snippet": "  544 |     const near = (a: number[], b: number[], what: string) => {\n  545 |         const d = Math.max(...a.slice(0, 3).map((v, i) => Math.abs(v - b[i]!)), Math.abs(a[3]! - b[3]!) * 255);\n> 546 |         expect(d, `${what}: ${a} against ${b}`).toBeLessThan(1.5);\n      |                                                 ^\n  547 |     };\n  548 |     // The even mix of two colours in srgb, interpolated premultiplied.\n  549 |     const half = (x: number[], y: number[]) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                        "column": 49,
+                        "line": 546
+                      },
+                      "message": "Error: literal, live dock, t = 0: 28.05,24.990000000000002,22.95,0.05 against 200,0,0,0.5\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m1.5\u001b[39m\nReceived:   \u001b[31m171.95\u001b[39m\n\n  544 |     const near = (a: number[], b: number[], what: string) => {\n  545 |         const d = Math.max(...a.slice(0, 3).map((v, i) => Math.abs(v - b[i]!)), Math.abs(a[3]! - b[3]!) * 255);\n> 546 |         expect(d, `${what}: ${a} against ${b}`).toBeLessThan(1.5);\n      |                                                 ^\n  547 |     };\n  548 |     // The even mix of two colours in srgb, interpolated premultiplied.\n  549 |     const half = (x: number[], y: number[]) => {\n    at near (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:546:49)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:555:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T01:17:24.415Z",
+                  "annotations": [
+                    {
+                      "type": "edge",
+                      "description": "{\"crashed\":false,\"library\":\"color(srgb 0.11 0.098 0.09 / 0.08)\",\"literal\":{\"live\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"half\":\"color(srgb 0.11 0.098 0.09 / 0.065)\"},\"held\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.05)\"},\"statik\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.05)\"},\"ref\":\"rgba(200, 0, 0, 0.5)\"},\"mixed\":{\"live\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"half\":\"color(srgb 0.11 0.098 0.09 / 0.065)\"},\"held\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.05)\"},\"statik\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.05)\"},\"ref\":\"color(srgb 0.11 0.098 0.09 / 0.55)\"}}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/test-results/release-11-0-2-edge-·-a-ho-92859--held-or-static-dock-s-edge-webkit-2311/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts",
+                    "column": 49,
+                    "line": 546
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-1e0b7a2b921f979418c2",
+          "file": "release-11-0-2.spec.ts",
+          "line": 490,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-15T01:17:11.470Z",
+    "duration": 14077.506000000001,
+    "expected": 6,
+    "skipped": 2,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

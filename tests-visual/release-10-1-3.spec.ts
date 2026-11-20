@@ -266,6 +266,10 @@ const boxDistance = (a: Box, b: Box) => Math.max(...sides.map((k) => Math.abs(a[
 // (pointer), or before the gesture's click is hit-tested (touch): RED on 10.1.2 and on
 // the first 10.1.3 cure, GREEN on 10.1.1. WebKit does not focus on press, so it is
 // GREEN on every tree.
+//
+// O-194 (the owner, 2026-11-09): a press on a persistent seat is that seat's own act and
+// never expands the dock. These cells asserted that the press expanded it; from 11.1.0
+// they assert that it does not, and every other assertion stands.
 for (const [anchor, width] of [
     ["right", 390],
     ["right", 1440],
@@ -274,7 +278,7 @@ for (const [anchor, width] of [
 ] as const) {
     test.describe(`10.1.3 · ${width} · ${anchor}-anchored, open-side seat`, () => {
         test.use({ viewport: { width, height: width > 1000 ? 900 : 844 } });
-        test("D-1 · a click on the open-side persistent seat of a collapsed dock reaches it", async ({
+        test("D-1 · a click on the open-side persistent seat of a collapsed dock reaches it and does not expand it", async ({
             page,
         }) => {
             await open(page, anchor, "open");
@@ -287,9 +291,10 @@ for (const [anchor, width] of [
                 ["click", "edit"],
             ]);
             expect(await edits(page), "the seat's own click handler ran once").toBe(1);
-            await expect(page.locator(".glass-dock"), "the press still expands the dock").toHaveClass(
-                /expanded/,
-            );
+            await expect(
+                page.locator(".glass-dock"),
+                "the press does not expand the dock (O-194)",
+            ).not.toHaveClass(/expanded/);
         });
     });
 }
@@ -466,7 +471,8 @@ test.describe("10.1.3 · 390 · reduced motion", () => {
 // no click, no cancel. Escape then collapses the dock without a click anywhere, and a
 // keyboard focus or a mouse hover must still expand it. RED on the round-1 cure (the
 // touch press held until some later click), GREEN on 10.1.2 and here. The swipe is a
-// CDP touch sequence, so this cell is Chromium's; the next one witnesses WebKit.
+// CDP touch sequence, so this cell is Chromium's; the next one witnesses WebKit. The dock
+// opens by a tap on its summary: a tap on the persistent seat no longer expands it (O-194).
 for (const after of ["focus", "hover"] as const) {
     test.describe(`10.1.3 · 390 · touch · run swipe, Escape, then ${after}`, () => {
         test.use({ viewport: { width: 390, height: 844 }, hasTouch: true });
@@ -477,10 +483,10 @@ for (const after of ["focus", "hover"] as const) {
             test.skip(browserName !== "chromium", "a CDP touch swipe");
             await open(page, "right");
             const dock = page.locator(".glass-dock");
-            const { x, y } = mid(await rect(page, EDIT));
+            const { x, y } = mid(await rect(page, '[data-witness="summary"]'));
             await page.touchscreen.tap(x, y);
             await page.waitForTimeout(1300);
-            await expect(dock).toHaveClass(/expanded/);
+            await expect(dock, "the summary tap expanded the dock").toHaveClass(/expanded/);
             await listen(page);
             const cdp = await page.context().newCDPSession(page);
             const q = mid(await rect(page, '[data-witness="Equation"]'));
@@ -861,11 +867,13 @@ test.describe("10.1.3 · 390 · right-anchored · right-click a collapsed seat, 
 // not moved, and back: the spurious leave and enter that O-110 cures.) So the hover
 // lands during the gesture. The pointer enters the collapsed seat and right-clicks it
 // inside the hover-intent dwell, and the dwell completes after the press began. The
-// press ends at `contextmenu`, so the dwell expands the dock. While the press stayed
-// held, the expand waited on it forever.
+// press ends at `contextmenu`. While the press stayed held, the expand waited on it
+// forever. O-194 (the owner, 2026-11-09): a press on a persistent seat, a right-click
+// included, is the seat's own act and never expands the dock, so from 11.1.0 the dwell
+// it lands in expands nothing and the dock reads collapsed.
 test.describe("10.1.3 · 390 · right-anchored · hover-intent dwell across a right-click", () => {
     test.use({ viewport: { width: 390, height: 844 } });
-    test("D-1 (critique-6) · a hover dwell that completes after a right-click expands the collapsed dock", async ({
+    test("D-1 (critique-6) · a hover dwell across a right-click on the persistent seat leaves the dock collapsed", async ({
         page,
     }) => {
         await open(page, "right");
@@ -886,7 +894,10 @@ test.describe("10.1.3 · 390 · right-anchored · hover-intent dwell across a ri
             "the press began inside the dwell: the dock was collapsed at the contextmenu",
         ).toMatch(/collapsed/);
         await page.waitForTimeout(900);
-        await expect(page.locator(".glass-dock")).toHaveClass(/expanded/);
+        await expect(
+            page.locator(".glass-dock"),
+            "the press on the persistent seat does not expand the dock (O-194)",
+        ).not.toHaveClass(/expanded/);
     });
 });
 

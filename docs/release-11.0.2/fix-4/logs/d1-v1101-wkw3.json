@@ -1,0 +1,693 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-0-2.config.ts",
+      "release-11-0-2.spec.ts",
+      "--grep",
+      "edge ·",
+      "--project=webkit",
+      "--project=webkit-2311",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-0-2.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-5.spec.ts",
+          "slider-forced-colors.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-2311",
+        "name": "webkit-2311",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-0-2.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/docs/release-11.0.2/fix-4/logs/d1-v1101-wkw3.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5342",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/",
+      "url": "http://localhost:5342",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-0-2.spec.ts",
+      "file": "release-11-0-2.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "edge · a GlassDock page opens and stays alive",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "edge",
+                  "description": "{\"crashed\":false,\"border\":\"color(srgb 0.11 0.098 0.09 / 0.08)\"}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2479,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T01:28:48.267Z",
+                  "annotations": [
+                    {
+                      "type": "edge",
+                      "description": "{\"crashed\":false,\"border\":\"color(srgb 0.11 0.098 0.09 / 0.08)\"}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-63936b2b85229133d78d",
+          "file": "release-11-0-2.spec.ts",
+          "line": 318,
+          "column": 1
+        },
+        {
+          "title": "edge · the plate edge computes 11.0.0's colour at t = 0, 0.5 and 1",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the 11.0.0 reference form is the one WebKit cannot compute",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                    "line": 338,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 211,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T01:28:50.957Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the 11.0.0 reference form is the one WebKit cannot compute",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                        "line": 338,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-a1f9dcb353b9626fd185",
+          "file": "release-11-0-2.spec.ts",
+          "line": 337,
+          "column": 1
+        },
+        {
+          "title": "edge · a host's --dock-plate-expanded-border and --dock-plate-collapsed-border still colour the plate edge",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "edge",
+                  "description": "{\"library\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.08)\"},\"both\":{\"collapsed\":\"color(srgb 0 0 0.784314 / 0.5)\",\"expanded\":\"color(srgb 0.784314 0 0 / 0.5)\"},\"expandedOnly\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.784314 0 0 / 0.5)\"},\"collapsedOnly\":{\"collapsed\":\"color(srgb 0 0 0.784314 / 0.5)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.08)\"},\"red\":\"rgba(200, 0, 0, 0.5)\",\"blue\":\"rgba(0, 0, 200, 0.5)\"}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 903,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T01:28:51.176Z",
+                  "annotations": [
+                    {
+                      "type": "edge",
+                      "description": "{\"library\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.08)\"},\"both\":{\"collapsed\":\"color(srgb 0 0 0.784314 / 0.5)\",\"expanded\":\"color(srgb 0.784314 0 0 / 0.5)\"},\"expandedOnly\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"expanded\":\"color(srgb 0.784314 0 0 / 0.5)\"},\"collapsedOnly\":{\"collapsed\":\"color(srgb 0 0 0.784314 / 0.5)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.08)\"},\"red\":\"rgba(200, 0, 0, 0.5)\",\"blue\":\"rgba(0, 0, 200, 0.5)\"}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-aeb9501bc768fd3e7882",
+          "file": "release-11-0-2.spec.ts",
+          "line": 368,
+          "column": 1
+        },
+        {
+          "title": "edge · a host's --glass-border-dock colours the expanded edge",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "edge",
+                  "description": "{\"crashed\":false,\"library\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"literal\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"half\":\"color(srgb 0.01 0.579319 0.008182 / 0.275)\",\"expanded\":\"color(srgb 0 0.627451 0 / 0.5)\"},\"mixed\":{\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.55)\",\"half\":\"color(srgb 0.11 0.098 0.09 / 0.3)\",\"ref\":\"color(srgb 0.11 0.098 0.09 / 0.55)\"},\"green\":\"rgba(0, 160, 0, 0.5)\"}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1147,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T01:28:52.085Z",
+                  "annotations": [
+                    {
+                      "type": "edge",
+                      "description": "{\"crashed\":false,\"library\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"literal\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.05)\",\"half\":\"color(srgb 0.01 0.579319 0.008182 / 0.275)\",\"expanded\":\"color(srgb 0 0.627451 0 / 0.5)\"},\"mixed\":{\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.55)\",\"half\":\"color(srgb 0.11 0.098 0.09 / 0.3)\",\"ref\":\"color(srgb 0.11 0.098 0.09 / 0.55)\"},\"green\":\"rgba(0, 160, 0, 0.5)\"}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-615842bec3d9bdcae62e",
+          "file": "release-11-0-2.spec.ts",
+          "line": 428,
+          "column": 1
+        },
+        {
+          "title": "edge · a host's --glass-border-floating colours the folded edge and a held or static dock's edge",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "edge",
+                  "description": "{\"crashed\":false,\"library\":\"color(srgb 0.11 0.098 0.09 / 0.08)\",\"literal\":{\"live\":{\"collapsed\":\"color(srgb 0.784314 0 0 / 0.5)\",\"half\":\"color(srgb 0.691305 0.013517 0.012414 / 0.29)\"},\"held\":{\"collapsed\":\"color(srgb 0.784314 0 0 / 0.5)\",\"expanded\":\"color(srgb 0.784314 0 0 / 0.5)\"},\"statik\":{\"collapsed\":\"color(srgb 0.784314 0 0 / 0.5)\",\"expanded\":\"color(srgb 0.784314 0 0 / 0.5)\"},\"ref\":\"rgba(200, 0, 0, 0.5)\"},\"mixed\":{\"live\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.55)\",\"half\":\"color(srgb 0.11 0.098 0.09 / 0.315)\"},\"held\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.55)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.55)\"},\"statik\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.55)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.55)\"},\"ref\":\"color(srgb 0.11 0.098 0.09 / 0.55)\"}}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1117,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T01:28:53.238Z",
+                  "annotations": [
+                    {
+                      "type": "edge",
+                      "description": "{\"crashed\":false,\"library\":\"color(srgb 0.11 0.098 0.09 / 0.08)\",\"literal\":{\"live\":{\"collapsed\":\"color(srgb 0.784314 0 0 / 0.5)\",\"half\":\"color(srgb 0.691305 0.013517 0.012414 / 0.29)\"},\"held\":{\"collapsed\":\"color(srgb 0.784314 0 0 / 0.5)\",\"expanded\":\"color(srgb 0.784314 0 0 / 0.5)\"},\"statik\":{\"collapsed\":\"color(srgb 0.784314 0 0 / 0.5)\",\"expanded\":\"color(srgb 0.784314 0 0 / 0.5)\"},\"ref\":\"rgba(200, 0, 0, 0.5)\"},\"mixed\":{\"live\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.55)\",\"half\":\"color(srgb 0.11 0.098 0.09 / 0.315)\"},\"held\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.55)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.55)\"},\"statik\":{\"collapsed\":\"color(srgb 0.11 0.098 0.09 / 0.55)\",\"expanded\":\"color(srgb 0.11 0.098 0.09 / 0.55)\"},\"ref\":\"color(srgb 0.11 0.098 0.09 / 0.55)\"}}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-ff7242d0b230d8e12ede",
+          "file": "release-11-0-2.spec.ts",
+          "line": 490,
+          "column": 1
+        },
+        {
+          "title": "edge · a GlassDock page opens and stays alive",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 628,
+                  "error": {
+                    "message": "Error: page.goto: Page crashed\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5342/tests-visual/release-11-0-2/press-harness.html\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: Page crashed\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5342/tests-visual/release-11-0-2/press-harness.html\", waiting until \"load\"\u001b[22m\n\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:322:16",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                      "column": 16,
+                      "line": 322
+                    },
+                    "snippet": "  320 |     page.on(\"crash\", () => (crashed = true));\n  321 |     await page.setViewportSize({ width: 1440, height: 900 });\n> 322 |     await page.goto(\"/tests-visual/release-11-0-2/press-harness.html\");\n      |                ^\n  323 |     await page.locator(\".press-dock .dock-plate\").waitFor();\n  324 |     await page.waitForTimeout(600);\n  325 |     const summary = page.locator('[aria-label$=\"open the dock\"]').first();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                        "column": 16,
+                        "line": 322
+                      },
+                      "message": "Error: page.goto: Page crashed\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5342/tests-visual/release-11-0-2/press-harness.html\", waiting until \"load\"\u001b[22m\n\n\n  320 |     page.on(\"crash\", () => (crashed = true));\n  321 |     await page.setViewportSize({ width: 1440, height: 900 });\n> 322 |     await page.goto(\"/tests-visual/release-11-0-2/press-harness.html\");\n      |                ^\n  323 |     await page.locator(\".press-dock .dock-plate\").waitFor();\n  324 |     await page.waitForTimeout(600);\n  325 |     const summary = page.locator('[aria-label$=\"open the dock\"]').first();\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:322:16"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T01:28:54.642Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/test-results/release-11-0-2-edge-·-a-GlassDock-page-opens-and-stays-alive-webkit-2311/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                    "column": 16,
+                    "line": 322
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-b1f40c2710a5aa407574",
+          "file": "release-11-0-2.spec.ts",
+          "line": 318,
+          "column": 1
+        },
+        {
+          "title": "edge · the plate edge computes 11.0.0's colour at t = 0, 0.5 and 1",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the 11.0.0 reference form is the one WebKit cannot compute",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                    "line": 338,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 303,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T01:28:55.840Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the 11.0.0 reference form is the one WebKit cannot compute",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                        "line": 338,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-620a1bbd21a12bcf617d",
+          "file": "release-11-0-2.spec.ts",
+          "line": 337,
+          "column": 1
+        },
+        {
+          "title": "edge · a host's --dock-plate-expanded-border and --dock-plate-collapsed-border still colour the plate edge",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 296,
+                  "error": {
+                    "message": "Error: page.goto: Page crashed\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5342/tests-visual/release-11-0-2/press-harness.html\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: Page crashed\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5342/tests-visual/release-11-0-2/press-harness.html\", waiting until \"load\"\u001b[22m\n\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:369:16",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                      "column": 16,
+                      "line": 369
+                    },
+                    "snippet": "  367 | // library's edge. Literal colours, so the reading needs no nested mix in any engine.\n  368 | test(\"edge · a host's --dock-plate-expanded-border and --dock-plate-collapsed-border still colour the plate edge\", async ({ page }, info) => {\n> 369 |     await page.goto(\"/tests-visual/release-11-0-2/press-harness.html\");\n      |                ^\n  370 |     await page.locator(\".press-dock .dock-plate\").waitFor();\n  371 |     await page.waitForTimeout(400);\n  372 |     const r = await page.evaluate(() => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                        "column": 16,
+                        "line": 369
+                      },
+                      "message": "Error: page.goto: Page crashed\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5342/tests-visual/release-11-0-2/press-harness.html\", waiting until \"load\"\u001b[22m\n\n\n  367 | // library's edge. Literal colours, so the reading needs no nested mix in any engine.\n  368 | test(\"edge · a host's --dock-plate-expanded-border and --dock-plate-collapsed-border still colour the plate edge\", async ({ page }, info) => {\n> 369 |     await page.goto(\"/tests-visual/release-11-0-2/press-harness.html\");\n      |                ^\n  370 |     await page.locator(\".press-dock .dock-plate\").waitFor();\n  371 |     await page.waitForTimeout(400);\n  372 |     const r = await page.evaluate(() => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:369:16"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T01:28:56.325Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/test-results/release-11-0-2-edge-·-a-ho-225d9-still-colour-the-plate-edge-webkit-2311/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                    "column": 16,
+                    "line": 369
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-d7262a1968abfaa8ac8e",
+          "file": "release-11-0-2.spec.ts",
+          "line": 368,
+          "column": 1
+        },
+        {
+          "title": "edge · a host's --glass-border-dock colours the expanded edge",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 455,
+                  "error": {
+                    "message": "Error: page.goto: Page crashed\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5342/tests-visual/release-11-0-2/press-harness.html\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: Page crashed\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5342/tests-visual/release-11-0-2/press-harness.html\", waiting until \"load\"\u001b[22m\n\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:431:16",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                      "column": 16,
+                      "line": 431
+                    },
+                    "snippet": "  429 |     let crashed = false;\n  430 |     page.on(\"crash\", () => (crashed = true));\n> 431 |     await page.goto(\"/tests-visual/release-11-0-2/press-harness.html\");\n      |                ^\n  432 |     await page.locator(\".press-dock .dock-plate\").waitFor();\n  433 |     await page.waitForTimeout(400);\n  434 |     const r = await page.evaluate(() => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                        "column": 16,
+                        "line": 431
+                      },
+                      "message": "Error: page.goto: Page crashed\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5342/tests-visual/release-11-0-2/press-harness.html\", waiting until \"load\"\u001b[22m\n\n\n  429 |     let crashed = false;\n  430 |     page.on(\"crash\", () => (crashed = true));\n> 431 |     await page.goto(\"/tests-visual/release-11-0-2/press-harness.html\");\n      |                ^\n  432 |     await page.locator(\".press-dock .dock-plate\").waitFor();\n  433 |     await page.waitForTimeout(400);\n  434 |     const r = await page.evaluate(() => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:431:16"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T01:28:56.928Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/test-results/release-11-0-2-edge-·-a-ho-95c2b-k-colours-the-expanded-edge-webkit-2311/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                    "column": 16,
+                    "line": 431
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-95afb4a2dec1cea95559",
+          "file": "release-11-0-2.spec.ts",
+          "line": 428,
+          "column": 1
+        },
+        {
+          "title": "edge · a host's --glass-border-floating colours the folded edge and a held or static dock's edge",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-2311",
+              "projectName": "webkit-2311",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 439,
+                  "error": {
+                    "message": "Error: page.goto: Page crashed\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5342/tests-visual/release-11-0-2/press-harness.html\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: Page crashed\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5342/tests-visual/release-11-0-2/press-harness.html\", waiting until \"load\"\u001b[22m\n\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:493:16",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                      "column": 16,
+                      "line": 493
+                    },
+                    "snippet": "  491 |     let crashed = false;\n  492 |     page.on(\"crash\", () => (crashed = true));\n> 493 |     await page.goto(\"/tests-visual/release-11-0-2/press-harness.html\");\n      |                ^\n  494 |     await page.locator(\".press-dock .dock-plate\").waitFor();\n  495 |     await page.waitForTimeout(400);\n  496 |     const r = await page.evaluate(() => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                        "column": 16,
+                        "line": 493
+                      },
+                      "message": "Error: page.goto: Page crashed\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5342/tests-visual/release-11-0-2/press-harness.html\", waiting until \"load\"\u001b[22m\n\n\n  491 |     let crashed = false;\n  492 |     page.on(\"crash\", () => (crashed = true));\n> 493 |     await page.goto(\"/tests-visual/release-11-0-2/press-harness.html\");\n      |                ^\n  494 |     await page.locator(\".press-dock .dock-plate\").waitFor();\n  495 |     await page.waitForTimeout(400);\n  496 |     const r = await page.evaluate(() => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:493:16"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-15T01:28:57.867Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/test-results/release-11-0-2-edge-·-a-ho-92859--held-or-static-dock-s-edge-webkit-2311/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                    "column": 16,
+                    "line": 493
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-1e0b7a2b921f979418c2",
+          "file": "release-11-0-2.spec.ts",
+          "line": 490,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-15T01:28:46.618Z",
+    "duration": 11901.926,
+    "expected": 4,
+    "skipped": 2,
+    "unexpected": 4,
+    "flaky": 0
+  }
+}

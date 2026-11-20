@@ -16,7 +16,7 @@ const attrs = useAttrs();
 </script>
 
 <template>
-    <div data-slot="table-container" class="relative w-full overflow-auto">
+    <div data-slot="table-container" class="table-container">
         <table
             v-bind="attrs"
             data-slot="table"

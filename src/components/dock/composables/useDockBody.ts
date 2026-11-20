@@ -15,6 +15,7 @@
  */
 import { inject, onBeforeUnmount, onMounted, provide, type InjectionKey, type Ref } from "vue";
 import { DOCK_SPRING } from "../constants";
+import { isRunSeat } from "./useDockRunMark";
 
 const OMEGA = (2 * Math.PI) / DOCK_SPRING.response;
 const ZETA = DOCK_SPRING.dampingFraction;
@@ -256,9 +257,12 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         };
     }
 
+    // The root's own corner (a pill's is `--radius-dock`, the stadium unless a host sets it).
+    let cap = Infinity;
     function restRadius(el: HTMLElement, w: number, h: number): number {
-        const cs = getComputedStyle(el);
-        return Math.min(Math.min(w, h) / 2, pxOf(cs.borderTopLeftRadius, Math.min(w, h)));
+        const r = getComputedStyle(el).borderTopLeftRadius;
+        cap = Number.isNaN(Number.parseFloat(r)) ? Infinity : pxOf(r, Math.min(w, h));
+        return Math.min(Math.min(w, h) / 2, cap);
     }
 
     /** Pre-flush: remember where the leaving content paints. */
@@ -449,7 +453,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         const inX = !host ? 0 : run.offsetParent === host ? run.offsetLeft : run.offsetParent === host.offsetParent ? run.offsetLeft - host.offsetLeft : 0;
         const inY = !host ? 0 : run.offsetParent === host ? run.offsetTop : run.offsetParent === host.offsetParent ? run.offsetTop - host.offsetTop : 0;
         for (const child of run.children) {
-            if (!(child instanceof HTMLElement) || child.offsetParent === null || ghosts.has(child)) continue;
+            if (!(child instanceof HTMLElement) || child.offsetParent === null || ghosts.has(child) || !isRunSeat(child)) continue;
             seen.add(child);
             const lx = child.offsetLeft + inX;
             const ly = child.offsetTop + inY;
@@ -527,7 +531,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         let same = true;
         let n = 0;
         for (const c of run.children) {
-            if (!(c instanceof HTMLElement) || ghosts.has(c) || c.offsetParent === null) continue;
+            if (!(c instanceof HTMLElement) || ghosts.has(c) || c.offsetParent === null || !isRunSeat(c)) continue;
             const a0 = v ? c.offsetTop : c.offsetLeft;
             const sz = v ? c.offsetHeight : c.offsetWidth;
             first = Math.min(first, a0);
@@ -631,7 +635,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         const cMid = v ? R0.left + R0.width / 2 : R0.top + R0.height / 2;
         let short = -Infinity;
         for (const c of run.children) {
-            if (!(c instanceof HTMLElement) || ghosts.has(c) || c.offsetParent === null) continue;
+            if (!(c instanceof HTMLElement) || ghosts.has(c) || c.offsetParent === null || !isRunSeat(c)) continue;
             const q = bcr(c);
             if (q.width <= 0 || q.height <= 0) continue;
             const t = seats.get(c);
@@ -950,8 +954,9 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
     }
 
     function currentRadius(pw: number, ph: number): number {
-        // A pill is half its painted cross extent in every frame: the owner's "Rounded."
-        if (o.pill()) return Math.min(pw, ph) / 2;
+        // A pill is half its painted cross extent in every frame (the owner's "Rounded."),
+        // bounded by its own corner, so a host's `--radius-dock` holds through a travel.
+        if (o.pill()) return Math.min(pw / 2, ph / 2, cap);
         // A rounded or card dock: the lerp of its two rests on e in a posture travel.
         if (postureTravel || (POSE && held !== null)) return restR[0] + (restR[1] - restR[0]) * clamp01(e);
         const f = 1 - u;
@@ -1368,7 +1373,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         for (const rec of recs) {
             if (rec.type !== "childList" || rec.target !== run) continue;
             for (const n of rec.removedNodes) {
-                if (!(n instanceof HTMLElement) || ghosts.has(n) || n.parentNode === run) continue;
+                if (!(n instanceof HTMLElement) || ghosts.has(n) || n.parentNode === run || !isRunSeat(n)) continue;
                 const t = seats.get(n);
                 if (!t) continue;
                 // Where it painted: the run's origin at the last read (read now, the run is
@@ -1395,7 +1400,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
                 any = true;
             }
             for (const n of rec.addedNodes) {
-                if (!(n instanceof HTMLElement) || ghosts.has(n) || seats.has(n) || n.parentNode !== run) continue;
+                if (!(n instanceof HTMLElement) || ghosts.has(n) || seats.has(n) || n.parentNode !== run || !isRunSeat(n)) continue;
                 joined.push(n);
             }
         }

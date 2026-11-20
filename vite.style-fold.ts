@@ -438,6 +438,30 @@ function cssFilesUnder(...roots: string[]): string[] {
     });
 }
 
+/** The sheet that delivers the faces as files (`./styles/font-files`). */
+export const FONT_FILES_SHEET = "font-files.css";
+
+const PACKAGE_FONT_URL = /url\(\s*["']?@mkbabb\/glass-ui\/fonts\/([^"')\s]+)["']?\s*\)/g;
+
+/**
+ * linkFonts — the file delivery. Flattens the published `font-files.css`: each
+ * relative `@import` of a sibling sheet is replaced by that sheet's text, and every
+ * package font URL becomes a relative URL to the woff2 file shipped under
+ * `dist/fonts/`. Runs before `inlineFonts`, so the inline pass, which only matches
+ * package URLs, leaves these alone. A consumer bundler that follows the sheet hashes
+ * and copies each file it references.
+ */
+export function linkFonts(distStyles: string): void {
+    const path = resolve(distStyles, FONT_FILES_SHEET);
+    if (!existsSync(path)) throw new Error(`linkFonts: ${FONT_FILES_SHEET} absent from the published styles`);
+    const flat = readFileSync(path, "utf-8").replace(
+        /^@import\s+["'](\.\/[^"']+\.css)["'];\s*$/gm,
+        (_match, rel: string) => readFileSync(resolve(distStyles, rel), "utf-8"),
+    );
+    if (/^@import\b/m.test(flat)) throw new Error(`linkFonts: ${FONT_FILES_SHEET} keeps an @import it cannot flatten`);
+    writeFileSync(path, flat.replace(PACKAGE_FONT_URL, (_match, rel: string) => `url("../fonts/${rel}")`), "utf-8");
+}
+
 /**
  * inlineFonts — inline every `url(... .woff2)` reference in the published CSS as
  * a base64 data URI sourced from `src/fonts/`. The URL form expected here is the
@@ -445,11 +469,10 @@ function cssFilesUnder(...roots: string[]): string[] {
  * Resolves the relative path against `srcFonts`, encodes, rewrites in place.
  */
 export function inlineFonts(srcFonts: string, ...cssRoots: string[]): void {
-    const urlRe = /url\(\s*["']?@mkbabb\/glass-ui\/fonts\/([^"')\s]+)["']?\s*\)/g;
     for (const path of cssFilesUnder(...cssRoots)) {
         const src = readFileSync(path, "utf-8");
         let touched = false;
-        const rewritten = src.replace(urlRe, (_match, rel: string) => {
+        const rewritten = src.replace(PACKAGE_FONT_URL, (_match, rel: string) => {
             const fontPath = resolve(srcFonts, rel);
             if (!existsSync(fontPath)) return _match;
             const buf = readFileSync(fontPath);

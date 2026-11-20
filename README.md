@@ -61,12 +61,47 @@ import { DEFAULT_AURORA_CONFIG, MAX_NUCLEI } from "@mkbabb/glass-ui/aurora";
 }
 ```
 
-The optional `styles/fonts` entry carries the packaged Plus Jakarta Sans and
-Fira Code faces as self-contained WOFF2 data URLs. Consumers that need raw font
-files can address the same built assets through `@mkbabb/glass-ui/fonts/*`.
+A Slider's colours have tokens of their own: `--slider-range-bg` paints the fill and
+`--slider-thumb-bg` the scrubber's thumb (`--foreground` when unset). Set either on the Slider
+or on any ancestor.
 
-Every packaged face is roman: there is no italic `@font-face` and none is
-intended. Three utilities ask for one anyway — `text-math`, `text-math-body` and
+The fonts come in two optional entries. `styles/font-files` declares Plus
+Jakarta Sans, Fira Code and IBM Plex Sans with each face pointing at its WOFF2
+file, so your bundler copies the files and the browser downloads a face only
+when your text uses it. Import it in place of `styles/fonts` when your CSS goes
+through a bundler:
+
+```css
+@import "@mkbabb/glass-ui/styles/font-files";
+```
+
+To land the brand face in the first frame, preload its Latin file. With Vite:
+
+```ts
+import jakarta from "@mkbabb/glass-ui/fonts/plus-jakarta-sans/plus-jakarta-sans-latin.woff2?url";
+```
+
+```html
+<link rel="preload" as="font" type="font/woff2" crossorigin href="<the jakarta URL>" />
+```
+
+`styles/fonts` carries the Plus Jakarta Sans and Fira Code faces inlined as
+WOFF2 data URLs (about 131 KB of CSS). It works however the sheet is emitted,
+including a `?url` import, which does not copy the files a sheet points at. IBM
+Plex Sans is not in it. Raw font files are at `@mkbabb/glass-ui/fonts/*`. If you
+link the package with `file:` in development, add the linked package's `dist`
+to Vite's `server.fs.allow` so the dev server may serve the files.
+
+To set your text in IBM Plex Sans:
+
+```css
+:root {
+    --font-stack-text: "IBM Plex Sans", system-ui, sans-serif;
+}
+```
+
+Plus Jakarta Sans and Fira Code are upright only. IBM Plex Sans ships an
+upright and an italic face. Three utilities ask for an italic anyway — `text-math`, `text-math-body` and
 `fourier-f`, because mathematical italic is notation — so they are
 SYNTHESIS-DEPENDENT: the browser obliques the roman face for them. The library
 declares no `font-synthesis`, so the UA default (`auto`) applies and they paint.
@@ -184,6 +219,20 @@ Convenience classes bundle a tier with a shape: `.glass-card` (resting + `--radi
 
 Five of the six shadow rungs are bridged: `--glass-shadow-capsule` has no `--shadow-glass-capsule` and no utility, only the token.
 
+**Shadow tokens.** These are the shadow tokens you can set, and each is stable within a major version. Re-declare one on an unlayered `:root`, or on any element to scope it to that subtree.
+
+| token | what it shadows |
+| --- | --- |
+| `--shadow-color` | the colour every elevation shadow mixes from |
+| `--glass-shadow-wash`, `--glass-shadow-quiet`, `--glass-shadow-resting`, `--glass-shadow-floating`, `--glass-shadow-overlay` | the five glass tiers, one complete `box-shadow` list each |
+| `--glass-shadow-capsule` | capsule chrome (dock controls, segmented pills); it defaults to the floating tier |
+| `--glass-under-shadow-quiet`, `--glass-under-shadow-default`, `--glass-under-shadow-vivid` | the soft cast under a glass surface |
+| `--shadow-cartoon`, `--shadow-cartoon-hover`, `--shadow-cartoon-sm`, `--shadow-cartoon-md`, `--shadow-cartoon-lg` | the offset stamp of cartoon cards |
+| `--shadow-dock`, `--shadow-dock-collapsed` | the dock's glow, open and collapsed |
+| `--shadow-dock-override` | unset by default; set it on a dock to replace both dock shadows with one value |
+
+Every other `--shadow-*` name in the stylesheets is internal and may change in a minor release.
+
 **The easing seam.** `<EasingCurve>` writes `--easing-curve-accent: var(--motion-accent, var(--viz-legendre))` on its own wrapper, so that name is already bound on the curve's subtree and an ancestor's `--easing-curve-accent` never reaches it. The one free arm is `--motion-accent`: set it on or above the curve to re-point the accent.
 
 ## Typography
@@ -221,7 +270,7 @@ All runtime deps are peer — glass-ui declares them in `peerDependencies` and s
 | Package                             | Role                                                              |
 | ----------------------------------- | ----------------------------------------------------------------- |
 | `vue` ^3.5                          | Framework                                                         |
-| `reka-ui` ^2.0                      | Headless UI primitives                                            |
+| `reka-ui` ^2.10.1                   | Headless UI primitives                                            |
 | `tailwindcss` ^4.0                  | Utility CSS                                                       |
 | `@lucide/vue` ^1.16.0               | Icon set (the renamed v1 package; was `lucide-vue-next` pre-v1.0) |
 | `@mkbabb/keyframes.js` ^6.0.0       | Spring/keyframe runtime                                           |

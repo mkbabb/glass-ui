@@ -1,0 +1,960 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "docs/release-11.1.0/fix-3/e2e-webkit.config.ts",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/docs/release-11.1.0/fix-3/e2e-webkit.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "disclosure-rotate.spec.ts",
+          "SegmentedTabs.glide.spec.ts",
+          "tabs-std.spec.ts",
+          "a11y-slider.spec.ts",
+          "aria-orientation.spec.ts"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/docs/release-11.1.0/fix-3/e2e/webkit-v1100.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite --host localhost --port 8782 --strictPort",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100",
+      "url": "http://localhost:8782",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "a11y-slider.spec.ts",
+      "file": "a11y-slider.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "a11y-slider (π lane — every Slider thumb resolves an accessible name)",
+          "file": "a11y-slider.spec.ts",
+          "line": 53,
+          "column": 6,
+          "specs": [
+            {
+              "title": "aurora — no nameless thumb (was ≥22), light + dark",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1814,
+                      "error": {
+                        "message": "Error: aurora (light): 56 of 79 slider thumb(s) resolve NO accessible name (aria-input-field-name)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m79\u001b[39m\nReceived: \u001b[31m23\u001b[39m",
+                        "stack": "Error: aurora (light): 56 of 79 slider thumb(s) resolve NO accessible name (aria-input-field-name)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m79\u001b[39m\nReceived: \u001b[31m23\u001b[39m\n    at assertEveryThumbNamed (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100/tests-visual/a11y-slider.spec.ts:50:7)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100/tests-visual/a11y-slider.spec.ts:56:9",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100/tests-visual/a11y-slider.spec.ts",
+                          "column": 7,
+                          "line": 50
+                        },
+                        "snippet": "  48 |         named,\n  49 |         `${label}: ${all - named} of ${all} slider thumb(s) resolve NO accessible name (aria-input-field-name)`,\n> 50 |     ).toBe(all);\n     |       ^\n  51 | }\n  52 |\n  53 | test.describe(\"a11y-slider (π lane — every Slider thumb resolves an accessible name)\", () => {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100/tests-visual/a11y-slider.spec.ts",
+                            "column": 7,
+                            "line": 50
+                          },
+                          "message": "Error: aurora (light): 56 of 79 slider thumb(s) resolve NO accessible name (aria-input-field-name)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m79\u001b[39m\nReceived: \u001b[31m23\u001b[39m\n\n  48 |         named,\n  49 |         `${label}: ${all - named} of ${all} slider thumb(s) resolve NO accessible name (aria-input-field-name)`,\n> 50 |     ).toBe(all);\n     |       ^\n  51 | }\n  52 |\n  53 | test.describe(\"a11y-slider (π lane — every Slider thumb resolves an accessible name)\", () => {\n    at assertEveryThumbNamed (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100/tests-visual/a11y-slider.spec.ts:50:7)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100/tests-visual/a11y-slider.spec.ts:56:9"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T12:03:11.321Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/test-results/a11y-slider-a11y-slider-π--953be-ss-thumb-was-≥22-light-dark-webkit/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100/tests-visual/a11y-slider.spec.ts",
+                        "column": 7,
+                        "line": 50
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d88a893a2cb43eccfc93-a4c0d54a97d058fc6363",
+              "file": "a11y-slider.spec.ts",
+              "line": 54,
+              "column": 5
+            },
+            {
+              "title": "configurator — LabeledSlider forwards the field label to the thumb",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1287,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-11T12:03:13.615Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d88a893a2cb43eccfc93-1ffb8fe081ab5c4b92b5",
+              "file": "a11y-slider.spec.ts",
+              "line": 63,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "aria-orientation.spec.ts",
+      "file": "aria-orientation.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "pill (role=group) carries NO aria-orientation — light",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1368,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T12:03:15.039Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8cbf928f28d0ee4e9980-ed4ba3ba3a9b52eb4ef9",
+          "file": "aria-orientation.spec.ts",
+          "line": 38,
+          "column": 5
+        },
+        {
+          "title": "underline (role=tablist) KEEPS aria-orientation — light",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1370,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T12:03:16.412Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8cbf928f28d0ee4e9980-664d1863810bdf22f696",
+          "file": "aria-orientation.spec.ts",
+          "line": 53,
+          "column": 5
+        },
+        {
+          "title": "pill (role=group) carries NO aria-orientation — dark",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1372,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T12:03:17.787Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8cbf928f28d0ee4e9980-4b39725a0cae5a4af051",
+          "file": "aria-orientation.spec.ts",
+          "line": 38,
+          "column": 5
+        },
+        {
+          "title": "underline (role=tablist) KEEPS aria-orientation — dark",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1366,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T12:03:19.164Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8cbf928f28d0ee4e9980-6b422b5b549bcad8259d",
+          "file": "aria-orientation.spec.ts",
+          "line": 53,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "disclosure-rotate.spec.ts",
+      "file": "disclosure-rotate.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "disclosure-rotate — ONE register, none snap (light)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "no select disclosure caret on /forms/select at HEAD",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100/tests-visual/disclosure-rotate.spec.ts",
+                    "line": 121,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 1370,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T12:03:20.541Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "no select disclosure caret on /forms/select at HEAD",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100/tests-visual/disclosure-rotate.spec.ts",
+                        "line": 121,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "66d26c1f8cfd321d9f2e-17f3f2e0bd01b7bb4a13",
+          "file": "disclosure-rotate.spec.ts",
+          "line": 110,
+          "column": 5
+        },
+        {
+          "title": "disclosure-rotate — ONE register, none snap (dark)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "no select disclosure caret on /forms/select at HEAD",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100/tests-visual/disclosure-rotate.spec.ts",
+                    "line": 121,
+                    "column": 22
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 1377,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T12:03:21.916Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "no select disclosure caret on /forms/select at HEAD",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/c1-v1100/tests-visual/disclosure-rotate.spec.ts",
+                        "line": 121,
+                        "column": 22
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "66d26c1f8cfd321d9f2e-74a4ded50a800625eda3",
+          "file": "disclosure-rotate.spec.ts",
+          "line": 110,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "SegmentedTabs.glide.spec.ts",
+      "file": "SegmentedTabs.glide.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "adjacent hop: the indicator glides at its own size in one monotone leg",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1496,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T12:03:23.303Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "81df10900155336a1b1b-3f62f82eac6d2c041f0e",
+          "file": "SegmentedTabs.glide.spec.ts",
+          "line": 70,
+          "column": 5
+        },
+        {
+          "title": "far hop: the indicator glides at its own size in one monotone leg",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1489,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T12:03:24.805Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "81df10900155336a1b1b-4d14d3cf7d0d208bbd64",
+          "file": "SegmentedTabs.glide.spec.ts",
+          "line": 70,
+          "column": 5
+        },
+        {
+          "title": "hover on an inactive tab changes its colour and nothing else",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1240,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T12:03:26.300Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "81df10900155336a1b1b-081a94d96cbe9376f6a7",
+          "file": "SegmentedTabs.glide.spec.ts",
+          "line": 115,
+          "column": 1
+        },
+        {
+          "title": "re-clicking the active tab on its centre moves nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1697,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T12:03:27.548Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "81df10900155336a1b1b-d44a583951cd0b0454ac",
+          "file": "SegmentedTabs.glide.spec.ts",
+          "line": 164,
+          "column": 5
+        },
+        {
+          "title": "re-clicking the active tab off its centre moves nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1665,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T12:03:29.250Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "81df10900155336a1b1b-2f972e87ad7dad399bbe",
+          "file": "SegmentedTabs.glide.spec.ts",
+          "line": 164,
+          "column": 5
+        },
+        {
+          "title": "the indicator can be dragged to the next tab, and stays under the label it commits",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1771,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T12:03:30.922Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "81df10900155336a1b1b-cbdc285bc16aaa8e0e85",
+          "file": "SegmentedTabs.glide.spec.ts",
+          "line": 179,
+          "column": 1
+        },
+        {
+          "title": "a 8 px drag out and back, released on its start, leaves the next hop gliding",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1928,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T12:03:32.698Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "81df10900155336a1b1b-ac6843e4a1c2c463a647",
+          "file": "SegmentedTabs.glide.spec.ts",
+          "line": 205,
+          "column": 5
+        },
+        {
+          "title": "a 24 px drag out and back, released on its start, leaves the next hop gliding",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1993,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T12:03:34.631Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "81df10900155336a1b1b-f41f569e8032d624f01e",
+          "file": "SegmentedTabs.glide.spec.ts",
+          "line": 205,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "tabs-std.spec.ts",
+      "file": "tabs-std.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "W1 — underline paints NO plate (no filled pill behind the active tab)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1483,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T12:03:36.633Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d738e7d4c2225465a703-817debd4b2d5466866f7",
+          "file": "tabs-std.spec.ts",
+          "line": 49,
+          "column": 1
+        },
+        {
+          "title": "W2 — vertical indicator tracks the block axis (y/height change dominates)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1946,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T12:03:38.121Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d738e7d4c2225465a703-9fbafdbd2d85234e5cfd",
+          "file": "tabs-std.spec.ts",
+          "line": 91,
+          "column": 1
+        },
+        {
+          "title": "W3 — the indicator settles inside the calibrated clock with no dead tail",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2697,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T12:03:40.072Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d738e7d4c2225465a703-ca9cafd721318521a825",
+          "file": "tabs-std.spec.ts",
+          "line": 121,
+          "column": 1
+        },
+        {
+          "title": "W5 — indicator center == label center (both axes) [pill]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1975,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T12:03:42.774Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d738e7d4c2225465a703-e0b14f6663e3a2d43fd2",
+          "file": "tabs-std.spec.ts",
+          "line": 189,
+          "column": 5
+        },
+        {
+          "title": "W5 — indicator center == label center (both axes) [underline]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1961,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T12:03:44.752Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d738e7d4c2225465a703-c8c346a81f48169c1842",
+          "file": "tabs-std.spec.ts",
+          "line": 189,
+          "column": 5
+        },
+        {
+          "title": "capture — the standardized tab materials over their substrates",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3310,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-11T12:03:46.718Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d738e7d4c2225465a703-a410d8050e9ca2953861",
+          "file": "tabs-std.spec.ts",
+          "line": 245,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-11T12:03:09.715Z",
+    "duration": 40366.126000000004,
+    "expected": 19,
+    "skipped": 2,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

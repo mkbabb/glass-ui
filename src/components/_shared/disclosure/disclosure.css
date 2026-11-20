@@ -1,24 +1,28 @@
+/* The disclosure travels by its height alone: the edge moves and the content keeps its
+   full opacity, so nothing fades in a region the reader is about to read. The content's
+   block padding rides the same progress from zero (the end it leaves out resolves to the
+   element's own padding), so a padded region is 0 px tall on its first frame and on its
+   last, never its padding. The measured size is the border box, padding included, so the
+   padding never outgrows the height. */
 @keyframes disclosure-open {
     from {
         block-size: 0;
-        opacity: 0;
+        padding-block: 0;
     }
 
     to {
         block-size: var(--disclosure-content-size);
-        opacity: 1;
     }
 }
 
 @keyframes disclosure-close {
     from {
         block-size: var(--disclosure-content-size);
-        opacity: 1;
     }
 
     to {
         block-size: 0;
-        opacity: 0;
+        padding-block: 0;
     }
 }
 
@@ -98,6 +102,7 @@
     }
 
     .disclosure-content {
+        box-sizing: border-box;
         overflow: hidden;
         color: var(--muted-foreground-strong);
         font-size: var(--type-small);
@@ -108,6 +113,18 @@
 
     .disclosure-content[data-disclosure="collapsible"] {
         --disclosure-content-size: var(--reka-collapsible-content-height);
+    }
+
+    /* `--collapsible-gap` is the space between the trigger and the content: the region's
+       own top padding, so it lies inside the clipped box and opens and closes with the
+       height (a `gap` on the root appears in one frame when the region mounts). It adds
+       no box, so a content laid out as a grid or a flex container keeps its items as
+       they were. `:where()` holds the rule at zero specificity, so a padding the consumer
+       gives the content in this layer or a later one sets that space instead; unset, the
+       gap falls back to `revert-layer`, handing the property to the layers beneath, so a
+       padding declared in an earlier layer (`base`) stands as well. */
+    :where(.disclosure-content[data-disclosure="collapsible"]) {
+        padding-block-start: var(--collapsible-gap, revert-layer);
     }
 
     .disclosure-content[data-disclosure="accordion"] {

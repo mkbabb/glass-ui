@@ -1,0 +1,786 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794521931 slope=31.8/s inuse=25856 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 28 tests using 1 worker
+
+[WebServer] 5:40:43 PM [vite] (client) [console.warn] [Vue warn]: Unhandled error during execution of setup function 
+[WebServer]   at <TooltipRoot data-slot="tooltip" open=undefined default-open=false  ... > 
+[WebServer]   at <Tooltip text="Search" > 
+[WebServer]   at <DockFace> 
+[WebServer]   at <GlassDock orientation="horizontal" shape="pill" collapse=false  ... > 
+[WebServer]   at <App>
+[WebServer] 5:40:43 PM [vite] (client) [Unhandled error] Error: Injection `Symbol(TooltipProviderContext)` not found. Component must be used within `TooltipProvider`
+[WebServer]  > injectContext node_modules/reka-ui/dist/shared/createContext.js:24:8
+[WebServer]  > setup node_modules/reka-ui/dist/Tooltip/TooltipRoot.js:55:26
+[WebServer]  > callWithErrorHandling node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:199:18
+[WebServer]  > setupStatefulComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:8214:24
+[WebServer]  > setupComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:8176:35
+[WebServer]  > mountComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6084:6
+[WebServer]  > processComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6050:8
+[WebServer]  > patch node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:5544:10
+[WebServer]  > ReactiveEffect.componentUpdateFn [as fn] node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6198:10
+[WebServer]  > ReactiveEffect.run node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js:264:18
+[WebServer] 
+  ✘   1 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a horizontal pill dock, expanded, keeps its box to 0 px through every seat's hover (1.0m)
+[WebServer] 5:41:44 PM [vite] (client) [console.warn] [Vue warn]: Unhandled error during execution of setup function 
+[WebServer]   at <TooltipRoot data-slot="tooltip" open=undefined default-open=false  ... > 
+[WebServer]   at <Tooltip text="Search" > 
+[WebServer]   at <DockFace> 
+[WebServer]   at <GlassDock orientation="horizontal" shape="pill" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:41:44 PM [vite] (client) [Unhandled error] Error: Injection `Symbol(TooltipProviderContext)` not found. Component must be used within `TooltipProvider`
+[WebServer]  > injectContext node_modules/reka-ui/dist/shared/createContext.js:24:8
+[WebServer]  > setup node_modules/reka-ui/dist/Tooltip/TooltipRoot.js:55:26
+[WebServer]  > callWithErrorHandling node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:199:18
+[WebServer]  > setupStatefulComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:8214:24
+[WebServer]  > setupComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:8176:35
+[WebServer]  > mountComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6084:6
+[WebServer]  > processComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6050:8
+[WebServer]  > patch node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:5544:10
+[WebServer]  > ReactiveEffect.componentUpdateFn [as fn] node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6198:10
+[WebServer]  > ReactiveEffect.run node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js:264:18
+[WebServer] 
+[WebServer] 5:41:59 PM [vite] (client) [console.warn] [Vue warn]: Slot "persistent" invoked outside of the render function: this will not track dependencies used in the slot. Invoke the slot function inside the render function instead. 
+[WebServer]   at <GlassDock orientation="horizontal" shape="pill" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:41:59 PM [vite] (client) [console.warn] [Vue warn]: Slot "collapsed" invoked outside of the render function: this will not track dependencies used in the slot. Invoke the slot function inside the render function instead. 
+[WebServer]   at <GlassDock orientation="horizontal" shape="pill" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:41:59 PM [vite] (client) [console.warn] [Vue warn]: Slot "persistent-end" invoked outside of the render function: this will not track dependencies used in the slot. Invoke the slot function inside the render function instead. 
+[WebServer]   at <GlassDock orientation="horizontal" shape="pill" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:41:59 PM [vite] (client) [console.warn] [Vue warn]: Slot "default" invoked outside of the render function: this will not track dependencies used in the slot. Invoke the slot function inside the render function instead. 
+[WebServer]   at <Primitive as="button" as-child=false type="button"  ... > 
+[WebServer]   at <DockControl aria-label="Lead" data-seat="persistent" > 
+[WebServer]   at <GlassDock orientation="horizontal" shape="pill" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:41:59 PM [vite] (client) [console.warn] [Vue warn]: Slot "default" invoked outside of the render function: this will not track dependencies used in the slot. Invoke the slot function inside the render function instead. 
+[WebServer]   at <DockFace> 
+[WebServer]   at <GlassDock orientation="horizontal" shape="pill" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:41:59 PM [vite] (client) [console.warn] [Vue warn]: Slot "default" invoked outside of the render function: this will not track dependencies used in the slot. Invoke the slot function inside the render function instead. 
+[WebServer]   at <Primitive as="button" as-child=false type="button"  ... > 
+[WebServer]   at <DockControl aria-label="Home" data-seat="icon" > 
+[WebServer]   at <DockFace> 
+[WebServer]   at <GlassDock orientation="horizontal" shape="pill" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:41:59 PM [vite] (client) [console.warn] [Vue warn]: Slot "default" invoked outside of the render function: this will not track dependencies used in the slot. Invoke the slot function inside the render function instead. 
+[WebServer]   at <Primitive as="button" as-child=false type="button"  ... > 
+[WebServer]   at <DockControl aria-label="Motion" data-seat="label" > 
+[WebServer]   at <DockFace> 
+[WebServer]   at <GlassDock orientation="horizontal" shape="pill" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:41:59 PM [vite] (client) [console.warn] [Vue warn]: Slot "default" invoked outside of the render function: this will not track dependencies used in the slot. Invoke the slot function inside the render function instead. 
+[WebServer]   at <Primitive as="button" as-child=false type="button"  ... > 
+[WebServer]   at <DockControl compact=true aria-label="Compact" data-seat="compact" > 
+[WebServer]   at <DockFace> 
+[WebServer]   at <GlassDock orientation="horizontal" shape="pill" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:41:59 PM [vite] (client) [console.warn] [Vue warn]: Slot "default" invoked outside of the render function: this will not track dependencies used in the slot. Invoke the slot function inside the render function instead. 
+[WebServer]   at <Primitive as="button" as-child=false type="button"  ... > 
+[WebServer]   at <DockControl shape="tab" aria-label="Week" data-seat="tab" > 
+[WebServer]   at <DockFace> 
+[WebServer]   at <GlassDock orientation="horizontal" shape="pill" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:41:59 PM [vite] (client) [console.warn] [Vue warn]: Unhandled error during execution of setup function 
+[WebServer]   at <TooltipRoot data-slot="tooltip" open=undefined default-open=false  ... > 
+[WebServer]   at <Tooltip text="Search" > 
+[WebServer]   at <DockFace> 
+[WebServer]   at <GlassDock orientation="horizontal" shape="pill" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:41:59 PM [vite] (client) [console.warn] [Vue warn]: Unhandled error during execution of scheduler flush 
+[WebServer]   at <TooltipRoot data-slot="tooltip" open=undefined default-open=false  ... > 
+[WebServer]   at <Tooltip text="Search" > 
+[WebServer]   at <DockFace> 
+[WebServer]   at <GlassDock orientation="horizontal" shape="pill" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:41:59 PM [vite] (client) [Unhandled rejection] Error: Injection `Symbol(TooltipProviderContext)` not found. Component must be used within `TooltipProvider`
+[WebServer]  > injectContext node_modules/reka-ui/dist/shared/createContext.js:24:8
+[WebServer]  > setup node_modules/reka-ui/dist/Tooltip/TooltipRoot.js:55:26
+[WebServer]  > callWithErrorHandling node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:199:18
+[WebServer]  > setupStatefulComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:8214:24
+[WebServer]  > setupComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:8176:35
+[WebServer]  > mountComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6084:6
+[WebServer]  > processComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6050:8
+[WebServer]  > patch node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:5544:10
+[WebServer]  > ReactiveEffect.componentUpdateFn [as fn] node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6198:10
+[WebServer]  > ReactiveEffect.run node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js:264:18
+[WebServer] 
+[WebServer] 5:41:59 PM [vite] (client) [console.warn] [Vue warn]: Slot "persistent" invoked outside of the render function: this will not track dependencies used in the slot. Invoke the slot function inside the render function instead. 
+[WebServer]   at <GlassDock orientation="horizontal" shape="pill" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:41:59 PM [vite] (client) [console.warn] [Vue warn]: Slot "collapsed" invoked outside of the render function: this will not track dependencies used in the slot. Invoke the slot function inside the render function instead. 
+[WebServer]   at <GlassDock orientation="horizontal" shape="pill" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:41:59 PM [vite] (client) [console.warn] [Vue warn]: Slot "persistent-end" invoked outside of the render function: this will not track dependencies used in the slot. Invoke the slot function inside the render function instead. 
+[WebServer]   at <GlassDock orientation="horizontal" shape="pill" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:41:59 PM [vite] (client) [console.warn] [Vue warn]: Slot "default" invoked outside of the render function: this will not track dependencies used in the slot. Invoke the slot function inside the render function instead. 
+[WebServer]   at <Primitive as="button" as-child=false type="button"  ... > 
+[WebServer]   at <DockControl aria-label="Lead" data-seat="persistent" > 
+[WebServer]   at <GlassDock orientation="horizontal" shape="pill" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:41:59 PM [vite] (client) [console.warn] [Vue warn]: Slot "default" invoked outside of the render function: this will not track dependencies used in the slot. Invoke the slot function inside the render function instead. 
+[WebServer]   at <DockFace> 
+[WebServer]   at <GlassDock orientation="horizontal" shape="pill" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:41:59 PM [vite] (client) [console.warn] [Vue warn]: Slot "default" invoked outside of the render function: this will not track dependencies used in the slot. Invoke the slot function inside the render function instead. 
+[WebServer]   at <Primitive as="button" as-child=false type="button"  ... > 
+[WebServer]   at <DockControl aria-label="Home" data-seat="icon" > 
+[WebServer]   at <DockFace> 
+[WebServer]   at <GlassDock orientation="horizontal" shape="pill" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:41:59 PM [vite] (client) [console.warn] [Vue warn]: Slot "default" invoked outside of the render function: this will not track dependencies used in the slot. Invoke the slot function inside the render function instead. 
+[WebServer]   at <Primitive as="button" as-child=false type="button"  ... > 
+[WebServer]   at <DockControl aria-label="Motion" data-seat="label" > 
+[WebServer]   at <DockFace> 
+[WebServer]   at <GlassDock orientation="horizontal" shape="pill" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:41:59 PM [vite] (client) [console.warn] [Vue warn]: Slot "default" invoked outside of the render function: this will not track dependencies used in the slot. Invoke the slot function inside the render function instead. 
+[WebServer]   at <Primitive as="button" as-child=false type="button"  ... > 
+[WebServer]   at <DockControl compact=true aria-label="Compact" data-seat="compact" > 
+[WebServer]   at <DockFace> 
+[WebServer]   at <GlassDock orientation="horizontal" shape="pill" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:41:59 PM [vite] (client) [console.warn] [Vue warn]: Slot "default" invoked outside of the render function: this will not track dependencies used in the slot. Invoke the slot function inside the render function instead. 
+[WebServer]   at <Primitive as="button" as-child=false type="button"  ... > 
+[WebServer]   at <DockControl shape="tab" aria-label="Week" data-seat="tab" > 
+[WebServer]   at <DockFace> 
+[WebServer]   at <GlassDock orientation="horizontal" shape="pill" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:41:59 PM [vite] (client) [console.warn] [Vue warn]: Unhandled error during execution of setup function 
+[WebServer]   at <TooltipRoot data-slot="tooltip" open=undefined default-open=false  ... > 
+[WebServer]   at <Tooltip text="Search" > 
+[WebServer]   at <DockFace> 
+[WebServer]   at <GlassDock orientation="horizontal" shape="pill" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:41:59 PM [vite] (client) [console.warn] [Vue warn]: Unhandled error during execution of scheduler flush 
+[WebServer]   at <TooltipRoot data-slot="tooltip" open=undefined default-open=false  ... > 
+[WebServer]   at <Tooltip text="Search" > 
+[WebServer]   at <DockFace> 
+[WebServer]   at <GlassDock orientation="horizontal" shape="pill" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:41:59 PM [vite] (client) [Unhandled rejection] Error: Injection `Symbol(TooltipProviderContext)` not found. Component must be used within `TooltipProvider`
+[WebServer]  > injectContext node_modules/reka-ui/dist/shared/createContext.js:24:8
+[WebServer]  > setup node_modules/reka-ui/dist/Tooltip/TooltipRoot.js:55:26
+[WebServer]  > callWithErrorHandling node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:199:18
+[WebServer]  > setupStatefulComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:8214:24
+[WebServer]  > setupComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:8176:35
+[WebServer]  > mountComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6084:6
+[WebServer]  > processComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6050:8
+[WebServer]  > patch node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:5544:10
+[WebServer]  > ReactiveEffect.componentUpdateFn [as fn] node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6198:10
+[WebServer]  > ReactiveEffect.run node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js:264:18
+[WebServer] 
+[WebServer] 5:42:09 PM [vite] (client) [console.warn] [Vue warn]: Slot "persistent" invoked outside of the render function: this will not track dependencies used in the slot. Invoke the slot function inside the render function instead. 
+[WebServer]   at <GlassDock orientation="horizontal" shape="pill" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:42:09 PM [vite] (client) [console.warn] [Vue warn]: Slot "collapsed" invoked outside of the render function: this will not track dependencies used in the slot. Invoke the slot function inside the render function instead. 
+[WebServer]   at <GlassDock orientation="horizontal" shape="pill" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:42:09 PM [vite] (client) [console.warn] [Vue warn]: Slot "persistent-end" invoked outside of the render function: this will not track dependencies used in the slot. Invoke the slot function inside the render function instead. 
+[WebServer]   at <GlassDock orientation="horizontal" shape="pill" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:42:09 PM [vite] (client) [console.warn] [Vue warn]: Slot "default" invoked outside of the render function: this will not track dependencies used in the slot. Invoke the slot function inside the render function instead. 
+[WebServer]   at <Primitive as="button" as-child=false type="button"  ... > 
+[WebServer]   at <DockControl aria-label="Lead" data-seat="persistent" > 
+[WebServer]   at <GlassDock orientation="horizontal" shape="pill" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:42:09 PM [vite] (client) [console.warn] [Vue warn]: Slot "default" invoked outside of the render function: this will not track dependencies used in the slot. Invoke the slot function inside the render function instead. 
+[WebServer]   at <DockFace> 
+[WebServer]   at <GlassDock orientation="horizontal" shape="pill" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:42:09 PM [vite] (client) [console.warn] [Vue warn]: Slot "default" invoked outside of the render function: this will not track dependencies used in the slot. Invoke the slot function inside the render function instead. 
+[WebServer]   at <Primitive as="button" as-child=false type="button"  ... > 
+[WebServer]   at <DockControl aria-label="Home" data-seat="icon" > 
+[WebServer]   at <DockFace> 
+[WebServer]   at <GlassDock orientation="horizontal" shape="pill" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:42:09 PM [vite] (client) [console.warn] [Vue warn]: Slot "default" invoked outside of the render function: this will not track dependencies used in the slot. Invoke the slot function inside the render function instead. 
+[WebServer]   at <Primitive as="button" as-child=false type="button"  ... > 
+[WebServer]   at <DockControl aria-label="Motion" data-seat="label" > 
+[WebServer]   at <DockFace> 
+[WebServer]   at <GlassDock orientation="horizontal" shape="pill" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:42:09 PM [vite] (client) [console.warn] [Vue warn]: Slot "default" invoked outside of the render function: this will not track dependencies used in the slot. Invoke the slot function inside the render function instead. 
+[WebServer]   at <Primitive as="button" as-child=false type="button"  ... > 
+[WebServer]   at <DockControl compact=true aria-label="Compact" data-seat="compact" > 
+[WebServer]   at <DockFace> 
+[WebServer]   at <GlassDock orientation="horizontal" shape="pill" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:42:09 PM [vite] (client) [console.warn] [Vue warn]: Slot "default" invoked outside of the render function: this will not track dependencies used in the slot. Invoke the slot function inside the render function instead. 
+[WebServer]   at <Primitive as="button" as-child=false type="button"  ... > 
+[WebServer]   at <DockControl shape="tab" aria-label="Week" data-seat="tab" > 
+[WebServer]   at <DockFace> 
+[WebServer]   at <GlassDock orientation="horizontal" shape="pill" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:42:09 PM [vite] (client) [console.warn] [Vue warn]: Unhandled error during execution of setup function 
+[WebServer]   at <TooltipRoot data-slot="tooltip" open=undefined default-open=false  ... > 
+[WebServer]   at <Tooltip text="Search" > 
+[WebServer]   at <DockFace> 
+[WebServer]   at <GlassDock orientation="horizontal" shape="pill" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:42:09 PM [vite] (client) [console.warn] [Vue warn]: Unhandled error during execution of scheduler flush 
+[WebServer]   at <TooltipRoot data-slot="tooltip" open=undefined default-open=false  ... > 
+[WebServer]   at <Tooltip text="Search" > 
+[WebServer]   at <DockFace> 
+[WebServer]   at <GlassDock orientation="horizontal" shape="pill" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:42:09 PM [vite] (client) [Unhandled rejection] Error: Injection `Symbol(TooltipProviderContext)` not found. Component must be used within `TooltipProvider`
+[WebServer]  > injectContext node_modules/reka-ui/dist/shared/createContext.js:24:8
+[WebServer]  > setup node_modules/reka-ui/dist/Tooltip/TooltipRoot.js:55:26
+[WebServer]  > callWithErrorHandling node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:199:18
+[WebServer]  > setupStatefulComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:8214:24
+[WebServer]  > setupComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:8176:35
+[WebServer]  > mountComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6084:6
+[WebServer]  > processComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6050:8
+[WebServer]  > patch node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:5544:10
+[WebServer]  > ReactiveEffect.componentUpdateFn [as fn] node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6198:10
+[WebServer]  > ReactiveEffect.run node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js:264:18
+[WebServer] 
+  ✘   2 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a horizontal pill dock, collapsed, keeps its box to 0 px through every seat's hover (1.0m)
+[WebServer] 5:42:44 PM [vite] (client) [console.warn] [Vue warn]: Unhandled error during execution of setup function 
+[WebServer]   at <TooltipRoot data-slot="tooltip" open=undefined default-open=false  ... > 
+[WebServer]   at <Tooltip text="Search" > 
+[WebServer]   at <DockFace> 
+[WebServer]   at <GlassDock orientation="horizontal" shape="rounded" collapse=false  ... > 
+[WebServer]   at <App>
+[WebServer] 5:42:44 PM [vite] (client) [Unhandled error] Error: Injection `Symbol(TooltipProviderContext)` not found. Component must be used within `TooltipProvider`
+[WebServer]  > injectContext node_modules/reka-ui/dist/shared/createContext.js:24:8
+[WebServer]  > setup node_modules/reka-ui/dist/Tooltip/TooltipRoot.js:55:26
+[WebServer]  > callWithErrorHandling node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:199:18
+[WebServer]  > setupStatefulComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:8214:24
+[WebServer]  > setupComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:8176:35
+[WebServer]  > mountComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6084:6
+[WebServer]  > processComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6050:8
+[WebServer]  > patch node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:5544:10
+[WebServer]  > ReactiveEffect.componentUpdateFn [as fn] node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6198:10
+[WebServer]  > ReactiveEffect.run node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js:264:18
+[WebServer] 
+  ✘   3 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a horizontal rounded dock, expanded, keeps its box to 0 px through every seat's hover (1.0m)
+[WebServer] 5:43:45 PM [vite] (client) [console.warn] [Vue warn]: Unhandled error during execution of setup function 
+[WebServer]   at <TooltipRoot data-slot="tooltip" open=undefined default-open=false  ... > 
+[WebServer]   at <Tooltip text="Search" > 
+[WebServer]   at <DockFace> 
+[WebServer]   at <GlassDock orientation="horizontal" shape="rounded" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:43:45 PM [vite] (client) [Unhandled error] Error: Injection `Symbol(TooltipProviderContext)` not found. Component must be used within `TooltipProvider`
+[WebServer]  > injectContext node_modules/reka-ui/dist/shared/createContext.js:24:8
+[WebServer]  > setup node_modules/reka-ui/dist/Tooltip/TooltipRoot.js:55:26
+[WebServer]  > callWithErrorHandling node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:199:18
+[WebServer]  > setupStatefulComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:8214:24
+[WebServer]  > setupComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:8176:35
+[WebServer]  > mountComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6084:6
+[WebServer]  > processComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6050:8
+[WebServer]  > patch node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:5544:10
+[WebServer]  > ReactiveEffect.componentUpdateFn [as fn] node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6198:10
+[WebServer]  > ReactiveEffect.run node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js:264:18
+[WebServer] 
+  ✘   4 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a horizontal rounded dock, collapsed, keeps its box to 0 px through every seat's hover (1.0m)
+[WebServer] 5:44:45 PM [vite] (client) [console.warn] [Vue warn]: Unhandled error during execution of setup function 
+[WebServer]   at <TooltipRoot data-slot="tooltip" open=undefined default-open=false  ... > 
+[WebServer]   at <Tooltip text="Search" > 
+[WebServer]   at <DockFace> 
+[WebServer]   at <GlassDock orientation="horizontal" shape="card" collapse=false  ... > 
+[WebServer]   at <App>
+[WebServer] 5:44:45 PM [vite] (client) [Unhandled error] Error: Injection `Symbol(TooltipProviderContext)` not found. Component must be used within `TooltipProvider`
+[WebServer]  > injectContext node_modules/reka-ui/dist/shared/createContext.js:24:8
+[WebServer]  > setup node_modules/reka-ui/dist/Tooltip/TooltipRoot.js:55:26
+[WebServer]  > callWithErrorHandling node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:199:18
+[WebServer]  > setupStatefulComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:8214:24
+[WebServer]  > setupComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:8176:35
+[WebServer]  > mountComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6084:6
+[WebServer]  > processComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6050:8
+[WebServer]  > patch node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:5544:10
+[WebServer]  > ReactiveEffect.componentUpdateFn [as fn] node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6198:10
+[WebServer]  > ReactiveEffect.run node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js:264:18
+[WebServer] 
+  ✘   5 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a horizontal card dock, expanded, keeps its box to 0 px through every seat's hover (1.0m)
+[WebServer] 5:45:46 PM [vite] (client) [console.warn] [Vue warn]: Unhandled error during execution of setup function 
+[WebServer]   at <TooltipRoot data-slot="tooltip" open=undefined default-open=false  ... > 
+[WebServer]   at <Tooltip text="Search" > 
+[WebServer]   at <DockFace> 
+[WebServer]   at <GlassDock orientation="horizontal" shape="card" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:45:46 PM [vite] (client) [Unhandled error] Error: Injection `Symbol(TooltipProviderContext)` not found. Component must be used within `TooltipProvider`
+[WebServer]  > injectContext node_modules/reka-ui/dist/shared/createContext.js:24:8
+[WebServer]  > setup node_modules/reka-ui/dist/Tooltip/TooltipRoot.js:55:26
+[WebServer]  > callWithErrorHandling node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:199:18
+[WebServer]  > setupStatefulComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:8214:24
+[WebServer]  > setupComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:8176:35
+[WebServer]  > mountComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6084:6
+[WebServer]  > processComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6050:8
+[WebServer]  > patch node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:5544:10
+[WebServer]  > ReactiveEffect.componentUpdateFn [as fn] node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6198:10
+[WebServer]  > ReactiveEffect.run node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js:264:18
+[WebServer] 
+  ✘   6 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a horizontal card dock, collapsed, keeps its box to 0 px through every seat's hover (1.0m)
+[WebServer] 5:46:46 PM [vite] (client) [console.warn] [Vue warn]: Unhandled error during execution of setup function 
+[WebServer]   at <TooltipRoot data-slot="tooltip" open=undefined default-open=false  ... > 
+[WebServer]   at <Tooltip text="Search" > 
+[WebServer]   at <DockFace> 
+[WebServer]   at <GlassDock orientation="vertical" shape="pill" collapse=false  ... > 
+[WebServer]   at <App>
+[WebServer] 5:46:46 PM [vite] (client) [Unhandled error] Error: Injection `Symbol(TooltipProviderContext)` not found. Component must be used within `TooltipProvider`
+[WebServer]  > injectContext node_modules/reka-ui/dist/shared/createContext.js:24:8
+[WebServer]  > setup node_modules/reka-ui/dist/Tooltip/TooltipRoot.js:55:26
+[WebServer]  > callWithErrorHandling node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:199:18
+[WebServer]  > setupStatefulComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:8214:24
+[WebServer]  > setupComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:8176:35
+[WebServer]  > mountComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6084:6
+[WebServer]  > processComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6050:8
+[WebServer]  > patch node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:5544:10
+[WebServer]  > ReactiveEffect.componentUpdateFn [as fn] node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6198:10
+[WebServer]  > ReactiveEffect.run node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js:264:18
+[WebServer] 
+  ✘   7 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a vertical pill dock, expanded, keeps its box to 0 px through every seat's hover (1.0m)
+[WebServer] 5:47:47 PM [vite] (client) [console.warn] [Vue warn]: Unhandled error during execution of setup function 
+[WebServer]   at <TooltipRoot data-slot="tooltip" open=undefined default-open=false  ... > 
+[WebServer]   at <Tooltip text="Search" > 
+[WebServer]   at <DockFace> 
+[WebServer]   at <GlassDock orientation="vertical" shape="pill" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:47:47 PM [vite] (client) [Unhandled error] Error: Injection `Symbol(TooltipProviderContext)` not found. Component must be used within `TooltipProvider`
+[WebServer]  > injectContext node_modules/reka-ui/dist/shared/createContext.js:24:8
+[WebServer]  > setup node_modules/reka-ui/dist/Tooltip/TooltipRoot.js:55:26
+[WebServer]  > callWithErrorHandling node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:199:18
+[WebServer]  > setupStatefulComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:8214:24
+[WebServer]  > setupComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:8176:35
+[WebServer]  > mountComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6084:6
+[WebServer]  > processComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6050:8
+[WebServer]  > patch node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:5544:10
+[WebServer]  > ReactiveEffect.componentUpdateFn [as fn] node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6198:10
+[WebServer]  > ReactiveEffect.run node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js:264:18
+[WebServer] 
+  ✘   8 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a vertical pill dock, collapsed, keeps its box to 0 px through every seat's hover (1.0m)
+[WebServer] 5:48:47 PM [vite] (client) [console.warn] [Vue warn]: Unhandled error during execution of setup function 
+[WebServer]   at <TooltipRoot data-slot="tooltip" open=undefined default-open=false  ... > 
+[WebServer]   at <Tooltip text="Search" > 
+[WebServer]   at <DockFace> 
+[WebServer]   at <GlassDock orientation="vertical" shape="rounded" collapse=false  ... > 
+[WebServer]   at <App>
+[WebServer] 5:48:47 PM [vite] (client) [Unhandled error] Error: Injection `Symbol(TooltipProviderContext)` not found. Component must be used within `TooltipProvider`
+[WebServer]  > injectContext node_modules/reka-ui/dist/shared/createContext.js:24:8
+[WebServer]  > setup node_modules/reka-ui/dist/Tooltip/TooltipRoot.js:55:26
+[WebServer]  > callWithErrorHandling node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:199:18
+[WebServer]  > setupStatefulComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:8214:24
+[WebServer]  > setupComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:8176:35
+[WebServer]  > mountComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6084:6
+[WebServer]  > processComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6050:8
+[WebServer]  > patch node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:5544:10
+[WebServer]  > ReactiveEffect.componentUpdateFn [as fn] node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6198:10
+[WebServer]  > ReactiveEffect.run node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js:264:18
+[WebServer] 
+  ✘   9 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a vertical rounded dock, expanded, keeps its box to 0 px through every seat's hover (1.0m)
+[WebServer] 5:49:48 PM [vite] (client) [console.warn] [Vue warn]: Unhandled error during execution of setup function 
+[WebServer]   at <TooltipRoot data-slot="tooltip" open=undefined default-open=false  ... > 
+[WebServer]   at <Tooltip text="Search" > 
+[WebServer]   at <DockFace> 
+[WebServer]   at <GlassDock orientation="vertical" shape="rounded" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:49:48 PM [vite] (client) [Unhandled error] Error: Injection `Symbol(TooltipProviderContext)` not found. Component must be used within `TooltipProvider`
+[WebServer]  > injectContext node_modules/reka-ui/dist/shared/createContext.js:24:8
+[WebServer]  > setup node_modules/reka-ui/dist/Tooltip/TooltipRoot.js:55:26
+[WebServer]  > callWithErrorHandling node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:199:18
+[WebServer]  > setupStatefulComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:8214:24
+[WebServer]  > setupComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:8176:35
+[WebServer]  > mountComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6084:6
+[WebServer]  > processComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6050:8
+[WebServer]  > patch node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:5544:10
+[WebServer]  > ReactiveEffect.componentUpdateFn [as fn] node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6198:10
+[WebServer]  > ReactiveEffect.run node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js:264:18
+[WebServer] 
+  ✘  10 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a vertical rounded dock, collapsed, keeps its box to 0 px through every seat's hover (1.0m)
+[WebServer] 5:50:48 PM [vite] (client) [console.warn] [Vue warn]: Unhandled error during execution of setup function 
+[WebServer]   at <TooltipRoot data-slot="tooltip" open=undefined default-open=false  ... > 
+[WebServer]   at <Tooltip text="Search" > 
+[WebServer]   at <DockFace> 
+[WebServer]   at <GlassDock orientation="vertical" shape="card" collapse=false  ... > 
+[WebServer]   at <App>
+[WebServer] 5:50:48 PM [vite] (client) [Unhandled error] Error: Injection `Symbol(TooltipProviderContext)` not found. Component must be used within `TooltipProvider`
+[WebServer]  > injectContext node_modules/reka-ui/dist/shared/createContext.js:24:8
+[WebServer]  > setup node_modules/reka-ui/dist/Tooltip/TooltipRoot.js:55:26
+[WebServer]  > callWithErrorHandling node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:199:18
+[WebServer]  > setupStatefulComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:8214:24
+[WebServer]  > setupComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:8176:35
+[WebServer]  > mountComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6084:6
+[WebServer]  > processComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6050:8
+[WebServer]  > patch node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:5544:10
+[WebServer]  > ReactiveEffect.componentUpdateFn [as fn] node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6198:10
+[WebServer]  > ReactiveEffect.run node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js:264:18
+[WebServer] 
+  ✘  11 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a vertical card dock, expanded, keeps its box to 0 px through every seat's hover (1.0m)
+[WebServer] 5:51:49 PM [vite] (client) [console.warn] [Vue warn]: Unhandled error during execution of setup function 
+[WebServer]   at <TooltipRoot data-slot="tooltip" open=undefined default-open=false  ... > 
+[WebServer]   at <Tooltip text="Search" > 
+[WebServer]   at <DockFace> 
+[WebServer]   at <GlassDock orientation="vertical" shape="card" collapse="closed"  ... > 
+[WebServer]   at <App>
+[WebServer] 5:51:49 PM [vite] (client) [Unhandled error] Error: Injection `Symbol(TooltipProviderContext)` not found. Component must be used within `TooltipProvider`
+[WebServer]  > injectContext node_modules/reka-ui/dist/shared/createContext.js:24:8
+[WebServer]  > setup node_modules/reka-ui/dist/Tooltip/TooltipRoot.js:55:26
+[WebServer]  > callWithErrorHandling node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:199:18
+[WebServer]  > setupStatefulComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:8214:24
+[WebServer]  > setupComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:8176:35
+[WebServer]  > mountComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6084:6
+[WebServer]  > processComponent node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6050:8
+[WebServer]  > patch node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:5544:10
+[WebServer]  > ReactiveEffect.componentUpdateFn [as fn] node_modules/@vue/runtime-core/dist/runtime-core.esm-bundler.js:6198:10
+[WebServer]  > ReactiveEffect.run node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js:264:18
+[WebServer] 
+  ✘  12 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a vertical card dock, collapsed, keeps its box to 0 px through every seat's hover (1.0m)
+  ✘  13 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:888:5 › radius · every dock seat's plate is a capsule, half its block size, at 1440 (4.7s)
+  ✘  14 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:888:5 › radius · every dock seat's plate is a capsule, half its block size, at 390 (4.7s)
+  -  15 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a horizontal pill dock, expanded, keeps its box to 0 px through every seat's hover
+  -  16 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a horizontal pill dock, collapsed, keeps its box to 0 px through every seat's hover
+  -  17 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a horizontal rounded dock, expanded, keeps its box to 0 px through every seat's hover
+  -  18 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a horizontal rounded dock, collapsed, keeps its box to 0 px through every seat's hover
+  -  19 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a horizontal card dock, expanded, keeps its box to 0 px through every seat's hover
+  -  20 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a horizontal card dock, collapsed, keeps its box to 0 px through every seat's hover
+  -  21 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a vertical pill dock, expanded, keeps its box to 0 px through every seat's hover
+  -  22 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a vertical pill dock, collapsed, keeps its box to 0 px through every seat's hover
+  -  23 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a vertical rounded dock, expanded, keeps its box to 0 px through every seat's hover
+  -  24 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a vertical rounded dock, collapsed, keeps its box to 0 px through every seat's hover
+  -  25 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a vertical card dock, expanded, keeps its box to 0 px through every seat's hover
+  -  26 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a vertical card dock, collapsed, keeps its box to 0 px through every seat's hover
+  ✘  27 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:888:5 › radius · every dock seat's plate is a capsule, half its block size, at 1440 (3.2s)
+  ✘  28 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:888:5 › radius · every dock seat's plate is a capsule, half its block size, at 390 (3.2s)
+
+
+  1) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a horizontal pill dock, expanded, keeps its box to 0 px through every seat's hover 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.waitFor: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('body[data-ready=\'1\'] [data-witness=\'dock\'] .dock-plate') to be visible
+
+
+      783 |                 await countRoLoops(page);
+      784 |                 await page.goto(`/tests-visual/release-11-0-2/hover-harness.html?orientation=${orientation}&shape=${shape}&posture=${posture}`);
+    > 785 |                 await page.locator("body[data-ready='1'] [data-witness='dock'] .dock-plate").waitFor();
+          |                                                                                              ^
+      786 |                 await page.evaluate(() => document.fonts.ready);
+      787 |                 await page.mouse.move(8, 8);
+      788 |                 await page.waitForTimeout(1200);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:785:94
+
+    Error Context: tests-visual/test-results/release-11-0-2-hover-·-a-h-62d21--through-every-seat-s-hover-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a horizontal pill dock, collapsed, keeps its box to 0 px through every seat's hover 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.waitFor: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('body[data-ready=\'1\'] [data-witness=\'dock\'] .dock-plate') to be visible
+
+
+      783 |                 await countRoLoops(page);
+      784 |                 await page.goto(`/tests-visual/release-11-0-2/hover-harness.html?orientation=${orientation}&shape=${shape}&posture=${posture}`);
+    > 785 |                 await page.locator("body[data-ready='1'] [data-witness='dock'] .dock-plate").waitFor();
+          |                                                                                              ^
+      786 |                 await page.evaluate(() => document.fonts.ready);
+      787 |                 await page.mouse.move(8, 8);
+      788 |                 await page.waitForTimeout(1200);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:785:94
+
+    Error Context: tests-visual/test-results/release-11-0-2-hover-·-a-h-8287c--through-every-seat-s-hover-chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a horizontal rounded dock, expanded, keeps its box to 0 px through every seat's hover 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.waitFor: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('body[data-ready=\'1\'] [data-witness=\'dock\'] .dock-plate') to be visible
+
+
+      783 |             test(`hover · a ${orientation} ${shape} dock, ${posture}, keeps its box to 0 px through every seat's hover`, async ({ page }, info) => {
+      784 |                 test.skip(info.project.name === "coarse-touch", "hover is a fine-pointer state");
+    > 785 |                 await page.setViewportSize({ width: 1440, height: 900 });
+          |                                                                          ^
+      786 |                 await countRoLoops(page);
+      787 |                 await page.goto(`/tests-visual/release-11-0-2/hover-harness.html?orientation=${orientation}&shape=${shape}&posture=${posture}`);
+      788 |                 await page.locator("body[data-ready='1'] [data-witness='dock'] .dock-plate").waitFor();
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:785:94
+
+    Error Context: tests-visual/test-results/release-11-0-2-hover-·-a-h-391a0--through-every-seat-s-hover-chromium-headless-new/error-context.md
+
+  4) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a horizontal rounded dock, collapsed, keeps its box to 0 px through every seat's hover 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.waitFor: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('body[data-ready=\'1\'] [data-witness=\'dock\'] .dock-plate') to be visible
+
+
+      783 |             test(`hover · a ${orientation} ${shape} dock, ${posture}, keeps its box to 0 px through every seat's hover`, async ({ page }, info) => {
+      784 |                 test.skip(info.project.name === "coarse-touch", "hover is a fine-pointer state");
+    > 785 |                 await page.setViewportSize({ width: 1440, height: 900 });
+          |                                                                          ^
+      786 |                 await countRoLoops(page);
+      787 |                 await page.goto(`/tests-visual/release-11-0-2/hover-harness.html?orientation=${orientation}&shape=${shape}&posture=${posture}`);
+      788 |                 await page.locator("body[data-ready='1'] [data-witness='dock'] .dock-plate").waitFor();
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:785:94
+
+    Error Context: tests-visual/test-results/release-11-0-2-hover-·-a-h-68c58--through-every-seat-s-hover-chromium-headless-new/error-context.md
+
+  5) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a horizontal card dock, expanded, keeps its box to 0 px through every seat's hover 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.waitFor: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('body[data-ready=\'1\'] [data-witness=\'dock\'] .dock-plate') to be visible
+
+
+      783 |             test(`hover · a ${orientation} ${shape} dock, ${posture}, keeps its box to 0 px through every seat's hover`, async ({ page }, info) => {
+      784 |                 test.skip(info.project.name === "coarse-touch", "hover is a fine-pointer state");
+    > 785 |                 await page.setViewportSize({ width: 1440, height: 900 });
+          |                                                                          ^
+      786 |                 await countRoLoops(page);
+      787 |                 await page.goto(`/tests-visual/release-11-0-2/hover-harness.html?orientation=${orientation}&shape=${shape}&posture=${posture}`);
+      788 |                 await page.locator("body[data-ready='1'] [data-witness='dock'] .dock-plate").waitFor();
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:785:94
+
+    Error Context: tests-visual/test-results/release-11-0-2-hover-·-a-h-a6e64--through-every-seat-s-hover-chromium-headless-new/error-context.md
+
+  6) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a horizontal card dock, collapsed, keeps its box to 0 px through every seat's hover 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.waitFor: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('body[data-ready=\'1\'] [data-witness=\'dock\'] .dock-plate') to be visible
+
+
+      783 |             test(`hover · a ${orientation} ${shape} dock, ${posture}, keeps its box to 0 px through every seat's hover`, async ({ page }, info) => {
+      784 |                 test.skip(info.project.name === "coarse-touch", "hover is a fine-pointer state");
+    > 785 |                 await page.setViewportSize({ width: 1440, height: 900 });
+          |                                                                          ^
+      786 |                 await countRoLoops(page);
+      787 |                 await page.goto(`/tests-visual/release-11-0-2/hover-harness.html?orientation=${orientation}&shape=${shape}&posture=${posture}`);
+      788 |                 await page.locator("body[data-ready='1'] [data-witness='dock'] .dock-plate").waitFor();
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:785:94
+
+    Error Context: tests-visual/test-results/release-11-0-2-hover-·-a-h-2e7ed--through-every-seat-s-hover-chromium-headless-new/error-context.md
+
+  7) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a vertical pill dock, expanded, keeps its box to 0 px through every seat's hover 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.waitFor: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('body[data-ready=\'1\'] [data-witness=\'dock\'] .dock-plate') to be visible
+
+
+      783 |             test(`hover · a ${orientation} ${shape} dock, ${posture}, keeps its box to 0 px through every seat's hover`, async ({ page }, info) => {
+      784 |                 test.skip(info.project.name === "coarse-touch", "hover is a fine-pointer state");
+    > 785 |                 await page.setViewportSize({ width: 1440, height: 900 });
+          |                                                                          ^
+      786 |                 await countRoLoops(page);
+      787 |                 await page.goto(`/tests-visual/release-11-0-2/hover-harness.html?orientation=${orientation}&shape=${shape}&posture=${posture}`);
+      788 |                 await page.locator("body[data-ready='1'] [data-witness='dock'] .dock-plate").waitFor();
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:785:94
+
+    Error Context: tests-visual/test-results/release-11-0-2-hover-·-a-v-3bdd1--through-every-seat-s-hover-chromium-headless-new/error-context.md
+
+  8) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a vertical pill dock, collapsed, keeps its box to 0 px through every seat's hover 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.waitFor: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('body[data-ready=\'1\'] [data-witness=\'dock\'] .dock-plate') to be visible
+
+
+      783 |             test(`hover · a ${orientation} ${shape} dock, ${posture}, keeps its box to 0 px through every seat's hover`, async ({ page }, info) => {
+      784 |                 test.skip(info.project.name === "coarse-touch", "hover is a fine-pointer state");
+    > 785 |                 await page.setViewportSize({ width: 1440, height: 900 });
+          |                                                                          ^
+      786 |                 await countRoLoops(page);
+      787 |                 await page.goto(`/tests-visual/release-11-0-2/hover-harness.html?orientation=${orientation}&shape=${shape}&posture=${posture}`);
+      788 |                 await page.locator("body[data-ready='1'] [data-witness='dock'] .dock-plate").waitFor();
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:785:94
+
+    Error Context: tests-visual/test-results/release-11-0-2-hover-·-a-v-c580a--through-every-seat-s-hover-chromium-headless-new/error-context.md
+
+  9) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a vertical rounded dock, expanded, keeps its box to 0 px through every seat's hover 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.waitFor: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('body[data-ready=\'1\'] [data-witness=\'dock\'] .dock-plate') to be visible
+
+
+      783 |             test(`hover · a ${orientation} ${shape} dock, ${posture}, keeps its box to 0 px through every seat's hover`, async ({ page }, info) => {
+      784 |                 test.skip(info.project.name === "coarse-touch", "hover is a fine-pointer state");
+    > 785 |                 await page.setViewportSize({ width: 1440, height: 900 });
+          |                                                                          ^
+      786 |                 await countRoLoops(page);
+      787 |                 await page.goto(`/tests-visual/release-11-0-2/hover-harness.html?orientation=${orientation}&shape=${shape}&posture=${posture}`);
+      788 |                 await page.locator("body[data-ready='1'] [data-witness='dock'] .dock-plate").waitFor();
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:785:94
+
+    Error Context: tests-visual/test-results/release-11-0-2-hover-·-a-v-f7503--through-every-seat-s-hover-chromium-headless-new/error-context.md
+
+  10) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a vertical rounded dock, collapsed, keeps its box to 0 px through every seat's hover 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.waitFor: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('body[data-ready=\'1\'] [data-witness=\'dock\'] .dock-plate') to be visible
+
+
+      783 |             test(`hover · a ${orientation} ${shape} dock, ${posture}, keeps its box to 0 px through every seat's hover`, async ({ page }, info) => {
+      784 |                 test.skip(info.project.name === "coarse-touch", "hover is a fine-pointer state");
+    > 785 |                 await page.setViewportSize({ width: 1440, height: 900 });
+          |                                                                          ^
+      786 |                 await countRoLoops(page);
+      787 |                 await page.goto(`/tests-visual/release-11-0-2/hover-harness.html?orientation=${orientation}&shape=${shape}&posture=${posture}`);
+      788 |                 await page.locator("body[data-ready='1'] [data-witness='dock'] .dock-plate").waitFor();
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:785:94
+
+    Error Context: tests-visual/test-results/release-11-0-2-hover-·-a-v-d599b--through-every-seat-s-hover-chromium-headless-new/error-context.md
+
+  11) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a vertical card dock, expanded, keeps its box to 0 px through every seat's hover 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.waitFor: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('body[data-ready=\'1\'] [data-witness=\'dock\'] .dock-plate') to be visible
+
+
+      783 |             test(`hover · a ${orientation} ${shape} dock, ${posture}, keeps its box to 0 px through every seat's hover`, async ({ page }, info) => {
+      784 |                 test.skip(info.project.name === "coarse-touch", "hover is a fine-pointer state");
+    > 785 |                 await page.setViewportSize({ width: 1440, height: 900 });
+          |                                                                          ^
+      786 |                 await countRoLoops(page);
+      787 |                 await page.goto(`/tests-visual/release-11-0-2/hover-harness.html?orientation=${orientation}&shape=${shape}&posture=${posture}`);
+      788 |                 await page.locator("body[data-ready='1'] [data-witness='dock'] .dock-plate").waitFor();
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:785:94
+
+    Error Context: tests-visual/test-results/release-11-0-2-hover-·-a-v-1df55--through-every-seat-s-hover-chromium-headless-new/error-context.md
+
+  12) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a vertical card dock, collapsed, keeps its box to 0 px through every seat's hover 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.waitFor: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('body[data-ready=\'1\'] [data-witness=\'dock\'] .dock-plate') to be visible
+
+
+      783 |             test(`hover · a ${orientation} ${shape} dock, ${posture}, keeps its box to 0 px through every seat's hover`, async ({ page }, info) => {
+      784 |                 test.skip(info.project.name === "coarse-touch", "hover is a fine-pointer state");
+    > 785 |                 await page.setViewportSize({ width: 1440, height: 900 });
+          |                                                                          ^
+      786 |                 await countRoLoops(page);
+      787 |                 await page.goto(`/tests-visual/release-11-0-2/hover-harness.html?orientation=${orientation}&shape=${shape}&posture=${posture}`);
+      788 |                 await page.locator("body[data-ready='1'] [data-witness='dock'] .dock-plate").waitFor();
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:785:94
+
+    Error Context: tests-visual/test-results/release-11-0-2-hover-·-a-v-d3103--through-every-seat-s-hover-chromium-headless-new/error-context.md
+
+  13) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:888:5 › radius · every dock seat's plate is a capsule, half its block size, at 1440 
+
+    Error: tab start end
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 4.222693532159296
+    Received:    3
+
+      937 |             await page.waitForTimeout(300);
+      938 |         }
+    > 939 |         info.annotations.push({ type: "radius", description: JSON.stringify({ ground, cells }) });
+          |                                                                ^
+      940 |         for (const [kind, cell] of Object.entries(cells) as [string, { ends: { insetStart: number; insetEnd: number; capsule: number } | null }][]) {
+      941 |             expect(cell.ends, `${kind} painted a plate`).not.toBeNull();
+      942 |             expect(cell.ends!.insetStart, `${kind} start end`).toBeGreaterThanOrEqual(cell.ends!.capsule * 0.75);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:939:64
+
+    Error Context: tests-visual/test-results/release-11-0-2-radius-·-ev-f328b-half-its-block-size-at-1440-chromium-headless-new/error-context.md
+
+  14) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:888:5 › radius · every dock seat's plate is a capsule, half its block size, at 390 
+
+    Error: tab start end
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 4.222693532159296
+    Received:    3
+
+      937 |             await page.waitForTimeout(300);
+      938 |         }
+    > 939 |         info.annotations.push({ type: "radius", description: JSON.stringify({ ground, cells }) });
+          |                                                                ^
+      940 |         for (const [kind, cell] of Object.entries(cells) as [string, { ends: { insetStart: number; insetEnd: number; capsule: number } | null }][]) {
+      941 |             expect(cell.ends, `${kind} painted a plate`).not.toBeNull();
+      942 |             expect(cell.ends!.insetStart, `${kind} start end`).toBeGreaterThanOrEqual(cell.ends!.capsule * 0.75);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:939:64
+
+    Error Context: tests-visual/test-results/release-11-0-2-radius-·-ev-99e84--half-its-block-size-at-390-chromium-headless-new/error-context.md
+
+  15) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:888:5 › radius · every dock seat's plate is a capsule, half its block size, at 1440 
+
+    Error: trigger-active start end
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 3.786124614758536
+    Received:    3
+
+      937 |             await page.waitForTimeout(300);
+      938 |         }
+    > 939 |         info.annotations.push({ type: "radius", description: JSON.stringify({ ground, cells }) });
+          |                                                                ^
+      940 |         for (const [kind, cell] of Object.entries(cells) as [string, { ends: { insetStart: number; insetEnd: number; capsule: number } | null }][]) {
+      941 |             expect(cell.ends, `${kind} painted a plate`).not.toBeNull();
+      942 |             expect(cell.ends!.insetStart, `${kind} start end`).toBeGreaterThanOrEqual(cell.ends!.capsule * 0.75);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:939:64
+
+    Error Context: tests-visual/test-results/release-11-0-2-radius-·-ev-f328b-half-its-block-size-at-1440-coarse-touch/error-context.md
+
+  16) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:888:5 › radius · every dock seat's plate is a capsule, half its block size, at 390 
+
+    Error: tab-active start end
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 4.222693532159296
+    Received:    3
+
+      937 |             await page.waitForTimeout(300);
+      938 |         }
+    > 939 |         info.annotations.push({ type: "radius", description: JSON.stringify({ ground, cells }) });
+          |                                                                ^
+      940 |         for (const [kind, cell] of Object.entries(cells) as [string, { ends: { insetStart: number; insetEnd: number; capsule: number } | null }][]) {
+      941 |             expect(cell.ends, `${kind} painted a plate`).not.toBeNull();
+      942 |             expect(cell.ends!.insetStart, `${kind} start end`).toBeGreaterThanOrEqual(cell.ends!.capsule * 0.75);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:939:64
+
+    Error Context: tests-visual/test-results/release-11-0-2-radius-·-ev-99e84--half-its-block-size-at-390-coarse-touch/error-context.md
+
+  16 failed
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a horizontal pill dock, expanded, keeps its box to 0 px through every seat's hover 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a horizontal pill dock, collapsed, keeps its box to 0 px through every seat's hover 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a horizontal rounded dock, expanded, keeps its box to 0 px through every seat's hover 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a horizontal rounded dock, collapsed, keeps its box to 0 px through every seat's hover 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a horizontal card dock, expanded, keeps its box to 0 px through every seat's hover 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a horizontal card dock, collapsed, keeps its box to 0 px through every seat's hover 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a vertical pill dock, expanded, keeps its box to 0 px through every seat's hover 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a vertical pill dock, collapsed, keeps its box to 0 px through every seat's hover 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a vertical rounded dock, expanded, keeps its box to 0 px through every seat's hover 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a vertical rounded dock, collapsed, keeps its box to 0 px through every seat's hover 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a vertical card dock, expanded, keeps its box to 0 px through every seat's hover 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:780:13 › hover · a vertical card dock, collapsed, keeps its box to 0 px through every seat's hover 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:888:5 › radius · every dock seat's plate is a capsule, half its block size, at 1440 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:888:5 › radius · every dock seat's plate is a capsule, half its block size, at 390 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:888:5 › radius · every dock seat's plate is a capsule, half its block size, at 1440 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:888:5 › radius · every dock seat's plate is a capsule, half its block size, at 390 
+  12 skipped

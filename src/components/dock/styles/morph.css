@@ -164,11 +164,9 @@
     }
 
     /* The collapsed horizontal dock at rest is a square box, and it is drawn as a
-       circle (`--radius-circle`). `--radius-dock` (the pill rung, 1rem) is a corner on
-       anything taller than 32px, so the circle is stated here, for the settled box
-       only: mid-morph the box carries the expanded footprint under a scale. The
-       stadium shape is not named here: its corner is half its cross extent in every
-       posture (run.css), which is this circle on a square box. */
+       circle (`--radius-circle`). These two rules are the finite shapes' (`rounded`,
+       `card`). The stadium shape is not named here: its corner is half its cross extent
+       in every posture (run.css), which is this circle on a square box. */
     .glass-dock.collapsed:not(.vertical):not(.shape-pill) {
         border-radius: var(--radius-circle);
     }
@@ -177,14 +175,14 @@
        square: it is two cells wide (atlas's figure dock, Table view plus the handle,
        100 x 52). `50%` on that box drew an oval lozenge, a full-radius box over 40 px
        (U/B8r I-3, atlas register F-20). Such a dock is a short bar, a container, so it
-       keeps the bar corner it wears open (`--radius-dock`, 16 px on a 52 px box): the
+       keeps a bar corner (`--radius-pill`, 16 px on a 52 px box): the
        collapse and the open dock share one corner, and the morph swaps no silhouette.
        The circle stays for the square cases: the summary alone, or a persistent
        control alone (the empty-summary case above). Two flat `:has()`, never nested. */
     .glass-dock.collapsed:not(.vertical):not(.shape-pill):has(.dock-persistent):has(
             .dock-layer--summary:not(:empty)
         ) {
-        border-radius: var(--radius-dock);
+        border-radius: var(--radius-pill);
     }
 
     /* The collapsed summary is a PERFECT CIRCLE. The `.dock-layer`
@@ -202,10 +200,7 @@
        clear of the caps. A glyph of 24 px or less still
        fits inside the floor with the padding, so its face stays a circle. */
     .glass-dock .dock-layer--summary {
-        min-width: var(
-            --dock-collapsed-summary-min-size,
-            var(--dock-layer-height, 2.5rem)
-        );
+        min-width: auto;
         min-block-size: var(
             --dock-collapsed-summary-min-size,
             var(--dock-layer-height, 2.5rem)
@@ -275,12 +270,29 @@
         border: 0;
     }
 
-    /* The persistent control IS the collapsed pill in the empty-summary case — drop
-       the inter-region gap so the collapsed circle is exactly the persistent box. */
-    .glass-dock.collapsed:has(.dock-layer--summary:empty)
-        .dock-persistent
-        + .dock-layers {
-        margin-inline-start: 0;
+    /* THE PERSISTENT FACE. With an empty summary the persistent seats ARE the
+       collapsed face: the (now empty) morph region drops the gaps it keeps toward the
+       regions (run.css, THE ROOM FOR THE RESERVE), so the plate is exactly the seats,
+       and a trailing region follows a leading one at the one gap. On a vertical dock
+       the empty summary also gives up its block size, so the collapsed column is the
+       seats too. */
+    .glass-dock.collapsed:has(.dock-layer--summary:empty) > .dock-controls > .dock-layers {
+        margin: 0;
+    }
+    .glass-dock.collapsed:not(.vertical):has(.dock-layer--summary:empty)
+        .dock-persistent-start
+        ~ .dock-persistent-end {
+        margin-inline-start: var(--dock-layer-gap, 0.375rem);
+    }
+    .glass-dock.collapsed.vertical:has(.dock-layer--summary:empty)
+        .dock-persistent-start
+        ~ .dock-persistent-end {
+        margin-block-start: var(--dock-layer-gap, 0.375rem);
+    }
+    .glass-dock.vertical .dock-layer--summary:empty {
+        min-block-size: 0;
+        block-size: 0;
+        height: 0;
     }
 
     /* The collapsed persistent pill centers its single glyph on
@@ -379,10 +391,10 @@
        survives here is the RIM half, which is a different axis: the border quiets to
        the floating ring so the held-cursor cue reads on the edge while the body opens. */
     .glass-dock[data-held] .dock-plate {
-        /* The EXPANDED endpoint only. The collapsed one is `--glass-border-floating`
-           already (shell.css) and is unread at `--dock-expand-t: 0` besides — a held
-           dock is held OPEN — so declaring it here was a no-op twice over. */
-        --dock-plate-expanded-border: var(--glass-border-floating);
+        /* Both ends of the edge are `--glass-border-floating`, so the edge is that
+           token at every t, unmixed (dock.css). */
+        --_dock-edge-expanded-ink: var(--glass-border-floating);
+        --_dock-edge-lerp: var(--glass-border-floating);
         transition: border-color var(--duration-fast) var(--ease-standard);
     }
 

@@ -1,0 +1,10 @@
+@import "tailwindcss" source("../../../../../src");
+@import "tw-animate-css";
+@import "../../../../../src/styles/index.css";
+@source "./harness.ts";
+body { margin: 0; background: var(--background); color: var(--foreground); }
+.scene { padding: 24px 16px; min-block-size: 300px; }
+.mark-probe { --dock-control-active-bg: rgb(255, 0, 255); }
+/* A consumer's own page entrance: the wrapper grows in, as a route or a panel does. */
+.grow-in { transform-origin: 0 0; animation: probe-grow 500ms ease-out both; }
+@keyframes probe-grow { from { transform: scale(0.8); } to { transform: scale(1); } }

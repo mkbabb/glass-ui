@@ -1,37 +1,58 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
-import StoryPage from "../../chassis/page/StoryPage.vue";
-import StorySection from "../../chassis/section/StorySection.vue";
-import { Button } from "@glass/components/button";
+import { ref } from "vue";
 import { PagerDots } from "@glass/components/pager-dots";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StoryStage from "../../chassis/stage/StoryStage.vue";
+import StoryVariants from "../../chassis/variants/StoryVariants.vue";
+import StoryVariantRow from "../../chassis/variants/StoryVariantRow.vue";
+import StoryCode from "../../chassis/code/StoryCode.vue";
+import PagerDotsStage from "./pager-dots.stage.vue";
 
-const count = ref(8);
-const active = ref(3);
-watch(count, (total) => {
-    active.value = Math.min(active.value, Math.max(0, total - 1));
-});
+// Twenty pages run in a window of seven.
+const COUNTS = [
+    { count: 3, windowFit: undefined },
+    { count: 7, windowFit: undefined },
+    { count: 20, windowFit: 7 },
+] as const;
+const active = ref<number[]>([0, 3, 9]);
+
+const snippet = `<script setup lang="ts">
+import { ref } from "vue";
+import { PagerDots } from "@mkbabb/glass-ui/pager-dots";
+
+const page = ref(0);
+<\/script>
+
+<template>
+    <PagerDots v-model:active="page" :count="8" aria-label="Pages" />
+</template>`;
 </script>
 
 <template>
     <StoryPage>
-        <StorySection
-            heading="Position, without noise"
-            label="pager-dots"
-            blurb="A local liquid indicator over crisp, accessible page targets. Change the count to exercise window boundaries and selection recovery."
-        >
-            <div class="flex flex-col items-center gap-6 rounded-card glass-quiet p-8">
-                <PagerDots
-                    v-model:active="active"
-                    :count="count"
-                    :window-fit="5"
-                    aria-label="Example pages"
-                />
-                <p class="text-mono-small">Page {{ count ? active + 1 : 0 }} of {{ count }}</p>
-                <div class="flex items-center gap-3">
-                    <Button emphasis="quiet" :disabled="count === 0" @click="count--">Remove page</Button>
-                    <Button emphasis="quiet" :disabled="count === 12" @click="count++">Add page</Button>
-                </div>
-            </div>
-        </StorySection>
+        <template #stage>
+            <StoryStage size="fit">
+                <PagerDotsStage />
+            </StoryStage>
+        </template>
+
+        <template #variants>
+            <StoryVariants>
+                <StoryVariantRow label="Counts">
+                    <PagerDots
+                        v-for="(row, i) in COUNTS"
+                        :key="row.count"
+                        v-model:active="active[i]"
+                        :count="row.count"
+                        :window-fit="row.windowFit"
+                        :aria-label="`${row.count} pages`"
+                    />
+                </StoryVariantRow>
+            </StoryVariants>
+        </template>
+
+        <template #code>
+            <StoryCode :code="snippet" />
+        </template>
     </StoryPage>
 </template>

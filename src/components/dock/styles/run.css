@@ -29,7 +29,7 @@
  *
  * THE DETENT ENGINE IS THE PLATFORM. `scroll-snap-type: <axis> mandatory` +
  * `scroll-snap-align: start` + `scroll-padding: P/2` + `touch-action: pan-<axis>` +
- * `overscroll-behavior: contain`. All five measured supported in Chromium 149 AND real
+ * `overscroll-behavior-<axis>: contain`. All five measured supported in Chromium 149 AND real
  * Safari 26.4. A JS flick projector cannot coexist with them — `touchmove` is
  * non-cancelable once native scroll begins, so owning the gesture means
  * `touch-action: none`, which un-scrollers the run and takes reach and
@@ -152,14 +152,14 @@
     /* THE ROOM FOR THE RESERVE, on the scroll axis. The run hands its reserve back by a
        negative margin (the run rule below), so its scroll clip reaches
        `--dock-run-reserve-*` past its slot. That reach lands in room the dock owns,
-       never on a neighbour. Beside a persistent region the slot keeps the reserve, and
-       after a leading one the family gap as well, so the gap lies between the region
-       and the run's clip, and no scrolled seat paints under a persistent seat or takes
-       its hit. At the dock's edge the slot keeps whatever the reserve needs past the
+       never on a neighbour. Beside a persistent region, leading or trailing, the slot
+       keeps the reserve and the family gap, so the gap lies between the region and the
+       run's clip, and no scrolled seat paints under a persistent seat or takes its
+       hit. At the dock's edge the slot keeps whatever the reserve needs past the
        dock's own padding (none at the house geometry). The cross axis scrolls nothing
        and keeps the full hand-back. The room is the visible run's, so a collapsed dock
        (whose run is the inactive pane) keeps its own geometry, and the family gap
-       after a leading persistent region holds in both postures. These rules are the
+       beside a persistent region holds in both postures. These rules are the
        one owner of the layers' scroll-axis margins (`morph.css`'s empty-summary
        collapse zeroes them). */
     .glass-dock:not(.vertical):not(.collapsed) > .dock-controls > .dock-layers {
@@ -177,10 +177,14 @@
         margin-inline-start: calc(var(--dock-layer-gap, 0.375rem) + var(--dock-run-reserve-inline));
     }
 
+    .glass-dock:not(.vertical) > .dock-controls > .dock-layers:has(+ .dock-persistent-end) {
+        margin-inline-end: var(--dock-layer-gap, 0.375rem);
+    }
+
     .glass-dock:not(.vertical):not(.collapsed)
         > .dock-controls
         > .dock-layers:has(+ .dock-persistent-end) {
-        margin-inline-end: var(--dock-run-reserve-inline);
+        margin-inline-end: calc(var(--dock-layer-gap, 0.375rem) + var(--dock-run-reserve-inline));
     }
 
     .glass-dock.vertical:not(.collapsed) > .dock-controls > .dock-layers {
@@ -198,10 +202,14 @@
         margin-block-start: calc(var(--dock-layer-gap, 0.375rem) + var(--dock-run-reserve-block));
     }
 
+    .glass-dock.vertical > .dock-controls > .dock-layers:has(+ .dock-persistent-end) {
+        margin-block-end: var(--dock-layer-gap, 0.375rem);
+    }
+
     .glass-dock.vertical:not(.collapsed)
         > .dock-controls
         > .dock-layers:has(+ .dock-persistent-end) {
-        margin-block-end: var(--dock-run-reserve-block);
+        margin-block-end: calc(var(--dock-layer-gap, 0.375rem) + var(--dock-run-reserve-block));
     }
 
     /* Which of the run's scroll-axis edges is the plate's own edge (1) and which lies
@@ -256,9 +264,13 @@
            which is what makes the deleted `useDockTouchGate` a second owner rather than
            a collaborator, and `contain` keeps a bottomed-out flick from chaining into
            the page behind the dock. `overscroll-behavior` applies only to scroll
-           containers — which is exactly why the vertical port below must stay one. */
+           containers — which is exactly why the vertical port below must stay one.
+           It contains the run's own scroll axis only: the run cannot scroll on the
+           cross axis, and a two-axis `contain` stopped a wheel on that axis at this box
+           too, so the page under a horizontal dock did not move. */
         touch-action: pan-x;
-        overscroll-behavior: contain;
+        overscroll-behavior-x: contain;
+        overscroll-behavior-y: auto;
         scrollbar-width: none;
         /* Release the flex/grid `min-content` floor on the port itself; without it the
            run's own children hold it open and `overflow: auto` never engages. */
@@ -408,23 +420,23 @@
         padding-block: min(var(--dock-run-reserve-block), var(--dock-run-room-block, 0px));
     }
 
-    .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> *) {
+    .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> :not(.dock-run-mark)) {
         padding-inline-end: 0;
     }
 
-    .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> *)::before,
-    .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> *)::after {
+    .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> :not(.dock-run-mark))::before,
+    .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> :not(.dock-run-mark))::after {
         content: "";
         flex: 0 var(--dock-run-yield) auto;
         inline-size: var(--dock-run-reserve-inline);
         min-inline-size: var(--dock-ring-reserve);
     }
 
-    .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> *)::before {
+    .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> :not(.dock-run-mark))::before {
         margin-inline: calc(-1 * var(--dock-run-reserve-inline)) calc(-1 * var(--dock-run-gap));
     }
 
-    .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> *)::after {
+    .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> :not(.dock-run-mark))::after {
         margin-inline-start: calc(-1 * var(--dock-run-gap));
     }
 
@@ -452,8 +464,10 @@
     /* THE SEATS. Every direct child of the run is a snap target and none of them flex —
        a seat that grows is a seat that is no longer an integer number of pitches, and
        the lattice dies quietly the moment one does. `start` alignment is what the
-       `scroll-padding` above is measured against. */
-    .glass-dock :where(.dock-layers) > .dock-run > * {
+       `scroll-padding` above is measured against. The run's mark (THE ACTIVE MARK,
+       below) is its one child that is not a seat, and every seat rule says so with
+       `:not(.dock-run-mark)`; script says it once, `isRunSeat` (useDockRunMark.ts). */
+    .glass-dock :where(.dock-layers) > .dock-run > :not(.dock-run-mark) {
         scroll-snap-align: start;
         flex: 0 0 auto;
     }
@@ -502,6 +516,9 @@
         scroll-snap-type: y mandatory;
         scroll-padding-block: calc(var(--dock-pitch) / 2 + var(--dock-run-reserve-block));
         touch-action: pan-y;
+        /* The base rule's axis split, rotated. */
+        overscroll-behavior-x: auto;
+        overscroll-behavior-y: contain;
         min-block-size: 0;
         /* The reserve is on both axes in the base rule, and this axis's
            `scroll-padding-block` adds it back, so it shifts no snap position.
@@ -530,6 +547,41 @@
        on the dock's one clock. The mark says which page is current; a name shows above the
        seat by Tooltip (R-7). `--dock-open-pitches` and `--dock-open-seat` stay declared
        and unread through 11.2.0 and are deleted in 12.0.0. */
+
+    /* ══ THE ACTIVE MARK — one selected plate per navigation run ════════════════
+       A run whose destination carries `aria-current` paints ONE selected plate, on the
+       run itself, and `useDockRunMark` moves it between seats on the dock spring
+       (reduced motion cuts it in one frame). The plate is one inert element the run
+       renders while it is marked, `.dock-run-mark` (GlassDock.vue): absolute, so its
+       containing block is the run's scrolled padding box and it scrolls with the seats
+       natively, and out of flow, so the horizontal run's `::before` and `::after` stay
+       its reserve boxes. It is no seat (`:not(.dock-run-mark)` on the seat rules,
+       `isRunSeat` in script, the carrier included): no snap target, no roving stop, not
+       counted in `data-run-fits`. The script writes the plate's box on the run as five
+       lengths, its inline offset from the run's inline-start edge, so a live change of
+       direction mirrors the mark with the seats; the stylesheet owns the paint.
+
+       z-index −1 seats it in the dock's stacking context after the glass plate (which
+       comes first in the tree) and under every seat's content. The seat it marks paints
+       no selected plate of its own (no fill, no rim or lift, no backdrop), so the run
+       shows one shape however the seat became current, `active` included. */
+    .glass-dock :where(.dock-layers) > .dock-run > .dock-run-mark {
+        position: absolute;
+        inset-block-start: var(--dock-run-mark-y);
+        inset-inline-start: var(--dock-run-mark-x);
+        z-index: -1;
+        width: var(--dock-run-mark-w);
+        height: var(--dock-run-mark-h);
+        border-radius: var(--dock-run-mark-r);
+        background: var(--dock-control-active-bg);
+        pointer-events: none;
+    }
+
+    .glass-dock :where(.dock-layers) > .dock-run:has(> .dock-run-mark) [aria-current]:not([aria-current="false"]) {
+        background-color: transparent;
+        box-shadow: none;
+        backdrop-filter: none;
+    }
 
     /* ══ W5 · THE CUT CAP ════════════════════════════════════════════════════════
        [2026-08-24 · BK #47 W5 CUT]
@@ -586,9 +638,12 @@
            laid out by, the layer height and the block padding either side. */
         --dock-cross: calc(var(--dock-layer-height) + 2 * var(--dock-padding-block));
         /* The rest corner and its two-rung drop, per shape. The stadium's rest is half
-           the plate's cross extent (see above); the finite shapes name their own rest
-           so the keyframe never has to guess at a box height. */
-        --dock-cap-rest: calc(var(--dock-cross) / 2);
+           the plate's cross extent (see above), bounded by `--radius-dock`: the token is
+           the stadium (theme/radius.css), so the bound is inert by default, and a host
+           that sets `--radius-dock: 1rem` gets the bar corner in every posture and
+           through the morph, from this one length. The finite shapes name their own
+           rest so the keyframe never has to guess at a box height. */
+        --dock-cap-rest: min(var(--radius-dock), calc(var(--dock-cross) / 2));
         --dock-cap-cut: var(--radius-card);
     }
 
@@ -712,9 +767,11 @@
        arc. The finite shapes keep the corner the shell gives them. */
     /* W-I.8 R-1 (RU-13): a pill rests at half its cross extent whatever its height, a
        two-row open dock as a one-seat circle; the used value of an oversized radius is
-       exactly that, and with the cap off the plate no keyframe interpolates it. */
+       exactly that, and with the cap off the plate no keyframe interpolates it.
+       `--radius-dock` is the stadium (theme/radius.css), and a host that sets it (atlas's
+       open home dock) bounds the pill's corner at rest and through every travel (6dc977fe2). */
     .glass-dock.shape-pill {
-        border-radius: 9999px;
+        border-radius: var(--radius-dock);
     }
 
     /* MID-MORPH THE CORNER IS COUNTER-SCALED ON THE MORPH AXIS. The morph scales the
@@ -743,6 +800,25 @@
        the plate's only corner writer, in travel and at rest, so a pill is a stadium in
        every frame and at every scroll position. What tells the reader that a run scrolls
        is the run's to draw on its port (W-I.1), never the plate. */
+    /* Under reduced motion the run's clip holds its rest corner, still, with no
+       scroll-driven animation (0bd7ed13d): the library's scroll-driven register is
+       motion, and the run's peek of its next seat still reports the overflow. */
+    @media (prefers-reduced-motion: reduce) {
+        .glass-dock:not([data-run-fits]) :where(.dock-layers) > .dock-run.is-active {
+            animation: none;
+            border-start-start-radius: calc(var(--dock-run-edge-start) * var(--dock-run-corner-rest)) var(--dock-run-cross-half);
+            border-end-start-radius: calc(var(--dock-run-edge-start) * var(--dock-run-corner-rest)) var(--dock-run-cross-half);
+            border-start-end-radius: calc(var(--dock-run-edge-end) * var(--dock-run-corner-rest)) var(--dock-run-cross-half);
+            border-end-end-radius: calc(var(--dock-run-edge-end) * var(--dock-run-corner-rest)) var(--dock-run-cross-half);
+        }
+
+        .glass-dock.vertical:not([data-run-fits]) :where(.dock-layers) > .dock-run.is-active {
+            border-start-start-radius: var(--dock-run-cross-half) calc(var(--dock-run-edge-start) * var(--dock-run-corner-rest));
+            border-start-end-radius: var(--dock-run-cross-half) calc(var(--dock-run-edge-start) * var(--dock-run-corner-rest));
+            border-end-start-radius: var(--dock-run-cross-half) calc(var(--dock-run-edge-end) * var(--dock-run-corner-rest));
+            border-end-end-radius: var(--dock-run-cross-half) calc(var(--dock-run-edge-end) * var(--dock-run-corner-rest));
+        }
+    }
 
     /* THE CAP RUNS ONLY ON A RUN THAT HIDES SOMETHING. An inactive scroll timeline
        does not release what it last resolved: when a scrolled run's overflow vanishes

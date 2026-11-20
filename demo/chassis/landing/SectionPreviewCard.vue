@@ -1,139 +1,118 @@
 <script setup lang="ts">
-import { computed, defineAsyncComponent } from "vue";
-import { cn } from "@glass/components/_shared/class-names";
+// A card: the preview plate across its top, then the title. The plate shows the page's
+// own stage (or its tile), mounted inert and scaled down to fit whole. A card has no
+// blurb.
+import { computed, defineAsyncComponent, onBeforeUnmount, onMounted, ref } from "vue";
 import TransitionRouteLink from "../TransitionRouteLink.vue";
-import type { TileResolution } from "./storyTile";
+import type { StoryPreview } from "./storyTile";
 
-interface SectionPreviewCardProps {
+const props = defineProps<{
     to: string;
     title: string;
-    blurb?: string | null;
-    lead?: boolean;
-    tile: TileResolution;
-    class?: string;
+    tile: StoryPreview;
+}>();
+
+const preview = computed(() => defineAsyncComponent(props.tile));
+
+// The specimen lays out at the plate's width; when its natural box is larger than the
+// plate it is scaled down about its centre until the whole of it fits.
+const plate = ref<HTMLElement | null>(null);
+const specimen = ref<HTMLElement | null>(null);
+const fit = ref(1);
+let observer: ResizeObserver | null = null;
+
+function measure(): void {
+    const box = plate.value;
+    const inner = specimen.value;
+    if (!box || !inner) return;
+    const w = Math.max(inner.scrollWidth, inner.offsetWidth);
+    const h = Math.max(inner.scrollHeight, inner.offsetHeight);
+    if (w === 0 || h === 0) return;
+    fit.value = Math.min(1, box.clientWidth / w, box.clientHeight / h);
 }
 
-const props = defineProps<SectionPreviewCardProps>();
-const authoredTile = computed(() =>
-    props.tile.kind === "authored" ? defineAsyncComponent(props.tile.loader) : null,
-);
+onMounted(() => {
+    observer = new ResizeObserver(measure);
+    if (plate.value) observer.observe(plate.value);
+    if (specimen.value) observer.observe(specimen.value);
+});
+onBeforeUnmount(() => observer?.disconnect());
 </script>
 
 <template>
-    <!-- The card is the WINDOW for the path it opens: the same element the route
-         grammar names going in and lands back into coming out. -->
     <TransitionRouteLink
         :to="to"
         :data-route-window="to"
-        :class="
-            cn(
-                'section-preview-card glass-resting focus-ring',
-                'flex flex-col gap-(--sp-3) rounded-card border border-[var(--glass-border-quiet)] p-(--sp-4)',
-                props.class,
-            )
-        "
-        :data-span="lead ? 'full' : null"
+        class="section-preview-card glass-resting focus-ring"
+        data-story-card
     >
-        <!-- The thumbnail is paint, never a second interactive subtree.
-             [BK #58] It mounts ONLY for a declared preview. A `none` card has no
-             media region at all — no empty well, and so no place for the title to be
-             printed a second time. -->
         <div
-            v-if="tile.kind !== 'none'"
+            ref="plate"
             class="section-preview-card-preview"
             inert
             aria-hidden="true"
+            data-card-preview="live"
         >
-            <img
-                v-if="tile.kind === 'still'"
-                class="section-preview-card-tile section-preview-card-viz-still"
-                :src="tile.src"
-                alt=""
-                draggable="false"
-            />
-            <component
-                :is="authoredTile"
-                v-else-if="authoredTile"
-                class="section-preview-card-tile"
-            />
+            <div
+                ref="specimen"
+                class="section-preview-card-specimen"
+                :style="{ scale: fit }"
+                data-card-specimen
+            >
+                <component :is="preview" />
+            </div>
         </div>
-
-        <span data-route-label class="text-subheading text-foreground">{{ title }}</span>
-        <p v-if="blurb" class="text-small text-muted-foreground">{{ blurb }}</p>
+        <span data-route-label class="section-preview-card-title text-subheading text-foreground">
+            {{ title }}
+        </span>
     </TransitionRouteLink>
 </template>
 
 <style scoped>
 .section-preview-card {
-    content-visibility: auto;
-    contain: content;
-    contain-intrinsic-size: auto 19rem;
+    display: flex;
+    flex-direction: column;
+    overflow: clip;
+    border-radius: var(--radius-3xl);
+    border: 1px solid var(--glass-border-quiet);
     transition:
         border-color var(--duration-fast) var(--ease-out),
-        background-color var(--duration-fast) var(--ease-out);
-}
-
-/* THE ABOVE-FOLD EXEMPTION (BK #58 W-PREVIEW-CARD; the edit ceded from PERF W3).
-   `content-visibility: auto` above the fold buys nothing and costs twice. The lead
-   card is the first grid item on its landing — it is on screen at first paint by
-   construction, so there is no render work to skip — and it is the ONE card that
-   spans the full row, so `contain-intrinsic-size: auto 19rem` is a placeholder height
-   guessed for a box of a different shape. On the first frame the browser lays the
-   field out against that guess and then corrects it, which is a shift under the
-   reader's eye for a saving that was never available. Keyed on `[data-span]`, which
-   is the same one attribute that makes it the lead — never a second flag to drift. */
-.section-preview-card[data-span="full"] {
-    content-visibility: visible;
-    contain-intrinsic-size: none;
+        translate var(--duration-fast) var(--ease-out);
 }
 
 .section-preview-card:hover {
     border-color: var(--glass-border-floating);
-    background-color: color-mix(in srgb, var(--card) 84%, transparent);
+    translate: 0 -2px;
 }
 
+/* The plate runs edge to edge at 16:10 on every card. */
 .section-preview-card-preview {
+    position: relative;
+    overflow: clip;
+    aspect-ratio: 16 / 10;
+    background-color: var(--story-stage-plate);
     pointer-events: none;
     user-select: none;
-    position: relative;
-    display: grid;
-    place-items: center;
-    overflow: clip;
-    container-type: size;
-    contain: paint;
-    aspect-ratio: 1.618;
-    max-block-size: 11rem;
-    border-radius: calc(var(--radius-card) - 0.75rem);
-    background: color-mix(in srgb, var(--card) 68%, transparent);
-    box-shadow:
-        inset 0 1px 0 color-mix(in srgb, white 45%, transparent),
-        inset 0 0 0 1px var(--glass-border-quiet);
 }
 
-.section-preview-card-tile {
-    inline-size: 100%;
-    block-size: 100%;
-    border-radius: inherit;
+/* The specimen at the plate's width and its own height, centred, scaled to fit. */
+.section-preview-card-specimen {
+    position: absolute;
+    inset-inline: 0;
+    top: 50%;
+    translate: 0 -50%;
+    transform-origin: center;
+    container-type: inline-size;
+    padding: var(--sp-4);
 }
 
-.section-preview-card-viz-still {
-    display: block;
-    object-fit: cover;
+.section-preview-card-title {
+    padding: var(--sp-3) var(--sp-4) var(--sp-4);
 }
 
-.section-preview-card-tile,
-.section-preview-card-tile :deep(*) {
-    animation: none !important;
-}
-
-/* [struck 2026-08-10, BK #58] `.section-preview-card-identity` is GONE with its rung.
-   It styled the title-slab the `identity` resolution rendered; that resolution no
-   longer exists, so the rule had no producer and could never match. A dead rule left
-   behind reads as a live option to the next author. */
-
-@media (prefers-reduced-transparency: reduce) {
-    .section-preview-card-preview {
-        background: var(--card);
+@media (prefers-reduced-motion: reduce) {
+    .section-preview-card:hover {
+        translate: none;
     }
 }
 </style>

@@ -1,0 +1,32 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794252999 slope=43.3/s inuse=29715 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+FAIL O-175(2) 390 dark OS, no class == light OS, no class {"differs":["page","card","ink","muted","popover","popoverInk"]}
+PASS O-175(2) 390 light OS, .dark == dark OS, .dark {"differs":[]}
+FAIL O-185 390-light no LCP entry names .dock-plate {"lcpSupported":true,"entries":[{"size":187,"url":"","time":319,"element":"p.","dockPlate":false},{"size":13716,"url":"data:image/svg+xml,%3Csvg width='200' height='20","time":357,"element":"div.dock-plate","dockPlate":t
+FAIL O-185 390-light the grain paints as a mask, not a background image {"backgroundImage":"url(\"data:image/svg+xml,%3Csvg width='20","maskImage":"none","backgroundColor":"rgba(0, 0, 0, 0)","opacity":"0.025","blend":"overlay"}
+FAIL O-204(3) 390-light the body paints 10 px outside the wrapper on all four sides {"drawn":true,"deltas":{"right":11,"left":14,"top":7,"bottom":19},"contain":"layout style","contentVisibility":"auto"}
+FAIL O-185 390-dark no LCP entry names .dock-plate {"lcpSupported":true,"entries":[{"size":187,"url":"","time":276,"element":"p.","dockPlate":false},{"size":13716,"url":"data:image/svg+xml,%3Csvg width='200' height='20","time":305,"element":"div.dock-plate","dockPlate":t
+FAIL O-185 390-dark the grain paints as a mask, not a background image {"backgroundImage":"url(\"data:image/svg+xml,%3Csvg width='20","maskImage":"none","backgroundColor":"rgba(0, 0, 0, 0)","opacity":"0.025","blend":"soft-light"}
+FAIL O-204(3) 390-dark the body paints 10 px outside the wrapper on all four sides {"drawn":true,"deltas":{"right":11,"left":12,"top":8,"bottom":18},"contain":"layout style","contentVisibility":"auto"}
+PASS O-204(3) 390-light park: frames while visible > 0, while scrolled away 0, back > 0 {"visible":98,"away":0,"back":98}
+FAIL O-175(2) 1440 dark OS, no class == light OS, no class {"differs":["page","card","ink","muted","popover","popoverInk"]}
+PASS O-175(2) 1440 light OS, .dark == dark OS, .dark {"differs":[]}
+FAIL O-185 1440-light no LCP entry names .dock-plate {"lcpSupported":true,"entries":[{"size":187,"url":"","time":295,"element":"p.","dockPlate":false},{"size":13716,"url":"data:image/svg+xml,%3Csvg width='200' height='20","time":319,"element":"div.dock-plate","dockPlate":t
+FAIL O-185 1440-light the grain paints as a mask, not a background image {"backgroundImage":"url(\"data:image/svg+xml,%3Csvg width='20","maskImage":"none","backgroundColor":"rgba(0, 0, 0, 0)","opacity":"0.025","blend":"overlay"}
+FAIL O-204(3) 1440-light the body paints 10 px outside the wrapper on all four sides {"drawn":true,"deltas":{"right":11,"left":14,"top":7,"bottom":19},"contain":"layout style","contentVisibility":"auto"}
+FAIL O-185 1440-dark no LCP entry names .dock-plate {"lcpSupported":true,"entries":[{"size":187,"url":"","time":284,"element":"p.","dockPlate":false},{"size":13716,"url":"data:image/svg+xml,%3Csvg width='200' height='20","time":304,"element":"div.dock-plate","dockPlate":t
+FAIL O-185 1440-dark the grain paints as a mask, not a background image {"backgroundImage":"url(\"data:image/svg+xml,%3Csvg width='20","maskImage":"none","backgroundColor":"rgba(0, 0, 0, 0)","opacity":"0.025","blend":"soft-light"}
+FAIL O-204(3) 1440-dark the body paints 10 px outside the wrapper on all four sides {"drawn":true,"deltas":{"right":11,"left":12,"top":8,"bottom":18},"contain":"layout style","contentVisibility":"auto"}
+PASS O-204(3) 1440-light park: frames while visible > 0, while scrolled away 0, back > 0 {"visible":98,"away":0,"back":98}
+red webkit: 4 pass, 14 fail, 0 n/a
+FAIL 390 O-173 G2 the sheet is served and carries 0 data URIs {"status":404,"bytes":0,"dataUris":0}
+FAIL 390 O-173 G2 Jakarta 400 and 600 and Fira Code load from files {"check":{"jakarta400":true,"jakarta600":true,"fira":true,"plex400":true,"plexItalic":true}}
+FAIL 390 O-173 G2 every woff2 request is a file under /dist/fonts/ and answers 200 []
+N/A  390 O-173 G2 layout shift <= 0.01 {"cls":null}
+FAIL 390 O-163 IBM Plex Sans upright and italic load []
+FAIL 1440 O-173 G2 the sheet is served and carries 0 data URIs {"status":404,"bytes":0,"dataUris":0}
+FAIL 1440 O-173 G2 Jakarta 400 and 600 and Fira Code load from files {"check":{"jakarta400":true,"jakarta600":true,"fira":true,"plex400":true,"plexItalic":true}}
+FAIL 1440 O-173 G2 every woff2 request is a file under /dist/fonts/ and answers 200 []
+N/A  1440 O-173 G2 layout shift <= 0.01 {"cls":null}
+FAIL 1440 O-163 IBM Plex Sans upright and italic load []
+red webkit fonts: 0 pass, 8 fail
+probe exit 1, fontprobe exit 1

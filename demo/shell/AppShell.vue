@@ -2,7 +2,6 @@
 import {
     computed,
     defineAsyncComponent,
-    h,
     nextTick,
     onMounted,
     ref,
@@ -51,38 +50,10 @@ const PresetEditor = defineAsyncComponent(
     () => import("./configurator/PresetEditor.vue"),
 );
 
-// The shell field already defers ARMING its GL path past first paint
-// (`useAurora` scheduleAfterFirstPaint), but the chunk carrying the runtime and both
-// shader sets was still eager. The direct component path is imported rather than the
-// aurora barrel so the async chunk carries the component, not the whole export surface.
-//
-// The boundary ships an EAGER wash, and that wash is the PRIMARY first paint — not a
-// fallback hiding a dead Aurora. It renders the SAME `auroraFallbackGround` surface
-// `Aurora.vue` itself renders, from the already-eager `shellAuroraConfig`, under the same
-// `opacityCeiling` envelope, so the resolved component replaces it with the identical
-// ground and the cross-fade is a same-palette dissolve. `delay: 0` because the default
-// 200ms would leave the field blank for exactly the window this wave exists to fill.
-const Aurora = defineAsyncComponent({
-    loader: () => import("@glass/components/aurora/Aurora.vue"),
-    delay: 0,
-    loadingComponent: {
-        setup: () => () => {
-            const ground = auroraFallbackGround(shellAuroraConfig.value);
-            return h("div", {
-                class: "shell-aurora fixed inset-0 -z-10",
-                "aria-hidden": "true",
-                style: {
-                    backgroundImage: ground.backgroundImage,
-                    backgroundColor: ground.backgroundColor,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    backgroundRepeat: "no-repeat",
-                    opacity: 0.5,
-                },
-            });
-        },
-    },
-});
+// The live field rides its own async chunk; the static ground below paints first.
+const Aurora = defineAsyncComponent(
+    () => import("@glass/components/aurora/Aurora.vue"),
+);
 
 const { next, prev, nextCategory, prevCategory } = useStoryNavigation();
 
@@ -99,13 +70,9 @@ const shortcuts = useRegisteredShortcuts();
 // change is not a page swap and must not re-scroll). Under the bare keyed
 // `<component>` swap there is no <Transition> leave window to race.
 const route = useRoute();
-// The shell field is a projection of the committed route, not parallel state. A
-// chromatic hero or self-staging Dock route owns the one page field and suppresses the
-// shell; ordinary routes retain it. `useRoute()` IS the router's `currentRoute`, which
-// updates only after navigation commits, so a keeps→keeps navigation preserves the
-// mounted shell node. It reads the route it already holds rather than importing the
-// router module back up the tree — the sole consumer computing off the sole source.
-const shellFieldActive = computed(() => !route.meta?.suppressesShellField);
+// The ground is painted on every route. Only the live canvas is conditional: a
+// route whose page runs its own canvas keeps the static ground and starts no second.
+const shellFieldLive = computed(() => !route.meta?.ownsCanvas);
 const mainEl = ref<HTMLElement | null>(null);
 const showRouteFocus = ref(false);
 let pendingRouteInput: "keyboard" | "pointer" | null = null;
@@ -175,6 +142,8 @@ const shellAuroraConfig = computed(() =>
         : buildShellAuroraConfig(fieldHue.value),
 );
 
+const ground = computed(() => auroraFallbackGround(shellAuroraConfig.value));
+
 // The shell field is a recessive enhancement, NEVER a legibility dependency — a GL
 // init failure leaves the placeholder/cream floor, logged but non-fatal (the M0
 // onInitError contract threaded onto every Aurora mount).
@@ -216,15 +185,23 @@ onMounted(() => {
 </script>
 
 <template>
-    <!-- The single shell field is a recessive `<Aurora>` that
-         paints behind every non-focal route. The
-         CSS plane). Mounted IFF `shellFieldActive` (false on a focal route whose own
-         GL field is the only context — the never-2-contexts law). The per-route hue
-         re-uploads on the persisted node; `opacity-ceiling` recedes it behind the
-         page glass. The grain rides ON TOP at its multiply/screen opacity — one
-         backdrop, two stacked planes (the field below, the grain over). -->
+    <!-- The site's one ground: a static plane from the shell field's own palette,
+         on every route from the first frame. The live field fades in over it where
+         the page does not run a canvas of its own. -->
+    <div
+        class="shell-ground fixed inset-0 -z-10"
+        aria-hidden="true"
+        :style="{
+            backgroundImage: ground.backgroundImage,
+            backgroundColor: ground.backgroundColor,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            opacity: 0.5,
+        }"
+    />
     <Aurora
-        v-if="shellFieldActive"
+        v-if="shellFieldLive"
         :config="shellAuroraConfig"
         :opacity-ceiling="0.5"
         :on-init-error="onShellAuroraError"
@@ -232,27 +209,12 @@ onMounted(() => {
         data-glass-field-canvas
         aria-hidden="true"
     />
-    <!-- Grain is a per-surface opt-in. The shell
-         field is the recessive <Aurora> above; a
-         surface that wants tactile paper composes `paper-grain-overlay` or mounts
-         `.paper-underpaint` itself). No universal grain plane rides over the whole page. -->
 
-    <!-- `data-paper-field` belongs on the content ancestor of
-         <main> (NOT the fixed Aurora sibling). The `cards.css` opaque-fallback
-         suppressor is a DESCENDANT selector reading this attr, so it must sit above
-         the cards. Set only while the shell field is active (a focal route's own
-         field needs no suppression). -->
-    <!-- THE SHELL GRID. `h-screen` + `flex` + an inner flex-column wrapper were
-         three mechanisms describing one two-by-two topology, and `100vh` is the
-         wrong unit on a phone with a dynamic toolbar — it measures the LARGEST
-         viewport, so the dock underflows by the toolbar's height for the whole
-         time the toolbar is showing. The grid states the topology once
-         (`"rail main" / "rail dock"`) and `100dvh` measures what is actually
-         visible; the dock is an in-flow grid row, so occluding the content is
-         impossible by construction rather than by a reserved spacer. -->
+    <!-- The shell grid is `"rail main"`; the pager dock is laid over the end of
+         `main`, so content passes under its glass. -->
     <div
         class="demo-app-shell relative text-foreground"
-        :data-paper-field="shellFieldActive ? '' : null"
+        data-paper-field
         @keydown.capture="markKeyboardInput"
         @pointerdown.capture="markPointerInput"
     >
@@ -291,15 +253,8 @@ onMounted(() => {
             <SidebarDock />
         </nav>
 
-        <!-- `<main>` owns route scroll. BottomDock is the adjacent shell grid ROW,
-             so its actual block-size shortens <main> without a guessed route
-             spacer. The flex-column wrapper that used to hold the two is gone —
-             the grid's own `"rail main" / "rail dock"` areas say the same thing
-             once, and one topology stated twice is one topology that can disagree
-             with itself.
-             `tabindex="-1"` lets the route-settle watch move focus here, so the
-             atomic keyed swap doesn't strand focus at <body> + keyboard tab order
-             resets to the new page. -->
+        <!-- `<main>` owns route scroll and runs the full height; `tabindex="-1"`
+             lets the route-settle watch move focus here. -->
         <main
             id="demo-main"
             ref="mainEl"
@@ -322,9 +277,7 @@ onMounted(() => {
             </RouterView>
         </main>
 
-        <!-- Shell-anchored story navigation, the grid's `dock` row. It never
-             scrolls with the content because only <main> scrolls, and it cannot
-             occlude the content because an in-flow row has nothing to occlude. -->
+        <!-- The pager dock, laid over the end of `main`. -->
         <BottomDock
             style="view-transition-name: gl-shell-footer; view-transition-class: gl-route-chrome"
         />

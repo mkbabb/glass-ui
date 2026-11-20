@@ -1,0 +1,170 @@
+[guarded] waiting for the 'webkit' lock
+
+Running 13 tests using 1 worker
+
+  ✓   1 [webkit] › tests-visual/release-10-1-5.spec.ts:1187:5 › critique 5, coarse phone › k3 at 320: a capped dock whose seats all show holds the fit law and rests round (2.0s)
+  ✘   2 [webkit] › tests-visual/release-10-1-5.spec.ts:1187:5 › k3 at 320: a capped dock whose seats all show holds the fit law and rests round (2.3s)
+  ✘   3 [webkit] › tests-visual/release-10-1-5.spec.ts:2331:5 › s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round (45.0s)
+  ✘   4 [webkit] › tests-visual/release-10-1-5.spec.ts:2331:5 › fix 11, coarse phone › s2 O-201 at 390: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round (45.1s)
+  ✓   5 [webkit] › tests-visual/release-11-0-2.spec.ts:1363:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 360 (2.1s)
+  ✓   6 [webkit] › tests-visual/release-11-0-2.spec.ts:1363:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 390 (1.9s)
+  ✓   7 [webkit] › tests-visual/release-11-0-2.spec.ts:1363:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 1440 (1.9s)
+  ✓   8 [webkit] › tests-visual/release-11-0-2.spec.ts:1363:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 360 (1.9s)
+  ✓   9 [webkit] › tests-visual/release-11-0-2.spec.ts:1363:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 390 (1.9s)
+  ✓  10 [webkit] › tests-visual/release-11-0-2.spec.ts:1363:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 1440 (1.9s)
+  ✓  11 [webkit] › tests-visual/release-11-0-2.spec.ts:1363:9 › rows · the stretched dock's rows fit with a persistent region beside the layers at 360 (1.9s)
+  ✓  12 [webkit] › tests-visual/release-11-0-2.spec.ts:1363:9 › rows · the stretched dock's rows fit with a persistent region beside the layers at 390 (1.9s)
+  ✓  13 [webkit] › tests-visual/release-11-0-2.spec.ts:1363:9 › rows · the stretched dock's rows fit with a persistent region beside the layers at 1440 (1.9s)
+
+
+  1) [webkit] › tests-visual/release-10-1-5.spec.ts:1187:5 › k3 at 320: a capped dock whose seats all show holds the fit law and rests round 
+
+    Error: 320 focus S4 ({"focusVisible":true,"outline":"solid","ink":4,"past":{"l":-192.8,"r":0.94,"t":-1,"b":-1},"seat":[204.8,308.94,25,63]}): ring inside the run (r)
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    0.94
+
+      1042 |     expect(read.outline, `${at}: the ring paints`).not.toBe("none");
+      1043 |     for (const [side, past] of Object.entries(read.past)) {
+    > 1044 |         expect(past, `${at}: ring inside the run (${side})`).toBeLessThanOrEqual(0.5);
+           |                                                              ^
+      1045 |     }
+      1046 | }
+      1047 |
+        at expectRingInsideRun (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-5.spec.ts:1044:62)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-5.spec.ts:1210:13
+
+    Error Context: tests-visual/test-results/release-10-1-5-k3-at-320-a-13047-the-fit-law-and-rests-round-webkit/error-context.md
+
+  2) [webkit] › tests-visual/release-10-1-5.spec.ts:2331:5 › s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round 
+
+    Error: a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 35
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "cap": 275,
+    +     "cuts": Array [
+    +       "dock-layer 1.23",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 1.23,
+    +   },
+    +   Object {
+    +     "cap": 274,
+    +     "cuts": Array [
+    +       "dock-layer 2.23",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 2.23,
+    +   },
+    +   Object {
+    +     "cap": 273,
+    +     "cuts": Array [
+    +       "dock-layer 3.23",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 3.23,
+    +   },
+    + ]
+
+      2356 |         }
+      2357 |         expect(unfit, `the sweep under ${natural} crosses the fit edge`).toBeGreaterThan(2);
+    > 2358 |         expect(bad, "a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round").toEqual([]);
+           |                                                                                                                                                ^
+      2359 |     });
+      2360 | }
+      2361 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-5.spec.ts:2358:144
+
+    Error Context: tests-visual/test-results/release-10-1-5-s2-O-201-at-f97e1-t-hides-nothing-rests-round-webkit/error-context.md
+
+  3) [webkit] › tests-visual/release-10-1-5.spec.ts:2331:5 › fix 11, coarse phone › s2 O-201 at 390: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round 
+
+    Error: a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 46
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "cap": 280,
+    +     "cuts": Array [
+    +       "dock-layer 0.63",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 0.63,
+    +   },
+    +   Object {
+    +     "cap": 279,
+    +     "cuts": Array [
+    +       "dock-layer 1.63",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 1.63,
+    +   },
+    +   Object {
+    +     "cap": 278,
+    +     "cuts": Array [
+    +       "dock-layer 2.63",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 2.63,
+    +   },
+    +   Object {
+    +     "cap": 277,
+    +     "cuts": Array [
+    +       "dock-layer 3.63",
+    +     ],
+    +     "focusVisible": true,
+    +     "ink": 4,
+    +     "outline": "solid",
+    +     "seat": "home",
+    +     "worst": 3.63,
+    +   },
+    + ]
+
+      2356 |         }
+      2357 |         expect(unfit, `the sweep under ${natural} crosses the fit edge`).toBeGreaterThan(2);
+    > 2358 |         expect(bad, "a cap that cuts a focused seat's ring, a flag that is not the span, or a run that hides nothing and does not rest round").toEqual([]);
+           |                                                                                                                                                ^
+      2359 |     });
+      2360 | }
+      2361 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-5.spec.ts:2358:144
+
+    Error Context: tests-visual/test-results/release-10-1-5-fix-11-coar-b6824-t-hides-nothing-rests-round-webkit/error-context.md
+
+  3 failed
+    [webkit] › tests-visual/release-10-1-5.spec.ts:1187:5 › k3 at 320: a capped dock whose seats all show holds the fit law and rests round 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:2331:5 › s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:2331:5 › fix 11, coarse phone › s2 O-201 at 390: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round 
+  10 passed (1.9m)

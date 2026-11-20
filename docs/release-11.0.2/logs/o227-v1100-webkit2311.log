@@ -1,0 +1,28 @@
+
+Running 2 tests using 1 worker
+
+  ✘  1 [webkit-2311] › tests-visual/release-11-0-2.spec.ts:188:1 › edge · a GlassDock page opens and stays alive (557ms)
+  -  2 [webkit-2311] › tests-visual/release-11-0-2.spec.ts:207:1 › edge · the plate edge computes 11.0.0's colour at t = 0, 0.5 and 1
+
+
+  1) [webkit-2311] › tests-visual/release-11-0-2.spec.ts:188:1 › edge · a GlassDock page opens and stays alive 
+
+    Error: page.goto: Page crashed
+    Call log:
+      - navigating to "http://localhost:5343/tests-visual/release-11-0-2/press-harness.html", waiting until "load"
+
+
+      190 |     page.on("crash", () => (crashed = true));
+      191 |     await page.setViewportSize({ width: 1440, height: 900 });
+    > 192 |     await page.goto("/tests-visual/release-11-0-2/press-harness.html");
+          |                ^
+      193 |     await page.locator(".press-dock .dock-plate").waitFor();
+      194 |     await page.waitForTimeout(600);
+      195 |     const summary = page.locator('[aria-label$="open the dock"]').first();
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.0/tree/tests-visual/release-11-0-2.spec.ts:192:16
+
+    Error Context: tests-visual/test-results/release-11-0-2-edge-·-a-GlassDock-page-opens-and-stays-alive-webkit-2311/error-context.md
+
+  1 failed
+    [webkit-2311] › tests-visual/release-11-0-2.spec.ts:188:1 › edge · a GlassDock page opens and stays alive 
+  1 skipped

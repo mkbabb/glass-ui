@@ -1,0 +1,151 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794252999 slope=43.3/s inuse=29715 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 13 tests using 1 worker
+
+  ✓   1 [chromium-headless-new] › .cache/l4-v1100/tests-visual/blob-pause-seam.spec.ts:89:5 › blob-integration (π lane — the WCAG-2.2.2 pause seam + context bound + README consistency) › the DockBackgroundToggle pause seam PARKS the render loop (live rAF-park observation) (14.3s)
+  ✓   2 [chromium-headless-new] › .cache/l4-v1100/tests-visual/blob-pause-seam.spec.ts:135:5 › blob-integration (π lane — the WCAG-2.2.2 pause seam + context bound + README consistency) › the re-cast blob stories hold a BOUNDED number of live WebGL2 contexts (980ms)
+  ✓   3 [chromium-headless-new] › .cache/l4-v1100/tests-visual/blob-pause-seam.spec.ts:167:5 › blob-integration (π lane — the WCAG-2.2.2 pause seam + context bound + README consistency) › README-vs-code defineExpose CONSISTENCY — every README 'Exposed' method is on the Blob surface (7ms)
+  ✘   4 [chromium-headless-new] › .cache/l4-v1100/tests-visual/blob-render.spec.ts:526:5 › blob-render (π lane — fail-CLOSED, the blob's CLOSING gate) › blob renders a CONTAINED LIT LIVING droplet on BLOB_CONFIG_DEFAULTS (four-side containment + dome variance + silhouette + field) (11.7s)
+  ✘   5 [chromium-headless-new] › .cache/l4-v1100/tests-visual/blob-render.spec.ts:660:5 › blob-render (π lane — fail-CLOSED, the blob's CLOSING gate) › blob LEANS toward a synthetic hover-flick (the wired interaction is legible within the footprint) (6.0s)
+  ✓   6 [chromium-headless-new] › .cache/l4-v1100/tests-visual/blob-render.spec.ts:707:5 › blob-render (π lane — fail-CLOSED, the blob's CLOSING gate) › EVERY grid blob paints visibly against the page background in BOTH light and dark (the var(--primary)-dark-wash guard) (11.0s)
+  ✓   7 [chromium-headless-new] › .cache/l4-v1100/tests-visual/dark-semantic-contrast.spec.ts:197:9 › dark-semantic-contrast (π lane — the dark --destructive ink readback, fail-CLOSED) › destructive Alert title clears the 4.6:1 ink floor under .dark @ mobile (2.0s)
+  ✓   8 [chromium-headless-new] › .cache/l4-v1100/tests-visual/dark-semantic-contrast.spec.ts:197:9 › dark-semantic-contrast (π lane — the dark --destructive ink readback, fail-CLOSED) › destructive Alert title clears the 4.6:1 ink floor under .dark @ desktop (1.9s)
+  ✘   9 [chromium-headless-new] › .cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (light) (1.2s)
+  ✘  10 [chromium-headless-new] › .cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (dark) (1.2s)
+  ✘  11 [chromium-headless-new] › .cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (light) (1.3s)
+  ✘  12 [chromium-headless-new] › .cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (dark) (1.3s)
+  ✓  13 [chromium-headless-new] › .cache/l4-v1100/tests-visual/font-cascade-live.spec.ts:64:5 › font-cascade-live (π lane — DOM-cascade font readback, fail-CLOSED) › the library default register IS the rendered register (Plus Jakarta text + Fira Code mono) (1.2s)
+
+
+  1) [chromium-headless-new] › .cache/l4-v1100/tests-visual/blob-render.spec.ts:526:5 › blob-render (π lane — fail-CLOSED, the blob's CLOSING gate) › blob renders a CONTAINED LIT LIVING droplet on BLOB_CONFIG_DEFAULTS (four-side containment + dome variance + silhouette + field) 
+
+    Error: blob interior-corner empty fraction 0.453 is below the field floor 0.7 — the canvas reads as a FLAT slab (the body fills the corners), not a contained metaball field
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 0.7
+    Received:    0.4534203686200378
+
+      607 |             cornerEmpty,
+      608 |             `blob interior-corner empty fraction ${cornerEmpty.toFixed(3)} is below the field floor ${CORNER_EMPTY_MIN} — the canvas reads as a FLAT slab (the body fills the corners), not a contained metaball field`,
+    > 609 |         ).toBeGreaterThanOrEqual(CORNER_EMPTY_MIN);
+          |           ^
+      610 |
+      611 |         // 3. FOUR-SIDE CONTAINMENT (AX.W15 F0 + AX.W16 reconciliation) — the BODY is
+      612 |         // contained on EVERY edge (W15 geometry); the orbiting SATELLITE intentionally
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/blob-render.spec.ts:609:11
+
+    Error Context: .cache/l4-v1100/tests-visual/test-results/blob-render-blob-render-π--62597--variance-silhouette-field--chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › .cache/l4-v1100/tests-visual/blob-render.spec.ts:660:5 › blob-render (π lane — fail-CLOSED, the blob's CLOSING gate) › blob LEANS toward a synthetic hover-flick (the wired interaction is legible within the footprint) 
+
+    Error: blob centroid shift under a rightward hover-flick = -0.0012 (rest 0.482 → lean 0.481); it must move ≥ 0.012 toward the pointer — the wired lean/pseudopod is INVISIBLE (no contained silhouette to deform legibly)
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 0.012
+    Received:    -0.0011893212480721393
+
+      698 |             shift,
+      699 |             `blob centroid shift under a rightward hover-flick = ${shift.toFixed(4)} (rest ${restCx.toFixed(3)} → lean ${leanCx.toFixed(3)}); it must move ≥ ${CENTROID_SHIFT_MIN} toward the pointer — the wired lean/pseudopod is INVISIBLE (no contained silhouette to deform legibly)`,
+    > 700 |         ).toBeGreaterThanOrEqual(CENTROID_SHIFT_MIN);
+          |           ^
+      701 |         expect(
+      702 |             shift,
+      703 |             `blob centroid shift under a rightward hover-flick = ${shift.toFixed(4)} exceeds the calm-lean ceiling ${CENTROID_SHIFT_MAX} — the creature LURCHES toward the cursor (the "far too dramatic" lunge; the calm lean measures ≈ 0.042, a lunge toward ≈ 0.11 reds)`,
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/blob-render.spec.ts:700:11
+
+    Error Context: .cache/l4-v1100/tests-visual/test-results/blob-render-blob-render-π--770c2-gible-within-the-footprint--chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › .cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (light) 
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5199/dock/overview
+    Call log:
+      - navigating to "http://localhost:5199/dock/overview", waiting until "networkidle"
+
+
+      36 |
+      37 | async function goto(page: Page, route: string) {
+    > 38 |     await page.goto(BASE + route, { waitUntil: "networkidle" });
+         |                ^
+      39 |     await page.waitForTimeout(450);
+      40 | }
+      41 |
+        at goto (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:38:16)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:176:19
+
+    Error Context: .cache/l4-v1100/tests-visual/test-results/dock-plate-clearance-plate-e898a-e-—-sidebar-vertical-light--chromium-headless-new/error-context.md
+
+    Error Context: .cache/l4-v1100/tests-visual/test-results/dock-plate-clearance-plate-e898a-e-—-sidebar-vertical-light--chromium-headless-new/error-context.md
+
+  4) [chromium-headless-new] › .cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (dark) 
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5199/dock/overview
+    Call log:
+      - navigating to "http://localhost:5199/dock/overview", waiting until "networkidle"
+
+
+      36 |
+      37 | async function goto(page: Page, route: string) {
+    > 38 |     await page.goto(BASE + route, { waitUntil: "networkidle" });
+         |                ^
+      39 |     await page.waitForTimeout(450);
+      40 | }
+      41 |
+        at goto (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:38:16)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:176:19
+
+    Error Context: .cache/l4-v1100/tests-visual/test-results/dock-plate-clearance-plate-a45e2-ce-—-sidebar-vertical-dark--chromium-headless-new/error-context.md
+
+    Error Context: .cache/l4-v1100/tests-visual/test-results/dock-plate-clearance-plate-a45e2-ce-—-sidebar-vertical-dark--chromium-headless-new/error-context.md
+
+  5) [chromium-headless-new] › .cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (light) 
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5199/dock/overview
+    Call log:
+      - navigating to "http://localhost:5199/dock/overview", waiting until "networkidle"
+
+
+      36 |
+      37 | async function goto(page: Page, route: string) {
+    > 38 |     await page.goto(BASE + route, { waitUntil: "networkidle" });
+         |                ^
+      39 |     await page.waitForTimeout(450);
+      40 | }
+      41 |
+        at goto (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:38:16)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:176:19
+
+    Error Context: .cache/l4-v1100/tests-visual/test-results/dock-plate-clearance-plate-0270e--—-bottom-horizontal-light--chromium-headless-new/error-context.md
+
+    Error Context: .cache/l4-v1100/tests-visual/test-results/dock-plate-clearance-plate-0270e--—-bottom-horizontal-light--chromium-headless-new/error-context.md
+
+  6) [chromium-headless-new] › .cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (dark) 
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5199/dock/overview
+    Call log:
+      - navigating to "http://localhost:5199/dock/overview", waiting until "networkidle"
+
+
+      36 |
+      37 | async function goto(page: Page, route: string) {
+    > 38 |     await page.goto(BASE + route, { waitUntil: "networkidle" });
+         |                ^
+      39 |     await page.waitForTimeout(450);
+      40 | }
+      41 |
+        at goto (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:38:16)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:176:19
+
+    Error Context: .cache/l4-v1100/tests-visual/test-results/dock-plate-clearance-plate-0ad3d-e-—-bottom-horizontal-dark--chromium-headless-new/error-context.md
+
+    Error Context: .cache/l4-v1100/tests-visual/test-results/dock-plate-clearance-plate-0ad3d-e-—-bottom-horizontal-dark--chromium-headless-new/error-context.md
+
+  6 failed
+    [chromium-headless-new] › .cache/l4-v1100/tests-visual/blob-render.spec.ts:526:5 › blob-render (π lane — fail-CLOSED, the blob's CLOSING gate) › blob renders a CONTAINED LIT LIVING droplet on BLOB_CONFIG_DEFAULTS (four-side containment + dome variance + silhouette + field) 
+    [chromium-headless-new] › .cache/l4-v1100/tests-visual/blob-render.spec.ts:660:5 › blob-render (π lane — fail-CLOSED, the blob's CLOSING gate) › blob LEANS toward a synthetic hover-flick (the wired interaction is legible within the footprint) 
+    [chromium-headless-new] › .cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (light) 
+    [chromium-headless-new] › .cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (dark) 
+    [chromium-headless-new] › .cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (light) 
+    [chromium-headless-new] › .cache/l4-v1100/tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (dark) 
+  7 passed (1.1m)

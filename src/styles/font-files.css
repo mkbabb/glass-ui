@@ -1,0 +1,44 @@
+/*
+ * font-files.css — every packaged face, delivered as woff2 FILES.
+ *
+ * Published as `@mkbabb/glass-ui/styles/font-files` (dist/styles/font-files.css).
+ * The build flattens the `@import` below into this sheet and points every `url()`
+ * at the shipped file beside it (`../fonts/<family>/<face>.woff2`). A consumer that
+ * `@import`s the sheet through a bundler gets each file hashed and copied, and the
+ * browser fetches a face only when text on the page uses it, so the faces cost no
+ * CSS bytes and an unused family costs nothing at all.
+ *
+ * The brand faces (Plus Jakarta Sans, Fira Code) are declared once, in fonts.css,
+ * which also ships on its own as `@mkbabb/glass-ui/styles/fonts` with the faces
+ * inlined as data URLs, for consumers that emit that sheet verbatim. IBM Plex Sans
+ * ships only as files, here.
+ */
+@import "./fonts.css";
+
+/* IBM Plex Sans — Latin subset, upright and italic. Variable: one woff2 per style
+   covers wght 100..700. `swap`: Plex is a consumer's chosen text face, so it should
+   paint as soon as it arrives; preload the upright file to land it in the first
+   frame. */
+@font-face {
+    font-family: "IBM Plex Sans";
+    font-style: normal;
+    font-weight: 100 700;
+    font-display: swap;
+    src: url("@mkbabb/glass-ui/fonts/ibm-plex-sans/ibm-plex-sans-latin.woff2") format("woff2");
+    unicode-range:
+        U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+        U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+        U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+    font-family: "IBM Plex Sans";
+    font-style: italic;
+    font-weight: 100 700;
+    font-display: swap;
+    src: url("@mkbabb/glass-ui/fonts/ibm-plex-sans/ibm-plex-sans-italic-latin.woff2") format("woff2");
+    unicode-range:
+        U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+        U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+        U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}

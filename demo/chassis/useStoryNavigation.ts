@@ -20,8 +20,9 @@ export type StoryLocation = CategoryStoryLocation;
 
 /**
  * Story navigation helpers keyed off the current route + manifest. Every story
- * lives in a category. Within-category siblings drive next/prev;
- * the category arrows wrap across categories that carry at least one story.
+ * lives in a category. Next and previous page walk the whole site in manifest order,
+ * crossing sections and wrapping at the ends, so a page control is never disabled;
+ * the category arrows wrap the same way.
  */
 export function useStoryNavigation() {
     const route = useRoute();
@@ -54,22 +55,24 @@ export function useStoryNavigation() {
         void pushRoute(router, `/${category.id}/${category.stories[0]!.id}`);
     }
 
-    function next(): void {
+    /** Every page on the site, in manifest order. */
+    const pages = CATEGORIES.flatMap((category) =>
+        category.stories.map((story) => `/${category.id}/${story.id}`),
+    );
+
+    function step(by: 1 | -1): void {
         const loc = current.value;
-        if (!loc) return;
-        const nextStory = loc.category.stories[loc.storyIndex + 1];
-        if (nextStory) {
-            void pushRoute(router, `/${loc.category.id}/${nextStory.id}`);
-        }
+        if (!loc || pages.length === 0) return;
+        const at = pages.indexOf(`/${loc.category.id}/${loc.story.id}`);
+        void pushRoute(router, pages[(at + by + pages.length) % pages.length]!);
+    }
+
+    function next(): void {
+        step(1);
     }
 
     function prev(): void {
-        const loc = current.value;
-        if (!loc) return;
-        const prevStory = loc.category.stories[loc.storyIndex - 1];
-        if (prevStory) {
-            void pushRoute(router, `/${loc.category.id}/${prevStory.id}`);
-        }
+        step(-1);
     }
 
     function nextCategory(): void {

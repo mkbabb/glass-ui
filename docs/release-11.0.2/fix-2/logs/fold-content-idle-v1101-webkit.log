@@ -1,0 +1,19 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794521931 slope=31.8/s inuse=25856 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for the 'webkit' lock
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.goto: Page crashed
+Call log:
+[2m  - navigating to "http://localhost:5344/tests-visual/release-11-0-2/fold-content-harness.html?orientation=horizontal", waiting until "load"[22m
+
+    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/docs/release-11.0.2/fix-2/scripts/fold-content-probe.mjs:57:28 {
+  log: [
+    '  - navigating to "http://localhost:5344/tests-visual/release-11-0-2/fold-content-harness.html?orientation=horizontal", waiting until "load"'
+  ],
+  name: 'Error'
+}
+
+Node.js v26.0.0
+docs/release-11.0.2/fix-2/scripts/serve-probe.sh: line 14: 28842 Terminated: 15          cd "$D" && BROWSER=none npx vite --host localhost --port $P --strictPort > $F/logs/vite-$T-$P.log 2>&1

@@ -1,0 +1,147 @@
+[guarded] waiting for the 'webkit' lock
+
+Running 13 tests using 1 worker
+
+  ✓   1 [webkit] › tests-visual/release-10-1-5.spec.ts:1187:5 › critique 5, coarse phone › k3 at 320: a capped dock whose seats all show holds the fit law and rests round (2.0s)
+  ✓   2 [webkit] › tests-visual/release-10-1-5.spec.ts:1187:5 › k3 at 320: a capped dock whose seats all show holds the fit law and rests round (2.2s)
+  ✓   3 [webkit] › tests-visual/release-10-1-5.spec.ts:2331:5 › s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round (44.7s)
+  ✓   4 [webkit] › tests-visual/release-10-1-5.spec.ts:2331:5 › fix 11, coarse phone › s2 O-201 at 390: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round (44.8s)
+  ✘   5 [webkit] › tests-visual/release-11-0-2.spec.ts:1363:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 360 (2.0s)
+  ✘   6 [webkit] › tests-visual/release-11-0-2.spec.ts:1363:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 390 (2.1s)
+  ✘   7 [webkit] › tests-visual/release-11-0-2.spec.ts:1363:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 1440 (2.1s)
+  ✘   8 [webkit] › tests-visual/release-11-0-2.spec.ts:1363:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 360 (2.1s)
+  ✘   9 [webkit] › tests-visual/release-11-0-2.spec.ts:1363:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 390 (2.1s)
+  ✘  10 [webkit] › tests-visual/release-11-0-2.spec.ts:1363:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 1440 (2.1s)
+  ✓  11 [webkit] › tests-visual/release-11-0-2.spec.ts:1363:9 › rows · the stretched dock's rows fit with a persistent region beside the layers at 360 (2.0s)
+  ✓  12 [webkit] › tests-visual/release-11-0-2.spec.ts:1363:9 › rows · the stretched dock's rows fit with a persistent region beside the layers at 390 (1.9s)
+  ✓  13 [webkit] › tests-visual/release-11-0-2.spec.ts:1363:9 › rows · the stretched dock's rows fit with a persistent region beside the layers at 1440 (1.9s)
+
+
+  1) [webkit] › tests-visual/release-11-0-2.spec.ts:1363:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 360 
+
+    Error: the run's scrollWidth is its clientWidth
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 282
+    Received: 286
+
+      1401 |             expect(r.collapsed).toBe(false);
+      1402 |             expect(r.root[0], "the root's scrollWidth is its clientWidth").toBe(r.root[1]);
+    > 1403 |             expect(r.run[0], "the run's scrollWidth is its clientWidth").toBe(r.run[1]);
+           |                                                                          ^
+      1404 |             expect(r.scrollers, "no element is a horizontal scroller at rest").toEqual([]);
+      1405 |             expect(r.page[0], "the page does not scroll sideways").toBe(r.page[1]);
+      1406 |         });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:1403:74
+
+    Error Context: tests-visual/test-results/release-11-0-2-rows-·-the--4db32-on-beside-the-layers-at-360-webkit/error-context.md
+
+  2) [webkit] › tests-visual/release-11-0-2.spec.ts:1363:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 390 
+
+    Error: the run's scrollWidth is its clientWidth
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 312
+    Received: 316
+
+      1401 |             expect(r.collapsed).toBe(false);
+      1402 |             expect(r.root[0], "the root's scrollWidth is its clientWidth").toBe(r.root[1]);
+    > 1403 |             expect(r.run[0], "the run's scrollWidth is its clientWidth").toBe(r.run[1]);
+           |                                                                          ^
+      1404 |             expect(r.scrollers, "no element is a horizontal scroller at rest").toEqual([]);
+      1405 |             expect(r.page[0], "the page does not scroll sideways").toBe(r.page[1]);
+      1406 |         });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:1403:74
+
+    Error Context: tests-visual/test-results/release-11-0-2-rows-·-the--be387-on-beside-the-layers-at-390-webkit/error-context.md
+
+  3) [webkit] › tests-visual/release-11-0-2.spec.ts:1363:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 1440 
+
+    Error: the run's scrollWidth is its clientWidth
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 894
+    Received: 898
+
+      1401 |             expect(r.collapsed).toBe(false);
+      1402 |             expect(r.root[0], "the root's scrollWidth is its clientWidth").toBe(r.root[1]);
+    > 1403 |             expect(r.run[0], "the run's scrollWidth is its clientWidth").toBe(r.run[1]);
+           |                                                                          ^
+      1404 |             expect(r.scrollers, "no element is a horizontal scroller at rest").toEqual([]);
+      1405 |             expect(r.page[0], "the page does not scroll sideways").toBe(r.page[1]);
+      1406 |         });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:1403:74
+
+    Error Context: tests-visual/test-results/release-11-0-2-rows-·-the--7c554-n-beside-the-layers-at-1440-webkit/error-context.md
+
+  4) [webkit] › tests-visual/release-11-0-2.spec.ts:1363:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 360 
+
+    Error: the run's scrollWidth is its clientWidth
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 168
+    Received: 172
+
+      1401 |             expect(r.collapsed).toBe(false);
+      1402 |             expect(r.root[0], "the root's scrollWidth is its clientWidth").toBe(r.root[1]);
+    > 1403 |             expect(r.run[0], "the run's scrollWidth is its clientWidth").toBe(r.run[1]);
+           |                                                                          ^
+      1404 |             expect(r.scrollers, "no element is a horizontal scroller at rest").toEqual([]);
+      1405 |             expect(r.page[0], "the page does not scroll sideways").toBe(r.page[1]);
+      1406 |         });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:1403:74
+
+    Error Context: tests-visual/test-results/release-11-0-2-rows-·-the--f00d1-on-beside-the-layers-at-360-webkit/error-context.md
+
+  5) [webkit] › tests-visual/release-11-0-2.spec.ts:1363:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 390 
+
+    Error: the run's scrollWidth is its clientWidth
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 168
+    Received: 172
+
+      1401 |             expect(r.collapsed).toBe(false);
+      1402 |             expect(r.root[0], "the root's scrollWidth is its clientWidth").toBe(r.root[1]);
+    > 1403 |             expect(r.run[0], "the run's scrollWidth is its clientWidth").toBe(r.run[1]);
+           |                                                                          ^
+      1404 |             expect(r.scrollers, "no element is a horizontal scroller at rest").toEqual([]);
+      1405 |             expect(r.page[0], "the page does not scroll sideways").toBe(r.page[1]);
+      1406 |         });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:1403:74
+
+    Error Context: tests-visual/test-results/release-11-0-2-rows-·-the--4767f-on-beside-the-layers-at-390-webkit/error-context.md
+
+  6) [webkit] › tests-visual/release-11-0-2.spec.ts:1363:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 1440 
+
+    Error: the run's scrollWidth is its clientWidth
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 168
+    Received: 172
+
+      1401 |             expect(r.collapsed).toBe(false);
+      1402 |             expect(r.root[0], "the root's scrollWidth is its clientWidth").toBe(r.root[1]);
+    > 1403 |             expect(r.run[0], "the run's scrollWidth is its clientWidth").toBe(r.run[1]);
+           |                                                                          ^
+      1404 |             expect(r.scrollers, "no element is a horizontal scroller at rest").toEqual([]);
+      1405 |             expect(r.page[0], "the page does not scroll sideways").toBe(r.page[1]);
+      1406 |         });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-11-0-2.spec.ts:1403:74
+
+    Error Context: tests-visual/test-results/release-11-0-2-rows-·-the--a7f21-n-beside-the-layers-at-1440-webkit/error-context.md
+
+  6 failed
+    [webkit] › tests-visual/release-11-0-2.spec.ts:1363:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 360 
+    [webkit] › tests-visual/release-11-0-2.spec.ts:1363:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 390 
+    [webkit] › tests-visual/release-11-0-2.spec.ts:1363:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 1440 
+    [webkit] › tests-visual/release-11-0-2.spec.ts:1363:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 360 
+    [webkit] › tests-visual/release-11-0-2.spec.ts:1363:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 390 
+    [webkit] › tests-visual/release-11-0-2.spec.ts:1363:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 1440 
+  7 passed (2.0m)

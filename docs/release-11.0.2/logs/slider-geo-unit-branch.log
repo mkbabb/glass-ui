@@ -1,0 +1,22 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794521931 slope=31.8/s inuse=25856 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2
+
+ ❯ tests/gates/boot-graph.test.ts (14 tests | 1 failed) 103ms
+     × the dist-demo it measures is NEWER than every source it is built from 15ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the dist-demo it measures is NEWER than every source it is built from
+AssertionError: dist-demo/index.html is STALE (built 2026-11-12T22:07:17.464Z, newest source 2026-11-12T23:49:28.789Z) — run `npm run demo:dist:build`; a stale build greens a regressed graph: expected 1794521237464.144 to be greater than 1794527368789.6382
+ ❯ tests/gates/boot-graph.test.ts:576:11
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 48 passed (49)
+      Tests  1 failed | 620 passed | 6 expected fail (627)
+   Start at  18:58:22
+   Duration  15.08s (transform 1.04s, setup 1.70s, import 6.51s, tests 8.24s, environment 7.50s)
+

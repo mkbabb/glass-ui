@@ -376,7 +376,8 @@ this table must agree). Five classes: **primitive** (the numeric ladder), **sema
 | `--radius-2xl`  | 1rem     | 16 px             | Large-card rung               |
 | `--radius-3xl`  | 1.5rem   | 24 px             | Big-dock/sheet rung           |
 | `--radius-pill` | 1rem     | 16 px             | Pill rung: a stadium up to 32 px tall, a 16 px corner above (U/B7) |
-| `--radius-circle` | 50%    | circle            | Icons, dots, thumbs, avatars, the collapsed dock (U/B7) |
+| `--radius-circle` | 50%    | circle            | Icons, dots, thumbs, avatars (U/B7) |
+| `--radius-stadium` | unbounded | stadium        | Round ends at any width, a circle on a square box |
 
 ### Semantic roles — what the surface IS
 
@@ -392,7 +393,7 @@ this table must agree). Five classes: **primitive** (the numeric ladder), **sema
 | `--radius-strip`    | 0.75rem            | 12 px | Bounded column-stack segmented track (vertical)            |
 | `--radius-tab`      | var(--radius-pill) | 16 px | Segmented control (horizontal; a stadium up to 32 px tall) |
 | `--radius-badge`    | var(--radius-pill) | 16 px | Badge (a stadium at badge height)                          |
-| `--radius-dock`     | var(--radius-pill) | 16 px | Dock container (the collapsed dock is `--radius-circle`)   |
+| `--radius-dock`     | var(--radius-stadium) | half the cross extent | Dock container: a capsule in every posture (a host sets `1rem` for the bar) |
 | `--radius-dock-card`| var(--radius-3xl)  | 24 px | Big-dock card shell (density-scaled)                       |
 | `--radius-tooltip`  | var(--radius-lg)   | 10 px | Tooltip                                                    |
 
@@ -1261,19 +1262,22 @@ compose the ONE shared `.glass-track-well` groove register and the ONE shared
 
 | Variant         | Track                      | Thumb                               | Use                                                                                                 |
 | --------------- | -------------------------- | ----------------------------------- | --------------------------------------------------------------------------------------------------- |
-| `standard`      | thick recessed capsule     | fill edge; semantic thumb is unpainted | General numeric binding |
-| `spectrum`      | consumer-supplied gradient | thin visible bar                       | Color-ramp selection      |
+| `standard`      | thick recessed capsule     | a disc the track's height, the fill's end | General numeric binding |
+| `spectrum`      | consumer-supplied gradient | a ring the track's height                 | Color-ramp selection      |
 
-| Size | Track height | Thumb size | Use               |
-| ---- | ------------ | ---------- | ----------------- |
-| `sm` | 12 px        | 8 px       | Density-tight UIs |
-| `md` | 20 px        | 16 px      | Default           |
-| `lg` | 28 px        | 24 px      | Hero / featured   |
+| Size | Track height | Thumb diameter | Use               |
+| ---- | ------------ | -------------- | ----------------- |
+| `sm` | 12 px        | 12 px          | Density-tight UIs |
+| `md` | 20 px        | 20 px          | Default           |
+| `lg` | 28 px        | 28 px          | Hero / featured   |
 
 Each rung reads two tokens from the token `:root`: `--slider-track-height-{sm,md,lg}`
 (0.75 / 1.25 / 1.75rem) and `--slider-thumb-size-{sm,md,lg}` (0.5 / 1 / 1.5rem). The rung
-sets `--slider-track-height` to its track token and `--slider-thumb-size` to
-`min(thumb, track)`, so the thumb never exceeds the track whichever token moves. The
+sets `--slider-track-height` to its track token and `--slider-thumb-size` to its thumb
+token. The track height is the band's one height: the track, the fill and the thumb
+(the scrubber's disc and the spectrum's ring) are all that tall, with a radius of half
+of it, so a thumb is resized by its track token. The thumb token sets only the
+spectrum's taller track (1.5 times it). The
 token `:root` is unlayered and beats every layered consumer `:root`, so override a rung
 token on a wrapper or on the slider in any layer, or on an unlayered `:root`; a `:root`
 override inside `@theme` or `@layer glass-overrides` loses. The table above is the

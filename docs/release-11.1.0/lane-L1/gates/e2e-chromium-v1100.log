@@ -1,0 +1,146 @@
+
+Running 7 tests using 1 worker
+
+  ✘  1 [chromium-headless-new] › .cache/l1-v1100/tests-visual/dock-animation-live.spec.ts:97:5 › dock-animation-live (π lane — single-scalar, fail-CLOSED) › the dock box and --dock-morph-t morph on ONE clock (lead/lag ≤ 1 frame) (884ms)
+  ✘  2 [chromium-headless-new] › .cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › light · mobile — nav-dock gestalt (826ms)
+  ✘  3 [chromium-headless-new] › .cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › light · desktop — nav-dock gestalt (834ms)
+  ✘  4 [chromium-headless-new] › .cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › dark · mobile — nav-dock gestalt (824ms)
+  ✘  5 [chromium-headless-new] › .cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › dark · desktop — nav-dock gestalt (830ms)
+  ✓  6 [chromium-headless-new] › .cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts:198:5 › W-NAV-DOCK-FIX — the nav-dock binding π › bottom-dock tab strip + persistent prev/next (719ms)
+  ✘  7 [chromium-headless-new] › .cache/l1-v1100/tests-visual/scroll-progress-rim.spec.ts:28:1 › aggregate and segmented progress share one thin radius-following masked rim (5.9s)
+
+
+  1) [chromium-headless-new] › .cache/l1-v1100/tests-visual/dock-animation-live.spec.ts:97:5 › dock-animation-live (π lane — single-scalar, fail-CLOSED) › the dock box and --dock-morph-t morph on ONE clock (lead/lag ≤ 1 frame) 
+
+    Error: --dock-morph-t ramped over only 0 rising frame(s) (< 5) — the single-scalar spring did NOT run (frozen at 0; the snap/desync regression)
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 5
+    Received:    0
+
+      233 |             risingScalar,
+      234 |             `--dock-morph-t ramped over only ${risingScalar} rising frame(s) (< ${MIN_MORPH_FRAMES}) — the single-scalar spring did NOT run (frozen at 0; the snap/desync regression)`,
+    > 235 |         ).toBeGreaterThanOrEqual(MIN_MORPH_FRAMES);
+          |           ^
+      236 |
+      237 |         // The root box width must rise over ≥5 rising frames (a snap/freeze fails).
+      238 |         const risingWidth = countRising(tl.widths, 0.5);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/dock-animation-live.spec.ts:235:11
+
+    Error Context: .cache/l1-v1100/tests-visual/test-results/dock-animation-live-dock-a-bdb92-E-clock-lead-lag-≤-1-frame--chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › .cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › light · mobile — nav-dock gestalt 
+
+    Error: the rail renders mode="facets"
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "facets"
+    Received: null
+
+      138 |                     return rail?.getAttribute("data-mode") ?? null;
+      139 |                 });
+    > 140 |                 expect(railMode, 'the rail renders mode="facets"').toBe("facets");
+          |                                                                    ^
+      141 |
+      142 |                 // Distinct per-facet --glass-accent (read the inline style hue).
+      143 |                 const accents = await page.evaluate(() => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts:140:68
+
+    Error Context: .cache/l1-v1100/tests-visual/test-results/nav-dock-fix-W-NAV-DOCK-FI-e4817-·-mobile-—-nav-dock-gestalt-chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › .cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › light · desktop — nav-dock gestalt 
+
+    Error: the rail renders mode="facets"
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "facets"
+    Received: null
+
+      138 |                     return rail?.getAttribute("data-mode") ?? null;
+      139 |                 });
+    > 140 |                 expect(railMode, 'the rail renders mode="facets"').toBe("facets");
+          |                                                                    ^
+      141 |
+      142 |                 // Distinct per-facet --glass-accent (read the inline style hue).
+      143 |                 const accents = await page.evaluate(() => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts:140:68
+
+    Error Context: .cache/l1-v1100/tests-visual/test-results/nav-dock-fix-W-NAV-DOCK-FI-c3b61--desktop-—-nav-dock-gestalt-chromium-headless-new/error-context.md
+
+  4) [chromium-headless-new] › .cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › dark · mobile — nav-dock gestalt 
+
+    Error: the rail renders mode="facets"
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "facets"
+    Received: null
+
+      138 |                     return rail?.getAttribute("data-mode") ?? null;
+      139 |                 });
+    > 140 |                 expect(railMode, 'the rail renders mode="facets"').toBe("facets");
+          |                                                                    ^
+      141 |
+      142 |                 // Distinct per-facet --glass-accent (read the inline style hue).
+      143 |                 const accents = await page.evaluate(() => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts:140:68
+
+    Error Context: .cache/l1-v1100/tests-visual/test-results/nav-dock-fix-W-NAV-DOCK-FI-abc92-·-mobile-—-nav-dock-gestalt-chromium-headless-new/error-context.md
+
+  5) [chromium-headless-new] › .cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › dark · desktop — nav-dock gestalt 
+
+    Error: the rail renders mode="facets"
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "facets"
+    Received: null
+
+      138 |                     return rail?.getAttribute("data-mode") ?? null;
+      139 |                 });
+    > 140 |                 expect(railMode, 'the rail renders mode="facets"').toBe("facets");
+          |                                                                    ^
+      141 |
+      142 |                 // Distinct per-facet --glass-accent (read the inline style hue).
+      143 |                 const accents = await page.evaluate(() => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts:140:68
+
+    Error Context: .cache/l1-v1100/tests-visual/test-results/nav-dock-fix-W-NAV-DOCK-FI-5fb77--desktop-—-nav-dock-gestalt-chromium-headless-new/error-context.md
+
+  6) [chromium-headless-new] › .cache/l1-v1100/tests-visual/scroll-progress-rim.spec.ts:28:1 › aggregate and segmented progress share one thin radius-following masked rim 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('progressbar', { name: 'Example scroll progress' })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByRole('progressbar', { name: 'Example scroll progress' })
+
+
+       6 |     const root = page.getByRole("progressbar", { name: label });
+       7 |     const track = root.locator(".scroll-progress-rim__track");
+    >  8 |     await expect(root).toBeVisible();
+         |                        ^
+       9 |     return {
+      10 |         root,
+      11 |         paint: await track.evaluate((element) => {
+        at readRim (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/scroll-progress-rim.spec.ts:8:24)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l1-v1100/tests-visual/scroll-progress-rim.spec.ts:33:29
+
+    Error Context: .cache/l1-v1100/tests-visual/test-results/scroll-progress-rim-aggreg-1eaea-radius-following-masked-rim-chromium-headless-new/error-context.md
+
+  6 failed
+    [chromium-headless-new] › .cache/l1-v1100/tests-visual/dock-animation-live.spec.ts:97:5 › dock-animation-live (π lane — single-scalar, fail-CLOSED) › the dock box and --dock-morph-t morph on ONE clock (lead/lag ≤ 1 frame) 
+    [chromium-headless-new] › .cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › light · mobile — nav-dock gestalt 
+    [chromium-headless-new] › .cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › light · desktop — nav-dock gestalt 
+    [chromium-headless-new] › .cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › dark · mobile — nav-dock gestalt 
+    [chromium-headless-new] › .cache/l1-v1100/tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › dark · desktop — nav-dock gestalt 
+    [chromium-headless-new] › .cache/l1-v1100/tests-visual/scroll-progress-rim.spec.ts:28:1 › aggregate and segmented progress share one thin radius-following masked rim 
+  1 passed (15.5s)

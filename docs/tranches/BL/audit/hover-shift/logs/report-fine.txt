@@ -1,0 +1,452 @@
+{
+ "routes": 92,
+ "targets": 718,
+ "nGroups": 81,
+ "errs": [],
+ "nErr": 0,
+ "truncated": [],
+ "marginFlipRoutes": [
+  "/dock/overview",
+  "/dock/layers",
+  "/dock/vertical",
+  "/dock/sections",
+  "/dock/controls",
+  "/dock/overflow",
+  "/dock/cta-receive"
+ ],
+ "byDesign": {
+  "slider value": [
+   "/forms/slider"
+  ],
+  "disclosure": [
+   "/containers/accordion",
+   "/containers/collapsible"
+  ]
+ }
+}
+
+== press | DIV|button||dock-layer.dock-layer--summary | n= 3 | chromium/fine | routes: /dock/overview | crop: chromium-fine-_dock_overview-3
+   label: div#glass-dock-v-26-summary.dock-layer.dock-layer--summary.is-active[role=button] "Expand dock"
+   sample /dock/overview 22 [{"rel":"target","kind":"box","detail":{"dO":[-218,0,0,0],"dc":[0,0]},"label":"div#glass-dock-v-26-summary.dock-layer.dock-layer--summary"},{"rel":"ancestor","kind":"box","detail":{"dO":[-222,0,445,0],"dc":[0,0]},"label":"div.glass-dock.horizontal.shape-pill.expanded \"Volume\""},{"rel":"other","kind":"box","detail":{"dO":[-210,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Volu"},{"rel":"other","kind":"box","detail":{"dO":[-210,0,0,0],"dc":[0,0]},"label":"div.flex.w-44.items-center.px-2"}]  
+   sample /dock/overview 20 [{"rel":"target","kind":"box","detail":{"dO":[-108,-8,0,0],"dc":[0,0]},"label":"div#glass-dock-v-27-summary.dock-layer.dock-layer--summary"},{"rel":"inside","kind":"box","detail":{"dO":[-108,-8,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Sett"},{"rel":"other","kind":"box","detail":{"dO":[-4,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Volu"},{"rel":"other","kind":"box","detail":{"dO":[-4,0,0,0],"dc":[0,0]},"label":"div.flex.w-44.items-center.px-2"}]  
+
+== press | DIV|||collapsed.glass-dock.horizontal.shape-pill | n= 3 | chromium/fine | routes: /dock/overview /dock/controls | crop: chromium-fine-_dock_overview-7
+   label: div.glass-dock.horizontal.shape-pill.collapsed
+   sample /dock/overview 11 [{"rel":"other","kind":"box","detail":{"dO":[-4,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Home"},{"rel":"other","kind":"box","detail":{"dO":[-4,0,0,0],"dc":[0,0]},"label":"div.dock-persistent"},{"rel":"other","kind":"box","detail":{"dO":[-14,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Sear"},{"rel":"other","kind":"box","detail":{"dO":[-14,0,0,0],"dc":[0,0]},"label":"div.dock-separator[role=separator]"}]  
+   sample /dock/overview 20 [{"rel":"inside","kind":"box","detail":{"dO":[-108,-8,0,0],"dc":[0,0]},"label":"div#glass-dock-v-27-summary.dock-layer.dock-layer--summary"},{"rel":"inside","kind":"box","detail":{"dO":[-108,-8,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Sett"},{"rel":"other","kind":"box","detail":{"dO":[-4,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Volu"},{"rel":"other","kind":"box","detail":{"dO":[-4,0,0,0],"dc":[0,0]},"label":"div.flex.w-44.items-center.px-2"}]  
+
+== release | DIV|||collapsed.glass-dock.horizontal.shape-pill | n= 3 | chromium/fine | routes: /dock/overview /dock/controls | crop: chromium-fine-_dock_overview-7
+   label: div.glass-dock.horizontal.shape-pill.collapsed
+   sample /dock/overview 2 [{"rel":"target","kind":"box","detail":{"dO":[-222,0,445,0],"dc":[0,0]},"label":"div.glass-dock.horizontal.shape-pill.expanded.pinned \"Volume\""},{"rel":"target","kind":"props","detail":["padding-right 8px->9.19311px","padding-left 8px->9.19311px","margin-right 547px->324.5px","margin-left 547px->324.5px"],"label":"div.glass-dock.horizontal.shape-pill.expanded.pinned \"Volume\""}]  
+   sample /dock/overview 1 [{"rel":"target","kind":"props","detail":["padding-right 8px->12px","padding-left 8px->12px","margin-right 547px->0px","margin-left 547px->0px"],"label":"div.glass-dock.horizontal.shape-pill.expanded \"Play\""}]  
+
+== after-press | DIV|||collapsed.glass-dock.horizontal.shape-pill | n= 3 | chromium/fine | routes: /dock/overview /dock/controls | crop: chromium-fine-_dock_overview-7
+   label: div.glass-dock.horizontal.shape-pill.collapsed
+   sample /dock/overview 2 [{"rel":"target","kind":"box","detail":{"dO":[-222,0,445,0],"dc":[0,0]},"label":"div.glass-dock.horizontal.shape-pill.expanded.pinned \"Volume\""},{"rel":"target","kind":"props","detail":["padding-right 8px->11.6008px","padding-left 8px->11.6008px","margin-right 547px->324.5px","margin-left 547px->324.5px"],"label":"div.glass-dock.horizontal.shape-pill.expanded.pinned \"Volume\""}]  
+   sample /dock/overview 1 [{"rel":"target","kind":"props","detail":["padding-right 8px->12px","padding-left 8px->12px","margin-right 547px->0px","margin-left 547px->0px"],"label":"div.glass-dock.horizontal.shape-pill.expanded \"Play\""}]  
+
+== hover | BUTTON|||tl__mark | n= 3 | chromium/fine | routes: /data/timeline | crop: null
+   label: button.tl__mark "Kickoff: completed"
+   sample /data/timeline 0 [] ADDS [{"label":"div.tl__detail \"Kickoff completed · hover 4 days Researc\"","w":588,"h":85}] 
+   sample /data/timeline 0 [] ADDS [{"label":"div.tl__detail \"Design completed · hover 11 days Wirefra\"","w":588,"h":85}] 
+
+== after-hover | BUTTON|||tl__mark | n= 3 | chromium/fine | routes: /data/timeline | crop: null
+   label: button.tl__mark "Kickoff: completed"
+   sample /data/timeline 0 [] ADDS [{"label":"div.tl__detail \"Build active in flight Core features lan\"","w":588,"h":85}] 
+   sample /data/timeline 0 [] ADDS [{"label":"div.tl__detail \"Kickoff completed 4 days Research and di\"","w":588,"h":85}] 
+
+== focus | BUTTON|||tl__mark | n= 3 | chromium/fine | routes: /data/timeline | crop: null
+   label: button.tl__mark "Kickoff: completed"
+   sample /data/timeline 0 [] ADDS [{"label":"div.tl__detail \"Kickoff completed · hover 4 days Researc\"","w":588,"h":85}] 
+   sample /data/timeline 0 [] ADDS [{"label":"div.tl__detail \"Design completed · hover 11 days Wirefra\"","w":588,"h":85}] 
+
+== after-focus | BUTTON|||tl__mark | n= 3 | chromium/fine | routes: /data/timeline | crop: null
+   label: button.tl__mark "Kickoff: completed"
+   sample /data/timeline 0 [] ADDS [{"label":"div.tl__detail \"Build active in flight Core features lan\"","w":588,"h":85}] 
+   sample /data/timeline 0 [] ADDS [{"label":"div.tl__detail \"Kickoff completed 4 days Research and di\"","w":588,"h":85}] 
+
+== press | BUTTON|||tl__mark | n= 3 | chromium/fine | routes: /data/timeline | crop: null
+   label: button.tl__mark "Kickoff: completed"
+   sample /data/timeline 0 [] ADDS [{"label":"div.tl__detail \"Kickoff completed · hover 4 days Researc\"","w":588,"h":85}] 
+   sample /data/timeline 0 [] ADDS [{"label":"div.tl__detail \"Design completed · hover 11 days Wirefra\"","w":588,"h":85}] 
+
+== hover | SPAN|||tl__disc | n= 3 | chromium/fine | routes: /data/timeline | crop: null
+   label: span.tl__disc
+   sample /data/timeline 0 [] ADDS [{"label":"span.text-caption.text-muted-foreground \"· hover\"","w":47,"h":19}] 
+   sample /data/timeline 0 [] ADDS [{"label":"div.tl__detail \"Kickoff completed · hover 4 days Researc\"","w":588,"h":85}] 
+
+== press | SPAN|||tl__disc | n= 3 | chromium/fine | routes: /data/timeline | crop: null
+   label: span.tl__disc
+   sample /data/timeline 0 [] ADDS [{"label":"span.text-caption.text-muted-foreground \"· hover\"","w":47,"h":19}] 
+   sample /data/timeline 0 [] ADDS [{"label":"div.tl__detail \"Kickoff completed · hover 4 days Researc\"","w":588,"h":85}] 
+
+== hover | LI|||tl__mark-seat | n= 3 | chromium/fine | routes: /data/timeline | crop: null
+   label: li.tl__mark-seat
+   sample /data/timeline 0 [] ADDS [{"label":"div.tl__detail \"Kickoff completed · hover 4 days Researc\"","w":588,"h":85}] 
+   sample /data/timeline 0 [] ADDS [{"label":"div.tl__detail \"Design completed · hover 11 days Wirefra\"","w":588,"h":85}] 
+
+== after-hover | LI|||tl__mark-seat | n= 3 | chromium/fine | routes: /data/timeline | crop: null
+   label: li.tl__mark-seat
+   sample /data/timeline 0 [] ADDS [{"label":"div.tl__detail \"Design completed 11 days Wireframes appr\"","w":588,"h":85}] 
+   sample /data/timeline 0 [] ADDS [{"label":"div.tl__detail \"Kickoff completed 4 days Research and di\"","w":588,"h":85}] 
+
+== focus | LI|||tl__mark-seat | n= 3 | chromium/fine | routes: /data/timeline | crop: null
+   label: li.tl__mark-seat
+   sample /data/timeline 0 [] ADDS [{"label":"div.tl__detail \"Kickoff completed · hover 4 days Researc\"","w":588,"h":85}] 
+   sample /data/timeline 0 [] ADDS [{"label":"div.tl__detail \"Design completed · hover 11 days Wirefra\"","w":588,"h":85}] 
+
+== after-focus | LI|||tl__mark-seat | n= 3 | chromium/fine | routes: /data/timeline | crop: null
+   label: li.tl__mark-seat
+   sample /data/timeline 0 [] ADDS [{"label":"div.tl__detail \"Design completed 11 days Wireframes appr\"","w":588,"h":85}] 
+   sample /data/timeline 0 [] ADDS [{"label":"div.tl__detail \"Kickoff completed 4 days Research and di\"","w":588,"h":85}] 
+
+== press | LI|||tl__mark-seat | n= 3 | chromium/fine | routes: /data/timeline | crop: null
+   label: li.tl__mark-seat
+   sample /data/timeline 0 [] ADDS [{"label":"div.tl__detail \"Kickoff completed · hover 4 days Researc\"","w":588,"h":85}] 
+   sample /data/timeline 0 [] ADDS [{"label":"div.tl__detail \"Design completed · hover 11 days Wirefra\"","w":588,"h":85}] 
+
+== release | BUTTON||toggle-group-item|control-surface.focus-ring.glass-capsule-hover.glass-control-edge.toggle-group__item | n= 2 | chromium/fine | routes: /substrates/glass-panel /forms/toggle | crop: chromium-fine-_substrates_glass_panel-0
+   label: button.toggle-group__item.control-surface.glass-control-edge.glass-capsule-hover.focus-ring[data-slot=toggle-g
+   rule: .toggle-group__item[data-state="on"] { font-weight: 600 }
+   sample /substrates/glass-panel 1 [{"rel":"target","kind":"props","detail":["font-weight 500->600"],"label":"button.toggle-group__item.control-surface.glass-control-edge.glass-cap"}]  
+   sample /forms/toggle 1 [{"rel":"target","kind":"props","detail":["font-weight 500->600"],"label":"button.toggle-group__item.control-surface.glass-control-edge.glass-cap"}]  
+
+== after-press | BUTTON||toggle-group-item|control-surface.focus-ring.glass-capsule-hover.glass-control-edge.toggle-group__item | n= 2 | chromium/fine | routes: /substrates/glass-panel /forms/toggle | crop: chromium-fine-_substrates_glass_panel-0
+   label: button.toggle-group__item.control-surface.glass-control-edge.glass-capsule-hover.focus-ring[data-slot=toggle-g
+   rule: .toggle-group__item[data-state="on"] { font-weight: 600 }
+   sample /substrates/glass-panel 1 [{"rel":"target","kind":"props","detail":["font-weight 500->600"],"label":"button.toggle-group__item.control-surface.glass-control-edge.glass-cap"}]  
+   sample /forms/toggle 1 [{"rel":"target","kind":"props","detail":["font-weight 500->600"],"label":"button.toggle-group__item.control-surface.glass-control-edge.glass-cap"}]  
+
+== release | BUTTON|||hover:bg-muted/50.px-(--sp-3).py-(--sp-2).rounded-control.text-foreground.text-left.text-small.transition-fast. | n= 2 | chromium/fine | routes: /navigation/toc-tracking | crop: chromium-fine-_navigation_toc_tracking-6
+   label: button.w-full.rounded-control.px-(--sp-3).py-(--sp-2).text-left.text-small "Section 3"
+   sample /navigation/toc-tracking 1 [{"rel":"target","kind":"props","detail":["font-weight 400->500"],"label":"button.w-full.rounded-control.px-(--sp-3).py-(--sp-2).text-left.text-s"}]  
+   sample /navigation/toc-tracking 1 [{"rel":"target","kind":"props","detail":["font-weight 400->500"],"label":"button.w-full.rounded-control.px-(--sp-3).py-(--sp-2).text-left.text-s"}] ADDS [{"label":"section#sec-6.mb-(--sp-6) \"Section 7 A scrollable section body for \"","w":898,"h":267},{"label":"section#sec-7.mb-(--sp-6) \"Section 8 A scrollable section body for \"","w":898,"h":267},{"label":"section#sec-8.mb-(--sp-6) \"Section 9 A scrollable section body for \"","w":898,"h":267}] 
+
+== after-press | BUTTON|||hover:bg-muted/50.px-(--sp-3).py-(--sp-2).rounded-control.text-foreground.text-left.text-small.transition-fast. | n= 2 | chromium/fine | routes: /navigation/toc-tracking | crop: chromium-fine-_navigation_toc_tracking-6
+   label: button.w-full.rounded-control.px-(--sp-3).py-(--sp-2).text-left.text-small "Section 3"
+   sample /navigation/toc-tracking 1 [{"rel":"target","kind":"props","detail":["font-weight 400->500"],"label":"button.w-full.rounded-control.px-(--sp-3).py-(--sp-2).text-left.text-s"}]  
+   sample /navigation/toc-tracking 1 [{"rel":"target","kind":"props","detail":["font-weight 400->500"],"label":"button.w-full.rounded-control.px-(--sp-3).py-(--sp-2).text-left.text-s"}]  
+
+== focus | DIV|button||dock-layer.dock-layer--summary | n= 2 | chromium/fine | routes: /dock/overview | crop: chromium-fine-_dock_overview-3
+   label: div#glass-dock-v-26-summary.dock-layer.dock-layer--summary.is-active[role=button] "Expand dock"
+   sample /dock/overview 22 [{"rel":"target","kind":"box","detail":{"dO":[-221,0,0,0],"dc":[0,0]},"label":"div#glass-dock-v-26-summary.dock-layer.dock-layer--summary"},{"rel":"ancestor","kind":"box","detail":{"dO":[-222,0,445,0],"dc":[0,0]},"label":"div.glass-dock.horizontal.shape-pill.expanded \"Volume\""},{"rel":"other","kind":"box","detail":{"dO":[-213,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Volu"},{"rel":"other","kind":"box","detail":{"dO":[-213,0,0,0],"dc":[0,0]},"label":"div.flex.w-44.items-center.px-2"}]  
+   sample /dock/overview 10 [{"rel":"target","kind":"box","detail":{"dO":[-51,0,0,0],"dc":[0,0]},"label":"div#glass-dock-v-29-summary.dock-layer.dock-layer--summary"},{"rel":"ancestor","kind":"box","detail":{"dO":[-52,0,104,0],"dc":[0,0]},"label":"div.relative.z-10.glass-dock.horizontal.shape-pill.expanded \"Home\""},{"rel":"other","kind":"box","detail":{"dO":[-43,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Paus"},{"rel":"other","kind":"box","detail":{"dO":[-43,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Home"}]  
+
+== after-focus | DIV|button||dock-layer.dock-layer--summary | n= 2 | chromium/fine | routes: /dock/overview | crop: chromium-fine-_dock_overview-3
+   label: div#glass-dock-v-26-summary.dock-layer.dock-layer--summary.is-active[role=button] "Expand dock"
+   sample /dock/overview 22 [{"rel":"target","kind":"box","detail":{"dO":[-219,0,0,0],"dc":[0,0]},"label":"div#glass-dock-v-26-summary.dock-layer.dock-layer--summary"},{"rel":"ancestor","kind":"box","detail":{"dO":[-222,0,445,0],"dc":[0,0]},"label":"div.glass-dock.horizontal.shape-pill.expanded \"Volume\""},{"rel":"other","kind":"box","detail":{"dO":[-211,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Volu"},{"rel":"other","kind":"box","detail":{"dO":[-211,0,0,0],"dc":[0,0]},"label":"div.flex.w-44.items-center.px-2"}]  
+   sample /dock/overview 10 [{"rel":"target","kind":"box","detail":{"dO":[-49,0,0,0],"dc":[0,0]},"label":"div#glass-dock-v-29-summary.dock-layer.dock-layer--summary"},{"rel":"ancestor","kind":"box","detail":{"dO":[-52,0,104,0],"dc":[0,0]},"label":"div.relative.z-10.glass-dock.horizontal.shape-pill.expanded \"Home\""},{"rel":"other","kind":"box","detail":{"dO":[-41,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Paus"},{"rel":"other","kind":"box","detail":{"dO":[-41,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Home"}]  
+
+== focus | DIV|||collapsed.glass-dock.horizontal.shape-pill | n= 2 | chromium/fine | routes: /dock/overview /dock/controls | crop: chromium-fine-_dock_overview-8
+   label: div.glass-dock.horizontal.shape-pill.collapsed
+   sample /dock/overview 3 [{"rel":"inside","kind":"box","detail":{"dO":[-108,-8,0,0],"dc":[0,0]},"label":"div#glass-dock-v-27-summary.dock-layer.dock-layer--summary"},{"rel":"inside","kind":"box","detail":{"dO":[-108,-8,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Sett"},{"rel":"target","kind":"props","detail":["padding-right 8px->12px","padding-left 8px->12px","margin-right 547px->0px","margin-left 547px->0px"],"label":"div.glass-dock.horizontal.shape-pill.expanded \"Play\""}]  
+   sample /dock/controls 15 [{"rel":"inside","kind":"box","detail":{"dO":[-63,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Togg"},{"rel":"inside","kind":"box","detail":{"dO":[-59,0,0,0],"dc":[0,0]},"label":"div#glass-dock-v-18-summary.dock-layer.dock-layer--summary"},{"rel":"target","kind":"box","detail":{"dO":[-64,0,129,0],"dc":[0,0]},"label":"div.glass-dock.horizontal.shape-pill.expanded \"Search\""},{"rel":"inside","kind":"box","detail":{"dO":[-63,0,0,0],"dc":[0,0]},"label":"div.dock-persistent"}]  
+
+== after-focus | DIV|||collapsed.glass-dock.horizontal.shape-pill | n= 2 | chromium/fine | routes: /dock/overview /dock/controls | crop: chromium-fine-_dock_overview-8
+   label: div.glass-dock.horizontal.shape-pill.collapsed
+   sample /dock/overview 3 [{"rel":"inside","kind":"box","detail":{"dO":[-108,-8,0,0],"dc":[0,0]},"label":"div#glass-dock-v-27-summary.dock-layer.dock-layer--summary"},{"rel":"inside","kind":"box","detail":{"dO":[-108,-8,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Sett"},{"rel":"target","kind":"props","detail":["padding-right 8px->12px","padding-left 8px->12px","margin-right 547px->0px","margin-left 547px->0px"],"label":"div.glass-dock.horizontal.shape-pill.expanded \"Play\""}]  
+   sample /dock/controls 15 [{"rel":"inside","kind":"box","detail":{"dO":[-61,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Togg"},{"rel":"inside","kind":"box","detail":{"dO":[-57,0,0,0],"dc":[0,0]},"label":"div#glass-dock-v-18-summary.dock-layer.dock-layer--summary"},{"rel":"target","kind":"box","detail":{"dO":[-64,0,129,0],"dc":[0,0]},"label":"div.glass-dock.horizontal.shape-pill.expanded \"Search\""},{"rel":"inside","kind":"box","detail":{"dO":[-61,0,0,0],"dc":[0,0]},"label":"div.dock-persistent"}]  
+
+== hover | DIV|||border.border-border/30.dock-stage-tile.flex.flex-col.gap-4.items-center.p-8.rounded-[var(--radius-card)] | n= 2 | chromium/fine | routes: /dock/overview | crop: chromium-fine-_dock_overview-10
+   label: div.dock-stage-tile.flex.flex-col.items-center.gap-4.rounded-[var(--radius-card)] "Starts compact"
+   sample /dock/overview 15 [{"rel":"inside","kind":"box","detail":{"dO":[-83,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Home"},{"rel":"inside","kind":"box","detail":{"dO":[-87,0,175,0],"dc":[0,0]},"label":"div.relative.z-10.glass-dock.horizontal.shape-pill.expanded[role=toolb"},{"rel":"inside","kind":"box","detail":{"dO":[-83,0,0,0],"dc":[0,0]},"label":"div.dock-persistent"},{"rel":"inside","kind":"box","detail":{"dO":[-25,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Sear"}]  
+   sample /dock/overview 15 [{"rel":"inside","kind":"box","detail":{"dO":[-83,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Home"},{"rel":"inside","kind":"box","detail":{"dO":[-25,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Sear"},{"rel":"inside","kind":"box","detail":{"dO":[-25,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Noti"},{"rel":"inside","kind":"box","detail":{"dO":[-25,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Sett"}]  
+
+== after-hover | DIV|||border.border-border/30.dock-stage-tile.flex.flex-col.gap-4.items-center.p-8.rounded-[var(--radius-card)] | n= 2 | chromium/fine | routes: /dock/overview | crop: chromium-fine-_dock_overview-10
+   label: div.dock-stage-tile.flex.flex-col.items-center.gap-4.rounded-[var(--radius-card)] "Starts compact"
+   sample /dock/overview 1 [{"rel":"inside","kind":"props","detail":["padding-right 8px->12.0082px","padding-left 8px->12.0082px","margin-right 240px->152.5px","margin-left 240px->152.5px"],"label":"div.relative.z-10.glass-dock.horizontal.shape-pill.expanded[role=toolb"}]  
+   sample /dock/overview 1 [{"rel":"inside","kind":"props","detail":["padding-right 8px->12.0082px","padding-left 8px->12.0082px","margin-right 240px->152.5px","margin-left 240px->152.5px"],"label":"div.relative.z-10.glass-dock.horizontal.shape-pill.expanded[role=toolb"}]  
+
+== focus | DIV|||border.border-border/30.dock-stage-tile.flex.flex-col.gap-4.items-center.p-8.rounded-[var(--radius-card)] | n= 2 | chromium/fine | routes: /dock/overview | crop: chromium-fine-_dock_overview-10
+   label: div.dock-stage-tile.flex.flex-col.items-center.gap-4.rounded-[var(--radius-card)] "Starts compact"
+   sample /dock/overview 1 [{"rel":"inside","kind":"props","detail":["padding-right 8px->12.0028px","padding-left 8px->12.0028px","margin-right 240px->152.5px","margin-left 240px->152.5px"],"label":"div.relative.z-10.glass-dock.horizontal.shape-pill.expanded[role=toolb"}]  
+   sample /dock/overview 1 [{"rel":"inside","kind":"props","detail":["padding-right 8px->12.002px","padding-left 8px->12.002px","margin-right 240px->152.5px","margin-left 240px->152.5px"],"label":"div.relative.z-10.glass-dock.horizontal.shape-pill.expanded[role=toolb"}]  
+
+== after-focus | DIV|||border.border-border/30.dock-stage-tile.flex.flex-col.gap-4.items-center.p-8.rounded-[var(--radius-card)] | n= 2 | chromium/fine | routes: /dock/overview | crop: chromium-fine-_dock_overview-10
+   label: div.dock-stage-tile.flex.flex-col.items-center.gap-4.rounded-[var(--radius-card)] "Starts compact"
+   sample /dock/overview 1 [{"rel":"inside","kind":"props","detail":["padding-right 8px->12.0006px","padding-left 8px->12.0006px","margin-right 240px->152.5px","margin-left 240px->152.5px"],"label":"div.relative.z-10.glass-dock.horizontal.shape-pill.expanded[role=toolb"}]  
+   sample /dock/overview 1 [{"rel":"inside","kind":"props","detail":["padding-right 8px->12.0002px","padding-left 8px->12.0002px","margin-right 240px->152.5px","margin-left 240px->152.5px"],"label":"div.relative.z-10.glass-dock.horizontal.shape-pill.expanded[role=toolb"}]  
+
+== press | DIV|||border.border-border/30.dock-stage-tile.flex.flex-col.gap-4.items-center.p-8.rounded-[var(--radius-card)] | n= 2 | chromium/fine | routes: /dock/overview | crop: chromium-fine-_dock_overview-10
+   label: div.dock-stage-tile.flex.flex-col.items-center.gap-4.rounded-[var(--radius-card)] "Starts compact"
+   sample /dock/overview 8 [{"rel":"inside","kind":"box","detail":{"dO":[-135,-8,0,0],"dc":[0,0]},"label":"div#glass-dock-v-14-summary.dock-layer.dock-layer--summary"},{"rel":"other","kind":"box","detail":{"dO":[-4,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Paus"},{"rel":"other","kind":"box","detail":{"dO":[-4,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Home"},{"rel":"other","kind":"box","detail":{"dO":[-4,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Sett"}]  
+   sample /dock/overview 13 [{"rel":"other","kind":"box","detail":{"dO":[-4,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Home"},{"rel":"other","kind":"box","detail":{"dO":[-4,0,0,0],"dc":[0,0]},"label":"div.dock-persistent"},{"rel":"other","kind":"box","detail":{"dO":[-14,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Sear"},{"rel":"other","kind":"box","detail":{"dO":[-14,0,0,0],"dc":[0,0]},"label":"div.dock-separator[role=separator]"}]  
+
+== release | DIV|||border.border-border/30.dock-stage-tile.flex.flex-col.gap-4.items-center.p-8.rounded-[var(--radius-card)] | n= 2 | chromium/fine | routes: /dock/overview | crop: chromium-fine-_dock_overview-10
+   label: div.dock-stage-tile.flex.flex-col.items-center.gap-4.rounded-[var(--radius-card)] "Starts compact"
+   sample /dock/overview 1 [{"rel":"inside","kind":"props","detail":["padding-right 8px->12px","padding-left 8px->12px","margin-right 240px->152.5px","margin-left 240px->152.5px"],"label":"div.relative.z-10.glass-dock.horizontal.shape-pill.expanded[role=toolb"}]  
+   sample /dock/overview 1 [{"rel":"inside","kind":"props","detail":["padding-right 8px->12px","padding-left 8px->12px","margin-right 240px->152.5px","margin-left 240px->152.5px"],"label":"div.relative.z-10.glass-dock.horizontal.shape-pill.expanded[role=toolb"}]  
+
+== after-press | DIV|||border.border-border/30.dock-stage-tile.flex.flex-col.gap-4.items-center.p-8.rounded-[var(--radius-card)] | n= 2 | chromium/fine | routes: /dock/overview | crop: chromium-fine-_dock_overview-10
+   label: div.dock-stage-tile.flex.flex-col.items-center.gap-4.rounded-[var(--radius-card)] "Starts compact"
+   sample /dock/overview 1 [{"rel":"inside","kind":"props","detail":["padding-right 8px->12px","padding-left 8px->12px","margin-right 240px->152.5px","margin-left 240px->152.5px"],"label":"div.relative.z-10.glass-dock.horizontal.shape-pill.expanded[role=toolb"}]  
+   sample /dock/overview 1 [{"rel":"inside","kind":"props","detail":["padding-right 8px->12px","padding-left 8px->12px","margin-right 240px->152.5px","margin-left 240px->152.5px"],"label":"div.relative.z-10.glass-dock.horizontal.shape-pill.expanded[role=toolb"}]  
+
+== after-hover | SPAN|||tl__disc | n= 2 | chromium/fine | routes: /data/timeline | crop: null
+   label: span.tl__disc
+   sample /data/timeline 0 [] ADDS [{"label":"div.tl__detail \"Build active in flight Core features lan\"","w":588,"h":85}] 
+   sample /data/timeline 0 [] ADDS [{"label":"div.tl__detail \"Kickoff completed 4 days Research and di\"","w":588,"h":85}] 
+
+== press | SPAN|||absolute.bg-card/80.font-mono.pointer-events-none.px-2.5.py-1.right-3.rounded-pill.text-micro.text-muted-foregrou | n= 1 | chromium/fine | routes: /substrates/constellation | crop: chromium-fine-_substrates_constellation-21
+   label: span.pointer-events-none.absolute.right-3.top-3.rounded-pill.bg-card/80 "settled"
+   sample /substrates/constellation 1 [{"rel":"target","kind":"box","detail":{"dO":[-6,0,7,0],"dc":[0,0]},"label":"span.pointer-events-none.absolute.right-3.top-3.rounded-pill.bg-card/8"}]  
+
+== release | BUTTON||toggle-group-item|control-surface.focus-ring.glass-capsule-hover.glass-control-edge.toggle-group__item | n= 1 | chromium/fine | routes: /forms/toggle | crop: chromium-fine-_forms_toggle-0
+   label: button.toggle-group__item.control-surface.glass-control-edge.glass-capsule-hover.focus-ring[data-slot=toggle-g
+   sample /forms/toggle 1 [{"rel":"target","kind":"props","detail":["font-weight 600->500"],"label":"button.toggle-group__item.control-surface.glass-control-edge.glass-cap"}]  
+
+== after-press | BUTTON||toggle-group-item|control-surface.focus-ring.glass-capsule-hover.glass-control-edge.toggle-group__item | n= 1 | chromium/fine | routes: /forms/toggle | crop: chromium-fine-_forms_toggle-0
+   label: button.toggle-group__item.control-surface.glass-control-edge.glass-capsule-hover.focus-ring[data-slot=toggle-g
+   sample /forms/toggle 1 [{"rel":"target","kind":"props","detail":["font-weight 600->500"],"label":"button.toggle-group__item.control-surface.glass-control-edge.glass-cap"}]  
+
+== press | BUTTON|combobox||dock-select-trigger.dock-trigger | n= 1 | chromium/fine | routes: /dock/overview | crop: chromium-fine-_dock_overview-0
+   label: button.dock-trigger.dock-select-trigger[role=combobox] "Preview Preview"
+   sample /dock/overview 11 [{"rel":"other","kind":"box","detail":{"dO":[-4,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Home"},{"rel":"other","kind":"box","detail":{"dO":[-14,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Sear"},{"rel":"other","kind":"box","detail":{"dO":[-14,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Noti"},{"rel":"other","kind":"box","detail":{"dO":[-14,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Sett"}]  
+
+== hover | DIV|button||dock-layer.dock-layer--summary | n= 1 | chromium/fine | routes: /dock/overview | crop: chromium-fine-_dock_overview-4
+   label: div#glass-dock-v-27-summary.dock-layer.dock-layer--summary.is-active[role=button] "Expand dock"
+   sample /dock/overview 13 [{"rel":"target","kind":"box","detail":{"dO":[-96,0,0,0],"dc":[0,0]},"label":"div#glass-dock-v-27-summary.dock-layer.dock-layer--summary"},{"rel":"inside","kind":"box","detail":{"dO":[-96,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Sett"},{"rel":"ancestor","kind":"box","detail":{"dO":[-100,0,200,0],"dc":[0,0]},"label":"div.glass-dock.horizontal.shape-pill.expanded \"Play\""},{"rel":"other","kind":"box","detail":{"dO":[-88,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Skip"}]  
+
+== after-hover | DIV|button||dock-layer.dock-layer--summary | n= 1 | chromium/fine | routes: /dock/overview | crop: chromium-fine-_dock_overview-4
+   label: div#glass-dock-v-27-summary.dock-layer.dock-layer--summary.is-active[role=button] "Expand dock"
+   sample /dock/overview 3 [{"rel":"target","kind":"box","detail":{"dO":[-108,-8,0,0],"dc":[0,0]},"label":"div#glass-dock-v-27-summary.dock-layer.dock-layer--summary"},{"rel":"inside","kind":"box","detail":{"dO":[-108,-8,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Sett"},{"rel":"ancestor","kind":"props","detail":["padding-right 8px->12px","padding-left 8px->12px","margin-right 547px->447px","margin-left 547px->447px"],"label":"div.glass-dock.horizontal.shape-pill.expanded \"Play\""}]  
+
+== hover | DIV|toolbar||collapsed.glass-dock.horizontal.relative.shape-pill.z-10 | n= 1 | chromium/fine | routes: /dock/overview | crop: chromium-fine-_dock_overview-6
+   label: div.relative.z-10.glass-dock.horizontal.shape-pill.collapsed[role=toolbar] "Starts compact workspace dock"
+   sample /dock/overview 15 [{"rel":"inside","kind":"box","detail":{"dO":[-83,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Home"},{"rel":"target","kind":"box","detail":{"dO":[-87,0,175,0],"dc":[0,0]},"label":"div.relative.z-10.glass-dock.horizontal.shape-pill.expanded[role=toolb"},{"rel":"inside","kind":"box","detail":{"dO":[-83,0,0,0],"dc":[0,0]},"label":"div.dock-persistent"},{"rel":"inside","kind":"box","detail":{"dO":[-25,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Sear"}]  
+
+== after-hover | DIV|toolbar||collapsed.glass-dock.horizontal.relative.shape-pill.z-10 | n= 1 | chromium/fine | routes: /dock/overview | crop: chromium-fine-_dock_overview-6
+   label: div.relative.z-10.glass-dock.horizontal.shape-pill.collapsed[role=toolbar] "Starts compact workspace dock"
+   sample /dock/overview 1 [{"rel":"target","kind":"props","detail":["padding-right 8px->12.0058px","padding-left 8px->12.0058px","margin-right 240px->152.5px","margin-left 240px->152.5px"],"label":"div.relative.z-10.glass-dock.horizontal.shape-pill.expanded[role=toolb"}]  
+
+== focus | DIV|toolbar||collapsed.glass-dock.horizontal.relative.shape-pill.z-10 | n= 1 | chromium/fine | routes: /dock/overview | crop: chromium-fine-_dock_overview-6
+   label: div.relative.z-10.glass-dock.horizontal.shape-pill.collapsed[role=toolbar] "Starts compact workspace dock"
+   sample /dock/overview 1 [{"rel":"target","kind":"props","detail":["padding-right 8px->12.0014px","padding-left 8px->12.0014px","margin-right 240px->152.5px","margin-left 240px->152.5px"],"label":"div.relative.z-10.glass-dock.horizontal.shape-pill.expanded[role=toolb"}]  
+
+== after-focus | DIV|toolbar||collapsed.glass-dock.horizontal.relative.shape-pill.z-10 | n= 1 | chromium/fine | routes: /dock/overview | crop: chromium-fine-_dock_overview-6
+   label: div.relative.z-10.glass-dock.horizontal.shape-pill.collapsed[role=toolbar] "Starts compact workspace dock"
+   sample /dock/overview 1 [{"rel":"target","kind":"props","detail":["padding-right 8px->12.0001px","padding-left 8px->12.0001px","margin-right 240px->152.5px","margin-left 240px->152.5px"],"label":"div.relative.z-10.glass-dock.horizontal.shape-pill.expanded[role=toolb"}]  
+
+== press | DIV|toolbar||collapsed.glass-dock.horizontal.relative.shape-pill.z-10 | n= 1 | chromium/fine | routes: /dock/overview | crop: chromium-fine-_dock_overview-6
+   label: div.relative.z-10.glass-dock.horizontal.shape-pill.collapsed[role=toolbar] "Starts compact workspace dock"
+   sample /dock/overview 8 [{"rel":"inside","kind":"box","detail":{"dO":[-135,-8,0,0],"dc":[0,0]},"label":"div#glass-dock-v-14-summary.dock-layer.dock-layer--summary"},{"rel":"other","kind":"box","detail":{"dO":[-4,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Paus"},{"rel":"other","kind":"box","detail":{"dO":[-4,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Home"},{"rel":"other","kind":"box","detail":{"dO":[-4,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Sett"}]  
+
+== release | DIV|toolbar||collapsed.glass-dock.horizontal.relative.shape-pill.z-10 | n= 1 | chromium/fine | routes: /dock/overview | crop: chromium-fine-_dock_overview-6
+   label: div.relative.z-10.glass-dock.horizontal.shape-pill.collapsed[role=toolbar] "Starts compact workspace dock"
+   sample /dock/overview 1 [{"rel":"target","kind":"props","detail":["padding-right 8px->12px","padding-left 8px->12px","margin-right 240px->152.5px","margin-left 240px->152.5px"],"label":"div.relative.z-10.glass-dock.horizontal.shape-pill.expanded[role=toolb"}]  
+
+== after-press | DIV|toolbar||collapsed.glass-dock.horizontal.relative.shape-pill.z-10 | n= 1 | chromium/fine | routes: /dock/overview | crop: chromium-fine-_dock_overview-6
+   label: div.relative.z-10.glass-dock.horizontal.shape-pill.collapsed[role=toolbar] "Starts compact workspace dock"
+   sample /dock/overview 1 [{"rel":"target","kind":"props","detail":["padding-right 8px->12px","padding-left 8px->12px","margin-right 240px->152.5px","margin-left 240px->152.5px"],"label":"div.relative.z-10.glass-dock.horizontal.shape-pill.expanded[role=toolb"}]  
+
+== hover | DIV|||collapsed.glass-dock.horizontal.shape-pill | n= 1 | chromium/fine | routes: /dock/overview | crop: chromium-fine-_dock_overview-8
+   label: div.glass-dock.horizontal.shape-pill.collapsed
+   sample /dock/overview 13 [{"rel":"inside","kind":"box","detail":{"dO":[-96,0,0,0],"dc":[0,0]},"label":"div#glass-dock-v-27-summary.dock-layer.dock-layer--summary"},{"rel":"inside","kind":"box","detail":{"dO":[-96,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Sett"},{"rel":"target","kind":"box","detail":{"dO":[-100,0,200,0],"dc":[0,0]},"label":"div.glass-dock.horizontal.shape-pill.expanded \"Play\""},{"rel":"inside","kind":"box","detail":{"dO":[-88,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Skip"}]  
+
+== after-hover | DIV|||collapsed.glass-dock.horizontal.shape-pill | n= 1 | chromium/fine | routes: /dock/overview | crop: chromium-fine-_dock_overview-8
+   label: div.glass-dock.horizontal.shape-pill.collapsed
+   sample /dock/overview 3 [{"rel":"inside","kind":"box","detail":{"dO":[-108,-8,0,0],"dc":[0,0]},"label":"div#glass-dock-v-27-summary.dock-layer.dock-layer--summary"},{"rel":"inside","kind":"box","detail":{"dO":[-108,-8,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Sett"},{"rel":"target","kind":"props","detail":["padding-right 8px->12px","padding-left 8px->12px","margin-right 547px->447px","margin-left 547px->447px"],"label":"div.glass-dock.horizontal.shape-pill.expanded \"Play\""}]  
+
+== after-hover | DIV|||collapsed.glass-dock.horizontal.relative.shape-pill.z-10 | n= 1 | chromium/fine | routes: /dock/overview | crop: chromium-fine-_dock_overview-9
+   label: div.relative.z-10.glass-dock.horizontal.shape-pill.collapsed
+   sample /dock/overview 10 [{"rel":"inside","kind":"box","detail":{"dO":[-50,0,0,0],"dc":[0,0]},"label":"div#glass-dock-v-29-summary.dock-layer.dock-layer--summary"},{"rel":"target","kind":"box","detail":{"dO":[-52,0,104,0],"dc":[0,0]},"label":"div.relative.z-10.glass-dock.horizontal.shape-pill.expanded \"Home\""},{"rel":"inside","kind":"box","detail":{"dO":[-42,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Paus"},{"rel":"inside","kind":"box","detail":{"dO":[-42,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Home"}]  
+
+== focus | DIV|||collapsed.glass-dock.horizontal.relative.shape-pill.z-10 | n= 1 | chromium/fine | routes: /dock/overview | crop: chromium-fine-_dock_overview-9
+   label: div.relative.z-10.glass-dock.horizontal.shape-pill.collapsed
+   sample /dock/overview 10 [{"rel":"inside","kind":"box","detail":{"dO":[-48,0,0,0],"dc":[0,0]},"label":"div#glass-dock-v-29-summary.dock-layer.dock-layer--summary"},{"rel":"target","kind":"box","detail":{"dO":[-52,0,104,0],"dc":[0,0]},"label":"div.relative.z-10.glass-dock.horizontal.shape-pill.expanded \"Home\""},{"rel":"inside","kind":"box","detail":{"dO":[-40,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Paus"},{"rel":"inside","kind":"box","detail":{"dO":[-40,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Home"}]  
+
+== after-focus | DIV|||collapsed.glass-dock.horizontal.relative.shape-pill.z-10 | n= 1 | chromium/fine | routes: /dock/overview | crop: chromium-fine-_dock_overview-9
+   label: div.relative.z-10.glass-dock.horizontal.shape-pill.collapsed
+   sample /dock/overview 10 [{"rel":"inside","kind":"box","detail":{"dO":[-48,0,0,0],"dc":[0,0]},"label":"div#glass-dock-v-29-summary.dock-layer.dock-layer--summary"},{"rel":"target","kind":"box","detail":{"dO":[-52,0,104,0],"dc":[0,0]},"label":"div.relative.z-10.glass-dock.horizontal.shape-pill.expanded \"Home\""},{"rel":"inside","kind":"box","detail":{"dO":[-40,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Paus"},{"rel":"inside","kind":"box","detail":{"dO":[-40,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Home"}]  
+
+== press | DIV|||collapsed.glass-dock.horizontal.relative.shape-pill.z-10 | n= 1 | chromium/fine | routes: /dock/overview | crop: chromium-fine-_dock_overview-9
+   label: div.relative.z-10.glass-dock.horizontal.shape-pill.collapsed
+   sample /dock/overview 21 [{"rel":"other","kind":"box","detail":{"dO":[108,8,0,0],"dc":[0,0]},"label":"div#glass-dock-v-27-summary.dock-layer.dock-layer--summary.is-active[r"},{"rel":"other","kind":"box","detail":{"dO":[108,8,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Sett"},{"rel":"inside","kind":"box","detail":{"dO":[-60,-8,0,0],"dc":[0,0]},"label":"div#glass-dock-v-29-summary.dock-layer.dock-layer--summary"},{"rel":"other","kind":"box","detail":{"dO":[100,0,-200,0],"dc":[0,0]},"label":"div.glass-dock.horizontal.shape-pill.collapsed \"Play\""}]  
+
+== release | DIV|||collapsed.glass-dock.horizontal.relative.shape-pill.z-10 | n= 1 | chromium/fine | routes: /dock/overview | crop: chromium-fine-_dock_overview-9
+   label: div.relative.z-10.glass-dock.horizontal.shape-pill.collapsed
+   sample /dock/overview 2 [{"rel":"target","kind":"box","detail":{"dO":[-52,0,104,0],"dc":[0,0]},"label":"div.relative.z-10.glass-dock.horizontal.shape-pill.expanded \"Home\""},{"rel":"target","kind":"props","detail":["padding-right 8px->12px","padding-left 8px->12px","margin-right 547px->0px","margin-left 547px->0px"],"label":"div.relative.z-10.glass-dock.horizontal.shape-pill.expanded \"Home\""}]  
+
+== after-press | DIV|||collapsed.glass-dock.horizontal.relative.shape-pill.z-10 | n= 1 | chromium/fine | routes: /dock/overview | crop: chromium-fine-_dock_overview-9
+   label: div.relative.z-10.glass-dock.horizontal.shape-pill.collapsed
+   sample /dock/overview 2 [{"rel":"target","kind":"box","detail":{"dO":[-52,0,104,0],"dc":[0,0]},"label":"div.relative.z-10.glass-dock.horizontal.shape-pill.expanded \"Home\""},{"rel":"target","kind":"props","detail":["padding-right 8px->12px","padding-left 8px->12px","margin-right 547px->0px","margin-left 547px->0px"],"label":"div.relative.z-10.glass-dock.horizontal.shape-pill.expanded \"Home\""}]  
+
+== press | DIV|||border.border-border/30.dock-stage-tile.flex.justify-center.p-8.rounded-[var(--radius-card)] | n= 1 | chromium/fine | routes: /dock/overview | crop: chromium-fine-_dock_overview-12
+   label: div.dock-stage-tile.flex.justify-center.rounded-[var(--radius-card)].border.border-border/30 "The Garden"
+   sample /dock/overview 11 [{"rel":"other","kind":"box","detail":{"dO":[-4,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Home"},{"rel":"other","kind":"box","detail":{"dO":[-14,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Sear"},{"rel":"other","kind":"box","detail":{"dO":[-14,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Noti"},{"rel":"other","kind":"box","detail":{"dO":[-14,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Sett"}]  
+
+== release | DIV|||border.border-border/40.dock-stage-tile.flex.justify-center.p-8.relative.rounded-[var(--radius-card)] | n= 1 | chromium/fine | routes: /dock/overview | crop: chromium-fine-_dock_overview-17
+   label: div.dock-stage-tile.relative.flex.justify-center.rounded-[var(--radius-card)].border
+   sample /dock/overview 1 [{"rel":"inside","kind":"props","detail":["padding-right 8px->12.0106px","padding-left 8px->12.0106px","margin-right 547px->495px","margin-left 547px->495px"],"label":"div.relative.z-10.glass-dock.horizontal.shape-pill.expanded \"Home\""}]  
+
+== after-press | DIV|||border.border-border/40.dock-stage-tile.flex.justify-center.p-8.relative.rounded-[var(--radius-card)] | n= 1 | chromium/fine | routes: /dock/overview | crop: chromium-fine-_dock_overview-17
+   label: div.dock-stage-tile.relative.flex.justify-center.rounded-[var(--radius-card)].border
+   sample /dock/overview 1 [{"rel":"inside","kind":"props","detail":["padding-right 8px->12px","padding-left 8px->12px","margin-right 547px->495px","margin-left 547px->495px"],"label":"div.relative.z-10.glass-dock.horizontal.shape-pill.expanded \"Home\""}]  
+
+== hover | DIV|||collapsed.fit-content.glass-dock.horizontal.shape-pill | n= 1 | chromium/fine | routes: /dock/layers | crop: chromium-fine-_dock_layers-12
+   label: div.glass-dock.horizontal.shape-pill.collapsed.fit-content
+   sample /dock/layers 30 [{"rel":"inside","kind":"box","detail":{"dO":[-98,0,0,0],"dc":[0,0]},"label":"div#glass-dock-v-20-summary.dock-layer.dock-layer--summary"},{"rel":"inside","kind":"box","detail":{"dO":[-98,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Open"},{"rel":"other","kind":"box","detail":{"dO":[0,52,0,0],"dc":[0,0]},"label":"button#dock-tab-v-23-assets.dock-layer-tab[role=tab] \"Assets\""},{"rel":"other","kind":"box","detail":{"dO":[0,52,0,0],"dc":[0,0]},"label":"button#dock-tab-v-23-layers.dock-layer-tab[role=tab] \"Layers\""}]  
+
+== press | DIV|||collapsed.fit-content.glass-dock.horizontal.shape-pill | n= 1 | chromium/fine | routes: /dock/layers | crop: chromium-fine-_dock_layers-12
+   label: div.glass-dock.horizontal.shape-pill.collapsed.fit-content
+   sample /dock/layers 2 [{"rel":"inside","kind":"box","detail":{"dO":[-110,-8,0,0],"dc":[0,0]},"label":"div#glass-dock-v-20-summary.dock-layer.dock-layer--summary"},{"rel":"inside","kind":"box","detail":{"dO":[-110,-8,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Open"}]  
+
+== release | DIV|||collapsed.fit-content.glass-dock.horizontal.shape-pill | n= 1 | chromium/fine | routes: /dock/layers | crop: chromium-fine-_dock_layers-12
+   label: div.glass-dock.horizontal.shape-pill.collapsed.fit-content
+   sample /dock/layers 1 [{"rel":"target","kind":"props","detail":["padding-right 8px->12px","padding-left 8px->12px"],"label":"div.glass-dock.horizontal.shape-pill.expanded.fit-content \"Assets imag"}]  
+
+== after-press | DIV|||collapsed.fit-content.glass-dock.horizontal.shape-pill | n= 1 | chromium/fine | routes: /dock/layers | crop: chromium-fine-_dock_layers-12
+   label: div.glass-dock.horizontal.shape-pill.collapsed.fit-content
+   sample /dock/layers 1 [{"rel":"target","kind":"props","detail":["padding-right 8px->12px","padding-left 8px->12px"],"label":"div.glass-dock.horizontal.shape-pill.expanded.fit-content \"Assets imag"}]  
+
+== press | DIV|||border.border-border/30.dock-stage-tile.flex.justify-center.p-10.rounded-card | n= 1 | chromium/fine | routes: /dock/layers | crop: chromium-fine-_dock_layers-13
+   label: div.dock-stage-tile.flex.justify-center.rounded-card.border.border-border/30 "Assets Layers Libraries Assets ·
+   sample /dock/layers 30 [{"rel":"other","kind":"box","detail":{"dO":[8,8,0,0],"dc":[0,0]},"label":"div#glass-dock-v-20-summary.dock-layer.dock-layer--summary.is-active[r"},{"rel":"other","kind":"box","detail":{"dO":[8,8,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Open"},{"rel":"other","kind":"box","detail":{"dO":[0,-52,0,0],"dc":[0,0]},"label":"button#dock-tab-v-23-assets.dock-layer-tab[role=tab] \"Assets\""},{"rel":"other","kind":"box","detail":{"dO":[0,-52,0,0],"dc":[0,0]},"label":"button#dock-tab-v-23-layers.dock-layer-tab[role=tab] \"Layers\""}]  
+
+== press | BUTTON|||dock-icon-button.glass-capsule-hover.glass-specular-track.text-muted-foreground | n= 1 | chromium/fine | routes: /dock/vertical | crop: chromium-fine-_dock_vertical-0
+   label: button.dock-icon-button.glass-specular-track.glass-capsule-hover.text-muted-foreground "Foundations"
+   sample /dock/vertical 8 [{"rel":"other","kind":"box","detail":{"dO":[0,4,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Home"},{"rel":"other","kind":"box","detail":{"dO":[0,4,0,0],"dc":[0,0]},"label":"div.dock-persistent"},{"rel":"other","kind":"box","detail":{"dO":[0,0,0,-4],"dc":[0,-4]},"label":"div#glass-dock-v-25-full.dock-layer.dock-layer--full.dock-run[role=too"},{"rel":"other","kind":"box","detail":{"dO":[0,0,0,-4],"dc":[0,0]},"label":"div.dock-layers"}]  
+
+== hover | DIV|toolbar||collapsed.glass-dock.shape-pill.vertical | n= 1 | chromium/fine | routes: /dock/vertical | crop: chromium-fine-_dock_vertical-5
+   label: div.glass-dock.vertical.shape-pill.collapsed[role=toolbar] "Starts compact vertical dock"
+   sample /dock/vertical 19 [{"rel":"inside","kind":"box","detail":{"dO":[0,-4,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Home"},{"rel":"target","kind":"box","detail":{"dO":[0,0,0,215],"dc":[0,0]},"label":"div.glass-dock.vertical.shape-pill.expanded[role=toolbar] \"Starts comp"},{"rel":"ancestor","kind":"box","detail":{"dO":[0,0,0,215],"dc":[0,0]},"label":"div.flex.flex-col.items-start.gap-3 \"Starts compact\""},{"rel":"ancestor","kind":"box","detail":{"dO":[0,0,0,120],"dc":[0,0]},"label":"div.flex.min-h-[18rem].flex-wrap.items-start.gap-8.p-6 \"Starts compact"}]  
+
+== after-hover | DIV|toolbar||collapsed.glass-dock.shape-pill.vertical | n= 1 | chromium/fine | routes: /dock/vertical | crop: chromium-fine-_dock_vertical-5
+   label: div.glass-dock.vertical.shape-pill.collapsed[role=toolbar] "Starts compact vertical dock"
+   sample /dock/vertical 1 [{"rel":"target","kind":"props","detail":["padding-top 12px->7.99176px","padding-bottom 12px->7.99176px"],"label":"div.glass-dock.vertical.shape-pill.expanded[role=toolbar] \"Starts comp"}]  
+
+== focus | DIV|toolbar||collapsed.glass-dock.shape-pill.vertical | n= 1 | chromium/fine | routes: /dock/vertical | crop: chromium-fine-_dock_vertical-5
+   label: div.glass-dock.vertical.shape-pill.collapsed[role=toolbar] "Starts compact vertical dock"
+   sample /dock/vertical 1 [{"rel":"target","kind":"props","detail":["padding-top 12px->7.99664px","padding-bottom 12px->7.99664px"],"label":"div.glass-dock.vertical.shape-pill.expanded[role=toolbar] \"Starts comp"}]  
+
+== after-focus | DIV|toolbar||collapsed.glass-dock.shape-pill.vertical | n= 1 | chromium/fine | routes: /dock/vertical | crop: chromium-fine-_dock_vertical-5
+   label: div.glass-dock.vertical.shape-pill.collapsed[role=toolbar] "Starts compact vertical dock"
+   sample /dock/vertical 1 [{"rel":"target","kind":"props","detail":["padding-top 12px->7.99904px","padding-bottom 12px->7.99904px"],"label":"div.glass-dock.vertical.shape-pill.expanded[role=toolbar] \"Starts comp"}]  
+
+== press | DIV|toolbar||collapsed.glass-dock.shape-pill.vertical | n= 1 | chromium/fine | routes: /dock/vertical | crop: chromium-fine-_dock_vertical-5
+   label: div.glass-dock.vertical.shape-pill.collapsed[role=toolbar] "Starts compact vertical dock"
+   sample /dock/vertical 3 [{"rel":"inside","kind":"box","detail":{"dO":[-12,-64,0,0],"dc":[0,0]},"label":"div#glass-dock-v-24-summary.dock-layer.dock-layer--summary"},{"rel":"inside","kind":"box","detail":{"dO":[-12,-64,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Open"},{"rel":"target","kind":"props","detail":["padding-top 12px->8px","padding-bottom 12px->8px"],"label":"div.glass-dock.vertical.shape-pill.expanded[role=toolbar] \"Starts comp"}]  
+
+== release | DIV|toolbar||collapsed.glass-dock.shape-pill.vertical | n= 1 | chromium/fine | routes: /dock/vertical | crop: chromium-fine-_dock_vertical-5
+   label: div.glass-dock.vertical.shape-pill.collapsed[role=toolbar] "Starts compact vertical dock"
+   sample /dock/vertical 1 [{"rel":"target","kind":"props","detail":["padding-top 12px->8px","padding-bottom 12px->8px"],"label":"div.glass-dock.vertical.shape-pill.expanded[role=toolbar] \"Starts comp"}]  
+
+== after-press | DIV|toolbar||collapsed.glass-dock.shape-pill.vertical | n= 1 | chromium/fine | routes: /dock/vertical | crop: chromium-fine-_dock_vertical-5
+   label: div.glass-dock.vertical.shape-pill.collapsed[role=toolbar] "Starts compact vertical dock"
+   sample /dock/vertical 1 [{"rel":"target","kind":"props","detail":["padding-top 12px->8px","padding-bottom 12px->8px"],"label":"div.glass-dock.vertical.shape-pill.expanded[role=toolbar] \"Starts comp"}]  
+
+== hover | DIV|toolbar||expanded.glass-dock.shape-pill.vertical | n= 1 | chromium/fine | routes: /dock/vertical | crop: chromium-fine-_dock_vertical-6
+   label: div.glass-dock.vertical.shape-pill.expanded[role=toolbar] "Starts open vertical dock"
+   sample /dock/vertical 16 [{"rel":"inside","kind":"box","detail":{"dO":[0,-4,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Home"},{"rel":"inside","kind":"box","detail":{"dO":[12,64,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover.text-"},{"rel":"inside","kind":"box","detail":{"dO":[12,64,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover.text-"},{"rel":"inside","kind":"box","detail":{"dO":[12,64,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover.text-"}]  
+
+== after-hover | DIV|toolbar||expanded.glass-dock.shape-pill.vertical | n= 1 | chromium/fine | routes: /dock/vertical | crop: chromium-fine-_dock_vertical-6
+   label: div.glass-dock.vertical.shape-pill.expanded[role=toolbar] "Starts open vertical dock"
+   sample /dock/vertical 1 [{"rel":"target","kind":"props","detail":["padding-top 12px->7.99096px","padding-bottom 12px->7.99096px"],"label":"div.glass-dock.vertical.shape-pill.expanded[role=toolbar] \"Starts open"}]  
+
+== focus | DIV|toolbar||expanded.glass-dock.shape-pill.vertical | n= 1 | chromium/fine | routes: /dock/vertical | crop: chromium-fine-_dock_vertical-6
+   label: div.glass-dock.vertical.shape-pill.expanded[role=toolbar] "Starts open vertical dock"
+   sample /dock/vertical 1 [{"rel":"target","kind":"props","detail":["padding-top 12px->7.99612px","padding-bottom 12px->7.99612px"],"label":"div.glass-dock.vertical.shape-pill.expanded[role=toolbar] \"Starts open"}]  
+
+== after-focus | DIV|toolbar||expanded.glass-dock.shape-pill.vertical | n= 1 | chromium/fine | routes: /dock/vertical | crop: chromium-fine-_dock_vertical-6
+   label: div.glass-dock.vertical.shape-pill.expanded[role=toolbar] "Starts open vertical dock"
+   sample /dock/vertical 1 [{"rel":"target","kind":"props","detail":["padding-top 12px->7.9988px","padding-bottom 12px->7.9988px"],"label":"div.glass-dock.vertical.shape-pill.expanded[role=toolbar] \"Starts open"}]  
+
+== press | DIV|toolbar||expanded.glass-dock.shape-pill.vertical | n= 1 | chromium/fine | routes: /dock/vertical | crop: chromium-fine-_dock_vertical-6
+   label: div.glass-dock.vertical.shape-pill.expanded[role=toolbar] "Starts open vertical dock"
+   sample /dock/vertical 11 [{"rel":"other","kind":"box","detail":{"dO":[0,4,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Home"},{"rel":"other","kind":"box","detail":{"dO":[12,64,0,0],"dc":[0,0]},"label":"div#glass-dock-v-24-summary.dock-layer.dock-layer--summary.is-active[r"},{"rel":"other","kind":"box","detail":{"dO":[12,64,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Open"},{"rel":"other","kind":"box","detail":{"dO":[0,4,0,0],"dc":[0,0]},"label":"div.dock-persistent"}]  
+
+== release | DIV|toolbar||expanded.glass-dock.shape-pill.vertical | n= 1 | chromium/fine | routes: /dock/vertical | crop: chromium-fine-_dock_vertical-6
+   label: div.glass-dock.vertical.shape-pill.expanded[role=toolbar] "Starts open vertical dock"
+   sample /dock/vertical 1 [{"rel":"target","kind":"props","detail":["padding-top 12px->8px","padding-bottom 12px->8px"],"label":"div.glass-dock.vertical.shape-pill.expanded[role=toolbar] \"Starts open"}]  
+
+== after-press | DIV|toolbar||expanded.glass-dock.shape-pill.vertical | n= 1 | chromium/fine | routes: /dock/vertical | crop: chromium-fine-_dock_vertical-6
+   label: div.glass-dock.vertical.shape-pill.expanded[role=toolbar] "Starts open vertical dock"
+   sample /dock/vertical 1 [{"rel":"target","kind":"props","detail":["padding-top 12px->8px","padding-bottom 12px->8px"],"label":"div.glass-dock.vertical.shape-pill.expanded[role=toolbar] \"Starts open"}]  
+
+== press | DIV|||flex.justify-start.overflow-hidden.p-6.relative.rounded-[var(--radius-card)] | n= 1 | chromium/fine | routes: /dock/vertical | crop: chromium-fine-_dock_vertical-7
+   label: div.relative.flex.justify-start.overflow-hidden.rounded-[var(--radius-card)].p-6 "Foundations Primitives Conta
+   sample /dock/vertical 8 [{"rel":"other","kind":"box","detail":{"dO":[0,4,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Home"},{"rel":"other","kind":"box","detail":{"dO":[0,4,0,0],"dc":[0,0]},"label":"div.dock-persistent"},{"rel":"other","kind":"box","detail":{"dO":[0,0,0,-4],"dc":[0,-4]},"label":"div#glass-dock-v-25-full.dock-layer.dock-layer--full.dock-run[role=too"},{"rel":"other","kind":"box","detail":{"dO":[0,0,0,-4],"dc":[0,0]},"label":"div.dock-layers"}]  
+
+== after-hover | BUTTON||button|button.focus-ring.tap-squish.text-mono-small | n= 1 | chromium/fine | routes: /dock/cta-receive | crop: chromium-fine-_dock_cta_receive-1
+   label: button.button.tap-squish.focus-ring.text-mono-small[data-slot=button] "Reveal seat"
+   sample /dock/cta-receive 0 [] ADDS [{"label":"span \"· 1080–1440\"","w":118,"h":44},{"label":"span \"· in band\"","w":118,"h":44},{"label":"button.button.tap-squish.focus-ring.glass-capsule.glass-specular-track.glass-capsule-hover[data-slot=button] \"Replay\"","w":88,"h":40}] 
+
+== focus | DIV|||bg-card.border.border-border.flex.flex-col.gap-6.p-6.rounded-card.shadow-cartoon | n= 1 | chromium/fine | routes: /data/timeline | crop: null
+   label: div.flex.flex-col.gap-6.rounded-card.border.border-border "Build active in flight Core features lan"
+   sample /data/timeline 0 [] ADDS [{"label":"div.tl__detail \"Kickoff completed · hover 4 days Researc\"","w":588,"h":85}] 
+
+== after-focus | DIV|||bg-card.border.border-border.flex.flex-col.gap-6.p-6.rounded-card.shadow-cartoon | n= 1 | chromium/fine | routes: /data/timeline | crop: null
+   label: div.flex.flex-col.gap-6.rounded-card.border.border-border "Build active in flight Core features lan"
+   sample /data/timeline 0 [] ADDS [{"label":"div.tl__detail \"Design completed 11 days Wireframes appr\"","w":588,"h":85}] 
+
+== hover | DIV|||border.glass-floating.glass-reveal.px-6.py-5.rounded-panel.shadow-cartoon-sm | n= 1 | chromium/fine | routes: /motion/curve-gallery | crop: null
+   label: div.glass-floating.glass-reveal.rounded-panel.border.px-6.py-5 "Material arrives as one layer. scale · f"
+   sample /motion/curve-gallery 0 [] ADDS [{"label":"svg.lucide.lucide-rotate-ccw-icon.lucide-rotate-ccw","w":16,"h":16}] 
+
+== TRANSFORMS (largest per signature/state), top 60
+  150.3px release chromium/fine /dock/cta-receive dx/dy/dw/dh=127.1/150.3/-110/3.5 OVERLAP [{"id":"21","gw":38.9,"gh":43.5}] button.button.tap-squish.focus-ring.glass-capsule.glass-specular-track.glass-dee
+  150.3px after-press chromium/fine /dock/cta-receive dx/dy/dw/dh=127.1/150.3/-110/3.5 OVERLAP [{"id":"21","gw":38.9,"gh":43.5}] button.button.tap-squish.focus-ring.glass-capsule.glass-specular-track.glass-dee
+  20.0px release chromium/fine /substrates/constellation dx/dy/dw/dh=20/0/0/0  span.switch__thumb
+  20.0px after-press chromium/fine /substrates/constellation dx/dy/dw/dh=20/0/0/0  span.switch__thumb
+  8.3px press chromium/fine /compositions/auth-shell dx/dy/dw/dh=-8.2/2/16.5/-3.9  button.button.tap-squish.focus-ring.glass-capsule.glass-specular-track.glass-cap
+  8.0px release chromium/fine /navigation/toc-tracking dx/dy/dw/dh=0/8/0/0  button.w-full.rounded-control.px-(--sp-3).py-(--sp-2).text-left.text-small "Sect
+  8.0px after-press chromium/fine /navigation/toc-tracking dx/dy/dw/dh=0/8/0/0  button.w-full.rounded-control.px-(--sp-3).py-(--sp-2).text-left.text-small "Sect
+  6.3px press chromium/fine /display/card dx/dy/dw/dh=6.2/2/-12.6/-4.1  div.glass-resting.card[role=option][data-slot=card] "Balanced The fill carries t
+  6.3px press chromium/fine /data/infinite-scroll dx/dy/dw/dh=6.2/1.1/-12.5/-2.1  li.interactive-item.flex.items-center.gap-4.px-4.py-3 "Signal #001 — dispatched 
+  5.8px press chromium/fine /containers/command dx/dy/dw/dh=5.8/-0.4/-11.6/-1.3  div#reka-combobox-item-v-18.command__item.interactive-item.glass-menu-row.relati
+  5.2px press chromium/fine /motion/curve-gallery dx/dy/dw/dh=-5.1/1.8/10.4/-3.6  button.button.tap-squish.focus-ring.min-w-0.gap-2[data-slot=button] "cubic-bezie
+  4.0px release chromium/fine /forms/chip dx/dy/dw/dh=-4/-1.3/8/2.6  button.glass-chip.glass-capsule.accent-tone.inline-flex.items-center.justify-cen
+  4.0px after-press chromium/fine /forms/chip dx/dy/dw/dh=-4/-1.3/8/2.6  button.glass-chip.glass-capsule.accent-tone.inline-flex.items-center.justify-cen
+  3.6px hover chromium/fine /foundations/css-utilities dx/dy/dw/dh=-3.6/-3.6/7.2/7.2  div.scale-on-hover.h-12.w-12.rounded-card.bg-primary.text-primary-foreground
+  3.6px press chromium/fine /foundations/css-utilities dx/dy/dw/dh=-3.6/-3.6/7.2/7.2  div.scale-on-hover.h-12.w-12.rounded-card.bg-primary.text-primary-foreground
+  3.6px release chromium/fine /foundations/css-utilities dx/dy/dw/dh=-3.6/-3.6/7.2/7.2  div.scale-on-hover.h-12.w-12.rounded-card.bg-primary.text-primary-foreground
+  3.4px press chromium/fine /containers/sheet dx/dy/dw/dh=-3.4/1.8/6.8/-3.6  button.button.tap-squish.focus-ring.glass-capsule.glass-specular-track.glass-cap
+  2.9px press chromium/fine /containers/collapsible dx/dy/dw/dh=-2.9/1.7/5.8/-3.6  button#glass-disclosure-trigger-v-14.button.tap-squish.focus-ring.disclosure-tri
+  2.7px press chromium/fine /data/virtual-section dx/dy/dw/dh=2.7/0.6/-5.4/-1.1  button.interactive-item.rounded-md.border.border-border.bg-background.px-3 "Jump
+  2.6px press chromium/fine /containers/command dx/dy/dw/dh=-2.6/1.8/5.1/-3.6  button.button.tap-squish.focus-ring.glass-capsule.glass-specular-track.glass-cap
+  2.5px press chromium/fine /dock/overview dx/dy/dw/dh=2.5/0.5/-4.9/-1  button#reka-dropdown-menu-trigger-v-20.menu__trigger.dock-trigger.dock-dropdown-
+  2.5px press chromium/fine /dock/cta-receive dx/dy/dw/dh=-2.4/1.8/4.9/-3.6  button.button.tap-squish.focus-ring.glass-capsule.glass-specular-track.glass-dee
+  2.4px release chromium/fine /forms/checks dx/dy/dw/dh=-2.4/-2.3/4.8/4.8  span.control-bit__mark
+  2.4px after-press chromium/fine /forms/checks dx/dy/dw/dh=-2.4/-2.3/4.8/4.8  span.control-bit__mark
+  2.3px hover chromium/fine /foundations/css-utilities dx/dy/dw/dh=-2.2/-2.3/4.5/4.5  div.scale-on-hover.flex.h-14.w-14.items-center.justify-center
+  2.3px press chromium/fine /foundations/css-utilities dx/dy/dw/dh=-2.2/-2.3/4.5/4.5  div.scale-on-hover.flex.h-14.w-14.items-center.justify-center
+  2.3px release chromium/fine /foundations/css-utilities dx/dy/dw/dh=-2.2/-2.3/4.5/4.5  div.scale-on-hover.flex.h-14.w-14.items-center.justify-center
+  2.2px press chromium/fine /containers/sheet dx/dy/dw/dh=-2.2/1.8/4.4/-3.6  button.button.tap-squish.focus-ring.glass-capsule.glass-specular-track.glass-cap
+  2.2px press chromium/fine /containers/dropdown-menu dx/dy/dw/dh=-2.2/1.6/4.3/-3.2  button#reka-dropdown-menu-trigger-v-16.button.tap-squish.focus-ring.glass-capsul
+  2.1px press chromium/fine /compositions/empty-states dx/dy/dw/dh=-2.1/1.6/4.3/-3.2  button.button.tap-squish.focus-ring.mt-2[data-slot=button] "Add something"
+  2.1px press chromium/fine /containers/sheet dx/dy/dw/dh=-2.1/1.8/4.1/-3.6  button.button.tap-squish.focus-ring.glass-capsule.glass-specular-track.glass-dee
+  2.1px press chromium/fine /compositions/empty-states dx/dy/dw/dh=-2.1/1.6/4.1/-3.2  button.button.tap-squish.focus-ring.glass-capsule.glass-specular-track.glass-cap
+  2.0px press chromium/fine /feedback/progress dx/dy/dw/dh=-0.7/2/1.5/-3.9  button.button.tap-squish.focus-ring.glass-capsule.glass-specular-track.glass-cap
+  1.9px press chromium/fine /dock/controls dx/dy/dw/dh=1.9/0.8/-3.8/-1.5  button.dock-tab-button.glass-specular-track "Overview"
+  1.8px press chromium/fine /display/buttons dx/dy/dw/dh=-0.9/1.8/1.8/-3.6  button.button.tap-squish.focus-ring.glass-capsule.glass-specular-track.glass-dee
+  1.8px press chromium/fine /display/buttons dx/dy/dw/dh=-0.9/1.8/1.8/-3.6  button.button.tap-squish.focus-ring[data-slot=button] "Save"
+  1.8px press chromium/fine /forms/number-field dx/dy/dw/dh=-0.7/1.8/1.3/-3.6  button.button.tap-squish.focus-ring.glass-capsule.glass-specular-track.glass-cap
+  1.8px press chromium/fine /forms/number-field dx/dy/dw/dh=-0.7/1.8/1.3/-3.6  button.button.tap-squish.focus-ring.glass-capsule.glass-specular-track.glass-cap
+  1.8px press chromium/fine /containers/dropdown-menu dx/dy/dw/dh=-0.7/1.8/1.3/-3.6  button#reka-dropdown-menu-trigger-v-15.button.tap-squish.focus-ring.menu__trigge
+  1.8px press chromium/fine /navigation/carousel dx/dy/dw/dh=-0.7/1.8/1.3/-3.6  button.button.tap-squish.focus-ring[data-slot=carousel-pager-next] "Next slide"
+  1.8px press chromium/fine /foundations/colors dx/dy/dw/dh=1.7/0.3/-3.5/-0.7  a.focus-ring.interactive-item.transition-control.text-small.text-muted-foregroun
+  1.6px press chromium/fine /foundations/motion dx/dy/dw/dh=-1/1.6/2.2/-3.2  button.button.tap-squish.focus-ring.glass-capsule.glass-specular-track.glass-cap
+  1.6px press chromium/fine /display/card dx/dy/dw/dh=-0.6/1.6/1.2/-3.2  button.button.tap-squish.focus-ring.story-code-block-copy[data-slot=button] "Cop
+  1.6px release chromium/fine /forms/checks dx/dy/dw/dh=-1.6/-1.6/3.2/3.2  span.control-bit__mark.radio-group__dot[data-slot=radio-group-indicator]
+  1.6px after-press chromium/fine /forms/checks dx/dy/dw/dh=-1.6/-1.6/3.2/3.2  span.control-bit__mark.radio-group__dot[data-slot=radio-group-indicator]
+  1.6px press chromium/fine /containers/popover dx/dy/dw/dh=-0.9/1.6/1.7/-3.2  button#reka-popover-trigger-v-19.button.tap-squish.focus-ring.capitalize[data-sl
+  1.5px press chromium/fine /dock/cta-receive dx/dy/dw/dh=0.2/1.5/-0.5/-2.9  button.dock-icon-button.glass-specular-track.glass-capsule-hover.cta-receive-tar
+  1.4px press chromium/fine /dock/overview dx/dy/dw/dh=1.4/0.4/-2.9/-0.9  button.dock-trigger.dock-select-trigger[role=combobox] "Preview Preview"
+  1.4px press chromium/fine /dock/overview dx/dy/dw/dh=1.4/0.5/-2.9/-1  button#reka-popover-trigger-v-21.dock-trigger.dock-dropdown-trigger "Info"
+  1.4px press chromium/fine /display/buttons dx/dy/dw/dh=-0.8/1.4/1.6/-2.7  a.button.tap-squish.focus-ring.glass-capsule.glass-specular-track.glass-capsule-
+  1.4px press chromium/fine /dock/controls dx/dy/dw/dh=0.2/1.4/-0.4/-2.7  button.dock-icon-button.glass-specular-track.glass-capsule-hover.glass-capsule "
+  1.4px press chromium/fine /dock/vertical dx/dy/dw/dh=0.3/1.3/-0.4/-2.7  button.dock-icon-button.glass-specular-track.glass-capsule-hover.text-muted-fore
+  1.4px press chromium/fine /dock/overflow dx/dy/dw/dh=0.2/1.3/-0.4/-2.7  button.dock-icon-button.glass-specular-track.glass-capsule-hover.glass-capsule[r
+  1.4px press chromium/fine /dock/overflow dx/dy/dw/dh=0.2/1.3/-0.4/-2.7  button.dock-icon-button.glass-specular-track.glass-capsule-hover[role=radio] "Se
+  1.0px hover chromium/fine /foundations/colors dx/dy/dw/dh=-1/-1/0/0  div.glass-quiet.min-w-0.rounded-card.p-(--sp-3).transition-transform.duration-fa
+  1.0px press chromium/fine /foundations/colors dx/dy/dw/dh=-1/-1/0/0  div.glass-quiet.min-w-0.rounded-card.p-(--sp-3).transition-transform.duration-fa
+  1.0px release chromium/fine /foundations/colors dx/dy/dw/dh=-1/-1/0/0  div.glass-quiet.min-w-0.rounded-card.p-(--sp-3).transition-transform.duration-fa
+  1.0px hover chromium/fine /foundations/shadows dx/dy/dw/dh=-1/-1/0/0  button.glass-card.focus-ring.flex.h-32.w-56.flex-col "hover me Lifts 1px"
+  1.0px press chromium/fine /foundations/shadows dx/dy/dw/dh=-1/-1/0/0  button.glass-card.focus-ring.flex.h-32.w-56.flex-col "hover me Lifts 1px"
+  1.0px release chromium/fine /foundations/shadows dx/dy/dw/dh=-1/-1/0/0  button.glass-card.focus-ring.flex.h-32.w-56.flex-col "hover me Lifts 1px"
+
+== OVERLAPS 2
+  release chromium/fine /dock/cta-receive 127.1/150.3/-110/3.5 [{"id":"21","gw":38.9,"gh":43.5}] button.button.tap-squish.focus-ring.glass-capsule.glass-specular-track.glass-dee
+  after-press chromium/fine /dock/cta-receive 127.1/150.3/-110/3.5 [{"id":"21","gw":38.9,"gh":43.5}] button.button.tap-squish.focus-ring.glass-capsule.glass-specular-track.glass-dee
+
+moves total 149 signatures 73

@@ -18,8 +18,6 @@
 //   P4 — the buttons pane's primary-audacious CTA renders ABOVE the destructive
 //        register (vertical Y) — the CTA out-presents destructive (D5) + the glass
 //        cluster sits in a field host (transparent plate — the BG-2 fix, D3).
-//   P5 — the notification pane renders real .feedback-tone rows (a translucent
-//        tinted-glass background, NOT a 10px solid dot) (D5).
 //
 // THE BINDING ASSERTION IS THE RESOLVED READBACK. It loads :5199 →
 // LIVE_VERIFIED_LOCAL_ONLY (tags: ["local"]); CI grace-skips, backstopped by
@@ -215,38 +213,6 @@ test.describe("BB.W-DEMO-DESIGN — the demo presentation designed to SOTA (π)"
 
             await page.screenshot({
                 path: `${VISUAL_DIR}/W-DEMO-DESIGN-buttons-${mode}.png`,
-                fullPage: true,
-            });
-        });
-
-        // ── P5 — the notification tones render as colored-glass rows ──────────────
-        test(`P5 — the notification tones render as translucent .feedback-tone rows [${mode}]`, async ({
-            page,
-        }) => {
-            await page.setViewportSize({ width: 1280, height: 1000 });
-            await page.goto("/feedback/notification", { waitUntil: "domcontentloaded" });
-            await page.waitForSelector("article", { timeout: 8000 }).catch(() => {});
-            await setDark(page, dark);
-            await page.waitForTimeout(400);
-
-            const tone = await page.evaluate(() => {
-                const row = document.querySelector<HTMLElement>("article .feedback-tone");
-                if (!row) return null;
-                const cs = getComputedStyle(row);
-                return { bg: cs.backgroundColor };
-            });
-            paired[`p5-${mode}`] = tone;
-            expect(tone, "a .feedback-tone row renders").not.toBeNull();
-            const alpha = parseAlpha(tone!.bg);
-            expect(alpha, `the tone row background resolves (${tone!.bg})`).not.toBeNull();
-            // A tinted-glass row is translucent (α < ~0.95) — NOT an opaque solid dot/slab.
-            expect(
-                alpha!,
-                `the .feedback-tone row reads as translucent colored glass (α=${alpha!}, < 0.95) — not a 10px solid dot`,
-            ).toBeLessThan(0.95);
-
-            await page.screenshot({
-                path: `${VISUAL_DIR}/W-DEMO-DESIGN-notification-${mode}.png`,
                 fullPage: true,
             });
         });

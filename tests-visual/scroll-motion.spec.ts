@@ -36,10 +36,7 @@ const VISUAL_DIR = fileURLToPath(
     new URL("../docs/tranches/BB/audit/visual", import.meta.url),
 );
 
-// The route this spec reads back. `"/motion/scroll-choreography"` was PRE-EXISTING ROT
-// — the manifest never carried that id, so every arm here navigated a 404 while the
-// suite stayed unwired and nobody noticed (BK #18 named it, #19 carries it out). The
-// scroll-choreography recipes (`.scroll-cascade` + the section build) paint on any
+// The route this spec reads back. The scroll-choreography recipes (`.scroll-cascade` + the section build) paint on any
 // StoryPage; the scroll-register specimen is the page that mounts them deliberately.
 const ROUTE = "/motion/scroll";
 

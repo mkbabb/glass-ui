@@ -105,7 +105,7 @@ test.describe("BB.W-LIQUID-REVEAL — the bloom-from-source liquid open", () => 
             }
 
             // The dock expand bloom beat — the collapsed pill blooms open.
-            await page.goto("/dock/overview", { waitUntil: "networkidle" });
+            await page.goto("/dock/chrome", { waitUntil: "networkidle" });
             await page.waitForTimeout(400);
             const dock = page.locator(".glass-dock").first();
             await expect(dock).toBeVisible();

@@ -328,7 +328,7 @@ test.describe("overlay uniformity (the surface axis + the φ pad cascade across 
         test(`${mode}: a bare floating overlay resolves the golden glass-floating tier + the φ pad cadence`, async ({
             page,
         }) => {
-            await page.goto("/containers/hover-card", { waitUntil: "networkidle" }).catch(() => {});
+            await page.goto("/containers/popover", { waitUntil: "networkidle" }).catch(() => {});
             await setMode(page, mode);
             // Scope to the story `<main>` — a bare getByRole("button").first() grabs the
             // demo SHELL's sidebar nav button, not the story's HoverCardTrigger.

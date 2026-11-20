@@ -1,0 +1,26 @@
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:702:1 › fold · an idle fold lays out once per morph frame on a scrolling page (5.7s)
+
+
+  1) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:702:1 › fold · an idle fold lays out once per morph frame on a scrolling page 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 79
+    Received:    245
+
+      736 |     expect(r.morphFrames).toBeGreaterThan(10);
+      737 |     // One layout per morph frame, and a few for the fold's arm and settle.
+    > 738 |     expect(count).toBeLessThanOrEqual(r.morphFrames + 12);
+          |                   ^
+      739 | });
+      740 |
+      741 | // A click Popover with `keep-dock-open`, rendered in the dock's own slot content: opened
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:738:19
+
+    Error Context: tests-visual/test-results/release-11-0-2-fold-·-an-i-ccd3a-h-frame-on-a-scrolling-page-chromium-headless-new/error-context.md
+
+  1 failed
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:702:1 › fold · an idle fold lays out once per morph frame on a scrolling page 

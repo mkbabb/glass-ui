@@ -1,0 +1,124 @@
+
+Running 6 tests using 1 worker
+
+  ✘  1 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:550:1 › pager · a neighbour hop paints a neck no wider than the pitch plus a dot (3.5s)
+  ✘  2 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:589:1 › wheel · a vertical wheel over a horizontal dock's run scrolls the page (1.2s)
+  ✘  3 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:615:1 › wheel · a vertical dock's run contains its own axis and passes the other (247ms)
+  ✘  4 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:550:1 › pager · a neighbour hop paints a neck no wider than the pitch plus a dot (3.4s)
+  -  5 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:589:1 › wheel · a vertical wheel over a horizontal dock's run scrolls the page
+  ✘  6 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:615:1 › wheel · a vertical dock's run contains its own axis and passes the other (231ms)
+
+
+  1) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:550:1 › pager · a neighbour hop paints a neck no wider than the pitch plus a dot 
+
+    Error: token 0.75rem
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 40.5
+    Received:    300.6239929199219
+
+      583 |     for (const hop of hops) {
+      584 |         expect(hop.frames, `the neck bridged the hop to ${hop.to}`).toBeGreaterThan(0);
+    > 585 |         expect(hop.widest, `token ${geo.token}`).toBeLessThanOrEqual(geo.pitch + geo.dot + 0.5);
+          |                                                  ^
+      586 |     }
+      587 | });
+      588 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:585:50
+
+    Error Context: tests-visual/test-results/release-11-0-2-pager-·-a-n-ef66e-r-than-the-pitch-plus-a-dot-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:589:1 › wheel · a vertical wheel over a horizontal dock's run scrolls the page 
+
+    Error: the page moved under the dock
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 150
+    Received:   0
+
+      609 |     info.annotations.push({ type: "wheel", description: JSON.stringify({ css, moved }) });
+      610 |     expect(css.overflow, "the run is a real scroller").toBeGreaterThan(0);
+    > 611 |     expect(moved, "the page moved under the dock").toBeGreaterThan(150);
+          |                                                    ^
+      612 |     expect(css).toMatchObject({ x: "contain", y: "auto" });
+      613 | });
+      614 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:611:52
+
+    Error Context: tests-visual/test-results/release-11-0-2-wheel-·-a-v-aad4b-dock-s-run-scrolls-the-page-chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:615:1 › wheel · a vertical dock's run contains its own axis and passes the other 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+    -   "x": "auto",
+    +   "x": "contain",
+        "y": "contain",
+      }
+
+      622 |     });
+      623 |     info.annotations.push({ type: "wheel", description: JSON.stringify(css) });
+    > 624 |     expect(css).toEqual({ x: "auto", y: "contain" });
+          |                 ^
+      625 | });
+      626 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:624:17
+
+    Error Context: tests-visual/test-results/release-11-0-2-wheel-·-a-v-18436-n-axis-and-passes-the-other-chromium-headless-new/error-context.md
+
+  4) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:550:1 › pager · a neighbour hop paints a neck no wider than the pitch plus a dot 
+
+    Error: token 0.5rem
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 56.5
+    Received:    515.2855834960938
+
+      583 |     for (const hop of hops) {
+      584 |         expect(hop.frames, `the neck bridged the hop to ${hop.to}`).toBeGreaterThan(0);
+    > 585 |         expect(hop.widest, `token ${geo.token}`).toBeLessThanOrEqual(geo.pitch + geo.dot + 0.5);
+          |                                                  ^
+      586 |     }
+      587 | });
+      588 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:585:50
+
+    Error Context: tests-visual/test-results/release-11-0-2-pager-·-a-n-ef66e-r-than-the-pitch-plus-a-dot-coarse-touch/error-context.md
+
+  5) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:615:1 › wheel · a vertical dock's run contains its own axis and passes the other 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+      Object {
+    -   "x": "auto",
+    +   "x": "contain",
+        "y": "contain",
+      }
+
+      622 |     });
+      623 |     info.annotations.push({ type: "wheel", description: JSON.stringify(css) });
+    > 624 |     expect(css).toEqual({ x: "auto", y: "contain" });
+          |                 ^
+      625 | });
+      626 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:624:17
+
+    Error Context: tests-visual/test-results/release-11-0-2-wheel-·-a-v-18436-n-axis-and-passes-the-other-coarse-touch/error-context.md
+
+  5 failed
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:550:1 › pager · a neighbour hop paints a neck no wider than the pitch plus a dot 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:589:1 › wheel · a vertical wheel over a horizontal dock's run scrolls the page 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:615:1 › wheel · a vertical dock's run contains its own axis and passes the other 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:550:1 › pager · a neighbour hop paints a neck no wider than the pitch plus a dot 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:615:1 › wheel · a vertical dock's run contains its own axis and passes the other 
+  1 skipped

@@ -103,16 +103,21 @@
         --glass-reveal-blur: var(--enter-overlay-blur);
         --glass-reveal-slide: var(--enter-overlay-slide);
     }
-    /* enter-menu — dropdown/select/combobox/command, sharing one refined arrival. */
+    /* enter-menu — dropdown/select/combobox/command. A menu does not bloom: it grows
+       from its trigger as geometry (the menu rules after the side variants below), so
+       every bloom channel is neutral here — no scale, no squish, no blur, no slide —
+       and the recipe's shared legs settle without moving. */
     .glass-reveal[data-reveal="menu"] {
         --reveal-spring: var(--enter-menu-spring);
         --reveal-clock: var(--enter-menu-clock);
         /* The exit reader of the row this register ENTERS on — the ratio law below
            binds each register to its OWN entering row, not to the overlay's. */
         --reveal-exit-clock: var(--spring-present-exit-duration);
-        --glass-reveal-enter-scale: var(--enter-menu-scale);
-        --glass-reveal-blur: var(--enter-menu-blur);
-        --glass-reveal-slide: var(--enter-menu-slide);
+        --glass-reveal-enter-scale: 1;
+        --lq-stretch-x: 1;
+        --lq-stretch-y: 1;
+        --glass-reveal-blur: 0px;
+        --glass-reveal-slide: 0px;
     }
     /* enter-tooltip — tooltip/hover-card, with no overshoot and the fastest arrival. */
     .glass-reveal[data-reveal="tooltip"] {
@@ -259,6 +264,32 @@
         translate: calc(-1 * var(--glass-reveal-slide)) 0;
     }
 
+    /* ── THE MENU GROWS FROM ITS TRIGGER ──────────────────────────────────────────
+       The plate opens as geometry anchored on its trigger: a clip uncovers the laid-out
+       plate from the edge facing the trigger, from a strip the trigger's height to the
+       whole plate, on the `bloom` spring (animations.css `glass-menu-grow`). The rows
+       are at their final size from the first frame and only the plate's far edge
+       travels. There is no blur and no fade in: opacity is 1 from the first frame. On
+       close the clip runs back into the strip and the plate cuts at the last tenth. */
+    .glass-reveal[data-reveal="menu"] {
+        --menu-grow-bleed: 2rem;
+    }
+    .glass-reveal[data-reveal="menu"][data-state="open"] {
+        animation: glass-menu-grow var(--spring-bloom-duration) var(--spring-bloom);
+        @starting-style {
+            opacity: 1;
+        }
+    }
+    .glass-reveal[data-reveal="menu"][data-state="open"][data-side="top"] {
+        animation-name: glass-menu-grow-up;
+    }
+    .glass-reveal[data-reveal="menu"][data-state="closed"] {
+        animation-name: glass-menu-recede;
+    }
+    .glass-reveal[data-reveal="menu"][data-state="closed"][data-side="top"] {
+        animation-name: glass-menu-recede-up;
+    }
+
     /* ── The `data-motion` reduction axis ─────────────────────────────────────────
        `useMotionAxis` (_shared/useMotionAxis.ts) emits `data-motion="reduced"/"off"`
        from the overlay content SFCs (Dialog + Sheet). These arms consume that signal.
@@ -334,6 +365,17 @@
                only fade would be torn down the same way, so the surface would just vanish; the
                fade-only keyframe keeps the fade PAINTING). The duration/timing/fill inherit
                from the closed rule's `animation` shorthand — only the name swaps. */
+            animation-name: glass-reveal-out-reduced;
+        }
+        /* The menu keeps no geometry under reduced motion: it fades in and out on the
+           same short clock as every reveal. */
+        .glass-reveal.glass-reveal[data-reveal="menu"][data-state="open"] {
+            animation: none;
+            @starting-style {
+                opacity: 0;
+            }
+        }
+        .glass-reveal.glass-reveal[data-reveal="menu"][data-state="closed"] {
             animation-name: glass-reveal-out-reduced;
         }
     }

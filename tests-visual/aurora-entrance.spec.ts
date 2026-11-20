@@ -6,7 +6,7 @@
 // judgement re-earned on a fresh capture (UF-E10 + value.js T-60: no repulsive-gray
 // fade, no intermediary gray stage). LOCAL real-GPU (rides the W-REFLECT close).
 //
-// THE BINDING ARMS (/foundations/intro flagship — the full-bleed hero aurora field):
+// THE BINDING ARMS (/ flagship — the full-bleed hero aurora field):
 //   (A) FRAME 0 IS THE PALETTE-DERIVED GROUND — the aurora placeholder's computed
 //       background is the field-sampled ground (a data: raster or radial-gradient
 //       stack), NOT the retired flat `linear-gradient(135deg)` gray band.
@@ -33,7 +33,7 @@ const VISUAL_DIR = fileURLToPath(
     new URL("../docs/tranches/BI/audit/visual", import.meta.url),
 );
 
-const ROUTE = "/foundations/intro";
+const ROUTE = "/";
 
 async function setDark(page: Page, dark: boolean): Promise<void> {
     await page.evaluate((d) => {

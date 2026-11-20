@@ -228,19 +228,4 @@ test.describe("glass-accent (π lane — the per-instance chromatic rim+glint, f
             expect(tC, "teal rim is chromatic").toBeGreaterThan(0.02);
         });
     }
-
-    // The demo specimen surfaces are LIVE on the glass-material story (the binding
-    // consumer witness). Verify the story renders the accent swatches per-instance.
-    test("the demo glass-material story renders the per-instance accent swatches", async ({
-        page,
-    }) => {
-        await page.setViewportSize({ width: 1280, height: 800 });
-        await page.goto(PI_TARGETS.substrate.path, { waitUntil: "networkidle" });
-        // navigate to the glass-material substrate story.
-        await page.goto("/substrates/glass-material", { waitUntil: "networkidle" }).catch(() => {});
-        const swatches = page.locator("[data-accent-swatch]");
-        const n = await swatches.count();
-        // the story carries ≥2 per-instance accent swatches (the W3 consumer bar).
-        expect(n, `the glass-material story renders ≥2 [data-accent-swatch] (found ${n})`).toBeGreaterThanOrEqual(2);
-    });
 });

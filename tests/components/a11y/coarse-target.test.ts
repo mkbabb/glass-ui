@@ -157,24 +157,17 @@ describe("G-COARSE-TARGET — the Slider's operable target clears the measured f
         expect(media![1]).not.toMatch(/position:\s*absolute/);
     });
 
-    it("the standard thumb is inscribed in the track — the target is still the TRACK", () => {
-        // The premise the whole exoneration rests on, re-derived at 10.1.5 (O-129 r5),
-        // when the scrubber's thumb regained paint so its value end shows at min and max.
-        // It paints a disc of `--slider-thumb-size`, and every size rung takes that as
-        // `min(thumb, track)`, so the disc lies inside the track on both axes: it adds no
-        // region a pointer could acquire that the track does not already cover, and the
-        // operable target is the track (reka binds the slide to the root) as before.
+    it("the standard thumb is the track's own height — the target is still the TRACK", () => {
+        // The premise the whole exoneration rests on. The scrubber's thumb paints so its
+        // value end shows at min and max: a disc of `--slider-track-height` on both axes,
+        // which the lane's cut (the same height) keeps inside the track's length, so it
+        // adds no region a pointer could acquire that the track does not already cover,
+        // and the operable target is the track (reka binds the slide to the root).
         const thumb = live.match(/\n\.slider-thumb\s*\{([\s\S]*?)\}/);
         expect(thumb).not.toBeNull();
-        expect(thumb![1]).toMatch(/width:\s*var\(--slider-thumb-size, 1rem\);/);
-        expect(thumb![1]).toMatch(/height:\s*var\(--slider-thumb-size, 1rem\);/);
-        for (const rung of ["sm", "md", "lg"]) {
-            expect(live).toMatch(
-                new RegExp(
-                    `--slider-thumb-size: min\\(var\\(--slider-thumb-size-${rung}\\), var\\(--slider-track-height-${rung}\\)\\)`,
-                ),
-            );
-        }
+        expect(thumb![1]).toMatch(/width:\s*var\(--slider-track-height, 0\.375rem\);/);
+        expect(thumb![1]).toMatch(/height:\s*var\(--slider-track-height, 0\.375rem\);/);
+        expect(live).toMatch(/--slider-lane-cut:\s*var\(--slider-track-height, 0\.375rem\);/);
     });
 });
 

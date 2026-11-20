@@ -27,6 +27,7 @@ import { onMounted, onUnmounted, ref, watch, type ComputedRef, type Ref } from "
 import { FOCUSABLE_SELECTOR } from "../../_shared/focus";
 import { DOCK_SEAT_ATTR, DOCK_SPRING } from "../constants";
 import { useDockSpring } from "./useDockSpring";
+import { isRunSeat } from "./useDockRunMark";
 
 export interface UseDockRunOptions {
     /** The scroll port — `.dock-run`, the element the seats are children of. */
@@ -74,13 +75,14 @@ export interface UseDockRunReturn {
  * only: a seat is a lattice cell, and a focusable descendant *inside* one (a menu item
  * in an open popover, an input in the search slot) is not a second seat. Taking
  * `querySelectorAll` here would put the tab stop inside a seat that the snap never
- * aligns.
+ * aligns. The run's mark is its one child that is not a seat (`isRunSeat`).
  */
 function seatsOf(run: HTMLElement): HTMLElement[] {
     // A control the host removed that the carrier holds while it fades (W-I.8 R-3) is not
     // a seat: it is inert, out of flow and gone at the landing.
     return Array.from(run.children).filter(
-        (child): child is HTMLElement => child instanceof HTMLElement && !child.hasAttribute("data-dock-leaving"),
+        (child): child is HTMLElement =>
+            child instanceof HTMLElement && !child.hasAttribute("data-dock-leaving") && isRunSeat(child),
     );
 }
 
@@ -492,9 +494,9 @@ export function useDockRun(options: UseDockRunOptions): UseDockRunReturn {
     }
 
     /**
-     * WHEEL CONTAINMENT AT THE ENDS [atlas U/B7, R-INTERACT §7]. `overscroll-behavior:
-     * contain` (run.css) keeps a wheel that reaches the run's end from scrolling the page in
-     * Chromium. Firefox honours it only inside one wheel transaction: once the run sits at
+     * WHEEL CONTAINMENT AT THE ENDS [atlas U/B7, R-INTERACT §7]. The run's
+     * `overscroll-behavior-<axis>: contain` (run.css) keeps a wheel that reaches the
+     * run's end from scrolling the page in Chromium. Firefox honours it only inside one wheel transaction: once the run sits at
      * its end and the transaction lapses (about 1.5 s), Firefox picks the next scroller
      * that can move, and the page behind the dock scrolls (measured: 10 of 20 wheel steps
      * scrolled the page 600 px at 1440 and 390). The platform cannot express "contain

@@ -1,194 +1,44 @@
 <script setup lang="ts">
-// The vibrant 13-stop color tour leads the pane as a designed specimen.
-// `--section-color` rainbow leads the pane (the focal moment, FIRST in source
-// order); it enters on the `.scroll-cascade--columns` motion register (no
-// demo-local @keyframes), the viz-basis glyphs use the shared reveal register
-// `:reveal` axis, and the core swatch grid stays correct-monochrome (the warm-cream/
-// role tokens are documentary — adding color violates the one-color-event
-// proportion) but gains the calm wash read-through (the StoryHero `cardTier` drop)
-// + the glass-tier hover the icons grid has. The library `--section-color` tokens
-// are NOT demo color (they ARE library tokens — D6 fence).
-//
-// The section-ramp stops render as the library's OWN hand voice: each stop is its index
-// PAINTED in its own hue — a marker-weight `<HandMark>`, the shipped
-// mark engine REUSED not re-forked (no demo-local blob, no demo-local @keyframes). The
-// mark and the caption FUSE: the numeral IS the label and the hand-painted swipe behind
-// it IS the swatch, so a stop reads as one hand-made object instead of a chip stacked
-// over a mono line.
-//
-// TWO knobs, both load-bearing. The slot is a `w-24` inline-block: HandMark marks
-// TEXT, so a bare narrow numeral gives the swipe nothing to sit on and a 96px slot
-// gives it a word's worth of paper. And `:weight="6"` is six times the ink law, which
-// at this rung paints a ~23px body — a marker swipe rather than a pen line, so the
-// numeral IS the label and the mark behind it IS the swatch. The highlight shape is
-// not the instrument here: its band is one law on two papers and takes a hue, while a
-// ramp stop must carry its OWN token colour.
-//
-// Laid out with the HAND-LAID vertical stagger (a fixed per-stop block-offset — the
-// irregular read the user named, never a flat aligned row) and entering ON SCROLL via
-// the EXISTING `.scroll-cascade--columns` register.
-//
-// [BK #55 WATERCOLOR-RELOCATE] the ramp used to mount `<WatercolorDot>`; the component
-// RELOCATED to value.js (its sole consumer) — swatch/palette-slot vocabulary is a color
-// library's. The ramp rebuilds from the library's own primitives, as the row rules.
+import { ref } from "vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
-import StorySection from "../../chassis/section/StorySection.vue";
-import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
-import { HandMark } from "@glass/components/handmark";
-import { cn } from "@glass/components/_shared/class-names";
+import StoryStage from "../../chassis/stage/StoryStage.vue";
+import StoryVariants from "../../chassis/variants/StoryVariants.vue";
+import StoryVariantRow from "../../chassis/variants/StoryVariantRow.vue";
+import StoryCode from "../../chassis/code/StoryCode.vue";
+import ColorsStage, { type ColorSet } from "./colors.stage.vue";
 
-// Core surface/semantic roles exposed as Tailwind utilities via @theme.
-const core: { name: string; cssVar: string; utility: string }[] = [
-    { name: "background", cssVar: "--background", utility: "bg-background" },
-    { name: "foreground", cssVar: "--foreground", utility: "bg-foreground" },
-    { name: "muted", cssVar: "--muted", utility: "bg-muted" },
-    { name: "muted-foreground", cssVar: "--muted-foreground", utility: "bg-muted-foreground" },
-    { name: "border", cssVar: "--border", utility: "bg-border" },
-    { name: "card", cssVar: "--card", utility: "bg-card" },
-    { name: "popover", cssVar: "--popover", utility: "bg-popover" },
-    { name: "primary", cssVar: "--primary", utility: "bg-primary" },
-    { name: "secondary", cssVar: "--secondary", utility: "bg-secondary" },
-    { name: "accent", cssVar: "--accent", utility: "bg-accent" },
-    { name: "destructive", cssVar: "--destructive", utility: "bg-destructive" },
-    // the shadcn `--ring`/`bg-ring` token retired onto the house
-    // `--focus-ring-color`, the `.focus-ring` box-shadow utility.
-    { name: "focus-ring-color", cssVar: "--focus-ring-color", utility: "focus-ring" },
+const set = ref<ColorSet>("palette");
+
+const SETS: { value: ColorSet; label: string }[] = [
+    { value: "palette", label: "Palette" },
+    { value: "tints", label: "Tints" },
+    { value: "chart", label: "Chart" },
 ];
 
-// The 13-stop chapter palette maps --section-color-0..12 to bg-section-N.
-const rainbow = Array.from({ length: 13 }, (_, i) => i);
-
-// Hand-laid block-offset per stop (rem), fixed for capture determinism. Adjacent
-// stops carry DISTINCT offsets — the irregular hand-laid zigzag the user named, not
-// a flat aligned row. Applied as a STATIC margin-block-start (a layout offset, never
-// animated) so it composes with the compositor-only.scroll-cascade--columns
-// entrance transform without clobbering it.
-const STAGGER_REM = [0, 1.6, 0.5, 1.3, 0, 1.7, 0.6, 1.4, 0.3, 1.5, 0.4, 1.2, 0];
-
-// Viz basis palette — the three orthogonal-polynomial hues plus two
-// companion neutrals (amber, green) used throughout math-paper work. The
-// ornamental glyphs are display-register letters (not lucide icons), so each tile
-// reads its hue as the ONE tile event (the glyph color); the tiles pop in on the
-//  `.scroll-cascade` register.
-const viz: { id: string; glyph: string; label: string; sub: string }[] = [
-    { id: "fourier", glyph: "ℱ", label: "Fourier", sub: "red basis" },
-    { id: "chebyshev", glyph: "T", label: "Chebyshev", sub: "blue basis" },
-    { id: "legendre", glyph: "P", label: "Legendre", sub: "purple basis" },
-    { id: "amber", glyph: "A", label: "Amber", sub: "warm accent" },
-    { id: "green", glyph: "G", label: "Green", sub: "cool accent" },
-];
+const snippet = `<template>
+    <div class="bg-card text-foreground border border-border">
+        <span class="text-primary">Primary ink</span>
+        <span :style="{ color: 'var(--chart-download)' }">Download</span>
+    </div>
+</template>`;
 </script>
 
 <template>
     <StoryPage>
-        <!-- THE RAINBOW — PROMOTED to the focal moment, leading the pane. Each of the
-             13 stops is its index swiped in its own hue (the library's own HandMark
-             engine — the hand voice glass-ui actually owns), laid out with a hand-laid
-             vertical stagger and popping in on the `.scroll-cascade--columns` register
-             (the column-stagger spring-clocked build — the focal pop-entrance, no
-             demo-local @keyframes). The mark carries the label; nothing is stacked. -->
-        <StorySection label="Foundations · Color" heading="Section ramp · 13 stops">
-            <p class="text-small max-w-prose text-muted-foreground">
-                The chapter palette — <code class="fira-code">--section-color-0..12</code>,
-                exposed as <code class="fira-code">bg-section-N</code>. The brand's
-                vibrant register; the role tokens below stay documentary-monochrome.
-            </p>
-            <div
-                class="scroll-cascade scroll-cascade--columns flex flex-wrap items-start gap-x-5 gap-y-3"
-            >
-                <div
-                    v-for="i in rainbow"
-                    :key="i"
-                    class="flex flex-col items-center"
-                    :style="{ '--col': i, marginBlockStart: `${STAGGER_REM[i]}rem` }"
-                >
-                    <span class="text-display-2 font-display leading-none text-foreground">
-                        <HandMark
-                            :color="`var(--section-color-${i})`"
-                            :weight="6"
-                            :seed="i + 1"
-                            ><span class="inline-block w-24 text-center">{{
-                                i
-                            }}</span></HandMark
-                        >
-                    </span>
-                </div>
-            </div>
-        </StorySection>
+        <template #stage>
+            <StoryStage size="fit">
+                <ColorsStage :set="set" />
+            </StoryStage>
+        </template>
 
-        <!-- VIZ BASIS — the math-paper hues. The hue is the ONE event per tile (the
-             ornamental glyph carries it; the label stays ink). The tiles pop in on
-             the `.scroll-cascade` register (its own host so each
-             tile builds in on its view() timeline). -->
-        <StorySection heading="Viz basis">
-            <div class="scroll-cascade grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5">
-                <ShowcaseFrame
-                    v-for="(t, i) in viz"
-                    :key="t.id"
-                    tier="quiet"
-                    pad="lg"
-                    class="relative overflow-hidden"
-                >
-                    <div
-                        class="pointer-events-none absolute inset-x-0 top-0 h-[3px]"
-                        :style="{ background: `var(--viz-${t.id})` }"
-                    />
-                    <div class="flex flex-col gap-3">
-                        <div
-                            class="text-display-2 font-display italic leading-none"
-                            :style="{
-                                fontVariationSettings: `'WONK' 1, 'SOFT' 0`,
-                                color: `var(--viz-${t.id})`,
-                            }"
-                        >
-                            {{ t.glyph }}
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="text-subheading text-foreground">{{ t.label }}</span>
-                            <span class="text-mono-small text-muted-foreground">{{
-                                t.sub
-                            }}</span>
-                        </div>
-                    </div>
-                </ShowcaseFrame>
-            </div>
-        </StorySection>
+        <template #variants>
+            <StoryVariants>
+                <StoryVariantRow v-model="set" label="Set" :options="SETS" />
+            </StoryVariants>
+        </template>
 
-        <!-- CORE ROLES — the documentary-monochrome role tokens. They stay flat
-             (the warm-cream/role tokens are the identity, not a color event — adding
-             color violates proportion); the grid gains the calm wash read-through
-             (the ShowcaseFrame quiet tier) + the glass-tier hover lift the icons
-             grid carries. -->
-        <StorySection span="full" heading="Core roles">
-            <div
-                class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"
-            >
-                <ShowcaseFrame
-                    v-for="c in core"
-                    :key="c.name"
-                    tier="quiet"
-                    pad="sm"
-                    :class="
-                        cn(
-                            'transition-transform duration-fast ease-out',
-                            'hover:-translate-x-px hover:-translate-y-px',
-                        )
-                    "
-                >
-                    <div class="flex flex-col gap-2">
-                        <div
-                            class="h-14 w-full rounded-md border border-border/60"
-                            :style="{ background: `var(${c.cssVar})` }"
-                        />
-                        <div class="flex flex-col">
-                            <span class="text-small text-foreground">{{ c.name }}</span>
-                            <span class="text-mono-small text-muted-foreground">{{
-                                c.utility
-                            }}</span>
-                        </div>
-                    </div>
-                </ShowcaseFrame>
-            </div>
-        </StorySection>
+        <template #code>
+            <StoryCode :code="snippet" />
+        </template>
     </StoryPage>
 </template>

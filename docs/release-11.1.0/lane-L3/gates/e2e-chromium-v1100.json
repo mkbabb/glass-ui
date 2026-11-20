@@ -1,0 +1,1463 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/playwright.config.ts",
+      "--project=chromium-headless-new",
+      "--workers=1",
+      "Sheet.position.spec.ts",
+      "sheet-inset.spec.ts",
+      "sheet-radius.spec.ts",
+      "overlay-sizing.spec.ts",
+      "card-padding.spec.ts"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/docs/release-11.1.0/lane-L3/gates/e2e-chromium-v1100.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 7971",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/",
+      "url": "http://localhost:7971",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "card-padding.spec.ts",
+      "file": "card-padding.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "card-padding (π — the GOLDEN sqrt-φ/φ ladder, fail-CLOSED)",
+          "file": "card-padding.spec.ts",
+          "line": 119,
+          "column": 6,
+          "specs": [
+            {
+              "title": "card golden padding — light",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 3322,
+                      "error": {
+                        "message": "Error: block axis must exceed inline (sqrt-φ lift)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m12\u001b[39m\nReceived:   \u001b[31m12\u001b[39m",
+                        "stack": "Error: block axis must exceed inline (sqrt-φ lift)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m12\u001b[39m\nReceived:   \u001b[31m12\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/card-padding.spec.ts:148:15",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/card-padding.spec.ts",
+                          "column": 15,
+                          "line": 148
+                        },
+                        "snippet": "  146 |                 m.paddingTop,\n  147 |                 \"block axis must exceed inline (sqrt-φ lift)\",\n> 148 |             ).toBeGreaterThan(m.paddingLeft);\n      |               ^\n  149 |             // the ratio is sqrt-φ ±0.04.\n  150 |             const ratio = m.paddingTop / m.paddingLeft;\n  151 |             expect("
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/card-padding.spec.ts",
+                            "column": 15,
+                            "line": 148
+                          },
+                          "message": "Error: block axis must exceed inline (sqrt-φ lift)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m12\u001b[39m\nReceived:   \u001b[31m12\u001b[39m\n\n  146 |                 m.paddingTop,\n  147 |                 \"block axis must exceed inline (sqrt-φ lift)\",\n> 148 |             ).toBeGreaterThan(m.paddingLeft);\n      |               ^\n  149 |             // the ratio is sqrt-φ ±0.04.\n  150 |             const ratio = m.paddingTop / m.paddingLeft;\n  151 |             expect(\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/card-padding.spec.ts:148:15"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T23:30:18.620Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/test-results/card-padding-card-padding--422cf-card-golden-padding-—-light-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/card-padding.spec.ts",
+                        "column": 15,
+                        "line": 148
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "00a85de0da7d24643d09-1535083ccbfa1c7c63ec",
+              "file": "card-padding.spec.ts",
+              "line": 121,
+              "column": 9
+            },
+            {
+              "title": "card golden padding — dark",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1876,
+                      "error": {
+                        "message": "Error: block axis must exceed inline (sqrt-φ lift)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m12\u001b[39m\nReceived:   \u001b[31m12\u001b[39m",
+                        "stack": "Error: block axis must exceed inline (sqrt-φ lift)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m12\u001b[39m\nReceived:   \u001b[31m12\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/card-padding.spec.ts:148:15",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/card-padding.spec.ts",
+                          "column": 15,
+                          "line": 148
+                        },
+                        "snippet": "  146 |                 m.paddingTop,\n  147 |                 \"block axis must exceed inline (sqrt-φ lift)\",\n> 148 |             ).toBeGreaterThan(m.paddingLeft);\n      |               ^\n  149 |             // the ratio is sqrt-φ ±0.04.\n  150 |             const ratio = m.paddingTop / m.paddingLeft;\n  151 |             expect("
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/card-padding.spec.ts",
+                            "column": 15,
+                            "line": 148
+                          },
+                          "message": "Error: block axis must exceed inline (sqrt-φ lift)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m12\u001b[39m\nReceived:   \u001b[31m12\u001b[39m\n\n  146 |                 m.paddingTop,\n  147 |                 \"block axis must exceed inline (sqrt-φ lift)\",\n> 148 |             ).toBeGreaterThan(m.paddingLeft);\n      |               ^\n  149 |             // the ratio is sqrt-φ ±0.04.\n  150 |             const ratio = m.paddingTop / m.paddingLeft;\n  151 |             expect(\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/card-padding.spec.ts:148:15"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T23:30:23.531Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/test-results/card-padding-card-padding--cec6f--card-golden-padding-—-dark-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/card-padding.spec.ts",
+                        "column": 15,
+                        "line": 148
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "00a85de0da7d24643d09-ea169fed532fb8949752",
+              "file": "card-padding.spec.ts",
+              "line": 121,
+              "column": 9
+            },
+            {
+              "title": "scroll-shrink header sqrt-φ lift — light",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1710,
+                      "error": {
+                        "message": "Error: no scroll-shrink header on the route\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m",
+                        "stack": "Error: no scroll-shrink header on the route\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/card-padding.spec.ts:209:67",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/card-padding.spec.ts",
+                          "column": 67,
+                          "line": 209
+                        },
+                        "snippet": "  207 |                 };\n  208 |             });\n> 209 |             expect(m, \"no scroll-shrink header on the route\").not.toBeNull();\n      |                                                                   ^\n  210 |             if (!m) return;\n  211 |             // the sqrt-φ top lift (paddingTop > paddingLeft) + zeroed block-end.\n  212 |             expect(m.paddingTop).toBeGreaterThan(m.paddingLeft);"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/card-padding.spec.ts",
+                            "column": 67,
+                            "line": 209
+                          },
+                          "message": "Error: no scroll-shrink header on the route\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n\n  207 |                 };\n  208 |             });\n> 209 |             expect(m, \"no scroll-shrink header on the route\").not.toBeNull();\n      |                                                                   ^\n  210 |             if (!m) return;\n  211 |             // the sqrt-φ top lift (paddingTop > paddingLeft) + zeroed block-end.\n  212 |             expect(m.paddingTop).toBeGreaterThan(m.paddingLeft);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/card-padding.spec.ts:209:67"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T23:30:26.679Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/test-results/card-padding-card-padding--882b7--header-sqrt-φ-lift-—-light-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/card-padding.spec.ts",
+                        "column": 67,
+                        "line": 209
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "00a85de0da7d24643d09-d1a4673bdef4322439a9",
+              "file": "card-padding.spec.ts",
+              "line": 191,
+              "column": 9
+            },
+            {
+              "title": "scroll-shrink header sqrt-φ lift — dark",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1799,
+                      "error": {
+                        "message": "Error: no scroll-shrink header on the route\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m",
+                        "stack": "Error: no scroll-shrink header on the route\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/card-padding.spec.ts:209:67",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/card-padding.spec.ts",
+                          "column": 67,
+                          "line": 209
+                        },
+                        "snippet": "  207 |                 };\n  208 |             });\n> 209 |             expect(m, \"no scroll-shrink header on the route\").not.toBeNull();\n      |                                                                   ^\n  210 |             if (!m) return;\n  211 |             // the sqrt-φ top lift (paddingTop > paddingLeft) + zeroed block-end.\n  212 |             expect(m.paddingTop).toBeGreaterThan(m.paddingLeft);"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/card-padding.spec.ts",
+                            "column": 67,
+                            "line": 209
+                          },
+                          "message": "Error: no scroll-shrink header on the route\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n\n  207 |                 };\n  208 |             });\n> 209 |             expect(m, \"no scroll-shrink header on the route\").not.toBeNull();\n      |                                                                   ^\n  210 |             if (!m) return;\n  211 |             // the sqrt-φ top lift (paddingTop > paddingLeft) + zeroed block-end.\n  212 |             expect(m.paddingTop).toBeGreaterThan(m.paddingLeft);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/card-padding.spec.ts:209:67"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T23:30:29.507Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/test-results/card-padding-card-padding--ff342-k-header-sqrt-φ-lift-—-dark-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/card-padding.spec.ts",
+                        "column": 67,
+                        "line": 209
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "00a85de0da7d24643d09-2a4d167ca53921fd9fb1",
+              "file": "card-padding.spec.ts",
+              "line": 191,
+              "column": 9
+            },
+            {
+              "title": "overlay band sqrt-φ ratio — light",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 60048,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/card-padding.spec.ts",
+                            "column": 18,
+                            "line": 233
+                          },
+                          "message": "Error: locator.click: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /open glass dialog/i }).first()\u001b[22m\n\n\n  231 |                 .getByRole(\"button\", { name: /open glass dialog/i })\n  232 |                 .first()\n> 233 |                 .click();\n      |                  ^\n  234 |             await page.waitForTimeout(200);\n  235 |             const dlg = await page.evaluate(() => {\n  236 |                 const el = document.querySelector<HTMLElement>(\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/card-padding.spec.ts:233:18"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T23:30:32.432Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/test-results/card-padding-card-padding--14bcd-y-band-sqrt-φ-ratio-—-light-chromium-headless-new/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "00a85de0da7d24643d09-ca5b3ddffd6d5952423c",
+              "file": "card-padding.spec.ts",
+              "line": 224,
+              "column": 9
+            },
+            {
+              "title": "overlay band sqrt-φ ratio — dark",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 60052,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 60000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/card-padding.spec.ts",
+                            "column": 18,
+                            "line": 233
+                          },
+                          "message": "Error: locator.click: Test timeout of 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /open glass dialog/i }).first()\u001b[22m\n\n\n  231 |                 .getByRole(\"button\", { name: /open glass dialog/i })\n  232 |                 .first()\n> 233 |                 .click();\n      |                  ^\n  234 |             await page.waitForTimeout(200);\n  235 |             const dlg = await page.evaluate(() => {\n  236 |                 const el = document.querySelector<HTMLElement>(\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/card-padding.spec.ts:233:18"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T23:31:34.185Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/test-results/card-padding-card-padding--c2002-ay-band-sqrt-φ-ratio-—-dark-chromium-headless-new/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "00a85de0da7d24643d09-a9193ca00f22dbd86512",
+              "file": "card-padding.spec.ts",
+              "line": 224,
+              "column": 9
+            },
+            {
+              "title": "the golden constants are sqrt-φ + φ",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 10,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T23:32:35.665Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "00a85de0da7d24643d09-689bc0bf571c51407e4e",
+              "file": "card-padding.spec.ts",
+              "line": 286,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "overlay-sizing.spec.ts",
+      "file": "overlay-sizing.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "DropdownMenu at the right edge: 16px from the edge, at most 22rem wide, card radius",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1454,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T23:32:35.729Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b3fe3e80f3891bcf9df8-a3baff028574b5fceb87",
+          "file": "overlay-sizing.spec.ts",
+          "line": 44,
+          "column": 5
+        },
+        {
+          "title": "Popover at the right edge: 16px from the edge, at most 22rem wide, card radius",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 868,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T23:32:37.365Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b3fe3e80f3891bcf9df8-2632951043143fe00d01",
+          "file": "overlay-sizing.spec.ts",
+          "line": 44,
+          "column": 5
+        },
+        {
+          "title": "a forty-row menu opened low fits the room and scrolls inside",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1029,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T23:32:38.248Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b3fe3e80f3891bcf9df8-b8f101f37569ea12296b",
+          "file": "overlay-sizing.spec.ts",
+          "line": 53,
+          "column": 1
+        },
+        {
+          "title": "the phone viewport: a long menu is the viewport less 1rem a side at most",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 895,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T23:32:39.288Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b3fe3e80f3891bcf9df8-72995ec51a5ef8ef2d05",
+          "file": "overlay-sizing.spec.ts",
+          "line": 62,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "sheet-inset.spec.ts",
+      "file": "sheet-inset.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "BG.W-SHEET-INSET-ROOT — the Sheet pins to its viewport edge (light)",
+          "file": "sheet-inset.spec.ts",
+          "line": 81,
+          "column": 10,
+          "specs": [
+            {
+              "title": "the right sheet is fixed, edge-pinned, on-screen, no bad ancestor",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1678,
+                      "error": {
+                        "message": "Error: right sheet right edge flush\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1.5\u001b[39m\nReceived:    \u001b[31m169.7080078125\u001b[39m",
+                        "stack": "Error: right sheet right edge flush\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1.5\u001b[39m\nReceived:    \u001b[31m169.7080078125\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts:121:23",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts",
+                          "column": 23,
+                          "line": 121
+                        },
+                        "snippet": "  119 |                         Math.abs(x + width - vp.width),\n  120 |                         \"right sheet right edge flush\",\n> 121 |                     ).toBeLessThanOrEqual(TOL);\n      |                       ^\n  122 |                 }\n  123 |                 if (side === \"left\") {\n  124 |                     expect(Math.abs(x), \"left sheet left edge flush\").toBeLessThanOrEqual(TOL);"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts",
+                            "column": 23,
+                            "line": 121
+                          },
+                          "message": "Error: right sheet right edge flush\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1.5\u001b[39m\nReceived:    \u001b[31m169.7080078125\u001b[39m\n\n  119 |                         Math.abs(x + width - vp.width),\n  120 |                         \"right sheet right edge flush\",\n> 121 |                     ).toBeLessThanOrEqual(TOL);\n      |                       ^\n  122 |                 }\n  123 |                 if (side === \"left\") {\n  124 |                     expect(Math.abs(x), \"left sheet left edge flush\").toBeLessThanOrEqual(TOL);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts:121:23"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T23:32:40.219Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/test-results/sheet-inset-BG-W-SHEET-INS-9f3bf-d-on-screen-no-bad-ancestor-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts",
+                        "column": 23,
+                        "line": 121
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "12d72c120f3bf15e3f2b-0499855745005990c982",
+              "file": "sheet-inset.spec.ts",
+              "line": 90,
+              "column": 13
+            },
+            {
+              "title": "the left sheet is fixed, edge-pinned, on-screen, no bad ancestor",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1905,
+                      "error": {
+                        "message": "Error: left sheet left edge flush\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1.5\u001b[39m\nReceived:    \u001b[31m169.70806884765625\u001b[39m",
+                        "stack": "Error: left sheet left edge flush\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1.5\u001b[39m\nReceived:    \u001b[31m169.70806884765625\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts:124:71",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts",
+                          "column": 71,
+                          "line": 124
+                        },
+                        "snippet": "  122 |                 }\n  123 |                 if (side === \"left\") {\n> 124 |                     expect(Math.abs(x), \"left sheet left edge flush\").toBeLessThanOrEqual(TOL);\n      |                                                                       ^\n  125 |                 }\n  126 |\n  127 |                 // onScreen all-4 — every edge lands within the viewport (with tolerance)."
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts",
+                            "column": 71,
+                            "line": 124
+                          },
+                          "message": "Error: left sheet left edge flush\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1.5\u001b[39m\nReceived:    \u001b[31m169.70806884765625\u001b[39m\n\n  122 |                 }\n  123 |                 if (side === \"left\") {\n> 124 |                     expect(Math.abs(x), \"left sheet left edge flush\").toBeLessThanOrEqual(TOL);\n      |                                                                       ^\n  125 |                 }\n  126 |\n  127 |                 // onScreen all-4 — every edge lands within the viewport (with tolerance).\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts:124:71"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T23:32:42.876Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/test-results/sheet-inset-BG-W-SHEET-INS-fc733-d-on-screen-no-bad-ancestor-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts",
+                        "column": 71,
+                        "line": 124
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "12d72c120f3bf15e3f2b-2c34009517294fd722b7",
+              "file": "sheet-inset.spec.ts",
+              "line": 90,
+              "column": 13
+            },
+            {
+              "title": "the top sheet is fixed, edge-pinned, on-screen, no bad ancestor",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1815,
+                      "error": {
+                        "message": "Error: top sheet top===0\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1.5\u001b[39m\nReceived:    \u001b[31m171.82371520996094\u001b[39m",
+                        "stack": "Error: top sheet top===0\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1.5\u001b[39m\nReceived:    \u001b[31m171.82371520996094\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts:110:66",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts",
+                          "column": 66,
+                          "line": 110
+                        },
+                        "snippet": "  108 |                 // bottom sheet pins its bottom edge flush to the viewport floor.\n  109 |                 if (side === \"right\" || side === \"left\" || side === \"top\") {\n> 110 |                     expect(Math.abs(y), `${side} sheet top===0`).toBeLessThanOrEqual(TOL);\n      |                                                                  ^\n  111 |                 } else {\n  112 |                     expect(\n  113 |                         Math.abs(y + height - vp.height),"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts",
+                            "column": 66,
+                            "line": 110
+                          },
+                          "message": "Error: top sheet top===0\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1.5\u001b[39m\nReceived:    \u001b[31m171.82371520996094\u001b[39m\n\n  108 |                 // bottom sheet pins its bottom edge flush to the viewport floor.\n  109 |                 if (side === \"right\" || side === \"left\" || side === \"top\") {\n> 110 |                     expect(Math.abs(y), `${side} sheet top===0`).toBeLessThanOrEqual(TOL);\n      |                                                                  ^\n  111 |                 } else {\n  112 |                     expect(\n  113 |                         Math.abs(y + height - vp.height),\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts:110:66"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T23:32:46.215Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/test-results/sheet-inset-BG-W-SHEET-INS-defbc-d-on-screen-no-bad-ancestor-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts",
+                        "column": 66,
+                        "line": 110
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "12d72c120f3bf15e3f2b-4181817d3696282b318d",
+              "file": "sheet-inset.spec.ts",
+              "line": 90,
+              "column": 13
+            },
+            {
+              "title": "the bottom sheet is fixed, edge-pinned, on-screen, no bad ancestor",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1948,
+                      "error": {
+                        "message": "Error: bottom sheet bottom edge flush to viewport\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1.5\u001b[39m\nReceived:    \u001b[31m109.902099609375\u001b[39m",
+                        "stack": "Error: bottom sheet bottom edge flush to viewport\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1.5\u001b[39m\nReceived:    \u001b[31m109.902099609375\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts:115:23",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts",
+                          "column": 23,
+                          "line": 115
+                        },
+                        "snippet": "  113 |                         Math.abs(y + height - vp.height),\n  114 |                         \"bottom sheet bottom edge flush to viewport\",\n> 115 |                     ).toBeLessThanOrEqual(TOL);\n      |                       ^\n  116 |                 }\n  117 |                 if (side === \"right\") {\n  118 |                     expect("
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts",
+                            "column": 23,
+                            "line": 115
+                          },
+                          "message": "Error: bottom sheet bottom edge flush to viewport\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1.5\u001b[39m\nReceived:    \u001b[31m109.902099609375\u001b[39m\n\n  113 |                         Math.abs(y + height - vp.height),\n  114 |                         \"bottom sheet bottom edge flush to viewport\",\n> 115 |                     ).toBeLessThanOrEqual(TOL);\n      |                       ^\n  116 |                 }\n  117 |                 if (side === \"right\") {\n  118 |                     expect(\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts:115:23"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T23:32:49.493Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/test-results/sheet-inset-BG-W-SHEET-INS-11504-d-on-screen-no-bad-ancestor-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts",
+                        "column": 23,
+                        "line": 115
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "12d72c120f3bf15e3f2b-0277492b611744377b5d",
+              "file": "sheet-inset.spec.ts",
+              "line": 90,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "BG.W-SHEET-INSET-ROOT — the Sheet pins to its viewport edge (dark)",
+          "file": "sheet-inset.spec.ts",
+          "line": 81,
+          "column": 10,
+          "specs": [
+            {
+              "title": "the right sheet is fixed, edge-pinned, on-screen, no bad ancestor",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2002,
+                      "error": {
+                        "message": "Error: right sheet right edge flush\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1.5\u001b[39m\nReceived:    \u001b[31m97.68798828125\u001b[39m",
+                        "stack": "Error: right sheet right edge flush\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1.5\u001b[39m\nReceived:    \u001b[31m97.68798828125\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts:121:23",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts",
+                          "column": 23,
+                          "line": 121
+                        },
+                        "snippet": "  119 |                         Math.abs(x + width - vp.width),\n  120 |                         \"right sheet right edge flush\",\n> 121 |                     ).toBeLessThanOrEqual(TOL);\n      |                       ^\n  122 |                 }\n  123 |                 if (side === \"left\") {\n  124 |                     expect(Math.abs(x), \"left sheet left edge flush\").toBeLessThanOrEqual(TOL);"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts",
+                            "column": 23,
+                            "line": 121
+                          },
+                          "message": "Error: right sheet right edge flush\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1.5\u001b[39m\nReceived:    \u001b[31m97.68798828125\u001b[39m\n\n  119 |                         Math.abs(x + width - vp.width),\n  120 |                         \"right sheet right edge flush\",\n> 121 |                     ).toBeLessThanOrEqual(TOL);\n      |                       ^\n  122 |                 }\n  123 |                 if (side === \"left\") {\n  124 |                     expect(Math.abs(x), \"left sheet left edge flush\").toBeLessThanOrEqual(TOL);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts:121:23"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T23:32:53.106Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/test-results/sheet-inset-BG-W-SHEET-INS-14701-d-on-screen-no-bad-ancestor-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts",
+                        "column": 23,
+                        "line": 121
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "12d72c120f3bf15e3f2b-4037634311aea6dc91c4",
+              "file": "sheet-inset.spec.ts",
+              "line": 90,
+              "column": 13
+            },
+            {
+              "title": "the left sheet is fixed, edge-pinned, on-screen, no bad ancestor",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 11,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2173,
+                      "error": {
+                        "message": "Error: left sheet left edge flush\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1.5\u001b[39m\nReceived:    \u001b[31m148.6787872314453\u001b[39m",
+                        "stack": "Error: left sheet left edge flush\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1.5\u001b[39m\nReceived:    \u001b[31m148.6787872314453\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts:124:71",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts",
+                          "column": 71,
+                          "line": 124
+                        },
+                        "snippet": "  122 |                 }\n  123 |                 if (side === \"left\") {\n> 124 |                     expect(Math.abs(x), \"left sheet left edge flush\").toBeLessThanOrEqual(TOL);\n      |                                                                       ^\n  125 |                 }\n  126 |\n  127 |                 // onScreen all-4 — every edge lands within the viewport (with tolerance)."
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts",
+                            "column": 71,
+                            "line": 124
+                          },
+                          "message": "Error: left sheet left edge flush\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1.5\u001b[39m\nReceived:    \u001b[31m148.6787872314453\u001b[39m\n\n  122 |                 }\n  123 |                 if (side === \"left\") {\n> 124 |                     expect(Math.abs(x), \"left sheet left edge flush\").toBeLessThanOrEqual(TOL);\n      |                                                                       ^\n  125 |                 }\n  126 |\n  127 |                 // onScreen all-4 — every edge lands within the viewport (with tolerance).\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts:124:71"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T23:32:56.499Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/test-results/sheet-inset-BG-W-SHEET-INS-6248c-d-on-screen-no-bad-ancestor-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts",
+                        "column": 71,
+                        "line": 124
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "12d72c120f3bf15e3f2b-15cff075d34d67e9a7be",
+              "file": "sheet-inset.spec.ts",
+              "line": 90,
+              "column": 13
+            },
+            {
+              "title": "the top sheet is fixed, edge-pinned, on-screen, no bad ancestor",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 12,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2119,
+                      "error": {
+                        "message": "Error: top sheet top===0\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1.5\u001b[39m\nReceived:    \u001b[31m171.82371520996094\u001b[39m",
+                        "stack": "Error: top sheet top===0\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1.5\u001b[39m\nReceived:    \u001b[31m171.82371520996094\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts:110:66",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts",
+                          "column": 66,
+                          "line": 110
+                        },
+                        "snippet": "  108 |                 // bottom sheet pins its bottom edge flush to the viewport floor.\n  109 |                 if (side === \"right\" || side === \"left\" || side === \"top\") {\n> 110 |                     expect(Math.abs(y), `${side} sheet top===0`).toBeLessThanOrEqual(TOL);\n      |                                                                  ^\n  111 |                 } else {\n  112 |                     expect(\n  113 |                         Math.abs(y + height - vp.height),"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts",
+                            "column": 66,
+                            "line": 110
+                          },
+                          "message": "Error: top sheet top===0\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1.5\u001b[39m\nReceived:    \u001b[31m171.82371520996094\u001b[39m\n\n  108 |                 // bottom sheet pins its bottom edge flush to the viewport floor.\n  109 |                 if (side === \"right\" || side === \"left\" || side === \"top\") {\n> 110 |                     expect(Math.abs(y), `${side} sheet top===0`).toBeLessThanOrEqual(TOL);\n      |                                                                  ^\n  111 |                 } else {\n  112 |                     expect(\n  113 |                         Math.abs(y + height - vp.height),\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts:110:66"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T23:33:00.229Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/test-results/sheet-inset-BG-W-SHEET-INS-7d4c2-d-on-screen-no-bad-ancestor-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts",
+                        "column": 66,
+                        "line": 110
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "12d72c120f3bf15e3f2b-dfd6da182800c1133872",
+              "file": "sheet-inset.spec.ts",
+              "line": 90,
+              "column": 13
+            },
+            {
+              "title": "the bottom sheet is fixed, edge-pinned, on-screen, no bad ancestor",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2226,
+                      "error": {
+                        "message": "Error: bottom sheet bottom edge flush to viewport\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1.5\u001b[39m\nReceived:    \u001b[31m109.4588623046875\u001b[39m",
+                        "stack": "Error: bottom sheet bottom edge flush to viewport\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1.5\u001b[39m\nReceived:    \u001b[31m109.4588623046875\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts:115:23",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts",
+                          "column": 23,
+                          "line": 115
+                        },
+                        "snippet": "  113 |                         Math.abs(y + height - vp.height),\n  114 |                         \"bottom sheet bottom edge flush to viewport\",\n> 115 |                     ).toBeLessThanOrEqual(TOL);\n      |                       ^\n  116 |                 }\n  117 |                 if (side === \"right\") {\n  118 |                     expect("
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts",
+                            "column": 23,
+                            "line": 115
+                          },
+                          "message": "Error: bottom sheet bottom edge flush to viewport\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m1.5\u001b[39m\nReceived:    \u001b[31m109.4588623046875\u001b[39m\n\n  113 |                         Math.abs(y + height - vp.height),\n  114 |                         \"bottom sheet bottom edge flush to viewport\",\n> 115 |                     ).toBeLessThanOrEqual(TOL);\n      |                       ^\n  116 |                 }\n  117 |                 if (side === \"right\") {\n  118 |                     expect(\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts:115:23"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T23:33:03.815Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/test-results/sheet-inset-BG-W-SHEET-INS-07638-d-on-screen-no-bad-ancestor-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-inset.spec.ts",
+                        "column": 23,
+                        "line": 115
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "12d72c120f3bf15e3f2b-fd4d6fdf5f12b0bbd6c5",
+              "file": "sheet-inset.spec.ts",
+              "line": 90,
+              "column": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "sheet-radius.spec.ts",
+      "file": "sheet-radius.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "BI.W-SHEET-RADIUS — the Sheet reads rounded; the squircle rule live (π)",
+          "file": "sheet-radius.spec.ts",
+          "line": 103,
+          "column": 6,
+          "specs": [
+            {
+              "title": "per-side inner corners round to --radius-dialog, flush edge square; squircle reads; relay resolves (light)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 14,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 2243,
+                      "error": {
+                        "message": "Error: light top: INNER corner bl (borderBottomLeftRadius) resolved 24px — must be ≈ 16px (the Sheet reads ROUNDED, UF-A3)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m8\u001b[39m",
+                        "stack": "Error: light top: INNER corner bl (borderBottomLeftRadius) resolved 24px — must be ≈ 16px (the Sheet reads ROUNDED, UF-A3)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m8\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-radius.spec.ts:138:23",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-radius.spec.ts",
+                          "column": 23,
+                          "line": 138
+                        },
+                        "snippet": "  136 |                         Math.abs(v - RADIUS_EXPECT),\n  137 |                         `${mode} ${side}: INNER corner ${c} (${CORNER_PROP[c]}) resolved ${v}px — must be ≈ ${RADIUS_EXPECT}px (the Sheet reads ROUNDED, UF-A3)`,\n> 138 |                     ).toBeLessThanOrEqual(RADIUS_TOL);\n      |                       ^\n  139 |                 }\n  140 |                 // S-π1 — flush corners square.\n  141 |                 for (const c of cfg.flush) {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-radius.spec.ts",
+                            "column": 23,
+                            "line": 138
+                          },
+                          "message": "Error: light top: INNER corner bl (borderBottomLeftRadius) resolved 24px — must be ≈ 16px (the Sheet reads ROUNDED, UF-A3)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m8\u001b[39m\n\n  136 |                         Math.abs(v - RADIUS_EXPECT),\n  137 |                         `${mode} ${side}: INNER corner ${c} (${CORNER_PROP[c]}) resolved ${v}px — must be ≈ ${RADIUS_EXPECT}px (the Sheet reads ROUNDED, UF-A3)`,\n> 138 |                     ).toBeLessThanOrEqual(RADIUS_TOL);\n      |                       ^\n  139 |                 }\n  140 |                 // S-π1 — flush corners square.\n  141 |                 for (const c of cfg.flush) {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-radius.spec.ts:138:23"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T23:33:07.354Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/test-results/sheet-radius-BI-W-SHEET-RA-ccf56-reads-relay-resolves-light--chromium-headless-new/error-context.md"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/test-results/sheet-radius-BI-W-SHEET-RA-ccf56-reads-relay-resolves-light--chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-radius.spec.ts",
+                        "column": 23,
+                        "line": 138
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "201f3cd45adcf3a23826-e895ebd824998b168255",
+              "file": "sheet-radius.spec.ts",
+              "line": 107,
+              "column": 9
+            },
+            {
+              "title": "per-side inner corners round to --radius-dialog, flush edge square; squircle reads; relay resolves (dark)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 15,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1863,
+                      "error": {
+                        "message": "Error: dark top: INNER corner bl (borderBottomLeftRadius) resolved 24px — must be ≈ 16px (the Sheet reads ROUNDED, UF-A3)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m8\u001b[39m",
+                        "stack": "Error: dark top: INNER corner bl (borderBottomLeftRadius) resolved 24px — must be ≈ 16px (the Sheet reads ROUNDED, UF-A3)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m8\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-radius.spec.ts:138:23",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-radius.spec.ts",
+                          "column": 23,
+                          "line": 138
+                        },
+                        "snippet": "  136 |                         Math.abs(v - RADIUS_EXPECT),\n  137 |                         `${mode} ${side}: INNER corner ${c} (${CORNER_PROP[c]}) resolved ${v}px — must be ≈ ${RADIUS_EXPECT}px (the Sheet reads ROUNDED, UF-A3)`,\n> 138 |                     ).toBeLessThanOrEqual(RADIUS_TOL);\n      |                       ^\n  139 |                 }\n  140 |                 // S-π1 — flush corners square.\n  141 |                 for (const c of cfg.flush) {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-radius.spec.ts",
+                            "column": 23,
+                            "line": 138
+                          },
+                          "message": "Error: dark top: INNER corner bl (borderBottomLeftRadius) resolved 24px — must be ≈ 16px (the Sheet reads ROUNDED, UF-A3)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m8\u001b[39m\n\n  136 |                         Math.abs(v - RADIUS_EXPECT),\n  137 |                         `${mode} ${side}: INNER corner ${c} (${CORNER_PROP[c]}) resolved ${v}px — must be ≈ ${RADIUS_EXPECT}px (the Sheet reads ROUNDED, UF-A3)`,\n> 138 |                     ).toBeLessThanOrEqual(RADIUS_TOL);\n      |                       ^\n  139 |                 }\n  140 |                 // S-π1 — flush corners square.\n  141 |                 for (const c of cfg.flush) {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-radius.spec.ts:138:23"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-09T23:33:11.075Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/test-results/sheet-radius-BI-W-SHEET-RA-98e28--reads-relay-resolves-dark--chromium-headless-new/error-context.md"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/test-results/sheet-radius-BI-W-SHEET-RA-98e28--reads-relay-resolves-dark--chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/.cache/l3-v1100/tests-visual/sheet-radius.spec.ts",
+                        "column": 23,
+                        "line": 138
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "201f3cd45adcf3a23826-e1ffcaa6db99a44a5e7c",
+              "file": "sheet-radius.spec.ts",
+              "line": 107,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Sheet.position.spec.ts",
+      "file": "Sheet.position.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "sheet opened deep in the page is fixed and on screen (consumer layer)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1596,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T23:33:14.769Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "635c9b867fa96b29ee77-1b0f6f91b109964dc1c3",
+          "file": "Sheet.position.spec.ts",
+          "line": 14,
+          "column": 5
+        },
+        {
+          "title": "sheet opened deep in the page is fixed and on screen (unlayered)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1797,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-09T23:33:16.873Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "635c9b867fa96b29ee77-189a6cc1330886044094",
+          "file": "Sheet.position.spec.ts",
+          "line": 14,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-09T23:30:13.250Z",
+    "duration": 185593.32499999998,
+    "expected": 7,
+    "skipped": 0,
+    "unexpected": 16,
+    "flaky": 0
+  }
+}

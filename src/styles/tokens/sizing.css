@@ -297,17 +297,17 @@
 
     /* The Slider's coarse floor is WCAG 2.5.8 (24px), deliberately NOT the 44px above:
        the operable target on a slider is the TRACK, not its thumb (the scrubber's
-       thumb is a disc inscribed in the fill, never a target of its own), and the
+       thumb is the fill's end, never a target of its own), and the
        measured acquired region is
        339.4 × 24 CSS px — 44px here would grow a control past the target that was
        measured. `slider/styles.css` `max()`es it against the rung's own
        `--slider-track-height`, so this knob can only RAISE a rung, never shrink one. */
     --slider-touch-target: 1.5rem; /* 24px */
 
-    /* The Slider's size rungs—track (the capsule thickness) and thumb (the spectrum
-       handle, the scrubber's inscribed disc) per `data-size`.
-       `slider/styles.css` reads them and takes the thumb as `min(thumb, track)`, so the
-       inscription law (thumb ≤ track) holds whatever a consumer sets. This root is
+    /* The Slider's size rungs per `data-size`. The track height is the band's one
+       height: the track, the fill and the thumb (the scrubber's disc and the spectrum's
+       ring) are all that tall, so a thumb is resized by its track height. The thumb
+       size sets only the spectrum's taller track (1.5 times it). This root is
        unlayered and beats a layered `:root`: override on an element below it (a
        wrapper, the slider) in any layer, or in an unlayered `:root`. */
     --slider-track-height-sm: 0.75rem; /* 12px */

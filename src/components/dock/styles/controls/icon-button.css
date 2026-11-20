@@ -125,9 +125,15 @@
            2026-10-19, "less flashy"). A hover answers with the fill and the gleam, never
            with size: the 1.1 lift deformed the atlas figure dock's Table view toggle
            under the pointer in every engine. The press keeps its spring. */
+        /* `background-color`, never the `background` shorthand: the shorthand resets
+           `background-clip` to `border-box`, so a hovered or pressed seat in a dock would
+           fill its whole cell instead of the face's inset plate (glass-capsule.css), and
+           the run mark, which reads the seat's clip box, would keep that larger box
+           after a click. The hover and press fills sit on the same inset plate as the
+           selected one. */
         @media (hover: hover) {
             &:hover:not(:disabled):not([aria-disabled="true"]) {
-                background: var(--dock-icon-hover-bg, var(--dock-control-hover-bg));
+                background-color: var(--dock-icon-hover-bg, var(--dock-control-hover-bg));
                 color: var(--btn-hover-color, var(--foreground));
             }
         }
@@ -137,7 +143,7 @@
            the existing scale-press, so a tap reads "darken + shrink" (C4-INV-4 was
            scale-only). Token-first — a consumer retunes via `--dock-control-press-bg`. */
         &:active:not(:disabled):not([aria-disabled="true"]) {
-            background: var(--dock-control-press-bg);
+            background-color: var(--dock-control-press-bg);
         }
 
         &:active:not(:disabled):not([data-press-armed]):not([aria-disabled="true"]) {

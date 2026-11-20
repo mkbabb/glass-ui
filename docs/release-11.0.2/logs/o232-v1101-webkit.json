@@ -1,0 +1,334 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-0-2.config.ts",
+      "release-11-0-2.spec.ts",
+      "--project=webkit",
+      "--workers=1",
+      "-g",
+      "static ·"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-0-2.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-5.spec.ts",
+          "slider-forced-colors.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-2311",
+        "name": "webkit-2311",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-0-2.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/docs/release-11.0.2/logs/o232-v1101-webkit.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5342",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/",
+      "url": "http://localhost:5342",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-0-2.spec.ts",
+      "file": "release-11-0-2.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "static · a static dock's controls draw no backdrop-filter (light)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "static",
+                  "description": "{\"mode\":\"static\",\"hits\":[[\"Home rest\",[\"dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)\"]],[\"Home hover\",[\"dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)\"]],[\"Home press\",[\"dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)\"]]]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 4930,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 20\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"Home rest\",\u001b[39m\n\u001b[31m+     Array [\u001b[39m\n\u001b[31m+       \"dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"Home hover\",\u001b[39m\n\u001b[31m+     Array [\u001b[39m\n\u001b[31m+       \"dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"Home press\",\u001b[39m\n\u001b[31m+     Array [\u001b[39m\n\u001b[31m+       \"dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 20\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"Home rest\",\u001b[39m\n\u001b[31m+     Array [\u001b[39m\n\u001b[31m+       \"dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"Home hover\",\u001b[39m\n\u001b[31m+     Array [\u001b[39m\n\u001b[31m+       \"dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"Home press\",\u001b[39m\n\u001b[31m+     Array [\u001b[39m\n\u001b[31m+       \"dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:280:22",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                      "column": 22,
+                      "line": 280
+                    },
+                    "snippet": "  278 |         info.annotations.push({ type: \"static\", description: JSON.stringify({ mode, hits }) });\n  279 |         expect(mode).toBe(\"static\");\n> 280 |         expect(hits).toEqual([]);\n      |                      ^\n  281 |     });\n  282 | }\n  283 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                        "column": 22,
+                        "line": 280
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 20\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"Home rest\",\u001b[39m\n\u001b[31m+     Array [\u001b[39m\n\u001b[31m+       \"dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"Home hover\",\u001b[39m\n\u001b[31m+     Array [\u001b[39m\n\u001b[31m+       \"dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"Home press\",\u001b[39m\n\u001b[31m+     Array [\u001b[39m\n\u001b[31m+       \"dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  278 |         info.annotations.push({ type: \"static\", description: JSON.stringify({ mode, hits }) });\n  279 |         expect(mode).toBe(\"static\");\n> 280 |         expect(hits).toEqual([]);\n      |                      ^\n  281 |     });\n  282 | }\n  283 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:280:22"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T14:27:25.375Z",
+                  "annotations": [
+                    {
+                      "type": "static",
+                      "description": "{\"mode\":\"static\",\"hits\":[[\"Home rest\",[\"dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)\"]],[\"Home hover\",[\"dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)\"]],[\"Home press\",[\"dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)\"]]]}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/test-results/release-11-0-2-static-·-a--9ec38-w-no-backdrop-filter-light--webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                    "column": 22,
+                    "line": 280
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-023e32dedccb139973b9",
+          "file": "release-11-0-2.spec.ts",
+          "line": 253,
+          "column": 5
+        },
+        {
+          "title": "static · a static dock's controls draw no backdrop-filter (dark)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "static",
+                  "description": "{\"mode\":\"static\",\"hits\":[[\"Home rest\",[\"dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)\"]],[\"Home hover\",[\"dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)\"]],[\"Home press\",[\"dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)\"]]]}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 4993,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 20\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"Home rest\",\u001b[39m\n\u001b[31m+     Array [\u001b[39m\n\u001b[31m+       \"dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"Home hover\",\u001b[39m\n\u001b[31m+     Array [\u001b[39m\n\u001b[31m+       \"dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"Home press\",\u001b[39m\n\u001b[31m+     Array [\u001b[39m\n\u001b[31m+       \"dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+ ]\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 20\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"Home rest\",\u001b[39m\n\u001b[31m+     Array [\u001b[39m\n\u001b[31m+       \"dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"Home hover\",\u001b[39m\n\u001b[31m+     Array [\u001b[39m\n\u001b[31m+       \"dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"Home press\",\u001b[39m\n\u001b[31m+     Array [\u001b[39m\n\u001b[31m+       \"dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+ ]\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:280:22",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                      "column": 22,
+                      "line": 280
+                    },
+                    "snippet": "  278 |         info.annotations.push({ type: \"static\", description: JSON.stringify({ mode, hits }) });\n  279 |         expect(mode).toBe(\"static\");\n> 280 |         expect(hits).toEqual([]);\n      |                      ^\n  281 |     });\n  282 | }\n  283 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                        "column": 22,
+                        "line": 280
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  -  1\u001b[39m\n\u001b[31m+ Received  + 20\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"Home rest\",\u001b[39m\n\u001b[31m+     Array [\u001b[39m\n\u001b[31m+       \"dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"Home hover\",\u001b[39m\n\u001b[31m+     Array [\u001b[39m\n\u001b[31m+       \"dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+   Array [\u001b[39m\n\u001b[31m+     \"Home press\",\u001b[39m\n\u001b[31m+     Array [\u001b[39m\n\u001b[31m+       \"dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)\",\u001b[39m\n\u001b[31m+     ],\u001b[39m\n\u001b[31m+   ],\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n  278 |         info.annotations.push({ type: \"static\", description: JSON.stringify({ mode, hits }) });\n  279 |         expect(mode).toBe(\"static\");\n> 280 |         expect(hits).toEqual([]);\n      |                      ^\n  281 |     });\n  282 | }\n  283 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:280:22"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T14:27:30.832Z",
+                  "annotations": [
+                    {
+                      "type": "static",
+                      "description": "{\"mode\":\"static\",\"hits\":[[\"Home rest\",[\"dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)\"]],[\"Home hover\",[\"dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)\"]],[\"Home press\",[\"dock-icon-button glass-specular-track glass-capsule-hover glass-capsule: blur(20px) saturate(1.5)\"]]]}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/test-results/release-11-0-2-static-·-a--21ec7-aw-no-backdrop-filter-dark--webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                    "column": 22,
+                    "line": 280
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-2594dd6d235e59d74984",
+          "file": "release-11-0-2.spec.ts",
+          "line": 253,
+          "column": 5
+        },
+        {
+          "title": "static · a live dock's active control keeps its capsule lens",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1256,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T14:27:36.426Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-2a378cf67f7c24b05e61",
+          "file": "release-11-0-2.spec.ts",
+          "line": 284,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-12T14:27:25.054Z",
+    "duration": 12874.189999999999,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

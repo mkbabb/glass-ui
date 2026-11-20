@@ -1,0 +1,418 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-0-2.config.ts",
+      "release-11-0-2.spec.ts",
+      "--project=webkit",
+      "--workers=1",
+      "-g",
+      "fill ·|thumb paints"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-0-2.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-5.spec.ts",
+          "slider-forced-colors.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-2311",
+        "name": "webkit-2311",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-0-2.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/docs/release-11.0.2/logs/o269-o273-v1101-webkit.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5342",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/",
+      "url": "http://localhost:5342",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-0-2.spec.ts",
+      "file": "release-11-0-2.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "slider · the thumb paints --card by default and --slider-thumb-bg when set",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "slider",
+                  "description": "{\"card\":\"rgb(253, 245, 236)\",\"unset\":\"rgb(253, 245, 236)\",\"set\":\"rgb(253, 245, 236)\"}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 815,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"rgb(2\u001b[7m00, 30, 60\u001b[27m)\"\u001b[39m\nReceived: \u001b[31m\"rgb(2\u001b[7m53, 245, 236\u001b[27m)\"\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"rgb(2\u001b[7m00, 30, 60\u001b[27m)\"\u001b[39m\nReceived: \u001b[31m\"rgb(2\u001b[7m53, 245, 236\u001b[27m)\"\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:216:19",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                      "column": 19,
+                      "line": 216
+                    },
+                    "snippet": "  214 |     info.annotations.push({ type: \"slider\", description: JSON.stringify(r) });\n  215 |     expect(r.unset).toBe(r.card);\n> 216 |     expect(r.set).toBe(\"rgb(200, 30, 60)\");\n      |                   ^\n  217 | });\n  218 |\n  219 | test(\"edge · a GlassDock page opens and stays alive\", async ({ page }, info) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                        "column": 19,
+                        "line": 216
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"rgb(2\u001b[7m00, 30, 60\u001b[27m)\"\u001b[39m\nReceived: \u001b[31m\"rgb(2\u001b[7m53, 245, 236\u001b[27m)\"\u001b[39m\n\n  214 |     info.annotations.push({ type: \"slider\", description: JSON.stringify(r) });\n  215 |     expect(r.unset).toBe(r.card);\n> 216 |     expect(r.set).toBe(\"rgb(200, 30, 60)\");\n      |                   ^\n  217 | });\n  218 |\n  219 | test(\"edge · a GlassDock page opens and stays alive\", async ({ page }, info) => {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:216:19"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T16:47:48.454Z",
+                  "annotations": [
+                    {
+                      "type": "slider",
+                      "description": "{\"card\":\"rgb(253, 245, 236)\",\"unset\":\"rgb(253, 245, 236)\",\"set\":\"rgb(253, 245, 236)\"}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/test-results/release-11-0-2-slider-·-th-3d5eb----slider-thumb-bg-when-set-webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                    "column": 19,
+                    "line": 216
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-10c84953e56cb22c123c",
+          "file": "release-11-0-2.spec.ts",
+          "line": 196,
+          "column": 1
+        },
+        {
+          "title": "fill · in dark a hovered, pressed or selected seat lifts the plate (static)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "fill",
+                  "description": "{\"plate\":0.021033132017247883,\"selected\":0.016418153834358008,\"selectedTab\":0.0164181538343581,\"restingTab\":0.021033132017247883,\"hover\":0.016672521212119564,\"press\":0.02729082378764947}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2438,
+                  "error": {
+                    "message": "Error: hover\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.006\u001b[39m\nReceived:   \u001b[31m-0.004360610805128319\u001b[39m",
+                    "stack": "Error: hover\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.006\u001b[39m\nReceived:   \u001b[31m-0.004360610805128319\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:361:56",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                      "column": 56,
+                      "line": 361
+                    },
+                    "snippet": "  359 |         const lift = 0.006;\n  360 |         expect(Math.abs(r.restingTab - r.plate), \"a resting tab is the plate\").toBeLessThan(0.002);\n> 361 |         if (!touch) expect(r.hover - r.plate, \"hover\").toBeGreaterThan(lift);\n      |                                                        ^\n  362 |         expect(r.press - r.plate, \"press\").toBeGreaterThan(lift);\n  363 |         expect(r.selected - r.plate, \"selected\").toBeGreaterThan(lift);\n  364 |         expect(r.selectedTab - r.plate, \"selected tab\").toBeGreaterThan(lift);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                        "column": 56,
+                        "line": 361
+                      },
+                      "message": "Error: hover\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.006\u001b[39m\nReceived:   \u001b[31m-0.004360610805128319\u001b[39m\n\n  359 |         const lift = 0.006;\n  360 |         expect(Math.abs(r.restingTab - r.plate), \"a resting tab is the plate\").toBeLessThan(0.002);\n> 361 |         if (!touch) expect(r.hover - r.plate, \"hover\").toBeGreaterThan(lift);\n      |                                                        ^\n  362 |         expect(r.press - r.plate, \"press\").toBeGreaterThan(lift);\n  363 |         expect(r.selected - r.plate, \"selected\").toBeGreaterThan(lift);\n  364 |         expect(r.selectedTab - r.plate, \"selected tab\").toBeGreaterThan(lift);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:361:56"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T16:47:49.892Z",
+                  "annotations": [
+                    {
+                      "type": "fill",
+                      "description": "{\"plate\":0.021033132017247883,\"selected\":0.016418153834358008,\"selectedTab\":0.0164181538343581,\"restingTab\":0.021033132017247883,\"hover\":0.016672521212119564,\"press\":0.02729082378764947}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/test-results/release-11-0-2-fill-·-in-d-b5af1-eat-lifts-the-plate-static--webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                    "column": 56,
+                    "line": 361
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-409da48851765a1d5192",
+          "file": "release-11-0-2.spec.ts",
+          "line": 332,
+          "column": 5
+        },
+        {
+          "title": "fill · in dark a hovered, pressed or selected seat lifts the plate (live)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "fill",
+                  "description": "{\"plate\":0.025283059414003647,\"selected\":0.019217266199828064,\"selectedTab\":0.019217266199827995,\"restingTab\":0.0252830594140038,\"hover\":0.019499305950709738,\"press\":0.03072511581263649}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2343,
+                  "error": {
+                    "message": "Error: hover\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.006\u001b[39m\nReceived:   \u001b[31m-0.005783753463293909\u001b[39m",
+                    "stack": "Error: hover\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.006\u001b[39m\nReceived:   \u001b[31m-0.005783753463293909\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:361:56",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                      "column": 56,
+                      "line": 361
+                    },
+                    "snippet": "  359 |         const lift = 0.006;\n  360 |         expect(Math.abs(r.restingTab - r.plate), \"a resting tab is the plate\").toBeLessThan(0.002);\n> 361 |         if (!touch) expect(r.hover - r.plate, \"hover\").toBeGreaterThan(lift);\n      |                                                        ^\n  362 |         expect(r.press - r.plate, \"press\").toBeGreaterThan(lift);\n  363 |         expect(r.selected - r.plate, \"selected\").toBeGreaterThan(lift);\n  364 |         expect(r.selectedTab - r.plate, \"selected tab\").toBeGreaterThan(lift);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                        "column": 56,
+                        "line": 361
+                      },
+                      "message": "Error: hover\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.006\u001b[39m\nReceived:   \u001b[31m-0.005783753463293909\u001b[39m\n\n  359 |         const lift = 0.006;\n  360 |         expect(Math.abs(r.restingTab - r.plate), \"a resting tab is the plate\").toBeLessThan(0.002);\n> 361 |         if (!touch) expect(r.hover - r.plate, \"hover\").toBeGreaterThan(lift);\n      |                                                        ^\n  362 |         expect(r.press - r.plate, \"press\").toBeGreaterThan(lift);\n  363 |         expect(r.selected - r.plate, \"selected\").toBeGreaterThan(lift);\n  364 |         expect(r.selectedTab - r.plate, \"selected tab\").toBeGreaterThan(lift);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:361:56"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T16:47:52.901Z",
+                  "annotations": [
+                    {
+                      "type": "fill",
+                      "description": "{\"plate\":0.025283059414003647,\"selected\":0.019217266199828064,\"selectedTab\":0.019217266199827995,\"restingTab\":0.0252830594140038,\"hover\":0.019499305950709738,\"press\":0.03072511581263649}"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/test-results/release-11-0-2-fill-·-in-d-c0870--seat-lifts-the-plate-live--webkit/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts",
+                    "column": 56,
+                    "line": 361
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-8d644dcd4df99a969d8b",
+          "file": "release-11-0-2.spec.ts",
+          "line": 332,
+          "column": 5
+        },
+        {
+          "title": "fill · the light scheme's seat fills are the plate rungs",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "fill",
+                  "description": "{\"hover\":\"color(srgb 0.203993 0.148252 0.08296 / 0.14)\",\"resting\":\"color(srgb 0.203993 0.148252 0.08296 / 0.14)\",\"selectedTab\":\"color(srgb 0.203993 0.148252 0.08296 / 0.18)\",\"floating\":\"color(srgb 0.203993 0.148252 0.08296 / 0.18)\"}"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "webkit",
+              "projectName": "webkit",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1831,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-12T16:47:55.775Z",
+                  "annotations": [
+                    {
+                      "type": "fill",
+                      "description": "{\"hover\":\"color(srgb 0.203993 0.148252 0.08296 / 0.14)\",\"resting\":\"color(srgb 0.203993 0.148252 0.08296 / 0.14)\",\"selectedTab\":\"color(srgb 0.203993 0.148252 0.08296 / 0.18)\",\"floating\":\"color(srgb 0.203993 0.148252 0.08296 / 0.18)\"}"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6be085e04bfac81dcd8c-1b8ae1d567e3537b9031",
+          "file": "release-11-0-2.spec.ts",
+          "line": 368,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-12T16:47:48.156Z",
+    "duration": 9700.263,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 3,
+    "flaky": 0
+  }
+}

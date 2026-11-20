@@ -1,0 +1,87 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/reka-scratch
+
+ ❯ tests/gates/comment-ratio.test.ts (15 tests | 2 failed) 140ms
+     × the census is internally consistent — comment + code = non-blank 28ms
+     × REPO-WIDE ≤20% AND zero tranche/wave/round names — OWED AT BATCH CLOSE 16ms
+ ❯ tests/gates/boot-graph.test.ts (14 tests | 1 failed) 131ms
+     × the dist-demo it measures is NEWER than every source it is built from 21ms
+ ❯ tests/components/popover.contract.test.ts (8 tests | 1 failed) 114ms
+     × preserves click placement, dismissal, focus return, and preventable autofocus 26ms
+(node:36027) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:36034) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:36885) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:37222) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/popover.contract.test.ts > Popover trigger contract > preserves click placement, dismissal, focus return, and preventable autofocus
+AssertionError: expected "vi.fn()" to be called once, but got 0 times
+ ❯ tests/components/popover.contract.test.ts:148:31
+    146|         expect(content.attributes("aria-labelledby")).toBe(trigger.att…
+    147|         expect(rekaContent.props()).toMatchObject({ align: "start", si…
+    148|         expect(openAutoFocus).toHaveBeenCalledOnce();
+       |                               ^
+    149|         expect(document.activeElement).toBe(trigger.element);
+    150|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  tests/gates/boot-graph.test.ts > gate:boot-graph — build arm > the dist-demo it measures is NEWER than every source it is built from
+AssertionError: dist-demo/index.html is STALE (built 2026-11-14T19:54:29.583Z, newest source 2026-11-14T21:59:52.000Z) — run `npm run demo:dist:build`; a stale build greens a regressed graph: expected 1794686069583.7512 to be greater than 1794693592000
+ ❯ tests/gates/boot-graph.test.ts:576:11
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  tests/gates/comment-ratio.test.ts > G-COMMENT-RATIO — source is not a tranche document (BK #17) > the census is internally consistent — comment + code = non-blank
+AssertionError: expected 0 to be greater than 0
+ ❯ tests/gates/comment-ratio.test.ts:189:33
+    187|         const result = census("src");
+    188|         expect(result.comment + result.code).toBe(result.nonBlank);
+    189|         expect(result.nonBlank).toBeGreaterThan(0);
+       |                                 ^
+    190|         // Every classified line is one of exactly three things; a raw…
+    191|         // the non-blank count would mean the lexer invented lines.
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  tests/gates/comment-ratio.test.ts > G-COMMENT-RATIO — source is not a tranche document (BK #17) > REPO-WIDE ≤20% AND zero tranche/wave/round names — OWED AT BATCH CLOSE
+Error: Expect test to fail
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+⎯⎯⎯⎯⎯⎯ Unhandled Errors ⎯⎯⎯⎯⎯⎯
+
+Vitest caught 1 unhandled error during the test run.
+This might cause false positive tests. Resolve unhandled errors to make sure your tests are not affected.
+
+⎯⎯⎯⎯ Unhandled Rejection ⎯⎯⎯⎯⎯
+RangeError: Maximum call stack size exceeded
+ ❯ ElementEventAttributeUtility.getEventListener ../../node_modules/happy-dom/lib/nodes/element/ElementEventAttributeUtility.js:15:28
+ ❯ HTMLButtonElement.get onblur [as onblur] ../../node_modules/happy-dom/lib/nodes/html-element/HTMLElement.js:100:45
+ ❯ HTMLButtonElement.#callDispatchEventListeners ../../node_modules/happy-dom/lib/event/EventTarget.js:276:87
+ ❯ HTMLButtonElement.dispatchEvent ../../node_modules/happy-dom/lib/event/EventTarget.js:104:41
+ ❯ HTMLButtonElement.dispatchEvent ../../node_modules/happy-dom/lib/nodes/html-button-element/HTMLButtonElement.js:323:35
+ ❯ HTMLButtonElement.#goThroughDispatchEventPhases ../../node_modules/happy-dom/lib/event/EventTarget.js:164:38
+ ❯ HTMLButtonElement.dispatchEvent ../../node_modules/happy-dom/lib/event/EventTarget.js:100:47
+ ❯ HTMLButtonElement.dispatchEvent ../../node_modules/happy-dom/lib/nodes/html-button-element/HTMLButtonElement.js:323:35
+ ❯ HTMLElementUtility.blur ../../node_modules/happy-dom/lib/nodes/html-element/HTMLElementUtility.js:23:16
+ ❯ HTMLButtonElement.blur ../../node_modules/happy-dom/lib/nodes/html-element/HTMLElement.js:773:28
+
+This error originated in "tests/components/dialog/modal-root-lock.test.ts" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+The latest test that might've caused the error is "composes with ExpandableContainer closed out of order (U-F04)". It might mean one of the following:
+- The error was thrown, while Vitest was running this test.
+- If the error occurred after the test had been completed, this was the last documented test before it was thrown.
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+
+ Test Files  3 failed | 275 passed (278)
+      Tests  4 failed | 2532 passed | 9 expected fail | 1 skipped (2546)
+     Errors  1 error
+   Start at  17:16:24
+   Duration  74.25s (transform 9.37s, setup 8.34s, import 36.51s, tests 38.03s, environment 35.76s)
+

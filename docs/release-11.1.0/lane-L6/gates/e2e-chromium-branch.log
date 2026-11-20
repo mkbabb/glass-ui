@@ -1,0 +1,296 @@
+
+Running 17 tests using 1 worker
+
+  ✘   1 [chromium-headless-new] › tests-visual/dock-animation-live.spec.ts:97:5 › dock-animation-live (π lane — single-scalar, fail-CLOSED) › the dock box and --dock-morph-t morph on ONE clock (lead/lag ≤ 1 frame) (994ms)
+  ✘   2 [chromium-headless-new] › tests-visual/dock-morph-family.spec.ts:43:1 › (a)/(b) — the morph composites a transform over a reserved footprint (no per-frame relayout) (1.6s)
+  ✘   3 [chromium-headless-new] › tests-visual/dock-morph-family.spec.ts:83:1 › (c) — under PRM the dock seats synchronously (every control inside the box, no sliver) (2.1s)
+  ✘   4 [chromium-headless-new] › tests-visual/dock-morph-family.spec.ts:139:1 › (d) — a nested DockLayerGroup reserves its peak-layer block-size (consumer never guesses) (1.7s)
+  ✘   5 [chromium-headless-new] › tests-visual/dock-morph-family.spec.ts:170:1 › (e) — a --dock-local-scale override on a dock scope paints a larger box (the @property thread) (1.6s)
+[WebServer] 3:23:35 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/dock/rail" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✓   6 [chromium-headless-new] › tests-visual/dock-morph-family.spec.ts:207:1 › (f) — the vertical dock morphs plate chrome continuously with its block-size (no snap, inline invariant) (1.5s)
+  ✘   7 [chromium-headless-new] › tests-visual/dock-morph-insitu.spec.ts:29:1 › 6a — in-situ V↔H frame-series lands the ONE --dock-morph-t scalar both ways (1.1s)
+  ✘   8 [chromium-headless-new] › tests-visual/dock-morph-insitu.spec.ts:115:1 › 6b — in-situ layering switch changes the dock active facet/route live (1.1s)
+6c BA-VJS-1: {"cycles":[{"cycle":0,"from":0,"to":0,"deadHold":false,"snap":false},{"cycle":1,"from":0,"to":0,"deadHold":false,"snap":false},{"cycle":2,"from":0,"to":0,"deadHold":false,"snap":false},{"cycle":3,"from":0,"to":0,"deadHold":false,"snap":false}]}
+  ✘   9 [chromium-headless-new] › tests-visual/dock-morph-insitu.spec.ts:147:1 › 6c — BA-VJS-1 four-cycle nested dock expand arms from:40 → to:≈242 (never 0) (6.7s)
+  ✘  10 [chromium-headless-new] › tests-visual/dock-morph-insitu.spec.ts:235:1 › 6d — §7 perf re-run over the in-situ V↔H morph window (4× throttle) (1.0s)
+  ✓  11 [chromium-headless-new] › tests-visual/dockmorph-cta.spec.ts:39:5 › dockmorph-cta — the CTA-receive landing SEAT (π lane, LOCAL) › the seat reserves its box (no jump) and reveals with an opacity FLIP (2.1s)
+  ✓  12 [chromium-headless-new] › tests-visual/dockmorph-cta.spec.ts:132:5 › dockmorph-cta — the CTA-receive landing SEAT (π lane, LOCAL) › PRM — the seat reveal is an INSTANT opacity swap (transition off) (323ms)
+  ✘  13 [chromium-headless-new] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › light · mobile — nav-dock gestalt (816ms)
+  ✘  14 [chromium-headless-new] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › light · desktop — nav-dock gestalt (830ms)
+  ✘  15 [chromium-headless-new] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › dark · mobile — nav-dock gestalt (829ms)
+  ✘  16 [chromium-headless-new] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › dark · desktop — nav-dock gestalt (832ms)
+  ✓  17 [chromium-headless-new] › tests-visual/nav-dock-fix.spec.ts:198:5 › W-NAV-DOCK-FIX — the nav-dock binding π › bottom-dock tab strip + persistent prev/next (705ms)
+
+
+  1) [chromium-headless-new] › tests-visual/dock-animation-live.spec.ts:97:5 › dock-animation-live (π lane — single-scalar, fail-CLOSED) › the dock box and --dock-morph-t morph on ONE clock (lead/lag ≤ 1 frame) 
+
+    Error: --dock-morph-t ramped over only 0 rising frame(s) (< 5) — the single-scalar spring did NOT run (frozen at 0; the snap/desync regression)
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 5
+    Received:    0
+
+      233 |             risingScalar,
+      234 |             `--dock-morph-t ramped over only ${risingScalar} rising frame(s) (< ${MIN_MORPH_FRAMES}) — the single-scalar spring did NOT run (frozen at 0; the snap/desync regression)`,
+    > 235 |         ).toBeGreaterThanOrEqual(MIN_MORPH_FRAMES);
+          |           ^
+      236 |
+      237 |         // The root box width must rise over ≥5 rising frames (a snap/freeze fails).
+      238 |         const risingWidth = countRising(tl.widths, 0.5);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-animation-live.spec.ts:235:11
+
+    Error Context: tests-visual/test-results/dock-animation-live-dock-a-bdb92-E-clock-lead-lag-≤-1-frame--chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/dock-morph-family.spec.ts:43:1 › (a)/(b) — the morph composites a transform over a reserved footprint (no per-frame relayout) 
+
+    Error: the morph-axis box composites a transform mid-morph (got none)
+
+    expect(received).toBeTruthy()
+
+    Received: false
+
+      73 |         read.transform && read.transform !== "none" && read.transform !== "matrix(1, 0, 0, 1, 0, 0)",
+      74 |         `the morph-axis box composites a transform mid-morph (got ${read.transform})`,
+    > 75 |     ).toBeTruthy();
+         |       ^
+      76 |     // The reserved footprint is the SETTLED `to` (~240px), not the live-scalar interp
+      77 |     // (~150px at t=0.5). A reserved 240px box with a 0.625 scale reads as ~150px.
+      78 |     const reserved = Number.parseFloat(read.reservedInline ?? "0");
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-morph-family.spec.ts:75:7
+
+    Error Context: tests-visual/test-results/dock-morph-family--a-b-—-t-4df0f-rint-no-per-frame-relayout--chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › tests-visual/dock-morph-family.spec.ts:83:1 › (c) — under PRM the dock seats synchronously (every control inside the box, no sliver) 
+
+    Error: every dock control seats INSIDE the box under PRM (2/13 outside)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      132 |         seat.allInside,
+      133 |         `every dock control seats INSIDE the box under PRM (${seat.outsideCount}/${seat.controlCount} outside)`,
+    > 134 |     ).toBe(true);
+          |       ^
+      135 |     await page.emulateMedia({ reducedMotion: null });
+      136 | });
+      137 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-morph-family.spec.ts:134:7
+
+    Error Context: tests-visual/test-results/dock-morph-family--c-—-und-4dba9-l-inside-the-box-no-sliver--chromium-headless-new/error-context.md
+
+  4) [chromium-headless-new] › tests-visual/dock-morph-family.spec.ts:139:1 › (d) — a nested DockLayerGroup reserves its peak-layer block-size (consumer never guesses) 
+
+    Error: --dock-layer-peak-block-size is a measured non-zero peak (got )
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      160 |     expect(reserve.found, "the .dock-layer-group is present").toBe(true);
+      161 |     // The group exposes a non-zero measured peak + reserves it as min-block-size.
+    > 162 |     expect(reserve.peakPx, `--dock-layer-peak-block-size is a measured non-zero peak (got ${reserve.peakVar})`).toBeGreaterThan(0);
+          |                                                                                                                 ^
+      163 |     expect(
+      164 |         Math.abs(reserve.minPx - reserve.peakPx),
+      165 |         `the group min-block-size (${reserve.minPx}) == the measured peak (${reserve.peakPx})`,
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-morph-family.spec.ts:162:113
+
+    Error Context: tests-visual/test-results/dock-morph-family--d-—-a-n-169aa-ize-consumer-never-guesses--chromium-headless-new/error-context.md
+
+  5) [chromium-headless-new] › tests-visual/dock-morph-family.spec.ts:170:1 › (e) — a --dock-local-scale override on a dock scope paints a larger box (the @property thread) 
+
+    Error: --dock-local-scale: 1.4 on the dock scope re-evaluates --dock-scale (base 1 → threaded 1)
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 1.3
+    Received:   1
+
+      197 |         thread.threadedScale,
+      198 |         `--dock-local-scale: 1.4 on the dock scope re-evaluates --dock-scale (base ${thread.baseScale} → threaded ${thread.threadedScale})`,
+    > 199 |     ).toBeGreaterThan(thread.baseScale * 1.3);
+          |       ^
+      200 | });
+      201 |
+      202 | // ── (f) — the VERTICAL collapse→expand morphs its chrome continuously ────────────
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-morph-family.spec.ts:199:7
+
+    Error Context: tests-visual/test-results/dock-morph-family--e-—-a---1db31-er-box-the-property-thread--chromium-headless-new/error-context.md
+
+  6) [chromium-headless-new] › tests-visual/dock-morph-insitu.spec.ts:29:1 › 6a — in-situ V↔H frame-series lands the ONE --dock-morph-t scalar both ways 
+
+    Error: the shell morph handle is present
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      35 |         await page.evaluate(() => typeof (window as any).__shellDockMorph?.setMorphT === "function"),
+      36 |         "the shell morph handle is present",
+    > 37 |     ).toBe(true);
+         |       ^
+      38 |
+      39 |     const series = await page.evaluate(async () => {
+      40 |         const h = (window as any).__shellDockMorph;
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-morph-insitu.spec.ts:37:7
+
+    Error Context: tests-visual/test-results/dock-morph-insitu-6a-—-in--b002e-ck-morph-t-scalar-both-ways-chromium-headless-new/error-context.md
+
+  7) [chromium-headless-new] › tests-visual/dock-morph-insitu.spec.ts:115:1 › 6b — in-situ layering switch changes the dock active facet/route live 
+
+    Error: page.evaluate: TypeError: Cannot read properties of null (reading 'querySelectorAll')
+        at eval (eval at evaluate (:303:30), <anonymous>:3:35)
+        at UtilityScript.evaluate (<anonymous>:305:16)
+        at UtilityScript.<anonymous> (<anonymous>:1:44)
+        at eval (eval at evaluate (:303:30), <anonymous>:3:35)
+        at UtilityScript.evaluate (<anonymous>:305:16)
+        at UtilityScript.<anonymous> (<anonymous>:1:44)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-morph-insitu.spec.ts:122:31
+
+    Error Context: tests-visual/test-results/dock-morph-insitu-6b-—-in--1bb52-ock-active-facet-route-live-chromium-headless-new/error-context.md
+
+  8) [chromium-headless-new] › tests-visual/dock-morph-insitu.spec.ts:147:1 › 6c — BA-VJS-1 four-cycle nested dock expand arms from:40 → to:≈242 (never 0) 
+
+    Error: cycle 0 from
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 20
+    Received:   0
+
+      223 |     for (const c of (result as any).cycles) {
+      224 |         // The acceptance: from:40 → to:≈242 (the content-intrinsic span, never 0/collapsed).
+    > 225 |         expect(c.from, `cycle ${c.cycle} from`).toBeGreaterThan(20);
+          |                                                 ^
+      226 |         expect(c.to, `cycle ${c.cycle} to is the real expanded span (never the collapsed ~43)`).toBeGreaterThan(
+      227 |             120,
+      228 |         );
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-morph-insitu.spec.ts:225:49
+
+    Error Context: tests-visual/test-results/dock-morph-insitu-6c-—-BA--c82b9--from-40-→-to-≈242-never-0--chromium-headless-new/error-context.md
+
+  9) [chromium-headless-new] › tests-visual/dock-morph-insitu.spec.ts:235:1 › 6d — §7 perf re-run over the in-situ V↔H morph window (4× throttle) 
+
+    Error: page.evaluate: TypeError: Cannot read properties of undefined (reading 'open')
+        at eval (eval at evaluate (:303:30), <anonymous>:5:9)
+        at UtilityScript.evaluate (<anonymous>:305:16)
+        at UtilityScript.<anonymous> (<anonymous>:1:44)
+        at eval (eval at evaluate (:303:30), <anonymous>:5:9)
+        at UtilityScript.evaluate (<anonymous>:305:16)
+        at UtilityScript.<anonymous> (<anonymous>:1:44)
+        at measure (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-morph-insitu.spec.ts:243:20)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-morph-insitu.spec.ts:290:25
+
+    Error Context: tests-visual/test-results/dock-morph-insitu-6d-—-§7--5dd9e-H-morph-window-4×-throttle--chromium-headless-new/error-context.md
+
+  10) [chromium-headless-new] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › light · mobile — nav-dock gestalt 
+
+    Error: the rail renders mode="facets"
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "facets"
+    Received: null
+
+      138 |                     return rail?.getAttribute("data-mode") ?? null;
+      139 |                 });
+    > 140 |                 expect(railMode, 'the rail renders mode="facets"').toBe("facets");
+          |                                                                    ^
+      141 |
+      142 |                 // Distinct per-facet --glass-accent (read the inline style hue).
+      143 |                 const accents = await page.evaluate(() => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/nav-dock-fix.spec.ts:140:68
+
+    Error Context: tests-visual/test-results/nav-dock-fix-W-NAV-DOCK-FI-e4817-·-mobile-—-nav-dock-gestalt-chromium-headless-new/error-context.md
+
+  11) [chromium-headless-new] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › light · desktop — nav-dock gestalt 
+
+    Error: the rail renders mode="facets"
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "facets"
+    Received: null
+
+      138 |                     return rail?.getAttribute("data-mode") ?? null;
+      139 |                 });
+    > 140 |                 expect(railMode, 'the rail renders mode="facets"').toBe("facets");
+          |                                                                    ^
+      141 |
+      142 |                 // Distinct per-facet --glass-accent (read the inline style hue).
+      143 |                 const accents = await page.evaluate(() => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/nav-dock-fix.spec.ts:140:68
+
+    Error Context: tests-visual/test-results/nav-dock-fix-W-NAV-DOCK-FI-c3b61--desktop-—-nav-dock-gestalt-chromium-headless-new/error-context.md
+
+  12) [chromium-headless-new] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › dark · mobile — nav-dock gestalt 
+
+    Error: the rail renders mode="facets"
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "facets"
+    Received: null
+
+      138 |                     return rail?.getAttribute("data-mode") ?? null;
+      139 |                 });
+    > 140 |                 expect(railMode, 'the rail renders mode="facets"').toBe("facets");
+          |                                                                    ^
+      141 |
+      142 |                 // Distinct per-facet --glass-accent (read the inline style hue).
+      143 |                 const accents = await page.evaluate(() => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/nav-dock-fix.spec.ts:140:68
+
+    Error Context: tests-visual/test-results/nav-dock-fix-W-NAV-DOCK-FI-abc92-·-mobile-—-nav-dock-gestalt-chromium-headless-new/error-context.md
+
+  13) [chromium-headless-new] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › dark · desktop — nav-dock gestalt 
+
+    Error: the rail renders mode="facets"
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "facets"
+    Received: null
+
+      138 |                     return rail?.getAttribute("data-mode") ?? null;
+      139 |                 });
+    > 140 |                 expect(railMode, 'the rail renders mode="facets"').toBe("facets");
+          |                                                                    ^
+      141 |
+      142 |                 // Distinct per-facet --glass-accent (read the inline style hue).
+      143 |                 const accents = await page.evaluate(() => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/nav-dock-fix.spec.ts:140:68
+
+    Error Context: tests-visual/test-results/nav-dock-fix-W-NAV-DOCK-FI-5fb77--desktop-—-nav-dock-gestalt-chromium-headless-new/error-context.md
+
+  13 failed
+    [chromium-headless-new] › tests-visual/dock-animation-live.spec.ts:97:5 › dock-animation-live (π lane — single-scalar, fail-CLOSED) › the dock box and --dock-morph-t morph on ONE clock (lead/lag ≤ 1 frame) 
+    [chromium-headless-new] › tests-visual/dock-morph-family.spec.ts:43:1 › (a)/(b) — the morph composites a transform over a reserved footprint (no per-frame relayout) 
+    [chromium-headless-new] › tests-visual/dock-morph-family.spec.ts:83:1 › (c) — under PRM the dock seats synchronously (every control inside the box, no sliver) 
+    [chromium-headless-new] › tests-visual/dock-morph-family.spec.ts:139:1 › (d) — a nested DockLayerGroup reserves its peak-layer block-size (consumer never guesses) 
+    [chromium-headless-new] › tests-visual/dock-morph-family.spec.ts:170:1 › (e) — a --dock-local-scale override on a dock scope paints a larger box (the @property thread) 
+    [chromium-headless-new] › tests-visual/dock-morph-insitu.spec.ts:29:1 › 6a — in-situ V↔H frame-series lands the ONE --dock-morph-t scalar both ways 
+    [chromium-headless-new] › tests-visual/dock-morph-insitu.spec.ts:115:1 › 6b — in-situ layering switch changes the dock active facet/route live 
+    [chromium-headless-new] › tests-visual/dock-morph-insitu.spec.ts:147:1 › 6c — BA-VJS-1 four-cycle nested dock expand arms from:40 → to:≈242 (never 0) 
+    [chromium-headless-new] › tests-visual/dock-morph-insitu.spec.ts:235:1 › 6d — §7 perf re-run over the in-situ V↔H morph window (4× throttle) 
+    [chromium-headless-new] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › light · mobile — nav-dock gestalt 
+    [chromium-headless-new] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › light · desktop — nav-dock gestalt 
+    [chromium-headless-new] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › dark · mobile — nav-dock gestalt 
+    [chromium-headless-new] › tests-visual/nav-dock-fix.spec.ts:73:13 › W-NAV-DOCK-FIX — the nav-dock binding π › dark · desktop — nav-dock gestalt 
+  4 passed (36.3s)

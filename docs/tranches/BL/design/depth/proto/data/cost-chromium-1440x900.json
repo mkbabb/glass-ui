@@ -1,0 +1,312 @@
+{
+ "engine": "chromium",
+ "cell": "1440x900",
+ "variants": [
+  {
+   "name": "built",
+   "animations": [
+    [
+     {
+      "name": "depth-lag",
+      "target": "DIV",
+      "props": [
+       "translate"
+      ],
+      "timeline": "ViewTimeline"
+     }
+    ],
+    [
+     {
+      "name": "depth-lag",
+      "target": "IMG",
+      "props": [
+       "translate"
+      ],
+      "timeline": "ViewTimeline"
+     }
+    ],
+    []
+   ],
+   "listeners": {
+    "window": [],
+    "document": [],
+    "scenes": []
+   },
+   "trace": {
+    "steps": 36,
+    "layouts": 1,
+    "layoutRoots": {
+     "#document": 1
+    },
+    "recalcs": 28,
+    "recalcElements": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     2,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     3,
+     1,
+     1,
+     1,
+     1,
+     3,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "paints": 6,
+    "paintNodes": {
+     "#document": 3,
+     "FIGCAPTION.glass-quiet": 2,
+     "DIV.goo-blob-wrapper": 1
+    },
+    "frames": 0,
+    "mainMs": 137.3,
+    "mainMsPerStep": 3.813
+   },
+   "styleWrites": 0,
+   "pacing": {
+    "frames": 153,
+    "p50": 8.3,
+    "p95": 10.1,
+    "max": 10.4,
+    "over33": 0
+   }
+  },
+  {
+   "name": "still",
+   "animations": [
+    [],
+    [],
+    []
+   ],
+   "listeners": {
+    "window": [],
+    "document": [],
+    "scenes": []
+   },
+   "trace": {
+    "steps": 36,
+    "layouts": 1,
+    "layoutRoots": {
+     "#document": 1
+    },
+    "recalcs": 7,
+    "recalcElements": [
+     2,
+     1,
+     1,
+     1,
+     1,
+     2,
+     1
+    ],
+    "paints": 6,
+    "paintNodes": {
+     "#document": 3,
+     "FIGCAPTION.glass-quiet": 2,
+     "DIV.goo-blob-wrapper": 1
+    },
+    "frames": 0,
+    "mainMs": 126.5,
+    "mainMsPerStep": 3.513
+   },
+   "styleWrites": 0,
+   "pacing": {
+    "frames": 142,
+    "p50": 8.3,
+    "p95": 9.7,
+    "max": 17.2,
+    "over33": 0
+   }
+  },
+  {
+   "name": "bite-lag-as-top",
+   "animations": [
+    [
+     {
+      "name": "depth-lag-top",
+      "target": "DIV",
+      "props": [
+       "top"
+      ],
+      "timeline": "ViewTimeline"
+     }
+    ],
+    [
+     {
+      "name": "depth-lag-top",
+      "target": "IMG",
+      "props": [
+       "top"
+      ],
+      "timeline": "ViewTimeline"
+     }
+    ],
+    []
+   ],
+   "listeners": {
+    "window": [],
+    "document": [],
+    "scenes": []
+   },
+   "trace": {
+    "steps": 36,
+    "layouts": 24,
+    "layoutRoots": {
+     "#document": 24
+    },
+    "recalcs": 28,
+    "recalcElements": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     2,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     3,
+     1,
+     1,
+     1,
+     1,
+     3,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "paints": 34,
+    "paintNodes": {
+     "#document": 16,
+     "IMG": 15,
+     "FIGCAPTION.glass-quiet": 2,
+     "DIV.goo-blob-wrapper": 1
+    },
+    "frames": 0,
+    "mainMs": 162.3,
+    "mainMsPerStep": 4.507
+   },
+   "styleWrites": 0,
+   "pacing": {
+    "frames": 153,
+    "p50": 8.3,
+    "p95": 9.8,
+    "max": 34.1,
+    "over33": 1
+   }
+  },
+  {
+   "name": "built-live-blob",
+   "animations": [
+    [
+     {
+      "name": "depth-lag",
+      "target": "DIV",
+      "props": [
+       "translate"
+      ],
+      "timeline": "ViewTimeline"
+     }
+    ],
+    [
+     {
+      "name": "depth-lag",
+      "target": "IMG",
+      "props": [
+       "translate"
+      ],
+      "timeline": "ViewTimeline"
+     }
+    ],
+    []
+   ],
+   "listeners": {
+    "window": [],
+    "document": [],
+    "scenes": []
+   },
+   "trace": {
+    "steps": 36,
+    "layouts": 1,
+    "layoutRoots": {
+     "#document": 1
+    },
+    "recalcs": 28,
+    "recalcElements": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     2,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     3,
+     1,
+     1,
+     1,
+     1,
+     3,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "paints": 6,
+    "paintNodes": {
+     "#document": 3,
+     "FIGCAPTION.glass-quiet": 2,
+     "DIV.goo-blob-wrapper": 1
+    },
+    "frames": 0,
+    "mainMs": 1795,
+    "mainMsPerStep": 49.861
+   },
+   "styleWrites": 0,
+   "pacing": {
+    "frames": 132,
+    "p50": 8.4,
+    "p95": 26,
+    "max": 33.7,
+    "over33": 2
+   }
+  }
+ ]
+}

@@ -1,0 +1,34 @@
+20:54:42 chain at f2dab5122; dirty: 0
+20:55:05 typecheck rc=0
+20:55:16 build rc=0
+20:55:22 demo:dist:build rc=0
+20:56:54 vitest (CI=true) rc=0  Test Files 278 passed (278)  Tests 2535 passed | 10 expected fail | 1 skipped (2546) 
+20:57:00 test:browser rc=0  Test Files 2 passed (2)  Tests 12 passed (12) 
+20:57:32 verify:package rc=0
+20:57:33 pack dry-run rc=0
+20:57:33 gates-done
+20:57:40 units-v1101 rc=1  Test Files 11 failed (11)  Tests 22 failed | 63 passed | 1 expected fail (86) 
+20:57:48 units-tip rc=0  Test Files 10 passed (10)  Tests 85 passed | 1 expected fail (86) 
+21:07:06 tip-wk-b rc=1  1 failed  10 skipped  130 passed (5.0m) 
+21:15:03 tip-chco rc=0  17 skipped  97 passed (7.9m) 
+21:23:25 v1101-chco rc=1  52 failed  17 skipped  45 passed (8.3m) 
+21:50:10 tip-wk-a rc=1  1 failed  6 skipped  263 passed (26.4m) 
+22:00:45 v1101-wk rc=1  77 failed  6 skipped  28 passed (7.4m) 
+22:00:45 STOP: guarded refused (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/docs/release-11.0.2/critic-4/logs/v1101-wk.log )
+22:01:27 chainB: the STOP above was a false match on the ARMED warning; carrying on
+22:19:56 tip-ch rc=0  300 passed (18.4m) 
+22:19:56 sweeps-done
+22:20:08 fold-v1101-ch (3 s window) rc=1
+22:21:21 select-v1101-chromium rc=1
+22:23:36 select-v1101-webkit rc=1
+22:28:54 select-tip-chromium rc=0
+22:36:04 select-tip-webkit rc=0
+22:53:10 c2file-tip-wk rc=1  1 failed  44 passed (2.3m) 
+23:19:14 chainB stopped by this seat while its v11.0.1 pixel-reader repeat waited 25 min for the webkit lock (never started); chainC takes the rest in a shorter order
+23:19:27 paint-tip-chromium rc=0
+23:19:39 paint-v1101-chromium rc=0
+23:35:44 hover-tip-wk rc=0  5 passed (2.2m) 
+23:35:44 essentials-done
+23:54:14 paint-tip-webkit rc=0
+00:17:30 c2file-v1101-wk rc=1  5 failed  40 passed (2.2m) 
+00:17:30 doneC

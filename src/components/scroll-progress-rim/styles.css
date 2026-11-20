@@ -91,35 +91,47 @@
         );
     }
 
-    /* `edge="border"` (W-I.8 RU-12): the rim is the host's border box, `inset: 0` with the
-       host's radius inherited, so a dock's plate carries it through every frame of its
-       travel with no geometry of its own. The fill is a ring of the rim's width revealed
-       from the leading edge to the fraction of the box; the fraction does not change when
-       the host moves. */
+    /* ── THE BORDER EDGE — the progress is the host's own border ─────────────────
+       The stroke is a box with a transparent border the width of the host's, at the
+       host's corner radius, so the engine's own border rasterizer traces it: it lands on
+       the host's border pixel for pixel at any device pixel ratio, corners included.
+       That is why it is not an SVG path on a measured rounded rect, which re-derives the
+       corner geometry in script and drifts by a fraction of a pixel against the real
+       border at DPR 1. Nothing paints where the host is unfilled, so at rest the border
+       is the host's border as it already was.
+
+       The fill is a clip along the axis, so at 0.5 half of the traced outline is drawn.
+       A tick moves one custom property on the stroke: a clip change, no layout and no
+       restyle outside it. The clip glides on the dock spring, and reduced motion cuts it.
+
+       Where the stroke sits: on the host's padding edge, which on a GlassDock is the
+       plate's border edge (the plate fills the dock box and the box draws no border).
+       A host whose border is its own CSS border sets `--scroll-progress-rim-outset` to
+       that width, so the stroke covers the border itself. */
     .scroll-progress-rim[data-edge="border"] {
+        inset: calc(-1 * var(--scroll-progress-rim-outset, 0px));
         border-radius: inherit;
     }
 
-    .scroll-progress-rim[data-edge="border"] .scroll-progress-rim__track {
+    /* The ink defaults to the rim's focal violet; a host retints it by setting
+       `--scroll-progress-rim-ink`, and `stops` sets it from the first stop. */
+    .scroll-progress-rim__stroke {
+        position: absolute;
         inset: 0;
+        box-sizing: border-box;
+        border: var(--scroll-progress-rim-stroke, 1px) solid
+            var(--scroll-progress-rim-ink, var(--rainbow-violet));
         border-radius: inherit;
-        background: none;
-    }
-
-    .scroll-progress-rim[data-edge="border"] .scroll-progress-rim__fill {
-        border-radius: inherit;
-        padding: var(--scroll-progress-rim-width);
-        mask:
-            linear-gradient(#000 0 0) content-box exclude,
-            linear-gradient(#000 0 0);
-    }
-
-    .scroll-progress-rim[data-edge="border"][data-orientation] .scroll-progress-rim__fill {
         clip-path: inset(0 calc(100% - var(--scroll-progress-rim-fill, 0%)) 0 0);
+        transition: clip-path var(--spring-dock-duration) var(--spring-dock);
     }
 
-    .scroll-progress-rim[data-edge="border"][data-orientation]:dir(rtl) .scroll-progress-rim__fill {
+    .scroll-progress-rim[data-orientation="horizontal"]:dir(rtl) .scroll-progress-rim__stroke {
         clip-path: inset(0 0 0 calc(100% - var(--scroll-progress-rim-fill, 0%)));
+    }
+
+    .scroll-progress-rim[data-orientation="vertical"] .scroll-progress-rim__stroke {
+        clip-path: inset(calc(100% - var(--scroll-progress-rim-fill, 0%)) 0 0 0);
     }
 
     /* The dot recipe is the value-marks register's — the third copy of it in this
@@ -129,7 +141,8 @@
        already grows along. */
 
     @media (prefers-reduced-motion: reduce) {
-        .scroll-progress-rim__fill {
+        .scroll-progress-rim__fill,
+        .scroll-progress-rim__stroke {
             transition: none;
         }
     }

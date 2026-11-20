@@ -1,0 +1,182 @@
+
+Running 8 tests using 1 worker
+
+  ✘  1 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390) (1.9s)
+  ✘  2 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (1440->390) (968ms)
+  ✘  3 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (390->1440) (1.7s)
+  ✘  4 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (390->1440) (957ms)
+  ✘  5 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (1440->390) (1.7s)
+  ✘  6 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (1440->390) (978ms)
+  ✘  7 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (390->1440) (1.7s)
+  ✘  8 [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (390->1440) (977ms)
+
+
+  1) [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390) 
+
+    Error: morphing frames after the change reserving other than the settled 160px (390)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      462 |                         stale.length,
+      463 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+    > 464 |                     ).toBe(0);
+          |                       ^
+      465 |                 }
+      466 |                 const over = seq.filter((f) => f.scroll > f.client);
+      467 |                 expect
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts:464:23
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101-·-hor-45391-follows-the-pane-1440--390--chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (1440->390) 
+
+    Error: morphing frames after the change reserving other than the settled 160px (390)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      462 |                         stale.length,
+      463 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+    > 464 |                     ).toBe(0);
+          |                       ^
+      465 |                 }
+      466 |                 const over = seq.filter((f) => f.scroll > f.client);
+      467 |                 expect
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts:464:23
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101-·-hor-5598b-follows-the-pane-1440--390--chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (390->1440) 
+
+    Error: morphing frames after the change reserving other than the settled 592px (160)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      462 |                         stale.length,
+      463 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+    > 464 |                     ).toBe(0);
+          |                       ^
+      465 |                 }
+      466 |                 const over = seq.filter((f) => f.scroll > f.client);
+      467 |                 expect
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts:464:23
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101-·-hor-ea1b6-follows-the-pane-390--1440--chromium-headless-new/error-context.md
+
+  4) [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (390->1440) 
+
+    Error: morphing frames after the change reserving other than the settled 592px (160)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      462 |                         stale.length,
+      463 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+    > 464 |                     ).toBe(0);
+          |                       ^
+      465 |                 }
+      466 |                 const over = seq.filter((f) => f.scroll > f.client);
+      467 |                 expect
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts:464:23
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101-·-hor-c79bf-follows-the-pane-390--1440--chromium-headless-new/error-context.md
+
+  5) [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (1440->390) 
+
+    Error: morphing frames after the change reserving other than the settled 152px (584)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      462 |                         stale.length,
+      463 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+    > 464 |                     ).toBe(0);
+          |                       ^
+      465 |                 }
+      466 |                 const over = seq.filter((f) => f.scroll > f.client);
+      467 |                 expect
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts:464:23
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101-·-ver-cc1e1-follows-the-pane-1440--390--chromium-headless-new/error-context.md
+
+  6) [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (1440->390) 
+
+    Error: morphing frames after the change reserving other than the settled 152px (584)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      462 |                         stale.length,
+      463 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+    > 464 |                     ).toBe(0);
+          |                       ^
+      465 |                 }
+      466 |                 const over = seq.filter((f) => f.scroll > f.client);
+      467 |                 expect
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts:464:23
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101-·-ver-cedb8-follows-the-pane-1440--390--chromium-headless-new/error-context.md
+
+  7) [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (390->1440) 
+
+    Error: morphing frames after the change reserving other than the settled 584px (152)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      462 |                         stale.length,
+      463 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+    > 464 |                     ).toBe(0);
+          |                       ^
+      465 |                 }
+      466 |                 const over = seq.filter((f) => f.scroll > f.client);
+      467 |                 expect
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts:464:23
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101-·-ver-8cda2-follows-the-pane-390--1440--chromium-headless-new/error-context.md
+
+  8) [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (390->1440) 
+
+    Error: morphing frames after the change reserving other than the settled 584px (152)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      462 |                         stale.length,
+      463 |                         `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
+    > 464 |                     ).toBe(0);
+          |                       ^
+      465 |                 }
+      466 |                 const over = seq.filter((f) => f.scroll > f.client);
+      467 |                 expect
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/tests-visual/release-10-1-2.spec.ts:464:23
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101-·-ver-a49ab-follows-the-pane-390--1440--chromium-headless-new/error-context.md
+
+  8 failed
+    [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390) 
+    [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (1440->390) 
+    [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (390->1440) 
+    [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (390->1440) 
+    [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (1440->390) 
+    [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (1440->390) 
+    [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (390->1440) 
+    [chromium-headless-new] › tests-visual/release-10-1-2.spec.ts:441:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (390->1440) 

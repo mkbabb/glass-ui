@@ -1,4 +1,4 @@
-import { readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import { router } from "../../demo/router";
@@ -6,32 +6,70 @@ import { CATEGORIES } from "../../demo/stories/manifest";
 
 const SHELL = resolve(__dirname, "../../demo/shell");
 
+const STORIES = resolve(__dirname, "../../demo/stories");
+const read = (path: string): string => (existsSync(path) ? readFileSync(path, "utf8") : "");
+const strip = (src: string): string =>
+    src.replace(/<!--[\s\S]*?-->/g, "").replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
+
+// A live canvas in a file: a substrate component, or a stage told to carry its field.
+const LIVE_CANVAS = /<(?:Aurora|Blob|Constellation|FourierField)\b|<StoryStage\b[^>]*\sfield[\s>]/;
+
 describe("demo route field ownership", () => {
     afterEach(async () => {
         await router.push("/");
     });
 
-    it("keeps one story-owned field across DockStage route navigation", async () => {
-        await router.push("/dock/overview");
-        expect(router.currentRoute.value.meta.suppressesShellField).toBe(true);
-
-        await router.push("/dock/layers");
-        expect(router.currentRoute.value.meta.suppressesShellField).toBe(true);
-        // Each `push` resolves a lazily-imported route component (`demo/router.ts:21`),
-        // so the arm's cost is module load, not assertion — vitest's 5s default flakes
-        // under the full battery while the arm runs in under a second alone.
-    }, 30_000);
-
-    it("lets the Aurora studio exclusively own its route field", async () => {
-        const aurora = CATEGORIES.find(({ id }) => id === "substrates")?.stories.find(
-            ({ id }) => id === "aurora",
-        );
-        expect(aurora?.background).toBe("paper");
-
-        await router.push("/substrates/aurora");
-        expect(router.currentRoute.value.meta.focal).toBe(true);
-        expect(router.currentRoute.value.meta.suppressesShellField).toBe(true);
+    // The declaration lives on the row, beside the page it describes; this reads the
+    // page's own files so a stage that gains a canvas without saying so fails here.
+    it("every row declares exactly the canvas its files mount", () => {
+        for (const category of CATEGORIES) {
+            for (const story of category.stories) {
+                const base = join(STORIES, category.id, story.id);
+                const page = strip(read(`${base}.vue`));
+                const stage = strip(read(`${base}.stage.vue`));
+                const tile = strip(read(`${base}.tile.vue`));
+                const card = tile
+                    ? tile + (tile.includes(`./${story.id}.stage.vue`) ? stage : "")
+                    : stage;
+                const expected = LIVE_CANVAS.test(card)
+                    ? "card"
+                    : LIVE_CANVAS.test(page) || LIVE_CANVAS.test(stage)
+                      ? "page"
+                      : undefined;
+                expect(story.canvas, `${category.id}/${story.id}`).toBe(expected);
+            }
+        }
     });
+
+    const meta = (path: string) => router.getRoutes().find((r) => r.path === path)?.meta;
+
+    it("a page that runs its own canvas holds the shell's field static; others keep it live", () => {
+        for (const category of CATEGORIES) {
+            for (const story of category.stories) {
+                const path = `/${category.id}/${story.id}`;
+                expect(meta(path)?.ownsCanvas, path).toBe(Boolean(story.canvas));
+            }
+        }
+    });
+
+    it("a page of cards that runs a canvas holds the shell's field static", () => {
+        for (const category of CATEGORIES) {
+            expect(meta(`/${category.id}`)?.ownsCanvas, `/${category.id}`).toBe(
+                category.stories.some((s) => s.canvas === "card"),
+            );
+        }
+        expect(meta("/")?.ownsCanvas).toBe(CATEGORIES.some((c) => c.stories[0]?.canvas === "card"));
+    });
+
+    it("the shell reads the declaration and nothing else", async () => {
+        await router.push("/substrates/aurora");
+        expect(router.currentRoute.value.meta.ownsCanvas).toBe(true);
+        await router.push("/display/buttons");
+        expect(router.currentRoute.value.meta.ownsCanvas).toBe(false);
+        for (const category of CATEGORIES) {
+            for (const story of category.stories) expect(story).not.toHaveProperty("background");
+        }
+    }, 30_000);
 
     // BK #21 W-DAG-REDUCE. The shell field used to be a `shellFieldActive` computed
     // EXPORTED FROM `demo/router.ts` and imported back down into `AppShell.vue` — the

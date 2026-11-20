@@ -17,6 +17,7 @@ import {
     useForwardPropsEmits,
 } from "reka-ui";
 import { useDragVelocity } from "../../composables/dom/useDragVelocity";
+import { useFrameCoalesce } from "../../composables/dom/useFrameCoalesce";
 import { useDockHold } from "../dock/composables/useDockHold";
 import { resolveValueMarks } from "../_shared/field/valueDomain";
 import { useMotionAxis } from "../_shared/useMotionAxis";
@@ -26,10 +27,15 @@ const props = withDefaults(defineProps<SliderProps>(), {
     variant: "scrubber",
     size: "md",
     invalid: false,
+    loupe: false,
 });
 const emits = defineEmits<{
     "update:modelValue": [value: number[] | undefined];
     valueCommit: [value: number[]];
+    /** A pointer took the slider: from here to `release` the hand owns the value. */
+    grab: [];
+    /** The pointer let go; carries the value the hand left, already emitted. */
+    release: [value: number[]];
 }>();
 
 const v = computed<SliderVariant>(() => props.variant);
@@ -47,6 +53,9 @@ const delegatedProps = computed(() => {
         invalid: _____,
         motion: ______,
         valueText: _______,
+        modelValue: ________,
+        defaultValue: _________,
+        loupe: __________,
         ...delegated
     } = props;
     // The containment law: reka's `contain` alignment clamps the thumb's value-follow
@@ -54,7 +63,76 @@ const delegatedProps = computed(() => {
     return { ...delegated, thumbAlignment: "contain" as const };
 });
 
-const forwarded = useForwardPropsEmits(delegatedProps, emits);
+const forwarded = useForwardPropsEmits(delegatedProps);
+
+/* ── THE HAND AND THE MODEL ────────────────────────────────────────────────────────
+   reka's root is driven by `own`, the value the slider paints, never by the prop
+   directly. Outside a grab `own` follows `modelValue`. From the press to the release
+   the hand owns it: a model written meanwhile (a playback clock) does not move the
+   thumb, and the pointer's value wins. On release the slider follows the model again,
+   from the value the hand left, so nothing jumps. A key step writes `own` and emits;
+   the next render then returns `own` to the model, so a consumer who declines the
+   step (leaves the model as it was) keeps the thumb where the model is.
+
+   A drag streams `update:modelValue` at most once per frame, the latest value winning
+   (`useFrameCoalesce`); the pending value is delivered before `valueCommit`, and
+   `release` comes last. A key step (arrows, Page, Home, End) is not a drag and emits
+   at once. The release listeners are bubble-phase so they run after reka's own
+   pointerup (its slide end and commit); the grab is capture-phase so the press's own
+   value already streams. */
+const grabbed = ref(false);
+const own = ref<number[]>(
+    props.modelValue ?? props.defaultValue ?? [props.min ?? 0],
+);
+watch(
+    () => props.modelValue,
+    (next) => {
+        if (!grabbed.value && next) own.value = next;
+    },
+    { deep: true },
+);
+
+const stream = useFrameCoalesce<number[]>((value) =>
+    emits("update:modelValue", value),
+);
+
+/** Outside a grab, return `own` to the model the consumer holds once the render that
+    carries it has run (the value just delivered, a declined step, or a clock's write). */
+function followModel(): void {
+    void nextTick(() => {
+        if (!grabbed.value && props.modelValue) own.value = props.modelValue;
+    });
+}
+
+function onRekaUpdate(next: number[] | undefined): void {
+    if (!next) return;
+    own.value = next;
+    if (grabbed.value) {
+        stream.push(next);
+        return;
+    }
+    emits("update:modelValue", next);
+    followModel();
+}
+
+function onRekaCommit(value: number[]): void {
+    stream.flush();
+    emits("valueCommit", value);
+}
+
+function onGrab(event: PointerEvent): void {
+    if (props.disabled || event.button !== 0 || grabbed.value) return;
+    grabbed.value = true;
+    emits("grab");
+}
+
+function onLetGo(): void {
+    if (!grabbed.value) return;
+    stream.flush();
+    grabbed.value = false;
+    emits("release", [...own.value]);
+    followModel();
+}
 
 /* The host-native drag hold — one owner, one acquire path. `useDockHold` attaches
    NATIVE `pointerdown`/`touchstart` on the RESOLVED host, and not because a template
@@ -135,7 +213,8 @@ function onGraspReleaseEnd(event: TransitionEvent): void {
 }
 
 // ── The FOCUS VEIL mount (glass/focus-veil.css) ──────────────────────────────────
-// While this slider is held the world behind it frosts and the slider stays crisp. The
+// With `loupe` set, while this slider is held the world behind it frosts and the
+// slider stays crisp. Without it nothing outside the control changes on a grasp. The
 // centre is VIEWPORT-space, so it is written whenever the control moves against the
 // viewport — never per frame. A slider does not move under its OWN drag, so the drag
 // loop stays layout-read-free; a PAGE SCROLL during a live hold does move it, and a
@@ -144,6 +223,7 @@ function onGraspReleaseEnd(event: TransitionEvent): void {
 // not bubble from a scroller, capture still reaches it, so one listener covers every
 // scroller.
 const focusVeilRef = useTemplateRef<HTMLElement>("focusVeilRef");
+const veiled = computed(() => grasping.value && graspable.value && props.loupe);
 
 function writeVeilCentre(): void {
     const host = getRootEl();
@@ -172,19 +252,20 @@ function writeVeilCentre(): void {
 // transformed down by k/3, so
 // `LENS/2 − k·x` puts that point dead centre at every k (the two scales cancel).
 // Horizontal only: a vertical scrubber's finger does not occlude its own value point.
-// THE ONE PREDICATE. Scrubber-only comes free — `grasping` opens only for a graspable
-// variant — so the spectrum is excluded here and nowhere else; horizontal-only is the
-// stated occlusion rule. Nothing downstream re-tests either.
+// THE ONE PREDICATE. It opens only when the host sets `loupe`. Scrubber-only comes
+// free, because `veiled` reads `grasping`, which opens only for a graspable variant, so
+// the spectrum is excluded here and nowhere else; horizontal-only is the stated
+// occlusion rule. Nothing downstream re-tests either.
 const loupeTrackW = ref(0);
 let loupeThumbD = 0;
 const loupeShown = computed(
-    () => grasping.value && props.orientation !== "vertical",
+    () => veiled.value && props.orientation !== "vertical",
 );
 
 function valueFraction(): number {
     const min = props.min ?? 0;
     const max = props.max ?? 100;
-    const values = props.modelValue ?? props.defaultValue ?? [min];
+    const values = own.value;
     const head = values[values.length - 1] ?? min;
     if (max === min) return 0;
     return Math.min(1, Math.max(0, (head - min) / (max - min)));
@@ -242,7 +323,7 @@ watch(grasping, async (open) => {
     trackViewport(true);
 });
 watch(
-    () => props.modelValue,
+    own,
     () => {
         if (grasping.value) writeLoupeValue();
     },
@@ -258,8 +339,7 @@ onBeforeUnmount(() => trackViewport(false));
 // descendant rule a host writes over its own children, and source order then decides
 // the raise away silently. Inline has no tie to lose.
 const hostStyle = computed<Record<string, string> | undefined>(() => {
-    const raised = grasping.value && graspable.value;
-    if (!raised) return motionAxis.hostStyle.value;
+    if (!veiled.value) return motionAxis.hostStyle.value;
     return { ...(motionAxis.hostStyle.value ?? {}), zIndex: "var(--z-overlay)" };
 });
 
@@ -298,10 +378,17 @@ onMounted(() => {
         :data-invalid="props.invalid || undefined"
         :data-held="isHeld || undefined"
         :data-inverted="props.inverted || undefined"
-        :data-focus-veil="(grasping && graspable) || undefined"
+        :data-focus-veil="veiled || undefined"
         :data-motion="motionAxis.dataMotion.value"
         :style="hostStyle"
         v-bind="forwarded"
+        :model-value="own"
+        @update:model-value="onRekaUpdate"
+        @value-commit="onRekaCommit"
+        @pointerdown.capture="onGrab"
+        @pointerup="onLetGo"
+        @pointercancel="onLetGo"
+        @lostpointercapture="onLetGo"
         @pointerdown="onPointerDown"
     >
         <!--
@@ -314,7 +401,7 @@ onMounted(() => {
         -->
         <Teleport to="body">
             <span
-                v-if="grasping && graspable"
+                v-if="veiled"
                 ref="focusVeilRef"
                 class="glass-focus-veil"
                 :data-engaged="isHeld || undefined"
@@ -325,8 +412,8 @@ onMounted(() => {
             The loupe, teleported for the same reason and clipped by its own housing so
             the lens sits outside every glass stack. The clone is a SECOND RENDER of the
             track at `--s: 3`, laid out once; only its transform moves per value.
-            SCRUBBER-ONLY, and unconditionally so: `loupeShown` reads `grasping`, which
-            opens only for a graspable variant, so neither a variant hook nor a
+            Mounted only with `loupe` set, and SCRUBBER-ONLY: `loupeShown` reads `veiled`,
+            which opens only for a graspable variant, so neither a variant hook nor a
             `graspable` guard on the fill can discriminate anything here — both would be
             branches that never take. The one place that decides is `loupeShown`.
         -->

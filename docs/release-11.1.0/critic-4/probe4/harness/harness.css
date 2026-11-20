@@ -1,0 +1,11 @@
+@import "tailwindcss" source("../../../../../src");
+@import "tw-animate-css";
+@import "../../../../../src/styles/index.css";
+@source "./harness.ts";
+body { margin: 0; background: var(--background); color: var(--foreground); }
+.scene { padding: 24px 16px; }
+/* A blob whose box ends at the viewport's inline-end edge, and one that ends the page. */
+.blob-edge { inline-size: 112px; margin-inline-start: auto; }
+.blob-last { inline-size: 112px; margin: 600px auto 0; }
+/* The run mark painted in one flat colour the probe can find. */
+.mark-probe { --dock-control-active-bg: rgb(255, 0, 255); }

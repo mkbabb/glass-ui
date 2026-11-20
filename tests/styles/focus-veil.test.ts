@@ -215,7 +215,7 @@ describe("G-RUNG-ONLY · GRADIENT-BLUR arm — applied at its named consumers", 
     // rule can tie away. A source scan can see none of the three.
     it("the engaged Slider mounts the plate to <body> and clears it inline", async () => {
         const wrapper = mount(Slider, {
-            props: { modelValue: [40], "aria-label": "Grasp" },
+            props: { modelValue: [40], loupe: true, "aria-label": "Grasp" },
             attachTo: document.body,
             global: { stubs: { teleport: false } },
         });
@@ -248,7 +248,7 @@ describe("G-RUNG-ONLY · GRADIENT-BLUR arm — applied at its named consumers", 
 
     it("re-takes the centre when the page scrolls under a live grasp", async () => {
         const wrapper = mount(Slider, {
-            props: { modelValue: [40], "aria-label": "Grasp" },
+            props: { modelValue: [40], loupe: true, "aria-label": "Grasp" },
             attachTo: document.body,
             global: { stubs: { teleport: false } },
         });

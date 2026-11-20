@@ -2,9 +2,9 @@
 //
 // The rungs were literals on `.glass-slider[data-size=…]` in a deliberately unlayered
 // file, so no consumer rule, ancestor token or layered utility reached them. They now
-// read `--slider-track-height-{sm,md,lg}` and `--slider-thumb-size-{sm,md,lg}`, and the
-// thumb is `min(thumb, track)`, so the inscription law (thumb ≤ track) holds by
-// construction. The token root is unlayered and beats a layered consumer `:root`, so
+// read `--slider-track-height-{sm,md,lg}` and `--slider-thumb-size-{sm,md,lg}`. The band
+// has one height, the track height: the track, the fill and every thumb are that tall,
+// and the thumb size sets only the spectrum's taller band. The token root is unlayered and beats a layered consumer `:root`, so
 // the consumer seam is an element below :root in any layer—here a wrapper inside
 // `@layer glass-overrides`, the idiom fourier documents.
 //
@@ -69,23 +69,20 @@ async function measure(id: string) {
 }
 
 describe("Slider size rungs read the token root", () => {
-    it("keeps the default md rung at 20px track (spectrum 24px track, 12px bar)", async () => {
-        expect((await measure("base")).track).toBe(20);
-        // spectrum: track = thumb × 1.5, bar = thumb × 0.75
-        expect(await measure("base-spectrum")).toEqual({ track: 24, thumbWidth: 12 });
+    it("keeps the default md rung at a 20px band with a 20px disc (spectrum 24px band, 24px ring)", async () => {
+        expect(await measure("base")).toEqual({ track: 20, thumbWidth: 20 });
+        // spectrum: track = thumb size × 1.5, and the ring is the band's height
+        expect(await measure("base-spectrum")).toEqual({ track: 24, thumbWidth: 24 });
     });
 
-    it("follows a wrapper override set inside @layer glass-overrides", async () => {
-        expect((await measure("tall")).track).toBe(32);
+    it("follows a wrapper override set inside @layer glass-overrides, the disc with it", async () => {
+        expect(await measure("tall")).toEqual({ track: 32, thumbWidth: 32 });
     });
 
-    it("clamps the thumb to the track (the inscription law) when either token moves", async () => {
-        // track 12px < thumb 16px → thumb 12px → spectrum track 18px, bar 9px
-        expect(await measure("thin-spectrum")).toEqual({ track: 18, thumbWidth: 9 });
-        // thumb 32px > track 20px → thumb 20px → spectrum track 30px, bar 15px
-        expect(await measure("fat-thumb-spectrum")).toEqual({
-            track: 30,
-            thumbWidth: 15,
-        });
+    it("sizes every thumb by the band's one height (the track height), never by the thumb size", async () => {
+        // the track rung moves the scrubber's band and disc, not the spectrum's taller band
+        expect(await measure("thin-spectrum")).toEqual({ track: 24, thumbWidth: 24 });
+        // the thumb size sets only the spectrum's band: 32px → 48px band, 48px ring
+        expect(await measure("fat-thumb-spectrum")).toEqual({ track: 48, thumbWidth: 48 });
     });
 });

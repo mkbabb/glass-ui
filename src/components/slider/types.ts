@@ -33,4 +33,10 @@ export interface SliderProps extends FormFieldProps {
      * the raw number. Authored per thumb onto `aria-valuetext`; reka mints none.
      */
     valueText?: (value: number, index: number) => string;
+    /**
+     * Raise the magnifying lens over a horizontal scrubber while it is held, and frost
+     * the page around the held control. Off by default: without it a grasp changes
+     * nothing outside the control.
+     */
+    loupe?: boolean;
 }

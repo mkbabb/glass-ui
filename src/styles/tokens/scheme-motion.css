@@ -11,22 +11,23 @@
     /* ═══════════════════════════════════════════════
        §-1 COLOR-SCHEME
 
-       Lets native UI (scrollbars, spinbuttons, form-control chrome, the
-       default focus ring) honor the OS preference when the consumer has
-       NOT pinned a `.dark` class. glass-ui's dark mode is class-driven
-       (`.dark`, theme.css `@variant dark`), so `.dark` overrides to a hard
-       `dark` regardless of OS — but absent the class, native chrome should
-       still track `prefers-color-scheme`. `light dark` (not `only light`)
-       on `:root` delivers that; `.dark` hard-pins `dark`.
+       The class is the mode. glass-ui's dark mode is the `.dark` class
+       (theme.css `@variant dark`), and every `light-dark()` token resolves
+       against the used `color-scheme`, so the scheme must follow the class
+       and nothing else: `:root` pins `light`, `.dark` (dark-arm.css) pins
+       `dark`. With `light dark` here the OS preference resolved the
+       `light-dark()` tokens whenever the class was absent, while the
+       class-keyed rules stayed light, so a page whose toggle chose light
+       on a dark OS painted half its surfaces on the dark arm. A consumer
+       that wants the OS default sets the class from `prefers-color-scheme`
+       (the shipped pre-paint script does).
 
-       Baseline Widely Available → adopt natively, no `@supports` guard
-       (older engines ignore the property and keep default-light chrome).
-       `accent-color` is the companion native-control brand;
-       both are inherited built-in <color>/keyword properties re-specified
-       inside `.dark`. The `--accent-color` token is defined in the §5
-       color block below (custom properties resolve order-independently).
+       `accent-color` is the companion native-control brand; both are
+       inherited built-in <color>/keyword properties re-specified inside
+       `.dark`. The `--accent-color` token is defined in the §5 color
+       block below (custom properties resolve order-independently).
        ═══════════════════════════════════════════════ */
-    color-scheme: light dark;
+    color-scheme: light;
     accent-color: var(--accent-color);
 
     /* ═══════════════════════════════════════════════

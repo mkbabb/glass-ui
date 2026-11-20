@@ -289,6 +289,7 @@ const scenes: Record<string, Component> = {
 
     // Value marks on the scrubber (critique D1): a mark at each quarter with the value
     // ON a mark, the same inverted and vertical, and a value at min below a near mark.
+    // on-25 sets `loupe`, so a grasp on it raises the lens.
     marks: defineComponent(() => {
         const quarters = [0, 25, 50, 75, 100];
         const row = (id: string, value: number, marks: number[], extra: Record<string, unknown> = {}) =>
@@ -305,7 +306,7 @@ const scenes: Record<string, Component> = {
             );
         return () =>
             h("div", [
-                row("on-25", 25, quarters),
+                row("on-25", 25, quarters, { loupe: true }),
                 row("on-75", 75, quarters),
                 row("inv-25", 25, quarters, { inverted: true }),
                 row("v-75", 75, quarters, { orientation: "vertical" }),

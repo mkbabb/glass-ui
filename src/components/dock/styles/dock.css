@@ -133,19 +133,45 @@
            the 1.625× held optic derives from. */
         --glass-grasp-rest-filter: var(--dock-surface-blur);
         --glass-grasp-radius: var(--glass-blur-resting-radius);
-        --dock-plate-border: 1.5px;
-        border: var(--dock-plate-border) solid
-            color-mix(
-                in srgb,
-                var(--dock-plate-expanded-border) calc(var(--dock-expand-t) * 100%),
-                var(--dock-plate-collapsed-border)
-            );
+        /* The edge mixes the expanded end's colour (`--_dock-edge-expanded-ink`,
+           shell.css: `--glass-border-dock` at rest) toward the collapsed end's,
+           `--glass-border-floating`, by t (`--_dock-edge-lerp`). The library writes
+           both tokens as relative colours of `--foreground` (tokens/glass.css), since
+           a mix whose two arms are both translucent mixes kills the page in
+           Playwright WebKit. A held or static dock paints both ends in
+           `--glass-border-floating` (morph.css, adaptive-legibility.css) and sets the
+           lerp to that token alone, so a host's translucent mix there is never mixed
+           with itself.
+
+           A host colours either end with `--dock-plate-expanded-border` or
+           `--dock-plate-collapsed-border`. The library declares neither, so with
+           neither set both `--_dock-edge-by-*` below hold an unset reference, are
+           invalid at computed-value time, and the edge is the lerp of the two library
+           ends. With one set, the edge mixes the host's colour toward the other end's
+           library colour by t. */
+        --_dock-edge-lerp: color-mix(
+            in srgb,
+            var(--_dock-edge-expanded-ink) calc(var(--dock-expand-t) * 100%),
+            var(--glass-border-floating)
+        );
+        --_dock-edge-by-expanded: color-mix(
+            in srgb,
+            var(--dock-plate-expanded-border) calc(var(--dock-expand-t) * 100%),
+            var(--dock-plate-collapsed-border, var(--glass-border-floating))
+        );
+        --_dock-edge-by-collapsed: color-mix(
+            in srgb,
+            var(--_dock-edge-expanded-ink) calc(var(--dock-expand-t) * 100%),
+            var(--dock-plate-collapsed-border)
+        );
+        border: var(--dock-plate-border-width) solid
+            var(--_dock-edge-by-expanded, var(--_dock-edge-by-collapsed, var(--_dock-edge-lerp)));
     }
 
     /* W-I.8 RU-12: the reading-progress rim drawn on the plate's border box, so its outline
        is the plate's outer edge in every frame (the rim's own `inset: 0` is the padding box). */
     .dock-plate > .scroll-progress-rim[data-edge="border"] {
-        inset: calc(-1 * var(--dock-plate-border));
+        --scroll-progress-rim-outset: var(--dock-plate-border-width);
     }
 
     /* ── THE GRASP PRECONDITION — the plate stands down its two backdrop roots ──────
@@ -171,16 +197,28 @@
         display: none;
     }
 
-    /* The paper-grain overlay — MOVED off `.glass-dock::after` onto the plate (the grain
-       belongs on the glass surface, which is the plate now). Same recipe, byte-identical. */
+    /* The paper grain on the plate: a generated dot field of foreground ink, three
+       gradient dot lattices at co-prime pitches, so the pattern repeats only every few
+       hundred pixels. No `url()` image paints here. Browsers count a `url()` image as
+       page content (Chromium a background, WebKit a mask as well), so an SVG grain
+       became a page's Largest Contentful Paint entry, timed by the dock's late land.
+       Gradients are never LCP candidates in either engine. The ink darkens on light
+       and lifts on dark through the blend. */
     .dock-plate::after {
         content: "";
         position: absolute;
         inset: 0;
         border-radius: inherit;
-        background: var(--paper-clean-texture);
+        background-image:
+            radial-gradient(circle at 30% 40%, var(--foreground) 0 0.5px, transparent 0.9px),
+            radial-gradient(circle at 70% 25%, var(--foreground) 0 0.5px, transparent 0.9px),
+            radial-gradient(
+                circle at 45% 75%,
+                color-mix(in srgb, var(--foreground) 50%, transparent) 0 0.6px,
+                transparent 1px
+            );
+        background-size: 7px 7px, 11px 13px, 17px 19px;
         background-repeat: repeat;
-        background-size: var(--paper-texture-size);
         opacity: var(--glass-grain-opacity);
         pointer-events: none;
         mix-blend-mode: overlay;
@@ -231,6 +269,15 @@
         --glass-capsule-fill: var(--dock-control-active-bg);
     }
     /* RU-56 end */
+
+    /* The dock's corner reaches a progress rim seated in a persistent region. The rim is
+       out of flow and fills the dock box, so on its border edge it traces the dock's
+       radius; neither wrapper paints, clips or draws a background, so passing the corner
+       through them changes nothing else. */
+    .glass-dock > .dock-controls,
+    .glass-dock > .dock-controls > .dock-persistent {
+        border-radius: inherit;
+    }
 
     /* When a consumer needs the control run to be a real box (a scroll port lands here at
        ), it stays `overflow: visible` on the cross axis — never a clip. */

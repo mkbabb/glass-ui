@@ -141,7 +141,12 @@
          (tab/trigger) uses its OWN text padding as the inset, so the padding leg is
          scoped to the icon shape (`.dock-icon-button`) — it never clobbers a text
          control's or a nested strip's padding. */
-    .glass-dock :is(.glass-capsule, .glass-capsule-hover) {
+    /* The icon shape's second selector outranks every state rule that paints the
+       face with the `background` shorthand (`active`, the `--dock-active-*` cohort in
+       controls/icon-button.css), which would reset the clip to `border-box`: an icon
+       control's plate is one inset box at rest, hovered, pressed and selected. */
+    .glass-dock :is(.glass-capsule, .glass-capsule-hover),
+    .glass-dock .dock-icon-button.glass-capsule-hover {
         background-clip: content-box;
     }
     .glass-dock .dock-icon-button {

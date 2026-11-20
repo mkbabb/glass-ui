@@ -1,0 +1,114 @@
+{
+  "exports": {
+    ".": {
+      "gone": [],
+      "added": [
+        "PopoverVirtualElement"
+      ]
+    },
+    "./motion-core": {
+      "gone": [],
+      "added": [
+        "MotionWeightReading",
+        "STAGGER_DEFAULT_MS",
+        "VIZ_ENTRANCE",
+        "VizEntrance",
+        "capAtWeight",
+        "cascadeStaggerMs",
+        "motionWeightOf"
+      ]
+    },
+    "./popover": {
+      "gone": [],
+      "added": [
+        "PopoverVirtualElement"
+      ]
+    },
+    "./scroll-progress-rim": {
+      "gone": [],
+      "added": [
+        "ScrollProgressRimEdge"
+      ]
+    }
+  },
+  "dts": {
+    "missing": [],
+    "changed": [
+      "components/badge/index.d.ts",
+      "components/dock/composables/dockMorphMeasure.d.ts",
+      "components/dock/composables/useDockClickIntegrity.d.ts",
+      "components/dock/constants.d.ts",
+      "components/handmark/HandMark.vue.d.ts",
+      "components/popover/PopoverContent.vue.d.ts",
+      "components/popover/index.d.ts",
+      "components/scroll-progress-rim/ScrollProgressRim.vue.d.ts",
+      "components/scroll-progress-rim/index.d.ts",
+      "components/scroll-progress-rim/types.d.ts",
+      "components/sheet/motion.d.ts",
+      "components/slider/Slider.vue.d.ts",
+      "components/slider/types.d.ts",
+      "composables/motion/core/index.d.ts",
+      "composables/motion/core/motionTempo.d.ts",
+      "composables/motion/core/writeVelocityWeight.d.ts",
+      "composables/motion/reveal/useStagger.d.ts",
+      "composables/motion/route/routeGrammar.d.ts",
+      "composables/motion/route/useRouteTransition.d.ts",
+      "index.d.ts",
+      "styles/tokens/manifest.d.ts"
+    ]
+  },
+  "css": {
+    "propsGone": [
+      "--hm-h",
+      "--route-slide",
+      "--route-world-slide"
+    ],
+    "propsAdded": [
+      "--configurator-aside-track",
+      "--dock-cross",
+      "--dock-plate-border-width",
+      "--dock-run-corner-cut",
+      "--dock-run-corner-rest",
+      "--dock-run-cross-half",
+      "--dock-run-edge-end",
+      "--dock-run-edge-start",
+      "--dock-run-inset",
+      "--dock-run-reserve-block",
+      "--dock-run-reserve-inline",
+      "--dock-run-yield",
+      "--field-text-floor",
+      "--icon-label-gap",
+      "--mark-glyph",
+      "--menu-grow-bleed",
+      "--overlay-inline-cap",
+      "--radius-stadium",
+      "--route-card-enter-scale",
+      "--route-card-recede",
+      "--route-card-travel",
+      "--scroll-progress-rim-stroke",
+      "--sheet-enter-skew",
+      "--slider-fill-ink",
+      "--slider-lane-cut",
+      "--value-mark-inset",
+      "--viz-stagger"
+    ],
+    "classesGone": [
+      "overflow-auto"
+    ],
+    "classesAdded": [
+      "badge-atom--bare",
+      "border-border",
+      "dock-persistent-end",
+      "dock-persistent-start",
+      "dock-run-mark",
+      "hm-guide",
+      "hm-reveal",
+      "scroll-progress-rim__stroke",
+      "slider-lane",
+      "table-container",
+      "viz-bar",
+      "viz-mark",
+      "viz-ripple"
+    ]
+  }
+}

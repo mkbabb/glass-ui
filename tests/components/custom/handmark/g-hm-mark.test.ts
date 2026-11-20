@@ -25,15 +25,15 @@ const SHAPE_MEMBERS = ["underline", "strike", "circle", "highlight"] as const;
 /** The φ multiples of the ONE root the story must name for three rungs to exist. */
 const RUNG_MULTIPLES = ["1.618", "2.618"] as const;
 const REPO_ROOT = process.cwd();
-const STORY = resolve(REPO_ROOT, "demo/stories/motion/handmark.vue");
+const STORY = resolve(REPO_ROOT, "demo/stories/motion/handmark.stage.vue");
 
 afterEach(restoreMeasure);
 
 interface Emitted {
     /** every `d` on a painted ink path, in DOM order */
     ink: string[];
-    /** every `d` on a draw-mask guide path (the centreline), in DOM order */
-    guide: string[];
+    /** every centreline, read off its painted ribbon, in DOM order */
+    centre: Array<Array<[number, number]>>;
     html: string;
 }
 
@@ -57,7 +57,8 @@ async function render(
             .findAll("path")
             .filter((p) => (p.attributes("class") ?? "").includes(token))
             .map((p) => p.attributes("d") ?? "");
-    const out = { ink: pick("hm-ink"), guide: pick("hm-guide"), html: w.html() };
+    const ink = pick("hm-ink");
+    const out = { ink, centre: ink.map(centreline), html: w.html() };
     w.unmount();
     return out;
 }
@@ -67,6 +68,23 @@ function points(d: string): Array<[number, number]> {
     const nums = (d.match(/-?\d+(?:\.\d+)?(?:e-?\d+)?/g) ?? []).map(Number);
     const out: Array<[number, number]> = [];
     for (let i = 0; i + 1 < nums.length; i += 2) out.push([nums[i], nums[i + 1]]);
+    return out;
+}
+
+/**
+ * The centreline a ribbon was inked over: the outline is the left side forward, then the
+ * right side back, each sample offset by ± the same normal, so sample i's centre is the
+ * midpoint of i and its partner (2n − 1 − i).
+ */
+function centreline(d: string): Array<[number, number]> {
+    const p = points(d);
+    const n = Math.floor(p.length / 2);
+    const out: Array<[number, number]> = [];
+    for (let i = 0; i < n; i++) {
+        const a = p[i];
+        const b = p[p.length - 1 - i];
+        out.push([(a[0] + b[0]) / 2, (a[1] + b[1]) / 2]);
+    }
     return out;
 }
 
@@ -188,11 +206,11 @@ describe("G-HM-MARK 4a · CALM, analytic — ≤2 extrema, peak ≤1.5% span", (
         const fs = 30.1;
         const span = 260;
         const e = await render("underline", fs, LINE(span, fs), seed);
-        const emitted = points(e.guide[0] ?? "");
+        const emitted = e.centre[0] ?? [];
         expect(emitted.length, `seed ${seed}: no emitted centreline`).toBeGreaterThan(10);
 
-        // The arm is bound to what SHIPS: the analytic centreline and the emitted mask
-        // guide must be the same sample set, so the closed-form reading below cannot
+        // The arm is bound to what SHIPS: the analytic centreline and the centreline the
+        // painted ribbon was inked over must be the same sample set, so the closed-form reading below cannot
         // drift from the geometry the component draws.
         const analytic = handLine(
             { x: 40, y: 60, width: span, height: fs * 1.35 },
@@ -296,7 +314,7 @@ describe("G-HM-MARK 7 · REACH, per-end signed — the release overruns the comm
         const span = 260;
         const x = 40;
         const e = await render("underline", fs, LINE(span, fs), seed);
-        const xs = points(e.guide[0] ?? "").map((q) => q[0]);
+        const xs = (e.centre[0] ?? []).map((q) => q[0]);
         expect(xs.length, `seed ${seed}: no emitted centreline`).toBeGreaterThan(10);
         const lead = (x - Math.min(...xs)) / span;
         const exit = (Math.max(...xs) - (x + span)) / span;

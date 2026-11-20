@@ -337,7 +337,7 @@ impulse resolves to the substrate's static rest pose. See [Accessibility](#acces
   true it records the frame that was just submitted by the active backend: `timeSec`,
   `simulationTimeMs`, the lifecycle-owned backing `width`/`height`/`dpr`, and normalized
   `simulationOrigin: { x: 0.5, y: 0.5 }`. It remains `null` until a quiescent frame has drawn.
-- **The substrate parks aggressively** — offscreen (intersection + `content-visibility`),
+- **The substrate parks aggressively** — offscreen (an intersection observer, so the goo still paints past the wrapper),
   tab-backgrounded (`document.hidden`), and under `prefers-reduced-motion` (one static frame then
   park). An off-screen or hidden blob attaches zero frames; you pay only for visible, in-motion blobs.
 - **Pre-FBM bounding discard** — a fragment outside the padded droplet reach (`uMaxReach`) writes

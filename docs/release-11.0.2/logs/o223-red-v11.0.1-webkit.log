@@ -1,0 +1,47 @@
+[guarded] waiting for the 'webkit' lock
+
+Running 2 tests using 1 worker
+
+  ✘  1 [webkit] › tests-visual/release-11-0-2.spec.ts:32:5 › dark · useGlobalDark › dark · a fresh key opens on initialValue while the default key holds auto (466ms)
+  ✘  2 [webkit] › tests-visual/release-11-0-2.spec.ts:49:5 › dark · useGlobalDark › dark · night chosen twice on a dark system stays night when the system turns light (563ms)
+
+
+  1) [webkit] › tests-visual/release-11-0-2.spec.ts:32:5 › dark · useGlobalDark › dark · a fresh key opens on initialValue while the default key holds auto 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      41 |         const r = await dark(page);
+      42 |         expect(r.stamped).toBe(true);
+    > 43 |         expect(r.isDark).toBe(true);
+         |                          ^
+      44 |         expect(r.htmlDark).toBe(true);
+      45 |         expect(r.site).toBe("dark");
+      46 |         expect(r.fallback).toBe("auto");
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:43:26
+
+    Error Context: tests-visual/test-results/release-11-0-2-dark-·-useG-014cd--the-default-key-holds-auto-webkit/error-context.md
+
+  2) [webkit] › tests-visual/release-11-0-2.spec.ts:49:5 › dark · useGlobalDark › dark · night chosen twice on a dark system stays night when the system turns light 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "dark"
+    Received: "auto"
+
+      57 |         await page.evaluate(() => (window as unknown as { __dark: DarkHandle }).__dark.toggle());
+      58 |         await page.waitForTimeout(50);
+    > 59 |         expect((await dark(page)).fallback).toBe("dark");
+         |                                             ^
+      60 |         await page.emulateMedia({ colorScheme: "light" });
+      61 |         await openDark(page, "initial=dark");
+      62 |         await page.waitForTimeout(50);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:59:45
+
+    Error Context: tests-visual/test-results/release-11-0-2-dark-·-useG-69686-when-the-system-turns-light-webkit/error-context.md
+
+  2 failed
+    [webkit] › tests-visual/release-11-0-2.spec.ts:32:5 › dark · useGlobalDark › dark · a fresh key opens on initialValue while the default key holds auto 
+    [webkit] › tests-visual/release-11-0-2.spec.ts:49:5 › dark · useGlobalDark › dark · night chosen twice on a dark system stays night when the system turns light 

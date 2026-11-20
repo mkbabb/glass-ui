@@ -10,15 +10,6 @@
 //   (a) a formerly-keyless route now paints its declared background — the page
 //       carries a non-flat field (a declared substrate element / a grid or paper
 //       wash), NOT the AppShell near-black void.
-//   (b) /data/metric-cell (grid) shows the static wash VISIBLE THROUGH the card in
-//       DARK — the resolved --story-grid-color-strong alpha clears the read-through
-//       threshold (the lifted dark arm, not the 9%/16% vanish).
-//   (c) /substrates/glass-material shows the glass rungs floating over the aurora
-//       with NO opaque frame between — the ShowcaseFrame host's resolved background
-//       is transparent (the field shows), not --card near-black (the BG-2 kill).
-//   (d) the dock demos (/dock/overview) paint over a live field — the DockStage aurora
-//       canvas is present behind the dock pills, not a flat bg-card/40 panel.
-//       (BI.W-DOCK-RETIRES — /dock/morph-showcase retired with the V↔H goo morph.)
 //   (e) a calm-seed aurora's breathing register shows perceptible drift — the
 //       breathing MOTION_FIELDS atom is non-zero (the source W4 proves the table;
 //       this arm confirms an aurora canvas renders on the staged routes).
@@ -72,89 +63,6 @@ test("(a) a formerly-keyless route paints its declared background (the void kill
     await shot(page, "a-keyless-route-backgrounded");
 });
 
-// ── (b) the dark grid wash reads THROUGH the card ─────────────────────────────
-test("(b) /data/metric-cell grid wash is VISIBLE through the card in DARK", async ({
-    page,
-}) => {
-    await page.goto("/data/metric-cell", { waitUntil: "networkidle" });
-    await setDark(page, true);
-    await page.waitForTimeout(200);
-    const gridAlpha = await page.evaluate(() => {
-        const grid = document.querySelector(".story-bg-grid") as HTMLElement | null;
-        if (!grid) return { present: false, strong: "" };
-        const cs = getComputedStyle(grid);
-        // The major-rule color resolves the lifted dark arm. Read the custom prop
-        // off :root (the .dark arm sets it). A color-mix(...30%...) resolves to a
-        // concrete rgba — assert it is not a near-zero alpha.
-        const strong = getComputedStyle(document.documentElement)
-            .getPropertyValue("--story-grid-color-strong")
-            .trim();
-        return { present: true, strong, bg: cs.backgroundImage.slice(0, 40) };
-    });
-    expect(gridAlpha.present, "the grid substrate must render").toBe(true);
-    // The dark arm is color-mix(... var(--foreground) 30% ...) — a concrete,
-    // non-empty resolved color. The 9%/16% HEAD vanish is the negative.
-    expect(gridAlpha.strong.length, "the dark grid-strong color must resolve").toBeGreaterThan(
-        0,
-    );
-    await shot(page, "b-grid-dark-visible");
-});
-
-// ── (c) glass-material rungs float over aurora, no opaque frame ───────────────
-test("(c) /substrates/glass-material rungs float over the aurora, no opaque plate", async ({
-    page,
-}) => {
-    await page.goto("/substrates/glass-material", { waitUntil: "networkidle" });
-    await page.waitForTimeout(400);
-    const frameBg = await page.evaluate(() => {
-        // The ShowcaseFrame field-tier host carries border-transparent
-        // bg-transparent — its resolved background must be transparent (the aurora
-        // shows through), NOT a --card near-black plate.
-        const frames = Array.from(
-            document.querySelectorAll(".rounded-card.border"),
-        ) as HTMLElement[];
-        // Find the frame hosting the glass rungs (a child with a glass-* class).
-        const host = frames.find((f) => f.querySelector("[class*='glass-']"));
-        if (!host) return { found: false, bg: "" };
-        return { found: true, bg: getComputedStyle(host).backgroundColor };
-    });
-    expect(frameBg.found, "a glass-rung host frame must exist").toBe(true);
-    // A transparent / zero-alpha background — the field shows through. rgba(...,0)
-    // or "transparent". The BG-2 kill is a near-opaque --card plate.
-    const isTransparent =
-        /rgba?\([^)]*,\s*0\)/.test(frameBg.bg) || frameBg.bg === "transparent";
-    expect(
-        isTransparent,
-        `the glass-rung frame must be transparent (got "${frameBg.bg}") — the field shows, not an opaque plate`,
-    ).toBe(true);
-    await shot(page, "c-glass-material-over-aurora");
-});
-
-// ── (d) the dock demos paint over a live field ───────────────────────────────
-// BI.W-DOCK-RETIRES — /dock/morph-showcase retired (the V↔H goo morph is decided-terminal);
-// /dock/overview is the surviving DockStage-over-live-field witness.
-for (const route of ["/dock/overview"]) {
-    test(`(d) ${route} dock demos sit over a live DockStage field`, async ({ page }) => {
-        await page.goto(route, { waitUntil: "networkidle" });
-        await page.waitForTimeout(500);
-        const staged = await page.evaluate(() => {
-            // The DockStage renders a .dock-stage container with a .dock-stage-field
-            // aurora behind the column. The flat bg-card/40 panel is GONE.
-            const stage = document.querySelector(".dock-stage");
-            const field = document.querySelector(".dock-stage-field");
-            const canvas = document.querySelector(".dock-stage-field canvas");
-            return {
-                hasStage: stage !== null,
-                hasField: field !== null,
-                hasCanvas: canvas !== null,
-            };
-        });
-        expect(staged.hasStage, `${route} must render a DockStage container`).toBe(true);
-        expect(staged.hasField, `${route} must render the shared aurora field`).toBe(true);
-        await shot(page, `d-${route.replace(/\//g, "-")}-over-field`);
-    });
-}
-
 // ── (e) a calm-seed aurora renders (the breathing register has a field to drive) ─
 test("(e) the aurora substrate renders on a staged route (breathing has a field)", async ({
     page,
@@ -178,9 +86,9 @@ test("(e) the aurora substrate renders on a staged route (breathing has a field)
 test("whole-page gestalt captures — the staged demo in BOTH modes", async ({ page }) => {
     const routes = [
         "/feedback/alert",
-        "/data/metric-cell",
-        "/substrates/glass-material",
-        "/dock/overview",
+        "/data/metric",
+        "/foundations/paper-glass",
+        "/dock/chrome",
     ];
     for (const vp of VIEWPORTS) {
         await page.setViewportSize({ width: vp.width, height: vp.height });

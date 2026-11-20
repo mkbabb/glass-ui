@@ -38,6 +38,7 @@ import {
 import { Slider } from "../slider";
 import { SegmentedTabs, type SegmentedTabOption } from "../tabs";
 import { useClipboard } from "../../composables/dom/useClipboard";
+import { useFrameCoalesce } from "../../composables/dom/useFrameCoalesce";
 import EasingCurve, { type EasingStroke } from "./EasingCurve.vue";
 import { useEasingPicker, type EasingPickerValue, type JumpTerm } from "./usePicker";
 import {
@@ -168,7 +169,6 @@ function applyModel(next: EasingPickerValue | undefined): void {
 // v-model is a genuine two-way authoring surface. Raw authoring fields flow in;
 // css and fn always flow back from the canonical value.js-derived state.
 watch(model, applyModel, { deep: true, immediate: true });
-watch(value, writeModel, { immediate: true });
 
 // ── the plot ──────────────────────────────────────────────────────────────────
 // Both curves, always. The active one is the subject; the other is the same page's
@@ -194,6 +194,18 @@ const travel = computed<number | null>(() =>
 const overlayEl = useTemplateRef<SVGSVGElement>("overlayEl");
 const handleInstructionsId = useId();
 const dragIndex = ref<0 | 1 | null>(null);
+
+// A handle drag streams the model once per frame, the latest curve winning; the
+// release delivers the pending curve at once. Every other change writes through.
+const dragStream = useFrameCoalesce<EasingPickerValue>(writeModel);
+watch(
+    value,
+    (next) => {
+        if (dragIndex.value !== null) dragStream.push(next);
+        else writeModel(next);
+    },
+    { immediate: true },
+);
 
 function pointerToCurve(ev: PointerEvent): { x: number; y: number } | null {
     const ctm = overlayEl.value?.getScreenCTM();
@@ -241,6 +253,7 @@ function onMove(ev: PointerEvent): void {
 }
 
 function onUp(): void {
+    dragStream.flush();
     dragIndex.value = null;
 }
 

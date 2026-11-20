@@ -1,0 +1,850 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/playwright.config.ts",
+      "--project=chromium-headless-new",
+      "--workers=1",
+      "blob-render.spec.ts",
+      "blob-pause-seam.spec.ts",
+      "dark-semantic-contrast.spec.ts",
+      "font-cascade-live.spec.ts",
+      "dock-plate-clearance.spec.ts"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/docs/release-11.1.0/lane-L4/gates/e2e-chromium-branch.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 7991",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/",
+      "url": "http://localhost:7991",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "blob-pause-seam.spec.ts",
+      "file": "blob-pause-seam.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "blob-integration (π lane — the WCAG-2.2.2 pause seam + context bound + README consistency)",
+          "file": "blob-pause-seam.spec.ts",
+          "line": 88,
+          "column": 6,
+          "specs": [
+            {
+              "title": "the DockBackgroundToggle pause seam PARKS the render loop (live rAF-park observation)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8325,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T01:44:31.758Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bc3e8071cbf21f46bb54-e7332b6ade59cbeda437",
+              "file": "blob-pause-seam.spec.ts",
+              "line": 89,
+              "column": 5
+            },
+            {
+              "title": "the re-cast blob stories hold a BOUNDED number of live WebGL2 contexts",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 504,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T01:44:40.195Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bc3e8071cbf21f46bb54-821f7ac284f8008ff956",
+              "file": "blob-pause-seam.spec.ts",
+              "line": 135,
+              "column": 5
+            },
+            {
+              "title": "README-vs-code defineExpose CONSISTENCY — every README 'Exposed' method is on the Blob surface",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T01:44:40.710Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "bc3e8071cbf21f46bb54-961f96838e862aa57812",
+              "file": "blob-pause-seam.spec.ts",
+              "line": 167,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "blob-render.spec.ts",
+      "file": "blob-render.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "blob-render (π lane — fail-CLOSED, the blob's CLOSING gate)",
+          "file": "blob-render.spec.ts",
+          "line": 525,
+          "column": 6,
+          "specs": [
+            {
+              "title": "blob renders a CONTAINED LIT LIVING droplet on BLOB_CONFIG_DEFAULTS (four-side containment + dome variance + silhouette + field)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 6934,
+                      "error": {
+                        "message": "Error: blob interior-corner empty fraction 0.453 is below the field floor 0.7 — the canvas reads as a FLAT slab (the body fills the corners), not a contained metaball field\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.7\u001b[39m\nReceived:    \u001b[31m0.4534203686200378\u001b[39m",
+                        "stack": "Error: blob interior-corner empty fraction 0.453 is below the field floor 0.7 — the canvas reads as a FLAT slab (the body fills the corners), not a contained metaball field\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.7\u001b[39m\nReceived:    \u001b[31m0.4534203686200378\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/blob-render.spec.ts:609:11",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/blob-render.spec.ts",
+                          "column": 11,
+                          "line": 609
+                        },
+                        "snippet": "  607 |             cornerEmpty,\n  608 |             `blob interior-corner empty fraction ${cornerEmpty.toFixed(3)} is below the field floor ${CORNER_EMPTY_MIN} — the canvas reads as a FLAT slab (the body fills the corners), not a contained metaball field`,\n> 609 |         ).toBeGreaterThanOrEqual(CORNER_EMPTY_MIN);\n      |           ^\n  610 |\n  611 |         // 3. FOUR-SIDE CONTAINMENT (AX.W15 F0 + AX.W16 reconciliation) — the BODY is\n  612 |         // contained on EVERY edge (W15 geometry); the orbiting SATELLITE intentionally"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/blob-render.spec.ts",
+                            "column": 11,
+                            "line": 609
+                          },
+                          "message": "Error: blob interior-corner empty fraction 0.453 is below the field floor 0.7 — the canvas reads as a FLAT slab (the body fills the corners), not a contained metaball field\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.7\u001b[39m\nReceived:    \u001b[31m0.4534203686200378\u001b[39m\n\n  607 |             cornerEmpty,\n  608 |             `blob interior-corner empty fraction ${cornerEmpty.toFixed(3)} is below the field floor ${CORNER_EMPTY_MIN} — the canvas reads as a FLAT slab (the body fills the corners), not a contained metaball field`,\n> 609 |         ).toBeGreaterThanOrEqual(CORNER_EMPTY_MIN);\n      |           ^\n  610 |\n  611 |         // 3. FOUR-SIDE CONTAINMENT (AX.W15 F0 + AX.W16 reconciliation) — the BODY is\n  612 |         // contained on EVERY edge (W15 geometry); the orbiting SATELLITE intentionally\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/blob-render.spec.ts:609:11"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T01:44:40.737Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results/blob-render-blob-render-π--62597--variance-silhouette-field--chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/blob-render.spec.ts",
+                        "column": 11,
+                        "line": 609
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "1238e1c6916d493c0e7e-b3db9497467a94a5f303",
+              "file": "blob-render.spec.ts",
+              "line": 526,
+              "column": 5
+            },
+            {
+              "title": "blob LEANS toward a synthetic hover-flick (the wired interaction is legible within the footprint)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 3756,
+                      "error": {
+                        "message": "Error: blob centroid shift under a rightward hover-flick = -0.0020 (rest 0.482 → lean 0.480); it must move ≥ 0.012 toward the pointer — the wired lean/pseudopod is INVISIBLE (no contained silhouette to deform legibly)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.012\u001b[39m\nReceived:    \u001b[31m-0.0020370439603960566\u001b[39m",
+                        "stack": "Error: blob centroid shift under a rightward hover-flick = -0.0020 (rest 0.482 → lean 0.480); it must move ≥ 0.012 toward the pointer — the wired lean/pseudopod is INVISIBLE (no contained silhouette to deform legibly)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.012\u001b[39m\nReceived:    \u001b[31m-0.0020370439603960566\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/blob-render.spec.ts:700:11",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/blob-render.spec.ts",
+                          "column": 11,
+                          "line": 700
+                        },
+                        "snippet": "  698 |             shift,\n  699 |             `blob centroid shift under a rightward hover-flick = ${shift.toFixed(4)} (rest ${restCx.toFixed(3)} → lean ${leanCx.toFixed(3)}); it must move ≥ ${CENTROID_SHIFT_MIN} toward the pointer — the wired lean/pseudopod is INVISIBLE (no contained silhouette to deform legibly)`,\n> 700 |         ).toBeGreaterThanOrEqual(CENTROID_SHIFT_MIN);\n      |           ^\n  701 |         expect(\n  702 |             shift,\n  703 |             `blob centroid shift under a rightward hover-flick = ${shift.toFixed(4)} exceeds the calm-lean ceiling ${CENTROID_SHIFT_MAX} — the creature LURCHES toward the cursor (the \"far too dramatic\" lunge; the calm lean measures ≈ 0.042, a lunge toward ≈ 0.11 reds)`,"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/blob-render.spec.ts",
+                            "column": 11,
+                            "line": 700
+                          },
+                          "message": "Error: blob centroid shift under a rightward hover-flick = -0.0020 (rest 0.482 → lean 0.480); it must move ≥ 0.012 toward the pointer — the wired lean/pseudopod is INVISIBLE (no contained silhouette to deform legibly)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m0.012\u001b[39m\nReceived:    \u001b[31m-0.0020370439603960566\u001b[39m\n\n  698 |             shift,\n  699 |             `blob centroid shift under a rightward hover-flick = ${shift.toFixed(4)} (rest ${restCx.toFixed(3)} → lean ${leanCx.toFixed(3)}); it must move ≥ ${CENTROID_SHIFT_MIN} toward the pointer — the wired lean/pseudopod is INVISIBLE (no contained silhouette to deform legibly)`,\n> 700 |         ).toBeGreaterThanOrEqual(CENTROID_SHIFT_MIN);\n      |           ^\n  701 |         expect(\n  702 |             shift,\n  703 |             `blob centroid shift under a rightward hover-flick = ${shift.toFixed(4)} exceeds the calm-lean ceiling ${CENTROID_SHIFT_MAX} — the creature LURCHES toward the cursor (the \"far too dramatic\" lunge; the calm lean measures ≈ 0.042, a lunge toward ≈ 0.11 reds)`,\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/blob-render.spec.ts:700:11"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T01:44:48.107Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results/blob-render-blob-render-π--770c2-gible-within-the-footprint--chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/blob-render.spec.ts",
+                        "column": 11,
+                        "line": 700
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "1238e1c6916d493c0e7e-edab4b8f82ed4b618980",
+              "file": "blob-render.spec.ts",
+              "line": 660,
+              "column": 5
+            },
+            {
+              "title": "EVERY grid blob paints visibly against the page background in BOTH light and dark (the var(--primary)-dark-wash guard)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6386,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T01:44:52.355Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1238e1c6916d493c0e7e-882e265d4690891bf29b",
+              "file": "blob-render.spec.ts",
+              "line": 707,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "dark-semantic-contrast.spec.ts",
+      "file": "dark-semantic-contrast.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "dark-semantic-contrast (π lane — the dark --destructive ink readback, fail-CLOSED)",
+          "file": "dark-semantic-contrast.spec.ts",
+          "line": 195,
+          "column": 6,
+          "specs": [
+            {
+              "title": "destructive Alert title clears the 4.6:1 ink floor under .dark @ mobile",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1483,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T01:44:58.847Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "105902f7e9ab759996a5-45138daddb2220ca3b53",
+              "file": "dark-semantic-contrast.spec.ts",
+              "line": 197,
+              "column": 9
+            },
+            {
+              "title": "destructive Alert title clears the 4.6:1 ink floor under .dark @ desktop",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1487,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T01:45:00.336Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "105902f7e9ab759996a5-6e39e10dd0c35c3adff4",
+              "file": "dark-semantic-contrast.spec.ts",
+              "line": 197,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "dock-plate-clearance.spec.ts",
+      "file": "dock-plate-clearance.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "plate clearance — sidebar-vertical (light)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1104,
+                  "error": {
+                    "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5199/dock/overview\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5199/dock/overview\", waiting until \"networkidle\"\u001b[22m\n",
+                    "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5199/dock/overview\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5199/dock/overview\", waiting until \"networkidle\"\u001b[22m\n\n    at goto (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:38:16)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:176:19",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts",
+                      "column": 16,
+                      "line": 38
+                    },
+                    "snippet": "  36 |\n  37 | async function goto(page: Page, route: string) {\n> 38 |     await page.goto(BASE + route, { waitUntil: \"networkidle\" });\n     |                ^\n  39 |     await page.waitForTimeout(450);\n  40 | }\n  41 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts",
+                        "column": 16,
+                        "line": 38
+                      },
+                      "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5199/dock/overview\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5199/dock/overview\", waiting until \"networkidle\"\u001b[22m\n\n\n  36 |\n  37 | async function goto(page: Page, route: string) {\n> 38 |     await page.goto(BASE + route, { waitUntil: \"networkidle\" });\n     |                ^\n  39 |     await page.waitForTimeout(450);\n  40 | }\n  41 |\n    at goto (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:38:16)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:176:19"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T01:45:01.834Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results/dock-plate-clearance-plate-e898a-e-—-sidebar-vertical-light--chromium-headless-new/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results/dock-plate-clearance-plate-e898a-e-—-sidebar-vertical-light--chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts",
+                    "column": 16,
+                    "line": 38
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ff679c7a1d0ebf803f58-0d61a7208441afcc2a78",
+          "file": "dock-plate-clearance.spec.ts",
+          "line": 174,
+          "column": 9
+        },
+        {
+          "title": "plate clearance — sidebar-vertical (dark)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1103,
+                  "error": {
+                    "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5199/dock/overview\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5199/dock/overview\", waiting until \"networkidle\"\u001b[22m\n",
+                    "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5199/dock/overview\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5199/dock/overview\", waiting until \"networkidle\"\u001b[22m\n\n    at goto (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:38:16)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:176:19",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts",
+                      "column": 16,
+                      "line": 38
+                    },
+                    "snippet": "  36 |\n  37 | async function goto(page: Page, route: string) {\n> 38 |     await page.goto(BASE + route, { waitUntil: \"networkidle\" });\n     |                ^\n  39 |     await page.waitForTimeout(450);\n  40 | }\n  41 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts",
+                        "column": 16,
+                        "line": 38
+                      },
+                      "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5199/dock/overview\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5199/dock/overview\", waiting until \"networkidle\"\u001b[22m\n\n\n  36 |\n  37 | async function goto(page: Page, route: string) {\n> 38 |     await page.goto(BASE + route, { waitUntil: \"networkidle\" });\n     |                ^\n  39 |     await page.waitForTimeout(450);\n  40 | }\n  41 |\n    at goto (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:38:16)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:176:19"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T01:45:03.304Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results/dock-plate-clearance-plate-a45e2-ce-—-sidebar-vertical-dark--chromium-headless-new/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results/dock-plate-clearance-plate-a45e2-ce-—-sidebar-vertical-dark--chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts",
+                    "column": 16,
+                    "line": 38
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ff679c7a1d0ebf803f58-e7c35e0208fa602df909",
+          "file": "dock-plate-clearance.spec.ts",
+          "line": 174,
+          "column": 9
+        },
+        {
+          "title": "plate clearance — bottom-horizontal (light)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1102,
+                  "error": {
+                    "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5199/dock/overview\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5199/dock/overview\", waiting until \"networkidle\"\u001b[22m\n",
+                    "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5199/dock/overview\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5199/dock/overview\", waiting until \"networkidle\"\u001b[22m\n\n    at goto (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:38:16)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:176:19",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts",
+                      "column": 16,
+                      "line": 38
+                    },
+                    "snippet": "  36 |\n  37 | async function goto(page: Page, route: string) {\n> 38 |     await page.goto(BASE + route, { waitUntil: \"networkidle\" });\n     |                ^\n  39 |     await page.waitForTimeout(450);\n  40 | }\n  41 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts",
+                        "column": 16,
+                        "line": 38
+                      },
+                      "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5199/dock/overview\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5199/dock/overview\", waiting until \"networkidle\"\u001b[22m\n\n\n  36 |\n  37 | async function goto(page: Page, route: string) {\n> 38 |     await page.goto(BASE + route, { waitUntil: \"networkidle\" });\n     |                ^\n  39 |     await page.waitForTimeout(450);\n  40 | }\n  41 |\n    at goto (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:38:16)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:176:19"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T01:45:04.852Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results/dock-plate-clearance-plate-0270e--—-bottom-horizontal-light--chromium-headless-new/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results/dock-plate-clearance-plate-0270e--—-bottom-horizontal-light--chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts",
+                    "column": 16,
+                    "line": 38
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ff679c7a1d0ebf803f58-67a9afd0f2b80deb5454",
+          "file": "dock-plate-clearance.spec.ts",
+          "line": 174,
+          "column": 9
+        },
+        {
+          "title": "plate clearance — bottom-horizontal (dark)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1100,
+                  "error": {
+                    "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5199/dock/overview\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5199/dock/overview\", waiting until \"networkidle\"\u001b[22m\n",
+                    "stack": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5199/dock/overview\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5199/dock/overview\", waiting until \"networkidle\"\u001b[22m\n\n    at goto (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:38:16)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:176:19",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts",
+                      "column": 16,
+                      "line": 38
+                    },
+                    "snippet": "  36 |\n  37 | async function goto(page: Page, route: string) {\n> 38 |     await page.goto(BASE + route, { waitUntil: \"networkidle\" });\n     |                ^\n  39 |     await page.waitForTimeout(450);\n  40 | }\n  41 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts",
+                        "column": 16,
+                        "line": 38
+                      },
+                      "message": "Error: page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:5199/dock/overview\nCall log:\n\u001b[2m  - navigating to \"http://localhost:5199/dock/overview\", waiting until \"networkidle\"\u001b[22m\n\n\n  36 |\n  37 | async function goto(page: Page, route: string) {\n> 38 |     await page.goto(BASE + route, { waitUntil: \"networkidle\" });\n     |                ^\n  39 |     await page.waitForTimeout(450);\n  40 | }\n  41 |\n    at goto (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:38:16)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts:176:19"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-10T01:45:06.405Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results/dock-plate-clearance-plate-0ad3d-e-—-bottom-horizontal-dark--chromium-headless-new/error-context.md"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/test-results/dock-plate-clearance-plate-0ad3d-e-—-bottom-horizontal-dark--chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0/tests-visual/dock-plate-clearance.spec.ts",
+                    "column": 16,
+                    "line": 38
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ff679c7a1d0ebf803f58-a2743d4807df53ffb45f",
+          "file": "dock-plate-clearance.spec.ts",
+          "line": 174,
+          "column": 9
+        }
+      ]
+    },
+    {
+      "title": "font-cascade-live.spec.ts",
+      "file": "font-cascade-live.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "font-cascade-live (π lane — DOM-cascade font readback, fail-CLOSED)",
+          "file": "font-cascade-live.spec.ts",
+          "line": 63,
+          "column": 6,
+          "specs": [
+            {
+              "title": "the library default register IS the rendered register (Plus Jakarta text + Fira Code mono)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 587,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-10T01:45:07.963Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "07d0417b224275570e11-7fcac8f217da4ed46738",
+              "file": "font-cascade-live.spec.ts",
+              "line": 64,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-10T01:44:29.878Z",
+    "duration": 38801.898,
+    "expected": 7,
+    "skipped": 0,
+    "unexpected": 6,
+    "flaky": 0
+  }
+}

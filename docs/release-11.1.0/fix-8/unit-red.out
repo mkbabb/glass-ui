@@ -1,0 +1,33 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0
+
+ ❯ tests/components/custom/dock/GlassDock.run-mark.test.ts (8 tests | 1 failed) 96ms
+     × re-measures when any seat resizes, not only the run and the destination 14ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/custom/dock/GlassDock.run-mark.test.ts > the run's active mark > re-measures when any seat resizes, not only the run and the destination
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/components/custom/dock/GlassDock.run-mark.test.ts:184:66
+    182|             const seats = [...run.children].filter(isRunSeat);
+    183|             expect(seats.length).toBe(3);
+    184|             for (const seat of seats) expect(observed.has(seat)).toBe(…
+       |                                                                  ^
+    185|             expect(observed.has(run)).toBe(true);
+    186|             expect(observed.has(markOf(run) as Element)).toBe(false);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 7 passed (8)
+   Start at  14:45:32
+   Duration  1.22s (transform 493ms, setup 57ms, import 757ms, tests 96ms, environment 166ms)
+

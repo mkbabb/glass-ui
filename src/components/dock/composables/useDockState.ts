@@ -2,7 +2,12 @@ import { computed, ref, watch, onUnmounted } from "vue";
 import type { ComputedRef, Ref } from "vue";
 import { isTeleportedTarget } from "../../_shared/overlay/isTeleportedTarget";
 import type { DockHoldKind } from "./dockContext";
-import { DOCK_COLLAPSE_DELAY_MS, HOVER_INTENT_MS } from "../constants";
+import {
+    DOCK_COLLAPSE_DELAY_MS,
+    DOCK_LONG_PRESS_MS,
+    DOCK_LONG_PRESS_SLOP_PX,
+    HOVER_INTENT_MS,
+} from "../constants";
 import type { DockExpandOn } from "./useDockShellProps";
 
 export interface UseDockStateOptions {
@@ -120,8 +125,8 @@ function ensurePointerTracker(): void {
 }
 
 export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
-    // Patient-dwell collapse delay (2500 → 3600ms): a more
-    // forgiving hover/interaction window before auto-collapse. The ~60ms HOVER_INTENT_MS
+    // The collapse delay is the one idle window, `DOCK_COLLAPSE_DELAY_MS` (six
+    // seconds), a forgiving window before auto-collapse. The ~60ms HOVER_INTENT_MS
     // enter dwell is kept as a sweep-past guard. The stationary, state-sized hit frame
     // removes the moving-edge recheck because it never sweeps the cursor.
     const {
@@ -222,6 +227,93 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
     let expandOnPressEnd: "focus" | "hover" | null = null;
     let pressEndTimer: ReturnType<typeof setTimeout> | null = null;
 
+    /* A PRESS ON A PERSISTENT SEAT IS THE SEAT'S. The `#persistent` /
+       `#persistent-end` seats stay live in both postures (a theme toggle, a Play), so a
+       press on one is that control's act, never the dock's expand gesture, on every
+       pointer type. From the seat's `pointerdown` until the pointer leaves the dock or
+       presses anywhere else, no environmental writer expands the dock: the focus the
+       press gives the seat, the hover dwell its arrival started, and a tap's
+       compatibility mouse events all defer to the press and then lapse with it. A
+       hover-opened dock the pointer leaves after a seat press collapses at once: the
+       reader came for the seat, and the patient dwell is for a reader using the dock.
+
+       A coarse pointer has no hover, so it gets one deliberate path that leaves the tap
+       to the seat: a long press. A touch or pen press held still on a collapsed dock's
+       seat for `DOCK_LONG_PRESS_MS` pins the dock open (the Dynamic Island idiom: a tap
+       is the control's, a hold opens the island), and the release that ends it presses
+       nothing. Keyboard focus on a seat, with no press behind it, expands at once. */
+    let seatAct = false;
+    let longPressTimer: ReturnType<typeof setTimeout> | null = null;
+    let longPressOrigin: { x: number; y: number } | null = null;
+    let longPressFired = false;
+
+    const onSeat = (target: EventTarget | null) => {
+        const root = rootEl.value;
+        const seat = target instanceof Element ? target.closest(".dock-persistent") : null;
+        return !!seat && !!root?.contains(seat);
+    };
+
+    function cancelLongPress() {
+        if (longPressTimer) {
+            clearTimeout(longPressTimer);
+            longPressTimer = null;
+        }
+        longPressOrigin = null;
+        window.removeEventListener("pointermove", onLongPressMove, true);
+    }
+
+    function onLongPressMove(e: PointerEvent) {
+        if (!longPressOrigin) return;
+        const dx = e.clientX - longPressOrigin.x;
+        const dy = e.clientY - longPressOrigin.y;
+        if (Math.hypot(dx, dy) > DOCK_LONG_PRESS_SLOP_PX) cancelLongPress();
+    }
+
+    /* The release that ends a long press is the expand's, not the seat's: its click and
+       the native context menu a held touch raises are swallowed. The swallow lasts
+       until that click, the next press, or a beat after the release (an engine that
+       sends no click for a held touch sends none later either). */
+    let swallowTimer: ReturnType<typeof setTimeout> | null = null;
+    function disarmSwallow() {
+        longPressFired = false;
+        if (swallowTimer) {
+            clearTimeout(swallowTimer);
+            swallowTimer = null;
+        }
+        window.removeEventListener("click", swallowLongPressRelease, true);
+        window.removeEventListener("contextmenu", swallowLongPressRelease, true);
+        window.removeEventListener("pointerup", onLongPressRelease, true);
+    }
+    function onLongPressRelease() {
+        swallowTimer ??= setTimeout(disarmSwallow, DOCK_LONG_PRESS_MS);
+    }
+    function swallowLongPressRelease(e: Event) {
+        if (!longPressFired) return;
+        e.preventDefault();
+        e.stopPropagation();
+        if (e.type === "click") disarmSwallow();
+    }
+
+    function fireLongPress() {
+        cancelLongPress();
+        if (isQuiet() || state.value !== "collapsed") return;
+        longPressFired = true;
+        window.addEventListener("click", swallowLongPressRelease, true);
+        window.addEventListener("contextmenu", swallowLongPressRelease, true);
+        window.addEventListener("pointerup", onLongPressRelease, true);
+        clearTimer();
+        clearHoverIntent();
+        state.value = "pinned";
+        syncDerived();
+    }
+
+    function armLongPress(e: PointerEvent) {
+        cancelLongPress();
+        longPressOrigin = { x: e.clientX, y: e.clientY };
+        window.addEventListener("pointermove", onLongPressMove, true);
+        longPressTimer = setTimeout(fireLongPress, DOCK_LONG_PRESS_MS);
+    }
+
     /** An environmental expand waits: the press's pointer is down, or its tap's
      *  compatibility mouse dispatch is running. */
     const pressHolds = () => press === "down" || press === "compat";
@@ -236,7 +328,8 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         for (const [type, listener] of pressListeners) {
             window.removeEventListener(type, listener, true);
         }
-        const deferred = expandOnPressEnd;
+        cancelLongPress();
+        const deferred = seatAct ? null : expandOnPressEnd;
         expandOnPressEnd = null;
         if (deferred && !isQuiet() && state.value === "collapsed") {
             clearTimer();
@@ -260,10 +353,23 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         ["click", () => endPress()],
         ["pointercancel", () => endPress()],
         ["dragstart", () => endPress()],
-        ["contextmenu", () => endPress()],
+        // An engine that raises its context menu for a held touch before the long press
+        // lapses has recognised the same hold: it is the long press, now.
+        [
+            "contextmenu",
+            (e) => {
+                if (longPressTimer) {
+                    fireLongPress();
+                    swallowLongPressRelease(e);
+                }
+                endPress();
+            },
+        ],
         [
             "pointerup",
             (e) => {
+                // A release before the hold lapses is a tap: the long press is off.
+                cancelLongPress();
                 if (press !== "down") return;
                 if ((e as PointerEvent).pointerType === "touch") press = "tap";
                 else endPressAtTaskEnd();
@@ -292,7 +398,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         ],
     ];
 
-    function onPressStart() {
+    function onPressStart(e: PointerEvent) {
         if (press) dropPress();
         press = "down";
         // A press inside the dock is activity: an armed idle window starts again from it.
@@ -302,6 +408,16 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         for (const [type, listener] of pressListeners) {
             window.addEventListener(type, listener, true);
         }
+        seatAct = onSeat(e.target);
+        if (seatAct) clearHoverIntent();
+        if (seatAct && e.pointerType !== "mouse" && state.value === "collapsed") armLongPress(e);
+    }
+
+    /* A press anywhere outside the persistent seats ends the seat's claim (the dock's
+       own capture listener has already set it for a press on a seat). */
+    function onAnyPressStart(e: PointerEvent) {
+        if (longPressFired) disarmSwallow();
+        if (!rootEl.value?.contains(e.target as Node)) seatAct = false;
     }
 
     watch(
@@ -309,7 +425,11 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         (root, _, onCleanup) => {
             if (!root) return;
             root.addEventListener("pointerdown", onPressStart, true);
-            onCleanup(() => root.removeEventListener("pointerdown", onPressStart, true));
+            window.addEventListener("pointerdown", onAnyPressStart, true);
+            onCleanup(() => {
+                root.removeEventListener("pointerdown", onPressStart, true);
+                window.removeEventListener("pointerdown", onAnyPressStart, true);
+            });
         },
         // Attached with the ref itself, so no press can precede it.
         { immediate: true, flush: "sync" },
@@ -507,7 +627,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
             clearHoverIntent();
             hoverIntentTimer = setTimeout(() => {
                 hoverIntentTimer = null;
-                if (isQuiet()) return;
+                if (isQuiet() || seatAct) return;
                 if (state.value === "collapsed") {
                     if (pressHolds()) {
                         expandOnPressEnd ??= "hover";
@@ -531,6 +651,8 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         // sweeping-edge enter immediately chased by a leave never commits the expand.
         clearHoverIntent();
         if (expandOnPressEnd === "hover") expandOnPressEnd = null;
+        const afterSeat = seatAct;
+        seatAct = false;
         if (state.value === "hover") {
             // Something is explicitly holding the dock open (dropdown, edit, etc.)
             if (keepOpenCount.value > 0) return;
@@ -545,7 +667,8 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
                     return;
                 if (isTeleportedTarget(e.relatedTarget, dockId)) return;
             }
-            scheduleCollapse();
+            if (afterSeat) collapse();
+            else scheduleCollapse();
         }
         // If pinned, no-op (stays pinned)
     }
@@ -758,6 +881,8 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         clearHoverIntent();
         removeClickAwayListener();
         dropPress();
+        cancelLongPress();
+        disarmSwallow();
     });
 
     return {

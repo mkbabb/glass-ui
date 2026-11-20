@@ -1,0 +1,44 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0
+
+(node:10628) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:10686) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:11629) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/gates/overfit-structure.test.ts (15 tests | 1 failed) 45ms
+     × every runtime export is reachable — no export leaks (zero external site AND unpublished) 7ms
+(node:12457) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/gates/overfit-structure.test.ts > gate:G-OVERFIT — EXPORT-REACH arm (the TS twin of orphan-css-partial) > every runtime export is reachable — no export leaks (zero external site AND unpublished)
+AssertionError: 1 runtime export(s) are referenced nowhere outside their own module AND ship on no published subpath. An unreachable export is not API — make it module-private or delete it:
+  src/components/dock/composables/useDockRunMark.ts :: DOCK_RUN_MARK_CLASS: expected [ Array(1) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "src/components/dock/composables/useDockRunMark.ts :: DOCK_RUN_MARK_CLASS",
++ ]
+
+ ❯ tests/gates/overfit-structure.test.ts:237:11
+    235|             `${offenders.length} runtime export(s) are referenced nowh…
+    236|                 `An unreachable export is not API — make it module-pri…
+    237|         ).toEqual([]);
+       |           ^
+    238|     });
+    239|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 278 passed (279)
+      Tests  1 failed | 2575 passed | 10 expected fail | 1 skipped (2587)
+   Start at  16:01:18
+   Duration  107.04s (transform 12.08s, setup 11.80s, import 48.29s, tests 59.20s, environment 54.56s)
+

@@ -166,4 +166,28 @@
                 inset 0 0 0 1px color-mix(in oklab, var(--foreground) 28%, transparent);
         }
     }
+
+    /* `bare` variant — the mark alone. No plate, no rim, no 1lh floor and no pad: the
+       badge's box is its glyph's box, and the glyph is the text's cap height, so it
+       sits on the line beside the words it annotates and inherits their ink. A label
+       ELEMENT beside the glyph (any child that is not and holds no `svg`) keeps the
+       badge's accessible name and is not painted. It follows the contrast arm above,
+       which would otherwise give it back its ring. */
+    .badge-atom--bare {
+        --mark-glyph: 1cap;
+        min-inline-size: 0;
+        padding: 0;
+        background: none;
+        box-shadow: none;
+    }
+
+    .badge-atom--bare > :not(svg, :has(svg)) {
+        position: absolute;
+        inline-size: 1px;
+        block-size: 1px;
+        margin: -1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+    }
 }

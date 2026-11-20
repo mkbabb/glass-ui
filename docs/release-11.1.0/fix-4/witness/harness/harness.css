@@ -1,0 +1,10 @@
+@import "tailwindcss" source("../../../../../src");
+@import "tw-animate-css";
+@import "../../../../../src/styles/index.css";
+@source "./harness.ts";
+body { margin: 0; background: var(--background); color: var(--foreground); }
+.scene { padding: 24px 16px; }
+/* A consumer's top padding on the content, in each place a consumer declares it. */
+.pad-plain { padding: 16px; }
+@layer base { .pad-base { padding: 16px; } }
+@layer components { .pad-components { padding: 16px; } }

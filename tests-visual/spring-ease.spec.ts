@@ -47,7 +47,6 @@ const BUTTONS_ROUTE = "/display/buttons";
 const TABS_ROUTE = "/navigation/tabs";
 const DIALOG_ROUTE = "/containers/dialog";
 const MENU_ROUTE = "/containers/dropdown-menu";
-const NOTIFICATION_ROUTE = "/feedback/notification";
 
 const GLASS_BTN =
     '[data-slot="button"][data-variant="default"], [data-slot="button"][data-variant="glass"], [data-slot="button"][data-variant="glass-wash"]';
@@ -258,8 +257,8 @@ for (const scheme of SCHEMES) {
             }
         });
 
-        // ── (5) the universal eased-everywhere sweep (a menu-row + a notification) ─
-        test("(5) UNIVERSAL — other animating surfaces move smooth + coupled (menu-row, notification)", async ({
+        // ── (5) the universal eased-everywhere sweep (a menu-row) ─
+        test("(5) UNIVERSAL — other animating surfaces move smooth + coupled (menu-row)", async ({
             page,
         }) => {
             mkdirSync(VISUAL_DIR, { recursive: true });
@@ -285,12 +284,6 @@ for (const scheme of SCHEMES) {
                     await page.screenshot({ path: resolve(VISUAL_DIR, `menu-row-hover-${scheme}.png`) });
                 }
             }
-            // a notification reveal (the surface materialize).
-            await page.goto(NOTIFICATION_ROUTE);
-            await page.waitForLoadState("networkidle");
-            await setScheme(page, scheme);
-            await page.waitForTimeout(120);
-            await page.screenshot({ path: resolve(VISUAL_DIR, `notification-${scheme}.png`) });
             // the sweep is a CAPTURE pass (the human reads "every element moves smooth
             // + coupled"); the binding machine assert is proof:spring-ease S6 (source).
             expect(true).toBe(true);

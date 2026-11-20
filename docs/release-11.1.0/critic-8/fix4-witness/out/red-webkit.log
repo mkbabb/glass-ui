@@ -1,0 +1,18 @@
+PASS padding 390-light none gap0 {"want":0,"paddingTop":0,"firstY":0,"content":39.2}
+FAIL padding 390-light none gap12 {"want":12,"paddingTop":0,"firstY":0,"content":39.2}
+PASS padding 390-light pad-plain gap0 {"want":16,"paddingTop":16,"firstY":16,"content":71.2}
+PASS padding 390-light pad-plain gap12 {"want":16,"paddingTop":16,"firstY":16,"content":71.2}
+PASS padding 390-light pad-base gap0 {"want":16,"paddingTop":16,"firstY":16,"content":71.2}
+FAIL padding 390-light pad-base gap12 {"want":12,"paddingTop":16,"firstY":16,"content":71.2}
+PASS padding 390-light pad-components gap0 {"want":16,"paddingTop":16,"firstY":16,"content":71.2}
+PASS padding 390-light pad-components gap12 {"want":16,"paddingTop":16,"firstY":16,"content":71.2}
+PASS padding 390-light p-4 gap0 {"want":16,"paddingTop":16,"firstY":16,"content":71.2}
+PASS padding 390-light p-4 gap12 {"want":16,"paddingTop":16,"firstY":16,"content":71.2}
+PASS padding 390-dark pad-base gap0 {"want":16,"paddingTop":16,"firstY":16,"content":71.2}
+PASS padding 1440-light pad-base gap0 {"want":16,"paddingTop":16,"firstY":16,"content":77.9}
+PASS padding 1440-dark pad-base gap0 {"want":16,"paddingTop":16,"firstY":16,"content":77.9}
+FAIL frames 390 pad-base gap0 {"closed":24,"first":{"root":56,"paddingTop":"16px"},"opened":{"paddingTop":16,"firstY":16,"content":71.2},"last":{"root":56,"paddingTop":"16px"},"after":24,"want":16}
+FAIL frames 1440 pad-base gap0 {"closed":27.89,"first":{"root":59.89,"paddingTop":"16px"},"opened":{"paddingTop":16,"firstY":16,"content":77.9},"last":{"root":59.89,"paddingTop":"16px"},"after":27.89,"want":16}
+FAIL frames 390 none gap12 {"closed":24,"first":{"root":24,"paddingTop":"0px"},"opened":{"paddingTop":0,"firstY":0,"content":39.2},"last":{"root":24.11,"paddingTop":"0px"},"after":24,"want":12}
+FAIL frames 1440 none gap12 {"closed":27.89,"first":{"root":27.89,"paddingTop":"0px"},"opened":{"paddingTop":0,"firstY":0,"content":45.9},"last":{"root":28.02,"paddingTop":"0px"},"after":27.89,"want":12}
+VERDICT red webkit 11/17

@@ -13,7 +13,7 @@
 // Windows-High-Contrast simulation), injects synthetic `.glass-*` panes + a focusable
 // control onto the live demo (which loads the `/styles` cascade), and
 // reads back the PAINTED result off the live DOM:
-//   - every glass-material tier pane resolves a non-`none` border (born-RED: `none`);
+//   - every glass tier pane resolves a non-`none` border (born-RED: `none`);
 //   - the floating rung resolves an opaque fill (the boxed-region separation);
 //   - a focused control resolves a `Highlight`-keyed outline (born-RED: no outline).
 //
@@ -32,9 +32,9 @@ import { resolveScene } from "./pi-manifest.ts";
 
 // The canonical glass-language render. Any route loads the global `/styles` cascade,
 // so the synthetic `.glass-*`
-// fixtures resolve, but the glass-material story is the on-topic stable surface. Resolved
+// fixtures resolve, but the Paper & Glass tier ladder is the on-topic stable surface. Resolved
 // against the re-sourced manifest (fails the resolution rather than driving a dead route).
-const GLASS_SCENE = resolveScene("substrates", "glass-material");
+const GLASS_SCENE = resolveScene("foundations", "paper-glass");
 
 const VIEWPORTS = [
     { name: "mobile", width: 375, height: 667 },
@@ -124,7 +124,7 @@ test.describe("forced-colors-skin (π lane — the WHC structure-survival readba
         test(`glass language survives WHC @ ${vp.name}`, async ({ page }) => {
             await page.setViewportSize({ width: vp.width, height: vp.height });
             // Any demo route loads the global `/styles` cascade so the `.glass-*` classes
-            // + the forced-colors skin resolve; the glass-material story is the on-topic
+            // + the forced-colors skin resolve; the Paper & Glass tier ladder is the on-topic
             // stable surface.
             await page.goto(GLASS_SCENE.path, { waitUntil: "networkidle" });
             // Emulate Windows-High-Contrast — `emulateMedia({ forcedColors })` is the

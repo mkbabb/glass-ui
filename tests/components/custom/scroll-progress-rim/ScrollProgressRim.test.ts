@@ -120,3 +120,50 @@ describe("ScrollProgressRim — law-12 fill-pill + dots geometry", () => {
         expect(vertical.attributes("data-orientation")).toBe("vertical");
     });
 });
+
+// The border edge: the progress is the host's own border. One stroke the border's width,
+// at the host's radius, clipped along the axis; the changing value lives on the stroke,
+// so a tick restyles that one element.
+describe("ScrollProgressRim edge=\"border\"", () => {
+    it("draws one stroke and no track, checkpoint or spectrum", () => {
+        const wrapper = mount(ScrollProgressRim, {
+            props: { value: 0.5, edge: "border", segments: [1, 0.5, 0] },
+        });
+        expect(wrapper.attributes("data-edge")).toBe("border");
+        expect(wrapper.findAll(".scroll-progress-rim__stroke")).toHaveLength(1);
+        expect(wrapper.find(".scroll-progress-rim__track").exists()).toBe(false);
+        expect(wrapper.find(".glass-value-mark").exists()).toBe(false);
+        expect(wrapper.attributes("style") ?? "").not.toContain("--scroll-progress-rim");
+    });
+
+    it("writes the fill on the stroke, with the first stop as its one ink", () => {
+        const wrapper = mount(ScrollProgressRim, {
+            props: { value: 0.5, edge: "border", stops: ["red", "blue"] },
+        });
+        const style = wrapper.find(".scroll-progress-rim__stroke").attributes("style") ?? "";
+        expect(fillVar(style)).toBe("50.000%");
+        expect(style).toMatch(/--scroll-progress-rim-ink:\s*red/);
+    });
+
+    it("keeps the inset edge as the default", () => {
+        const wrapper = mount(ScrollProgressRim, { props: { value: 0.5 } });
+        expect(wrapper.attributes("data-edge")).toBe("inset");
+        expect(wrapper.find(".scroll-progress-rim__track").exists()).toBe(true);
+    });
+
+    it("is a border-width stroke at the host radius, clipped along the axis, cut by reduced motion", () => {
+        const stroke = STYLES.match(/\.scroll-progress-rim__stroke\s*\{([^}]*)\}/)?.[1] ?? "";
+        expect(stroke).toMatch(/border:\s*var\(--scroll-progress-rim-stroke, 1px\) solid\s+var\(--scroll-progress-rim-ink, var\(--rainbow-violet\)\)/);
+        expect(stroke).toMatch(/border-radius:\s*inherit/);
+        expect(stroke).toMatch(/clip-path:\s*inset\(0 calc\(100% - var\(--scroll-progress-rim-fill, 0%\)\) 0 0\)/);
+        expect(stroke).toMatch(/transition:\s*clip-path var\(--spring-dock-duration\) var\(--spring-dock\)/);
+        expect(STYLES).toMatch(/prefers-reduced-motion: reduce\)\s*\{\s*\.scroll-progress-rim__fill,\s*\.scroll-progress-rim__stroke\s*\{\s*transition: none;/);
+    });
+
+    it("strokes at the dock plate's own border width inside a GlassDock", () => {
+        const shell = readFileSync(resolve(process.cwd(), "src/components/dock/styles/shell.css"), "utf8");
+        const dock = readFileSync(resolve(process.cwd(), "src/components/dock/styles/dock.css"), "utf8");
+        expect(shell).toMatch(/--scroll-progress-rim-stroke:\s*var\(--dock-plate-border-width\)/);
+        expect(dock).toMatch(/border:\s*var\(--dock-plate-border-width\) solid/);
+    });
+});

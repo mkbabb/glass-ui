@@ -1,121 +1,61 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import StoryPage from "../../chassis/page/StoryPage.vue";
-import StorySection from "../../chassis/section/StorySection.vue";
-import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
-import { Button } from "@glass/components/button";
 import { Metric, MetricRow, MetricStack } from "@glass/components/metric";
+import StoryPage from "../../chassis/page/StoryPage.vue";
+import StoryStage from "../../chassis/stage/StoryStage.vue";
+import StoryVariants from "../../chassis/variants/StoryVariants.vue";
+import StoryVariantRow from "../../chassis/variants/StoryVariantRow.vue";
+import StoryCode from "../../chassis/code/StoryCode.vue";
+import MetricStage from "./metric.stage.vue";
 
-const loading = ref(true);
+const snippet = `<script setup lang="ts">
+import { Metric } from "@mkbabb/glass-ui/metric";
+<\/script>
+
+<template>
+    <Metric label="Download" :value="482.7" unit="Mbps" />
+    <Metric label="Errors" :value="318" :delta="-7" posture="cell" />
+</template>`;
 </script>
 
 <template>
     <StoryPage>
-        <StorySection
-            label="readouts"
-            blurb="Values, absence, and loading remain distinct without invented status or interaction."
-        >
-            <ShowcaseFrame pad="lg">
-                <div class="flex flex-wrap items-end gap-6">
-                    <Metric label="Download" :value="482.7" unit="Mbps" />
-                    <Metric label="Loss" :value="0" unit="%" context="No dropped packets" />
-                    <Metric label="Jitter" :value="null" unit="ms" />
-                    <Metric
-                        label="Sample"
-                        :value="917"
-                        unit="req/s"
-                        :loading="loading"
-                        posture="stacked"
-                        size="xl"
-                    />
-                    <Button size="sm" @click="loading = !loading">
-                        {{ loading ? "Show sample" : "Mask sample" }}
-                    </Button>
-                </div>
-            </ShowcaseFrame>
-        </StorySection>
+        <template #stage>
+            <StoryStage size="fit">
+                <MetricStage />
+            </StoryStage>
+        </template>
 
-        <StorySection
-            label="delta + compact"
-            blurb="A numeric delta carries its own polarity in its number and sign, painted in the one ink — never a tone on the text, never a coloured plate. `compact` renders a number in its locale's compact form through the family's one data-shaping seam."
-        >
-            <ShowcaseFrame pad="lg">
-                <div class="flex flex-wrap items-end gap-6">
-                    <Metric label="Requests" :value="1240000" compact unit="/s" :delta="12.4" />
-                    <Metric label="Errors" :value="318" :delta="-7" />
-                    <Metric label="Sessions" :value="88400" compact :delta="0" />
-                    <Metric label="Backlog" :value="42" delta="steady" polarity="flat" />
-                </div>
-            </ShowcaseFrame>
-        </StorySection>
-
-        <StorySection
-            label="cell posture"
-            blurb="A cell is a POSTURE of the one readout, not a second component — a bounded wash-tier plate around the same atom."
-        >
-            <div class="grid gap-3 sm:grid-cols-2">
-                <Metric
-                    posture="cell"
-                    label="Requests"
-                    :value="1204"
-                    unit="/s"
-                    context="Rolling five-minute window"
-                />
-                <Metric
-                    posture="cell"
-                    label="Queue depth"
-                    :value="18"
-                    :delta="-4"
-                    context="Down four since the last window"
-                />
-            </div>
-        </StorySection>
-
-        <StorySection
-            label="ledger"
-            blurb="Rows share one responsive definition-list subgrid; long labels wrap on narrow hosts. MetricStack and MetricRow place; the Metric paints."
-        >
-            <ShowcaseFrame pad="lg">
-                <div class="max-w-xl">
-                    <MetricStack density="compact">
+        <template #variants>
+            <StoryVariants>
+                <StoryVariantRow label="Layouts">
+                    <Metric posture="cell" label="Queue" :value="18" :delta="-4" class="metric-cell" />
+                    <MetricStack density="compact" class="metric-ledger">
                         <MetricRow>
-                            <Metric
-                                posture="row"
-                                label="Requests"
-                                context="Current throughput"
-                                :value="9"
-                                unit="/s"
-                            />
+                            <Metric posture="row" label="Latency" :value="42.8" unit="ms" />
                         </MetricRow>
                         <MetricRow>
-                            <Metric
-                                posture="row"
-                                label="Median latency"
-                                context="Last 100 samples"
-                                :value="42.8"
-                                unit="ms"
-                            />
-                        </MetricRow>
-                        <MetricRow>
-                            <Metric
-                                posture="row"
-                                label="Extraordinarily long checkpoint description"
-                                context="Wraps without clipping or changing value order"
-                                :value="12048"
-                                unit="events"
-                            />
-                        </MetricRow>
-                        <MetricRow>
-                            <Metric
-                                posture="row"
-                                label="Unresolved"
-                                :value="Number.NaN"
-                                placeholder="n/a"
-                            />
+                            <Metric posture="row" label="Uptime" :value="99.9" unit="%" />
                         </MetricRow>
                     </MetricStack>
-                </div>
-            </ShowcaseFrame>
-        </StorySection>
+                </StoryVariantRow>
+            </StoryVariants>
+        </template>
+
+        <template #code>
+            <StoryCode :code="snippet" />
+        </template>
     </StoryPage>
 </template>
+
+<style scoped>
+/* The cell and the ledger sit side by side, top edges level; the row wraps only
+   where it is narrower than both. */
+.metric-cell,
+.metric-ledger {
+    align-self: flex-start;
+}
+
+.metric-ledger {
+    inline-size: 14rem;
+}
+</style>

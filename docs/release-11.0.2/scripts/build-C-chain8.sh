@@ -1,0 +1,26 @@
+#!/bin/bash
+# Build seat C's sweep on the branch tip after its rows, one guarded run at a time: the 11.0.2
+# spec and the dock release specs (release-10-1-2's reversal titles, release-10-1-5,
+# release-11-0-1, release-11-0-1-daraksha) in chromium-headless-new and coarse-touch, then
+# WebKit 2287; then the demo dist build, typecheck and vitest.
+W=/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2
+S=$W/docs/release-11.0.2/scripts
+L=$W/docs/release-11.0.2/logs
+O=$L/sweep-chain-C.out
+G=~/.claude/guard/guarded
+while pgrep -f build-C-chain7.sh >/dev/null; do sleep 20; done
+echo "$(date +%H:%M:%S) start $(git -C $W rev-parse --short HEAD)" >> $O
+TIMEOUT=80 $S/build-C-chromium.sh branch sweep-C-branch-chromium "." "release-11-0-2.spec.ts release-10-1-2.spec.ts release-10-1-5.spec.ts release-11-0-1.spec.ts release-11-0-1-daraksha.spec.ts"
+echo "$(date +%H:%M:%S) sweep-C-branch-chromium done" >> $O
+TIMEOUT=60 $S/build-C-webkit.sh branch sweep-C-branch-webkit "." "release-11-0-2.spec.ts release-10-1-2.spec.ts release-10-1-5.spec.ts"
+echo "$(date +%H:%M:%S) sweep-C-branch-webkit done" >> $O
+cd $W && GLASS_UI_DEMO_PORT=5341 GLASS_UI_DEMO_URL=http://localhost:5341 PI_REPORT=$L/sweep-C-branch-webkit-1101.json \
+  $G --exclusive webkit --timeout 30 -- npx playwright test -c tests-visual/release-11-0-1.config.ts release-11-0-1.spec.ts release-11-0-1-daraksha.spec.ts --project=webkit --workers=1 > $L/sweep-C-branch-webkit-1101.log 2>&1
+echo "$(date +%H:%M:%S) sweep-C-branch-webkit-1101 exit $?" >> $O
+cd $W && $G --timeout 20 -- npm run demo:dist:build > $L/demo-dist-build-C.log 2>&1
+echo "$(date +%H:%M:%S) demo-dist-build exit $?" >> $O
+cd $W && $G --light -- npm run typecheck > $L/typecheck-final-C.log 2>&1
+echo "$(date +%H:%M:%S) typecheck exit $?" >> $O
+cd $W && $G --timeout 45 -- npx vitest run --maxWorkers=2 > $L/vitest-final-C.log 2>&1
+echo "$(date +%H:%M:%S) vitest exit $?" >> $O
+echo done >> $O

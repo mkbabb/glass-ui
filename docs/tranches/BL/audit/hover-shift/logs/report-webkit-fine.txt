@@ -1,0 +1,206 @@
+{
+ "routes": 14,
+ "targets": 324,
+ "nGroups": 36,
+ "errs": [],
+ "nErr": 0,
+ "truncated": [],
+ "marginFlipRoutes": [],
+ "byDesign": {
+  "disclosure": [
+   "/containers/accordion"
+  ]
+ }
+}
+
+== release | BUTTON|radio|toggle-group-item|control-surface.focus-ring.glass-capsule-hover.glass-control-edge.toggle-group__item | n= 9 | webkit/fine | routes: /forms/toggle | crop: webkit-fine-_forms_toggle-5
+   label: button.toggle-group__item.control-surface.glass-control-edge.glass-capsule-hover.focus-ring[role=radio][data-s
+   rule: .toggle-group__item[data-state="on"] { font-weight: 600 }
+   sample /forms/toggle 1 [{"rel":"target","kind":"props","detail":["font-weight 500->600"],"label":"button.toggle-group__item.control-surface.glass-control-edge.glass-cap"}]  
+   sample /forms/toggle 1 [{"rel":"target","kind":"props","detail":["font-weight 500->600"],"label":"button.toggle-group__item.control-surface.glass-control-edge.glass-cap"}]  
+
+== after-press | BUTTON|radio|toggle-group-item|control-surface.focus-ring.glass-capsule-hover.glass-control-edge.toggle-group__item | n= 9 | webkit/fine | routes: /forms/toggle | crop: webkit-fine-_forms_toggle-5
+   label: button.toggle-group__item.control-surface.glass-control-edge.glass-capsule-hover.focus-ring[role=radio][data-s
+   rule: .toggle-group__item[data-state="on"] { font-weight: 600 }
+   sample /forms/toggle 1 [{"rel":"target","kind":"props","detail":["font-weight 500->600"],"label":"button.toggle-group__item.control-surface.glass-control-edge.glass-cap"}]  
+   sample /forms/toggle 1 [{"rel":"target","kind":"props","detail":["font-weight 500->600"],"label":"button.toggle-group__item.control-surface.glass-control-edge.glass-cap"}]  
+
+== press | BUTTON|||dock-icon-button.glass-capsule-hover.glass-specular-track | n= 7 | webkit/fine | routes: /dock/vertical /dock/overview /dock/controls | crop: webkit-fine-_dock_vertical-15
+   label: button.dock-icon-button.glass-specular-track.glass-capsule-hover "Home"
+   sample /dock/vertical 3 [{"rel":"other","kind":"box","detail":{"dO":[-12,-64,30,0],"dc":[0,0]},"label":"div#glass-dock-v-24-summary.dock-layer.dock-layer--summary"},{"rel":"other","kind":"box","detail":{"dO":[-12,-64,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Open"},{"rel":"ancestor","kind":"props","detail":["padding-top 12px->8px","padding-bottom 12px->8px"],"label":"div.glass-dock.vertical.shape-pill.expanded[role=toolbar] \"Starts comp"}]  
+   sample /dock/vertical 16 [{"rel":"other","kind":"box","detail":{"dO":[0,4,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Home"},{"rel":"other","kind":"box","detail":{"dO":[12,64,-30,0],"dc":[0,0]},"label":"div#glass-dock-v-24-summary.dock-layer.dock-layer--summary.is-active[r"},{"rel":"other","kind":"box","detail":{"dO":[12,64,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Open"},{"rel":"other","kind":"box","detail":{"dO":[0,0,0,-215],"dc":[0,0]},"label":"div.glass-dock.vertical.shape-pill.collapsed[role=toolbar] \"Starts com"}]  
+
+== hover | BUTTON|||dock-icon-button.glass-capsule-hover.glass-specular-track | n= 5 | webkit/fine | routes: /dock/vertical /dock/overview /dock/controls | crop: webkit-fine-_dock_vertical-15
+   label: button.dock-icon-button.glass-specular-track.glass-capsule-hover "Home"
+   sample /dock/vertical 19 [{"rel":"target","kind":"box","detail":{"dO":[0,-4,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Home"},{"rel":"ancestor","kind":"box","detail":{"dO":[0,0,0,215],"dc":[0,0]},"label":"div.glass-dock.vertical.shape-pill.expanded[role=toolbar] \"Starts comp"},{"rel":"ancestor","kind":"box","detail":{"dO":[0,0,0,215],"dc":[0,0]},"label":"div.flex.flex-col.items-start.gap-3 \"Starts compact\""},{"rel":"ancestor","kind":"box","detail":{"dO":[0,0,0,120],"dc":[0,0]},"label":"div.flex.min-h-[18rem].flex-wrap.items-start.gap-8.p-6 \"Starts compact"}]  
+   sample /dock/vertical 16 [{"rel":"target","kind":"box","detail":{"dO":[0,-4,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Home"},{"rel":"other","kind":"box","detail":{"dO":[12,64,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover.text-"},{"rel":"other","kind":"box","detail":{"dO":[12,64,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover.text-"},{"rel":"other","kind":"box","detail":{"dO":[12,64,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover.text-"}]  
+
+== after-hover | BUTTON|||dock-icon-button.glass-capsule-hover.glass-specular-track | n= 5 | webkit/fine | routes: /dock/vertical /dock/overview /dock/controls | crop: webkit-fine-_dock_vertical-15
+   label: button.dock-icon-button.glass-specular-track.glass-capsule-hover "Home"
+   sample /dock/vertical 3 [{"rel":"other","kind":"box","detail":{"dO":[-12,-64,30,0],"dc":[0,0]},"label":"div#glass-dock-v-24-summary.dock-layer.dock-layer--summary"},{"rel":"other","kind":"box","detail":{"dO":[-12,-64,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Open"},{"rel":"ancestor","kind":"props","detail":["padding-top 12px->8px","padding-bottom 12px->8px"],"label":"div.glass-dock.vertical.shape-pill.expanded[role=toolbar] \"Starts comp"}]  
+   sample /dock/vertical 3 [{"rel":"other","kind":"box","detail":{"dO":[-12,-64,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Open"},{"rel":"other","kind":"box","detail":{"dO":[-12,-64,30,0],"dc":[0,0]},"label":"div#glass-dock-v-25-summary.dock-layer.dock-layer--summary"},{"rel":"ancestor","kind":"props","detail":["padding-top 12px->8px","padding-bottom 12px->8px"],"label":"div.glass-dock.vertical.shape-pill.expanded[role=toolbar] \"Starts open"}]  
+
+== focus | BUTTON|||dock-icon-button.glass-capsule-hover.glass-specular-track | n= 5 | webkit/fine | routes: /dock/vertical /dock/overview /dock/controls | crop: webkit-fine-_dock_vertical-15
+   label: button.dock-icon-button.glass-specular-track.glass-capsule-hover "Home"
+   rule: .dock-icon-button:focus-visible, .dock-tab-button:focus-visible, .dock-select-trigger:focus-visible, .dock-dropdown-trigger:focus-visible { outline-offset: var(--dock-ring-offset) }
+   sample /dock/vertical 3 [{"rel":"other","kind":"box","detail":{"dO":[-12,-64,30,0],"dc":[0,0]},"label":"div#glass-dock-v-24-summary.dock-layer.dock-layer--summary"},{"rel":"other","kind":"box","detail":{"dO":[-12,-64,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Open"},{"rel":"ancestor","kind":"props","detail":["padding-top 12px->8px","padding-bottom 12px->8px"],"label":"div.glass-dock.vertical.shape-pill.expanded[role=toolbar] \"Starts comp"}]  
+   sample /dock/vertical 3 [{"rel":"other","kind":"box","detail":{"dO":[-12,-64,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Open"},{"rel":"other","kind":"box","detail":{"dO":[-12,-64,30,0],"dc":[0,0]},"label":"div#glass-dock-v-25-summary.dock-layer.dock-layer--summary"},{"rel":"ancestor","kind":"props","detail":["padding-top 12px->8px","padding-bottom 12px->8px"],"label":"div.glass-dock.vertical.shape-pill.expanded[role=toolbar] \"Starts open"}]  
+
+== after-focus | BUTTON|||dock-icon-button.glass-capsule-hover.glass-specular-track | n= 5 | webkit/fine | routes: /dock/vertical /dock/overview /dock/controls | crop: webkit-fine-_dock_vertical-15
+   label: button.dock-icon-button.glass-specular-track.glass-capsule-hover "Home"
+   sample /dock/vertical 3 [{"rel":"other","kind":"box","detail":{"dO":[-12,-64,30,0],"dc":[0,0]},"label":"div#glass-dock-v-24-summary.dock-layer.dock-layer--summary"},{"rel":"other","kind":"box","detail":{"dO":[-12,-64,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Open"},{"rel":"ancestor","kind":"props","detail":["padding-top 12px->8px","padding-bottom 12px->8px"],"label":"div.glass-dock.vertical.shape-pill.expanded[role=toolbar] \"Starts comp"}]  
+   sample /dock/vertical 3 [{"rel":"other","kind":"box","detail":{"dO":[-12,-64,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Open"},{"rel":"other","kind":"box","detail":{"dO":[-12,-64,30,0],"dc":[0,0]},"label":"div#glass-dock-v-25-summary.dock-layer.dock-layer--summary"},{"rel":"ancestor","kind":"props","detail":["padding-top 12px->8px","padding-bottom 12px->8px"],"label":"div.glass-dock.vertical.shape-pill.expanded[role=toolbar] \"Starts open"}]  
+
+== release | BUTTON||toggle-group-item|control-surface.focus-ring.glass-capsule-hover.glass-control-edge.toggle-group__item | n= 3 | webkit/fine | routes: /forms/toggle /substrates/glass-panel | crop: webkit-fine-_forms_toggle-2
+   label: button.toggle-group__item.control-surface.glass-control-edge.glass-capsule-hover.focus-ring[data-slot=toggle-g
+   rule: .toggle-group__item[data-state="on"] { font-weight: 600 }
+   sample /forms/toggle 1 [{"rel":"target","kind":"props","detail":["font-weight 500->600"],"label":"button.toggle-group__item.control-surface.glass-control-edge.glass-cap"}]  
+   sample /forms/toggle 1 [{"rel":"target","kind":"props","detail":["font-weight 500->600"],"label":"button.toggle-group__item.control-surface.glass-control-edge.glass-cap"}]  
+
+== after-press | BUTTON||toggle-group-item|control-surface.focus-ring.glass-capsule-hover.glass-control-edge.toggle-group__item | n= 3 | webkit/fine | routes: /forms/toggle /substrates/glass-panel | crop: webkit-fine-_forms_toggle-2
+   label: button.toggle-group__item.control-surface.glass-control-edge.glass-capsule-hover.focus-ring[data-slot=toggle-g
+   rule: .toggle-group__item[data-state="on"] { font-weight: 600 }
+   sample /forms/toggle 1 [{"rel":"target","kind":"props","detail":["font-weight 500->600"],"label":"button.toggle-group__item.control-surface.glass-control-edge.glass-cap"}]  
+   sample /forms/toggle 1 [{"rel":"target","kind":"props","detail":["font-weight 500->600"],"label":"button.toggle-group__item.control-surface.glass-control-edge.glass-cap"}]  
+
+== hover | DIV|button||dock-layer.dock-layer--summary | n= 3 | webkit/fine | routes: /dock/layers /dock/overview | crop: webkit-fine-_dock_layers-25
+   label: div#glass-dock-v-20-summary.dock-layer.dock-layer--summary.is-active[role=button] "Expand dock"
+   sample /dock/layers 30 [{"rel":"target","kind":"box","detail":{"dO":[-99,0,0,0],"dc":[0,0]},"label":"div#glass-dock-v-20-summary.dock-layer.dock-layer--summary"},{"rel":"inside","kind":"box","detail":{"dO":[-99,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Open"},{"rel":"other","kind":"box","detail":{"dO":[0,52,0,0],"dc":[0,0]},"label":"button#dock-tab-v-23-assets.dock-layer-tab[role=tab] \"Assets\""},{"rel":"other","kind":"box","detail":{"dO":[0,52,0,0],"dc":[0,0]},"label":"button#dock-tab-v-23-layers.dock-layer-tab[role=tab] \"Layers\""}]  
+   sample /dock/overview 22 [{"rel":"target","kind":"box","detail":{"dO":[-222,0,0,0],"dc":[0,0]},"label":"div#glass-dock-v-26-summary.dock-layer.dock-layer--summary"},{"rel":"ancestor","kind":"box","detail":{"dO":[-222,0,445,0],"dc":[0,0]},"label":"div.glass-dock.horizontal.shape-pill.expanded"},{"rel":"other","kind":"box","detail":{"dO":[-214,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Volu"},{"rel":"other","kind":"box","detail":{"dO":[-214,0,0,0],"dc":[0,0]},"label":"div.flex.w-44.items-center.px-2"}]  
+
+== after-hover | DIV|button||dock-layer.dock-layer--summary | n= 3 | webkit/fine | routes: /dock/layers /dock/overview | crop: webkit-fine-_dock_layers-25
+   label: div#glass-dock-v-20-summary.dock-layer.dock-layer--summary.is-active[role=button] "Expand dock"
+   sample /dock/layers 12 [{"rel":"target","kind":"box","detail":{"dO":[-112,-8,0,0],"dc":[0,0]},"label":"div#glass-dock-v-20-summary.dock-layer.dock-layer--summary"},{"rel":"inside","kind":"box","detail":{"dO":[-112,-8,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Open"},{"rel":"ancestor","kind":"box","detail":{"dO":[-104,0,207,52],"dc":[0,0]},"label":"div.glass-dock.horizontal.shape-pill.expanded.fit-content \"Assets imag"},{"rel":"other","kind":"box","detail":{"dO":[-92,26,0,0],"dc":[0,0]},"label":"div.dock-layer-switcher.start.glass-drag-grabbable[role=tablist]"}]  
+   sample /dock/overview 20 [{"rel":"target","kind":"box","detail":{"dO":[-218,0,0,0],"dc":[0,0]},"label":"div#glass-dock-v-26-summary.dock-layer.dock-layer--summary"},{"rel":"other","kind":"box","detail":{"dO":[-210,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Volu"},{"rel":"other","kind":"box","detail":{"dO":[-210,0,0,0],"dc":[0,0]},"label":"div.flex.w-44.items-center.px-2"},{"rel":"other","kind":"box","detail":{"dO":[-210,0,0,0],"dc":[0,0]},"label":"div.dock-separator[role=separator]"}]  
+
+== press | DIV|button||dock-layer.dock-layer--summary | n= 3 | webkit/fine | routes: /dock/layers /dock/overview | crop: webkit-fine-_dock_layers-25
+   label: div#glass-dock-v-20-summary.dock-layer.dock-layer--summary.is-active[role=button] "Expand dock"
+   sample /dock/layers 12 [{"rel":"target","kind":"box","detail":{"dO":[-112,-8,0,0],"dc":[0,0]},"label":"div#glass-dock-v-20-summary.dock-layer.dock-layer--summary"},{"rel":"inside","kind":"box","detail":{"dO":[-112,-8,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Open"},{"rel":"ancestor","kind":"box","detail":{"dO":[-104,0,207,52],"dc":[0,0]},"label":"div.glass-dock.horizontal.shape-pill.expanded.fit-content \"Assets imag"},{"rel":"other","kind":"box","detail":{"dO":[-92,26,0,0],"dc":[0,0]},"label":"div.dock-layer-switcher.start.glass-drag-grabbable[role=tablist]"}]  
+   sample /dock/overview 20 [{"rel":"target","kind":"box","detail":{"dO":[-230,-8,0,0],"dc":[0,0]},"label":"div#glass-dock-v-26-summary.dock-layer.dock-layer--summary"},{"rel":"other","kind":"box","detail":{"dO":[-210,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Volu"},{"rel":"other","kind":"box","detail":{"dO":[-210,0,0,0],"dc":[0,0]},"label":"div.flex.w-44.items-center.px-2"},{"rel":"other","kind":"box","detail":{"dO":[-210,0,0,0],"dc":[0,0]},"label":"div.dock-separator[role=separator]"}]  
+
+== press | A|||focus-ring.gap-1.hover:text-foreground.inline-flex.interactive-item.items-center.text-muted-foreground.text-small.tr | n= 2 | webkit/fine | routes: /dock/vertical /dock/overview | crop: webkit-fine-_dock_vertical-0
+   label: a.focus-ring.interactive-item.transition-control.text-small.text-muted-foreground.inline-flex "← Dock"
+   sample /dock/vertical 8 [{"rel":"other","kind":"box","detail":{"dO":[0,4,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Home"},{"rel":"other","kind":"box","detail":{"dO":[0,4,0,0],"dc":[0,0]},"label":"div.dock-persistent"},{"rel":"other","kind":"box","detail":{"dO":[0,0,0,-4],"dc":[0,-4]},"label":"div#glass-dock-v-25-full.dock-layer.dock-layer--full.dock-run[role=too"},{"rel":"other","kind":"box","detail":{"dO":[0,0,0,-4],"dc":[0,0]},"label":"div.dock-layers"}]  
+   sample /dock/overview 11 [{"rel":"other","kind":"box","detail":{"dO":[-4,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Home"},{"rel":"other","kind":"box","detail":{"dO":[-14,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Sear"},{"rel":"other","kind":"box","detail":{"dO":[-14,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Noti"},{"rel":"other","kind":"box","detail":{"dO":[-14,0,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Sett"}]  
+
+== release | BUTTON||toggle-group-item|control-surface.focus-ring.glass-capsule-hover.glass-control-edge.toggle-group__item | n= 1 | webkit/fine | routes: /forms/toggle | crop: webkit-fine-_forms_toggle-1
+   label: button.toggle-group__item.control-surface.glass-control-edge.glass-capsule-hover.focus-ring[data-slot=toggle-g
+   sample /forms/toggle 1 [{"rel":"target","kind":"props","detail":["font-weight 600->500"],"label":"button.toggle-group__item.control-surface.glass-control-edge.glass-cap"}]  
+
+== after-press | BUTTON||toggle-group-item|control-surface.focus-ring.glass-capsule-hover.glass-control-edge.toggle-group__item | n= 1 | webkit/fine | routes: /forms/toggle | crop: webkit-fine-_forms_toggle-1
+   label: button.toggle-group__item.control-surface.glass-control-edge.glass-capsule-hover.focus-ring[data-slot=toggle-g
+   sample /forms/toggle 1 [{"rel":"target","kind":"props","detail":["font-weight 600->500"],"label":"button.toggle-group__item.control-surface.glass-control-edge.glass-cap"}]  
+
+== press | DIV|||always-expanded.expanded.glass-dock.pinned.relative.shape-pill.vertical.z-10 | n= 1 | webkit/fine | routes: /dock/vertical | crop: webkit-fine-_dock_vertical-24
+   label: div.relative.z-10.glass-dock.vertical.shape-pill.expanded "Foundations Primitives Containers Naviga"
+   sample /dock/vertical 19 [{"rel":"other","kind":"box","detail":{"dO":[0,4,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Home"},{"rel":"other","kind":"box","detail":{"dO":[-12,-64,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover.text-"},{"rel":"other","kind":"box","detail":{"dO":[-12,-64,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover.text-"},{"rel":"other","kind":"box","detail":{"dO":[-12,-64,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover.text-"}]  
+
+== hover | DIV|toolbar||collapsed.glass-dock.shape-pill.vertical | n= 1 | webkit/fine | routes: /dock/vertical | crop: webkit-fine-_dock_vertical-26
+   label: div.glass-dock.vertical.shape-pill.collapsed[role=toolbar] "Starts compact vertical dock"
+   sample /dock/vertical 19 [{"rel":"inside","kind":"box","detail":{"dO":[0,-4,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Home"},{"rel":"target","kind":"box","detail":{"dO":[0,0,0,215],"dc":[0,0]},"label":"div.glass-dock.vertical.shape-pill.expanded[role=toolbar] \"Starts comp"},{"rel":"ancestor","kind":"box","detail":{"dO":[0,0,0,215],"dc":[0,0]},"label":"div.flex.flex-col.items-start.gap-3 \"Starts compact\""},{"rel":"ancestor","kind":"box","detail":{"dO":[0,0,0,120],"dc":[0,0]},"label":"div.flex.min-h-[18rem].flex-wrap.items-start.gap-8.p-6 \"Starts compact"}]  
+
+== after-hover | DIV|toolbar||collapsed.glass-dock.shape-pill.vertical | n= 1 | webkit/fine | routes: /dock/vertical | crop: webkit-fine-_dock_vertical-26
+   label: div.glass-dock.vertical.shape-pill.collapsed[role=toolbar] "Starts compact vertical dock"
+   sample /dock/vertical 1 [{"rel":"target","kind":"props","detail":["padding-top 12px->7.998384px","padding-bottom 12px->7.998384px"],"label":"div.glass-dock.vertical.shape-pill.expanded[role=toolbar] \"Starts comp"}]  
+
+== focus | DIV|toolbar||collapsed.glass-dock.shape-pill.vertical | n= 1 | webkit/fine | routes: /dock/vertical | crop: webkit-fine-_dock_vertical-26
+   label: div.glass-dock.vertical.shape-pill.collapsed[role=toolbar] "Starts compact vertical dock"
+   sample /dock/vertical 3 [{"rel":"inside","kind":"box","detail":{"dO":[-12,-64,30,0],"dc":[0,0]},"label":"div#glass-dock-v-24-summary.dock-layer.dock-layer--summary"},{"rel":"inside","kind":"box","detail":{"dO":[-12,-64,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Open"},{"rel":"target","kind":"props","detail":["padding-top 12px->8px","padding-bottom 12px->8px"],"label":"div.glass-dock.vertical.shape-pill.expanded[role=toolbar] \"Starts comp"}]  
+
+== after-focus | DIV|toolbar||collapsed.glass-dock.shape-pill.vertical | n= 1 | webkit/fine | routes: /dock/vertical | crop: webkit-fine-_dock_vertical-26
+   label: div.glass-dock.vertical.shape-pill.collapsed[role=toolbar] "Starts compact vertical dock"
+   sample /dock/vertical 3 [{"rel":"inside","kind":"box","detail":{"dO":[-12,-64,30,0],"dc":[0,0]},"label":"div#glass-dock-v-24-summary.dock-layer.dock-layer--summary"},{"rel":"inside","kind":"box","detail":{"dO":[-12,-64,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Open"},{"rel":"target","kind":"props","detail":["padding-top 12px->8px","padding-bottom 12px->8px"],"label":"div.glass-dock.vertical.shape-pill.expanded[role=toolbar] \"Starts comp"}]  
+
+== press | DIV|toolbar||collapsed.glass-dock.shape-pill.vertical | n= 1 | webkit/fine | routes: /dock/vertical | crop: webkit-fine-_dock_vertical-26
+   label: div.glass-dock.vertical.shape-pill.collapsed[role=toolbar] "Starts compact vertical dock"
+   sample /dock/vertical 3 [{"rel":"inside","kind":"box","detail":{"dO":[-12,-64,30,0],"dc":[0,0]},"label":"div#glass-dock-v-24-summary.dock-layer.dock-layer--summary"},{"rel":"inside","kind":"box","detail":{"dO":[-12,-64,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Open"},{"rel":"target","kind":"props","detail":["padding-top 12px->8px","padding-bottom 12px->8px"],"label":"div.glass-dock.vertical.shape-pill.expanded[role=toolbar] \"Starts comp"}]  
+
+== release | DIV|toolbar||collapsed.glass-dock.shape-pill.vertical | n= 1 | webkit/fine | routes: /dock/vertical | crop: webkit-fine-_dock_vertical-26
+   label: div.glass-dock.vertical.shape-pill.collapsed[role=toolbar] "Starts compact vertical dock"
+   sample /dock/vertical 1 [{"rel":"target","kind":"props","detail":["padding-top 12px->8px","padding-bottom 12px->8px"],"label":"div.glass-dock.vertical.shape-pill.expanded[role=toolbar] \"Starts comp"}]  
+
+== after-press | DIV|toolbar||collapsed.glass-dock.shape-pill.vertical | n= 1 | webkit/fine | routes: /dock/vertical | crop: webkit-fine-_dock_vertical-26
+   label: div.glass-dock.vertical.shape-pill.collapsed[role=toolbar] "Starts compact vertical dock"
+   sample /dock/vertical 1 [{"rel":"target","kind":"props","detail":["padding-top 12px->8px","padding-bottom 12px->8px"],"label":"div.glass-dock.vertical.shape-pill.expanded[role=toolbar] \"Starts comp"}]  
+
+== hover | DIV|toolbar||expanded.glass-dock.shape-pill.vertical | n= 1 | webkit/fine | routes: /dock/vertical | crop: webkit-fine-_dock_vertical-27
+   label: div.glass-dock.vertical.shape-pill.expanded[role=toolbar] "Starts open vertical dock"
+   sample /dock/vertical 16 [{"rel":"inside","kind":"box","detail":{"dO":[0,-4,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Home"},{"rel":"inside","kind":"box","detail":{"dO":[12,64,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover.text-"},{"rel":"inside","kind":"box","detail":{"dO":[12,64,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover.text-"},{"rel":"inside","kind":"box","detail":{"dO":[12,64,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover.text-"}]  
+
+== after-hover | DIV|toolbar||expanded.glass-dock.shape-pill.vertical | n= 1 | webkit/fine | routes: /dock/vertical | crop: webkit-fine-_dock_vertical-27
+   label: div.glass-dock.vertical.shape-pill.expanded[role=toolbar] "Starts open vertical dock"
+   sample /dock/vertical 1 [{"rel":"target","kind":"props","detail":["padding-top 12px->7.998964px","padding-bottom 12px->7.998964px"],"label":"div.glass-dock.vertical.shape-pill.expanded[role=toolbar] \"Data\""}]  
+
+== focus | DIV|toolbar||expanded.glass-dock.shape-pill.vertical | n= 1 | webkit/fine | routes: /dock/vertical | crop: webkit-fine-_dock_vertical-27
+   label: div.glass-dock.vertical.shape-pill.expanded[role=toolbar] "Starts open vertical dock"
+   sample /dock/vertical 3 [{"rel":"inside","kind":"box","detail":{"dO":[-12,-64,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Open"},{"rel":"inside","kind":"box","detail":{"dO":[-12,-64,30,0],"dc":[0,0]},"label":"div#glass-dock-v-25-summary.dock-layer.dock-layer--summary"},{"rel":"target","kind":"props","detail":["padding-top 12px->8px","padding-bottom 12px->8px"],"label":"div.glass-dock.vertical.shape-pill.expanded[role=toolbar] \"Data\""}]  
+
+== after-focus | DIV|toolbar||expanded.glass-dock.shape-pill.vertical | n= 1 | webkit/fine | routes: /dock/vertical | crop: webkit-fine-_dock_vertical-27
+   label: div.glass-dock.vertical.shape-pill.expanded[role=toolbar] "Starts open vertical dock"
+   sample /dock/vertical 3 [{"rel":"inside","kind":"box","detail":{"dO":[-12,-64,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Open"},{"rel":"inside","kind":"box","detail":{"dO":[-12,-64,30,0],"dc":[0,0]},"label":"div#glass-dock-v-25-summary.dock-layer.dock-layer--summary"},{"rel":"target","kind":"props","detail":["padding-top 12px->8px","padding-bottom 12px->8px"],"label":"div.glass-dock.vertical.shape-pill.expanded[role=toolbar] \"Data\""}]  
+
+== press | DIV|toolbar||expanded.glass-dock.shape-pill.vertical | n= 1 | webkit/fine | routes: /dock/vertical | crop: webkit-fine-_dock_vertical-27
+   label: div.glass-dock.vertical.shape-pill.expanded[role=toolbar] "Starts open vertical dock"
+   sample /dock/vertical 11 [{"rel":"other","kind":"box","detail":{"dO":[0,4,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Home"},{"rel":"other","kind":"box","detail":{"dO":[12,64,-30,0],"dc":[0,0]},"label":"div#glass-dock-v-24-summary.dock-layer.dock-layer--summary.is-active[r"},{"rel":"other","kind":"box","detail":{"dO":[12,64,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Open"},{"rel":"other","kind":"box","detail":{"dO":[0,4,0,0],"dc":[0,0]},"label":"div.dock-persistent"}]  
+
+== release | DIV|toolbar||expanded.glass-dock.shape-pill.vertical | n= 1 | webkit/fine | routes: /dock/vertical | crop: webkit-fine-_dock_vertical-27
+   label: div.glass-dock.vertical.shape-pill.expanded[role=toolbar] "Starts open vertical dock"
+   sample /dock/vertical 1 [{"rel":"target","kind":"props","detail":["padding-top 12px->8px","padding-bottom 12px->8px"],"label":"div.glass-dock.vertical.shape-pill.expanded[role=toolbar] \"Data\""}]  
+
+== after-press | DIV|toolbar||expanded.glass-dock.shape-pill.vertical | n= 1 | webkit/fine | routes: /dock/vertical | crop: webkit-fine-_dock_vertical-27
+   label: div.glass-dock.vertical.shape-pill.expanded[role=toolbar] "Starts open vertical dock"
+   sample /dock/vertical 1 [{"rel":"target","kind":"props","detail":["padding-top 12px->8px","padding-bottom 12px->8px"],"label":"div.glass-dock.vertical.shape-pill.expanded[role=toolbar] \"Data\""}]  
+
+== press | DIV|||flex.justify-start.overflow-hidden.p-6.relative.rounded-[var(--radius-card)] | n= 1 | webkit/fine | routes: /dock/vertical | crop: webkit-fine-_dock_vertical-28
+   label: div.relative.flex.justify-start.overflow-hidden.rounded-[var(--radius-card)].p-6 "Foundations Primitives Conta
+   sample /dock/vertical 8 [{"rel":"other","kind":"box","detail":{"dO":[0,4,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Home"},{"rel":"other","kind":"box","detail":{"dO":[0,4,0,0],"dc":[0,0]},"label":"div.dock-persistent"},{"rel":"other","kind":"box","detail":{"dO":[0,0,0,-4],"dc":[0,-4]},"label":"div#glass-dock-v-25-full.dock-layer.dock-layer--full.dock-run[role=too"},{"rel":"other","kind":"box","detail":{"dO":[0,0,0,-4],"dc":[0,0]},"label":"div.dock-layers"}]  
+
+== press | BUTTON|tab||dock-layer-tab | n= 1 | webkit/fine | routes: /dock/layers | crop: webkit-fine-_dock_layers-27
+   label: button#dock-tab-v-23-assets.dock-layer-tab[role=tab] "Assets"
+   sample /dock/layers 30 [{"rel":"other","kind":"box","detail":{"dO":[9,8,0,0],"dc":[0,0]},"label":"div#glass-dock-v-20-summary.dock-layer.dock-layer--summary.is-active[r"},{"rel":"other","kind":"box","detail":{"dO":[9,8,0,0],"dc":[0,0]},"label":"button.dock-icon-button.glass-specular-track.glass-capsule-hover \"Open"},{"rel":"target","kind":"box","detail":{"dO":[0,-52,0,0],"dc":[0,0]},"label":"button#dock-tab-v-23-assets.dock-layer-tab[role=tab] \"Assets\""},{"rel":"sibling","kind":"box","detail":{"dO":[0,-52,0,0],"dc":[0,0]},"label":"button#dock-tab-v-23-layers.dock-layer-tab[role=tab] \"Layers\""}]  
+
+== after-hover | DIV|||fading-scroll.fading-scroll--x.story-code-block-scroll | n= 1 | webkit/fine | routes: /display/card | crop: webkit-fine-_display_card-9
+   label: div.fading-scroll.fading-scroll--x.story-code-block-scroll "<script setup lang="ts"> import { Card, "
+   sample /display/card 2 [{"rel":"other","kind":"box","detail":{"dO":[121,0,-121,0],"dc":[0,0]},"label":"span.story-code-block-status.text-mono-caption[role=status]"},{"rel":"other","kind":"props","detail":["margin-left 189.609375px->310.4375px"],"label":"span.story-code-block-status.text-mono-caption[role=status]"}] ADDS [{"label":"svg.lucide.lucide-copy-icon.lucide-copy.size-4","w":16,"h":16}] 
+
+== focus | DIV|||fading-scroll.fading-scroll--x.story-code-block-scroll | n= 1 | webkit/fine | routes: /display/card | crop: webkit-fine-_display_card-9
+   label: div.fading-scroll.fading-scroll--x.story-code-block-scroll "<script setup lang="ts"> import { Card, "
+   sample /display/card 2 [{"rel":"other","kind":"box","detail":{"dO":[121,0,-121,0],"dc":[0,0]},"label":"span.story-code-block-status.text-mono-caption[role=status]"},{"rel":"other","kind":"props","detail":["margin-left 189.609375px->310.4375px"],"label":"span.story-code-block-status.text-mono-caption[role=status]"}]  
+
+== after-focus | DIV|||fading-scroll.fading-scroll--x.story-code-block-scroll | n= 1 | webkit/fine | routes: /display/card | crop: webkit-fine-_display_card-9
+   label: div.fading-scroll.fading-scroll--x.story-code-block-scroll "<script setup lang="ts"> import { Card, "
+   sample /display/card 2 [{"rel":"other","kind":"box","detail":{"dO":[121,0,-121,0],"dc":[0,0]},"label":"span.story-code-block-status.text-mono-caption[role=status]"},{"rel":"other","kind":"props","detail":["margin-left 189.609375px->310.4375px"],"label":"span.story-code-block-status.text-mono-caption[role=status]"}]  
+
+== press | DIV|||fading-scroll.fading-scroll--x.story-code-block-scroll | n= 1 | webkit/fine | routes: /display/card | crop: webkit-fine-_display_card-9
+   label: div.fading-scroll.fading-scroll--x.story-code-block-scroll "<script setup lang="ts"> import { Card, "
+   sample /display/card 2 [{"rel":"other","kind":"box","detail":{"dO":[121,0,-121,0],"dc":[0,0]},"label":"span.story-code-block-status.text-mono-caption[role=status]"},{"rel":"other","kind":"props","detail":["margin-left 189.609375px->310.4375px"],"label":"span.story-code-block-status.text-mono-caption[role=status]"}]  
+
+== TRANSFORMS (largest per signature/state), top 60
+  6.3px press webkit/fine /display/card dx/dy/dw/dh=6.2/2/-12.6/-4  div.glass-resting.card[role=option][data-slot=card] "Balanced The fill carries t
+  4.2px release webkit/fine /forms/chip dx/dy/dw/dh=-4.2/-1.3/8.4/2.6  button.glass-chip.glass-capsule.accent-tone.inline-flex.items-center.justify-cen
+  4.2px after-press webkit/fine /forms/chip dx/dy/dw/dh=-4.2/-1.3/8.4/2.6  button.glass-chip.glass-capsule.accent-tone.inline-flex.items-center.justify-cen
+  2.9px press webkit/fine /display/card dx/dy/dw/dh=-2.9/1.6/5.7/-3.2  button.button.tap-squish.focus-ring.glass-capsule.glass-specular-track.glass-cap
+  2.8px press webkit/fine /display/buttons dx/dy/dw/dh=-2.8/1.8/5.5/-3.6  button.button.tap-squish.focus-ring.glass-capsule.glass-specular-track.glass-dee
+  2.7px press webkit/fine /display/buttons dx/dy/dw/dh=-2.7/1.7/5.4/-3.6  button.button.tap-squish.focus-ring[data-slot=button] "Touch command"
+  2.5px press webkit/fine /dock/overview dx/dy/dw/dh=2.4/0.5/-4.9/-1  button#reka-dropdown-menu-trigger-v-20.menu__trigger.dock-trigger.dock-dropdown-
+  2.4px release webkit/fine /forms/checks dx/dy/dw/dh=-2.4/-2.4/4.8/4.8  span.control-bit__mark
+  2.4px after-press webkit/fine /forms/checks dx/dy/dw/dh=-2.4/-2.4/4.8/4.8  span.control-bit__mark
+  2.0px press webkit/fine /dock/controls dx/dy/dw/dh=2/0.7/-4/-1.5  button.dock-tab-button.glass-specular-track "Overview"
+  1.6px press webkit/fine /substrates/glass-panel dx/dy/dw/dh=1.6/0.3/-3.2/-0.7  a.focus-ring.interactive-item.transition-control.text-small.text-muted-foregroun
+  1.6px press webkit/fine /display/card dx/dy/dw/dh=-0.6/1.6/1.2/-3.2  button.button.tap-squish.focus-ring.story-code-block-copy[data-slot=button] "Cop
+  1.4px press webkit/fine /dock/overview dx/dy/dw/dh=1.4/0.5/-2.9/-0.9  button.dock-trigger.dock-select-trigger[role=combobox] "Preview Preview"
+  1.4px press webkit/fine /dock/overview dx/dy/dw/dh=1.4/0.5/-2.9/-1  button#reka-popover-trigger-v-21.dock-trigger.dock-dropdown-trigger "Info"
+  1.4px press webkit/fine /dock/vertical dx/dy/dw/dh=0.3/1.4/-0.4/-2.7  button.dock-icon-button.glass-specular-track.glass-capsule-hover "Home"
+  1.4px press webkit/fine /dock/vertical dx/dy/dw/dh=0.3/1.4/-0.4/-2.7  button.dock-icon-button.glass-specular-track.glass-capsule-hover.text-muted-fore
+  1.4px press webkit/fine /dock/controls dx/dy/dw/dh=0.2/1.3/-0.4/-2.7  button.dock-icon-button.glass-specular-track.glass-capsule-hover.glass-capsule "
+  1.4px press webkit/fine /display/buttons dx/dy/dw/dh=-0.8/1.3/1.6/-2.7  a.button.tap-squish.focus-ring.glass-capsule.glass-specular-track.glass-capsule-
+  0.9px press webkit/fine /forms/checks dx/dy/dw/dh=0.9/0.9/-1.8/-1.8  button#chk-tos.checkbox.control-bit.tap-squish[role=checkbox][data-slot=checkbox
+  0.9px press webkit/fine /forms/checks dx/dy/dw/dh=0.8/0.9/-1.8/-1.8  button#plan-solo.control-bit.tap-squish[role=radio][data-slot=radio-group-item] 
+  0.9px press webkit/fine /forms/checks dx/dy/dw/dh=0.9/0.9/-1.8/-1.8  button#sw-notifications.switch.control-bit.tap-squish[role=switch][data-slot=swi
+  0.5px release webkit/fine /forms/toggle dx/dy/dw/dh=0/0/0.9/0  button.toggle-group__item.control-surface.glass-control-edge.glass-capsule-hover
+  0.5px after-press webkit/fine /forms/toggle dx/dy/dw/dh=0/0/0.9/0  button.toggle-group__item.control-surface.glass-control-edge.glass-capsule-hover
+  0.3px press webkit/fine /forms/checks dx/dy/dw/dh=0.2/0.3/-0.5/-0.5  span.control-bit__mark
+
+== OVERLAPS 0
+
+moves total 135 signatures 24

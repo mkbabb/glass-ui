@@ -12,4 +12,5 @@ export {
     default as PopoverContent,
     type PopoverContentEmits,
     type PopoverContentProps,
+    type PopoverVirtualElement,
 } from "./PopoverContent.vue";

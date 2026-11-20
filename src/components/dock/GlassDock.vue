@@ -47,6 +47,7 @@ import { useDockClickIntegrity } from "./composables/useDockClickIntegrity";
 // two CSS branches were three moving parts expressing one fact the platform already
 // had.
 import { useDockRun } from "./composables/useDockRun";
+import { useDockRunMark } from "./composables/useDockRunMark";
 
 /* The attrs contract. Fall-through attrs (class, data-testid, aria-*, the container
    styles every gate + consumer targets via `.glass-dock[...]`) belong on the
@@ -128,6 +129,9 @@ const persistentEndEl = useTemplateRef<HTMLElement>("persistentEndEl");
    roving tabindex and the announcement all read the SAME seat list, so they live in
    one composable rather than three that must agree. */
 const { toolbar, controls: controlCount, restingScroll, halt: haltReach } = useDockRun({ runEl: fullEl, statusEl, orientation });
+/* One selected plate for a navigation run, gliding between `aria-current` seats: the
+   run renders its inert `.dock-run-mark` while `marked` (run.css, THE ACTIVE MARK). */
+const { marked: runMarked } = useDockRunMark({ runEl: fullEl });
 
 /* Wire the sampled-luminance observer ON for
    the dock by default. It writes `--glass-backdrop-luma` + derives the
@@ -303,7 +307,20 @@ if (import.meta.env.VITE_DOCK_HOLD === "1" && typeof window !== "undefined") {
     (window as unknown as { __dockHold: Record<string, (f: number | null) => void> }).__dockHold[dockId] = body.__dockPose!;
 }
 
-const summaryIsDisclosure = computed(() => outerCurrentLayer.value === "summary");
+/* THE PERSISTENT FACE. With no `#collapsed` slot authored and a seat in `#persistent`
+   or `#persistent-end`, those seats ARE the collapsed face: the summary pane is empty
+   (morph.css shrinks it to nothing, so the plate shrink-wraps the seats on the one
+   spring) and it is no disclosure. A summary button beside the seats would put a
+   second control on the collapsed dock, and wrapping a seat in it would nest a button
+   in a button. Expansion follows `expand-on`: a hover or a keyboard focus on a seat, or
+   a long press on a coarse pointer (useDockState); a press on a seat is the seat's.
+   Both reads are functions, decided on every render and every event: `useSlots()` is not
+   reactive, so a computed over it would keep the slots as they were at mount, and a
+   `#collapsed` that arrives later would sit in a summary with no role, tab stop or name. */
+const persistentFace = (): boolean =>
+    !slots.collapsed && (!!slots.persistent || !!slots["persistent-end"]);
+const summaryIsDisclosure = (): boolean =>
+    outerCurrentLayer.value === "summary" && !persistentFace();
 /** Once the expand has patched the full face live, focus its first seat. The full face
     is the fallback focus target (it carries `tabindex="-1"`): a dock whose expanded face
     holds NO focusable descendant would otherwise no-op to <body>, and the summary goes
@@ -318,7 +335,7 @@ async function focusFirstSeat(): Promise<void> {
 }
 
 async function onSummaryKeydown(event: KeyboardEvent) {
-    if (!summaryIsDisclosure.value || !["Enter", " "].includes(event.key)) return;
+    if (!summaryIsDisclosure() || !["Enter", " "].includes(event.key)) return;
     event.preventDefault();
     onClickCollapsed();
     await focusFirstSeat();
@@ -334,7 +351,7 @@ let summaryFocusFromCollapse = false;
 function onSummaryFocusIn(event: FocusEvent): void {
     const reach =
         !summaryFocusFromCollapse &&
-        summaryIsDisclosure.value &&
+        summaryIsDisclosure() &&
         !!summaryEl.value?.matches(":focus-visible");
     event.stopPropagation();
     if (!reach) return;
@@ -383,7 +400,8 @@ function onFullKeydown(event: KeyboardEvent): void {
    overlay's later return to its inert trigger is a no-op on an inert element. An
    overlay a `#persistent` control opened is not the face's: it stays open, focus in it
    stays, and taking it would send its own focus return to a live trigger and re-expand
-   the dock (critic-3 D-1). */
+   the dock (critic-3 D-1). A persistent face has no summary to take focus: its first
+   seat takes it. */
 watch(visualExpanded, async (isExpanded, was) => {
     if (!was || isExpanded) return;
     const active = document.activeElement;
@@ -393,10 +411,14 @@ watch(visualExpanded, async (isExpanded, was) => {
             dockId;
     if (!held) return;
     await nextTick();
-    const summary = summaryEl.value;
-    if (!summary || summary.hasAttribute("inert")) return;
+    const target = persistentFace()
+        ? dockEl.value?.querySelector<HTMLElement>(
+              `.dock-persistent :is(${FOCUSABLE_SELECTOR})`,
+          )
+        : summaryEl.value;
+    if (!target || target.hasAttribute("inert")) return;
     summaryFocusFromCollapse = true;
-    summary.focus({ preventScroll: true });
+    target.focus({ preventScroll: true });
     summaryFocusFromCollapse = false;
 });
 
@@ -552,7 +574,7 @@ defineExpose({
             No cartoon box-punch; the morph carries ONE
             deformation-free `--dock-size-scale` box morph on the `scale:` channel.
         -->
-        <div v-if="$slots.persistent || regionWanted(siteId, 'persistent')" ref="persistentEl" class="dock-persistent">
+        <div v-if="$slots.persistent || regionWanted(siteId, 'persistent')" ref="persistentEl" class="dock-persistent dock-persistent-start">
             <slot name="persistent" />
         </div>
 
@@ -611,6 +633,7 @@ defineExpose({
                 @keydown="onFullKeydown"
             >
                 <DockFace><slot /></DockFace>
+                <span v-if="runMarked" class="dock-run-mark" aria-hidden="true"></span>
             </div>
             <div
                 ref="summaryEl"
@@ -620,11 +643,11 @@ defineExpose({
                     'is-leaving': outerLeavingLayer === 'summary',
                 }]"
                 :inert="(outerCurrentLayer !== 'summary') || undefined"
-                :role="summaryIsDisclosure ? 'button' : undefined"
-                :tabindex="summaryIsDisclosure ? 0 : undefined"
-                :aria-label="summaryIsDisclosure ? props.collapsedLabel : undefined"
-                :aria-expanded="summaryIsDisclosure ? 'false' : undefined"
-                :aria-controls="summaryIsDisclosure ? `${dockId}-full` : undefined"
+                :role="summaryIsDisclosure() ? 'button' : undefined"
+                :tabindex="summaryIsDisclosure() ? 0 : undefined"
+                :aria-label="summaryIsDisclosure() ? props.collapsedLabel : undefined"
+                :aria-expanded="summaryIsDisclosure() ? 'false' : undefined"
+                :aria-controls="summaryIsDisclosure() ? `${dockId}-full` : undefined"
                 @focusin="onSummaryFocusIn"
                 @keydown="onSummaryKeydown"
                 @click="onClickCollapsed"

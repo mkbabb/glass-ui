@@ -1,0 +1,62 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/demo
+
+ ❯ tests/gates/overfit-structure.test.ts (15 tests | 1 failed) 55ms
+     × every runtime export is reachable — no export leaks (zero external site AND unpublished) 10ms
+ ❯ tests/components/fourier-field/FourierField.smoke.test.ts (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/fourier-field/FourierField.smoke.test.ts [ tests/components/fourier-field/FourierField.smoke.test.ts ]
+Error: Failed to resolve import "@mkbabb/glass-ui/fourier-math" from "tests/components/fourier-field/FourierField.smoke.test.ts". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/demo/tests/components/fourier-field/FourierField.smoke.test.ts:18:29
+  15 |  import { readFileSync, readdirSync, statSync } from "node:fs";
+  16 |  import { join } from "node:path";
+  17 |  import * as fourierMath from "@mkbabb/glass-ui/fourier-math";
+     |                                ^
+  18 |  import { dftFromPoints, makeEllipticSpectrum, positionsAt } from "@mkbabb/glass-ui/fourier-math";
+  19 |  import { DEFAULT_FOURIER_CONFIG, FourierField, FOURIER_FIGURES, makeHarmonicFigure, mintSpectrum } from "@glass/compo...
+ ❯ TransformPluginContext._formatLog ../../../../node_modules/vite/dist/node/chunks/node.js:30416:39
+ ❯ TransformPluginContext.error ../../../../node_modules/vite/dist/node/chunks/node.js:30413:14
+ ❯ normalizeUrl ../../../../node_modules/vite/dist/node/chunks/node.js:27438:18
+ ❯ ../../../../node_modules/vite/dist/node/chunks/node.js:27506:30
+ ❯ TransformPluginContext.transform ../../../../node_modules/vite/dist/node/chunks/node.js:27474:4
+ ❯ EnvironmentPluginContainer.transform ../../../../node_modules/vite/dist/node/chunks/node.js:30201:14
+ ❯ loadAndTransform ../../../../node_modules/vite/dist/node/chunks/node.js:20124:26
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/gates/overfit-structure.test.ts > gate:G-OVERFIT — EXPORT-REACH arm (the TS twin of orphan-css-partial) > every runtime export is reachable — no export leaks (zero external site AND unpublished)
+AssertionError: 2 runtime export(s) are referenced nowhere outside their own module AND ship on no published subpath. An unreachable export is not API — make it module-private or delete it:
+  src/components/fourier-field/constants.ts :: FOURIER_STROKE_RUNGS
+  src/composables/glass/backdropLuminanceSample.ts :: SHELL_FIELD_CANVAS_SELECTOR: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "src/components/fourier-field/constants.ts :: FOURIER_STROKE_RUNGS",
++   "src/composables/glass/backdropLuminanceSample.ts :: SHELL_FIELD_CANVAS_SELECTOR",
++ ]
+
+ ❯ tests/gates/overfit-structure.test.ts:237:11
+    235|             `${offenders.length} runtime export(s) are referenced nowh…
+    236|                 `An unreachable export is not API — make it module-pri…
+    237|         ).toEqual([]);
+       |           ^
+    238|     });
+    239|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed | 32 passed (34)
+      Tests  1 failed | 484 passed | 1 expected fail (486)
+   Start at  15:22:27
+   Duration  15.56s (transform 4.39s, setup 1.73s, import 9.39s, tests 5.21s, environment 8.12s)
+

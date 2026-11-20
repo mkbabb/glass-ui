@@ -44,21 +44,20 @@ export const DOCK_LAYER_GROUP_LABEL = "glass-ui:dock-layer-group";
  * this window cancels the expansion. */
 export const HOVER_INTENT_MS = 60;
 
+/** A touch or pen press held this long on a collapsed dock's persistent seat expands
+ * the dock instead of pressing the seat (the coarse pointer has no hover). */
+export const DOCK_LONG_PRESS_MS = 500;
+
+/** Travel, in px, past which a held press is a drag and never a long press. */
+export const DOCK_LONG_PRESS_SLOP_PX = 10;
+
 /**
- * The ONE idle window before an unheld, unhovered dock auto-collapses.
- *
- * [2026-08-12 · BK #47 W1 SURFACE] `collapseDelay` was a per-dock prop; it is struck
- * and this is its single resolution point. The patient-dwell value (2500 → 3600) is a
- * forgiving hover/interaction window.
- *
- * [2026-08-24 · BK #47 W3 LATTICE] ~~`useDockState` and `useDockTouchGate` both default
- * to it, so the two owners of the same timer cannot drift apart.~~ — `useDockTouchGate`
- * is DELETED (a JS touch gate beside a native snap scroller is a second owner of one
- * gesture; `touch-action: pan-x` + mandatory snap supersede it outright). There is now
- * exactly ONE consumer, `useDockState`, so the drift this sentence guarded against is
- * not merely prevented — it has no second party left to occur between.
+ * The one idle window before an unheld, unhovered dock auto-collapses: six seconds
+ * after the pointer and focus leave it, or after mount for a dock mounted open. Long
+ * enough that a reader who steps away to the page and comes back finds the dock still
+ * open. `useDockState` is its one reader.
  */
-export const DOCK_COLLAPSE_DELAY_MS = 3600;
+export const DOCK_COLLAPSE_DELAY_MS = 6000;
 
 /* Morph-settle window for the click-integrity guard
  * (`useDockClickIntegrity`). After the dock flips collapsed→expanded (a tap or a

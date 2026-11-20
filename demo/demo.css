@@ -155,6 +155,15 @@
     --ppmycota: hsl(248 88% 71%);
 }
 
+/* The site's one ground: the shell field's settled mean colour. The head stamp
+   (`vite.dark-stamp.ts`) paints the same two colours before this sheet loads; the
+   body stays transparent over it. */
 html {
-    background: var(--background);
+    background-color: rgb(252 241 230);
+}
+html.dark {
+    background-color: rgb(43 34 27);
+}
+body {
+    background-color: transparent;
 }

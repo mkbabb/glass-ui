@@ -1,0 +1,21 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794867409 slope=21.8/s inuse=1459002 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+pass m390 / no switch; code -; layer -; console 0
+pass m390 /compositions no switch; code -; layer -; console 0
+pass m390 /compositions/auth-shell no switch; code ok; layer -; console 0
+pass m390 /compositions/settings no switch; code ok; layer -; console 0
+pass m390 /compositions/empty-states 4/4 switches; code ok; layer -; console 0
+pass m390 /containers no switch; code -; layer -; console 0
+pass m390 /containers/dialog 6/6 switches; code ok; layer -; console 0; closed 0
+pass m390 /containers/sheet 6/6 switches; code ok; layer -; console 0; closed 0
+pass m390 /containers/popover 3/3 switches; code ok; layer -; console 0
+pass m390 /containers/dropdown-menu 2/2 switches; code ok; layer -; console 0; closed 0
+pass m390 /containers/tooltip no switch; code ok; layer -; console 0
+pass m390 /containers/accordion 3/3 switches; code ok; layer -; console 0
+pass m390 /containers/expandable-container 2/2 switches; code ok; layer -; console 0
+FAIL m390 /containers/command 1/2 switches; code ok; layer -; console 0
+pass m390 /containers/configurator no switch; code -; layer ok; console 0
+pass m390 /data no switch; code -; layer -; console 0
+pass m390 /data/table no switch; code ok; layer -; console 0
+pass m390 /data/data-table 4/4 switches; code ok; layer -; console 0
+pass m390 /data/sortable-list no switch; code ok; layer -; console 0
+pass m390 /data/infinite-scroll no switch; code ok; layer -; console 0

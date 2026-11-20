@@ -1,0 +1,41 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.0
+
+(node:9452) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:9752) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/composables/motion/press.test.ts (6 tests | 1 failed) 80ms
+     × reads the root tempo only when its source changes 10ms
+(node:11021) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:11462) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/composables/motion/press.test.ts > useLiquidPress > reads the root tempo only when its source changes
+AssertionError: expected +0 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ tests/composables/motion/press.test.ts:156:29
+    154|         document.documentElement.setAttribute("data-tempo-probe", "");
+    155|         const later = mountComposable(() => useLiquidPress({ squish: f…
+    156|         expect(rootReads()).toBe(before + 1);
+       |                             ^
+    157|
+    158|         document.documentElement.removeAttribute("data-tempo-probe");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 273 passed (274)
+      Tests  1 failed | 2542 passed | 10 expected fail | 1 skipped (2554)
+   Start at  17:57:16
+   Duration  91.53s (transform 4.79s, setup 11.19s, import 37.60s, tests 44.40s, environment 49.95s)
+

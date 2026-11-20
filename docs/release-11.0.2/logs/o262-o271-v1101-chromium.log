@@ -1,0 +1,365 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794521931 slope=31.8/s inuse=25856 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for headroom (load 41 > 36)
+
+Running 22 tests using 1 worker
+
+[WebServer] 5:38:32 PM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../../@vite/client:531:50
+[WebServer] 
+  ✘   1 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:665:1 › rail · a start-anchored rail's close holds its top edge and crest, and ends on the disc (2.7s)
+  ✘   2 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:691:1 › rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate (1.5s)
+  ✘   3 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 360 (1.8s)
+  ✘   4 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 390 (1.8s)
+  ✘   5 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 1440 (1.7s)
+  ✘   6 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 360 (1.7s)
+  ✘   7 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 390 (1.7s)
+  ✘   8 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 1440 (1.7s)
+  ✓   9 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the stretched dock's rows fit with a persistent region beside the layers at 360 (1.7s)
+  ✓  10 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the stretched dock's rows fit with a persistent region beside the layers at 390 (1.8s)
+  ✓  11 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the stretched dock's rows fit with a persistent region beside the layers at 1440 (1.7s)
+[WebServer] 5:38:57 PM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../../../../@vite/client:531:50
+[WebServer] 
+  ✘  12 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:665:1 › rail · a start-anchored rail's close holds its top edge and crest, and ends on the disc (2.5s)
+  ✘  13 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:691:1 › rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate (1.5s)
+  ✘  14 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 360 (1.8s)
+  ✘  15 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 390 (1.7s)
+  ✘  16 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 1440 (1.7s)
+  ✘  17 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 360 (1.8s)
+  ✘  18 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 390 (1.7s)
+  ✘  19 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 1440 (1.7s)
+  ✓  20 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the stretched dock's rows fit with a persistent region beside the layers at 360 (1.8s)
+  ✓  21 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the stretched dock's rows fit with a persistent region beside the layers at 390 (1.7s)
+  ✓  22 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the stretched dock's rows fit with a persistent region beside the layers at 1440 (1.7s)
+
+
+  1) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:665:1 › rail · a start-anchored rail's close holds its top edge and crest, and ends on the disc 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 89
+    Received:    454.61676025390625
+
+      681 |     }
+      682 |     const bottoms = moving.map((f) => f.root[1] + f.root[3]);
+    > 683 |     for (let i = 1; i < bottoms.length; i++) expect(bottoms[i]!).toBeLessThanOrEqual(bottoms[i - 1]! + 1);
+          |                                                                  ^
+      684 |     const last = moving.at(-1)!;
+      685 |     const settled = frames.at(-1)!;
+      686 |     expect(settled.morphing).toBe(false);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:683:66
+
+    Error Context: tests-visual/test-results/release-11-0-2-rail-·-a-st-c6ee6--crest-and-ends-on-the-disc-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:691:1 › rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 2
+    Received:   46.99998092651367
+
+      699 |     info.annotations.push({ type: "rail", description: JSON.stringify({ disc, frames: moving.map((f) => [...f.root.map(Math.round), Math.round(f.crest[1]), f.foot ? f.foot.map(Math.round) : null]) }) });
+      700 |     expect(moving.length, "the open is a morph").toBeGreaterThan(6);
+    > 701 |     expect(Math.abs(moving[0]!.crest[1] - disc[1]!)).toBeLessThan(2);
+          |                                                      ^
+      702 |     for (const f of moving) {
+      703 |         expect(f.crest[1], "crest never above the plate").toBeGreaterThanOrEqual(f.root[1] - 1.5);
+      704 |         if (f.foot) {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:701:54
+
+    Error Context: tests-visual/test-results/release-11-0-2-rail-·-a-st-96ce3-e-the-foot-inside-the-plate-chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 360 
+
+    Error: the run's scrollWidth is its clientWidth
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 278
+    Received: 286
+
+      747 |             expect(r.collapsed).toBe(false);
+      748 |             expect(r.root[0], "the root's scrollWidth is its clientWidth").toBe(r.root[1]);
+    > 749 |             expect(r.run[0], "the run's scrollWidth is its clientWidth").toBe(r.run[1]);
+          |                                                                          ^
+      750 |             expect(r.scrollers, "no element is a horizontal scroller at rest").toEqual([]);
+      751 |             expect(r.page[0], "the page does not scroll sideways").toBe(r.page[1]);
+      752 |         });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:749:74
+
+    Error Context: tests-visual/test-results/release-11-0-2-rows-·-the--4db32-on-beside-the-layers-at-360-chromium-headless-new/error-context.md
+
+  4) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 390 
+
+    Error: the run's scrollWidth is its clientWidth
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 308
+    Received: 316
+
+      747 |             expect(r.collapsed).toBe(false);
+      748 |             expect(r.root[0], "the root's scrollWidth is its clientWidth").toBe(r.root[1]);
+    > 749 |             expect(r.run[0], "the run's scrollWidth is its clientWidth").toBe(r.run[1]);
+          |                                                                          ^
+      750 |             expect(r.scrollers, "no element is a horizontal scroller at rest").toEqual([]);
+      751 |             expect(r.page[0], "the page does not scroll sideways").toBe(r.page[1]);
+      752 |         });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:749:74
+
+    Error Context: tests-visual/test-results/release-11-0-2-rows-·-the--be387-on-beside-the-layers-at-390-chromium-headless-new/error-context.md
+
+  5) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 1440 
+
+    Error: the run's scrollWidth is its clientWidth
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 894
+    Received: 898
+
+      747 |             expect(r.collapsed).toBe(false);
+      748 |             expect(r.root[0], "the root's scrollWidth is its clientWidth").toBe(r.root[1]);
+    > 749 |             expect(r.run[0], "the run's scrollWidth is its clientWidth").toBe(r.run[1]);
+          |                                                                          ^
+      750 |             expect(r.scrollers, "no element is a horizontal scroller at rest").toEqual([]);
+      751 |             expect(r.page[0], "the page does not scroll sideways").toBe(r.page[1]);
+      752 |         });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:749:74
+
+    Error Context: tests-visual/test-results/release-11-0-2-rows-·-the--7c554-n-beside-the-layers-at-1440-chromium-headless-new/error-context.md
+
+  6) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 360 
+
+    Error: the run's scrollWidth is its clientWidth
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 168
+    Received: 172
+
+      747 |             expect(r.collapsed).toBe(false);
+      748 |             expect(r.root[0], "the root's scrollWidth is its clientWidth").toBe(r.root[1]);
+    > 749 |             expect(r.run[0], "the run's scrollWidth is its clientWidth").toBe(r.run[1]);
+          |                                                                          ^
+      750 |             expect(r.scrollers, "no element is a horizontal scroller at rest").toEqual([]);
+      751 |             expect(r.page[0], "the page does not scroll sideways").toBe(r.page[1]);
+      752 |         });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:749:74
+
+    Error Context: tests-visual/test-results/release-11-0-2-rows-·-the--f00d1-on-beside-the-layers-at-360-chromium-headless-new/error-context.md
+
+  7) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 390 
+
+    Error: the run's scrollWidth is its clientWidth
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 168
+    Received: 172
+
+      747 |             expect(r.collapsed).toBe(false);
+      748 |             expect(r.root[0], "the root's scrollWidth is its clientWidth").toBe(r.root[1]);
+    > 749 |             expect(r.run[0], "the run's scrollWidth is its clientWidth").toBe(r.run[1]);
+          |                                                                          ^
+      750 |             expect(r.scrollers, "no element is a horizontal scroller at rest").toEqual([]);
+      751 |             expect(r.page[0], "the page does not scroll sideways").toBe(r.page[1]);
+      752 |         });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:749:74
+
+    Error Context: tests-visual/test-results/release-11-0-2-rows-·-the--4767f-on-beside-the-layers-at-390-chromium-headless-new/error-context.md
+
+  8) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 1440 
+
+    Error: the run's scrollWidth is its clientWidth
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 168
+    Received: 172
+
+      747 |             expect(r.collapsed).toBe(false);
+      748 |             expect(r.root[0], "the root's scrollWidth is its clientWidth").toBe(r.root[1]);
+    > 749 |             expect(r.run[0], "the run's scrollWidth is its clientWidth").toBe(r.run[1]);
+          |                                                                          ^
+      750 |             expect(r.scrollers, "no element is a horizontal scroller at rest").toEqual([]);
+      751 |             expect(r.page[0], "the page does not scroll sideways").toBe(r.page[1]);
+      752 |         });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:749:74
+
+    Error Context: tests-visual/test-results/release-11-0-2-rows-·-the--a7f21-n-beside-the-layers-at-1440-chromium-headless-new/error-context.md
+
+  9) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:665:1 › rail · a start-anchored rail's close holds its top edge and crest, and ends on the disc 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 89
+    Received:    485.1764221191406
+
+      681 |     }
+      682 |     const bottoms = moving.map((f) => f.root[1] + f.root[3]);
+    > 683 |     for (let i = 1; i < bottoms.length; i++) expect(bottoms[i]!).toBeLessThanOrEqual(bottoms[i - 1]! + 1);
+          |                                                                  ^
+      684 |     const last = moving.at(-1)!;
+      685 |     const settled = frames.at(-1)!;
+      686 |     expect(settled.morphing).toBe(false);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:683:66
+
+    Error Context: tests-visual/test-results/release-11-0-2-rail-·-a-st-c6ee6--crest-and-ends-on-the-disc-coarse-touch/error-context.md
+
+  10) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:691:1 › rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate 
+
+    Error: expect(received).toBeLessThan(expected)
+
+    Expected: < 2
+    Received:   51.00001907348633
+
+      699 |     info.annotations.push({ type: "rail", description: JSON.stringify({ disc, frames: moving.map((f) => [...f.root.map(Math.round), Math.round(f.crest[1]), f.foot ? f.foot.map(Math.round) : null]) }) });
+      700 |     expect(moving.length, "the open is a morph").toBeGreaterThan(6);
+    > 701 |     expect(Math.abs(moving[0]!.crest[1] - disc[1]!)).toBeLessThan(2);
+          |                                                      ^
+      702 |     for (const f of moving) {
+      703 |         expect(f.crest[1], "crest never above the plate").toBeGreaterThanOrEqual(f.root[1] - 1.5);
+      704 |         if (f.foot) {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:701:54
+
+    Error Context: tests-visual/test-results/release-11-0-2-rail-·-a-st-96ce3-e-the-foot-inside-the-plate-coarse-touch/error-context.md
+
+  11) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 360 
+
+    Error: the run's scrollWidth is its clientWidth
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 274
+    Received: 287
+
+      747 |             expect(r.collapsed).toBe(false);
+      748 |             expect(r.root[0], "the root's scrollWidth is its clientWidth").toBe(r.root[1]);
+    > 749 |             expect(r.run[0], "the run's scrollWidth is its clientWidth").toBe(r.run[1]);
+          |                                                                          ^
+      750 |             expect(r.scrollers, "no element is a horizontal scroller at rest").toEqual([]);
+      751 |             expect(r.page[0], "the page does not scroll sideways").toBe(r.page[1]);
+      752 |         });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:749:74
+
+    Error Context: tests-visual/test-results/release-11-0-2-rows-·-the--4db32-on-beside-the-layers-at-360-coarse-touch/error-context.md
+
+  12) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 390 
+
+    Error: the run's scrollWidth is its clientWidth
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 304
+    Received: 317
+
+      747 |             expect(r.collapsed).toBe(false);
+      748 |             expect(r.root[0], "the root's scrollWidth is its clientWidth").toBe(r.root[1]);
+    > 749 |             expect(r.run[0], "the run's scrollWidth is its clientWidth").toBe(r.run[1]);
+          |                                                                          ^
+      750 |             expect(r.scrollers, "no element is a horizontal scroller at rest").toEqual([]);
+      751 |             expect(r.page[0], "the page does not scroll sideways").toBe(r.page[1]);
+      752 |         });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:749:74
+
+    Error Context: tests-visual/test-results/release-11-0-2-rows-·-the--be387-on-beside-the-layers-at-390-coarse-touch/error-context.md
+
+  13) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 1440 
+
+    Error: the run's scrollWidth is its clientWidth
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 890
+    Received: 899
+
+      747 |             expect(r.collapsed).toBe(false);
+      748 |             expect(r.root[0], "the root's scrollWidth is its clientWidth").toBe(r.root[1]);
+    > 749 |             expect(r.run[0], "the run's scrollWidth is its clientWidth").toBe(r.run[1]);
+          |                                                                          ^
+      750 |             expect(r.scrollers, "no element is a horizontal scroller at rest").toEqual([]);
+      751 |             expect(r.page[0], "the page does not scroll sideways").toBe(r.page[1]);
+      752 |         });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:749:74
+
+    Error Context: tests-visual/test-results/release-11-0-2-rows-·-the--7c554-n-beside-the-layers-at-1440-coarse-touch/error-context.md
+
+  14) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 360 
+
+    Error: the run's scrollWidth is its clientWidth
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 184
+    Received: 188
+
+      747 |             expect(r.collapsed).toBe(false);
+      748 |             expect(r.root[0], "the root's scrollWidth is its clientWidth").toBe(r.root[1]);
+    > 749 |             expect(r.run[0], "the run's scrollWidth is its clientWidth").toBe(r.run[1]);
+          |                                                                          ^
+      750 |             expect(r.scrollers, "no element is a horizontal scroller at rest").toEqual([]);
+      751 |             expect(r.page[0], "the page does not scroll sideways").toBe(r.page[1]);
+      752 |         });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:749:74
+
+    Error Context: tests-visual/test-results/release-11-0-2-rows-·-the--f00d1-on-beside-the-layers-at-360-coarse-touch/error-context.md
+
+  15) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 390 
+
+    Error: the run's scrollWidth is its clientWidth
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 184
+    Received: 188
+
+      747 |             expect(r.collapsed).toBe(false);
+      748 |             expect(r.root[0], "the root's scrollWidth is its clientWidth").toBe(r.root[1]);
+    > 749 |             expect(r.run[0], "the run's scrollWidth is its clientWidth").toBe(r.run[1]);
+          |                                                                          ^
+      750 |             expect(r.scrollers, "no element is a horizontal scroller at rest").toEqual([]);
+      751 |             expect(r.page[0], "the page does not scroll sideways").toBe(r.page[1]);
+      752 |         });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:749:74
+
+    Error Context: tests-visual/test-results/release-11-0-2-rows-·-the--4767f-on-beside-the-layers-at-390-coarse-touch/error-context.md
+
+  16) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 1440 
+
+    Error: the run's scrollWidth is its clientWidth
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 184
+    Received: 188
+
+      747 |             expect(r.collapsed).toBe(false);
+      748 |             expect(r.root[0], "the root's scrollWidth is its clientWidth").toBe(r.root[1]);
+    > 749 |             expect(r.run[0], "the run's scrollWidth is its clientWidth").toBe(r.run[1]);
+          |                                                                          ^
+      750 |             expect(r.scrollers, "no element is a horizontal scroller at rest").toEqual([]);
+      751 |             expect(r.page[0], "the page does not scroll sideways").toBe(r.page[1]);
+      752 |         });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:749:74
+
+    Error Context: tests-visual/test-results/release-11-0-2-rows-·-the--a7f21-n-beside-the-layers-at-1440-coarse-touch/error-context.md
+
+  16 failed
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:665:1 › rail · a start-anchored rail's close holds its top edge and crest, and ends on the disc 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:691:1 › rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 360 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 390 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 1440 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 360 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 390 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 1440 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:665:1 › rail · a start-anchored rail's close holds its top edge and crest, and ends on the disc 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:691:1 › rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 360 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 390 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the transport dock's rows fit with a persistent region beside the layers at 1440 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 360 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 390 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:713:9 › rows · the editor dock's rows fit with a persistent region beside the layers at 1440 
+  6 passed (50.9s)

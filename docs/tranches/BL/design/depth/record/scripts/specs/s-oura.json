@@ -1,0 +1,49 @@
+{
+ "url": "https://ouraring.com/",
+ "root": "main",
+ "depth": 4,
+ "gate": true,
+ "layers": [
+  {
+   "label": "card 1 image",
+   "sel": "img.object-cover"
+  },
+  {
+   "label": "card 2 image",
+   "sel": "img.object-cover",
+   "nth": 1
+  },
+  {
+   "label": "card 1 box",
+   "sel": ".col-start-main .overflow-hidden"
+  },
+  {
+   "label": "section title",
+   "sel": "h2",
+   "contains": "Understand",
+   "text": true
+  }
+ ],
+ "startY": 600,
+ "steps": 16,
+ "frames": [
+  0,
+  2,
+  4,
+  6,
+  8,
+  10,
+  12,
+  16
+ ],
+ "narrowStartY": 500,
+ "narrowSteps": 14,
+ "wait": 6000,
+ "after": "(() => { const i = document.querySelectorAll('img.object-cover')[0]; const p = i.parentElement; return { imgStyle: i.getAttribute('style'), parentStyle: p.getAttribute('style'), parentCls: p.className, gp: p.parentElement.className, gpStyle: p.parentElement.getAttribute('style'), imgH: i.getBoundingClientRect().height, boxH: p.getBoundingClientRect().height }; })()",
+ "modes": [
+  "wide",
+  "prm",
+  "narrow"
+ ],
+ "name": "s-oura"
+}

@@ -40,7 +40,9 @@ for (const L of LANES) {
 
 let crit = null
 let clean = 0
-for (let round = 1; round <= 8; round++) {
+const LASTR = (args && args.lastRound) || 8
+const NEED = (args && args.cleanNeeded) || 2
+for (let round = 1; round <= LASTR; round++) {
   if (crit && (crit.defects || []).length) {
     phase('Fix')
     const f = await retry(() => seat(ID + '\n' + LAW + '\n' + SCOPE + '\nYou are the FIX seat (before critic ' + round + ') on release/11.1.0 in ' + WT + '. Read ' + REL + '/ in full. Cure every defect below at its root, add or correct a witness for each (RED before, GREEN after, both engines), re-run the affected gates (guarded), record in ' + REL + '/fix-' + round + '.md, and commit. ' + PACE + MEAS + RES('fix-1110-' + round) + ' Defects:\n' + JSON.stringify(crit.defects, null, 1), { label: 'fix-1110-' + round, phase: 'Fix', model: 'opus', schema: REP }))
@@ -50,8 +52,8 @@ for (let round = 1; round <= 8; round++) {
   crit = await retry(() => seat(ID + '\n' + LAW + '\n' + SCOPE + '\nYou are a FRESH ADVERSARIAL CRITIC (round ' + round + ') of release/11.1.0 in ' + WT + '. You built nothing on it. Read every commit (git -C ' + WT + ' log master..release/11.1.0) and ' + REL + '/ in full. Try to REFUTE each lane\'s claims: for every item, re-run its witness in headless Chromium and Playwright WebKit (guarded; --exclusive webkit) at 390 and 1440, and test whether it is RED on v11.0.0; look at the item in paint, light and dark, and judge it against its INBOUND row, its wave addendum and the design bar (weight and inertia on the shared presets, reduced motion cuts, no ornament); confirm nothing breaks a consumer of 11.0.0 (the public exports, props and tokens, against the 11.0.0 tarball); check the dock in every posture at 390 and 1440, fine and coarse, for regressions; check the CHANGELOG entry is accurate and free of internal terms. Write ' + REL + '/critique-' + round + '.md. Return defects only for what you reproduced, with evidence. ' + PACE + MEAS + RES('critic-1110-' + round), { label: 'critic-1110-' + round, phase: 'Verify', model: 'opus', schema: REP }))
   if (!crit || (!crit.measured && !(((args && args.acceptUnmeasured) || []).includes(round) && (crit.defects || []).length))) return { stopped: 'critic-not-measured', round, crit: crit?.summary?.slice(0, 1500) }
   if ((crit.defects || []).length) { clean = 0 } else { clean++ }
-  if (clean >= 2) break
-  if (round === 8) return { stopped: 'not-converged', round, crit }
+  if (clean >= NEED) break
+  if (round === LASTR) return { stopped: 'not-converged', round, crit }
 }
 
 phase('Close')

@@ -146,9 +146,15 @@
            cannot. */
         /* RU-44: one tier, folded and open. */
         --dock-plate-collapsed-tier: var(--glass-veil-dock);
-        --dock-plate-collapsed-border: var(--glass-border-floating);
         --dock-plate-expanded-tier: var(--glass-veil-dock);
-        --dock-plate-expanded-border: var(--glass-border-dock);
+        /* The colour at the edge's expanded end (dock/dock.css): the dock hairline
+           token, so a host's `--glass-border-dock` colours it. */
+        --_dock-edge-expanded-ink: var(--glass-border-dock);
+        /* The plate's border width, named once: the plate draws it (dock/dock.css) and a
+           `ScrollProgressRim edge="border"` seated in this dock strokes over it at the
+           same width. */
+        --dock-plate-border-width: 1.5px;
+        --scroll-progress-rim-stroke: var(--dock-plate-border-width);
         /* `contain: layout style` — the restyle-scope axes ONLY; `paint` is NOT in the
            value and `.glass-dock` is NOT a clip aperture.
 
@@ -372,10 +378,8 @@
        inline one that died with `overflow.css`) go together — there is no half-state
        where one axis feathers and the other caps. */
 
-    /* The paper-grain `::after` MOVED onto `.dock-plate::after`
-       (dock/dock.css): the grain belongs on the glass SURFACE, which is the plate now.
-       Same recipe (the `--paper-clean-texture` overlay + the `.dark` soft-light arm),
-       byte-identical. */
+    /* The paper-grain `::after` lives on `.dock-plate::after` (dock/dock.css): the
+       grain belongs on the glass SURFACE, which is the plate. */
 
     /* Vertical docks grow-to-fit then clamp at `--dock-max-block-size` (the
        contract). At rest a capped column scrolls its OWN block axis
@@ -390,14 +394,11 @@
         flex-direction: column;
         align-items: stretch;
         justify-content: flex-start;
-        /* H/V PROPORTION PARITY. The hardcoded `gap: 0.25rem` + the
-           density-blind `--dock-vertical-padding` override are DELETED. The vertical
-           dock now reads the SAME `--dock-layer-gap` / `--dock-padding-*` density
-           cascade the horizontal dock tunes, so `size="lg"` paints a LARGER
-           gap than `compact` on BOTH axes (the density axis was dead on the vertical
-           dock). ONE token ladder, both orientations; the `--dock-scale` multiplier
-           threads it for free (the cascade is `calc(* --dock-scale)`-keyed). */
-        gap: var(--dock-layer-gap, 0.375rem);
+        /* H/V PROPORTION PARITY. The vertical dock reads the SAME `--dock-layer-gap`
+           / `--dock-padding-*` density cascade the horizontal dock tunes. The gap
+           between its regions is the regions' own (shell-regions.css), as on the
+           horizontal dock: a root `gap` here was a second owner that doubled the
+           leading region's gap. */
         white-space: normal;
         width: auto;
         height: auto;
@@ -405,7 +406,6 @@
         /* overflow on the block (morph) axis is the data-morphing-gated clip
            shell above; the cross axis stays visible there. */
         padding: var(--dock-padding-block, 0.375rem);
-        border-radius: var(--radius-dock);
         /* The stale "a vertical dock is ALWAYS-EXPANDED
            (no collapse↔expand morph)" assumption is RETIRED (it was false since
            vertical-collapse shipped: `alwaysExpanded` defaults FALSE, so a vertical

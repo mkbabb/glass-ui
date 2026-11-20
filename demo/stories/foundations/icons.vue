@@ -1,201 +1,49 @@
 <script setup lang="ts">
-// the icons pane as a DESIGNED specimen. The Pops row (the
-// user-cited "colorful audacious pops, like in our icons") LEADS the pane — the
-// icons-as-color-event IS the story; the monochrome grid is the supporting
-// reference. Static icon plates use Chip geometry without acquiring button semantics.
-// The icon grid gains the calm
-// wash read-through (ShowcaseFrame quiet tier) + the glass-tier hover lift; its
-// glyphs stay ink (the monochrome proportion held). The library `--section-color`
-// tokens are NOT demo color (D6 fence).
+import { Compass } from "@lucide/vue";
 import StoryPage from "../../chassis/page/StoryPage.vue";
-import StorySection from "../../chassis/section/StorySection.vue";
-import ShowcaseFrame from "../../chassis/showcase/ShowcaseFrame.vue";
-import {
-    Bell,
-    BookOpen,
-    Command,
-    Compass,
-    LayoutTemplate,
-    Layers,
-    Library,
-    Moon,
-    Package,
-    Palette,
-    Search,
-    Settings,
-    Shapes,
-    SquareStack,
-    Star,
-    Sun,
-    Table,
-    Type,
-    Wand2,
-    Waves,
-    Zap,
-} from "@lucide/vue";
-import type { Component } from "vue";
-import { Chip } from "@glass/components/chip";
+import StoryStage from "../../chassis/stage/StoryStage.vue";
+import StoryVariants from "../../chassis/variants/StoryVariants.vue";
+import StoryVariantRow from "../../chassis/variants/StoryVariantRow.vue";
+import StoryCode from "../../chassis/code/StoryCode.vue";
+import IconsStage from "./icons.stage.vue";
 
-interface IconRow {
-    name: string;
-    component: Component;
-}
+const SIZES = [16, 20, 24, 32] as const;
 
-const icons: IconRow[] = [
-    { name: "Compass", component: Compass },
-    { name: "Shapes", component: Shapes },
-    { name: "SquareStack", component: SquareStack },
-    { name: "Table", component: Table },
-    { name: "Bell", component: Bell },
-    { name: "Waves", component: Waves },
-    { name: "LayoutTemplate", component: LayoutTemplate },
-    { name: "Settings", component: Settings },
-    { name: "Sun", component: Sun },
-    { name: "Moon", component: Moon },
-    { name: "Command", component: Command },
-    { name: "Search", component: Search },
-    { name: "Star", component: Star },
-    { name: "Zap", component: Zap },
-    { name: "Wand2", component: Wand2 },
-    { name: "Palette", component: Palette },
-    { name: "Type", component: Type },
-    { name: "Layers", component: Layers },
-    { name: "Library", component: Library },
-    { name: "Package", component: Package },
-    { name: "BookOpen", component: BookOpen },
-];
+const snippet = `<script setup lang="ts">
+import { Compass } from "@lucide/vue";
+<\/script>
 
-const sizes: { label: string; px: number }[] = [
-    { label: "sm · 16", px: 16 },
-    { label: "md · 20", px: 20 },
-    { label: "lg · 24", px: 24 },
-];
-
-const strokes: number[] = [1, 1.5, 2];
-
-// The pops register — the shipped empty-states chip recipe (a 25% color-mix circle
-// backplate + a full-chroma glyph) walked across the 13-stop `--section-color-*`
-// ramp. ONE chip per stop, 1:1 onto the section ramp. The proportion rule rides in
-// the section blurb: one color event per surface, chips never exceed icon scale,
-// body ink stays untinted.
-const pops: { icon: Component; section: number }[] = [
-    { icon: Compass, section: 0 },
-    { icon: Shapes, section: 1 },
-    { icon: Waves, section: 2 },
-    { icon: Star, section: 3 },
-    { icon: Zap, section: 4 },
-    { icon: Wand2, section: 5 },
-    { icon: Palette, section: 6 },
-    { icon: Command, section: 7 },
-    { icon: Search, section: 8 },
-    { icon: Layers, section: 9 },
-    { icon: Library, section: 10 },
-    { icon: Package, section: 11 },
-    { icon: BookOpen, section: 12 },
-];
+<template>
+    <Compass :size="24" :stroke-width="1.75" />
+</template>`;
 </script>
 
 <template>
     <StoryPage>
-        <!-- Static plated glyphs walk the 13-stop ramp without false hover or
-             button affordance. The monochrome grid below is the supporting reference. -->
-        <StorySection label="Foundations · Icons" heading="Pops · the color event">
-            <p class="text-small max-w-2xl text-muted-foreground">
-                The plated icon is the brand's color event: a
-                <span class="font-mono text-micro">warm 0-alpha → tone</span>
-                backplate under a full-chroma glyph, walked across the 13-stop
-                <span class="font-mono text-micro">--section-color-*</span> ramp.
-                <span class="text-foreground">The proportion rule:</span> a surface
-                gets ONE color event — either a field behind glass or a chip cluster
-                like this, never both at full volume; a chip never exceeds icon
-                scale, and body ink is never tinted.
-            </p>
-            <ShowcaseFrame tier="field" pad="lg">
-                <div class="grid grid-cols-5 gap-4 sm:grid-cols-7 md:grid-cols-13">
-                    <div
-                        v-for="pop in pops"
-                        :key="pop.section"
-                        class="flex flex-col items-center gap-2"
-                    >
-                        <Chip
-                            shape="icon"
-                            size="lg"
-                            :tone="`var(--section-color-${pop.section})`"
-                        >
-                            <component :is="pop.icon" class="size-5" aria-hidden="true" />
-                        </Chip>
-                        <span class="text-mono-small text-muted-foreground">{{
-                            pop.section
-                        }}</span>
-                    </div>
-                </div>
-            </ShowcaseFrame>
-        </StorySection>
+        <template #stage>
+            <StoryStage size="fit">
+                <IconsStage />
+            </StoryStage>
+        </template>
 
-        <!-- THE MONOCHROME GRID — the supporting reference. The grid cells gain the
-             calm wash read-through + the glass-tier hover lift; the glyphs stay ink
-             (the monochrome proportion held — no color event here). -->
-        <StorySection span="full" heading="Lucide reference">
-            <div
-                class="scroll-cascade grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8"
-            >
-                <ShowcaseFrame
-                    v-for="icon in icons"
-                    :key="icon.name"
-                    tier="quiet"
-                    pad="sm"
-                    class="transition-transform duration-fast ease-out hover:-translate-x-px hover:-translate-y-px"
-                >
-                    <div class="flex flex-col items-center gap-2">
-                        <component
-                            :is="icon.component"
-                            :size="22"
+        <template #variants>
+            <StoryVariants>
+                <StoryVariantRow label="Sizes">
+                    <template v-for="s in SIZES" :key="s">
+                        <Compass
+                            :size="s"
                             :stroke-width="1.75"
                             class="text-foreground"
+                            role="img"
+                            :aria-label="`Compass, ${s} pixels`"
                         />
-                        <span
-                            class="text-mono-small text-center text-muted-foreground"
-                            >{{ icon.name }}</span
-                        >
-                    </div>
-                </ShowcaseFrame>
-            </div>
-        </StorySection>
+                    </template>
+                </StoryVariantRow>
+            </StoryVariants>
+        </template>
 
-        <!-- Sizing demo -->
-        <StorySection heading="Sizing">
-            <div class="flex items-end gap-8">
-                <div
-                    v-for="s in sizes"
-                    :key="s.label"
-                    class="flex flex-col items-center gap-2"
-                >
-                    <Compass
-                        :size="s.px"
-                        :stroke-width="1.75"
-                        class="text-foreground"
-                    />
-                    <span class="text-mono-small text-muted-foreground">{{
-                        s.label
-                    }}</span>
-                </div>
-            </div>
-        </StorySection>
-
-        <!-- Stroke-width demo -->
-        <StorySection heading="Stroke width">
-            <div class="flex items-end gap-8">
-                <div
-                    v-for="w in strokes"
-                    :key="w"
-                    class="flex flex-col items-center gap-2"
-                >
-                    <Compass :size="28" :stroke-width="w" class="text-foreground" />
-                    <span class="text-mono-small text-muted-foreground"
-                        >{{ w.toFixed(1) }}px</span
-                    >
-                </div>
-            </div>
-        </StorySection>
+        <template #code>
+            <StoryCode :code="snippet" />
+        </template>
     </StoryPage>
 </template>

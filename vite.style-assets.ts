@@ -17,6 +17,7 @@ import type { Plugin, ResolvedConfig, UserConfig } from "vite";
 import {
     copyStyleAssets,
     inlineFonts,
+    linkFonts,
     normalizeShippedBackdropPairs,
     minifyStyleAssets,
     collectStyleClosure,
@@ -170,6 +171,7 @@ export function publishStyleAssets(): Plugin {
             try {
                 const { srcFonts, distStyles, distComponents } = copyStyleAssets(repositoryRoot, closure, outputRoot);
                 await emitComponentUtilities(repositoryRoot, distStyles, closure);
+                linkFonts(distStyles);
                 inlineFonts(srcFonts, distStyles, distComponents);
                 normalizeShippedBackdropPairs(
                     distStyles,

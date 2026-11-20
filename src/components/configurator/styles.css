@@ -353,12 +353,11 @@
          * two rows: the gallery row (auto) over the body row (1fr). The placement of
          * the gallery dock is the ONLY thing the `data-gallery` axis swaps. */
         [data-slot="configurator"] {
-            grid-template-columns:
-                minmax(0, 1fr)
-                minmax(
-                    var(--configurator-aside-min, 300px),
-                    var(--configurator-aside-max, 400px)
-                );
+            --configurator-aside-track: minmax(
+                var(--configurator-aside-min, 300px),
+                var(--configurator-aside-max, 400px)
+            );
+            grid-template-columns: minmax(0, 1fr) var(--configurator-aside-track);
             grid-template-rows: auto minmax(0, 1fr);
         }
 
@@ -548,6 +547,11 @@
          * selector would lose the cascade to those and the flip would no-op. The aside
          * keeps its body row (row 2); only the column target moves. The aside-placed
          * gallery dock follows the aside to column 1. */
+        /* The template reverses with the placement, so the aside keeps its band and
+           the stage keeps the free column on either side. */
+        [data-slot="configurator"][data-aside-side="left"] {
+            grid-template-columns: var(--configurator-aside-track) minmax(0, 1fr);
+        }
         [data-slot="configurator"][data-aside-side="left"] > .configurator-stage {
             grid-column: 2;
         }

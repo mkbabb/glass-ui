@@ -1,0 +1,95 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1794521931 slope=31.8/s inuse=25856 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 4 tests using 1 worker
+
+  ✘  1 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:906:5 › radius · every dock seat's corner is half its block size, at 1440 (8.6s)
+  ✘  2 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:906:5 › radius · every dock seat's corner is half its block size, at 390 (8.5s)
+  ✘  3 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:906:5 › radius · every dock seat's corner is half its block size, at 1440 (6.3s)
+  ✘  4 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:906:5 › radius · every dock seat's corner is half its block size, at 390 (6.4s)
+
+
+  1) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:906:5 › radius · every dock seat's corner is half its block size, at 1440 
+
+    Error: trigger: the unpainted corner area
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 55.33546079775887
+    Received:    49.65625000000002
+
+      945 |         for (const [kind, cell] of Object.entries(cells)) {
+      946 |             expect(cell.span, `${kind} paints a plate`).toBeGreaterThan(12);
+    > 947 |             expect(cell.measured, `${kind}: the unpainted corner area`).toBeGreaterThanOrEqual(cell.expected * 0.8);
+          |                                                                         ^
+      948 |         }
+      949 |     });
+      950 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:947:73
+
+    Error Context: tests-visual/test-results/release-11-0-2-radius-·-ev-2f393-half-its-block-size-at-1440-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:906:5 › radius · every dock seat's corner is half its block size, at 390 
+
+    Error: tab: the unpainted corner area
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 61.97701041081694
+    Received:    54.52243589743591
+
+      945 |         for (const [kind, cell] of Object.entries(cells)) {
+      946 |             expect(cell.span, `${kind} paints a plate`).toBeGreaterThan(12);
+    > 947 |             expect(cell.measured, `${kind}: the unpainted corner area`).toBeGreaterThanOrEqual(cell.expected * 0.8);
+          |                                                                         ^
+      948 |         }
+      949 |     });
+      950 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:947:73
+
+    Error Context: tests-visual/test-results/release-11-0-2-radius-·-ev-ae7a4--half-its-block-size-at-390-chromium-headless-new/error-context.md
+
+  3) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:906:5 › radius · every dock seat's corner is half its block size, at 1440 
+
+    Error: trigger-active: the unpainted corner area
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 55.33546079775887
+    Received:    49.18316831683168
+
+      945 |         for (const [kind, cell] of Object.entries(cells)) {
+      946 |             expect(cell.span, `${kind} paints a plate`).toBeGreaterThan(12);
+    > 947 |             expect(cell.measured, `${kind}: the unpainted corner area`).toBeGreaterThanOrEqual(cell.expected * 0.8);
+          |                                                                         ^
+      948 |         }
+      949 |     });
+      950 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:947:73
+
+    Error Context: tests-visual/test-results/release-11-0-2-radius-·-ev-2f393-half-its-block-size-at-1440-coarse-touch/error-context.md
+
+  4) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:906:5 › radius · every dock seat's corner is half its block size, at 390 
+
+    Error: tab-active: the unpainted corner area
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 61.97701041081694
+    Received:    54.67249999999994
+
+      945 |         for (const [kind, cell] of Object.entries(cells)) {
+      946 |             expect(cell.span, `${kind} paints a plate`).toBeGreaterThan(12);
+    > 947 |             expect(cell.measured, `${kind}: the unpainted corner area`).toBeGreaterThanOrEqual(cell.expected * 0.8);
+          |                                                                         ^
+      948 |         }
+      949 |     });
+      950 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.0.2/.cache/red-v11.0.1/tree/tests-visual/release-11-0-2.spec.ts:947:73
+
+    Error Context: tests-visual/test-results/release-11-0-2-radius-·-ev-ae7a4--half-its-block-size-at-390-coarse-touch/error-context.md
+
+  4 failed
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:906:5 › radius · every dock seat's corner is half its block size, at 1440 
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:906:5 › radius · every dock seat's corner is half its block size, at 390 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:906:5 › radius · every dock seat's corner is half its block size, at 1440 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:906:5 › radius · every dock seat's corner is half its block size, at 390 

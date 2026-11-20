@@ -302,8 +302,13 @@ describe("G-DOCK-RUN — the platform is the detent engine", () => {
             ),
         );
         expect(run).toContain(`touch-action: ${pan}`);
-        expect(run).toContain("overscroll-behavior: contain");
-        expect(run).toMatch(/\.dock-run > \*\s*\{[^{}]*scroll-snap-align:\s*start/);
+        // Contained on the scroll axis only; the cross axis chains to the page, or a
+        // wheel on that axis over the dock moves the page 0 px.
+        expect(run).toContain(`overscroll-behavior-${axis}: contain`);
+        expect(run).toContain(`overscroll-behavior-${axis === "x" ? "y" : "x"}: auto`);
+        expect(run).not.toMatch(/overscroll-behavior:\s*contain/);
+        // Every child but the run's mark is a seat, and a snap target.
+        expect(run).toMatch(/\.dock-run > :not\(\.dock-run-mark\)\s*\{[^{}]*scroll-snap-align:\s*start/);
     });
 
     /** `proximity` anywhere in the band is the de-quantisation mutation, spelled out. */
@@ -352,7 +357,7 @@ describe("G-DOCK-RUN — the platform is the detent engine", () => {
         expect(frames).toHaveLength(0);
         expect(declarations(`${STYLES}/run.css`)).not.toMatch(/\.dock-plate\s*\{[^}]*animation-timeline/);
         const decls = declarations(`${STYLES}/run.css`);
-        expect(decls).toMatch(/--dock-cap-rest:\s*calc\(var\(--dock-cross\) \/ 2\)/);
+        expect(decls).toMatch(/--dock-cap-rest:\s*min\(var\(--radius-dock\), calc\(var\(--dock-cross\) \/ 2\)\)/);
         expect(decls).not.toMatch(/--dock-cap-rest:\s*[\d.]+%/);
         // Declarations only: `from: 9999px` is NAMED in the docblock as the rejected
         // alternative, and a detector that cannot tell a rejection from a declaration
@@ -930,11 +935,12 @@ describe("G-DOCK-STATE — one selected seat, carried on at least two channels",
      * readers negate the false pole so any truthy token — `page`, `true`, `step` — counts.
      */
     it("selection is aria-current, negated the same way in CSS and JS", () => {
-        // W-I.8 RU-28: run.css no longer selects the open seat (no rule widens it); the
-        // predicate is JS's alone, and no stylesheet of the dock reads a negated form.
-        expect(declarations(`${STYLES}/run.css`)).not.toContain(
-            '[aria-current]:not([aria-current="false"])',
-        );
+        // W-I.8 RU-28: no rule widens the open seat. RU-66 (C7-1) carries 11.1.0's run mark,
+        // whose marked seat paints no fill of its own: that rule is run.css's one reader of
+        // the predicate, negated as JS negates it.
+        const run = declarations(`${STYLES}/run.css`);
+        expect(run.split('[aria-current]:not([aria-current="false"])').length - 1).toBe(1);
+        expect(run).toMatch(/\.dock-run:has\(> \.dock-run-mark\) \[aria-current\]:not\(\[aria-current="false"\]\)/);
         expect(read(`${DOCK}/composables/useDockRun.ts`)).toMatch(
             /current != null && current !== "false"/,
         );

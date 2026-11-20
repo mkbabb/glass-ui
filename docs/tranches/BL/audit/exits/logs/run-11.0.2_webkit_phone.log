@@ -1,0 +1,27 @@
+dock-select 19.5s enter=tween/201 pick=CUT(teleport)/111 outside=STAYED/0 escape=CUT(teleport)/84 trigger=STAYED/0 rev=jumps
+dock-select-collapsible 12.3s enter=tween/207 pick=CUT(teleport)/103 outside=CUT(teleport)/92 escape=CUT(teleport)/93
+dock-dropdown 15.4s enter=tween/209 pick=tween/83 outside=STAYED/0 escape=tween/82 trigger=tween/82
+dock-popover 11.9s enter=tween/451 outside=STAYED/0 escape=tween/145 trigger=tween/131
+select 18.8s enter=tween/228 pick=CUT(teleport)/112 outside=STAYED/0 escape=CUT(teleport)/92 trigger=STAYED/0 rev=reopen ignored
+dropdown-menu 18.7s enter=tween/204 pick=tween/70 outside=STAYED/0 escape=tween/72 trigger=tween/71 focusOut=tween/68
+dropdown-submenu 16.0s enter=tween/204 pick=tween/71 parentItem=n/a/ escape=tween/72 outside=STAYED/0
+context-menu 2.2s enter=undefined/undefined pick=n/a/ outside=n/a/ escape=n/a/ ERR enter: SKIP: no long-press in WebKit Playwright
+popover 15.1s enter=tween/461 outside=STAYED/0 escape=tween/133 trigger=tween/132 focusOut=tween/133
+hover-popover 10.3s enter=tween/463 leave=n/a/ outside=STAYED/0 escape=tween/132
+tooltip 10.2s enter=NEVER/0 leave=n/a/ escape=ABSENT/0 press=ABSENT/0
+dialog 15.1s enter=tween/443 close=tween/226 outside=STAYED/0 escape=tween/236 rev=reopen ignored
+dialog-opaque 5.4s enter=tween/444 escape=tween/235
+alert-dialog 12.0s enter=tween/445 close=tween/232 escape=tween/233 outside=STAYED/0
+sheet-top 15.7s enter=tween/840 close=tween/218 outside=STAYED/0 escape=tween/217 swipe=STAYED/0
+sheet-right 15.7s enter=tween/845 close=tween/219 outside=STAYED/0 escape=tween/220 swipe=STAYED/0
+sheet-bottom 15.9s enter=tween/847 close=tween/218 outside=STAYED/0 escape=tween/217 swipe=STAYED/0
+sheet-left 15.9s enter=tween/847 close=tween/222 outside=STAYED/0 escape=tween/219 swipe=STAYED/0
+sheet-detented 15.8s enter=tween/604 close=CUT(tail)/472 outside=STAYED/0 escape=CUT(tail)/486 swipe=CUT(tail)/780
+toast 14.4s enter=tween/460 close=tween/268 swipe=tween/500 timeout=tween/267
+command-dialog 12.0s enter=tween/450 pick=CUT(teleport)/267 outside=STAYED/0 escape=CUT(teleport)/265
+expandable-container 8.5s enter=tween/225 exit=CUT/12 escape=CUT/11
+accordion 5.3s enter=tween/208 trigger=tween/204
+collapsible 5.3s enter=tween/203 trigger=tween/196
+dock-collapse 10.7s enter=tween/560 outside=tween/562 leave=n/a/
+dock-layer 8.4s enter=tween/223 back=tween/235
+theme-toggle 5.3s enter=tween/228 back=tween/226

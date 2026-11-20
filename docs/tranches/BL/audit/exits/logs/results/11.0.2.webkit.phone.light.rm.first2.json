@@ -1,0 +1,2737 @@
+{
+ "tree": "11.0.2",
+ "engine": "webkit",
+ "form": "phone",
+ "scheme": "light",
+ "rm": true,
+ "mode": "first2",
+ "at": "2026-11-15T23:24:50.428Z",
+ "surfaces": {
+  "dock-select": {
+   "routes": {
+    "pick": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 53,
+     "latency": 0,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "absent"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "frames": 0,
+     "ms": 0,
+     "verdict": "STAYED",
+     "startVis": true,
+     "note": "outside at 16,25"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "select-content",
+     "surface": "opaque",
+     "form": "sheet",
+     "cls": "glass-reveal glass-floating glass-field-portal",
+     "bf": "none",
+     "wbf": "none",
+     "bg": "color(srgb 0.992157 0.960784 0.92549)",
+     "bgi": "linear-gradient(oklab(0.88 0.025882 0.096593 / 0.16), oklab(0.88 0.025882 0.0965",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.16)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(70% 60% at 24% 22%, oklch(0.92 0.08 48 / 0.55), rgba(0, 0, 0, 0)",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 50,
+    "latency": 0,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     1,
+     1
+    ],
+    "anims": [
+     "gl-fade-start-in:NaN gl-fade-end-out:NaN"
+    ],
+    "states": [
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "dock-select-collapsible": {
+   "routes": {
+    "pick": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 28,
+     "latency": 0,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "scale",
+      "translate",
+      "background",
+      "backdrop-filter",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      0,
+      null
+     ],
+     "anims": [
+      "glass-reveal-out-reduced:0 gl-fade-start-in:NaN gl-fade-end-out:NaN"
+     ],
+     "states": [
+      "closed",
+      "absent"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 2,
+     "ms": 93,
+     "latency": 0,
+     "inter": 1,
+     "jump": 16,
+     "matFlip": true,
+     "tail": 0.49,
+     "what": [
+      "scale",
+      "translate",
+      "background",
+      "backdrop-filter",
+      "position",
+      "size",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      null,
+      null
+     ],
+     "anims": [
+      "glass-reveal-out-reduced:0 gl-fade-start-in:NaN gl-fade-end-out:NaN"
+     ],
+     "states": [
+      "closed",
+      "absent"
+     ],
+     "note": "outside at 16,25"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "select-content",
+     "surface": "opaque",
+     "form": "sheet",
+     "cls": "glass-reveal glass-floating glass-field-portal",
+     "bf": "none",
+     "wbf": "none",
+     "bg": "color(srgb 0.992157 0.960784 0.92549)",
+     "bgi": "linear-gradient(oklab(0.88 0.025882 0.096593 / 0.16), oklab(0.88 0.025882 0.0965",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.16)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(70% 60% at 24% 22%, oklch(0.92 0.08 48 / 0.55), rgba(0, 0, 0, 0)",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 21,
+    "latency": 0,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     1,
+     1
+    ],
+    "anims": [
+     "gl-fade-start-in:NaN gl-fade-end-out:NaN"
+    ],
+    "states": [
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "dock-dropdown": {
+   "routes": {
+    "pick": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 2,
+     "ms": 23,
+     "latency": 0,
+     "inter": 1,
+     "jump": 8,
+     "matFlip": true,
+     "tail": 1,
+     "what": [
+      "scale",
+      "translate",
+      "background",
+      "backdrop-filter",
+      "position",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      null,
+      null
+     ],
+     "anims": [
+      "glass-reveal-out-reduced:0"
+     ],
+     "states": [
+      "closed",
+      "absent"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "frames": 0,
+     "ms": 0,
+     "verdict": "STAYED",
+     "startVis": true,
+     "note": "outside at 16,25"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "menu-content",
+     "surface": "opaque",
+     "form": null,
+     "cls": "glass-floating glass-overlay-plate glass-reveal",
+     "bf": "none",
+     "wbf": "none",
+     "bg": "color(srgb 0.992157 0.960784 0.92549)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947252 0.01436 84.583649 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 39,
+    "latency": 0,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "dock-popover": {
+   "routes": {
+    "outside": {
+     "kind": "leave",
+     "frames": 0,
+     "ms": 0,
+     "verdict": "STAYED",
+     "startVis": true,
+     "note": "outside at 16,25"
+    },
+    "escape": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 2,
+     "ms": 22,
+     "latency": 10,
+     "inter": 1,
+     "jump": 8,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "scale",
+      "translate",
+      "position",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [
+      "glass-reveal-out-reduced:0"
+     ],
+     "states": [
+      "open",
+      "closed",
+      "absent"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "popover-content",
+     "surface": null,
+     "form": null,
+     "cls": "glass-floating glass-overlay-plate glass-reveal",
+     "bf": "blur(20px) saturate(1.5)",
+     "wbf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947252 0.01436 84.583649 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 27,
+    "latency": 0,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "select": {
+   "routes": {
+    "pick": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 89,
+     "latency": 0,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "absent"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "frames": 0,
+     "ms": 0,
+     "verdict": "STAYED",
+     "startVis": true,
+     "note": "outside at 16,25"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "select-content",
+     "surface": "opaque",
+     "form": "sheet",
+     "cls": "glass-reveal glass-floating glass-field-portal",
+     "bf": "none",
+     "wbf": "none",
+     "bg": "color(srgb 0.992157 0.960784 0.92549)",
+     "bgi": "linear-gradient(oklab(0.88 0.025882 0.096593 / 0.16), oklab(0.88 0.025882 0.0965",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.16)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(70% 60% at 24% 22%, oklch(0.92 0.08 48 / 0.55), rgba(0, 0, 0, 0)",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 49,
+    "latency": 0,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     1,
+     1
+    ],
+    "anims": [
+     "gl-fade-start-in:NaN gl-fade-end-out:NaN"
+    ],
+    "states": [
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "dropdown-menu": {
+   "routes": {
+    "pick": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 21,
+     "latency": 0,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "absent"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "frames": 0,
+     "ms": 0,
+     "verdict": "STAYED",
+     "startVis": true,
+     "note": "outside at 16,25"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "menu-content",
+     "surface": null,
+     "form": null,
+     "cls": "glass-floating glass-overlay-plate glass-reveal",
+     "bf": "blur(20px) saturate(1.5)",
+     "wbf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947252 0.01436 84.583649 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 115,
+    "latency": 115,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "absent",
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "dropdown-submenu": {
+   "routes": {
+    "pick": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 27,
+     "latency": 27,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "open",
+      "absent"
+     ]
+    },
+    "parentItem": {
+     "verdict": "n/a",
+     "note": "parent-item hover is a pointer route"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "menu-sub-content",
+     "surface": null,
+     "form": null,
+     "cls": "glass-floating glass-overlay-plate glass-reveal",
+     "bf": "blur(20px) saturate(1.5)",
+     "wbf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947252 0.01436 84.583649 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 37,
+    "latency": 608,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null,
+     null
+    ],
+    "anims": [],
+    "states": [
+     "absent",
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "context-menu": {
+   "routes": {
+    "pick": {
+     "verdict": "n/a",
+     "note": "no long-press in WebKit Playwright"
+    },
+    "outside": {
+     "verdict": "n/a",
+     "note": "no long-press in WebKit Playwright"
+    }
+   },
+   "errors": [
+    "enter: SKIP: no long-press in WebKit Playwright"
+   ],
+   "pageErrors": []
+  },
+  "popover": {
+   "routes": {
+    "outside": {
+     "kind": "leave",
+     "frames": 0,
+     "ms": 0,
+     "verdict": "STAYED",
+     "startVis": true,
+     "note": "outside at 16,25"
+    },
+    "escape": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 38,
+     "latency": 0,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "absent"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "popover-content",
+     "surface": null,
+     "form": null,
+     "cls": "glass-floating glass-overlay-plate glass-reveal",
+     "bf": "blur(20px) saturate(1.5)",
+     "wbf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947252 0.01436 84.583649 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 105,
+    "latency": 0,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "hover-popover": {
+   "routes": {
+    "leave": {
+     "verdict": "n/a",
+     "note": "no hover leave on touch"
+    },
+    "outside": {
+     "kind": "leave",
+     "frames": 0,
+     "ms": 0,
+     "verdict": "STAYED",
+     "startVis": true,
+     "note": "outside at 374,25"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "popover-content",
+     "surface": null,
+     "form": null,
+     "cls": "glass-floating glass-overlay-plate glass-reveal",
+     "bf": "blur(20px) saturate(1.5)",
+     "wbf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947252 0.01436 84.583649 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 54,
+    "latency": 0,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "tooltip": {
+   "routes": {
+    "leave": {
+     "verdict": "n/a",
+     "note": "no hover leave on touch"
+    },
+    "escape": {
+     "kind": "leave",
+     "frames": 0,
+     "ms": 0,
+     "verdict": "ABSENT",
+     "startVis": false
+    }
+   },
+   "errors": [],
+   "glass": null,
+   "enter": {
+    "kind": "enter",
+    "frames": 0,
+    "ms": 0,
+    "verdict": "NEVER",
+    "startVis": false
+   },
+   "pageErrors": []
+  },
+  "dialog": {
+   "routes": {
+    "close": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 35,
+     "latency": 0,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "absent"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "frames": 0,
+     "ms": 0,
+     "verdict": "STAYED",
+     "startVis": true,
+     "note": "outside at 16,25"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "dialog-content",
+     "surface": "glass",
+     "form": null,
+     "cls": "glass-floating",
+     "bf": "blur(20px) saturate(1.5)",
+     "wbf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947252 0.01436 84.583649 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 47,
+    "latency": 0,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "dialog-opaque": {
+   "routes": {
+    "escape": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 26,
+     "latency": 26,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "open",
+      "absent"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "dialog-content",
+     "surface": "opaque",
+     "form": null,
+     "cls": "glass-floating",
+     "bf": "none",
+     "wbf": "none",
+     "bg": "color(srgb 0.992157 0.960784 0.92549)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947252 0.01436 84.583649 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": {
+     "where": "child d2",
+     "tag": "button",
+     "cls": "glass-capsule glass-specular-track glass-capsule-hover",
+     "bf": "blur(14px) saturate(1.5)",
+     "wbf": "blur(14px) saturate(1.5)",
+     "bg": "oklab(0.95888 0.008188 0.027135)",
+     "bgi": "none",
+     "bd": "1px solid rgba(0, 0, 0, 0)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1"
+    },
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 62,
+    "latency": 0,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "alert-dialog": {
+   "routes": {
+    "close": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 24,
+     "latency": 24,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "open",
+      "absent"
+     ]
+    },
+    "escape": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 22,
+     "latency": 0,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "absent"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "dialog-content",
+     "surface": "glass",
+     "form": null,
+     "cls": "glass-floating",
+     "bf": "blur(20px) saturate(1.5)",
+     "wbf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947252 0.01436 84.583649 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 55,
+    "latency": 0,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "sheet-top": {
+   "routes": {
+    "close": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 62,
+     "latency": 62,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "open",
+      "absent"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "frames": 0,
+     "ms": 0,
+     "verdict": "STAYED",
+     "startVis": true,
+     "note": "outside at 16,819"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "sheet-content",
+     "surface": "glass",
+     "form": null,
+     "cls": "glass-floating",
+     "bf": "blur(20px) saturate(1.5)",
+     "wbf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947252 0.01436 84.583649 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 68,
+    "latency": 0,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "sheet-right": {
+   "routes": {
+    "close": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 42,
+     "latency": 0,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "absent"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "frames": 0,
+     "ms": 0,
+     "verdict": "STAYED",
+     "startVis": true,
+     "note": "outside at 16,25"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "sheet-content",
+     "surface": "glass",
+     "form": null,
+     "cls": "glass-floating",
+     "bf": "blur(20px) saturate(1.5)",
+     "wbf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947252 0.01436 84.583649 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 61,
+    "latency": 71,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     null,
+     null,
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "absent",
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "sheet-bottom": {
+   "routes": {
+    "close": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 35,
+     "latency": 35,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "open",
+      "absent"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "frames": 0,
+     "ms": 0,
+     "verdict": "STAYED",
+     "startVis": true,
+     "note": "outside at 16,25"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "sheet-content",
+     "surface": "glass",
+     "form": null,
+     "cls": "glass-floating",
+     "bf": "blur(20px) saturate(1.5)",
+     "wbf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947252 0.01436 84.583649 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 73,
+    "latency": 0,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "sheet-left": {
+   "routes": {
+    "close": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 58,
+     "latency": 0,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "absent"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "frames": 0,
+     "ms": 0,
+     "verdict": "STAYED",
+     "startVis": true,
+     "note": "outside at 374,25"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "sheet-content",
+     "surface": "glass",
+     "form": null,
+     "cls": "glass-floating",
+     "bf": "blur(20px) saturate(1.5)",
+     "wbf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947252 0.01436 84.583649 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 86,
+    "latency": 0,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "sheet-detented": {
+   "routes": {
+    "close": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 39,
+     "latency": 0,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "absent"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "frames": 0,
+     "ms": 0,
+     "verdict": "STAYED",
+     "startVis": true,
+     "note": "outside at 16,25"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "sheet-content",
+     "surface": "glass",
+     "form": null,
+     "cls": "glass-floating",
+     "bf": "blur(20px) saturate(1.5)",
+     "wbf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.196)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947252 0.01436 84.583649 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 71,
+    "latency": 0,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "toast": {
+   "routes": {
+    "close": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 25,
+     "ms": 276,
+     "latency": 0,
+     "inter": 24,
+     "jump": 0,
+     "matFlip": true,
+     "tail": 0,
+     "what": [
+      "scale",
+      "filter",
+      "background",
+      "backdrop-filter",
+      "content opacity",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      null,
+      null
+     ],
+     "anims": [
+      "glass-vaporize-saturate:250 glass-vaporize-panel:250 glass-vaporize-blur:250 glass-vaporize-ink-reduced:250"
+     ],
+     "states": [
+      "closed",
+      "absent"
+     ]
+    },
+    "swipe": {
+     "kind": "leave",
+     "verdict": "tween",
+     "frames": 54,
+     "ms": 587,
+     "latency": 35,
+     "inter": 53,
+     "jump": 40,
+     "matFlip": true,
+     "tail": 0,
+     "what": [
+      "translate",
+      "position",
+      "scale",
+      "filter",
+      "background",
+      "backdrop-filter",
+      "content opacity",
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+     ],
+     "anims": [
+      "glass-vaporize-saturate:250 glass-vaporize-panel:250 glass-vaporize-blur:250 glass-vaporize-ink-reduced:250"
+     ],
+     "states": [
+      "open",
+      "closed",
+      "absent"
+     ],
+     "note": "swipe by mouse"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "li",
+     "slot": "toast",
+     "surface": "glass",
+     "form": null,
+     "cls": "glass-floating glass-reveal glass-vaporize glass-corner-host",
+     "bf": "blur(20px) saturate(1.5)",
+     "wbf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947252 0.01436 84.583649 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 37,
+    "latency": 0,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "command-dialog": {
+   "routes": {
+    "pick": {
+     "kind": "leave",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 120,
+     "latency": 0,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 1,
+     "what": [
+      "presence"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      null,
+      null
+     ],
+     "anims": [],
+     "states": [
+      "absent"
+     ]
+    },
+    "outside": {
+     "kind": "leave",
+     "frames": 0,
+     "ms": 0,
+     "verdict": "STAYED",
+     "startVis": true,
+     "note": "outside at 16,25"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "dialog-content",
+     "surface": "glass",
+     "form": null,
+     "cls": "glass-floating",
+     "bf": "blur(20px) saturate(1.5)",
+     "wbf": "blur(20px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.18)",
+     "bgi": "none",
+     "bd": "1px solid oklab(0.216115 0.003422 0.005081 / 0.05)",
+     "sh": "rgba(255, 255, 255, 0.1) 0px 1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.06) 0px -1px 0px 0px inset, color(srgb 0.109804 0.098039 0.090196 / 0.",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "radial-gradient(36% 36%, oklch(0.947252 0.01436 84.583649 / 0.5) 0%, rgba(0, 0, ",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0.1"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "enter",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 113,
+    "latency": 0,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "presence"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     1,
+     1
+    ],
+    "anims": [
+     "gl-fade-start-in:NaN gl-fade-end-out:NaN"
+    ],
+    "states": [
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "expandable-container": {
+   "routes": {
+    "exit": {
+     "kind": "inplace",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 32,
+     "latency": 32,
+     "inter": 0,
+     "jump": 145.6,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": true,
+     "op": [
+      1,
+      1,
+      1
+     ],
+     "anims": [],
+     "states": [
+      "-"
+     ]
+    },
+    "escape": {
+     "kind": "inplace",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 42,
+     "latency": 0,
+     "inter": 0,
+     "jump": 145.6,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": true,
+     "op": [
+      1,
+      1
+     ],
+     "anims": [],
+     "states": [
+      "-"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": null,
+     "surface": null,
+     "form": null,
+     "cls": "",
+     "bf": "none",
+     "wbf": "none",
+     "bg": "rgba(0, 0, 0, 0)",
+     "bgi": "none",
+     "bd": "0px solid rgb(28, 25, 23)",
+     "sh": "none",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "inplace",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 48,
+    "latency": 0,
+    "inter": 0,
+    "jump": 145.6,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "position",
+     "size"
+    ],
+    "startVis": true,
+    "endVis": true,
+    "op": [
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "-"
+    ]
+   },
+   "pageErrors": []
+  },
+  "accordion": {
+   "routes": {
+    "trigger": {
+     "kind": "inplace",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 35,
+     "latency": 47,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "position",
+      "size"
+     ],
+     "startVis": false,
+     "endVis": true,
+     "op": [
+      0,
+      0,
+      1,
+      1
+     ],
+     "anims": [],
+     "states": [
+      "closed",
+      "open"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "accordion-content",
+     "surface": null,
+     "form": null,
+     "cls": "",
+     "bf": "none",
+     "wbf": "none",
+     "bg": "rgba(0, 0, 0, 0)",
+     "bgi": "none",
+     "bd": "0px solid rgb(91, 70, 51)",
+     "sh": "none",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(91, 70, 51)",
+      "sh": "none",
+      "op": "1"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(91, 70, 51)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": {
+     "where": "ancestor 4",
+     "tag": "div",
+     "cls": "glass-quiet",
+     "bf": "blur(14px) saturate(1.5)",
+     "wbf": "blur(14px) saturate(1.5)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.1)",
+     "bgi": "none",
+     "bd": "0px none rgb(28, 25, 23)",
+     "sh": "none",
+     "op": "1"
+    },
+    "dark": false
+   },
+   "enter": {
+    "kind": "inplace",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 15,
+    "latency": 15,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "opacity",
+     "position",
+     "size"
+    ],
+    "startVis": true,
+    "endVis": false,
+    "op": [
+     1,
+     0,
+     0
+    ],
+    "anims": [
+     "disclosure-close:0"
+    ],
+    "states": [
+     "closed"
+    ]
+   },
+   "pageErrors": []
+  },
+  "collapsible": {
+   "routes": {
+    "trigger": {
+     "kind": "inplace",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 21,
+     "latency": 21,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "opacity",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": false,
+     "op": [
+      1,
+      0,
+      0
+     ],
+     "anims": [
+      "disclosure-close:0"
+     ],
+     "states": [
+      "closed"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": "collapsible-content",
+     "surface": null,
+     "form": null,
+     "cls": "",
+     "bf": "none",
+     "wbf": "none",
+     "bg": "rgba(0, 0, 0, 0)",
+     "bgi": "none",
+     "bd": "0px solid rgb(91, 70, 51)",
+     "sh": "none",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(91, 70, 51)",
+      "sh": "none",
+      "op": "1"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(91, 70, 51)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "inplace",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 21,
+    "latency": 0,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "opacity",
+     "position",
+     "size"
+    ],
+    "startVis": false,
+    "endVis": true,
+    "op": [
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "open"
+    ]
+   },
+   "pageErrors": []
+  },
+  "dock-collapse": {
+   "routes": {
+    "outside": {
+     "kind": "inplace",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 41,
+     "latency": 0,
+     "inter": 0,
+     "jump": 92.9,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "background",
+      "position",
+      "size"
+     ],
+     "startVis": true,
+     "endVis": true,
+     "op": [
+      1,
+      1
+     ],
+     "anims": [],
+     "states": [
+      "-"
+     ],
+     "note": "outside at 16,25"
+    },
+    "leave": {
+     "verdict": "n/a",
+     "note": "no hover leave on touch"
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": null,
+     "surface": null,
+     "form": null,
+     "cls": "dock-plate",
+     "bf": "blur(16px) saturate(1.2)",
+     "wbf": "blur(16px) saturate(1.2)",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.1)",
+     "bgi": "none",
+     "bd": "1.333333px solid color(srgb 0.109804 0.098039 0.090196 / 0.08)",
+     "sh": "none",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "url(\"data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xm",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "0.025"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "inplace",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 25,
+    "latency": 78,
+    "inter": 0,
+    "jump": 92.9,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "background",
+     "position",
+     "size"
+    ],
+    "startVis": true,
+    "endVis": true,
+    "op": [
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "-"
+    ]
+   },
+   "pageErrors": []
+  },
+  "dock-layer": {
+   "routes": {
+    "back": {
+     "kind": "inplace",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 24,
+     "latency": 0,
+     "inter": 0,
+     "jump": 60,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "translate",
+      "position"
+     ],
+     "startVis": true,
+     "endVis": true,
+     "op": [
+      1,
+      1
+     ],
+     "anims": [],
+     "states": [
+      "-"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "div",
+     "slot": null,
+     "surface": null,
+     "form": null,
+     "cls": "",
+     "bf": "none",
+     "wbf": "none",
+     "bg": "color(srgb 0.203993 0.148252 0.08296 / 0.18)",
+     "bgi": "none",
+     "bd": "0px solid rgb(28, 25, 23)",
+     "sh": "none",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(28, 25, 23)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": false
+   },
+   "enter": {
+    "kind": "inplace",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 25,
+    "latency": 0,
+    "inter": 0,
+    "jump": 60,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "translate",
+     "position"
+    ],
+    "startVis": true,
+    "endVis": true,
+    "op": [
+     1,
+     1
+    ],
+    "anims": [],
+    "states": [
+     "-"
+    ]
+   },
+   "pageErrors": []
+  },
+  "theme-toggle": {
+   "routes": {
+    "back": {
+     "kind": "inplace",
+     "verdict": "CUT",
+     "frames": 1,
+     "ms": 28,
+     "latency": 28,
+     "inter": 0,
+     "jump": 0,
+     "matFlip": false,
+     "tail": 0,
+     "what": [
+      "transform"
+     ],
+     "startVis": true,
+     "endVis": true,
+     "op": [
+      0.8,
+      0.8,
+      0.8
+     ],
+     "anims": [],
+     "states": [
+      "-"
+     ]
+    }
+   },
+   "errors": [],
+   "glass": {
+    "me": {
+     "tag": "g",
+     "slot": null,
+     "surface": null,
+     "form": null,
+     "cls": "",
+     "bf": "none",
+     "wbf": "none",
+     "bg": "rgba(0, 0, 0, 0)",
+     "bgi": "none",
+     "bd": "0px solid rgb(233, 230, 226)",
+     "sh": "none",
+     "op": "1",
+     "before": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(233, 230, 226)",
+      "sh": "none",
+      "op": "1"
+     },
+     "after": {
+      "bf": "none",
+      "wbf": "none",
+      "bg": "rgba(0, 0, 0, 0)",
+      "bgi": "none",
+      "bd": "0px solid rgb(233, 230, 226)",
+      "sh": "none",
+      "op": "1"
+     }
+    },
+    "found": null,
+    "dark": true
+   },
+   "enter": {
+    "kind": "inplace",
+    "verdict": "CUT",
+    "frames": 1,
+    "ms": 32,
+    "latency": 0,
+    "inter": 0,
+    "jump": 0,
+    "matFlip": false,
+    "tail": 0,
+    "what": [
+     "transform"
+    ],
+    "startVis": true,
+    "endVis": true,
+    "op": [
+     0.8,
+     0.8
+    ],
+    "anims": [],
+    "states": [
+     "-"
+    ]
+   },
+   "pageErrors": []
+  }
+ }
+}
