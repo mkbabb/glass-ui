@@ -1,8 +1,8 @@
-== g8-exempt 11:18:14 (load { 13.24 13.66 11.86 })
+== g8-exempt 12:15:35 (load { 6.58 5.60 8.46 })
 applied g8-exempt - G-8 (RU-72): a press on the trigger of an open surface folds the dock (the trigger exemption removed)
-[guarded] REFUSED: kernel zone data.kalloc.1024 at 8.36M (panics near 20.8M; heavy and browser runs stop at 8M): reboot the Mac
-chromium rc=75
-[guarded] REFUSED: kernel zone data.kalloc.1024 at 8.36M (panics near 20.8M; heavy and browser runs stop at 8M): reboot the Mac
-webkit rc=75
+{"engine":"chromium","tag":"plant8-g8-exempt","pass":false,"cells":{"menu-mouse":false,"select-mouse":false,"popover-mouse":false,"sheet-mouse":true,"menu-touch":false,"select-touch":false,"popover-touch":false,"sheet-touch":true,"select-touch-item":true,"sheet-touch-scrim":true,"tapseat":"w-pill-search","fourier":{"face":"folds","theme":"folds","menu":"folds","about":"folds"}},"bad":["menu-mouse: opened true closed true stillClosed true reopened 0 dock false","select-mouse: opened true closed true stillClosed true reopened 1 dock false","popover-mouse: opened true closed true stillClosed true reopened 0 dock false","menu-touch: opened true closed true stillClosed true reopened 0 dock false","select-touch: opened true closed false stillClosed false reopened 1 dock false","popover-touch: opened true closed true stillClosed true reopened 0 dock false"]}
+chromium rc=0
+{"engine":"webkit","tag":"plant8-g8-exempt","pass":false,"cells":{"menu-mouse":false,"select-mouse":false,"popover-mouse":false,"sheet-mouse":true,"menu-touch":false,"select-touch":false,"popover-touch":false,"sheet-touch":false,"select-touch-item":true,"sheet-touch-scrim":false,"tapseat":"w-pill-search","fourier":{"face":"folds","theme":"folds","menu":"folds","about":"folds"}},"bad":["menu-mouse: opened true closed true stillClosed true reopened 0 dock false","select-mouse: opened true closed true stillClosed true reopened 1 dock false","popover-mouse: opened true closed true stillClosed true reopened 0 dock false","menu-touch: opened true closed true stillClosed true reopened 0 dock false","select-touch: opened true closed true stillClosed true reopened 0 dock false","popover-touch: opened true closed true stillClosed true reopened 0 dock false","sheet-touch: opened true closed false stillClosed false reopened 0 dock true","sheet-touch-scrim: opened true closed false stillClosed false reopened 0 dock true"]}
+webkit rc=0
 reverted g8-exempt
-== done 11:18:18
+== done 12:19:19

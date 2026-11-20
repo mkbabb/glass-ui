@@ -1,9 +1,33 @@
-== g4-ghost 11:18:11 (load { 13.61 13.73 11.87 })
+== g4-ghost 12:15:05 (load { 4.19 5.08 8.38 })
 applied g4-ghost - G-4 (RU-81): a removed seat keeps painting at its own opacity through its exit and is cut at the landing
-[guarded] REFUSED: kernel zone data.kalloc.1024 at 8.36M (panics near 20.8M; heavy and browser runs stop at 8M): reboot the Mac
-chromium rc=75
-[guarded] REFUSED: kernel zone data.kalloc.1024 at 8.36M (panics near 20.8M; heavy and browser runs stop at 8M): reboot the Mac
-webkit rc=75
+== p3-seatset-fine chromium 12:15:08 load { 5.54 5.34 8.45 }
+{"cell":"1440-fine-light","rows":"p3-seatset-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":417,"firstChange":234.1,"lastChange":3056.7,"screencast":null,"consoleErrors":0}
+== p3-seatset-coarse chromium 12:15:13 load { 5.66 5.37 8.45 }
+{"cell":"390-coarse-light","rows":"p3-seatset-coarse.wi8.chromium.390-coarse-light.rows.json","strips":[],"frames":298,"firstChange":153.5,"lastChange":2103.3,"screencast":null,"consoleErrors":0}
+chromium rc=0
+== p3-seatset-fine webkit 12:15:21 load { 5.76 5.39 8.44 }
+{"cell":"1440-fine-light","rows":"p3-seatset-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":200,"firstChange":221,"lastChange":2917,"screencast":null,"consoleErrors":0}
+== p3-seatset-coarse webkit 12:15:26 load { 6.42 5.54 8.47 }
+{"cell":"390-coarse-light","rows":"p3-seatset-coarse.wi8.webkit.390-coarse-light.rows.json","strips":[],"frames":148,"firstChange":66,"lastChange":2030,"screencast":null,"consoleErrors":0}
+webkit rc=0
 reverted g4-ghost
 -- judge
-== done 11:18:14
+p3-seatset-coarse | chromium | 390-coarse-light | curve 0.02 | held 0 | ghost {"rows":32,"hidden":0} | join {"step":1,"cuts":1,"fades":"in 183ms out 8ms"} | whole {"row":297,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":224,"over":0,"room":374,"offset":0,"focused":false} | touch true | FAIL: joining seat steps 1.00 in 16.7 ms; joining seat cut in 1 rows; joining seat fade out 8ms (bound 75 ms)
+p3-seatset-coarse | webkit | 390-coarse-light | curve 0.02 | held 0 | ghost {"rows":16,"hidden":0} | join {"step":1,"cuts":1,"fades":"in 183ms out 18ms"} | whole {"row":147,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":224,"over":0,"room":374,"offset":0,"focused":false} | touch true | FAIL: joining seat steps 1.00 in 16.7 ms; joining seat cut in 1 rows; joining seat fade out 18ms (bound 75 ms)
+p3-seatset-fine | chromium | 1440-fine-light | curve 0.02 | held 0 | ghost {"rows":128,"hidden":0} | join {"step":1,"cuts":1,"fades":"in 183ms out 8ms"} | whole {"row":416,"fits":true,"whole":3,"of":3,"partial":[],"absent":0,"ext":160,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: joining seat steps 1.00 in 16.7 ms; joining seat cut in 1 rows; joining seat fade out 8ms (bound 75 ms)
+p3-seatset-fine | webkit | 1440-fine-light | curve 0.02 | held 0 | ghost {"rows":68,"hidden":0} | join {"step":1,"cuts":1,"fades":"in 183ms out 17ms"} | whole {"row":199,"fits":true,"whole":3,"of":3,"partial":[],"absent":0,"ext":160,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: joining seat steps 1.00 in 16.7 ms; joining seat cut in 1 rows; joining seat fade out 17ms (bound 75 ms)
+p3-seatset-coarse | wi8 | chromium | 390-coarse-light | load 5.66/5.76 | f15-f58 384ms | L 82px first 7.6% max 12.7% last 0.09px; R 82px first 7.6% max 12.7% last 0.1px | op60 0.24 | out 0px | pass
+p3-seatset-coarse | wi8 | chromium | 390-coarse-light | load 5.66/5.76 | f108-f141 275ms | L 26px first 1.4% max 6.9% last 0.14px; R 26px first 1.5% max 7% last 0.14px | op60 0.21 | out 0px | pass
+p3-seatset-coarse | wi8 | chromium | 390-coarse-light | load 5.66/5.76 | f216-f249 275ms | L 26px first 1.5% max 7.2% last 0.14px; R 26px first 1.4% max 7.2% last 0.14px | op60 0 | out 0px | pass
+p3-seatset-coarse | wi8 | webkit | 390-coarse-light | load 6.63/6.63 | f3-f27 399ms | L 82px first 2.7% max 14.1% last 0.03px; R 82px first 2.7% max 14.1% last 0.03px | op60 0.26 | out 0px | pass
+p3-seatset-coarse | wi8 | webkit | 390-coarse-light | load 6.63/6.63 | f52-f69 284ms | L 26px first 5.7% max 14% last 0.23px; R 26px first 5.7% max 14% last 0.24px | op60 0.2 | out 0px | pass
+p3-seatset-coarse | wi8 | webkit | 390-coarse-light | load 6.63/6.63 | f105-f122 284ms | L 26px first 4.6% max 14% last 0.23px; R 26px first 4.7% max 14% last 0.24px | op60 0 | out 0px | pass
+p3-seatset-fine | wi8 | chromium | 1440-fine-light | load 5.54/5.66 | f26-f72 383ms | L 76px first 1.4% max 7.5% last 0.08px; R 76px first 1.4% max 7.5% last 0.08px | op60 0.25 | out 0px | pass
+p3-seatset-fine | wi8 | chromium | 1440-fine-light | load 5.54/5.66 | f121-f154 275ms | L 24px first 1.4% max 7% last 0.14px; R 24px first 1.4% max 7% last 0.14px | op60 0.21 | out 0px | pass
+p3-seatset-fine | wi8 | chromium | 1440-fine-light | load 5.54/5.66 | f227-f260 275ms | L 24px first 1.7% max 7% last 0.12px; R 24px first 1.7% max 7% last 0.13px | op60 0 | out 0px | pass
+p3-seatset-fine | wi8 | chromium | 1440-fine-light | load 5.54/5.66 | f308-f341 275ms | L 24px first 1.4% max 7.1% last 0.14px; R 24px first 1.5% max 7.1% last 0.14px | op60 0.21 | out 0px | pass
+p3-seatset-fine | wi8 | webkit | 1440-fine-light | load 6.42/6.42 | f12-f36 399ms | L 76px first 2.7% max 13.6% last 0.06px; R 76px first 2.7% max 13.6% last 0.06px | op60 0.25 | out 0px | pass
+p3-seatset-fine | wi8 | webkit | 1440-fine-light | load 6.42/6.42 | f61-f78 283ms | L 24px first 5.7% max 14% last 0.2px; R 24px first 5.7% max 14% last 0.21px | op60 0.21 | out 0px | pass
+p3-seatset-fine | wi8 | webkit | 1440-fine-light | load 6.42/6.42 | f114-f132 300ms | L 24px first 4.6% max 16.1% last 0.22px; R 24px first 4.6% max 16.1% last 0.22px | op60 0 | out 0px | pass
+p3-seatset-fine | wi8 | webkit | 1440-fine-light | load 6.42/6.42 | f157-f175 300ms | L 24px first 5.2% max 14% last 0.2px; R 24px first 5.2% max 14% last 0.21px | op60 0.21 | out 0px | pass
+== done 12:15:35
