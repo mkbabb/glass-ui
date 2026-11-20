@@ -1,0 +1,16 @@
+== touch 20:02:23 (load { 11.05 18.49 33.64 })
+applied touch: every dock rests open under (hover: none), with a folded face or not
+[guarded] waiting for the 'webkit' lock
+
+Running 5 tests using 1 worker
+
+  ✓  1 [webkit] › tests-visual/release-10-1-1.spec.ts:137:9 › 10.1.1 › O-102(3) · a dropdown opened from a seat closes when the dock collapses (1.7s)
+  ✓  2 [webkit] › tests-visual/release-10-1-1.spec.ts:137:9 › 10.1.1 › O-102(3) · a popover opened from a seat closes when the dock collapses (962ms)
+  ✓  3 [webkit] › tests-visual/release-10-1-1.spec.ts:137:9 › 10.1.1 › O-102(3) · a select opened from a seat closes when the dock collapses (886ms)
+  ✓  4 [webkit] › tests-visual/release-10-1-1.spec.ts:156:5 › 10.1.1 › O-102(3) · a collapse-closed menu hands focus to the summary, not <body> (932ms)
+  ✓  5 [webkit] › tests-visual/release-10-1-1.spec.ts:186:5 › 10.1.1 › O-102(3) · a popover opened from #persistent outlives the collapse, and the dock stays collapsed (2.1s)
+
+  5 passed (8.5s)
+webkit-a rc=0
+reverted touch
+== done 20:03:20
