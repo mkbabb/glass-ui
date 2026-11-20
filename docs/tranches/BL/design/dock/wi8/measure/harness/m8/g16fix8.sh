@@ -16,11 +16,12 @@ REF="$1"; T="$2"; TAG="$3"; PLANT="${4:-}"
 SHA=$(git -C "$W" rev-parse --short "$REF")
 if [ ! -f "$T/.g16-ref" ] || [ "$(cat "$T/.g16-ref")" != "$SHA" ]; then
   rm -rf "$T"; mkdir -p "$T"
-  git -C "$W" archive "$REF" | tar -x -C "$T"
-  rm -rf "$T/docs"
+  # docs/ is left out of the archive (pathspec exclude), not extracted and then removed: the full tree is about 5 GB of
+  # docs (the 2026-11-19 resume found a half-extracted 5.0 GB candidate tree), and the library build never reads it
+  git -C "$W" archive "$REF" -- . ':(exclude)docs' | tar -x -C "$T"
   ln -s /Users/mkbabb/Programming/glass-ui/node_modules "$T/node_modules"
   echo "$SHA" > "$T/.g16-ref"
-  echo "$(date '+%F %T') g16fix8: archived $REF ($SHA) into $T, docs/ dropped" >> "$L/m8-disk.log"
+  echo "$(date '+%F %T') g16fix8: archived $REF ($SHA) into $T, docs/ left out" >> "$L/m8-disk.log"
 fi
 restore() {
   rm -f "$T/src/components/dock/m8-plant-unused.ts" "$T/src/components/dock/m8-plant-used.ts"
