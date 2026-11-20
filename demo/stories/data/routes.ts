@@ -7,11 +7,11 @@ export const section: SectionRoutes = {
     icon: Database,
     lede: "Tables, lists, timelines and metrics.",
     routes: [
-        { id: "table", title: "Table", lede: "Lays data out in rows and columns." },
-        { id: "data-table", title: "Data Table", lede: "A table you can sort and select." },
+        { id: "table", title: "Table", lede: "Lays data out in rows and columns.", codeFace: true },
+        { id: "data-table", title: "Data Table", lede: "A table you can sort and select.", codeFace: true },
         { id: "sortable-list", title: "Sortable List", lede: "Reorder items by dragging or with the keyboard." },
         { id: "infinite-scroll", title: "Infinite Scroll", lede: "A feed that loads more as you reach its end." },
         { id: "timeline", title: "Timeline", lede: "Phases and marks along one axis." },
-        { id: "metric", title: "Metric", lede: "A number with its label." },
+        { id: "metric", title: "Metric", lede: "A number with its label.", codeFace: true },
     ],
 };

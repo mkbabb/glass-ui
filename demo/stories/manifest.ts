@@ -32,6 +32,8 @@ export interface Story {
     tile?: () => Promise<Component>;
     /** Where the page runs a live canvas of its own (`RouteRow.canvas`). */
     canvas?: "page" | "card";
+    /** The page's first screen sets figures or code in the code face (`RouteRow.codeFace`). */
+    codeFace?: true;
 }
 
 export interface Category {
@@ -67,6 +69,7 @@ function category(section: SectionRoutes): Category {
             title: row.title,
             lede: row.lede,
             canvas: row.canvas,
+            codeFace: row.codeFace,
             component: lazy(section.id, row.id),
             stage: loader(stageModules, `./${section.id}/${row.id}.stage.vue`),
             tile: loader(tileModules, `./${section.id}/${row.id}.tile.vue`),
@@ -104,6 +107,11 @@ export function findStory(
 /** A card on this page runs a live canvas, so the shell's field stays static there. */
 export function cardsRunCanvas(stories: readonly Story[]): boolean {
     return stories.some((s) => s.canvas === "card");
+}
+
+/** A card on this page sets figures or code in the code face. */
+export function cardsSetCode(stories: readonly Story[]): boolean {
+    return stories.some((s) => s.codeFace);
 }
 
 export function firstStoryPath(): string {
