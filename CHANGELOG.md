@@ -159,8 +159,8 @@ A patch on 11.1.0 about how surfaces leave. Nothing is removed or renamed.
   gzipped, from 11.1.0: `dialog` 12,508 to 14,529 bytes, `select` 8,453 to 9,517,
   `popover` 8,663 to 9,385, `tooltip` 5,897 to 6,607 and `menu` 11,865 to 12,555.
 - These entries also grew by more than half a kilobyte, measured the same way, from
-  11.1.0: the root entry (`@mkbabb/glass-ui`) 104,776 to 108,642 bytes, `command`
-  16,804 to 18,898, `sheet` 14,306 to 16,695, `tabs` 19,091 to 20,154, `easing` 36,889
+  11.1.0: the root entry (`@mkbabb/glass-ui`) 104,776 to 108,672 bytes, `command`
+  16,804 to 18,898, `sheet` 14,306 to 16,726, `tabs` 19,091 to 20,154, `easing` 36,889
   to 37,983, `motion` 12,599 to 13,544 and `toast` 5,093 to 5,879.
 
 ## 11.1.0 — 2026-11-15
