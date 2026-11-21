@@ -1,0 +1,52 @@
+
+Running 2 tests using 1 worker
+
+[WebServer] 1:47:50 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  1 [webkit-phone] › critic8-probe/rowb.probe.ts:42:5 › rowb · a detented Sheet dragged up by the mouse and let go at speed (8.0s)
+[WebServer] 1:47:58 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  2 [webkit-phone] › critic8-probe/rowb.probe.ts:42:5 › rowb · a detented Sheet dragged up by the mouse and let go at rest (6.8s)
+
+
+  1) [webkit-phone] › critic8-probe/rowb.probe.ts:42:5 › rowb · a detented Sheet dragged up by the mouse and let go at speed 
+
+    Error: no frame over a fifth of the travel left {"half":0.5,"from":242,"end":84,"fromRung":0.713,"endRung":0.9,"share":0.908,"frames":[[-9,242],[0,242],[6,242],[17,242],[36,405],[44,361],[60,339],[70,294],[83,267],[91,234],[105,216],[117,188],[127,167],[140,152],[154,136],[167,122],[178,112],[198,105],[211,96],[223,92],[239,89],[253,87],[264,85],[276,85],[293,84],[307,84],[324,83],[342,83],[349,84],[361,84],[374,84],[385,84],[395,84],[407,84],[418,84],[437,84],[446,84],[459,84],[467,84],[477,84]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.908
+
+      69 |         expect(read.fromRung, `past the midpoint ${at}`).toBeGreaterThan(0.7);
+      70 |         expect(read.fromRung, `short of 0.9 ${at}`).toBeLessThan(0.88);
+    > 71 |         expect(read.share, `no frame over a fifth of the travel left ${at}`).toBeLessThanOrEqual(0.2);
+         |                                                                              ^
+      72 |         expect(Math.abs(read.endRung - 0.9), `settles on 0.9 ${at}`).toBeLessThanOrEqual(0.01);
+      73 |     });
+      74 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/critic8-probe/rowb.probe.ts:71:78
+
+    Error Context: test-results/rowb.probe.ts-rowb-·-a-det-9242c-e-mouse-and-let-go-at-speed-webkit-phone/error-context.md
+
+  2) [webkit-phone] › critic8-probe/rowb.probe.ts:42:5 › rowb · a detented Sheet dragged up by the mouse and let go at rest 
+
+    Error: no frame over a fifth of the travel left {"half":0.5,"from":242,"end":84,"fromRung":0.713,"endRung":0.9,"share":0.863,"frames":[[-10,242],[1,242],[10,242],[30,405],[49,358],[66,305],[72,259],[89,244],[100,205],[112,184],[123,164],[133,148],[144,136],[156,125],[168,115],[190,107],[207,96],[225,91],[236,88],[254,86],[270,85],[280,84],[294,84],[300,83],[315,83],[327,83],[336,83],[345,84],[357,84],[368,84],[379,84],[387,84],[398,84],[409,84],[418,84],[428,84],[439,84],[456,84],[463,84],[469,84]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.863
+
+      69 |         expect(read.fromRung, `past the midpoint ${at}`).toBeGreaterThan(0.7);
+      70 |         expect(read.fromRung, `short of 0.9 ${at}`).toBeLessThan(0.88);
+    > 71 |         expect(read.share, `no frame over a fifth of the travel left ${at}`).toBeLessThanOrEqual(0.2);
+         |                                                                              ^
+      72 |         expect(Math.abs(read.endRung - 0.9), `settles on 0.9 ${at}`).toBeLessThanOrEqual(0.01);
+      73 |     });
+      74 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/critic8-probe/rowb.probe.ts:71:78
+
+    Error Context: test-results/rowb.probe.ts-rowb-·-a-det-0f74a-he-mouse-and-let-go-at-rest-webkit-phone/error-context.md
+
+  2 failed
+    [webkit-phone] › critic8-probe/rowb.probe.ts:42:5 › rowb · a detented Sheet dragged up by the mouse and let go at speed 
+    [webkit-phone] › critic8-probe/rowb.probe.ts:42:5 › rowb · a detented Sheet dragged up by the mouse and let go at rest 

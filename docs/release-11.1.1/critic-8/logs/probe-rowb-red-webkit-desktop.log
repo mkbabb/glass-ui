@@ -1,0 +1,53 @@
+[guarded] waiting for the 'webkit' lock
+
+Running 2 tests using 1 worker
+
+[WebServer] 1:50:30 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  1 [webkit-desktop] › critic8-probe/rowb.probe.ts:42:5 › rowb · a detented Sheet dragged up by the mouse and let go at speed (6.8s)
+[WebServer] 1:50:37 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  2 [webkit-desktop] › critic8-probe/rowb.probe.ts:42:5 › rowb · a detented Sheet dragged up by the mouse and let go at rest (5.9s)
+
+
+  1) [webkit-desktop] › critic8-probe/rowb.probe.ts:42:5 › rowb · a detented Sheet dragged up by the mouse and let go at speed 
+
+    Error: past the midpoint {"half":0.5,"from":270,"end":90,"fromRung":0.7,"endRung":0.9,"share":0.715,"frames":[[-2,270],[7,270],[28,432],[44,379],[71,331],[78,255],[95,238],[103,200],[110,185],[122,173],[131,155],[143,144],[152,131],[168,123],[175,112],[183,108],[192,105],[212,101],[228,95],[242,93],[254,91],[265,90],[283,90],[300,89],[312,89],[327,89],[335,89],[350,89],[360,89],[366,89],[375,89],[386,89],[397,90],[407,90],[417,90],[427,90],[436,90],[453,90],[459,90],[468,90]]}
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0.7
+    Received:   0.7
+
+      67 |         await info.attach("sheet", { body: at, contentType: "application/json" });
+      68 |         expect(Math.abs(read.half - 0.5), `the first drag left the sheet on its 0.5 rung ${at}`).toBeLessThanOrEqual(0.01);
+    > 69 |         expect(read.fromRung, `past the midpoint ${at}`).toBeGreaterThan(0.7);
+         |                                                          ^
+      70 |         expect(read.fromRung, `short of 0.9 ${at}`).toBeLessThan(0.88);
+      71 |         expect(read.share, `no frame over a fifth of the travel left ${at}`).toBeLessThanOrEqual(0.2);
+      72 |         expect(Math.abs(read.endRung - 0.9), `settles on 0.9 ${at}`).toBeLessThanOrEqual(0.01);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/critic8-probe/rowb.probe.ts:69:58
+
+    Error Context: test-results/rowb.probe.ts-rowb-·-a-det-9242c-e-mouse-and-let-go-at-speed-webkit-desktop/error-context.md
+
+  2) [webkit-desktop] › critic8-probe/rowb.probe.ts:42:5 › rowb · a detented Sheet dragged up by the mouse and let go at rest 
+
+    Error: past the midpoint {"half":0.5,"from":270,"end":450,"fromRung":0.7,"endRung":0.5,"share":1,"frames":[[-1,270],[8,450],[18,450],[28,450],[38,450],[49,450],[59,450],[69,450],[79,450],[89,450],[100,450],[110,450],[120,450],[130,450],[140,450],[151,450],[161,450],[171,450],[181,450],[192,450],[202,450],[212,450],[222,450],[232,450],[241,450],[252,450],[261,450],[274,450],[283,450],[294,450],[304,450],[313,450],[324,450],[333,450],[343,450],[354,450],[365,450],[375,450],[385,450],[396,450]]}
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0.7
+    Received:   0.7
+
+      67 |         await info.attach("sheet", { body: at, contentType: "application/json" });
+      68 |         expect(Math.abs(read.half - 0.5), `the first drag left the sheet on its 0.5 rung ${at}`).toBeLessThanOrEqual(0.01);
+    > 69 |         expect(read.fromRung, `past the midpoint ${at}`).toBeGreaterThan(0.7);
+         |                                                          ^
+      70 |         expect(read.fromRung, `short of 0.9 ${at}`).toBeLessThan(0.88);
+      71 |         expect(read.share, `no frame over a fifth of the travel left ${at}`).toBeLessThanOrEqual(0.2);
+      72 |         expect(Math.abs(read.endRung - 0.9), `settles on 0.9 ${at}`).toBeLessThanOrEqual(0.01);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/critic8-probe/rowb.probe.ts:69:58
+
+    Error Context: test-results/rowb.probe.ts-rowb-·-a-det-0f74a-he-mouse-and-let-go-at-rest-webkit-desktop/error-context.md
+
+  2 failed
+    [webkit-desktop] › critic8-probe/rowb.probe.ts:42:5 › rowb · a detented Sheet dragged up by the mouse and let go at speed 
+    [webkit-desktop] › critic8-probe/rowb.probe.ts:42:5 › rowb · a detented Sheet dragged up by the mouse and let go at rest 

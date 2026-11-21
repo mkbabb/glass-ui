@@ -1,0 +1,286 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "critic8-probe/probe.config.ts",
+      "--project=webkit-desktop",
+      "--workers=1",
+      "-g",
+      "rowb ·"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/critic8-probe/probe.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/critic8-probe",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/critic8-probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/critic8-probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/critic8-probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/critic8-probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-8/logs/probe-rowb-red-webkit-desktop.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5356",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/",
+      "url": "http://localhost:5356",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "rowb.probe.ts",
+      "file": "rowb.probe.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "rowb · a detented Sheet dragged up by the mouse and let go at speed",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6834,
+                  "error": {
+                    "message": "Error: past the midpoint {\"half\":0.5,\"from\":270,\"end\":90,\"fromRung\":0.7,\"endRung\":0.9,\"share\":0.715,\"frames\":[[-2,270],[7,270],[28,432],[44,379],[71,331],[78,255],[95,238],[103,200],[110,185],[122,173],[131,155],[143,144],[152,131],[168,123],[175,112],[183,108],[192,105],[212,101],[228,95],[242,93],[254,91],[265,90],[283,90],[300,89],[312,89],[327,89],[335,89],[350,89],[360,89],[366,89],[375,89],[386,89],[397,90],[407,90],[417,90],[427,90],[436,90],[453,90],[459,90],[468,90]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.7\u001b[39m\nReceived:   \u001b[31m0.7\u001b[39m",
+                    "stack": "Error: past the midpoint {\"half\":0.5,\"from\":270,\"end\":90,\"fromRung\":0.7,\"endRung\":0.9,\"share\":0.715,\"frames\":[[-2,270],[7,270],[28,432],[44,379],[71,331],[78,255],[95,238],[103,200],[110,185],[122,173],[131,155],[143,144],[152,131],[168,123],[175,112],[183,108],[192,105],[212,101],[228,95],[242,93],[254,91],[265,90],[283,90],[300,89],[312,89],[327,89],[335,89],[350,89],[360,89],[366,89],[375,89],[386,89],[397,90],[407,90],[417,90],[427,90],[436,90],[453,90],[459,90],[468,90]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.7\u001b[39m\nReceived:   \u001b[31m0.7\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/critic8-probe/rowb.probe.ts:69:58",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/critic8-probe/rowb.probe.ts",
+                      "column": 58,
+                      "line": 69
+                    },
+                    "snippet": "  67 |         await info.attach(\"sheet\", { body: at, contentType: \"application/json\" });\n  68 |         expect(Math.abs(read.half - 0.5), `the first drag left the sheet on its 0.5 rung ${at}`).toBeLessThanOrEqual(0.01);\n> 69 |         expect(read.fromRung, `past the midpoint ${at}`).toBeGreaterThan(0.7);\n     |                                                          ^\n  70 |         expect(read.fromRung, `short of 0.9 ${at}`).toBeLessThan(0.88);\n  71 |         expect(read.share, `no frame over a fifth of the travel left ${at}`).toBeLessThanOrEqual(0.2);\n  72 |         expect(Math.abs(read.endRung - 0.9), `settles on 0.9 ${at}`).toBeLessThanOrEqual(0.01);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/critic8-probe/rowb.probe.ts",
+                        "column": 58,
+                        "line": 69
+                      },
+                      "message": "Error: past the midpoint {\"half\":0.5,\"from\":270,\"end\":90,\"fromRung\":0.7,\"endRung\":0.9,\"share\":0.715,\"frames\":[[-2,270],[7,270],[28,432],[44,379],[71,331],[78,255],[95,238],[103,200],[110,185],[122,173],[131,155],[143,144],[152,131],[168,123],[175,112],[183,108],[192,105],[212,101],[228,95],[242,93],[254,91],[265,90],[283,90],[300,89],[312,89],[327,89],[335,89],[350,89],[360,89],[366,89],[375,89],[386,89],[397,90],[407,90],[417,90],[427,90],[436,90],[453,90],[459,90],[468,90]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.7\u001b[39m\nReceived:   \u001b[31m0.7\u001b[39m\n\n  67 |         await info.attach(\"sheet\", { body: at, contentType: \"application/json\" });\n  68 |         expect(Math.abs(read.half - 0.5), `the first drag left the sheet on its 0.5 rung ${at}`).toBeLessThanOrEqual(0.01);\n> 69 |         expect(read.fromRung, `past the midpoint ${at}`).toBeGreaterThan(0.7);\n     |                                                          ^\n  70 |         expect(read.fromRung, `short of 0.9 ${at}`).toBeLessThan(0.88);\n  71 |         expect(read.share, `no frame over a fifth of the travel left ${at}`).toBeLessThanOrEqual(0.2);\n  72 |         expect(Math.abs(read.endRung - 0.9), `settles on 0.9 ${at}`).toBeLessThanOrEqual(0.01);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/critic8-probe/rowb.probe.ts:69:58"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-20T06:50:28.119Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "sheet",
+                      "contentType": "application/json",
+                      "body": "eyJoYWxmIjowLjUsImZyb20iOjI3MCwiZW5kIjo5MCwiZnJvbVJ1bmciOjAuNywiZW5kUnVuZyI6MC45LCJzaGFyZSI6MC43MTUsImZyYW1lcyI6W1stMiwyNzBdLFs3LDI3MF0sWzI4LDQzMl0sWzQ0LDM3OV0sWzcxLDMzMV0sWzc4LDI1NV0sWzk1LDIzOF0sWzEwMywyMDBdLFsxMTAsMTg1XSxbMTIyLDE3M10sWzEzMSwxNTVdLFsxNDMsMTQ0XSxbMTUyLDEzMV0sWzE2OCwxMjNdLFsxNzUsMTEyXSxbMTgzLDEwOF0sWzE5MiwxMDVdLFsyMTIsMTAxXSxbMjI4LDk1XSxbMjQyLDkzXSxbMjU0LDkxXSxbMjY1LDkwXSxbMjgzLDkwXSxbMzAwLDg5XSxbMzEyLDg5XSxbMzI3LDg5XSxbMzM1LDg5XSxbMzUwLDg5XSxbMzYwLDg5XSxbMzY2LDg5XSxbMzc1LDg5XSxbMzg2LDg5XSxbMzk3LDkwXSxbNDA3LDkwXSxbNDE3LDkwXSxbNDI3LDkwXSxbNDM2LDkwXSxbNDUzLDkwXSxbNDU5LDkwXSxbNDY4LDkwXV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/rowb.probe.ts-rowb-·-a-det-9242c-e-mouse-and-let-go-at-speed-webkit-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/critic8-probe/rowb.probe.ts",
+                    "column": 58,
+                    "line": 69
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "759f4366d2a3bb0c31c4-5f67d34d15980a6d70f1",
+          "file": "rowb.probe.ts",
+          "line": 42,
+          "column": 5
+        },
+        {
+          "title": "rowb · a detented Sheet dragged up by the mouse and let go at rest",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5948,
+                  "error": {
+                    "message": "Error: past the midpoint {\"half\":0.5,\"from\":270,\"end\":450,\"fromRung\":0.7,\"endRung\":0.5,\"share\":1,\"frames\":[[-1,270],[8,450],[18,450],[28,450],[38,450],[49,450],[59,450],[69,450],[79,450],[89,450],[100,450],[110,450],[120,450],[130,450],[140,450],[151,450],[161,450],[171,450],[181,450],[192,450],[202,450],[212,450],[222,450],[232,450],[241,450],[252,450],[261,450],[274,450],[283,450],[294,450],[304,450],[313,450],[324,450],[333,450],[343,450],[354,450],[365,450],[375,450],[385,450],[396,450]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.7\u001b[39m\nReceived:   \u001b[31m0.7\u001b[39m",
+                    "stack": "Error: past the midpoint {\"half\":0.5,\"from\":270,\"end\":450,\"fromRung\":0.7,\"endRung\":0.5,\"share\":1,\"frames\":[[-1,270],[8,450],[18,450],[28,450],[38,450],[49,450],[59,450],[69,450],[79,450],[89,450],[100,450],[110,450],[120,450],[130,450],[140,450],[151,450],[161,450],[171,450],[181,450],[192,450],[202,450],[212,450],[222,450],[232,450],[241,450],[252,450],[261,450],[274,450],[283,450],[294,450],[304,450],[313,450],[324,450],[333,450],[343,450],[354,450],[365,450],[375,450],[385,450],[396,450]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.7\u001b[39m\nReceived:   \u001b[31m0.7\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/critic8-probe/rowb.probe.ts:69:58",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/critic8-probe/rowb.probe.ts",
+                      "column": 58,
+                      "line": 69
+                    },
+                    "snippet": "  67 |         await info.attach(\"sheet\", { body: at, contentType: \"application/json\" });\n  68 |         expect(Math.abs(read.half - 0.5), `the first drag left the sheet on its 0.5 rung ${at}`).toBeLessThanOrEqual(0.01);\n> 69 |         expect(read.fromRung, `past the midpoint ${at}`).toBeGreaterThan(0.7);\n     |                                                          ^\n  70 |         expect(read.fromRung, `short of 0.9 ${at}`).toBeLessThan(0.88);\n  71 |         expect(read.share, `no frame over a fifth of the travel left ${at}`).toBeLessThanOrEqual(0.2);\n  72 |         expect(Math.abs(read.endRung - 0.9), `settles on 0.9 ${at}`).toBeLessThanOrEqual(0.01);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/critic8-probe/rowb.probe.ts",
+                        "column": 58,
+                        "line": 69
+                      },
+                      "message": "Error: past the midpoint {\"half\":0.5,\"from\":270,\"end\":450,\"fromRung\":0.7,\"endRung\":0.5,\"share\":1,\"frames\":[[-1,270],[8,450],[18,450],[28,450],[38,450],[49,450],[59,450],[69,450],[79,450],[89,450],[100,450],[110,450],[120,450],[130,450],[140,450],[151,450],[161,450],[171,450],[181,450],[192,450],[202,450],[212,450],[222,450],[232,450],[241,450],[252,450],[261,450],[274,450],[283,450],[294,450],[304,450],[313,450],[324,450],[333,450],[343,450],[354,450],[365,450],[375,450],[385,450],[396,450]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.7\u001b[39m\nReceived:   \u001b[31m0.7\u001b[39m\n\n  67 |         await info.attach(\"sheet\", { body: at, contentType: \"application/json\" });\n  68 |         expect(Math.abs(read.half - 0.5), `the first drag left the sheet on its 0.5 rung ${at}`).toBeLessThanOrEqual(0.01);\n> 69 |         expect(read.fromRung, `past the midpoint ${at}`).toBeGreaterThan(0.7);\n     |                                                          ^\n  70 |         expect(read.fromRung, `short of 0.9 ${at}`).toBeLessThan(0.88);\n  71 |         expect(read.share, `no frame over a fifth of the travel left ${at}`).toBeLessThanOrEqual(0.2);\n  72 |         expect(Math.abs(read.endRung - 0.9), `settles on 0.9 ${at}`).toBeLessThanOrEqual(0.01);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/critic8-probe/rowb.probe.ts:69:58"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-20T06:50:35.904Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "sheet",
+                      "contentType": "application/json",
+                      "body": "eyJoYWxmIjowLjUsImZyb20iOjI3MCwiZW5kIjo0NTAsImZyb21SdW5nIjowLjcsImVuZFJ1bmciOjAuNSwic2hhcmUiOjEsImZyYW1lcyI6W1stMSwyNzBdLFs4LDQ1MF0sWzE4LDQ1MF0sWzI4LDQ1MF0sWzM4LDQ1MF0sWzQ5LDQ1MF0sWzU5LDQ1MF0sWzY5LDQ1MF0sWzc5LDQ1MF0sWzg5LDQ1MF0sWzEwMCw0NTBdLFsxMTAsNDUwXSxbMTIwLDQ1MF0sWzEzMCw0NTBdLFsxNDAsNDUwXSxbMTUxLDQ1MF0sWzE2MSw0NTBdLFsxNzEsNDUwXSxbMTgxLDQ1MF0sWzE5Miw0NTBdLFsyMDIsNDUwXSxbMjEyLDQ1MF0sWzIyMiw0NTBdLFsyMzIsNDUwXSxbMjQxLDQ1MF0sWzI1Miw0NTBdLFsyNjEsNDUwXSxbMjc0LDQ1MF0sWzI4Myw0NTBdLFsyOTQsNDUwXSxbMzA0LDQ1MF0sWzMxMyw0NTBdLFszMjQsNDUwXSxbMzMzLDQ1MF0sWzM0Myw0NTBdLFszNTQsNDUwXSxbMzY1LDQ1MF0sWzM3NSw0NTBdLFszODUsNDUwXSxbMzk2LDQ1MF1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/rowb.probe.ts-rowb-·-a-det-0f74a-he-mouse-and-let-go-at-rest-webkit-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/critic8-probe/rowb.probe.ts",
+                    "column": 58,
+                    "line": 69
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "759f4366d2a3bb0c31c4-cb1096ccbbb462aa4001",
+          "file": "rowb.probe.ts",
+          "line": 42,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-20T06:50:23.476Z",
+    "duration": 18705.775999999998,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

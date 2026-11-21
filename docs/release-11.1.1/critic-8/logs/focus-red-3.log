@@ -1,0 +1,26 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree
+
+ ❯ tests/critic8-probe/focus.probe.test.ts (1 test | 1 failed) 2054ms
+   × times the close by an item 2052ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/critic8-probe/focus.probe.test.ts > times the close by an item
+TypeError: The "path" argument must be of type string or an instance of Buffer or URL. Received undefined
+ ❯ tests/critic8-probe/focus.probe.test.ts:50:5
+     48|         await new Promise((r) => setTimeout(r, 5));
+     49|     }
+     50|     writeFileSync(process.env.FOCUS_OUT!, JSON.stringify(rows));
+       |     ^
+     51|     expect(rows.length).toBe(30);
+     52| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  09:09:45
+   Duration  4.89s (transform 1.19s, setup 142ms, import 1.99s, tests 2.05s, environment 450ms)
+

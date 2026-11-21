@@ -1,0 +1,16 @@
+15:33:27 CHAIN-START from 1 head 11b58de50 load { 39.48 43.00 33.13 }
+15:39:41 frost-tip-chromium-phone tip chromium-phone exit 1 374s load-at-start={ 39.48 43.00 33.13 } load-end={ 74.73 53.23 40.31 }  9 failed 
+15:42:57 frost-red-chromium-phone red chromium-phone exit 1 196s load-at-start={ 74.73 53.23 40.31 } load-end={ 41.41 47.72 40.88 }  9 failed 
+15:45:31 frost-tip-chromium-desktop tip chromium-desktop exit 1 154s load-at-start={ 41.41 47.72 40.88 } load-end={ 80.99 56.25 45.05 }  9 failed 
+15:48:07 frost-red-chromium-desktop red chromium-desktop exit 1 156s load-at-start={ 80.99 56.25 45.05 } load-end={ 30.43 43.31 41.53 }  9 failed 
+16:13:02 frost-tip-webkit-phone tip webkit-phone exit 1 1495s load-at-start={ 30.43 43.31 41.53 } load-end={ 56.58 46.57 43.69 }  9 failed 
+16:17:59 frost-red-webkit-phone red webkit-phone exit 1 295s load-at-start={ 56.58 46.57 43.69 } load-end={ 45.90 42.88 42.71 }  9 failed 
+16:27:42 frost-tip-webkit-desktop tip webkit-desktop exit 1 583s load-at-start={ 45.90 42.88 42.71 } load-end={ 45.91 41.04 41.60 }  9 failed 
+16:47:40 frost-red-webkit-desktop red webkit-desktop (chain.sh's run, ended under chain2)  9 failed 
+16:47:40 CHAIN2-START head 11b58de50 load { 34.43 34.37 36.94 }
+16:48:47 raf-cured-webkit exit 0 load-at-start={ 34.43 34.37 36.94 } {"engine":"webkit","version":"26.5","forms":{"phone":{"films":60,"firstNotBeforeMark":0,"framesStampedAfterTheirCallback":2,"worstAheadMs":0,"cases":[]},"desktop":{"films":60,"firstNotBeforeMark":0,"framesStampedAfterTheirCallback":3,"worstAheadMs":0,"cases":[]}}}
+16:49:01 raf-cured-chromium exit 0 load-at-start={ 30.40 33.14 36.27 } {"engine":"chromium","version":"149.0.7827.55","forms":{"phone":{"films":60,"firstNotBeforeMark":0,"framesStampedAfterTheirCallback":0,"worstAheadMs":-0.1,"cases":[]},"desktop":{"films":60,"firstNotBeforeMark":0,"framesStampedAfterTheirCallback":20,"worstAheadMs":0,"cases":[]}}}
+17:06:51 wp-fade-x10 tip webkit-phone exit 0 227s load-at-start={ 15.65 22.41 29.32 } load-end={ 16.09 18.71 26.09 }  10 passed (38.3s) 
+17:08:02 wp-D tip webkit-phone exit 0 71s load-at-start={ 16.09 18.71 26.09 } load-end={ 13.09 17.31 24.98 }  2 skipped  16 passed (45.3s) 
+17:11:08 wp-A tip webkit-phone exit 0 186s load-at-start={ 13.09 17.31 24.98 } load-end={ 13.04 15.47 22.65 }  16 skipped  25 passed (3.0m) 
+17:11:08 CHAIN2-DONE load { 13.04 15.47 22.65 }

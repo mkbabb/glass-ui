@@ -1,0 +1,228 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "critic8-probe/probe.config.ts",
+      "--project=webkit-phone",
+      "--workers=1",
+      "-g",
+      "rowb ·"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/probe.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-8/logs/probe-rowb-tip-webkit-phone.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5355",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5355",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "rowb.probe.ts",
+      "file": "rowb.probe.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "rowb · a detented Sheet dragged up by the mouse and let go at speed",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7630,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-20T06:47:12.809Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "sheet",
+                      "contentType": "application/json",
+                      "body": "eyJoYWxmIjowLjUsImZyb20iOjI0MiwiZW5kIjo4NCwiZnJvbVJ1bmciOjAuNzEzLCJlbmRSdW5nIjowLjksInNoYXJlIjowLjE5NiwiZnJhbWVzIjpbWy0yLDI0Ml0sWzksMjQyXSxbMzIsMjI3XSxbNTQsMTk4XSxbODIsMTY5XSxbOTEsMTM5XSxbMTA2LDEzMF0sWzEyNywxMTldLFsxNDIsMTA3XSxbMTU3LDEwMF0sWzE3Myw5NV0sWzE4OSw5MV0sWzIwMyw4OV0sWzIyMCw4N10sWzIzNiw4Nl0sWzI1MSw4NV0sWzI2Nyw4NF0sWzI4Myw4NF0sWzMwMSw4NF0sWzMxOCw4NF0sWzMzNCw4NF0sWzM0MSw4NF0sWzM1Miw4NF0sWzM2MCw4NF0sWzM2Nyw4NF0sWzM3OCw4NF0sWzM4Niw4NF0sWzM5OSw4NF0sWzQwNyw4NF0sWzQxNSw4NF0sWzQyNyw4NF0sWzQzNiw4NF0sWzQ0OCw4NF0sWzQ1OSw4NF0sWzQ2OSw4NF0sWzQ3OCw4NF0sWzQ5MSw4NF0sWzUwMSw4NF0sWzUwOSw4NF0sWzUxOCw4NF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "759f4366d2a3bb0c31c4-7dee2b5f277ba746521a",
+          "file": "rowb.probe.ts",
+          "line": 42,
+          "column": 5
+        },
+        {
+          "title": "rowb · a detented Sheet dragged up by the mouse and let go at rest",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6409,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-20T06:47:21.408Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "sheet",
+                      "contentType": "application/json",
+                      "body": "eyJoYWxmIjowLjUsImZyb20iOjI0MiwiZW5kIjo4NCwiZnJvbVJ1bmciOjAuNzEzLCJlbmRSdW5nIjowLjksInNoYXJlIjowLjE4NiwiZnJhbWVzIjpbWy0yLDI0Ml0sWzExLDI0Ml0sWzQwLDIzNF0sWzY5LDIwMV0sWzk3LDE2NF0sWzEwNywxMzRdLFsxMjcsMTI2XSxbMTQ1LDExMl0sWzE2NywxMDNdLFsxODMsOTVdLFsyMDQsOTJdLFsyMjEsODhdLFsyNDAsODZdLFsyNTksODVdLFsyNzcsODRdLFsyOTQsODRdLFszMTMsODRdLFszMzEsODRdLFszNTUsODRdLFszNzIsODRdLFszNzgsODRdLFszOTAsODRdLFszOTgsODRdLFs0MDgsODRdLFs0MTcsODRdLFs0MjgsODRdLFs0NDIsODRdLFs0NDgsODRdLFs0NTcsODRdLFs0NjksODRdLFs0NzgsODRdLFs0ODksODRdLFs0OTksODRdLFs1MTAsODRdLFs1MjAsODRdLFs1MjksODRdLFs1NDIsODRdLFs1NDksODRdLFs1NjEsODRdLFs1NzAsODRdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "759f4366d2a3bb0c31c4-97cd1a92acaa381fae53",
+          "file": "rowb.probe.ts",
+          "line": 42,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-20T06:47:06.514Z",
+    "duration": 21431.054,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

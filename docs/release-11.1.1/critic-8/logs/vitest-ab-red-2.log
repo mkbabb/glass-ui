@@ -1,0 +1,83 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree
+
+ ❯ tests/components/menu/contract.test.ts (11 tests | 1 failed) 2950ms
+     × keeps the click branch to one portaled menu and restores focus on execute 428ms
+ ❯ tests/components/custom/aurora/atoms.test.ts (24 tests | 1 failed) 6803ms
+     × every atom combination yields a valid in-range config (TOTAL) 6705ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/menu/contract.test.ts > DropdownMenu contract > keeps the click branch to one portaled menu and restores focus on execute
+AssertionError: expected <body><div data-v-app>…(1)</div></body> to be <button …(7)></button> // Object.is equality
+
+- Expected
++ Received
+
+@@ -1,5 +1,13 @@
++ <body>
++   <div
++     data-v-app=""
++   >
++     
++     
++     
++     
+      <button
+        aria-expanded="false"
+        aria-haspopup="menu"
+        class="menu__trigger"
+        data-slot="menu-trigger"
+@@ -7,5 +15,22 @@
+        id="reka-dropdown-menu-trigger-v-0"
+        type="button"
+      >
+        Open commands
+      </button>
++     <!--teleport start-->
++     <!--teleport end-->
++     
++     
++     
++     
++   </div>
++   
++   
++   
++   
++   <!---->
++   
++   
++   
++   
++ </body>
+
+ ❯ tests/components/menu/contract.test.ts:124:40
+    122|         expect((wrapper.vm as unknown as { open: boolean }).open).toBe…
+    123|         await new Promise((resolve) => setTimeout(resolve, 30));
+    124|         expect(document.activeElement).toBe(trigger.element);
+       |                                        ^
+    125|     });
+    126|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/components/custom/aurora/atoms.test.ts > resolveAtoms total-function fuzz > every atom combination yields a valid in-range config (TOTAL)
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/components/custom/aurora/atoms.test.ts:141:5
+    139|     // deriveAurora call is the per-iteration cost). Together they exc…
+    140|     // floor and exercise every atom field including the out-of-range …
+    141|     it("every atom combination yields a valid in-range config (TOTAL)"…
+       |     ^
+    142|         const violations: string[] = [];
+    143|         let count = 0;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  2 failed | 33 passed (35)
+   Start at  01:17:50
+   Duration  10.47s (transform 3.79s, setup 514ms, import 5.55s, tests 9.75s, environment 2.90s)
+

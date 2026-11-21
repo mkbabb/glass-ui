@@ -1,0 +1,215 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for headroom (load 43 > 36)
+
+Running 9 tests using 1 worker
+
+[WebServer] 3:37:59 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  1 [chromium-phone] › critic8-probe/frost.probe.ts:71:9 › frost · a Sheet right's frost layer fades with its plate under reduced motion (1) (4.6s)
+[WebServer] 3:38:12 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  2 [chromium-phone] › critic8-probe/frost.probe.ts:71:9 › frost · a Sheet right's frost layer fades with its plate under reduced motion (2) (3.2s)
+[WebServer] 3:38:19 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  3 [chromium-phone] › critic8-probe/frost.probe.ts:71:9 › frost · a Sheet right's frost layer fades with its plate under reduced motion (3) (3.5s)
+[WebServer] 3:38:24 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  4 [chromium-phone] › critic8-probe/frost.probe.ts:71:9 › frost · a Sheet bottom's frost layer fades with its plate under reduced motion (1) (3.5s)
+[WebServer] 3:38:30 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  5 [chromium-phone] › critic8-probe/frost.probe.ts:71:9 › frost · a Sheet bottom's frost layer fades with its plate under reduced motion (2) (3.3s)
+[WebServer] 3:38:52 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  6 [chromium-phone] › critic8-probe/frost.probe.ts:71:9 › frost · a Sheet bottom's frost layer fades with its plate under reduced motion (3) (3.1s)
+[WebServer] 3:38:57 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  7 [chromium-phone] › critic8-probe/frost.probe.ts:71:9 › frost · a detented Sheet's frost layer fades with its plate under reduced motion (1) (3.0s)
+[WebServer] 3:39:16 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  8 [chromium-phone] › critic8-probe/frost.probe.ts:71:9 › frost · a detented Sheet's frost layer fades with its plate under reduced motion (2) (3.4s)
+[WebServer] 3:39:31 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  9 [chromium-phone] › critic8-probe/frost.probe.ts:71:9 › frost · a detented Sheet's frost layer fades with its plate under reduced motion (3) (3.5s)
+
+
+  1) [chromium-phone] › critic8-probe/frost.probe.ts:71:9 › frost · a Sheet right's frost layer fades with its plate under reduced motion (1) 
+
+    Error: in: on every frame the frost layer is within 0.02 of the plate {"in":{"frames":92,"haloFrames":86,"worstGap":1,"firstHalo":1,"lastHalo":1,"strip":[[1,"-","-"],[9,"-","-"],[17,"-","-"],[26,"-","-"],[34,"-","-"],[42,"-","-"],[51,0,1],[59,0,1],[76,0.029,1],[84,0.099,1],[92,0.136,1],[101,0.177,1],[109,0.22,1],[117,0.264,1],[126,0.309,1],[134,0.356,1],[141,0.402,1],[150,0.443,1],[157,0.492,1],[166,0.535,1],[176,0.585,1],[184,0.64,1],[191,0.685,1],[201,0.722,1],[209,0.775,1],[217,0.818,1]]},"out":{"frames":109,"haloFrames":25,"worstGap":0.969,"firstHalo":1,"lastHalo":1,"strip":[[11,1,1],[20,1,1],[29,0.968,1],[37,0.933,1],[46,0.897,1],[54,0.857,1],[61,0.816,1],[71,0.781,1],[79,0.729,1],[87,0.684,1],[96,0.637,1],[104,0.591,1],[112,0.543,1],[120,0.495,1],[129,0.449,1],[137,0.401,1],[145,0.358,1],[154,0.31,1],[162,0.263,1],[171,0.218,1],[179,0.175,1],[187,0.135,1],[196,0.096,1],[203,0.06,1],[213,0.031,1],[220,"-","-"]]}}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.02
+    Received:    1
+
+      85 |             expect(legIn.haloFrames, `in: the frost layer is filmed ${at}`).toBeGreaterThan(0);
+      86 |             expect(legOut.haloFrames, `out: the frost layer is filmed ${at}`).toBeGreaterThan(0);
+    > 87 |             expect(legIn.worstGap, `in: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);
+         |                                                                                                            ^
+      88 |             expect(legOut.worstGap, `out: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);
+      89 |             expect(legIn.firstHalo, `in: it enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);
+      90 |             expect(legOut.lastHalo, `out: it leaves at 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts:87:108
+
+    Error Context: test-results/frost.probe.ts-frost-·-a-S-3240f-ate-under-reduced-motion-1--chromium-phone/error-context.md
+
+  2) [chromium-phone] › critic8-probe/frost.probe.ts:71:9 › frost · a Sheet right's frost layer fades with its plate under reduced motion (2) 
+
+    Error: in: on every frame the frost layer is within 0.02 of the plate {"in":{"frames":90,"haloFrames":84,"worstGap":1,"firstHalo":1,"lastHalo":1,"strip":[[10,"-","-"],[19,"-","-"],[28,"-","-"],[36,"-","-"],[43,"-","-"],[53,"-","-"],[60,0,1],[69,0,1],[86,0.033,1],[95,0.104,1],[119,0.143,1],[126,0.228,1],[136,0.264,1],[144,0.318,1],[153,0.364,1],[160,0.411,1],[170,0.45,1],[177,0.507,1],[186,0.549,1],[194,0.602,1],[203,0.648,1],[211,0.694,1],[218,0.739,1],[228,0.776,1],[235,0.828,1],[245,0.862,1]]},"out":{"frames":111,"haloFrames":27,"worstGap":0.995,"firstHalo":1,"lastHalo":1,"strip":[[2,1,1],[10,1,1],[19,1,1],[26,0.97,1],[34,0.94,1],[44,0.905,1],[51,0.862,1],[61,0.826,1],[69,0.777,1],[77,0.734,1],[85,0.687,1],[94,0.647,1],[102,0.595,1],[111,0.547,1],[119,0.499,1],[126,0.452,1],[135,0.41,1],[144,0.358,1],[152,0.311,1],[159,0.266,1],[169,0.228,1],[176,0.18,1],[186,0.145,1],[193,0.099,1],[202,0.065,1],[209,0.03,1]]}}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.02
+    Received:    1
+
+      85 |             expect(legIn.haloFrames, `in: the frost layer is filmed ${at}`).toBeGreaterThan(0);
+      86 |             expect(legOut.haloFrames, `out: the frost layer is filmed ${at}`).toBeGreaterThan(0);
+    > 87 |             expect(legIn.worstGap, `in: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);
+         |                                                                                                            ^
+      88 |             expect(legOut.worstGap, `out: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);
+      89 |             expect(legIn.firstHalo, `in: it enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);
+      90 |             expect(legOut.lastHalo, `out: it leaves at 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts:87:108
+
+    Error Context: test-results/frost.probe.ts-frost-·-a-S-ee397-ate-under-reduced-motion-2--chromium-phone/error-context.md
+
+  3) [chromium-phone] › critic8-probe/frost.probe.ts:71:9 › frost · a Sheet right's frost layer fades with its plate under reduced motion (3) 
+
+    Error: in: on every frame the frost layer is within 0.02 of the plate {"in":{"frames":99,"haloFrames":85,"worstGap":1,"firstHalo":1,"lastHalo":1,"strip":[[7,"-","-"],[15,"-","-"],[23,"-","-"],[32,"-","-"],[40,"-","-"],[48,"-","-"],[57,"-","-"],[65,"-","-"],[73,"-","-"],[82,"-","-"],[90,"-","-"],[98,"-","-"],[106,"-","-"],[114,"-","-"],[123,0,1],[140,0,1],[148,0.063,1],[157,0.1,1],[173,0.138,1],[182,0.222,1],[190,0.266,1],[198,0.311,1],[207,0.355,1],[215,0.405,1],[223,0.452,1],[232,0.5,1]]},"out":{"frames":111,"haloFrames":26,"worstGap":1,"firstHalo":1,"lastHalo":1,"strip":[[4,1,1],[12,1,1],[20,0.972,1],[29,0.942,1],[37,0.901,1],[46,0.864,1],[54,0.822,1],[62,0.779,1],[71,0.735,1],[79,0.69,1],[87,0.643,1],[96,0.597,1],[104,0.549,1],[112,0.502,1],[121,0.454,1],[129,0.407,1],[136,0.36,1],[145,0.321,1],[153,0.272,1],[162,0.23,1],[171,0.184,1],[179,0.14,1],[187,0.101,1],[195,0.065,1],[204,0.034,1],[212,0,1]]}}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.02
+    Received:    1
+
+      85 |             expect(legIn.haloFrames, `in: the frost layer is filmed ${at}`).toBeGreaterThan(0);
+      86 |             expect(legOut.haloFrames, `out: the frost layer is filmed ${at}`).toBeGreaterThan(0);
+    > 87 |             expect(legIn.worstGap, `in: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);
+         |                                                                                                            ^
+      88 |             expect(legOut.worstGap, `out: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);
+      89 |             expect(legIn.firstHalo, `in: it enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);
+      90 |             expect(legOut.lastHalo, `out: it leaves at 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts:87:108
+
+    Error Context: test-results/frost.probe.ts-frost-·-a-S-5c022-ate-under-reduced-motion-3--chromium-phone/error-context.md
+
+  4) [chromium-phone] › critic8-probe/frost.probe.ts:71:9 › frost · a Sheet bottom's frost layer fades with its plate under reduced motion (1) 
+
+    Error: in: on every frame the frost layer is within 0.02 of the plate {"in":{"frames":94,"haloFrames":88,"worstGap":1,"firstHalo":1,"lastHalo":1,"strip":[[2,"-","-"],[10,"-","-"],[18,"-","-"],[27,"-","-"],[35,"-","-"],[43,"-","-"],[51,0,1],[68,0,1],[77,0.063,1],[85,0.103,1],[110,0.141,1],[118,0.225,1],[127,0.269,1],[135,0.314,1],[143,0.361,1],[152,0.407,1],[160,0.455,1],[167,0.502,1],[177,0.541,1],[185,0.598,1],[193,0.644,1],[201,0.69,1],[210,0.733,1],[218,0.781,1],[226,0.822,1],[235,0.861,1]]},"out":{"frames":113,"haloFrames":26,"worstGap":0.97,"firstHalo":1,"lastHalo":1,"strip":[[1,1,1],[9,1,1],[17,1,1],[26,0.97,1],[34,0.937,1],[42,0.901,1],[51,0.864,1],[59,0.82,1],[67,0.778,1],[76,0.733,1],[84,0.688,1],[92,0.641,1],[101,0.595,1],[109,0.547,1],[117,0.5,1],[126,0.453,1],[134,0.405,1],[142,0.359,1],[151,0.312,1],[159,0.266,1],[167,0.222,1],[176,0.179,1],[184,0.138,1],[191,0.1,1],[201,0.069,1],[209,0.03,1]]}}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.02
+    Received:    1
+
+      85 |             expect(legIn.haloFrames, `in: the frost layer is filmed ${at}`).toBeGreaterThan(0);
+      86 |             expect(legOut.haloFrames, `out: the frost layer is filmed ${at}`).toBeGreaterThan(0);
+    > 87 |             expect(legIn.worstGap, `in: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);
+         |                                                                                                            ^
+      88 |             expect(legOut.worstGap, `out: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);
+      89 |             expect(legIn.firstHalo, `in: it enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);
+      90 |             expect(legOut.lastHalo, `out: it leaves at 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts:87:108
+
+    Error Context: test-results/frost.probe.ts-frost-·-a-S-dba58-ate-under-reduced-motion-1--chromium-phone/error-context.md
+
+  5) [chromium-phone] › critic8-probe/frost.probe.ts:71:9 › frost · a Sheet bottom's frost layer fades with its plate under reduced motion (2) 
+
+    Error: in: on every frame the frost layer is within 0.02 of the plate {"in":{"frames":89,"haloFrames":85,"worstGap":1,"firstHalo":1,"lastHalo":1,"strip":[[54,"-","-"],[61,"-","-"],[71,"-","-"],[79,"-","-"],[88,0,1],[104,0,1],[113,0.06,1],[121,0.101,1],[155,0.136,1],[162,0.219,1],[172,0.259,1],[179,0.311,1],[188,0.355,1],[196,0.402,1],[205,0.446,1],[212,0.498,1],[221,0.542,1],[230,0.593,1],[238,0.639,1],[246,0.686,1],[255,0.731,1],[263,0.775,1],[271,0.818,1],[280,0.859,1],[288,0.898,1],[295,0.934,1]]},"out":{"frames":103,"haloFrames":26,"worstGap":0.996,"firstHalo":1,"lastHalo":1,"strip":[[77,1,1],[85,1,1],[94,0.972,1],[102,0.937,1],[111,0.9,1],[119,0.861,1],[126,0.82,1],[134,0.784,1],[143,0.74,1],[152,0.691,1],[160,0.641,1],[168,0.595,1],[177,0.554,1],[184,0.5,1],[192,0.459,1],[202,0.413,1],[210,0.358,1],[217,0.312,1],[227,0.275,1],[235,0.221,1],[242,0.18,1],[251,0.146,1],[260,0.103,1],[269,0.067,1],[276,0.029,1],[286,0.004,1]]}}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.02
+    Received:    1
+
+      85 |             expect(legIn.haloFrames, `in: the frost layer is filmed ${at}`).toBeGreaterThan(0);
+      86 |             expect(legOut.haloFrames, `out: the frost layer is filmed ${at}`).toBeGreaterThan(0);
+    > 87 |             expect(legIn.worstGap, `in: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);
+         |                                                                                                            ^
+      88 |             expect(legOut.worstGap, `out: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);
+      89 |             expect(legIn.firstHalo, `in: it enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);
+      90 |             expect(legOut.lastHalo, `out: it leaves at 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts:87:108
+
+    Error Context: test-results/frost.probe.ts-frost-·-a-S-bd4b4-ate-under-reduced-motion-2--chromium-phone/error-context.md
+
+  6) [chromium-phone] › critic8-probe/frost.probe.ts:71:9 › frost · a Sheet bottom's frost layer fades with its plate under reduced motion (3) 
+
+    Error: in: on every frame the frost layer is within 0.02 of the plate {"in":{"frames":89,"haloFrames":84,"worstGap":1,"firstHalo":1,"lastHalo":1,"strip":[[8,"-","-"],[17,"-","-"],[24,"-","-"],[34,"-","-"],[42,"-","-"],[50,0,1],[67,0,1],[74,0.063,1],[84,0.094,1],[109,0.141,1],[124,0.225,1],[133,0.306,1],[142,0.357,1],[150,0.408,1],[159,0.454,1],[167,0.502,1],[175,0.548,1],[184,0.598,1],[192,0.644,1],[200,0.69,1],[209,0.736,1],[215,0.78,1],[225,0.814,1],[234,0.863,1],[242,0.902,1],[250,0.938,1]]},"out":{"frames":112,"haloFrames":27,"worstGap":1,"firstHalo":1,"lastHalo":1,"strip":[[2,1,1],[10,1,1],[18,1,1],[27,0.97,1],[35,0.937,1],[43,0.9,1],[52,0.862,1],[60,0.82,1],[68,0.778,1],[77,0.734,1],[85,0.688,1],[93,0.642,1],[102,0.595,1],[110,0.547,1],[118,0.499,1],[126,0.453,1],[135,0.411,1],[143,0.358,1],[152,0.311,1],[160,0.266,1],[168,0.222,1],[177,0.179,1],[185,0.138,1],[192,0.1,1],[202,0.07,1],[210,0.029,1]]}}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.02
+    Received:    1
+
+      85 |             expect(legIn.haloFrames, `in: the frost layer is filmed ${at}`).toBeGreaterThan(0);
+      86 |             expect(legOut.haloFrames, `out: the frost layer is filmed ${at}`).toBeGreaterThan(0);
+    > 87 |             expect(legIn.worstGap, `in: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);
+         |                                                                                                            ^
+      88 |             expect(legOut.worstGap, `out: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);
+      89 |             expect(legIn.firstHalo, `in: it enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);
+      90 |             expect(legOut.lastHalo, `out: it leaves at 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts:87:108
+
+    Error Context: test-results/frost.probe.ts-frost-·-a-S-40737-ate-under-reduced-motion-3--chromium-phone/error-context.md
+
+  7) [chromium-phone] › critic8-probe/frost.probe.ts:71:9 › frost · a detented Sheet's frost layer fades with its plate under reduced motion (1) 
+
+    Error: in: on every frame the frost layer is within 0.02 of the plate {"in":{"frames":94,"haloFrames":89,"worstGap":1,"firstHalo":1,"lastHalo":1,"strip":[[3,"-","-"],[11,"-","-"],[19,"-","-"],[28,"-","-"],[36,"-","-"],[44,0,1],[61,0,1],[69,0.063,1],[78,0.099,1],[94,0.138,1],[103,0.222,1],[110,0.266,1],[120,0.305,1],[127,0.359,1],[135,0.398,1],[144,0.443,1],[153,0.5,1],[161,0.547,1],[169,0.594,1],[178,0.642,1],[185,0.687,1],[194,0.73,1],[201,0.777,1],[211,0.813,1],[219,0.863,1],[228,0.9,1]]},"out":{"frames":111,"haloFrames":27,"worstGap":0.996,"firstHalo":1,"lastHalo":1,"strip":[[2,1,1],[12,1,1],[20,1,1],[28,0.97,1],[37,0.937,1],[45,0.9,1],[53,0.861,1],[62,0.821,1],[70,0.777,1],[78,0.733,1],[85,0.687,1],[95,0.649,1],[103,0.593,1],[112,0.549,1],[120,0.499,1],[128,0.452,1],[137,0.405,1],[145,0.358,1],[153,0.312,1],[162,0.266,1],[170,0.222,1],[178,0.179,1],[187,0.138,1],[194,0.1,1],[203,0.068,1],[210,0.031,1]]}}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.02
+    Received:    1
+
+      85 |             expect(legIn.haloFrames, `in: the frost layer is filmed ${at}`).toBeGreaterThan(0);
+      86 |             expect(legOut.haloFrames, `out: the frost layer is filmed ${at}`).toBeGreaterThan(0);
+    > 87 |             expect(legIn.worstGap, `in: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);
+         |                                                                                                            ^
+      88 |             expect(legOut.worstGap, `out: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);
+      89 |             expect(legIn.firstHalo, `in: it enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);
+      90 |             expect(legOut.lastHalo, `out: it leaves at 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts:87:108
+
+    Error Context: test-results/frost.probe.ts-frost-·-a-d-6717a-ate-under-reduced-motion-1--chromium-phone/error-context.md
+
+  8) [chromium-phone] › critic8-probe/frost.probe.ts:71:9 › frost · a detented Sheet's frost layer fades with its plate under reduced motion (2) 
+
+    Error: in: on every frame the frost layer is within 0.02 of the plate {"in":{"frames":93,"haloFrames":86,"worstGap":1,"firstHalo":1,"lastHalo":1,"strip":[[4,"-","-"],[11,"-","-"],[21,"-","-"],[29,"-","-"],[37,"-","-"],[45,"-","-"],[54,"-","-"],[62,0,1],[79,0,1],[87,0.063,1],[96,0.098,1],[120,0.137,1],[129,0.221,1],[137,0.27,1],[146,0.315,1],[154,0.362,1],[162,0.408,1],[170,0.456,1],[179,0.503,1],[187,0.551,1],[196,0.598,1],[204,0.645,1],[212,0.691,1],[221,0.735,1],[229,0.781,1],[237,0.824,1]]},"out":{"frames":112,"haloFrames":27,"worstGap":0.999,"firstHalo":1,"lastHalo":1,"strip":[[2,1,1],[11,1,1],[19,1,1],[27,0.971,1],[36,0.938,1],[44,0.902,1],[51,0.863,1],[60,0.828,1],[68,0.783,1],[76,0.741,1],[86,0.696,1],[94,0.643,1],[102,0.596,1],[111,0.549,1],[119,0.502,1],[127,0.454,1],[136,0.406,1],[144,0.359,1],[152,0.313,1],[161,0.268,1],[169,0.223,1],[177,0.181,1],[186,0.14,1],[194,0.101,1],[202,0.064,1],[211,0.032,1]]}}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.02
+    Received:    1
+
+      85 |             expect(legIn.haloFrames, `in: the frost layer is filmed ${at}`).toBeGreaterThan(0);
+      86 |             expect(legOut.haloFrames, `out: the frost layer is filmed ${at}`).toBeGreaterThan(0);
+    > 87 |             expect(legIn.worstGap, `in: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);
+         |                                                                                                            ^
+      88 |             expect(legOut.worstGap, `out: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);
+      89 |             expect(legIn.firstHalo, `in: it enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);
+      90 |             expect(legOut.lastHalo, `out: it leaves at 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts:87:108
+
+    Error Context: test-results/frost.probe.ts-frost-·-a-d-c0332-ate-under-reduced-motion-2--chromium-phone/error-context.md
+
+  9) [chromium-phone] › critic8-probe/frost.probe.ts:71:9 › frost · a detented Sheet's frost layer fades with its plate under reduced motion (3) 
+
+    Error: in: on every frame the frost layer is within 0.02 of the plate {"in":{"frames":110,"haloFrames":86,"worstGap":1,"firstHalo":1,"lastHalo":1,"strip":[[17,"-","-"],[25,"-","-"],[33,"-","-"],[42,"-","-"],[50,"-","-"],[57,"-","-"],[65,"-","-"],[75,"-","-"],[83,"-","-"],[92,"-","-"],[100,"-","-"],[107,"-","-"],[116,"-","-"],[125,"-","-"],[133,"-","-"],[142,"-","-"],[150,"-","-"],[158,"-","-"],[167,"-","-"],[174,"-","-"],[184,"-","-"],[192,"-","-"],[199,"-","-"],[209,"-","-"],[217,0,1],[225,0,1]]},"out":{"frames":111,"haloFrames":26,"worstGap":0.999,"firstHalo":1,"lastHalo":1,"strip":[[4,1,1],[12,1,1],[19,0.972,1],[29,0.943,1],[36,0.901,1],[45,0.869,1],[54,0.822,1],[61,0.779,1],[70,0.742,1],[79,0.69,1],[86,0.644,1],[95,0.604,1],[104,0.549,1],[112,0.502,1],[120,0.454,1],[128,0.407,1],[137,0.361,1],[145,0.313,1],[154,0.27,1],[162,0.223,1],[170,0.181,1],[177,0.14,1],[187,0.108,1],[195,0.064,1],[204,0.031,1],[211,0.001,1]]}}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.02
+    Received:    1
+
+      85 |             expect(legIn.haloFrames, `in: the frost layer is filmed ${at}`).toBeGreaterThan(0);
+      86 |             expect(legOut.haloFrames, `out: the frost layer is filmed ${at}`).toBeGreaterThan(0);
+    > 87 |             expect(legIn.worstGap, `in: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);
+         |                                                                                                            ^
+      88 |             expect(legOut.worstGap, `out: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);
+      89 |             expect(legIn.firstHalo, `in: it enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);
+      90 |             expect(legOut.lastHalo, `out: it leaves at 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts:87:108
+
+    Error Context: test-results/frost.probe.ts-frost-·-a-d-75d44-ate-under-reduced-motion-3--chromium-phone/error-context.md
+
+  9 failed
+    [chromium-phone] › critic8-probe/frost.probe.ts:71:9 › frost · a Sheet right's frost layer fades with its plate under reduced motion (1) 
+    [chromium-phone] › critic8-probe/frost.probe.ts:71:9 › frost · a Sheet right's frost layer fades with its plate under reduced motion (2) 
+    [chromium-phone] › critic8-probe/frost.probe.ts:71:9 › frost · a Sheet right's frost layer fades with its plate under reduced motion (3) 
+    [chromium-phone] › critic8-probe/frost.probe.ts:71:9 › frost · a Sheet bottom's frost layer fades with its plate under reduced motion (1) 
+    [chromium-phone] › critic8-probe/frost.probe.ts:71:9 › frost · a Sheet bottom's frost layer fades with its plate under reduced motion (2) 
+    [chromium-phone] › critic8-probe/frost.probe.ts:71:9 › frost · a Sheet bottom's frost layer fades with its plate under reduced motion (3) 
+    [chromium-phone] › critic8-probe/frost.probe.ts:71:9 › frost · a detented Sheet's frost layer fades with its plate under reduced motion (1) 
+    [chromium-phone] › critic8-probe/frost.probe.ts:71:9 › frost · a detented Sheet's frost layer fades with its plate under reduced motion (2) 
+    [chromium-phone] › critic8-probe/frost.probe.ts:71:9 › frost · a detented Sheet's frost layer fades with its plate under reduced motion (3) 

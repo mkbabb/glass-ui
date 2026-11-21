@@ -1,0 +1,280 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "critic8-probe/probe.config.ts",
+      "--project=chromium-phone",
+      "--workers=1",
+      "-g",
+      "rest ·"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/critic8-probe/probe.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/critic8-probe",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/critic8-probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/critic8-probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/critic8-probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/critic8-probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-8/logs/probe-rest-red-chromium-phone.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5356",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/",
+      "url": "http://localhost:5356",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "rest.probe.ts",
+      "file": "rest.probe.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "rest · release at speed",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5309,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "rest · release at speed {\"movesAfterTwelfth\":0,\"tail\":[{\"k\":\"pointerup\",\"t\":4177,\"y\":277}],\"top\":[[-1,242],[7,242],[15,242],[23,405.2],[31,387.3],[40,367.2],[48,345.2],[57,321.6],[65,297.1],[73,274.7],[81,253],[92,233.2],[98,210],[106,196],[115,180.9]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-20T06:46:38.668Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "rest",
+                      "contentType": "application/json",
+                      "body": "eyJtb3Zlc0FmdGVyVHdlbGZ0aCI6MCwidGFpbCI6W3siayI6InBvaW50ZXJ1cCIsInQiOjQxNzcsInkiOjI3N31dLCJ0b3AiOltbLTEsMjQyXSxbNywyNDJdLFsxNSwyNDJdLFsyMyw0MDUuMl0sWzMxLDM4Ny4zXSxbNDAsMzY3LjJdLFs0OCwzNDUuMl0sWzU3LDMyMS42XSxbNjUsMjk3LjFdLFs3MywyNzQuN10sWzgxLDI1M10sWzkyLDIzMy4yXSxbOTgsMjEwXSxbMTA2LDE5Nl0sWzExNSwxODAuOV1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d72b44d3ad0d3a67dfc8-392a51d5eba4971d7144",
+          "file": "rest.probe.ts",
+          "line": 30,
+          "column": 5
+        },
+        {
+          "title": "rest · release at rest (the spec's)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4949,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "rest · release at rest (the spec's) {\"movesAfterTwelfth\":0,\"tail\":[{\"k\":\"pointerup\",\"t\":3853,\"y\":277}],\"top\":[[-2,242],[7,242],[14,242],[22,405.2],[32,388],[40,364.3],[49,341.9],[57,318.2],[65,295.5],[72,271.8],[81,254],[90,231.8],[98,211.1],[105,194.9],[116,181.8]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-20T06:46:44.140Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "rest",
+                      "contentType": "application/json",
+                      "body": "eyJtb3Zlc0FmdGVyVHdlbGZ0aCI6MCwidGFpbCI6W3siayI6InBvaW50ZXJ1cCIsInQiOjM4NTMsInkiOjI3N31dLCJ0b3AiOltbLTIsMjQyXSxbNywyNDJdLFsxNCwyNDJdLFsyMiw0MDUuMl0sWzMyLDM4OF0sWzQwLDM2NC4zXSxbNDksMzQxLjldLFs1NywzMTguMl0sWzY1LDI5NS41XSxbNzIsMjcxLjhdLFs4MSwyNTRdLFs5MCwyMzEuOF0sWzk4LDIxMS4xXSxbMTA1LDE5NC45XSxbMTE2LDE4MS44XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d72b44d3ad0d3a67dfc8-fd6f7bdd5f3c31eab04a",
+          "file": "rest.probe.ts",
+          "line": 30,
+          "column": 5
+        },
+        {
+          "title": "rest · release at rest by jitter",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5401,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "rest · release at rest by jitter {\"movesAfterTwelfth\":6,\"tail\":[{\"k\":\"pointermove\",\"t\":4073,\"y\":276},{\"k\":\"pointermove\",\"t\":4107,\"y\":278},{\"k\":\"pointermove\",\"t\":4141,\"y\":276},{\"k\":\"pointermove\",\"t\":4175,\"y\":278},{\"k\":\"pointermove\",\"t\":4207,\"y\":276},{\"k\":\"pointermove\",\"t\":4242,\"y\":278},{\"k\":\"pointerup\",\"t\":4275,\"y\":278}],\"top\":[[-3,243],[4,243],[14,422],[22,422],[30,422],[38,422],[47,422],[55,422],[62,422],[72,422],[80,422],[88,422],[97,422],[104,422],[113,422]]}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-20T06:46:49.099Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "rest",
+                      "contentType": "application/json",
+                      "body": "eyJtb3Zlc0FmdGVyVHdlbGZ0aCI6NiwidGFpbCI6W3siayI6InBvaW50ZXJtb3ZlIiwidCI6NDA3MywieSI6Mjc2fSx7ImsiOiJwb2ludGVybW92ZSIsInQiOjQxMDcsInkiOjI3OH0seyJrIjoicG9pbnRlcm1vdmUiLCJ0Ijo0MTQxLCJ5IjoyNzZ9LHsiayI6InBvaW50ZXJtb3ZlIiwidCI6NDE3NSwieSI6Mjc4fSx7ImsiOiJwb2ludGVybW92ZSIsInQiOjQyMDcsInkiOjI3Nn0seyJrIjoicG9pbnRlcm1vdmUiLCJ0Ijo0MjQyLCJ5IjoyNzh9LHsiayI6InBvaW50ZXJ1cCIsInQiOjQyNzUsInkiOjI3OH1dLCJ0b3AiOltbLTMsMjQzXSxbNCwyNDNdLFsxNCw0MjJdLFsyMiw0MjJdLFszMCw0MjJdLFszOCw0MjJdLFs0Nyw0MjJdLFs1NSw0MjJdLFs2Miw0MjJdLFs3Miw0MjJdLFs4MCw0MjJdLFs4OCw0MjJdLFs5Nyw0MjJdLFsxMDQsNDIyXSxbMTEzLDQyMl1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d72b44d3ad0d3a67dfc8-8083b376e61b74c01f7b",
+          "file": "rest.probe.ts",
+          "line": 30,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-20T06:46:34.349Z",
+    "duration": 20257.871,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,27 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1
+
+ ❯ tests/components/custom/aurora/atoms.test.ts (24 tests | 1 failed) 6254ms
+     × every atom combination yields a valid in-range config (TOTAL) 6231ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/custom/aurora/atoms.test.ts > resolveAtoms total-function fuzz > every atom combination yields a valid in-range config (TOTAL)
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/components/custom/aurora/atoms.test.ts:141:5
+    139|     // deriveAurora call is the per-iteration cost). Together they exc…
+    140|     // floor and exercise every atom field including the out-of-range …
+    141|     it("every atom combination yields a valid in-range config (TOTAL)"…
+       |     ^
+    142|         const violations: string[] = [];
+    143|         let count = 0;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 34 passed (35)
+   Start at  01:17:23
+   Duration  10.03s (transform 4.11s, setup 407ms, import 6.23s, tests 7.81s, environment 2.31s)
+

@@ -1,0 +1,1296 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/playwright.config.ts",
+      "--project=chromium-headless-new",
+      "release-11-0-1-critic-1.spec.ts",
+      "release-11-0-1-critic-1b.spec.ts",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-5.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-8/logs/reg-branch-c1-ch.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5353",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5353",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-0-1-critic-1.spec.ts",
+      "file": "release-11-0-1-critic-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "critic 1 e",
+          "file": "release-11-0-1-critic-1.spec.ts",
+          "line": 121,
+          "column": 6,
+          "specs": [
+            {
+              "title": "e the stadium dock's corner before the script publishes its cross extent, open",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1068,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"ch unpublished open\",\"published\":{\"inline\":\"56px\",\"root\":\"28px\",\"plate\":\"28px\",\"h\":56},\"unpublished\":{\"inline\":\"\",\"root\":\"28px\",\"plate\":\"28px\",\"h\":56}}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-20T15:15:13.856Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-0cc7d772a9b7f09e8635",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 124,
+              "column": 9
+            },
+            {
+              "title": "e the stadium dock's corner before the script publishes its cross extent, closed",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 995,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"ch unpublished closed\",\"published\":{\"inline\":\"56px\",\"root\":\"28px\",\"plate\":\"28px\",\"h\":56},\"unpublished\":{\"inline\":\"\",\"root\":\"28px\",\"plate\":\"28px\",\"h\":56}}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-20T15:15:14.993Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-24850547d1303a5cfee6",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 124,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "critic 1 light-1440f",
+          "file": "release-11-0-1-critic-1.spec.ts",
+          "line": 156,
+          "column": 14,
+          "specs": [
+            {
+              "title": "a light-1440f: the wide label seat's plate is a capsule in paint",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5414,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f ch name-active-rest\",\"W\":252,\"H\":84,\"d\":7,\"w\":218,\"stadium\":214,\"ellipse\":139,\"css\":{\"W\":84,\"H\":28}}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f ch name-active-hover\",\"W\":252,\"H\":84,\"d\":7,\"w\":218,\"stadium\":214,\"ellipse\":139,\"css\":{\"W\":84,\"H\":28}}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f ch focus-hover\",\"W\":219,\"H\":84,\"d\":7,\"w\":185,\"stadium\":181,\"ellipse\":121,\"css\":{\"W\":73,\"H\":28}}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f ch focus-press\",\"W\":222,\"H\":78,\"d\":6,\"w\":185,\"stadium\":186,\"ellipse\":118,\"css\":{\"W\":74,\"H\":26}}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f ch focus-press\",\"W\":222,\"H\":78,\"d\":6,\"w\":185,\"stadium\":186,\"ellipse\":118,\"css\":{\"W\":74,\"H\":26}}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-20T15:15:15.993Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-6626f2117da1a5e07ee8",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 163,
+              "column": 13
+            },
+            {
+              "title": "b light-1440f house: the dock's ends at rest, collapsed, and open on the narrow face",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3525,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f ch house open\",\"w\":258.03125,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f ch house open-end\",\"w\":305.40625,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f ch house collapsed\",\"w\":102,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill collapsed fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f ch house collapsed-end\",\"w\":148,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill collapsed fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f ch house narrow\",\"w\":164,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f ch house narrow-noend\",\"w\":114,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-20T15:15:21.420Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-f8e26ff153388b3e0aab",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 198,
+              "column": 17
+            },
+            {
+              "title": "b light-1440f rd: the dock's ends at rest, collapsed, and open on the narrow face",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3608,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f ch rd open\",\"w\":258.03125,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f ch rd open-end\",\"w\":305.40625,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f ch rd collapsed\",\"w\":102,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill collapsed fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f ch rd collapsed-end\",\"w\":148,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill collapsed fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f ch rd narrow\",\"w\":164,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f ch rd narrow-noend\",\"w\":114,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-20T15:15:24.950Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-3621865520b7521bd72c",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 198,
+              "column": 17
+            },
+            {
+              "title": "d light-1440f: the painted corner per frame of the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3853,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f ch painted-corner expand\",\"frames\":193,\"morphing\":66,\"morphMs\":534,\"minScale\":0.481,\"minPaintedX\":28,\"squashed\":0,\"squashedMs\":0,\"first\":\"\",\"last\":\"\"}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f ch painted-corner collapse\",\"frames\":193,\"morphing\":67,\"morphMs\":545,\"minScale\":0.481,\"minPaintedX\":28,\"squashed\":0,\"squashedMs\":0,\"first\":\"\",\"last\":\"\"}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-20T15:15:28.562Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-dc5389885090691a0722",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 218,
+              "column": 13
+            },
+            {
+              "title": "c light-1440f: frames through the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1847,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f ch morph expand\",\"rows\":[\"0@31ms morph 164x56 52.5135px 28px 52.5135px 28px 52.5135px 28px 52.5135px 28px\",\"1@63ms morph 207x56 41.6783px 28px 41.6783px 28px 41.6783px 28px 41.6783px 28px\",\"2@95ms morph 247x56 34.9799px 28px 34.9799px 28px 34.9799px 28px 34.9799px 28px\",\"3@128ms morph 268x56 32.1243px 28px 32.1243px 28px 32.1243px 28px 32.1243px 28px\",\"4@162ms morph 289x56 29.8802px 28px 29.8802px 28px 29.8802px 28px 29.8802px 28px\",\"5@195ms morph 300x56 28.7859px 28px 28.7859px 28px 28.7859px 28px 28.7859px 28px\",\"6@228ms morph 305x56 28.2689px 28px 28.2689px 28px 28.2689px 28px 28.2689px 28px\",\"7@250ms morph 307x56 28.0512px 28px 28.0512px 28px 28.0512px 28px 28.0512px 28px\",\"8@276ms morph 308x56 28px 28px 28px 28px\"]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-1440f ch morph collapse\",\"rows\":[\"0@39ms morph 293x56 29.3834px 28px 29.3834px 28px 29.3834px 28px 29.3834px 28px\",\"1@69ms morph 249x56 34.6052px 28px 34.6052px 28px 34.6052px 28px 34.6052px 28px\",\"2@101ms morph 209x56 41.1936px 28px 41.1936px 28px 41.1936px 28px 41.1936px 28px\",\"3@134ms morph 182x56 47.4196px 28px 47.4196px 28px 47.4196px 28px 47.4196px 28px\",\"4@158ms morph 167x56 51.4964px 28px 51.4964px 28px 51.4964px 28px 51.4964px 28px\",\"5@182ms morph 159x56 54.3953px 28px 54.3953px 28px 54.3953px 28px 54.3953px 28px\",\"6@207ms morph 153x56 56.306px 28px 56.306px 28px 56.306px 28px 56.306px 28px\",\"7@232ms morph 150x56 57.448px 28px 57.448px 28px 57.448px 28px 57.448px 28px\",\"8@257ms morph 149x56 58.0601px 28px 58.0601px 28px 58.0601px 28px 58.0601px 28px\"]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-20T15:15:32.419Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-2a71da6f2c9c51be8221",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 272,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "critic 1 light-390c",
+          "file": "release-11-0-1-critic-1.spec.ts",
+          "line": 156,
+          "column": 14,
+          "specs": [
+            {
+              "title": "a light-390c: the wide label seat's plate is a capsule in paint",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3100,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"light-390c ch name-active-rest\",\"W\":234,\"H\":72,\"d\":6,\"w\":206,\"stadium\":202,\"ellipse\":129,\"css\":{\"W\":78,\"H\":24}}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-390c ch focus-press\",\"W\":210,\"H\":71,\"d\":6,\"w\":179,\"stadium\":178,\"ellipse\":117,\"css\":{\"W\":70,\"H\":23.666666666666668}}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-390c ch focus-press\",\"W\":210,\"H\":71,\"d\":6,\"w\":179,\"stadium\":178,\"ellipse\":117,\"css\":{\"W\":70,\"H\":23.666666666666668}}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-20T15:15:34.271Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-602514e7edc5c87cc4f6",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 163,
+              "column": 13
+            },
+            {
+              "title": "b light-390c house: the dock's ends at rest, collapsed, and open on the narrow face",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3503,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"light-390c ch house open\",\"w\":263.828125,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-390c ch house open-end\",\"w\":315.609375,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-390c ch house collapsed\",\"w\":110,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill collapsed fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-390c ch house collapsed-end\",\"w\":160,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill collapsed fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-390c ch house narrow\",\"w\":176,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-390c ch house narrow-noend\",\"w\":122,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-20T15:15:37.376Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-07a944c2d8000df229e6",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 198,
+              "column": 17
+            },
+            {
+              "title": "b light-390c rd: the dock's ends at rest, collapsed, and open on the narrow face",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3550,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"light-390c ch rd open\",\"w\":263.828125,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-390c ch rd open-end\",\"w\":315.609375,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-390c ch rd collapsed\",\"w\":110,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill collapsed fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-390c ch rd collapsed-end\",\"w\":160,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill collapsed fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-390c ch rd narrow\",\"w\":176,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-390c ch rd narrow-noend\",\"w\":122,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-20T15:15:40.883Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-9ad75d303fa1e36b2f33",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 198,
+              "column": 17
+            },
+            {
+              "title": "d light-390c: the painted corner per frame of the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3843,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"light-390c ch painted-corner expand\",\"frames\":193,\"morphing\":66,\"morphMs\":542,\"minScale\":0.503,\"minPaintedX\":30,\"squashed\":0,\"squashedMs\":0,\"first\":\"\",\"last\":\"\"}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-390c ch painted-corner collapse\",\"frames\":193,\"morphing\":66,\"morphMs\":540,\"minScale\":0.503,\"minPaintedX\":30,\"squashed\":0,\"squashedMs\":0,\"first\":\"\",\"last\":\"\"}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-20T15:15:44.437Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-5452f41966183219491c",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 218,
+              "column": 13
+            },
+            {
+              "title": "c light-390c: frames through the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1915,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"light-390c ch morph expand\",\"rows\":[\"0@31ms morph 168x60 56.8374px 30px 56.8374px 30px 56.8374px 30px 56.8374px 30px\",\"1@61ms morph 207x60 46.1174px 30px 46.1174px 30px 46.1174px 30px 46.1174px 30px\",\"2@87ms morph 237x60 40.3054px 30px 40.3054px 30px 40.3054px 30px 40.3054px 30px\",\"3@120ms morph 265x60 35.9734px 30px 35.9734px 30px 35.9734px 30px 35.9734px 30px\",\"4@156ms morph 295x60 32.3656px 30px 32.3656px 30px 32.3656px 30px 32.3656px 30px\",\"5@187ms morph 308x60 31.021px 30px 31.021px 30px 31.021px 30px 31.021px 30px\",\"6@212ms morph 313x60 30.492px 30px 30.492px 30px 30.492px 30px 30.492px 30px\",\"7@244ms morph 316x60 30.15px 30px 30.15px 30px 30.15px 30px 30.15px 30px\",\"8@269ms morph 318x60 30.0217px 30px 30.0217px 30px 30.0217px 30px 30.0217px 30px\"]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"light-390c ch morph collapse\",\"rows\":[\"0@41ms morph 302x60 31.5803px 30px 31.5803px 30px 31.5803px 30px 31.5803px 30px\",\"1@91ms morph 240x60 39.7124px 30px 39.7124px 30px 39.7124px 30px 39.7124px 30px\",\"2@127ms morph 199x60 48.0183px 30px 48.0183px 30px 48.0183px 30px 48.0183px 30px\",\"3@171ms morph 176x60 54.2647px 30px 54.2647px 30px 54.2647px 30px 54.2647px 30px\",\"4@206ms morph 167x60 57.2713px 30px 57.2713px 30px 57.2713px 30px 57.2713px 30px\",\"5@234ms morph 162x60 58.8523px 30px 58.8523px 30px 58.8523px 30px 58.8523px 30px\",\"6@267ms morph 160x60 59.5429px 30px 59.5429px 30px 59.5429px 30px 59.5429px 30px\",\"7@300ms morph 160x60 59.625px 30px 59.625px 30px 59.625px 30px 59.625px 30px\",\"8@336ms morph 160x60 59.625px 30px 59.625px 30px 59.625px 30px 59.625px 30px\"]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-20T15:15:48.283Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-20224b8d38256b4d1a9e",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 272,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "critic 1 dark-1440f",
+          "file": "release-11-0-1-critic-1.spec.ts",
+          "line": 156,
+          "column": 14,
+          "specs": [
+            {
+              "title": "a dark-1440f: the wide label seat's plate is a capsule in paint",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5335,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f ch name-active-rest\",\"W\":252,\"H\":84,\"d\":7,\"w\":218,\"stadium\":214,\"ellipse\":139,\"css\":{\"W\":84,\"H\":28}}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f ch name-active-hover\",\"W\":252,\"H\":84,\"d\":7,\"w\":218,\"stadium\":214,\"ellipse\":139,\"css\":{\"W\":84,\"H\":28}}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f ch focus-hover\",\"W\":219,\"H\":84,\"d\":7,\"w\":185,\"stadium\":181,\"ellipse\":121,\"css\":{\"W\":73,\"H\":28}}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f ch focus-press\",\"W\":222,\"H\":78,\"d\":6,\"w\":185,\"stadium\":186,\"ellipse\":118,\"css\":{\"W\":74,\"H\":26}}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f ch focus-press\",\"W\":222,\"H\":78,\"d\":6,\"w\":185,\"stadium\":186,\"ellipse\":118,\"css\":{\"W\":74,\"H\":26}}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-20T15:15:50.202Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-fb6ad6d86406fb588e1c",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 163,
+              "column": 13
+            },
+            {
+              "title": "b dark-1440f house: the dock's ends at rest, collapsed, and open on the narrow face",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3609,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f ch house open\",\"w\":258.03125,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f ch house open-end\",\"w\":305.40625,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f ch house collapsed\",\"w\":102,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill collapsed fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f ch house collapsed-end\",\"w\":148,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill collapsed fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f ch house narrow\",\"w\":164,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f ch house narrow-noend\",\"w\":114,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-20T15:15:55.543Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-2491c930f2af7bdf5d4f",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 198,
+              "column": 17
+            },
+            {
+              "title": "b dark-1440f rd: the dock's ends at rest, collapsed, and open on the narrow face",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3599,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f ch rd open\",\"w\":258.03125,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f ch rd open-end\",\"w\":305.40625,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f ch rd collapsed\",\"w\":102,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill collapsed fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f ch rd collapsed-end\",\"w\":148,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill collapsed fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f ch rd narrow\",\"w\":164,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f ch rd narrow-noend\",\"w\":114,\"h\":56,\"half\":\"28px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"28px 28px 28px 28px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-20T15:15:59.157Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-b06ca5ea48c8574fbda4",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 198,
+              "column": 17
+            },
+            {
+              "title": "d dark-1440f: the painted corner per frame of the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3865,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f ch painted-corner expand\",\"frames\":193,\"morphing\":67,\"morphMs\":547,\"minScale\":0.481,\"minPaintedX\":28,\"squashed\":0,\"squashedMs\":0,\"first\":\"\",\"last\":\"\"}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f ch painted-corner collapse\",\"frames\":193,\"morphing\":66,\"morphMs\":541,\"minScale\":0.481,\"minPaintedX\":28,\"squashed\":0,\"squashedMs\":0,\"first\":\"\",\"last\":\"\"}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-20T15:16:02.761Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-e6a3cc0f6a572237eca6",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 218,
+              "column": 13
+            },
+            {
+              "title": "c dark-1440f: frames through the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1857,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f ch morph expand\",\"rows\":[\"0@33ms morph 164x56 52.5135px 28px 52.5135px 28px 52.5135px 28px 52.5135px 28px\",\"1@62ms morph 205x56 41.9733px 28px 41.9733px 28px 41.9733px 28px 41.9733px 28px\",\"2@97ms morph 245x56 35.1574px 28px 35.1574px 28px 35.1574px 28px 35.1574px 28px\",\"3@128ms morph 275x56 31.3746px 28px 31.3746px 28px 31.3746px 28px 31.3746px 28px\",\"4@153ms morph 289x56 29.8756px 28px 29.8756px 28px 29.8756px 28px 29.8756px 28px\",\"5@186ms morph 297x56 28.9898px 28px 28.9898px 28px 28.9898px 28px 28.9898px 28px\",\"6@211ms morph 304x56 28.3606px 28px 28.3606px 28px 28.3606px 28px 28.3606px 28px\",\"7@243ms morph 307x56 28.1358px 28px 28.1358px 28px 28.1358px 28px 28.1358px 28px\",\"8@267ms morph 308x56 28.0011px 28px 28.0011px 28px 28.0011px 28px 28.0011px 28px\"]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-1440f ch morph collapse\",\"rows\":[\"0@37ms morph 300x56 28.7416px 28px 28.7416px 28px 28.7416px 28px 28.7416px 28px\",\"1@80ms morph 250x56 34.5623px 28px 34.5623px 28px 34.5623px 28px 34.5623px 28px\",\"2@109ms morph 202x56 42.7184px 28px 42.7184px 28px 42.7184px 28px 42.7184px 28px\",\"3@134ms morph 181x56 47.5546px 28px 47.5546px 28px 47.5546px 28px 47.5546px 28px\",\"4@159ms morph 168x56 51.4781px 28px 51.4781px 28px 51.4781px 28px 51.4781px 28px\",\"5@195ms morph 159x56 54.373px 28px 54.373px 28px 54.373px 28px 54.373px 28px\",\"6@225ms morph 151x56 57.117px 28px 57.117px 28px 57.117px 28px 57.117px 28px\",\"7@250ms morph 149x56 57.897px 28px 57.897px 28px 57.897px 28px 57.897px 28px\",\"8@272ms morph 148x56 58.2703px 28px 58.2703px 28px 58.2703px 28px 58.2703px 28px\"]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-20T15:16:06.631Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-194d1f3c229be65a6b62",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 272,
+              "column": 13
+            }
+          ]
+        },
+        {
+          "title": "critic 1 dark-390c",
+          "file": "release-11-0-1-critic-1.spec.ts",
+          "line": 156,
+          "column": 14,
+          "specs": [
+            {
+              "title": "a dark-390c: the wide label seat's plate is a capsule in paint",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3098,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c ch name-active-rest\",\"W\":234,\"H\":72,\"d\":6,\"w\":206,\"stadium\":202,\"ellipse\":129,\"css\":{\"W\":78,\"H\":24}}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c ch focus-press\",\"W\":210,\"H\":70,\"d\":6,\"w\":182,\"stadium\":179,\"ellipse\":118,\"css\":{\"W\":70,\"H\":23.333333333333332}}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c ch focus-press\",\"W\":210,\"H\":70,\"d\":6,\"w\":182,\"stadium\":179,\"ellipse\":118,\"css\":{\"W\":70,\"H\":23.333333333333332}}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-20T15:16:08.493Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-c37291567dc1c4709e42",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 163,
+              "column": 13
+            },
+            {
+              "title": "b dark-390c house: the dock's ends at rest, collapsed, and open on the narrow face",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3580,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c ch house open\",\"w\":263.828125,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c ch house open-end\",\"w\":315.609375,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c ch house collapsed\",\"w\":110,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill collapsed fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c ch house collapsed-end\",\"w\":160,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill collapsed fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c ch house narrow\",\"w\":176,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c ch house narrow-noend\",\"w\":122,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-20T15:16:11.594Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-2a014f599faf3b4d9138",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 198,
+              "column": 17
+            },
+            {
+              "title": "b dark-390c rd: the dock's ends at rest, collapsed, and open on the narrow face",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3563,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c ch rd open\",\"w\":263.828125,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c ch rd open-end\",\"w\":315.609375,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c ch rd collapsed\",\"w\":110,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill collapsed fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c ch rd collapsed-end\",\"w\":160,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill collapsed fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c ch rd narrow\",\"w\":176,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c ch rd narrow-noend\",\"w\":122,\"h\":60,\"half\":\"30px\",\"classes\":\"witness-dock glass-dock horizontal shape-pill expanded fit-content\",\"painted\":4,\"odd\":[{\"label\":\".dock-plate\",\"r\":\"30px 30px 30px 30px\",\"clip\":\"inset(0px)\",\"mask\":\"none\",\"overflow\":\"visible\"},{\"label\":\".dock-run-status\",\"r\":\"0px 0px 0px 0px\",\"clip\":\"inset(50%)\",\"mask\":\"none\",\"overflow\":\"hidden\"}]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-20T15:16:15.178Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-b884c249a8d4d58af31f",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 198,
+              "column": 17
+            },
+            {
+              "title": "d dark-390c: the painted corner per frame of the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3860,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c ch painted-corner expand\",\"frames\":193,\"morphing\":67,\"morphMs\":545,\"minScale\":0.503,\"minPaintedX\":30,\"squashed\":0,\"squashedMs\":0,\"first\":\"\",\"last\":\"\"}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c ch painted-corner collapse\",\"frames\":193,\"morphing\":67,\"morphMs\":545,\"minScale\":0.503,\"minPaintedX\":30,\"squashed\":0,\"squashedMs\":0,\"first\":\"\",\"last\":\"\"}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-20T15:16:18.746Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-485a2a211067fbd47fae",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 218,
+              "column": 13
+            },
+            {
+              "title": "c dark-390c: frames through the expand and the collapse",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1829,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c ch morph expand\",\"rows\":[\"0@29ms morph 168x60 56.8374px 30px 56.8374px 30px 56.8374px 30px 56.8374px 30px\",\"1@63ms morph 197x60 48.494px 30px 48.494px 30px 48.494px 30px 48.494px 30px\",\"2@95ms morph 239x60 39.9222px 30px 39.9222px 30px 39.9222px 30px 39.9222px 30px\",\"3@127ms morph 273x60 34.9632px 30px 34.9632px 30px 34.9632px 30px 34.9632px 30px\",\"4@153ms morph 295x60 32.3324px 30px 32.3324px 30px 32.3324px 30px 32.3324px 30px\",\"5@177ms morph 305x60 31.2627px 30px 31.2627px 30px 31.2627px 30px 31.2627px 30px\",\"6@202ms morph 311x60 30.6449px 30px 30.6449px 30px 30.6449px 30px 30.6449px 30px\",\"7@227ms morph 315x60 30.2755px 30px 30.2755px 30px 30.2755px 30px 30.2755px 30px\",\"8@260ms morph 317x60 30.0879px 30px 30.0879px 30px 30.0879px 30px 30.0879px 30px\"]}\n"
+                        },
+                        {
+                          "text": "c1 {\"cell\":\"dark-390c ch morph collapse\",\"rows\":[\"0@35ms morph 310x60 30.759px 30px 30.759px 30px 30.759px 30px 30.759px 30px\",\"1@65ms morph 260x60 36.6628px 30px 36.6628px 30px 36.6628px 30px 36.6628px 30px\",\"2@98ms morph 230x60 41.4266px 30px 41.4266px 30px 41.4266px 30px 41.4266px 30px\",\"3@131ms morph 199x60 47.9823px 30px 47.9823px 30px 47.9823px 30px 47.9823px 30px\",\"4@157ms morph 180x60 53.1243px 30px 53.1243px 30px 53.1243px 30px 53.1243px 30px\",\"5@179ms morph 171x60 55.9279px 30px 55.9279px 30px 55.9279px 30px 55.9279px 30px\",\"6@217ms morph 165x60 57.7667px 30px 57.7667px 30px 57.7667px 30px 57.7667px 30px\",\"7@246ms morph 161x60 59.2499px 30px 59.2499px 30px 59.2499px 30px 59.2499px 30px\",\"8@271ms morph 160x60 59.625px 30px 59.625px 30px 59.625px 30px 59.625px 30px\"]}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-20T15:16:22.610Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2eea307d6b42cca3e519-16b85f4a223c4e5bbf6d",
+              "file": "release-11-0-1-critic-1.spec.ts",
+              "line": 272,
+              "column": 13
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "release-11-0-1-critic-1b.spec.ts",
+      "file": "release-11-0-1-critic-1b.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "critic 1 k3 fine",
+          "file": "release-11-0-1-critic-1b.spec.ts",
+          "line": 12,
+          "column": 10,
+          "specs": [
+            {
+              "title": "k3 scene at 320 fine: span, port, flag, range, corners",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1022,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"k3 ch fine\",\"path\":\"expectFitting\",\"span\":292,\"port\":300,\"range\":0,\"scrollLeft\":0,\"fits\":true,\"dockW\":316,\"plate\":\"28px 28px 28px 28px\",\"half\":28,\"seats\":[\"S1:4.0..91.2\",\"S2:99.2..139.2\",\"S3:147.2..187.2\",\"S4:195.2..296.3\"],\"runW\":300.28125}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-20T15:16:24.448Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "83cd9476978951524ebf-f17347d7f21bb5a77e49",
+              "file": "release-11-0-1-critic-1b.spec.ts",
+              "line": 14,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "critic 1 k3 coarse",
+          "file": "release-11-0-1-critic-1b.spec.ts",
+          "line": 12,
+          "column": 10,
+          "specs": [
+            {
+              "title": "k3 scene at 320 coarse: span, port, flag, range, corners",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 988,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "c1 {\"cell\":\"k3 ch coarse\",\"path\":\"expectFitting\",\"span\":300,\"port\":304,\"range\":4,\"scrollLeft\":0,\"fits\":true,\"dockW\":320,\"plate\":\"30px 30px 30px 30px\",\"half\":30,\"seats\":[\"S1:4.0..91.2\",\"S2:99.2..143.2\",\"S3:151.2..195.2\",\"S4:203.2..304.3\"],\"runW\":304}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-20T15:16:25.473Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "83cd9476978951524ebf-e4e141cd43aff9297e53",
+              "file": "release-11-0-1-critic-1b.spec.ts",
+              "line": 14,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-20T15:15:12.798Z",
+    "duration": 73708.323,
+    "expected": 24,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

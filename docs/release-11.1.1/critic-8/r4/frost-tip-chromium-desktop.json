@@ -1,0 +1,768 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "critic8-probe/probe.config.ts",
+      "--project=chromium-desktop",
+      "--workers=1",
+      "frost.probe.ts"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/probe.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-8/r4/frost-tip-chromium-desktop.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5355",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5355",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "frost.probe.ts",
+      "file": "frost.probe.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "frost · a Sheet right's frost layer fades with its plate under reduced motion (1)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3272,
+                  "error": {
+                    "message": "Error: in: on every frame the frost layer is within 0.02 of the plate {\"in\":{\"frames\":88,\"haloFrames\":84,\"worstGap\":1,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[1,\"-\",\"-\"],[8,\"-\",\"-\"],[16,\"-\",\"-\"],[26,\"-\",\"-\"],[32,0,1],[51,0,1],[67,0.063,1],[76,0.138,1],[92,0.179,1],[100,0.266,1],[107,0.308,1],[118,0.348,1],[124,0.407,1],[134,0.443,1],[142,0.501,1],[151,0.546,1],[158,0.595,1],[168,0.637,1],[176,0.689,1],[184,0.733,1],[192,0.776,1],[200,0.821,1],[208,0.856,1],[216,0.894,1],[224,0.93,1],[232,0.965,1]]},\"out\":{\"frames\":110,\"haloFrames\":27,\"worstGap\":0.997,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[1,1,1],[10,1,1],[17,1,1],[27,0.974,1],[36,0.935,1],[43,0.898,1],[51,0.866,1],[60,0.826,1],[67,0.778,1],[77,0.74,1],[85,0.688,1],[94,0.645,1],[102,0.591,1],[111,0.547,1],[119,0.497,1],[126,0.452,1],[136,0.411,1],[144,0.355,1],[152,0.31,1],[161,0.266,1],[167,0.22,1],[176,0.185,1],[184,0.144,1],[194,0.105,1],[201,0.061,1],[209,0.033,1]]}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m",
+                    "stack": "Error: in: on every frame the frost layer is within 0.02 of the plate {\"in\":{\"frames\":88,\"haloFrames\":84,\"worstGap\":1,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[1,\"-\",\"-\"],[8,\"-\",\"-\"],[16,\"-\",\"-\"],[26,\"-\",\"-\"],[32,0,1],[51,0,1],[67,0.063,1],[76,0.138,1],[92,0.179,1],[100,0.266,1],[107,0.308,1],[118,0.348,1],[124,0.407,1],[134,0.443,1],[142,0.501,1],[151,0.546,1],[158,0.595,1],[168,0.637,1],[176,0.689,1],[184,0.733,1],[192,0.776,1],[200,0.821,1],[208,0.856,1],[216,0.894,1],[224,0.93,1],[232,0.965,1]]},\"out\":{\"frames\":110,\"haloFrames\":27,\"worstGap\":0.997,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[1,1,1],[10,1,1],[17,1,1],[27,0.974,1],[36,0.935,1],[43,0.898,1],[51,0.866,1],[60,0.826,1],[67,0.778,1],[77,0.74,1],[85,0.688,1],[94,0.645,1],[102,0.591,1],[111,0.547,1],[119,0.497,1],[126,0.452,1],[136,0.411,1],[144,0.355,1],[152,0.31,1],[161,0.266,1],[167,0.22,1],[176,0.185,1],[184,0.144,1],[194,0.105,1],[201,0.061,1],[209,0.033,1]]}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts:87:108",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts",
+                      "column": 108,
+                      "line": 87
+                    },
+                    "snippet": "  85 |             expect(legIn.haloFrames, `in: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n  86 |             expect(legOut.haloFrames, `out: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 87 |             expect(legIn.worstGap, `in: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n     |                                                                                                            ^\n  88 |             expect(legOut.worstGap, `out: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n  89 |             expect(legIn.firstHalo, `in: it enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n  90 |             expect(legOut.lastHalo, `out: it leaves at 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts",
+                        "column": 108,
+                        "line": 87
+                      },
+                      "message": "Error: in: on every frame the frost layer is within 0.02 of the plate {\"in\":{\"frames\":88,\"haloFrames\":84,\"worstGap\":1,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[1,\"-\",\"-\"],[8,\"-\",\"-\"],[16,\"-\",\"-\"],[26,\"-\",\"-\"],[32,0,1],[51,0,1],[67,0.063,1],[76,0.138,1],[92,0.179,1],[100,0.266,1],[107,0.308,1],[118,0.348,1],[124,0.407,1],[134,0.443,1],[142,0.501,1],[151,0.546,1],[158,0.595,1],[168,0.637,1],[176,0.689,1],[184,0.733,1],[192,0.776,1],[200,0.821,1],[208,0.856,1],[216,0.894,1],[224,0.93,1],[232,0.965,1]]},\"out\":{\"frames\":110,\"haloFrames\":27,\"worstGap\":0.997,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[1,1,1],[10,1,1],[17,1,1],[27,0.974,1],[36,0.935,1],[43,0.898,1],[51,0.866,1],[60,0.826,1],[67,0.778,1],[77,0.74,1],[85,0.688,1],[94,0.645,1],[102,0.591,1],[111,0.547,1],[119,0.497,1],[126,0.452,1],[136,0.411,1],[144,0.355,1],[152,0.31,1],[161,0.266,1],[167,0.22,1],[176,0.185,1],[184,0.144,1],[194,0.105,1],[201,0.061,1],[209,0.033,1]]}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n\n  85 |             expect(legIn.haloFrames, `in: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n  86 |             expect(legOut.haloFrames, `out: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 87 |             expect(legIn.worstGap, `in: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n     |                                                                                                            ^\n  88 |             expect(legOut.worstGap, `out: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n  89 |             expect(legIn.firstHalo, `in: it enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n  90 |             expect(legOut.lastHalo, `out: it leaves at 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts:87:108"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T20:44:02.872Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "frost",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmcmFtZXMiOjg4LCJoYWxvRnJhbWVzIjo4NCwid29yc3RHYXAiOjEsImZpcnN0SGFsbyI6MSwibGFzdEhhbG8iOjEsInN0cmlwIjpbWzEsIi0iLCItIl0sWzgsIi0iLCItIl0sWzE2LCItIiwiLSJdLFsyNiwiLSIsIi0iXSxbMzIsMCwxXSxbNTEsMCwxXSxbNjcsMC4wNjMsMV0sWzc2LDAuMTM4LDFdLFs5MiwwLjE3OSwxXSxbMTAwLDAuMjY2LDFdLFsxMDcsMC4zMDgsMV0sWzExOCwwLjM0OCwxXSxbMTI0LDAuNDA3LDFdLFsxMzQsMC40NDMsMV0sWzE0MiwwLjUwMSwxXSxbMTUxLDAuNTQ2LDFdLFsxNTgsMC41OTUsMV0sWzE2OCwwLjYzNywxXSxbMTc2LDAuNjg5LDFdLFsxODQsMC43MzMsMV0sWzE5MiwwLjc3NiwxXSxbMjAwLDAuODIxLDFdLFsyMDgsMC44NTYsMV0sWzIxNiwwLjg5NCwxXSxbMjI0LDAuOTMsMV0sWzIzMiwwLjk2NSwxXV19LCJvdXQiOnsiZnJhbWVzIjoxMTAsImhhbG9GcmFtZXMiOjI3LCJ3b3JzdEdhcCI6MC45OTcsImZpcnN0SGFsbyI6MSwibGFzdEhhbG8iOjEsInN0cmlwIjpbWzEsMSwxXSxbMTAsMSwxXSxbMTcsMSwxXSxbMjcsMC45NzQsMV0sWzM2LDAuOTM1LDFdLFs0MywwLjg5OCwxXSxbNTEsMC44NjYsMV0sWzYwLDAuODI2LDFdLFs2NywwLjc3OCwxXSxbNzcsMC43NCwxXSxbODUsMC42ODgsMV0sWzk0LDAuNjQ1LDFdLFsxMDIsMC41OTEsMV0sWzExMSwwLjU0NywxXSxbMTE5LDAuNDk3LDFdLFsxMjYsMC40NTIsMV0sWzEzNiwwLjQxMSwxXSxbMTQ0LDAuMzU1LDFdLFsxNTIsMC4zMSwxXSxbMTYxLDAuMjY2LDFdLFsxNjcsMC4yMiwxXSxbMTc2LDAuMTg1LDFdLFsxODQsMC4xNDQsMV0sWzE5NCwwLjEwNSwxXSxbMjAxLDAuMDYxLDFdLFsyMDksMC4wMzMsMV1dfX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/frost.probe.ts-frost-·-a-S-3240f-ate-under-reduced-motion-1--chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts",
+                    "column": 108,
+                    "line": 87
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "e7a2de29d21ed9b633f7-62a5e989d4e8e966bae7",
+          "file": "frost.probe.ts",
+          "line": 71,
+          "column": 9
+        },
+        {
+          "title": "frost · a Sheet right's frost layer fades with its plate under reduced motion (2)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3055,
+                  "error": {
+                    "message": "Error: in: on every frame the frost layer is within 0.02 of the plate {\"in\":{\"frames\":90,\"haloFrames\":85,\"worstGap\":1,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[6,\"-\",\"-\"],[13,\"-\",\"-\"],[21,\"-\",\"-\"],[31,\"-\",\"-\"],[39,\"-\",\"-\"],[46,0,1],[56,0,1],[71,0.035,1],[81,0.099,1],[97,0.147,1],[105,0.229,1],[114,0.273,1],[122,0.319,1],[130,0.365,1],[139,0.412,1],[147,0.46,1],[154,0.506,1],[162,0.547,1],[171,0.593,1],[180,0.642,1],[187,0.695,1],[197,0.732,1],[204,0.783,1],[214,0.821,1],[222,0.869,1],[229,0.906,1]]},\"out\":{\"frames\":110,\"haloFrames\":26,\"worstGap\":1,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[9,1,1],[17,1,1],[25,0.971,1],[34,0.938,1],[42,0.902,1],[49,0.863,1],[59,0.83,1],[67,0.779,1],[75,0.735,1],[84,0.69,1],[92,0.644,1],[100,0.596,1],[109,0.553,1],[117,0.501,1],[125,0.454,1],[134,0.407,1],[142,0.36,1],[150,0.313,1],[159,0.268,1],[167,0.224,1],[175,0.181,1],[183,0.14,1],[191,0.105,1],[199,0.069,1],[209,0.036,1],[217,0,1]]}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m",
+                    "stack": "Error: in: on every frame the frost layer is within 0.02 of the plate {\"in\":{\"frames\":90,\"haloFrames\":85,\"worstGap\":1,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[6,\"-\",\"-\"],[13,\"-\",\"-\"],[21,\"-\",\"-\"],[31,\"-\",\"-\"],[39,\"-\",\"-\"],[46,0,1],[56,0,1],[71,0.035,1],[81,0.099,1],[97,0.147,1],[105,0.229,1],[114,0.273,1],[122,0.319,1],[130,0.365,1],[139,0.412,1],[147,0.46,1],[154,0.506,1],[162,0.547,1],[171,0.593,1],[180,0.642,1],[187,0.695,1],[197,0.732,1],[204,0.783,1],[214,0.821,1],[222,0.869,1],[229,0.906,1]]},\"out\":{\"frames\":110,\"haloFrames\":26,\"worstGap\":1,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[9,1,1],[17,1,1],[25,0.971,1],[34,0.938,1],[42,0.902,1],[49,0.863,1],[59,0.83,1],[67,0.779,1],[75,0.735,1],[84,0.69,1],[92,0.644,1],[100,0.596,1],[109,0.553,1],[117,0.501,1],[125,0.454,1],[134,0.407,1],[142,0.36,1],[150,0.313,1],[159,0.268,1],[167,0.224,1],[175,0.181,1],[183,0.14,1],[191,0.105,1],[199,0.069,1],[209,0.036,1],[217,0,1]]}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts:87:108",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts",
+                      "column": 108,
+                      "line": 87
+                    },
+                    "snippet": "  85 |             expect(legIn.haloFrames, `in: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n  86 |             expect(legOut.haloFrames, `out: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 87 |             expect(legIn.worstGap, `in: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n     |                                                                                                            ^\n  88 |             expect(legOut.worstGap, `out: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n  89 |             expect(legIn.firstHalo, `in: it enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n  90 |             expect(legOut.lastHalo, `out: it leaves at 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts",
+                        "column": 108,
+                        "line": 87
+                      },
+                      "message": "Error: in: on every frame the frost layer is within 0.02 of the plate {\"in\":{\"frames\":90,\"haloFrames\":85,\"worstGap\":1,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[6,\"-\",\"-\"],[13,\"-\",\"-\"],[21,\"-\",\"-\"],[31,\"-\",\"-\"],[39,\"-\",\"-\"],[46,0,1],[56,0,1],[71,0.035,1],[81,0.099,1],[97,0.147,1],[105,0.229,1],[114,0.273,1],[122,0.319,1],[130,0.365,1],[139,0.412,1],[147,0.46,1],[154,0.506,1],[162,0.547,1],[171,0.593,1],[180,0.642,1],[187,0.695,1],[197,0.732,1],[204,0.783,1],[214,0.821,1],[222,0.869,1],[229,0.906,1]]},\"out\":{\"frames\":110,\"haloFrames\":26,\"worstGap\":1,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[9,1,1],[17,1,1],[25,0.971,1],[34,0.938,1],[42,0.902,1],[49,0.863,1],[59,0.83,1],[67,0.779,1],[75,0.735,1],[84,0.69,1],[92,0.644,1],[100,0.596,1],[109,0.553,1],[117,0.501,1],[125,0.454,1],[134,0.407,1],[142,0.36,1],[150,0.313,1],[159,0.268,1],[167,0.224,1],[175,0.181,1],[183,0.14,1],[191,0.105,1],[199,0.069,1],[209,0.036,1],[217,0,1]]}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n\n  85 |             expect(legIn.haloFrames, `in: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n  86 |             expect(legOut.haloFrames, `out: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 87 |             expect(legIn.worstGap, `in: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n     |                                                                                                            ^\n  88 |             expect(legOut.worstGap, `out: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n  89 |             expect(legIn.firstHalo, `in: it enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n  90 |             expect(legOut.lastHalo, `out: it leaves at 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts:87:108"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T20:44:06.924Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "frost",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmcmFtZXMiOjkwLCJoYWxvRnJhbWVzIjo4NSwid29yc3RHYXAiOjEsImZpcnN0SGFsbyI6MSwibGFzdEhhbG8iOjEsInN0cmlwIjpbWzYsIi0iLCItIl0sWzEzLCItIiwiLSJdLFsyMSwiLSIsIi0iXSxbMzEsIi0iLCItIl0sWzM5LCItIiwiLSJdLFs0NiwwLDFdLFs1NiwwLDFdLFs3MSwwLjAzNSwxXSxbODEsMC4wOTksMV0sWzk3LDAuMTQ3LDFdLFsxMDUsMC4yMjksMV0sWzExNCwwLjI3MywxXSxbMTIyLDAuMzE5LDFdLFsxMzAsMC4zNjUsMV0sWzEzOSwwLjQxMiwxXSxbMTQ3LDAuNDYsMV0sWzE1NCwwLjUwNiwxXSxbMTYyLDAuNTQ3LDFdLFsxNzEsMC41OTMsMV0sWzE4MCwwLjY0MiwxXSxbMTg3LDAuNjk1LDFdLFsxOTcsMC43MzIsMV0sWzIwNCwwLjc4MywxXSxbMjE0LDAuODIxLDFdLFsyMjIsMC44NjksMV0sWzIyOSwwLjkwNiwxXV19LCJvdXQiOnsiZnJhbWVzIjoxMTAsImhhbG9GcmFtZXMiOjI2LCJ3b3JzdEdhcCI6MSwiZmlyc3RIYWxvIjoxLCJsYXN0SGFsbyI6MSwic3RyaXAiOltbOSwxLDFdLFsxNywxLDFdLFsyNSwwLjk3MSwxXSxbMzQsMC45MzgsMV0sWzQyLDAuOTAyLDFdLFs0OSwwLjg2MywxXSxbNTksMC44MywxXSxbNjcsMC43NzksMV0sWzc1LDAuNzM1LDFdLFs4NCwwLjY5LDFdLFs5MiwwLjY0NCwxXSxbMTAwLDAuNTk2LDFdLFsxMDksMC41NTMsMV0sWzExNywwLjUwMSwxXSxbMTI1LDAuNDU0LDFdLFsxMzQsMC40MDcsMV0sWzE0MiwwLjM2LDFdLFsxNTAsMC4zMTMsMV0sWzE1OSwwLjI2OCwxXSxbMTY3LDAuMjI0LDFdLFsxNzUsMC4xODEsMV0sWzE4MywwLjE0LDFdLFsxOTEsMC4xMDUsMV0sWzE5OSwwLjA2OSwxXSxbMjA5LDAuMDM2LDFdLFsyMTcsMCwxXV19fQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/frost.probe.ts-frost-·-a-S-ee397-ate-under-reduced-motion-2--chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts",
+                    "column": 108,
+                    "line": 87
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "e7a2de29d21ed9b633f7-51ed83532e36fad2ff1d",
+          "file": "frost.probe.ts",
+          "line": 71,
+          "column": 9
+        },
+        {
+          "title": "frost · a Sheet right's frost layer fades with its plate under reduced motion (3)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2997,
+                  "error": {
+                    "message": "Error: in: on every frame the frost layer is within 0.02 of the plate {\"in\":{\"frames\":92,\"haloFrames\":86,\"worstGap\":1,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[4,\"-\",\"-\"],[14,\"-\",\"-\"],[22,\"-\",\"-\"],[29,\"-\",\"-\"],[37,\"-\",\"-\"],[46,\"-\",\"-\"],[56,0,1],[72,0,1],[80,0.062,1],[89,0.098,1],[105,0.137,1],[113,0.221,1],[122,0.26,1],[130,0.311,1],[139,0.353,1],[146,0.404,1],[155,0.445,1],[164,0.494,1],[172,0.547,1],[180,0.593,1],[189,0.637,1],[196,0.687,1],[206,0.724,1],[214,0.778,1],[222,0.818,1],[230,0.86,1]]},\"out\":{\"frames\":110,\"haloFrames\":25,\"worstGap\":0.976,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[8,1,1],[17,1,1],[25,0.964,1],[34,0.935,1],[42,0.896,1],[51,0.854,1],[59,0.814,1],[67,0.771,1],[75,0.727,1],[82,0.685,1],[93,0.643,1],[100,0.586,1],[108,0.545,1],[117,0.498,1],[125,0.443,1],[134,0.398,1],[141,0.351,1],[149,0.314,1],[158,0.266,1],[167,0.22,1],[174,0.172,1],[184,0.138,1],[191,0.093,1],[201,0.062,1],[208,0.024,1],[216,\"-\",\"-\"]]}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m",
+                    "stack": "Error: in: on every frame the frost layer is within 0.02 of the plate {\"in\":{\"frames\":92,\"haloFrames\":86,\"worstGap\":1,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[4,\"-\",\"-\"],[14,\"-\",\"-\"],[22,\"-\",\"-\"],[29,\"-\",\"-\"],[37,\"-\",\"-\"],[46,\"-\",\"-\"],[56,0,1],[72,0,1],[80,0.062,1],[89,0.098,1],[105,0.137,1],[113,0.221,1],[122,0.26,1],[130,0.311,1],[139,0.353,1],[146,0.404,1],[155,0.445,1],[164,0.494,1],[172,0.547,1],[180,0.593,1],[189,0.637,1],[196,0.687,1],[206,0.724,1],[214,0.778,1],[222,0.818,1],[230,0.86,1]]},\"out\":{\"frames\":110,\"haloFrames\":25,\"worstGap\":0.976,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[8,1,1],[17,1,1],[25,0.964,1],[34,0.935,1],[42,0.896,1],[51,0.854,1],[59,0.814,1],[67,0.771,1],[75,0.727,1],[82,0.685,1],[93,0.643,1],[100,0.586,1],[108,0.545,1],[117,0.498,1],[125,0.443,1],[134,0.398,1],[141,0.351,1],[149,0.314,1],[158,0.266,1],[167,0.22,1],[174,0.172,1],[184,0.138,1],[191,0.093,1],[201,0.062,1],[208,0.024,1],[216,\"-\",\"-\"]]}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts:87:108",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts",
+                      "column": 108,
+                      "line": 87
+                    },
+                    "snippet": "  85 |             expect(legIn.haloFrames, `in: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n  86 |             expect(legOut.haloFrames, `out: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 87 |             expect(legIn.worstGap, `in: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n     |                                                                                                            ^\n  88 |             expect(legOut.worstGap, `out: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n  89 |             expect(legIn.firstHalo, `in: it enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n  90 |             expect(legOut.lastHalo, `out: it leaves at 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts",
+                        "column": 108,
+                        "line": 87
+                      },
+                      "message": "Error: in: on every frame the frost layer is within 0.02 of the plate {\"in\":{\"frames\":92,\"haloFrames\":86,\"worstGap\":1,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[4,\"-\",\"-\"],[14,\"-\",\"-\"],[22,\"-\",\"-\"],[29,\"-\",\"-\"],[37,\"-\",\"-\"],[46,\"-\",\"-\"],[56,0,1],[72,0,1],[80,0.062,1],[89,0.098,1],[105,0.137,1],[113,0.221,1],[122,0.26,1],[130,0.311,1],[139,0.353,1],[146,0.404,1],[155,0.445,1],[164,0.494,1],[172,0.547,1],[180,0.593,1],[189,0.637,1],[196,0.687,1],[206,0.724,1],[214,0.778,1],[222,0.818,1],[230,0.86,1]]},\"out\":{\"frames\":110,\"haloFrames\":25,\"worstGap\":0.976,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[8,1,1],[17,1,1],[25,0.964,1],[34,0.935,1],[42,0.896,1],[51,0.854,1],[59,0.814,1],[67,0.771,1],[75,0.727,1],[82,0.685,1],[93,0.643,1],[100,0.586,1],[108,0.545,1],[117,0.498,1],[125,0.443,1],[134,0.398,1],[141,0.351,1],[149,0.314,1],[158,0.266,1],[167,0.22,1],[174,0.172,1],[184,0.138,1],[191,0.093,1],[201,0.062,1],[208,0.024,1],[216,\"-\",\"-\"]]}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n\n  85 |             expect(legIn.haloFrames, `in: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n  86 |             expect(legOut.haloFrames, `out: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 87 |             expect(legIn.worstGap, `in: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n     |                                                                                                            ^\n  88 |             expect(legOut.worstGap, `out: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n  89 |             expect(legIn.firstHalo, `in: it enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n  90 |             expect(legOut.lastHalo, `out: it leaves at 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts:87:108"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T20:44:10.871Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "frost",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmcmFtZXMiOjkyLCJoYWxvRnJhbWVzIjo4Niwid29yc3RHYXAiOjEsImZpcnN0SGFsbyI6MSwibGFzdEhhbG8iOjEsInN0cmlwIjpbWzQsIi0iLCItIl0sWzE0LCItIiwiLSJdLFsyMiwiLSIsIi0iXSxbMjksIi0iLCItIl0sWzM3LCItIiwiLSJdLFs0NiwiLSIsIi0iXSxbNTYsMCwxXSxbNzIsMCwxXSxbODAsMC4wNjIsMV0sWzg5LDAuMDk4LDFdLFsxMDUsMC4xMzcsMV0sWzExMywwLjIyMSwxXSxbMTIyLDAuMjYsMV0sWzEzMCwwLjMxMSwxXSxbMTM5LDAuMzUzLDFdLFsxNDYsMC40MDQsMV0sWzE1NSwwLjQ0NSwxXSxbMTY0LDAuNDk0LDFdLFsxNzIsMC41NDcsMV0sWzE4MCwwLjU5MywxXSxbMTg5LDAuNjM3LDFdLFsxOTYsMC42ODcsMV0sWzIwNiwwLjcyNCwxXSxbMjE0LDAuNzc4LDFdLFsyMjIsMC44MTgsMV0sWzIzMCwwLjg2LDFdXX0sIm91dCI6eyJmcmFtZXMiOjExMCwiaGFsb0ZyYW1lcyI6MjUsIndvcnN0R2FwIjowLjk3NiwiZmlyc3RIYWxvIjoxLCJsYXN0SGFsbyI6MSwic3RyaXAiOltbOCwxLDFdLFsxNywxLDFdLFsyNSwwLjk2NCwxXSxbMzQsMC45MzUsMV0sWzQyLDAuODk2LDFdLFs1MSwwLjg1NCwxXSxbNTksMC44MTQsMV0sWzY3LDAuNzcxLDFdLFs3NSwwLjcyNywxXSxbODIsMC42ODUsMV0sWzkzLDAuNjQzLDFdLFsxMDAsMC41ODYsMV0sWzEwOCwwLjU0NSwxXSxbMTE3LDAuNDk4LDFdLFsxMjUsMC40NDMsMV0sWzEzNCwwLjM5OCwxXSxbMTQxLDAuMzUxLDFdLFsxNDksMC4zMTQsMV0sWzE1OCwwLjI2NiwxXSxbMTY3LDAuMjIsMV0sWzE3NCwwLjE3MiwxXSxbMTg0LDAuMTM4LDFdLFsxOTEsMC4wOTMsMV0sWzIwMSwwLjA2MiwxXSxbMjA4LDAuMDI0LDFdLFsyMTYsIi0iLCItIl1dfX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/frost.probe.ts-frost-·-a-S-5c022-ate-under-reduced-motion-3--chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts",
+                    "column": 108,
+                    "line": 87
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "e7a2de29d21ed9b633f7-d629c0e7f181bf4d96f6",
+          "file": "frost.probe.ts",
+          "line": 71,
+          "column": 9
+        },
+        {
+          "title": "frost · a Sheet bottom's frost layer fades with its plate under reduced motion (1)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3071,
+                  "error": {
+                    "message": "Error: in: on every frame the frost layer is within 0.02 of the plate {\"in\":{\"frames\":91,\"haloFrames\":85,\"worstGap\":1,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[1,\"-\",\"-\"],[11,\"-\",\"-\"],[19,\"-\",\"-\"],[27,\"-\",\"-\"],[35,\"-\",\"-\"],[43,\"-\",\"-\"],[52,0,1],[61,0,1],[78,0.032,1],[85,0.102,1],[111,0.135,1],[119,0.218,1],[128,0.262,1],[135,0.308,1],[144,0.346,1],[152,0.402,1],[161,0.443,1],[169,0.498,1],[176,0.543,1],[186,0.582,1],[193,0.639,1],[201,0.677,1],[211,0.722,1],[219,0.776,1],[227,0.817,1],[236,0.855,1]]},\"out\":{\"frames\":111,\"haloFrames\":26,\"worstGap\":0.996,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[4,1,1],[12,1,1],[21,0.97,1],[28,0.937,1],[36,0.905,1],[44,0.866,1],[54,0.828,1],[62,0.777,1],[69,0.734,1],[79,0.697,1],[87,0.641,1],[95,0.596,1],[104,0.553,1],[112,0.499,1],[120,0.454,1],[128,0.411,1],[138,0.364,1],[146,0.311,1],[154,0.267,1],[162,0.223,1],[170,0.183,1],[179,0.14,1],[187,0.1,1],[196,0.064,1],[203,0.03,1],[213,0.004,1]]}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m",
+                    "stack": "Error: in: on every frame the frost layer is within 0.02 of the plate {\"in\":{\"frames\":91,\"haloFrames\":85,\"worstGap\":1,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[1,\"-\",\"-\"],[11,\"-\",\"-\"],[19,\"-\",\"-\"],[27,\"-\",\"-\"],[35,\"-\",\"-\"],[43,\"-\",\"-\"],[52,0,1],[61,0,1],[78,0.032,1],[85,0.102,1],[111,0.135,1],[119,0.218,1],[128,0.262,1],[135,0.308,1],[144,0.346,1],[152,0.402,1],[161,0.443,1],[169,0.498,1],[176,0.543,1],[186,0.582,1],[193,0.639,1],[201,0.677,1],[211,0.722,1],[219,0.776,1],[227,0.817,1],[236,0.855,1]]},\"out\":{\"frames\":111,\"haloFrames\":26,\"worstGap\":0.996,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[4,1,1],[12,1,1],[21,0.97,1],[28,0.937,1],[36,0.905,1],[44,0.866,1],[54,0.828,1],[62,0.777,1],[69,0.734,1],[79,0.697,1],[87,0.641,1],[95,0.596,1],[104,0.553,1],[112,0.499,1],[120,0.454,1],[128,0.411,1],[138,0.364,1],[146,0.311,1],[154,0.267,1],[162,0.223,1],[170,0.183,1],[179,0.14,1],[187,0.1,1],[196,0.064,1],[203,0.03,1],[213,0.004,1]]}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts:87:108",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts",
+                      "column": 108,
+                      "line": 87
+                    },
+                    "snippet": "  85 |             expect(legIn.haloFrames, `in: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n  86 |             expect(legOut.haloFrames, `out: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 87 |             expect(legIn.worstGap, `in: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n     |                                                                                                            ^\n  88 |             expect(legOut.worstGap, `out: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n  89 |             expect(legIn.firstHalo, `in: it enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n  90 |             expect(legOut.lastHalo, `out: it leaves at 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts",
+                        "column": 108,
+                        "line": 87
+                      },
+                      "message": "Error: in: on every frame the frost layer is within 0.02 of the plate {\"in\":{\"frames\":91,\"haloFrames\":85,\"worstGap\":1,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[1,\"-\",\"-\"],[11,\"-\",\"-\"],[19,\"-\",\"-\"],[27,\"-\",\"-\"],[35,\"-\",\"-\"],[43,\"-\",\"-\"],[52,0,1],[61,0,1],[78,0.032,1],[85,0.102,1],[111,0.135,1],[119,0.218,1],[128,0.262,1],[135,0.308,1],[144,0.346,1],[152,0.402,1],[161,0.443,1],[169,0.498,1],[176,0.543,1],[186,0.582,1],[193,0.639,1],[201,0.677,1],[211,0.722,1],[219,0.776,1],[227,0.817,1],[236,0.855,1]]},\"out\":{\"frames\":111,\"haloFrames\":26,\"worstGap\":0.996,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[4,1,1],[12,1,1],[21,0.97,1],[28,0.937,1],[36,0.905,1],[44,0.866,1],[54,0.828,1],[62,0.777,1],[69,0.734,1],[79,0.697,1],[87,0.641,1],[95,0.596,1],[104,0.553,1],[112,0.499,1],[120,0.454,1],[128,0.411,1],[138,0.364,1],[146,0.311,1],[154,0.267,1],[162,0.223,1],[170,0.183,1],[179,0.14,1],[187,0.1,1],[196,0.064,1],[203,0.03,1],[213,0.004,1]]}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n\n  85 |             expect(legIn.haloFrames, `in: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n  86 |             expect(legOut.haloFrames, `out: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 87 |             expect(legIn.worstGap, `in: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n     |                                                                                                            ^\n  88 |             expect(legOut.worstGap, `out: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n  89 |             expect(legIn.firstHalo, `in: it enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n  90 |             expect(legOut.lastHalo, `out: it leaves at 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts:87:108"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T20:44:14.796Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "frost",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmcmFtZXMiOjkxLCJoYWxvRnJhbWVzIjo4NSwid29yc3RHYXAiOjEsImZpcnN0SGFsbyI6MSwibGFzdEhhbG8iOjEsInN0cmlwIjpbWzEsIi0iLCItIl0sWzExLCItIiwiLSJdLFsxOSwiLSIsIi0iXSxbMjcsIi0iLCItIl0sWzM1LCItIiwiLSJdLFs0MywiLSIsIi0iXSxbNTIsMCwxXSxbNjEsMCwxXSxbNzgsMC4wMzIsMV0sWzg1LDAuMTAyLDFdLFsxMTEsMC4xMzUsMV0sWzExOSwwLjIxOCwxXSxbMTI4LDAuMjYyLDFdLFsxMzUsMC4zMDgsMV0sWzE0NCwwLjM0NiwxXSxbMTUyLDAuNDAyLDFdLFsxNjEsMC40NDMsMV0sWzE2OSwwLjQ5OCwxXSxbMTc2LDAuNTQzLDFdLFsxODYsMC41ODIsMV0sWzE5MywwLjYzOSwxXSxbMjAxLDAuNjc3LDFdLFsyMTEsMC43MjIsMV0sWzIxOSwwLjc3NiwxXSxbMjI3LDAuODE3LDFdLFsyMzYsMC44NTUsMV1dfSwib3V0Ijp7ImZyYW1lcyI6MTExLCJoYWxvRnJhbWVzIjoyNiwid29yc3RHYXAiOjAuOTk2LCJmaXJzdEhhbG8iOjEsImxhc3RIYWxvIjoxLCJzdHJpcCI6W1s0LDEsMV0sWzEyLDEsMV0sWzIxLDAuOTcsMV0sWzI4LDAuOTM3LDFdLFszNiwwLjkwNSwxXSxbNDQsMC44NjYsMV0sWzU0LDAuODI4LDFdLFs2MiwwLjc3NywxXSxbNjksMC43MzQsMV0sWzc5LDAuNjk3LDFdLFs4NywwLjY0MSwxXSxbOTUsMC41OTYsMV0sWzEwNCwwLjU1MywxXSxbMTEyLDAuNDk5LDFdLFsxMjAsMC40NTQsMV0sWzEyOCwwLjQxMSwxXSxbMTM4LDAuMzY0LDFdLFsxNDYsMC4zMTEsMV0sWzE1NCwwLjI2NywxXSxbMTYyLDAuMjIzLDFdLFsxNzAsMC4xODMsMV0sWzE3OSwwLjE0LDFdLFsxODcsMC4xLDFdLFsxOTYsMC4wNjQsMV0sWzIwMywwLjAzLDFdLFsyMTMsMC4wMDQsMV1dfX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/frost.probe.ts-frost-·-a-S-dba58-ate-under-reduced-motion-1--chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts",
+                    "column": 108,
+                    "line": 87
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "e7a2de29d21ed9b633f7-e87b179624444a1f09e9",
+          "file": "frost.probe.ts",
+          "line": 71,
+          "column": 9
+        },
+        {
+          "title": "frost · a Sheet bottom's frost layer fades with its plate under reduced motion (2)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3246,
+                  "error": {
+                    "message": "Error: in: on every frame the frost layer is within 0.02 of the plate {\"in\":{\"frames\":90,\"haloFrames\":85,\"worstGap\":1,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[13,\"-\",\"-\"],[22,\"-\",\"-\"],[30,\"-\",\"-\"],[38,\"-\",\"-\"],[46,\"-\",\"-\"],[55,0,1],[80,0,1],[97,0.063,1],[105,0.138,1],[122,0.179,1],[130,0.266,1],[147,0.311,1],[155,0.405,1],[163,0.45,1],[172,0.499,1],[180,0.545,1],[187,0.592,1],[197,0.635,1],[203,0.687,1],[212,0.723,1],[222,0.769,1],[230,0.82,1],[238,0.859,1],[247,0.898,1],[255,0.935,1],[263,0.969,1]]},\"out\":{\"frames\":110,\"haloFrames\":25,\"worstGap\":0.995,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[3,1,1],[20,1,1],[28,0.937,1],[36,0.902,1],[44,0.863,1],[53,0.825,1],[61,0.778,1],[69,0.736,1],[78,0.69,1],[86,0.644,1],[93,0.596,1],[103,0.557,1],[111,0.5,1],[120,0.455,1],[128,0.406,1],[136,0.359,1],[143,0.313,1],[153,0.276,1],[161,0.222,1],[169,0.181,1],[178,0.14,1],[186,0.101,1],[193,0.064,1],[202,0.037,1],[211,0.005,1],[219,\"-\",\"-\"]]}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m",
+                    "stack": "Error: in: on every frame the frost layer is within 0.02 of the plate {\"in\":{\"frames\":90,\"haloFrames\":85,\"worstGap\":1,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[13,\"-\",\"-\"],[22,\"-\",\"-\"],[30,\"-\",\"-\"],[38,\"-\",\"-\"],[46,\"-\",\"-\"],[55,0,1],[80,0,1],[97,0.063,1],[105,0.138,1],[122,0.179,1],[130,0.266,1],[147,0.311,1],[155,0.405,1],[163,0.45,1],[172,0.499,1],[180,0.545,1],[187,0.592,1],[197,0.635,1],[203,0.687,1],[212,0.723,1],[222,0.769,1],[230,0.82,1],[238,0.859,1],[247,0.898,1],[255,0.935,1],[263,0.969,1]]},\"out\":{\"frames\":110,\"haloFrames\":25,\"worstGap\":0.995,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[3,1,1],[20,1,1],[28,0.937,1],[36,0.902,1],[44,0.863,1],[53,0.825,1],[61,0.778,1],[69,0.736,1],[78,0.69,1],[86,0.644,1],[93,0.596,1],[103,0.557,1],[111,0.5,1],[120,0.455,1],[128,0.406,1],[136,0.359,1],[143,0.313,1],[153,0.276,1],[161,0.222,1],[169,0.181,1],[178,0.14,1],[186,0.101,1],[193,0.064,1],[202,0.037,1],[211,0.005,1],[219,\"-\",\"-\"]]}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts:87:108",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts",
+                      "column": 108,
+                      "line": 87
+                    },
+                    "snippet": "  85 |             expect(legIn.haloFrames, `in: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n  86 |             expect(legOut.haloFrames, `out: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 87 |             expect(legIn.worstGap, `in: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n     |                                                                                                            ^\n  88 |             expect(legOut.worstGap, `out: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n  89 |             expect(legIn.firstHalo, `in: it enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n  90 |             expect(legOut.lastHalo, `out: it leaves at 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts",
+                        "column": 108,
+                        "line": 87
+                      },
+                      "message": "Error: in: on every frame the frost layer is within 0.02 of the plate {\"in\":{\"frames\":90,\"haloFrames\":85,\"worstGap\":1,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[13,\"-\",\"-\"],[22,\"-\",\"-\"],[30,\"-\",\"-\"],[38,\"-\",\"-\"],[46,\"-\",\"-\"],[55,0,1],[80,0,1],[97,0.063,1],[105,0.138,1],[122,0.179,1],[130,0.266,1],[147,0.311,1],[155,0.405,1],[163,0.45,1],[172,0.499,1],[180,0.545,1],[187,0.592,1],[197,0.635,1],[203,0.687,1],[212,0.723,1],[222,0.769,1],[230,0.82,1],[238,0.859,1],[247,0.898,1],[255,0.935,1],[263,0.969,1]]},\"out\":{\"frames\":110,\"haloFrames\":25,\"worstGap\":0.995,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[3,1,1],[20,1,1],[28,0.937,1],[36,0.902,1],[44,0.863,1],[53,0.825,1],[61,0.778,1],[69,0.736,1],[78,0.69,1],[86,0.644,1],[93,0.596,1],[103,0.557,1],[111,0.5,1],[120,0.455,1],[128,0.406,1],[136,0.359,1],[143,0.313,1],[153,0.276,1],[161,0.222,1],[169,0.181,1],[178,0.14,1],[186,0.101,1],[193,0.064,1],[202,0.037,1],[211,0.005,1],[219,\"-\",\"-\"]]}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n\n  85 |             expect(legIn.haloFrames, `in: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n  86 |             expect(legOut.haloFrames, `out: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 87 |             expect(legIn.worstGap, `in: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n     |                                                                                                            ^\n  88 |             expect(legOut.worstGap, `out: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n  89 |             expect(legIn.firstHalo, `in: it enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n  90 |             expect(legOut.lastHalo, `out: it leaves at 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts:87:108"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T20:44:18.893Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "frost",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmcmFtZXMiOjkwLCJoYWxvRnJhbWVzIjo4NSwid29yc3RHYXAiOjEsImZpcnN0SGFsbyI6MSwibGFzdEhhbG8iOjEsInN0cmlwIjpbWzEzLCItIiwiLSJdLFsyMiwiLSIsIi0iXSxbMzAsIi0iLCItIl0sWzM4LCItIiwiLSJdLFs0NiwiLSIsIi0iXSxbNTUsMCwxXSxbODAsMCwxXSxbOTcsMC4wNjMsMV0sWzEwNSwwLjEzOCwxXSxbMTIyLDAuMTc5LDFdLFsxMzAsMC4yNjYsMV0sWzE0NywwLjMxMSwxXSxbMTU1LDAuNDA1LDFdLFsxNjMsMC40NSwxXSxbMTcyLDAuNDk5LDFdLFsxODAsMC41NDUsMV0sWzE4NywwLjU5MiwxXSxbMTk3LDAuNjM1LDFdLFsyMDMsMC42ODcsMV0sWzIxMiwwLjcyMywxXSxbMjIyLDAuNzY5LDFdLFsyMzAsMC44MiwxXSxbMjM4LDAuODU5LDFdLFsyNDcsMC44OTgsMV0sWzI1NSwwLjkzNSwxXSxbMjYzLDAuOTY5LDFdXX0sIm91dCI6eyJmcmFtZXMiOjExMCwiaGFsb0ZyYW1lcyI6MjUsIndvcnN0R2FwIjowLjk5NSwiZmlyc3RIYWxvIjoxLCJsYXN0SGFsbyI6MSwic3RyaXAiOltbMywxLDFdLFsyMCwxLDFdLFsyOCwwLjkzNywxXSxbMzYsMC45MDIsMV0sWzQ0LDAuODYzLDFdLFs1MywwLjgyNSwxXSxbNjEsMC43NzgsMV0sWzY5LDAuNzM2LDFdLFs3OCwwLjY5LDFdLFs4NiwwLjY0NCwxXSxbOTMsMC41OTYsMV0sWzEwMywwLjU1NywxXSxbMTExLDAuNSwxXSxbMTIwLDAuNDU1LDFdLFsxMjgsMC40MDYsMV0sWzEzNiwwLjM1OSwxXSxbMTQzLDAuMzEzLDFdLFsxNTMsMC4yNzYsMV0sWzE2MSwwLjIyMiwxXSxbMTY5LDAuMTgxLDFdLFsxNzgsMC4xNCwxXSxbMTg2LDAuMTAxLDFdLFsxOTMsMC4wNjQsMV0sWzIwMiwwLjAzNywxXSxbMjExLDAuMDA1LDFdLFsyMTksIi0iLCItIl1dfX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/frost.probe.ts-frost-·-a-S-bd4b4-ate-under-reduced-motion-2--chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts",
+                    "column": 108,
+                    "line": 87
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "e7a2de29d21ed9b633f7-5869f5431ae56bc1bbec",
+          "file": "frost.probe.ts",
+          "line": 71,
+          "column": 9
+        },
+        {
+          "title": "frost · a Sheet bottom's frost layer fades with its plate under reduced motion (3)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2999,
+                  "error": {
+                    "message": "Error: in: on every frame the frost layer is within 0.02 of the plate {\"in\":{\"frames\":88,\"haloFrames\":84,\"worstGap\":1,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[2,\"-\",\"-\"],[9,\"-\",\"-\"],[19,\"-\",\"-\"],[27,\"-\",\"-\"],[35,0,1],[51,0,1],[61,0.059,1],[69,0.103,1],[94,0.14,1],[102,0.224,1],[110,0.268,1],[118,0.313,1],[127,0.358,1],[135,0.407,1],[142,0.454,1],[152,0.492,1],[160,0.548,1],[169,0.597,1],[177,0.643,1],[185,0.689,1],[194,0.735,1],[202,0.779,1],[210,0.822,1],[219,0.862,1],[227,0.902,1],[235,0.938,1]]},\"out\":{\"frames\":102,\"haloFrames\":25,\"worstGap\":0.972,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[74,1,1],[83,1,1],[90,0.968,1],[99,0.938,1],[106,0.898,1],[115,0.864,1],[124,0.82,1],[132,0.775,1],[141,0.732,1],[149,0.686,1],[156,0.64,1],[166,0.602,1],[172,0.543,1],[183,0.507,1],[191,0.449,1],[199,0.403,1],[207,0.356,1],[216,0.31,1],[224,0.264,1],[232,0.22,1],[241,0.177,1],[249,0.136,1],[257,0.098,1],[266,0.063,1],[274,0.028,1],[282,\"-\",\"-\"]]}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m",
+                    "stack": "Error: in: on every frame the frost layer is within 0.02 of the plate {\"in\":{\"frames\":88,\"haloFrames\":84,\"worstGap\":1,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[2,\"-\",\"-\"],[9,\"-\",\"-\"],[19,\"-\",\"-\"],[27,\"-\",\"-\"],[35,0,1],[51,0,1],[61,0.059,1],[69,0.103,1],[94,0.14,1],[102,0.224,1],[110,0.268,1],[118,0.313,1],[127,0.358,1],[135,0.407,1],[142,0.454,1],[152,0.492,1],[160,0.548,1],[169,0.597,1],[177,0.643,1],[185,0.689,1],[194,0.735,1],[202,0.779,1],[210,0.822,1],[219,0.862,1],[227,0.902,1],[235,0.938,1]]},\"out\":{\"frames\":102,\"haloFrames\":25,\"worstGap\":0.972,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[74,1,1],[83,1,1],[90,0.968,1],[99,0.938,1],[106,0.898,1],[115,0.864,1],[124,0.82,1],[132,0.775,1],[141,0.732,1],[149,0.686,1],[156,0.64,1],[166,0.602,1],[172,0.543,1],[183,0.507,1],[191,0.449,1],[199,0.403,1],[207,0.356,1],[216,0.31,1],[224,0.264,1],[232,0.22,1],[241,0.177,1],[249,0.136,1],[257,0.098,1],[266,0.063,1],[274,0.028,1],[282,\"-\",\"-\"]]}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts:87:108",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts",
+                      "column": 108,
+                      "line": 87
+                    },
+                    "snippet": "  85 |             expect(legIn.haloFrames, `in: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n  86 |             expect(legOut.haloFrames, `out: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 87 |             expect(legIn.worstGap, `in: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n     |                                                                                                            ^\n  88 |             expect(legOut.worstGap, `out: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n  89 |             expect(legIn.firstHalo, `in: it enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n  90 |             expect(legOut.lastHalo, `out: it leaves at 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts",
+                        "column": 108,
+                        "line": 87
+                      },
+                      "message": "Error: in: on every frame the frost layer is within 0.02 of the plate {\"in\":{\"frames\":88,\"haloFrames\":84,\"worstGap\":1,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[2,\"-\",\"-\"],[9,\"-\",\"-\"],[19,\"-\",\"-\"],[27,\"-\",\"-\"],[35,0,1],[51,0,1],[61,0.059,1],[69,0.103,1],[94,0.14,1],[102,0.224,1],[110,0.268,1],[118,0.313,1],[127,0.358,1],[135,0.407,1],[142,0.454,1],[152,0.492,1],[160,0.548,1],[169,0.597,1],[177,0.643,1],[185,0.689,1],[194,0.735,1],[202,0.779,1],[210,0.822,1],[219,0.862,1],[227,0.902,1],[235,0.938,1]]},\"out\":{\"frames\":102,\"haloFrames\":25,\"worstGap\":0.972,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[74,1,1],[83,1,1],[90,0.968,1],[99,0.938,1],[106,0.898,1],[115,0.864,1],[124,0.82,1],[132,0.775,1],[141,0.732,1],[149,0.686,1],[156,0.64,1],[166,0.602,1],[172,0.543,1],[183,0.507,1],[191,0.449,1],[199,0.403,1],[207,0.356,1],[216,0.31,1],[224,0.264,1],[232,0.22,1],[241,0.177,1],[249,0.136,1],[257,0.098,1],[266,0.063,1],[274,0.028,1],[282,\"-\",\"-\"]]}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n\n  85 |             expect(legIn.haloFrames, `in: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n  86 |             expect(legOut.haloFrames, `out: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 87 |             expect(legIn.worstGap, `in: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n     |                                                                                                            ^\n  88 |             expect(legOut.worstGap, `out: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n  89 |             expect(legIn.firstHalo, `in: it enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n  90 |             expect(legOut.lastHalo, `out: it leaves at 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts:87:108"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T20:44:23.693Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "frost",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmcmFtZXMiOjg4LCJoYWxvRnJhbWVzIjo4NCwid29yc3RHYXAiOjEsImZpcnN0SGFsbyI6MSwibGFzdEhhbG8iOjEsInN0cmlwIjpbWzIsIi0iLCItIl0sWzksIi0iLCItIl0sWzE5LCItIiwiLSJdLFsyNywiLSIsIi0iXSxbMzUsMCwxXSxbNTEsMCwxXSxbNjEsMC4wNTksMV0sWzY5LDAuMTAzLDFdLFs5NCwwLjE0LDFdLFsxMDIsMC4yMjQsMV0sWzExMCwwLjI2OCwxXSxbMTE4LDAuMzEzLDFdLFsxMjcsMC4zNTgsMV0sWzEzNSwwLjQwNywxXSxbMTQyLDAuNDU0LDFdLFsxNTIsMC40OTIsMV0sWzE2MCwwLjU0OCwxXSxbMTY5LDAuNTk3LDFdLFsxNzcsMC42NDMsMV0sWzE4NSwwLjY4OSwxXSxbMTk0LDAuNzM1LDFdLFsyMDIsMC43NzksMV0sWzIxMCwwLjgyMiwxXSxbMjE5LDAuODYyLDFdLFsyMjcsMC45MDIsMV0sWzIzNSwwLjkzOCwxXV19LCJvdXQiOnsiZnJhbWVzIjoxMDIsImhhbG9GcmFtZXMiOjI1LCJ3b3JzdEdhcCI6MC45NzIsImZpcnN0SGFsbyI6MSwibGFzdEhhbG8iOjEsInN0cmlwIjpbWzc0LDEsMV0sWzgzLDEsMV0sWzkwLDAuOTY4LDFdLFs5OSwwLjkzOCwxXSxbMTA2LDAuODk4LDFdLFsxMTUsMC44NjQsMV0sWzEyNCwwLjgyLDFdLFsxMzIsMC43NzUsMV0sWzE0MSwwLjczMiwxXSxbMTQ5LDAuNjg2LDFdLFsxNTYsMC42NCwxXSxbMTY2LDAuNjAyLDFdLFsxNzIsMC41NDMsMV0sWzE4MywwLjUwNywxXSxbMTkxLDAuNDQ5LDFdLFsxOTksMC40MDMsMV0sWzIwNywwLjM1NiwxXSxbMjE2LDAuMzEsMV0sWzIyNCwwLjI2NCwxXSxbMjMyLDAuMjIsMV0sWzI0MSwwLjE3NywxXSxbMjQ5LDAuMTM2LDFdLFsyNTcsMC4wOTgsMV0sWzI2NiwwLjA2MywxXSxbMjc0LDAuMDI4LDFdLFsyODIsIi0iLCItIl1dfX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/frost.probe.ts-frost-·-a-S-40737-ate-under-reduced-motion-3--chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts",
+                    "column": 108,
+                    "line": 87
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "e7a2de29d21ed9b633f7-1c3fc23b32d8738464ad",
+          "file": "frost.probe.ts",
+          "line": 71,
+          "column": 9
+        },
+        {
+          "title": "frost · a detented Sheet's frost layer fades with its plate under reduced motion (1)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3198,
+                  "error": {
+                    "message": "Error: in: on every frame the frost layer is within 0.02 of the plate {\"in\":{\"frames\":89,\"haloFrames\":85,\"worstGap\":1,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[50,\"-\",\"-\"],[60,\"-\",\"-\"],[68,\"-\",\"-\"],[76,\"-\",\"-\"],[84,0,1],[108,0,1],[118,0.063,1],[126,0.108,1],[143,0.145,1],[151,0.23,1],[160,0.274,1],[167,0.319,1],[176,0.363,1],[185,0.414,1],[193,0.46,1],[200,0.508,1],[210,0.548,1],[218,0.605,1],[226,0.649,1],[235,0.696,1],[243,0.741,1],[251,0.785,1],[260,0.828,1],[268,0.868,1],[275,0.906,1],[284,0.938,1]]},\"out\":{\"frames\":110,\"haloFrames\":26,\"worstGap\":0.999,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[9,1,1],[16,1,1],[26,0.976,1],[34,0.937,1],[42,0.902,1],[51,0.863,1],[59,0.822,1],[66,0.779,1],[74,0.741,1],[84,0.697,1],[91,0.641,1],[101,0.602,1],[108,0.547,1],[117,0.505,1],[126,0.453,1],[134,0.407,1],[142,0.359,1],[151,0.313,1],[159,0.268,1],[167,0.223,1],[176,0.181,1],[184,0.139,1],[192,0.101,1],[201,0.065,1],[209,0.031,1],[216,0.001,1]]}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m",
+                    "stack": "Error: in: on every frame the frost layer is within 0.02 of the plate {\"in\":{\"frames\":89,\"haloFrames\":85,\"worstGap\":1,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[50,\"-\",\"-\"],[60,\"-\",\"-\"],[68,\"-\",\"-\"],[76,\"-\",\"-\"],[84,0,1],[108,0,1],[118,0.063,1],[126,0.108,1],[143,0.145,1],[151,0.23,1],[160,0.274,1],[167,0.319,1],[176,0.363,1],[185,0.414,1],[193,0.46,1],[200,0.508,1],[210,0.548,1],[218,0.605,1],[226,0.649,1],[235,0.696,1],[243,0.741,1],[251,0.785,1],[260,0.828,1],[268,0.868,1],[275,0.906,1],[284,0.938,1]]},\"out\":{\"frames\":110,\"haloFrames\":26,\"worstGap\":0.999,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[9,1,1],[16,1,1],[26,0.976,1],[34,0.937,1],[42,0.902,1],[51,0.863,1],[59,0.822,1],[66,0.779,1],[74,0.741,1],[84,0.697,1],[91,0.641,1],[101,0.602,1],[108,0.547,1],[117,0.505,1],[126,0.453,1],[134,0.407,1],[142,0.359,1],[151,0.313,1],[159,0.268,1],[167,0.223,1],[176,0.181,1],[184,0.139,1],[192,0.101,1],[201,0.065,1],[209,0.031,1],[216,0.001,1]]}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts:87:108",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts",
+                      "column": 108,
+                      "line": 87
+                    },
+                    "snippet": "  85 |             expect(legIn.haloFrames, `in: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n  86 |             expect(legOut.haloFrames, `out: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 87 |             expect(legIn.worstGap, `in: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n     |                                                                                                            ^\n  88 |             expect(legOut.worstGap, `out: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n  89 |             expect(legIn.firstHalo, `in: it enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n  90 |             expect(legOut.lastHalo, `out: it leaves at 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts",
+                        "column": 108,
+                        "line": 87
+                      },
+                      "message": "Error: in: on every frame the frost layer is within 0.02 of the plate {\"in\":{\"frames\":89,\"haloFrames\":85,\"worstGap\":1,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[50,\"-\",\"-\"],[60,\"-\",\"-\"],[68,\"-\",\"-\"],[76,\"-\",\"-\"],[84,0,1],[108,0,1],[118,0.063,1],[126,0.108,1],[143,0.145,1],[151,0.23,1],[160,0.274,1],[167,0.319,1],[176,0.363,1],[185,0.414,1],[193,0.46,1],[200,0.508,1],[210,0.548,1],[218,0.605,1],[226,0.649,1],[235,0.696,1],[243,0.741,1],[251,0.785,1],[260,0.828,1],[268,0.868,1],[275,0.906,1],[284,0.938,1]]},\"out\":{\"frames\":110,\"haloFrames\":26,\"worstGap\":0.999,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[9,1,1],[16,1,1],[26,0.976,1],[34,0.937,1],[42,0.902,1],[51,0.863,1],[59,0.822,1],[66,0.779,1],[74,0.741,1],[84,0.697,1],[91,0.641,1],[101,0.602,1],[108,0.547,1],[117,0.505,1],[126,0.453,1],[134,0.407,1],[142,0.359,1],[151,0.313,1],[159,0.268,1],[167,0.223,1],[176,0.181,1],[184,0.139,1],[192,0.101,1],[201,0.065,1],[209,0.031,1],[216,0.001,1]]}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n\n  85 |             expect(legIn.haloFrames, `in: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n  86 |             expect(legOut.haloFrames, `out: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 87 |             expect(legIn.worstGap, `in: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n     |                                                                                                            ^\n  88 |             expect(legOut.worstGap, `out: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n  89 |             expect(legIn.firstHalo, `in: it enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n  90 |             expect(legOut.lastHalo, `out: it leaves at 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts:87:108"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T20:44:28.967Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "frost",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmcmFtZXMiOjg5LCJoYWxvRnJhbWVzIjo4NSwid29yc3RHYXAiOjEsImZpcnN0SGFsbyI6MSwibGFzdEhhbG8iOjEsInN0cmlwIjpbWzUwLCItIiwiLSJdLFs2MCwiLSIsIi0iXSxbNjgsIi0iLCItIl0sWzc2LCItIiwiLSJdLFs4NCwwLDFdLFsxMDgsMCwxXSxbMTE4LDAuMDYzLDFdLFsxMjYsMC4xMDgsMV0sWzE0MywwLjE0NSwxXSxbMTUxLDAuMjMsMV0sWzE2MCwwLjI3NCwxXSxbMTY3LDAuMzE5LDFdLFsxNzYsMC4zNjMsMV0sWzE4NSwwLjQxNCwxXSxbMTkzLDAuNDYsMV0sWzIwMCwwLjUwOCwxXSxbMjEwLDAuNTQ4LDFdLFsyMTgsMC42MDUsMV0sWzIyNiwwLjY0OSwxXSxbMjM1LDAuNjk2LDFdLFsyNDMsMC43NDEsMV0sWzI1MSwwLjc4NSwxXSxbMjYwLDAuODI4LDFdLFsyNjgsMC44NjgsMV0sWzI3NSwwLjkwNiwxXSxbMjg0LDAuOTM4LDFdXX0sIm91dCI6eyJmcmFtZXMiOjExMCwiaGFsb0ZyYW1lcyI6MjYsIndvcnN0R2FwIjowLjk5OSwiZmlyc3RIYWxvIjoxLCJsYXN0SGFsbyI6MSwic3RyaXAiOltbOSwxLDFdLFsxNiwxLDFdLFsyNiwwLjk3NiwxXSxbMzQsMC45MzcsMV0sWzQyLDAuOTAyLDFdLFs1MSwwLjg2MywxXSxbNTksMC44MjIsMV0sWzY2LDAuNzc5LDFdLFs3NCwwLjc0MSwxXSxbODQsMC42OTcsMV0sWzkxLDAuNjQxLDFdLFsxMDEsMC42MDIsMV0sWzEwOCwwLjU0NywxXSxbMTE3LDAuNTA1LDFdLFsxMjYsMC40NTMsMV0sWzEzNCwwLjQwNywxXSxbMTQyLDAuMzU5LDFdLFsxNTEsMC4zMTMsMV0sWzE1OSwwLjI2OCwxXSxbMTY3LDAuMjIzLDFdLFsxNzYsMC4xODEsMV0sWzE4NCwwLjEzOSwxXSxbMTkyLDAuMTAxLDFdLFsyMDEsMC4wNjUsMV0sWzIwOSwwLjAzMSwxXSxbMjE2LDAuMDAxLDFdXX19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/frost.probe.ts-frost-·-a-d-6717a-ate-under-reduced-motion-1--chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts",
+                    "column": 108,
+                    "line": 87
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "e7a2de29d21ed9b633f7-c6c5b398689fac148de0",
+          "file": "frost.probe.ts",
+          "line": 71,
+          "column": 9
+        },
+        {
+          "title": "frost · a detented Sheet's frost layer fades with its plate under reduced motion (2)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3047,
+                  "error": {
+                    "message": "Error: in: on every frame the frost layer is within 0.02 of the plate {\"in\":{\"frames\":94,\"haloFrames\":85,\"worstGap\":1,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[7,\"-\",\"-\"],[15,\"-\",\"-\"],[24,\"-\",\"-\"],[32,\"-\",\"-\"],[40,\"-\",\"-\"],[49,\"-\",\"-\"],[57,\"-\",\"-\"],[65,\"-\",\"-\"],[73,\"-\",\"-\"],[82,0,1],[99,0,1],[115,0.063,1],[124,0.138,1],[140,0.179,1],[149,0.266,1],[157,0.311,1],[165,0.358,1],[174,0.404,1],[182,0.451,1],[190,0.499,1],[197,0.547,1],[206,0.587,1],[215,0.638,1],[224,0.688,1],[230,0.732,1],[239,0.769,1]]},\"out\":{\"frames\":111,\"haloFrames\":26,\"worstGap\":0.999,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[4,1,1],[12,1,1],[21,0.971,1],[29,0.937,1],[38,0.901,1],[46,0.862,1],[54,0.821,1],[63,0.782,1],[71,0.734,1],[79,0.689,1],[88,0.643,1],[96,0.596,1],[103,0.549,1],[112,0.508,1],[120,0.454,1],[129,0.408,1],[138,0.363,1],[146,0.312,1],[154,0.267,1],[162,0.223,1],[171,0.181,1],[178,0.139,1],[188,0.105,1],[196,0.062,1],[204,0.031,1],[211,0.001,1]]}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m",
+                    "stack": "Error: in: on every frame the frost layer is within 0.02 of the plate {\"in\":{\"frames\":94,\"haloFrames\":85,\"worstGap\":1,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[7,\"-\",\"-\"],[15,\"-\",\"-\"],[24,\"-\",\"-\"],[32,\"-\",\"-\"],[40,\"-\",\"-\"],[49,\"-\",\"-\"],[57,\"-\",\"-\"],[65,\"-\",\"-\"],[73,\"-\",\"-\"],[82,0,1],[99,0,1],[115,0.063,1],[124,0.138,1],[140,0.179,1],[149,0.266,1],[157,0.311,1],[165,0.358,1],[174,0.404,1],[182,0.451,1],[190,0.499,1],[197,0.547,1],[206,0.587,1],[215,0.638,1],[224,0.688,1],[230,0.732,1],[239,0.769,1]]},\"out\":{\"frames\":111,\"haloFrames\":26,\"worstGap\":0.999,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[4,1,1],[12,1,1],[21,0.971,1],[29,0.937,1],[38,0.901,1],[46,0.862,1],[54,0.821,1],[63,0.782,1],[71,0.734,1],[79,0.689,1],[88,0.643,1],[96,0.596,1],[103,0.549,1],[112,0.508,1],[120,0.454,1],[129,0.408,1],[138,0.363,1],[146,0.312,1],[154,0.267,1],[162,0.223,1],[171,0.181,1],[178,0.139,1],[188,0.105,1],[196,0.062,1],[204,0.031,1],[211,0.001,1]]}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts:87:108",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts",
+                      "column": 108,
+                      "line": 87
+                    },
+                    "snippet": "  85 |             expect(legIn.haloFrames, `in: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n  86 |             expect(legOut.haloFrames, `out: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 87 |             expect(legIn.worstGap, `in: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n     |                                                                                                            ^\n  88 |             expect(legOut.worstGap, `out: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n  89 |             expect(legIn.firstHalo, `in: it enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n  90 |             expect(legOut.lastHalo, `out: it leaves at 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts",
+                        "column": 108,
+                        "line": 87
+                      },
+                      "message": "Error: in: on every frame the frost layer is within 0.02 of the plate {\"in\":{\"frames\":94,\"haloFrames\":85,\"worstGap\":1,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[7,\"-\",\"-\"],[15,\"-\",\"-\"],[24,\"-\",\"-\"],[32,\"-\",\"-\"],[40,\"-\",\"-\"],[49,\"-\",\"-\"],[57,\"-\",\"-\"],[65,\"-\",\"-\"],[73,\"-\",\"-\"],[82,0,1],[99,0,1],[115,0.063,1],[124,0.138,1],[140,0.179,1],[149,0.266,1],[157,0.311,1],[165,0.358,1],[174,0.404,1],[182,0.451,1],[190,0.499,1],[197,0.547,1],[206,0.587,1],[215,0.638,1],[224,0.688,1],[230,0.732,1],[239,0.769,1]]},\"out\":{\"frames\":111,\"haloFrames\":26,\"worstGap\":0.999,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[4,1,1],[12,1,1],[21,0.971,1],[29,0.937,1],[38,0.901,1],[46,0.862,1],[54,0.821,1],[63,0.782,1],[71,0.734,1],[79,0.689,1],[88,0.643,1],[96,0.596,1],[103,0.549,1],[112,0.508,1],[120,0.454,1],[129,0.408,1],[138,0.363,1],[146,0.312,1],[154,0.267,1],[162,0.223,1],[171,0.181,1],[178,0.139,1],[188,0.105,1],[196,0.062,1],[204,0.031,1],[211,0.001,1]]}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n\n  85 |             expect(legIn.haloFrames, `in: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n  86 |             expect(legOut.haloFrames, `out: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 87 |             expect(legIn.worstGap, `in: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n     |                                                                                                            ^\n  88 |             expect(legOut.worstGap, `out: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n  89 |             expect(legIn.firstHalo, `in: it enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n  90 |             expect(legOut.lastHalo, `out: it leaves at 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts:87:108"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T20:44:59.026Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "frost",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmcmFtZXMiOjk0LCJoYWxvRnJhbWVzIjo4NSwid29yc3RHYXAiOjEsImZpcnN0SGFsbyI6MSwibGFzdEhhbG8iOjEsInN0cmlwIjpbWzcsIi0iLCItIl0sWzE1LCItIiwiLSJdLFsyNCwiLSIsIi0iXSxbMzIsIi0iLCItIl0sWzQwLCItIiwiLSJdLFs0OSwiLSIsIi0iXSxbNTcsIi0iLCItIl0sWzY1LCItIiwiLSJdLFs3MywiLSIsIi0iXSxbODIsMCwxXSxbOTksMCwxXSxbMTE1LDAuMDYzLDFdLFsxMjQsMC4xMzgsMV0sWzE0MCwwLjE3OSwxXSxbMTQ5LDAuMjY2LDFdLFsxNTcsMC4zMTEsMV0sWzE2NSwwLjM1OCwxXSxbMTc0LDAuNDA0LDFdLFsxODIsMC40NTEsMV0sWzE5MCwwLjQ5OSwxXSxbMTk3LDAuNTQ3LDFdLFsyMDYsMC41ODcsMV0sWzIxNSwwLjYzOCwxXSxbMjI0LDAuNjg4LDFdLFsyMzAsMC43MzIsMV0sWzIzOSwwLjc2OSwxXV19LCJvdXQiOnsiZnJhbWVzIjoxMTEsImhhbG9GcmFtZXMiOjI2LCJ3b3JzdEdhcCI6MC45OTksImZpcnN0SGFsbyI6MSwibGFzdEhhbG8iOjEsInN0cmlwIjpbWzQsMSwxXSxbMTIsMSwxXSxbMjEsMC45NzEsMV0sWzI5LDAuOTM3LDFdLFszOCwwLjkwMSwxXSxbNDYsMC44NjIsMV0sWzU0LDAuODIxLDFdLFs2MywwLjc4MiwxXSxbNzEsMC43MzQsMV0sWzc5LDAuNjg5LDFdLFs4OCwwLjY0MywxXSxbOTYsMC41OTYsMV0sWzEwMywwLjU0OSwxXSxbMTEyLDAuNTA4LDFdLFsxMjAsMC40NTQsMV0sWzEyOSwwLjQwOCwxXSxbMTM4LDAuMzYzLDFdLFsxNDYsMC4zMTIsMV0sWzE1NCwwLjI2NywxXSxbMTYyLDAuMjIzLDFdLFsxNzEsMC4xODEsMV0sWzE3OCwwLjEzOSwxXSxbMTg4LDAuMTA1LDFdLFsxOTYsMC4wNjIsMV0sWzIwNCwwLjAzMSwxXSxbMjExLDAuMDAxLDFdXX19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/frost.probe.ts-frost-·-a-d-c0332-ate-under-reduced-motion-2--chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts",
+                    "column": 108,
+                    "line": 87
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "e7a2de29d21ed9b633f7-c256a8cdaab2a8ac8d71",
+          "file": "frost.probe.ts",
+          "line": 71,
+          "column": 9
+        },
+        {
+          "title": "frost · a detented Sheet's frost layer fades with its plate under reduced motion (3)",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3012,
+                  "error": {
+                    "message": "Error: in: on every frame the frost layer is within 0.02 of the plate {\"in\":{\"frames\":90,\"haloFrames\":85,\"worstGap\":1,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[2,\"-\",\"-\"],[10,\"-\",\"-\"],[18,\"-\",\"-\"],[27,\"-\",\"-\"],[34,\"-\",\"-\"],[44,0,1],[60,0,1],[77,0.062,1],[85,0.137,1],[102,0.178,1],[109,0.265,1],[119,0.306,1],[127,0.358,1],[135,0.404,1],[142,0.451,1],[152,0.49,1],[160,0.547,1],[168,0.593,1],[177,0.641,1],[185,0.686,1],[193,0.732,1],[200,0.777,1],[210,0.812,1],[218,0.862,1],[227,0.897,1],[235,0.937,1]]},\"out\":{\"frames\":110,\"haloFrames\":25,\"worstGap\":0.97,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[6,1,1],[13,1,1],[23,0.975,1],[31,0.935,1],[39,0.901,1],[48,0.861,1],[56,0.82,1],[63,0.778,1],[73,0.741,1],[80,0.686,1],[89,0.649,1],[97,0.593,1],[106,0.548,1],[114,0.5,1],[123,0.452,1],[131,0.405,1],[139,0.359,1],[147,0.311,1],[156,0.267,1],[164,0.222,1],[172,0.179,1],[181,0.142,1],[189,0.099,1],[197,0.063,1],[206,0.03,1],[214,\"-\",\"-\"]]}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m",
+                    "stack": "Error: in: on every frame the frost layer is within 0.02 of the plate {\"in\":{\"frames\":90,\"haloFrames\":85,\"worstGap\":1,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[2,\"-\",\"-\"],[10,\"-\",\"-\"],[18,\"-\",\"-\"],[27,\"-\",\"-\"],[34,\"-\",\"-\"],[44,0,1],[60,0,1],[77,0.062,1],[85,0.137,1],[102,0.178,1],[109,0.265,1],[119,0.306,1],[127,0.358,1],[135,0.404,1],[142,0.451,1],[152,0.49,1],[160,0.547,1],[168,0.593,1],[177,0.641,1],[185,0.686,1],[193,0.732,1],[200,0.777,1],[210,0.812,1],[218,0.862,1],[227,0.897,1],[235,0.937,1]]},\"out\":{\"frames\":110,\"haloFrames\":25,\"worstGap\":0.97,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[6,1,1],[13,1,1],[23,0.975,1],[31,0.935,1],[39,0.901,1],[48,0.861,1],[56,0.82,1],[63,0.778,1],[73,0.741,1],[80,0.686,1],[89,0.649,1],[97,0.593,1],[106,0.548,1],[114,0.5,1],[123,0.452,1],[131,0.405,1],[139,0.359,1],[147,0.311,1],[156,0.267,1],[164,0.222,1],[172,0.179,1],[181,0.142,1],[189,0.099,1],[197,0.063,1],[206,0.03,1],[214,\"-\",\"-\"]]}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts:87:108",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts",
+                      "column": 108,
+                      "line": 87
+                    },
+                    "snippet": "  85 |             expect(legIn.haloFrames, `in: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n  86 |             expect(legOut.haloFrames, `out: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 87 |             expect(legIn.worstGap, `in: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n     |                                                                                                            ^\n  88 |             expect(legOut.worstGap, `out: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n  89 |             expect(legIn.firstHalo, `in: it enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n  90 |             expect(legOut.lastHalo, `out: it leaves at 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts",
+                        "column": 108,
+                        "line": 87
+                      },
+                      "message": "Error: in: on every frame the frost layer is within 0.02 of the plate {\"in\":{\"frames\":90,\"haloFrames\":85,\"worstGap\":1,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[2,\"-\",\"-\"],[10,\"-\",\"-\"],[18,\"-\",\"-\"],[27,\"-\",\"-\"],[34,\"-\",\"-\"],[44,0,1],[60,0,1],[77,0.062,1],[85,0.137,1],[102,0.178,1],[109,0.265,1],[119,0.306,1],[127,0.358,1],[135,0.404,1],[142,0.451,1],[152,0.49,1],[160,0.547,1],[168,0.593,1],[177,0.641,1],[185,0.686,1],[193,0.732,1],[200,0.777,1],[210,0.812,1],[218,0.862,1],[227,0.897,1],[235,0.937,1]]},\"out\":{\"frames\":110,\"haloFrames\":25,\"worstGap\":0.97,\"firstHalo\":1,\"lastHalo\":1,\"strip\":[[6,1,1],[13,1,1],[23,0.975,1],[31,0.935,1],[39,0.901,1],[48,0.861,1],[56,0.82,1],[63,0.778,1],[73,0.741,1],[80,0.686,1],[89,0.649,1],[97,0.593,1],[106,0.548,1],[114,0.5,1],[123,0.452,1],[131,0.405,1],[139,0.359,1],[147,0.311,1],[156,0.267,1],[164,0.222,1],[172,0.179,1],[181,0.142,1],[189,0.099,1],[197,0.063,1],[206,0.03,1],[214,\"-\",\"-\"]]}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n\n  85 |             expect(legIn.haloFrames, `in: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n  86 |             expect(legOut.haloFrames, `out: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 87 |             expect(legIn.worstGap, `in: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n     |                                                                                                            ^\n  88 |             expect(legOut.worstGap, `out: on every frame the frost layer is within 0.02 of the plate ${at}`).toBeLessThanOrEqual(0.02);\n  89 |             expect(legIn.firstHalo, `in: it enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n  90 |             expect(legOut.lastHalo, `out: it leaves at 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts:87:108"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T20:45:22.856Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "frost",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmcmFtZXMiOjkwLCJoYWxvRnJhbWVzIjo4NSwid29yc3RHYXAiOjEsImZpcnN0SGFsbyI6MSwibGFzdEhhbG8iOjEsInN0cmlwIjpbWzIsIi0iLCItIl0sWzEwLCItIiwiLSJdLFsxOCwiLSIsIi0iXSxbMjcsIi0iLCItIl0sWzM0LCItIiwiLSJdLFs0NCwwLDFdLFs2MCwwLDFdLFs3NywwLjA2MiwxXSxbODUsMC4xMzcsMV0sWzEwMiwwLjE3OCwxXSxbMTA5LDAuMjY1LDFdLFsxMTksMC4zMDYsMV0sWzEyNywwLjM1OCwxXSxbMTM1LDAuNDA0LDFdLFsxNDIsMC40NTEsMV0sWzE1MiwwLjQ5LDFdLFsxNjAsMC41NDcsMV0sWzE2OCwwLjU5MywxXSxbMTc3LDAuNjQxLDFdLFsxODUsMC42ODYsMV0sWzE5MywwLjczMiwxXSxbMjAwLDAuNzc3LDFdLFsyMTAsMC44MTIsMV0sWzIxOCwwLjg2MiwxXSxbMjI3LDAuODk3LDFdLFsyMzUsMC45MzcsMV1dfSwib3V0Ijp7ImZyYW1lcyI6MTEwLCJoYWxvRnJhbWVzIjoyNSwid29yc3RHYXAiOjAuOTcsImZpcnN0SGFsbyI6MSwibGFzdEhhbG8iOjEsInN0cmlwIjpbWzYsMSwxXSxbMTMsMSwxXSxbMjMsMC45NzUsMV0sWzMxLDAuOTM1LDFdLFszOSwwLjkwMSwxXSxbNDgsMC44NjEsMV0sWzU2LDAuODIsMV0sWzYzLDAuNzc4LDFdLFs3MywwLjc0MSwxXSxbODAsMC42ODYsMV0sWzg5LDAuNjQ5LDFdLFs5NywwLjU5MywxXSxbMTA2LDAuNTQ4LDFdLFsxMTQsMC41LDFdLFsxMjMsMC40NTIsMV0sWzEzMSwwLjQwNSwxXSxbMTM5LDAuMzU5LDFdLFsxNDcsMC4zMTEsMV0sWzE1NiwwLjI2NywxXSxbMTY0LDAuMjIyLDFdLFsxNzIsMC4xNzksMV0sWzE4MSwwLjE0MiwxXSxbMTg5LDAuMDk5LDFdLFsxOTcsMC4wNjMsMV0sWzIwNiwwLjAzLDFdLFsyMTQsIi0iLCItIl1dfX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/frost.probe.ts-frost-·-a-d-75d44-ate-under-reduced-motion-3--chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic8-probe/frost.probe.ts",
+                    "column": 108,
+                    "line": 87
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "e7a2de29d21ed9b633f7-73067c38d31b12de672c",
+          "file": "frost.probe.ts",
+          "line": 71,
+          "column": 9
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-21T20:44:00.185Z",
+    "duration": 86782.87,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 9,
+    "flaky": 0
+  }
+}

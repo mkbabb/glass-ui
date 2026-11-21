@@ -1,0 +1,143 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for headroom (load 38 > 36)
+
+Running 6 tests using 1 worker
+
+  ✘  1 [webkit-desktop] › release-11-1-1.spec.ts:310:5 › exit · Tooltip leaves on the exit curve, shorter than it entered (3.7s)
+[WebServer] 3:19:50 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  2 [webkit-desktop] › release-11-1-1.spec.ts:310:5 › exit · Sheet right leaves on the exit curve, shorter than it entered (3.7s)
+  ✘  3 [webkit-desktop] › release-11-1-1.spec.ts:310:5 › exit · Tooltip leaves on the exit curve, shorter than it entered (4.7s)
+[WebServer] 3:20:02 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  4 [webkit-desktop] › release-11-1-1.spec.ts:310:5 › exit · Sheet right leaves on the exit curve, shorter than it entered (4.8s)
+  ✘  5 [webkit-desktop] › release-11-1-1.spec.ts:310:5 › exit · Tooltip leaves on the exit curve, shorter than it entered (4.6s)
+[WebServer] 3:20:16 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  6 [webkit-desktop] › release-11-1-1.spec.ts:310:5 › exit · Sheet right leaves on the exit curve, shorter than it entered (4.8s)
+
+
+  1) [webkit-desktop] › release-11-1-1.spec.ts:310:5 › exit · Tooltip leaves on the exit curve, shorter than it entered 
+
+    Error: no frame takes more than a fifth of what is seen {"entrance":200,"exit":80,"painted":7,"seenShare":0.513,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.298,"travel":3,"travelShare":null,"frames":[[0,1,55],[8,1,55],[19,0.585,56],[28,0.384,56],[39,0.217,57],[50,0.107,57],[60,0.045,57],[69,0.013,58],[80,0,58]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.513
+
+      383 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });
+      384 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 385 |         expect(read.seenShare, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                          ^
+      386 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+      387 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);
+      388 |         // A Dialog or a Sheet leaves on one script tween whose progress is the curve
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:385:90
+
+    Error Context: test-results/release-11-1-1-exit-·-Tool-3332f-rve-shorter-than-it-entered-webkit-desktop/error-context.md
+
+  2) [webkit-desktop] › release-11-1-1.spec.ts:310:5 › exit · Sheet right leaves on the exit curve, shorter than it entered 
+
+    Error: the exit follows the exit curve {"entrance":657,"exit":210,"painted":20,"seenShare":0.121,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.107,"travel":375,"travelShare":0.124,"frames":[[0,1,1056],[7,1,1056],[16,0.97,1068],[26,0.933,1082],[36,0.881,1102],[47,0.819,1125],[57,0.745,1154],[67,0.674,1181],[77,0.603,1209],[88,0.532,1236],[97,0.458,1264],[109,0.4,1287],[117,0.327,1314],[128,0.283,1331],[140,0.227,1353],[149,0.173,1373],[159,0.138,1387],[169,0.103,1401],[179,0.073,1412],[190,0.047,1422],[200,0.023,1431],[210,0.006,1438]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.06
+    Received:    0.107
+
+      390 |         // 0.11); a floating surface's fade rides with a hold, a clip or a slide.
+      391 |         const scripted = c.name === "Dialog" || c.name.startsWith("Sheet");
+    > 392 |         expect(read.stray, `the exit follows the exit curve ${at}`).toBeLessThanOrEqual(scripted ? 0.06 : 0.12);
+          |                                                                     ^
+      393 |     });
+      394 | }
+      395 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:392:69
+
+    Error Context: test-results/release-11-1-1-exit-·-Shee-4a00a-rve-shorter-than-it-entered-webkit-desktop/error-context.md
+
+  3) [webkit-desktop] › release-11-1-1.spec.ts:310:5 › exit · Tooltip leaves on the exit curve, shorter than it entered 
+
+    Error: no frame takes more than a fifth of what is seen {"entrance":200,"exit":80,"painted":7,"seenShare":0.513,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.283,"travel":3,"travelShare":null,"frames":[[0,1,55],[10,1,55],[20,0.585,56],[30,0.384,56],[40,0.217,57],[52,0.107,57],[61,0.05,57],[72,0.011,58],[80,0,58]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.513
+
+      383 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });
+      384 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 385 |         expect(read.seenShare, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                          ^
+      386 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+      387 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);
+      388 |         // A Dialog or a Sheet leaves on one script tween whose progress is the curve
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:385:90
+
+    Error Context: test-results/release-11-1-1-exit-·-Tool-3332f-rve-shorter-than-it-entered-webkit-desktop-repeat1/error-context.md
+
+  4) [webkit-desktop] › release-11-1-1.spec.ts:310:5 › exit · Sheet right leaves on the exit curve, shorter than it entered 
+
+    Error: the exit follows the exit curve {"entrance":726,"exit":228,"painted":19,"seenShare":0.172,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.112,"travel":379,"travelShare":0.174,"frames":[[0,1,1056],[16,1,1056],[33,0.97,1068],[52,0.892,1098],[60,0.772,1143],[69,0.717,1165],[82,0.653,1189],[93,0.56,1225],[104,0.484,1254],[112,0.412,1282],[120,0.363,1301],[132,0.316,1319],[144,0.252,1343],[153,0.195,1365],[168,0.157,1380],[175,0.103,1401],[188,0.081,1409],[198,0.047,1422],[205,0.025,1430],[213,0.012,1435],[228,0,null]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.06
+    Received:    0.112
+
+      390 |         // 0.11); a floating surface's fade rides with a hold, a clip or a slide.
+      391 |         const scripted = c.name === "Dialog" || c.name.startsWith("Sheet");
+    > 392 |         expect(read.stray, `the exit follows the exit curve ${at}`).toBeLessThanOrEqual(scripted ? 0.06 : 0.12);
+          |                                                                     ^
+      393 |     });
+      394 | }
+      395 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:392:69
+
+    Error Context: test-results/release-11-1-1-exit-·-Shee-4a00a-rve-shorter-than-it-entered-webkit-desktop-repeat1/error-context.md
+
+  5) [webkit-desktop] › release-11-1-1.spec.ts:310:5 › exit · Tooltip leaves on the exit curve, shorter than it entered 
+
+    Error: no frame takes more than a fifth of what is seen {"entrance":200,"exit":72,"painted":6,"seenShare":0.529,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.245,"travel":2,"travelShare":null,"frames":[[0,1,55],[9,1,55],[19,0.585,56],[29,0.366,56],[41,0.205,57],[50,0.115,57],[61,0.045,57],[72,0.007,58]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.529
+
+      383 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });
+      384 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 385 |         expect(read.seenShare, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                          ^
+      386 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+      387 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);
+      388 |         // A Dialog or a Sheet leaves on one script tween whose progress is the curve
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:385:90
+
+    Error Context: test-results/release-11-1-1-exit-·-Tool-3332f-rve-shorter-than-it-entered-webkit-desktop-repeat2/error-context.md
+
+  6) [webkit-desktop] › release-11-1-1.spec.ts:310:5 › exit · Sheet right leaves on the exit curve, shorter than it entered 
+
+    Error: the exit follows the exit curve {"entrance":675,"exit":207,"painted":20,"seenShare":0.158,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.088,"travel":376,"travelShare":0.161,"frames":[[0,1,1056],[0,1,1056],[10,1,1056],[20,0.97,1068],[30,0.928,1084],[42,0.875,1104],[51,0.799,1133],[63,0.738,1157],[75,0.653,1189],[81,0.567,1222],[91,0.526,1238],[102,0.458,1264],[116,0.387,1291],[123,0.305,1323],[132,0.267,1337],[147,0.222,1355],[154,0.157,1380],[163,0.13,1390],[180,0.1,1402],[194,0.052,1420],[201,0.021,1432],[207,0.009,1437]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.06
+    Received:    0.088
+
+      390 |         // 0.11); a floating surface's fade rides with a hold, a clip or a slide.
+      391 |         const scripted = c.name === "Dialog" || c.name.startsWith("Sheet");
+    > 392 |         expect(read.stray, `the exit follows the exit curve ${at}`).toBeLessThanOrEqual(scripted ? 0.06 : 0.12);
+          |                                                                     ^
+      393 |     });
+      394 | }
+      395 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:392:69
+
+    Error Context: test-results/release-11-1-1-exit-·-Shee-4a00a-rve-shorter-than-it-entered-webkit-desktop-repeat2/error-context.md
+
+  6 failed
+    [webkit-desktop] › release-11-1-1.spec.ts:310:5 › exit · Tooltip leaves on the exit curve, shorter than it entered 
+    [webkit-desktop] › release-11-1-1.spec.ts:310:5 › exit · Sheet right leaves on the exit curve, shorter than it entered 
+    [webkit-desktop] › release-11-1-1.spec.ts:310:5 › exit · Tooltip leaves on the exit curve, shorter than it entered 
+    [webkit-desktop] › release-11-1-1.spec.ts:310:5 › exit · Sheet right leaves on the exit curve, shorter than it entered 
+    [webkit-desktop] › release-11-1-1.spec.ts:310:5 › exit · Tooltip leaves on the exit curve, shorter than it entered 
+    [webkit-desktop] › release-11-1-1.spec.ts:310:5 › exit · Sheet right leaves on the exit curve, shorter than it entered 

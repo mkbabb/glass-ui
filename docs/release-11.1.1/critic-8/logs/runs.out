@@ -1,0 +1,74 @@
+CHAIN-START 01:00:27 from step 1 head d0f85bd29 load { 36.14 15.44 9.49 }
+01:19:23 tip-chromium-phone-0 tip chromium-phone [0] exit 1 289s load-at-start={ 37.17 45.55 32.28 } load-end={ 48.16 45.99 36.14 }  1 failed  3 skipped  37 passed (4.4m) 
+01:22:42 tip-chromium-phone-1 tip chromium-phone [1] exit 0 199s load-at-start={ 48.16 45.99 36.14 } load-end={ 51.25 45.05 37.51 }  11 skipped  32 passed (2.1m) 
+01:39:49 tip-chromium-phone-2 tip chromium-phone [2] exit 0 1026s load-at-start={ 51.25 45.05 37.51 } load-end={ 43.96 42.23 41.12 }  3 skipped  41 passed (2.9m) 
+01:42:13 tip-chromium-phone-3 tip chromium-phone [3] exit 0 143s load-at-start={ 43.96 42.23 41.12 } load-end={ 33.73 38.49 39.74 }  1 skipped  17 passed (1.2m) 
+01:43:50 tip-chromium-desktop-0 tip chromium-desktop [0] exit 0 97s load-at-start={ 33.73 38.49 39.74 } load-end={ 30.24 35.99 38.64 }  13 skipped  28 passed (1.5m) 
+01:46:30 probe-rest-tip-chromium-phone probe tip chromium-phone exit 0 160s load={ 32.20 35.34 37.97 }  3 passed (20.1s) 
+01:47:02 probe-rest-red-chromium-phone probe red chromium-phone exit 0 32s load={ 33.03 35.23 37.83 }  3 passed (20.3s) 
+01:47:37 probe-rowb-tip-webkit-phone probe tip webkit-phone exit 0 35s load={ 34.81 35.65 37.89 }  2 passed (21.4s) 
+01:48:10 probe-rowb-red-webkit-phone probe red webkit-phone exit 1 33s load={ 32.82 35.08 37.60 }  2 failed 
+01:49:43 probe-rowb-tip-webkit-desktop probe tip webkit-desktop exit 1 92s load={ 35.81 35.41 37.47 }  2 failed 
+01:50:46 probe-rowb-red-webkit-desktop probe red webkit-desktop exit 1 63s load={ 32.10 34.23 36.87 }  2 failed 
+01:51:08 probe-rowb-tip-chromium-phone probe tip chromium-phone exit 0 21s load={ 30.91 33.83 36.65 }  2 passed (15.5s) 
+01:53:17 tip-chromium-desktop-1 tip chromium-desktop [1] exit 0 129s load-at-start={ 30.91 33.83 36.65 } load-end={ 21.43 29.73 34.64 }  1 skipped  42 passed (2.1m) 
+09:01:38 CHAIN2-START from step 1 head d0f85bd29 load { 7.18 9.04 10.03 }
+09:08:52 vitest done
+09:09:08 focus tip 1 exit 0 load={ 32.88 27.22 18.65 }
+09:09:16 focus red 1 exit 0 load={ 31.45 27.02 18.63 }
+09:09:24 focus tip 2 exit 0 load={ 31.59 27.22 18.80 }
+09:09:32 focus red 2 exit 0 load={ 29.78 26.92 18.74 }
+09:09:42 focus tip 3 exit 0 load={ 27.34 26.49 18.69 }
+09:09:54 focus red 3 exit 0 load={ 27.21 26.50 18.83 }
+09:12:35 tip-chromium-desktop-2 tip chromium-desktop [2] exit 0 161s load-at-start={ 27.21 26.50 18.83 } load-end={ 41.51 32.33 22.50 }  44 passed (2.5m) 
+09:12:47 focus tip 4 exit 0 load={ 42.33 32.81 22.78 }
+09:13:00 focus red 4 exit 0 load={ 50.64 35.12 23.78 }
+09:13:11 focus tip 5 exit 0 load={ 51.04 35.72 24.13 }
+09:13:18 focus red 5 exit 0 load={ 45.56 35.05 24.02 }
+09:13:28 focus tip 6 exit 0 load={ 42.87 34.67 23.95 }
+09:13:36 focus red 6 exit 0 load={ 37.86 33.87 23.80 }
+09:15:13 tip-chromium-desktop-3 tip chromium-desktop [3] exit 0 98s load-at-start={ 37.86 33.87 23.80 } load-end={ 23.08 29.99 23.40 }  18 passed (59.7s) 
+09:15:25 focus2 tip 1 exit 0 load={ 23.48 29.86 23.43 }
+09:15:37 focus2 red 1 exit 0 load={ 22.65 29.48 23.37 }
+09:15:47 focus2 tip 2 exit 0 load={ 20.94 28.89 23.23 }
+09:15:59 focus2 red 2 exit 0 load={ 21.55 28.63 23.24 }
+09:16:11 focus2 tip 3 exit 0 load={ 22.37 28.59 23.29 }
+09:16:22 focus2 red 3 exit 0 load={ 22.46 28.40 23.29 }
+09:16:30 focus2 tip 4 exit 0 load={ 21.18 27.94 23.18 }
+09:16:38 focus2 red 4 exit 0 load={ 18.83 27.22 22.98 }
+09:19:50 tip-webkit-phone-0 tip webkit-phone [0] exit 1 192s load-at-start={ 18.83 27.22 22.98 } load-end={ 4.11 16.33 19.22 }  1 failed  16 skipped  24 passed (3.1m) 
+09:25:13 tip-webkit-phone-1 tip webkit-phone [1] exit 0 323s load-at-start={ 4.11 16.33 19.22 } load-end={ 3.37 7.90 14.27 }  11 skipped  32 passed (1.8m) 
+09:26:48 tip-webkit-phone-2 tip webkit-phone [2] exit 0 95s load-at-start={ 3.37 7.90 14.27 } load-end={ 3.45 6.77 13.16 }  17 skipped  27 passed (1.5m) 
+09:27:36 tip-webkit-phone-3 tip webkit-phone [3] exit 1 48s load-at-start={ 3.45 6.77 13.16 } load-end={ 2.98 6.18 12.61 }  1 failed  2 skipped  15 passed (42.5s) 
+09:29:02 tip-webkit-desktop-0 tip webkit-desktop [0] exit 0 86s load-at-start={ 2.98 6.18 12.61 } load-end={ 2.58 5.25 11.65 }  13 skipped  28 passed (1.3m) 
+09:31:18 tip-webkit-desktop-1 tip webkit-desktop [1] exit 0 136s load-at-start={ 2.58 5.25 11.65 } load-end={ 2.93 4.44 10.38 }  1 skipped  42 passed (2.2m) 
+09:33:44 tip-webkit-desktop-2 tip webkit-desktop [2] exit 0 146s load-at-start={ 2.93 4.44 10.38 } load-end={ 3.09 4.10 9.29 }  44 passed (2.4m) 
+09:34:45 tip-webkit-desktop-3 tip webkit-desktop [3] exit 0 61s load-at-start={ 3.09 4.10 9.29 } load-end={ 3.26 4.01 8.90 }  18 passed (55.8s) 
+09:38:18 tip-chromium-phone-0b tip chromium-phone [0] exit 0 213s load-at-start={ 3.26 4.01 8.90 } load-end={ 10.68 6.44 8.78 }  3 skipped  38 passed (3.5m) 
+09:38:18 tip gate done
+09:38:18 redspecs equal HEAD d0f85bd29
+09:42:09 red-chromium-phone-0 red chromium-phone [0] exit 1 230s load-at-start={ 11.27 6.64 8.83 } load-end={ 14.96 11.52 10.46 }  35 failed  3 skipped  3 passed (3.8m) 
+09:44:01 red-chromium-phone-1 red chromium-phone [1] exit 1 112s load-at-start={ 14.96 11.52 10.46 } load-end={ 12.95 11.98 10.78 }  26 failed  11 skipped  6 passed (1.8m) 
+09:45:05 red-chromium-phone-3 red chromium-phone [3] exit 1 64s load-at-start={ 12.95 11.98 10.78 } load-end={ 16.60 13.31 11.37 }  16 failed  1 skipped  1 passed (58.6s) 
+09:46:30 red-chromium-desktop-0 red chromium-desktop [0] exit 1 85s load-at-start={ 16.60 13.31 11.37 } load-end={ 16.39 14.09 11.86 }  19 failed  13 skipped  9 passed (1.3m) 
+09:48:48 red-chromium-desktop-1 red chromium-desktop [1] exit 1 138s load-at-start={ 16.39 14.09 11.86 } load-end={ 9.89 12.69 11.64 }  35 failed  1 skipped  7 passed (2.2m) 
+09:49:48 red-chromium-desktop-3 red chromium-desktop [3] exit 1 60s load-at-start={ 9.89 12.69 11.64 } load-end={ 14.46 13.40 11.97 }  17 failed  1 passed (55.9s) 
+09:52:59 red-webkit-phone-0 red webkit-phone [0] exit 1 191s load-at-start={ 14.46 13.40 11.97 } load-end={ 6.13 10.73 11.22 }  24 failed  16 skipped  1 passed (3.1m) 
+09:55:02 red-webkit-phone-1 red webkit-phone [1] exit 1 123s load-at-start={ 6.13 10.73 11.22 } load-end={ 7.94 9.79 10.77 }  25 failed  11 skipped  7 passed (2.0m) 
+09:55:56 red-webkit-phone-3 red webkit-phone [3] exit 1 54s load-at-start={ 7.94 9.79 10.77 } load-end={ 6.02 8.94 10.39 }  15 failed  2 skipped  1 passed (49.4s) 
+09:57:31 red-webkit-desktop-0 red webkit-desktop [0] exit 1 95s load-at-start={ 6.02 8.94 10.39 } load-end={ 6.32 8.33 10.01 }  19 failed  13 skipped  9 passed (1.5m) 
+10:00:06 red-webkit-desktop-1 red webkit-desktop [1] exit 1 155s load-at-start={ 6.32 8.33 10.01 } load-end={ 4.30 6.65 9.04 }  35 failed  1 skipped  7 passed (2.5m) 
+10:01:16 red-webkit-desktop-3 red webkit-desktop [3] exit 1 70s load-at-start={ 4.30 6.65 9.04 } load-end={ 7.25 6.97 8.96 }  17 failed  1 passed (1.1m) 
+10:01:16 red gate done
+11:01:07 earlier specs done
+11:01:40 guard-tip-1 cells tip webkit-phone exit 0 33s load-at-start={ 3.39 3.33 3.49 } load-end={ 3.60 3.38 3.50 }  5 passed (28.3s) 
+11:02:13 guard-red-1 cells red webkit-phone exit 0 33s load-at-start={ 3.60 3.38 3.50 } load-end={ 3.12 3.29 3.46 }  5 passed (28.3s) 
+11:02:46 guard-tip-2 cells tip webkit-phone exit 0 33s load-at-start={ 3.12 3.29 3.46 } load-end={ 3.23 3.30 3.46 }  5 passed (28.3s) 
+11:03:19 guard-red-2 cells red webkit-phone exit 0 33s load-at-start={ 3.23 3.30 3.46 } load-end={ 2.46 3.11 3.39 }  5 passed (28.3s) 
+11:03:51 guard-tip-3 cells tip webkit-phone exit 0 32s load-at-start={ 2.46 3.11 3.39 } load-end={ 2.79 3.14 3.38 }  5 passed (28.3s) 
+11:04:24 guard-red-3 cells red webkit-phone exit 0 33s load-at-start={ 2.79 3.14 3.38 } load-end={ 2.94 3.13 3.37 }  5 passed (28.3s) 
+11:04:57 guard-tip-4 cells tip webkit-phone exit 0 33s load-at-start={ 2.94 3.13 3.37 } load-end={ 3.91 3.37 3.45 }  5 passed (28.4s) 
+11:05:30 guard-red-4 cells red webkit-phone exit 0 33s load-at-start={ 3.91 3.37 3.45 } load-end={ 3.50 3.32 3.43 }  5 passed (28.3s) 
+11:05:30 disclosure guard done
+11:05:30 CHAIN2-DONE load { 3.50 3.32 3.43 }
+15:17:33 redspecs equal HEAD d0f85bd29

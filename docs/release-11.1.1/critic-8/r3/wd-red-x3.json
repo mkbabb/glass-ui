@@ -1,0 +1,527 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "release-11-1-1.config.ts",
+      "--project=webkit-desktop",
+      "--workers=1",
+      "-g",
+      "exit · Tooltip leaves on the exit curve|exit · Sheet right leaves",
+      "--repeat-each=3"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 3,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-8/r3/wd-red-x3.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5352",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/",
+      "url": "http://localhost:5352",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "exit · Tooltip leaves on the exit curve, shorter than it entered",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3706,
+                  "error": {
+                    "message": "Error: no frame takes more than a fifth of what is seen {\"entrance\":200,\"exit\":80,\"painted\":7,\"seenShare\":0.513,\"curve\":\"cubic-bezier(0, 0, 0.2, 1)\",\"stray\":0.298,\"travel\":3,\"travelShare\":null,\"frames\":[[0,1,55],[8,1,55],[19,0.585,56],[28,0.384,56],[39,0.217,57],[50,0.107,57],[60,0.045,57],[69,0.013,58],[80,0,58]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.513\u001b[39m",
+                    "stack": "Error: no frame takes more than a fifth of what is seen {\"entrance\":200,\"exit\":80,\"painted\":7,\"seenShare\":0.513,\"curve\":\"cubic-bezier(0, 0, 0.2, 1)\",\"stray\":0.298,\"travel\":3,\"travelShare\":null,\"frames\":[[0,1,55],[8,1,55],[19,0.585,56],[28,0.384,56],[39,0.217,57],[50,0.107,57],[60,0.045,57],[69,0.013,58],[80,0,58]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.513\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:385:90",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 90,
+                      "line": 385
+                    },
+                    "snippet": "  383 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });\n  384 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 385 |         expect(read.seenShare, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n      |                                                                                          ^\n  386 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  387 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);\n  388 |         // A Dialog or a Sheet leaves on one script tween whose progress is the curve"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 90,
+                        "line": 385
+                      },
+                      "message": "Error: no frame takes more than a fifth of what is seen {\"entrance\":200,\"exit\":80,\"painted\":7,\"seenShare\":0.513,\"curve\":\"cubic-bezier(0, 0, 0.2, 1)\",\"stray\":0.298,\"travel\":3,\"travelShare\":null,\"frames\":[[0,1,55],[8,1,55],[19,0.585,56],[28,0.384,56],[39,0.217,57],[50,0.107,57],[60,0.045,57],[69,0.013,58],[80,0,58]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.513\u001b[39m\n\n  383 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });\n  384 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 385 |         expect(read.seenShare, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n      |                                                                                          ^\n  386 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  387 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);\n  388 |         // A Dialog or a Sheet leaves on one script tween whose progress is the curve\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:385:90"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T20:19:44.580Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6MjAwLCJleGl0Ijo4MCwicGFpbnRlZCI6Nywic2VlblNoYXJlIjowLjUxMywiY3VydmUiOiJjdWJpYy1iZXppZXIoMCwgMCwgMC4yLCAxKSIsInN0cmF5IjowLjI5OCwidHJhdmVsIjozLCJ0cmF2ZWxTaGFyZSI6bnVsbCwiZnJhbWVzIjpbWzAsMSw1NV0sWzgsMSw1NV0sWzE5LDAuNTg1LDU2XSxbMjgsMC4zODQsNTZdLFszOSwwLjIxNyw1N10sWzUwLDAuMTA3LDU3XSxbNjAsMC4wNDUsNTddLFs2OSwwLjAxMyw1OF0sWzgwLDAsNThdXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-exit-·-Tool-3332f-rve-shorter-than-it-entered-webkit-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 90,
+                    "line": 385
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 4739,
+                  "error": {
+                    "message": "Error: no frame takes more than a fifth of what is seen {\"entrance\":200,\"exit\":80,\"painted\":7,\"seenShare\":0.513,\"curve\":\"cubic-bezier(0, 0, 0.2, 1)\",\"stray\":0.283,\"travel\":3,\"travelShare\":null,\"frames\":[[0,1,55],[10,1,55],[20,0.585,56],[30,0.384,56],[40,0.217,57],[52,0.107,57],[61,0.05,57],[72,0.011,58],[80,0,58]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.513\u001b[39m",
+                    "stack": "Error: no frame takes more than a fifth of what is seen {\"entrance\":200,\"exit\":80,\"painted\":7,\"seenShare\":0.513,\"curve\":\"cubic-bezier(0, 0, 0.2, 1)\",\"stray\":0.283,\"travel\":3,\"travelShare\":null,\"frames\":[[0,1,55],[10,1,55],[20,0.585,56],[30,0.384,56],[40,0.217,57],[52,0.107,57],[61,0.05,57],[72,0.011,58],[80,0,58]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.513\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:385:90",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 90,
+                      "line": 385
+                    },
+                    "snippet": "  383 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });\n  384 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 385 |         expect(read.seenShare, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n      |                                                                                          ^\n  386 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  387 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);\n  388 |         // A Dialog or a Sheet leaves on one script tween whose progress is the curve"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 90,
+                        "line": 385
+                      },
+                      "message": "Error: no frame takes more than a fifth of what is seen {\"entrance\":200,\"exit\":80,\"painted\":7,\"seenShare\":0.513,\"curve\":\"cubic-bezier(0, 0, 0.2, 1)\",\"stray\":0.283,\"travel\":3,\"travelShare\":null,\"frames\":[[0,1,55],[10,1,55],[20,0.585,56],[30,0.384,56],[40,0.217,57],[52,0.107,57],[61,0.05,57],[72,0.011,58],[80,0,58]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.513\u001b[39m\n\n  383 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });\n  384 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 385 |         expect(read.seenShare, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n      |                                                                                          ^\n  386 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  387 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);\n  388 |         // A Dialog or a Sheet leaves on one script tween whose progress is the curve\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:385:90"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T20:19:53.359Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6MjAwLCJleGl0Ijo4MCwicGFpbnRlZCI6Nywic2VlblNoYXJlIjowLjUxMywiY3VydmUiOiJjdWJpYy1iZXppZXIoMCwgMCwgMC4yLCAxKSIsInN0cmF5IjowLjI4MywidHJhdmVsIjozLCJ0cmF2ZWxTaGFyZSI6bnVsbCwiZnJhbWVzIjpbWzAsMSw1NV0sWzEwLDEsNTVdLFsyMCwwLjU4NSw1Nl0sWzMwLDAuMzg0LDU2XSxbNDAsMC4yMTcsNTddLFs1MiwwLjEwNyw1N10sWzYxLDAuMDUsNTddLFs3MiwwLjAxMSw1OF0sWzgwLDAsNThdXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-exit-·-Tool-3332f-rve-shorter-than-it-entered-webkit-desktop-repeat1/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 90,
+                    "line": 385
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 4638,
+                  "error": {
+                    "message": "Error: no frame takes more than a fifth of what is seen {\"entrance\":200,\"exit\":72,\"painted\":6,\"seenShare\":0.529,\"curve\":\"cubic-bezier(0, 0, 0.2, 1)\",\"stray\":0.245,\"travel\":2,\"travelShare\":null,\"frames\":[[0,1,55],[9,1,55],[19,0.585,56],[29,0.366,56],[41,0.205,57],[50,0.115,57],[61,0.045,57],[72,0.007,58]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.529\u001b[39m",
+                    "stack": "Error: no frame takes more than a fifth of what is seen {\"entrance\":200,\"exit\":72,\"painted\":6,\"seenShare\":0.529,\"curve\":\"cubic-bezier(0, 0, 0.2, 1)\",\"stray\":0.245,\"travel\":2,\"travelShare\":null,\"frames\":[[0,1,55],[9,1,55],[19,0.585,56],[29,0.366,56],[41,0.205,57],[50,0.115,57],[61,0.045,57],[72,0.007,58]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.529\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:385:90",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 90,
+                      "line": 385
+                    },
+                    "snippet": "  383 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });\n  384 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 385 |         expect(read.seenShare, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n      |                                                                                          ^\n  386 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  387 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);\n  388 |         // A Dialog or a Sheet leaves on one script tween whose progress is the curve"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 90,
+                        "line": 385
+                      },
+                      "message": "Error: no frame takes more than a fifth of what is seen {\"entrance\":200,\"exit\":72,\"painted\":6,\"seenShare\":0.529,\"curve\":\"cubic-bezier(0, 0, 0.2, 1)\",\"stray\":0.245,\"travel\":2,\"travelShare\":null,\"frames\":[[0,1,55],[9,1,55],[19,0.585,56],[29,0.366,56],[41,0.205,57],[50,0.115,57],[61,0.045,57],[72,0.007,58]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.529\u001b[39m\n\n  383 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });\n  384 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 385 |         expect(read.seenShare, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);\n      |                                                                                          ^\n  386 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  387 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);\n  388 |         // A Dialog or a Sheet leaves on one script tween whose progress is the curve\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:385:90"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T20:20:07.388Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6MjAwLCJleGl0Ijo3MiwicGFpbnRlZCI6Niwic2VlblNoYXJlIjowLjUyOSwiY3VydmUiOiJjdWJpYy1iZXppZXIoMCwgMCwgMC4yLCAxKSIsInN0cmF5IjowLjI0NSwidHJhdmVsIjoyLCJ0cmF2ZWxTaGFyZSI6bnVsbCwiZnJhbWVzIjpbWzAsMSw1NV0sWzksMSw1NV0sWzE5LDAuNTg1LDU2XSxbMjksMC4zNjYsNTZdLFs0MSwwLjIwNSw1N10sWzUwLDAuMTE1LDU3XSxbNjEsMC4wNDUsNTddLFs3MiwwLjAwNyw1OF1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-exit-·-Tool-3332f-rve-shorter-than-it-entered-webkit-desktop-repeat2/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 90,
+                    "line": 385
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-d9d263a538f4a0f8b919",
+          "file": "release-11-1-1.spec.ts",
+          "line": 310,
+          "column": 5
+        },
+        {
+          "title": "exit · Sheet right leaves on the exit curve, shorter than it entered",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3708,
+                  "error": {
+                    "message": "Error: the exit follows the exit curve {\"entrance\":657,\"exit\":210,\"painted\":20,\"seenShare\":0.121,\"curve\":\"cubic-bezier(0, 0, 0.2, 1)\",\"stray\":0.107,\"travel\":375,\"travelShare\":0.124,\"frames\":[[0,1,1056],[7,1,1056],[16,0.97,1068],[26,0.933,1082],[36,0.881,1102],[47,0.819,1125],[57,0.745,1154],[67,0.674,1181],[77,0.603,1209],[88,0.532,1236],[97,0.458,1264],[109,0.4,1287],[117,0.327,1314],[128,0.283,1331],[140,0.227,1353],[149,0.173,1373],[159,0.138,1387],[169,0.103,1401],[179,0.073,1412],[190,0.047,1422],[200,0.023,1431],[210,0.006,1438]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.107\u001b[39m",
+                    "stack": "Error: the exit follows the exit curve {\"entrance\":657,\"exit\":210,\"painted\":20,\"seenShare\":0.121,\"curve\":\"cubic-bezier(0, 0, 0.2, 1)\",\"stray\":0.107,\"travel\":375,\"travelShare\":0.124,\"frames\":[[0,1,1056],[7,1,1056],[16,0.97,1068],[26,0.933,1082],[36,0.881,1102],[47,0.819,1125],[57,0.745,1154],[67,0.674,1181],[77,0.603,1209],[88,0.532,1236],[97,0.458,1264],[109,0.4,1287],[117,0.327,1314],[128,0.283,1331],[140,0.227,1353],[149,0.173,1373],[159,0.138,1387],[169,0.103,1401],[179,0.073,1412],[190,0.047,1422],[200,0.023,1431],[210,0.006,1438]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.107\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:392:69",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 69,
+                      "line": 392
+                    },
+                    "snippet": "  390 |         // 0.11); a floating surface's fade rides with a hold, a clip or a slide.\n  391 |         const scripted = c.name === \"Dialog\" || c.name.startsWith(\"Sheet\");\n> 392 |         expect(read.stray, `the exit follows the exit curve ${at}`).toBeLessThanOrEqual(scripted ? 0.06 : 0.12);\n      |                                                                     ^\n  393 |     });\n  394 | }\n  395 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 69,
+                        "line": 392
+                      },
+                      "message": "Error: the exit follows the exit curve {\"entrance\":657,\"exit\":210,\"painted\":20,\"seenShare\":0.121,\"curve\":\"cubic-bezier(0, 0, 0.2, 1)\",\"stray\":0.107,\"travel\":375,\"travelShare\":0.124,\"frames\":[[0,1,1056],[7,1,1056],[16,0.97,1068],[26,0.933,1082],[36,0.881,1102],[47,0.819,1125],[57,0.745,1154],[67,0.674,1181],[77,0.603,1209],[88,0.532,1236],[97,0.458,1264],[109,0.4,1287],[117,0.327,1314],[128,0.283,1331],[140,0.227,1353],[149,0.173,1373],[159,0.138,1387],[169,0.103,1401],[179,0.073,1412],[190,0.047,1422],[200,0.023,1431],[210,0.006,1438]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.107\u001b[39m\n\n  390 |         // 0.11); a floating surface's fade rides with a hold, a clip or a slide.\n  391 |         const scripted = c.name === \"Dialog\" || c.name.startsWith(\"Sheet\");\n> 392 |         expect(read.stray, `the exit follows the exit curve ${at}`).toBeLessThanOrEqual(scripted ? 0.06 : 0.12);\n      |                                                                     ^\n  393 |     });\n  394 | }\n  395 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:392:69"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T20:19:48.888Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6NjU3LCJleGl0IjoyMTAsInBhaW50ZWQiOjIwLCJzZWVuU2hhcmUiOjAuMTIxLCJjdXJ2ZSI6ImN1YmljLWJlemllcigwLCAwLCAwLjIsIDEpIiwic3RyYXkiOjAuMTA3LCJ0cmF2ZWwiOjM3NSwidHJhdmVsU2hhcmUiOjAuMTI0LCJmcmFtZXMiOltbMCwxLDEwNTZdLFs3LDEsMTA1Nl0sWzE2LDAuOTcsMTA2OF0sWzI2LDAuOTMzLDEwODJdLFszNiwwLjg4MSwxMTAyXSxbNDcsMC44MTksMTEyNV0sWzU3LDAuNzQ1LDExNTRdLFs2NywwLjY3NCwxMTgxXSxbNzcsMC42MDMsMTIwOV0sWzg4LDAuNTMyLDEyMzZdLFs5NywwLjQ1OCwxMjY0XSxbMTA5LDAuNCwxMjg3XSxbMTE3LDAuMzI3LDEzMTRdLFsxMjgsMC4yODMsMTMzMV0sWzE0MCwwLjIyNywxMzUzXSxbMTQ5LDAuMTczLDEzNzNdLFsxNTksMC4xMzgsMTM4N10sWzE2OSwwLjEwMywxNDAxXSxbMTc5LDAuMDczLDE0MTJdLFsxOTAsMC4wNDcsMTQyMl0sWzIwMCwwLjAyMywxNDMxXSxbMjEwLDAuMDA2LDE0MzhdXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-exit-·-Shee-4a00a-rve-shorter-than-it-entered-webkit-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 69,
+                    "line": 392
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 4840,
+                  "error": {
+                    "message": "Error: the exit follows the exit curve {\"entrance\":726,\"exit\":228,\"painted\":19,\"seenShare\":0.172,\"curve\":\"cubic-bezier(0, 0, 0.2, 1)\",\"stray\":0.112,\"travel\":379,\"travelShare\":0.174,\"frames\":[[0,1,1056],[16,1,1056],[33,0.97,1068],[52,0.892,1098],[60,0.772,1143],[69,0.717,1165],[82,0.653,1189],[93,0.56,1225],[104,0.484,1254],[112,0.412,1282],[120,0.363,1301],[132,0.316,1319],[144,0.252,1343],[153,0.195,1365],[168,0.157,1380],[175,0.103,1401],[188,0.081,1409],[198,0.047,1422],[205,0.025,1430],[213,0.012,1435],[228,0,null]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.112\u001b[39m",
+                    "stack": "Error: the exit follows the exit curve {\"entrance\":726,\"exit\":228,\"painted\":19,\"seenShare\":0.172,\"curve\":\"cubic-bezier(0, 0, 0.2, 1)\",\"stray\":0.112,\"travel\":379,\"travelShare\":0.174,\"frames\":[[0,1,1056],[16,1,1056],[33,0.97,1068],[52,0.892,1098],[60,0.772,1143],[69,0.717,1165],[82,0.653,1189],[93,0.56,1225],[104,0.484,1254],[112,0.412,1282],[120,0.363,1301],[132,0.316,1319],[144,0.252,1343],[153,0.195,1365],[168,0.157,1380],[175,0.103,1401],[188,0.081,1409],[198,0.047,1422],[205,0.025,1430],[213,0.012,1435],[228,0,null]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.112\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:392:69",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 69,
+                      "line": 392
+                    },
+                    "snippet": "  390 |         // 0.11); a floating surface's fade rides with a hold, a clip or a slide.\n  391 |         const scripted = c.name === \"Dialog\" || c.name.startsWith(\"Sheet\");\n> 392 |         expect(read.stray, `the exit follows the exit curve ${at}`).toBeLessThanOrEqual(scripted ? 0.06 : 0.12);\n      |                                                                     ^\n  393 |     });\n  394 | }\n  395 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 69,
+                        "line": 392
+                      },
+                      "message": "Error: the exit follows the exit curve {\"entrance\":726,\"exit\":228,\"painted\":19,\"seenShare\":0.172,\"curve\":\"cubic-bezier(0, 0, 0.2, 1)\",\"stray\":0.112,\"travel\":379,\"travelShare\":0.174,\"frames\":[[0,1,1056],[16,1,1056],[33,0.97,1068],[52,0.892,1098],[60,0.772,1143],[69,0.717,1165],[82,0.653,1189],[93,0.56,1225],[104,0.484,1254],[112,0.412,1282],[120,0.363,1301],[132,0.316,1319],[144,0.252,1343],[153,0.195,1365],[168,0.157,1380],[175,0.103,1401],[188,0.081,1409],[198,0.047,1422],[205,0.025,1430],[213,0.012,1435],[228,0,null]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.112\u001b[39m\n\n  390 |         // 0.11); a floating surface's fade rides with a hold, a clip or a slide.\n  391 |         const scripted = c.name === \"Dialog\" || c.name.startsWith(\"Sheet\");\n> 392 |         expect(read.stray, `the exit follows the exit curve ${at}`).toBeLessThanOrEqual(scripted ? 0.06 : 0.12);\n      |                                                                     ^\n  393 |     });\n  394 | }\n  395 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:392:69"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T20:20:00.321Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6NzI2LCJleGl0IjoyMjgsInBhaW50ZWQiOjE5LCJzZWVuU2hhcmUiOjAuMTcyLCJjdXJ2ZSI6ImN1YmljLWJlemllcigwLCAwLCAwLjIsIDEpIiwic3RyYXkiOjAuMTEyLCJ0cmF2ZWwiOjM3OSwidHJhdmVsU2hhcmUiOjAuMTc0LCJmcmFtZXMiOltbMCwxLDEwNTZdLFsxNiwxLDEwNTZdLFszMywwLjk3LDEwNjhdLFs1MiwwLjg5MiwxMDk4XSxbNjAsMC43NzIsMTE0M10sWzY5LDAuNzE3LDExNjVdLFs4MiwwLjY1MywxMTg5XSxbOTMsMC41NiwxMjI1XSxbMTA0LDAuNDg0LDEyNTRdLFsxMTIsMC40MTIsMTI4Ml0sWzEyMCwwLjM2MywxMzAxXSxbMTMyLDAuMzE2LDEzMTldLFsxNDQsMC4yNTIsMTM0M10sWzE1MywwLjE5NSwxMzY1XSxbMTY4LDAuMTU3LDEzODBdLFsxNzUsMC4xMDMsMTQwMV0sWzE4OCwwLjA4MSwxNDA5XSxbMTk4LDAuMDQ3LDE0MjJdLFsyMDUsMC4wMjUsMTQzMF0sWzIxMywwLjAxMiwxNDM1XSxbMjI4LDAsbnVsbF1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-exit-·-Shee-4a00a-rve-shorter-than-it-entered-webkit-desktop-repeat1/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 69,
+                    "line": 392
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 4842,
+                  "error": {
+                    "message": "Error: the exit follows the exit curve {\"entrance\":675,\"exit\":207,\"painted\":20,\"seenShare\":0.158,\"curve\":\"cubic-bezier(0, 0, 0.2, 1)\",\"stray\":0.088,\"travel\":376,\"travelShare\":0.161,\"frames\":[[0,1,1056],[0,1,1056],[10,1,1056],[20,0.97,1068],[30,0.928,1084],[42,0.875,1104],[51,0.799,1133],[63,0.738,1157],[75,0.653,1189],[81,0.567,1222],[91,0.526,1238],[102,0.458,1264],[116,0.387,1291],[123,0.305,1323],[132,0.267,1337],[147,0.222,1355],[154,0.157,1380],[163,0.13,1390],[180,0.1,1402],[194,0.052,1420],[201,0.021,1432],[207,0.009,1437]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.088\u001b[39m",
+                    "stack": "Error: the exit follows the exit curve {\"entrance\":675,\"exit\":207,\"painted\":20,\"seenShare\":0.158,\"curve\":\"cubic-bezier(0, 0, 0.2, 1)\",\"stray\":0.088,\"travel\":376,\"travelShare\":0.161,\"frames\":[[0,1,1056],[0,1,1056],[10,1,1056],[20,0.97,1068],[30,0.928,1084],[42,0.875,1104],[51,0.799,1133],[63,0.738,1157],[75,0.653,1189],[81,0.567,1222],[91,0.526,1238],[102,0.458,1264],[116,0.387,1291],[123,0.305,1323],[132,0.267,1337],[147,0.222,1355],[154,0.157,1380],[163,0.13,1390],[180,0.1,1402],[194,0.052,1420],[201,0.021,1432],[207,0.009,1437]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.088\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:392:69",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 69,
+                      "line": 392
+                    },
+                    "snippet": "  390 |         // 0.11); a floating surface's fade rides with a hold, a clip or a slide.\n  391 |         const scripted = c.name === \"Dialog\" || c.name.startsWith(\"Sheet\");\n> 392 |         expect(read.stray, `the exit follows the exit curve ${at}`).toBeLessThanOrEqual(scripted ? 0.06 : 0.12);\n      |                                                                     ^\n  393 |     });\n  394 | }\n  395 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 69,
+                        "line": 392
+                      },
+                      "message": "Error: the exit follows the exit curve {\"entrance\":675,\"exit\":207,\"painted\":20,\"seenShare\":0.158,\"curve\":\"cubic-bezier(0, 0, 0.2, 1)\",\"stray\":0.088,\"travel\":376,\"travelShare\":0.161,\"frames\":[[0,1,1056],[0,1,1056],[10,1,1056],[20,0.97,1068],[30,0.928,1084],[42,0.875,1104],[51,0.799,1133],[63,0.738,1157],[75,0.653,1189],[81,0.567,1222],[91,0.526,1238],[102,0.458,1264],[116,0.387,1291],[123,0.305,1323],[132,0.267,1337],[147,0.222,1355],[154,0.157,1380],[163,0.13,1390],[180,0.1,1402],[194,0.052,1420],[201,0.021,1432],[207,0.009,1437]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.06\u001b[39m\nReceived:    \u001b[31m0.088\u001b[39m\n\n  390 |         // 0.11); a floating surface's fade rides with a hold, a clip or a slide.\n  391 |         const scripted = c.name === \"Dialog\" || c.name.startsWith(\"Sheet\");\n> 392 |         expect(read.stray, `the exit follows the exit curve ${at}`).toBeLessThanOrEqual(scripted ? 0.06 : 0.12);\n      |                                                                     ^\n  393 |     });\n  394 | }\n  395 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:392:69"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T20:20:13.773Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6Njc1LCJleGl0IjoyMDcsInBhaW50ZWQiOjIwLCJzZWVuU2hhcmUiOjAuMTU4LCJjdXJ2ZSI6ImN1YmljLWJlemllcigwLCAwLCAwLjIsIDEpIiwic3RyYXkiOjAuMDg4LCJ0cmF2ZWwiOjM3NiwidHJhdmVsU2hhcmUiOjAuMTYxLCJmcmFtZXMiOltbMCwxLDEwNTZdLFswLDEsMTA1Nl0sWzEwLDEsMTA1Nl0sWzIwLDAuOTcsMTA2OF0sWzMwLDAuOTI4LDEwODRdLFs0MiwwLjg3NSwxMTA0XSxbNTEsMC43OTksMTEzM10sWzYzLDAuNzM4LDExNTddLFs3NSwwLjY1MywxMTg5XSxbODEsMC41NjcsMTIyMl0sWzkxLDAuNTI2LDEyMzhdLFsxMDIsMC40NTgsMTI2NF0sWzExNiwwLjM4NywxMjkxXSxbMTIzLDAuMzA1LDEzMjNdLFsxMzIsMC4yNjcsMTMzN10sWzE0NywwLjIyMiwxMzU1XSxbMTU0LDAuMTU3LDEzODBdLFsxNjMsMC4xMywxMzkwXSxbMTgwLDAuMSwxNDAyXSxbMTk0LDAuMDUyLDE0MjBdLFsyMDEsMC4wMjEsMTQzMl0sWzIwNywwLjAwOSwxNDM3XV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-exit-·-Shee-4a00a-rve-shorter-than-it-entered-webkit-desktop-repeat2/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 69,
+                    "line": 392
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-44b17b3510ea52a3285b",
+          "file": "release-11-1-1.spec.ts",
+          "line": 310,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-21T20:19:42.807Z",
+    "duration": 36388.973999999995,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 6,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,43 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 4 tests using 1 worker
+
+c1 {"cell":"light-1440f wk name-active-rest","W":244,"H":84,"d":7,"w":210,"stadium":206,"ellipse":135,"css":{"W":81.33333333333333,"H":28}}
+c1 {"cell":"light-1440f wk name-active-hover","W":244,"H":84,"d":7,"w":210,"stadium":206,"ellipse":135,"css":{"W":81.33333333333333,"H":28}}
+c1 {"cell":"light-1440f wk focus-hover","W":222,"H":84,"d":7,"w":188,"stadium":184,"ellipse":123,"css":{"W":74,"H":28}}
+c1 {"cell":"light-1440f wk focus-press","W":224,"H":78,"d":6,"w":186,"stadium":188,"ellipse":119,"css":{"W":74.66666666666667,"H":26}}
+c1 {"cell":"light-1440f wk focus-press","W":224,"H":78,"d":6,"w":186,"stadium":188,"ellipse":119,"css":{"W":74.66666666666667,"H":26}}
+  ✓  1 [webkit] › tests-visual/release-11-0-1-critic-1.spec.ts:163:13 › critic 1 light-1440f › a light-1440f: the wide label seat's plate is a capsule in paint (7.5s)
+  ✘  2 [webkit] › tests-visual/release-11-0-1-critic-1.spec.ts:163:13 › critic 1 light-390c › a light-390c: the wide label seat's plate is a capsule in paint (2.6s)
+c1 {"cell":"dark-1440f wk name-active-rest","W":244,"H":84,"d":7,"w":210,"stadium":206,"ellipse":135,"css":{"W":81.33333333333333,"H":28}}
+c1 {"cell":"dark-1440f wk name-active-hover","W":244,"H":84,"d":7,"w":210,"stadium":206,"ellipse":135,"css":{"W":81.33333333333333,"H":28}}
+c1 {"cell":"dark-1440f wk focus-hover","W":222,"H":84,"d":7,"w":188,"stadium":184,"ellipse":123,"css":{"W":74,"H":28}}
+c1 {"cell":"dark-1440f wk focus-press","W":224,"H":78,"d":6,"w":186,"stadium":188,"ellipse":119,"css":{"W":74.66666666666667,"H":26}}
+c1 {"cell":"dark-1440f wk focus-press","W":224,"H":78,"d":6,"w":186,"stadium":188,"ellipse":119,"css":{"W":74.66666666666667,"H":26}}
+  ✓  3 [webkit] › tests-visual/release-11-0-1-critic-1.spec.ts:163:13 › critic 1 dark-1440f › a dark-1440f: the wide label seat's plate is a capsule in paint (7.2s)
+c1 {"cell":"dark-390c wk name-active-rest","W":224,"H":72,"d":6,"w":196,"stadium":192,"ellipse":124,"css":{"W":74.66666666666667,"H":24}}
+c1 {"cell":"dark-390c wk focus-press","W":208,"H":66,"d":5,"w":176,"stadium":177,"ellipse":110,"css":{"W":69.33333333333333,"H":22}}
+c1 {"cell":"dark-390c wk focus-press","W":208,"H":66,"d":5,"w":176,"stadium":177,"ellipse":110,"css":{"W":69.33333333333333,"H":22}}
+  ✓  4 [webkit] › tests-visual/release-11-0-1-critic-1.spec.ts:163:13 › critic 1 dark-390c › a dark-390c: the wide label seat's plate is a capsule in paint (4.5s)
+
+
+  1) [webkit] › tests-visual/release-11-0-1-critic-1.spec.ts:163:13 › critic 1 light-390c › a light-390c: the wide label seat's plate is a capsule in paint 
+
+    TypeError: Cannot read properties of null (reading '1')
+
+      66 |     const d = Math.round(H * 0.08) || 1; // a row a little under the top edge
+      67 |     const at = rows[top + d]!;
+    > 68 |     const w = at[1] - at[0] + 1;
+         |                 ^
+      69 |     const r = H / 2;
+      70 |     const stadium = W - 2 * (r - Math.sqrt(r * r - (r - d) * (r - d)));
+      71 |     const ellipse = W * Math.sqrt(1 - ((r - d) / r) ** 2);
+        at plateOf (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-0-1-critic-1.spec.ts:68:17)
+        at plateInk (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-0-1-critic-1.spec.ts:86:12)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-0-1-critic-1.spec.ts:168:55
+
+    Error Context: tests-visual/test-results/release-11-0-1-critic-1-cr-ece51-plate-is-a-capsule-in-paint-webkit/error-context.md
+
+  1 failed
+    [webkit] › tests-visual/release-11-0-1-critic-1.spec.ts:163:13 › critic 1 light-390c › a light-390c: the wide label seat's plate is a capsule in paint 
+  3 passed (29.1s)
