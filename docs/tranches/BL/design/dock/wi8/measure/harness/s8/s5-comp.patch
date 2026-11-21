@@ -1,0 +1,65 @@
+diff --git a/docs/tranches/BL/design/dock/wi8/measure/harness/m6/comp/chrome.stage.vue b/docs/tranches/BL/design/dock/wi8/measure/harness/m6/comp/chrome.stage.vue
+index 028e41b10..9a727a826 100644
+--- a/docs/tranches/BL/design/dock/wi8/measure/harness/m6/comp/chrome.stage.vue
++++ b/docs/tranches/BL/design/dock/wi8/measure/harness/m6/comp/chrome.stage.vue
+@@ -65,7 +65,7 @@ const zoom = ref(100);
+                     aria-label="App"
+                 >
+                     <template #collapsed>
+-                        <Hexagon class="h-4 w-4" aria-hidden="true" />
++                        <Hexagon aria-hidden="true" />
+                     </template>
+ 
+                     <DockCrossfade :active="face" reserve="inline">
+diff --git a/docs/tranches/BL/design/dock/wi8/measure/harness/m6/comp/corner-controls.stage.vue b/docs/tranches/BL/design/dock/wi8/measure/harness/m6/comp/corner-controls.stage.vue
+index bacd8ac42..e7456f7d0 100644
+--- a/docs/tranches/BL/design/dock/wi8/measure/harness/m6/comp/corner-controls.stage.vue
++++ b/docs/tranches/BL/design/dock/wi8/measure/harness/m6/comp/corner-controls.stage.vue
+@@ -35,7 +35,7 @@ withDefaults(defineProps<{ several?: boolean }>(), { several: false });
+                     aria-label="Page controls"
+                 >
+                     <template #collapsed>
+-                        <SlidersHorizontal class="h-4 w-4" aria-hidden="true" />
++                        <SlidersHorizontal aria-hidden="true" />
+                     </template>
+                     <DockControl aria-label="Shuffle"><Shuffle aria-hidden="true" /></DockControl>
+                     <DockControl aria-label="Undo"><Undo2 aria-hidden="true" /></DockControl>
+diff --git a/docs/tranches/BL/design/dock/wi8/measure/harness/m6/comp/figure-tools.stage.vue b/docs/tranches/BL/design/dock/wi8/measure/harness/m6/comp/figure-tools.stage.vue
+index 9705ab959..17421d16e 100644
+--- a/docs/tranches/BL/design/dock/wi8/measure/harness/m6/comp/figure-tools.stage.vue
++++ b/docs/tranches/BL/design/dock/wi8/measure/harness/m6/comp/figure-tools.stage.vue
+@@ -28,7 +28,7 @@ const table = reactive<Record<string, boolean>>({});
+                     >
+                         <template #collapsed>
+                             <Transition name="fade" mode="out-in">
+-                                <MoreHorizontal v-if="face === 'handle'" class="h-4 w-4" aria-hidden="true" />
++                                <MoreHorizontal v-if="face === 'handle'" aria-hidden="true" />
+                                 <span v-else class="figure-words text-small">
+                                     Tools <ChevronDown class="h-3 w-3" aria-hidden="true" />
+                                 </span>
+diff --git a/docs/tranches/BL/design/dock/wi8/measure/harness/m7/comp/chrome.stage.vue b/docs/tranches/BL/design/dock/wi8/measure/harness/m7/comp/chrome.stage.vue
+index 5553877ca..5a9548425 100644
+--- a/docs/tranches/BL/design/dock/wi8/measure/harness/m7/comp/chrome.stage.vue
++++ b/docs/tranches/BL/design/dock/wi8/measure/harness/m7/comp/chrome.stage.vue
+@@ -67,7 +67,7 @@ const zoom = ref(100);
+                     aria-label="App"
+                 >
+                     <template #collapsed>
+-                        <Hexagon class="h-4 w-4" aria-hidden="true" />
++                        <Hexagon aria-hidden="true" />
+                     </template>
+ 
+                     <DockCrossfade :active="face" reserve="inline">
+diff --git a/docs/tranches/BL/design/dock/wi8/measure/harness/m8/comp/pill.stage.vue b/docs/tranches/BL/design/dock/wi8/measure/harness/m8/comp/pill.stage.vue
+index 1843f745e..60e2966a8 100644
+--- a/docs/tranches/BL/design/dock/wi8/measure/harness/m8/comp/pill.stage.vue
++++ b/docs/tranches/BL/design/dock/wi8/measure/harness/m8/comp/pill.stage.vue
+@@ -20,7 +20,7 @@ const PAGES = [
+                 <component :is="p.icon" />
+             </DockControl>
+             <template #collapsed>
+-                <BookOpen class="h-4 w-4" aria-hidden="true" />
++                <BookOpen aria-hidden="true" />
+             </template>
+         </GlassDock>
+     </DockScene>

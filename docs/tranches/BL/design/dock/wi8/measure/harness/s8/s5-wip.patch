@@ -1,0 +1,50 @@
+diff --git a/src/components/dock/styles/controls/icon-button.css b/src/components/dock/styles/controls/icon-button.css
+index 8cf58a8d6..c18eacf04 100644
+--- a/src/components/dock/styles/controls/icon-button.css
++++ b/src/components/dock/styles/controls/icon-button.css
+@@ -256,6 +256,10 @@
+         height: 1.5em;
+         flex-shrink: 0;
+     }
++    /* RU-75: and the worded seat is the run's seat height, as a trigger and a tab seat are. */
++    .dock-icon-button:has(> :not(svg, img, picture)) {
++        min-block-size: var(--dock-control-size);
++    }
+ 
+     .dock-icon-button--compact {
+         width: var(--dock-compact-control-size, auto);
+diff --git a/src/components/dock/styles/controls/tab-button.css b/src/components/dock/styles/controls/tab-button.css
+index b3d4cdcf3..2e189bd57 100644
+--- a/src/components/dock/styles/controls/tab-button.css
++++ b/src/components/dock/styles/controls/tab-button.css
+@@ -20,8 +20,9 @@
+            sets `--dock-tab-h`, the tab-button reserves that row even when
+            the glyph + padding sum would ride lower. Falls through to
+            `--dock-tab-min-height` (kept for audacious-tier callers) and
+-           finally to `auto`. */
+-        min-height: var(--dock-tab-h, var(--dock-tab-min-height, auto));
++           finally to the run's seat height (RU-75: every seat in a run is
++           `--dock-control-size` tall, worded or not). */
++        min-height: var(--dock-tab-h, var(--dock-tab-min-height, var(--dock-control-size)));
+         padding-inline: var(--dock-tab-padding-inline, 0.75rem);
+         padding-block: var(--dock-tab-padding-block, 0.375rem);
+         border: none;
+diff --git a/src/components/dock/styles/morph.css b/src/components/dock/styles/morph.css
+index 77840f152..15309f143 100644
+--- a/src/components/dock/styles/morph.css
++++ b/src/components/dock/styles/morph.css
+@@ -275,6 +275,14 @@
+         min-width: 1rem;
+         min-height: 1rem;
+     }
++    /* RU-76: the folded face's own glyph (a direct svg, img or picture) takes the icon share, as a
++       seat's glyph does. A glyph the site sized with a class keeps its size. */
++    .glass-dock .dock-layer--summary > :is(svg, img, picture) {
++        width: var(--dock-control-glyph-size);
++        height: var(--dock-control-glyph-size);
++        flex-shrink: 0;
++        max-inline-size: none;
++    }
+ 
+     /* Nothing in the dock scales on hover. */
+ 

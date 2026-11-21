@@ -28,7 +28,7 @@ const table = reactive<Record<string, boolean>>({});
                     >
                         <template #collapsed>
                             <Transition name="fade" mode="out-in">
-                                <MoreHorizontal v-if="face === 'handle'" class="h-4 w-4" aria-hidden="true" />
+                                <MoreHorizontal v-if="face === 'handle'" aria-hidden="true" />
                                 <span v-else class="figure-words text-small">
                                     Tools <ChevronDown class="h-3 w-3" aria-hidden="true" />
                                 </span>

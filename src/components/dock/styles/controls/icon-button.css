@@ -256,6 +256,10 @@
         height: 1.5em;
         flex-shrink: 0;
     }
+    /* RU-75: and the worded seat is the run's seat height, as a trigger in a run is. */
+    .dock-icon-button:has(> :not(svg, img, picture)) {
+        min-block-size: var(--dock-control-size);
+    }
 
     .dock-icon-button--compact {
         width: var(--dock-compact-control-size, auto);

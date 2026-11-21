@@ -20,7 +20,7 @@ const PAGES = [
                 <component :is="p.icon" />
             </DockControl>
             <template #collapsed>
-                <BookOpen class="h-4 w-4" aria-hidden="true" />
+                <BookOpen aria-hidden="true" />
             </template>
         </GlassDock>
     </DockScene>

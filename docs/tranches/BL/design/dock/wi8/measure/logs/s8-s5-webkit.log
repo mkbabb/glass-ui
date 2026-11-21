@@ -1,0 +1,47 @@
+start 16:22:23 load { 34.16 40.44 41.88 }
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for the 'webkit' lock
+[guarded] waiting for headroom (load 46 > 36)
+{"engine":"webkit","tag":"s8-s5","pass":false,"bad":30,"first":["1440 fine share 0.5 w-glyphs-tab Home: seat 38.59 against control 40","1440 fine share 0.5 w-glyphs-tab Image: seat 38.59 against control 40","1440 fine share 0.5 w-glyphs-tab Picture: seat 38.59 against control 40","1440 fine share 0.6 w-glyphs-tab Home: seat 38.59 against control 40","1440 fine share 0.6 w-glyphs-tab Image: seat 38.59 against control 40","1440 fine share 0.6 w-glyphs-tab Picture: seat 38.59 against control 40","1440 fine share 0.7 w-glyphs-tab Home: seat 38.59 against control 40","1440 fine share 0.7 w-glyphs-tab Image: seat 38.59 against control 40"]}
+tabauto applied
+{"engine":"webkit","tag":"s8-s5-tabauto","pass":false,"bad":30,"first":["1440 fine share 0.5 w-glyphs-tab Home: seat 38.59 against control 40","1440 fine share 0.5 w-glyphs-tab Image: seat 38.59 against control 40","1440 fine share 0.5 w-glyphs-tab Picture: seat 38.59 against control 40","1440 fine share 0.6 w-glyphs-tab Home: seat 38.59 against control 40","1440 fine share 0.6 w-glyphs-tab Image: seat 38.59 against control 40","1440 fine share 0.6 w-glyphs-tab Picture: seat 38.59 against control 40","1440 fine share 0.7 w-glyphs-tab Home: seat 38.59 against control 40","1440 fine share 0.7 w-glyphs-tab Image: seat 38.59 against control 40"]}
+tabauto reverted
+iconword applied
+{"engine":"webkit","tag":"s8-s5-iconword","pass":false,"bad":40,"first":["1440 fine share 0.5 w-glyphs-icon Focus: seat 35.91 against control 40","1440 fine share 0.5 w-glyphs-tab Home: seat 38.59 against control 40","1440 fine share 0.5 w-glyphs-tab Image: seat 38.59 against control 40","1440 fine share 0.5 w-glyphs-tab Picture: seat 38.59 against control 40","1440 fine share 0.6 w-glyphs-icon Focus: seat 35.91 against control 40","1440 fine share 0.6 w-glyphs-tab Home: seat 38.59 against control 40","1440 fine share 0.6 w-glyphs-tab Image: seat 38.59 against control 40","1440 fine share 0.6 w-glyphs-tab Picture: seat 38.59 against control 40"]}
+iconword reverted
+{"read":24,"judged":8,"pass":8,"fail":0,"sized":[],"notJudged":["nav fine 1440 Site: rests open","chrome fine 1440 App: rests open","rail fine 1440 Sections: empty","canvas-tools fine 1440 Canvas tools: composed (span.canvas-face)","transport fine 1440 Transport: composed (div.progress-rail)","pager fine 1440 Pages: rests open","corner-controls fine 1440 Page controls: rests open","action-row fine 1440 Stylesheet actions: rests open","nav coarse 390 Site: rests open","chrome coarse 390 App: rests open","rail coarse 390 Sections: rests open","canvas-tools coarse 390 Canvas tools: composed (span.canvas-face)","transport coarse 390 Transport: composed (div.progress-rail)","pager coarse 390 Pages: rests open","corner-controls coarse 390 Page controls: rests open","action-row coarse 390 Stylesheet actions: rests open"]} []
+facerule applied
+{"read":24,"judged":8,"pass":0,"fail":8,"sized":[],"notJudged":["nav fine 1440 Site: rests open","chrome fine 1440 App: rests open","rail fine 1440 Sections: empty","canvas-tools fine 1440 Canvas tools: composed (span.canvas-face)","transport fine 1440 Transport: composed (div.progress-rail)","pager fine 1440 Pages: rests open","corner-controls fine 1440 Page controls: rests open","action-row fine 1440 Stylesheet actions: rests open","nav coarse 390 Site: rests open","chrome coarse 390 App: rests open","rail coarse 390 Sections: rests open","canvas-tools coarse 390 Canvas tools: composed (span.canvas-face)","transport coarse 390 Transport: composed (div.progress-rail)","pager coarse 390 Pages: rests open","corner-controls coarse 390 Page controls: rests open","action-row coarse 390 Stylesheet actions: rests open"]} [
+  'figure-tools fine 1440 Revenue tools: 24,24 against 36',
+  'figure-tools fine 1440 Headcount tools: 24,24 against 36',
+  'figure-tools fine 1440 Churn tools: 24,24 against 36',
+  'pill fine 1440 Pill: 24,24 against 36',
+  'figure-tools coarse 390 Revenue tools: 24,24 against 39.59',
+  'figure-tools coarse 390 Headcount tools: 24,24 against 39.59',
+  'figure-tools coarse 390 Churn tools: 24,24 against 39.59',
+  'pill coarse 390 Pill: 24,24 against 39.59'
+]
+facerule reverted
+{"cells":8,"failing":8,"minText":4.64,"minIcon":4.23,"marks":0,"markFails":0,"minMark":null,"hoverReads":0,"hoverFails":0,"hoverNotes":0,"unsettledFails":8,"unsettledSteady":8,"notOpened":0,"minHover":null,"looseFails":0,"schemeMismatch":0}
+chrome field dark rest (no dock folds): icon svg 4.23 (unsettled, op 0.8, the same on both reads)
+chrome field dark open App: icon svg 4.23 (unsettled, op 0.8, the same on both reads)
+chrome field light rest (no dock folds): icon svg 5.72 (unsettled, op 0.8, the same on both reads)
+chrome field light open App: icon svg 5.69 (unsettled, op 0.8, the same on both reads)
+chrome flat dark rest (no dock folds): icon svg 10.21 (unsettled, op 0.8, the same on both reads)
+chrome flat dark open App: icon svg 10.21 (unsettled, op 0.8, the same on both reads)
+chrome flat light rest (no dock folds): icon svg 7.52 (unsettled, op 0.8, the same on both reads)
+chrome flat light open App: icon svg 7.52 (unsettled, op 0.8, the same on both reads)
+plate chrome field dark rest (no dock folds): 
+plate chrome field dark open App: App 1.281 (spread 0)
+plate chrome field light rest (no dock folds): 
+plate chrome field light open App: App 1.284 (spread 0)
+plate chrome flat dark rest (no dock folds): 
+plate chrome flat dark open App: App 1.002 (spread 0)
+plate chrome flat light rest (no dock folds): 
+plate chrome flat light open App: App 1.31 (spread 0)
+{"rows":20,"ok":20,"wrong":[]}
+applied
+{"rows":20,"ok":12,"wrong":["w-ctl@1440","w-ctl-mix@1440","w-ctlout@1440","w-fourier@1440","w-daraksha@1440","w-sci@1440","w-ctl6@1440","w-kfcode@1440"]}
+reverted
+s5run webkit done
+rc=0 end 16:42:32

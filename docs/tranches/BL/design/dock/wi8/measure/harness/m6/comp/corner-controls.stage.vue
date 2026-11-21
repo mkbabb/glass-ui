@@ -35,7 +35,7 @@ withDefaults(defineProps<{ several?: boolean }>(), { several: false });
                     aria-label="Page controls"
                 >
                     <template #collapsed>
-                        <SlidersHorizontal class="h-4 w-4" aria-hidden="true" />
+                        <SlidersHorizontal aria-hidden="true" />
                     </template>
                     <DockControl aria-label="Shuffle"><Shuffle aria-hidden="true" /></DockControl>
                     <DockControl aria-label="Undo"><Undo2 aria-hidden="true" /></DockControl>

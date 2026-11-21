@@ -275,6 +275,14 @@
         min-width: 1rem;
         min-height: 1rem;
     }
+    /* RU-76: the folded face's own glyph (a direct svg, img or picture) takes the icon share, as a
+       seat's glyph does. A glyph the site sized with a class keeps its size. */
+    .glass-dock .dock-layer--summary > :is(svg, img, picture) {
+        width: var(--dock-control-glyph-size);
+        height: var(--dock-control-glyph-size);
+        flex-shrink: 0;
+        max-inline-size: none;
+    }
 
     /* Nothing in the dock scales on hover. */
 

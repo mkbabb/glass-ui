@@ -67,7 +67,7 @@ const zoom = ref(100);
                     aria-label="App"
                 >
                     <template #collapsed>
-                        <Hexagon class="h-4 w-4" aria-hidden="true" />
+                        <Hexagon aria-hidden="true" />
                     </template>
 
                     <DockCrossfade :active="face" reserve="inline">
