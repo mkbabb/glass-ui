@@ -8,7 +8,11 @@
 //            way in and only falls on the way out, its box (place and size) never takes
 //            a step between its two ends, and the fade is over within 200 ms (one
 //            frame of slack for the sampling); a surface that says when its leave has
-//            finished says so once, at or after the fade's last seen frame
+//            finished says so once, at or after the fade's last seen frame; a glass
+//            Sheet's frost layer fades with its plate: it appears and leaves on a fade
+//            as the plate does, it enters from 0.02 or less, and on every frame it is
+//            mounted its opacity is within 0.02 of the plate's, so it leaves at the
+//            plate's last value (the fade's last painted step) and never outlasts it
 //   fold     a collapsible dock unfolds and folds by cross-fading its two faces, the
 //            box landing at once
 //   mark     a navigation run's selected plate moves to a new seat by a cross-fade:
@@ -31,6 +35,7 @@ const EXITS = "/tests-visual/release-11-1-1/exits-harness.html";
 const REDUCE = "/tests-visual/release-11-1-1/reduce-harness.html";
 const CLOCK = 200;
 const SLACK = 1000 / 60 + 4;
+const FROST = '[data-slot="glass-graded-halo"]';
 
 async function open(page: Page, path: string): Promise<void> {
     await page.emulateMedia({ reducedMotion: "reduce" });
@@ -103,6 +108,24 @@ function expectFade(leg: Leg, dir: "in" | "out", at: string): void {
 const opacity = (f: Frame) => (f.present ? (f.op ?? 0) : 0);
 const boxOf = (f: Frame) => (f.present && f.x !== undefined ? [f.x!, f.y!, f.w!, f.h!] : null);
 
+/** A Sheet's frost layer over one leg from the film's mark, read against its plate: the
+ *  frames it is mounted, the most its opacity differs from the plate's on any of them (the
+ *  plate read as 0 on a frame it is gone), its first and last opacity, the plate's last
+ *  opacity, and the frost layer's own fade. */
+function judgeFrost(film: Film, dir: "in" | "out") {
+    const after = film.frames.filter((f) => f.t >= film.mark);
+    const seen = after.filter((f) => f.alsoOp !== undefined);
+    const plate = after.filter((f) => f.present);
+    return {
+        frames: seen.length,
+        gap: +Math.max(0, ...seen.map((f) => Math.abs(f.alsoOp! - opacity(f)))).toFixed(3),
+        first: seen.length ? +seen[0].alsoOp!.toFixed(3) : null,
+        last: seen.length ? +seen[seen.length - 1].alsoOp!.toFixed(3) : null,
+        plateLast: plate.length ? +opacity(plate[plate.length - 1]).toFixed(3) : null,
+        leg: judgeLeg(film, dir, (f) => f.alsoOp ?? 0, () => null),
+    };
+}
+
 test("site · a site's own opacity fade keeps its clock under reduced motion", async ({ page }, info) => {
     const project = info.project.name;
     await open(page, REDUCE);
@@ -127,6 +150,8 @@ type Surface = {
     desktopOnly?: boolean;
     /** The surface says when its leave has finished (README, "leave-finished"). */
     says?: boolean;
+    /** A glass Sheet: its frost layer is filmed with its plate. */
+    frost?: boolean;
 };
 
 const tap = (sel: string) => (page: Page, project: string) => pressOn(page, project, sel);
@@ -146,9 +171,9 @@ const surfaces: Surface[] = [
         says: true,
     },
     { name: "Dialog", says: true, content: '[data-testid="x-dialog-content"]', enter: tap('[data-testid="x-dialog"]'), leave: escape },
-    { name: "Sheet right", says: true, content: '[data-testid="x-sheet-right-content"]', enter: tap('[data-testid="x-sheet-right"]'), leave: escape },
-    { name: "Sheet bottom", says: true, content: '[data-testid="x-sheet-bottom-content"]', enter: tap('[data-testid="x-sheet-bottom"]'), leave: escape },
-    { name: "detented Sheet", says: true, content: '[data-testid="x-detent-content"]', enter: tap('[data-testid="x-detent"]'), leave: escape },
+    { name: "Sheet right", says: true, frost: true, content: '[data-testid="x-sheet-right-content"]', enter: tap('[data-testid="x-sheet-right"]'), leave: escape },
+    { name: "Sheet bottom", says: true, frost: true, content: '[data-testid="x-sheet-bottom-content"]', enter: tap('[data-testid="x-sheet-bottom"]'), leave: escape },
+    { name: "detented Sheet", says: true, frost: true, content: '[data-testid="x-detent-content"]', enter: tap('[data-testid="x-detent"]'), leave: escape },
     {
         name: "Toast",
         content: '[data-slot="toast"]',
@@ -173,7 +198,8 @@ for (const s of surfaces) {
         test.skip(Boolean(s.desktopOnly) && isPhone(project), "a Tooltip does not open on touch");
         await open(page, EXITS);
         const sel = s.film ?? s.content;
-        await startFilm(page, sel);
+        const companion = s.frost ? FROST : "";
+        await startFilm(page, sel, companion);
         await markFilm(page);
         await s.enter(page, project);
         const inFilm = await stopFilm(page, 700);
@@ -184,7 +210,7 @@ for (const s of surfaces) {
             w.__said = [];
             window.addEventListener("leave-finished", () => w.__said.push(performance.now()));
         });
-        await startFilm(page, sel);
+        await startFilm(page, sel, companion);
         await markFilm(page);
         await s.leave(page, project);
         const outFilm = await stopFilm(page, 900);
@@ -193,10 +219,19 @@ for (const s of surfaces) {
         const legOut = judgeLeg(outFilm, "out", opacity, boxOf);
         const lastSeen = Math.max(...outFilm.frames.filter((f) => f.t >= outFilm.mark && opacity(f) > 0.01).map((f) => f.t), outFilm.mark);
         const leave = said.map((t) => Math.round(t - outFilm.t0 - lastSeen));
-        const at = JSON.stringify({ in: legIn, out: legOut, leave });
+        const frost = s.frost ? { in: judgeFrost(inFilm, "in"), out: judgeFrost(outFilm, "out") } : undefined;
+        const at = JSON.stringify({ in: legIn, out: legOut, leave, frost });
         await info.attach("fade", { body: at, contentType: "application/json" });
         expectFade(legIn, "in", at);
         expectFade(legOut, "out", at);
+        if (frost) {
+            for (const dir of ["in", "out"] as const) {
+                expect(frost[dir].frames, `${dir}: the frost layer is filmed ${at}`).toBeGreaterThan(0);
+                expect(frost[dir].gap, `${dir}: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's ${at}`).toBeLessThanOrEqual(0.02);
+                expectFade(frost[dir].leg, dir, `frost layer ${at}`);
+            }
+            expect(frost.in.first, `in: the frost layer enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);
+        }
         if (s.says) {
             expect(leave.length, `one leave-finished event ${at}`).toBe(1);
             expect(leave[0], `it comes at or after the last seen frame ${at}`).toBeGreaterThanOrEqual(0);

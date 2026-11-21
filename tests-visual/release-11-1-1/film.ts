@@ -21,6 +21,8 @@ export type Frame = {
     clip?: string;
     /** The companion selector is mounted. */
     also?: boolean;
+    /** The companion's effective opacity, on every frame it is mounted, the surface's or not. */
+    alsoOp?: number;
 };
 
 export type Film = {
@@ -55,7 +57,9 @@ export async function startFilm(page: Page, selector: string, also = ""): Promis
         const tick = (frameTime: number) => {
             const t = frameTime - t0;
             const el = document.querySelector(selector);
-            if (!el) film.frames.push({ t, present: false });
+            const companion = also ? document.querySelector(also) : null;
+            const alsoOp = companion ? effective(companion) : undefined;
+            if (!el) film.frames.push({ t, present: false, alsoOp });
             else {
                 const r = el.getBoundingClientRect();
                 const cs = getComputedStyle(el);
@@ -74,7 +78,8 @@ export async function startFilm(page: Page, selector: string, also = ""): Promis
                     bg: cs.backgroundColor,
                     anim: el.getAnimations().some((a) => a.playState === "running"),
                     clip: cs.clipPath,
-                    also: also ? !!document.querySelector(also) : undefined,
+                    also: also ? !!companion : undefined,
+                    alsoOp,
                 });
             }
             if (!film.stop) requestAnimationFrame(tick);

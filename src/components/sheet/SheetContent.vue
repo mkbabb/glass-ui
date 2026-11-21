@@ -157,18 +157,29 @@ const sheetDetents = useSheetDetents({
     requestClose: () => dialogRoot.onOpenChange(false),
 });
 
+// Under reduced motion the sheet stays where it rests and fades in and out: one opacity,
+// which the plate and its frost sampler both take, so the two leave as one. A detented
+// sheet's engine runs the fade; a sliding sheet's position is the fade's clock, and a
+// drag still moves it. Null when nothing fades.
+const fade = computed<number | null>(() => {
+    if (!live.value) return null;
+    if (detented.value) return sheetDetents.opacity.value;
+    return reducedMotion.value && !springMount.isDragging.value
+        ? 1 - springMount.position.value
+        : null;
+});
+
 const springStyle = computed<CSSProperties | undefined>(() => {
     if (!live.value) return undefined;
+    const opacity = fade.value === null ? undefined : String(fade.value);
     // A detented sheet is SIZED by its rung, so it publishes the scalar and the size its
     // box takes: the stylesheet translates only the part of the box that is not up, which
     // is the rise into place on the open leg and the floor's slide below its smallest rung.
-    // Under reduced motion its opacity carries the entrance and the exit.
     if (detented.value) {
-        const fade = sheetDetents.opacity.value;
         return {
             "--detent-t": String(sheetDetents.t.value),
             "--_detent-size": String(sheetDetents.size.value),
-            opacity: fade === null ? undefined : String(fade),
+            opacity,
         };
     }
     // The slide rides the `translate` LONGHAND: an unclamped position drives a
@@ -177,17 +188,19 @@ const springStyle = computed<CSSProperties | undefined>(() => {
     // carries the entry shear on the same scalar (0 unless `--sheet-enter-skew` is
     // set); a reduced register (the OS setting or `motion="reduced"`) draws none.
     const p = springMount.position.value;
-    // Under reduced motion the position is a fade's clock: the sheet stays where it rests
-    // and its opacity carries the entrance and the exit. A drag still moves it.
-    const fade = reducedMotion.value && !springMount.isDragging.value;
     return {
-        translate: sheetSlideTransform(props.side, fade ? 0 : p),
-        opacity: fade ? String(1 - p) : undefined,
+        translate: sheetSlideTransform(props.side, fade.value === null ? p : 0),
+        opacity,
         transform: motionAxis.resolved.value === "full" ? sheetEntryShear(props.side, p) : "none",
         animation: "none",
         transition: "none",
     };
 });
+
+// The frost sampler takes the plate's fade.
+const haloStyle = computed<CSSProperties | undefined>(() =>
+    fade.value === null ? undefined : { opacity: String(fade.value) },
+);
 
 // Mount-hold — the spring, not a keyframe, owns unmount timing.
 const held = computed(() =>
@@ -457,6 +470,7 @@ const contentStyle = computed<CSSProperties>(() => ({
              nothing. The host's flat blur stays off: this is the sole sampler. -->
         <span
             v-if="haloPresent"
+            :style="haloStyle"
             data-slot="glass-graded-halo"
             :data-side="props.side"
             :data-detents="detented ? '' : undefined"
