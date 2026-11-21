@@ -1,28 +1,27 @@
 <script setup lang="ts">
 // StoryCode: the page's one usage snippet, closed by default under "Code". The
-// disclosure opens and closes by the library Collapsible's own tween. The code face
-// loads when "Code" is first pointed at, focused or pressed. Its arrival restyles the
-// page in WebKit, one long frame, and a long frame inside the open lands much of it in
-// one step; so the first open waits for the face and two frames after it.
+// disclosure opens and closes by the library Collapsible's own tween. The code face and
+// the highlighter load when "Code" is first pointed at, focused or pressed, and the
+// first open waits for both, so neither lands inside the travel (the face's arrival
+// restyles the page in WebKit; the highlighter recolours the code). The frame that
+// first lays out, colours and paints the code is long, so each open holds the tween at
+// its start until two frames have begun since the content went in.
 import { ref } from "vue";
 import { ChevronDown } from "@lucide/vue";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@glass/components/collapsible";
 import CodeBlock from "./CodeBlock.vue";
 import { loadCodeFace } from "./code-face";
+import { loadHljs } from "./useCodeHighlight";
 
 defineProps<{ code: string; lang?: string }>();
 
 const open = ref(false);
-let ready: Promise<unknown> | undefined;
-function prepare(): Promise<unknown> {
-    ready ??= loadCodeFace().then(
-        () => new Promise((done) => requestAnimationFrame(() => requestAnimationFrame(done))),
-    );
-    return ready;
-}
+const held = ref(false);
+const prepare = (): Promise<unknown> => Promise.all([loadCodeFace(), loadHljs().catch(() => undefined)]);
 async function setOpen(next: boolean): Promise<void> {
     if (next) await prepare();
-    open.value = next;
+    open.value = held.value = next;
+    if (next) requestAnimationFrame(() => requestAnimationFrame(() => (held.value = false)));
 }
 </script>
 
@@ -38,7 +37,7 @@ async function setOpen(next: boolean): Promise<void> {
                 <ChevronDown class="h-4 w-4" />
             </span>
         </CollapsibleTrigger>
-        <CollapsibleContent>
+        <CollapsibleContent :style="held ? { animationPlayState: 'paused' } : undefined">
             <CodeBlock :code="code" :lang="lang ?? 'vue'" />
         </CollapsibleContent>
     </Collapsible>

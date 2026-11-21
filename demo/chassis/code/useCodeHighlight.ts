@@ -28,7 +28,7 @@ type Hljs = {
 // every subsequent block reuses the registered instance (idempotent registration).
 let hljsPromise: Promise<Hljs> | null = null;
 
-function loadHljs(): Promise<Hljs> {
+export function loadHljs(): Promise<Hljs> {
     if (!hljsPromise) {
         hljsPromise = (async () => {
             const [core, ts, xml, css, bash] = await Promise.all([
