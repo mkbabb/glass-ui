@@ -27,3 +27,7 @@ The owner lifted the battery rule at 00:58 ("we have it plugged in"); the three 
 ## The owner rules the battery out, 2026-11-20 08:57
 
 The owner: "The battery is invariant. Communicate to all sessions." The battery is no longer a reason to stop, pause or gate a glass run: the 35 % wait above is withdrawn, power-ok.sh does not gate glass, and power-hold.py stays off. The three runs resumed at 08:57 (battery 28 %, charging) with the args files as they stand. Every session was told (value-js-f3, gaggle-f4, sci-report-89, hassio-config-f7, dns-analysis-b1). The guard, the zone line and one WebKit run at a time still bind.
+
+## The weekly limit, 2026-11-20 13:00 to 2026-11-21 15:07
+
+At 13:01 on 11-20 every seat hit the weekly usage limit ("You've hit your weekly limit"). The four runs stayed listed as running with no live seat and no journal write for 26 hours. On 11-21 the owner relayed "resume work. The limit has been reset" (via value-js-f3). The orchestrator stopped the four hung tasks, saved the cut seats' uncommitted work (the dock's as `measure/harness/s8/wip-at-limit-1121.patch`, the demo's as `.p17/close/wip-at-limit-1121.patch`), updated the RESUME notes, and resumed all four: 11.1.1 (critic 8), dock pass 8 (source-8), the P17 close (its fix seat, after c06026d5d), and the keyframes triage `wf_026dccf8-16c` (its tokens and tooltip placement cached).
