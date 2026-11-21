@@ -1,0 +1,214 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 9 tests using 1 worker
+
+[WebServer] 5:26:31 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  1 [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet right appears and leaves on a fade (2.9s)
+[WebServer] 5:26:34 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  2 [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet bottom appears and leaves on a fade (2.7s)
+[WebServer] 5:26:38 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  3 [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a detented Sheet appears and leaves on a fade (2.7s)
+[WebServer] 5:26:41 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  4 [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet right appears and leaves on a fade (2.7s)
+[WebServer] 5:26:44 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  5 [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet bottom appears and leaves on a fade (2.6s)
+[WebServer] 5:26:47 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  6 [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a detented Sheet appears and leaves on a fade (2.7s)
+[WebServer] 5:26:51 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  7 [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet right appears and leaves on a fade (2.7s)
+[WebServer] 5:26:54 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  8 [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet bottom appears and leaves on a fade (2.7s)
+[WebServer] 5:26:57 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  9 [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a detented Sheet appears and leaves on a fade (2.7s)
+
+
+  1) [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet right appears and leaves on a fade 
+
+    Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {"in":{"fading":25,"rises":true,"falls":true,"span":188,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"fading":24,"rises":true,"falls":true,"span":191,"boxSteps":0,"stepped":[],"from":1,"to":0},"leave":[2],"frost":{"in":{"frames":93,"gap":1,"first":1,"last":1,"plateLast":1,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1}},"out":{"frames":26,"gap":0.976,"first":1,"last":1,"plateLast":0.024,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":1,"to":0}}}}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.02
+    Received:    1
+
+      228 |             for (const dir of ["in", "out"] as const) {
+      229 |                 expect(frost[dir].frames, `${dir}: the frost layer is filmed ${at}`).toBeGreaterThan(0);
+    > 230 |                 expect(frost[dir].gap, `${dir}: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's ${at}`).toBeLessThanOrEqual(0.02);
+          |                                                                                                                                              ^
+      231 |                 expectFade(frost[dir].leg, dir, `frost layer ${at}`);
+      232 |             }
+      233 |             expect(frost.in.first, `in: the frost layer enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts:230:142
+
+    Error Context: test-results/release-11-1-1-reduce-fade-cfeca-ppears-and-leaves-on-a-fade-chromium-desktop/error-context.md
+
+  2) [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet bottom appears and leaves on a fade 
+
+    Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {"in":{"fading":23,"rises":true,"falls":true,"span":183,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"fading":25,"rises":true,"falls":true,"span":199,"boxSteps":0,"stepped":[],"from":1,"to":0},"leave":[12],"frost":{"in":{"frames":93,"gap":1,"first":1,"last":1,"plateLast":1,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1}},"out":{"frames":28,"gap":0.994,"first":1,"last":1,"plateLast":0.006,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":1,"to":0}}}}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.02
+    Received:    1
+
+      228 |             for (const dir of ["in", "out"] as const) {
+      229 |                 expect(frost[dir].frames, `${dir}: the frost layer is filmed ${at}`).toBeGreaterThan(0);
+    > 230 |                 expect(frost[dir].gap, `${dir}: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's ${at}`).toBeLessThanOrEqual(0.02);
+          |                                                                                                                                              ^
+      231 |                 expectFade(frost[dir].leg, dir, `frost layer ${at}`);
+      232 |             }
+      233 |             expect(frost.in.first, `in: the frost layer enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts:230:142
+
+    Error Context: test-results/release-11-1-1-reduce-fade-1f21c-ppears-and-leaves-on-a-fade-chromium-desktop/error-context.md
+
+  3) [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a detented Sheet appears and leaves on a fade 
+
+    Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {"in":{"fading":24,"rises":true,"falls":true,"span":184,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"fading":24,"rises":true,"falls":true,"span":195,"boxSteps":0,"stepped":[],"from":1,"to":0},"leave":[3],"frost":{"in":{"frames":96,"gap":1,"first":1,"last":1,"plateLast":1,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1}},"out":{"frames":26,"gap":0.976,"first":1,"last":1,"plateLast":0.024,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":1,"to":0}}}}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.02
+    Received:    1
+
+      228 |             for (const dir of ["in", "out"] as const) {
+      229 |                 expect(frost[dir].frames, `${dir}: the frost layer is filmed ${at}`).toBeGreaterThan(0);
+    > 230 |                 expect(frost[dir].gap, `${dir}: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's ${at}`).toBeLessThanOrEqual(0.02);
+          |                                                                                                                                              ^
+      231 |                 expectFade(frost[dir].leg, dir, `frost layer ${at}`);
+      232 |             }
+      233 |             expect(frost.in.first, `in: the frost layer enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts:230:142
+
+    Error Context: test-results/release-11-1-1-reduce-fade-ccbe5-ppears-and-leaves-on-a-fade-chromium-desktop/error-context.md
+
+  4) [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet right appears and leaves on a fade 
+
+    Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {"in":{"fading":25,"rises":true,"falls":true,"span":183,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"fading":23,"rises":true,"falls":true,"span":200,"boxSteps":0,"stepped":[],"from":1,"to":0},"leave":[13],"frost":{"in":{"frames":96,"gap":1,"first":1,"last":1,"plateLast":1,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1}},"out":{"frames":26,"gap":0.991,"first":1,"last":1,"plateLast":0.009,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":1,"to":0}}}}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.02
+    Received:    1
+
+      228 |             for (const dir of ["in", "out"] as const) {
+      229 |                 expect(frost[dir].frames, `${dir}: the frost layer is filmed ${at}`).toBeGreaterThan(0);
+    > 230 |                 expect(frost[dir].gap, `${dir}: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's ${at}`).toBeLessThanOrEqual(0.02);
+          |                                                                                                                                              ^
+      231 |                 expectFade(frost[dir].leg, dir, `frost layer ${at}`);
+      232 |             }
+      233 |             expect(frost.in.first, `in: the frost layer enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts:230:142
+
+    Error Context: test-results/release-11-1-1-reduce-fade-cfeca-ppears-and-leaves-on-a-fade-chromium-desktop-repeat1/error-context.md
+
+  5) [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet bottom appears and leaves on a fade 
+
+    Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {"in":{"fading":22,"rises":true,"falls":true,"span":187,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"fading":25,"rises":true,"falls":true,"span":192,"boxSteps":0,"stepped":[],"from":1,"to":0},"leave":[2],"frost":{"in":{"frames":90,"gap":1,"first":1,"last":1,"plateLast":1,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1}},"out":{"frames":28,"gap":0.981,"first":1,"last":1,"plateLast":0.019,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":1,"to":0}}}}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.02
+    Received:    1
+
+      228 |             for (const dir of ["in", "out"] as const) {
+      229 |                 expect(frost[dir].frames, `${dir}: the frost layer is filmed ${at}`).toBeGreaterThan(0);
+    > 230 |                 expect(frost[dir].gap, `${dir}: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's ${at}`).toBeLessThanOrEqual(0.02);
+          |                                                                                                                                              ^
+      231 |                 expectFade(frost[dir].leg, dir, `frost layer ${at}`);
+      232 |             }
+      233 |             expect(frost.in.first, `in: the frost layer enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts:230:142
+
+    Error Context: test-results/release-11-1-1-reduce-fade-1f21c-ppears-and-leaves-on-a-fade-chromium-desktop-repeat1/error-context.md
+
+  6) [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a detented Sheet appears and leaves on a fade 
+
+    Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {"in":{"fading":24,"rises":true,"falls":true,"span":182,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"fading":26,"rises":true,"falls":true,"span":196,"boxSteps":0,"stepped":[],"from":1,"to":0},"leave":[11],"frost":{"in":{"frames":95,"gap":1,"first":1,"last":1,"plateLast":1,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1}},"out":{"frames":30,"gap":0.993,"first":1,"last":1,"plateLast":0.007,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":1,"to":0}}}}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.02
+    Received:    1
+
+      228 |             for (const dir of ["in", "out"] as const) {
+      229 |                 expect(frost[dir].frames, `${dir}: the frost layer is filmed ${at}`).toBeGreaterThan(0);
+    > 230 |                 expect(frost[dir].gap, `${dir}: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's ${at}`).toBeLessThanOrEqual(0.02);
+          |                                                                                                                                              ^
+      231 |                 expectFade(frost[dir].leg, dir, `frost layer ${at}`);
+      232 |             }
+      233 |             expect(frost.in.first, `in: the frost layer enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts:230:142
+
+    Error Context: test-results/release-11-1-1-reduce-fade-ccbe5-ppears-and-leaves-on-a-fade-chromium-desktop-repeat1/error-context.md
+
+  7) [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet right appears and leaves on a fade 
+
+    Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {"in":{"fading":23,"rises":true,"falls":true,"span":183,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"fading":25,"rises":true,"falls":true,"span":196,"boxSteps":0,"stepped":[],"from":1,"to":0},"leave":[2],"frost":{"in":{"frames":95,"gap":1,"first":1,"last":1,"plateLast":1,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1}},"out":{"frames":27,"gap":0.976,"first":1,"last":1,"plateLast":0.024,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":1,"to":0}}}}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.02
+    Received:    1
+
+      228 |             for (const dir of ["in", "out"] as const) {
+      229 |                 expect(frost[dir].frames, `${dir}: the frost layer is filmed ${at}`).toBeGreaterThan(0);
+    > 230 |                 expect(frost[dir].gap, `${dir}: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's ${at}`).toBeLessThanOrEqual(0.02);
+          |                                                                                                                                              ^
+      231 |                 expectFade(frost[dir].leg, dir, `frost layer ${at}`);
+      232 |             }
+      233 |             expect(frost.in.first, `in: the frost layer enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts:230:142
+
+    Error Context: test-results/release-11-1-1-reduce-fade-cfeca-ppears-and-leaves-on-a-fade-chromium-desktop-repeat2/error-context.md
+
+  8) [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet bottom appears and leaves on a fade 
+
+    Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {"in":{"fading":24,"rises":true,"falls":true,"span":196,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"fading":26,"rises":true,"falls":true,"span":195,"boxSteps":0,"stepped":[],"from":1,"to":0},"leave":[2],"frost":{"in":{"frames":91,"gap":1,"first":1,"last":1,"plateLast":1,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1}},"out":{"frames":29,"gap":0.989,"first":1,"last":1,"plateLast":0.011,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":1,"to":0}}}}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.02
+    Received:    1
+
+      228 |             for (const dir of ["in", "out"] as const) {
+      229 |                 expect(frost[dir].frames, `${dir}: the frost layer is filmed ${at}`).toBeGreaterThan(0);
+    > 230 |                 expect(frost[dir].gap, `${dir}: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's ${at}`).toBeLessThanOrEqual(0.02);
+          |                                                                                                                                              ^
+      231 |                 expectFade(frost[dir].leg, dir, `frost layer ${at}`);
+      232 |             }
+      233 |             expect(frost.in.first, `in: the frost layer enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts:230:142
+
+    Error Context: test-results/release-11-1-1-reduce-fade-1f21c-ppears-and-leaves-on-a-fade-chromium-desktop-repeat2/error-context.md
+
+  9) [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a detented Sheet appears and leaves on a fade 
+
+    Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {"in":{"fading":26,"rises":true,"falls":true,"span":191,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"fading":25,"rises":true,"falls":true,"span":197,"boxSteps":0,"stepped":[],"from":1,"to":0},"leave":[3],"frost":{"in":{"frames":93,"gap":1,"first":1,"last":1,"plateLast":1,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1}},"out":{"frames":28,"gap":0.989,"first":1,"last":1,"plateLast":0.011,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":1,"to":0}}}}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.02
+    Received:    1
+
+      228 |             for (const dir of ["in", "out"] as const) {
+      229 |                 expect(frost[dir].frames, `${dir}: the frost layer is filmed ${at}`).toBeGreaterThan(0);
+    > 230 |                 expect(frost[dir].gap, `${dir}: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's ${at}`).toBeLessThanOrEqual(0.02);
+          |                                                                                                                                              ^
+      231 |                 expectFade(frost[dir].leg, dir, `frost layer ${at}`);
+      232 |             }
+      233 |             expect(frost.in.first, `in: the frost layer enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts:230:142
+
+    Error Context: test-results/release-11-1-1-reduce-fade-ccbe5-ppears-and-leaves-on-a-fade-chromium-desktop-repeat2/error-context.md
+
+  9 failed
+    [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet right appears and leaves on a fade 
+    [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet bottom appears and leaves on a fade 
+    [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a detented Sheet appears and leaves on a fade 
+    [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet right appears and leaves on a fade 
+    [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet bottom appears and leaves on a fade 
+    [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a detented Sheet appears and leaves on a fade 
+    [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet right appears and leaves on a fade 
+    [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet bottom appears and leaves on a fade 
+    [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a detented Sheet appears and leaves on a fade 

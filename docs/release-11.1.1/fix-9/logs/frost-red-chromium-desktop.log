@@ -1,0 +1,223 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 9 tests using 1 worker
+
+[WebServer] 5:25:55 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  1 [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet right appears and leaves on a fade (2.8s)
+[WebServer] 5:25:58 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  2 [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet bottom appears and leaves on a fade (2.7s)
+[WebServer] 5:26:01 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  3 [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a detented Sheet appears and leaves on a fade (2.8s)
+[WebServer] 5:26:04 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  4 [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet right appears and leaves on a fade (2.8s)
+[WebServer] 5:26:08 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  5 [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet bottom appears and leaves on a fade (2.7s)
+[WebServer] 5:26:11 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  6 [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a detented Sheet appears and leaves on a fade (2.8s)
+[WebServer] 5:26:14 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  7 [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet right appears and leaves on a fade (2.7s)
+[WebServer] 5:26:17 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  8 [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet bottom appears and leaves on a fade (2.7s)
+[WebServer] 5:26:20 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  9 [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a detented Sheet appears and leaves on a fade (2.6s)
+
+
+  1) [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet right appears and leaves on a fade 
+
+    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":1,"to":0},"leave":[],"frost":{"in":{"frames":96,"gap":0,"first":1,"last":1,"plateLast":1,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1}},"out":{"frames":0,"gap":0,"first":null,"last":null,"plateLast":null,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":1,"to":0}}}}
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 2
+    Received:    0
+
+      100 |
+      101 | function expectFade(leg: Leg, dir: "in" | "out", at: string): void {
+    > 102 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);
+          |                                                                            ^
+      103 |     expect(dir === "in" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);
+      104 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);
+      105 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);
+        at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:102:76)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:225:9
+
+    Error Context: test-results/release-11-1-1-reduce-fade-cfeca-ppears-and-leaves-on-a-fade-chromium-desktop/error-context.md
+
+  2) [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet bottom appears and leaves on a fade 
+
+    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":1,"to":0},"leave":[],"frost":{"in":{"frames":95,"gap":0,"first":1,"last":1,"plateLast":1,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1}},"out":{"frames":0,"gap":0,"first":null,"last":null,"plateLast":null,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":1,"to":0}}}}
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 2
+    Received:    0
+
+      100 |
+      101 | function expectFade(leg: Leg, dir: "in" | "out", at: string): void {
+    > 102 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);
+          |                                                                            ^
+      103 |     expect(dir === "in" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);
+      104 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);
+      105 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);
+        at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:102:76)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:225:9
+
+    Error Context: test-results/release-11-1-1-reduce-fade-1f21c-ppears-and-leaves-on-a-fade-chromium-desktop/error-context.md
+
+  3) [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a detented Sheet appears and leaves on a fade 
+
+    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":1,"to":0},"leave":[],"frost":{"in":{"frames":96,"gap":0,"first":1,"last":1,"plateLast":1,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1}},"out":{"frames":0,"gap":0,"first":null,"last":null,"plateLast":null,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":1,"to":0}}}}
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 2
+    Received:    0
+
+      100 |
+      101 | function expectFade(leg: Leg, dir: "in" | "out", at: string): void {
+    > 102 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);
+          |                                                                            ^
+      103 |     expect(dir === "in" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);
+      104 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);
+      105 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);
+        at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:102:76)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:225:9
+
+    Error Context: test-results/release-11-1-1-reduce-fade-ccbe5-ppears-and-leaves-on-a-fade-chromium-desktop/error-context.md
+
+  4) [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet right appears and leaves on a fade 
+
+    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":1,"to":0},"leave":[],"frost":{"in":{"frames":91,"gap":0,"first":1,"last":1,"plateLast":1,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1}},"out":{"frames":0,"gap":0,"first":null,"last":null,"plateLast":null,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":1,"to":0}}}}
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 2
+    Received:    0
+
+      100 |
+      101 | function expectFade(leg: Leg, dir: "in" | "out", at: string): void {
+    > 102 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);
+          |                                                                            ^
+      103 |     expect(dir === "in" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);
+      104 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);
+      105 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);
+        at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:102:76)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:225:9
+
+    Error Context: test-results/release-11-1-1-reduce-fade-cfeca-ppears-and-leaves-on-a-fade-chromium-desktop-repeat1/error-context.md
+
+  5) [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet bottom appears and leaves on a fade 
+
+    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":1,"to":0},"leave":[],"frost":{"in":{"frames":88,"gap":0,"first":1,"last":1,"plateLast":1,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1}},"out":{"frames":0,"gap":0,"first":null,"last":null,"plateLast":null,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":1,"to":0}}}}
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 2
+    Received:    0
+
+      100 |
+      101 | function expectFade(leg: Leg, dir: "in" | "out", at: string): void {
+    > 102 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);
+          |                                                                            ^
+      103 |     expect(dir === "in" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);
+      104 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);
+      105 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);
+        at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:102:76)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:225:9
+
+    Error Context: test-results/release-11-1-1-reduce-fade-1f21c-ppears-and-leaves-on-a-fade-chromium-desktop-repeat1/error-context.md
+
+  6) [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a detented Sheet appears and leaves on a fade 
+
+    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":1,"to":0},"leave":[],"frost":{"in":{"frames":92,"gap":0,"first":1,"last":1,"plateLast":1,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1}},"out":{"frames":0,"gap":0,"first":null,"last":null,"plateLast":null,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":1,"to":0}}}}
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 2
+    Received:    0
+
+      100 |
+      101 | function expectFade(leg: Leg, dir: "in" | "out", at: string): void {
+    > 102 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);
+          |                                                                            ^
+      103 |     expect(dir === "in" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);
+      104 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);
+      105 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);
+        at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:102:76)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:225:9
+
+    Error Context: test-results/release-11-1-1-reduce-fade-ccbe5-ppears-and-leaves-on-a-fade-chromium-desktop-repeat1/error-context.md
+
+  7) [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet right appears and leaves on a fade 
+
+    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":1,"to":0},"leave":[],"frost":{"in":{"frames":94,"gap":0,"first":1,"last":1,"plateLast":1,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1}},"out":{"frames":0,"gap":0,"first":null,"last":null,"plateLast":null,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":1,"to":0}}}}
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 2
+    Received:    0
+
+      100 |
+      101 | function expectFade(leg: Leg, dir: "in" | "out", at: string): void {
+    > 102 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);
+          |                                                                            ^
+      103 |     expect(dir === "in" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);
+      104 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);
+      105 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);
+        at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:102:76)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:225:9
+
+    Error Context: test-results/release-11-1-1-reduce-fade-cfeca-ppears-and-leaves-on-a-fade-chromium-desktop-repeat2/error-context.md
+
+  8) [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet bottom appears and leaves on a fade 
+
+    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":1,"to":0},"leave":[],"frost":{"in":{"frames":95,"gap":0,"first":1,"last":1,"plateLast":1,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1}},"out":{"frames":0,"gap":0,"first":null,"last":null,"plateLast":null,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":1,"to":0}}}}
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 2
+    Received:    0
+
+      100 |
+      101 | function expectFade(leg: Leg, dir: "in" | "out", at: string): void {
+    > 102 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);
+          |                                                                            ^
+      103 |     expect(dir === "in" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);
+      104 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);
+      105 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);
+        at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:102:76)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:225:9
+
+    Error Context: test-results/release-11-1-1-reduce-fade-1f21c-ppears-and-leaves-on-a-fade-chromium-desktop-repeat2/error-context.md
+
+  9) [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a detented Sheet appears and leaves on a fade 
+
+    Error: in: the fade spans at least two frames {"in":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":1,"to":0},"leave":[],"frost":{"in":{"frames":93,"gap":0,"first":1,"last":1,"plateLast":1,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":0,"to":1}},"out":{"frames":0,"gap":0,"first":null,"last":null,"plateLast":null,"leg":{"fading":0,"rises":true,"falls":true,"span":0,"boxSteps":0,"stepped":[],"from":1,"to":0}}}}
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 2
+    Received:    0
+
+      100 |
+      101 | function expectFade(leg: Leg, dir: "in" | "out", at: string): void {
+    > 102 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);
+          |                                                                            ^
+      103 |     expect(dir === "in" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);
+      104 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);
+      105 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);
+        at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:102:76)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:225:9
+
+    Error Context: test-results/release-11-1-1-reduce-fade-ccbe5-ppears-and-leaves-on-a-fade-chromium-desktop-repeat2/error-context.md
+
+  9 failed
+    [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet right appears and leaves on a fade 
+    [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet bottom appears and leaves on a fade 
+    [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a detented Sheet appears and leaves on a fade 
+    [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet right appears and leaves on a fade 
+    [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet bottom appears and leaves on a fade 
+    [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a detented Sheet appears and leaves on a fade 
+    [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet right appears and leaves on a fade 
+    [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet bottom appears and leaves on a fade 
+    [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a detented Sheet appears and leaves on a fade 

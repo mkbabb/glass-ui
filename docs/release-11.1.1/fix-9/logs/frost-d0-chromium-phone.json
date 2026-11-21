@@ -1,0 +1,712 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "release-11-1-1.config.ts",
+      "--project=chromium-phone",
+      "--workers=1",
+      "-g",
+      "fade · a (Sheet right|Sheet bottom|detented Sheet) appears",
+      "--repeat-each=3"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/test-results",
+        "repeatEach": 3,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-9/logs/frost-d0-chromium-phone.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5353",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/",
+      "url": "http://localhost:5353",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1-reduce.spec.ts",
+      "file": "release-11-1-1-reduce.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "fade · a Sheet right appears and leaves on a fade",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2863,
+                  "error": {
+                    "message": "Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {\"in\":{\"fading\":23,\"rises\":true,\"falls\":true,\"span\":198,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":23,\"rises\":true,\"falls\":true,\"span\":192,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[2],\"frost\":{\"in\":{\"frames\":91,\"gap\":1,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":26,\"gap\":0.984,\"first\":1,\"last\":1,\"plateLast\":0.016,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m",
+                    "stack": "Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {\"in\":{\"fading\":23,\"rises\":true,\"falls\":true,\"span\":198,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":23,\"rises\":true,\"falls\":true,\"span\":192,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[2],\"frost\":{\"in\":{\"frames\":91,\"gap\":1,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":26,\"gap\":0.984,\"first\":1,\"last\":1,\"plateLast\":0.016,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts:230:142",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                      "column": 142,
+                      "line": 230
+                    },
+                    "snippet": "  228 |             for (const dir of [\"in\", \"out\"] as const) {\n  229 |                 expect(frost[dir].frames, `${dir}: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 230 |                 expect(frost[dir].gap, `${dir}: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's ${at}`).toBeLessThanOrEqual(0.02);\n      |                                                                                                                                              ^\n  231 |                 expectFade(frost[dir].leg, dir, `frost layer ${at}`);\n  232 |             }\n  233 |             expect(frost.in.first, `in: the frost layer enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                        "column": 142,
+                        "line": 230
+                      },
+                      "message": "Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {\"in\":{\"fading\":23,\"rises\":true,\"falls\":true,\"span\":198,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":23,\"rises\":true,\"falls\":true,\"span\":192,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[2],\"frost\":{\"in\":{\"frames\":91,\"gap\":1,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":26,\"gap\":0.984,\"first\":1,\"last\":1,\"plateLast\":0.016,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n\n  228 |             for (const dir of [\"in\", \"out\"] as const) {\n  229 |                 expect(frost[dir].frames, `${dir}: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 230 |                 expect(frost[dir].gap, `${dir}: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's ${at}`).toBeLessThanOrEqual(0.02);\n      |                                                                                                                                              ^\n  231 |                 expectFade(frost[dir].leg, dir, `frost layer ${at}`);\n  232 |             }\n  233 |             expect(frost.in.first, `in: the frost layer enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts:230:142"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T22:24:45.137Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjIzLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5OCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjIzLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbMl0sImZyb3N0Ijp7ImluIjp7ImZyYW1lcyI6OTEsImdhcCI6MSwiZmlyc3QiOjEsImxhc3QiOjEsInBsYXRlTGFzdCI6MSwibGVnIjp7ImZhZGluZyI6MCwicmlzZXMiOnRydWUsImZhbGxzIjp0cnVlLCJzcGFuIjowLCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjAsInRvIjoxfX0sIm91dCI6eyJmcmFtZXMiOjI2LCJnYXAiOjAuOTg0LCJmaXJzdCI6MSwibGFzdCI6MSwicGxhdGVMYXN0IjowLjAxNiwibGVnIjp7ImZhZGluZyI6MCwicmlzZXMiOnRydWUsImZhbGxzIjp0cnVlLCJzcGFuIjowLCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjEsInRvIjowfX19fQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/test-results/release-11-1-1-reduce-fade-cfeca-ppears-and-leaves-on-a-fade-chromium-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                    "column": 142,
+                    "line": 230
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2642,
+                  "error": {
+                    "message": "Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {\"in\":{\"fading\":24,\"rises\":true,\"falls\":true,\"span\":198,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":24,\"rises\":true,\"falls\":true,\"span\":193,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[7],\"frost\":{\"in\":{\"frames\":91,\"gap\":1,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":27,\"gap\":0.997,\"first\":1,\"last\":1,\"plateLast\":0.003,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m",
+                    "stack": "Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {\"in\":{\"fading\":24,\"rises\":true,\"falls\":true,\"span\":198,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":24,\"rises\":true,\"falls\":true,\"span\":193,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[7],\"frost\":{\"in\":{\"frames\":91,\"gap\":1,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":27,\"gap\":0.997,\"first\":1,\"last\":1,\"plateLast\":0.003,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts:230:142",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                      "column": 142,
+                      "line": 230
+                    },
+                    "snippet": "  228 |             for (const dir of [\"in\", \"out\"] as const) {\n  229 |                 expect(frost[dir].frames, `${dir}: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 230 |                 expect(frost[dir].gap, `${dir}: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's ${at}`).toBeLessThanOrEqual(0.02);\n      |                                                                                                                                              ^\n  231 |                 expectFade(frost[dir].leg, dir, `frost layer ${at}`);\n  232 |             }\n  233 |             expect(frost.in.first, `in: the frost layer enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                        "column": 142,
+                        "line": 230
+                      },
+                      "message": "Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {\"in\":{\"fading\":24,\"rises\":true,\"falls\":true,\"span\":198,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":24,\"rises\":true,\"falls\":true,\"span\":193,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[7],\"frost\":{\"in\":{\"frames\":91,\"gap\":1,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":27,\"gap\":0.997,\"first\":1,\"last\":1,\"plateLast\":0.003,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n\n  228 |             for (const dir of [\"in\", \"out\"] as const) {\n  229 |                 expect(frost[dir].frames, `${dir}: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 230 |                 expect(frost[dir].gap, `${dir}: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's ${at}`).toBeLessThanOrEqual(0.02);\n      |                                                                                                                                              ^\n  231 |                 expectFade(frost[dir].leg, dir, `frost layer ${at}`);\n  232 |             }\n  233 |             expect(frost.in.first, `in: the frost layer enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts:230:142"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T22:24:54.794Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjI0LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5OCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjI0LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MywiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbN10sImZyb3N0Ijp7ImluIjp7ImZyYW1lcyI6OTEsImdhcCI6MSwiZmlyc3QiOjEsImxhc3QiOjEsInBsYXRlTGFzdCI6MSwibGVnIjp7ImZhZGluZyI6MCwicmlzZXMiOnRydWUsImZhbGxzIjp0cnVlLCJzcGFuIjowLCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjAsInRvIjoxfX0sIm91dCI6eyJmcmFtZXMiOjI3LCJnYXAiOjAuOTk3LCJmaXJzdCI6MSwibGFzdCI6MSwicGxhdGVMYXN0IjowLjAwMywibGVnIjp7ImZhZGluZyI6MCwicmlzZXMiOnRydWUsImZhbGxzIjp0cnVlLCJzcGFuIjowLCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjEsInRvIjowfX19fQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/test-results/release-11-1-1-reduce-fade-cfeca-ppears-and-leaves-on-a-fade-chromium-phone-repeat1/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                    "column": 142,
+                    "line": 230
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2832,
+                  "error": {
+                    "message": "Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {\"in\":{\"fading\":25,\"rises\":true,\"falls\":true,\"span\":198,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":24,\"rises\":true,\"falls\":true,\"span\":196,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[11],\"frost\":{\"in\":{\"frames\":95,\"gap\":1,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":28,\"gap\":0.993,\"first\":1,\"last\":1,\"plateLast\":0.007,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m",
+                    "stack": "Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {\"in\":{\"fading\":25,\"rises\":true,\"falls\":true,\"span\":198,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":24,\"rises\":true,\"falls\":true,\"span\":196,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[11],\"frost\":{\"in\":{\"frames\":95,\"gap\":1,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":28,\"gap\":0.993,\"first\":1,\"last\":1,\"plateLast\":0.007,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts:230:142",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                      "column": 142,
+                      "line": 230
+                    },
+                    "snippet": "  228 |             for (const dir of [\"in\", \"out\"] as const) {\n  229 |                 expect(frost[dir].frames, `${dir}: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 230 |                 expect(frost[dir].gap, `${dir}: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's ${at}`).toBeLessThanOrEqual(0.02);\n      |                                                                                                                                              ^\n  231 |                 expectFade(frost[dir].leg, dir, `frost layer ${at}`);\n  232 |             }\n  233 |             expect(frost.in.first, `in: the frost layer enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                        "column": 142,
+                        "line": 230
+                      },
+                      "message": "Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {\"in\":{\"fading\":25,\"rises\":true,\"falls\":true,\"span\":198,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":24,\"rises\":true,\"falls\":true,\"span\":196,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[11],\"frost\":{\"in\":{\"frames\":95,\"gap\":1,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":28,\"gap\":0.993,\"first\":1,\"last\":1,\"plateLast\":0.007,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n\n  228 |             for (const dir of [\"in\", \"out\"] as const) {\n  229 |                 expect(frost[dir].frames, `${dir}: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 230 |                 expect(frost[dir].gap, `${dir}: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's ${at}`).toBeLessThanOrEqual(0.02);\n      |                                                                                                                                              ^\n  231 |                 expectFade(frost[dir].leg, dir, `frost layer ${at}`);\n  232 |             }\n  233 |             expect(frost.in.first, `in: the frost layer enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts:230:142"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T22:25:04.277Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjI1LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5OCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjI0LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5NiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbMTFdLCJmcm9zdCI6eyJpbiI6eyJmcmFtZXMiOjk1LCJnYXAiOjEsImZpcnN0IjoxLCJsYXN0IjoxLCJwbGF0ZUxhc3QiOjEsImxlZyI6eyJmYWRpbmciOjAsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX19LCJvdXQiOnsiZnJhbWVzIjoyOCwiZ2FwIjowLjk5MywiZmlyc3QiOjEsImxhc3QiOjEsInBsYXRlTGFzdCI6MC4wMDcsImxlZyI6eyJmYWRpbmciOjAsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH19fX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/test-results/release-11-1-1-reduce-fade-cfeca-ppears-and-leaves-on-a-fade-chromium-phone-repeat2/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                    "column": 142,
+                    "line": 230
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-83497baecab9eeb4f4b3",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 196,
+          "column": 5
+        },
+        {
+          "title": "fade · a Sheet bottom appears and leaves on a fade",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2686,
+                  "error": {
+                    "message": "Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {\"in\":{\"fading\":26,\"rises\":true,\"falls\":true,\"span\":192,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":25,\"rises\":true,\"falls\":true,\"span\":192,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[2],\"frost\":{\"in\":{\"frames\":92,\"gap\":1,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":27,\"gap\":0.979,\"first\":1,\"last\":1,\"plateLast\":0.021,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m",
+                    "stack": "Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {\"in\":{\"fading\":26,\"rises\":true,\"falls\":true,\"span\":192,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":25,\"rises\":true,\"falls\":true,\"span\":192,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[2],\"frost\":{\"in\":{\"frames\":92,\"gap\":1,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":27,\"gap\":0.979,\"first\":1,\"last\":1,\"plateLast\":0.021,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts:230:142",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                      "column": 142,
+                      "line": 230
+                    },
+                    "snippet": "  228 |             for (const dir of [\"in\", \"out\"] as const) {\n  229 |                 expect(frost[dir].frames, `${dir}: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 230 |                 expect(frost[dir].gap, `${dir}: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's ${at}`).toBeLessThanOrEqual(0.02);\n      |                                                                                                                                              ^\n  231 |                 expectFade(frost[dir].leg, dir, `frost layer ${at}`);\n  232 |             }\n  233 |             expect(frost.in.first, `in: the frost layer enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                        "column": 142,
+                        "line": 230
+                      },
+                      "message": "Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {\"in\":{\"fading\":26,\"rises\":true,\"falls\":true,\"span\":192,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":25,\"rises\":true,\"falls\":true,\"span\":192,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[2],\"frost\":{\"in\":{\"frames\":92,\"gap\":1,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":27,\"gap\":0.979,\"first\":1,\"last\":1,\"plateLast\":0.021,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n\n  228 |             for (const dir of [\"in\", \"out\"] as const) {\n  229 |                 expect(frost[dir].frames, `${dir}: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 230 |                 expect(frost[dir].gap, `${dir}: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's ${at}`).toBeLessThanOrEqual(0.02);\n      |                                                                                                                                              ^\n  231 |                 expectFade(frost[dir].leg, dir, `frost layer ${at}`);\n  232 |             }\n  233 |             expect(frost.in.first, `in: the frost layer enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts:230:142"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T22:24:48.448Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjI2LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjI1LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbMl0sImZyb3N0Ijp7ImluIjp7ImZyYW1lcyI6OTIsImdhcCI6MSwiZmlyc3QiOjEsImxhc3QiOjEsInBsYXRlTGFzdCI6MSwibGVnIjp7ImZhZGluZyI6MCwicmlzZXMiOnRydWUsImZhbGxzIjp0cnVlLCJzcGFuIjowLCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjAsInRvIjoxfX0sIm91dCI6eyJmcmFtZXMiOjI3LCJnYXAiOjAuOTc5LCJmaXJzdCI6MSwibGFzdCI6MSwicGxhdGVMYXN0IjowLjAyMSwibGVnIjp7ImZhZGluZyI6MCwicmlzZXMiOnRydWUsImZhbGxzIjp0cnVlLCJzcGFuIjowLCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjEsInRvIjowfX19fQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/test-results/release-11-1-1-reduce-fade-1f21c-ppears-and-leaves-on-a-fade-chromium-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                    "column": 142,
+                    "line": 230
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2622,
+                  "error": {
+                    "message": "Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {\"in\":{\"fading\":25,\"rises\":true,\"falls\":true,\"span\":200,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":26,\"rises\":true,\"falls\":true,\"span\":198,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[2],\"frost\":{\"in\":{\"frames\":92,\"gap\":1,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":29,\"gap\":0.985,\"first\":1,\"last\":1,\"plateLast\":0.015,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m",
+                    "stack": "Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {\"in\":{\"fading\":25,\"rises\":true,\"falls\":true,\"span\":200,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":26,\"rises\":true,\"falls\":true,\"span\":198,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[2],\"frost\":{\"in\":{\"frames\":92,\"gap\":1,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":29,\"gap\":0.985,\"first\":1,\"last\":1,\"plateLast\":0.015,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts:230:142",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                      "column": 142,
+                      "line": 230
+                    },
+                    "snippet": "  228 |             for (const dir of [\"in\", \"out\"] as const) {\n  229 |                 expect(frost[dir].frames, `${dir}: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 230 |                 expect(frost[dir].gap, `${dir}: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's ${at}`).toBeLessThanOrEqual(0.02);\n      |                                                                                                                                              ^\n  231 |                 expectFade(frost[dir].leg, dir, `frost layer ${at}`);\n  232 |             }\n  233 |             expect(frost.in.first, `in: the frost layer enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                        "column": 142,
+                        "line": 230
+                      },
+                      "message": "Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {\"in\":{\"fading\":25,\"rises\":true,\"falls\":true,\"span\":200,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":26,\"rises\":true,\"falls\":true,\"span\":198,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[2],\"frost\":{\"in\":{\"frames\":92,\"gap\":1,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":29,\"gap\":0.985,\"first\":1,\"last\":1,\"plateLast\":0.015,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n\n  228 |             for (const dir of [\"in\", \"out\"] as const) {\n  229 |                 expect(frost[dir].frames, `${dir}: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 230 |                 expect(frost[dir].gap, `${dir}: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's ${at}`).toBeLessThanOrEqual(0.02);\n      |                                                                                                                                              ^\n  231 |                 expectFade(frost[dir].leg, dir, `frost layer ${at}`);\n  232 |             }\n  233 |             expect(frost.in.first, `in: the frost layer enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts:230:142"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T22:24:57.820Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjI1LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjIwMCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjI2LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5OCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbMl0sImZyb3N0Ijp7ImluIjp7ImZyYW1lcyI6OTIsImdhcCI6MSwiZmlyc3QiOjEsImxhc3QiOjEsInBsYXRlTGFzdCI6MSwibGVnIjp7ImZhZGluZyI6MCwicmlzZXMiOnRydWUsImZhbGxzIjp0cnVlLCJzcGFuIjowLCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjAsInRvIjoxfX0sIm91dCI6eyJmcmFtZXMiOjI5LCJnYXAiOjAuOTg1LCJmaXJzdCI6MSwibGFzdCI6MSwicGxhdGVMYXN0IjowLjAxNSwibGVnIjp7ImZhZGluZyI6MCwicmlzZXMiOnRydWUsImZhbGxzIjp0cnVlLCJzcGFuIjowLCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjEsInRvIjowfX19fQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/test-results/release-11-1-1-reduce-fade-1f21c-ppears-and-leaves-on-a-fade-chromium-phone-repeat1/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                    "column": 142,
+                    "line": 230
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2709,
+                  "error": {
+                    "message": "Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {\"in\":{\"fading\":23,\"rises\":true,\"falls\":true,\"span\":198,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":26,\"rises\":true,\"falls\":true,\"span\":194,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[10],\"frost\":{\"in\":{\"frames\":90,\"gap\":1,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":29,\"gap\":0.996,\"first\":1,\"last\":1,\"plateLast\":0.004,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m",
+                    "stack": "Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {\"in\":{\"fading\":23,\"rises\":true,\"falls\":true,\"span\":198,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":26,\"rises\":true,\"falls\":true,\"span\":194,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[10],\"frost\":{\"in\":{\"frames\":90,\"gap\":1,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":29,\"gap\":0.996,\"first\":1,\"last\":1,\"plateLast\":0.004,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts:230:142",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                      "column": 142,
+                      "line": 230
+                    },
+                    "snippet": "  228 |             for (const dir of [\"in\", \"out\"] as const) {\n  229 |                 expect(frost[dir].frames, `${dir}: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 230 |                 expect(frost[dir].gap, `${dir}: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's ${at}`).toBeLessThanOrEqual(0.02);\n      |                                                                                                                                              ^\n  231 |                 expectFade(frost[dir].leg, dir, `frost layer ${at}`);\n  232 |             }\n  233 |             expect(frost.in.first, `in: the frost layer enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                        "column": 142,
+                        "line": 230
+                      },
+                      "message": "Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {\"in\":{\"fading\":23,\"rises\":true,\"falls\":true,\"span\":198,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":26,\"rises\":true,\"falls\":true,\"span\":194,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[10],\"frost\":{\"in\":{\"frames\":90,\"gap\":1,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":29,\"gap\":0.996,\"first\":1,\"last\":1,\"plateLast\":0.004,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n\n  228 |             for (const dir of [\"in\", \"out\"] as const) {\n  229 |                 expect(frost[dir].frames, `${dir}: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 230 |                 expect(frost[dir].gap, `${dir}: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's ${at}`).toBeLessThanOrEqual(0.02);\n      |                                                                                                                                              ^\n  231 |                 expectFade(frost[dir].leg, dir, `frost layer ${at}`);\n  232 |             }\n  233 |             expect(frost.in.first, `in: the frost layer enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts:230:142"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T22:25:07.836Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjIzLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5OCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjI2LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5NCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbMTBdLCJmcm9zdCI6eyJpbiI6eyJmcmFtZXMiOjkwLCJnYXAiOjEsImZpcnN0IjoxLCJsYXN0IjoxLCJwbGF0ZUxhc3QiOjEsImxlZyI6eyJmYWRpbmciOjAsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX19LCJvdXQiOnsiZnJhbWVzIjoyOSwiZ2FwIjowLjk5NiwiZmlyc3QiOjEsImxhc3QiOjEsInBsYXRlTGFzdCI6MC4wMDQsImxlZyI6eyJmYWRpbmciOjAsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH19fX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/test-results/release-11-1-1-reduce-fade-1f21c-ppears-and-leaves-on-a-fade-chromium-phone-repeat2/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                    "column": 142,
+                    "line": 230
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-08c56a09e2d1a2b4ef88",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 196,
+          "column": 5
+        },
+        {
+          "title": "fade · a detented Sheet appears and leaves on a fade",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2711,
+                  "error": {
+                    "message": "Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {\"in\":{\"fading\":24,\"rises\":true,\"falls\":true,\"span\":196,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":24,\"rises\":true,\"falls\":true,\"span\":193,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[11],\"frost\":{\"in\":{\"frames\":94,\"gap\":1,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":27,\"gap\":0.997,\"first\":1,\"last\":1,\"plateLast\":0.003,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m",
+                    "stack": "Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {\"in\":{\"fading\":24,\"rises\":true,\"falls\":true,\"span\":196,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":24,\"rises\":true,\"falls\":true,\"span\":193,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[11],\"frost\":{\"in\":{\"frames\":94,\"gap\":1,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":27,\"gap\":0.997,\"first\":1,\"last\":1,\"plateLast\":0.003,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts:230:142",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                      "column": 142,
+                      "line": 230
+                    },
+                    "snippet": "  228 |             for (const dir of [\"in\", \"out\"] as const) {\n  229 |                 expect(frost[dir].frames, `${dir}: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 230 |                 expect(frost[dir].gap, `${dir}: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's ${at}`).toBeLessThanOrEqual(0.02);\n      |                                                                                                                                              ^\n  231 |                 expectFade(frost[dir].leg, dir, `frost layer ${at}`);\n  232 |             }\n  233 |             expect(frost.in.first, `in: the frost layer enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                        "column": 142,
+                        "line": 230
+                      },
+                      "message": "Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {\"in\":{\"fading\":24,\"rises\":true,\"falls\":true,\"span\":196,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":24,\"rises\":true,\"falls\":true,\"span\":193,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[11],\"frost\":{\"in\":{\"frames\":94,\"gap\":1,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":27,\"gap\":0.997,\"first\":1,\"last\":1,\"plateLast\":0.003,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n\n  228 |             for (const dir of [\"in\", \"out\"] as const) {\n  229 |                 expect(frost[dir].frames, `${dir}: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 230 |                 expect(frost[dir].gap, `${dir}: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's ${at}`).toBeLessThanOrEqual(0.02);\n      |                                                                                                                                              ^\n  231 |                 expectFade(frost[dir].leg, dir, `frost layer ${at}`);\n  232 |             }\n  233 |             expect(frost.in.first, `in: the frost layer enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts:230:142"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T22:24:51.659Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjI0LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5NiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjI0LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MywiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbMTFdLCJmcm9zdCI6eyJpbiI6eyJmcmFtZXMiOjk0LCJnYXAiOjEsImZpcnN0IjoxLCJsYXN0IjoxLCJwbGF0ZUxhc3QiOjEsImxlZyI6eyJmYWRpbmciOjAsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX19LCJvdXQiOnsiZnJhbWVzIjoyNywiZ2FwIjowLjk5NywiZmlyc3QiOjEsImxhc3QiOjEsInBsYXRlTGFzdCI6MC4wMDMsImxlZyI6eyJmYWRpbmciOjAsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH19fX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/test-results/release-11-1-1-reduce-fade-ccbe5-ppears-and-leaves-on-a-fade-chromium-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                    "column": 142,
+                    "line": 230
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2728,
+                  "error": {
+                    "message": "Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {\"in\":{\"fading\":24,\"rises\":true,\"falls\":true,\"span\":191,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":23,\"rises\":true,\"falls\":true,\"span\":196,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[11],\"frost\":{\"in\":{\"frames\":90,\"gap\":1,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":26,\"gap\":0.99,\"first\":1,\"last\":1,\"plateLast\":0.01,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m",
+                    "stack": "Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {\"in\":{\"fading\":24,\"rises\":true,\"falls\":true,\"span\":191,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":23,\"rises\":true,\"falls\":true,\"span\":196,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[11],\"frost\":{\"in\":{\"frames\":90,\"gap\":1,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":26,\"gap\":0.99,\"first\":1,\"last\":1,\"plateLast\":0.01,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts:230:142",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                      "column": 142,
+                      "line": 230
+                    },
+                    "snippet": "  228 |             for (const dir of [\"in\", \"out\"] as const) {\n  229 |                 expect(frost[dir].frames, `${dir}: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 230 |                 expect(frost[dir].gap, `${dir}: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's ${at}`).toBeLessThanOrEqual(0.02);\n      |                                                                                                                                              ^\n  231 |                 expectFade(frost[dir].leg, dir, `frost layer ${at}`);\n  232 |             }\n  233 |             expect(frost.in.first, `in: the frost layer enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                        "column": 142,
+                        "line": 230
+                      },
+                      "message": "Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {\"in\":{\"fading\":24,\"rises\":true,\"falls\":true,\"span\":191,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":23,\"rises\":true,\"falls\":true,\"span\":196,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[11],\"frost\":{\"in\":{\"frames\":90,\"gap\":1,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":26,\"gap\":0.99,\"first\":1,\"last\":1,\"plateLast\":0.01,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n\n  228 |             for (const dir of [\"in\", \"out\"] as const) {\n  229 |                 expect(frost[dir].frames, `${dir}: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 230 |                 expect(frost[dir].gap, `${dir}: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's ${at}`).toBeLessThanOrEqual(0.02);\n      |                                                                                                                                              ^\n  231 |                 expectFade(frost[dir].leg, dir, `frost layer ${at}`);\n  232 |             }\n  233 |             expect(frost.in.first, `in: the frost layer enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts:230:142"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T22:25:00.942Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjI0LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MSwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjIzLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5NiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbMTFdLCJmcm9zdCI6eyJpbiI6eyJmcmFtZXMiOjkwLCJnYXAiOjEsImZpcnN0IjoxLCJsYXN0IjoxLCJwbGF0ZUxhc3QiOjEsImxlZyI6eyJmYWRpbmciOjAsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX19LCJvdXQiOnsiZnJhbWVzIjoyNiwiZ2FwIjowLjk5LCJmaXJzdCI6MSwibGFzdCI6MSwicGxhdGVMYXN0IjowLjAxLCJsZWciOnsiZmFkaW5nIjowLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjAsImJveFN0ZXBzIjowLCJzdGVwcGVkIjpbXSwiZnJvbSI6MSwidG8iOjB9fX19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/test-results/release-11-1-1-reduce-fade-ccbe5-ppears-and-leaves-on-a-fade-chromium-phone-repeat1/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                    "column": 142,
+                    "line": 230
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2649,
+                  "error": {
+                    "message": "Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {\"in\":{\"fading\":24,\"rises\":true,\"falls\":true,\"span\":197,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":26,\"rises\":true,\"falls\":true,\"span\":200,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[2],\"frost\":{\"in\":{\"frames\":92,\"gap\":1,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":28,\"gap\":0.979,\"first\":1,\"last\":1,\"plateLast\":0.021,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m",
+                    "stack": "Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {\"in\":{\"fading\":24,\"rises\":true,\"falls\":true,\"span\":197,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":26,\"rises\":true,\"falls\":true,\"span\":200,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[2],\"frost\":{\"in\":{\"frames\":92,\"gap\":1,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":28,\"gap\":0.979,\"first\":1,\"last\":1,\"plateLast\":0.021,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts:230:142",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                      "column": 142,
+                      "line": 230
+                    },
+                    "snippet": "  228 |             for (const dir of [\"in\", \"out\"] as const) {\n  229 |                 expect(frost[dir].frames, `${dir}: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 230 |                 expect(frost[dir].gap, `${dir}: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's ${at}`).toBeLessThanOrEqual(0.02);\n      |                                                                                                                                              ^\n  231 |                 expectFade(frost[dir].leg, dir, `frost layer ${at}`);\n  232 |             }\n  233 |             expect(frost.in.first, `in: the frost layer enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                        "column": 142,
+                        "line": 230
+                      },
+                      "message": "Error: in: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's {\"in\":{\"fading\":24,\"rises\":true,\"falls\":true,\"span\":197,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":26,\"rises\":true,\"falls\":true,\"span\":200,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[2],\"frost\":{\"in\":{\"frames\":92,\"gap\":1,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":28,\"gap\":0.979,\"first\":1,\"last\":1,\"plateLast\":0.021,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.02\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n\n  228 |             for (const dir of [\"in\", \"out\"] as const) {\n  229 |                 expect(frost[dir].frames, `${dir}: the frost layer is filmed ${at}`).toBeGreaterThan(0);\n> 230 |                 expect(frost[dir].gap, `${dir}: on every frame the frost layer is mounted, its opacity is within 0.02 of the plate's ${at}`).toBeLessThanOrEqual(0.02);\n      |                                                                                                                                              ^\n  231 |                 expectFade(frost[dir].leg, dir, `frost layer ${at}`);\n  232 |             }\n  233 |             expect(frost.in.first, `in: the frost layer enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts:230:142"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T22:25:10.941Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjI0LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5NywiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjI2LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjIwMCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbMl0sImZyb3N0Ijp7ImluIjp7ImZyYW1lcyI6OTIsImdhcCI6MSwiZmlyc3QiOjEsImxhc3QiOjEsInBsYXRlTGFzdCI6MSwibGVnIjp7ImZhZGluZyI6MCwicmlzZXMiOnRydWUsImZhbGxzIjp0cnVlLCJzcGFuIjowLCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjAsInRvIjoxfX0sIm91dCI6eyJmcmFtZXMiOjI4LCJnYXAiOjAuOTc5LCJmaXJzdCI6MSwibGFzdCI6MSwicGxhdGVMYXN0IjowLjAyMSwibGVnIjp7ImZhZGluZyI6MCwicmlzZXMiOnRydWUsImZhbGxzIjp0cnVlLCJzcGFuIjowLCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjEsInRvIjowfX19fQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/test-results/release-11-1-1-reduce-fade-ccbe5-ppears-and-leaves-on-a-fade-chromium-phone-repeat2/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/fix7-tip/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                    "column": 142,
+                    "line": 230
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-e6cfe6150ba977d905ec",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 196,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-21T22:24:43.064Z",
+    "duration": 30652.752,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 9,
+    "flaky": 0
+  }
+}

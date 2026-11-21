@@ -1,0 +1,451 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "release-11-1-1.config.ts",
+      "--project=chromium-desktop",
+      "--workers=1",
+      "-g",
+      "fade · a (Sheet right|Sheet bottom|detented Sheet) appears",
+      "--repeat-each=3"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 3,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-9/logs/frost-branch-chromium-desktop.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1-reduce.spec.ts",
+      "file": "release-11-1-1-reduce.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "fade · a Sheet right appears and leaves on a fade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2840,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T22:27:08.391Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjI0LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5NiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjI2LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MSwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbMTFdLCJmcm9zdCI6eyJpbiI6eyJmcmFtZXMiOjkzLCJnYXAiOjAsImZpcnN0IjowLCJsYXN0IjoxLCJwbGF0ZUxhc3QiOjEsImxlZyI6eyJmYWRpbmciOjI0LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5NiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX19LCJvdXQiOnsiZnJhbWVzIjoyOSwiZ2FwIjowLCJmaXJzdCI6MSwibGFzdCI6MC4wMDQsInBsYXRlTGFzdCI6MC4wMDQsImxlZyI6eyJmYWRpbmciOjI2LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MSwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH19fX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2727,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T22:27:17.109Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjI0LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE4OCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjIyLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbM10sImZyb3N0Ijp7ImluIjp7ImZyYW1lcyI6OTMsImdhcCI6MCwiZmlyc3QiOjAsImxhc3QiOjEsInBsYXRlTGFzdCI6MSwibGVnIjp7ImZhZGluZyI6MjQsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MTg4LCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjAsInRvIjoxfX0sIm91dCI6eyJmcmFtZXMiOjI1LCJnYXAiOjAsImZpcnN0IjoxLCJsYXN0IjowLjAxOSwicGxhdGVMYXN0IjowLjAxOSwibGVnIjp7ImZhZGluZyI6MjIsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MTkyLCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjEsInRvIjowfX19fQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2796,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T22:27:25.930Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjI1LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MywiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjI1LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5OSwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbOV0sImZyb3N0Ijp7ImluIjp7ImZyYW1lcyI6OTUsImdhcCI6MCwiZmlyc3QiOjAsImxhc3QiOjEsInBsYXRlTGFzdCI6MSwibGVnIjp7ImZhZGluZyI6MjUsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MTkzLCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjAsInRvIjoxfX0sIm91dCI6eyJmcmFtZXMiOjI4LCJnYXAiOjAsImZpcnN0IjoxLCJsYXN0IjowLjAwOSwicGxhdGVMYXN0IjowLjAwOSwibGVnIjp7ImZhZGluZyI6MjUsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MTk5LCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjEsInRvIjowfX19fQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-4cf7218610484061d728",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 196,
+          "column": 5
+        },
+        {
+          "title": "fade · a Sheet bottom appears and leaves on a fade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2645,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T22:27:11.324Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjI1LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjI1LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbN10sImZyb3N0Ijp7ImluIjp7ImZyYW1lcyI6OTMsImdhcCI6MCwiZmlyc3QiOjAsImxhc3QiOjEsInBsYXRlTGFzdCI6MSwibGVnIjp7ImZhZGluZyI6MjUsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MTkwLCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjAsInRvIjoxfX0sIm91dCI6eyJmcmFtZXMiOjI4LCJnYXAiOjAsImZpcnN0IjoxLCJsYXN0IjowLjAwOSwicGxhdGVMYXN0IjowLjAwOSwibGVnIjp7ImZhZGluZyI6MjUsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MTkyLCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjEsInRvIjowfX19fQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2756,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T22:27:19.947Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjI0LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE4OCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjI0LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjIwMSwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbM10sImZyb3N0Ijp7ImluIjp7ImZyYW1lcyI6OTUsImdhcCI6MCwiZmlyc3QiOjAsImxhc3QiOjEsInBsYXRlTGFzdCI6MSwibGVnIjp7ImZhZGluZyI6MjQsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MTg4LCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjAsInRvIjoxfX0sIm91dCI6eyJmcmFtZXMiOjI3LCJnYXAiOjAsImZpcnN0IjoxLCJsYXN0IjowLjAxMiwicGxhdGVMYXN0IjowLjAxMiwibGVnIjp7ImZhZGluZyI6MjQsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MjAxLCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjEsInRvIjowfX19fQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2715,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T22:27:28.856Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjI0LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MSwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjI2LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE4OSwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbOV0sImZyb3N0Ijp7ImluIjp7ImZyYW1lcyI6OTIsImdhcCI6MCwiZmlyc3QiOjAsImxhc3QiOjEsInBsYXRlTGFzdCI6MSwibGVnIjp7ImZhZGluZyI6MjQsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MTkxLCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjAsInRvIjoxfX0sIm91dCI6eyJmcmFtZXMiOjI5LCJnYXAiOjAsImZpcnN0IjoxLCJsYXN0IjowLjAwNCwicGxhdGVMYXN0IjowLjAwNCwibGVnIjp7ImZhZGluZyI6MjYsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MTg5LCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjEsInRvIjowfX19fQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-069f09c849d8d4967eec",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 196,
+          "column": 5
+        },
+        {
+          "title": "fade · a detented Sheet appears and leaves on a fade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2689,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T22:27:13.976Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjI2LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjIwMCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjI1LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5OCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbMTJdLCJmcm9zdCI6eyJpbiI6eyJmcmFtZXMiOjk3LCJnYXAiOjAsImZpcnN0IjowLCJsYXN0IjoxLCJwbGF0ZUxhc3QiOjEsImxlZyI6eyJmYWRpbmciOjI2LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjIwMCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX19LCJvdXQiOnsiZnJhbWVzIjoyOCwiZ2FwIjowLCJmaXJzdCI6MSwibGFzdCI6MC4wMDEsInBsYXRlTGFzdCI6MC4wMDEsImxlZyI6eyJmYWRpbmciOjI1LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5OCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH19fX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2744,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T22:27:22.711Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjI1LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE4NSwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjI2LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MSwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbM10sImZyb3N0Ijp7ImluIjp7ImZyYW1lcyI6OTUsImdhcCI6MCwiZmlyc3QiOjAsImxhc3QiOjEsInBsYXRlTGFzdCI6MSwibGVnIjp7ImZhZGluZyI6MjUsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MTg1LCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjAsInRvIjoxfX0sIm91dCI6eyJmcmFtZXMiOjI5LCJnYXAiOjAsImZpcnN0IjoxLCJsYXN0IjowLjAyMSwicGxhdGVMYXN0IjowLjAyMSwibGVnIjp7ImZhZGluZyI6MjYsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MTkxLCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjEsInRvIjowfX19fQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2664,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T22:27:31.578Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjI2LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5NSwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjIzLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbMl0sImZyb3N0Ijp7ImluIjp7ImZyYW1lcyI6OTYsImdhcCI6MCwiZmlyc3QiOjAsImxhc3QiOjEsInBsYXRlTGFzdCI6MSwibGVnIjp7ImZhZGluZyI6MjYsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MTk1LCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjAsInRvIjoxfX0sIm91dCI6eyJmcmFtZXMiOjI1LCJnYXAiOjAsImZpcnN0IjoxLCJsYXN0IjowLjAzMiwicGxhdGVMYXN0IjowLjAzMiwibGVnIjp7ImZhZGluZyI6MjMsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MTkwLCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjEsInRvIjowfX19fQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-1d6089caf5dcfde170c2",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 196,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-21T22:27:06.677Z",
+    "duration": 27647.798,
+    "expected": 9,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

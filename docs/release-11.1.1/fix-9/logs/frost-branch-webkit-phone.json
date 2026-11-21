@@ -1,0 +1,451 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "release-11-1-1.config.ts",
+      "--project=webkit-phone",
+      "--workers=1",
+      "-g",
+      "fade · a (Sheet right|Sheet bottom|detented Sheet) appears",
+      "--repeat-each=3"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 3,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-9/logs/frost-branch-webkit-phone.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1-reduce.spec.ts",
+      "file": "release-11-1-1-reduce.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "fade · a Sheet right appears and leaves on a fade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3314,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T22:29:35.468Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5NSwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5OCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbNF0sImZyb3N0Ijp7ImluIjp7ImZyYW1lcyI6NzAsImdhcCI6MCwiZmlyc3QiOjAsImxhc3QiOjEsInBsYXRlTGFzdCI6MSwibGVnIjp7ImZhZGluZyI6MTksInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MTk1LCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjAsInRvIjoxfX0sIm91dCI6eyJmcmFtZXMiOjIyLCJnYXAiOjAsImZpcnN0IjoxLCJsYXN0IjowLjAxLCJwbGF0ZUxhc3QiOjAuMDEsImxlZyI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5OCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH19fX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3151,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T22:29:45.784Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5NCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5NCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbM10sImZyb3N0Ijp7ImluIjp7ImZyYW1lcyI6NzAsImdhcCI6MCwiZmlyc3QiOjAsImxhc3QiOjEsInBsYXRlTGFzdCI6MSwibGVnIjp7ImZhZGluZyI6MTksInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MTk0LCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjAsInRvIjoxfX0sIm91dCI6eyJmcmFtZXMiOjIxLCJnYXAiOjAsImZpcnN0IjoxLCJsYXN0IjowLjAyMSwicGxhdGVMYXN0IjowLjAyMSwibGVnIjp7ImZhZGluZyI6MTksInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MTk0LCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjEsInRvIjowfX19fQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2945,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T22:29:55.227Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5NSwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5NCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbMl0sImZyb3N0Ijp7ImluIjp7ImZyYW1lcyI6NzAsImdhcCI6MCwiZmlyc3QiOjAsImxhc3QiOjEsInBsYXRlTGFzdCI6MSwibGVnIjp7ImZhZGluZyI6MTksInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MTk1LCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjAsInRvIjoxfX0sIm91dCI6eyJmcmFtZXMiOjIxLCJnYXAiOjAsImZpcnN0IjoxLCJsYXN0IjowLjAyMSwicGxhdGVMYXN0IjowLjAyMSwibGVnIjp7ImZhZGluZyI6MTksInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MTk0LCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjEsInRvIjowfX19fQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-28a795ef8d1d0fcb390d",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 196,
+          "column": 5
+        },
+        {
+          "title": "fade · a Sheet bottom appears and leaves on a fade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3247,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T22:29:39.021Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjIwNiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5NSwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbNF0sImZyb3N0Ijp7ImluIjp7ImZyYW1lcyI6NzAsImdhcCI6MCwiZmlyc3QiOjAsImxhc3QiOjEsInBsYXRlTGFzdCI6MSwibGVnIjp7ImZhZGluZyI6MTksInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MjA2LCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjAsInRvIjoxfX0sIm91dCI6eyJmcmFtZXMiOjIxLCJnYXAiOjAsImZpcnN0IjoxLCJsYXN0IjowLjAzMiwicGxhdGVMYXN0IjowLjAzMiwibGVnIjp7ImZhZGluZyI6MTksInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MTk1LCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjEsInRvIjowfX19fQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2989,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T22:29:49.144Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjIwNCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5NSwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbM10sImZyb3N0Ijp7ImluIjp7ImZyYW1lcyI6NzAsImdhcCI6MCwiZmlyc3QiOjAsImxhc3QiOjEsInBsYXRlTGFzdCI6MSwibGVnIjp7ImZhZGluZyI6MTksInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MjA0LCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjAsInRvIjoxfX0sIm91dCI6eyJmcmFtZXMiOjIxLCJnYXAiOjAsImZpcnN0IjoxLCJsYXN0IjowLjAyNSwicGxhdGVMYXN0IjowLjAyNSwibGVnIjp7ImZhZGluZyI6MTksInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MTk1LCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjEsInRvIjowfX19fQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2837,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T22:29:58.312Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjIwOCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjIwNCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbM10sImZyb3N0Ijp7ImluIjp7ImZyYW1lcyI6NzAsImdhcCI6MCwiZmlyc3QiOjAsImxhc3QiOjEsInBsYXRlTGFzdCI6MSwibGVnIjp7ImZhZGluZyI6MTksInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MjA4LCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjAsInRvIjoxfX0sIm91dCI6eyJmcmFtZXMiOjIyLCJnYXAiOjAsImZpcnN0IjoxLCJsYXN0IjowLjAxLCJwbGF0ZUxhc3QiOjAuMDEsImxlZyI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjIwNCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH19fX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-6d6ac25fbc7eb9ae2348",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 196,
+          "column": 5
+        },
+        {
+          "title": "fade · a detented Sheet appears and leaves on a fade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3069,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T22:29:42.275Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjIwNCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5NiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbMl0sImZyb3N0Ijp7ImluIjp7ImZyYW1lcyI6NzAsImdhcCI6MCwiZmlyc3QiOjAsImxhc3QiOjEsInBsYXRlTGFzdCI6MSwibGVnIjp7ImZhZGluZyI6MTksInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MjA0LCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjAsInRvIjoxfX0sIm91dCI6eyJmcmFtZXMiOjIxLCJnYXAiOjAsImZpcnN0IjoxLCJsYXN0IjowLjAyOSwicGxhdGVMYXN0IjowLjAyOSwibGVnIjp7ImZhZGluZyI6MTksInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MTk2LCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjEsInRvIjowfX19fQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2834,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T22:29:52.140Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjIwLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjIwNCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MSwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbMl0sImZyb3N0Ijp7ImluIjp7ImZyYW1lcyI6NzEsImdhcCI6MCwiZmlyc3QiOjAsImxhc3QiOjEsInBsYXRlTGFzdCI6MSwibGVnIjp7ImZhZGluZyI6MjAsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MjA0LCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjAsInRvIjoxfX0sIm91dCI6eyJmcmFtZXMiOjIxLCJnYXAiOjAsImZpcnN0IjoxLCJsYXN0IjowLjAyNSwicGxhdGVMYXN0IjowLjAyNSwibGVnIjp7ImZhZGluZyI6MTksInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MTkxLCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjEsInRvIjowfX19fQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2850,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T22:30:01.154Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjIwNSwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjE5LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE5MiwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbM10sImZyb3N0Ijp7ImluIjp7ImZyYW1lcyI6NzAsImdhcCI6MCwiZmlyc3QiOjAsImxhc3QiOjEsInBsYXRlTGFzdCI6MSwibGVnIjp7ImZhZGluZyI6MTksInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MjA1LCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjAsInRvIjoxfX0sIm91dCI6eyJmcmFtZXMiOjIxLCJnYXAiOjAsImZpcnN0IjoxLCJsYXN0IjowLjAyMSwicGxhdGVMYXN0IjowLjAyMSwibGVnIjp7ImZhZGluZyI6MTksInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MTkyLCJib3hTdGVwcyI6MCwic3RlcHBlZCI6W10sImZyb20iOjEsInRvIjowfX19fQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-363a973c44e113a99367",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 196,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-21T22:29:33.727Z",
+    "duration": 30326.209,
+    "expected": 9,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

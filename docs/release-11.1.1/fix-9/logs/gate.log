@@ -1,0 +1,1021 @@
+
+> @mkbabb/glass-ui-tests-visual@0.0.0 gate:exits
+> bash release-11-1-1/gate.sh
+
+== exits · chromium-phone · (form|glass|exit|routes|round|weight|lift|sheet) ·  · port 5354
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 41 tests using 1 worker
+
+  ✓   1 [chromium-phone] › release-11-1-1-controls.spec.ts:22:5 › round · a compact SegmentedTabs strip is round-ended on touch (821ms)
+  ✓   2 [chromium-phone] › release-11-1-1-controls.spec.ts:22:5 › round · a wide SegmentedTabs strip is round-ended on touch (621ms)
+  ✓   3 [chromium-phone] › release-11-1-1-controls.spec.ts:46:1 › weight · selecting a word-labelled ToggleGroupItem moves no item box (1.5s)
+  ✓   4 [chromium-phone] › release-11-1-1-controls.spec.ts:69:1 › lift · a scale-on-hover element returns to rest after a tap (1.4s)
+  ✓   5 [chromium-phone] › release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · pick (2.5s)
+  ✓   6 [chromium-phone] › release-11-1-1.spec.ts:101:5 › form · a dock DropdownMenu keeps its material through the exit · pick (2.4s)
+  ✓   7 [chromium-phone] › release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · outside (2.4s)
+  ✓   8 [chromium-phone] › release-11-1-1.spec.ts:101:5 › form · a dock DropdownMenu keeps its material through the exit · outside (2.4s)
+  ✓   9 [chromium-phone] › release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · escape (2.4s)
+  ✓  10 [chromium-phone] › release-11-1-1.spec.ts:101:5 › form · a dock DropdownMenu keeps its material through the exit · escape (2.4s)
+  ✓  11 [chromium-phone] › release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · trigger (2.4s)
+  ✓  12 [chromium-phone] › release-11-1-1.spec.ts:101:5 › form · a dock DropdownMenu keeps its material through the exit · trigger (2.4s)
+  ✓  13 [chromium-phone] › release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · current (2.4s)
+  -  14 [chromium-phone] › release-11-1-1.spec.ts:101:5 › form · a dock DropdownMenu keeps its material through the exit · current
+  ✓  15 [chromium-phone] › release-11-1-1.spec.ts:204:9 › glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · light (2.2s)
+  ✓  16 [chromium-phone] › release-11-1-1.spec.ts:204:9 › glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · dark (2.2s)
+  ✓  17 [chromium-phone] › release-11-1-1.spec.ts:241:5 › glass · a phone Select is solid under reduced transparency (1.4s)
+  ✓  18 [chromium-phone] › release-11-1-1.spec.ts:204:9 › glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · light (1.9s)
+  ✓  19 [chromium-phone] › release-11-1-1.spec.ts:204:9 › glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · dark (1.9s)
+  ✓  20 [chromium-phone] › release-11-1-1.spec.ts:241:5 › glass · a phone dock DropdownMenu is solid under reduced transparency (1.4s)
+  ✓  21 [chromium-phone] › release-11-1-1.spec.ts:310:5 › exit · Select leaves on the exit curve, shorter than it entered (3.3s)
+  ✓  22 [chromium-phone] › release-11-1-1.spec.ts:310:5 › exit · DropdownMenu leaves on the exit curve, shorter than it entered (3.3s)
+  ✓  23 [chromium-phone] › release-11-1-1.spec.ts:310:5 › exit · Popover leaves on the exit curve, shorter than it entered (3.3s)
+  -  24 [chromium-phone] › release-11-1-1.spec.ts:310:5 › exit · Tooltip leaves on the exit curve, shorter than it entered
+[WebServer] 5:57:10 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  25 [chromium-phone] › release-11-1-1.spec.ts:310:5 › exit · Dialog leaves on the exit curve, shorter than it entered (3.3s)
+[WebServer] 5:57:14 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  26 [chromium-phone] › release-11-1-1.spec.ts:310:5 › exit · Sheet right leaves on the exit curve, shorter than it entered (3.3s)
+[WebServer] 5:57:17 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  27 [chromium-phone] › release-11-1-1.spec.ts:310:5 › exit · Sheet bottom leaves on the exit curve, shorter than it entered (3.3s)
+  ✓  28 [chromium-phone] › release-11-1-1.spec.ts:439:5 › exit · a Popover enters and leaves on opacity and its slide alone (2.3s)
+  -  29 [chromium-phone] › release-11-1-1.spec.ts:439:5 › exit · a Tooltip leaves on opacity and its slide alone
+[WebServer] 5:57:22 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  30 [chromium-phone] › release-11-1-1.spec.ts:497:5 › routes · a detented Sheet leaves whole by escape (3.4s)
+[WebServer] 5:57:26 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  31 [chromium-phone] › release-11-1-1.spec.ts:497:5 › routes · a detented Sheet leaves whole by outside (3.4s)
+[WebServer] 5:57:29 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  32 [chromium-phone] › release-11-1-1.spec.ts:523:1 › routes · a detented Sheet dragged off leaves from where the drag left it (3.8s)
+  ✓  33 [chromium-phone] › release-11-1-1.spec.ts:587:5 › routes · a CommandDialog keeps its list through its exit by pick (2.7s)
+  ✓  34 [chromium-phone] › release-11-1-1.spec.ts:587:5 › routes · a CommandDialog keeps its list through its exit by escape (2.4s)
+  ✓  35 [chromium-phone] › release-11-1-1.spec.ts:587:5 › routes · a CommandDialog keeps its list through its exit by outside (2.5s)
+  ✓  36 [chromium-phone] › release-11-1-1.spec.ts:621:5 › routes · a press on an open Select's trigger closes it once (2.3s)
+  ✓  37 [chromium-phone] › release-11-1-1.spec.ts:621:5 › routes · a press on an open DropdownMenu's trigger closes it once (2.3s)
+  ✓  38 [chromium-phone] › release-11-1-1.spec.ts:621:5 › routes · a press on an open Popover's trigger closes it once (2.3s)
+[WebServer] 5:57:48 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:57:50 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:57:51 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:57:52 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:57:54 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:57:55 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:57:56 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:57:57 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:57:58 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:57:59 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:00 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:02 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:03 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:04 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:05 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:06 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:07 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:08 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:09 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:10 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:11 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:12 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:13 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:14 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:16 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:17 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:19 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:20 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:21 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:23 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:24 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:25 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:27 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:28 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:30 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:31 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:32 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:34 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:35 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:37 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:38 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:39 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:41 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:42 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:44 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:45 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:46 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:48 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:49 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:51 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:52 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:54 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:55 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:57 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:58 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:58:59 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:59:01 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:59:02 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:59:04 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:59:05 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:59:07 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:59:08 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:59:10 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:59:11 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:59:13 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:59:14 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:59:16 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:59:17 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:59:19 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:59:21 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:59:22 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:59:24 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:59:25 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:59:27 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:59:29 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:59:30 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:59:32 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:59:33 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:59:35 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:59:37 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:59:38 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 5:59:40 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  39 [chromium-phone] › release-11-1-1.spec.ts:726:1 › sheet · a detented Sheet rises into place at its rung's size (1.9m)
+[WebServer] 5:59:42 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  40 [chromium-phone] › release-11-1-1.spec.ts:907:5 › sheet · a detented Sheet dragged up and let go at speed springs on from where the finger left it (5.1s)
+[WebServer] 5:59:47 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  41 [chromium-phone] › release-11-1-1.spec.ts:907:5 › sheet · a detented Sheet dragged up and let go at rest springs on from where the finger left it (5.3s)
+
+  3 skipped
+  38 passed (3.5m)
+== exits · chromium-phone · (reverse|tooltip|expand|leave) ·  · port 5354
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 43 tests using 1 worker
+
+  ✓   1 [chromium-phone] › release-11-1-1.spec.ts:1174:9 › reverse · a Select closed while it opens turns from where it is (2.4s)
+  ✓   2 [chromium-phone] › release-11-1-1.spec.ts:1186:9 › reverse · a Select reopened while it closes turns from where it is (3.1s)
+  ✓   3 [chromium-phone] › release-11-1-1.spec.ts:1174:9 › reverse · a DropdownMenu closed while it opens turns from where it is (2.1s)
+  ✓   4 [chromium-phone] › release-11-1-1.spec.ts:1186:9 › reverse · a DropdownMenu reopened while it closes turns from where it is (3.0s)
+  ✓   5 [chromium-phone] › release-11-1-1.spec.ts:1174:9 › reverse · a Popover closed while it opens turns from where it is (2.1s)
+  ✓   6 [chromium-phone] › release-11-1-1.spec.ts:1186:9 › reverse · a Popover reopened while it closes turns from where it is (3.0s)
+  ✓   7 [chromium-phone] › release-11-1-1.spec.ts:1174:9 › reverse · a Toast closed while it opens turns from where it is (2.0s)
+  -   8 [chromium-phone] › release-11-1-1.spec.ts:1174:9 › reverse · a Tooltip closed while it opens turns from where it is
+  -   9 [chromium-phone] › release-11-1-1.spec.ts:1186:9 › reverse · a Tooltip reopened while it closes turns from where it is
+  ✓  10 [chromium-phone] › release-11-1-1.spec.ts:1206:1 › reverse · a disclosure reopened while it closes finishes its reopen (4.9s)
+[WebServer] 6:00:23 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  11 [chromium-phone] › release-11-1-1.spec.ts:1242:5 › reverse · a press on a leaving Dialog's trigger reopens it from where it is (3.1s)
+[WebServer] 6:00:27 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  12 [chromium-phone] › release-11-1-1.spec.ts:1242:5 › reverse · a press on a leaving Sheet's trigger reopens it from where it is (3.1s)
+  ✓  13 [chromium-phone] › release-11-1-1.spec.ts:1242:5 › reverse · a press on a leaving Select's trigger reopens it from where it is (3.1s)
+[WebServer] 6:00:33 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  14 [chromium-phone] › release-11-1-1.spec.ts:1266:1 › reverse · a press on the page while a sheet leaves reaches the page (2.3s)
+  -  15 [chromium-phone] › release-11-1-1.spec.ts:1305:1 › tooltip · a Tooltip enters on a tween
+  -  16 [chromium-phone] › release-11-1-1.spec.ts:1320:5 › tooltip · a hint handed to its neighbour fades, incoming
+  -  17 [chromium-phone] › release-11-1-1.spec.ts:1320:5 › tooltip · a hint handed to its neighbour fades, outgoing
+  ✓  18 [chromium-phone] › release-11-1-1.spec.ts:1413:1 › expand · an ExpandableContainer enters on a tween (3.6s)
+  ✓  19 [chromium-phone] › release-11-1-1.spec.ts:1428:5 › expand · an ExpandableContainer leaves on a tween by exit (4.6s)
+  ✓  20 [chromium-phone] › release-11-1-1.spec.ts:1428:5 › expand · an ExpandableContainer leaves on a tween by escape (4.5s)
+  ✓  21 [chromium-phone] › release-11-1-1.spec.ts:1428:5 › expand · an ExpandableContainer leaves on a tween by open (4.5s)
+  ✓  22 [chromium-phone] › release-11-1-1.spec.ts:1451:1 › expand · an ExpandableContainer closed while it enters turns from where it is (3.7s)
+  ✓  23 [chromium-phone] › release-11-1-1.spec.ts:1468:1 › expand · an ExpandableContainer reopened while it leaves turns from where it is (4.6s)
+  ✓  24 [chromium-phone] › release-11-1-1.spec.ts:1484:1 › expand · Escape is live from the entrance's first frame (1.4s)
+[WebServer] 6:01:02 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  25 [chromium-phone] › release-11-1-1.spec.ts:1543:5 › leave · a Dialog says once that its leave has finished, after its last seen frame (2.7s)
+[WebServer] 6:01:05 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  26 [chromium-phone] › release-11-1-1.spec.ts:1572:5 › leave · a Dialog closed and reopened mid-exit says nothing (2.5s)
+[WebServer] 6:01:07 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  27 [chromium-phone] › release-11-1-1.spec.ts:1543:5 › leave · a Sheet says once that its leave has finished, after its last seen frame (2.7s)
+[WebServer] 6:01:10 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  28 [chromium-phone] › release-11-1-1.spec.ts:1572:5 › leave · a Sheet closed and reopened mid-exit says nothing (2.5s)
+  ✓  29 [chromium-phone] › release-11-1-1.spec.ts:1543:5 › leave · a Popover says once that its leave has finished, after its last seen frame (2.7s)
+  ✓  30 [chromium-phone] › release-11-1-1.spec.ts:1572:5 › leave · a Popover closed and reopened mid-exit says nothing (2.4s)
+  ✓  31 [chromium-phone] › release-11-1-1.spec.ts:1543:5 › leave · a DropdownMenu says once that its leave has finished, after its last seen frame (2.7s)
+  ✓  32 [chromium-phone] › release-11-1-1.spec.ts:1572:5 › leave · a DropdownMenu closed and reopened mid-exit says nothing (2.5s)
+  ✓  33 [chromium-phone] › release-11-1-1.spec.ts:1543:5 › leave · a Select says once that its leave has finished, after its last seen frame (2.7s)
+  ✓  34 [chromium-phone] › release-11-1-1.spec.ts:1572:5 › leave · a Select closed and reopened mid-exit says nothing (2.5s)
+  -  35 [chromium-phone] › release-11-1-1.spec.ts:1543:5 › leave · a Tooltip says once that its leave has finished, after its last seen frame
+  -  36 [chromium-phone] › release-11-1-1.spec.ts:1572:5 › leave · a Tooltip closed and reopened mid-exit says nothing
+  ✓  37 [chromium-phone] › release-11-1-1.spec.ts:1543:5 › leave · a Toast says once that its leave has finished, after its last seen frame (2.7s)
+  -  38 [chromium-phone] › release-11-1-1.spec.ts:1572:5 › leave · a Toast closed and reopened mid-exit says nothing
+  ✓  39 [chromium-phone] › release-11-1-1.spec.ts:1647:1 › leave · a Popover inside a shadow root says so to its host (3.4s)
+  -  40 [chromium-phone] › release-11-1-1.spec.ts:1671:5 › leave · a ContextMenu says once that its leave has finished, by escape
+  -  41 [chromium-phone] › release-11-1-1.spec.ts:1671:5 › leave · a ContextMenu says once that its leave has finished, by pick
+  -  42 [chromium-phone] › release-11-1-1.spec.ts:1689:1 › leave · a hover card says once that its leave has finished
+[WebServer] 6:01:35 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  43 [chromium-phone] › release-11-1-1.spec.ts:1707:1 › leave · a Dialog unmounted mid-exit says so once, at the unmount (3.1s)
+
+  11 skipped
+  32 passed (1.7m)
+== exits · chromium-phone · standing ·  · port 5354
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 44 tests using 1 worker
+
+  ✓   1 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · Select by pick: no exit in under two frames, no frame over a fifth (3.4s)
+  ✓   2 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · Select by outside: no exit in under two frames, no frame over a fifth (3.1s)
+  ✓   3 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · Select by escape: no exit in under two frames, no frame over a fifth (3.1s)
+  ✓   4 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · Select by trigger: no exit in under two frames, no frame over a fifth (3.1s)
+  ✓   5 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · DropdownMenu by pick: no exit in under two frames, no frame over a fifth (3.1s)
+  ✓   6 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · DropdownMenu by outside: no exit in under two frames, no frame over a fifth (3.0s)
+  ✓   7 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · DropdownMenu by escape: no exit in under two frames, no frame over a fifth (3.0s)
+  ✓   8 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · DropdownMenu by trigger: no exit in under two frames, no frame over a fifth (3.1s)
+  ✓   9 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · plain Select by pick: no exit in under two frames, no frame over a fifth (3.0s)
+  ✓  10 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · plain Select by outside: no exit in under two frames, no frame over a fifth (3.0s)
+  ✓  11 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · plain Select by escape: no exit in under two frames, no frame over a fifth (3.0s)
+  ✓  12 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · Popover by outside: no exit in under two frames, no frame over a fifth (3.0s)
+  ✓  13 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · Popover by escape: no exit in under two frames, no frame over a fifth (3.0s)
+  ✓  14 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · Popover by trigger: no exit in under two frames, no frame over a fifth (3.0s)
+  ✓  15 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · Popover by focus: no exit in under two frames, no frame over a fifth (3.0s)
+  -  16 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · Tooltip by escape: no exit in under two frames, no frame over a fifth
+  -  17 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · Tooltip by away: no exit in under two frames, no frame over a fifth
+  -  18 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · Tooltip by trigger: no exit in under two frames, no frame over a fifth
+  ✓  19 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · brief Toast by timeout: no exit in under two frames, no frame over a fifth (2.9s)
+[WebServer] 6:02:36 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  20 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · Dialog by close: no exit in under two frames, no frame over a fifth (3.0s)
+[WebServer] 6:02:39 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  21 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · Dialog by outside: no exit in under two frames, no frame over a fifth (3.0s)
+[WebServer] 6:02:42 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  22 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · Dialog by escape: no exit in under two frames, no frame over a fifth (3.0s)
+[WebServer] 6:02:45 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  23 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · Sheet right by close: no exit in under two frames, no frame over a fifth (3.1s)
+[WebServer] 6:02:48 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  24 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · Sheet right by outside: no exit in under two frames, no frame over a fifth (3.0s)
+[WebServer] 6:02:51 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  25 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · Sheet right by escape: no exit in under two frames, no frame over a fifth (3.0s)
+[WebServer] 6:02:54 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  26 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · Sheet bottom by close: no exit in under two frames, no frame over a fifth (3.0s)
+[WebServer] 6:02:57 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  27 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · Sheet bottom by outside: no exit in under two frames, no frame over a fifth (3.0s)
+[WebServer] 6:03:00 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  28 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · Sheet bottom by escape: no exit in under two frames, no frame over a fifth (3.0s)
+[WebServer] 6:03:03 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  29 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · Sheet top by close: no exit in under two frames, no frame over a fifth (3.0s)
+[WebServer] 6:03:06 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  30 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · Sheet top by outside: no exit in under two frames, no frame over a fifth (3.0s)
+[WebServer] 6:03:09 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  31 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · Sheet top by escape: no exit in under two frames, no frame over a fifth (3.0s)
+[WebServer] 6:03:12 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  32 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · Sheet left by close: no exit in under two frames, no frame over a fifth (3.0s)
+[WebServer] 6:03:15 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  33 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · Sheet left by outside: no exit in under two frames, no frame over a fifth (3.0s)
+[WebServer] 6:03:18 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  34 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · Sheet left by escape: no exit in under two frames, no frame over a fifth (3.0s)
+[WebServer] 6:03:21 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  35 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · detented Sheet by outside: no exit in under two frames, no frame over a fifth (3.0s)
+[WebServer] 6:03:24 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  36 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · detented Sheet by escape: no exit in under two frames, no frame over a fifth (3.1s)
+  ✓  37 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · Toast by close: no exit in under two frames, no frame over a fifth (3.1s)
+  ✓  38 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · Collapsible by trigger: no exit in under two frames, no frame over a fifth (3.1s)
+  ✓  39 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · Accordion by trigger: no exit in under two frames, no frame over a fifth (3.2s)
+  ✓  40 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · ExpandableContainer by close: no exit in under two frames, no frame over a fifth (3.2s)
+  ✓  41 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · ExpandableContainer by escape: no exit in under two frames, no frame over a fifth (3.1s)
+  ✓  42 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · CommandDialog by pick: no exit in under two frames, no frame over a fifth (3.2s)
+  ✓  43 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · CommandDialog by outside: no exit in under two frames, no frame over a fifth (3.0s)
+  ✓  44 [chromium-phone] › release-11-1-1.spec.ts:1859:9 › standing · CommandDialog by escape: no exit in under two frames, no frame over a fifth (2.9s)
+
+  3 skipped
+  41 passed (2.1m)
+== exits · chromium-phone · (site|fade|fold|mark|press|still) ·  · port 5354
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 18 tests using 1 worker
+
+  ✓   1 [chromium-phone] › release-11-1-1-reduce.spec.ts:129:1 › site · a site's own opacity fade keeps its clock under reduced motion (1.5s)
+  ✓   2 [chromium-phone] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Popover appears and leaves on a fade (2.8s)
+  ✓   3 [chromium-phone] › release-11-1-1-reduce.spec.ts:196:5 › fade · a DropdownMenu appears and leaves on a fade (2.6s)
+  ✓   4 [chromium-phone] › release-11-1-1-reduce.spec.ts:196:5 › fade · a dock Select appears and leaves on a fade (2.7s)
+  ✓   5 [chromium-phone] › release-11-1-1-reduce.spec.ts:196:5 › fade · a plain Select appears and leaves on a fade (2.6s)
+  -   6 [chromium-phone] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Tooltip appears and leaves on a fade
+[WebServer] 6:04:11 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓   7 [chromium-phone] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Dialog appears and leaves on a fade (2.7s)
+[WebServer] 6:04:14 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓   8 [chromium-phone] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet right appears and leaves on a fade (2.6s)
+[WebServer] 6:04:16 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓   9 [chromium-phone] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet bottom appears and leaves on a fade (2.7s)
+[WebServer] 6:04:19 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  10 [chromium-phone] › release-11-1-1-reduce.spec.ts:196:5 › fade · a detented Sheet appears and leaves on a fade (2.6s)
+  ✓  11 [chromium-phone] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Toast appears and leaves on a fade (2.6s)
+  ✓  12 [chromium-phone] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Collapsible appears and leaves on a fade (2.6s)
+  ✓  13 [chromium-phone] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Accordion appears and leaves on a fade (2.6s)
+  ✓  14 [chromium-phone] › release-11-1-1-reduce.spec.ts:196:5 › fade · a ExpandableContainer appears and leaves on a fade (2.6s)
+  ✓  15 [chromium-phone] › release-11-1-1-reduce.spec.ts:281:1 › fold · a dock unfolds and folds by cross-fading its faces, its box landing at once (2.6s)
+  ✓  16 [chromium-phone] › release-11-1-1-reduce.spec.ts:300:1 › mark · a run's selected plate moves to a new seat by a cross-fade (1.7s)
+[WebServer] 6:04:47 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  17 [chromium-phone] › release-11-1-1-reduce.spec.ts:438:1 › press · a pressed control shows its press by colour, not by size, under reduced motion (13.9s)
+  ✓  18 [chromium-phone] › release-11-1-1-reduce.spec.ts:477:1 › still · a Slider holds still under reduced motion (598ms)
+
+  1 skipped
+  17 passed (54.2s)
+== exits · chromium-desktop · (form|glass|exit|routes|round|weight|lift|sheet) ·  · port 5354
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 41 tests using 1 worker
+
+  -   1 [chromium-desktop] › release-11-1-1-controls.spec.ts:22:5 › round · a compact SegmentedTabs strip is round-ended on touch
+  -   2 [chromium-desktop] › release-11-1-1-controls.spec.ts:22:5 › round · a wide SegmentedTabs strip is round-ended on touch
+  ✓   3 [chromium-desktop] › release-11-1-1-controls.spec.ts:46:1 › weight · selecting a word-labelled ToggleGroupItem moves no item box (1.6s)
+  -   4 [chromium-desktop] › release-11-1-1-controls.spec.ts:69:1 › lift · a scale-on-hover element returns to rest after a tap
+  ✓   5 [chromium-desktop] › release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · pick (2.4s)
+  ✓   6 [chromium-desktop] › release-11-1-1.spec.ts:101:5 › form · a dock DropdownMenu keeps its material through the exit · pick (2.2s)
+  ✓   7 [chromium-desktop] › release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · outside (2.2s)
+  ✓   8 [chromium-desktop] › release-11-1-1.spec.ts:101:5 › form · a dock DropdownMenu keeps its material through the exit · outside (2.2s)
+  ✓   9 [chromium-desktop] › release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · escape (2.2s)
+  ✓  10 [chromium-desktop] › release-11-1-1.spec.ts:101:5 › form · a dock DropdownMenu keeps its material through the exit · escape (2.2s)
+  ✓  11 [chromium-desktop] › release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · trigger (2.2s)
+  ✓  12 [chromium-desktop] › release-11-1-1.spec.ts:101:5 › form · a dock DropdownMenu keeps its material through the exit · trigger (2.2s)
+  ✓  13 [chromium-desktop] › release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · current (2.2s)
+  -  14 [chromium-desktop] › release-11-1-1.spec.ts:101:5 › form · a dock DropdownMenu keeps its material through the exit · current
+  -  15 [chromium-desktop] › release-11-1-1.spec.ts:204:9 › glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · light
+  -  16 [chromium-desktop] › release-11-1-1.spec.ts:204:9 › glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · dark
+  -  17 [chromium-desktop] › release-11-1-1.spec.ts:241:5 › glass · a phone Select is solid under reduced transparency
+  -  18 [chromium-desktop] › release-11-1-1.spec.ts:204:9 › glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · light
+  -  19 [chromium-desktop] › release-11-1-1.spec.ts:204:9 › glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · dark
+  -  20 [chromium-desktop] › release-11-1-1.spec.ts:241:5 › glass · a phone dock DropdownMenu is solid under reduced transparency
+  ✓  21 [chromium-desktop] › release-11-1-1.spec.ts:310:5 › exit · Select leaves on the exit curve, shorter than it entered (3.2s)
+  ✓  22 [chromium-desktop] › release-11-1-1.spec.ts:310:5 › exit · DropdownMenu leaves on the exit curve, shorter than it entered (3.2s)
+  ✓  23 [chromium-desktop] › release-11-1-1.spec.ts:310:5 › exit · Popover leaves on the exit curve, shorter than it entered (3.2s)
+  ✓  24 [chromium-desktop] › release-11-1-1.spec.ts:310:5 › exit · Tooltip leaves on the exit curve, shorter than it entered (3.2s)
+[WebServer] 6:05:34 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  25 [chromium-desktop] › release-11-1-1.spec.ts:310:5 › exit · Dialog leaves on the exit curve, shorter than it entered (3.2s)
+[WebServer] 6:05:37 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  26 [chromium-desktop] › release-11-1-1.spec.ts:310:5 › exit · Sheet right leaves on the exit curve, shorter than it entered (3.2s)
+[WebServer] 6:05:40 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  27 [chromium-desktop] › release-11-1-1.spec.ts:310:5 › exit · Sheet bottom leaves on the exit curve, shorter than it entered (3.2s)
+  ✓  28 [chromium-desktop] › release-11-1-1.spec.ts:439:5 › exit · a Popover enters and leaves on opacity and its slide alone (2.2s)
+  ✓  29 [chromium-desktop] › release-11-1-1.spec.ts:439:5 › exit · a Tooltip leaves on opacity and its slide alone (1.6s)
+[WebServer] 6:05:47 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  30 [chromium-desktop] › release-11-1-1.spec.ts:497:5 › routes · a detented Sheet leaves whole by escape (3.3s)
+[WebServer] 6:05:50 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  31 [chromium-desktop] › release-11-1-1.spec.ts:497:5 › routes · a detented Sheet leaves whole by outside (3.4s)
+[WebServer] 6:05:54 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  32 [chromium-desktop] › release-11-1-1.spec.ts:523:1 › routes · a detented Sheet dragged off leaves from where the drag left it (3.8s)
+  ✓  33 [chromium-desktop] › release-11-1-1.spec.ts:587:5 › routes · a CommandDialog keeps its list through its exit by pick (2.6s)
+  ✓  34 [chromium-desktop] › release-11-1-1.spec.ts:587:5 › routes · a CommandDialog keeps its list through its exit by escape (2.4s)
+  ✓  35 [chromium-desktop] › release-11-1-1.spec.ts:587:5 › routes · a CommandDialog keeps its list through its exit by outside (2.4s)
+  ✓  36 [chromium-desktop] › release-11-1-1.spec.ts:621:5 › routes · a press on an open Select's trigger closes it once (2.3s)
+  ✓  37 [chromium-desktop] › release-11-1-1.spec.ts:621:5 › routes · a press on an open DropdownMenu's trigger closes it once (2.3s)
+  ✓  38 [chromium-desktop] › release-11-1-1.spec.ts:621:5 › routes · a press on an open Popover's trigger closes it once (2.2s)
+  -  39 [chromium-desktop] › release-11-1-1.spec.ts:726:1 › sheet · a detented Sheet rises into place at its rung's size
+  -  40 [chromium-desktop] › release-11-1-1.spec.ts:907:5 › sheet · a detented Sheet dragged up and let go at speed springs on from where the finger left it
+  -  41 [chromium-desktop] › release-11-1-1.spec.ts:907:5 › sheet · a detented Sheet dragged up and let go at rest springs on from where the finger left it
+
+  13 skipped
+  28 passed (1.2m)
+== exits · chromium-desktop · (reverse|tooltip|expand|leave) ·  · port 5354
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 43 tests using 1 worker
+
+  ✓   1 [chromium-desktop] › release-11-1-1.spec.ts:1174:9 › reverse · a Select closed while it opens turns from where it is (4.3s)
+  ✓   2 [chromium-desktop] › release-11-1-1.spec.ts:1186:9 › reverse · a Select reopened while it closes turns from where it is (3.0s)
+  ✓   3 [chromium-desktop] › release-11-1-1.spec.ts:1174:9 › reverse · a DropdownMenu closed while it opens turns from where it is (2.1s)
+  ✓   4 [chromium-desktop] › release-11-1-1.spec.ts:1186:9 › reverse · a DropdownMenu reopened while it closes turns from where it is (3.0s)
+  ✓   5 [chromium-desktop] › release-11-1-1.spec.ts:1174:9 › reverse · a Popover closed while it opens turns from where it is (2.1s)
+  ✓   6 [chromium-desktop] › release-11-1-1.spec.ts:1186:9 › reverse · a Popover reopened while it closes turns from where it is (3.0s)
+  ✓   7 [chromium-desktop] › release-11-1-1.spec.ts:1174:9 › reverse · a Toast closed while it opens turns from where it is (2.0s)
+  ✓   8 [chromium-desktop] › release-11-1-1.spec.ts:1174:9 › reverse · a Tooltip closed while it opens turns from where it is (2.0s)
+  ✓   9 [chromium-desktop] › release-11-1-1.spec.ts:1186:9 › reverse · a Tooltip reopened while it closes turns from where it is (3.0s)
+  ✓  10 [chromium-desktop] › release-11-1-1.spec.ts:1206:1 › reverse · a disclosure reopened while it closes finishes its reopen (4.9s)
+[WebServer] 6:06:48 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  11 [chromium-desktop] › release-11-1-1.spec.ts:1242:5 › reverse · a press on a leaving Dialog's trigger reopens it from where it is (3.0s)
+[WebServer] 6:06:51 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  12 [chromium-desktop] › release-11-1-1.spec.ts:1242:5 › reverse · a press on a leaving Sheet's trigger reopens it from where it is (3.0s)
+  ✓  13 [chromium-desktop] › release-11-1-1.spec.ts:1242:5 › reverse · a press on a leaving Select's trigger reopens it from where it is (3.0s)
+[WebServer] 6:06:57 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  14 [chromium-desktop] › release-11-1-1.spec.ts:1266:1 › reverse · a press on the page while a sheet leaves reaches the page (2.2s)
+  ✓  15 [chromium-desktop] › release-11-1-1.spec.ts:1305:1 › tooltip · a Tooltip enters on a tween (1.4s)
+  ✓  16 [chromium-desktop] › release-11-1-1.spec.ts:1320:5 › tooltip · a hint handed to its neighbour fades, incoming (2.0s)
+  ✓  17 [chromium-desktop] › release-11-1-1.spec.ts:1320:5 › tooltip · a hint handed to its neighbour fades, outgoing (2.1s)
+  ✓  18 [chromium-desktop] › release-11-1-1.spec.ts:1413:1 › expand · an ExpandableContainer enters on a tween (3.7s)
+  ✓  19 [chromium-desktop] › release-11-1-1.spec.ts:1428:5 › expand · an ExpandableContainer leaves on a tween by exit (4.6s)
+  ✓  20 [chromium-desktop] › release-11-1-1.spec.ts:1428:5 › expand · an ExpandableContainer leaves on a tween by escape (4.6s)
+  ✓  21 [chromium-desktop] › release-11-1-1.spec.ts:1428:5 › expand · an ExpandableContainer leaves on a tween by open (4.5s)
+  ✓  22 [chromium-desktop] › release-11-1-1.spec.ts:1451:1 › expand · an ExpandableContainer closed while it enters turns from where it is (3.8s)
+  ✓  23 [chromium-desktop] › release-11-1-1.spec.ts:1468:1 › expand · an ExpandableContainer reopened while it leaves turns from where it is (4.7s)
+  ✓  24 [chromium-desktop] › release-11-1-1.spec.ts:1484:1 › expand · Escape is live from the entrance's first frame (1.4s)
+[WebServer] 6:07:33 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  25 [chromium-desktop] › release-11-1-1.spec.ts:1543:5 › leave · a Dialog says once that its leave has finished, after its last seen frame (2.8s)
+[WebServer] 6:07:36 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  26 [chromium-desktop] › release-11-1-1.spec.ts:1572:5 › leave · a Dialog closed and reopened mid-exit says nothing (2.5s)
+[WebServer] 6:07:38 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  27 [chromium-desktop] › release-11-1-1.spec.ts:1543:5 › leave · a Sheet says once that its leave has finished, after its last seen frame (2.7s)
+[WebServer] 6:07:41 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  28 [chromium-desktop] › release-11-1-1.spec.ts:1572:5 › leave · a Sheet closed and reopened mid-exit says nothing (2.4s)
+  ✓  29 [chromium-desktop] › release-11-1-1.spec.ts:1543:5 › leave · a Popover says once that its leave has finished, after its last seen frame (2.7s)
+  ✓  30 [chromium-desktop] › release-11-1-1.spec.ts:1572:5 › leave · a Popover closed and reopened mid-exit says nothing (2.4s)
+  ✓  31 [chromium-desktop] › release-11-1-1.spec.ts:1543:5 › leave · a DropdownMenu says once that its leave has finished, after its last seen frame (2.7s)
+  ✓  32 [chromium-desktop] › release-11-1-1.spec.ts:1572:5 › leave · a DropdownMenu closed and reopened mid-exit says nothing (2.4s)
+  ✓  33 [chromium-desktop] › release-11-1-1.spec.ts:1543:5 › leave · a Select says once that its leave has finished, after its last seen frame (2.7s)
+  ✓  34 [chromium-desktop] › release-11-1-1.spec.ts:1572:5 › leave · a Select closed and reopened mid-exit says nothing (2.5s)
+  ✓  35 [chromium-desktop] › release-11-1-1.spec.ts:1543:5 › leave · a Tooltip says once that its leave has finished, after its last seen frame (2.7s)
+  ✓  36 [chromium-desktop] › release-11-1-1.spec.ts:1572:5 › leave · a Tooltip closed and reopened mid-exit says nothing (2.5s)
+  ✓  37 [chromium-desktop] › release-11-1-1.spec.ts:1543:5 › leave · a Toast says once that its leave has finished, after its last seen frame (2.7s)
+  -  38 [chromium-desktop] › release-11-1-1.spec.ts:1572:5 › leave · a Toast closed and reopened mid-exit says nothing
+  ✓  39 [chromium-desktop] › release-11-1-1.spec.ts:1647:1 › leave · a Popover inside a shadow root says so to its host (3.4s)
+  ✓  40 [chromium-desktop] › release-11-1-1.spec.ts:1671:5 › leave · a ContextMenu says once that its leave has finished, by escape (3.1s)
+  ✓  41 [chromium-desktop] › release-11-1-1.spec.ts:1671:5 › leave · a ContextMenu says once that its leave has finished, by pick (3.1s)
+  ✓  42 [chromium-desktop] › release-11-1-1.spec.ts:1689:1 › leave · a hover card says once that its leave has finished (3.3s)
+[WebServer] 6:08:20 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  43 [chromium-desktop] › release-11-1-1.spec.ts:1707:1 › leave · a Dialog unmounted mid-exit says so once, at the unmount (3.0s)
+
+  1 skipped
+  42 passed (2.1m)
+== exits · chromium-desktop · standing ·  · port 5354
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 44 tests using 1 worker
+
+  ✓   1 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Select by pick: no exit in under two frames, no frame over a fifth (3.2s)
+  ✓   2 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Select by outside: no exit in under two frames, no frame over a fifth (3.0s)
+  ✓   3 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Select by escape: no exit in under two frames, no frame over a fifth (3.0s)
+  ✓   4 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Select by trigger: no exit in under two frames, no frame over a fifth (3.1s)
+  ✓   5 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · DropdownMenu by pick: no exit in under two frames, no frame over a fifth (3.1s)
+  ✓   6 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · DropdownMenu by outside: no exit in under two frames, no frame over a fifth (3.0s)
+  ✓   7 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · DropdownMenu by escape: no exit in under two frames, no frame over a fifth (3.0s)
+  ✓   8 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · DropdownMenu by trigger: no exit in under two frames, no frame over a fifth (3.0s)
+  ✓   9 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · plain Select by pick: no exit in under two frames, no frame over a fifth (3.0s)
+  ✓  10 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · plain Select by outside: no exit in under two frames, no frame over a fifth (3.0s)
+  ✓  11 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · plain Select by escape: no exit in under two frames, no frame over a fifth (3.0s)
+  ✓  12 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Popover by outside: no exit in under two frames, no frame over a fifth (3.0s)
+  ✓  13 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Popover by escape: no exit in under two frames, no frame over a fifth (3.1s)
+  ✓  14 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Popover by trigger: no exit in under two frames, no frame over a fifth (3.0s)
+  ✓  15 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Popover by focus: no exit in under two frames, no frame over a fifth (3.0s)
+  ✓  16 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Tooltip by escape: no exit in under two frames, no frame over a fifth (2.9s)
+  ✓  17 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Tooltip by away: no exit in under two frames, no frame over a fifth (2.9s)
+  ✓  18 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Tooltip by trigger: no exit in under two frames, no frame over a fifth (3.0s)
+  ✓  19 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · brief Toast by timeout: no exit in under two frames, no frame over a fifth (2.9s)
+[WebServer] 6:09:27 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  20 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Dialog by close: no exit in under two frames, no frame over a fifth (2.9s)
+[WebServer] 6:09:30 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  21 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Dialog by outside: no exit in under two frames, no frame over a fifth (3.0s)
+[WebServer] 6:09:33 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  22 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Dialog by escape: no exit in under two frames, no frame over a fifth (3.0s)
+[WebServer] 6:09:36 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  23 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Sheet right by close: no exit in under two frames, no frame over a fifth (3.0s)
+[WebServer] 6:09:39 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  24 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Sheet right by outside: no exit in under two frames, no frame over a fifth (3.0s)
+[WebServer] 6:09:42 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  25 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Sheet right by escape: no exit in under two frames, no frame over a fifth (2.9s)
+[WebServer] 6:09:45 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  26 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Sheet bottom by close: no exit in under two frames, no frame over a fifth (3.0s)
+[WebServer] 6:09:48 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  27 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Sheet bottom by outside: no exit in under two frames, no frame over a fifth (3.0s)
+[WebServer] 6:09:51 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  28 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Sheet bottom by escape: no exit in under two frames, no frame over a fifth (3.0s)
+[WebServer] 6:09:54 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  29 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Sheet top by close: no exit in under two frames, no frame over a fifth (3.0s)
+[WebServer] 6:09:57 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  30 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Sheet top by outside: no exit in under two frames, no frame over a fifth (3.0s)
+[WebServer] 6:10:00 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  31 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Sheet top by escape: no exit in under two frames, no frame over a fifth (3.0s)
+[WebServer] 6:10:03 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  32 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Sheet left by close: no exit in under two frames, no frame over a fifth (3.0s)
+[WebServer] 6:10:06 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  33 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Sheet left by outside: no exit in under two frames, no frame over a fifth (2.9s)
+[WebServer] 6:10:09 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  34 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Sheet left by escape: no exit in under two frames, no frame over a fifth (3.0s)
+[WebServer] 6:10:12 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  35 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · detented Sheet by outside: no exit in under two frames, no frame over a fifth (3.1s)
+[WebServer] 6:10:15 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  36 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · detented Sheet by escape: no exit in under two frames, no frame over a fifth (3.1s)
+  ✓  37 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Toast by close: no exit in under two frames, no frame over a fifth (3.0s)
+  ✓  38 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Collapsible by trigger: no exit in under two frames, no frame over a fifth (3.1s)
+  ✓  39 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Accordion by trigger: no exit in under two frames, no frame over a fifth (3.1s)
+  ✓  40 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · ExpandableContainer by close: no exit in under two frames, no frame over a fifth (3.0s)
+  ✓  41 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · ExpandableContainer by escape: no exit in under two frames, no frame over a fifth (3.0s)
+  ✓  42 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · CommandDialog by pick: no exit in under two frames, no frame over a fifth (3.0s)
+  ✓  43 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · CommandDialog by outside: no exit in under two frames, no frame over a fifth (2.9s)
+  ✓  44 [chromium-desktop] › release-11-1-1.spec.ts:1859:9 › standing · CommandDialog by escape: no exit in under two frames, no frame over a fifth (2.9s)
+
+  44 passed (2.2m)
+== exits · chromium-desktop · (site|fade|fold|mark|press|still) ·  · port 5354
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 18 tests using 1 worker
+
+  ✓   1 [chromium-desktop] › release-11-1-1-reduce.spec.ts:129:1 › site · a site's own opacity fade keeps its clock under reduced motion (1.5s)
+  ✓   2 [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Popover appears and leaves on a fade (2.8s)
+  ✓   3 [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a DropdownMenu appears and leaves on a fade (2.7s)
+  ✓   4 [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a dock Select appears and leaves on a fade (2.6s)
+  ✓   5 [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a plain Select appears and leaves on a fade (2.6s)
+  ✓   6 [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Tooltip appears and leaves on a fade (2.6s)
+[WebServer] 6:11:04 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓   7 [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Dialog appears and leaves on a fade (2.6s)
+[WebServer] 6:11:07 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓   8 [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet right appears and leaves on a fade (2.7s)
+[WebServer] 6:11:09 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓   9 [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet bottom appears and leaves on a fade (2.6s)
+[WebServer] 6:11:12 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  10 [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a detented Sheet appears and leaves on a fade (2.6s)
+  ✓  11 [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Toast appears and leaves on a fade (2.6s)
+  ✓  12 [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Collapsible appears and leaves on a fade (2.6s)
+  ✓  13 [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Accordion appears and leaves on a fade (2.6s)
+  ✓  14 [chromium-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a ExpandableContainer appears and leaves on a fade (2.6s)
+  ✓  15 [chromium-desktop] › release-11-1-1-reduce.spec.ts:281:1 › fold · a dock unfolds and folds by cross-fading its faces, its box landing at once (2.6s)
+  ✓  16 [chromium-desktop] › release-11-1-1-reduce.spec.ts:300:1 › mark · a run's selected plate moves to a new seat by a cross-fade (1.7s)
+[WebServer] 6:11:37 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  17 [chromium-desktop] › release-11-1-1-reduce.spec.ts:438:1 › press · a pressed control shows its press by colour, not by size, under reduced motion (9.6s)
+  ✓  18 [chromium-desktop] › release-11-1-1-reduce.spec.ts:477:1 › still · a Slider holds still under reduced motion (1.8s)
+
+  18 passed (53.5s)
+== exits · webkit-phone · (form|glass|exit|routes|round|weight|lift|sheet) ·  · port 5354
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 41 tests using 1 worker
+
+  ✓   1 [webkit-phone] › release-11-1-1-controls.spec.ts:22:5 › round · a compact SegmentedTabs strip is round-ended on touch (1.2s)
+  ✓   2 [webkit-phone] › release-11-1-1-controls.spec.ts:22:5 › round · a wide SegmentedTabs strip is round-ended on touch (902ms)
+  ✓   3 [webkit-phone] › release-11-1-1-controls.spec.ts:46:1 › weight · selecting a word-labelled ToggleGroupItem moves no item box (1.7s)
+  ✓   4 [webkit-phone] › release-11-1-1-controls.spec.ts:69:1 › lift · a scale-on-hover element returns to rest after a tap (1.6s)
+  ✓   5 [webkit-phone] › release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · pick (2.6s)
+  ✓   6 [webkit-phone] › release-11-1-1.spec.ts:101:5 › form · a dock DropdownMenu keeps its material through the exit · pick (2.4s)
+  -   7 [webkit-phone] › release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · outside
+  -   8 [webkit-phone] › release-11-1-1.spec.ts:101:5 › form · a dock DropdownMenu keeps its material through the exit · outside
+  ✓   9 [webkit-phone] › release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · escape (2.5s)
+  ✓  10 [webkit-phone] › release-11-1-1.spec.ts:101:5 › form · a dock DropdownMenu keeps its material through the exit · escape (2.5s)
+  -  11 [webkit-phone] › release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · trigger
+  ✓  12 [webkit-phone] › release-11-1-1.spec.ts:101:5 › form · a dock DropdownMenu keeps its material through the exit · trigger (2.5s)
+  ✓  13 [webkit-phone] › release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · current (2.5s)
+  -  14 [webkit-phone] › release-11-1-1.spec.ts:101:5 › form · a dock DropdownMenu keeps its material through the exit · current
+  ✓  15 [webkit-phone] › release-11-1-1.spec.ts:204:9 › glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · light (2.1s)
+  ✓  16 [webkit-phone] › release-11-1-1.spec.ts:204:9 › glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · dark (2.1s)
+  -  17 [webkit-phone] › release-11-1-1.spec.ts:241:5 › glass · a phone Select is solid under reduced transparency
+  ✓  18 [webkit-phone] › release-11-1-1.spec.ts:204:9 › glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · light (2.1s)
+  ✓  19 [webkit-phone] › release-11-1-1.spec.ts:204:9 › glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · dark (2.1s)
+  -  20 [webkit-phone] › release-11-1-1.spec.ts:241:5 › glass · a phone dock DropdownMenu is solid under reduced transparency
+  ✓  21 [webkit-phone] › release-11-1-1.spec.ts:310:5 › exit · Select leaves on the exit curve, shorter than it entered (3.5s)
+  ✓  22 [webkit-phone] › release-11-1-1.spec.ts:310:5 › exit · DropdownMenu leaves on the exit curve, shorter than it entered (3.5s)
+  ✓  23 [webkit-phone] › release-11-1-1.spec.ts:310:5 › exit · Popover leaves on the exit curve, shorter than it entered (3.5s)
+  -  24 [webkit-phone] › release-11-1-1.spec.ts:310:5 › exit · Tooltip leaves on the exit curve, shorter than it entered
+[WebServer] 6:12:30 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  25 [webkit-phone] › release-11-1-1.spec.ts:310:5 › exit · Dialog leaves on the exit curve, shorter than it entered (3.5s)
+[WebServer] 6:12:34 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  26 [webkit-phone] › release-11-1-1.spec.ts:310:5 › exit · Sheet right leaves on the exit curve, shorter than it entered (3.4s)
+[WebServer] 6:12:37 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  27 [webkit-phone] › release-11-1-1.spec.ts:310:5 › exit · Sheet bottom leaves on the exit curve, shorter than it entered (3.5s)
+  ✓  28 [webkit-phone] › release-11-1-1.spec.ts:439:5 › exit · a Popover enters and leaves on opacity and its slide alone (2.5s)
+  -  29 [webkit-phone] › release-11-1-1.spec.ts:439:5 › exit · a Tooltip leaves on opacity and its slide alone
+[WebServer] 6:12:44 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  30 [webkit-phone] › release-11-1-1.spec.ts:497:5 › routes · a detented Sheet leaves whole by escape (3.8s)
+  -  31 [webkit-phone] › release-11-1-1.spec.ts:497:5 › routes · a detented Sheet leaves whole by outside
+  -  32 [webkit-phone] › release-11-1-1.spec.ts:523:1 › routes · a detented Sheet dragged off leaves from where the drag left it
+  ✓  33 [webkit-phone] › release-11-1-1.spec.ts:587:5 › routes · a CommandDialog keeps its list through its exit by pick (2.9s)
+  ✓  34 [webkit-phone] › release-11-1-1.spec.ts:587:5 › routes · a CommandDialog keeps its list through its exit by escape (2.7s)
+  -  35 [webkit-phone] › release-11-1-1.spec.ts:587:5 › routes · a CommandDialog keeps its list through its exit by outside
+  -  36 [webkit-phone] › release-11-1-1.spec.ts:621:5 › routes · a press on an open Select's trigger closes it once
+  -  37 [webkit-phone] › release-11-1-1.spec.ts:621:5 › routes · a press on an open DropdownMenu's trigger closes it once
+  -  38 [webkit-phone] › release-11-1-1.spec.ts:621:5 › routes · a press on an open Popover's trigger closes it once
+[WebServer] 6:12:54 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:12:57 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:12:58 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:12:59 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:00 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:01 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:03 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:04 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:05 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:06 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:07 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:08 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:09 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:10 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:11 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:12 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:13 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:14 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:15 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:16 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:17 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:18 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:20 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:21 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:23 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:24 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:25 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:27 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:28 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:29 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:31 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:32 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:34 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:35 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:36 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:38 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:39 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:41 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:42 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:43 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:45 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:46 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:47 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:49 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:50 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:52 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:53 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:55 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:56 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:58 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:13:59 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:14:00 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:14:02 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:14:03 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:14:05 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:14:06 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:14:08 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:14:09 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:14:10 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:14:12 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:14:13 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:14:15 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:14:16 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:14:18 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:14:20 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:14:21 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:14:23 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:14:24 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:14:26 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:14:28 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:14:29 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:14:31 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:14:32 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:14:34 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:14:35 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:14:37 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:14:39 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:14:40 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:14:42 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:14:43 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+[WebServer] 6:14:45 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  39 [webkit-phone] › release-11-1-1.spec.ts:726:1 › sheet · a detented Sheet rises into place at its rung's size (1.9m)
+  -  40 [webkit-phone] › release-11-1-1.spec.ts:907:5 › sheet · a detented Sheet dragged up and let go at speed springs on from where the finger left it
+  -  41 [webkit-phone] › release-11-1-1.spec.ts:907:5 › sheet · a detented Sheet dragged up and let go at rest springs on from where the finger left it
+
+  16 skipped
+  25 passed (3.0m)
+== exits · webkit-phone · (reverse|tooltip|expand|leave) ·  · port 5354
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 43 tests using 1 worker
+
+  ✓   1 [webkit-phone] › release-11-1-1.spec.ts:1174:9 › reverse · a Select closed while it opens turns from where it is (2.6s)
+  ✓   2 [webkit-phone] › release-11-1-1.spec.ts:1186:9 › reverse · a Select reopened while it closes turns from where it is (3.3s)
+  ✓   3 [webkit-phone] › release-11-1-1.spec.ts:1174:9 › reverse · a DropdownMenu closed while it opens turns from where it is (2.4s)
+  ✓   4 [webkit-phone] › release-11-1-1.spec.ts:1186:9 › reverse · a DropdownMenu reopened while it closes turns from where it is (3.2s)
+  ✓   5 [webkit-phone] › release-11-1-1.spec.ts:1174:9 › reverse · a Popover closed while it opens turns from where it is (2.5s)
+  ✓   6 [webkit-phone] › release-11-1-1.spec.ts:1186:9 › reverse · a Popover reopened while it closes turns from where it is (3.3s)
+  ✓   7 [webkit-phone] › release-11-1-1.spec.ts:1174:9 › reverse · a Toast closed while it opens turns from where it is (2.3s)
+  -   8 [webkit-phone] › release-11-1-1.spec.ts:1174:9 › reverse · a Tooltip closed while it opens turns from where it is
+  -   9 [webkit-phone] › release-11-1-1.spec.ts:1186:9 › reverse · a Tooltip reopened while it closes turns from where it is
+  ✓  10 [webkit-phone] › release-11-1-1.spec.ts:1206:1 › reverse · a disclosure reopened while it closes finishes its reopen (5.2s)
+[WebServer] 6:15:21 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  11 [webkit-phone] › release-11-1-1.spec.ts:1242:5 › reverse · a press on a leaving Dialog's trigger reopens it from where it is (3.3s)
+[WebServer] 6:15:24 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  12 [webkit-phone] › release-11-1-1.spec.ts:1242:5 › reverse · a press on a leaving Sheet's trigger reopens it from where it is (3.3s)
+  ✓  13 [webkit-phone] › release-11-1-1.spec.ts:1242:5 › reverse · a press on a leaving Select's trigger reopens it from where it is (3.3s)
+[WebServer] 6:15:30 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  14 [webkit-phone] › release-11-1-1.spec.ts:1266:1 › reverse · a press on the page while a sheet leaves reaches the page (2.5s)
+  -  15 [webkit-phone] › release-11-1-1.spec.ts:1305:1 › tooltip · a Tooltip enters on a tween
+  -  16 [webkit-phone] › release-11-1-1.spec.ts:1320:5 › tooltip · a hint handed to its neighbour fades, incoming
+  -  17 [webkit-phone] › release-11-1-1.spec.ts:1320:5 › tooltip · a hint handed to its neighbour fades, outgoing
+  ✓  18 [webkit-phone] › release-11-1-1.spec.ts:1413:1 › expand · an ExpandableContainer enters on a tween (3.9s)
+  ✓  19 [webkit-phone] › release-11-1-1.spec.ts:1428:5 › expand · an ExpandableContainer leaves on a tween by exit (4.9s)
+  ✓  20 [webkit-phone] › release-11-1-1.spec.ts:1428:5 › expand · an ExpandableContainer leaves on a tween by escape (4.8s)
+  ✓  21 [webkit-phone] › release-11-1-1.spec.ts:1428:5 › expand · an ExpandableContainer leaves on a tween by open (4.7s)
+  ✓  22 [webkit-phone] › release-11-1-1.spec.ts:1451:1 › expand · an ExpandableContainer closed while it enters turns from where it is (4.0s)
+  ✓  23 [webkit-phone] › release-11-1-1.spec.ts:1468:1 › expand · an ExpandableContainer reopened while it leaves turns from where it is (4.9s)
+  ✓  24 [webkit-phone] › release-11-1-1.spec.ts:1484:1 › expand · Escape is live from the entrance's first frame (1.9s)
+[WebServer] 6:16:03 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  25 [webkit-phone] › release-11-1-1.spec.ts:1543:5 › leave · a Dialog says once that its leave has finished, after its last seen frame (3.2s)
+[WebServer] 6:16:06 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  26 [webkit-phone] › release-11-1-1.spec.ts:1572:5 › leave · a Dialog closed and reopened mid-exit says nothing (3.0s)
+[WebServer] 6:16:09 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  27 [webkit-phone] › release-11-1-1.spec.ts:1543:5 › leave · a Sheet says once that its leave has finished, after its last seen frame (3.1s)
+[WebServer] 6:16:12 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  28 [webkit-phone] › release-11-1-1.spec.ts:1572:5 › leave · a Sheet closed and reopened mid-exit says nothing (3.0s)
+  ✓  29 [webkit-phone] › release-11-1-1.spec.ts:1543:5 › leave · a Popover says once that its leave has finished, after its last seen frame (3.2s)
+  ✓  30 [webkit-phone] › release-11-1-1.spec.ts:1572:5 › leave · a Popover closed and reopened mid-exit says nothing (2.8s)
+  ✓  31 [webkit-phone] › release-11-1-1.spec.ts:1543:5 › leave · a DropdownMenu says once that its leave has finished, after its last seen frame (2.9s)
+  ✓  32 [webkit-phone] › release-11-1-1.spec.ts:1572:5 › leave · a DropdownMenu closed and reopened mid-exit says nothing (2.9s)
+  ✓  33 [webkit-phone] › release-11-1-1.spec.ts:1543:5 › leave · a Select says once that its leave has finished, after its last seen frame (3.3s)
+  ✓  34 [webkit-phone] › release-11-1-1.spec.ts:1572:5 › leave · a Select closed and reopened mid-exit says nothing (3.1s)
+  -  35 [webkit-phone] › release-11-1-1.spec.ts:1543:5 › leave · a Tooltip says once that its leave has finished, after its last seen frame
+  -  36 [webkit-phone] › release-11-1-1.spec.ts:1572:5 › leave · a Tooltip closed and reopened mid-exit says nothing
+  ✓  37 [webkit-phone] › release-11-1-1.spec.ts:1543:5 › leave · a Toast says once that its leave has finished, after its last seen frame (3.2s)
+  -  38 [webkit-phone] › release-11-1-1.spec.ts:1572:5 › leave · a Toast closed and reopened mid-exit says nothing
+  ✓  39 [webkit-phone] › release-11-1-1.spec.ts:1647:1 › leave · a Popover inside a shadow root says so to its host (3.7s)
+  -  40 [webkit-phone] › release-11-1-1.spec.ts:1671:5 › leave · a ContextMenu says once that its leave has finished, by escape
+  -  41 [webkit-phone] › release-11-1-1.spec.ts:1671:5 › leave · a ContextMenu says once that its leave has finished, by pick
+  -  42 [webkit-phone] › release-11-1-1.spec.ts:1689:1 › leave · a hover card says once that its leave has finished
+[WebServer] 6:16:42 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  43 [webkit-phone] › release-11-1-1.spec.ts:1707:1 › leave · a Dialog unmounted mid-exit says so once, at the unmount (3.4s)
+
+  11 skipped
+  32 passed (1.9m)
+== exits · webkit-phone · standing ·  · port 5354
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 44 tests using 1 worker
+
+  ✓   1 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · Select by pick: no exit in under two frames, no frame over a fifth (3.9s)
+  -   2 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · Select by outside: no exit in under two frames, no frame over a fifth
+  ✓   3 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · Select by escape: no exit in under two frames, no frame over a fifth (3.5s)
+  -   4 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · Select by trigger: no exit in under two frames, no frame over a fifth
+  ✓   5 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · DropdownMenu by pick: no exit in under two frames, no frame over a fifth (3.5s)
+  -   6 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · DropdownMenu by outside: no exit in under two frames, no frame over a fifth
+  ✓   7 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · DropdownMenu by escape: no exit in under two frames, no frame over a fifth (3.4s)
+  -   8 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · DropdownMenu by trigger: no exit in under two frames, no frame over a fifth
+  ✓   9 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · plain Select by pick: no exit in under two frames, no frame over a fifth (3.3s)
+  -  10 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · plain Select by outside: no exit in under two frames, no frame over a fifth
+  ✓  11 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · plain Select by escape: no exit in under two frames, no frame over a fifth (3.3s)
+  -  12 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · Popover by outside: no exit in under two frames, no frame over a fifth
+  ✓  13 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · Popover by escape: no exit in under two frames, no frame over a fifth (3.3s)
+  -  14 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · Popover by trigger: no exit in under two frames, no frame over a fifth
+  ✓  15 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · Popover by focus: no exit in under two frames, no frame over a fifth (3.4s)
+  -  16 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · Tooltip by escape: no exit in under two frames, no frame over a fifth
+  -  17 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · Tooltip by away: no exit in under two frames, no frame over a fifth
+  -  18 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · Tooltip by trigger: no exit in under two frames, no frame over a fifth
+  ✓  19 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · brief Toast by timeout: no exit in under two frames, no frame over a fifth (3.3s)
+[WebServer] 6:17:28 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  20 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · Dialog by close: no exit in under two frames, no frame over a fifth (3.3s)
+  -  21 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · Dialog by outside: no exit in under two frames, no frame over a fifth
+[WebServer] 6:17:32 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  22 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · Dialog by escape: no exit in under two frames, no frame over a fifth (3.5s)
+[WebServer] 6:17:35 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  23 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · Sheet right by close: no exit in under two frames, no frame over a fifth (3.5s)
+  -  24 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · Sheet right by outside: no exit in under two frames, no frame over a fifth
+[WebServer] 6:17:39 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  25 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · Sheet right by escape: no exit in under two frames, no frame over a fifth (3.4s)
+[WebServer] 6:17:42 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  26 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · Sheet bottom by close: no exit in under two frames, no frame over a fifth (3.5s)
+  -  27 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · Sheet bottom by outside: no exit in under two frames, no frame over a fifth
+[WebServer] 6:17:46 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  28 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · Sheet bottom by escape: no exit in under two frames, no frame over a fifth (3.5s)
+[WebServer] 6:17:50 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  29 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · Sheet top by close: no exit in under two frames, no frame over a fifth (3.3s)
+  -  30 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · Sheet top by outside: no exit in under two frames, no frame over a fifth
+[WebServer] 6:17:53 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  31 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · Sheet top by escape: no exit in under two frames, no frame over a fifth (3.2s)
+[WebServer] 6:17:56 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  32 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · Sheet left by close: no exit in under two frames, no frame over a fifth (3.2s)
+  -  33 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · Sheet left by outside: no exit in under two frames, no frame over a fifth
+[WebServer] 6:18:00 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  34 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · Sheet left by escape: no exit in under two frames, no frame over a fifth (3.4s)
+  -  35 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · detented Sheet by outside: no exit in under two frames, no frame over a fifth
+[WebServer] 6:18:04 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  36 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · detented Sheet by escape: no exit in under two frames, no frame over a fifth (3.5s)
+  ✓  37 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · Toast by close: no exit in under two frames, no frame over a fifth (3.4s)
+  ✓  38 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · Collapsible by trigger: no exit in under two frames, no frame over a fifth (3.5s)
+  ✓  39 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · Accordion by trigger: no exit in under two frames, no frame over a fifth (3.7s)
+  ✓  40 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · ExpandableContainer by close: no exit in under two frames, no frame over a fifth (3.6s)
+  ✓  41 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · ExpandableContainer by escape: no exit in under two frames, no frame over a fifth (3.6s)
+  ✓  42 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · CommandDialog by pick: no exit in under two frames, no frame over a fifth (3.4s)
+  -  43 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · CommandDialog by outside: no exit in under two frames, no frame over a fifth
+  ✓  44 [webkit-phone] › release-11-1-1.spec.ts:1859:9 › standing · CommandDialog by escape: no exit in under two frames, no frame over a fifth (3.2s)
+
+  17 skipped
+  27 passed (1.7m)
+== exits · webkit-phone · (site|fade|fold|mark|press|still) ·  · port 5354
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 18 tests using 1 worker
+
+  ✓   1 [webkit-phone] › release-11-1-1-reduce.spec.ts:129:1 › site · a site's own opacity fade keeps its clock under reduced motion (2.0s)
+  ✓   2 [webkit-phone] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Popover appears and leaves on a fade (3.2s)
+  ✓   3 [webkit-phone] › release-11-1-1-reduce.spec.ts:196:5 › fade · a DropdownMenu appears and leaves on a fade (3.1s)
+  ✓   4 [webkit-phone] › release-11-1-1-reduce.spec.ts:196:5 › fade · a dock Select appears and leaves on a fade (3.2s)
+  ✓   5 [webkit-phone] › release-11-1-1-reduce.spec.ts:196:5 › fade · a plain Select appears and leaves on a fade (2.9s)
+  -   6 [webkit-phone] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Tooltip appears and leaves on a fade
+[WebServer] 6:18:55 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓   7 [webkit-phone] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Dialog appears and leaves on a fade (3.1s)
+[WebServer] 6:18:58 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓   8 [webkit-phone] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet right appears and leaves on a fade (3.1s)
+[WebServer] 6:19:01 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓   9 [webkit-phone] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet bottom appears and leaves on a fade (2.9s)
+[WebServer] 6:19:04 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  10 [webkit-phone] › release-11-1-1-reduce.spec.ts:196:5 › fade · a detented Sheet appears and leaves on a fade (2.9s)
+  ✓  11 [webkit-phone] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Toast appears and leaves on a fade (2.9s)
+  ✓  12 [webkit-phone] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Collapsible appears and leaves on a fade (3.2s)
+  ✓  13 [webkit-phone] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Accordion appears and leaves on a fade (3.1s)
+  ✓  14 [webkit-phone] › release-11-1-1-reduce.spec.ts:196:5 › fade · a ExpandableContainer appears and leaves on a fade (2.9s)
+  ✓  15 [webkit-phone] › release-11-1-1-reduce.spec.ts:281:1 › fold · a dock unfolds and folds by cross-fading its faces, its box landing at once (3.0s)
+  ✓  16 [webkit-phone] › release-11-1-1-reduce.spec.ts:300:1 › mark · a run's selected plate moves to a new seat by a cross-fade (2.0s)
+  -  17 [webkit-phone] › release-11-1-1-reduce.spec.ts:438:1 › press · a pressed control shows its press by colour, not by size, under reduced motion
+  ✓  18 [webkit-phone] › release-11-1-1-reduce.spec.ts:477:1 › still · a Slider holds still under reduced motion (916ms)
+
+  2 skipped
+  16 passed (47.1s)
+== exits · webkit-desktop · (form|glass|exit|routes|round|weight|lift|sheet) ·  · port 5354
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 41 tests using 1 worker
+
+  -   1 [webkit-desktop] › release-11-1-1-controls.spec.ts:22:5 › round · a compact SegmentedTabs strip is round-ended on touch
+  -   2 [webkit-desktop] › release-11-1-1-controls.spec.ts:22:5 › round · a wide SegmentedTabs strip is round-ended on touch
+  ✓   3 [webkit-desktop] › release-11-1-1-controls.spec.ts:46:1 › weight · selecting a word-labelled ToggleGroupItem moves no item box (1.9s)
+  -   4 [webkit-desktop] › release-11-1-1-controls.spec.ts:69:1 › lift · a scale-on-hover element returns to rest after a tap
+  ✓   5 [webkit-desktop] › release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · pick (2.7s)
+  ✓   6 [webkit-desktop] › release-11-1-1.spec.ts:101:5 › form · a dock DropdownMenu keeps its material through the exit · pick (2.7s)
+  ✓   7 [webkit-desktop] › release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · outside (2.7s)
+  ✓   8 [webkit-desktop] › release-11-1-1.spec.ts:101:5 › form · a dock DropdownMenu keeps its material through the exit · outside (2.6s)
+  ✓   9 [webkit-desktop] › release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · escape (2.6s)
+  ✓  10 [webkit-desktop] › release-11-1-1.spec.ts:101:5 › form · a dock DropdownMenu keeps its material through the exit · escape (2.6s)
+  ✓  11 [webkit-desktop] › release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · trigger (2.7s)
+  ✓  12 [webkit-desktop] › release-11-1-1.spec.ts:101:5 › form · a dock DropdownMenu keeps its material through the exit · trigger (2.6s)
+  ✓  13 [webkit-desktop] › release-11-1-1.spec.ts:68:5 › form · a dock Select leaves in the form it opened in · current (2.5s)
+  -  14 [webkit-desktop] › release-11-1-1.spec.ts:101:5 › form · a dock DropdownMenu keeps its material through the exit · current
+  -  15 [webkit-desktop] › release-11-1-1.spec.ts:204:9 › glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · light
+  -  16 [webkit-desktop] › release-11-1-1.spec.ts:204:9 › glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · dark
+  -  17 [webkit-desktop] › release-11-1-1.spec.ts:241:5 › glass · a phone Select is solid under reduced transparency
+  -  18 [webkit-desktop] › release-11-1-1.spec.ts:204:9 › glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · light
+  -  19 [webkit-desktop] › release-11-1-1.spec.ts:204:9 › glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · dark
+  -  20 [webkit-desktop] › release-11-1-1.spec.ts:241:5 › glass · a phone dock DropdownMenu is solid under reduced transparency
+  ✓  21 [webkit-desktop] › release-11-1-1.spec.ts:310:5 › exit · Select leaves on the exit curve, shorter than it entered (3.6s)
+  ✓  22 [webkit-desktop] › release-11-1-1.spec.ts:310:5 › exit · DropdownMenu leaves on the exit curve, shorter than it entered (3.7s)
+  ✓  23 [webkit-desktop] › release-11-1-1.spec.ts:310:5 › exit · Popover leaves on the exit curve, shorter than it entered (3.5s)
+  ✓  24 [webkit-desktop] › release-11-1-1.spec.ts:310:5 › exit · Tooltip leaves on the exit curve, shorter than it entered (3.6s)
+[WebServer] 6:20:15 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  25 [webkit-desktop] › release-11-1-1.spec.ts:310:5 › exit · Dialog leaves on the exit curve, shorter than it entered (3.5s)
+[WebServer] 6:20:19 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  26 [webkit-desktop] › release-11-1-1.spec.ts:310:5 › exit · Sheet right leaves on the exit curve, shorter than it entered (3.4s)
+[WebServer] 6:20:22 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  27 [webkit-desktop] › release-11-1-1.spec.ts:310:5 › exit · Sheet bottom leaves on the exit curve, shorter than it entered (3.5s)
+  ✓  28 [webkit-desktop] › release-11-1-1.spec.ts:439:5 › exit · a Popover enters and leaves on opacity and its slide alone (2.5s)
+  ✓  29 [webkit-desktop] › release-11-1-1.spec.ts:439:5 › exit · a Tooltip leaves on opacity and its slide alone (2.1s)
+[WebServer] 6:20:31 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  30 [webkit-desktop] › release-11-1-1.spec.ts:497:5 › routes · a detented Sheet leaves whole by escape (4.0s)
+[WebServer] 6:20:34 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  31 [webkit-desktop] › release-11-1-1.spec.ts:497:5 › routes · a detented Sheet leaves whole by outside (3.6s)
+[WebServer] 6:20:38 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  32 [webkit-desktop] › release-11-1-1.spec.ts:523:1 › routes · a detented Sheet dragged off leaves from where the drag left it (4.1s)
+  ✓  33 [webkit-desktop] › release-11-1-1.spec.ts:587:5 › routes · a CommandDialog keeps its list through its exit by pick (3.1s)
+  ✓  34 [webkit-desktop] › release-11-1-1.spec.ts:587:5 › routes · a CommandDialog keeps its list through its exit by escape (3.0s)
+  ✓  35 [webkit-desktop] › release-11-1-1.spec.ts:587:5 › routes · a CommandDialog keeps its list through its exit by outside (3.1s)
+  ✓  36 [webkit-desktop] › release-11-1-1.spec.ts:621:5 › routes · a press on an open Select's trigger closes it once (3.3s)
+  ✓  37 [webkit-desktop] › release-11-1-1.spec.ts:621:5 › routes · a press on an open DropdownMenu's trigger closes it once (2.9s)
+  ✓  38 [webkit-desktop] › release-11-1-1.spec.ts:621:5 › routes · a press on an open Popover's trigger closes it once (2.7s)
+  -  39 [webkit-desktop] › release-11-1-1.spec.ts:726:1 › sheet · a detented Sheet rises into place at its rung's size
+  -  40 [webkit-desktop] › release-11-1-1.spec.ts:907:5 › sheet · a detented Sheet dragged up and let go at speed springs on from where the finger left it
+  -  41 [webkit-desktop] › release-11-1-1.spec.ts:907:5 › sheet · a detented Sheet dragged up and let go at rest springs on from where the finger left it
+
+  13 skipped
+  28 passed (1.5m)
+== exits · webkit-desktop · (reverse|tooltip|expand|leave) ·  · port 5354
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 43 tests using 1 worker
+
+  ✓   1 [webkit-desktop] › release-11-1-1.spec.ts:1174:9 › reverse · a Select closed while it opens turns from where it is (4.9s)
+  ✓   2 [webkit-desktop] › release-11-1-1.spec.ts:1186:9 › reverse · a Select reopened while it closes turns from where it is (3.6s)
+  ✓   3 [webkit-desktop] › release-11-1-1.spec.ts:1174:9 › reverse · a DropdownMenu closed while it opens turns from where it is (2.6s)
+  ✓   4 [webkit-desktop] › release-11-1-1.spec.ts:1186:9 › reverse · a DropdownMenu reopened while it closes turns from where it is (3.4s)
+  ✓   5 [webkit-desktop] › release-11-1-1.spec.ts:1174:9 › reverse · a Popover closed while it opens turns from where it is (2.5s)
+  ✓   6 [webkit-desktop] › release-11-1-1.spec.ts:1186:9 › reverse · a Popover reopened while it closes turns from where it is (3.3s)
+  ✓   7 [webkit-desktop] › release-11-1-1.spec.ts:1174:9 › reverse · a Toast closed while it opens turns from where it is (2.2s)
+  ✓   8 [webkit-desktop] › release-11-1-1.spec.ts:1174:9 › reverse · a Tooltip closed while it opens turns from where it is (2.2s)
+  ✓   9 [webkit-desktop] › release-11-1-1.spec.ts:1186:9 › reverse · a Tooltip reopened while it closes turns from where it is (3.2s)
+  ✓  10 [webkit-desktop] › release-11-1-1.spec.ts:1206:1 › reverse · a disclosure reopened while it closes finishes its reopen (5.1s)
+[WebServer] 6:21:42 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  11 [webkit-desktop] › release-11-1-1.spec.ts:1242:5 › reverse · a press on a leaving Dialog's trigger reopens it from where it is (3.5s)
+[WebServer] 6:21:46 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  12 [webkit-desktop] › release-11-1-1.spec.ts:1242:5 › reverse · a press on a leaving Sheet's trigger reopens it from where it is (3.3s)
+  ✓  13 [webkit-desktop] › release-11-1-1.spec.ts:1242:5 › reverse · a press on a leaving Select's trigger reopens it from where it is (3.5s)
+[WebServer] 6:21:52 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  14 [webkit-desktop] › release-11-1-1.spec.ts:1266:1 › reverse · a press on the page while a sheet leaves reaches the page (2.5s)
+  ✓  15 [webkit-desktop] › release-11-1-1.spec.ts:1305:1 › tooltip · a Tooltip enters on a tween (1.9s)
+  ✓  16 [webkit-desktop] › release-11-1-1.spec.ts:1320:5 › tooltip · a hint handed to its neighbour fades, incoming (2.5s)
+  ✓  17 [webkit-desktop] › release-11-1-1.spec.ts:1320:5 › tooltip · a hint handed to its neighbour fades, outgoing (2.4s)
+  ✓  18 [webkit-desktop] › release-11-1-1.spec.ts:1413:1 › expand · an ExpandableContainer enters on a tween (4.2s)
+  ✓  19 [webkit-desktop] › release-11-1-1.spec.ts:1428:5 › expand · an ExpandableContainer leaves on a tween by exit (5.0s)
+  ✓  20 [webkit-desktop] › release-11-1-1.spec.ts:1428:5 › expand · an ExpandableContainer leaves on a tween by escape (4.9s)
+  ✓  21 [webkit-desktop] › release-11-1-1.spec.ts:1428:5 › expand · an ExpandableContainer leaves on a tween by open (4.9s)
+  ✓  22 [webkit-desktop] › release-11-1-1.spec.ts:1451:1 › expand · an ExpandableContainer closed while it enters turns from where it is (4.1s)
+  ✓  23 [webkit-desktop] › release-11-1-1.spec.ts:1468:1 › expand · an ExpandableContainer reopened while it leaves turns from where it is (5.0s)
+  ✓  24 [webkit-desktop] › release-11-1-1.spec.ts:1484:1 › expand · Escape is live from the entrance's first frame (1.6s)
+[WebServer] 6:22:31 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  25 [webkit-desktop] › release-11-1-1.spec.ts:1543:5 › leave · a Dialog says once that its leave has finished, after its last seen frame (3.0s)
+[WebServer] 6:22:34 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  26 [webkit-desktop] › release-11-1-1.spec.ts:1572:5 › leave · a Dialog closed and reopened mid-exit says nothing (2.8s)
+[WebServer] 6:22:37 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  27 [webkit-desktop] › release-11-1-1.spec.ts:1543:5 › leave · a Sheet says once that its leave has finished, after its last seen frame (3.1s)
+[WebServer] 6:22:40 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  28 [webkit-desktop] › release-11-1-1.spec.ts:1572:5 › leave · a Sheet closed and reopened mid-exit says nothing (2.8s)
+  ✓  29 [webkit-desktop] › release-11-1-1.spec.ts:1543:5 › leave · a Popover says once that its leave has finished, after its last seen frame (2.9s)
+  ✓  30 [webkit-desktop] › release-11-1-1.spec.ts:1572:5 › leave · a Popover closed and reopened mid-exit says nothing (2.7s)
+  ✓  31 [webkit-desktop] › release-11-1-1.spec.ts:1543:5 › leave · a DropdownMenu says once that its leave has finished, after its last seen frame (3.0s)
+  ✓  32 [webkit-desktop] › release-11-1-1.spec.ts:1572:5 › leave · a DropdownMenu closed and reopened mid-exit says nothing (2.7s)
+  ✓  33 [webkit-desktop] › release-11-1-1.spec.ts:1543:5 › leave · a Select says once that its leave has finished, after its last seen frame (3.1s)
+  ✓  34 [webkit-desktop] › release-11-1-1.spec.ts:1572:5 › leave · a Select closed and reopened mid-exit says nothing (2.9s)
+  ✓  35 [webkit-desktop] › release-11-1-1.spec.ts:1543:5 › leave · a Tooltip says once that its leave has finished, after its last seen frame (3.1s)
+  ✓  36 [webkit-desktop] › release-11-1-1.spec.ts:1572:5 › leave · a Tooltip closed and reopened mid-exit says nothing (2.7s)
+  ✓  37 [webkit-desktop] › release-11-1-1.spec.ts:1543:5 › leave · a Toast says once that its leave has finished, after its last seen frame (3.1s)
+  -  38 [webkit-desktop] › release-11-1-1.spec.ts:1572:5 › leave · a Toast closed and reopened mid-exit says nothing
+  ✓  39 [webkit-desktop] › release-11-1-1.spec.ts:1647:1 › leave · a Popover inside a shadow root says so to its host (3.6s)
+  ✓  40 [webkit-desktop] › release-11-1-1.spec.ts:1671:5 › leave · a ContextMenu says once that its leave has finished, by escape (3.3s)
+  ✓  41 [webkit-desktop] › release-11-1-1.spec.ts:1671:5 › leave · a ContextMenu says once that its leave has finished, by pick (3.4s)
+  ✓  42 [webkit-desktop] › release-11-1-1.spec.ts:1689:1 › leave · a hover card says once that its leave has finished (3.7s)
+[WebServer] 6:23:24 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  43 [webkit-desktop] › release-11-1-1.spec.ts:1707:1 › leave · a Dialog unmounted mid-exit says so once, at the unmount (3.3s)
+
+  1 skipped
+  42 passed (2.3m)
+== exits · webkit-desktop · standing ·  · port 5354
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 44 tests using 1 worker
+
+  ✓   1 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Select by pick: no exit in under two frames, no frame over a fifth (3.8s)
+  ✓   2 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Select by outside: no exit in under two frames, no frame over a fifth (3.5s)
+  ✓   3 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Select by escape: no exit in under two frames, no frame over a fifth (3.6s)
+  ✓   4 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Select by trigger: no exit in under two frames, no frame over a fifth (3.3s)
+  ✓   5 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · DropdownMenu by pick: no exit in under two frames, no frame over a fifth (3.3s)
+  ✓   6 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · DropdownMenu by outside: no exit in under two frames, no frame over a fifth (3.4s)
+  ✓   7 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · DropdownMenu by escape: no exit in under two frames, no frame over a fifth (3.4s)
+  ✓   8 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · DropdownMenu by trigger: no exit in under two frames, no frame over a fifth (3.6s)
+[WebServer] 6:24:03 PM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../@vite/client:531:59
+[WebServer] 
+  ✓   9 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · plain Select by pick: no exit in under two frames, no frame over a fifth (3.5s)
+[WebServer] 6:24:06 PM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../@vite/client:531:59
+[WebServer] 
+  ✓  10 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · plain Select by outside: no exit in under two frames, no frame over a fifth (3.5s)
+[WebServer] 6:24:10 PM [vite] (client) [Unhandled error] Error: ResizeObserver loop completed with undelivered notifications.
+[WebServer]  > ../../../../../../../@vite/client:531:59
+[WebServer] 
+  ✓  11 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · plain Select by escape: no exit in under two frames, no frame over a fifth (3.4s)
+  ✓  12 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Popover by outside: no exit in under two frames, no frame over a fifth (3.4s)
+  ✓  13 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Popover by escape: no exit in under two frames, no frame over a fifth (3.5s)
+  ✓  14 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Popover by trigger: no exit in under two frames, no frame over a fifth (3.5s)
+  ✓  15 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Popover by focus: no exit in under two frames, no frame over a fifth (3.4s)
+  ✓  16 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Tooltip by escape: no exit in under two frames, no frame over a fifth (3.5s)
+  ✓  17 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Tooltip by away: no exit in under two frames, no frame over a fifth (3.4s)
+  ✓  18 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Tooltip by trigger: no exit in under two frames, no frame over a fifth (3.3s)
+  ✓  19 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · brief Toast by timeout: no exit in under two frames, no frame over a fifth (3.5s)
+[WebServer] 6:24:40 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  20 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Dialog by close: no exit in under two frames, no frame over a fifth (3.5s)
+[WebServer] 6:24:44 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  21 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Dialog by outside: no exit in under two frames, no frame over a fifth (3.4s)
+[WebServer] 6:24:47 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  22 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Dialog by escape: no exit in under two frames, no frame over a fifth (3.4s)
+[WebServer] 6:24:51 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  23 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Sheet right by close: no exit in under two frames, no frame over a fifth (3.5s)
+[WebServer] 6:24:54 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  24 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Sheet right by outside: no exit in under two frames, no frame over a fifth (3.5s)
+[WebServer] 6:24:58 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  25 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Sheet right by escape: no exit in under two frames, no frame over a fifth (3.2s)
+[WebServer] 6:25:01 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  26 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Sheet bottom by close: no exit in under two frames, no frame over a fifth (3.3s)
+[WebServer] 6:25:04 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  27 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Sheet bottom by outside: no exit in under two frames, no frame over a fifth (3.3s)
+[WebServer] 6:25:07 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  28 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Sheet bottom by escape: no exit in under two frames, no frame over a fifth (3.2s)
+[WebServer] 6:25:11 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  29 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Sheet top by close: no exit in under two frames, no frame over a fifth (3.3s)
+[WebServer] 6:25:14 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  30 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Sheet top by outside: no exit in under two frames, no frame over a fifth (3.3s)
+[WebServer] 6:25:17 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  31 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Sheet top by escape: no exit in under two frames, no frame over a fifth (3.3s)
+[WebServer] 6:25:21 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  32 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Sheet left by close: no exit in under two frames, no frame over a fifth (3.5s)
+[WebServer] 6:25:24 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  33 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Sheet left by outside: no exit in under two frames, no frame over a fifth (3.4s)
+[WebServer] 6:25:28 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  34 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Sheet left by escape: no exit in under two frames, no frame over a fifth (3.5s)
+[WebServer] 6:25:31 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  35 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · detented Sheet by outside: no exit in under two frames, no frame over a fifth (3.3s)
+[WebServer] 6:25:34 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  36 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · detented Sheet by escape: no exit in under two frames, no frame over a fifth (3.3s)
+  ✓  37 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Toast by close: no exit in under two frames, no frame over a fifth (3.4s)
+  ✓  38 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Collapsible by trigger: no exit in under two frames, no frame over a fifth (3.5s)
+  ✓  39 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · Accordion by trigger: no exit in under two frames, no frame over a fifth (3.4s)
+  ✓  40 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · ExpandableContainer by close: no exit in under two frames, no frame over a fifth (3.4s)
+  ✓  41 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · ExpandableContainer by escape: no exit in under two frames, no frame over a fifth (3.5s)
+  ✓  42 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · CommandDialog by pick: no exit in under two frames, no frame over a fifth (3.7s)
+  ✓  43 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · CommandDialog by outside: no exit in under two frames, no frame over a fifth (3.5s)
+  ✓  44 [webkit-desktop] › release-11-1-1.spec.ts:1859:9 › standing · CommandDialog by escape: no exit in under two frames, no frame over a fifth (3.5s)
+
+  44 passed (2.6m)
+== exits · webkit-desktop · (site|fade|fold|mark|press|still) ·  · port 5354
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 18 tests using 1 worker
+
+  ✓   1 [webkit-desktop] › release-11-1-1-reduce.spec.ts:129:1 › site · a site's own opacity fade keeps its clock under reduced motion (2.1s)
+  ✓   2 [webkit-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Popover appears and leaves on a fade (3.2s)
+  ✓   3 [webkit-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a DropdownMenu appears and leaves on a fade (3.2s)
+  ✓   4 [webkit-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a dock Select appears and leaves on a fade (3.1s)
+  ✓   5 [webkit-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a plain Select appears and leaves on a fade (3.1s)
+  ✓   6 [webkit-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Tooltip appears and leaves on a fade (3.1s)
+[WebServer] 6:26:31 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓   7 [webkit-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Dialog appears and leaves on a fade (3.1s)
+[WebServer] 6:26:35 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓   8 [webkit-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet right appears and leaves on a fade (3.2s)
+[WebServer] 6:26:38 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓   9 [webkit-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Sheet bottom appears and leaves on a fade (3.1s)
+[WebServer] 6:26:41 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  10 [webkit-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a detented Sheet appears and leaves on a fade (3.0s)
+  ✓  11 [webkit-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Toast appears and leaves on a fade (3.0s)
+  ✓  12 [webkit-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Collapsible appears and leaves on a fade (3.0s)
+  ✓  13 [webkit-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a Accordion appears and leaves on a fade (3.0s)
+  ✓  14 [webkit-desktop] › release-11-1-1-reduce.spec.ts:196:5 › fade · a ExpandableContainer appears and leaves on a fade (3.0s)
+  ✓  15 [webkit-desktop] › release-11-1-1-reduce.spec.ts:281:1 › fold · a dock unfolds and folds by cross-fading its faces, its box landing at once (3.0s)
+  ✓  16 [webkit-desktop] › release-11-1-1-reduce.spec.ts:300:1 › mark · a run's selected plate moves to a new seat by a cross-fade (2.1s)
+[WebServer] 6:27:09 PM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  17 [webkit-desktop] › release-11-1-1-reduce.spec.ts:438:1 › press · a pressed control shows its press by colour, not by size, under reduced motion (10.7s)
+  ✓  18 [webkit-desktop] › release-11-1-1-reduce.spec.ts:477:1 › still · a Slider holds still under reduced motion (2.2s)
+
+  18 passed (1.0m)
