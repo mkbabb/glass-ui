@@ -12,7 +12,7 @@ export const section: SectionRoutes = {
         { id: "select", title: "Select", lede: "Pick one option from a list that opens over the page." },
         { id: "checks", title: "Checkbox · Radio · Switch", lede: "Controls for choosing one option or several." },
         { id: "slider", title: "Slider", lede: "Pick a value along a track." },
-        { id: "number-field", title: "Number Field", lede: "Enter a bounded number, or step it up and down." },
+        { id: "number-field", title: "Number Field", lede: "Enter a bounded number, or step it up and down.", codeFace: true },
         { id: "toggle", title: "Toggle Group", lede: "A strip of buttons that stay pressed." },
         { id: "chip", title: "Chip", lede: "Small labels you can select, act on or remove." },
         { id: "labeled-field", title: "Labeled Field", lede: "A control with its label, description and error." },
