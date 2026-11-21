@@ -1,0 +1,183 @@
+start 15:41:36 load { 52.17 53.44 42.12 }
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for the 'webkit' lock
+[guarded] waiting for headroom (load 41 > 36)
+{"engine":"webkit","rows":[{"id":"light","want":"1","wantBlur":"saturate(1.2)","level":"1","blur":"blur( calc(16px * 1) ) saturate(1.2)","docDark":false,"rt":false,"more":false,"ok":true},{"id":"dark","want":"1","wantBlur":"saturate(1.3) brightness(1.14)","level":"1","blur":"blur( calc(16px * 1) ) saturate(1.3) brightness(1.14)","docDark":true,"rt":false,"more":false,"ok":true},{"id":"rt-light","scheme":"light","rt":true,"want":"0","read":null,"note":"no emulation of prefers-reduced-transparency in WebKit"},{"id":"rt-dark","scheme":"dark","rt":true,"want":"0","read":null,"note":"no emulation of prefers-reduced-transparency in WebKit"},{"id":"contrast-more","want":"0.3","wantBlur":null,"level":"0.3","blur":"blur( calc(16px * 0.3) ) saturate(1.2)","docDark":false,"rt":false,"more":true,"ok":true},{"id":"static","want":"0","wantBlur":null,"level":"0","blur":"blur( calc(16px * 0) ) saturate(1.2)","docDark":false,"rt":false,"more":false,"ok":true},{"id":"dock-dark-in-light","want":"1","wantBlur":"saturate(1.3) brightness(1.14)","level":"1","blur":"blur( calc(16px * 1) ) saturate(1.3) brightness(1.14)","docDark":false,"rt":false,"more":false,"ok":true}],"summary":{"cells":5,"ok":5,"fail":[]}}
+applied
+{"engine":"webkit","rows":[{"id":"light","want":"1","wantBlur":"saturate(1.2)","level":"1","blur":"blur( calc(16px * 1) ) saturate(1.2)","docDark":false,"rt":false,"more":false,"ok":true},{"id":"dark","want":"1","wantBlur":"saturate(1.3) brightness(1.14)","level":"1","blur":"blur( calc(16px * 1) ) saturate(1.3) brightness(1.14)","docDark":true,"rt":false,"more":false,"ok":true},{"id":"rt-light","scheme":"light","rt":true,"want":"0","read":null,"note":"no emulation of prefers-reduced-transparency in WebKit"},{"id":"rt-dark","scheme":"dark","rt":true,"want":"0","read":null,"note":"no emulation of prefers-reduced-transparency in WebKit"},{"id":"contrast-more","want":"0.3","wantBlur":null,"level":"0.3","blur":"blur( calc(16px * 0.3) ) saturate(1.2)","docDark":false,"rt":false,"more":true,"ok":true},{"id":"static","want":"0","wantBlur":null,"level":"0","blur":"blur( calc(16px * 0) ) saturate(1.2)","docDark":false,"rt":false,"more":false,"ok":true},{"id":"dock-dark-in-light","want":"1","wantBlur":"saturate(1.3) brightness(1.14)","level":"1","blur":"blur( calc(16px * 1) ) saturate(1.2)","docDark":false,"rt":false,"more":false,"ok":false}],"summary":{"cells":5,"ok":4,"fail":["dock-dark-in-light"]}}
+reverted
+{"engine":"webkit","before":null,"firstPress":{"to":"w-std-library","markBefore":false,"after":[718.5,32],"seat":[714.5,40],"current":"page","seatBg":"rgba(0, 0, 0, 0)","frames":90,"first":627.27,"last":718.5,"travel":91.23,"between":22,"largestStep":12.56,"stepShare":0.138,"onSeat":true,"glides":true},"secondPress":{"to":"w-std-marks","markBefore":true,"after":[766.5,32],"seat":[762.5,40],"current":"page","seatBg":"rgba(0, 0, 0, 0)","frames":186,"first":718.5,"last":766.5,"travel":48,"between":42,"largestStep":4.02,"stepShare":0.084,"onSeat":true,"glides":true}}
+applied
+{"engine":"webkit","before":null,"firstPress":{"to":"w-std-library","markBefore":false,"after":[718.5,32],"seat":[714.5,40],"current":"page","seatBg":"rgba(0, 0, 0, 0)","frames":90,"first":718.5,"last":718.5,"travel":0,"between":0,"largestStep":0,"stepShare":null,"onSeat":true,"glides":false},"secondPress":{"to":"w-std-marks","markBefore":true,"after":[766.5,32],"seat":[762.5,40],"current":"page","seatBg":"rgba(0, 0, 0, 0)","frames":95,"first":718.5,"last":766.5,"travel":48,"between":0,"largestStep":48,"stepShare":1,"onSeat":true,"glides":false}}
+reverted
+{"cells":56,"failing":16,"minText":4.01,"minIcon":3.85,"marks":28,"markFails":20,"minMark":1,"hoverReads":16,"hoverFails":8,"hoverNotes":12,"unsettledFails":16,"unsettledSteady":16,"notOpened":0,"minHover":1,"looseFails":0,"schemeMismatch":0}
+nav field dark rest (no dock folds): text Reports 4.01, icon svg 3.85 (unsettled, op 0.8, the same on both reads)
+nav field dark open Site: text Reports 4.08, icon svg 3.9 (unsettled, op 0.8, the same on both reads), mark Reports 1.25 < v11.0.2 1.32
+nav field light rest (no dock folds): icon svg 6.07 (unsettled, op 0.8, the same on both reads)
+nav field light open Site: icon svg 6.02 (unsettled, op 0.8, the same on both reads), mark Reports 1.236 < v11.0.2 1.363, hover Home against its ground 1.177 < v11.0.2 1.284
+nav flat dark rest (no dock folds): icon svg 10.21 (unsettled, op 0.8, the same on both reads)
+nav flat dark open Site: icon svg 10.21 (unsettled, op 0.8, the same on both reads), mark Reports 1.247 < v11.0.2 1.358
+nav flat light rest (no dock folds): icon svg 7.53 (unsettled, op 0.8, the same on both reads)
+nav flat light open Site: icon svg 7.53 (unsettled, op 0.8, the same on both reads), mark Reports 1.246 < v11.0.2 1.396, hover Home against its ground 1.182 < v11.0.2 1.301
+rail field dark folded: icon svg 4.29 (unsettled, op 0.8, the same on both reads)
+rail field dark open Sections: icon svg 4.25 (unsettled, op 0.8, the same on both reads)
+rail field light folded: icon svg 5.65 (unsettled, op 0.8, the same on both reads)
+rail field light open Sections: icon svg 5.68 (unsettled, op 0.8, the same on both reads)
+rail flat dark folded: icon svg 10.21 (unsettled, op 0.8, the same on both reads)
+rail flat dark open Sections: icon svg 10.21 (unsettled, op 0.8, the same on both reads)
+rail flat light folded: icon svg 7.53 (unsettled, op 0.8, the same on both reads)
+rail flat light open Sections: icon svg 7.51 (unsettled, op 0.8, the same on both reads)
+dials field dark open Fund balance filters: mark 5Y 1.08 < 1.2 (the polarity flipped: v11.0.2 90,60,42 on 108,72,56, now 123,90,77 on 121,84,69), mark Lin 1.076 < 1.2 (the polarity flipped: v11.0.2 90,61,41 on 121,85,66, now 123,93,77 on 122,86,68)
+dials flat light open Fund balance filters: mark 5Y 1.236 < v11.0.2 1.323, mark Lin 1.493 < v11.0.2 1.586
+canvas-tools field dark open Canvas tools: mark Grid 1.001 < 1.2 (the polarity flipped: v11.0.2 137,101,88 on 122,81,65, now 123,82,69 on 123,82,69), mark Draw 1.005 < 1.2 (the polarity flipped: v11.0.2 138,103,87 on 122,83,65, now 123,84,68 on 123,84,68), hover Layers against its ground 1.006 < v11.0.2 1.178
+canvas-tools field light open Canvas tools: mark Grid 1.001 < 1.2 (the polarity flipped: v11.0.2 194,157,141 on 226,183,167, now 218,173,158 on 218,173,158), mark Draw 1.001 < 1.2 (the polarity flipped: v11.0.2 194,159,140 on 226,186,166, now 219,178,157 on 219,178,157), hover Layers against its ground 1.002 < v11.0.2 1.269
+canvas-tools flat dark open Canvas tools: mark Grid 1 < 1.2 (the polarity flipped: v11.0.2 43,41,39 on 12,11,8, now 13,10,7 on 13,10,7), mark Draw 1 < 1.2 (the polarity flipped: v11.0.2 43,41,39 on 12,11,8, now 13,10,7 on 13,10,7), hover Layers against its ground 1 < v11.0.2 1.153
+canvas-tools flat light open Canvas tools: mark Grid 1.001 < 1.2 (the polarity flipped: v11.0.2 198,195,188 on 230,229,225, now 223,220,216 on 222,219,215), mark Draw 1.002 < v11.0.2 1.401, hover Layers against its ground 1.003 < v11.0.2 1.298
+action-row field dark open Stylesheet actions: mark Format 1.308 < v11.0.2 1.373
+action-row field light open Stylesheet actions: mark Format 1.22 < v11.0.2 1.34, hover Copy against its ground 1.185 < v11.0.2 1.251
+action-row flat dark open Stylesheet actions: mark Format 1.255 < v11.0.2 1.361
+action-row flat light open Stylesheet actions: mark Format 1.237 < v11.0.2 1.371, hover Copy against its ground 1.181 < v11.0.2 1.281
+plate nav field dark rest (no dock folds): 
+plate nav field dark open Site: Site 1.315 (spread 0.012)
+plate nav field light rest (no dock folds): 
+plate nav field light open Site: Site 1.295 (spread 0.005)
+plate nav flat dark rest (no dock folds): 
+plate nav flat dark open Site: Site 1.002 (spread 0)
+plate nav flat light rest (no dock folds): 
+plate nav flat light open Site: Site 1.31 (spread 0)
+plate rail field dark folded: Sections 1.292 (spread 0)
+plate rail field dark open Sections: Sections 1.28 (spread 0.011)
+plate rail field light folded: Sections 1.283 (spread 0.001)
+plate rail field light open Sections: Sections 1.284 (spread 0.001)
+plate rail flat dark folded: Sections 1.002 (spread 0)
+plate rail flat dark open Sections: Sections 1.002 (spread 0)
+plate rail flat light folded: Sections 1.31 (spread 0)
+plate rail flat light open Sections: Sections 1.31 (spread 0)
+plate figure-tools field dark folded: Revenue tools 1.237 (spread 0.013); Headcount tools 1.24 (spread 0.005); Churn tools 1.255 (spread 0.012)
+plate figure-tools field dark open Revenue tools: Revenue tools 1.225 (spread 0.024)
+plate figure-tools field dark open Headcount tools: Headcount tools 1.246 (spread 0.007)
+plate figure-tools field dark open Churn tools: Churn tools 1.256 (spread 0)
+plate figure-tools field light folded: Revenue tools 1.261 (spread 0.009); Headcount tools 1.266 (spread 0.005); Churn tools 1.279 (spread 0.008)
+plate figure-tools field light open Revenue tools: Revenue tools 1.272 (spread 0)
+plate figure-tools field light open Headcount tools: Headcount tools 1.27 (spread 0.004)
+plate figure-tools field light open Churn tools: Churn tools 1.279 (spread 0.003)
+plate figure-tools flat dark folded: Revenue tools 1.005 (spread 0); Headcount tools 1.005 (spread 0); Churn tools 1.005 (spread 0)
+plate figure-tools flat dark open Revenue tools: Revenue tools 1.005 (spread 0)
+plate figure-tools flat dark open Headcount tools: Headcount tools 1.005 (spread 0)
+plate figure-tools flat dark open Churn tools: Churn tools 1.005 (spread 0)
+plate figure-tools flat light folded: Revenue tools 1.306 (spread 0); Headcount tools 1.306 (spread 0); Churn tools 1.306 (spread 0)
+plate figure-tools flat light open Revenue tools: Revenue tools 1.306 (spread 0)
+plate figure-tools flat light open Headcount tools: Headcount tools 1.306 (spread 0)
+plate figure-tools flat light open Churn tools: Churn tools 1.306 (spread 0)
+plate dials field dark rest (no dock folds): 
+plate dials field dark open Fund balance filters: Fund balance filters 1.287 (spread 0.001)
+plate dials field light rest (no dock folds): 
+plate dials field light open Fund balance filters: Fund balance filters 1.293 (spread 0.009)
+plate dials flat dark rest (no dock folds): 
+plate dials flat dark open Fund balance filters: Fund balance filters 1.002 (spread 0)
+plate dials flat light rest (no dock folds): 
+plate dials flat light open Fund balance filters: Fund balance filters 1.31 (spread 0)
+plate canvas-tools field dark folded: Canvas tools 1.274 (spread 0)
+plate canvas-tools field dark open Canvas tools: Canvas tools 1.276 (spread 0.013)
+plate canvas-tools field light folded: Canvas tools 1.295 (spread 0)
+plate canvas-tools field light open Canvas tools: Canvas tools 1.288 (spread 0)
+plate canvas-tools flat dark folded: Canvas tools 1.002 (spread 0)
+plate canvas-tools flat dark open Canvas tools: Canvas tools 1.002 (spread 0)
+plate canvas-tools flat light folded: Canvas tools 1.31 (spread 0)
+plate canvas-tools flat light open Canvas tools: Canvas tools 1.31 (spread 0)
+plate action-row field dark rest (no dock folds): 
+plate action-row field dark open Stylesheet actions: Stylesheet actions 1.26 (spread 0.013)
+plate action-row field light rest (no dock folds): 
+plate action-row field light open Stylesheet actions: Stylesheet actions 1.269 (spread 0.01)
+plate action-row flat dark rest (no dock folds): 
+plate action-row flat dark open Stylesheet actions: Stylesheet actions 1.005 (spread 0)
+plate action-row flat light rest (no dock folds): 
+plate action-row flat light open Stylesheet actions: Stylesheet actions 1.306 (spread 0)
+applied
+{"cells":56,"failing":16,"minText":3.81,"minIcon":3.85,"marks":28,"markFails":10,"minMark":1,"hoverReads":16,"hoverFails":6,"hoverNotes":14,"unsettledFails":16,"unsettledSteady":16,"notOpened":0,"minHover":1,"looseFails":0,"schemeMismatch":0}
+nav field dark rest (no dock folds): text Reports 3.81, icon svg 3.85 (unsettled, op 0.8, the same on both reads)
+nav field dark open Site: text Reports 3.86, icon svg 3.89 (unsettled, op 0.8, the same on both reads)
+nav field light rest (no dock folds): icon svg 6.07 (unsettled, op 0.8, the same on both reads)
+nav field light open Site: icon svg 6.03 (unsettled, op 0.8, the same on both reads), hover Home against its ground 1.257 < v11.0.2 1.284
+nav flat dark rest (no dock folds): icon svg 10.21 (unsettled, op 0.8, the same on both reads)
+nav flat dark open Site: icon svg 10.21 (unsettled, op 0.8, the same on both reads)
+nav flat light rest (no dock folds): icon svg 7.53 (unsettled, op 0.8, the same on both reads)
+nav flat light open Site: icon svg 7.53 (unsettled, op 0.8, the same on both reads)
+rail field dark folded: icon svg 4.29 (unsettled, op 0.8, the same on both reads)
+rail field dark open Sections: icon svg 4.26 (unsettled, op 0.8, the same on both reads)
+rail field light folded: icon svg 5.65 (unsettled, op 0.8, the same on both reads)
+rail field light open Sections: icon svg 5.68 (unsettled, op 0.8, the same on both reads)
+rail flat dark folded: icon svg 10.21 (unsettled, op 0.8, the same on both reads)
+rail flat dark open Sections: icon svg 10.21 (unsettled, op 0.8, the same on both reads)
+rail flat light folded: icon svg 7.53 (unsettled, op 0.8, the same on both reads)
+rail flat light open Sections: icon svg 7.51 (unsettled, op 0.8, the same on both reads)
+dials field dark open Fund balance filters: hover 1Y against its ground 1.155 < v11.0.2 1.201
+dials field light open Fund balance filters: mark Lin 1.382 < v11.0.2 1.44
+dials flat light open Fund balance filters: mark 5Y 1.291 < v11.0.2 1.323, mark Lin 1.558 < v11.0.2 1.586
+canvas-tools field dark open Canvas tools: mark Grid 1.001 < 1.2 (the polarity flipped: v11.0.2 137,101,88 on 122,81,65, now 123,82,69 on 123,82,69), mark Draw 1.005 < 1.2 (the polarity flipped: v11.0.2 138,103,87 on 122,83,65, now 123,84,68 on 123,84,68), hover Layers against its ground 1.006 < v11.0.2 1.178
+canvas-tools field light open Canvas tools: mark Grid 1.001 < 1.2 (the polarity flipped: v11.0.2 194,157,141 on 226,183,167, now 218,173,158 on 218,173,158), hover Layers against its ground 1.001 < v11.0.2 1.269
+canvas-tools flat dark open Canvas tools: mark Grid 1 < 1.2 (the polarity flipped: v11.0.2 43,41,39 on 12,11,8, now 13,10,7 on 13,10,7), mark Draw 1 < 1.2 (the polarity flipped: v11.0.2 43,41,39 on 12,11,8, now 13,10,7 on 13,10,7), hover Layers against its ground 1 < v11.0.2 1.153
+canvas-tools flat light open Canvas tools: mark Grid 1.001 < 1.2 (the polarity flipped: v11.0.2 198,195,188 on 230,229,225, now 223,220,216 on 223,220,216), mark Draw 1.002 < 1.2 (the polarity flipped: v11.0.2 198,195,188 on 230,229,225, now 223,220,216 on 223,220,216), hover Layers against its ground 1.004 < v11.0.2 1.298
+plate nav field dark rest (no dock folds): 
+plate nav field dark open Site: Site 1.316 (spread 0.001)
+plate nav field light rest (no dock folds): 
+plate nav field light open Site: Site 1.293 (spread 0.004)
+plate nav flat dark rest (no dock folds): 
+plate nav flat dark open Site: Site 1.002 (spread 0)
+plate nav flat light rest (no dock folds): 
+plate nav flat light open Site: Site 1.31 (spread 0)
+plate rail field dark folded: Sections 1.292 (spread 0.011)
+plate rail field dark open Sections: Sections 1.28 (spread 0.012)
+plate rail field light folded: Sections 1.283 (spread 0.001)
+plate rail field light open Sections: Sections 1.284 (spread 0.001)
+plate rail flat dark folded: Sections 1.002 (spread 0)
+plate rail flat dark open Sections: Sections 1.002 (spread 0)
+plate rail flat light folded: Sections 1.31 (spread 0)
+plate rail flat light open Sections: Sections 1.31 (spread 0)
+plate figure-tools field dark folded: Revenue tools 1.242 (spread 0.012); Headcount tools 1.24 (spread 0.007); Churn tools 1.255 (spread 0.012)
+plate figure-tools field dark open Revenue tools: Revenue tools 1.225 (spread 0.024)
+plate figure-tools field dark open Headcount tools: Headcount tools 1.241 (spread 0.007)
+plate figure-tools field dark open Churn tools: Churn tools 1.256 (spread 0)
+plate figure-tools field light folded: Revenue tools 1.261 (spread 0.009); Headcount tools 1.266 (spread 0.006); Churn tools 1.279 (spread 0.009)
+plate figure-tools field light open Revenue tools: Revenue tools 1.272 (spread 0.001)
+plate figure-tools field light open Headcount tools: Headcount tools 1.27 (spread 0.003)
+plate figure-tools field light open Churn tools: Churn tools 1.279 (spread 0.003)
+plate figure-tools flat dark folded: Revenue tools 1.005 (spread 0); Headcount tools 1.005 (spread 0); Churn tools 1.005 (spread 0)
+plate figure-tools flat dark open Revenue tools: Revenue tools 1.005 (spread 0)
+plate figure-tools flat dark open Headcount tools: Headcount tools 1.005 (spread 0)
+plate figure-tools flat dark open Churn tools: Churn tools 1.005 (spread 0)
+plate figure-tools flat light folded: Revenue tools 1.306 (spread 0); Headcount tools 1.306 (spread 0); Churn tools 1.306 (spread 0)
+plate figure-tools flat light open Revenue tools: Revenue tools 1.306 (spread 0)
+plate figure-tools flat light open Headcount tools: Headcount tools 1.306 (spread 0)
+plate figure-tools flat light open Churn tools: Churn tools 1.306 (spread 0)
+plate dials field dark rest (no dock folds): 
+plate dials field dark open Fund balance filters: Fund balance filters 1.276 (spread 0.006)
+plate dials field light rest (no dock folds): 
+plate dials field light open Fund balance filters: Fund balance filters 1.289 (spread 0.018)
+plate dials flat dark rest (no dock folds): 
+plate dials flat dark open Fund balance filters: Fund balance filters 1.002 (spread 0)
+plate dials flat light rest (no dock folds): 
+plate dials flat light open Fund balance filters: Fund balance filters 1.31 (spread 0)
+plate canvas-tools field dark folded: Canvas tools 1.274 (spread 0.001)
+plate canvas-tools field dark open Canvas tools: Canvas tools 1.288 (spread 0.013)
+plate canvas-tools field light folded: Canvas tools 1.295 (spread 0)
+plate canvas-tools field light open Canvas tools: Canvas tools 1.288 (spread 0)
+plate canvas-tools flat dark folded: Canvas tools 1.002 (spread 0)
+plate canvas-tools flat dark open Canvas tools: Canvas tools 1.002 (spread 0)
+plate canvas-tools flat light folded: Canvas tools 1.31 (spread 0)
+plate canvas-tools flat light open Canvas tools: Canvas tools 1.31 (spread 0)
+plate action-row field dark rest (no dock folds): 
+plate action-row field dark open Stylesheet actions: Stylesheet actions 1.26 (spread 0.013)
+plate action-row field light rest (no dock folds): 
+plate action-row field light open Stylesheet actions: Stylesheet actions 1.269 (spread 0.01)
+plate action-row flat dark rest (no dock folds): 
+plate action-row flat dark open Stylesheet actions: Stylesheet actions 1.005 (spread 0)
+plate action-row flat light rest (no dock folds): 
+plate action-row flat light open Stylesheet actions: Stylesheet actions 1.306 (spread 0)
+reverted
+{"rows":20,"ok":16,"wrong":["w-ctlout@1440","w-daraksha@1440","w-ctlout@390","w-daraksha@390"]}
+applied
+{"rows":20,"ok":10,"wrong":["w-ctl@1440","w-ctl-mix@1440","w-ctlout@1440","w-fourier@1440","w-daraksha@1440","w-sci@1440","w-ctl6@1440","w-kfcode@1440","w-ctlout@390","w-daraksha@390"]}
+reverted
+s4run webkit done
+rc=0 end 16:10:32

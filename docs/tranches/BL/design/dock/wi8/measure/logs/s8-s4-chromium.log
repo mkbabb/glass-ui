@@ -1,0 +1,479 @@
+{"engine":"chromium","rows":[{"id":"light","want":"1","wantBlur":"saturate(1.2)","level":"1","blur":"blur( calc(16px * 1) ) saturate(1.2)","docDark":false,"rt":false,"more":false,"ok":true},{"id":"dark","want":"1","wantBlur":"saturate(1.3) brightness(1.14)","level":"1","blur":"blur( calc(16px * 1) ) saturate(1.3) brightness(1.14)","docDark":true,"rt":false,"more":false,"ok":true},{"id":"rt-light","want":"0","wantBlur":null,"level":"0","blur":"blur( calc(16px * 0) ) saturate(1.2)","docDark":false,"rt":true,"more":false,"ok":true},{"id":"rt-dark","want":"0","wantBlur":null,"level":"0","blur":"blur( calc(16px * 0) ) saturate(1.3) brightness(1.14)","docDark":true,"rt":true,"more":false,"ok":true},{"id":"contrast-more","want":"0.3","wantBlur":null,"level":"0.3","blur":"blur( calc(16px * 0.3) ) saturate(1.2)","docDark":false,"rt":false,"more":true,"ok":true},{"id":"static","want":"0","wantBlur":null,"level":"0","blur":"blur( calc(16px * 0) ) saturate(1.2)","docDark":false,"rt":false,"more":false,"ok":true},{"id":"dock-dark-in-light","want":"1","wantBlur":"saturate(1.3) brightness(1.14)","level":"1","blur":"blur( calc(16px * 1) ) saturate(1.3) brightness(1.14)","docDark":false,"rt":false,"more":false,"ok":true}],"summary":{"cells":7,"ok":7,"fail":[]}}
+applied
+{"engine":"chromium","rows":[{"id":"light","want":"1","wantBlur":"saturate(1.2)","level":"1","blur":"blur( calc(16px * 1) ) saturate(1.2)","docDark":false,"rt":false,"more":false,"ok":true},{"id":"dark","want":"1","wantBlur":"saturate(1.3) brightness(1.14)","level":"1","blur":"blur( calc(16px * 1) ) saturate(1.3) brightness(1.14)","docDark":true,"rt":false,"more":false,"ok":true},{"id":"rt-light","want":"0","wantBlur":null,"level":"0","blur":"blur( calc(16px * 0) ) saturate(1.2)","docDark":false,"rt":true,"more":false,"ok":true},{"id":"rt-dark","want":"0","wantBlur":null,"level":"0","blur":"blur( calc(16px * 0) ) saturate(1.3) brightness(1.14)","docDark":true,"rt":true,"more":false,"ok":true},{"id":"contrast-more","want":"0.3","wantBlur":null,"level":"0.3","blur":"blur( calc(16px * 0.3) ) saturate(1.2)","docDark":false,"rt":false,"more":true,"ok":true},{"id":"static","want":"0","wantBlur":null,"level":"0","blur":"blur( calc(16px * 0) ) saturate(1.2)","docDark":false,"rt":false,"more":false,"ok":true},{"id":"dock-dark-in-light","want":"1","wantBlur":"saturate(1.3) brightness(1.14)","level":"1","blur":"blur( calc(16px * 1) ) saturate(1.2)","docDark":false,"rt":false,"more":false,"ok":false}],"summary":{"cells":7,"ok":6,"fail":["dock-dark-in-light"]}}
+reverted
+current 10% hover 8%
+{"cells":56,"failing":18,"minText":3.27,"minIcon":3.17,"marks":28,"markFails":20,"minMark":1,"hoverReads":16,"hoverFails":8,"hoverNotes":12,"unsettledFails":16,"unsettledSteady":16,"notOpened":0,"minHover":1,"looseFails":0,"schemeMismatch":0}
+nav field dark rest (no dock folds): text Reports 3.27, icon svg 3.17 (unsettled, op 0.8, the same on both reads)
+nav field dark open Site: text Reports 3.32, icon svg 3.21 (unsettled, op 0.8, the same on both reads), mark Reports 1.227 < v11.0.2 1.255
+nav field light rest (no dock folds): icon svg 6.06 (unsettled, op 0.8, the same on both reads)
+nav field light open Site: icon svg 6.03 (unsettled, op 0.8, the same on both reads), mark Reports 1.238 < v11.0.2 1.369, hover Home against its ground 1.177 < v11.0.2 1.263
+nav flat dark rest (no dock folds): icon svg 10.16 (unsettled, op 0.8, the same on both reads)
+nav flat dark open Site: icon svg 10.16 (unsettled, op 0.8, the same on both reads), mark Reports 1.276 < v11.0.2 1.365
+nav flat light rest (no dock folds): icon svg 7.53 (unsettled, op 0.8, the same on both reads)
+nav flat light open Site: icon svg 7.53 (unsettled, op 0.8, the same on both reads), mark Reports 1.247 < v11.0.2 1.394, hover Home against its ground 1.183 < v11.0.2 1.303
+rail field dark folded: icon svg 3.52 (unsettled, op 0.8, the same on both reads)
+rail field dark open Sections: icon svg 3.49 (unsettled, op 0.8, the same on both reads)
+rail field light folded: icon svg 5.69 (unsettled, op 0.8, the same on both reads)
+rail field light open Sections: icon svg 5.72 (unsettled, op 0.8, the same on both reads)
+rail flat dark folded: icon svg 10.16 (unsettled, op 0.8, the same on both reads)
+rail flat dark open Sections: icon svg 10.16 (unsettled, op 0.8, the same on both reads)
+rail flat light folded: icon svg 7.53 (unsettled, op 0.8, the same on both reads)
+rail flat light open Sections: icon svg 7.51 (unsettled, op 0.8, the same on both reads)
+dials field dark rest (no dock folds): text Range 4.42, text Scale 4.23, text 2024 4.23
+dials field dark open Fund balance filters: text Range 4.45, text Scale 4.34, text 2024 4.27, mark 5Y 1.066 < 1.2 (the polarity flipped: v11.0.2 106,56,31 on 152,74,45, now 146,86,62 on 152,76,46), mark Lin 1.058 < v11.0.2 1.756
+dials flat light open Fund balance filters: mark 5Y 1.466 < v11.0.2 1.512, mark Lin 1.461 < v11.0.2 1.817
+canvas-tools field dark open Canvas tools: mark Grid 1 < v11.0.2 1.329, mark Draw 1.295 < v11.0.2 1.335, hover Layers against its ground 1.005 < v11.0.2 1.161
+canvas-tools field light open Canvas tools: mark Grid 1.002 < 1.2 (the polarity flipped: v11.0.2 216,150,127 on 232,179,163, now 227,171,153 on 225,171,154), mark Draw 1.204 < v11.0.2 1.334, hover Layers against its ground 1 < v11.0.2 1.272
+canvas-tools flat dark open Canvas tools: mark Grid 1.004 < v11.0.2 1.373, mark Draw 1.007 < v11.0.2 1.372, hover Layers against its ground 1 < v11.0.2 1.162
+canvas-tools flat light open Canvas tools: mark Grid 1.24 < v11.0.2 1.41, mark Draw 1.004 < v11.0.2 1.408, hover Layers against its ground 1.004 < v11.0.2 1.304
+action-row field dark open Stylesheet actions: mark Format 1.33 < v11.0.2 1.391
+action-row field light open Stylesheet actions: mark Format 1.201 < v11.0.2 1.28, hover Copy against its ground 1.16 < v11.0.2 1.227
+action-row flat dark open Stylesheet actions: mark Format 1.266 < v11.0.2 1.365
+action-row flat light open Stylesheet actions: mark Format 1.227 < v11.0.2 1.333, hover Copy against its ground 1.178 < v11.0.2 1.267
+plate nav field dark rest (no dock folds): 
+plate nav field dark open Site: Site 1.056 (spread 0.005)
+plate nav field light rest (no dock folds): 
+plate nav field light open Site: Site 1.299 (spread 0.003)
+plate nav flat dark rest (no dock folds): 
+plate nav flat dark open Site: Site 1.01 (spread 0)
+plate nav flat light rest (no dock folds): 
+plate nav flat light open Site: Site 1.31 (spread 0)
+plate rail field dark folded: Sections 1.041 (spread 0)
+plate rail field dark open Sections: Sections 1.04 (spread 0.003)
+plate rail field light folded: Sections 1.275 (spread 0.009)
+plate rail field light open Sections: Sections 1.279 (spread 0)
+plate rail flat dark folded: Sections 1.01 (spread 0)
+plate rail flat dark open Sections: Sections 1.01 (spread 0)
+plate rail flat light folded: Sections 1.31 (spread 0)
+plate rail flat light open Sections: Sections 1.31 (spread 0)
+plate figure-tools field dark folded: Revenue tools 1.499 (spread 0.022); Headcount tools 1.529 (spread 0.001); Churn tools 1.55 (spread 0)
+plate figure-tools field dark open Revenue tools: Revenue tools 1.492 (spread 0.012)
+plate figure-tools field dark open Headcount tools: Headcount tools 1.538 (spread 0.016)
+plate figure-tools field dark open Churn tools: Churn tools 1.535 (spread 0.014)
+plate figure-tools field light folded: Revenue tools 1.586 (spread 0.013); Headcount tools 1.585 (spread 0); Churn tools 1.588 (spread 0.001)
+plate figure-tools field light open Revenue tools: Revenue tools 1.576 (spread 0)
+plate figure-tools field light open Headcount tools: Headcount tools 1.598 (spread 0.015)
+plate figure-tools field light open Churn tools: Churn tools 1.599 (spread 0)
+plate figure-tools flat dark folded: Revenue tools 1.005 (spread 0); Headcount tools 1.005 (spread 0); Churn tools 1.005 (spread 0)
+plate figure-tools flat dark open Revenue tools: Revenue tools 1.005 (spread 0)
+plate figure-tools flat dark open Headcount tools: Headcount tools 1.005 (spread 0)
+plate figure-tools flat dark open Churn tools: Churn tools 1.005 (spread 0)
+plate figure-tools flat light folded: Revenue tools 1.668 (spread 0); Headcount tools 1.668 (spread 0); Churn tools 1.668 (spread 0)
+plate figure-tools flat light open Revenue tools: Revenue tools 1.668 (spread 0)
+plate figure-tools flat light open Headcount tools: Headcount tools 1.668 (spread 0)
+plate figure-tools flat light open Churn tools: Churn tools 1.668 (spread 0)
+plate dials field dark rest (no dock folds): 
+plate dials field dark open Fund balance filters: Fund balance filters 1.031 (spread 0.009)
+plate dials field light rest (no dock folds): 
+plate dials field light open Fund balance filters: Fund balance filters 1.268 (spread 0.01)
+plate dials flat dark rest (no dock folds): 
+plate dials flat dark open Fund balance filters: Fund balance filters 1.01 (spread 0)
+plate dials flat light rest (no dock folds): 
+plate dials flat light open Fund balance filters: Fund balance filters 1.31 (spread 0)
+plate canvas-tools field dark folded: Canvas tools 1.041 (spread 0)
+plate canvas-tools field dark open Canvas tools: Canvas tools 1.04 (spread 0)
+plate canvas-tools field light folded: Canvas tools 1.291 (spread 0.008)
+plate canvas-tools field light open Canvas tools: Canvas tools 1.288 (spread 0.013)
+plate canvas-tools flat dark folded: Canvas tools 1.01 (spread 0)
+plate canvas-tools flat dark open Canvas tools: Canvas tools 1.01 (spread 0)
+plate canvas-tools flat light folded: Canvas tools 1.31 (spread 0)
+plate canvas-tools flat light open Canvas tools: Canvas tools 1.31 (spread 0)
+plate action-row field dark rest (no dock folds): 
+plate action-row field dark open Stylesheet actions: Stylesheet actions 1.516 (spread 0)
+plate action-row field light rest (no dock folds): 
+plate action-row field light open Stylesheet actions: Stylesheet actions 1.582 (spread 0.003)
+plate action-row flat dark rest (no dock folds): 
+plate action-row flat dark open Stylesheet actions: Stylesheet actions 1.005 (spread 0)
+plate action-row flat light rest (no dock folds): 
+plate action-row flat light open Stylesheet actions: Stylesheet actions 1.668 (spread 0)
+step c10 h8 rc=0
+current 12% hover 8%
+{"cells":56,"failing":20,"minText":3.15,"minIcon":3.17,"marks":28,"markFails":12,"minMark":1.001,"hoverReads":16,"hoverFails":8,"hoverNotes":13,"unsettledFails":16,"unsettledSteady":16,"notOpened":0,"minHover":1.003,"looseFails":0,"schemeMismatch":0}
+nav field dark rest (no dock folds): text Reports 3.15, icon svg 3.17 (unsettled, op 0.8, the same on both reads)
+nav field dark open Site: text Reports 3.2, icon svg 3.21 (unsettled, op 0.8, the same on both reads)
+nav field light rest (no dock folds): icon svg 6.06 (unsettled, op 0.8, the same on both reads)
+nav field light open Site: icon svg 6.03 (unsettled, op 0.8, the same on both reads), mark Reports 1.297 < v11.0.2 1.369, hover Home against its ground 1.177 < v11.0.2 1.263
+nav flat dark rest (no dock folds): icon svg 10.16 (unsettled, op 0.8, the same on both reads)
+nav flat dark open Site: icon svg 10.16 (unsettled, op 0.8, the same on both reads)
+nav flat light rest (no dock folds): icon svg 7.53 (unsettled, op 0.8, the same on both reads)
+nav flat light open Site: icon svg 7.53 (unsettled, op 0.8, the same on both reads), mark Reports 1.31 < v11.0.2 1.394, hover Home against its ground 1.183 < v11.0.2 1.303
+rail field dark folded: icon svg 3.52 (unsettled, op 0.8, the same on both reads)
+rail field dark open Sections: icon svg 3.48 (unsettled, op 0.8, the same on both reads)
+rail field light folded: icon svg 5.69 (unsettled, op 0.8, the same on both reads)
+rail field light open Sections: icon svg 5.72 (unsettled, op 0.8, the same on both reads)
+rail flat dark folded: icon svg 10.16 (unsettled, op 0.8, the same on both reads)
+rail flat dark open Sections: icon svg 10.16 (unsettled, op 0.8, the same on both reads)
+rail flat light folded: icon svg 7.53 (unsettled, op 0.8, the same on both reads)
+rail flat light open Sections: icon svg 7.51 (unsettled, op 0.8, the same on both reads)
+dials field dark rest (no dock folds): text Range 4.42, text 5Y 4.39, text Scale 4.23, text Lin 4.31, text 2024 4.23
+dials field dark open Fund balance filters: text Range 4.45, text 5Y 4.42, text Scale 4.37, text Lin 4.44, text 2024 4.27, mark 5Y 1.121 < 1.2 (the polarity flipped: v11.0.2 106,56,31 on 152,74,45, now 149,90,67 on 152,76,46), mark Lin 1.003 < v11.0.2 1.756
+dials flat light open Fund balance filters: mark Lin 1.529 < v11.0.2 1.817
+canvas-tools field dark open Canvas tools: mark Grid 1.001 < v11.0.2 1.329, hover Layers against its ground 1.008 < v11.0.2 1.161
+canvas-tools field light open Canvas tools: mark Grid 1.002 < 1.2 (the polarity flipped: v11.0.2 216,150,127 on 232,179,163, now 227,171,153 on 225,171,154), mark Draw 1.257 < v11.0.2 1.334, hover Layers against its ground 1.003 < v11.0.2 1.272
+canvas-tools flat dark open Canvas tools: mark Grid 1.004 < v11.0.2 1.373, hover Layers against its ground 1 < v11.0.2 1.162
+canvas-tools flat light open Canvas tools: mark Grid 1.001 < 1.2 (the polarity flipped: v11.0.2 198,194,186 on 230,229,225, now 223,220,216 on 223,220,216), mark Draw 1.004 < v11.0.2 1.408, hover Layers against its ground 1.004 < v11.0.2 1.304
+action-row field light rest (no dock folds): text Format 4.45
+action-row field light open Stylesheet actions: text Format 4.4, hover Copy against its ground 1.163 < v11.0.2 1.227
+action-row flat light open Stylesheet actions: mark Format 1.296 < v11.0.2 1.333, hover Copy against its ground 1.178 < v11.0.2 1.267
+plate nav field dark rest (no dock folds): 
+plate nav field dark open Site: Site 1.056 (spread 0.005)
+plate nav field light rest (no dock folds): 
+plate nav field light open Site: Site 1.298 (spread 0.004)
+plate nav flat dark rest (no dock folds): 
+plate nav flat dark open Site: Site 1.01 (spread 0)
+plate nav flat light rest (no dock folds): 
+plate nav flat light open Site: Site 1.31 (spread 0)
+plate rail field dark folded: Sections 1.041 (spread 0.009)
+plate rail field dark open Sections: Sections 1.04 (spread 0.003)
+plate rail field light folded: Sections 1.275 (spread 0.001)
+plate rail field light open Sections: Sections 1.279 (spread 0)
+plate rail flat dark folded: Sections 1.01 (spread 0)
+plate rail flat dark open Sections: Sections 1.01 (spread 0)
+plate rail flat light folded: Sections 1.31 (spread 0)
+plate rail flat light open Sections: Sections 1.31 (spread 0)
+plate figure-tools field dark folded: Revenue tools 1.499 (spread 0.007); Headcount tools 1.53 (spread 0.002); Churn tools 1.55 (spread 0)
+plate figure-tools field dark open Revenue tools: Revenue tools 1.492 (spread 0)
+plate figure-tools field dark open Headcount tools: Headcount tools 1.537 (spread 0.001)
+plate figure-tools field dark open Churn tools: Churn tools 1.549 (spread 0)
+plate figure-tools field light folded: Revenue tools 1.573 (spread 0.014); Headcount tools 1.585 (spread 0.001); Churn tools 1.589 (spread 0.001)
+plate figure-tools field light open Revenue tools: Revenue tools 1.576 (spread 0)
+plate figure-tools field light open Headcount tools: Headcount tools 1.589 (spread 0.003)
+plate figure-tools field light open Churn tools: Churn tools 1.599 (spread 0.001)
+plate figure-tools flat dark folded: Revenue tools 1.005 (spread 0); Headcount tools 1.005 (spread 0); Churn tools 1.005 (spread 0)
+plate figure-tools flat dark open Revenue tools: Revenue tools 1.005 (spread 0)
+plate figure-tools flat dark open Headcount tools: Headcount tools 1.005 (spread 0)
+plate figure-tools flat dark open Churn tools: Churn tools 1.005 (spread 0)
+plate figure-tools flat light folded: Revenue tools 1.668 (spread 0); Headcount tools 1.668 (spread 0); Churn tools 1.668 (spread 0)
+plate figure-tools flat light open Revenue tools: Revenue tools 1.668 (spread 0)
+plate figure-tools flat light open Headcount tools: Headcount tools 1.668 (spread 0)
+plate figure-tools flat light open Churn tools: Churn tools 1.668 (spread 0)
+plate dials field dark rest (no dock folds): 
+plate dials field dark open Fund balance filters: Fund balance filters 1.034 (spread 0.013)
+plate dials field light rest (no dock folds): 
+plate dials field light open Fund balance filters: Fund balance filters 1.277 (spread 0.013)
+plate dials flat dark rest (no dock folds): 
+plate dials flat dark open Fund balance filters: Fund balance filters 1.01 (spread 0)
+plate dials flat light rest (no dock folds): 
+plate dials flat light open Fund balance filters: Fund balance filters 1.31 (spread 0)
+plate canvas-tools field dark folded: Canvas tools 1.041 (spread 0)
+plate canvas-tools field dark open Canvas tools: Canvas tools 1.049 (spread 0.011)
+plate canvas-tools field light folded: Canvas tools 1.291 (spread 0.001)
+plate canvas-tools field light open Canvas tools: Canvas tools 1.297 (spread 0.013)
+plate canvas-tools flat dark folded: Canvas tools 1.01 (spread 0)
+plate canvas-tools flat dark open Canvas tools: Canvas tools 1.01 (spread 0)
+plate canvas-tools flat light folded: Canvas tools 1.31 (spread 0)
+plate canvas-tools flat light open Canvas tools: Canvas tools 1.31 (spread 0)
+plate action-row field dark rest (no dock folds): 
+plate action-row field dark open Stylesheet actions: Stylesheet actions 1.516 (spread 0)
+plate action-row field light rest (no dock folds): 
+plate action-row field light open Stylesheet actions: Stylesheet actions 1.584 (spread 0.012)
+plate action-row flat dark rest (no dock folds): 
+plate action-row flat dark open Stylesheet actions: Stylesheet actions 1.005 (spread 0)
+plate action-row flat light rest (no dock folds): 
+plate action-row flat light open Stylesheet actions: Stylesheet actions 1.668 (spread 0)
+step c12 h8 rc=0
+current 14% hover 8%
+{"cells":56,"failing":20,"minText":3.04,"minIcon":3.17,"marks":28,"markFails":9,"minMark":1,"hoverReads":16,"hoverFails":8,"hoverNotes":9,"unsettledFails":16,"unsettledSteady":16,"notOpened":0,"minHover":1.003,"looseFails":0,"schemeMismatch":0}
+nav field dark rest (no dock folds): text Reports 3.04, icon svg 3.17 (unsettled, op 0.8, the same on both reads)
+nav field dark open Site: text Reports 3.08, icon svg 3.21 (unsettled, op 0.8, the same on both reads)
+nav field light rest (no dock folds): icon svg 6.06 (unsettled, op 0.8, the same on both reads)
+nav field light open Site: icon svg 6.03 (unsettled, op 0.8, the same on both reads), hover Home against its ground 1.178 < v11.0.2 1.263
+nav flat dark rest (no dock folds): icon svg 10.16 (unsettled, op 0.8, the same on both reads)
+nav flat dark open Site: icon svg 10.16 (unsettled, op 0.8, the same on both reads)
+nav flat light rest (no dock folds): icon svg 7.53 (unsettled, op 0.8, the same on both reads)
+nav flat light open Site: icon svg 7.53 (unsettled, op 0.8, the same on both reads), mark Reports 1.367 < v11.0.2 1.394, hover Home against its ground 1.183 < v11.0.2 1.303
+rail field dark folded: icon svg 3.52 (unsettled, op 0.8, the same on both reads)
+rail field dark open Sections: icon svg 3.48 (unsettled, op 0.8, the same on both reads)
+rail field light folded: icon svg 5.69 (unsettled, op 0.8, the same on both reads)
+rail field light open Sections: icon svg 5.72 (unsettled, op 0.8, the same on both reads)
+rail flat dark folded: icon svg 10.16 (unsettled, op 0.8, the same on both reads)
+rail flat dark open Sections: icon svg 10.16 (unsettled, op 0.8, the same on both reads)
+rail flat light folded: icon svg 7.53 (unsettled, op 0.8, the same on both reads)
+rail flat light open Sections: icon svg 7.51 (unsettled, op 0.8, the same on both reads)
+dials field dark rest (no dock folds): text Range 4.42, text 5Y 4.22, text Scale 4.23, text Lin 4.18, text 2024 4.22
+dials field dark open Fund balance filters: text Range 4.44, text 5Y 4.23, text Scale 4.29, text Lin 4.22, text 2024 4.26, mark 5Y 1.164 < 1.2 (the polarity flipped: v11.0.2 106,56,31 on 152,74,45, now 151,93,71 on 152,76,46), mark Lin 1.028 < 1.2 (the polarity flipped: v11.0.2 107,56,29 on 150,91,68, now 151,93,71 on 150,90,71)
+dials flat light open Fund balance filters: mark Lin 1.603 < v11.0.2 1.817
+canvas-tools field dark open Canvas tools: mark Grid 1 < v11.0.2 1.329, hover Layers against its ground 1.004 < v11.0.2 1.161
+canvas-tools field light open Canvas tools: mark Grid 1.002 < 1.2 (the polarity flipped: v11.0.2 216,150,127 on 232,179,163, now 227,171,153 on 225,171,154), hover Layers against its ground 1.002 < v11.0.2 1.272
+canvas-tools flat dark open Canvas tools: mark Grid 1.004 < v11.0.2 1.373, hover Layers against its ground 1 < v11.0.2 1.162
+canvas-tools flat light open Canvas tools: mark Grid 1.001 < 1.2 (the polarity flipped: v11.0.2 198,194,186 on 230,229,225, now 223,220,216 on 223,220,216), mark Draw 1.004 < v11.0.2 1.408, hover Layers against its ground 1.004 < v11.0.2 1.304
+action-row field light rest (no dock folds): text Format 4.28
+action-row field light open Stylesheet actions: text Format 4.25, hover Copy against its ground 1.165 < v11.0.2 1.227
+action-row flat light open Stylesheet actions: hover Copy against its ground 1.178 < v11.0.2 1.267
+plate nav field dark rest (no dock folds): 
+plate nav field dark open Site: Site 1.056 (spread 0.005)
+plate nav field light rest (no dock folds): 
+plate nav field light open Site: Site 1.299 (spread 0.003)
+plate nav flat dark rest (no dock folds): 
+plate nav flat dark open Site: Site 1.01 (spread 0)
+plate nav flat light rest (no dock folds): 
+plate nav flat light open Site: Site 1.31 (spread 0)
+plate rail field dark folded: Sections 1.041 (spread 0.009)
+plate rail field dark open Sections: Sections 1.04 (spread 0.003)
+plate rail field light folded: Sections 1.275 (spread 0.001)
+plate rail field light open Sections: Sections 1.279 (spread 0)
+plate rail flat dark folded: Sections 1.01 (spread 0)
+plate rail flat dark open Sections: Sections 1.01 (spread 0)
+plate rail flat light folded: Sections 1.31 (spread 0)
+plate rail flat light open Sections: Sections 1.31 (spread 0)
+plate figure-tools field dark folded: Revenue tools 1.499 (spread 0.015); Headcount tools 1.53 (spread 0.007); Churn tools 1.55 (spread 0)
+plate figure-tools field dark open Revenue tools: Revenue tools 1.492 (spread 0)
+plate figure-tools field dark open Headcount tools: Headcount tools 1.537 (spread 0.001)
+plate figure-tools field dark open Churn tools: Churn tools 1.549 (spread 0)
+plate figure-tools field light folded: Revenue tools 1.574 (spread 0.014); Headcount tools 1.585 (spread 0); Churn tools 1.589 (spread 0.002)
+plate figure-tools field light open Revenue tools: Revenue tools 1.576 (spread 0.011)
+plate figure-tools field light open Headcount tools: Headcount tools 1.586 (spread 0.012)
+plate figure-tools field light open Churn tools: Churn tools 1.599 (spread 0)
+plate figure-tools flat dark folded: Revenue tools 1.005 (spread 0); Headcount tools 1.005 (spread 0); Churn tools 1.005 (spread 0)
+plate figure-tools flat dark open Revenue tools: Revenue tools 1.005 (spread 0)
+plate figure-tools flat dark open Headcount tools: Headcount tools 1.005 (spread 0)
+plate figure-tools flat dark open Churn tools: Churn tools 1.005 (spread 0)
+plate figure-tools flat light folded: Revenue tools 1.668 (spread 0); Headcount tools 1.668 (spread 0); Churn tools 1.668 (spread 0)
+plate figure-tools flat light open Revenue tools: Revenue tools 1.668 (spread 0)
+plate figure-tools flat light open Headcount tools: Headcount tools 1.668 (spread 0)
+plate figure-tools flat light open Churn tools: Churn tools 1.668 (spread 0)
+plate dials field dark rest (no dock folds): 
+plate dials field dark open Fund balance filters: Fund balance filters 1.031 (spread 0.008)
+plate dials field light rest (no dock folds): 
+plate dials field light open Fund balance filters: Fund balance filters 1.277 (spread 0.006)
+plate dials flat dark rest (no dock folds): 
+plate dials flat dark open Fund balance filters: Fund balance filters 1.01 (spread 0)
+plate dials flat light rest (no dock folds): 
+plate dials flat light open Fund balance filters: Fund balance filters 1.31 (spread 0)
+plate canvas-tools field dark folded: Canvas tools 1.041 (spread 0)
+plate canvas-tools field dark open Canvas tools: Canvas tools 1.04 (spread 0.009)
+plate canvas-tools field light folded: Canvas tools 1.291 (spread 0.009)
+plate canvas-tools field light open Canvas tools: Canvas tools 1.297 (spread 0.009)
+plate canvas-tools flat dark folded: Canvas tools 1.01 (spread 0)
+plate canvas-tools flat dark open Canvas tools: Canvas tools 1.01 (spread 0)
+plate canvas-tools flat light folded: Canvas tools 1.31 (spread 0)
+plate canvas-tools flat light open Canvas tools: Canvas tools 1.31 (spread 0)
+plate action-row field dark rest (no dock folds): 
+plate action-row field dark open Stylesheet actions: Stylesheet actions 1.516 (spread 0)
+plate action-row field light rest (no dock folds): 
+plate action-row field light open Stylesheet actions: Stylesheet actions 1.581 (spread 0.003)
+plate action-row flat dark rest (no dock folds): 
+plate action-row flat dark open Stylesheet actions: Stylesheet actions 1.005 (spread 0)
+plate action-row flat light rest (no dock folds): 
+plate action-row flat light open Stylesheet actions: Stylesheet actions 1.668 (spread 0)
+step c14 h8 rc=0
+current 16% hover 8%
+Terminated: 15
+{"cells":36,"failing":18,"minText":2.93,"minIcon":3.17,"marks":12,"markFails":1,"minMark":1.003,"hoverReads":6,"hoverFails":2,"hoverNotes":0,"unsettledFails":16,"unsettledSteady":16,"notOpened":0,"minHover":1.202,"looseFails":0,"schemeMismatch":0}
+nav field dark rest (no dock folds): text Reports 2.93, icon svg 3.17 (unsettled, op 0.8, the same on both reads)
+nav field dark open Site: text Reports 2.97, icon svg 3.21 (unsettled, op 0.8, the same on both reads)
+nav field light rest (no dock folds): icon svg 6.06 (unsettled, op 0.8, the same on both reads)
+nav field light open Site: icon svg 6.02 (unsettled, op 0.8, the same on both reads), hover Home against its ground 1.178 < v11.0.2 1.263
+nav flat dark rest (no dock folds): icon svg 10.16 (unsettled, op 0.8, the same on both reads)
+nav flat dark open Site: icon svg 10.16 (unsettled, op 0.8, the same on both reads)
+nav flat light rest (no dock folds): icon svg 7.53 (unsettled, op 0.8, the same on both reads)
+nav flat light open Site: icon svg 7.53 (unsettled, op 0.8, the same on both reads), hover Home against its ground 1.183 < v11.0.2 1.303
+rail field dark folded: icon svg 3.52 (unsettled, op 0.8, the same on both reads)
+rail field dark open Sections: icon svg 3.49 (unsettled, op 0.8, the same on both reads)
+rail field light folded: icon svg 5.69 (unsettled, op 0.8, the same on both reads)
+rail field light open Sections: icon svg 5.72 (unsettled, op 0.8, the same on both reads)
+rail flat dark folded: icon svg 10.16 (unsettled, op 0.8, the same on both reads)
+rail flat dark open Sections: icon svg 10.16 (unsettled, op 0.8, the same on both reads)
+rail flat light folded: icon svg 7.53 (unsettled, op 0.8, the same on both reads)
+rail flat light open Sections: icon svg 7.51 (unsettled, op 0.8, the same on both reads)
+dials field dark rest (no dock folds): text Range 4.42, text 5Y 4.02, text Scale 4.23, text Lin 3.97, text 2024 4.18
+dials field dark open Fund balance filters: text Range 4.42, text 5Y 4.01, text Scale 4.23, text Lin 3.98, text 2024 4.24, mark Lin 1.079 < 1.2 (the polarity flipped: v11.0.2 107,56,29 on 150,91,68, now 154,99,74 on 150,92,70)
+plate nav field dark rest (no dock folds): 
+plate nav field dark open Site: Site 1.055 (spread 0.001)
+plate nav field light rest (no dock folds): 
+plate nav field light open Site: Site 1.298 (spread 0.012)
+plate nav flat dark rest (no dock folds): 
+plate nav flat dark open Site: Site 1.01 (spread 0)
+plate nav flat light rest (no dock folds): 
+plate nav flat light open Site: Site 1.31 (spread 0)
+plate rail field dark folded: Sections 1.041 (spread 0.009)
+plate rail field dark open Sections: Sections 1.035 (spread 0.006)
+plate rail field light folded: Sections 1.275 (spread 0.009)
+plate rail field light open Sections: Sections 1.279 (spread 0.004)
+plate rail flat dark folded: Sections 1.01 (spread 0)
+plate rail flat dark open Sections: Sections 1.01 (spread 0)
+plate rail flat light folded: Sections 1.31 (spread 0)
+plate rail flat light open Sections: Sections 1.31 (spread 0)
+plate figure-tools field dark folded: Revenue tools 1.499 (spread 0.015); Headcount tools 1.53 (spread 0.007); Churn tools 1.55 (spread 0)
+plate figure-tools field dark open Revenue tools: Revenue tools 1.492 (spread 0)
+plate figure-tools field dark open Headcount tools: Headcount tools 1.524 (spread 0.015)
+plate figure-tools field dark open Churn tools: Churn tools 1.549 (spread 0.008)
+plate figure-tools field light folded: Revenue tools 1.573 (spread 0.014); Headcount tools 1.585 (spread 0); Churn tools 1.589 (spread 0.001)
+plate figure-tools field light open Revenue tools: Revenue tools 1.576 (spread 0)
+plate figure-tools field light open Headcount tools: Headcount tools 1.59 (spread 0.013)
+plate figure-tools field light open Churn tools: Churn tools 1.599 (spread 0)
+plate figure-tools flat dark folded: Revenue tools 1.005 (spread 0); Headcount tools 1.005 (spread 0); Churn tools 1.005 (spread 0)
+plate figure-tools flat dark open Revenue tools: Revenue tools 1.005 (spread 0)
+plate figure-tools flat dark open Headcount tools: Headcount tools 1.005 (spread 0)
+plate figure-tools flat dark open Churn tools: Churn tools 1.005 (spread 0)
+plate figure-tools flat light folded: Revenue tools 1.668 (spread 0); Headcount tools 1.668 (spread 0); Churn tools 1.668 (spread 0)
+plate figure-tools flat light open Revenue tools: Revenue tools 1.668 (spread 0)
+plate figure-tools flat light open Headcount tools: Headcount tools 1.668 (spread 0)
+plate figure-tools flat light open Churn tools: Churn tools 1.668 (spread 0)
+plate dials field dark rest (no dock folds): 
+plate dials field dark open Fund balance filters: Fund balance filters 1.041 (spread 0.01)
+plate dials field light rest (no dock folds): 
+plate dials field light open Fund balance filters: Fund balance filters 1.272 (spread 0.012)
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+browserContext.close: Target page, context or browser has been closed
+Browser logs:
+
+[pid=80648][err] [1120/015933.960672:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:4558
+[pid=80648][err] [1120/015933.960693:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x10400533600]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:34:D9:3D:3C:25:B9:8E:59:92:09:3B:2C:37:D4:78:69
+[pid=80648][err] [1120/015933.960703:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x10400533600]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015934.211260:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:4558
+[pid=80648][err] [1120/015934.211282:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x10400533600]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:66:16:8D:18:95:01:D0:02:86:41:E5:BF:85:08:83:3D
+[pid=80648][err] [1120/015934.211292:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x10400533600]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015934.463235:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:4558
+[pid=80648][err] [1120/015934.463257:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x10400533600]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:BE:81:09:F9:72:32:A1:10:5F:F9:CD:A8:4A:4B:36:51
+[pid=80648][err] [1120/015934.463268:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x10400533600]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015934.715941:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:4558
+[pid=80648][err] [1120/015934.715962:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x10400533600]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:F7:0B:E8:82:FF:FD:A0:1E:CB:D0:19:6B:F4:6D:89:07
+[pid=80648][err] [1120/015934.715971:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x10400533600]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015934.934414:INFO:CONSOLE:851] "[vite] connecting...", source: http://127.0.0.1:5433/@vite/client (851)
+[pid=80648][err] [1120/015934.936473:INFO:CONSOLE:955] "[vite] connected.", source: http://127.0.0.1:5433/@vite/client (955)
+[pid=80648][err] [1120/015935.252641:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015935.252660:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:B6:21:F9:2D:62:2B:9F:A1:AD:88:56:5E:96:C5:2E:8D
+[pid=80648][err] [1120/015935.252669:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015935.503091:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015935.503114:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:71:D1:84:2C:64:31:2D:9F:03:76:9B:78:0E:57:31:2B
+[pid=80648][err] [1120/015935.503124:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015935.754895:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015935.754915:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:3C:FE:1D:C0:DB:DC:C8:D0:28:17:DF:FA:26:51:60:F5
+[pid=80648][err] [1120/015935.754926:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015936.006102:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015936.006123:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:C5:9D:3D:67:6B:0A:8F:F2:30:FE:C1:DE:D8:B8:B2:CB
+[pid=80648][err] [1120/015936.006134:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015936.258283:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015936.258299:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:D2:BD:97:85:79:F3:D5:99:4E:B0:94:D2:A3:CC:6A:C3
+[pid=80648][err] [1120/015936.258320:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015936.509599:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015936.509617:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:A1:13:A7:C6:1B:02:34:CF:17:8B:D6:96:5A:65:14:C7
+[pid=80648][err] [1120/015936.509627:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015936.759998:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015936.760016:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:7F:A8:33:41:4A:B9:A5:36:D8:E4:10:92:B6:AD:85:29
+[pid=80648][err] [1120/015936.760026:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015937.011110:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015937.011131:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:F9:D0:0B:33:A1:19:A9:4F:6F:81:91:95:BC:B3:8A:7D
+[pid=80648][err] [1120/015937.011142:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015937.262334:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015937.262352:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:85:84:27:FB:74:46:8D:7F:8C:0A:AC:54:B1:9E:9B:8F
+[pid=80648][err] [1120/015937.262362:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015937.513660:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015937.513680:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:49:70:1D:A7:DF:F1:E8:AD:54:60:E8:6F:CE:8D:65:53
+[pid=80648][err] [1120/015937.513690:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015937.764966:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015937.764985:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:DC:EF:55:A3:97:E9:45:16:58:75:9E:69:DD:3D:51:D5
+[pid=80648][err] [1120/015937.764995:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015938.015567:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015938.015586:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:90:5C:86:85:77:42:1C:E8:BC:A6:36:6E:F6:B3:F8:E7
+[pid=80648][err] [1120/015938.015596:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015938.266340:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015938.266358:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:84:69:C3:69:9D:D7:E5:8C:78:2C:54:B1:34:91:64:D7
+[pid=80648][err] [1120/015938.266367:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015938.519657:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015938.519681:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:E4:B0:5A:E3:A0:C5:4D:40:D7:FD:48:9D:BF:68:AB:07
+[pid=80648][err] [1120/015938.519692:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015938.770736:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015938.770755:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:EA:3D:75:E8:72:38:B4:8F:01:05:D5:DD:A3:DC:75:71
+[pid=80648][err] [1120/015938.770768:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015939.022881:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015939.022899:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:64:50:0D:7F:E0:A6:F0:BE:A9:70:5F:DE:EB:DF:02:E9
+[pid=80648][err] [1120/015939.022909:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015939.275192:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015939.275210:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:5C:AD:F6:B2:7B:30:8E:95:65:73:3D:9C:70:6D:CC:EB
+[pid=80648][err] [1120/015939.275219:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015939.527177:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015939.527203:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:17:8D:09:0E:A7:45:4C:C8:EC:05:C7:FA:D8:E8:94:A5
+[pid=80648][err] [1120/015939.527215:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015939.785946:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015939.785965:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:17:6F:D9:C0:6F:4B:FA:78:32:84:23:73:3C:F3:4B:11
+[pid=80648][err] [1120/015939.785975:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015940.036032:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015940.036054:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:FE:CA:1F:FB:0B:99:26:DF:BA:68:C8:68:29:58:26:17
+[pid=80648][err] [1120/015940.036067:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015940.288097:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015940.288114:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:E6:A8:84:98:2F:76:84:F5:D3:D6:FD:41:A2:1F:5D:7B
+[pid=80648][err] [1120/015940.288123:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015940.539874:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015940.539892:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:7E:48:11:54:E4:86:A4:9E:57:CB:4F:A4:C2:96:86:BF
+[pid=80648][err] [1120/015940.539901:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015940.794083:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015940.794103:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:A7:81:C5:66:4A:49:81:D0:4F:DF:1C:5B:4C:A9:1A:7B
+[pid=80648][err] [1120/015940.794114:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015941.046034:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015941.046054:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:07:FA:13:C5:52:A6:26:FD:32:8B:F6:AD:96:F2:53:55
+[pid=80648][err] [1120/015941.046064:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015941.304517:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015941.304532:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:A8:1B:53:38:B8:8D:D6:DA:16:36:E6:52:34:89:74:5D
+[pid=80648][err] [1120/015941.304540:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015941.556817:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015941.556837:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:B2:1A:B9:BD:10:B3:21:C1:17:54:27:6E:1B:C3:67:19
+[pid=80648][err] [1120/015941.556848:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015941.809493:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015941.809510:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:77:CA:CD:2E:1B:D7:70:79:F3:36:7B:EB:9D:F6:C4:81
+[pid=80648][err] [1120/015941.809520:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015942.060951:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015942.060969:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:A2:78:6F:CB:1E:19:B8:25:C7:8C:CC:79:01:41:BF:75
+[pid=80648][err] [1120/015942.060979:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015942.312497:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015942.312514:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:87:D9:7C:8F:9A:11:FF:57:15:15:88:BB:45:BF:28:33
+[pid=80648][err] [1120/015942.312525:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015942.563536:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015942.563556:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:0B:5F:C0:9B:54:A5:21:0F:F5:D2:A3:79:8E:D3:0A:F3
+[pid=80648][err] [1120/015942.563566:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015942.816037:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015942.816055:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:2C:03:47:F4:7F:65:10:62:4B:0F:0D:0E:09:A9:63:4D
+[pid=80648][err] [1120/015942.816064:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015943.068559:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015943.068574:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:95:8D:04:FD:97:E1:95:7B:2C:DB:B7:3D:D7:8D:EE:C5
+[pid=80648][err] [1120/015943.068584:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015943.319936:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015943.319953:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:FB:D8:D9:7E:12:FE:80:B1:E1:8F:AB:8C:8D:E6:84:CF
+[pid=80648][err] [1120/015943.319962:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015943.572020:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015943.572040:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:4E:1B:97:E2:D1:1C:F3:6B:17:D7:93:48:8C:FB:91:11
+[pid=80648][err] [1120/015943.572049:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015943.825072:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015943.825092:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:50:8D:45:2F:AF:57:96:E2:C9:1B:5F:D2:A1:C1:61:69
+[pid=80648][err] [1120/015943.825103:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015944.076988:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015944.077005:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:31:74:00:59:61:06:0B:7C:8C:A4:3A:42:C5:43:10:7F
+[pid=80648][err] [1120/015944.077016:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015944.327985:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015944.328006:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:8A:87:86:DD:8C:E0:BF:F4:28:98:0A:CC:30:F6:F8:0B
+[pid=80648][err] [1120/015944.328019:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015944.579687:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015944.579705:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:20:44:83:9F:7B:DA:9F:10:AC:97:CB:95:6C:81:B1:5F
+[pid=80648][err] [1120/015944.579715:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015944.831196:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015944.831213:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:D5:13:D4:33:16:F1:59:79:28:21:76:B6:95:47:04:85
+[pid=80648][err] [1120/015944.831223:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015945.084397:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015945.084417:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:04:5F:44:FC:9B:77:4A:BE:5D:20:01:AA:0E:43:23:23
+[pid=80648][err] [1120/015945.084427:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015945.336093:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015945.336114:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:03:D0:97:95:D1:90:18:EA:7F:2D:9F:82:34:7C:FF:85
+[pid=80648][err] [1120/015945.336125:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015945.587500:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015945.587517:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:D3:2B:7A:7C:5F:D7:0D:B1:BA:9B:B3:F9:DD:6C:BD:23
+[pid=80648][err] [1120/015945.587526:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015945.839860:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015945.839881:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:93:A8:FA:6B:F0:EA:22:8B:0D:96:08:0A:05:CB:D3:AB
+[pid=80648][err] [1120/015945.839893:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648][err] [1120/015946.092969:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:5383
+[pid=80648][err] [1120/015946.092991:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:74:0F:21:C7:11:BD:04:06:D7:DD:D5:E3:EB:2C:B2:C1
+[pid=80648][err] [1120/015946.093001:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x11c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=80648] <gracefully close start>
+[pid=80648][err] [1120/015946.109193:ERROR:content/browser/gpu/gpu_process_host.cc:1005] GPU process exited unexpectedly: exit_code=15
+[pid=80648][err] [1120/015946.109212:WARNING:content/browser/gpu/gpu_process_host.cc:1447] The GPU process has crashed 1 time(s)
+[pid=80648][err] [1120/015946.109823:ERROR:content/browser/network_service_instance_impl.cc:722] Network service crashed or was terminated, restarting service.
+    at async file:///Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/docs/tranches/BL/design/dock/wi8/measure/harness/m8/ink8.mjs:367:13 {
+  log: []
+}
+
+Node.js v26.0.0

@@ -1,0 +1,220 @@
+[guarded] waiting for headroom (load 37 > 36)
+current 16% hover 8%
+Terminated: 15
+{"cells":36,"failing":18,"minText":2.93,"minIcon":3.17,"marks":12,"markFails":1,"minMark":1.003,"hoverReads":6,"hoverFails":2,"hoverNotes":0,"unsettledFails":16,"unsettledSteady":16,"notOpened":0,"minHover":1.206,"looseFails":0,"schemeMismatch":0}
+nav field dark rest (no dock folds): text Reports 2.93, icon svg 3.17 (unsettled, op 0.8, the same on both reads)
+nav field dark open Site: text Reports 2.97, icon svg 3.21 (unsettled, op 0.8, the same on both reads)
+nav field light rest (no dock folds): icon svg 6.06 (unsettled, op 0.8, the same on both reads)
+nav field light open Site: icon svg 6.03 (unsettled, op 0.8, the same on both reads), hover Home against its ground 1.178 < v11.0.2 1.263
+nav flat dark rest (no dock folds): icon svg 10.16 (unsettled, op 0.8, the same on both reads)
+nav flat dark open Site: icon svg 10.16 (unsettled, op 0.8, the same on both reads)
+nav flat light rest (no dock folds): icon svg 7.53 (unsettled, op 0.8, the same on both reads)
+nav flat light open Site: icon svg 7.53 (unsettled, op 0.8, the same on both reads), hover Home against its ground 1.183 < v11.0.2 1.303
+rail field dark folded: icon svg 3.52 (unsettled, op 0.8, the same on both reads)
+rail field dark open Sections: icon svg 3.49 (unsettled, op 0.8, the same on both reads)
+rail field light folded: icon svg 5.69 (unsettled, op 0.8, the same on both reads)
+rail field light open Sections: icon svg 5.72 (unsettled, op 0.8, the same on both reads)
+rail flat dark folded: icon svg 10.16 (unsettled, op 0.8, the same on both reads)
+rail flat dark open Sections: icon svg 10.16 (unsettled, op 0.8, the same on both reads)
+rail flat light folded: icon svg 7.53 (unsettled, op 0.8, the same on both reads)
+rail flat light open Sections: icon svg 7.51 (unsettled, op 0.8, the same on both reads)
+dials field dark rest (no dock folds): text Range 4.42, text 5Y 4.02, text Scale 4.23, text Lin 3.97, text 2024 4.22
+dials field dark open Fund balance filters: text Range 4.44, text 5Y 4.02, text Scale 4.27, text Lin 4, text 2024 4.26, mark Lin 1.084 < 1.2 (the polarity flipped: v11.0.2 107,56,29 on 150,91,68, now 154,97,75 on 150,91,71)
+plate nav field dark rest (no dock folds): 
+plate nav field dark open Site: Site 1.056 (spread 0.005)
+plate nav field light rest (no dock folds): 
+plate nav field light open Site: Site 1.299 (spread 0.014)
+plate nav flat dark rest (no dock folds): 
+plate nav flat dark open Site: Site 1.01 (spread 0)
+plate nav flat light rest (no dock folds): 
+plate nav flat light open Site: Site 1.31 (spread 0)
+plate rail field dark folded: Sections 1.041 (spread 0.009)
+plate rail field dark open Sections: Sections 1.04 (spread 0.006)
+plate rail field light folded: Sections 1.275 (spread 0.009)
+plate rail field light open Sections: Sections 1.279 (spread 0)
+plate rail flat dark folded: Sections 1.01 (spread 0)
+plate rail flat dark open Sections: Sections 1.01 (spread 0)
+plate rail flat light folded: Sections 1.31 (spread 0)
+plate rail flat light open Sections: Sections 1.31 (spread 0)
+plate figure-tools field dark folded: Revenue tools 1.499 (spread 0.015); Headcount tools 1.53 (spread 0.007); Churn tools 1.55 (spread 0)
+plate figure-tools field dark open Revenue tools: Revenue tools 1.492 (spread 0)
+plate figure-tools field dark open Headcount tools: Headcount tools 1.538 (spread 0.002)
+plate figure-tools field dark open Churn tools: Churn tools 1.549 (spread 0)
+plate figure-tools field light folded: Revenue tools 1.573 (spread 0.014); Headcount tools 1.585 (spread 0); Churn tools 1.589 (spread 0.002)
+plate figure-tools field light open Revenue tools: Revenue tools 1.576 (spread 0.011)
+plate figure-tools field light open Headcount tools: Headcount tools 1.587 (spread 0.013)
+plate figure-tools field light open Churn tools: Churn tools 1.599 (spread 0)
+plate figure-tools flat dark folded: Revenue tools 1.005 (spread 0); Headcount tools 1.005 (spread 0); Churn tools 1.005 (spread 0)
+plate figure-tools flat dark open Revenue tools: Revenue tools 1.005 (spread 0)
+plate figure-tools flat dark open Headcount tools: Headcount tools 1.005 (spread 0)
+plate figure-tools flat dark open Churn tools: Churn tools 1.005 (spread 0)
+plate figure-tools flat light folded: Revenue tools 1.668 (spread 0); Headcount tools 1.668 (spread 0); Churn tools 1.668 (spread 0)
+plate figure-tools flat light open Revenue tools: Revenue tools 1.668 (spread 0)
+plate figure-tools flat light open Headcount tools: Headcount tools 1.668 (spread 0)
+plate figure-tools flat light open Churn tools: Churn tools 1.668 (spread 0)
+plate dials field dark rest (no dock folds): 
+plate dials field dark open Fund balance filters: Fund balance filters 1.04 (spread 0.011)
+plate dials field light rest (no dock folds): 
+plate dials field light open Fund balance filters: Fund balance filters 1.268 (spread 0.004)
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+browserContext.close: Target page, context or browser has been closed
+Browser logs:
+
+[pid=48410][err] [1120/091614.324896:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:75634
+[pid=48410][err] [1120/091614.324948:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:C8:CB:F3:FF:6B:46:1A:50:93:50:EA:34:FC:C4:99:CB
+[pid=48410][err] [1120/091614.324971:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091614.577934:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:75634
+[pid=48410][err] [1120/091614.577978:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:AD:18:26:CB:52:6D:73:EB:65:48:77:F6:CB:A4:87:69
+[pid=48410][err] [1120/091614.578001:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091614.743144:INFO:CONSOLE:851] "[vite] connecting...", source: http://127.0.0.1:5433/@vite/client (851)
+[pid=48410][err] [1120/091614.747833:INFO:CONSOLE:955] "[vite] connected.", source: http://127.0.0.1:5433/@vite/client (955)
+[pid=48410][err] [1120/091615.136205:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091615.136242:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:95:79:97:07:EF:0D:59:E8:0A:18:D4:E0:40:62:D6:A1
+[pid=48410][err] [1120/091615.136264:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091615.390675:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091615.390715:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:5F:0B:5B:7D:3C:42:B1:86:40:40:66:05:4B:DD:32:D1
+[pid=48410][err] [1120/091615.390733:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091615.642470:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091615.642506:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:12:18:F1:AC:99:D3:5B:8E:BD:1B:7B:5C:7F:B9:61:F3
+[pid=48410][err] [1120/091615.642522:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091615.895804:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091615.895842:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:13:10:D1:7E:7C:2B:35:FC:7D:4C:02:D2:C0:47:16:73
+[pid=48410][err] [1120/091615.895863:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091616.152484:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091616.152524:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:40:05:16:3A:39:8B:41:F7:83:B6:95:ED:44:B2:B3:F1
+[pid=48410][err] [1120/091616.152544:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091616.404243:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091616.404277:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:AA:A3:D0:9F:7B:0D:40:E0:01:E7:25:8A:99:B1:9B:6D
+[pid=48410][err] [1120/091616.404295:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091616.656899:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091616.656941:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:FB:8A:72:11:11:89:B9:1E:1E:7A:7D:64:55:19:80:67
+[pid=48410][err] [1120/091616.656959:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091616.909728:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091616.909762:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:85:88:5D:D9:10:87:22:EC:4E:AE:C3:68:65:2F:83:D3
+[pid=48410][err] [1120/091616.909778:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091617.164979:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091617.165021:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:DF:12:5A:8B:FF:0D:3F:03:F8:3C:BA:16:00:1D:97:E3
+[pid=48410][err] [1120/091617.165043:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091617.416404:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091617.416438:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:3D:DC:E4:BD:F9:49:93:C0:D8:A4:77:90:20:FD:8C:45
+[pid=48410][err] [1120/091617.416458:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091617.668568:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091617.668603:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:E8:C5:32:67:D3:F9:A1:8E:C5:8A:F1:5E:F1:84:87:BD
+[pid=48410][err] [1120/091617.668620:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091617.922312:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091617.922351:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:A7:75:EF:7F:33:8A:FA:A7:93:09:34:42:BF:77:52:01
+[pid=48410][err] [1120/091617.922371:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091618.175608:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091618.175641:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:D4:E2:5C:2D:BF:86:8D:19:43:68:7B:74:55:88:F3:5D
+[pid=48410][err] [1120/091618.175659:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091618.427082:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091618.427118:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:4A:68:2E:8F:F5:9B:71:6B:70:20:28:1D:1B:96:05:95
+[pid=48410][err] [1120/091618.427137:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091618.679519:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091618.679555:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:1C:1F:15:00:0A:31:5B:FC:15:3B:5E:9B:2C:B5:B0:41
+[pid=48410][err] [1120/091618.679575:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091618.932119:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091618.932162:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:B0:2D:EB:A6:AE:18:F1:8C:0D:EE:26:3F:99:EA:F5:05
+[pid=48410][err] [1120/091618.932181:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091619.183836:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091619.183868:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:BD:B3:DD:81:23:B7:96:79:AF:70:D2:5B:BF:70:50:C5
+[pid=48410][err] [1120/091619.183887:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091619.436072:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091619.436115:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:9E:06:2A:30:5E:DC:72:0F:7A:B8:95:51:1A:A2:AA:67
+[pid=48410][err] [1120/091619.436137:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091619.689117:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091619.689156:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:D7:16:6F:38:2D:73:1A:D9:7F:A1:5F:91:B8:65:57:17
+[pid=48410][err] [1120/091619.689175:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091619.942218:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091619.942249:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:CA:09:1D:19:BD:74:D5:5C:BF:BF:FC:E3:40:8D:1E:A1
+[pid=48410][err] [1120/091619.942270:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091620.194335:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091620.194367:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:81:11:8A:CA:08:92:4C:9A:7C:DE:43:BB:A6:07:CC:87
+[pid=48410][err] [1120/091620.194386:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091620.446345:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091620.446392:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:F4:C8:78:73:95:EB:64:EF:C6:1B:27:7A:45:B8:FD:E9
+[pid=48410][err] [1120/091620.446413:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091620.698808:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091620.698847:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:02:8B:7A:40:A0:90:D0:99:CF:A6:9C:D0:4B:C8:14:D5
+[pid=48410][err] [1120/091620.698869:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091620.951324:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091620.951359:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:7D:CE:FA:4A:5F:E8:D1:EF:F5:C0:9E:BA:86:4F:35:D9
+[pid=48410][err] [1120/091620.951380:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091621.203316:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091621.203358:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:90:F8:DE:4D:6C:2B:B3:C6:46:AE:35:66:86:BF:C5:D5
+[pid=48410][err] [1120/091621.203378:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091621.471103:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091621.471141:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:AD:2C:C5:D7:05:36:F0:05:70:B7:E7:14:84:0B:45:4F
+[pid=48410][err] [1120/091621.471160:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091621.723830:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091621.723863:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:96:8C:99:66:5C:D4:7A:B8:B8:29:E4:CC:33:38:D9:21
+[pid=48410][err] [1120/091621.723884:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091621.975222:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091621.975261:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:90:18:11:6C:85:62:EF:24:10:AF:73:D5:14:1C:45:8D
+[pid=48410][err] [1120/091621.975281:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091622.234967:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091622.234998:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:B6:10:CE:AC:82:1A:07:42:58:55:94:40:22:B1:03:6F
+[pid=48410][err] [1120/091622.235012:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091622.485896:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091622.485936:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:D9:B5:CF:25:58:A3:67:98:9D:75:56:E0:6A:31:5F:93
+[pid=48410][err] [1120/091622.485958:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091622.739010:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091622.739048:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:09:1F:AF:B8:2B:07:3E:36:D6:AD:43:46:9A:3C:0C:C9
+[pid=48410][err] [1120/091622.739069:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091622.993059:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091622.993091:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:0B:29:CC:3F:19:C4:21:FE:6D:57:A0:02:E5:93:F1:2D
+[pid=48410][err] [1120/091622.993108:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091623.246480:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091623.246509:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:97:C2:C3:83:A3:1E:19:69:2A:B6:D2:79:0E:29:31:91
+[pid=48410][err] [1120/091623.246526:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091623.506461:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091623.506493:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:23:78:D6:D5:AC:68:77:52:2C:2F:59:D4:70:03:A8:F7
+[pid=48410][err] [1120/091623.506514:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091623.757417:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091623.757453:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:90:3F:91:8D:E4:30:F3:F0:A0:95:0C:CD:3B:D1:AE:5F
+[pid=48410][err] [1120/091623.757471:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091624.009480:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091624.009511:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:AD:17:63:53:1C:36:70:71:21:72:C8:85:38:89:D8:79
+[pid=48410][err] [1120/091624.009527:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091624.262375:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091624.262405:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:00:E9:75:E2:A6:58:CA:53:86:40:81:ED:75:E4:3E:87
+[pid=48410][err] [1120/091624.262424:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091624.513291:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091624.513317:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:C2:BC:83:AF:12:EF:8C:5F:31:66:94:2F:C1:73:B6:6D
+[pid=48410][err] [1120/091624.513331:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091624.766617:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091624.766643:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:65:C2:76:FF:4C:61:33:51:74:AA:FD:61:67:95:40:F3
+[pid=48410][err] [1120/091624.766656:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091625.018441:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091625.018466:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:48:1F:8A:9F:AE:92:34:2A:91:3A:CF:53:B1:C8:F2:15
+[pid=48410][err] [1120/091625.018478:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091625.270542:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091625.270569:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:3D:0F:D9:17:8E:BF:1C:35:FE:84:FF:DC:28:81:0E:57
+[pid=48410][err] [1120/091625.270583:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091625.523656:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091625.523681:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:20:4D:1F:1C:56:FF:26:95:71:DB:5F:B7:E7:0E:A5:D1
+[pid=48410][err] [1120/091625.523694:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091625.775089:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091625.775109:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:67:96:C4:9E:8E:72:B1:5D:95:CC:8D:7B:35:80:00:77
+[pid=48410][err] [1120/091625.775122:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091626.026493:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091626.026516:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:11:2A:E7:A6:C2:44:75:AC:FE:2D:97:62:FB:AD:0A:37
+[pid=48410][err] [1120/091626.026531:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091626.278369:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091626.278391:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:F8:54:DB:A5:64:09:90:EA:6F:97:56:11:1A:68:03:51
+[pid=48410][err] [1120/091626.278402:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410][err] [1120/091626.531614:ERROR:gpu/command_buffer/service/shared_image/shared_image_representation.cc:792] Attempt to read from an uninitialized SharedImage. Initialized region: (0, 0, 0, 0) Size: (1342, 558) Debug Label: CanvasResourceRaster_Pid:76592
+[pid=48410][err] [1120/091626.531636:ERROR:gpu/command_buffer/service/raster_decoder.cc:267] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : SharedImageProviderImpl::OpenSharedImageForRead: Couldn't access shared image for mailbox:AC:36:46:15:6A:B0:7F:01:52:F7:CC:4D:D4:80:03:53
+[pid=48410][err] [1120/091626.531646:ERROR:gpu/command_buffer/service/raster_decoder.cc:3052] [.RendererMainThread-0x12c00534200]GL ERROR :GL_INVALID_OPERATION : glRasterCHROMIUM: RasterCHROMIUM: serialization failure
+[pid=48410] <gracefully close start>
+[pid=48410][err] [1120/091626.740025:ERROR:content/browser/gpu/gpu_process_host.cc:1005] GPU process exited unexpectedly: exit_code=15
+[pid=48410][err] [1120/091626.740040:WARNING:content/browser/gpu/gpu_process_host.cc:1447] The GPU process has crashed 1 time(s)
+[pid=48410][err] [1120/091626.740450:ERROR:content/browser/network_service_instance_impl.cc:722] Network service crashed or was terminated, restarting service.
+    at async file:///Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/docs/tranches/BL/design/dock/wi8/measure/harness/m8/ink8.mjs:367:13 {
+  log: []
+}
+
+Node.js v26.0.0

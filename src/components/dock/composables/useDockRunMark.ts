@@ -248,6 +248,13 @@ export function useDockRunMark({ runEl }: UseDockRunMarkOptions): UseDockRunMark
         mutations = new MutationObserver((records) => {
             const seats = records.some((r) => r.type === "childList" && r.target === run);
             if (seats) observe(run);
+            // A run with no mark yet (a dock that mounts folded: its face has no box, RU-17)
+            // glides from the seat the destination leaves, so its first change of page
+            // moves the plate as every later one does.
+            if (!mark) {
+                const left = records.find((r) => r.type === "attributes" && r.oldValue !== null && r.oldValue !== "false" && r.target instanceof HTMLElement && !r.target.matches(CURRENT) && r.target.getClientRects().length > 0);
+                if (left) mark = plate(run, left.target as HTMLElement);
+            }
             if (seats || records.some((r) => r.type === "attributes")) sync();
         });
         mutations.observe(run, {
@@ -255,10 +262,10 @@ export function useDockRunMark({ runEl }: UseDockRunMarkOptions): UseDockRunMark
             subtree: true,
             attributes: true,
             attributeFilter: ["aria-current"],
+            attributeOldValue: true,
         });
         // Without a ResizeObserver (an embedded or older host) the mark still lands on
-        // each destination change; only a seat's own resize goes unread, as the dock's
-        // endpoints do there (dockMorphMeasure.ts).
+        // each destination change; only a seat's own resize goes unread.
         if (typeof ResizeObserver !== "undefined") {
             resizes = new ResizeObserver(() => {
                 if (!spring.live) sync();

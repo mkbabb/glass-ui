@@ -1,0 +1,324 @@
+diff --git a/demo/main.ts b/demo/main.ts
+index b0bf89932..d408c0f44 100644
+--- a/demo/main.ts
++++ b/demo/main.ts
+@@ -1,149 +1,4 @@
+-// Establish the global cascade order before any component stylesheet is evaluated.
+-import "./demo.css";
+-import { createApp, nextTick, type App } from "vue";
+-import App_ from "./App.vue";
+-import { router } from "./router";
+-
+-declare global {
+-    interface Window {
+-        /** BG C18 capture harness — set true once the settled frame is ready to snapshot. */
+-        __captureReady?: boolean;
+-    }
+-}
+-
+-const app = createApp(App_).use(router);
+-
+-// Surface route-component failures in the console with the
+-// Vue lifecycle `info` string instead of silently white-screening the shell. The
+-// per-Aurora `onInitError` contract stays the localized handler; this is the shell-wide
+-// backstop.
+-app.config.errorHandler = (err, _instance, info) => {
+-    console.error("[demo] app error", info, err);
+-};
+-
+-// ── BG C18 — the deterministic capture harness boot ────────────────────────────
+-//
+-// `?capture=<route>&mode=<light|dark>` boots the demo in a snapshot-friendly
+-// SETTLED-FRAME mode (real-paint-protocol §6): the entrance animations +
+-// compositing promotions are neutralized (the `html[data-capture]` capture
+-// stylesheet) so an OFF-SCREEN WKWebView snapshot captures the FULL route content
+-// into the base layer, an in-pixel engine badge is
+-// painted as the SOLE provenance source, and readiness is signalled via
+-// `window.__captureReady` + `<html data-capture-ready>` so the harness polls
+-// instead of guessing a fixed sleep. WebKit RENDERS correctly — this is a HARNESS
+-// path, ZERO src/component logic touched.
+-//
+-// The non-capture (normal demo) path is BYTE-UNTOUCHED — capture branches are
+-// reached ONLY when the `capture` param is present.
+-
+-// The GL warm-up before the readiness flag — enough frames for the aurora field
+-// to reach a stable composite. The harness polls `data-capture-ready`, so a
+-// longer warm-up just delays the flag; it never races the snapshot.
+-const GL_WARMUP_MS = 3500;
+-
+-const wait = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
+-// A paint settle that NEVER hangs. An OFF-SCREEN WKWebView (no attached window)
+-// throttles/suspends `requestAnimationFrame`, so a bare double-rAF would stall the
+-// boot forever and the `data-capture-ready` signal would never land. Race the rAF
+-// against a `setTimeout` fallback (setTimeout fires off-screen) so the settle
+-// resolves within the cap even when rAF is suspended.
+-const nextPaint = () =>
+-    new Promise<void>((resolve) => {
+-        let done = false;
+-        const finish = () => {
+-            if (!done) {
+-                done = true;
+-                resolve();
+-            }
+-        };
+-        requestAnimationFrame(() => requestAnimationFrame(finish));
+-        setTimeout(finish, 250);
+-    });
+-
+-const captureParams = new URLSearchParams(window.location.search);
+-const captureRoute = captureParams.get("capture");
+-const motionCapture = captureParams.get("motion") === "1";
+-
+-if (captureRoute) {
+-    void bootCaptureMode(app, captureRoute, captureParams, motionCapture);
+-} else {
+-    // Await the router; beforeResolve eagerly resolves
+-    // the first navigation's lazy chunk) BEFORE mount, so the first paint is the resolved
+-    // page, never an empty <RouterView> + the "Pick a story" flash.
+-    void router.isReady().then(() => app.mount("#app"));
+-}
+-
+-/**
+- * Boot the demo into a capture mode. The color scheme and still-capture flag are
+- * set BEFORE mount, so the existing still path mounts at its settled frame.
+- */
+-async function bootCaptureMode(
+-    appInstance: App,
+-    route: string,
+-    params: URLSearchParams,
+-    motionCapture: boolean,
+-): Promise<void> {
+-    const mode = params.get("mode") === "dark" ? "dark" : "light";
+-    const el = document.documentElement;
+-
+-    // 1 · Set the color scheme + still-capture flag BEFORE mount. `data-capture`
+-    //     activates the existing capture stylesheet from frame 0; motion capture
+-    //     deliberately leaves the attribute absent so the real clock stays live.
+-    try {
+-        localStorage.setItem("vueuse-color-scheme", mode);
+-    } catch {
+-        // localStorage may be unavailable (private mode, file URL) — the class +
+-        // colorScheme below are the binding signals; the seed is best-effort.
+-    }
+-    el.classList.toggle("dark", mode === "dark");
+-    el.style.colorScheme = mode;
+-    if (motionCapture) el.removeAttribute("data-capture");
+-    else el.setAttribute("data-capture", "");
+-    el.setAttribute("data-capture-mode", mode);
+-
+-    // 2 · Load the still-capture stylesheet only for the still path (dynamic —
+-    //     never in the normal bundle).
+-    if (!motionCapture) await import("./capture/capture.css");
+-
+-    // 3 · Resolve the initial navigation, mount, then navigate to the capture
+-    //     target. Mounting after `isReady()` + pushing the target is the robust
+-    //     order (the `/` redirect resolves first, then we land the real route).
+-    //     Forward any EXTRA capture params (everything except `capture`/`mode`/`motion`) onto
+-    //     the pushed route as query — history-mode push drops the OUTER search string,
+-    //     so a story cannot read window.location.search; it reads useRoute().query.
+-    const extra = new URLSearchParams();
+-    for (const [k, v] of params) {
+-        if (k !== "capture" && k !== "mode" && k !== "motion") extra.set(k, v);
+-    }
+-    const extraStr = extra.toString();
+-    const target = extraStr
+-        ? `${route}${route.includes("?") ? "&" : "?"}${extraStr}`
+-        : route;
+-    await router.isReady();
+-    appInstance.mount("#app");
+-    if (router.currentRoute.value.fullPath !== target) {
+-        await router.push(target).catch((e) => {
+-            console.error("[capture] route push failed", target, e);
+-        });
+-    }
+-
+-    // 4 · Let the route component + the GL field settle, paint the badge, signal
+-    //     ready. The page OWNS the warm-up; the harness polls `data-capture-ready`.
+-    await nextTick();
+-    await nextPaint();
+-    // GL warm-up — give the aurora/WebGL field several frames to paint a stable
+-    // image (the substrate's rAF loop keeps running; `animation: none` does not
+-    // touch the WebGL canvas, only CSS animation).
+-    await wait(GL_WARMUP_MS);
+-    await nextPaint();
+-
+-    const { mountEngineBadge } = await import("./capture/engine-badge");
+-    const info = mountEngineBadge(mode);
+-    console.info(
+-        `[capture] ready · route=${route} mode=${mode} engine=${info.engine} gpu=${info.glRenderer}`,
+-    );
+-
+-    await nextPaint();
+-    window.__captureReady = true;
+-    el.setAttribute("data-capture-ready", "");
+-}
++const params = new URLSearchParams(window.location.search);
++const c = params.get("c");
++if (c) void import("./__anim/entry").then((m) => m.boot(c, params));
++else void import("./main.demo");
+diff --git a/docs/tranches/BL/design/dock/wi8/measure/harness/s8/mark8.mjs b/docs/tranches/BL/design/dock/wi8/measure/harness/s8/mark8.mjs
+index 02415ac79..3c82a39bf 100644
+--- a/docs/tranches/BL/design/dock/wi8/measure/harness/s8/mark8.mjs
++++ b/docs/tranches/BL/design/dock/wi8/measure/harness/s8/mark8.mjs
+@@ -1,8 +1,10 @@
+ // mark8.mjs <port> <tag> [--engine chromium|webkit]: S1's engine read of the carried run mark (RU-66 as amended by C7-1),
+ // the cell its plant needs (RULINGS-7 RU-66's witness: "the mark's move removed, so the plate jumps"), since the unit
+ // test reads no glide. dock-wi8.vue's w-std at 1440 by 900, light, fine pointer: the dock opened by hover, then a press
+-// on Library while Reader is current. Every animation frame for 900 ms reads the mark (.dock-run-mark): its box in the
+-// viewport and its background, and the current seat's own background. Read: the frames strictly between the mark's
++// on Library while Reader is current, then a press on Bookmarks. Every animation frame for 900 ms after each press reads
++// the mark (.dock-run-mark): its box in the viewport, and the current seat's own background. The first press reads
++// whether a mark existed before it (a dock that mounts folded gives its hidden face no box at rest, RU-17); the second
++// reads the glide from a mark that exists. Read: the frames strictly between the mark's
+ // first box and its last (a glide has several; a jump has none or one), the largest step in one frame against the
+ // whole travel, whether the mark ends centred on Library's box (within 1 px), and the seat under it painting no fill.
+ // One browser, one context, closed in finally. Output: logs/s8-mark-<tag>.<engine>.json.
+@@ -35,34 +37,39 @@ try {
+             const r = m?.getBoundingClientRect();
+             return m ? { x: r.x, w: r.width, bg: getComputedStyle(m).backgroundColor } : null;
+         });
+-        await page.evaluate(() => {
+-            window.__mf = [];
+-            window.__mon = true;
+-            const tick = () => {
++        const press = async (id) => {
++            await page.evaluate(() => {
++                window.__mf = [];
++                window.__mon = true;
++                const tick = () => {
++                    const m = document.querySelector("[data-testid=w-std] .dock-run-mark");
++                    const r = m?.getBoundingClientRect();
++                    window.__mf.push(m ? [+r.x.toFixed(2), +r.width.toFixed(2)] : null);
++                    if (window.__mon) requestAnimationFrame(tick);
++                };
++                requestAnimationFrame(tick);
++            });
++            await page.locator(`[data-testid=${id}]`).click();
++            await sleep(900);
++            const res = await page.evaluate((id) => {
++                window.__mon = false;
++                const seat = document.querySelector(`[data-testid=${id}]`);
++                const s = seat.getBoundingClientRect();
+                 const m = document.querySelector("[data-testid=w-std] .dock-run-mark");
+                 const r = m?.getBoundingClientRect();
+-                window.__mf.push(m ? [+r.x.toFixed(2), +r.width.toFixed(2)] : null);
+-                if (window.__mon) requestAnimationFrame(tick);
+-            };
+-            requestAnimationFrame(tick);
+-        });
+-        await page.locator("[data-testid=w-std-library]").click();
+-        await sleep(900);
+-        const res = await page.evaluate(() => {
+-            window.__mon = false;
+-            const seat = document.querySelector("[data-testid=w-std-library]");
+-            const s = seat.getBoundingClientRect();
+-            const m = document.querySelector("[data-testid=w-std] .dock-run-mark");
+-            const r = m?.getBoundingClientRect();
+-            return { frames: window.__mf, seat: [s.x, s.width], mark: r ? [r.x, r.width] : null, seatBg: getComputedStyle(seat).backgroundColor, current: seat.getAttribute("aria-current") };
+-        });
+-        const xs = res.frames.filter(Boolean).map((f) => f[0]);
+-        const first = xs[0], last = xs[xs.length - 1];
+-        const between = xs.filter((x) => Math.abs(x - first) > 0.5 && Math.abs(x - last) > 0.5).length;
+-        let step = 0;
+-        for (let i = 1; i < xs.length; i++) step = Math.max(step, Math.abs(xs[i] - xs[i - 1]));
+-        const travel = Math.abs(last - first);
+-        out = { engine, before, after: res.mark, seat: res.seat, current: res.current, seatBg: res.seatBg, frames: xs.length, first, last, travel: +travel.toFixed(2), between, largestStep: +step.toFixed(2), stepShare: travel ? +(step / travel).toFixed(3) : null, onSeat: res.mark ? Math.abs(res.mark[0] + res.mark[1] / 2 - (res.seat[0] + res.seat[1] / 2)) <= 1 : false, glides: between >= 3 };
++                return { frames: window.__mf, seat: [s.x, s.width], mark: r ? [r.x, r.width] : null, seatBg: getComputedStyle(seat).backgroundColor, current: seat.getAttribute("aria-current") };
++            }, id);
++            const xs = res.frames.filter(Boolean).map((f) => f[0]);
++            const first = xs[0], last = xs[xs.length - 1];
++            const between = xs.filter((x) => Math.abs(x - first) > 0.5 && Math.abs(x - last) > 0.5).length;
++            let step = 0;
++            for (let i = 1; i < xs.length; i++) step = Math.max(step, Math.abs(xs[i] - xs[i - 1]));
++            const travel = Math.abs(last - first);
++            return { to: id, markBefore: res.frames[0] !== null, after: res.mark, seat: res.seat, current: res.current, seatBg: res.seatBg, frames: xs.length, first, last, travel: +travel.toFixed(2), between, largestStep: +step.toFixed(2), stepShare: travel ? +(step / travel).toFixed(3) : null, onSeat: res.mark ? Math.abs(res.mark[0] + res.mark[1] / 2 - (res.seat[0] + res.seat[1] / 2)) <= 1 : false, glides: between >= 3 };
++        };
++        const firstPress = await press("w-std-library");
++        const secondPress = await press("w-std-marks");
++        out = { engine, before, firstPress, secondPress };
+         console.log(JSON.stringify(out));
+     } finally {
+         await ctx.close();
+diff --git a/src/components/dock/README.md b/src/components/dock/README.md
+index 7ab3d8560..66dc30b23 100644
+--- a/src/components/dock/README.md
++++ b/src/components/dock/README.md
+@@ -79,6 +79,11 @@ way more seats lie. `backdropMode="static"` paints an opaque plate from the dock
+ veil ink with no backdrop sampling or filtering (a `"live"` dock samples the painted
+ backdrop by default).
+ 
++A plate outside a dock that should read as the dock's, such as a neck between two docks
++or a bare plate, applies the `glass-plate` utility with
++`--glass-veil-tier: var(--glass-veil-dock)`. It sets no `--glass-level`: the level is 1
++outside a dock, and 1 is the dock's level in both schemes.
++
+ ## Slots
+ 
+ - `default`: the expanded controls (the run).
+diff --git a/src/components/dock/composables/useDockRunMark.ts b/src/components/dock/composables/useDockRunMark.ts
+index bb4c60469..03e3f6eb1 100644
+--- a/src/components/dock/composables/useDockRunMark.ts
++++ b/src/components/dock/composables/useDockRunMark.ts
+@@ -248,6 +248,13 @@ export function useDockRunMark({ runEl }: UseDockRunMarkOptions): UseDockRunMark
+         mutations = new MutationObserver((records) => {
+             const seats = records.some((r) => r.type === "childList" && r.target === run);
+             if (seats) observe(run);
++            // A run with no mark yet (a dock that mounts folded: its face has no box, RU-17)
++            // glides from the seat the destination leaves, so its first change of page
++            // moves the plate as every later one does.
++            if (!mark) {
++                const left = records.find((r) => r.type === "attributes" && r.oldValue !== null && r.oldValue !== "false" && r.target instanceof HTMLElement && !r.target.matches(CURRENT) && r.target.getClientRects().length > 0);
++                if (left) mark = plate(run, left.target as HTMLElement);
++            }
+             if (seats || records.some((r) => r.type === "attributes")) sync();
+         });
+         mutations.observe(run, {
+@@ -255,10 +262,10 @@ export function useDockRunMark({ runEl }: UseDockRunMarkOptions): UseDockRunMark
+             subtree: true,
+             attributes: true,
+             attributeFilter: ["aria-current"],
++            attributeOldValue: true,
+         });
+         // Without a ResizeObserver (an embedded or older host) the mark still lands on
+-        // each destination change; only a seat's own resize goes unread, as the dock's
+-        // endpoints do there (dockMorphMeasure.ts).
++        // each destination change; only a seat's own resize goes unread.
+         if (typeof ResizeObserver !== "undefined") {
+             resizes = new ResizeObserver(() => {
+                 if (!spring.live) sync();
+diff --git a/src/components/dock/styles/dock.css b/src/components/dock/styles/dock.css
+index 4d2fc5686..da42527a3 100644
+--- a/src/components/dock/styles/dock.css
++++ b/src/components/dock/styles/dock.css
+@@ -251,10 +251,11 @@
+         pointer-events: none;
+     }
+ 
+-    /* RU-44: the dock's plate takes more of the scheme's own surface (G-15: words 4.5:1 and
+-       glyphs 3:1 over a busy field, both schemes). The a11y brackets still lower it. */
++    /* RU-67: the plate's level is 1 in both schemes. Dark takes the level at which the dark
++       dock hides as much of a grid page as the light dock does at its own (MEASURE-8 H6),
++       which is 1, so one rule serves both. The a11y brackets and the static arm still win. */
+     .glass-dock {
+-        --glass-level: 0.4;
++        --glass-level: 1;
+     }
+ 
+     /* W-I.8 RU-56: inside a dock the current seat's fill, a hovered seat's fill and a segmented
+diff --git a/src/components/dock/styles/shell.css b/src/components/dock/styles/shell.css
+index bc088ad6e..1e6a6d130 100644
+--- a/src/components/dock/styles/shell.css
++++ b/src/components/dock/styles/shell.css
+@@ -165,8 +165,10 @@
+        (which wins over the dark `:root` value by cascade order) would strip the dark glow
+        to 1.2. This is the plain per-mode pair, the house idiom; the SAME radius primitive
+        (7px × `--glass-level`, peer-lock byte-identical). The dark content-tier resting
+-       plate keeps the dark `:root` value untouched (this override is `.glass-dock`-scoped). */
+-    .dark .glass-dock {
++       plate keeps the dark `:root` value untouched (this override is `.glass-dock`-scoped).
++       A dock that carries `.dark` itself in a light document takes it too (C7-3). */
++    .dark .glass-dock,
++    .glass-dock.dark {
+         --glass-blur-resting: blur(
+                 calc(var(--glass-blur-resting-radius) * var(--glass-level))
+             )

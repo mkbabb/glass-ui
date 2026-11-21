@@ -251,20 +251,23 @@
         pointer-events: none;
     }
 
-    /* RU-44: the dock's plate takes more of the scheme's own surface (G-15: words 4.5:1 and
-       glyphs 3:1 over a busy field, both schemes). The a11y brackets still lower it. */
+    /* RU-67: the plate's level is 1 in both schemes. Dark takes the level at which the dark
+       dock hides as much of a grid page as the light dock does at its own (MEASURE-8 H6),
+       which is 1, so one rule serves both. The a11y brackets and the static arm still win. */
     .glass-dock {
-        --glass-level: 0.4;
+        --glass-level: 1;
     }
 
     /* W-I.8 RU-56: inside a dock the current seat's fill, a hovered seat's fill and a segmented
        control's selected mark are the dock's own ink over whatever the plate is, so they keep
        their distance from the plate at any level and in both schemes. Two steps in rising
-       strength, hover and current. The `:root` lines (tokens/sizing.css) stay for a
+       strength, hover and current, one pair for both schemes (RU-68: the current step is the
+       strongest the current and pressed seats' words allow, and no step of 12 % or more keeps
+       them at 4.5:1; the hover is P0a's 8 %). The `:root` lines (tokens/sizing.css) stay for a
        DockControl outside any dock. */
     .glass-dock {
-        --dock-control-hover-bg: color-mix(in oklab, var(--dock-fg-on-aurora, var(--foreground)) 10%, transparent);
-        --dock-control-active-bg: color-mix(in oklab, var(--dock-fg-on-aurora, var(--foreground)) 20%, transparent);
+        --dock-control-hover-bg: color-mix(in oklab, var(--dock-fg-on-aurora, var(--foreground)) 8%, transparent);
+        --dock-control-active-bg: color-mix(in oklab, var(--dock-fg-on-aurora, var(--foreground)) 10%, transparent);
         --glass-capsule-fill: var(--dock-control-active-bg);
     }
 

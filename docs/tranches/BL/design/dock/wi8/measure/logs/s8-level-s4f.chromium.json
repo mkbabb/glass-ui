@@ -1,0 +1,87 @@
+{
+ "engine": "chromium",
+ "rows": [
+  {
+   "id": "light",
+   "want": "1",
+   "wantBlur": "saturate(1.2)",
+   "level": "1",
+   "blur": "blur( calc(16px * 1) ) saturate(1.2)",
+   "docDark": false,
+   "rt": false,
+   "more": false,
+   "ok": true
+  },
+  {
+   "id": "dark",
+   "want": "1",
+   "wantBlur": "saturate(1.3) brightness(1.14)",
+   "level": "1",
+   "blur": "blur( calc(16px * 1) ) saturate(1.3) brightness(1.14)",
+   "docDark": true,
+   "rt": false,
+   "more": false,
+   "ok": true
+  },
+  {
+   "id": "rt-light",
+   "want": "0",
+   "wantBlur": null,
+   "level": "0",
+   "blur": "blur( calc(16px * 0) ) saturate(1.2)",
+   "docDark": false,
+   "rt": true,
+   "more": false,
+   "ok": true
+  },
+  {
+   "id": "rt-dark",
+   "want": "0",
+   "wantBlur": null,
+   "level": "0",
+   "blur": "blur( calc(16px * 0) ) saturate(1.3) brightness(1.14)",
+   "docDark": true,
+   "rt": true,
+   "more": false,
+   "ok": true
+  },
+  {
+   "id": "contrast-more",
+   "want": "0.3",
+   "wantBlur": null,
+   "level": "0.3",
+   "blur": "blur( calc(16px * 0.3) ) saturate(1.2)",
+   "docDark": false,
+   "rt": false,
+   "more": true,
+   "ok": true
+  },
+  {
+   "id": "static",
+   "want": "0",
+   "wantBlur": null,
+   "level": "0",
+   "blur": "blur( calc(16px * 0) ) saturate(1.2)",
+   "docDark": false,
+   "rt": false,
+   "more": false,
+   "ok": true
+  },
+  {
+   "id": "dock-dark-in-light",
+   "want": "1",
+   "wantBlur": "saturate(1.3) brightness(1.14)",
+   "level": "1",
+   "blur": "blur( calc(16px * 1) ) saturate(1.3) brightness(1.14)",
+   "docDark": false,
+   "rt": false,
+   "more": false,
+   "ok": true
+  }
+ ],
+ "summary": {
+  "cells": 7,
+  "ok": 7,
+  "fail": []
+ }
+}

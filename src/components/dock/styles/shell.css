@@ -165,8 +165,10 @@
        (which wins over the dark `:root` value by cascade order) would strip the dark glow
        to 1.2. This is the plain per-mode pair, the house idiom; the SAME radius primitive
        (7px × `--glass-level`, peer-lock byte-identical). The dark content-tier resting
-       plate keeps the dark `:root` value untouched (this override is `.glass-dock`-scoped). */
-    .dark .glass-dock {
+       plate keeps the dark `:root` value untouched (this override is `.glass-dock`-scoped).
+       A dock that carries `.dark` itself in a light document takes it too (C7-3). */
+    .dark .glass-dock,
+    .glass-dock.dark {
         --glass-blur-resting: blur(
                 calc(var(--glass-blur-resting-radius) * var(--glass-level))
             )

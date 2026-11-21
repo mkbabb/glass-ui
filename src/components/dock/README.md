@@ -79,6 +79,11 @@ way more seats lie. `backdropMode="static"` paints an opaque plate from the dock
 veil ink with no backdrop sampling or filtering (a `"live"` dock samples the painted
 backdrop by default).
 
+A plate outside a dock that should read as the dock's, such as a neck between two docks
+or a bare plate, applies the `glass-plate` utility with
+`--glass-veil-tier: var(--glass-veil-dock)`. It sets no `--glass-level`: the level is 1
+outside a dock, and 1 is the dock's level in both schemes.
+
 ## Slots
 
 - `default`: the expanded controls (the run).
