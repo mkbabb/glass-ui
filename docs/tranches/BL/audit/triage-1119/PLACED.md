@@ -40,3 +40,7 @@ Read against glass-ui 11.1.0, release/11.1.1 (a476d0cba), the 11.1.2 scope, the 
 - **Study G7, a short select at its trigger:** "bottom of the screen is good for longer lists and larger items, like the keyframes easing curve picker, for example." Ruled for 11.3.0: a short list (seven rows or fewer, with no search) opens at its trigger; the bottom sheet is for long lists and large items.
 - **Study G9, 1.25 as the coarse default:** "yes." `--ui-coarse-scale` becomes 1.25 in 11.3.0 (a default change, so a minor); the 44 px floor stays through `--control-floor`. Sites drop their own line then.
 - **Study G1, the thin capped-line form for colour ramps:** "yes." It ships in 11.3.0 with the thumbless Slider.
+
+## Consumer witness for study G4 (2026-11-21, relayed by value-js-f3)
+
+fourier PR #33 (merged 2026-11-21) removed its own rule that widened the stage dock's triggers, because it was a shim. Its width check now stays red until fourier moves to 11.2.0 (test TRIGGER-CELL-WIDTH, O-414). At 390 the triggers measure 38 px against the dock's control cell. Frame: `~/.dev-logs/owner-1112/FRONTS/fourier/final/R-G4-trigger-width-390.jpg`. That red test is G4 part (1)'s consumer check in 11.2.0: the painted trigger takes the seat's size in the persistent regions as well as in the run. If the build seat limits the default to the run, fourier's test stays red, so the README must say so.
