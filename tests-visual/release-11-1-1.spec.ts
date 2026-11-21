@@ -19,7 +19,7 @@
 //          Playwright WebKit paints no backdrop blur, so there the material is read from
 //          computed style and the contrast is recorded, not judged
 import { expect, test, type Page } from "@playwright/test";
-import { exitOf, firstFrame, gotoReady, isPhone, markFilm, markTurn, press, pressOn, startFilm, stopFilm, worstFrameShare, type Film, type Frame } from "./release-11-1-1/film";
+import { exitOf, firstFrame, gotoReady, isPhone, lastBefore, markFilm, markTurn, press, pressOn, startFilm, stopFilm, worstFrameShare, type Film, type Frame } from "./release-11-1-1/film";
 
 const HARNESS = "/tests-visual/release-11-1-1/exits-harness.html";
 
@@ -1874,8 +1874,7 @@ for (const c of standing) {
             await act(page, project);
             const film = await stopFilm(page, 1400);
             const vw = page.viewportSize()!;
-            const before = film.frames.filter((f) => f.t < film.mark);
-            const start = before[before.length - 1];
+            const start = lastBefore(film);
             const fromRest = seenFrom(vw, start);
             const channel: Channel = c.height
                 ? (f) => (f.present ? (f.h ?? 0) / rest.height : 0)

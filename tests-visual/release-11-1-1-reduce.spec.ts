@@ -25,7 +25,7 @@
 //            held press and its release, rest, pressed, rest, with no value between
 import { expect, test, type CDPSession, type Page } from "@playwright/test";
 import { PNG } from "pngjs";
-import { firstFrame, gotoReady, isPhone, markFilm, press, pressOn, startFilm, stopFilm, type Film, type Frame } from "./release-11-1-1/film";
+import { firstFrame, gotoReady, isPhone, lastBefore, markFilm, press, pressOn, startFilm, stopFilm, type Film, type Frame } from "./release-11-1-1/film";
 
 const EXITS = "/tests-visual/release-11-1-1/exits-harness.html";
 const REDUCE = "/tests-visual/release-11-1-1/reduce-harness.html";
@@ -55,9 +55,8 @@ type Leg = {
  *  whether its opacity is monotone, how long it ran and how many painted frames hold a
  *  box that is neither end's. */
 function judgeLeg(film: Film, dir: "in" | "out", channel: (f: Frame) => number, box: (f: Frame) => number[] | null): Leg {
-    const before = film.frames.filter((f) => f.t < film.mark);
+    const start = lastBefore(film);
     const after = film.frames.filter((f) => f.t >= film.mark);
-    const start = before[before.length - 1];
     const values = after.map((f) => channel(f));
     const from = channel(start);
     const to = values[values.length - 1];
@@ -215,16 +214,15 @@ async function filmFold(page: Page, act: () => Promise<void>): Promise<{ mark: n
             const cs = getComputedStyle(el);
             return cs.visibility === "hidden" || cs.display === "none" ? 0 : parseFloat(cs.opacity);
         };
-        const fold = { mark: -1, frames: [] as unknown[], stop: false };
+        const fold = { t0: performance.now(), mark: -1, frames: [] as unknown[], stop: false };
         w.__fold = fold;
-        const t0 = performance.now();
         const tick = (now: number) => {
             const r = dock.getBoundingClientRect();
-            fold.frames.push({ t: now - t0, full: seen(face("full")), summary: seen(face("summary")), box: [r.left, r.top, r.width, r.height] });
+            fold.frames.push({ t: now - fold.t0, full: seen(face("full")), summary: seen(face("summary")), box: [r.left, r.top, r.width, r.height] });
             if (!fold.stop) requestAnimationFrame(tick);
         };
         requestAnimationFrame(tick);
-        (window as unknown as { __foldMark: () => void }).__foldMark = () => (fold.mark = performance.now() - t0);
+        (window as unknown as { __foldMark: () => void }).__foldMark = () => (fold.mark = performance.now() - fold.t0);
     });
     await firstFrame(page, "__fold");
     await page.evaluate(() => (window as unknown as { __foldMark: () => void }).__foldMark());
@@ -282,15 +280,14 @@ test("mark · a run's selected plate moves to a new seat by a cross-fade", async
             return m ? parseFloat(m[1].split(",")[3]) : 1;
         };
         const seat = (i: number) => document.querySelector<HTMLElement>(`[data-testid="r-seat-${i}"]`)!;
-        const film = { mark: -1, frames: [] as unknown[], stop: false };
+        const film = { t0: performance.now(), mark: -1, frames: [] as unknown[], stop: false };
         w.__run = film;
-        const t0 = performance.now();
         const tick = (now: number) => {
             const mark = run.querySelector<HTMLElement>(".dock-run-mark");
             const cs = mark ? getComputedStyle(mark) : null;
             const r = mark?.getBoundingClientRect();
             film.frames.push({
-                t: now - t0,
+                t: now - film.t0,
                 mark: mark && cs!.display !== "none" && cs!.visibility !== "hidden" ? parseFloat(cs!.opacity) * alpha(cs!.backgroundColor) : 0,
                 x: r ? r.left : 0,
                 old: alpha(getComputedStyle(seat(0)).backgroundColor),
@@ -299,7 +296,7 @@ test("mark · a run's selected plate moves to a new seat by a cross-fade", async
             if (!film.stop) requestAnimationFrame(tick);
         };
         requestAnimationFrame(tick);
-        (window as unknown as { __runMark: () => void }).__runMark = () => (film.mark = performance.now() - t0);
+        (window as unknown as { __runMark: () => void }).__runMark = () => (film.mark = performance.now() - film.t0);
     });
     await firstFrame(page, "__run");
     await page.evaluate(() => (window as unknown as { __runMark: () => void }).__runMark());
@@ -367,11 +364,11 @@ async function holdPress(page: Page, sel: string, cdp: CDPSession | null, pseudo
     // cannot read as one that kept its size.
     await page.evaluate(({ sel, pseudo }) => {
         const el = document.querySelector(sel)!;
-        const film = { frames: [] as [string, string, number, boolean][], stop: false };
+        const film = { t0: performance.now(), frames: [] as { t: number; read: [string, string, number, boolean] }[], stop: false };
         (window as unknown as { __hold: typeof film }).__hold = film;
-        const tick = () => {
+        const tick = (now: number) => {
             const cs = getComputedStyle(el, pseudo || null);
-            film.frames.push([cs.scale, cs.transform, el.getBoundingClientRect().width, el.matches(":active")]);
+            film.frames.push({ t: now - film.t0, read: [cs.scale, cs.transform, el.getBoundingClientRect().width, el.matches(":active")] });
             if (!film.stop) requestAnimationFrame(tick);
         };
         requestAnimationFrame(tick);
@@ -383,9 +380,9 @@ async function holdPress(page: Page, sel: string, cdp: CDPSession | null, pseudo
     if (!hold) await page.mouse.down();
     await page.waitForTimeout(300);
     const frames = await page.evaluate(() => {
-        const film = (window as unknown as { __hold: { frames: [string, string, number, boolean][]; stop: boolean } }).__hold;
+        const film = (window as unknown as { __hold: { frames: { read: [string, string, number, boolean] }[]; stop: boolean } }).__hold;
         film.stop = true;
-        return film.frames;
+        return film.frames.map((f) => f.read);
     });
     const heldShot = await page.screenshot({ clip });
     const heldFill = await page.locator(sel).first().evaluate(fillOf, pseudo);
@@ -461,12 +458,12 @@ test("still · a Slider holds still under reduced motion", async ({ page }, info
         await page.mouse.move(box.x + box.width * 0.4, box.y + box.height / 2);
         await page.waitForTimeout(80);
         await page.evaluate(() => {
-            const w = window as unknown as { __fill: { frames: string[]; stop: boolean } };
+            const w = window as unknown as { __fill: { t0: number; frames: { t: number; value: string }[]; stop: boolean } };
             const fill = document.querySelector('[data-testid="r-slider"] .slider-range')!;
-            const film = { frames: [] as string[], stop: false };
+            const film = { t0: performance.now(), frames: [] as { t: number; value: string }[], stop: false };
             w.__fill = film;
-            const tick = () => {
-                film.frames.push(getComputedStyle(fill).transform);
+            const tick = (now: number) => {
+                film.frames.push({ t: now - film.t0, value: getComputedStyle(fill).transform });
                 if (!film.stop) requestAnimationFrame(tick);
             };
             requestAnimationFrame(tick);
@@ -477,9 +474,9 @@ test("still · a Slider holds still under reduced motion", async ({ page }, info
         await page.mouse.up();
         await page.waitForTimeout(600);
         const frames = await page.evaluate(() => {
-            const f = (window as unknown as { __fill: { frames: string[]; stop: boolean } }).__fill;
+            const f = (window as unknown as { __fill: { frames: { value: string }[]; stop: boolean } }).__fill;
             f.stop = true;
-            return f.frames;
+            return f.frames.map((x) => x.value);
         });
         runs = [];
         for (const value of frames) {

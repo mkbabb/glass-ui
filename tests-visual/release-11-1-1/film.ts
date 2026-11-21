@@ -100,10 +100,15 @@ export async function startFilm(page: Page, selector: string, also = ""): Promis
     await firstFrame(page, "__film");
 }
 
-/** Resolves once the page's film at `window[key]` holds its first frame, so the mark or
- *  the input that follows comes after a filmed frame however late the page draws. */
+/** Resolves once the page's film at `window[key]` holds its first frame and the page's
+ *  clock has passed that frame's stamp, so the mark or the input that follows is stamped
+ *  strictly after a filmed frame however late the page draws and however coarse its
+ *  clock. The film keeps its start in `t0` and stamps each frame's `t` from it. */
 export async function firstFrame(page: Page, key: string): Promise<void> {
-    await page.waitForFunction((key) => (window as unknown as Record<string, { frames: unknown[] }>)[key].frames.length > 0, key);
+    await page.waitForFunction((key) => {
+        const film = (window as unknown as Record<string, { t0: number; frames: { t: number }[] }>)[key];
+        return film.frames.length > 0 && performance.now() - film.t0 > film.frames[0].t;
+    }, key);
 }
 
 export async function markFilm(page: Page): Promise<void> {
@@ -124,16 +129,23 @@ export async function stopFilm(page: Page, ms: number): Promise<Film> {
     });
 }
 
+/** The last frame filmed before the mark; with `present`, the last that holds the
+ *  surface. A film with none fails by name. */
+export function lastBefore(film: Film, present = false): Frame {
+    const before = film.frames.filter((f) => f.t < film.mark && (!present || f.present));
+    const last = before[before.length - 1];
+    if (!last) {
+        const first = film.frames.slice(0, 4).map((f) => [Math.round(f.t), f.present]);
+        throw new Error(`the film holds no frame ${present ? "of the surface " : ""}before its mark ${JSON.stringify({ mark: Math.round(film.mark), first })}`);
+    }
+    return last;
+}
+
 /** The last open frame before the action, and every frame after it while the surface
  *  is mounted and still painted. A film with no frame of the surface before its mark
  *  fails by name. */
 export function exitOf(film: Film): { rest: Frame; exit: Frame[]; gone: boolean } {
-    const before = film.frames.filter((f) => f.t < film.mark && f.present);
-    const rest = before[before.length - 1];
-    if (!rest) {
-        const first = film.frames.slice(0, 4).map((f) => [Math.round(f.t), f.present]);
-        throw new Error(`the film holds no frame of the surface before its mark ${JSON.stringify({ mark: Math.round(film.mark), first })}`);
-    }
+    const rest = lastBefore(film, true);
     const after = film.frames.filter((f) => f.t >= film.mark);
     const exit = after.filter((f) => f.present && (f.op ?? 0) > 0.01);
     const gone = after.length > 0 && !after[after.length - 1].present;
