@@ -1,0 +1,11 @@
+start 17:18:59 load { 15.61 14.00 18.60 }
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"engine":"webkit","tag":"s8-s6","pass":true,"cells":{"menu-mouse":true,"select-mouse":true,"popover-mouse":true,"sheet-mouse":true,"menu-touch":true,"select-touch":true,"popover-touch":true,"sheet-touch":true,"select-touch-item":true,"sheet-touch-scrim":true,"tapseat":"w-pill-search","fourier":{"face":"folds","theme":"folds","menu":"folds","about":"folds"}},"bad":[]}
+g8-exempt applied
+{"engine":"webkit","tag":"s8-s6-g8-exempt","pass":false,"cells":{"menu-mouse":false,"select-mouse":false,"popover-mouse":false,"sheet-mouse":true,"menu-touch":false,"select-touch":false,"popover-touch":false,"sheet-touch":true,"select-touch-item":true,"sheet-touch-scrim":true,"tapseat":"w-pill-search","fourier":{"face":"folds","theme":"folds","menu":"folds","about":"folds"}},"bad":["menu-mouse: opened true closed true stillClosed true reopened 0 dock false","select-mouse: opened true closed true stillClosed true reopened 1 dock false","popover-mouse: opened true closed true stillClosed true reopened 0 dock false","menu-touch: opened true closed true stillClosed true reopened 0 dock false","select-touch: opened true closed true stillClosed true reopened 0 dock false","popover-touch: opened true closed true stillClosed true reopened 0 dock false"]}
+g8-exempt reverted
+g8-trigger applied
+{"engine":"webkit","tag":"s8-s6-g8-trigger","pass":false,"cells":{"menu-mouse":true,"select-mouse":true,"popover-mouse":true,"sheet-mouse":false,"menu-touch":true,"select-touch":true,"popover-touch":true,"sheet-touch":false,"select-touch-item":true,"sheet-touch-scrim":false,"tapseat":"w-pill-search","fourier":{"face":"folds","theme":"folds","menu":"pinned","about":"folds"}},"bad":["sheet-mouse: opened true closed true stillClosed true reopened 0 dock false","sheet-touch: opened true closed true stillClosed true reopened 0 dock false","sheet-touch-scrim: opened true closed true stillClosed true reopened 0 dock false"]}
+g8-trigger reverted
+s6run webkit done
+rc=0 end 17:24:48

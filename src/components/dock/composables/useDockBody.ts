@@ -517,7 +517,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         for (const { key, el: r } of o.regions()) if (key !== "layers" && r && r.isConnected) sibs += `${key}:${v ? r.offsetHeight : r.offsetWidth} `;
         return { ext: v ? el.offsetHeight : el.offsetWidth, sibs };
     }
-    function fitRun(el: HTMLElement, run: HTMLElement, open: boolean): { plan: FitPlan; inset: string | null } | null {
+    function fitRun(el: HTMLElement, run: HTMLElement, open: boolean): { plan: FitPlan; inset: string | null; reread?: boolean } | null {
         // The fit is the open run's. A face with no box (RU-17), or a run leaving on a fold (its
         // region already laid out at the folded size), keeps the reading it had when it was
         // laid out open.
@@ -570,8 +570,9 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         fitKey = { run, span, n, ext, sibs };
         fitHeld = { fits, whole, room, inset };
         fitFresh = true;
-        // The inset is already written; the sync writes nothing more for it.
-        return { plan: { run, fits, whole, room, span, n }, inset: null };
+        // The inset is already written; the sync writes nothing more for it. The frame read the run's
+        // layout again only if the inset moved or the second read ran (RU-74).
+        return { plan: { run, fits, whole, room, span, n }, inset: null, reread: insetFit !== had || (!fits && !!insetFit) };
     }
 
     /** The fit law (10.1.5 e4, k3, p2): `data-run-fits` says the seats' span is no longer
@@ -720,8 +721,9 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
                 if (inset === "") el.style.removeProperty("--dock-curve-inset");
                 else el.style.setProperty("--dock-curve-inset", inset);
             }
-            // RU-54: a deciding frame is the named flag frame (RU-53's bound of four), whether or not a flag moved.
-            if (POSE && (fitMoved || inset !== null || fitFresh)) performance.mark("dock:reread", { detail: { fit: fitMoved || fitFresh, decided: fitFresh, inset: fitFresh ? fitHeld?.inset : inset, fits: plan?.fits ?? null, whole: plan?.whole ?? null } });
+            // RU-74: the named flag frame (RU-53's bound of four) is a frame whose flag moved or that read the run
+            // again (RU-54's second read); a deciding frame that changed nothing is a plain trigger frame.
+            if (POSE && (fitMoved || inset !== null || fit?.reread)) performance.mark("dock:reread", { detail: { fit: fitMoved, decided: fitFresh, reread: !!fit?.reread, inset: fitFresh ? fitHeld?.inset : inset, fits: plan?.fits ?? null, whole: plan?.whole ?? null } });
         }
         // RU-53: the carrier's read of the root, named, so a fold frame's first forced layout is told from a flag's.
         if (POSE) performance.mark("dock:rect");

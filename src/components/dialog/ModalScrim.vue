@@ -16,6 +16,15 @@ const props = defineProps<{ present: boolean }>();
 
 const root = injectDialogRootContext();
 useRootScrollLock(() => props.present);
+
+/* A touch press on the scrim ends in the click reka's outside dismissal waits for. WebKit
+   sends that click neither after the cancelled press nor, with the cancel taken off, after
+   an uncancelled one (RU-72, MEASURE-8 S6), so the scrim sends it on the press's pointerup.
+   The dismissal listens once, so Chromium's own click after it closes nothing more, and a
+   `locked` dialog still refuses the press. */
+function onPointerup(event: PointerEvent): void {
+    if (event.pointerType === "touch") (event.currentTarget as HTMLElement).click();
+}
 </script>
 
 <template>
@@ -23,6 +32,7 @@ useRootScrollLock(() => props.present);
         :data-state="root.open.value ? 'open' : 'closed'"
         style="pointer-events: auto"
         @pointerdown.left.self.prevent
+        @pointerup.self="onPointerup"
     >
         <slot />
     </div>

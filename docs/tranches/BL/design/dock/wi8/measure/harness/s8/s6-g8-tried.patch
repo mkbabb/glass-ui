@@ -1,0 +1,79 @@
+diff --git a/src/components/dialog/ModalScrim.vue b/src/components/dialog/ModalScrim.vue
+index ad5697c3b..8cd21dc15 100644
+--- a/src/components/dialog/ModalScrim.vue
++++ b/src/components/dialog/ModalScrim.vue
+@@ -11,18 +11,27 @@ import { useRootScrollLock } from "../_shared/overlay";
+  * lets go (U/B7b: the atlas homepage finder, 4 of 4 cells per engine). This scrim holds
+  * the page still through the one root lock instead (`_shared/overlay`), for exactly as
+  * long as reka's lock held it: while the scrim is present.
++ *
++ * A press on the scrim is cancelled, as reka's is, so it never moves focus out of the
++ * surface, except a touch press: reka's outside dismissal waits for the click a touch
++ * press ends in, and WebKit sends no click after a cancelled touch pointerdown, so a tap
++ * on the scrim closed nothing there (RU-72, MEASURE-8 H2).
+  */
+ const props = defineProps<{ present: boolean }>();
+ 
+ const root = injectDialogRootContext();
+ useRootScrollLock(() => props.present);
++
++function onPointerdown(event: PointerEvent): void {
++    if (event.pointerType !== "touch") event.preventDefault();
++}
+ </script>
+ 
+ <template>
+     <div
+         :data-state="root.open.value ? 'open' : 'closed'"
+         style="pointer-events: auto"
+-        @pointerdown.left.self.prevent
++        @pointerdown.left.self="onPointerdown"
+     >
+         <slot />
+     </div>
+diff --git a/src/components/select/SelectTrigger.vue b/src/components/select/SelectTrigger.vue
+index 1549c04dd..dd37bb9a3 100644
+--- a/src/components/select/SelectTrigger.vue
++++ b/src/components/select/SelectTrigger.vue
+@@ -12,6 +12,7 @@ import { computed, useAttrs } from "vue";
+ import {
+     SelectIcon as RekaSelectIcon,
+     SelectTrigger as RekaSelectTrigger,
++    injectSelectRootContext,
+ } from "reka-ui";
+ import { ChevronDown } from "@lucide/vue";
+ import { cn } from "../_shared/class-names";
+@@ -29,6 +30,23 @@ const props = defineProps<SelectTriggerProps>();
+ 
+ const attrs = useAttrs();
+ const openInput = injectSelectOpenInput();
++const root = injectSelectRootContext();
++
++/* A touch press on the trigger of an open Select closes it (RU-72, MEASURE-8 H2). reka's
++ * trigger cancels a touch pointerdown and only opens on the pointerup, and its outside
++ * dismissal waits for the click a touch press ends in; WebKit sends no click after a
++ * cancelled touch pointerdown, so a second tap on the trigger left the list open there.
++ * The close runs after every pointerup handler, so reka's open on the same pointerup
++ * cannot undo it. */
++let closeOnUp = false;
++function onPointerdown(event: PointerEvent): void {
++    openInput?.mark("pointer");
++    closeOnUp = event.pointerType === "touch" && root.open.value;
++}
++function onPointerup(event: PointerEvent): void {
++    if (closeOnUp && event.pointerType === "touch") queueMicrotask(() => root.onOpenChange(false));
++    closeOnUp = false;
++}
+ const forwardedAttrs = computed(() => {
+     const { reference: _reference, ...forwarded } = fixedHostAttrs(attrs);
+     return forwarded;
+@@ -49,7 +67,8 @@ const forwardedAttrs = computed(() => {
+         data-slot="select-trigger"
+         v-bind="forwardedAttrs"
+         :disabled="props.disabled"
+-        @pointerdown="openInput?.mark('pointer')"
++        @pointerdown="onPointerdown"
++        @pointerup="onPointerup"
+         @keydown="openInput?.mark('keyboard')"
+         :class="
+             cn(

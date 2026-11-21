@@ -4,6 +4,7 @@ import {
     SelectTrigger,
     SelectIcon,
     PopoverTrigger,
+    injectSelectRootContext,
 } from "reka-ui";
 import { ChevronDown } from "@lucide/vue";
 import { cn } from "../_shared/class-names";
@@ -78,6 +79,20 @@ const SeatHost: FunctionalComponent = (_, { attrs, slots }) => {
 };
 SeatHost.inheritAttrs = false;
 
+/* RU-72: a touch press on an open Select's trigger closes it. reka's trigger cancels a touch
+   pointerdown, and its outside dismissal waits for the click the press ends in, which WebKit
+   does not send after the cancelled press (MEASURE-8 H2), so a second tap left the list open
+   there. The close runs after reka's own pointerup, which asks to open. */
+const select = props.for === "select" ? injectSelectRootContext(null) : null;
+let closeOnUp = false;
+function onSelectPointerdown(event: PointerEvent): void {
+    closeOnUp = event.pointerType === "touch" && !!select?.open.value;
+}
+function onSelectPointerup(event: PointerEvent): void {
+    if (closeOnUp && event.pointerType === "touch") queueMicrotask(() => select?.onOpenChange(false));
+    closeOnUp = false;
+}
+
 const triggerClass = computed(() =>
     cn(
         "dock-trigger",
@@ -95,6 +110,8 @@ const triggerClass = computed(() =>
         v-bind="{ ...$attrs, ...seat }"
         as-child
         :class="triggerClass"
+        @pointerdown="onSelectPointerdown"
+        @pointerup="onSelectPointerup"
     >
         <SeatHost>
             <slot />
