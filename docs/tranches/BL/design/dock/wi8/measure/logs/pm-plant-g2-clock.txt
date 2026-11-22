@@ -1,0 +1,23 @@
+== g2-clock 2026-11-22 02:39:03 (load { 6.22 6.74 7.71 })
+OK   g2-clock
+applied g2-clock - G-2: the loop's clock started at the trigger (the first frame advances 33 ms)
+-- chromium 02:39:07 (load { 6.36 6.76 7.71 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+== p3-fold-pill-fine chromium 02:39:07 load { 6.36 6.76 7.71 }
+{"cell":"1440-fine-light","rows":"p3-fold-pill-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":229,"firstChange":230.4,"lastChange":1319.5,"screencast":null,"consoleErrors":0}
+chromium rc=0
+-- webkit 02:39:14 (load { 6.36 6.75 7.70 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+== p3-fold-pill-fine webkit 02:39:14 load { 6.36 6.75 7.70 }
+{"cell":"1440-fine-light","rows":"p3-fold-pill-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":172,"firstChange":230,"lastChange":1335,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g2-clock
+tree clean: 677 src files equal HEAD
+-- judge
+-- judge8 chromium
+p3-fold-pill-fine | wi8 | chromium | 1440-fine-light | load 6.36/6.74 | f27-f73 347ms | L 76px first 15.6% max 15.6% last 0.08px; R 76px first 15.6% max 15.6% last 0.08px | op60 0.42 | out 0px | FAIL: L from rest 15.6% > 1.4% at 7.9 ms; L step 15.6% > 7.6% (f28, 7.9 ms); R from rest 15.6% > 1.4% at 7.9 ms; R step 15.6% > 7.6% (f28, 7.9 ms); opacity 0.42 in 60 Hz at summary f27; summary fade lasts 55.4 ms interpolated (bound 66.7 ms)
+p3-fold-pill-fine | wi8 | chromium | 1440-fine-light | load 6.36/6.74 | f126-f172 348ms | L 76px first 16% max 16% last 0.06px; R 76px first 16% max 16% last 0.06px | op60 0.37 | out 0px | FAIL: L from rest 16.0% > 1.2% at 7.2 ms; L step 16.0% > 6.9% (f127, 7.2 ms); R from rest 16.0% > 1.2% at 7.2 ms; R step 16.0% > 6.9% (f127, 7.2 ms); full fade lasts 56.2 ms interpolated (bound 66.7 ms); seat#0 fade lasts 56.2 ms interpolated (bound 66.7 ms) (+3)
+-- judge8 webkit
+p3-fold-pill-fine | wi8 | webkit | 1440-fine-light | load 6.36/6.36 | f21-f55 348ms | L 76px first 16% max 16% last 0.13px; R 76px first 16% max 16% last 0.12px | op60 0.29 | out 0px | FAIL: L from rest 16.0% > 2.2% at 10.0 ms; L step 16.0% > 9.6% (f22, 10.0 ms); R from rest 16.0% > 2.2% at 10.0 ms; R step 16.0% > 9.6% (f22, 10.0 ms); summary fade lasts 60 ms interpolated (bound 66.7 ms)
+p3-fold-pill-fine | wi8 | webkit | 1440-fine-light | load 6.36/6.36 | f96-f130 349ms | L 76px first 16% max 16% last 0.02px; R 76px first 16% max 16% last 0.01px | op60 0.29 | out 0px | FAIL: L from rest 16.0% > 2.2% at 10.0 ms; L step 16.0% > 9.6% (f97, 10.0 ms); R from rest 16.0% > 2.2% at 10.0 ms; R step 16.0% > 9.6% (f97, 10.0 ms); full fade lasts 58.3 ms interpolated (bound 66.7 ms); seat#0 fade lasts 58.3 ms interpolated (bound 66.7 ms) (+3)
+== done 2026-11-22 02:39:22

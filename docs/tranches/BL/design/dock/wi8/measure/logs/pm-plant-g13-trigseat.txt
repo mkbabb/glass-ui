@@ -1,0 +1,15 @@
+== g13-trigseat 2026-11-22 03:21:05 (load { 8.26 11.67 11.74 })
+OK   g13-trigseat
+applied g13-trigseat - step 7: a DockTrigger in a run no longer takes the run's seat height and padding
+-- chromium 03:21:09 (load { 8.26 11.67 11.74 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"engine":"chromium","tag":"pm-g13-trigseat","pass":false,"trig":{"1440 fine":{"trigger":[66.23,35.91],"seat":[40,40],"padInline":8,"tabPad":12,"pass":false},"390 coarse":{"trigger":[61.45,32],"seat":[44,44],"padInline":8,"tabPad":12,"pass":false}},"bad":["trig 1440 fine: {\"trigger\":[66.23,35.91],\"seat\":[40,40],\"padInline\":8,\"tabPad\":12,\"pass\":false}","trig 390 coarse: {\"trigger\":[61.45,32],\"seat\":[44,44],\"padInline\":8,\"tabPad\":12,\"pass\":false}"]}
+chromium rc=0
+-- webkit 03:21:25 (load { 8.84 11.57 11.70 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for the 'webkit' lock
+{"engine":"webkit","tag":"pm-g13-trigseat","pass":false,"trig":{"1440 fine":{"trigger":[66.25,35.89],"seat":[40,40],"padInline":8,"tabPad":12,"pass":false},"390 coarse":{"trigger":[61.45,32],"seat":[44,44],"padInline":8,"tabPad":12,"pass":false}},"bad":["trig 1440 fine: {\"trigger\":[66.25,35.89],\"seat\":[40,40],\"padInline\":8,\"tabPad\":12,\"pass\":false}","trig 390 coarse: {\"trigger\":[61.45,32],\"seat\":[44,44],\"padInline\":8,\"tabPad\":12,\"pass\":false}"]}
+webkit rc=0
+reverted g13-trigseat
+tree clean: 677 src files equal HEAD
+== done 2026-11-22 03:22:58

@@ -1,0 +1,19 @@
+== g2-whole-length 2026-11-22 02:42:32 (load { 9.11 7.94 8.01 })
+OK   g2-whole-length
+applied g2-whole-length - G-2 (RU-27): a length written in place of the percentage (the carrier caps the run at n pitches in px)
+-- chromium 02:42:36 (load { 8.94 7.93 8.00 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+== p5-many-lift-fine chromium 02:42:36 load { 8.94 7.93 8.00 }
+{"cell":"1440-fine-light","rows":"p5-many-lift-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":263,"firstChange":54.6,"lastChange":1701.7,"screencast":null,"consoleErrors":0}
+chromium rc=0
+-- webkit 02:42:44 (load { 8.33 7.83 7.96 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+== p5-many-lift-fine webkit 02:42:44 load { 8.33 7.83 7.96 }
+{"cell":"1440-fine-light","rows":"p5-many-lift-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":477,"firstChange":61,"lastChange":1857,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g2-whole-length
+tree clean: 677 src files equal HEAD
+-- judge
+p5-many-lift-fine | chromium | 1440-fine-light | curve 0.01 | held 0 | whole {"row":262,"fits":false,"whole":6,"of":7,"partial":[],"absent":1,"ext":304,"over":50,"room":304,"offset":0,"focused":false} | lift null | cap plate 0 hidden 0 | FAIL: the host's cap lifted: every seat shows never after the change (bound 2)
+p5-many-lift-fine | webkit | 1440-fine-light | curve 0 | held 0 | whole {"row":476,"fits":false,"whole":6,"of":7,"partial":[],"absent":1,"ext":304,"over":50,"room":304,"offset":0,"focused":false} | lift null | cap plate 0 hidden 0 | FAIL: the host's cap lifted: every seat shows never after the change (bound 2)
+== done 2026-11-22 02:42:56

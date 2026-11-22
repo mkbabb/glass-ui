@@ -1,0 +1,373 @@
+== cap 2026-11-22 04:46:35 (load { 8.40 9.87 9.67 })
+applied g14-cap - G-14 cap: a cut-cap keyframe restored on the plate
+-- chromium 04:46:35 (load { 8.40 9.87 9.67 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 14 tests using 1 worker
+
+  ✘   1 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its mid seals round (5.0s)
+  ✘   2 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its end seals round (4.5s)
+  ✘   3 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 1440: a collapse from a run scrolled to its end seals round (4.5s)
+  ✘   4 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 390: a collapse from a run scrolled to its mid seals round (4.5s)
+  ✘   5 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 390: a collapse from a run scrolled to its end seals round (4.5s)
+  ✘   6 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 1440: a collapse from a run scrolled to its end seals round (4.5s)
+  ✘   7 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2603:1 › m3 O-160 no cut-cap or clip keyframe carries a percentage radius (57ms)
+  ✘   8 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its mid seals round (4.5s)
+  ✘   9 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its end seals round (4.5s)
+  ✘  10 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 1440: a collapse from a run scrolled to its end seals round (4.5s)
+  ✘  11 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 390: a collapse from a run scrolled to its mid seals round (4.5s)
+  ✘  12 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 390: a collapse from a run scrolled to its end seals round (4.5s)
+  ✘  13 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 1440: a collapse from a run scrolled to its end seals round (4.5s)
+  ✘  14 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2603:1 › m3 O-160 no cut-cap or clip keyframe carries a percentage radius (61ms)
+
+
+  1) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its mid seals round 
+
+    Error: last 20% of the collapse, frame 0: corner 3.35544e+07px is one length ({"w":60,"h":60,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      1415 |     const half = Math.min(f.w, f.h) / 2;
+      1416 |     for (const r of f.radii) {
+    > 1417 |         expect(r, `${at}: corner ${r} is one length (${JSON.stringify(f)})`).toMatch(/^[\d.]+px$/);
+           |                                                                              ^
+      1418 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the extent ${half} (${JSON.stringify(f)})`).toBeLessThanOrEqual(0.5);
+      1419 |     }
+      1420 | }
+        at expectCircleFrame (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:1417:78)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:1436:82
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-7--bdcfd-lled-to-its-mid-seals-round-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its end seals round 
+
+    Error: last 20% of the collapse, frame 0: corner 3.35544e+07px is one length ({"w":60,"h":60,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      1415 |     const half = Math.min(f.w, f.h) / 2;
+      1416 |     for (const r of f.radii) {
+    > 1417 |         expect(r, `${at}: corner ${r} is one length (${JSON.stringify(f)})`).toMatch(/^[\d.]+px$/);
+           |                                                                              ^
+      1418 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the extent ${half} (${JSON.stringify(f)})`).toBeLessThanOrEqual(0.5);
+      1419 |     }
+      1420 | }
+        at expectCircleFrame (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:1417:78)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:1436:82
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-7--c718c-lled-to-its-end-seals-round-chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 1440: a collapse from a run scrolled to its end seals round 
+
+    Error: last 20% of the collapse, frame 0: corner 3.35544e+07px is one length ({"w":60,"h":60,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      1415 |     const half = Math.min(f.w, f.h) / 2;
+      1416 |     for (const r of f.radii) {
+    > 1417 |         expect(r, `${at}: corner ${r} is one length (${JSON.stringify(f)})`).toMatch(/^[\d.]+px$/);
+           |                                                                              ^
+      1418 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the extent ${half} (${JSON.stringify(f)})`).toBeLessThanOrEqual(0.5);
+      1419 |     }
+      1420 | }
+        at expectCircleFrame (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:1417:78)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:1436:82
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-7--b9986-lled-to-its-end-seals-round-chromium-headless-new/error-context.md
+
+  4) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 390: a collapse from a run scrolled to its mid seals round 
+
+    Error: last 20% of the collapse, frame 0: corner 3.35544e+07px is one length ({"w":56,"h":56,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      1415 |     const half = Math.min(f.w, f.h) / 2;
+      1416 |     for (const r of f.radii) {
+    > 1417 |         expect(r, `${at}: corner ${r} is one length (${JSON.stringify(f)})`).toMatch(/^[\d.]+px$/);
+           |                                                                              ^
+      1418 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the extent ${half} (${JSON.stringify(f)})`).toBeLessThanOrEqual(0.5);
+      1419 |     }
+      1420 | }
+        at expectCircleFrame (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:1417:78)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:1436:82
+
+    Error Context: tests-visual/test-results/release-10-1-5-m1-at-390-a-279dc-lled-to-its-mid-seals-round-chromium-headless-new/error-context.md
+
+  5) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 390: a collapse from a run scrolled to its end seals round 
+
+    Error: last 20% of the collapse, frame 0: corner 3.35544e+07px is one length ({"w":56,"h":56,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      1415 |     const half = Math.min(f.w, f.h) / 2;
+      1416 |     for (const r of f.radii) {
+    > 1417 |         expect(r, `${at}: corner ${r} is one length (${JSON.stringify(f)})`).toMatch(/^[\d.]+px$/);
+           |                                                                              ^
+      1418 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the extent ${half} (${JSON.stringify(f)})`).toBeLessThanOrEqual(0.5);
+      1419 |     }
+      1420 | }
+        at expectCircleFrame (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:1417:78)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:1436:82
+
+    Error Context: tests-visual/test-results/release-10-1-5-m1-at-390-a-8d656-lled-to-its-end-seals-round-chromium-headless-new/error-context.md
+
+  6) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 1440: a collapse from a run scrolled to its end seals round 
+
+    Error: last 20% of the collapse, frame 0: corner 3.35544e+07px is one length ({"w":56,"h":56,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      1415 |     const half = Math.min(f.w, f.h) / 2;
+      1416 |     for (const r of f.radii) {
+    > 1417 |         expect(r, `${at}: corner ${r} is one length (${JSON.stringify(f)})`).toMatch(/^[\d.]+px$/);
+           |                                                                              ^
+      1418 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the extent ${half} (${JSON.stringify(f)})`).toBeLessThanOrEqual(0.5);
+      1419 |     }
+      1420 | }
+        at expectCircleFrame (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:1417:78)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:1436:82
+
+    Error Context: tests-visual/test-results/release-10-1-5-m1-at-1440--7328f-lled-to-its-end-seals-round-chromium-headless-new/error-context.md
+
+  7) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2603:1 › m3 O-160 no cut-cap or clip keyframe carries a percentage radius 
+
+    Error: no cut-cap keyframe
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      2607 |     // W-I.8 R-1 (RU-13): the cut cap's four keyframes leave with its writes to the plate;
+      2608 |     // the run's four clip keyframes stay, and none of them carries a percentage.
+    > 2609 |     expect(frames.filter(([, n]) => n!.startsWith("gl-dock-cap-")).length, "no cut-cap keyframe").toBe(0);
+           |                                                                                                   ^
+      2610 |     expect(frames.filter(([, n]) => n!.startsWith("gl-dock-clip-")).length, "the run's four clip keyframes").toBe(4);
+      2611 |     for (const [, name, body] of frames) {
+      2612 |         for (const decl of body!.matchAll(/radius:\s*([^;]+);/g)) expect(decl[1], `${name}`).not.toMatch(/%/);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:2609:99
+
+    Error Context: tests-visual/test-results/release-10-1-5-m3-O-160-no-4feb5-carries-a-percentage-radius-chromium-headless-new/error-context.md
+
+  8) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its mid seals round 
+
+    Error: last 20% of the collapse, frame 0: corner 3.35544e+07px is one length ({"w":60,"h":60,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      1415 |     const half = Math.min(f.w, f.h) / 2;
+      1416 |     for (const r of f.radii) {
+    > 1417 |         expect(r, `${at}: corner ${r} is one length (${JSON.stringify(f)})`).toMatch(/^[\d.]+px$/);
+           |                                                                              ^
+      1418 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the extent ${half} (${JSON.stringify(f)})`).toBeLessThanOrEqual(0.5);
+      1419 |     }
+      1420 | }
+        at expectCircleFrame (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:1417:78)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:1436:82
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-7--bdcfd-lled-to-its-mid-seals-round-coarse-touch/error-context.md
+
+  9) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its end seals round 
+
+    Error: last 20% of the collapse, frame 0: corner 3.35544e+07px is one length ({"w":60,"h":60,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      1415 |     const half = Math.min(f.w, f.h) / 2;
+      1416 |     for (const r of f.radii) {
+    > 1417 |         expect(r, `${at}: corner ${r} is one length (${JSON.stringify(f)})`).toMatch(/^[\d.]+px$/);
+           |                                                                              ^
+      1418 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the extent ${half} (${JSON.stringify(f)})`).toBeLessThanOrEqual(0.5);
+      1419 |     }
+      1420 | }
+        at expectCircleFrame (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:1417:78)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:1436:82
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-7--c718c-lled-to-its-end-seals-round-coarse-touch/error-context.md
+
+  10) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 1440: a collapse from a run scrolled to its end seals round 
+
+    Error: last 20% of the collapse, frame 0: corner 3.35544e+07px is one length ({"w":60,"h":60,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      1415 |     const half = Math.min(f.w, f.h) / 2;
+      1416 |     for (const r of f.radii) {
+    > 1417 |         expect(r, `${at}: corner ${r} is one length (${JSON.stringify(f)})`).toMatch(/^[\d.]+px$/);
+           |                                                                              ^
+      1418 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the extent ${half} (${JSON.stringify(f)})`).toBeLessThanOrEqual(0.5);
+      1419 |     }
+      1420 | }
+        at expectCircleFrame (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:1417:78)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:1436:82
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-7--b9986-lled-to-its-end-seals-round-coarse-touch/error-context.md
+
+  11) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 390: a collapse from a run scrolled to its mid seals round 
+
+    Error: last 20% of the collapse, frame 0: corner 3.35544e+07px is one length ({"w":60,"h":60,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      1415 |     const half = Math.min(f.w, f.h) / 2;
+      1416 |     for (const r of f.radii) {
+    > 1417 |         expect(r, `${at}: corner ${r} is one length (${JSON.stringify(f)})`).toMatch(/^[\d.]+px$/);
+           |                                                                              ^
+      1418 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the extent ${half} (${JSON.stringify(f)})`).toBeLessThanOrEqual(0.5);
+      1419 |     }
+      1420 | }
+        at expectCircleFrame (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:1417:78)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:1436:82
+
+    Error Context: tests-visual/test-results/release-10-1-5-m1-at-390-a-279dc-lled-to-its-mid-seals-round-coarse-touch/error-context.md
+
+  12) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 390: a collapse from a run scrolled to its end seals round 
+
+    Error: last 20% of the collapse, frame 0: corner 3.35544e+07px is one length ({"w":60,"h":60,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      1415 |     const half = Math.min(f.w, f.h) / 2;
+      1416 |     for (const r of f.radii) {
+    > 1417 |         expect(r, `${at}: corner ${r} is one length (${JSON.stringify(f)})`).toMatch(/^[\d.]+px$/);
+           |                                                                              ^
+      1418 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the extent ${half} (${JSON.stringify(f)})`).toBeLessThanOrEqual(0.5);
+      1419 |     }
+      1420 | }
+        at expectCircleFrame (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:1417:78)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:1436:82
+
+    Error Context: tests-visual/test-results/release-10-1-5-m1-at-390-a-8d656-lled-to-its-end-seals-round-coarse-touch/error-context.md
+
+  13) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 1440: a collapse from a run scrolled to its end seals round 
+
+    Error: last 20% of the collapse, frame 0: corner 3.35544e+07px is one length ({"w":60,"h":60,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      1415 |     const half = Math.min(f.w, f.h) / 2;
+      1416 |     for (const r of f.radii) {
+    > 1417 |         expect(r, `${at}: corner ${r} is one length (${JSON.stringify(f)})`).toMatch(/^[\d.]+px$/);
+           |                                                                              ^
+      1418 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the extent ${half} (${JSON.stringify(f)})`).toBeLessThanOrEqual(0.5);
+      1419 |     }
+      1420 | }
+        at expectCircleFrame (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:1417:78)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:1436:82
+
+    Error Context: tests-visual/test-results/release-10-1-5-m1-at-1440--7328f-lled-to-its-end-seals-round-coarse-touch/error-context.md
+
+  14) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2603:1 › m3 O-160 no cut-cap or clip keyframe carries a percentage radius 
+
+    Error: no cut-cap keyframe
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      2607 |     // W-I.8 R-1 (RU-13): the cut cap's four keyframes leave with its writes to the plate;
+      2608 |     // the run's four clip keyframes stay, and none of them carries a percentage.
+    > 2609 |     expect(frames.filter(([, n]) => n!.startsWith("gl-dock-cap-")).length, "no cut-cap keyframe").toBe(0);
+           |                                                                                                   ^
+      2610 |     expect(frames.filter(([, n]) => n!.startsWith("gl-dock-clip-")).length, "the run's four clip keyframes").toBe(4);
+      2611 |     for (const [, name, body] of frames) {
+      2612 |         for (const decl of body!.matchAll(/radius:\s*([^;]+);/g)) expect(decl[1], `${name}`).not.toMatch(/%/);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:2609:99
+
+    Error Context: tests-visual/test-results/release-10-1-5-m3-O-160-no-4feb5-carries-a-percentage-radius-coarse-touch/error-context.md
+
+  14 failed
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its mid seals round 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its end seals round 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 1440: a collapse from a run scrolled to its end seals round 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 390: a collapse from a run scrolled to its mid seals round 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 390: a collapse from a run scrolled to its end seals round 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 1440: a collapse from a run scrolled to its end seals round 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:2603:1 › m3 O-160 no cut-cap or clip keyframe carries a percentage radius 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its mid seals round 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its end seals round 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 1440: a collapse from a run scrolled to its end seals round 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 390: a collapse from a run scrolled to its mid seals round 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 390: a collapse from a run scrolled to its end seals round 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 1440: a collapse from a run scrolled to its end seals round 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:2603:1 › m3 O-160 no cut-cap or clip keyframe carries a percentage radius 
+chromium rc=1
+-- webkit-b 04:47:42 (load { 8.66 9.64 9.59 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for the 'webkit' lock
+
+Running 7 tests using 1 worker
+
+  ✓  1 [webkit] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its mid seals round (8.0s)
+  ✓  2 [webkit] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its end seals round (7.5s)
+  ✓  3 [webkit] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 1440: a collapse from a run scrolled to its end seals round (7.4s)
+  ✓  4 [webkit] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 390: a collapse from a run scrolled to its mid seals round (7.4s)
+  ✓  5 [webkit] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 390: a collapse from a run scrolled to its end seals round (7.4s)
+  ✓  6 [webkit] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 1440: a collapse from a run scrolled to its end seals round (7.4s)
+  ✘  7 [webkit] › tests-visual/release-10-1-5.spec.ts:2603:1 › m3 O-160 no cut-cap or clip keyframe carries a percentage radius (224ms)
+
+
+  1) [webkit] › tests-visual/release-10-1-5.spec.ts:2603:1 › m3 O-160 no cut-cap or clip keyframe carries a percentage radius 
+
+    Error: no cut-cap keyframe
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      2607 |     // W-I.8 R-1 (RU-13): the cut cap's four keyframes leave with its writes to the plate;
+      2608 |     // the run's four clip keyframes stay, and none of them carries a percentage.
+    > 2609 |     expect(frames.filter(([, n]) => n!.startsWith("gl-dock-cap-")).length, "no cut-cap keyframe").toBe(0);
+           |                                                                                                   ^
+      2610 |     expect(frames.filter(([, n]) => n!.startsWith("gl-dock-clip-")).length, "the run's four clip keyframes").toBe(4);
+      2611 |     for (const [, name, body] of frames) {
+      2612 |         for (const decl of body!.matchAll(/radius:\s*([^;]+);/g)) expect(decl[1], `${name}`).not.toMatch(/%/);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:2609:99
+
+    Error Context: tests-visual/test-results/release-10-1-5-m3-O-160-no-4feb5-carries-a-percentage-radius-webkit/error-context.md
+
+  1 failed
+    [webkit] › tests-visual/release-10-1-5.spec.ts:2603:1 › m3 O-160 no cut-cap or clip keyframe carries a percentage radius 
+  6 passed (47.2s)
+webkit-b rc=1
+reverted g14-cap
+tree clean: 677 src files equal HEAD
+== done 2026-11-22 04:49:15

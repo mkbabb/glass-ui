@@ -1,0 +1,31 @@
+== g2-fitwhole 2026-11-22 02:41:36 (load { 8.70 7.57 7.88 })
+OK   g2-fitwhole
+applied g2-fitwhole - G-2/G-13 (RU-26): fitWhole restored as built (the window read as clientWidth less two reserves, the run capped by a length)
+-- chromium 02:41:40 (load { 8.81 7.61 7.90 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+== p3-fold-pill-fine chromium 02:41:40 load { 8.81 7.61 7.90 }
+{"cell":"1440-fine-light","rows":"p3-fold-pill-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":237,"firstChange":235.4,"lastChange":1408,"screencast":null,"consoleErrors":0}
+== p3-fold-ctl6-c360 chromium 02:41:43 load { 8.81 7.61 7.90 }
+{"cell":"360-coarse-light","rows":"p3-fold-ctl6-c360.wi8.chromium.360-coarse-light.rows.json","strips":[],"frames":225,"firstChange":91.6,"lastChange":1350.2,"screencast":null,"consoleErrors":0}
+== p3-fold-transport-rm chromium 02:41:46 load { 8.90 7.65 7.91 }
+{"cell":"1440-fine-light-rm","rows":"p3-fold-transport-rm.wi8.chromium.1440-fine-light-rm.rows.json","strips":[],"frames":168,"firstChange":231.1,"lastChange":863.2,"screencast":null,"consoleErrors":0}
+chromium rc=0
+-- webkit 02:41:53 (load { 9.07 7.70 7.93 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+== p3-fold-pill-fine webkit 02:41:53 load { 9.07 7.70 7.93 }
+{"cell":"1440-fine-light","rows":"p3-fold-pill-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":181,"firstChange":229,"lastChange":1425,"screencast":null,"consoleErrors":0}
+== p3-fold-ctl6-c360 webkit 02:41:56 load { 10.02 7.93 8.00 }
+{"cell":"360-coarse-light","rows":"p3-fold-ctl6-c360.wi8.webkit.360-coarse-light.rows.json","strips":[],"frames":171,"firstChange":65,"lastChange":1327,"screencast":null,"consoleErrors":0}
+== p3-fold-transport-rm webkit 02:42:00 load { 9.78 7.91 8.00 }
+{"cell":"1440-fine-light-rm","rows":"p3-fold-transport-rm.wi8.webkit.1440-fine-light-rm.rows.json","strips":[],"frames":127,"firstChange":242,"lastChange":882,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g2-fitwhole
+tree clean: 677 src files equal HEAD
+-- judge
+p3-fold-ctl6-c360 | chromium | 360-coarse-light | curve 0.02 | held 0 | whole {"row":119,"fits":true,"whole":5,"of":6,"partial":[],"absent":1,"ext":264,"over":48,"room":344,"offset":0,"focused":false} | touch true | FAIL: at open rest: row 119: a run that fits shows 5 of 6 seats whole (partial [])
+p3-fold-ctl6-c360 | webkit | 360-coarse-light | curve 0.02 | held 0 | whole {"row":88,"fits":true,"whole":5,"of":6,"partial":[],"absent":1,"ext":264,"over":48,"room":344,"offset":0,"focused":false} | touch true | FAIL: at open rest: row 88: a run that fits shows 5 of 6 seats whole (partial [])
+p3-fold-pill-fine | chromium | 1440-fine-light | curve 32 | held 0 | whole {"row":134,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":164,"over":44,"room":1424,"offset":0,"focused":false} | FAIL: content 32.00 px outside the plate's curve (seat#3 row 78 (rest))
+p3-fold-pill-fine | webkit | 1440-fine-light | curve 32 | held 0 | whole {"row":101,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":164,"over":44,"room":1424,"offset":0,"focused":false} | FAIL: content 32.00 px outside the plate's curve (seat#3 row 59 (rest))
+p3-fold-transport-rm | chromium | 1440-fine-light-rm | curve 32 | held 0 | whole {"row":98,"fits":true,"whole":2,"of":2,"partial":[],"absent":0,"ext":118,"over":44,"room":1424,"offset":0,"focused":false} | FAIL: content 32.00 px outside the plate's curve (seat#1 row 43 (rest))
+p3-fold-transport-rm | webkit | 1440-fine-light-rm | curve 32 | held 0 | whole {"row":74,"fits":true,"whole":2,"of":2,"partial":[],"absent":0,"ext":118,"over":44,"room":1424,"offset":0,"focused":false} | FAIL: content 32.00 px outside the plate's curve (seat#1 row 34 (rest))
+== done 2026-11-22 02:42:07

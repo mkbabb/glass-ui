@@ -1,0 +1,18 @@
+== g14-rmclock 2026-11-21 23:10:58 (load { 21.60 20.15 17.77 })
+OK   g14-rmclock
+applied g14-rmclock - G-14: reduced motion's clocks 300 ms, not 100 (a restated unit witness)
+ ✓ tests/components/custom/dock/GlassDock.motion-parity.test.ts > GlassDock isTransitioning — spring-settle source > a stray transitionend is INERT — only the spring's own settle clears the flag 49ms
+ ✓ tests/components/custom/dock/GlassDock.motion-parity.test.ts > GlassDock isTransitioning — spring-settle source > rapid A→B→A never stale-clears: the flag stays true across the chain, false at settle 16ms
+ ✓ tests/components/custom/dock/GlassDock.motion-parity.test.ts > GlassDock isTransitioning — spring-settle source > an exact-origin reversal does not fabricate a busy window 9ms
+ ✓ tests/components/custom/dock/GlassDock.motion-parity.test.ts > GlassDock isTransitioning — spring-settle source > reverses from the live plate position without reseating its expandedness 16ms
+ × tests/components/custom/dock/GlassDock.motion-parity.test.ts > GlassDock isTransitioning — spring-settle source > settles an active morph immediately when reduced motion becomes preferred 15ms
+   → expected true to be false // Object.is equality
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  tests/components/custom/dock/GlassDock.motion-parity.test.ts > GlassDock isTransitioning — spring-settle source > settles an active morph immediately when reduced motion becomes preferred
+AssertionError: expected true to be false // Object.is equality
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+unit rc=0
+reverted g14-rmclock
+tree clean: 677 src files equal HEAD
+== done 2026-11-21 23:11:09

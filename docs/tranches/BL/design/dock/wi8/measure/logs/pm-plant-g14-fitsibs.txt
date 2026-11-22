@@ -1,0 +1,15 @@
+== g14-fitsibs 2026-11-22 03:30:40 (load { 7.42 8.74 10.10 })
+OK   g14-fitsibs
+applied g14-fitsibs - RU-54 (C6-M8): the root's other regions dropped from the key
+-- chromium 03:30:44 (load { 7.42 8.74 10.10 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"engine":"chromium","tag":"pm-g14-fitsibs","sweep":{"flip":363,"pass":true,"bad":[],"dirBad":[]},"rest":{"cells":[{"w":362,"writes":0},{"w":363,"writes":0},{"w":364,"writes":0}],"pass":true},"pwords":{"natural":350,"crossed":4,"pass":false,"bad":["364 long: fits true, span 136, lifted 33, persistent 285","362 long: fits true, span 136, lifted 31, persistent 285"]}}
+chromium rc=0
+-- webkit 03:31:50 (load { 10.62 9.36 10.22 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for the 'webkit' lock
+{"engine":"webkit","tag":"pm-g14-fitsibs","sweep":{"flip":363,"pass":true,"bad":[],"dirBad":[]},"rest":{"cells":[{"w":362,"writes":0},{"w":363,"writes":0},{"w":364,"writes":0}],"pass":true},"pwords":{"natural":350,"crossed":4,"pass":false,"bad":["364 long: fits true, span 136, lifted 33, persistent 285","362 long: fits true, span 136, lifted 31, persistent 285"]}}
+webkit rc=0
+reverted g14-fitsibs
+tree clean: 677 src files equal HEAD
+== done 2026-11-22 03:34:34

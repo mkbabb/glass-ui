@@ -1,0 +1,36 @@
+== g12-scale 2026-11-22 03:15:29 (load { 13.20 13.63 11.97 })
+OK   g12-scale
+-- the tree's src as built
+pass · no scale on .glass-dock or its regions
+pass · no clip-path on a plate at rest
+pass · no box-shadow on .glass-dock
+pass · one box-shadow value for the plate across both postures, reading --dock-shadow-color (and no --dock-halo) · src/components/dock/styles/dock.css: .dock-plate
+pass · no filter: url(, <filter or feGaussianBlur under dock
+pass · no size, margin or padding in a dock transition, @keyframes or .animate(
+pass · no var(--dock-expand-t) or var(--dock-morph-t) in a size, padding, inset, radius or margin
+pass · no border-radius on the plate in a scroll-timeline animation
+pass · --dock-morph-origin, --dock-size-scale, --dock-pane-shift, --dock-rest-t absent
+pass · no [data-glyph selector under dock
+pass · no millisecond literal for the intent or the linger in useDockState.ts
+pass · no rule of glass reads --dock-expanded-px, --dock-collapsed-px or --dock-plate-cross-px
+pass · [data-morphing], --dock-morph-t and --dock-expand-t present
+UNREAD · __dockHold absent from the built bundle · no library build given
+applied g12-scale - G-12: a scale on .glass-dock
+-- under the plant
+FAIL · no scale on .glass-dock or its regions · src/components/dock/styles/shell.css: .glass-dock
+pass · no clip-path on a plate at rest
+pass · no box-shadow on .glass-dock
+pass · one box-shadow value for the plate across both postures, reading --dock-shadow-color (and no --dock-halo) · src/components/dock/styles/dock.css: .dock-plate
+pass · no filter: url(, <filter or feGaussianBlur under dock
+pass · no size, margin or padding in a dock transition, @keyframes or .animate(
+pass · no var(--dock-expand-t) or var(--dock-morph-t) in a size, padding, inset, radius or margin
+pass · no border-radius on the plate in a scroll-timeline animation
+pass · --dock-morph-origin, --dock-size-scale, --dock-pane-shift, --dock-rest-t absent
+pass · no [data-glyph selector under dock
+pass · no millisecond literal for the intent or the linger in useDockState.ts
+pass · no rule of glass reads --dock-expanded-px, --dock-collapsed-px or --dock-plate-cross-px
+pass · [data-morphing], --dock-morph-t and --dock-expand-t present
+UNREAD · __dockHold absent from the built bundle · no library build given
+reverted g12-scale
+tree clean: 677 src files equal HEAD
+== done 2026-11-22 03:15:29

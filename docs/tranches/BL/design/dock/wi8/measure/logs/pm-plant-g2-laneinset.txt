@@ -1,0 +1,23 @@
+== g2-laneinset 2026-11-22 02:43:17 (load { 9.06 8.02 8.02 })
+OK   g2-laneinset
+applied g2-laneinset - G-2 (RU-25): a lane inset 12 px inside the plate's edge on a side with no neighbour
+-- chromium 02:43:21 (load { 8.81 7.98 8.01 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+== p3-fold-pill-fine chromium 02:43:21 load { 8.81 7.98 8.01 }
+{"cell":"1440-fine-light","rows":"p3-fold-pill-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":225,"firstChange":245.7,"lastChange":1406,"screencast":null,"consoleErrors":0}
+chromium rc=0
+-- webkit 02:43:28 (load { 9.95 8.23 8.10 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+== p3-fold-pill-fine webkit 02:43:28 load { 9.95 8.23 8.10 }
+{"cell":"1440-fine-light","rows":"p3-fold-pill-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":197,"firstChange":233,"lastChange":1592,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g2-laneinset
+tree clean: 677 src files equal HEAD
+-- judge
+-- judge8 chromium
+p3-fold-pill-fine | wi8 | chromium | 1440-fine-light | load 8.81/9.95 | f30-f76 380ms | L 76px first 1.5% max 12.5% last 0.08px; R 76px first 1.5% max 12.5% last 0.08px | op60 0.26 | out 0px | FAIL: a region's clip is off its lane in 45 region-rows, up to 12.02 px (layers f52)
+p3-fold-pill-fine | wi8 | chromium | 1440-fine-light | load 8.81/9.95 | f126-f174 382ms | L 76px first 1.4% max 7.2% last 0.05px; R 76px first 1.4% max 7.1% last 0.04px | op60 0.23 | out 0px | FAIL: a region's clip is off its lane in 47 region-rows, up to 12.00 px (layers f161)
+-- judge8 webkit
+p3-fold-pill-fine | wi8 | webkit | 1440-fine-light | load 10.03/10.03 | f21-f59 390ms | L 76px first 2.7% max 8.8% last 0.08px; R 76px first 2.7% max 8.8% last 0.08px | op60 0.16 | out 0px | FAIL: a region's clip is off its lane in 37 region-rows, up to 12.02 px (layers f31)
+p3-fold-pill-fine | wi8 | webkit | 1440-fine-light | load 10.03/10.03 | f118-f155 378ms | L 76px first 2.7% max 9.6% last 0.03px; R 76px first 2.7% max 9.6% last 0.03px | op60 0.17 | out 0px | FAIL: a region's clip is off its lane in 36 region-rows, up to 12.00 px (layers f139)
+== done 2026-11-22 02:43:36

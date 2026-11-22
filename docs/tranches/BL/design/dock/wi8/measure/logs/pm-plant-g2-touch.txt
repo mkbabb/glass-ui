@@ -1,0 +1,19 @@
+== g2-touch 2026-11-22 02:39:40 (load { 7.38 6.98 7.75 })
+OK   g2-touch
+applied g2-touch - G-2 (no folded face under touch): the rule removed
+-- chromium 02:39:44 (load { 7.35 6.98 7.75 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+== p3-fold-transport-coarse chromium 02:39:44 load { 7.35 6.98 7.75 }
+{"cell":"390-coarse-light","rows":"p3-fold-transport-coarse.wi8.chromium.390-coarse-light.rows.json","strips":[],"frames":460,"firstChange":82.5,"lastChange":3121,"screencast":null,"consoleErrors":0}
+chromium rc=0
+-- webkit 02:39:53 (load { 7.08 6.94 7.73 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+== p3-fold-transport-coarse webkit 02:39:53 load { 7.08 6.94 7.73 }
+{"cell":"390-coarse-light","rows":"p3-fold-transport-coarse.wi8.webkit.390-coarse-light.rows.json","strips":[],"frames":598,"firstChange":null,"lastChange":null,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g2-touch
+tree clean: 677 src files equal HEAD
+-- judge
+p3-fold-transport-coarse | chromium | 390-coarse-light | curve 0 | held 0 | touch true | restsOpen false | FAIL: keyframes's transport is folded under touch (glass-dock horizontal shape-pill collapsed)
+p3-fold-transport-coarse | webkit | 390-coarse-light | curve 0 | held 0 | touch true | restsOpen false | FAIL: keyframes's transport is folded under touch (glass-dock horizontal shape-pill collapsed)
+== done 2026-11-22 02:40:05

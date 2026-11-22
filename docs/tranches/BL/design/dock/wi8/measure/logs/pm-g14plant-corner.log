@@ -1,0 +1,1507 @@
+== corner 2026-11-22 04:28:53 (load { 9.78 8.05 8.34 })
+applied g14-corner - G-14 corner: the pill's rest corner a fixed 16 px (re-anchored: 11.1.0's --radius-dock knob)
+-- chromium 04:28:54 (load { 9.78 8.05 8.34 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 28 tests using 1 worker
+
+  ✘   1 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 390: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (2.3s)
+  ✘   2 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 844: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (1.8s)
+  ✘   3 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:217:5 › g1 rest dock at 1280: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (1.8s)
+  ✘   4 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:294:1 › g1 an overflowing run at scroll 0: the leading cap rests at half the block extent, a length; the trailing cap is cut (1.1s)
+  ✘   5 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:318:1 › g2 collapsed: the plate is a circle, half its extent on both axes (1.3s)
+  ✘   6 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:336:1 › g2 expanded (collapsible), each layer and input mode hold g1 (915ms)
+  ✘   7 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:999:1 › h4 with no ResizeObserver the plate rests at half its block extent (1.2s)
+o2 open house tokens plate {"radii":["16px","16px","16px","16px"],"w":264,"h":56} root {"radii":["16px","16px","16px","16px"],"w":264,"h":56}
+  ✘   8 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round (572ms)
+o2 collapsed house tokens plate {"radii":["16px","16px","16px","16px"],"w":102,"h":56} root {"radii":["16px","16px","16px","16px"],"w":102,"h":56}
+  ✘   9 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round (594ms)
+o2 narrow house tokens plate {"radii":["16px","16px","16px","16px"],"w":164,"h":56} root {"radii":["16px","16px","16px","16px"],"w":164,"h":56} run {"scroll":0}
+  ✘  10 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round (562ms)
+o2 open radius-dock 1.875rem plate {"radii":["16px","16px","16px","16px"],"w":264,"h":56} root {"radii":["16px","16px","16px","16px"],"w":264,"h":56}
+  ✘  11 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open at rest, the plate and the box are round (569ms)
+o2 collapsed radius-dock 1.875rem plate {"radii":["16px","16px","16px","16px"],"w":102,"h":56} root {"radii":["16px","16px","16px","16px"],"w":102,"h":56}
+  ✘  12 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: collapsed with a persistent seat beside the summary, the plate and the box are round (577ms)
+o2 narrow radius-dock 1.875rem plate {"radii":["16px","16px","16px","16px"],"w":164,"h":56} root {"radii":["16px","16px","16px","16px"],"w":164,"h":56} run {"scroll":0}
+  ✘  13 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round (573ms)
+o3 expand {"frames":185,"morphing":49,"bad":["0ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28","11ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28","22ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28","33ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28","41ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28","51ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28"]}
+o3 collapse {"frames":176,"morphing":48,"bad":["4ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28","9ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28","16ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28","25ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28","31ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28","38ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28"]}
+  ✘  14 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:142:1 › o3 every frame of the expand and of the collapse paints a round end (3.4s)
+  ✘  15 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 390: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (1.8s)
+  ✘  16 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 844: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (1.8s)
+  ✘  17 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:217:5 › g1 rest dock at 1280: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (1.8s)
+  ✘  18 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:294:1 › g1 an overflowing run at scroll 0: the leading cap rests at half the block extent, a length; the trailing cap is cut (1.1s)
+  ✘  19 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:318:1 › g2 collapsed: the plate is a circle, half its extent on both axes (1.3s)
+  ✘  20 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:336:1 › g2 expanded (collapsible), each layer and input mode hold g1 (918ms)
+  ✘  21 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:999:1 › h4 with no ResizeObserver the plate rests at half its block extent (1.1s)
+o2 open house tokens plate {"radii":["16px","16px","16px","16px"],"w":266,"h":60} root {"radii":["16px","16px","16px","16px"],"w":266,"h":60}
+  ✘  22 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round (579ms)
+o2 collapsed house tokens plate {"radii":["16px","16px","16px","16px"],"w":110,"h":60} root {"radii":["16px","16px","16px","16px"],"w":110,"h":60}
+  ✘  23 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round (595ms)
+o2 narrow house tokens plate {"radii":["16px","16px","16px","16px"],"w":176,"h":60} root {"radii":["16px","16px","16px","16px"],"w":176,"h":60} run {"scroll":0}
+  ✘  24 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round (570ms)
+o2 open radius-dock 1.875rem plate {"radii":["16px","16px","16px","16px"],"w":266,"h":60} root {"radii":["16px","16px","16px","16px"],"w":266,"h":60}
+  ✘  25 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open at rest, the plate and the box are round (590ms)
+o2 collapsed radius-dock 1.875rem plate {"radii":["16px","16px","16px","16px"],"w":110,"h":60} root {"radii":["16px","16px","16px","16px"],"w":110,"h":60}
+  ✘  26 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: collapsed with a persistent seat beside the summary, the plate and the box are round (592ms)
+o2 narrow radius-dock 1.875rem plate {"radii":["16px","16px","16px","16px"],"w":176,"h":60} root {"radii":["16px","16px","16px","16px"],"w":176,"h":60} run {"scroll":0}
+  ✘  27 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round (562ms)
+o3 expand {"frames":187,"morphing":50,"bad":["0ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30","12ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30","21ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30","33ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30","37ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30","45ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30"]}
+o3 collapse {"frames":186,"morphing":51,"bad":["6ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30","14ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30","18ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30","26ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30","35ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30","43ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30"]}
+  ✘  28 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:142:1 › o3 every frame of the expand and of the collapse paints a round end (3.4s)
+
+
+  1) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 390: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+
+    Error: 390 rest: corner 16px = half the block extent 30 ({"cls":"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded","w":287,"h":60,"radii":["16px","16px","16px","16px"],"runs":[{"sw":271,"cw":271,"sh":52,"ch":52,"active":true}]})
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    14
+
+      142 |             Math.abs(Number.parseFloat(r) - half),
+      143 |             `${cell}: corner ${r} = half the block extent ${half} (${JSON.stringify(read)})`,
+    > 144 |         ).toBeLessThanOrEqual(0.5);
+          |           ^
+      145 |     }
+      146 | }
+      147 |
+        at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:144:11)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:233:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-coarse-phon-a994e-ff-and-on-the-trailing-seat-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 844: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+
+    Error: 844 rest: corner 16px = half the block extent 30 ({"cls":"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded","w":289.640625,"h":60,"radii":["16px","16px","16px","16px"],"runs":[{"sw":274,"cw":274,"sh":52,"ch":52,"active":true}]})
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    14
+
+      142 |             Math.abs(Number.parseFloat(r) - half),
+      143 |             `${cell}: corner ${r} = half the block extent ${half} (${JSON.stringify(read)})`,
+    > 144 |         ).toBeLessThanOrEqual(0.5);
+          |           ^
+      145 |     }
+      146 | }
+      147 |
+        at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:144:11)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:233:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-coarse-phon-2730d-ff-and-on-the-trailing-seat-chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:217:5 › g1 rest dock at 1280: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+
+    Error: 1280 rest: corner 16px = half the block extent 28 ({"cls":"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded","w":280.734375,"h":56,"radii":["16px","16px","16px","16px"],"runs":[{"sw":265,"cw":265,"sh":48,"ch":48,"active":true}]})
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    12
+
+      142 |             Math.abs(Number.parseFloat(r) - half),
+      143 |             `${cell}: corner ${r} = half the block extent ${half} (${JSON.stringify(read)})`,
+    > 144 |         ).toBeLessThanOrEqual(0.5);
+          |           ^
+      145 |     }
+      146 | }
+      147 |
+        at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:144:11)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:233:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-g1-rest-doc-dccb9-ff-and-on-the-trailing-seat-chromium-headless-new/error-context.md
+
+  4) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:294:1 › g1 an overflowing run at scroll 0: the leading cap rests at half the block extent, a length; the trailing cap is cut 
+
+    Error: leading 16px = h/2
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    12
+
+      305 |     for (const r of [tl, bl]) {
+      306 |         expect(r, `leading corner ${r} is one length (${JSON.stringify(read)})`).toMatch(/^[\d.]+px$/);
+    > 307 |         expect(Math.abs(Number.parseFloat(r) - read.h / 2), `leading ${r} = h/2`).toBeLessThanOrEqual(0.5);
+          |                                                                                   ^
+      308 |     }
+      309 |     // W-I.8 R-1 (RU-13) deletes the cut cap's writes to the plate: what says the run
+      310 |     // scrolls is drawn on the run's port (W-I.1), and the plate stays a stadium.
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:307:83
+
+    Error Context: tests-visual/test-results/release-10-1-5-g1-an-overf-f9764-gth-the-trailing-cap-is-cut-chromium-headless-new/error-context.md
+
+  5) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:318:1 › g2 collapsed: the plate is a circle, half its extent on both axes 
+
+    Error: collapsed: corner 16px = half the block extent 28 ({"cls":"glass-dock horizontal shape-pill collapsed fit-content","w":56,"h":56,"radii":["16px","16px","16px","16px"],"runs":[{"sw":0,"cw":0,"sh":0,"ch":0,"active":false}]})
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    12
+
+      142 |             Math.abs(Number.parseFloat(r) - half),
+      143 |             `${cell}: corner ${r} = half the block extent ${half} (${JSON.stringify(read)})`,
+    > 144 |         ).toBeLessThanOrEqual(0.5);
+          |           ^
+      145 |     }
+      146 | }
+      147 |
+        at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:144:11)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:327:5
+
+    Error Context: tests-visual/test-results/release-10-1-5-g2-collapse-09b64-alf-its-extent-on-both-axes-chromium-headless-new/error-context.md
+
+  6) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:336:1 › g2 expanded (collapsible), each layer and input mode hold g1 
+
+    Error: expanded: corner 16px = half the block extent 28 ({"cls":"glass-dock horizontal shape-pill expanded fit-content","w":280.734375,"h":56,"radii":["16px","16px","16px","16px"],"runs":[{"sw":265,"cw":265,"sh":48,"ch":48,"active":true}]})
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    12
+
+      142 |             Math.abs(Number.parseFloat(r) - half),
+      143 |             `${cell}: corner ${r} = half the block extent ${half} (${JSON.stringify(read)})`,
+    > 144 |         ).toBeLessThanOrEqual(0.5);
+          |           ^
+      145 |     }
+      146 | }
+      147 |
+        at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:144:11)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:341:5
+
+    Error Context: tests-visual/test-results/release-10-1-5-g2-expanded-a9b97-ayer-and-input-mode-hold-g1-chromium-headless-new/error-context.md
+
+  7) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:999:1 › h4 with no ResizeObserver the plate rests at half its block extent 
+
+    Error: no ResizeObserver: corner 16px = half the block extent 28 ({"cls":"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded","w":160,"h":56,"radii":["16px","16px","16px","16px"],"runs":[{"sw":144,"cw":144,"sh":48,"ch":48,"active":true}]})
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    12
+
+      142 |             Math.abs(Number.parseFloat(r) - half),
+      143 |             `${cell}: corner ${r} = half the block extent ${half} (${JSON.stringify(read)})`,
+    > 144 |         ).toBeLessThanOrEqual(0.5);
+          |           ^
+      145 |     }
+      146 | }
+      147 |
+        at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:144:11)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:1004:5
+
+    Error Context: tests-visual/test-results/release-10-1-5-h4-with-no--6cc04-ts-at-half-its-block-extent-chromium-headless-new/error-context.md
+
+  8) [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round 
+
+    Error: {"radii":["16px","16px","16px","16px"],"w":264,"h":56}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      109 |             await shoot(page, page.locator(ROOT), `o2-open-${radius ? "rd" : "house"}-${info.project.name}`);
+      110 |             console.log(`o2 open ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)}`);
+    > 111 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      112 |             expect(root.radii).toEqual(plate.radii);
+      113 |         });
+      114 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-11-0-1.spec.ts:111:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-5effe-plate-and-the-box-are-round-chromium-headless-new/error-context.md
+
+  9) [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round 
+
+    Error: {"radii":["16px","16px","16px","16px"],"w":102,"h":56}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      120 |             await shoot(page, page.locator(ROOT), `o2-collapsed-${radius ? "rd" : "house"}-${info.project.name}`);
+      121 |             console.log(`o2 collapsed ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)}`);
+    > 122 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      123 |             expect(root.radii).toEqual(plate.radii);
+      124 |         });
+      125 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-11-0-1.spec.ts:122:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-b7623-plate-and-the-box-are-round-chromium-headless-new/error-context.md
+
+  10) [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round 
+
+    Error: {"radii":["16px","16px","16px","16px"],"w":164,"h":56}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      134 |             await shoot(page, page.locator(ROOT), `o2-narrow-${radius ? "rd" : "house"}-${info.project.name}`);
+      135 |             console.log(`o2 narrow ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)} run ${JSON.stringify(run)}`);
+    > 136 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      137 |             expect(root.radii).toEqual(plate.radii);
+      138 |         });
+      139 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-11-0-1.spec.ts:136:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-b862f-end-seat-the-plate-is-round-chromium-headless-new/error-context.md
+
+  11) [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open at rest, the plate and the box are round 
+
+    Error: {"radii":["16px","16px","16px","16px"],"w":264,"h":56}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      109 |             await shoot(page, page.locator(ROOT), `o2-open-${radius ? "rd" : "house"}-${info.project.name}`);
+      110 |             console.log(`o2 open ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)}`);
+    > 111 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      112 |             expect(root.radii).toEqual(plate.radii);
+      113 |         });
+      114 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-11-0-1.spec.ts:111:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-ce341-plate-and-the-box-are-round-chromium-headless-new/error-context.md
+
+  12) [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: collapsed with a persistent seat beside the summary, the plate and the box are round 
+
+    Error: {"radii":["16px","16px","16px","16px"],"w":102,"h":56}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      120 |             await shoot(page, page.locator(ROOT), `o2-collapsed-${radius ? "rd" : "house"}-${info.project.name}`);
+      121 |             console.log(`o2 collapsed ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)}`);
+    > 122 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      123 |             expect(root.radii).toEqual(plate.radii);
+      124 |         });
+      125 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-11-0-1.spec.ts:122:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-fa514-plate-and-the-box-are-round-chromium-headless-new/error-context.md
+
+  13) [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round 
+
+    Error: {"radii":["16px","16px","16px","16px"],"w":164,"h":56}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      134 |             await shoot(page, page.locator(ROOT), `o2-narrow-${radius ? "rd" : "house"}-${info.project.name}`);
+      135 |             console.log(`o2 narrow ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)} run ${JSON.stringify(run)}`);
+    > 136 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      137 |             expect(root.radii).toEqual(plate.radii);
+      138 |         });
+      139 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-11-0-1.spec.ts:136:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-b74d4-end-seat-the-plate-is-round-chromium-headless-new/error-context.md
+
+  14) [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:142:1 › o3 every frame of the expand and of the collapse paints a round end 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 187
+
+    - Array []
+    + Array [
+    +   "0ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "11ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "22ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "33ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "41ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "51ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "60ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "66ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "71ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "79ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "85ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "93ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "101ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "108ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "116ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "123ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "130ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "139ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "144ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "153ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "159ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "167ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "174ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "181ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "188ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "196ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "205ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "211ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "218ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "226ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "234ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "240ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "247ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "254ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "263ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "271ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "277ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "285ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "292ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "300ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "306ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "313ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "322ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "331ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "337ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "346ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "354ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "359ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "374ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "385ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "390ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "400ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "408ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "416ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "419ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "427ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "436ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "446ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "452ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "460ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "470ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "479ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "487ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "494ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "502ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "512ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "517ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "524ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "531ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "539ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "548ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "553ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "560ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "568ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "576ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "583ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "590ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "598ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "606ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "613ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "618ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "627ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "634ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "644ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "647ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "657ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "665ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "672ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "680ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "686ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "694ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "701ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "710ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "715ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "722ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "732ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "739ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "746ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "752ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "759ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "769ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "777ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "781ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "789ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "796ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "805ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "814ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "818ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "827ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "835ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "841ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "849ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "855ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "864ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "872ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "881ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "885ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "895ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "900ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "910ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "915ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "922ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "931ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "940ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "948ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "953ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "961ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "968ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "977ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "982ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "989ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "997ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1005ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1014ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1019ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1028ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1033ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1043ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1048ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1055ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1064ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1072ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1079ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1086ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1093ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1108ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1117ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1123ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1134ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1140ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1148ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1152ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1161ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1171ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1184ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1193ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1204ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1209ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1216ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1223ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1232ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1238ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1244ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1255ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1259ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1268ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1274ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1281ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1289ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1295ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1304ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1308ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1316ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1326ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1333ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1340ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1349ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1354ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1364ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1369ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1374ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1383ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1390ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1398ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1407ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    + ]
+
+      187 |     expect(expand.morphing, "the expand morphed").toBeGreaterThan(2);
+      188 |     expect(collapse.morphing, "the collapse morphed").toBeGreaterThan(2);
+    > 189 |     expect(expand.bad).toEqual([]);
+          |                        ^
+      190 |     expect(collapse.bad).toEqual([]);
+      191 | });
+      192 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-11-0-1.spec.ts:189:24
+
+    Error Context: tests-visual/test-results/release-11-0-1-o3-every-fr-1c7bf-collapse-paints-a-round-end-chromium-headless-new/error-context.md
+
+  15) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 390: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+
+    Error: 390 rest: corner 16px = half the block extent 30 ({"cls":"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded","w":287,"h":60,"radii":["16px","16px","16px","16px"],"runs":[{"sw":271,"cw":271,"sh":52,"ch":52,"active":true}]})
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    14
+
+      142 |             Math.abs(Number.parseFloat(r) - half),
+      143 |             `${cell}: corner ${r} = half the block extent ${half} (${JSON.stringify(read)})`,
+    > 144 |         ).toBeLessThanOrEqual(0.5);
+          |           ^
+      145 |     }
+      146 | }
+      147 |
+        at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:144:11)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:233:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-coarse-phon-a994e-ff-and-on-the-trailing-seat-coarse-touch/error-context.md
+
+  16) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 844: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+
+    Error: 844 rest: corner 16px = half the block extent 30 ({"cls":"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded","w":289.640625,"h":60,"radii":["16px","16px","16px","16px"],"runs":[{"sw":274,"cw":274,"sh":52,"ch":52,"active":true}]})
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    14
+
+      142 |             Math.abs(Number.parseFloat(r) - half),
+      143 |             `${cell}: corner ${r} = half the block extent ${half} (${JSON.stringify(read)})`,
+    > 144 |         ).toBeLessThanOrEqual(0.5);
+          |           ^
+      145 |     }
+      146 | }
+      147 |
+        at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:144:11)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:233:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-coarse-phon-2730d-ff-and-on-the-trailing-seat-coarse-touch/error-context.md
+
+  17) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:217:5 › g1 rest dock at 1280: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+
+    Error: 1280 rest: corner 16px = half the block extent 30 ({"cls":"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded","w":292.734375,"h":60,"radii":["16px","16px","16px","16px"],"runs":[{"sw":277,"cw":277,"sh":52,"ch":52,"active":true}]})
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    14
+
+      142 |             Math.abs(Number.parseFloat(r) - half),
+      143 |             `${cell}: corner ${r} = half the block extent ${half} (${JSON.stringify(read)})`,
+    > 144 |         ).toBeLessThanOrEqual(0.5);
+          |           ^
+      145 |     }
+      146 | }
+      147 |
+        at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:144:11)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:233:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-g1-rest-doc-dccb9-ff-and-on-the-trailing-seat-coarse-touch/error-context.md
+
+  18) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:294:1 › g1 an overflowing run at scroll 0: the leading cap rests at half the block extent, a length; the trailing cap is cut 
+
+    Error: leading 16px = h/2
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    14
+
+      305 |     for (const r of [tl, bl]) {
+      306 |         expect(r, `leading corner ${r} is one length (${JSON.stringify(read)})`).toMatch(/^[\d.]+px$/);
+    > 307 |         expect(Math.abs(Number.parseFloat(r) - read.h / 2), `leading ${r} = h/2`).toBeLessThanOrEqual(0.5);
+          |                                                                                   ^
+      308 |     }
+      309 |     // W-I.8 R-1 (RU-13) deletes the cut cap's writes to the plate: what says the run
+      310 |     // scrolls is drawn on the run's port (W-I.1), and the plate stays a stadium.
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:307:83
+
+    Error Context: tests-visual/test-results/release-10-1-5-g1-an-overf-f9764-gth-the-trailing-cap-is-cut-coarse-touch/error-context.md
+
+  19) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:318:1 › g2 collapsed: the plate is a circle, half its extent on both axes 
+
+    Error: collapsed: corner 16px = half the block extent 30 ({"cls":"glass-dock horizontal shape-pill collapsed fit-content","w":60,"h":60,"radii":["16px","16px","16px","16px"],"runs":[{"sw":0,"cw":0,"sh":0,"ch":0,"active":false}]})
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    14
+
+      142 |             Math.abs(Number.parseFloat(r) - half),
+      143 |             `${cell}: corner ${r} = half the block extent ${half} (${JSON.stringify(read)})`,
+    > 144 |         ).toBeLessThanOrEqual(0.5);
+          |           ^
+      145 |     }
+      146 | }
+      147 |
+        at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:144:11)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:327:5
+
+    Error Context: tests-visual/test-results/release-10-1-5-g2-collapse-09b64-alf-its-extent-on-both-axes-coarse-touch/error-context.md
+
+  20) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:336:1 › g2 expanded (collapsible), each layer and input mode hold g1 
+
+    Error: expanded: corner 16px = half the block extent 30 ({"cls":"glass-dock horizontal shape-pill expanded fit-content","w":287,"h":60,"radii":["16px","16px","16px","16px"],"runs":[{"sw":271,"cw":271,"sh":52,"ch":52,"active":true}]})
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    14
+
+      142 |             Math.abs(Number.parseFloat(r) - half),
+      143 |             `${cell}: corner ${r} = half the block extent ${half} (${JSON.stringify(read)})`,
+    > 144 |         ).toBeLessThanOrEqual(0.5);
+          |           ^
+      145 |     }
+      146 | }
+      147 |
+        at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:144:11)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:341:5
+
+    Error Context: tests-visual/test-results/release-10-1-5-g2-expanded-a9b97-ayer-and-input-mode-hold-g1-coarse-touch/error-context.md
+
+  21) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:999:1 › h4 with no ResizeObserver the plate rests at half its block extent 
+
+    Error: no ResizeObserver: corner 16px = half the block extent 30 ({"cls":"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded","w":172,"h":60,"radii":["16px","16px","16px","16px"],"runs":[{"sw":156,"cw":156,"sh":52,"ch":52,"active":true}]})
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    14
+
+      142 |             Math.abs(Number.parseFloat(r) - half),
+      143 |             `${cell}: corner ${r} = half the block extent ${half} (${JSON.stringify(read)})`,
+    > 144 |         ).toBeLessThanOrEqual(0.5);
+          |           ^
+      145 |     }
+      146 | }
+      147 |
+        at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:144:11)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:1004:5
+
+    Error Context: tests-visual/test-results/release-10-1-5-h4-with-no--6cc04-ts-at-half-its-block-extent-coarse-touch/error-context.md
+
+  22) [coarse-touch] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round 
+
+    Error: {"radii":["16px","16px","16px","16px"],"w":266,"h":60}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      109 |             await shoot(page, page.locator(ROOT), `o2-open-${radius ? "rd" : "house"}-${info.project.name}`);
+      110 |             console.log(`o2 open ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)}`);
+    > 111 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      112 |             expect(root.radii).toEqual(plate.radii);
+      113 |         });
+      114 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-11-0-1.spec.ts:111:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-5effe-plate-and-the-box-are-round-coarse-touch/error-context.md
+
+  23) [coarse-touch] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round 
+
+    Error: {"radii":["16px","16px","16px","16px"],"w":110,"h":60}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      120 |             await shoot(page, page.locator(ROOT), `o2-collapsed-${radius ? "rd" : "house"}-${info.project.name}`);
+      121 |             console.log(`o2 collapsed ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)}`);
+    > 122 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      123 |             expect(root.radii).toEqual(plate.radii);
+      124 |         });
+      125 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-11-0-1.spec.ts:122:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-b7623-plate-and-the-box-are-round-coarse-touch/error-context.md
+
+  24) [coarse-touch] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round 
+
+    Error: {"radii":["16px","16px","16px","16px"],"w":176,"h":60}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      134 |             await shoot(page, page.locator(ROOT), `o2-narrow-${radius ? "rd" : "house"}-${info.project.name}`);
+      135 |             console.log(`o2 narrow ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)} run ${JSON.stringify(run)}`);
+    > 136 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      137 |             expect(root.radii).toEqual(plate.radii);
+      138 |         });
+      139 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-11-0-1.spec.ts:136:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-b862f-end-seat-the-plate-is-round-coarse-touch/error-context.md
+
+  25) [coarse-touch] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open at rest, the plate and the box are round 
+
+    Error: {"radii":["16px","16px","16px","16px"],"w":266,"h":60}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      109 |             await shoot(page, page.locator(ROOT), `o2-open-${radius ? "rd" : "house"}-${info.project.name}`);
+      110 |             console.log(`o2 open ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)}`);
+    > 111 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      112 |             expect(root.radii).toEqual(plate.radii);
+      113 |         });
+      114 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-11-0-1.spec.ts:111:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-ce341-plate-and-the-box-are-round-coarse-touch/error-context.md
+
+  26) [coarse-touch] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: collapsed with a persistent seat beside the summary, the plate and the box are round 
+
+    Error: {"radii":["16px","16px","16px","16px"],"w":110,"h":60}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      120 |             await shoot(page, page.locator(ROOT), `o2-collapsed-${radius ? "rd" : "house"}-${info.project.name}`);
+      121 |             console.log(`o2 collapsed ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)}`);
+    > 122 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      123 |             expect(root.radii).toEqual(plate.radii);
+      124 |         });
+      125 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-11-0-1.spec.ts:122:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-fa514-plate-and-the-box-are-round-coarse-touch/error-context.md
+
+  27) [coarse-touch] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round 
+
+    Error: {"radii":["16px","16px","16px","16px"],"w":176,"h":60}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      134 |             await shoot(page, page.locator(ROOT), `o2-narrow-${radius ? "rd" : "house"}-${info.project.name}`);
+      135 |             console.log(`o2 narrow ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)} run ${JSON.stringify(run)}`);
+    > 136 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      137 |             expect(root.radii).toEqual(plate.radii);
+      138 |         });
+      139 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-11-0-1.spec.ts:136:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-b74d4-end-seat-the-plate-is-round-coarse-touch/error-context.md
+
+  28) [coarse-touch] › tests-visual/release-11-0-1.spec.ts:142:1 › o3 every frame of the expand and of the collapse paints a round end 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 189
+
+    - Array []
+    + Array [
+    +   "0ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "12ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "21ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "33ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "37ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "45ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "49ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "57ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "64ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "74ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "81ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "90ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "93ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "102ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "107ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "113ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "119ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "127ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "135ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "142ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "154ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "165ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "173ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "181ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "188ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "196ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "206ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "212ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "219ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "227ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "233ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "243ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "248ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "256ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "263ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "271ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "279ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "286ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "292ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "301ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "310ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "315ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "321ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "329ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "337ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "346ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "352ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "360ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "368ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "376ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "381ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "388ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "397ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "405ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "413ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "418ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "426ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "434ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "441ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "448ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "455ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "464ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "471ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "480ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "486ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "492ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "501ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "509ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "515ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "522ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "530ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "537ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "547ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "552ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "559ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "566ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "577ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "584ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "589ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "598ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "605ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "615ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "621ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "629ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "634ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "643ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "651ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "657ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "664ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "672ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "682ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "687ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "693ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "703ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "709ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "719ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "724ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "731ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "739ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "749ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "754ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "760ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "769ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "777ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "785ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "789ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "797ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "806ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "815ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "822ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "827ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "835ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "844ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "852ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "858ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "864ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "872ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "880ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "889ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "896ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "903ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "912ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "922ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "928ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "935ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "944ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "952ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "957ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "963ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "972ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "980ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "988ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "997ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1005ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1013ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1022ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1027ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1035ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1042ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1052ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1056ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1065ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1072ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1080ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1089ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1097ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1106ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1115ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1122ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1127ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1137ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1143ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1151ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1160ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1166ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1173ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1181ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1187ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1193ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1203ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1210ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1218ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1227ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1231ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1240ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1247ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1256ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1260ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1268ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1275ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1284ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1294ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1298ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1306ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1313ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1323ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1328ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1336ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1344ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1351ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1361ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1365ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1373ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1381ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1387ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1393ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    +   "1402ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=30",
+    + ]
+
+      187 |     expect(expand.morphing, "the expand morphed").toBeGreaterThan(2);
+      188 |     expect(collapse.morphing, "the collapse morphed").toBeGreaterThan(2);
+    > 189 |     expect(expand.bad).toEqual([]);
+          |                        ^
+      190 |     expect(collapse.bad).toEqual([]);
+      191 | });
+      192 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-11-0-1.spec.ts:189:24
+
+    Error Context: tests-visual/test-results/release-11-0-1-o3-every-fr-1c7bf-collapse-paints-a-round-end-coarse-touch/error-context.md
+
+  28 failed
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 390: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 844: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:217:5 › g1 rest dock at 1280: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:294:1 › g1 an overflowing run at scroll 0: the leading cap rests at half the block extent, a length; the trailing cap is cut 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:318:1 › g2 collapsed: the plate is a circle, half its extent on both axes 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:336:1 › g2 expanded (collapsible), each layer and input mode hold g1 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:999:1 › h4 with no ResizeObserver the plate rests at half its block extent 
+    [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round 
+    [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round 
+    [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round 
+    [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open at rest, the plate and the box are round 
+    [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: collapsed with a persistent seat beside the summary, the plate and the box are round 
+    [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round 
+    [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:142:1 › o3 every frame of the expand and of the collapse paints a round end 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 390: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 844: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:217:5 › g1 rest dock at 1280: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:294:1 › g1 an overflowing run at scroll 0: the leading cap rests at half the block extent, a length; the trailing cap is cut 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:318:1 › g2 collapsed: the plate is a circle, half its extent on both axes 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:336:1 › g2 expanded (collapsible), each layer and input mode hold g1 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:999:1 › h4 with no ResizeObserver the plate rests at half its block extent 
+    [coarse-touch] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round 
+    [coarse-touch] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round 
+    [coarse-touch] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round 
+    [coarse-touch] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open at rest, the plate and the box are round 
+    [coarse-touch] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: collapsed with a persistent seat beside the summary, the plate and the box are round 
+    [coarse-touch] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round 
+    [coarse-touch] › tests-visual/release-11-0-1.spec.ts:142:1 › o3 every frame of the expand and of the collapse paints a round end 
+chromium rc=1
+-- webkit-b 04:29:45 (load { 9.52 8.35 8.44 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 14 tests using 1 worker
+
+  ✘   1 [webkit] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 390: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (2.6s)
+  ✘   2 [webkit] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 844: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (2.2s)
+  ✘   3 [webkit] › tests-visual/release-10-1-5.spec.ts:217:5 › g1 rest dock at 1280: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (2.2s)
+  ✘   4 [webkit] › tests-visual/release-10-1-5.spec.ts:294:1 › g1 an overflowing run at scroll 0: the leading cap rests at half the block extent, a length; the trailing cap is cut (1.5s)
+  ✘   5 [webkit] › tests-visual/release-10-1-5.spec.ts:318:1 › g2 collapsed: the plate is a circle, half its extent on both axes (1.7s)
+  ✘   6 [webkit] › tests-visual/release-10-1-5.spec.ts:336:1 › g2 expanded (collapsible), each layer and input mode hold g1 (1.3s)
+  ✘   7 [webkit] › tests-visual/release-10-1-5.spec.ts:999:1 › h4 with no ResizeObserver the plate rests at half its block extent (1.5s)
+o2 open house tokens plate {"radii":["16px","16px","16px","16px"],"w":261,"h":56} root {"radii":["16px","16px","16px","16px"],"w":261,"h":56}
+  ✘   8 [webkit] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round (992ms)
+o2 collapsed house tokens plate {"radii":["16px","16px","16px","16px"],"w":102,"h":56} root {"radii":["16px","16px","16px","16px"],"w":102,"h":56}
+  ✘   9 [webkit] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round (962ms)
+o2 narrow house tokens plate {"radii":["16px","16px","16px","16px"],"w":164,"h":56} root {"radii":["16px","16px","16px","16px"],"w":164,"h":56} run {"scroll":0}
+  ✘  10 [webkit] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round (923ms)
+o2 open radius-dock 1.875rem plate {"radii":["16px","16px","16px","16px"],"w":261,"h":56} root {"radii":["16px","16px","16px","16px"],"w":261,"h":56}
+  ✘  11 [webkit] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open at rest, the plate and the box are round (991ms)
+o2 collapsed radius-dock 1.875rem plate {"radii":["16px","16px","16px","16px"],"w":102,"h":56} root {"radii":["16px","16px","16px","16px"],"w":102,"h":56}
+  ✘  12 [webkit] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: collapsed with a persistent seat beside the summary, the plate and the box are round (1.0s)
+o2 narrow radius-dock 1.875rem plate {"radii":["16px","16px","16px","16px"],"w":164,"h":56} root {"radii":["16px","16px","16px","16px"],"w":164,"h":56} run {"scroll":0}
+  ✘  13 [webkit] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round (936ms)
+o3 expand {"frames":140,"morphing":38,"bad":["0ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28","4ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28","15ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28","16ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28","30ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28","40ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28"]}
+o3 collapse {"frames":138,"morphing":38,"bad":["9ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28","19ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28","31ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28","38ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28","50ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28","58ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28"]}
+  ✘  14 [webkit] › tests-visual/release-11-0-1.spec.ts:142:1 › o3 every frame of the expand and of the collapse paints a round end (3.8s)
+
+
+  1) [webkit] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 390: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+
+    Error: 390 rest: corner 16px = half the block extent 30 ({"cls":"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded","w":286.5625,"h":60,"radii":["16px","16px","16px","16px"],"runs":[{"sw":271,"cw":271,"sh":52,"ch":52,"active":true}]})
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    14
+
+      142 |             Math.abs(Number.parseFloat(r) - half),
+      143 |             `${cell}: corner ${r} = half the block extent ${half} (${JSON.stringify(read)})`,
+    > 144 |         ).toBeLessThanOrEqual(0.5);
+          |           ^
+      145 |     }
+      146 | }
+      147 |
+        at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:144:11)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:233:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-coarse-phon-a994e-ff-and-on-the-trailing-seat-webkit/error-context.md
+
+  2) [webkit] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 844: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+
+    Error: 844 rest: corner 16px = half the block extent 30 ({"cls":"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded","w":289.15625,"h":60,"radii":["16px","16px","16px","16px"],"runs":[{"sw":273,"cw":273,"sh":52,"ch":52,"active":true}]})
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    14
+
+      142 |             Math.abs(Number.parseFloat(r) - half),
+      143 |             `${cell}: corner ${r} = half the block extent ${half} (${JSON.stringify(read)})`,
+    > 144 |         ).toBeLessThanOrEqual(0.5);
+          |           ^
+      145 |     }
+      146 | }
+      147 |
+        at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:144:11)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:233:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-coarse-phon-2730d-ff-and-on-the-trailing-seat-webkit/error-context.md
+
+  3) [webkit] › tests-visual/release-10-1-5.spec.ts:217:5 › g1 rest dock at 1280: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+
+    Error: 1280 rest: corner 16px = half the block extent 28 ({"cls":"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded","w":280.203125,"h":56,"radii":["16px","16px","16px","16px"],"runs":[{"sw":264,"cw":264,"sh":48,"ch":48,"active":true}]})
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    12
+
+      142 |             Math.abs(Number.parseFloat(r) - half),
+      143 |             `${cell}: corner ${r} = half the block extent ${half} (${JSON.stringify(read)})`,
+    > 144 |         ).toBeLessThanOrEqual(0.5);
+          |           ^
+      145 |     }
+      146 | }
+      147 |
+        at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:144:11)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:233:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-g1-rest-doc-dccb9-ff-and-on-the-trailing-seat-webkit/error-context.md
+
+  4) [webkit] › tests-visual/release-10-1-5.spec.ts:294:1 › g1 an overflowing run at scroll 0: the leading cap rests at half the block extent, a length; the trailing cap is cut 
+
+    Error: leading 16px = h/2
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    12
+
+      305 |     for (const r of [tl, bl]) {
+      306 |         expect(r, `leading corner ${r} is one length (${JSON.stringify(read)})`).toMatch(/^[\d.]+px$/);
+    > 307 |         expect(Math.abs(Number.parseFloat(r) - read.h / 2), `leading ${r} = h/2`).toBeLessThanOrEqual(0.5);
+          |                                                                                   ^
+      308 |     }
+      309 |     // W-I.8 R-1 (RU-13) deletes the cut cap's writes to the plate: what says the run
+      310 |     // scrolls is drawn on the run's port (W-I.1), and the plate stays a stadium.
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:307:83
+
+    Error Context: tests-visual/test-results/release-10-1-5-g1-an-overf-f9764-gth-the-trailing-cap-is-cut-webkit/error-context.md
+
+  5) [webkit] › tests-visual/release-10-1-5.spec.ts:318:1 › g2 collapsed: the plate is a circle, half its extent on both axes 
+
+    Error: collapsed: corner 16px = half the block extent 28 ({"cls":"glass-dock horizontal shape-pill collapsed fit-content","w":56,"h":56,"radii":["16px","16px","16px","16px"],"runs":[{"sw":0,"cw":0,"sh":0,"ch":0,"active":false}]})
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    12
+
+      142 |             Math.abs(Number.parseFloat(r) - half),
+      143 |             `${cell}: corner ${r} = half the block extent ${half} (${JSON.stringify(read)})`,
+    > 144 |         ).toBeLessThanOrEqual(0.5);
+          |           ^
+      145 |     }
+      146 | }
+      147 |
+        at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:144:11)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:327:5
+
+    Error Context: tests-visual/test-results/release-10-1-5-g2-collapse-09b64-alf-its-extent-on-both-axes-webkit/error-context.md
+
+  6) [webkit] › tests-visual/release-10-1-5.spec.ts:336:1 › g2 expanded (collapsible), each layer and input mode hold g1 
+
+    Error: expanded: corner 16px = half the block extent 28 ({"cls":"glass-dock horizontal shape-pill expanded fit-content","w":280.203125,"h":56,"radii":["16px","16px","16px","16px"],"runs":[{"sw":264,"cw":264,"sh":48,"ch":48,"active":true}]})
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    12
+
+      142 |             Math.abs(Number.parseFloat(r) - half),
+      143 |             `${cell}: corner ${r} = half the block extent ${half} (${JSON.stringify(read)})`,
+    > 144 |         ).toBeLessThanOrEqual(0.5);
+          |           ^
+      145 |     }
+      146 | }
+      147 |
+        at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:144:11)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:341:5
+
+    Error Context: tests-visual/test-results/release-10-1-5-g2-expanded-a9b97-ayer-and-input-mode-hold-g1-webkit/error-context.md
+
+  7) [webkit] › tests-visual/release-10-1-5.spec.ts:999:1 › h4 with no ResizeObserver the plate rests at half its block extent 
+
+    Error: no ResizeObserver: corner 16px = half the block extent 28 ({"cls":"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded","w":160,"h":56,"radii":["16px","16px","16px","16px"],"runs":[{"sw":144,"cw":144,"sh":48,"ch":48,"active":true}]})
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.5
+    Received:    12
+
+      142 |             Math.abs(Number.parseFloat(r) - half),
+      143 |             `${cell}: corner ${r} = half the block extent ${half} (${JSON.stringify(read)})`,
+    > 144 |         ).toBeLessThanOrEqual(0.5);
+          |           ^
+      145 |     }
+      146 | }
+      147 |
+        at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:144:11)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-10-1-5.spec.ts:1004:5
+
+    Error Context: tests-visual/test-results/release-10-1-5-h4-with-no--6cc04-ts-at-half-its-block-extent-webkit/error-context.md
+
+  8) [webkit] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round 
+
+    Error: {"radii":["16px","16px","16px","16px"],"w":261,"h":56}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      109 |             await shoot(page, page.locator(ROOT), `o2-open-${radius ? "rd" : "house"}-${info.project.name}`);
+      110 |             console.log(`o2 open ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)}`);
+    > 111 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      112 |             expect(root.radii).toEqual(plate.radii);
+      113 |         });
+      114 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-11-0-1.spec.ts:111:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-5effe-plate-and-the-box-are-round-webkit/error-context.md
+
+  9) [webkit] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round 
+
+    Error: {"radii":["16px","16px","16px","16px"],"w":102,"h":56}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      120 |             await shoot(page, page.locator(ROOT), `o2-collapsed-${radius ? "rd" : "house"}-${info.project.name}`);
+      121 |             console.log(`o2 collapsed ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)}`);
+    > 122 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      123 |             expect(root.radii).toEqual(plate.radii);
+      124 |         });
+      125 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-11-0-1.spec.ts:122:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-b7623-plate-and-the-box-are-round-webkit/error-context.md
+
+  10) [webkit] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round 
+
+    Error: {"radii":["16px","16px","16px","16px"],"w":164,"h":56}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      134 |             await shoot(page, page.locator(ROOT), `o2-narrow-${radius ? "rd" : "house"}-${info.project.name}`);
+      135 |             console.log(`o2 narrow ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)} run ${JSON.stringify(run)}`);
+    > 136 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      137 |             expect(root.radii).toEqual(plate.radii);
+      138 |         });
+      139 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-11-0-1.spec.ts:136:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-b862f-end-seat-the-plate-is-round-webkit/error-context.md
+
+  11) [webkit] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open at rest, the plate and the box are round 
+
+    Error: {"radii":["16px","16px","16px","16px"],"w":261,"h":56}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      109 |             await shoot(page, page.locator(ROOT), `o2-open-${radius ? "rd" : "house"}-${info.project.name}`);
+      110 |             console.log(`o2 open ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)}`);
+    > 111 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      112 |             expect(root.radii).toEqual(plate.radii);
+      113 |         });
+      114 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-11-0-1.spec.ts:111:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-ce341-plate-and-the-box-are-round-webkit/error-context.md
+
+  12) [webkit] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: collapsed with a persistent seat beside the summary, the plate and the box are round 
+
+    Error: {"radii":["16px","16px","16px","16px"],"w":102,"h":56}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      120 |             await shoot(page, page.locator(ROOT), `o2-collapsed-${radius ? "rd" : "house"}-${info.project.name}`);
+      121 |             console.log(`o2 collapsed ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)}`);
+    > 122 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      123 |             expect(root.radii).toEqual(plate.radii);
+      124 |         });
+      125 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-11-0-1.spec.ts:122:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-fa514-plate-and-the-box-are-round-webkit/error-context.md
+
+  13) [webkit] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round 
+
+    Error: {"radii":["16px","16px","16px","16px"],"w":164,"h":56}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      134 |             await shoot(page, page.locator(ROOT), `o2-narrow-${radius ? "rd" : "house"}-${info.project.name}`);
+      135 |             console.log(`o2 narrow ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)} run ${JSON.stringify(run)}`);
+    > 136 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      137 |             expect(root.radii).toEqual(plate.radii);
+      138 |         });
+      139 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-11-0-1.spec.ts:136:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-b74d4-end-seat-the-plate-is-round-webkit/error-context.md
+
+  14) [webkit] › tests-visual/release-11-0-1.spec.ts:142:1 › o3 every frame of the expand and of the collapse paints a round end 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 142
+
+    - Array []
+    + Array [
+    +   "0ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "4ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "15ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "16ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "30ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "40ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "45ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "56ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "65ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "75ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "86ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "94ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "107ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "117ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "126ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "137ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "146ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "158ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "168ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "176ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "187ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "197ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "207ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "218ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "228ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "240ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "248ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "260ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "270ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "279ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "291ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "301ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "310ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "320ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "331ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "341ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "353ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "361ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "372ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "382ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "391ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "402ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "413ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "422ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "433ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "442ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "452ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "462ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "474ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "484ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "493ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "503ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "515ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "524ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "534ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "545ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "556ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "565ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "574ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "585ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "596ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "607ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "617ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "625ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "637ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "646ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "657ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "668ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "677ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "688ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "698ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "710ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "719ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "729ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "738ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "749ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "758ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "770ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "781ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "789ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "799ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "811ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "819ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "831ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "841ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "852ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "862ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "872ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "882ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "892ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "902ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "912ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "924ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "931ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "941ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "953ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "962ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "974ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "983ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "995ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1003ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1015ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1023ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1033ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1045ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1057ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1064ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1075ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1086ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1096ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1107ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1117ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1127ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1137ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1146ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1158ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1168ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1177ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1187ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1199ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1208ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1220ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1227ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1240ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1248ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1259ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1269ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1279ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1289ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1300ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1312ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1321ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1329ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1341ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1350ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1362ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1370ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1382ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1392ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    +   "1402ms 16px 16px 16px 16px painted 16.0x16.0 16.0x16.0 16.0x16.0 16.0x16.0 half=28",
+    + ]
+
+      187 |     expect(expand.morphing, "the expand morphed").toBeGreaterThan(2);
+      188 |     expect(collapse.morphing, "the collapse morphed").toBeGreaterThan(2);
+    > 189 |     expect(expand.bad).toEqual([]);
+          |                        ^
+      190 |     expect(collapse.bad).toEqual([]);
+      191 | });
+      192 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-11-0-1.spec.ts:189:24
+
+    Error Context: tests-visual/test-results/release-11-0-1-o3-every-fr-1c7bf-collapse-paints-a-round-end-webkit/error-context.md
+
+  14 failed
+    [webkit] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 390: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 844: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:217:5 › g1 rest dock at 1280: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:294:1 › g1 an overflowing run at scroll 0: the leading cap rests at half the block extent, a length; the trailing cap is cut 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:318:1 › g2 collapsed: the plate is a circle, half its extent on both axes 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:336:1 › g2 expanded (collapsible), each layer and input mode hold g1 
+    [webkit] › tests-visual/release-10-1-5.spec.ts:999:1 › h4 with no ResizeObserver the plate rests at half its block extent 
+    [webkit] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round 
+    [webkit] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round 
+    [webkit] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round 
+    [webkit] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open at rest, the plate and the box are round 
+    [webkit] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: collapsed with a persistent seat beside the summary, the plate and the box are round 
+    [webkit] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round 
+    [webkit] › tests-visual/release-11-0-1.spec.ts:142:1 › o3 every frame of the expand and of the collapse paints a round end 
+webkit-b rc=1
+reverted g14-corner
+tree clean: 677 src files equal HEAD
+== done 2026-11-22 04:30:22

@@ -1,0 +1,19 @@
+== g2-held 2026-11-22 02:40:25 (load { 9.36 7.50 7.90 })
+OK   g2-held
+applied g2-held - G-2 (from rest): a leaving face sized by its border box as its content box
+-- chromium 02:40:29 (load { 9.09 7.47 7.89 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+== p3-fold-pill-fine chromium 02:40:29 load { 9.09 7.47 7.89 }
+{"cell":"1440-fine-light","rows":"p3-fold-pill-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":234,"firstChange":233.4,"lastChange":1422.3,"screencast":null,"consoleErrors":0}
+chromium rc=0
+-- webkit 02:40:36 (load { 8.76 7.43 7.87 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+== p3-fold-pill-fine webkit 02:40:36 load { 8.76 7.43 7.87 }
+{"cell":"1440-fine-light","rows":"p3-fold-pill-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":199,"firstChange":223,"lastChange":1617,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g2-held
+tree clean: 677 src files equal HEAD
+-- judge
+p3-fold-pill-fine | chromium | 1440-fine-light | curve 0.02 | held 4 | whole {"row":132,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":208,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: a unit moves 4.00 px in the window's first row (seat#0 row 133)
+p3-fold-pill-fine | webkit | 1440-fine-light | curve 0.01 | held 4 | whole {"row":120,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":208,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: a unit moves 4.00 px in the window's first row (seat#0 row 121)
+== done 2026-11-22 02:40:44

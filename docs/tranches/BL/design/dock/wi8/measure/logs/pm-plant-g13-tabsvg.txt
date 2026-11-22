@@ -1,0 +1,15 @@
+== g13-tabsvg 2026-11-22 03:19:22 (load { 12.23 13.16 12.20 })
+OK   g13-tabsvg
+applied g13-tabsvg - G-13 / RU-65, RU-87: the tab seat's glyph rule cut back to a direct svg
+-- chromium 03:19:26 (load { 12.29 13.16 12.20 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"engine":"chromium","tag":"pm-g13-tabsvg","pass":false,"bad":50,"first":["1440 fine share 0.5 w-glyphs-tab Home: seat 38.59 against control 40","1440 fine share 0.5 w-glyphs-tab Image: seat 63.42 against control 40","1440 fine share 0.5 w-glyphs-tab Image (img, worded): glyph 49.42x49.42 against 24.6","1440 fine share 0.5 w-glyphs-tab Picture: seat 314 against control 40","1440 fine share 0.5 w-glyphs-tab Picture (picture, worded): glyph 300x300 against 24.6","1440 fine share 0.6 w-glyphs-tab Home: seat 38.59 against control 40","1440 fine share 0.6 w-glyphs-tab Image: seat 63.42 against control 40","1440 fine share 0.6 w-glyphs-tab Image (img, worded): glyph 49.42x49.42 against 24.6"]}
+chromium rc=0
+-- webkit 03:19:33 (load { 12.59 13.21 12.22 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for the 'webkit' lock
+{"engine":"webkit","tag":"pm-g13-tabsvg","pass":false,"bad":50,"first":["1440 fine share 0.5 w-glyphs-tab Home: seat 38.59 against control 40","1440 fine share 0.5 w-glyphs-tab Image: seat 38 against control 40","1440 fine share 0.5 w-glyphs-tab Image (img, worded): glyph 24x24 against 24.6","1440 fine share 0.5 w-glyphs-tab Picture: seat 38 against control 40","1440 fine share 0.5 w-glyphs-tab Picture (picture, worded): glyph 24x24 against 24.6","1440 fine share 0.6 w-glyphs-tab Home: seat 38.59 against control 40","1440 fine share 0.6 w-glyphs-tab Image: seat 38 against control 40","1440 fine share 0.6 w-glyphs-tab Image (img, worded): glyph 24x24 against 24.6"]}
+webkit rc=0
+reverted g13-tabsvg
+tree clean: 677 src files equal HEAD
+== done 2026-11-22 03:21:05

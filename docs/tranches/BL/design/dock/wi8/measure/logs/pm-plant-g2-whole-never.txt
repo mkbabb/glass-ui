@@ -1,0 +1,25 @@
+== g2-whole-never 2026-11-22 02:42:07 (load { 9.96 7.98 8.02 })
+OK   g2-whole-never
+applied g2-whole-never - G-2 (RU-27): the whole-seat flag never set
+-- chromium 02:42:11 (load { 9.88 7.99 8.03 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+== p3-fold-many-coarse chromium 02:42:11 load { 9.88 7.99 8.03 }
+{"cell":"390-coarse-light","rows":"p3-fold-many-coarse.wi8.chromium.390-coarse-light.rows.json","strips":[],"frames":213,"firstChange":73.4,"lastChange":1251.4,"screencast":null,"consoleErrors":0}
+== p3-fold-many-c360 chromium 02:42:14 load { 9.73 7.99 8.03 }
+{"cell":"360-coarse-light","rows":"p3-fold-many-c360.wi8.chromium.360-coarse-light.rows.json","strips":[],"frames":206,"firstChange":72,"lastChange":1259.8,"screencast":null,"consoleErrors":0}
+chromium rc=0
+-- webkit 02:42:21 (load { 9.75 8.03 8.04 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+== p3-fold-many-coarse webkit 02:42:21 load { 9.75 8.03 8.04 }
+{"cell":"390-coarse-light","rows":"p3-fold-many-coarse.wi8.webkit.390-coarse-light.rows.json","strips":[],"frames":162,"firstChange":67,"lastChange":1238,"screencast":null,"consoleErrors":0}
+== p3-fold-many-c360 webkit 02:42:25 load { 9.29 7.96 8.01 }
+{"cell":"360-coarse-light","rows":"p3-fold-many-c360.wi8.webkit.360-coarse-light.rows.json","strips":[],"frames":165,"firstChange":66,"lastChange":1259,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g2-whole-never
+tree clean: 677 src files equal HEAD
+-- judge
+p3-fold-many-c360 | chromium | 360-coarse-light | curve 0.01 | held 0 | whole {"row":108,"fits":false,"whole":5,"of":7,"partial":[12],"absent":1,"ext":296,"over":84,"room":344,"offset":0,"focused":false} | touch true | FAIL: at open rest: row 108: a run that does not fit has a partial seat [12] (+1 rests)
+p3-fold-many-c360 | webkit | 360-coarse-light | curve 0.02 | held 0 | whole {"row":85,"fits":false,"whole":5,"of":7,"partial":[12],"absent":1,"ext":296,"over":84,"room":344,"offset":0,"focused":false} | touch true | FAIL: at open rest: row 85: a run that does not fit has a partial seat [12] (+1 rests)
+p3-fold-many-coarse | chromium | 390-coarse-light | curve 0.02 | held 0 | whole {"row":111,"fits":false,"whole":5,"of":7,"partial":[42],"absent":1,"ext":326,"over":54,"room":374,"offset":0,"focused":false} | touch true | FAIL: at open rest: row 111: a run that does not fit has a partial seat [42] (+1 rests)
+p3-fold-many-coarse | webkit | 390-coarse-light | curve 0.02 | held 0 | whole {"row":83,"fits":false,"whole":5,"of":7,"partial":[42],"absent":1,"ext":326,"over":54,"room":374,"offset":0,"focused":false} | touch true | FAIL: at open rest: row 83: a run that does not fit has a partial seat [42] (+1 rests)
+== done 2026-11-22 02:42:32

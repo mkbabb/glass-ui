@@ -1,0 +1,14 @@
+== touchcure 2026-11-22 03:10:01 (load { 18.62 13.97 11.25 })
+OK   touchcure
+applied touchcure - RU-72 (S6): the two touch cures removed (DockTrigger's close on a touch press, the scrim's touch click)
+-- chromium 03:10:05 (load { 18.49 14.02 11.29 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"engine":"chromium","tag":"pm-touchcure","pass":true,"cells":{"select-touch":true,"sheet-touch":true,"select-touch-item":true,"sheet-touch-scrim":true},"bad":[]}
+chromium rc=0
+-- webkit 03:10:30 (load { 15.94 13.79 11.28 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"engine":"webkit","tag":"pm-touchcure","pass":false,"cells":{"select-touch":false,"sheet-touch":false,"select-touch-item":true,"sheet-touch-scrim":false},"bad":["select-touch: opened true closed false stillClosed false reopened 0 dock true","sheet-touch: opened true closed false stillClosed false reopened 0 dock true","sheet-touch-scrim: opened true closed false stillClosed false reopened 0 dock true"]}
+webkit rc=0
+reverted touchcure
+tree clean: 677 src files equal HEAD
+== done 2026-11-22 03:10:55

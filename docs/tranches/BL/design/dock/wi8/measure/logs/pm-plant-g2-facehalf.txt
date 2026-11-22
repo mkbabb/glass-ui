@@ -1,0 +1,39 @@
+== g2-facehalf 2026-11-22 02:44:09 (load { 9.15 8.31 8.14 })
+OK   g2-facehalf
+applied g2-facehalf - G-2/G-4 (RU-70): the content window halved, 0.55 to 0.275
+-- chromium 02:44:13 (load { 9.15 8.31 8.14 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+== p3-fold-pill-fine chromium 02:44:14 load { 9.15 8.31 8.14 }
+{"cell":"1440-fine-light","rows":"p3-fold-pill-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":238,"firstChange":237.3,"lastChange":1400,"screencast":null,"consoleErrors":0}
+== p3-fold-rim-coarse chromium 02:44:17 load { 8.97 8.29 8.13 }
+{"cell":"390-coarse-light","rows":"p3-fold-rim-coarse.wi8.chromium.390-coarse-light.rows.json","strips":[],"frames":221,"firstChange":76.6,"lastChange":1243,"screencast":null,"consoleErrors":0}
+== p3-fold-ctl-te-parent-coarse chromium 02:44:20 load { 9.06 8.31 8.14 }
+{"cell":"390-coarse-light","rows":"p3-fold-ctl-te-parent-coarse.wi8.chromium.390-coarse-light.rows.json","strips":[],"frames":228,"firstChange":77.7,"lastChange":1285.7,"screencast":null,"consoleErrors":0}
+chromium rc=0
+-- webkit 02:44:26 (load { 9.61 8.44 8.19 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+== p3-fold-pill-fine webkit 02:44:26 load { 9.61 8.44 8.19 }
+{"cell":"1440-fine-light","rows":"p3-fold-pill-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":200,"firstChange":226,"lastChange":1626,"screencast":null,"consoleErrors":0}
+== p3-fold-rim-coarse webkit 02:44:30 load { 9.48 8.43 8.18 }
+{"cell":"390-coarse-light","rows":"p3-fold-rim-coarse.wi8.webkit.390-coarse-light.rows.json","strips":[],"frames":162,"firstChange":60,"lastChange":1231,"screencast":null,"consoleErrors":0}
+== p3-fold-ctl-te-parent-coarse webkit 02:44:33 load { 9.48 8.43 8.18 }
+{"cell":"390-coarse-light","rows":"p3-fold-ctl-te-parent-coarse.wi8.webkit.390-coarse-light.rows.json","strips":[],"frames":167,"firstChange":62,"lastChange":1287,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g2-facehalf
+tree clean: 677 src files equal HEAD
+-- judge
+-- judge8 chromium
+p3-fold-ctl-te-parent-coarse | wi8 | chromium | 390-coarse-light | load 9.06/9.06 | f9-f62 395ms | L 156px first 1.4% max 7.2% last 0.27px | op60 0.47 | out 0px | FAIL: no face showing for 74 ms (10 rows; bound 17 ms); opacity 0.47 in 60 Hz at summary f14; summary fade lasts 43.2 ms interpolated (bound 66.7 ms)
+p3-fold-ctl-te-parent-coarse | wi8 | chromium | 390-coarse-light | load 9.06/9.06 | f119-f172 391ms | L 156px first 1.4% max 8.3% last 0.26px | op60 0.42 | out 0px | FAIL: no face showing for 75 ms (10 rows; bound 17 ms); opacity 0.42 in 60 Hz at full f122; full fade lasts 45.6 ms interpolated (bound 66.7 ms); seat#0 fade lasts 45.6 ms interpolated (bound 66.7 ms); seat#1 fade lasts 45.6 ms interpolated (bound 66.7 ms); seat#2 fade lasts 45.6 ms interpolated (bound 66.7 ms) (+1)
+p3-fold-pill-fine | wi8 | chromium | 1440-fine-light | load 8.97/8.97 | f31-f79 378ms | L 76px first 1.3% max 7.2% last 0.05px; R 76px first 1.3% max 7.2% last 0.04px | op60 0.49 | out 0px | FAIL: no face showing for 74 ms (10 rows; bound 17 ms); opacity 0.49 in 60 Hz at summary f36; summary fade lasts 46.5 ms interpolated (bound 66.7 ms)
+p3-fold-pill-fine | wi8 | chromium | 1440-fine-light | load 8.97/8.97 | f133-f183 380ms | L 76px first 0.9% max 8.4% last 0.06px; R 76px first 0.9% max 8.4% last 0.06px | op60 0.44 | out 0px | FAIL: no face showing for 72 ms (9 rows; bound 17 ms); opacity 0.44 in 60 Hz at full f137; full fade lasts 43.7 ms interpolated (bound 66.7 ms); seat#0 fade lasts 43.7 ms interpolated (bound 66.7 ms); seat#1 fade lasts 43.7 ms interpolated (bound 66.7 ms); seat#2 fade lasts 43.7 ms interpolated (bound 66.7 ms) (+1)
+p3-fold-rim-coarse | wi8 | chromium | 390-coarse-light | load 8.97/9.06 | f9-f60 373ms | L 82px first 0.5% max 8.3% last 0.09px; R 82px first 0.5% max 8.3% last 0.1px | op60 0.48 | out 0px | FAIL: no face showing for 72 ms (9 rows; bound 17 ms); opacity 0.48 in 60 Hz at summary f15; summary fade lasts 41.5 ms interpolated (bound 66.7 ms)
+p3-fold-rim-coarse | wi8 | chromium | 390-coarse-light | load 8.97/9.06 | f114-f164 379ms | L 82px first 1.2% max 7% last 0.09px; R 82px first 1.2% max 7% last 0.1px | op60 0.4 | out 0px | FAIL: no face showing for 73 ms (10 rows; bound 17 ms); opacity 0.40 in 60 Hz at full f117; full fade lasts 47.2 ms interpolated (bound 66.7 ms); seat#0 fade lasts 47.2 ms interpolated (bound 66.7 ms); seat#1 fade lasts 47.2 ms interpolated (bound 66.7 ms); seat#2 fade lasts 47.2 ms interpolated (bound 66.7 ms) (+1)
+-- judge8 webkit
+p3-fold-ctl-te-parent-coarse | wi8 | webkit | 390-coarse-light | load 9.36/9.36 | f4-f44 409ms | L 156px first 1.6% max 9.9% last 0.25px | op60 0.28 | out 0px | FAIL: no face showing for 72 ms (7 rows; bound 17 ms); summary fade lasts 46 ms interpolated (bound 66.7 ms)
+p3-fold-ctl-te-parent-coarse | wi8 | webkit | 390-coarse-light | load 9.36/9.36 | f86-f125 400ms | L 156px first 1.3% max 9.1% last 0.26px | op60 0.28 | out 0px | FAIL: no face showing for 70 ms (7 rows; bound 17 ms); full fade lasts 47.4 ms interpolated (bound 66.7 ms); seat#0 fade lasts 47.4 ms interpolated (bound 66.7 ms); seat#1 fade lasts 47.4 ms interpolated (bound 66.7 ms); seat#2 fade lasts 47.4 ms interpolated (bound 66.7 ms); seat#3 fade lasts 47.4 ms interpolated (bound 66.7 ms)
+p3-fold-pill-fine | wi8 | webkit | 1440-fine-light | load 9.61/9.48 | f21-f59 389ms | L 76px first 2.3% max 9.9% last 0.08px; R 76px first 2.3% max 10% last 0.08px | op60 0.26 | out 0px | FAIL: no face showing for 74 ms (7 rows; bound 17 ms); summary fade lasts 47.4 ms interpolated (bound 66.7 ms)
+p3-fold-pill-fine | wi8 | webkit | 1440-fine-light | load 9.61/9.48 | f121-f159 390ms | L 76px first 1.9% max 10.3% last 0.08px; R 76px first 2% max 10.3% last 0.08px | op60 0.38 | out 0px | FAIL: no face showing for 70 ms (7 rows; bound 17 ms); full fade lasts 46.9 ms interpolated (bound 66.7 ms); seat#0 fade lasts 46.9 ms interpolated (bound 66.7 ms); seat#1 fade lasts 46.9 ms interpolated (bound 66.7 ms); seat#2 fade lasts 46.9 ms interpolated (bound 66.7 ms); seat#3 fade lasts 46.9 ms interpolated (bound 66.7 ms)
+p3-fold-rim-coarse | wi8 | webkit | 390-coarse-light | load 9.48/9.48 | f4-f42 386ms | L 82px first 1% max 8.9% last 0.05px; R 82px first 1% max 8.9% last 0.04px | op60 0.31 | out 0px | FAIL: no face showing for 71 ms (7 rows; bound 17 ms); summary fade lasts 43.4 ms interpolated (bound 66.7 ms)
+p3-fold-rim-coarse | wi8 | webkit | 390-coarse-light | load 9.48/9.48 | f82-f120 386ms | L 82px first 1.9% max 9.3% last 0.09px; R 82px first 1.9% max 9.3% last 0.1px | op60 0.34 | out 0px | FAIL: no face showing for 72 ms (7 rows; bound 17 ms); full fade lasts 46.2 ms interpolated (bound 66.7 ms); seat#0 fade lasts 46.2 ms interpolated (bound 66.7 ms); seat#1 fade lasts 46.2 ms interpolated (bound 66.7 ms); seat#2 fade lasts 46.2 ms interpolated (bound 66.7 ms); seat#3 fade lasts 46.2 ms interpolated (bound 66.7 ms)
+== done 2026-11-22 02:44:43

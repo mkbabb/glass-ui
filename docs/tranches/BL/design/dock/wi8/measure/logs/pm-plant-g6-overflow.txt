@@ -1,0 +1,37 @@
+== g6-overflow 2026-11-22 02:57:28 (load { 8.41 7.59 7.91 })
+OK   g6-overflow
+applied g6-overflow - G-6 / RU-52: the cure removed (a fitting run a scroll port again, reach spending its reserve)
+-- chromium 02:57:32 (load { 8.62 7.65 7.93 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+== p3-hover-fine chromium 02:57:32 load { 8.62 7.65 7.93 }
+{"cell":"1440-fine-light","rows":"p3-hover-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":1253,"firstChange":217,"lastChange":9104.7,"screencast":null,"consoleErrors":0}
+== p4-hover-390 chromium 02:57:45 load { 9.48 7.88 8.00 }
+{"cell":"390-fine-light","rows":"p4-hover-390.wi8.chromium.390-fine-light.rows.json","strips":[],"frames":1267,"firstChange":220.3,"lastChange":9103.5,"screencast":null,"consoleErrors":0}
+== p4-hover-key chromium 02:57:58 load { 9.32 7.90 8.01 }
+{"cell":"1440-fine-light","rows":"p4-hover-key.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":425,"firstChange":70,"lastChange":443.7,"screencast":null,"consoleErrors":0}
+== p6-press-fine chromium 02:58:03 load { 9.61 7.98 8.04 }
+{"cell":"1440-fine-light","rows":"p6-press-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":783,"firstChange":215.1,"lastChange":2134.4,"screencast":null,"consoleErrors":0}
+chromium rc=0
+-- webkit 02:58:16 (load { 9.69 8.07 8.06 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+== p3-hover-fine webkit 02:58:17 load { 9.69 8.07 8.06 }
+{"cell":"1440-fine-light","rows":"p3-hover-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":965,"firstChange":210,"lastChange":9076,"screencast":null,"consoleErrors":0}
+== p4-hover-390 webkit 02:58:29 load { 10.63 8.36 8.17 }
+{"cell":"390-fine-light","rows":"p4-hover-390.wi8.webkit.390-fine-light.rows.json","strips":[],"frames":966,"firstChange":212,"lastChange":9070,"screencast":null,"consoleErrors":0}
+== p4-hover-key webkit 02:58:42 load { 10.08 8.31 8.15 }
+{"cell":"1440-fine-light","rows":"p4-hover-key.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":324,"firstChange":69,"lastChange":3110,"screencast":null,"consoleErrors":0}
+== p6-press-fine webkit 02:58:47 load { 10.23 8.37 8.18 }
+{"cell":"1440-fine-light","rows":"p6-press-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":592,"firstChange":213,"lastChange":1978,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g6-overflow
+tree clean: 677 src files equal HEAD
+-- judge
+pass p3-hover-fine.wi8.chromium.1440-fine-light.rows.json: rows 1116, largest box change 0.00 px (-), folded rows 0
+pass p3-hover-fine.wi8.webkit.1440-fine-light.rows.json: rows 865, largest box change 0.00 px (-), folded rows 0
+pass p4-hover-390.wi8.chromium.390-fine-light.rows.json: rows 1135, largest box change 0.00 px (-), folded rows 0
+pass p4-hover-390.wi8.webkit.390-fine-light.rows.json: rows 865, largest box change 0.00 px (-), folded rows 0
+pass p4-hover-key.wi8.chromium.1440-fine-light.rows.json: rows 313, largest box change 0.00 px (-), folded rows 0
+FAIL p4-hover-key.wi8.webkit.1440-fine-light.rows.json: rows 239, largest box change 4.00 px (seat#0 row 185), folded rows 0
+FAIL p6-press-fine.wi8.chromium.1440-fine-light.rows.json: rows 648, largest box change 225.66 px (plate row 250), folded rows 573
+FAIL p6-press-fine.wi8.webkit.1440-fine-light.rows.json: rows 492, largest box change 225.25 px (plate row 183), folded rows 436
+== done 2026-11-22 02:59:00

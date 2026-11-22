@@ -1,0 +1,14 @@
+== g4-groupframe 2026-11-22 02:53:17 (load { 7.14 8.08 8.22 })
+OK   g4-groupframe
+applied g4-groupframe - step 7: a role=group child of the run is a snap area again
+-- chromium 02:53:21 (load { 7.05 8.05 8.21 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"engine":"chromium","tag":"pm-g4-groupframe","pass":false,"trig":{"1440 fine":{"trigger":[66.23,40],"seat":[40,40],"padInline":8,"tabPad":12,"pass":false},"390 coarse":{"trigger":[61.45,44],"seat":[44,44],"padInline":8,"tabPad":12,"pass":false}},"bad":["trig 1440 fine: {\"trigger\":[66.23,40],\"seat\":[40,40],\"padInline\":8,\"tabPad\":12,\"pass\":false}","group 1440 fine: moved true, rests 60! 120! 180! 240! 300! 360! 420! 480! 540 600! 600! 600!, group start, seat none","trig 390 coarse: {\"trigger\":[61.45,44],\"seat\":[44,44],\"padInline\":8,\"tabPad\":12,\"pass\":false}","group 390 coarse: moved true, rests 60! 120 180! 240! 300! 360! 420! 480! 535, group start, seat none"]}
+chromium rc=0
+-- webkit 02:53:39 (load { 6.67 7.89 8.14 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"engine":"webkit","tag":"pm-g4-groupframe","pass":false,"trig":{"1440 fine":{"trigger":[66.25,40],"seat":[40,40],"padInline":8,"tabPad":12,"pass":false},"390 coarse":{"trigger":[61.45,44],"seat":[44,44],"padInline":8,"tabPad":12,"pass":false}},"bad":["trig 1440 fine: {\"trigger\":[66.25,40],\"seat\":[40,40],\"padInline\":8,\"tabPad\":12,\"pass\":false}","group 1440 fine: moved true, rests 60! 120! 180! 240! 300! 360! 420! 480! 540 0 60! 120!, group start, seat none","trig 390 coarse: {\"trigger\":[61.45,44],\"seat\":[44,44],\"padInline\":8,\"tabPad\":12,\"pass\":false}","group 390 coarse: moved true, rests 60! 120 180! 240! 300! 360! 420! 480! 0 60! 120 180!, group start, seat none"]}
+webkit rc=0
+reverted g4-groupframe
+tree clean: 677 src files equal HEAD
+== done 2026-11-22 02:54:00

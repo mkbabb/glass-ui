@@ -1,0 +1,14 @@
+== g8-exempt 2026-11-22 03:02:18 (load { 10.42 9.52 8.73 })
+OK   g8-exempt
+applied g8-exempt - G-8 (RU-72): a press on the trigger of an open surface folds the dock (the trigger exemption removed)
+-- chromium 03:02:22 (load { 10.87 9.63 8.77 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"engine":"chromium","tag":"pm-g8-exempt","pass":false,"cells":{"menu-mouse":false,"select-mouse":false,"popover-mouse":false,"sheet-mouse":true,"menu-touch":false,"select-touch":false,"popover-touch":false,"sheet-touch":true,"select-touch-item":true,"sheet-touch-scrim":true,"tapseat":"w-pill-search","fourier":{"face":"folds","theme":"folds","menu":"folds","about":"folds"}},"bad":["menu-mouse: opened true closed true stillClosed true reopened 0 dock false","select-mouse: opened true closed true stillClosed true reopened 1 dock false","popover-mouse: opened true closed true stillClosed true reopened 0 dock false","menu-touch: opened true closed true stillClosed true reopened 0 dock false","select-touch: opened true closed false stillClosed false reopened 1 dock false","popover-touch: opened true closed true stillClosed true reopened 0 dock false"]}
+chromium rc=0
+-- webkit 03:04:11 (load { 12.39 10.65 9.28 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"engine":"webkit","tag":"pm-g8-exempt","pass":false,"cells":{"menu-mouse":false,"select-mouse":false,"popover-mouse":false,"sheet-mouse":true,"menu-touch":false,"select-touch":false,"popover-touch":false,"sheet-touch":true,"select-touch-item":true,"sheet-touch-scrim":true,"tapseat":"w-pill-search","fourier":{"face":"folds","theme":"folds","menu":"folds","about":"folds"}},"bad":["menu-mouse: opened true closed true stillClosed true reopened 0 dock false","select-mouse: opened true closed true stillClosed true reopened 1 dock false","popover-mouse: opened true closed true stillClosed true reopened 0 dock false","menu-touch: opened true closed true stillClosed true reopened 0 dock false","select-touch: opened true closed true stillClosed true reopened 0 dock false","popover-touch: opened true closed true stillClosed true reopened 0 dock false"]}
+webkit rc=0
+reverted g8-exempt
+tree clean: 677 src files equal HEAD
+== done 2026-11-22 03:06:05

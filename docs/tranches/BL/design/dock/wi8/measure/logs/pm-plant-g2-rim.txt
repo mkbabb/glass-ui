@@ -1,0 +1,19 @@
+== g2-rim 2026-11-22 02:40:05 (load { 7.62 7.07 7.76 })
+OK   g2-rim
+applied g2-rim - G-2 (the rim): the rim drawn on the root, not the plate
+-- chromium 02:40:10 (load { 7.33 7.02 7.74 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+== p3-fold-rim-fine chromium 02:40:10 load { 7.33 7.02 7.74 }
+{"cell":"1440-fine-light","rows":"p3-fold-rim-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":237,"firstChange":240.7,"lastChange":1403.7,"screencast":null,"consoleErrors":0}
+chromium rc=0
+-- webkit 02:40:17 (load { 9.23 7.41 7.87 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+== p3-fold-rim-fine webkit 02:40:17 load { 9.23 7.41 7.87 }
+{"cell":"1440-fine-light","rows":"p3-fold-rim-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":201,"firstChange":234,"lastChange":1634,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g2-rim
+tree clean: 677 src files equal HEAD
+-- judge
+p3-fold-rim-fine | chromium | 1440-fine-light | curve 0.02 | held 0 | rim {"dev":76,"fill":"Infinity..-Infinity%"} | whole {"row":133,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":208,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: rim 76.00 px off the plate's edge
+p3-fold-rim-fine | webkit | 1440-fine-light | curve 0.01 | held 0 | rim {"dev":76,"fill":"Infinity..-Infinity%"} | whole {"row":121,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":208,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: rim 76.00 px off the plate's edge
+== done 2026-11-22 02:40:25

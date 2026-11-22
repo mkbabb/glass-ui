@@ -1,0 +1,19 @@
+== g2-curve 2026-11-22 02:39:22 (load { 6.89 6.85 7.73 })
+OK   g2-curve
+applied g2-curve - G-2 (inside the curve): the curve inset never written
+-- chromium 02:39:26 (load { 7.54 6.99 7.77 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+== p3-fold-layers-fine chromium 02:39:26 load { 7.54 6.99 7.77 }
+{"cell":"1440-fine-light","rows":"p3-fold-layers-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":242,"firstChange":229.3,"lastChange":1395.9,"screencast":null,"consoleErrors":0}
+chromium rc=0
+-- webkit 02:39:33 (load { 7.97 7.09 7.80 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+== p3-fold-layers-fine webkit 02:39:33 load { 7.97 7.09 7.80 }
+{"cell":"1440-fine-light","rows":"p3-fold-layers-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":177,"firstChange":228,"lastChange":1403,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g2-curve
+tree clean: 677 src files equal HEAD
+-- judge
+p3-fold-layers-fine | chromium | 1440-fine-light | curve 8.29 | held 0 | FAIL: content 8.29 px outside the plate's curve (kid#0 row 80 (rest))
+p3-fold-layers-fine | webkit | 1440-fine-light | curve 8.29 | held 0 | FAIL: content 8.29 px outside the plate's curve (kid#0 row 59 (rest))
+== done 2026-11-22 02:39:40

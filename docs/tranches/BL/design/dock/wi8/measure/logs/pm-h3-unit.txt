@@ -1,0 +1,38 @@
+== tip 2026-11-21 23:10:31 (load { 24.59 20.51 17.82 })
+ ✓ tests/components/custom/dock/GlassDock.posture.test.ts > useDockState — G-1 (f): a held finger holds, the linger runs from the lift > holds while the finger is down and folds one linger after the lift, past the tap's focus (the tap's FocusEvent on the seat) 20ms
+ ✓ tests/components/custom/dock/GlassDock.posture.test.ts > useDockState — G-1 (f): a held finger holds, the linger runs from the lift > holds while the finger is down and folds one linger after the lift, past the tap's focus (no event) 3ms
+      Tests  2 passed | 20 skipped (22)
+applied g1-presshold - G-1 (f) (RU-73): the press hold removed
+== plant g1-presshold 2026-11-21 23:10:38 (load { 23.10 20.27 17.75 })
+ × tests/components/custom/dock/GlassDock.posture.test.ts > useDockState — G-1 (f): a held finger holds, the linger runs from the lift > holds while the finger is down and folds one linger after the lift, past the tap's focus (the tap's FocusEvent on the seat) 35ms
+   → a held finger holds: expected 'collapsed' to be 'hover' // Object.is equality
+ × tests/components/custom/dock/GlassDock.posture.test.ts > useDockState — G-1 (f): a held finger holds, the linger runs from the lift > holds while the finger is down and folds one linger after the lift, past the tap's focus (no event) 5ms
+   → a held finger holds: expected 'collapsed' to be 'hover' // Object.is equality
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  tests/components/custom/dock/GlassDock.posture.test.ts > useDockState — G-1 (f): a held finger holds, the linger runs from the lift > holds while the finger is down and folds one linger after the lift, past the tap's focus (the tap's FocusEvent on the seat)
+ FAIL  tests/components/custom/dock/GlassDock.posture.test.ts > useDockState — G-1 (f): a held finger holds, the linger runs from the lift > holds while the finger is down and folds one linger after the lift, past the tap's focus (no event)
+AssertionError: a held finger holds: expected 'collapsed' to be 'hover' // Object.is equality
+      Tests  2 failed | 20 skipped (22)
+reverted g1-presshold
+tree clean: 677 src files equal HEAD
+applied g1-frompress - G-1 (f) (RU-73): the linger timed from the touch press, not the lift
+== plant g1-frompress 2026-11-21 23:10:45 (load { 23.73 20.45 17.83 })
+ × tests/components/custom/dock/GlassDock.posture.test.ts > useDockState — G-1 (f): a held finger holds, the linger runs from the lift > holds while the finger is down and folds one linger after the lift, past the tap's focus (the tap's FocusEvent on the seat) 26ms
+   → not before one linger from the lift: expected 'collapsed' to be 'hover' // Object.is equality
+ × tests/components/custom/dock/GlassDock.posture.test.ts > useDockState — G-1 (f): a held finger holds, the linger runs from the lift > holds while the finger is down and folds one linger after the lift, past the tap's focus (no event) 4ms
+   → not before one linger from the lift: expected 'collapsed' to be 'hover' // Object.is equality
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  tests/components/custom/dock/GlassDock.posture.test.ts > useDockState — G-1 (f): a held finger holds, the linger runs from the lift > holds while the finger is down and folds one linger after the lift, past the tap's focus (the tap's FocusEvent on the seat)
+ FAIL  tests/components/custom/dock/GlassDock.posture.test.ts > useDockState — G-1 (f): a held finger holds, the linger runs from the lift > holds while the finger is down and folds one linger after the lift, past the tap's focus (no event)
+AssertionError: not before one linger from the lift: expected 'collapsed' to be 'hover' // Object.is equality
+      Tests  2 failed | 20 skipped (22)
+reverted g1-frompress
+tree clean: 677 src files equal HEAD
+applied g1-lift - G-1 (f): the linger scheduled in the touch pointerup, before the tap's focus
+== plant g1-lift 2026-11-21 23:10:51 (load { 22.61 20.32 17.81 })
+ ✓ tests/components/custom/dock/GlassDock.posture.test.ts > useDockState — G-1 (f): a held finger holds, the linger runs from the lift > holds while the finger is down and folds one linger after the lift, past the tap's focus (the tap's FocusEvent on the seat) 25ms
+ ✓ tests/components/custom/dock/GlassDock.posture.test.ts > useDockState — G-1 (f): a held finger holds, the linger runs from the lift > holds while the finger is down and folds one linger after the lift, past the tap's focus (no event) 5ms
+      Tests  2 passed | 20 skipped (22)
+reverted g1-lift
+tree clean: 677 src files equal HEAD
+== done

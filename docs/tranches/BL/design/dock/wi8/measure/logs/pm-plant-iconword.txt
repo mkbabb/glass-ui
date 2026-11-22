@@ -1,0 +1,15 @@
+== iconword 2026-11-22 03:22:58 (load { 8.58 10.70 11.35 })
+OK   iconword
+applied iconword - RU-75: the labelled icon seat's seat height removed
+-- chromium 03:23:03 (load { 8.78 10.71 11.34 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"engine":"chromium","tag":"pm-iconword","pass":false,"bad":40,"first":["1440 fine share 0.5 w-glyphs-icon Focus: seat 35.91 against control 40","1440 fine share 0.5 w-glyphs-tab Home: seat 38.59 against control 40","1440 fine share 0.5 w-glyphs-tab Image: seat 38.59 against control 40","1440 fine share 0.5 w-glyphs-tab Picture: seat 38.59 against control 40","1440 fine share 0.6 w-glyphs-icon Focus: seat 35.91 against control 40","1440 fine share 0.6 w-glyphs-tab Home: seat 38.59 against control 40","1440 fine share 0.6 w-glyphs-tab Image: seat 38.59 against control 40","1440 fine share 0.6 w-glyphs-tab Picture: seat 38.59 against control 40"]}
+chromium rc=0
+-- webkit 03:23:09 (load { 8.42 10.57 11.29 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for the 'webkit' lock
+{"engine":"webkit","tag":"pm-iconword","pass":false,"bad":40,"first":["1440 fine share 0.5 w-glyphs-icon Focus: seat 35.91 against control 40","1440 fine share 0.5 w-glyphs-tab Home: seat 38.59 against control 40","1440 fine share 0.5 w-glyphs-tab Image: seat 38.59 against control 40","1440 fine share 0.5 w-glyphs-tab Picture: seat 38.59 against control 40","1440 fine share 0.6 w-glyphs-icon Focus: seat 35.91 against control 40","1440 fine share 0.6 w-glyphs-tab Home: seat 38.59 against control 40","1440 fine share 0.6 w-glyphs-tab Image: seat 38.59 against control 40","1440 fine share 0.6 w-glyphs-tab Picture: seat 38.59 against control 40"]}
+webkit rc=0
+reverted iconword
+tree clean: 677 src files equal HEAD
+== done 2026-11-22 03:23:54

@@ -1,0 +1,40 @@
+== g4-ghost 2026-11-22 02:46:39 (load { 9.57 8.99 8.44 })
+OK   g4-ghost
+applied g4-ghost - G-4 (RU-81): a removed seat keeps painting at its own opacity through its exit and is cut at the landing
+-- chromium 02:46:43 (load { 9.36 8.95 8.43 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+== p3-seatset-fine chromium 02:46:43 load { 9.36 8.95 8.43 }
+{"cell":"1440-fine-light","rows":"p3-seatset-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":440,"firstChange":220,"lastChange":2895.5,"screencast":null,"consoleErrors":0}
+== p3-seatset-coarse chromium 02:46:48 load { 8.93 8.87 8.41 }
+{"cell":"390-coarse-light","rows":"p3-seatset-coarse.wi8.chromium.390-coarse-light.rows.json","strips":[],"frames":325,"firstChange":69.8,"lastChange":2013,"screencast":null,"consoleErrors":0}
+chromium rc=0
+-- webkit 02:46:55 (load { 9.18 8.92 8.43 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for the 'webkit' lock
+== p3-seatset-fine webkit 02:52:39 load { 6.99 8.15 8.25 }
+{"cell":"1440-fine-light","rows":"p3-seatset-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":343,"firstChange":217,"lastChange":3085,"screencast":null,"consoleErrors":0}
+== p3-seatset-coarse webkit 02:52:45 load { 7.55 8.25 8.28 }
+{"cell":"390-coarse-light","rows":"p3-seatset-coarse.wi8.webkit.390-coarse-light.rows.json","strips":[],"frames":239,"firstChange":60,"lastChange":2027,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g4-ghost
+tree clean: 677 src files equal HEAD
+-- judge
+p3-seatset-coarse | chromium | 390-coarse-light | curve 0.02 | held 0 | ghost {"rows":36,"hidden":0} | join {"step":1,"cuts":1,"fades":"in 179ms out 8ms"} | whole {"row":324,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":224,"over":0,"room":374,"offset":0,"focused":false} | touch true | FAIL: joining seat steps 1.00 in 16.7 ms; joining seat cut in 1 rows; joining seat fade out 8ms (bound 75 ms)
+p3-seatset-coarse | webkit | 390-coarse-light | curve 0.02 | held 0 | ghost {"rows":27,"hidden":0} | join {"step":1,"cuts":1,"fades":"in 185ms out 10ms"} | whole {"row":238,"fits":true,"whole":4,"of":4,"partial":[],"absent":0,"ext":224,"over":0,"room":374,"offset":0,"focused":false} | touch true | FAIL: joining seat steps 1.00 in 16.7 ms; joining seat cut in 1 rows; joining seat fade out 10ms (bound 75 ms)
+p3-seatset-fine | chromium | 1440-fine-light | curve 0.02 | held 0 | ghost {"rows":147,"hidden":0} | join {"step":1,"cuts":1,"fades":"in 180ms out 9ms"} | whole {"row":439,"fits":true,"whole":3,"of":3,"partial":[],"absent":0,"ext":160,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: joining seat steps 1.00 in 16.7 ms; joining seat cut in 1 rows; joining seat fade out 9ms (bound 75 ms)
+p3-seatset-fine | webkit | 1440-fine-light | curve 0.02 | held 0 | ghost {"rows":111,"hidden":0} | join {"step":1,"cuts":1,"fades":"in 187ms out 9ms"} | whole {"row":342,"fits":true,"whole":3,"of":3,"partial":[],"absent":0,"ext":160,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: joining seat steps 1.00 in 16.7 ms; joining seat cut in 1 rows; joining seat fade out 9ms (bound 75 ms)
+p3-seatset-coarse | wi8 | chromium | 390-coarse-light | load 8.93/9.02 | f7-f59 381ms | L 82px first 1.3% max 7.6% last 0.05px; R 82px first 1.3% max 7.6% last 0.04px | op60 0.24 | out 0px | pass
+p3-seatset-coarse | wi8 | chromium | 390-coarse-light | load 8.93/9.02 | f115-f152 274ms | L 26px first 1% max 6.8% last 0.11px; R 26px first 1% max 6.8% last 0.11px | op60 0.19 | out 0px | pass
+p3-seatset-coarse | wi8 | chromium | 390-coarse-light | load 8.93/9.02 | f232-f269 274ms | L 26px first 1.2% max 8.2% last 0.12px; R 26px first 1.1% max 8.2% last 0.13px | op60 0 | out 0px | pass
+p3-seatset-coarse | wi8 | webkit | 390-coarse-light | load 7.55/7.55 | f4-f42 387ms | L 82px first 1% max 10% last 0.05px; R 82px first 1% max 10% last 0.04px | op60 0.18 | out 0px | pass
+p3-seatset-coarse | wi8 | webkit | 390-coarse-light | load 7.55/7.55 | f83-f111 286ms | L 26px first 1.6% max 10.5% last 0.14px; R 26px first 1.6% max 10.5% last 0.14px | op60 0.13 | out 0px | pass
+p3-seatset-coarse | wi8 | webkit | 390-coarse-light | load 7.55/7.55 | f170-f198 286ms | L 26px first 0.8% max 9% last 0.17px; R 26px first 0.8% max 9% last 0.17px | op60 0 | out 0px | pass
+p3-seatset-fine | wi8 | chromium | 1440-fine-light | load 8.93/8.93 | f27-f78 378ms | L 76px first 1.2% max 7.6% last 0.06px; R 76px first 1.2% max 7.6% last 0.07px | op60 0.25 | out 0px | pass
+p3-seatset-fine | wi8 | chromium | 1440-fine-light | load 8.93/8.93 | f135-f173 283ms | L 24px first 1.4% max 7.8% last 0.17px; R 24px first 1.5% max 7.8% last 0.17px | op60 0.19 | out 0px | pass
+p3-seatset-fine | wi8 | chromium | 1440-fine-light | load 8.93/8.93 | f230-f267 281ms | L 24px first 1.4% max 7.3% last 0.14px; R 24px first 1.4% max 7.3% last 0.14px | op60 0 | out 0px | pass
+p3-seatset-fine | wi8 | chromium | 1440-fine-light | load 8.93/8.93 | f322-f360 283ms | L 24px first 0.9% max 7.8% last 0.17px; R 24px first 0.9% max 7.8% last 0.17px | op60 0.18 | out 0px | pass
+p3-seatset-fine | wi8 | webkit | 1440-fine-light | load 6.99/7.55 | f20-f58 388ms | L 76px first 1.9% max 10.2% last 0.08px; R 76px first 2% max 10.2% last 0.08px | op60 0.19 | out 0px | pass
+p3-seatset-fine | wi8 | webkit | 1440-fine-light | load 6.99/7.55 | f100-f128 287ms | L 24px first 1.6% max 10% last 0.2px; R 24px first 1.6% max 10% last 0.21px | op60 0.15 | out 0px | pass
+p3-seatset-fine | wi8 | webkit | 1440-fine-light | load 6.99/7.55 | f187-f215 286ms | L 24px first 1.3% max 10% last 0.22px; R 24px first 1.3% max 10% last 0.22px | op60 0 | out 0px | pass
+p3-seatset-fine | wi8 | webkit | 1440-fine-light | load 6.99/7.55 | f254-f283 296ms | L 24px first 0.2% max 10% last 0.22px; R 24px first 0.2% max 9.9% last 0.22px | op60 0.18 | out 0px | pass
+== done 2026-11-22 02:52:53

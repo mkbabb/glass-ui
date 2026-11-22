@@ -1,0 +1,29 @@
+== g4-snap2 2026-11-22 02:45:38 (load { 10.52 8.92 8.38 })
+OK   g4-snap2
+applied g4-snap2 - G-4 (the open seat changes in a scrolling run): the rest 9 px off its snap position
+-- chromium 02:45:42 (load { 10.08 8.86 8.36 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+== p3-seat-coarse chromium 02:45:42 load { 10.08 8.86 8.36 }
+{"cell":"390-coarse-light","rows":"p3-seat-coarse.wi8.chromium.390-coarse-light.rows.json","strips":[],"frames":499,"firstChange":95.5,"lastChange":3354.3,"screencast":null,"consoleErrors":0}
+== p3-seat-long-coarse chromium 02:45:48 load { 10.39 8.94 8.40 }
+{"cell":"390-coarse-light","rows":"p3-seat-long-coarse.wi8.chromium.390-coarse-light.rows.json","strips":[],"frames":489,"firstChange":72.1,"lastChange":3319,"screencast":null,"consoleErrors":0}
+chromium rc=0
+-- webkit 02:45:58 (load { 10.50 9.01 8.43 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+== p3-seat-coarse webkit 02:45:58 load { 10.50 9.01 8.43 }
+{"cell":"390-coarse-light","rows":"p3-seat-coarse.wi8.webkit.390-coarse-light.rows.json","strips":[],"frames":377,"firstChange":70,"lastChange":3326,"screencast":null,"consoleErrors":0}
+== p3-seat-long-coarse webkit 02:46:04 load { 10.46 9.03 8.43 }
+{"cell":"390-coarse-light","rows":"p3-seat-long-coarse.wi8.webkit.390-coarse-light.rows.json","strips":[],"frames":369,"firstChange":63,"lastChange":3256,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g4-snap2
+tree clean: 677 src files equal HEAD
+-- judge
+p3-seat-coarse chromium 390-coarse-light [{"mark":"neighbour","seatsMoved":5,"largestPx":8.7,"plateMovePx":0,"viol":["seat#0 step 100.0% > 8.6%","seat#0 last 8.71 px","seat#1 step 100.0% > 8.6%","seat#1 last 8.71 px","seat#2 step 100.0% > 8.6%","seat#2 last 8.71 px"]},{"mark":"far","seatsMoved":5,"largestPx":8.7,"plateMovePx":0,"viol":["seat#0 step 100.0% > 7.9%","seat#0 last 8.70 px","seat#1 step 100.0% > 7.9%","seat#1 last 8.70 px","seat#2 step 100.0% > 7.9%","seat#2 last 8.70 px"]},{"mark":"twice","seatsMoved":5,"largestPx":26,"plateMovePx":0,"viol":["seat#0 step 45.0% > 8.7%","seat#0 last 11.70 px","seat#1 step 45.0% > 8.7%","seat#1 last 11.70 px","seat#2 step 45.0% > 8.7%","seat#2 last 11.70 px"]}]
+p3-seat-coarse webkit 390-coarse-light [{"mark":"neighbour","seatsMoved":5,"largestPx":8.7,"plateMovePx":0,"viol":["seat#0 step 100.0% > 10.6%","seat#0 last 8.66 px","seat#1 step 100.0% > 10.6%","seat#1 last 8.66 px","seat#2 step 100.0% > 10.6%","seat#2 last 8.66 px"]},{"mark":"far","seatsMoved":5,"largestPx":8.8,"plateMovePx":0,"viol":["seat#0 step 100.0% > 8.7%","seat#0 last 8.75 px","seat#1 step 100.0% > 8.7%","seat#1 last 8.75 px","seat#2 step 100.0% > 8.7%","seat#2 last 8.75 px"]},{"mark":"twice","seatsMoved":5,"largestPx":26,"plateMovePx":0,"viol":["seat#0 step 46.3% > 7.7%","seat#0 last 12.04 px","seat#1 step 46.3% > 7.7%","seat#1 last 12.04 px","seat#2 step 46.3% > 7.7%","seat#2 last 12.04 px"]}]
+p3-seat-long-coarse chromium 390-coarse-light [{"mark":"neighbour","seatsMoved":10,"largestPx":8.7,"plateMovePx":0,"viol":["seat#0 step 100.0% > 8.7%","seat#0 last 8.71 px","seat#1 step 100.0% > 8.7%","seat#1 last 8.71 px","seat#2 step 100.0% > 8.7%","seat#2 last 8.71 px"]},{"mark":"far","seatsMoved":10,"largestPx":260.5,"plateMovePx":0,"viol":[]},{"mark":"twice","seatsMoved":10,"largestPx":251,"plateMovePx":0,"viol":["seat#0 step 5.4% > 5.2%","seat#0 last 13.54 px","seat#1 step 5.4% > 5.2%","seat#1 last 13.54 px","seat#2 step 5.4% > 5.2%","seat#2 last 13.54 px"]}]
+p3-seat-long-coarse webkit 390-coarse-light [{"mark":"neighbour","seatsMoved":10,"largestPx":8.8,"plateMovePx":0,"viol":["seat#0 step 100.0% > 7.7%","seat#0 last 8.75 px","seat#1 step 100.0% > 7.7%","seat#1 last 8.75 px","seat#2 step 100.0% > 7.7%","seat#2 last 8.75 px"]},{"mark":"far","seatsMoved":10,"largestPx":260.4,"plateMovePx":0,"viol":[]},{"mark":"twice","seatsMoved":10,"largestPx":251,"plateMovePx":0,"viol":["seat#0 step 9.4% > 8.7%","seat#0 last 23.68 px","seat#1 step 9.4% > 8.7%","seat#1 last 23.68 px","seat#2 step 9.4% > 8.7%","seat#2 last 23.68 px"]}]
+p3-seat-coarse | chromium | 390-coarse-light | curve 0.01 | held 0 | whole {"row":498,"fits":true,"whole":4,"of":5,"partial":[22],"absent":0,"ext":326,"over":26,"room":374,"offset":26,"focused":false} | touch true | openSeat 0 | FAIL: at open rest: row 115: a run that fits shows 4 of 5 seats whole (partial [19]) (+4 rests)
+p3-seat-coarse | webkit | 390-coarse-light | curve 0 | held 0 | whole {"row":376,"fits":true,"whole":4,"of":5,"partial":[22],"absent":0,"ext":326,"over":26,"room":374,"offset":26,"focused":false} | touch true | openSeat 0 | FAIL: at open rest: row 85: a run that fits shows 4 of 5 seats whole (partial [19]) (+4 rests)
+p3-seat-long-coarse | chromium | 390-coarse-light | curve 0 | held 0 | whole {"row":488,"fits":false,"whole":5,"of":10,"partial":[],"absent":5,"ext":326,"over":210,"room":374,"offset":104,"focused":false} | touch true | openSeat 0 | FAIL: at open rest: row 108: a run that does not fit rests 326.0 px wide in a room of 374 (+3 rests)
+p3-seat-long-coarse | webkit | 390-coarse-light | curve 0 | held 0 | whole {"row":368,"fits":false,"whole":5,"of":10,"partial":[],"absent":5,"ext":326,"over":210,"room":374,"offset":156,"focused":false} | touch true | openSeat 0 | FAIL: at open rest: row 83: a run that does not fit rests 326.0 px wide in a room of 374 (+3 rests)
+== done 2026-11-22 02:46:15

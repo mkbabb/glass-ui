@@ -1,0 +1,19 @@
+== g4-join 2026-11-22 02:45:16 (load { 9.94 8.71 8.30 })
+OK   g4-join
+applied g4-join - G-4 (a control joins or leaves): the records ignored
+-- chromium 02:45:20 (load { 9.95 8.73 8.31 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+== p3-seatset-fine chromium 02:45:20 load { 9.95 8.73 8.31 }
+{"cell":"1440-fine-light","rows":"p3-seatset-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":396,"firstChange":214.4,"lastChange":2618.2,"screencast":null,"consoleErrors":0}
+chromium rc=0
+-- webkit 02:45:29 (load { 10.48 8.89 8.37 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+== p3-seatset-fine webkit 02:45:29 load { 10.48 8.89 8.37 }
+{"cell":"1440-fine-light","rows":"p3-seatset-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":296,"firstChange":213,"lastChange":2612,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g4-join
+tree clean: 677 src files equal HEAD
+-- judge
+p3-seatset-fine | chromium | 1440-fine-light | curve 0 | held 0 | join {"step":1,"cuts":2,"fades":"in 11ms out 9ms"} | whole {"row":395,"fits":true,"whole":3,"of":3,"partial":[],"absent":0,"ext":160,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: joining seat steps 1.00 in 16.7 ms; joining seat cut in 2 rows; joining seat fade in 11ms (bound 75 ms); joining seat fade out 9ms (bound 75 ms)
+p3-seatset-fine | webkit | 1440-fine-light | curve 0 | held 0 | join {"step":1,"cuts":2,"fades":"in 9ms out 10ms"} | whole {"row":295,"fits":true,"whole":3,"of":3,"partial":[],"absent":0,"ext":160,"over":0,"room":1424,"offset":0,"focused":false} | FAIL: joining seat steps 1.00 in 16.7 ms; joining seat cut in 2 rows; joining seat fade in 9ms (bound 75 ms); joining seat fade out 10ms (bound 75 ms)
+== done 2026-11-22 02:45:38

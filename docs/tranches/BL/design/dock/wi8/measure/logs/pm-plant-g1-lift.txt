@@ -1,0 +1,22 @@
+== g1-lift 2026-11-22 02:37:18 (load { 6.71 7.13 7.97 })
+OK   g1-lift
+applied g1-lift - G-1 (f): the linger scheduled in the touch pointerup, before the tap's focus
+ ✓ tests/components/custom/dock/GlassDock.posture.test.ts > useDockState — G-1 (f): a held finger holds, the linger runs from the lift > holds while the finger is down and folds one linger after the lift, past the tap's focus (the tap's FocusEvent on the seat) 13ms
+ ✓ tests/components/custom/dock/GlassDock.posture.test.ts > useDockState — G-1 (f): a held finger holds, the linger runs from the lift > holds while the finger is down and folds one linger after the lift, past the tap's focus (no event) 2ms
+ Test Files  1 passed (1)
+      Tests  2 passed | 20 skipped (22)
+unit rc=0
+-- chromium 02:37:27 (load { 6.52 7.07 7.94 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"finger":{"how":"CDP touchStart/touchEnd","opened":true,"foldedWhileHeld":false,"lifted":{"open":true,"pinned":false,"focus":"w-pill-read","focusSummary":false,"fv":false,"held":false,"exp":true},"foldAfterLiftMs":null,"end":{"open":true,"pinned":false,"focus":"w-pill-read","focusSummary":false,"fv":false,"held":false,"exp":true},"events":[[735,"pointerdown","touch"],[735,"pointerup","touch"],[735,"touchend",""],[736,"focusin",""],[736,"click","touch"],[1647,"pointerdown","touch"],[10652,"pointerup","touch"],[10652,"touchend",""],[10653,"focusin",""],[10653,"click","touch"]],"tDown":1646,"tUp":10651}}
+{"tapseat":{"foldAfterSeatTapMs":null,"end":{"open":true,"pinned":false,"focus":"w-pill-read","focusSummary":false,"fv":false,"held":false,"exp":true}}}
+{"c390":{"g":{"opened":true,"pinned":false,"foldAfterTapMs":6005},"hOutside":{"opened":true,"foldAfterTapOutsideMs":2.6}}}
+chromium rc=0
+-- webkit 02:38:27 (load { 5.76 6.74 7.75 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"tapseat":{"foldAfterSeatTapMs":null,"end":{"open":true,"pinned":false,"focus":"w-pill-read","focusSummary":false,"fv":false,"held":false,"exp":true}}}
+{"c390":{"g":{"opened":true,"pinned":false,"foldAfterTapMs":6012},"hOutside":{"opened":true,"foldAfterTapOutsideMs":3}}}
+webkit rc=0
+reverted g1-lift
+tree clean: 677 src files equal HEAD
+== done 2026-11-22 02:39:03

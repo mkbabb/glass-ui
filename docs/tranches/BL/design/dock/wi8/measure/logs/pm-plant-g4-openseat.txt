@@ -1,0 +1,19 @@
+== g4-openseat 2026-11-22 02:52:53 (load { 7.27 8.18 8.26 })
+OK   g4-openseat
+applied g4-openseat - G-4 (RU-28): the open seat's width rule restored (three pitches)
+-- chromium 02:52:57 (load { 7.08 8.13 8.24 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+== p3-seat-fine chromium 02:52:57 load { 7.08 8.13 8.24 }
+{"cell":"1440-fine-light","rows":"p3-seat-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":523,"firstChange":214.3,"lastChange":3438.6,"screencast":null,"consoleErrors":0}
+chromium rc=0
+-- webkit 02:53:07 (load { 7.47 8.17 8.25 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+== p3-seat-fine webkit 02:53:07 load { 7.47 8.17 8.25 }
+{"cell":"1440-fine-light","rows":"p3-seat-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":404,"firstChange":217,"lastChange":3621,"screencast":null,"consoleErrors":0}
+webkit rc=0
+reverted g4-openseat
+tree clean: 677 src files equal HEAD
+-- judge
+p3-seat-fine | chromium | 1440-fine-light | curve 0.01 | held 96 | whole {"row":522,"fits":true,"whole":5,"of":5,"partial":[],"absent":0,"ext":423,"over":0,"room":1424,"offset":0,"focused":false} | openSeat 96 | FAIL: a unit moves 96.00 px in the window's first row (seat#0 row 136); a change of open seat moves a box 96.00 px in one row (seat#1 width, row 258)
+p3-seat-fine | webkit | 1440-fine-light | curve 0 | held 96 | whole {"row":403,"fits":true,"whole":5,"of":5,"partial":[],"absent":0,"ext":423,"over":0,"room":1424,"offset":0,"focused":false} | openSeat 96 | FAIL: a unit moves 96.00 px in the window's first row (seat#0 row 119); a change of open seat moves a box 96.00 px in one row (seat#1 width, row 209)
+== done 2026-11-22 02:53:17

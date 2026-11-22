@@ -1,0 +1,14 @@
+== g8-trigger 2026-11-22 03:06:05 (load { 13.64 11.85 9.94 })
+OK   g8-trigger
+applied g8-trigger - G-8 / RU-62: the scrim's stamp removed and a quiet focus return cancelling the linger again
+-- chromium 03:06:09 (load { 13.64 11.85 9.94 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"engine":"chromium","tag":"pm-g8-trigger","pass":false,"cells":{"menu-mouse":true,"select-mouse":true,"popover-mouse":true,"sheet-mouse":false,"menu-touch":true,"select-touch":true,"popover-touch":true,"sheet-touch":false,"select-touch-item":true,"sheet-touch-scrim":false,"tapseat":"w-pill-search","fourier":{"face":"folds","theme":"folds","menu":"pinned","about":"folds"}},"bad":["sheet-mouse: opened true closed true stillClosed true reopened 0 dock false","sheet-touch: opened true closed true stillClosed true reopened 0 dock false","sheet-touch-scrim: opened true closed true stillClosed true reopened 0 dock false"]}
+chromium rc=0
+-- webkit 03:07:57 (load { 15.66 12.92 10.57 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"engine":"webkit","tag":"pm-g8-trigger","pass":false,"cells":{"menu-mouse":true,"select-mouse":true,"popover-mouse":true,"sheet-mouse":false,"menu-touch":true,"select-touch":true,"popover-touch":true,"sheet-touch":false,"select-touch-item":true,"sheet-touch-scrim":false,"tapseat":"w-pill-search","fourier":{"face":"folds","theme":"folds","menu":"pinned","about":"folds"}},"bad":["sheet-mouse: opened true closed true stillClosed true reopened 0 dock false","sheet-touch: opened true closed true stillClosed true reopened 0 dock false","sheet-touch-scrim: opened true closed true stillClosed true reopened 0 dock false"]}
+webkit rc=0
+reverted g8-trigger
+tree clean: 677 src files equal HEAD
+== done 2026-11-22 03:09:53
