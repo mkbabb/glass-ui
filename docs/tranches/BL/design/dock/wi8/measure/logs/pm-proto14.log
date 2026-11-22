@@ -1,0 +1,12 @@
+== proto14 2026-11-21 23:04:15 (load { 14.30 14.82 15.35 })
+ru61b arith applied
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+ownerm frames chromium proto: 12
+chromium rc=0
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for the 'webkit' lock
+ownerm frames webkit proto: 12
+webkit rc=0
+ru61b reverted
+tree clean: 677 src files equal HEAD
+== done 2026-11-21 23:06:49
