@@ -34,3 +34,7 @@ Questions 10, 12, 14 and 18 to 21 carry their defaults; the work goes on with th
 ## The step-10 messages
 
 Booked now: atlas (sci-report-b0), Gregg (sci-report-87), value.js and daraksha (value-js-15), gaggle (gaggle-ff), Home Assistant (hassio-config-c8). fourier, speedtest, slides and keyframes have no live session; their drafts are owed and go out when one appears, and all of them again before the tag with the final numbers.
+
+5. (2026-11-22, for the pass after pass 8; atlas O-418, audit/atlas-speed/PLACED.md; ledger L-60 and O-215.) `useDockBody`'s `sync("mount")` (useDockBody.ts:1328) forces style and layout inside GlassDock's mount task. On a collapsed dock that is one read; on an open run whose fit flag changes, two. That breaks the booked law of no forced layout in the mount task (W-0.8.md:252).
+   - **Cure:** post `sync("mount")` to a requestAnimationFrame registered in onMounted, ahead of the `shown` frame (:1329-1331). Do not move it into the ResizeObserver delivery: a layout read there breaks the RO-loop law, and in WebKit it raises the loop error on a pending stylesheet. The first value still goes through `if (!layout)` and is placed with no travel before first paint, and `shown` turns true after the read.
+   - **Witness:** the O-418 trace cell on the branch shows no `useDockBody` frame forcing layout in the mount task, and `audit/ro-loop/hold.sh` in WebKit raises no loop error from the dock.
