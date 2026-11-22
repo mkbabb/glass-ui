@@ -32,6 +32,7 @@
 //           every seat whole, no sliver)
 //   ghost   a removed control, held by glass: visible until covered while above 0.1
 //   held    the window's first row: every seat above 0.1 moves no more than 0.5 px (W-I.8 "From rest")
+//   overlap MEASURE-9 H10 (RU-101, C8-M2): no two seats above 0.1 overlap by more than 0.5 px in any row
 //   touch   a coarse cell's pointer log holds a touch event; the dock's class in the first row
 import { readFileSync } from "node:fs";
 import { gunzipSync } from "node:zlib";
@@ -137,6 +138,22 @@ for (const file of files) {
         }
         res.held = +worst.toFixed(2);
         if (worst > 0.5) res.viol.push(`a unit moves ${worst.toFixed(2)} px in the window's first row (${at})`);
+    }
+    // overlap: MEASURE-9 H10 (RU-101 as amended for C8-M2): no two seats above 0.1 overlap by more than 0.5 px in any
+    // row: each pair's visible boxes (`vb`, the box cut by every clip) meeting by more than 0.5 px on both axes, the
+    // overlap read on the dock's own axis (the larger of the two extents for a box met on both).
+    {
+        let worst = 0, at = "";
+        for (let i = 0; i < rows.length; i++) {
+            const S = Object.keys(rows[i].el).filter((k) => /^seat#/.test(k)).map((k) => [k, rows[i].el[k]]).filter(([, e]) => e && e.vis !== 0 && e.vb !== 0 && num(e.eop) > 0.1 && e.w && e.h).map(([k, e]) => [k, Array.isArray(e.vb) ? e.vb : [e.x, e.y, e.x + e.w, e.y + e.h]]);
+            for (let p = 0; p < S.length; p++) for (let q = p + 1; q < S.length; q++) {
+                const [ka, A] = S[p], [kb, B] = S[q];
+                const ox = Math.min(A[2], B[2]) - Math.max(A[0], B[0]), oy = Math.min(A[3], B[3]) - Math.max(A[1], B[1]);
+                if (ox > 0.5 && oy > 0.5) { const o = /vert/.test(cell) || /vertical/.test(rows[i].el.dock?.["a:class"] ?? "") ? oy : ox; if (o > worst) { worst = o; at = `${ka} over ${kb} row ${i}`; } }
+            }
+        }
+        res.overlap = +worst.toFixed(2);
+        if (worst > 0.5) res.viol.push(`two seats overlap by ${worst.toFixed(2)} px (${at})`);
     }
     // ghost: a control the host removed is held where it painted and is visible until the
     // plate covers it (W-I.8 "Visible until covered"): above 0.1 with its box inside the
@@ -321,4 +338,4 @@ for (const file of files) {
     out.push(res);
 }
 if (json) console.log(JSON.stringify(out, null, 1));
-else for (const r of out) console.log(`${r.scen} | ${r.eng} | ${r.cell} | curve ${r.curve}${r.held != null ? ` | held ${r.held}` : ""}${r.ghost ? ` | ghost ${JSON.stringify(r.ghost)}` : ""}${r.join ? ` | join ${JSON.stringify(r.join)}` : ""}${r.rim ? ` | rim ${JSON.stringify(r.rim)}` : ""}${r.whole ? ` | whole ${JSON.stringify(r.whole)}` : ""}${r.touch != null ? ` | touch ${r.touch}` : ""}${r.lift !== undefined ? ` | lift ${r.lift}` : ""}${r.capPlate !== undefined ? ` | cap plate ${r.capPlate} hidden ${r.capHidden}` : ""}${r.openSeatStep != null ? ` | openSeat ${r.openSeatStep}` : ""}${r.restsOpen != null ? ` | restsOpen ${r.restsOpen}` : ""} | ${r.viol.length ? "FAIL: " + r.viol.join("; ") : "pass"}`);
+else for (const r of out) console.log(`${r.scen} | ${r.eng} | ${r.cell} | curve ${r.curve}${r.held != null ? ` | held ${r.held}` : ""}${r.overlap ? ` | overlap ${r.overlap}` : ""}${r.ghost ? ` | ghost ${JSON.stringify(r.ghost)}` : ""}${r.join ? ` | join ${JSON.stringify(r.join)}` : ""}${r.rim ? ` | rim ${JSON.stringify(r.rim)}` : ""}${r.whole ? ` | whole ${JSON.stringify(r.whole)}` : ""}${r.touch != null ? ` | touch ${r.touch}` : ""}${r.lift !== undefined ? ` | lift ${r.lift}` : ""}${r.capPlate !== undefined ? ` | cap plate ${r.capPlate} hidden ${r.capHidden}` : ""}${r.openSeatStep != null ? ` | openSeat ${r.openSeatStep}` : ""}${r.restsOpen != null ? ` | restsOpen ${r.restsOpen}` : ""} | ${r.viol.length ? "FAIL: " + r.viol.join("; ") : "pass"}`);

@@ -223,6 +223,8 @@ def h9():
     f = runfile(900, "h9-tip", [("chromium", 20, "node m9/trace9.mjs 5444 tip-idle --mode idle"), ("chromium", 10, "node m9/trace9.mjs 5444 tip-layer --mode layer"),
                                 ("chromium", 10, "node m9/trace9.mjs 5444 tip-docks18 --mode docks --n 18"), ("chromium", 10, "node m9/trace9.mjs 5444 tip-docks10 --mode docks --n 10")])
     item(900, "h9-tip", f"plant raw 0 {L}/m9-trace-tip-docks10.json m9/withplant.sh none {L}/m9-plant-none.txt 'sh {f}'")
+    f2 = runfile(902, "h9-writer", [("chromium", 10, "node m9/trace9.mjs 5444 tip-writer --mode writer")])
+    item(902, "h9-writer", f"plant raw 0 {L}/m9-trace-tip-writer.json m9/withplant.sh none {L}/m9-plant-none.txt 'sh {f2}'")
     item(901, "h9-v1110", f"v1110 chromium 20 {L}/m9-trace-v1110-idle.json node m9/trace9.mjs 5446 v1110-idle --mode idle >> {L}/m9-h9.log 2>&1")
 
 @phase
