@@ -1,0 +1,810 @@
+{
+ "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Max, Unspecified Version)",
+ "w-pill@1x": {
+  "nodesFolded": 27,
+  "nodesOpen": 27,
+  "framesWithRaf": 101,
+  "layoutsPerFrameMax": 3,
+  "layoutsPerFrameMedian": 1,
+  "dirtyPerLayoutMax": 32,
+  "layoutMsMax": 0.199,
+  "layoutCount": 78,
+  "layoutMsSum": 3.368,
+  "rafMsMedian": 0.142,
+  "rafMsMax": 1.093,
+  "elementsStyledUnfold": 5,
+  "elementsStyledFold": [
+   "dock-layer dock-layer--summary is-active:27",
+   "dock-layer dock-layer--full dock-run:58",
+   "glass-dock horizontal shape-pill collaps:68",
+   "dock-plate:40",
+   "dock-layers:72"
+  ],
+  "rest": {
+   "rafCalls": 0,
+   "mutations": 0,
+   "runningAnimations": 0,
+   "animTargets": []
+  },
+  "seatChangeElementsStyled": null,
+  "layoutsBy": {
+   "(frame, not forced)": 73,
+   "bcr@useDockBody.ts:66": 2,
+   "resolveBackdropRgba@backdropLuminanceSample.ts:164": 2,
+   "fitRun@useDockBody.ts:573": 1
+  },
+  "framesOver1Layout": 1,
+  "triggerFrames": [
+   {
+    "layouts": 6,
+    "bound": 3,
+    "over": true,
+    "rereadNoFlag": true,
+    "layoutMs": 0.404,
+    "named": [
+     "read:0.174",
+     "reread:0.046",
+     "write:0.073",
+     "frame:0.031",
+     "frame:0.047",
+     "frame:0.033"
+    ],
+    "stacks": [
+     "read: fitRun@useDockBody.ts:573:20 < sync@useDockBody.ts:698:23 < watch.flush@GlassDock.vue:265:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZABrFIbg.js:1909:17 < callWithAsyncErrorHandling@vue.runtime.esm-bundler-ZABrFIbg.js:1916:15 [no phase mark before it]",
+     "reread: bcr@useDockBody.ts:66:15 < rectOf@useDockBody.ts:78:12 < sync@useDockBody.ts:718:16 < watch.flush@GlassDock.vue:265:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZABrFIbg.js:1909:17 [no phase mark before it]",
+     "write: (no stack) [no phase mark before it]",
+     "frame: (no stack) [after a rAF callback]",
+     "frame: resolveBackdropRgba@backdropLuminanceSample.ts:164:18 < resolveUnderlayRgb@backdropLuminanceSample.ts:200:15 < measure@useGlassBackdropLuminance.ts:204:68 < (anon)@useGlassBackdropLuminance.ts:28:43 < flushFrameSamples@useGlassBackdropLuminance.ts:28:26 [inside a rAF callback]",
+     "frame: (no stack) [after a rAF callback]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 0,
+    "afterOver": false
+   },
+   {
+    "layouts": 3,
+    "bound": 3,
+    "over": false,
+    "rereadNoFlag": false,
+    "layoutMs": 0.176,
+    "named": [
+     "read:0.104",
+     "write:0.03",
+     "frame:0.042"
+    ],
+    "stacks": [
+     "read: bcr@useDockBody.ts:66:15 < rectOf@useDockBody.ts:78:12 < sync@useDockBody.ts:718:16 < watch.flush@GlassDock.vue:265:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZABrFIbg.js:1909:17 [after a rAF callback]",
+     "write: (no stack) [after a rAF callback]",
+     "frame: (no stack) [after a rAF callback]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 2,
+      "forced": 1,
+      "own": 1,
+      "forcedStacks": [
+       "resolveBackdropRgba@backdropLuminanceSample.ts:164:18 < resolveUnderlayRgb@backdropLuminanceSample.ts:200:15 < measure@useGlassBackdropLuminance.ts:204:68 < (anon)@useGlassBackdropLuminance.ts:28:43 < flushFrameSamples@useGlassBackdropLuminance.ts:28:26"
+      ],
+      "phases": [
+       "forced: inside a rAF callback",
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 3,
+      "forced": 0,
+      "own": 3,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 1,
+    "afterOver": true
+   }
+  ],
+  "landings": [
+   {
+    "frames": [
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   },
+   {
+    "frames": [
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   }
+  ],
+  "landingForced": 0,
+  "longestLayoutMs": 0.174,
+  "medianLayoutAfterTriggerMs": 0.04,
+  "traceEventKinds": {
+   "Layout": 78,
+   "FireAnimationFrame": 102,
+   "UpdateLayoutTree": 92
+  }
+ },
+ "w-pill@4x": {
+  "nodesFolded": 27,
+  "nodesOpen": 27,
+  "framesWithRaf": 105,
+  "layoutsPerFrameMax": 3,
+  "layoutsPerFrameMedian": 1,
+  "dirtyPerLayoutMax": 32,
+  "layoutMsMax": 0.974,
+  "layoutCount": 80,
+  "layoutMsSum": 13.992,
+  "rafMsMedian": 0.333,
+  "rafMsMax": 3.956,
+  "elementsStyledUnfold": 5,
+  "elementsStyledFold": [
+   "dock-layer dock-layer--summary is-active:29",
+   "dock-layer dock-layer--full dock-run:62",
+   "glass-dock horizontal shape-pill collaps:74",
+   "dock-plate:43",
+   "dock-layers:78"
+  ],
+  "rest": {
+   "rafCalls": 0,
+   "mutations": 0,
+   "runningAnimations": 0,
+   "animTargets": []
+  },
+  "seatChangeElementsStyled": null,
+  "layoutsBy": {
+   "(frame, not forced)": 75,
+   "bcr@useDockBody.ts:66": 2,
+   "resolveBackdropRgba@backdropLuminanceSample.ts:164": 2,
+   "fitRun@useDockBody.ts:573": 1
+  },
+  "framesOver1Layout": 1,
+  "triggerFrames": [
+   {
+    "layouts": 3,
+    "bound": 3,
+    "over": false,
+    "rereadNoFlag": true,
+    "layoutMs": 0.871,
+    "named": [
+     "read:0.73",
+     "reread:0.074",
+     "write:0.067"
+    ],
+    "stacks": [
+     "read: fitRun@useDockBody.ts:573:20 < sync@useDockBody.ts:698:23 < watch.flush@GlassDock.vue:265:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZABrFIbg.js:1909:17 < callWithAsyncErrorHandling@vue.runtime.esm-bundler-ZABrFIbg.js:1916:15 [no phase mark before it]",
+     "reread: bcr@useDockBody.ts:66:15 < rectOf@useDockBody.ts:78:12 < sync@useDockBody.ts:718:16 < watch.flush@GlassDock.vue:265:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZABrFIbg.js:1909:17 [no phase mark before it]",
+     "write: (no stack) [no phase mark before it]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 3,
+      "forced": 1,
+      "own": 2,
+      "forcedStacks": [
+       "resolveBackdropRgba@backdropLuminanceSample.ts:164:18 < resolveUnderlayRgb@backdropLuminanceSample.ts:200:15 < measure@useGlassBackdropLuminance.ts:204:68 < (anon)@useGlassBackdropLuminance.ts:28:43 < flushFrameSamples@useGlassBackdropLuminance.ts:28:26"
+      ],
+      "phases": [
+       "own: after a rAF callback",
+       "forced: inside a rAF callback",
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 1,
+    "afterOver": true
+   },
+   {
+    "layouts": 4,
+    "bound": 3,
+    "over": true,
+    "rereadNoFlag": false,
+    "layoutMs": 1.684,
+    "named": [
+     "read:0.766",
+     "write:0.055",
+     "frame:0.819",
+     "frame:0.044"
+    ],
+    "stacks": [
+     "read: bcr@useDockBody.ts:66:15 < rectOf@useDockBody.ts:78:12 < sync@useDockBody.ts:718:16 < watch.flush@GlassDock.vue:265:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZABrFIbg.js:1909:17 [after a rAF callback]",
+     "write: (no stack) [after a rAF callback]",
+     "frame: (no stack) [after a rAF callback]",
+     "frame: resolveBackdropRgba@backdropLuminanceSample.ts:164:18 < resolveUnderlayRgb@backdropLuminanceSample.ts:200:15 < measure@useGlassBackdropLuminance.ts:204:68 < (anon)@useGlassBackdropLuminance.ts:28:43 < flushFrameSamples@useGlassBackdropLuminance.ts:28:26 [inside a rAF callback]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 3,
+      "forced": 0,
+      "own": 3,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 0,
+    "afterOver": false
+   }
+  ],
+  "landings": [
+   {
+    "frames": [
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   },
+   {
+    "frames": [
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   }
+  ],
+  "landingForced": 0,
+  "longestLayoutMs": 0.974,
+  "medianLayoutAfterTriggerMs": 0.035,
+  "traceEventKinds": {
+   "Layout": 80,
+   "FireAnimationFrame": 106,
+   "UpdateLayoutTree": 94
+  }
+ },
+ "w-flow@1x": {
+  "nodesFolded": 55,
+  "nodesOpen": 55,
+  "framesWithRaf": 106,
+  "layoutsPerFrameMax": 3,
+  "layoutsPerFrameMedian": 1,
+  "dirtyPerLayoutMax": 64,
+  "layoutMsMax": 0.23,
+  "layoutCount": 79,
+  "layoutMsSum": 5.65,
+  "rafMsMedian": 0.133,
+  "rafMsMax": 1.358,
+  "elementsStyledUnfold": 6,
+  "elementsStyledFold": [
+   "dock-layer dock-layer--summary is-active:30",
+   "dock-layer dock-layer--full dock-run:59",
+   "glass-dock horizontal shape-pill collaps:111",
+   "dock-plate:40",
+   "dock-layers:75",
+   "dock-layer-tab-indicator:3"
+  ],
+  "rest": {
+   "rafCalls": 0,
+   "mutations": 0,
+   "runningAnimations": 0,
+   "animTargets": []
+  },
+  "seatChangeElementsStyled": null,
+  "layoutsBy": {
+   "(frame, not forced)": 73,
+   "bcr@useDockBody.ts:66": 2,
+   "resolveBackdropRgba@backdropLuminanceSample.ts:164": 2,
+   "fitRun@useDockBody.ts:573": 1,
+   "measurePeak@DockCrossfade.vue:87": 1
+  },
+  "framesOver1Layout": 1,
+  "triggerFrames": [
+   {
+    "layouts": 7,
+    "bound": 3,
+    "over": true,
+    "rereadNoFlag": true,
+    "layoutMs": 1.124,
+    "named": [
+     "read:0.756",
+     "reread:0.05",
+     "write:0.085",
+     "frame:0.039",
+     "frame:0.047",
+     "frame:0.081",
+     "frame:0.066"
+    ],
+    "stacks": [
+     "read: fitRun@useDockBody.ts:573:20 < sync@useDockBody.ts:698:23 < watch.flush@GlassDock.vue:265:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZABrFIbg.js:1909:17 < callWithAsyncErrorHandling@vue.runtime.esm-bundler-ZABrFIbg.js:1916:15 [no phase mark before it]",
+     "reread: bcr@useDockBody.ts:66:15 < rectOf@useDockBody.ts:78:12 < sync@useDockBody.ts:718:16 < watch.flush@GlassDock.vue:265:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZABrFIbg.js:1909:17 [no phase mark before it]",
+     "write: (no stack) [no phase mark before it]",
+     "frame: (no stack) [after a delivery's writes (the dock's)]",
+     "frame: measurePeak@DockCrossfade.vue:87:67 < (anon)@DockCrossfade.vue:96:35 < flush@useResizeObserver.ts:40:3 < (anon)@:4:127 [inside a rAF callback]",
+     "frame: resolveBackdropRgba@backdropLuminanceSample.ts:164:18 < resolveUnderlayRgb@backdropLuminanceSample.ts:200:15 < measure@useGlassBackdropLuminance.ts:204:68 < (anon)@useGlassBackdropLuminance.ts:28:43 < flushFrameSamples@useGlassBackdropLuminance.ts:28:26 [inside a rAF callback]",
+     "frame: (no stack) [after a rAF callback]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 0,
+    "afterOver": false
+   },
+   {
+    "layouts": 3,
+    "bound": 3,
+    "over": false,
+    "rereadNoFlag": false,
+    "layoutMs": 0.217,
+    "named": [
+     "read:0.116",
+     "write:0.035",
+     "frame:0.066"
+    ],
+    "stacks": [
+     "read: bcr@useDockBody.ts:66:15 < rectOf@useDockBody.ts:78:12 < sync@useDockBody.ts:718:16 < watch.flush@GlassDock.vue:265:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZABrFIbg.js:1909:17 [after a rAF callback]",
+     "write: (no stack) [after a rAF callback]",
+     "frame: (no stack) [after a rAF callback]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 2,
+      "forced": 1,
+      "own": 1,
+      "forcedStacks": [
+       "resolveBackdropRgba@backdropLuminanceSample.ts:164:18 < resolveUnderlayRgb@backdropLuminanceSample.ts:200:15 < measure@useGlassBackdropLuminance.ts:204:68 < (anon)@useGlassBackdropLuminance.ts:28:43 < flushFrameSamples@useGlassBackdropLuminance.ts:28:26"
+      ],
+      "phases": [
+       "forced: inside a rAF callback",
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 1,
+    "afterOver": true
+   }
+  ],
+  "landings": [
+   {
+    "frames": [
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   },
+   {
+    "frames": [
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   }
+  ],
+  "landingForced": 0,
+  "longestLayoutMs": 0.756,
+  "medianLayoutAfterTriggerMs": 0.062,
+  "traceEventKinds": {
+   "Layout": 79,
+   "FireAnimationFrame": 107,
+   "UpdateLayoutTree": 82
+  }
+ },
+ "w-flow@4x": {
+  "nodesFolded": 55,
+  "nodesOpen": 55,
+  "framesWithRaf": 103,
+  "layoutsPerFrameMax": 3,
+  "layoutsPerFrameMedian": 1,
+  "dirtyPerLayoutMax": 64,
+  "layoutMsMax": 1.011,
+  "layoutCount": 75,
+  "layoutMsSum": 23.892,
+  "rafMsMedian": 0.242,
+  "rafMsMax": 5.902,
+  "elementsStyledUnfold": 6,
+  "elementsStyledFold": [
+   "dock-layer dock-layer--summary is-active:28",
+   "dock-layer dock-layer--full dock-run:57",
+   "glass-dock horizontal shape-pill collaps:103",
+   "dock-plate:37",
+   "dock-layers:70",
+   "dock-layer-tab-indicator:3"
+  ],
+  "rest": {
+   "rafCalls": 0,
+   "mutations": 0,
+   "runningAnimations": 0,
+   "animTargets": []
+  },
+  "seatChangeElementsStyled": null,
+  "layoutsBy": {
+   "(frame, not forced)": 69,
+   "bcr@useDockBody.ts:66": 2,
+   "resolveBackdropRgba@backdropLuminanceSample.ts:164": 2,
+   "fitRun@useDockBody.ts:573": 1,
+   "measurePeak@DockCrossfade.vue:87": 1
+  },
+  "framesOver1Layout": 1,
+  "triggerFrames": [
+   {
+    "layouts": 3,
+    "bound": 3,
+    "over": false,
+    "rereadNoFlag": true,
+    "layoutMs": 3.463,
+    "named": [
+     "read:2.849",
+     "reread:0.071",
+     "write:0.543"
+    ],
+    "stacks": [
+     "read: fitRun@useDockBody.ts:573:20 < sync@useDockBody.ts:698:23 < watch.flush@GlassDock.vue:265:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZABrFIbg.js:1909:17 < callWithAsyncErrorHandling@vue.runtime.esm-bundler-ZABrFIbg.js:1916:15 [no phase mark before it]",
+     "reread: bcr@useDockBody.ts:66:15 < rectOf@useDockBody.ts:78:12 < sync@useDockBody.ts:718:16 < watch.flush@GlassDock.vue:265:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZABrFIbg.js:1909:17 [no phase mark before it]",
+     "write: (no stack) [no phase mark before it]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 2,
+      "forced": 1,
+      "own": 1,
+      "forcedStacks": [
+       "measurePeak@DockCrossfade.vue:87:67 < (anon)@DockCrossfade.vue:96:35 < flush@useResizeObserver.ts:40:3 < (anon)@:4:127"
+      ],
+      "phases": [
+       "own: after a delivery's writes (the dock's)",
+       "forced: inside a rAF callback"
+      ]
+     },
+     {
+      "layouts": 3,
+      "forced": 1,
+      "own": 2,
+      "forcedStacks": [
+       "resolveBackdropRgba@backdropLuminanceSample.ts:164:18 < resolveUnderlayRgb@backdropLuminanceSample.ts:200:15 < measure@useGlassBackdropLuminance.ts:204:68 < (anon)@useGlassBackdropLuminance.ts:28:43 < flushFrameSamples@useGlassBackdropLuminance.ts:28:26"
+      ],
+      "phases": [
+       "forced: inside a rAF callback",
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 2,
+    "afterOver": true
+   },
+   {
+    "layouts": 3,
+    "bound": 3,
+    "over": false,
+    "rereadNoFlag": false,
+    "layoutMs": 0.488,
+    "named": [
+     "read:0.111",
+     "write:0.308",
+     "frame:0.069"
+    ],
+    "stacks": [
+     "read: bcr@useDockBody.ts:66:15 < rectOf@useDockBody.ts:78:12 < sync@useDockBody.ts:718:16 < watch.flush@GlassDock.vue:265:36 < callWithErrorHandling@vue.runtime.esm-bundler-ZABrFIbg.js:1909:17 [after a rAF callback]",
+     "write: (no stack) [after a rAF callback]",
+     "frame: (no stack) [after a rAF callback]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 2,
+      "forced": 1,
+      "own": 1,
+      "forcedStacks": [
+       "resolveBackdropRgba@backdropLuminanceSample.ts:164:18 < resolveUnderlayRgb@backdropLuminanceSample.ts:200:15 < measure@useGlassBackdropLuminance.ts:204:68 < (anon)@useGlassBackdropLuminance.ts:28:43 < flushFrameSamples@useGlassBackdropLuminance.ts:28:26"
+      ],
+      "phases": [
+       "forced: inside a rAF callback",
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 1,
+    "afterOver": true
+   }
+  ],
+  "landings": [
+   {
+    "frames": [
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   },
+   {
+    "frames": [
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   }
+  ],
+  "landingForced": 0,
+  "longestLayoutMs": 2.849,
+  "medianLayoutAfterTriggerMs": 0.068,
+  "traceEventKinds": {
+   "Layout": 75,
+   "FireAnimationFrame": 104,
+   "UpdateLayoutTree": 78
+  }
+ },
+ "summary": {
+  "w-pill": {
+   "longest4x": [
+    0.974
+   ],
+   "medianOfLongest4x": 0.974,
+   "medianLayoutAfterTrigger4x": 0.035
+  },
+  "w-flow": {
+   "longest4x": [
+    2.849
+   ],
+   "medianOfLongest4x": 2.849,
+   "medianLayoutAfterTrigger4x": 0.068
+  }
+ },
+ "g11": {
+  "triggerFrames": 8,
+  "over": [
+   "w-pill@1x: 6 > 3 [read:0.174, reread:0.046, write:0.073, frame:0.031, frame:0.047, frame:0.033]",
+   "w-pill@4x: 4 > 3 [read:0.766, write:0.055, frame:0.819, frame:0.044]",
+   "w-flow@1x: 7 > 3 [read:0.756, reread:0.05, write:0.085, frame:0.039, frame:0.047, frame:0.081, frame:0.066]"
+  ],
+  "afterOver": [
+   "w-pill@1x: 1 forced in the two frames after [resolveBackdropRgba@backdropLuminanceSample.ts:164:18 < resolveUnderlayRgb@backdropLuminanceSample.ts:200:15 < measure@useGlassBackdropLuminance.ts:204:68 < (anon)@useGlassBackdropLuminance.ts:28:43 < flushFrameSamples@useGlassBackdropLuminance.ts:28:26 ; ]",
+   "w-pill@4x: 1 forced in the two frames after [resolveBackdropRgba@backdropLuminanceSample.ts:164:18 < resolveUnderlayRgb@backdropLuminanceSample.ts:200:15 < measure@useGlassBackdropLuminance.ts:204:68 < (anon)@useGlassBackdropLuminance.ts:28:43 < flushFrameSamples@useGlassBackdropLuminance.ts:28:26 ; ]",
+   "w-flow@1x: 1 forced in the two frames after [resolveBackdropRgba@backdropLuminanceSample.ts:164:18 < resolveUnderlayRgb@backdropLuminanceSample.ts:200:15 < measure@useGlassBackdropLuminance.ts:204:68 < (anon)@useGlassBackdropLuminance.ts:28:43 < flushFrameSamples@useGlassBackdropLuminance.ts:28:26 ; ]",
+   "w-flow@4x: 2 forced in the two frames after [measurePeak@DockCrossfade.vue:87:67 < (anon)@DockCrossfade.vue:96:35 < flush@useResizeObserver.ts:40:3 < (anon)@:4:127 ; resolveBackdropRgba@backdropLuminanceSample.ts:164:18 < resolveUnderlayRgb@backdropLuminanceSample.ts:200:15 < measure@useGlassBackdropLuminance.ts:204:68 < (anon)@useGlassBackdropLuminance.ts:28:43 < flushFrameSamples@useGlassBackdropLuminance.ts:28:26]",
+   "w-flow@4x: 1 forced in the two frames after [resolveBackdropRgba@backdropLuminanceSample.ts:164:18 < resolveUnderlayRgb@backdropLuminanceSample.ts:200:15 < measure@useGlassBackdropLuminance.ts:204:68 < (anon)@useGlassBackdropLuminance.ts:28:43 < flushFrameSamples@useGlassBackdropLuminance.ts:28:26 ; ]"
+  ],
+  "byCount": {
+   "3": 5,
+   "4": 1,
+   "6": 1,
+   "7": 1
+  },
+  "rest": {
+   "w-pill@1x": {
+    "rafCalls": 0,
+    "mutations": 0,
+    "runningAnimations": 0,
+    "animTargets": []
+   },
+   "w-pill@4x": {
+    "rafCalls": 0,
+    "mutations": 0,
+    "runningAnimations": 0,
+    "animTargets": []
+   },
+   "w-flow@1x": {
+    "rafCalls": 0,
+    "mutations": 0,
+    "runningAnimations": 0,
+    "animTargets": []
+   },
+   "w-flow@4x": {
+    "rafCalls": 0,
+    "mutations": 0,
+    "runningAnimations": 0,
+    "animTargets": []
+   }
+  }
+ }
+}

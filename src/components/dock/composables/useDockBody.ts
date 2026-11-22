@@ -1257,7 +1257,8 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
     }
     onMounted(() => {
         window.addEventListener("resize", onWindowResize);
-        sync("mount");
+        // ORCH line 5 (RU-103): the mount's read is the first frame's, ahead of the `shown` frame.
+        requestAnimationFrame(() => sync("mount"));
         requestAnimationFrame(() => {
             shown = true;
         });

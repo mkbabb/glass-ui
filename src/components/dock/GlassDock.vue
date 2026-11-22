@@ -102,7 +102,7 @@ const { marked: runMarked } = useDockRunMark({ runEl: fullEl });
    Arm-1 self-engage + the declarative bucket stay the FLOOR — this REFINES.
    Wired ON for every `backdropMode: "live"` dock; a `"static"` dock uses the
    solid plate with no observer. */
-if (props.backdropMode === "live") {
+const backdrop = props.backdropMode !== "live" ? null : (() => {
     // Hand the field canvas as a REACTIVE GETTER, not
     // a by-value snapshot. `props.backgroundCanvas` is the DockStage aurora canvas,
     // which resolves POST-MOUNT (the scoped-slot `canvasRef` is null during this
@@ -110,7 +110,7 @@ if (props.backdropMode === "live") {
     // the live `sampleAnimated` path → the whole dock band was a DEAD observer (0 of 12
     // docks stamped the writer-fired witness). The getter re-resolves each sample, so
     // the observer picks up the field the moment it paints + writes real luma/ambient-hue.
-    useGlassBackdropLuminance(dockEl, {
+    return useGlassBackdropLuminance(dockEl, {
         backgroundCanvas: (): HTMLCanvasElement | null => {
             const bc = props.backgroundCanvas;
             return typeof bc === "function"
@@ -120,9 +120,13 @@ if (props.backdropMode === "live") {
                   : null;
         },
     });
-}
+})();
 
 const isTransitioning = ref(false);
+// RU-103: the plate's ink is sampled where the dock lands, not at each frame of its travel.
+watch(isTransitioning, (moving) => {
+    if (!moving) backdrop?.landed();
+});
 const dockId = `glass-dock-${useId()}`;
 
 const {

@@ -1,0 +1,29 @@
+{
+ "tag": "s9-s7-docks18",
+ "mode": "docks",
+ "port": 5454,
+ "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+ "fine": {
+  "cell": "fine",
+  "reasonsInTrace": true,
+  "docks": 18,
+  "mountReads": 18,
+  "readReasons": [
+   [
+    "mount",
+    18
+   ]
+  ],
+  "firstFrameLayouts": 1,
+  "firstFrameForcedUnderDock": 1,
+  "firstFrameSpanMs": 7.8,
+  "byStack": [
+   {
+    "n": 1,
+    "stack": "bcr@src/components/dock/composables/useDockBody.ts:67 < rectOf@src/components/dock/composables/useDockBody.ts:79 < sync@src/components/dock/composables/useDockBody.ts:719 < (anon)@src/components/dock/composables/useDockBody.ts:1301"
+   }
+  ],
+  "allForcedAfterLoad": 1,
+  "pass": true
+ }
+}

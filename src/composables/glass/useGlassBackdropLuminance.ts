@@ -87,6 +87,8 @@ export interface UseGlassBackdropLuminanceControls {
     readonly sample: Readonly<Ref<GlassBackdropSample>>;
     /** Force one sample now (bypasses the throttle — used on mount + resize-settle). */
     sampleNow: () => void;
+    /** The surface landed: take the sample its travel owed, if any, on the next frame's batch. */
+    landed: () => void;
     /** Cancel a pending sample + detach every observer/listener. */
     dispose: () => void;
 }
@@ -211,6 +213,7 @@ export function useGlassBackdropLuminance(
             bucket: readonly(bucket) as Readonly<Ref<GlassBackdropBucket | null>>,
             sample: readonly(sample) as Readonly<Ref<GlassBackdropSample>>,
             sampleNow: () => {},
+            landed: () => {},
             dispose: () => {},
         };
     }
@@ -325,6 +328,8 @@ export function useGlassBackdropLuminance(
     }
 
     let lastSampleAt = 0;
+    // RU-103: a sample asked for while the surface travels (a dock's `data-morphing`) is owed to its landing.
+    let owed = false;
 
     /**
      * Read everything one sample needs (the surface's rect, the elements or canvas
@@ -338,6 +343,10 @@ export function useGlassBackdropLuminance(
         // STAND DOWN — a shared route observer covers this per-surface target; inherit its
         // `--glass-backdrop-*` via the cascade (zero readback — the 12→1 collapse).
         if (coveredByShared(el)) return null;
+        if (el.hasAttribute("data-morphing")) {
+            owed = true;
+            return null;
+        }
         // Live intent has one source of truth: an unavailable canvas is surfaced as
         // unavailable, never substituted with the static stack-walk/default signal.
         const ctx = getDownContext();
@@ -368,6 +377,13 @@ export function useGlassBackdropLuminance(
             lastSampleAt =
                 typeof performance !== "undefined" ? performance.now() : sampledAt;
         };
+    }
+
+    /** The surface landed: the sample its travel owed, on the next frame's batch. */
+    function landed(): void {
+        if (!owed) return;
+        owed = false;
+        requestBatchSample();
     }
 
     /** One sample now, read and written in this task (an explicit caller's request). */
@@ -541,6 +557,7 @@ export function useGlassBackdropLuminance(
         bucket: readonly(bucket) as Readonly<Ref<GlassBackdropBucket | null>>,
         sample: readonly(sample) as Readonly<Ref<GlassBackdropSample>>,
         sampleNow,
+        landed,
         dispose,
     };
 }

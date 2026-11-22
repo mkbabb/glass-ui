@@ -1,0 +1,15 @@
+== s7 chromium start 2026-11-22 13:12:00 (load { 7.92 8.03 7.97 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+cost chromium rc=0
+docks 18 rc=0
+docks 10 rc=0
+applied s7-nogate - RU-103 plant: the sampler's morphing gate removed
+reverted s7-nogate
+s7 chromium done
+== s7 chromium rc=0 end 2026-11-22 13:14:12 (load { 7.64 7.87 7.91 })
+== s7 webkit start 2026-11-22 13:14:12 (load { 7.64 7.87 7.91 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+cost webkit rc=0
+s7 webkit done
+== s7 webkit rc=0 end 2026-11-22 13:14:52 (load { 6.57 7.58 7.80 })
+== s7 ALL DONE 2026-11-22 13:14:52
