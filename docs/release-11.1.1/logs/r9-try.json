@@ -1,0 +1,422 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-1-1.config.ts",
+      "--project=chromium-desktop",
+      "--workers=1",
+      "-g",
+      "expand"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/logs/r9-try.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "expand · an ExpandableContainer enters on a tween",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3711,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:11:15.184Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "enter",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MCwiYmV0d2VlbiI6MjMsInNoYXJlIjowLjE0OSwiZW5kIjoxLCJmcmFtZXMiOltbMCwwXSxbOCwwXSxbMTYsMF0sWzI1LDBdLFszMywwLjA4OF0sWzQxLDAuMTU2XSxbNTAsMC4yMjJdLFs1OCwwLjI4NF0sWzY2LDAuMzRdLFs3NSwwLjQwMV0sWzgzLDAuNDU2XSxbOTEsMC41MTFdLFs5OSwwLjU1N10sWzEwNywwLjYwOF0sWzExNiwwLjY2XSxbMTI1LDAuNzA2XSxbMTMyLDAuNzQyXSxbMTQxLDAuNzgzXSxbMTQ5LDAuODE2XSxbMTU4LDAuODVdLFsxNjYsMC44NzhdLFsxNzUsMC45MDJdLFsxODMsMC45MjNdLFsxOTIsMC45NDFdLFsyMDAsMC45NTZdLFsyMDcsMC45NjddLFsyMTcsMC45NzhdLFsyMjUsMC45ODVdLFsyMzMsMC45OTVdLFsyNDEsMV0sWzI1MCwxXSxbMjU4LDFdLFsyNjYsMV0sWzI3NSwxXSxbMjgzLDFdLFsyOTEsMV0sWzI5OSwxXSxbMzA4LDFdLFszMTYsMV0sWzMyNSwxXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-fff1a17ac81c99ffdf0a",
+          "file": "release-11-1-1.spec.ts",
+          "line": 840,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer leaves on a tween by exit",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4607,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:11:18.980Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MSwiYmV0d2VlbiI6MTQsInNoYXJlIjowLjE2OSwiZW5kIjowLCJmcmFtZXMiOltbLTcsMV0sWzMsMV0sWzExLDFdLFsxOSwxXSxbMjgsMV0sWzM2LDAuOTNdLFs0NCwwLjg1Ml0sWzUzLDAuNzddLFs2MSwwLjY4NF0sWzY5LDAuNl0sWzc4LDAuNTE4XSxbODYsMC40MzldLFs5NCwwLjM2M10sWzEwMywwLjI5NF0sWzExMSwwLjIzXSxbMTE5LDAuMTcxXSxbMTI4LDAuMTE5XSxbMTM2LDAuMDc0XSxbMTQ0LDAuMDM1XSxbMTUzLDAuMDAzXSxbMTYxLDBdLFsxNjksMF0sWzE3NywwXSxbMTg2LDBdLFsxOTQsMF0sWzIwMywwXSxbMjExLDBdLFsyMTksMF0sWzIyOCwwXSxbMjM2LDBdLFsyNDQsMF0sWzI1MiwwXSxbMjYxLDBdLFsyNjksMF0sWzI3OCwwXSxbMjg2LDBdLFsyOTMsMF0sWzMwMywwXSxbMzExLDBdLFszMTksMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-565b73d3153e925473fe",
+          "file": "release-11-1-1.spec.ts",
+          "line": 855,
+          "column": 5
+        },
+        {
+          "title": "expand · an ExpandableContainer leaves on a tween by escape",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4558,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:11:23.593Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MSwiYmV0d2VlbiI6MTQsInNoYXJlIjowLjE2OSwiZW5kIjowLCJmcmFtZXMiOltbLTQsMV0sWzQsMV0sWzEyLDAuOTMxXSxbMjEsMC44NTNdLFsyOSwwLjc3MV0sWzM3LDAuNjg1XSxbNDYsMC42MDFdLFs1MywwLjUyN10sWzYyLDAuNDM5XSxbNzEsMC4zNjNdLFs3OCwwLjNdLFs4NywwLjIzXSxbOTYsMC4xNzFdLFsxMDQsMC4xMTldLFsxMTIsMC4wNzRdLFsxMjEsMC4wMzVdLFsxMjksMC4wMDNdLFsxMzcsMF0sWzE0NiwwXSxbMTU0LDBdLFsxNjIsMF0sWzE3MSwwXSxbMTc5LDBdLFsxODcsMF0sWzE5NiwwXSxbMjA0LDBdLFsyMTMsMF0sWzIyMSwwXSxbMjI5LDBdLFsyMzcsMF0sWzI0NSwwXSxbMjU0LDBdLFsyNjIsMF0sWzI3MSwwXSxbMjc5LDBdLFsyODcsMF0sWzI5NiwwXSxbMzA0LDBdLFszMTIsMF0sWzMyMSwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-5579c29abd6e371bf08d",
+          "file": "release-11-1-1.spec.ts",
+          "line": 855,
+          "column": 5
+        },
+        {
+          "title": "expand · an ExpandableContainer leaves on a tween by open",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4593,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:11:28.157Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MSwiYmV0d2VlbiI6MTQsInNoYXJlIjowLjE2OSwiZW5kIjowLCJmcmFtZXMiOltbLTYsMV0sWzMsMV0sWzExLDAuOTM4XSxbMjAsMC44NTNdLFsyOCwwLjc2OV0sWzM2LDAuNjg1XSxbNDUsMC42XSxbNTMsMC41MThdLFs2MSwwLjQzOV0sWzY5LDAuMzY4XSxbNzgsMC4yOTRdLFs4NiwwLjIzXSxbOTQsMC4xNzZdLFsxMDMsMC4xMTldLFsxMTEsMC4wNzddLFsxMjAsMC4wMzVdLFsxMjgsMC4wMDNdLFsxMzYsMF0sWzE0NSwwXSxbMTUzLDBdLFsxNjEsMF0sWzE3MCwwXSxbMTc4LDBdLFsxODYsMF0sWzE5NSwwXSxbMjAzLDBdLFsyMTEsMF0sWzIyMCwwXSxbMjI4LDBdLFsyMzYsMF0sWzI0NSwwXSxbMjUzLDBdLFsyNjIsMF0sWzI3MCwwXSxbMjc4LDBdLFsyODYsMF0sWzI5NSwwXSxbMzAzLDBdLFszMTEsMF0sWzMyMCwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-47be150c8bd23711a580",
+          "file": "release-11-1-1.spec.ts",
+          "line": 855,
+          "column": 5
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3749,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:11:32.755Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC40NTYsImJldHdlZW4iOjksInNoYXJlIjowLjExOSwiZW5kIjowLCJmcmFtZXMiOltbLTUsMC40NTZdLFszLDAuNDA1XSxbMTIsMC4zNDddLFsyMCwwLjI4Nl0sWzI4LDAuMjI4XSxbMzcsMC4xNzNdLFs0NSwwLjEyNV0sWzUzLDAuMDgyXSxbNjEsMC4wNDVdLFs3MCwwLjAwOV0sWzc4LDBdLFs4NiwwXSxbOTQsMF0sWzEwMywwXSxbMTEyLDBdLFsxMjAsMF0sWzEyOCwwXSxbMTM2LDBdLFsxNDUsMF0sWzE1MywwXSxbMTYyLDBdLFsxNzAsMF0sWzE3OCwwXSxbMTg3LDBdLFsxOTUsMF0sWzIwMywwXSxbMjEyLDBdLFsyMjAsMF0sWzIyOCwwXSxbMjM3LDBdLFsyNDUsMF0sWzI1MywwXSxbMjYxLDBdLFsyNzAsMF0sWzI3OCwwXSxbMjg3LDBdLFsyOTUsMF0sWzMwMywwXSxbMzEyLDBdLFszMjAsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-4cd9366833080455d906",
+          "file": "release-11-1-1.spec.ts",
+          "line": 878,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer reopened while it leaves turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4680,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:11:36.509Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC41MTgsImJldHdlZW4iOjE0LCJzaGFyZSI6MC4xODksImVuZCI6MSwiZnJhbWVzIjpbWy0xLDAuNTE4XSxbNywwLjQzOF0sWzE1LDAuMzcxXSxbMjQsMC40ODddLFszMiwwLjU3XSxbNDEsMC42NDZdLFs0OSwwLjcxNV0sWzU3LDAuNzc1XSxbNjYsMC44MjhdLFs3NCwwLjg3Ml0sWzgyLDAuOTFdLFs5MSwwLjkzOV0sWzk4LDAuOTZdLFsxMDcsMC45NzhdLFsxMTYsMC45ODhdLFsxMjQsMC45OTddLFsxMzIsMV0sWzE0MSwxXSxbMTQ5LDFdLFsxNTcsMV0sWzE2NiwxXSxbMTc0LDFdLFsxODEsMV0sWzE5MSwxXSxbMTk5LDFdLFsyMDcsMV0sWzIxNiwxXSxbMjI0LDFdLFsyMzIsMV0sWzI0MSwxXSxbMjQ5LDFdLFsyNTYsMV0sWzI2NiwxXSxbMjc0LDFdLFsyODIsMV0sWzI5MSwxXSxbMjk4LDFdLFszMDcsMV0sWzMxNiwxXSxbMzI0LDFdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-ab81a0a8b23ca16ba818",
+          "file": "release-11-1-1.spec.ts",
+          "line": 895,
+          "column": 1
+        },
+        {
+          "title": "expand · Escape is live from the entrance's first frame",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1332,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:11:41.195Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-8ba146530773c8f1baf9",
+          "file": "release-11-1-1.spec.ts",
+          "line": 911,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-16T03:11:14.744Z",
+    "duration": 27828.597,
+    "expected": 7,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

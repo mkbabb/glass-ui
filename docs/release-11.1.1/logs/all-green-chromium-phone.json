@@ -1,0 +1,937 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-1-1.config.ts",
+      "--project=chromium-phone",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/logs/all-green-chromium-phone.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "form · a dock Select leaves in the form it opened in · pick",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2510,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:05:42.926Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6NCwieCI6MCwieSI6NjE1LCJ3IjozOTAsIm9wIjoxLCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTMsIngiOjAsInkiOjYxNSwidyI6MzkwLCJvcCI6MSwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjIxLCJ4IjowLCJ5Ijo2MTUsInciOjM5MCwib3AiOjEsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyOCwieCI6MCwieSI6NjE1LjYwMzI3MTQ4NDM3NSwidyI6MzkwLCJvcCI6MC45OTczNjUsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjozNSwieCI6MCwieSI6NjE3LjY1MDE0NjQ4NDM3NSwidyI6MzkwLCJvcCI6MC45ODg0MjcsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo0MywieCI6MCwieSI6NjIxLjA0NDI1MDQ4ODI4MTIsInciOjM5MCwib3AiOjAuOTczNjA2LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6NTEsIngiOjAsInkiOjYyNS41NDYzMjU2ODM1OTM4LCJ3IjozOTAsIm9wIjowLjk1Mzk0NiwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjYxLCJ4IjowLCJ5Ijo2MzMuMjgxMDA1ODU5Mzc1LCJ3IjozOTAsIm9wIjowLjkyMDE3LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6NzAsIngiOjAsInkiOjY0MC45NzY1NjI1LCJ3IjozOTAsIm9wIjowLjg4NjU2NSwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjgwLCJ4IjowLCJ5Ijo2NTAuODQ0NzI2NTYyNSwidyI6MzkwLCJvcCI6MC44NDM0NzMsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo5MCwieCI6MCwieSI6NjYxLjY2NTI4MzIwMzEyNSwidyI6MzkwLCJvcCI6MC43OTYyMjEsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo5NCwieCI6MCwieSI6NjY3LjEwNTEwMjUzOTA2MjUsInciOjM5MCwib3AiOjAuNzcyNDY3LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTA0LCJ4IjowLCJ5Ijo2NzkuNDg5NjI0MDIzNDM3NSwidyI6MzkwLCJvcCI6MC43MTgzODYsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMTAsIngiOjAsInkiOjY4Ny4yMjAxNTM4MDg1OTM4LCJ3IjozOTAsIm9wIjowLjY4NDYyOCwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjEyMCwieCI6MCwieSI6Njk5Ljc5NjU2OTgyNDIxODgsInciOjM5MCwib3AiOjAuNjI5NzA5LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTI2LCJ4IjowLCJ5Ijo3MDguOTc0NzMxNDQ1MzEyNSwidyI6MzkwLCJvcCI6MC41ODk2MywiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjEzNCwieCI6MCwieSI6NzE5LjQ2NTk0MjM4MjgxMjUsInciOjM5MCwib3AiOjAuNTQzODE3LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTQzLCJ4IjowLCJ5Ijo3MzEuNzYzMDYxNTIzNDM3NSwidyI6MzkwLCJvcCI6MC40OTAxMTgsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNTEsIngiOjAsInkiOjc0Mi41MDM1NDAwMzkwNjI1LCJ3IjozOTAsIm9wIjowLjQ0MzIxNiwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE1NywieCI6MCwieSI6NzUwLjMxMzg0Mjc3MzQzNzUsInciOjM5MCwib3AiOjAuNDA5MTEsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNjUsIngiOjAsInkiOjc2MS4xOTIwNzc2MzY3MTg4LCJ3IjozOTAsIm9wIjowLjM2MTYwNywiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE3MiwieCI6MCwieSI6NzcwLjUzNzcxOTcyNjU2MjUsInciOjM5MCwib3AiOjAuMzIwNzk2LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTgwLCJ4IjowLCJ5Ijo3ODAuMzk0MTY1MDM5MDYyNSwidyI6MzkwLCJvcCI6MC4yNzc3NTUsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxOTAsIngiOjAsInkiOjc5Mi4xOTIzODI4MTI1LCJ3IjozOTAsIm9wIjowLjIyNjIzNCwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjIwMCwieCI6MCwieSI6ODA0LjE4OTY5NzI2NTYyNSwidyI6MzkwLCJvcCI6MC4xNzM4NDQsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyMDksIngiOjAsInkiOjgxNC4yNzYwMDA5NzY1NjI1LCJ3IjozOTAsIm9wIjowLjEyOTc5OSwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjIxNywieCI6MCwieSI6ODIyLjMyNTMxNzM4MjgxMjUsInciOjM5MCwib3AiOjAuMDk0NjQ5MiwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjIyMywieCI6MCwieSI6ODI3LjYzMTU5MTc5Njg3NSwidyI6MzkwLCJvcCI6MC4wNzE0Nzc5LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MjMyLCJ4IjowLCJ5Ijo4MzYuNDUwNzQ0NjI4OTA2MiwidyI6MzkwLCJvcCI6MC4wMzI5NjYzLCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9XQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-f844d71cb3488c052955",
+          "file": "release-11-1-1.spec.ts",
+          "line": 58,
+          "column": 5
+        },
+        {
+          "title": "form · a dock DropdownMenu keeps its material through the exit · pick",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2280,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:05:45.577Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6Mywib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo4LCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE5LCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjI4LCJvcCI6MC45OTU4MTIsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjozOCwib3AiOjAuOTgxOTMyLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6NDUsIm9wIjowLjk2NjY2LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6NTIsIm9wIjowLjk0NzU3Mywic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjYxLCJvcCI6MC45MTkxMzksInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo2Nywib3AiOjAuODkzNTUsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo3NSwib3AiOjAuODYyMTc5LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6ODEsIm9wIjowLjgzNDEzNywic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjg5LCJvcCI6MC43OTM3NDQsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo5Niwib3AiOjAuNzU3MTczLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTAzLCJvcCI6MC43MjA2NzcsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMTIsIm9wIjowLjY2OTI1NSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjEyMywib3AiOjAuNjAzMzE2LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTMyLCJvcCI6MC41NDgwNywic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE0MSwib3AiOjAuNDk1NTU5LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTQ3LCJvcCI6MC40NjA0NjMsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNTUsIm9wIjowLjQxNjIxMywic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE2Mywib3AiOjAuMzY1Njk3LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTcxLCJvcCI6MC4zMjM2NzIsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNzksIm9wIjowLjI3OTQ1Niwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE4NSwib3AiOjAuMjQ3MjU4LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTkzLCJvcCI6MC4yMDQ3NjYsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyMDAsIm9wIjowLjE3MDk4Mywic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjIwOCwib3AiOjAuMTI5ODU5LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MjEzLCJvcCI6MC4xMDg2ODUsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyMjMsIm9wIjowLjA2ODI1MjMsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyMjksIm9wIjowLjA0MTM0NDcsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyMzcsIm9wIjowLjAxMzAxMzUsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn1d"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-a727ea62b0b9dbfdb462",
+          "file": "release-11-1-1.spec.ts",
+          "line": 98,
+          "column": 5
+        },
+        {
+          "title": "form · a dock Select leaves in the form it opened in · outside",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2337,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:05:47.865Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6NiwieCI6MCwieSI6NjE1LCJ3IjozOTAsIm9wIjoxLCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTIsIngiOjAsInkiOjYxNSwidyI6MzkwLCJvcCI6MSwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE2LCJ4IjowLCJ5Ijo2MTUuNDUyMjcwNTA3ODEyNSwidyI6MzkwLCJvcCI6MC45OTgwMjUsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyMCwieCI6MCwieSI6NjE2LjcyODE0OTQxNDA2MjUsInciOjM5MCwib3AiOjAuOTkyNDU0LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MjksIngiOjAsInkiOjYyMC40MjEzODY3MTg3NSwidyI6MzkwLCJvcCI6MC45NzYzMjYsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjozNCwieCI6MCwieSI6NjIyLjk0MzkwODY5MTQwNjIsInciOjM5MCwib3AiOjAuOTY1MzExLCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6NDIsIngiOjAsInkiOjYyNy44NzM5NjI0MDIzNDM4LCJ3IjozOTAsIm9wIjowLjk0Mzc4MiwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjUwLCJ4IjowLCJ5Ijo2MzMuOTcwMDkyNzczNDM3NSwidyI6MzkwLCJvcCI6MC45MTcxNjEsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo1NywieCI6MCwieSI6NjQwLjI1NTQ5MzE2NDA2MjUsInciOjM5MCwib3AiOjAuODg5NzE0LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6NjcsIngiOjAsInkiOjY1MC4zNDg1MTA3NDIxODc1LCJ3IjozOTAsIm9wIjowLjg0NTY0LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6NzIsIngiOjAsInkiOjY1NS44OTQ2NTMzMjAzMTI1LCJ3IjozOTAsIm9wIjowLjgyMTQyMSwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjc4LCJ4IjowLCJ5Ijo2NjMuMTA1NTkwODIwMzEyNSwidyI6MzkwLCJvcCI6MC43ODk5MzIsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo4OCwieCI6MCwieSI6Njc0Ljg2ODE2NDA2MjUsInciOjM5MCwib3AiOjAuNzM4NTY3LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6OTYsIngiOjAsInkiOjY4NC43OTQyNTA0ODgyODEyLCJ3IjozOTAsIm9wIjowLjY5NTIyMiwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjEwMiwieCI6MCwieSI6NjkyLjExOTUwNjgzNTkzNzUsInciOjM5MCwib3AiOjAuNjYzMjM0LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTA5LCJ4IjowLCJ5Ijo3MDIuMzkzOTIwODk4NDM3NSwidyI6MzkwLCJvcCI6MC42MTgzNjcsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMTcsIngiOjAsInkiOjcxMy4wOTg2MzI4MTI1LCJ3IjozOTAsIm9wIjowLjU3MTYyMiwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjEyNSwieCI6MCwieSI6NzI0LjI5NDU1NTY2NDA2MjUsInciOjM5MCwib3AiOjAuNTIyNzMxLCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTM0LCJ4IjowLCJ5Ijo3MzUuNzYwNzQyMTg3NSwidyI6MzkwLCJvcCI6MC40NzI2NiwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjEzOSwieCI6MCwieSI6NzQzLjIyNDQ4NzMwNDY4NzUsInciOjM5MCwib3AiOjAuNDQwMDY4LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTQ2LCJ4IjowLCJ5Ijo3NTIuNjMwNjE1MjM0Mzc1LCJ3IjozOTAsIm9wIjowLjM5ODk5MywiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE1NSwieCI6MCwieSI6NzY0LjExMzM0MjI4NTE1NjIsInciOjM5MCwib3AiOjAuMzQ4ODUsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNjMsIngiOjAsInkiOjc3NC41MzI4MzY5MTQwNjI1LCJ3IjozOTAsIm9wIjowLjMwMzM1LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTY5LCJ4IjowLCJ5Ijo3ODEuNTUyMjQ2MDkzNzUsInciOjM5MCwib3AiOjAuMjcyNjk4LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTc2LCJ4IjowLCJ5Ijo3OTAuODAyNDI5MTk5MjE4OCwidyI6MzkwLCJvcCI6MC4yMzIzMDQsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxODMsIngiOjAsInkiOjc5OC40MzQzODcyMDcwMzEyLCJ3IjozOTAsIm9wIjowLjE5ODk3NiwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE5MywieCI6MCwieSI6ODA5LjQwMjQ2NTgyMDMxMjUsInciOjM5MCwib3AiOjAuMTUxMDgxLCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MjAwLCJ4IjowLCJ5Ijo4MTcuNjI5NjM4NjcxODc1LCJ3IjozOTAsIm9wIjowLjExNTE1NCwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjIwNSwieCI6MCwieSI6ODIyLjY1MzY4NjUyMzQzNzUsInciOjM5MCwib3AiOjAuMDkzMjE1NCwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjIxNCwieCI6MCwieSI6ODMwLjgxNTE4NTU0Njg3NSwidyI6MzkwLCJvcCI6MC4wNTc1NzU3LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MjIyLCJ4IjowLCJ5Ijo4MzcuNTAwOTE1NTI3MzQzOCwidyI6MzkwLCJvcCI6MC4wMjgzODAyLCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9XQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-dac5833ffd3a1e227459",
+          "file": "release-11-1-1.spec.ts",
+          "line": 58,
+          "column": 5
+        },
+        {
+          "title": "form · a dock DropdownMenu keeps its material through the exit · outside",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2291,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:05:50.212Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6NSwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMiwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyMCwib3AiOjAuOTk2MzcxLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MjcsIm9wIjowLjk4NzI3Mywic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjM2LCJvcCI6MC45NzAzMTUsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo0Mywib3AiOjAuOTUzNzksInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo1MSwib3AiOjAuOTI2MzI0LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6NTgsIm9wIjowLjkwMTYwOCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjY1LCJvcCI6MC44NzMyNTcsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo3NCwib3AiOjAuODI5MDQzLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6ODQsIm9wIjowLjc4MzY0Miwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjk1LCJvcCI6MC43MjMwNjksInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMDIsIm9wIjowLjY4MTQ2NSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjExMSwib3AiOjAuNjMyODk5LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTE3LCJvcCI6MC41OTUyMjcsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMjYsIm9wIjowLjU0NTI3OCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjEzMywib3AiOjAuNDk5OTI0LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTM5LCJvcCI6MC40Njc3NzYsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNDYsIm9wIjowLjQyMjg1Nywic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE1Mywib3AiOjAuMzgzMTgyLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTYxLCJvcCI6MC4zMzYyNDMsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNjksIm9wIjowLjI5MzMsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNzcsIm9wIjowLjI0OTU0Niwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE4NCwib3AiOjAuMjExNTQyLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTkwLCJvcCI6MC4xODE0MjYsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxOTgsIm9wIjowLjE0MzQ0NCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjIwOCwib3AiOjAuMDk5NjA5Mywic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjIxNiwib3AiOjAuMDYzOTExNiwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjIyOCwib3AiOjAuMDIwMjY1MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifV0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-422f5f0810da6663e49d",
+          "file": "release-11-1-1.spec.ts",
+          "line": 98,
+          "column": 5
+        },
+        {
+          "title": "form · a dock Select leaves in the form it opened in · escape",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2296,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:05:52.509Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6NiwieCI6MCwieSI6NjE1LCJ3IjozOTAsIm9wIjoxLCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTAsIngiOjAsInkiOjYxNS4zNjE5Mzg0NzY1NjI1LCJ3IjozOTAsIm9wIjowLjk5ODQxOSwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE4LCJ4IjowLCJ5Ijo2MTcuMTUzMzIwMzEyNSwidyI6MzkwLCJvcCI6MC45OTA1OTcsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyNSwieCI6MCwieSI6NjE5LjkyNjIwODQ5NjA5MzgsInciOjM5MCwib3AiOjAuOTc4NDg4LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MzMsIngiOjAsInkiOjYyNC4zOTQyMjYwNzQyMTg4LCJ3IjozOTAsIm9wIjowLjk1ODk3NywiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjQyLCJ4IjowLCJ5Ijo2MzAuNDg1MTY4NDU3MDMxMiwidyI6MzkwLCJvcCI6MC45MzIzNzksImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo0NiwieCI6MCwieSI6NjM0LjI1Nzc1MTQ2NDg0MzgsInciOjM5MCwib3AiOjAuOTE1OTA1LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6NTYsIngiOjAsInkiOjY0Mi45NjgzODM3ODkwNjI1LCJ3IjozOTAsIm9wIjowLjg3Nzg2NywiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjYzLCJ4IjowLCJ5Ijo2NDkuNjU1NzYxNzE4NzUsInciOjM5MCwib3AiOjAuODQ4NjY1LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6NjksIngiOjAsInkiOjY1Ni44Mzg2MjMwNDY4NzUsInciOjM5MCwib3AiOjAuODE3Mjk5LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6NzgsIngiOjAsInkiOjY2Ni4zNTc5NzExOTE0MDYyLCJ3IjozOTAsIm9wIjowLjc3NTcyOSwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjkwLCJ4IjowLCJ5Ijo2ODEuMzc0Mzg5NjQ4NDM3NSwidyI6MzkwLCJvcCI6MC43MTAxNTYsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo5OSwieCI6MCwieSI6NjkzLjM2Nzc5Nzg1MTU2MjUsInciOjM5MCwib3AiOjAuNjU3NzgyLCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTA5LCJ4IjowLCJ5Ijo3MDYuNzc0NDc1MDk3NjU2MiwidyI6MzkwLCJvcCI6MC41OTkyMzgsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMTcsIngiOjAsInkiOjcxOC4zNDE3OTY4NzUsInciOjM5MCwib3AiOjAuNTQ4NzI2LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTIzLCJ4IjowLCJ5Ijo3MjYuMTMxNjUyODMyMDMxMiwidyI6MzkwLCJvcCI6MC41MTQ3MDksImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMzIsIngiOjAsInkiOjczOC40MDQ1NDEwMTU2MjUsInciOjM5MCwib3AiOjAuNDYxMTE2LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTM4LCJ4IjowLCJ5Ijo3NDYuNjU3MDQzNDU3MDMxMiwidyI6MzkwLCJvcCI6MC40MjUwNzgsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNDQsIngiOjAsInkiOjc1NS4wODU5OTg1MzUxNTYyLCJ3IjozOTAsIm9wIjowLjM4ODI3MSwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE1MywieCI6MCwieSI6NzY1Ljg2MjA2MDU0Njg3NSwidyI6MzkwLCJvcCI6MC4zNDEyMTQsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNjAsIngiOjAsInkiOjc3NS4wOTUyMTQ4NDM3NSwidyI6MzkwLCJvcCI6MC4zMDA4OTQsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNjcsIngiOjAsInkiOjc4NC42ODU2Njg5NDUzMTI1LCJ3IjozOTAsIm9wIjowLjI1OTAxNSwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE3NSwieCI6MCwieSI6NzkzLjExMzE1OTE3OTY4NzUsInciOjM5MCwib3AiOjAuMjIyMjEzLCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTg2LCJ4IjowLCJ5Ijo4MDYuODI3ODgwODU5Mzc1LCJ3IjozOTAsIm9wIjowLjE2MjMyNCwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE5NSwieCI6MCwieSI6ODE1LjcxNDI5NDQzMzU5MzgsInciOjM5MCwib3AiOjAuMTIzNTE4LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MjA1LCJ4IjowLCJ5Ijo4MjUuODA0ODA5NTcwMzEyNSwidyI6MzkwLCJvcCI6MC4wNzk0NTUsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyMTIsIngiOjAsInkiOjgzMi4zMDQwNzcxNDg0Mzc1LCJ3IjozOTAsIm9wIjowLjA1MTA3NDEsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyMjAsIngiOjAsInkiOjgzOS4zNzc1MDI0NDE0MDYyLCJ3IjozOTAsIm9wIjowLjAyMDE4NTcsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn1d"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-5abbc746f57a5204a6bb",
+          "file": "release-11-1-1.spec.ts",
+          "line": 58,
+          "column": 5
+        },
+        {
+          "title": "form · a dock DropdownMenu keeps its material through the exit · escape",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2264,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:05:54.810Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6NCwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMCwib3AiOjAuOTk3Njc0LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTcsIm9wIjowLjk4OTkyNywic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjI1LCJvcCI6MC45NzQxMjMsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjozNywib3AiOjAuOTQ0MzAzLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6NDYsIm9wIjowLjkxMTUxMSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjU1LCJvcCI6MC44NzUzNjUsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo2MSwib3AiOjAuODQ5NjQzLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6NzAsIm9wIjowLjgwNjk3NCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjc3LCJvcCI6MC43NzE2MDYsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo4NSwib3AiOjAuNzI3OTg2LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6OTAsIm9wIjowLjY5ODQzNSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjk5LCJvcCI6MC42NDgwMDMsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMDUsIm9wIjowLjYxMzQ3OCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjExNCwib3AiOjAuNTYyNTEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMjIsIm9wIjowLjUxMzU5Mywic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjEyNywib3AiOjAuNDgxMzk5LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTM2LCJvcCI6MC40MjgwOTYsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNDMsIm9wIjowLjM4ODkyNiwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE1MSwib3AiOjAuMzQ0MTI1LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTYyLCJvcCI6MC4yODMzOTQsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNzEsIm9wIjowLjIzMzE4Niwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE4MCwib3AiOjAuMTg4ODEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxODgsIm9wIjowLjE0NjIxNywic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE5NCwib3AiOjAuMTE5NTA3LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MjAzLCJvcCI6MC4wODExODU4LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MjEwLCJvcCI6MC4wNTMwOTIsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyMTgsIm9wIjowLjAyMjQwNDcsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn1d"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-f0ac634a491fb7661d99",
+          "file": "release-11-1-1.spec.ts",
+          "line": 98,
+          "column": 5
+        },
+        {
+          "title": "glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · light",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2095,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:05:57.078Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "glass",
+                      "contentType": "application/json",
+                      "body": "eyJwbGF0ZSI6eyJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImFscGhhIjowLjYxMTc2NDcwNTg4MjM1MywibmVzdGVkIjpbXX0sInJlYWRzIjpbeyJpZCI6Ingtb3B0LVBhbGV0dGVzIiwiaGkiOnRydWUsInJhdGlvIjo3LjAzNzcyODQ2NjAyNjUzMSwiaW5rIjpbMjgsMjUsMjMsMjU1XX0seyJpZCI6Ingtb3B0LVBpY2tlciIsImhpIjpmYWxzZSwicmF0aW8iOjguMjU1ODQ5MTY2MTQ3ODUyLCJpbmsiOlsyOCwyNSwyMywyNTVdfV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-9f8488d106daa6154cf2",
+          "file": "release-11-1-1.spec.ts",
+          "line": 208,
+          "column": 9
+        },
+        {
+          "title": "glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · dark",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2091,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:05:59.180Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "glass",
+                      "contentType": "application/json",
+                      "body": "eyJwbGF0ZSI6eyJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImFscGhhIjowLjYzMTM3MjU0OTAxOTYwNzgsIm5lc3RlZCI6W119LCJyZWFkcyI6W3siaWQiOiJ4LW9wdC1QYWxldHRlcyIsImhpIjp0cnVlLCJyYXRpbyI6Ny41MDAzMjQ2NDUyMTQ2MDUsImluayI6WzIzMywyMzAsMjI2LDI1NV19LHsiaWQiOiJ4LW9wdC1QaWNrZXIiLCJoaSI6ZmFsc2UsInJhdGlvIjo2LjU2NDEwNTE0OTA5OTk4MzUsImluayI6WzIzMywyMzAsMjI2LDI1NV19XX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-5963f59a1eeb4007a099",
+          "file": "release-11-1-1.spec.ts",
+          "line": 208,
+          "column": 9
+        },
+        {
+          "title": "glass · a phone Select is solid under reduced transparency",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1301,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:06:01.276Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-4a732a514c454f6df4b2",
+          "file": "release-11-1-1.spec.ts",
+          "line": 245,
+          "column": 5
+        },
+        {
+          "title": "glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · light",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1804,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:06:02.582Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "glass",
+                      "contentType": "application/json",
+                      "body": "eyJwbGF0ZSI6eyJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImFscGhhIjowLjYxMTc2NDcwNTg4MjM1MywibmVzdGVkIjpbXX0sInJlYWRzIjpbeyJpZCI6IngtaXRlbS1Db3B5IiwiaGkiOnRydWUsInJhdGlvIjo2LjkwMDI2MjE0NTkwNTM3OCwiaW5rIjpbMjgsMjUsMjMsMjU1XX0seyJpZCI6IngtaXRlbS1TaGFyZSIsImhpIjpmYWxzZSwicmF0aW8iOjguNDEwMDkyNzA4OTA2ODM2LCJpbmsiOlsyOCwyNSwyMywyNTVdfV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-b1fd6120727c6b2e160e",
+          "file": "release-11-1-1.spec.ts",
+          "line": 208,
+          "column": 9
+        },
+        {
+          "title": "glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · dark",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1821,
+                  "error": {
+                    "message": "Error: x-item-Share text contrast\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m4.5\u001b[39m\nReceived:    \u001b[31m3.934429316349946\u001b[39m",
+                    "stack": "Error: x-item-Share text contrast\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m4.5\u001b[39m\nReceived:    \u001b[31m3.934429316349946\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:241:77",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 77,
+                      "line": 241
+                    },
+                    "snippet": "  239 |             // contrast is read from Chromium's paint and recorded here.\n  240 |             if (project.startsWith(\"webkit\")) return;\n> 241 |             for (const r of reads) expect(r.ratio, `${r.id} text contrast`).toBeGreaterThanOrEqual(4.5);\n      |                                                                             ^\n  242 |         });\n  243 |     }\n  244 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 77,
+                        "line": 241
+                      },
+                      "message": "Error: x-item-Share text contrast\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m4.5\u001b[39m\nReceived:    \u001b[31m3.934429316349946\u001b[39m\n\n  239 |             // contrast is read from Chromium's paint and recorded here.\n  240 |             if (project.startsWith(\"webkit\")) return;\n> 241 |             for (const r of reads) expect(r.ratio, `${r.id} text contrast`).toBeGreaterThanOrEqual(4.5);\n      |                                                                             ^\n  242 |         });\n  243 |     }\n  244 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:241:77"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:06:04.390Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "glass",
+                      "contentType": "application/json",
+                      "body": "eyJwbGF0ZSI6eyJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImFscGhhIjowLjYzMTM3MjU0OTAxOTYwNzgsIm5lc3RlZCI6W119LCJyZWFkcyI6W3siaWQiOiJ4LWl0ZW0tQ29weSIsImhpIjp0cnVlLCJyYXRpbyI6NS44NjAxMjI2OTgzNDkwODUsImluayI6WzIzMywyMzAsMjI2LDI1NV19LHsiaWQiOiJ4LWl0ZW0tU2hhcmUiLCJoaSI6ZmFsc2UsInJhdGlvIjozLjkzNDQyOTMxNjM0OTk0NiwiaW5rIjpbMjMzLDIzMCwyMjYsMjU1XX1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-glass-·-a-p-363ff-1-over-a-busy-ground-·-dark-chromium-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 77,
+                    "line": 241
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-2561a2df8587c69226f4",
+          "file": "release-11-1-1.spec.ts",
+          "line": 208,
+          "column": 9
+        },
+        {
+          "title": "glass · a phone dock DropdownMenu is solid under reduced transparency",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1277,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:06:06.546Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-d07ab76d5694a48b7020",
+          "file": "release-11-1-1.spec.ts",
+          "line": 245,
+          "column": 5
+        },
+        {
+          "title": "exit · Select leaves on the exit curve, shorter than it entered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3357,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:06:07.931Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6NDE0LCJleGl0IjoyMDgsInBhaW50ZWQiOjI3LCJzZWVuU2hhcmUiOjAuMTM0LCJjdXJ2ZSI6ImN1YmljLWJlemllcigwLjMsIDAsIDAuNiwgMC43KSIsInN0cmF5IjowLjA3NSwidHJhdmVsIjoyMDMsInRyYXZlbFNoYXJlIjowLjExMSwiZnJhbWVzIjpbWzAsMSw2MTVdLFswLDEsNjE1XSxbNiwxLDYxNV0sWzEzLDAuOTk1LDYxNl0sWzIzLDAuOTcsNjE4XSxbMjcsMC45NTIsNjIxXSxbMzcsMC45MDUsNjI2XSxbNDMsMC44NjksNjMxXSxbNDksMC44MjksNjM1XSxbNTcsMC43NzUsNjQyXSxbNjUsMC43MTMsNjUxXSxbNzEsMC42NjIsNjU4XSxbODAsMC41OTYsNjY3XSxbODUsMC41NSw2NzRdLFs5NCwwLjQ4MSw2ODVdLFsxMDIsMC40MTYsNjk2XSxbMTEwLDAuMzYzLDcwNl0sWzExNSwwLjMyOSw3MTNdLFsxMjUsMC4yNjMsNzI3XSxbMTMxLDAuMjI5LDczNF0sWzEzOSwwLjE4Myw3NDZdLFsxNDcsMC4xNDUsNzU3XSxbMTU2LDAuMTA5LDc2OF0sWzE2NSwwLjA3OCw3ODBdLFsxNzYsMC4wNSw3OTNdLFsxODMsMC4wMzQsODAyXSxbMTkzLDAuMDE5LDgxMl0sWzE5OCwwLjAxMyw4MThdLFsyMDgsMC4wMDYsODI3XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-8f704d32e15cd8a5b910",
+          "file": "release-11-1-1.spec.ts",
+          "line": 314,
+          "column": 5
+        },
+        {
+          "title": "exit · DropdownMenu leaves on the exit curve, shorter than it entered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3352,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:06:11.299Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6Mzk0LCJleGl0IjoyMjQsInBhaW50ZWQiOjI4LCJzZWVuU2hhcmUiOjAuMTAxLCJjdXJ2ZSI6ImN1YmljLWJlemllcigwLjMsIDAsIDAuNiwgMC43KSIsInN0cmF5IjowLjAwMywidHJhdmVsIjowLCJ0cmF2ZWxTaGFyZSI6bnVsbCwiZnJhbWVzIjpbWzAsMSwxNTRdLFs1LDEsMTU0XSxbMTAsMC45OTgsMTU0XSxbMTYsMC45OTEsMTU0XSxbMjUsMC45NzcsMTU0XSxbMzEsMC45NjEsMTU0XSxbNDAsMC45MzcsMTU0XSxbNDgsMC45MDksMTU0XSxbNTksMC44NjMsMTU0XSxbNjgsMC44MiwxNTRdLFs3NywwLjc3NiwxNTRdLFs4MiwwLjc0NSwxNTRdLFs5MCwwLjcwMiwxNTRdLFs5NywwLjY2MiwxNTRdLFsxMDcsMC42MDUsMTU0XSxbMTE0LDAuNTYxLDE1NF0sWzEyMCwwLjUyNSwxNTRdLFsxMjksMC40NzEsMTU0XSxbMTM2LDAuNDMyLDE1NF0sWzE0NCwwLjM4NCwxNTRdLFsxNDksMC4zNTksMTU0XSxbMTU3LDAuMzEyLDE1NF0sWzE2NSwwLjI2NywxNTRdLFsxNzMsMC4yMjMsMTU0XSxbMTgxLDAuMTg0LDE1NF0sWzE5MSwwLjEzNSwxNTRdLFsyMDAsMC4wOTUsMTU0XSxbMjEwLDAuMDU3LDE1NF0sWzIxOCwwLjAyNiwxNTRdLFsyMjQsMC4wMDIsMTU0XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-4235f18599920e42114a",
+          "file": "release-11-1-1.spec.ts",
+          "line": 314,
+          "column": 5
+        },
+        {
+          "title": "exit · Popover leaves on the exit curve, shorter than it entered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3384,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:06:14.657Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6NDY3LCJleGl0IjoyNTksInBhaW50ZWQiOjMzLCJzZWVuU2hhcmUiOjAuMDg1LCJjdXJ2ZSI6ImN1YmljLWJlemllcigwLjMsIDAsIDAuNiwgMC43KSIsInN0cmF5IjowLjAxMywidHJhdmVsIjo4LCJ0cmF2ZWxTaGFyZSI6bnVsbCwiZnJhbWVzIjpbWzAsMSwxNDBdLFs5LDEsMTQwXSxbMTQsMC45OTcsMTQwXSxbMjIsMC45ODksMTQwXSxbMzAsMC45NzYsMTQwXSxbMzUsMC45NjUsMTQwXSxbNDQsMC45NDMsMTQwXSxbNTEsMC45MjMsMTM5XSxbNTksMC44OTYsMTM5XSxbNjcsMC44NjYsMTM5XSxbNzMsMC44NDMsMTM5XSxbODAsMC44MSwxMzhdLFs4OSwwLjc3MywxMzhdLFs5NSwwLjc0LDEzOF0sWzEwMiwwLjcwOCwxMzhdLFsxMTAsMC42NjUsMTM3XSxbMTE3LDAuNjI5LDEzN10sWzEyNSwwLjU5MSwxMzddLFsxMzQsMC41NDQsMTM2XSxbMTM5LDAuNTE0LDEzNl0sWzE0OCwwLjQ2OCwxMzZdLFsxNTUsMC40MzIsMTM1XSxbMTYzLDAuMzksMTM1XSxbMTczLDAuMzM2LDEzNV0sWzE4MiwwLjI5MSwxMzRdLFsxOTEsMC4yNDksMTM0XSxbMjAwLDAuMjEsMTM0XSxbMjA1LDAuMTg2LDEzM10sWzIxMywwLjE1MywxMzNdLFsyMjIsMC4xMTYsMTMzXSxbMjI5LDAuMDg2LDEzM10sWzIzNCwwLjA2OCwxMzNdLFsyNDMsMC4wMzgsMTMyXSxbMjUxLDAuMDEyLDEzMl0sWzI1OSwwLG51bGxdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-1026b3be80538a4494ba",
+          "file": "release-11-1-1.spec.ts",
+          "line": 314,
+          "column": 5
+        },
+        {
+          "title": "exit · Tooltip leaves on the exit curve, shorter than it entered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a Tooltip does not open on touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 316,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 59,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:06:18.053Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a Tooltip does not open on touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 316,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-977136336468bc72c3a4",
+          "file": "release-11-1-1.spec.ts",
+          "line": 314,
+          "column": 5
+        },
+        {
+          "title": "exit · Dialog leaves on the exit curve, shorter than it entered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3341,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:06:18.123Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6MjQzLCJleGl0IjoxMzAsInBhaW50ZWQiOjE3LCJzZWVuU2hhcmUiOjAuMTg5LCJjdXJ2ZSI6ImN1YmljLWJlemllcigwLjMsIDAsIDAuNiwgMC43KSIsInN0cmF5IjowLjAyNSwidHJhdmVsIjo4LCJ0cmF2ZWxTaGFyZSI6bnVsbCwiZnJhbWVzIjpbWzAsMSwyMF0sWzUsMSwyMF0sWzEyLDEsMjBdLFsxOCwwLjk4NiwyMF0sWzI1LDAuOTYzLDIwXSxbMzQsMC45MjEsMjFdLFs0MiwwLjg1NCwyMV0sWzUwLDAuNzgyLDIyXSxbNTYsMC43MDIsMjNdLFs2MiwwLjYzOSwyM10sWzcyLDAuNTcxLDI0XSxbNzksMC40NjUsMjVdLFs4NSwwLjM4MSwyNV0sWzkyLDAuMzIxLDI2XSxbMTAwLDAuMjUxLDI3XSxbMTA4LDAuMTczLDI3XSxbMTE3LDAuMTA2LDI4XSxbMTIyLDAuMDM5LDI4XSxbMTMwLDAuMDA2LDI5XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-5030e3282ea7f9610ee0",
+          "file": "release-11-1-1.spec.ts",
+          "line": 314,
+          "column": 5
+        },
+        {
+          "title": "exit · Sheet right leaves on the exit curve, shorter than it entered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3357,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:06:21.470Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6NTk2LCJleGl0IjoyNTYsInBhaW50ZWQiOjM0LCJzZWVuU2hhcmUiOjAuMDg1LCJjdXJ2ZSI6ImN1YmljLWJlemllcigwLjMsIDAsIDAuNiwgMC43KSIsInN0cmF5IjowLjAxOCwidHJhdmVsIjoyODMsInRyYXZlbFNoYXJlIjowLjA4OCwiZnJhbWVzIjpbWzAsMSw5OF0sWzcsMSw5OF0sWzEzLDEsOThdLFsxOSwwLjk5Niw5OV0sWzI2LDAuOTksMTAwXSxbMzQsMC45NzksMTA0XSxbNDIsMC45NjMsMTA4XSxbNTEsMC45NDIsMTE0XSxbNTYsMC45MTgsMTIyXSxbNjQsMC44OTksMTI3XSxbNzIsMC44NzEsMTM1XSxbODAsMC44MzksMTQ1XSxbODUsMC44MDQsMTU1XSxbOTMsMC43NzksMTYyXSxbMTAxLDAuNzQzLDE3M10sWzEwOSwwLjcwNSwxODRdLFsxMTcsMC42NjMsMTk2XSxbMTIzLDAuNjIsMjA5XSxbMTMwLDAuNTkxLDIxN10sWzEzOCwwLjU1LDIyOV0sWzE0NiwwLjUwOSwyNDFdLFsxNTIsMC40NjYsMjU0XSxbMTYwLDAuNDM3LDI2Ml0sWzE2OCwwLjM5NywyNzRdLFsxNzYsMC4zNTcsMjg2XSxbMTg0LDAuMzE2LDI5OF0sWzE4OSwwLjI3NiwzMDldLFsxOTcsMC4yNTEsMzE3XSxbMjA1LDAuMjEzLDMyOF0sWzIxMywwLjE3OSwzMzhdLFsyMTksMC4xNDQsMzQ4XSxbMjI2LDAuMTIxLDM1NV0sWzIzNCwwLjA5MywzNjNdLFsyNDIsMC4wNjQsMzcxXSxbMjUxLDAuMDM0LDM4MF0sWzI1NiwwLjAwOCwzODhdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-92562af27a0c55e15a32",
+          "file": "release-11-1-1.spec.ts",
+          "line": 314,
+          "column": 5
+        },
+        {
+          "title": "exit · Sheet bottom leaves on the exit curve, shorter than it entered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3340,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:06:24.834Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6NDU5LCJleGl0IjoyNjEsInBhaW50ZWQiOjMyLCJzZWVuU2hhcmUiOjAuMDg1LCJjdXJ2ZSI6ImN1YmljLWJlemllcigwLjMsIDAsIDAuNiwgMC43KSIsInN0cmF5IjowLjAxMywidHJhdmVsIjo4NywidHJhdmVsU2hhcmUiOjAuMDg3LCJmcmFtZXMiOltbMCwxLDc1NV0sWzUsMSw3NTVdLFsxMiwxLDc1NV0sWzIyLDAuOTk3LDc1Nl0sWzMwLDAuOTg2LDc1N10sWzM3LDAuOTczLDc1OF0sWzQ3LDAuOTU2LDc1OV0sWzU3LDAuOTMsNzYyXSxbNjYsMC44OTUsNzY1XSxbNzYsMC44NjIsNzY4XSxbODQsMC44MjMsNzcxXSxbOTAsMC43ODYsNzc0XSxbOTksMC43NTksNzc3XSxbMTA1LDAuNzE1LDc4MV0sWzExMywwLjY4MSw3ODRdLFsxMjAsMC42NCw3ODddLFsxMjgsMC42MTIsNzkwXSxbMTM1LDAuNTY0LDc5NF0sWzE0MiwwLjUyNyw3OTddLFsxNDksMC40OSw4MDFdLFsxNTcsMC40NTUsODA0XSxbMTY0LDAuNDEzLDgwN10sWzE3MSwwLjM3NSw4MTFdLFsxODAsMC4zMzcsODE0XSxbMTkxLDAuMjkzLDgxOF0sWzE5OSwwLjI0Myw4MjJdLFsyMDksMC4yMDQsODI2XSxbMjE3LDAuMTYyLDgzMF0sWzIyMywwLjEyOCw4MzNdLFsyMzIsMC4xMDQsODM1XSxbMjM5LDAuMDcxLDgzOF0sWzI0NiwwLjA0Nyw4NDBdLFsyNTYsMC4wMjIsODQyXSxbMjYxLDAsbnVsbF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-059560b6f989949b79ad",
+          "file": "release-11-1-1.spec.ts",
+          "line": 314,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-16T01:05:42.512Z",
+    "duration": 45711.854,
+    "expected": 17,
+    "skipped": 1,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

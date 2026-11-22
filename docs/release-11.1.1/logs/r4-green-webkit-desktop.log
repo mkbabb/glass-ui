@@ -1,0 +1,37 @@
+[guarded] waiting for the 'webkit' lock
+
+Running 8 tests using 1 worker
+
+  ✓  1 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:426:5 › routes · a detented Sheet leaves whole by escape (4.0s)
+  ✓  2 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:426:5 › routes · a detented Sheet leaves whole by outside (3.7s)
+  ✓  3 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:448:5 › routes · a CommandDialog keeps its list through its exit by pick (2.9s)
+  ✓  4 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:448:5 › routes · a CommandDialog keeps its list through its exit by escape (3.0s)
+  ✘  5 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:448:5 › routes · a CommandDialog keeps its list through its exit by outside (3.0s)
+  ✓  6 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:482:5 › routes · a press on an open Select's trigger closes it once (2.8s)
+  ✓  7 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:482:5 › routes · a press on an open DropdownMenu's trigger closes it once (2.6s)
+  ✓  8 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:482:5 › routes · a press on an open Popover's trigger closes it once (2.7s)
+
+
+  1) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:448:5 › routes · a CommandDialog keeps its list through its exit by outside 
+
+    Error: no frame takes more than a fifth of what is seen [[0,1,435],[43,1,435],[59,0.869,432],[67,0.734,429],[71,0.66,428],[79,0.623,427],[90,0.548,425],[100,0.443,423],[110,0.349,421],[118,0.258,419],[129,0.188,417],[141,0.1,415],[151,0.017,414],[166,0,null]]
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.209
+
+      469 |             expect(f.h!, `the plate keeps its height ${at}`).toBeGreaterThanOrEqual(read.rest.h! * 0.9);
+      470 |         }
+    > 471 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                      ^
+      472 |     });
+      473 | }
+      474 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:471:86
+
+    Error Context: tests-visual/test-results/release-11-1-1-routes-·-a--22113-through-its-exit-by-outside-webkit-desktop/error-context.md
+
+  1 failed
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:448:5 › routes · a CommandDialog keeps its list through its exit by outside 
+  7 passed (25.7s)

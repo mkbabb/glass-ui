@@ -1,0 +1,99 @@
+
+Running 8 tests using 1 worker
+
+  ✘  1 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:425:5 › routes · a detented Sheet leaves whole by escape (3.5s)
+  ✘  2 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:425:5 › routes · a detented Sheet leaves whole by outside (3.5s)
+  ✓  3 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:447:5 › routes · a CommandDialog keeps its list through its exit by pick (2.6s)
+  ✘  4 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:447:5 › routes · a CommandDialog keeps its list through its exit by escape (2.6s)
+  ✓  5 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:447:5 › routes · a CommandDialog keeps its list through its exit by outside (2.6s)
+  ✘  6 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:478:5 › routes · a press on an open Select's trigger closes it once (2.4s)
+  ✓  7 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:478:5 › routes · a press on an open DropdownMenu's trigger closes it once (2.4s)
+  ✓  8 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:478:5 › routes · a press on an open Popover's trigger closes it once (2.3s)
+
+
+  1) [chromium-phone] › tests-visual/release-11-1-1.spec.ts:425:5 › routes · a detented Sheet leaves whole by escape 
+
+    Error: no frame takes more than a fifth of what is seen [[0,1,422],[1,1,422],[9,1,422],[17,1,411],[29,1,399],[39,1,376],[48,1,355],[52,1,334],[62,1,322],[69,1,298],[74,1,281],[82,1,267],[89,1,249],[97,1,233],[105,1,213],[111,1,196],[119,1,184],[126,1,171],[134,1,171],[145,1,171],[154,1,171],[163,1,171],[172,1,171],[178,1,171],[186,1,171],[193,1,171],[201,1,171],[212,1,171],[221,1,171],[230,1,171],[239,1,171],[245,1,171],[254,1,171],[261,1,171],[268,1,171],[279,1,171],[287,1,171],[296,1,171],[306,1,171],[313,1,171],[321,1,171],[331,1,171],[339,1,171],[350,1,171],[359,1,171],[368,1,171],[374,1,171],[383,1,171],[389,1,171],[397,1,171],[406,1,171],[414,1,171],[423,1,171],[431,1,171],[438,1,171],[447,1,171],[456,1,171],[464,1,171],[472,1,171],[478,0,null]]
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    1
+
+      440 |         expect(read.goneIdx, `the sheet leaves ${at}`).toBeGreaterThan(-1);
+      441 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 442 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                      ^
+      443 |     });
+      444 | }
+      445 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:442:86
+
+    Error Context: tests-visual/test-results/release-11-1-1-routes-·-a--9057b-heet-leaves-whole-by-escape-chromium-phone/error-context.md
+
+  2) [chromium-phone] › tests-visual/release-11-1-1.spec.ts:425:5 › routes · a detented Sheet leaves whole by outside 
+
+    Error: no frame takes more than a fifth of what is seen [[0,1,422],[8,1,422],[15,1,422],[18,1,411],[26,1,407],[32,1,394],[39,1,383],[47,1,368],[55,1,350],[62,1,331],[70,1,313],[80,1,294],[86,1,270],[93,1,255],[102,1,238],[110,1,217],[119,1,199],[124,1,181],[132,1,171],[140,1,171],[148,1,171],[154,1,171],[161,1,171],[169,1,171],[177,1,171],[185,1,171],[191,1,171],[199,1,171],[207,1,171],[214,1,171],[221,1,171],[228,1,171],[236,1,171],[244,1,171],[252,1,171],[261,1,171],[269,1,171],[277,1,171],[286,1,171],[291,1,171],[299,1,171],[307,1,171],[314,1,171],[321,1,171],[328,1,171],[336,1,171],[344,1,171],[352,1,171],[358,1,171],[365,1,171],[374,1,171],[380,1,171],[386,1,171],[395,1,171],[403,1,171],[411,1,171],[419,1,171],[425,1,171],[432,1,171],[440,1,171],[448,1,171],[453,1,171],[461,1,171],[469,1,171],[477,1,171],[486,0,null]]
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    1
+
+      440 |         expect(read.goneIdx, `the sheet leaves ${at}`).toBeGreaterThan(-1);
+      441 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 442 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                      ^
+      443 |     });
+      444 | }
+      445 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:442:86
+
+    Error Context: tests-visual/test-results/release-11-1-1-routes-·-a--524c4-eet-leaves-whole-by-outside-chromium-phone/error-context.md
+
+  3) [chromium-phone] › tests-visual/release-11-1-1.spec.ts:447:5 › routes · a CommandDialog keeps its list through its exit by escape 
+
+    Error: no frame takes more than a fifth of what is seen [[0,1,339],[10,1,339],[18,0.995,339],[26,0.968,338],[31,0.927,338],[37,0.893,337],[47,0.845,336],[53,0.748,335],[63,0.682,334],[74,0.577,332],[83,0.457,330],[90,0.364,328],[97,0.282,327],[106,0.222,326],[112,0.139,324],[119,0.085,323],[125,0.036,323],[134,0,null]]
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.213
+
+      465 |             if (f.present) expect(f.h!, `the plate keeps its height ${at}`).toBeGreaterThanOrEqual(read.rest.h! * 0.9);
+      466 |         }
+    > 467 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                      ^
+      468 |     });
+      469 | }
+      470 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:467:86
+
+    Error Context: tests-visual/test-results/release-11-1-1-routes-·-a--e6d5e--through-its-exit-by-escape-chromium-phone/error-context.md
+
+  4) [chromium-phone] › tests-visual/release-11-1-1.spec.ts:478:5 › routes · a press on an open Select's trigger closes it once 
+
+    Error: and stays closed [[0,1,229],[3,1,229],[13,1,229],[15,1,229],[23,0.993,229],[31,0.971,229],[40,0.936,229],[48,0.891,229],[56,0.844,229],[66,0.774,229],[74,0.713,229],[79,0.671,229],[87,0.609,229],[94,0.547,229],[102,0.484,229],[113,0.401,229],[122,0.338,229],[131,0.276,229],[139,0.23,229],[146,0.189,229],[153,0.156,229],[162,0.12,229],[170,0.092,229],[177,0.069,229],[185,0.047,229],[195,0.029,229],[202,0.018,229],[208,0.012,229],[216,0.005,229]]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      496 |         const at = JSON.stringify(read.frames);
+      497 |         expect(read.goneIdx, `the surface leaves ${at}`).toBeGreaterThan(-1);
+    > 498 |         expect(read.after.slice(read.goneIdx).every((f) => !f.present || (f.op ?? 0) <= 0.01), `and stays closed ${at}`).toBe(true);
+          |                                                                                                                          ^
+      499 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+      500 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+      501 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:498:122
+
+    Error Context: tests-visual/test-results/release-11-1-1-routes-·-a--df64e-ct-s-trigger-closes-it-once-chromium-phone/error-context.md
+
+  4 failed
+    [chromium-phone] › tests-visual/release-11-1-1.spec.ts:425:5 › routes · a detented Sheet leaves whole by escape 
+    [chromium-phone] › tests-visual/release-11-1-1.spec.ts:425:5 › routes · a detented Sheet leaves whole by outside 
+    [chromium-phone] › tests-visual/release-11-1-1.spec.ts:447:5 › routes · a CommandDialog keeps its list through its exit by escape 
+    [chromium-phone] › tests-visual/release-11-1-1.spec.ts:478:5 › routes · a press on an open Select's trigger closes it once 
+  4 passed (24.3s)

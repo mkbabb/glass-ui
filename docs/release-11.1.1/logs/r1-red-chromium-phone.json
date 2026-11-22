@@ -1,0 +1,562 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-1-1.config.ts",
+      "--project=chromium-phone",
+      "--workers=1",
+      "-g",
+      "form"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/logs/r1-red-chromium-phone.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5352",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/",
+      "url": "http://localhost:5352",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "form · a dock Select leaves in the form it opened in · pick",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2276,
+                  "error": {
+                    "message": "Error: form on every exit frame [{\"t\":6,\"x\":0,\"y\":615,\"w\":390,\"op\":1,\"form\":\"sheet\",\"bf\":\"none\"},{\"t\":20,\"x\":16,\"y\":610,\"w\":358,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":24,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":30,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":40,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":44,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":53,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":60,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":71,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":80,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":89,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":98,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":103,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":112,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":119,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":127,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":133,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":0.332507,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"}]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"sheet\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m",
+                    "stack": "Error: form on every exit frame [{\"t\":6,\"x\":0,\"y\":615,\"w\":390,\"op\":1,\"form\":\"sheet\",\"bf\":\"none\"},{\"t\":20,\"x\":16,\"y\":610,\"w\":358,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":24,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":30,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":40,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":44,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":53,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":60,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":71,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":80,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":89,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":98,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":103,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":112,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":119,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":127,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":133,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":0.332507,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"}]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"sheet\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:74:82",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 82,
+                      "line": 74
+                    },
+                    "snippet": "  72 |         let prevY = rest.y!;\n  73 |         for (const f of exit) {\n> 74 |             expect(f.form, `form on every exit frame ${JSON.stringify(report)}`).toBe(rest.form);\n     |                                                                                  ^\n  75 |             expect(f.surface, `material attribute on every exit frame`).toBe(rest.surface);\n  76 |             expect(f.bf, `backdrop on every exit frame`).toBe(rest.bf);\n  77 |             // The anchored form follows its trigger, whose label a pick rewrites; the sheet"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 82,
+                        "line": 74
+                      },
+                      "message": "Error: form on every exit frame [{\"t\":6,\"x\":0,\"y\":615,\"w\":390,\"op\":1,\"form\":\"sheet\",\"bf\":\"none\"},{\"t\":20,\"x\":16,\"y\":610,\"w\":358,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":24,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":30,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":40,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":44,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":53,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":60,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":71,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":80,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":89,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":98,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":103,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":112,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":119,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":127,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":133,\"x\":152.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":0.332507,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"}]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"sheet\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m\n\n  72 |         let prevY = rest.y!;\n  73 |         for (const f of exit) {\n> 74 |             expect(f.form, `form on every exit frame ${JSON.stringify(report)}`).toBe(rest.form);\n     |                                                                                  ^\n  75 |             expect(f.surface, `material attribute on every exit frame`).toBe(rest.surface);\n  76 |             expect(f.bf, `backdrop on every exit frame`).toBe(rest.bf);\n  77 |             // The anchored form follows its trigger, whose label a pick rewrites; the sheet\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:74:82"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T00:32:28.086Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6NiwieCI6MCwieSI6NjE1LCJ3IjozOTAsIm9wIjoxLCJmb3JtIjoic2hlZXQiLCJiZiI6Im5vbmUifSx7InQiOjIwLCJ4IjoxNiwieSI6NjEwLCJ3IjozNTgsIm9wIjoxLCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MjQsIngiOjE1Mi42NjY2NzE3NTI5Mjk3LCJ5Ijo2NiwidyI6MTI4LjAwMDAxNTI1ODc4OTA2LCJvcCI6MSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjMwLCJ4IjoxNTIuNjY2NjcxNzUyOTI5NywieSI6NjYsInciOjEyOC4wMDAwMTUyNTg3ODkwNiwib3AiOjEsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo0MCwieCI6MTUyLjY2NjY3MTc1MjkyOTcsInkiOjY2LCJ3IjoxMjguMDAwMDE1MjU4Nzg5MDYsIm9wIjoxLCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6NDQsIngiOjE1Mi42NjY2NzE3NTI5Mjk3LCJ5Ijo2NiwidyI6MTI4LjAwMDAxNTI1ODc4OTA2LCJvcCI6MSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjUzLCJ4IjoxNTIuNjY2NjcxNzUyOTI5NywieSI6NjYsInciOjEyOC4wMDAwMTUyNTg3ODkwNiwib3AiOjEsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo2MCwieCI6MTUyLjY2NjY3MTc1MjkyOTcsInkiOjY2LCJ3IjoxMjguMDAwMDE1MjU4Nzg5MDYsIm9wIjoxLCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6NzEsIngiOjE1Mi42NjY2NzE3NTI5Mjk3LCJ5Ijo2NiwidyI6MTI4LjAwMDAxNTI1ODc4OTA2LCJvcCI6MSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjgwLCJ4IjoxNTIuNjY2NjcxNzUyOTI5NywieSI6NjYsInciOjEyOC4wMDAwMTUyNTg3ODkwNiwib3AiOjEsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo4OSwieCI6MTUyLjY2NjY3MTc1MjkyOTcsInkiOjY2LCJ3IjoxMjguMDAwMDE1MjU4Nzg5MDYsIm9wIjoxLCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6OTgsIngiOjE1Mi42NjY2NzE3NTI5Mjk3LCJ5Ijo2NiwidyI6MTI4LjAwMDAxNTI1ODc4OTA2LCJvcCI6MSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjEwMywieCI6MTUyLjY2NjY3MTc1MjkyOTcsInkiOjY2LCJ3IjoxMjguMDAwMDE1MjU4Nzg5MDYsIm9wIjoxLCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTEyLCJ4IjoxNTIuNjY2NjcxNzUyOTI5NywieSI6NjYsInciOjEyOC4wMDAwMTUyNTg3ODkwNiwib3AiOjEsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMTksIngiOjE1Mi42NjY2NzE3NTI5Mjk3LCJ5Ijo2NiwidyI6MTI4LjAwMDAxNTI1ODc4OTA2LCJvcCI6MSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjEyNywieCI6MTUyLjY2NjY3MTc1MjkyOTcsInkiOjY2LCJ3IjoxMjguMDAwMDE1MjU4Nzg5MDYsIm9wIjoxLCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTMzLCJ4IjoxNTIuNjY2NjcxNzUyOTI5NywieSI6NjYsInciOjEyOC4wMDAwMTUyNTg3ODkwNiwib3AiOjAuMzMyNTA3LCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9XQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-form-·-a-do-bbadc-he-form-it-opened-in-·-pick-chromium-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 82,
+                    "line": 74
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-f844d71cb3488c052955",
+          "file": "release-11-1-1.spec.ts",
+          "line": 51,
+          "column": 5
+        },
+        {
+          "title": "form · a dock DropdownMenu keeps its material through the exit · pick",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2301,
+                  "error": {
+                    "message": "Error: material attribute +18 ms\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"opaque\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m",
+                    "stack": "Error: material attribute +18 ms\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"opaque\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:115:59",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 59,
+                      "line": 115
+                    },
+                    "snippet": "  113 |         for (const f of exit) {\n  114 |             const at = `+${Math.round(f.t - film.mark)} ms`;\n> 115 |             expect(f.surface, `material attribute ${at}`).toBe(rest.surface);\n      |                                                           ^\n  116 |             expect(f.bf, `backdrop ${at}`).toBe(rest.bf);\n  117 |             expect(f.bg, `fill ${at}`).toBe(rest.bg);\n  118 |         }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 59,
+                        "line": 115
+                      },
+                      "message": "Error: material attribute +18 ms\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"opaque\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m\n\n  113 |         for (const f of exit) {\n  114 |             const at = `+${Math.round(f.t - film.mark)} ms`;\n> 115 |             expect(f.surface, `material attribute ${at}`).toBe(rest.surface);\n      |                                                           ^\n  116 |             expect(f.bf, `backdrop ${at}`).toBe(rest.bf);\n  117 |             expect(f.bg, `fill ${at}`).toBe(rest.bg);\n  118 |         }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:115:59"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T00:32:30.787Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6NSwib3AiOjEsInN1cmZhY2UiOiJvcGFxdWUiLCJiZiI6Im5vbmUifSx7InQiOjgsIm9wIjoxLCJzdXJmYWNlIjoib3BhcXVlIiwiYmYiOiJub25lIn0seyJ0IjoxOCwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyNCwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjozMiwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo0MCwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo0Niwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo1NCwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo2MSwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo3MCwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo3NCwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo4Mywib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo5MCwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo5OSwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMDcsIm9wIjoxLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTEyLCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjEyMCwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMjgsIm9wIjowLjI3NTE5NCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifV0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-form-·-a-do-b92ff-ial-through-the-exit-·-pick-chromium-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 59,
+                    "line": 115
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-a727ea62b0b9dbfdb462",
+          "file": "release-11-1-1.spec.ts",
+          "line": 91,
+          "column": 5
+        },
+        {
+          "title": "form · a dock Select leaves in the form it opened in · outside",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2289,
+                  "error": {
+                    "message": "Error: form on every exit frame [{\"t\":7,\"x\":0,\"y\":615,\"w\":390,\"op\":1,\"form\":\"sheet\",\"bf\":\"none\"},{\"t\":18,\"x\":16,\"y\":610,\"w\":358,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":21,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":25,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":40,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":48,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":56,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":61,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":69,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":76,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":85,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":93,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":102,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":117,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":126,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":0.579574,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":133,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":0.0294723,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"}]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"sheet\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m",
+                    "stack": "Error: form on every exit frame [{\"t\":7,\"x\":0,\"y\":615,\"w\":390,\"op\":1,\"form\":\"sheet\",\"bf\":\"none\"},{\"t\":18,\"x\":16,\"y\":610,\"w\":358,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":21,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":25,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":40,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":48,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":56,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":61,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":69,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":76,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":85,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":93,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":102,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":117,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":126,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":0.579574,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":133,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":0.0294723,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"}]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"sheet\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:74:82",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 82,
+                      "line": 74
+                    },
+                    "snippet": "  72 |         let prevY = rest.y!;\n  73 |         for (const f of exit) {\n> 74 |             expect(f.form, `form on every exit frame ${JSON.stringify(report)}`).toBe(rest.form);\n     |                                                                                  ^\n  75 |             expect(f.surface, `material attribute on every exit frame`).toBe(rest.surface);\n  76 |             expect(f.bf, `backdrop on every exit frame`).toBe(rest.bf);\n  77 |             // The anchored form follows its trigger, whose label a pick rewrites; the sheet"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 82,
+                        "line": 74
+                      },
+                      "message": "Error: form on every exit frame [{\"t\":7,\"x\":0,\"y\":615,\"w\":390,\"op\":1,\"form\":\"sheet\",\"bf\":\"none\"},{\"t\":18,\"x\":16,\"y\":610,\"w\":358,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":21,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":25,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":40,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":48,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":56,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":61,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":69,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":76,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":85,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":93,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":102,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":117,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":126,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":0.579574,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":133,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":0.0294723,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"}]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"sheet\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m\n\n  72 |         let prevY = rest.y!;\n  73 |         for (const f of exit) {\n> 74 |             expect(f.form, `form on every exit frame ${JSON.stringify(report)}`).toBe(rest.form);\n     |                                                                                  ^\n  75 |             expect(f.surface, `material attribute on every exit frame`).toBe(rest.surface);\n  76 |             expect(f.bf, `backdrop on every exit frame`).toBe(rest.bf);\n  77 |             // The anchored form follows its trigger, whose label a pick rewrites; the sheet\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:74:82"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T00:32:33.535Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6NywieCI6MCwieSI6NjE1LCJ3IjozOTAsIm9wIjoxLCJmb3JtIjoic2hlZXQiLCJiZiI6Im5vbmUifSx7InQiOjE4LCJ4IjoxNiwieSI6NjEwLCJ3IjozNTgsIm9wIjoxLCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MjEsIngiOjE2MS42NjY2NzE3NTI5Mjk3LCJ5Ijo2NiwidyI6MTI4LjAwMDAxNTI1ODc4OTA2LCJvcCI6MSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjI1LCJ4IjoxNjEuNjY2NjcxNzUyOTI5NywieSI6NjYsInciOjEyOC4wMDAwMTUyNTg3ODkwNiwib3AiOjEsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo0MCwieCI6MTYxLjY2NjY3MTc1MjkyOTcsInkiOjY2LCJ3IjoxMjguMDAwMDE1MjU4Nzg5MDYsIm9wIjoxLCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6NDgsIngiOjE2MS42NjY2NzE3NTI5Mjk3LCJ5Ijo2NiwidyI6MTI4LjAwMDAxNTI1ODc4OTA2LCJvcCI6MSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjU2LCJ4IjoxNjEuNjY2NjcxNzUyOTI5NywieSI6NjYsInciOjEyOC4wMDAwMTUyNTg3ODkwNiwib3AiOjEsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo2MSwieCI6MTYxLjY2NjY3MTc1MjkyOTcsInkiOjY2LCJ3IjoxMjguMDAwMDE1MjU4Nzg5MDYsIm9wIjoxLCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6NjksIngiOjE2MS42NjY2NzE3NTI5Mjk3LCJ5Ijo2NiwidyI6MTI4LjAwMDAxNTI1ODc4OTA2LCJvcCI6MSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjc2LCJ4IjoxNjEuNjY2NjcxNzUyOTI5NywieSI6NjYsInciOjEyOC4wMDAwMTUyNTg3ODkwNiwib3AiOjEsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo4NSwieCI6MTYxLjY2NjY3MTc1MjkyOTcsInkiOjY2LCJ3IjoxMjguMDAwMDE1MjU4Nzg5MDYsIm9wIjoxLCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6OTMsIngiOjE2MS42NjY2NzE3NTI5Mjk3LCJ5Ijo2NiwidyI6MTI4LjAwMDAxNTI1ODc4OTA2LCJvcCI6MSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjEwMiwieCI6MTYxLjY2NjY3MTc1MjkyOTcsInkiOjY2LCJ3IjoxMjguMDAwMDE1MjU4Nzg5MDYsIm9wIjoxLCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTE3LCJ4IjoxNjEuNjY2NjcxNzUyOTI5NywieSI6NjYsInciOjEyOC4wMDAwMTUyNTg3ODkwNiwib3AiOjEsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMjYsIngiOjE2MS42NjY2NzE3NTI5Mjk3LCJ5Ijo2NiwidyI6MTI4LjAwMDAxNTI1ODc4OTA2LCJvcCI6MC41Nzk1NzQsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMzMsIngiOjE2MS42NjY2NzE3NTI5Mjk3LCJ5Ijo2NiwidyI6MTI4LjAwMDAxNTI1ODc4OTA2LCJvcCI6MC4wMjk0NzIzLCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9XQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-form-·-a-do-12479-form-it-opened-in-·-outside-chromium-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 82,
+                    "line": 74
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-dac5833ffd3a1e227459",
+          "file": "release-11-1-1.spec.ts",
+          "line": 51,
+          "column": 5
+        },
+        {
+          "title": "form · a dock DropdownMenu keeps its material through the exit · outside",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2257,
+                  "error": {
+                    "message": "Error: material attribute +14 ms\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"opaque\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m",
+                    "stack": "Error: material attribute +14 ms\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"opaque\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:115:59",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 59,
+                      "line": 115
+                    },
+                    "snippet": "  113 |         for (const f of exit) {\n  114 |             const at = `+${Math.round(f.t - film.mark)} ms`;\n> 115 |             expect(f.surface, `material attribute ${at}`).toBe(rest.surface);\n      |                                                           ^\n  116 |             expect(f.bf, `backdrop ${at}`).toBe(rest.bf);\n  117 |             expect(f.bg, `fill ${at}`).toBe(rest.bg);\n  118 |         }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 59,
+                        "line": 115
+                      },
+                      "message": "Error: material attribute +14 ms\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"opaque\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m\n\n  113 |         for (const f of exit) {\n  114 |             const at = `+${Math.round(f.t - film.mark)} ms`;\n> 115 |             expect(f.surface, `material attribute ${at}`).toBe(rest.surface);\n      |                                                           ^\n  116 |             expect(f.bf, `backdrop ${at}`).toBe(rest.bf);\n  117 |             expect(f.bg, `fill ${at}`).toBe(rest.bg);\n  118 |         }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:115:59"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T00:32:36.283Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6Niwib3AiOjEsInN1cmZhY2UiOiJvcGFxdWUiLCJiZiI6Im5vbmUifSx7InQiOjE0LCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjIxLCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjI2LCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjM1LCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjQxLCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjQ4LCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjU2LCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjYzLCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjcwLCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjc4LCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjg2LCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjk4LCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjEwOCwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMTcsIm9wIjoxLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTIxLCJvcCI6MC41Mzg5NDMsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn1d"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-form-·-a-do-f9776--through-the-exit-·-outside-chromium-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 59,
+                    "line": 115
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-422f5f0810da6663e49d",
+          "file": "release-11-1-1.spec.ts",
+          "line": 91,
+          "column": 5
+        },
+        {
+          "title": "form · a dock Select leaves in the form it opened in · escape",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2275,
+                  "error": {
+                    "message": "Error: form on every exit frame [{\"t\":0,\"x\":0,\"y\":615,\"w\":390,\"op\":1,\"form\":\"sheet\",\"bf\":\"none\"},{\"t\":13,\"x\":16,\"y\":610,\"w\":358,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":16,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":22,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":29,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":37,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":45,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":56,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":65,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":74,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":82,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":89,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":98,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":105,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":112,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":118,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":127,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":0.388347,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":134,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":0.0171298,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"}]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"sheet\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m",
+                    "stack": "Error: form on every exit frame [{\"t\":0,\"x\":0,\"y\":615,\"w\":390,\"op\":1,\"form\":\"sheet\",\"bf\":\"none\"},{\"t\":13,\"x\":16,\"y\":610,\"w\":358,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":16,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":22,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":29,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":37,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":45,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":56,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":65,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":74,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":82,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":89,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":98,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":105,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":112,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":118,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":127,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":0.388347,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":134,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":0.0171298,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"}]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"sheet\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:74:82",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 82,
+                      "line": 74
+                    },
+                    "snippet": "  72 |         let prevY = rest.y!;\n  73 |         for (const f of exit) {\n> 74 |             expect(f.form, `form on every exit frame ${JSON.stringify(report)}`).toBe(rest.form);\n     |                                                                                  ^\n  75 |             expect(f.surface, `material attribute on every exit frame`).toBe(rest.surface);\n  76 |             expect(f.bf, `backdrop on every exit frame`).toBe(rest.bf);\n  77 |             // The anchored form follows its trigger, whose label a pick rewrites; the sheet"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 82,
+                        "line": 74
+                      },
+                      "message": "Error: form on every exit frame [{\"t\":0,\"x\":0,\"y\":615,\"w\":390,\"op\":1,\"form\":\"sheet\",\"bf\":\"none\"},{\"t\":13,\"x\":16,\"y\":610,\"w\":358,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":16,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":22,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":29,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":37,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":45,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":56,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":65,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":74,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":82,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":89,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":98,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":105,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":112,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":118,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":1,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":127,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":0.388347,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"},{\"t\":134,\"x\":161.6666717529297,\"y\":66,\"w\":128.00001525878906,\"op\":0.0171298,\"form\":null,\"bf\":\"blur(20px) saturate(1.5)\"}]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"sheet\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m\n\n  72 |         let prevY = rest.y!;\n  73 |         for (const f of exit) {\n> 74 |             expect(f.form, `form on every exit frame ${JSON.stringify(report)}`).toBe(rest.form);\n     |                                                                                  ^\n  75 |             expect(f.surface, `material attribute on every exit frame`).toBe(rest.surface);\n  76 |             expect(f.bf, `backdrop on every exit frame`).toBe(rest.bf);\n  77 |             // The anchored form follows its trigger, whose label a pick rewrites; the sheet\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:74:82"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T00:32:38.978Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6MCwieCI6MCwieSI6NjE1LCJ3IjozOTAsIm9wIjoxLCJmb3JtIjoic2hlZXQiLCJiZiI6Im5vbmUifSx7InQiOjEzLCJ4IjoxNiwieSI6NjEwLCJ3IjozNTgsIm9wIjoxLCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTYsIngiOjE2MS42NjY2NzE3NTI5Mjk3LCJ5Ijo2NiwidyI6MTI4LjAwMDAxNTI1ODc4OTA2LCJvcCI6MSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjIyLCJ4IjoxNjEuNjY2NjcxNzUyOTI5NywieSI6NjYsInciOjEyOC4wMDAwMTUyNTg3ODkwNiwib3AiOjEsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyOSwieCI6MTYxLjY2NjY3MTc1MjkyOTcsInkiOjY2LCJ3IjoxMjguMDAwMDE1MjU4Nzg5MDYsIm9wIjoxLCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MzcsIngiOjE2MS42NjY2NzE3NTI5Mjk3LCJ5Ijo2NiwidyI6MTI4LjAwMDAxNTI1ODc4OTA2LCJvcCI6MSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjQ1LCJ4IjoxNjEuNjY2NjcxNzUyOTI5NywieSI6NjYsInciOjEyOC4wMDAwMTUyNTg3ODkwNiwib3AiOjEsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo1NiwieCI6MTYxLjY2NjY3MTc1MjkyOTcsInkiOjY2LCJ3IjoxMjguMDAwMDE1MjU4Nzg5MDYsIm9wIjoxLCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6NjUsIngiOjE2MS42NjY2NzE3NTI5Mjk3LCJ5Ijo2NiwidyI6MTI4LjAwMDAxNTI1ODc4OTA2LCJvcCI6MSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjc0LCJ4IjoxNjEuNjY2NjcxNzUyOTI5NywieSI6NjYsInciOjEyOC4wMDAwMTUyNTg3ODkwNiwib3AiOjEsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo4MiwieCI6MTYxLjY2NjY3MTc1MjkyOTcsInkiOjY2LCJ3IjoxMjguMDAwMDE1MjU4Nzg5MDYsIm9wIjoxLCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6ODksIngiOjE2MS42NjY2NzE3NTI5Mjk3LCJ5Ijo2NiwidyI6MTI4LjAwMDAxNTI1ODc4OTA2LCJvcCI6MSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjk4LCJ4IjoxNjEuNjY2NjcxNzUyOTI5NywieSI6NjYsInciOjEyOC4wMDAwMTUyNTg3ODkwNiwib3AiOjEsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMDUsIngiOjE2MS42NjY2NzE3NTI5Mjk3LCJ5Ijo2NiwidyI6MTI4LjAwMDAxNTI1ODc4OTA2LCJvcCI6MSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjExMiwieCI6MTYxLjY2NjY3MTc1MjkyOTcsInkiOjY2LCJ3IjoxMjguMDAwMDE1MjU4Nzg5MDYsIm9wIjoxLCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTE4LCJ4IjoxNjEuNjY2NjcxNzUyOTI5NywieSI6NjYsInciOjEyOC4wMDAwMTUyNTg3ODkwNiwib3AiOjEsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMjcsIngiOjE2MS42NjY2NzE3NTI5Mjk3LCJ5Ijo2NiwidyI6MTI4LjAwMDAxNTI1ODc4OTA2LCJvcCI6MC4zODgzNDcsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMzQsIngiOjE2MS42NjY2NzE3NTI5Mjk3LCJ5Ijo2NiwidyI6MTI4LjAwMDAxNTI1ODc4OTA2LCJvcCI6MC4wMTcxMjk4LCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9XQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-form-·-a-do-0bcc0--form-it-opened-in-·-escape-chromium-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 82,
+                    "line": 74
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-5abbc746f57a5204a6bb",
+          "file": "release-11-1-1.spec.ts",
+          "line": 51,
+          "column": 5
+        },
+        {
+          "title": "form · a dock DropdownMenu keeps its material through the exit · escape",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2265,
+                  "error": {
+                    "message": "Error: material attribute +4 ms\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"opaque\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m",
+                    "stack": "Error: material attribute +4 ms\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"opaque\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:115:59",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 59,
+                      "line": 115
+                    },
+                    "snippet": "  113 |         for (const f of exit) {\n  114 |             const at = `+${Math.round(f.t - film.mark)} ms`;\n> 115 |             expect(f.surface, `material attribute ${at}`).toBe(rest.surface);\n      |                                                           ^\n  116 |             expect(f.bf, `backdrop ${at}`).toBe(rest.bf);\n  117 |             expect(f.bg, `fill ${at}`).toBe(rest.bg);\n  118 |         }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 59,
+                        "line": 115
+                      },
+                      "message": "Error: material attribute +4 ms\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"opaque\"\u001b[39m\nReceived: \u001b[31mnull\u001b[39m\n\n  113 |         for (const f of exit) {\n  114 |             const at = `+${Math.round(f.t - film.mark)} ms`;\n> 115 |             expect(f.surface, `material attribute ${at}`).toBe(rest.surface);\n      |                                                           ^\n  116 |             expect(f.bf, `backdrop ${at}`).toBe(rest.bf);\n  117 |             expect(f.bg, `fill ${at}`).toBe(rest.bg);\n  118 |         }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:115:59"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T00:32:41.673Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6NCwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNywib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyNywib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjozNSwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjozOSwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo0OCwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo1NCwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo2NCwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo3Miwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo3Niwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo4NSwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo5Miwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMDEsIm9wIjoxLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTA4LCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjExNywib3AiOjAuMjEzNjEyLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9XQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-form-·-a-do-0ca6a-l-through-the-exit-·-escape-chromium-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 59,
+                    "line": 115
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-f0ac634a491fb7661d99",
+          "file": "release-11-1-1.spec.ts",
+          "line": 91,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-16T00:32:27.802Z",
+    "duration": 16279.64,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 6,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,751 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-1-1.config.ts",
+      "--project=chromium-desktop",
+      "--workers=1",
+      "-g",
+      "exit ·"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/logs/r3-pre-chromium-desktop.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "form · a dock DropdownMenu keeps its material through the exit · pick",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2350,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T00:48:01.020Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6MCwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo0LCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjEzLCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE5LCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjI1LCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjM0LCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjQwLCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjQ3LCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjU1LCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjYzLCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjc0LCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjg0LCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjkyLCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjEwMiwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMDYsIm9wIjoxLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTE2LCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjEyMywib3AiOjAuMjgyMjk4LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTI4LCJvcCI6MC4wMjE0MDM4LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9XQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-a5afe19a75b15bac1a65",
+          "file": "release-11-1-1.spec.ts",
+          "line": 98,
+          "column": 5
+        },
+        {
+          "title": "form · a dock DropdownMenu keeps its material through the exit · outside",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2266,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T00:48:03.495Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6Niwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMSwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyMSwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjozMSwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo0MCwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo0Nywib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo1Nywib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo2Mywib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo3Miwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo3OSwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo4NCwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo5Mywib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo5OSwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMDYsIm9wIjoxLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTE0LCJvcCI6MC4yNTEyLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9XQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-62faec3e5a29f95c0e2b",
+          "file": "release-11-1-1.spec.ts",
+          "line": 98,
+          "column": 5
+        },
+        {
+          "title": "form · a dock DropdownMenu keeps its material through the exit · escape",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2304,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T00:48:05.766Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6MSwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo4LCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE2LCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjI0LCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjM1LCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjQ1LCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjU0LCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjYwLCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjY4LCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjc0LCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjg0LCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjk0LCJvcCI6MSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjEwMywib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMTMsIm9wIjoxLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTIxLCJvcCI6MC4xOTk1NTUsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn1d"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-d58b04059e3a45a382c5",
+          "file": "release-11-1-1.spec.ts",
+          "line": 98,
+          "column": 5
+        },
+        {
+          "title": "exit · Select leaves on the exit curve, shorter than it entered",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3393,
+                  "error": {
+                    "message": "Error: no frame takes more than a fifth of the opacity {\"entrance\":413,\"exit\":133,\"painted\":13,\"opacityShare\":0.96,\"travel\":0,\"travelShare\":null,\"frames\":[[0,1,679],[4,1,679],[9,1,679],[26,1,679],[35,1,679],[45,1,679],[55,1,679],[64,1,679],[73,1,679],[83,1,679],[93,1,679],[102,1,679],[109,0.955,679],[118,0.04,679],[133,\"gone\",null]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.96\u001b[39m",
+                    "stack": "Error: no frame takes more than a fifth of the opacity {\"entrance\":413,\"exit\":133,\"painted\":13,\"opacityShare\":0.96,\"travel\":0,\"travelShare\":null,\"frames\":[[0,1,679],[4,1,679],[9,1,679],[26,1,679],[35,1,679],[45,1,679],[55,1,679],[64,1,679],[73,1,679],[83,1,679],[93,1,679],[102,1,679],[109,0.955,679],[118,0.04,679],[133,\"gone\",null]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.96\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:331:92",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 92,
+                      "line": 331
+                    },
+                    "snippet": "  329 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });\n  330 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 331 |         expect(read.opacityShare, `no frame takes more than a fifth of the opacity ${at}`).toBeLessThanOrEqual(0.2);\n      |                                                                                            ^\n  332 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  333 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);\n  334 |     });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 92,
+                        "line": 331
+                      },
+                      "message": "Error: no frame takes more than a fifth of the opacity {\"entrance\":413,\"exit\":133,\"painted\":13,\"opacityShare\":0.96,\"travel\":0,\"travelShare\":null,\"frames\":[[0,1,679],[4,1,679],[9,1,679],[26,1,679],[35,1,679],[45,1,679],[55,1,679],[64,1,679],[73,1,679],[83,1,679],[93,1,679],[102,1,679],[109,0.955,679],[118,0.04,679],[133,\"gone\",null]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.96\u001b[39m\n\n  329 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });\n  330 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 331 |         expect(read.opacityShare, `no frame takes more than a fifth of the opacity ${at}`).toBeLessThanOrEqual(0.2);\n      |                                                                                            ^\n  332 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  333 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);\n  334 |     });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:331:92"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T00:48:08.076Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6NDEzLCJleGl0IjoxMzMsInBhaW50ZWQiOjEzLCJvcGFjaXR5U2hhcmUiOjAuOTYsInRyYXZlbCI6MCwidHJhdmVsU2hhcmUiOm51bGwsImZyYW1lcyI6W1swLDEsNjc5XSxbNCwxLDY3OV0sWzksMSw2NzldLFsyNiwxLDY3OV0sWzM1LDEsNjc5XSxbNDUsMSw2NzldLFs1NSwxLDY3OV0sWzY0LDEsNjc5XSxbNzMsMSw2NzldLFs4MywxLDY3OV0sWzkzLDEsNjc5XSxbMTAyLDEsNjc5XSxbMTA5LDAuOTU1LDY3OV0sWzExOCwwLjA0LDY3OV0sWzEzMywiZ29uZSIsbnVsbF1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-exit-·-Sele-dd1af-rve-shorter-than-it-entered-chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 92,
+                    "line": 331
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-f551eaefda173c5004cb",
+          "file": "release-11-1-1.spec.ts",
+          "line": 287,
+          "column": 5
+        },
+        {
+          "title": "exit · DropdownMenu leaves on the exit curve, shorter than it entered",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3389,
+                  "error": {
+                    "message": "Error: no frame takes more than a fifth of the opacity {\"entrance\":403,\"exit\":135,\"painted\":15,\"opacityShare\":0.982,\"travel\":0,\"travelShare\":null,\"frames\":[[0,1,683],[8,1,683],[16,1,683],[22,1,683],[31,1,683],[38,1,683],[48,1,683],[54,1,683],[64,1,683],[74,1,683],[82,1,683],[93,1,683],[103,1,683],[112,1,683],[120,0.371,683],[126,0.018,683],[135,\"gone\",null]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.982\u001b[39m",
+                    "stack": "Error: no frame takes more than a fifth of the opacity {\"entrance\":403,\"exit\":135,\"painted\":15,\"opacityShare\":0.982,\"travel\":0,\"travelShare\":null,\"frames\":[[0,1,683],[8,1,683],[16,1,683],[22,1,683],[31,1,683],[38,1,683],[48,1,683],[54,1,683],[64,1,683],[74,1,683],[82,1,683],[93,1,683],[103,1,683],[112,1,683],[120,0.371,683],[126,0.018,683],[135,\"gone\",null]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.982\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:331:92",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 92,
+                      "line": 331
+                    },
+                    "snippet": "  329 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });\n  330 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 331 |         expect(read.opacityShare, `no frame takes more than a fifth of the opacity ${at}`).toBeLessThanOrEqual(0.2);\n      |                                                                                            ^\n  332 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  333 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);\n  334 |     });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 92,
+                        "line": 331
+                      },
+                      "message": "Error: no frame takes more than a fifth of the opacity {\"entrance\":403,\"exit\":135,\"painted\":15,\"opacityShare\":0.982,\"travel\":0,\"travelShare\":null,\"frames\":[[0,1,683],[8,1,683],[16,1,683],[22,1,683],[31,1,683],[38,1,683],[48,1,683],[54,1,683],[64,1,683],[74,1,683],[82,1,683],[93,1,683],[103,1,683],[112,1,683],[120,0.371,683],[126,0.018,683],[135,\"gone\",null]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.982\u001b[39m\n\n  329 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });\n  330 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 331 |         expect(read.opacityShare, `no frame takes more than a fifth of the opacity ${at}`).toBeLessThanOrEqual(0.2);\n      |                                                                                            ^\n  332 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  333 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);\n  334 |     });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:331:92"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T00:48:11.826Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6NDAzLCJleGl0IjoxMzUsInBhaW50ZWQiOjE1LCJvcGFjaXR5U2hhcmUiOjAuOTgyLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJmcmFtZXMiOltbMCwxLDY4M10sWzgsMSw2ODNdLFsxNiwxLDY4M10sWzIyLDEsNjgzXSxbMzEsMSw2ODNdLFszOCwxLDY4M10sWzQ4LDEsNjgzXSxbNTQsMSw2ODNdLFs2NCwxLDY4M10sWzc0LDEsNjgzXSxbODIsMSw2ODNdLFs5MywxLDY4M10sWzEwMywxLDY4M10sWzExMiwxLDY4M10sWzEyMCwwLjM3MSw2ODNdLFsxMjYsMC4wMTgsNjgzXSxbMTM1LCJnb25lIixudWxsXV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-exit-·-Drop-7d51e-rve-shorter-than-it-entered-chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 92,
+                    "line": 331
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-84528e2c308c5b8dcb58",
+          "file": "release-11-1-1.spec.ts",
+          "line": 287,
+          "column": 5
+        },
+        {
+          "title": "exit · Popover leaves on the exit curve, shorter than it entered",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3365,
+                  "error": {
+                    "message": "Error: no frame takes more than a fifth of the opacity {\"entrance\":484,\"exit\":142,\"painted\":16,\"opacityShare\":0.323,\"travel\":7,\"travelShare\":null,\"frames\":[[0,1,136],[2,1,136],[11,1,136],[18,0.805,135],[26,0.677,134],[36,0.53,133],[46,0.432,133],[54,0.36,132],[65,0.272,132],[74,0.217,131],[82,0.171,131],[93,0.123,131],[102,0.089,130],[111,0.061,130],[122,0.035,130],[127,0.026,129],[134,0.015,129],[142,0.007,129]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.323\u001b[39m",
+                    "stack": "Error: no frame takes more than a fifth of the opacity {\"entrance\":484,\"exit\":142,\"painted\":16,\"opacityShare\":0.323,\"travel\":7,\"travelShare\":null,\"frames\":[[0,1,136],[2,1,136],[11,1,136],[18,0.805,135],[26,0.677,134],[36,0.53,133],[46,0.432,133],[54,0.36,132],[65,0.272,132],[74,0.217,131],[82,0.171,131],[93,0.123,131],[102,0.089,130],[111,0.061,130],[122,0.035,130],[127,0.026,129],[134,0.015,129],[142,0.007,129]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.323\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:331:92",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 92,
+                      "line": 331
+                    },
+                    "snippet": "  329 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });\n  330 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 331 |         expect(read.opacityShare, `no frame takes more than a fifth of the opacity ${at}`).toBeLessThanOrEqual(0.2);\n      |                                                                                            ^\n  332 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  333 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);\n  334 |     });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 92,
+                        "line": 331
+                      },
+                      "message": "Error: no frame takes more than a fifth of the opacity {\"entrance\":484,\"exit\":142,\"painted\":16,\"opacityShare\":0.323,\"travel\":7,\"travelShare\":null,\"frames\":[[0,1,136],[2,1,136],[11,1,136],[18,0.805,135],[26,0.677,134],[36,0.53,133],[46,0.432,133],[54,0.36,132],[65,0.272,132],[74,0.217,131],[82,0.171,131],[93,0.123,131],[102,0.089,130],[111,0.061,130],[122,0.035,130],[127,0.026,129],[134,0.015,129],[142,0.007,129]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.323\u001b[39m\n\n  329 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });\n  330 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 331 |         expect(read.opacityShare, `no frame takes more than a fifth of the opacity ${at}`).toBeLessThanOrEqual(0.2);\n      |                                                                                            ^\n  332 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  333 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);\n  334 |     });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:331:92"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T00:48:15.702Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6NDg0LCJleGl0IjoxNDIsInBhaW50ZWQiOjE2LCJvcGFjaXR5U2hhcmUiOjAuMzIzLCJ0cmF2ZWwiOjcsInRyYXZlbFNoYXJlIjpudWxsLCJmcmFtZXMiOltbMCwxLDEzNl0sWzIsMSwxMzZdLFsxMSwxLDEzNl0sWzE4LDAuODA1LDEzNV0sWzI2LDAuNjc3LDEzNF0sWzM2LDAuNTMsMTMzXSxbNDYsMC40MzIsMTMzXSxbNTQsMC4zNiwxMzJdLFs2NSwwLjI3MiwxMzJdLFs3NCwwLjIxNywxMzFdLFs4MiwwLjE3MSwxMzFdLFs5MywwLjEyMywxMzFdLFsxMDIsMC4wODksMTMwXSxbMTExLDAuMDYxLDEzMF0sWzEyMiwwLjAzNSwxMzBdLFsxMjcsMC4wMjYsMTI5XSxbMTM0LDAuMDE1LDEyOV0sWzE0MiwwLjAwNywxMjldXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-exit-·-Popo-25b8f-rve-shorter-than-it-entered-chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 92,
+                    "line": 331
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-4a2ecbe587d1abbaf553",
+          "file": "release-11-1-1.spec.ts",
+          "line": 287,
+          "column": 5
+        },
+        {
+          "title": "exit · Tooltip leaves on the exit curve, shorter than it entered",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3411,
+                  "error": {
+                    "message": "Error: no frame takes more than a fifth of the opacity {\"entrance\":0,\"exit\":77,\"painted\":9,\"opacityShare\":0.54,\"travel\":3,\"travelShare\":null,\"frames\":[[0,1,55],[6,1,55],[15,0.623,56],[22,0.46,56],[30,0.308,57],[35,0.234,57],[43,0.146,57],[50,0.086,57],[60,0.032,57],[67,0.011,58],[77,0,58]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.54\u001b[39m",
+                    "stack": "Error: no frame takes more than a fifth of the opacity {\"entrance\":0,\"exit\":77,\"painted\":9,\"opacityShare\":0.54,\"travel\":3,\"travelShare\":null,\"frames\":[[0,1,55],[6,1,55],[15,0.623,56],[22,0.46,56],[30,0.308,57],[35,0.234,57],[43,0.146,57],[50,0.086,57],[60,0.032,57],[67,0.011,58],[77,0,58]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.54\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:331:92",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 92,
+                      "line": 331
+                    },
+                    "snippet": "  329 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });\n  330 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 331 |         expect(read.opacityShare, `no frame takes more than a fifth of the opacity ${at}`).toBeLessThanOrEqual(0.2);\n      |                                                                                            ^\n  332 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  333 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);\n  334 |     });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 92,
+                        "line": 331
+                      },
+                      "message": "Error: no frame takes more than a fifth of the opacity {\"entrance\":0,\"exit\":77,\"painted\":9,\"opacityShare\":0.54,\"travel\":3,\"travelShare\":null,\"frames\":[[0,1,55],[6,1,55],[15,0.623,56],[22,0.46,56],[30,0.308,57],[35,0.234,57],[43,0.146,57],[50,0.086,57],[60,0.032,57],[67,0.011,58],[77,0,58]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.54\u001b[39m\n\n  329 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });\n  330 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 331 |         expect(read.opacityShare, `no frame takes more than a fifth of the opacity ${at}`).toBeLessThanOrEqual(0.2);\n      |                                                                                            ^\n  332 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  333 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);\n  334 |     });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:331:92"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T00:48:19.563Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6MCwiZXhpdCI6NzcsInBhaW50ZWQiOjksIm9wYWNpdHlTaGFyZSI6MC41NCwidHJhdmVsIjozLCJ0cmF2ZWxTaGFyZSI6bnVsbCwiZnJhbWVzIjpbWzAsMSw1NV0sWzYsMSw1NV0sWzE1LDAuNjIzLDU2XSxbMjIsMC40Niw1Nl0sWzMwLDAuMzA4LDU3XSxbMzUsMC4yMzQsNTddLFs0MywwLjE0Niw1N10sWzUwLDAuMDg2LDU3XSxbNjAsMC4wMzIsNTddLFs2NywwLjAxMSw1OF0sWzc3LDAsNThdXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-exit-·-Tool-3332f-rve-shorter-than-it-entered-chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 92,
+                    "line": 331
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-6f4a1761c073c0b07576",
+          "file": "release-11-1-1.spec.ts",
+          "line": 287,
+          "column": 5
+        },
+        {
+          "title": "exit · Dialog leaves on the exit curve, shorter than it entered",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3377,
+                  "error": {
+                    "message": "Error: the exit is shorter than the entrance {\"entrance\":229,\"exit\":236,\"painted\":26,\"opacityShare\":0.196,\"travel\":13,\"travelShare\":null,\"frames\":[[0,1,464],[11,1,464],[20,0.917,465],[29,0.835,466],[39,0.733,467],[44,0.639,469],[52,0.588,469],[59,0.505,470],[70,0.443,471],[78,0.363,472],[87,0.31,473],[97,0.259,473],[105,0.209,474],[115,0.175,475],[123,0.142,475],[134,0.119,475],[142,0.092,476],[149,0.076,476],[158,0.064,476],[170,0.053,476],[178,0.039,476],[187,0.033,476],[196,0.026,476],[203,0.021,477],[211,0.018,477],[219,0.015,477],[227,0.012,477],[236,0.01,477]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m229\u001b[39m\nReceived:   \u001b[31m236\u001b[39m",
+                    "stack": "Error: the exit is shorter than the entrance {\"entrance\":229,\"exit\":236,\"painted\":26,\"opacityShare\":0.196,\"travel\":13,\"travelShare\":null,\"frames\":[[0,1,464],[11,1,464],[20,0.917,465],[29,0.835,466],[39,0.733,467],[44,0.639,469],[52,0.588,469],[59,0.505,470],[70,0.443,471],[78,0.363,472],[87,0.31,473],[97,0.259,473],[105,0.209,474],[115,0.175,475],[123,0.142,475],[134,0.119,475],[142,0.092,476],[149,0.076,476],[158,0.064,476],[170,0.053,476],[178,0.039,476],[187,0.033,476],[196,0.026,476],[203,0.021,477],[211,0.018,477],[219,0.015,477],[227,0.012,477],[236,0.01,477]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m229\u001b[39m\nReceived:   \u001b[31m236\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:333:74",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 74,
+                      "line": 333
+                    },
+                    "snippet": "  331 |         expect(read.opacityShare, `no frame takes more than a fifth of the opacity ${at}`).toBeLessThanOrEqual(0.2);\n  332 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n> 333 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);\n      |                                                                          ^\n  334 |     });\n  335 | }\n  336 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 74,
+                        "line": 333
+                      },
+                      "message": "Error: the exit is shorter than the entrance {\"entrance\":229,\"exit\":236,\"painted\":26,\"opacityShare\":0.196,\"travel\":13,\"travelShare\":null,\"frames\":[[0,1,464],[11,1,464],[20,0.917,465],[29,0.835,466],[39,0.733,467],[44,0.639,469],[52,0.588,469],[59,0.505,470],[70,0.443,471],[78,0.363,472],[87,0.31,473],[97,0.259,473],[105,0.209,474],[115,0.175,475],[123,0.142,475],[134,0.119,475],[142,0.092,476],[149,0.076,476],[158,0.064,476],[170,0.053,476],[178,0.039,476],[187,0.033,476],[196,0.026,476],[203,0.021,477],[211,0.018,477],[219,0.015,477],[227,0.012,477],[236,0.01,477]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m229\u001b[39m\nReceived:   \u001b[31m236\u001b[39m\n\n  331 |         expect(read.opacityShare, `no frame takes more than a fifth of the opacity ${at}`).toBeLessThanOrEqual(0.2);\n  332 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n> 333 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);\n      |                                                                          ^\n  334 |     });\n  335 | }\n  336 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:333:74"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T00:48:23.444Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6MjI5LCJleGl0IjoyMzYsInBhaW50ZWQiOjI2LCJvcGFjaXR5U2hhcmUiOjAuMTk2LCJ0cmF2ZWwiOjEzLCJ0cmF2ZWxTaGFyZSI6bnVsbCwiZnJhbWVzIjpbWzAsMSw0NjRdLFsxMSwxLDQ2NF0sWzIwLDAuOTE3LDQ2NV0sWzI5LDAuODM1LDQ2Nl0sWzM5LDAuNzMzLDQ2N10sWzQ0LDAuNjM5LDQ2OV0sWzUyLDAuNTg4LDQ2OV0sWzU5LDAuNTA1LDQ3MF0sWzcwLDAuNDQzLDQ3MV0sWzc4LDAuMzYzLDQ3Ml0sWzg3LDAuMzEsNDczXSxbOTcsMC4yNTksNDczXSxbMTA1LDAuMjA5LDQ3NF0sWzExNSwwLjE3NSw0NzVdLFsxMjMsMC4xNDIsNDc1XSxbMTM0LDAuMTE5LDQ3NV0sWzE0MiwwLjA5Miw0NzZdLFsxNDksMC4wNzYsNDc2XSxbMTU4LDAuMDY0LDQ3Nl0sWzE3MCwwLjA1Myw0NzZdLFsxNzgsMC4wMzksNDc2XSxbMTg3LDAuMDMzLDQ3Nl0sWzE5NiwwLjAyNiw0NzZdLFsyMDMsMC4wMjEsNDc3XSxbMjExLDAuMDE4LDQ3N10sWzIxOSwwLjAxNSw0NzddLFsyMjcsMC4wMTIsNDc3XSxbMjM2LDAuMDEsNDc3XV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-exit-·-Dial-279d3-rve-shorter-than-it-entered-chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 74,
+                    "line": 333
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-118249ef14258dd93860",
+          "file": "release-11-1-1.spec.ts",
+          "line": 287,
+          "column": 5
+        },
+        {
+          "title": "exit · Sheet right leaves on the exit curve, shorter than it entered",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3398,
+                  "error": {
+                    "message": "Error: no frame takes more than a fifth of the opacity {\"entrance\":633,\"exit\":216,\"painted\":25,\"opacityShare\":1,\"travel\":381,\"travelShare\":0.142,\"frames\":[[0,1,1056],[6,1,1056],[17,1,1068],[26,1,1084],[31,1,1103],[41,1,1116],[47,1,1140],[57,1,1156],[64,1,1182],[75,1,1201],[84,1,1232],[92,1,1255],[104,1,1276],[111,1,1304],[122,1,1321],[130,1,1343],[136,1,1359],[146,1,1368],[152,1,1383],[160,1,1392],[165,1,1402],[173,1,1409],[180,1,1417],[188,1,1424],[198,1,1430],[207,1,1437],[216,\"gone\",null]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m1\u001b[39m",
+                    "stack": "Error: no frame takes more than a fifth of the opacity {\"entrance\":633,\"exit\":216,\"painted\":25,\"opacityShare\":1,\"travel\":381,\"travelShare\":0.142,\"frames\":[[0,1,1056],[6,1,1056],[17,1,1068],[26,1,1084],[31,1,1103],[41,1,1116],[47,1,1140],[57,1,1156],[64,1,1182],[75,1,1201],[84,1,1232],[92,1,1255],[104,1,1276],[111,1,1304],[122,1,1321],[130,1,1343],[136,1,1359],[146,1,1368],[152,1,1383],[160,1,1392],[165,1,1402],[173,1,1409],[180,1,1417],[188,1,1424],[198,1,1430],[207,1,1437],[216,\"gone\",null]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:331:92",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 92,
+                      "line": 331
+                    },
+                    "snippet": "  329 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });\n  330 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 331 |         expect(read.opacityShare, `no frame takes more than a fifth of the opacity ${at}`).toBeLessThanOrEqual(0.2);\n      |                                                                                            ^\n  332 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  333 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);\n  334 |     });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 92,
+                        "line": 331
+                      },
+                      "message": "Error: no frame takes more than a fifth of the opacity {\"entrance\":633,\"exit\":216,\"painted\":25,\"opacityShare\":1,\"travel\":381,\"travelShare\":0.142,\"frames\":[[0,1,1056],[6,1,1056],[17,1,1068],[26,1,1084],[31,1,1103],[41,1,1116],[47,1,1140],[57,1,1156],[64,1,1182],[75,1,1201],[84,1,1232],[92,1,1255],[104,1,1276],[111,1,1304],[122,1,1321],[130,1,1343],[136,1,1359],[146,1,1368],[152,1,1383],[160,1,1392],[165,1,1402],[173,1,1409],[180,1,1417],[188,1,1424],[198,1,1430],[207,1,1437],[216,\"gone\",null]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n\n  329 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });\n  330 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 331 |         expect(read.opacityShare, `no frame takes more than a fifth of the opacity ${at}`).toBeLessThanOrEqual(0.2);\n      |                                                                                            ^\n  332 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  333 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);\n  334 |     });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:331:92"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T00:48:27.281Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6NjMzLCJleGl0IjoyMTYsInBhaW50ZWQiOjI1LCJvcGFjaXR5U2hhcmUiOjEsInRyYXZlbCI6MzgxLCJ0cmF2ZWxTaGFyZSI6MC4xNDIsImZyYW1lcyI6W1swLDEsMTA1Nl0sWzYsMSwxMDU2XSxbMTcsMSwxMDY4XSxbMjYsMSwxMDg0XSxbMzEsMSwxMTAzXSxbNDEsMSwxMTE2XSxbNDcsMSwxMTQwXSxbNTcsMSwxMTU2XSxbNjQsMSwxMTgyXSxbNzUsMSwxMjAxXSxbODQsMSwxMjMyXSxbOTIsMSwxMjU1XSxbMTA0LDEsMTI3Nl0sWzExMSwxLDEzMDRdLFsxMjIsMSwxMzIxXSxbMTMwLDEsMTM0M10sWzEzNiwxLDEzNTldLFsxNDYsMSwxMzY4XSxbMTUyLDEsMTM4M10sWzE2MCwxLDEzOTJdLFsxNjUsMSwxNDAyXSxbMTczLDEsMTQwOV0sWzE4MCwxLDE0MTddLFsxODgsMSwxNDI0XSxbMTk4LDEsMTQzMF0sWzIwNywxLDE0MzddLFsyMTYsImdvbmUiLG51bGxdXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-exit-·-Shee-4a00a-rve-shorter-than-it-entered-chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 92,
+                    "line": 331
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-62528eb3e68bf0b369e9",
+          "file": "release-11-1-1.spec.ts",
+          "line": 287,
+          "column": 5
+        },
+        {
+          "title": "exit · Sheet bottom leaves on the exit curve, shorter than it entered",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3375,
+                  "error": {
+                    "message": "Error: no frame takes more than a fifth of the opacity {\"entrance\":453,\"exit\":217,\"painted\":24,\"opacityShare\":1,\"travel\":117,\"travelShare\":0.134,\"frames\":[[0,1,783],[7,1,783],[16,1,786],[26,1,791],[36,1,797],[47,1,804],[55,1,813],[63,1,820],[70,1,826],[77,1,832],[85,1,838],[92,1,845],[104,1,850],[114,1,859],[122,1,865],[131,1,870],[140,1,875],[151,1,880],[160,1,885],[165,1,888],[175,1,890],[182,1,893],[189,1,895],[198,1,897],[208,1,899],[217,\"gone\",null]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m1\u001b[39m",
+                    "stack": "Error: no frame takes more than a fifth of the opacity {\"entrance\":453,\"exit\":217,\"painted\":24,\"opacityShare\":1,\"travel\":117,\"travelShare\":0.134,\"frames\":[[0,1,783],[7,1,783],[16,1,786],[26,1,791],[36,1,797],[47,1,804],[55,1,813],[63,1,820],[70,1,826],[77,1,832],[85,1,838],[92,1,845],[104,1,850],[114,1,859],[122,1,865],[131,1,870],[140,1,875],[151,1,880],[160,1,885],[165,1,888],[175,1,890],[182,1,893],[189,1,895],[198,1,897],[208,1,899],[217,\"gone\",null]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:331:92",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 92,
+                      "line": 331
+                    },
+                    "snippet": "  329 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });\n  330 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 331 |         expect(read.opacityShare, `no frame takes more than a fifth of the opacity ${at}`).toBeLessThanOrEqual(0.2);\n      |                                                                                            ^\n  332 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  333 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);\n  334 |     });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 92,
+                        "line": 331
+                      },
+                      "message": "Error: no frame takes more than a fifth of the opacity {\"entrance\":453,\"exit\":217,\"painted\":24,\"opacityShare\":1,\"travel\":117,\"travelShare\":0.134,\"frames\":[[0,1,783],[7,1,783],[16,1,786],[26,1,791],[36,1,797],[47,1,804],[55,1,813],[63,1,820],[70,1,826],[77,1,832],[85,1,838],[92,1,845],[104,1,850],[114,1,859],[122,1,865],[131,1,870],[140,1,875],[151,1,880],[160,1,885],[165,1,888],[175,1,890],[182,1,893],[189,1,895],[198,1,897],[208,1,899],[217,\"gone\",null]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m1\u001b[39m\n\n  329 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });\n  330 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);\n> 331 |         expect(read.opacityShare, `no frame takes more than a fifth of the opacity ${at}`).toBeLessThanOrEqual(0.2);\n      |                                                                                            ^\n  332 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);\n  333 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);\n  334 |     });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:331:92"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T00:48:31.158Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6NDUzLCJleGl0IjoyMTcsInBhaW50ZWQiOjI0LCJvcGFjaXR5U2hhcmUiOjEsInRyYXZlbCI6MTE3LCJ0cmF2ZWxTaGFyZSI6MC4xMzQsImZyYW1lcyI6W1swLDEsNzgzXSxbNywxLDc4M10sWzE2LDEsNzg2XSxbMjYsMSw3OTFdLFszNiwxLDc5N10sWzQ3LDEsODA0XSxbNTUsMSw4MTNdLFs2MywxLDgyMF0sWzcwLDEsODI2XSxbNzcsMSw4MzJdLFs4NSwxLDgzOF0sWzkyLDEsODQ1XSxbMTA0LDEsODUwXSxbMTE0LDEsODU5XSxbMTIyLDEsODY1XSxbMTMxLDEsODcwXSxbMTQwLDEsODc1XSxbMTUxLDEsODgwXSxbMTYwLDEsODg1XSxbMTY1LDEsODg4XSxbMTc1LDEsODkwXSxbMTgyLDEsODkzXSxbMTg5LDEsODk1XSxbMTk4LDEsODk3XSxbMjA4LDEsODk5XSxbMjE3LCJnb25lIixudWxsXV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-exit-·-Shee-72c6c-rve-shorter-than-it-entered-chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 92,
+                    "line": 331
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-c94bf249a81491dfa6ab",
+          "file": "release-11-1-1.spec.ts",
+          "line": 287,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-16T00:48:00.583Z",
+    "duration": 34110.163,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 7,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,58 @@
+
+Running 8 tests using 1 worker
+
+  ✓  1 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:426:5 › routes · a detented Sheet leaves whole by escape (4.1s)
+  -  2 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:426:5 › routes · a detented Sheet leaves whole by outside
+  ✘  3 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:448:5 › routes · a CommandDialog keeps its list through its exit by pick (2.8s)
+  ✓  4 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:448:5 › routes · a CommandDialog keeps its list through its exit by escape (3.0s)
+  -  5 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:448:5 › routes · a CommandDialog keeps its list through its exit by outside
+  ✘  6 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:482:5 › routes · a press on an open Select's trigger closes it once (2.6s)
+  ✓  7 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:482:5 › routes · a press on an open DropdownMenu's trigger closes it once (2.7s)
+  ✓  8 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:482:5 › routes · a press on an open Popover's trigger closes it once (2.6s)
+
+
+  1) [webkit-phone] › tests-visual/release-11-1-1.spec.ts:448:5 › routes · a CommandDialog keeps its list through its exit by pick 
+
+    Error: no frame takes more than a fifth of what is seen [[0,1,435],[9,1,435],[19,1,435],[20,1,435],[26,1,435],[65,1,435],[85,0.893,433],[90,0.725,429],[100,0.679,428],[111,0.586,426],[122,0.481,424],[132,0.377,421],[142,0.284,419],[151,0.196,418],[162,0.123,416],[173,0.043,414],[187,0,null]]
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.214
+
+      469 |             expect(f.h!, `the plate keeps its height ${at}`).toBeGreaterThanOrEqual(read.rest.h! * 0.9);
+      470 |         }
+    > 471 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                      ^
+      472 |     });
+      473 | }
+      474 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:471:86
+
+    Error Context: tests-visual/test-results/release-11-1-1-routes-·-a--79dcb-st-through-its-exit-by-pick-webkit-phone/error-context.md
+
+  2) [webkit-phone] › tests-visual/release-11-1-1.spec.ts:482:5 › routes · a press on an open Select's trigger closes it once 
+
+    Error: the surface leaves [[0,1,229],[6,1,229],[18,1,229],[28,1,229],[38,1,229],[49,1,229],[58,1,229],[68,1,229],[77,1,229],[89,1,229],[99,1,229],[109,1,229],[119,1,229],[130,1,229],[140,1,229],[150,1,229],[160,1,229],[170,1,229],[181,1,229],[190,1,229],[200,1,229],[211,1,229],[220,1,229],[230,1,229],[242,1,229],[252,1,229],[262,1,229],[272,1,229],[283,1,229],[293,1,229],[303,1,229],[313,1,229],[323,1,229],[334,1,229],[344,1,229],[353,1,229],[365,1,229],[374,1,229],[383,1,229],[395,1,229],[405,1,229],[416,1,229],[425,1,229],[437,1,229],[445,1,229],[455,1,229],[466,1,229],[477,1,229],[486,1,229],[499,1,229],[507,1,229],[517,1,229],[526,1,229],[538,1,229],[548,1,229],[558,1,229],[568,1,229],[579,1,229],[589,1,229],[599,1,229],[609,1,229],[618,1,229],[630,1,229],[640,1,229],[650,1,229],[660,1,229],[670,1,229],[681,1,229],[691,1,229],[701,1,229],[711,1,229],[722,1,229],[730,1,229],[742,1,229],[752,1,229],[762,1,229],[773,1,229],[783,1,229],[793,1,229],[803,1,229],[813,1,229],[823,1,229],[835,1,229],[843,1,229],[852,1,229],[864,1,229],[873,1,229],[885,1,229],[895,1,229],[903,1,229]]
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > -1
+    Received:   -1
+
+      499 |         await info.attach("routes", { body: JSON.stringify(read), contentType: "application/json" });
+      500 |         const at = JSON.stringify(read.frames);
+    > 501 |         expect(read.goneIdx, `the surface leaves ${at}`).toBeGreaterThan(-1);
+          |                                                          ^
+      502 |         expect(read.reopened, `and stays closed ${at}`).toBe(false);
+      503 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+      504 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:501:58
+
+    Error Context: tests-visual/test-results/release-11-1-1-routes-·-a--df64e-ct-s-trigger-closes-it-once-webkit-phone/error-context.md
+
+  2 failed
+    [webkit-phone] › tests-visual/release-11-1-1.spec.ts:448:5 › routes · a CommandDialog keeps its list through its exit by pick 
+    [webkit-phone] › tests-visual/release-11-1-1.spec.ts:482:5 › routes · a press on an open Select's trigger closes it once 
+  2 skipped
+  4 passed (19.9s)

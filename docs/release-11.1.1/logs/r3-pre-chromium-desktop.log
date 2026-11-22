@@ -1,0 +1,164 @@
+
+Running 10 tests using 1 worker
+
+  ✓   1 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:98:5 › form · a dock DropdownMenu keeps its material through the exit · pick (2.4s)
+  ✓   2 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:98:5 › form · a dock DropdownMenu keeps its material through the exit · outside (2.3s)
+  ✓   3 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:98:5 › form · a dock DropdownMenu keeps its material through the exit · escape (2.3s)
+  ✘   4 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:287:5 › exit · Select leaves on the exit curve, shorter than it entered (3.4s)
+  ✘   5 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:287:5 › exit · DropdownMenu leaves on the exit curve, shorter than it entered (3.4s)
+  ✘   6 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:287:5 › exit · Popover leaves on the exit curve, shorter than it entered (3.4s)
+  ✘   7 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:287:5 › exit · Tooltip leaves on the exit curve, shorter than it entered (3.4s)
+  ✘   8 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:287:5 › exit · Dialog leaves on the exit curve, shorter than it entered (3.4s)
+  ✘   9 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:287:5 › exit · Sheet right leaves on the exit curve, shorter than it entered (3.4s)
+  ✘  10 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:287:5 › exit · Sheet bottom leaves on the exit curve, shorter than it entered (3.4s)
+
+
+  1) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:287:5 › exit · Select leaves on the exit curve, shorter than it entered 
+
+    Error: no frame takes more than a fifth of the opacity {"entrance":413,"exit":133,"painted":13,"opacityShare":0.96,"travel":0,"travelShare":null,"frames":[[0,1,679],[4,1,679],[9,1,679],[26,1,679],[35,1,679],[45,1,679],[55,1,679],[64,1,679],[73,1,679],[83,1,679],[93,1,679],[102,1,679],[109,0.955,679],[118,0.04,679],[133,"gone",null]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.96
+
+      329 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });
+      330 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 331 |         expect(read.opacityShare, `no frame takes more than a fifth of the opacity ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                            ^
+      332 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+      333 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);
+      334 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:331:92
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-Sele-dd1af-rve-shorter-than-it-entered-chromium-desktop/error-context.md
+
+  2) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:287:5 › exit · DropdownMenu leaves on the exit curve, shorter than it entered 
+
+    Error: no frame takes more than a fifth of the opacity {"entrance":403,"exit":135,"painted":15,"opacityShare":0.982,"travel":0,"travelShare":null,"frames":[[0,1,683],[8,1,683],[16,1,683],[22,1,683],[31,1,683],[38,1,683],[48,1,683],[54,1,683],[64,1,683],[74,1,683],[82,1,683],[93,1,683],[103,1,683],[112,1,683],[120,0.371,683],[126,0.018,683],[135,"gone",null]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.982
+
+      329 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });
+      330 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 331 |         expect(read.opacityShare, `no frame takes more than a fifth of the opacity ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                            ^
+      332 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+      333 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);
+      334 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:331:92
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-Drop-7d51e-rve-shorter-than-it-entered-chromium-desktop/error-context.md
+
+  3) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:287:5 › exit · Popover leaves on the exit curve, shorter than it entered 
+
+    Error: no frame takes more than a fifth of the opacity {"entrance":484,"exit":142,"painted":16,"opacityShare":0.323,"travel":7,"travelShare":null,"frames":[[0,1,136],[2,1,136],[11,1,136],[18,0.805,135],[26,0.677,134],[36,0.53,133],[46,0.432,133],[54,0.36,132],[65,0.272,132],[74,0.217,131],[82,0.171,131],[93,0.123,131],[102,0.089,130],[111,0.061,130],[122,0.035,130],[127,0.026,129],[134,0.015,129],[142,0.007,129]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.323
+
+      329 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });
+      330 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 331 |         expect(read.opacityShare, `no frame takes more than a fifth of the opacity ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                            ^
+      332 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+      333 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);
+      334 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:331:92
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-Popo-25b8f-rve-shorter-than-it-entered-chromium-desktop/error-context.md
+
+  4) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:287:5 › exit · Tooltip leaves on the exit curve, shorter than it entered 
+
+    Error: no frame takes more than a fifth of the opacity {"entrance":0,"exit":77,"painted":9,"opacityShare":0.54,"travel":3,"travelShare":null,"frames":[[0,1,55],[6,1,55],[15,0.623,56],[22,0.46,56],[30,0.308,57],[35,0.234,57],[43,0.146,57],[50,0.086,57],[60,0.032,57],[67,0.011,58],[77,0,58]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.54
+
+      329 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });
+      330 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 331 |         expect(read.opacityShare, `no frame takes more than a fifth of the opacity ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                            ^
+      332 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+      333 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);
+      334 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:331:92
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-Tool-3332f-rve-shorter-than-it-entered-chromium-desktop/error-context.md
+
+  5) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:287:5 › exit · Dialog leaves on the exit curve, shorter than it entered 
+
+    Error: the exit is shorter than the entrance {"entrance":229,"exit":236,"painted":26,"opacityShare":0.196,"travel":13,"travelShare":null,"frames":[[0,1,464],[11,1,464],[20,0.917,465],[29,0.835,466],[39,0.733,467],[44,0.639,469],[52,0.588,469],[59,0.505,470],[70,0.443,471],[78,0.363,472],[87,0.31,473],[97,0.259,473],[105,0.209,474],[115,0.175,475],[123,0.142,475],[134,0.119,475],[142,0.092,476],[149,0.076,476],[158,0.064,476],[170,0.053,476],[178,0.039,476],[187,0.033,476],[196,0.026,476],[203,0.021,477],[211,0.018,477],[219,0.015,477],[227,0.012,477],[236,0.01,477]]}
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 229
+    Received:   236
+
+      331 |         expect(read.opacityShare, `no frame takes more than a fifth of the opacity ${at}`).toBeLessThanOrEqual(0.2);
+      332 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+    > 333 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);
+          |                                                                          ^
+      334 |     });
+      335 | }
+      336 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:333:74
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-Dial-279d3-rve-shorter-than-it-entered-chromium-desktop/error-context.md
+
+  6) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:287:5 › exit · Sheet right leaves on the exit curve, shorter than it entered 
+
+    Error: no frame takes more than a fifth of the opacity {"entrance":633,"exit":216,"painted":25,"opacityShare":1,"travel":381,"travelShare":0.142,"frames":[[0,1,1056],[6,1,1056],[17,1,1068],[26,1,1084],[31,1,1103],[41,1,1116],[47,1,1140],[57,1,1156],[64,1,1182],[75,1,1201],[84,1,1232],[92,1,1255],[104,1,1276],[111,1,1304],[122,1,1321],[130,1,1343],[136,1,1359],[146,1,1368],[152,1,1383],[160,1,1392],[165,1,1402],[173,1,1409],[180,1,1417],[188,1,1424],[198,1,1430],[207,1,1437],[216,"gone",null]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    1
+
+      329 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });
+      330 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 331 |         expect(read.opacityShare, `no frame takes more than a fifth of the opacity ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                            ^
+      332 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+      333 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);
+      334 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:331:92
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-Shee-4a00a-rve-shorter-than-it-entered-chromium-desktop/error-context.md
+
+  7) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:287:5 › exit · Sheet bottom leaves on the exit curve, shorter than it entered 
+
+    Error: no frame takes more than a fifth of the opacity {"entrance":453,"exit":217,"painted":24,"opacityShare":1,"travel":117,"travelShare":0.134,"frames":[[0,1,783],[7,1,783],[16,1,786],[26,1,791],[36,1,797],[47,1,804],[55,1,813],[63,1,820],[70,1,826],[77,1,832],[85,1,838],[92,1,845],[104,1,850],[114,1,859],[122,1,865],[131,1,870],[140,1,875],[151,1,880],[160,1,885],[165,1,888],[175,1,890],[182,1,893],[189,1,895],[198,1,897],[208,1,899],[217,"gone",null]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    1
+
+      329 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });
+      330 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 331 |         expect(read.opacityShare, `no frame takes more than a fifth of the opacity ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                            ^
+      332 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+      333 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);
+      334 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:331:92
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-Shee-72c6c-rve-shorter-than-it-entered-chromium-desktop/error-context.md
+
+  7 failed
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:287:5 › exit · Select leaves on the exit curve, shorter than it entered 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:287:5 › exit · DropdownMenu leaves on the exit curve, shorter than it entered 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:287:5 › exit · Popover leaves on the exit curve, shorter than it entered 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:287:5 › exit · Tooltip leaves on the exit curve, shorter than it entered 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:287:5 › exit · Dialog leaves on the exit curve, shorter than it entered 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:287:5 › exit · Sheet right leaves on the exit curve, shorter than it entered 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:287:5 › exit · Sheet bottom leaves on the exit curve, shorter than it entered 
+  3 passed (34.1s)

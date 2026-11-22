@@ -1,0 +1,990 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-1-1.config.ts",
+      "--project=chromium-desktop",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/logs/all-green-chromium-desktop.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "form · a dock Select leaves in the form it opened in · pick",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2393,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:06:33.904Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6MywieCI6Njc5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE2LCJ4Ijo2NzksInkiOjY2LCJ3IjoxMjgsIm9wIjoxLCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MjIsIngiOjY2OSwieSI6NjYsInciOjEyOCwib3AiOjEsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyNywieCI6NjY5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC45OTY0NTIsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjozNCwieCI6NjY5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC45ODc0MjEsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo0MiwieCI6NjY5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC45NzE5MDksImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo0NywieCI6NjY5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC45NTkyOTEsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo1NiwieCI6NjY5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC45MzMxMDMsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo2MywieCI6NjY5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC45MDc3NTUsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo3MSwieCI6NjY5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC44NzU4MSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjc3LCJ4Ijo2NjksInkiOjY2LCJ3IjoxMjgsIm9wIjowLjg0NjQzOSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjg3LCJ4Ijo2NjksInkiOjY2LCJ3IjoxMjgsIm9wIjowLjgwMDk3NiwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjk1LCJ4Ijo2NjksInkiOjY2LCJ3IjoxMjgsIm9wIjowLjc1NjI0OCwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjEwMSwieCI6NjY5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC43Mjc0NTcsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMDgsIngiOjY2OSwieSI6NjYsInciOjEyOCwib3AiOjAuNjg3MTMxLCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTE0LCJ4Ijo2NjksInkiOjY2LCJ3IjoxMjgsIm9wIjowLjY1MTUxLCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTIyLCJ4Ijo2NjksInkiOjY2LCJ3IjoxMjgsIm9wIjowLjYwMjg4NSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjEyOCwieCI6NjY5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC41Njk2NzYsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMzcsIngiOjY2OSwieSI6NjYsInciOjEyOCwib3AiOjAuNTE1NDA3LCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTQ1LCJ4Ijo2NjksInkiOjY2LCJ3IjoxMjgsIm9wIjowLjQ2ODkzNCwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE1MiwieCI6NjY5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC40MjgxMTksImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNTksIngiOjY2OSwieSI6NjYsInciOjEyOCwib3AiOjAuMzg3MjA5LCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTY2LCJ4Ijo2NjksInkiOjY2LCJ3IjoxMjgsIm9wIjowLjM0NTI4MywiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE3NCwieCI6NjY5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC4zMDA0MzYsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxODIsIngiOjY2OSwieSI6NjYsInciOjEyOCwib3AiOjAuMjU4MDM2LCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTg3LCJ4Ijo2NjksInkiOjY2LCJ3IjoxMjgsIm9wIjowLjIyNzQ3OSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE5NCwieCI6NjY5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC4xOTE4MjEsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyMDMsIngiOjY2OSwieSI6NjYsInciOjEyOCwib3AiOjAuMTQ5NTM0LCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MjEwLCJ4Ijo2NjksInkiOjY2LCJ3IjoxMjgsIm9wIjowLjExOTA3NCwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjIyMCwieCI6NjY5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC4wNzYxOTA2LCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MjI4LCJ4Ijo2NjksInkiOjY2LCJ3IjoxMjgsIm9wIjowLjA0NDUyMzksImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyMzUsIngiOjY2OSwieSI6NjYsInciOjEyOCwib3AiOjAuMDE3NzMwNywiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifV0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-9b6f0d415db3e939a2a0",
+          "file": "release-11-1-1.spec.ts",
+          "line": 58,
+          "column": 5
+        },
+        {
+          "title": "form · a dock DropdownMenu keeps its material through the exit · pick",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2328,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:06:36.417Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6Nywib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNCwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxOCwib3AiOjAuOTk2MjExLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MjIsIm9wIjowLjk5MDc4LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MjksIm9wIjowLjk3OTU0OSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjM4LCJvcCI6MC45NTkwNzQsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo0Miwib3AiOjAuOTQ1NTk4LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6NTAsIm9wIjowLjkyMDAyMywic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjU4LCJvcCI6MC44OTA0OTcsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo2NSwib3AiOjAuODU3NDY4LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6NzUsIm9wIjowLjgxMTU2Mywic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjgwLCJvcCI6MC43ODYyOTQsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo4OCwib3AiOjAuNzQ1MDQ0LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6OTYsIm9wIjowLjcwMTM4Miwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjEwMywib3AiOjAuNjU5MTQ3LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTEwLCJvcCI6MC42MjEyNTgsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMTcsIm9wIjowLjU3NjkyNCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjEyNCwib3AiOjAuNTM0MDI1LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTMzLCJvcCI6MC40NzkxNTUsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNDIsIm9wIjowLjQzMTE3NSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE0Nywib3AiOjAuMzk4OTQ2LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTU0LCJvcCI6MC4zNjAyMjYsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNjMsIm9wIjowLjMwODg1Miwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE3MSwib3AiOjAuMjY1NjQzLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTc3LCJvcCI6MC4yMzUzOTcsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxODQsIm9wIjowLjE5NjQyMiwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE5Miwib3AiOjAuMTU3NzAyLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MjAwLCJvcCI6MC4xMjAwNjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyMDgsIm9wIjowLjA4MzgwODMsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyMTQsIm9wIjowLjA2MDc0NDEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyMjIsIm9wIjowLjAzMDk0NjgsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn1d"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-a5afe19a75b15bac1a65",
+          "file": "release-11-1-1.spec.ts",
+          "line": 98,
+          "column": 5
+        },
+        {
+          "title": "form · a dock Select leaves in the form it opened in · outside",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2334,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:06:38.754Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6NiwieCI6Njc5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjEyLCJ4Ijo2NzksInkiOjY2LCJ3IjoxMjgsIm9wIjowLjk5MzYyNSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE3LCJ4Ijo2NzksInkiOjY2LCJ3IjoxMjgsIm9wIjowLjk4NjE5MywiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjI1LCJ4Ijo2NzksInkiOjY2LCJ3IjoxMjgsIm9wIjowLjk3MDYsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjozMiwieCI6Njc5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC45NDk4MTQsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo0NCwieCI6Njc5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC45MTIzNzcsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo1MywieCI6Njc5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC44NzM3ODYsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo2MSwieCI6Njc5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC44MzgxNzcsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo3MCwieCI6Njc5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC43OTQwMjUsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo3OSwieCI6Njc5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC43NDUwOTMsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo4NSwieCI6Njc5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC43MTU0MjgsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo5MywieCI6Njc5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC42NzEyOTQsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMDEsIngiOjY3OSwieSI6NjYsInciOjEyOCwib3AiOjAuNjI0ODMzLCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTExLCJ4Ijo2NzksInkiOjY2LCJ3IjoxMjgsIm9wIjowLjU2MjEwNSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjEyMCwieCI6Njc5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC41MDc4MTYsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMjksIngiOjY3OSwieSI6NjYsInciOjEyOCwib3AiOjAuNDU2MDQ2LCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTM3LCJ4Ijo2NzksInkiOjY2LCJ3IjoxMjgsIm9wIjowLjQwNzE2OSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE0MywieCI6Njc5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC4zNzIzNDEsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNTEsIngiOjY3OSwieSI6NjYsInciOjEyOCwib3AiOjAuMzMxMjkyLCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTU5LCJ4Ijo2NzksInkiOjY2LCJ3IjoxMjgsIm9wIjowLjI4MTkzMywiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE2NiwieCI6Njc5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC4yNDY0OTEsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNzgsIngiOjY3OSwieSI6NjYsInciOjEyOCwib3AiOjAuMTg1OTg5LCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTg3LCJ4Ijo2NzksInkiOjY2LCJ3IjoxMjgsIm9wIjowLjE0MTIxNSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE5NiwieCI6Njc5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC4xMDE0NTMsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyMDQsIngiOjY3OSwieSI6NjYsInciOjEyOCwib3AiOjAuMDY2NDM4NiwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjIxMCwieCI6Njc5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC4wNDQ2MzIsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn1d"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-5fdc052293eaba2d2f19",
+          "file": "release-11-1-1.spec.ts",
+          "line": 58,
+          "column": 5
+        },
+        {
+          "title": "form · a dock DropdownMenu keeps its material through the exit · outside",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2276,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:06:41.095Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6MSwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNiwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyOSwib3AiOjAuOTkyNTAxLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MzksIm9wIjowLjk3NTM1Miwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjQ2LCJvcCI6MC45NTc1NzcsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo1Nywib3AiOjAuOTIxOTc2LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6NjAsIm9wIjowLjkxMTAyNSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjY2LCJvcCI6MC44ODk4NzMsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo3Nywib3AiOjAuODQxNjM3LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6NzksIm9wIjowLjgyODM3Niwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjkwLCJvcCI6MC43Nzc3MjgsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo5NSwib3AiOjAuNzQ2MzgxLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTAyLCJvcCI6MC43MTAwNjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMTAsIm9wIjowLjY2NzQ5LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTE0LCJvcCI6MC42NDAyNjIsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMjAsIm9wIjowLjYwMzg2NSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjEzMSwib3AiOjAuNTQyNjYsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMzcsIm9wIjowLjUwMzI3LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTQzLCJvcCI6MC40NzIyOTgsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNTIsIm9wIjowLjQxNjE3Miwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE1OCwib3AiOjAuMzgxMjIsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNjcsIm9wIjowLjMyODEyNywic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE3NCwib3AiOjAuMjg5NzkyLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTgyLCJvcCI6MC4yNDYxNjMsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxODksIm9wIjowLjIxMjM2NSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE5OSwib3AiOjAuMTYyNzIzLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MjA3LCJvcCI6MC4xMjU3MTQsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyMTIsIm9wIjowLjEwMDc0Niwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjIyMiwib3AiOjAuMDYyMTM5Niwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjIyNywib3AiOjAuMDQwNTUzLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9XQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-62faec3e5a29f95c0e2b",
+          "file": "release-11-1-1.spec.ts",
+          "line": 98,
+          "column": 5
+        },
+        {
+          "title": "form · a dock Select leaves in the form it opened in · escape",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2322,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:06:43.377Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6NywieCI6Njc5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjExLCJ4Ijo2NzksInkiOjY2LCJ3IjoxMjgsIm9wIjowLjk5NjY1NSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE5LCJ4Ijo2NzksInkiOjY2LCJ3IjoxMjgsIm9wIjowLjk4NTg5MiwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjI1LCJ4Ijo2NzksInkiOjY2LCJ3IjoxMjgsIm9wIjowLjk3NDg3NywiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjMzLCJ4Ijo2NzksInkiOjY2LCJ3IjoxMjgsIm9wIjowLjk1NTg2NCwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjQxLCJ4Ijo2NzksInkiOjY2LCJ3IjoxMjgsIm9wIjowLjkzMTI0MiwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjUxLCJ4Ijo2NzksInkiOjY2LCJ3IjoxMjgsIm9wIjowLjg5MzQzMywiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjYyLCJ4Ijo2NzksInkiOjY2LCJ3IjoxMjgsIm9wIjowLjg0NzEwNCwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjY5LCJ4Ijo2NzksInkiOjY2LCJ3IjoxMjgsIm9wIjowLjgxMDIsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo3OSwieCI6Njc5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC43NTk2ODgsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo4NSwieCI6Njc5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC43MzEsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo5NCwieCI6Njc5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC42Nzk0MDQsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMDAsIngiOjY3OSwieSI6NjYsInciOjEyOCwib3AiOjAuNjQzNjMsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMDgsIngiOjY3OSwieSI6NjYsInciOjEyOCwib3AiOjAuNTk3MjMzLCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTE0LCJ4Ijo2NzksInkiOjY2LCJ3IjoxMjgsIm9wIjowLjU2MTYwNSwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjEyMywieCI6Njc5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC41MDg1MDgsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMjgsIngiOjY3OSwieSI6NjYsInciOjEyOCwib3AiOjAuNDc0NTQ1LCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTM2LCJ4Ijo2NzksInkiOjY2LCJ3IjoxMjgsIm9wIjowLjQyODk2NywiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE0NSwieCI6Njc5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC4zNzUzMTYsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNTEsIngiOjY3OSwieSI6NjYsInciOjEyOCwib3AiOjAuMzQzODI5LCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTU4LCJ4Ijo2NzksInkiOjY2LCJ3IjoxMjgsIm9wIjowLjMwMzk5OCwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE2NywieCI6Njc5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC4yNTU2MDMsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNzMsIngiOjY3OSwieSI6NjYsInciOjEyOCwib3AiOjAuMjIwNDY0LCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTgzLCJ4Ijo2NzksInkiOjY2LCJ3IjoxMjgsIm9wIjowLjE3Mzc2NiwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE4OCwieCI6Njc5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC4xNDg3OTgsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxOTcsIngiOjY3OSwieSI6NjYsInciOjEyOCwib3AiOjAuMTA4OTk5LCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MjA0LCJ4Ijo2NzksInkiOjY2LCJ3IjoxMjgsIm9wIjowLjA3OTI5MTgsImZvcm0iOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyMTIsIngiOjY3OSwieSI6NjYsInciOjEyOCwib3AiOjAuMDQ3MDE3NiwiZm9ybSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjIxNywieCI6Njc5LCJ5Ijo2NiwidyI6MTI4LCJvcCI6MC4wMjU0OTg2LCJmb3JtIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9XQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-091712cf7a3ea79bc947",
+          "file": "release-11-1-1.spec.ts",
+          "line": 58,
+          "column": 5
+        },
+        {
+          "title": "form · a dock DropdownMenu keeps its material through the exit · escape",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2323,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:06:45.704Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6Niwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMSwib3AiOjAuOTk4NzMxLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTgsIm9wIjowLjk5MjEyNiwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjIzLCJvcCI6MC45ODQ3NSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjI5LCJvcCI6MC45NzMzODgsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjozNywib3AiOjAuOTU0MjMyLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6NDQsIm9wIjowLjkzMjk3Mywic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjU0LCJvcCI6MC44OTM5MDQsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo2Miwib3AiOjAuODYxNjgxLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6NzIsIm9wIjowLjgxMjI2Niwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjgwLCJvcCI6MC43NzE0MjIsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo5MCwib3AiOjAuNzE3ODM2LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTAxLCJvcCI6MC42NTU5MTksInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMTEsIm9wIjowLjU5NzMzNCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjEyMSwib3AiOjAuNTM3MjU5LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTI4LCJvcCI6MC40OTc4NzMsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMzYsIm9wIjowLjQ0OTcyNywic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE0Mywib3AiOjAuNDA5MTE2LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTUzLCJvcCI6MC4zNTEzMjMsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNjEsIm9wIjowLjMwNTc1NCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE2Niwib3AiOjAuMjc1MDQ3LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTc0LCJvcCI6MC4yMzQ1Nywic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE4Miwib3AiOjAuMTk0NjI3LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTkwLCJvcCI6MC4xNTQ1NjQsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxOTYsIm9wIjowLjEyODQzLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MjAzLCJvcCI6MC4wOTUwODQ5LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MjEwLCJvcCI6MC4wNjc3OTUxLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MjE5LCJvcCI6MC4wMzI5NzAxLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSJ9XQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-d58b04059e3a45a382c5",
+          "file": "release-11-1-1.spec.ts",
+          "line": 98,
+          "column": 5
+        },
+        {
+          "title": "glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · light",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the firm plate is the phone form's",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 210,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 51,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:06:48.034Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the firm plate is the phone form's",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 210,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-7fb78fc43053d1a1b648",
+          "file": "release-11-1-1.spec.ts",
+          "line": 208,
+          "column": 9
+        },
+        {
+          "title": "glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · dark",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the firm plate is the phone form's",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 210,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 47,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:06:48.092Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the firm plate is the phone form's",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 210,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-1ff87f99486a15caf90e",
+          "file": "release-11-1-1.spec.ts",
+          "line": 208,
+          "column": 9
+        },
+        {
+          "title": "glass · a phone Select is solid under reduced transparency",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "reduced transparency is emulated through Chromium's CDP",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 247,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 49,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:06:48.145Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "reduced transparency is emulated through Chromium's CDP",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 247,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-7f268ef3d71c9101bb2d",
+          "file": "release-11-1-1.spec.ts",
+          "line": 245,
+          "column": 5
+        },
+        {
+          "title": "glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · light",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the firm plate is the phone form's",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 210,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 51,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:06:48.200Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the firm plate is the phone form's",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 210,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-2f21f535ed160fe508f2",
+          "file": "release-11-1-1.spec.ts",
+          "line": 208,
+          "column": 9
+        },
+        {
+          "title": "glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · dark",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "the firm plate is the phone form's",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 210,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 49,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:06:48.256Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "the firm plate is the phone form's",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 210,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-7c4e0b9ab64e50780956",
+          "file": "release-11-1-1.spec.ts",
+          "line": 208,
+          "column": 9
+        },
+        {
+          "title": "glass · a phone dock DropdownMenu is solid under reduced transparency",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "reduced transparency is emulated through Chromium's CDP",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 247,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 52,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:06:48.310Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "reduced transparency is emulated through Chromium's CDP",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 247,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-b9b6b988cc53a1dc6209",
+          "file": "release-11-1-1.spec.ts",
+          "line": 245,
+          "column": 5
+        },
+        {
+          "title": "exit · Select leaves on the exit curve, shorter than it entered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3380,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:06:48.368Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6NDI3LCJleGl0IjoyMzksInBhaW50ZWQiOjMwLCJzZWVuU2hhcmUiOjAuMDksImN1cnZlIjoiY3ViaWMtYmV6aWVyKDAuMywgMCwgMC42LCAwLjcpIiwic3RyYXkiOjAuMDMxLCJ0cmF2ZWwiOjAsInRyYXZlbFNoYXJlIjpudWxsLCJmcmFtZXMiOltbMCwxLDY3OV0sWzEsMSw2NzldLFsxMCwxLDY3OV0sWzEzLDAuOTk5LDY3OV0sWzIyLDAuOTksNjc5XSxbMjgsMC45NzksNjc5XSxbMzgsMC45NTUsNjc5XSxbNDYsMC45MzEsNjc5XSxbNTQsMC45MDMsNjc5XSxbNjIsMC44NjUsNjc5XSxbNzAsMC44MzIsNjc5XSxbNzYsMC43OTgsNjc5XSxbODMsMC43NjUsNjc5XSxbOTIsMC43MTUsNjc5XSxbOTksMC42NzUsNjc5XSxbMTA3LDAuNjI4LDY3OV0sWzExNywwLjU3NCw2NzldLFsxMjgsMC41MDcsNjc5XSxbMTM2LDAuNDU1LDY3OV0sWzE0MywwLjQxOSw2NzldLFsxNTAsMC4zNzksNjc5XSxbMTU4LDAuMzI4LDY3OV0sWzE2NSwwLjI4OSw2NzldLFsxNzEsMC4yNTgsNjc5XSxbMTgwLDAuMjExLDY3OV0sWzE4NywwLjE3NSw2NzldLFsxOTYsMC4xMzQsNjc5XSxbMjAzLDAuMTAxLDY3OV0sWzIwOSwwLjA3Nyw2NzldLFsyMTcsMC4wNDUsNjc5XSxbMjI1LDAuMDE0LDY3OV0sWzIzOSwwLG51bGxdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-f551eaefda173c5004cb",
+          "file": "release-11-1-1.spec.ts",
+          "line": 314,
+          "column": 5
+        },
+        {
+          "title": "exit · DropdownMenu leaves on the exit curve, shorter than it entered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3391,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:06:51.753Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6NDI5LCJleGl0IjoyMjgsInBhaW50ZWQiOjI3LCJzZWVuU2hhcmUiOjAuMTAxLCJjdXJ2ZSI6ImN1YmljLWJlemllcigwLjMsIDAsIDAuNiwgMC43KSIsInN0cmF5IjowLjAxOCwidHJhdmVsIjowLCJ0cmF2ZWxTaGFyZSI6bnVsbCwiZnJhbWVzIjpbWzAsMSw2ODNdLFs0LDEsNjgzXSxbMTEsMC45OTYsNjgzXSxbMTcsMC45ODgsNjgzXSxbMjUsMC45NzMsNjgzXSxbMzUsMC45NDUsNjgzXSxbNDUsMC45MTMsNjgzXSxbNTQsMC44NzgsNjgzXSxbNjIsMC44MzksNjgzXSxbNjcsMC44MTYsNjgzXSxbNzcsMC43NjcsNjgzXSxbODMsMC43MzIsNjgzXSxbOTIsMC42ODIsNjgzXSxbMTAzLDAuNjIxLDY4M10sWzExMiwwLjU2OCw2ODNdLFsxMjAsMC41MTYsNjgzXSxbMTI5LDAuNDY2LDY4M10sWzEzNSwwLjQzMSw2ODNdLFsxNDQsMC4zNzgsNjgzXSxbMTUxLDAuMzM5LDY4M10sWzE1OCwwLjI5Nyw2ODNdLFsxNjksMC4yMzksNjgzXSxbMTc5LDAuMTksNjgzXSxbMTg3LDAuMTQ4LDY4M10sWzE5NSwwLjExNCw2ODNdLFsyMDQsMC4wNzMsNjgzXSxbMjEwLDAuMDQ5LDY4M10sWzIxNywwLjAyMyw2ODNdLFsyMjgsMCxudWxsXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-84528e2c308c5b8dcb58",
+          "file": "release-11-1-1.spec.ts",
+          "line": 314,
+          "column": 5
+        },
+        {
+          "title": "exit · Popover leaves on the exit curve, shorter than it entered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3358,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:06:55.151Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6NDkyLCJleGl0IjoyNTAsInBhaW50ZWQiOjMyLCJzZWVuU2hhcmUiOjAuMDg1LCJjdXJ2ZSI6ImN1YmljLWJlemllcigwLjMsIDAsIDAuNiwgMC43KSIsInN0cmF5IjowLjAwOCwidHJhdmVsIjo4LCJ0cmF2ZWxTaGFyZSI6bnVsbCwiZnJhbWVzIjpbWzAsMSwxMzZdLFs4LDEsMTM2XSxbMTIsMC45OTcsMTM2XSxbMTksMC45OSwxMzZdLFsyNiwwLjk3OSwxMzZdLFszNSwwLjk2MSwxMzZdLFs0MywwLjk0MSwxMzZdLFs1MSwwLjkxNSwxMzVdLFs1OCwwLjg5MiwxMzVdLFs2OCwwLjg1NiwxMzVdLFs3NSwwLjgyMywxMzVdLFs4NSwwLjc4MiwxMzRdLFs5MCwwLjc1NiwxMzRdLFs5OCwwLjcxOSwxMzRdLFsxMDMsMC42OTIsMTM0XSxbMTEyLDAuNjQ4LDEzM10sWzExOSwwLjYxMiwxMzNdLFsxMjYsMC41NzQsMTMzXSxbMTM1LDAuNTI3LDEzMl0sWzE0MCwwLjQ5OCwxMzJdLFsxNDksMC40NTEsMTMyXSxbMTU1LDAuNDE5LDEzMV0sWzE2NCwwLjM3MywxMzFdLFsxNzAsMC4zNDYsMTMxXSxbMTc4LDAuMzA2LDEzMF0sWzE4NSwwLjI2OCwxMzBdLFsxOTMsMC4yMzEsMTMwXSxbMjAwLDAuMTk5LDEzMF0sWzIxMCwwLjE1OCwxMjldLFsyMTQsMC4xMzksMTI5XSxbMjI0LDAuMTAxLDEyOV0sWzIzMSwwLjA3NCwxMjldLFsyNDIsMC4wMzcsMTI4XSxbMjUwLDAuMDA4LDEyOF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-4a2ecbe587d1abbaf553",
+          "file": "release-11-1-1.spec.ts",
+          "line": 314,
+          "column": 5
+        },
+        {
+          "title": "exit · Tooltip leaves on the exit curve, shorter than it entered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3388,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:06:58.514Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6MjAwLCJleGl0IjoxMzEsInBhaW50ZWQiOjE1LCJzZWVuU2hhcmUiOjAuMTg0LCJjdXJ2ZSI6ImN1YmljLWJlemllcigwLjMsIDAsIDAuNiwgMC43KSIsInN0cmF5IjowLjA0NSwidHJhdmVsIjozLCJ0cmF2ZWxTaGFyZSI6bnVsbCwiZnJhbWVzIjpbWzAsMSw1NV0sWzQsMSw1NV0sWzEyLDAuOTg5LDU1XSxbMjIsMC45NDIsNTVdLFszMiwwLjg3OSw1NV0sWzQwLDAuODAzLDU2XSxbNDksMC43MTksNTZdLFs1NSwwLjY1OCw1Nl0sWzYyLDAuNTgzLDU2XSxbNzEsMC40ODUsNTddLFs3OSwwLjM5OSw1N10sWzg3LDAuMzEzLDU3XSxbOTcsMC4yMDcsNTddLFsxMDcsMC4xMjQsNThdLFsxMTQsMC4wNjYsNThdLFsxMjIsMC4wMTIsNThdLFsxMzEsMCxudWxsXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-6f4a1761c073c0b07576",
+          "file": "release-11-1-1.spec.ts",
+          "line": 314,
+          "column": 5
+        },
+        {
+          "title": "exit · Dialog leaves on the exit curve, shorter than it entered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3356,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:07:01.908Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6MjM3LCJleGl0IjoxMzcsInBhaW50ZWQiOjE2LCJzZWVuU2hhcmUiOjAuMiwiY3VydmUiOiJjdWJpYy1iZXppZXIoMC4zLCAwLCAwLjYsIDAuNykiLCJzdHJheSI6MC4wNDIsInRyYXZlbCI6MTIsInRyYXZlbFNoYXJlIjpudWxsLCJmcmFtZXMiOltbMCwxLDQ2NF0sWzQsMSw0NjRdLFsxMywxLDQ2NF0sWzIxLDAuOTgzLDQ2NF0sWzI3LDAuOTQ0LDQ2NV0sWzM1LDAuOTA1LDQ2NV0sWzQzLDAuODQ1LDQ2Nl0sWzUxLDAuNzY5LDQ2N10sWzYxLDAuNjksNDY4XSxbNzEsMC41ODEsNDY5XSxbNzksMC40NzMsNDcxXSxbODgsMC4zOCw0NzJdLFs5NCwwLjI5LDQ3M10sWzEwMiwwLjIzMSw0NzRdLFsxMTAsMC4xNTMsNDc1XSxbMTE4LDAuMDkyLDQ3Nl0sWzEyOCwwLjAzMiw0NzZdLFsxMzcsMCxudWxsXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-118249ef14258dd93860",
+          "file": "release-11-1-1.spec.ts",
+          "line": 314,
+          "column": 5
+        },
+        {
+          "title": "exit · Sheet right leaves on the exit curve, shorter than it entered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3334,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:07:05.269Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6NjIzLCJleGl0IjoyNjAsInBhaW50ZWQiOjMxLCJzZWVuU2hhcmUiOjAuMDkzLCJjdXJ2ZSI6ImN1YmljLWJlemllcigwLjMsIDAsIDAuNiwgMC43KSIsInN0cmF5IjowLjAxNiwidHJhdmVsIjozNzEsInRyYXZlbFNoYXJlIjowLjA5NiwiZnJhbWVzIjpbWzAsMSwxMDU2XSxbOSwxLDEwNTZdLFsxNCwxLDEwNTZdLFsyMCwwLjk5NiwxMDU4XSxbMjcsMC45OTEsMTA2MF0sWzM2LDAuOTc5LDEwNjRdLFs0MywwLjk2MiwxMDcxXSxbNTIsMC45NDMsMTA3OF0sWzYwLDAuOTE4LDEwODhdLFs2OCwwLjg5MSwxMDk4XSxbNzcsMC44NTksMTExMF0sWzg0LDAuODI0LDExMjRdLFs5MCwwLjc5LDExMzZdLFs5OSwwLjc2MSwxMTQ4XSxbMTA2LDAuNzE4LDExNjRdLFsxMTUsMC42ODQsMTE3N10sWzEyNSwwLjY0MSwxMTk0XSxbMTM0LDAuNTg3LDEyMTVdLFsxNDMsMC41MzksMTIzM10sWzE1MSwwLjQ5MiwxMjUxXSxbMTYwLDAuNDQ3LDEyNjhdLFsxNjgsMC40MDMsMTI4NV0sWzE3NiwwLjM2MSwxMzAxXSxbMTg1LDAuMzIsMTMxN10sWzE5NiwwLjI3NywxMzM0XSxbMjA1LDAuMjI2LDEzNTNdLFsyMTQsMC4xODUsMTM2OV0sWzIxOSwwLjE0NywxMzg0XSxbMjI5LDAuMTI0LDEzOTNdLFsyMzYsMC4wODcsMTQwN10sWzI0NCwwLjA2MiwxNDE2XSxbMjUyLDAuMDM1LDE0MjddLFsyNjAsMC4wMDgsMTQzN11dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-62528eb3e68bf0b369e9",
+          "file": "release-11-1-1.spec.ts",
+          "line": 314,
+          "column": 5
+        },
+        {
+          "title": "exit · Sheet bottom leaves on the exit curve, shorter than it entered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3337,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T01:07:08.608Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6NDU3LCJleGl0IjoyNjIsInBhaW50ZWQiOjM1LCJzZWVuU2hhcmUiOjAuMDg4LCJjdXJ2ZSI6ImN1YmljLWJlemllcigwLjMsIDAsIDAuNiwgMC43KSIsInN0cmF5IjowLjAxNSwidHJhdmVsIjoxMTYsInRyYXZlbFNoYXJlIjowLjA4OSwiZnJhbWVzIjpbWzAsMSw3ODNdLFs0LDEsNzgzXSxbMTEsMSw3ODNdLFsxOCwwLjk5Nyw3ODNdLFsyNCwwLjk5MSw3ODRdLFszMywwLjk4Miw3ODVdLFs0MSwwLjk2NSw3ODddLFs0OSwwLjk0NSw3ODldLFs1NCwwLjkyMyw3OTJdLFs2MSwwLjkwNiw3OTRdLFs3MCwwLjg4LDc5N10sWzc3LDAuODQ3LDgwMV0sWzgzLDAuODE0LDgwNF0sWzkyLDAuNzg4LDgwN10sWzEwMCwwLjc0Niw4MTJdLFsxMDgsMC43MSw4MTddLFsxMTUsMC42NjgsODIyXSxbMTIxLDAuNjI5LDgyNl0sWzEyOSwwLjYwMiw4MjldLFsxMzcsMC41NTksODM0XSxbMTQ1LDAuNTEzLDg0MF0sWzE1MSwwLjQ3Miw4NDVdLFsxNTgsMC40NDIsODQ4XSxbMTY2LDAuNDAyLDg1M10sWzE3NCwwLjM2Miw4NThdLFsxODMsMC4zMjUsODYyXSxbMTg4LDAuMjgsODY3XSxbMTk1LDAuMjU0LDg3MF0sWzIwNCwwLjIyMSw4NzRdLFsyMTEsMC4xODMsODc5XSxbMjE4LDAuMTUxLDg4Ml0sWzIyNSwwLjEyNSw4ODVdLFsyMzIsMC4wOTYsODg5XSxbMjM5LDAuMDY5LDg5Ml0sWzI1MCwwLjA0Myw4OTVdLFsyNTQsMC4wMSw4OTldLFsyNjIsMCxudWxsXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-c94bf249a81491dfa6ab",
+          "file": "release-11-1-1.spec.ts",
+          "line": 314,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-16T01:06:33.486Z",
+    "duration": 38496.394,
+    "expected": 13,
+    "skipped": 6,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

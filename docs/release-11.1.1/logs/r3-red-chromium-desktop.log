@@ -1,0 +1,186 @@
+
+Running 10 tests using 1 worker
+
+  ✓   1 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:98:5 › form · a dock DropdownMenu keeps its material through the exit · pick (2.4s)
+  ✓   2 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:98:5 › form · a dock DropdownMenu keeps its material through the exit · outside (2.3s)
+  ✘   3 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:98:5 › form · a dock DropdownMenu keeps its material through the exit · escape (1.0m)
+  ✘   4 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Select leaves on the exit curve, shorter than it entered (3.4s)
+  ✘   5 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · DropdownMenu leaves on the exit curve, shorter than it entered (3.4s)
+  ✘   6 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Popover leaves on the exit curve, shorter than it entered (3.4s)
+  ✘   7 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Tooltip leaves on the exit curve, shorter than it entered (3.4s)
+  ✘   8 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Dialog leaves on the exit curve, shorter than it entered (3.4s)
+  ✘   9 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Sheet right leaves on the exit curve, shorter than it entered (3.4s)
+  ✘  10 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Sheet bottom leaves on the exit curve, shorter than it entered (3.4s)
+
+
+  1) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:98:5 › form · a dock DropdownMenu keeps its material through the exit · escape 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.waitFor: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('body[data-ready=\'1\']')
+
+
+      24 | async function openHarness(page: Page, query = ""): Promise<void> {
+      25 |     await page.goto(`${HARNESS}${query}`);
+    > 26 |     await page.locator("body[data-ready='1']").waitFor({ state: "attached" });
+         |                                                ^
+      27 |     await page.waitForTimeout(300);
+      28 | }
+      29 |
+        at openHarness (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:26:48)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:104:9
+
+    Error Context: tests-visual/test-results/release-11-1-1-form-·-a-do-0ca6a-l-through-the-exit-·-escape-chromium-desktop/error-context.md
+
+  2) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Select leaves on the exit curve, shorter than it entered 
+
+    Error: no frame takes more than a fifth of what is seen {"entrance":414,"exit":136,"painted":16,"seenShare":0.951,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.659,"travel":0,"travelShare":null,"frames":[[0,1,679],[6,1,679],[10,1,679],[19,1,679],[25,1,679],[33,1,679],[39,1,679],[48,1,679],[55,1,679],[61,1,679],[71,1,679],[81,1,679],[91,1,679],[99,1,679],[104,1,679],[114,0.513,679],[121,0.049,679],[136,0,null]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.951
+
+      387 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });
+      388 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 389 |         expect(read.seenShare, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                          ^
+      390 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+      391 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);
+      392 |         expect(read.stray, `the exit follows the exit curve ${at}`).toBeLessThanOrEqual(0.12);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:389:90
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-Sele-dd1af-rve-shorter-than-it-entered-chromium-desktop/error-context.md
+
+  3) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · DropdownMenu leaves on the exit curve, shorter than it entered 
+
+    Error: no frame takes more than a fifth of what is seen {"entrance":418,"exit":128,"painted":17,"seenShare":0.96,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.807,"travel":0,"travelShare":null,"frames":[[0,1,683],[5,1,683],[7,1,683],[17,1,683],[22,1,683],[32,1,683],[37,1,683],[46,1,683],[53,1,683],[61,1,683],[66,1,683],[75,1,683],[82,1,683],[90,1,683],[95,1,683],[103,1,683],[110,1,683],[119,0.04,683],[128,0,null]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.96
+
+      387 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });
+      388 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 389 |         expect(read.seenShare, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                          ^
+      390 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+      391 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);
+      392 |         expect(read.stray, `the exit follows the exit curve ${at}`).toBeLessThanOrEqual(0.12);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:389:90
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-Drop-7d51e-rve-shorter-than-it-entered-chromium-desktop/error-context.md
+
+  4) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Popover leaves on the exit curve, shorter than it entered 
+
+    Error: no frame takes more than a fifth of what is seen {"entrance":475,"exit":137,"painted":17,"seenShare":0.302,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.363,"travel":7,"travelShare":null,"frames":[[0,1,136],[7,1,136],[13,0.864,135],[22,0.698,134],[29,0.601,134],[37,0.503,133],[42,0.453,133],[52,0.359,132],[58,0.308,132],[66,0.251,132],[74,0.203,131],[82,0.161,131],[91,0.123,131],[97,0.097,130],[106,0.069,130],[115,0.045,130],[121,0.032,130],[130,0.018,129],[137,0.01,129]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.302
+
+      387 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });
+      388 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 389 |         expect(read.seenShare, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                          ^
+      390 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+      391 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);
+      392 |         expect(read.stray, `the exit follows the exit curve ${at}`).toBeLessThanOrEqual(0.12);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:389:90
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-Popo-25b8f-rve-shorter-than-it-entered-chromium-desktop/error-context.md
+
+  5) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Tooltip leaves on the exit curve, shorter than it entered 
+
+    Error: no frame takes more than a fifth of what is seen {"entrance":200,"exit":65,"painted":8,"seenShare":0.5,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.411,"travel":3,"travelShare":null,"frames":[[0,1,55],[3,1,55],[5,0.786,55],[15,0.5,56],[21,0.38,56],[30,0.241,57],[37,0.152,57],[47,0.075,57],[58,0.024,58],[65,0.006,58]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.5
+
+      387 |         const at = JSON.stringify({ ...read, frames: read.frames.slice(0, 40) });
+      388 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 389 |         expect(read.seenShare, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                          ^
+      390 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+      391 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);
+      392 |         expect(read.stray, `the exit follows the exit curve ${at}`).toBeLessThanOrEqual(0.12);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:389:90
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-Tool-3332f-rve-shorter-than-it-entered-chromium-desktop/error-context.md
+
+  6) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Dialog leaves on the exit curve, shorter than it entered 
+
+    Error: the exit is shorter than the entrance {"entrance":230,"exit":231,"painted":29,"seenShare":0.173,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.473,"travel":13,"travelShare":null,"frames":[[0,1,464],[6,1,464],[8,0.917,465],[18,0.852,466],[25,0.757,467],[31,0.679,468],[38,0.621,469],[47,0.546,470],[54,0.471,471],[60,0.409,472],[69,0.368,472],[76,0.307,473],[83,0.268,473],[91,0.228,474],[100,0.192,474],[107,0.16,475],[116,0.137,475],[125,0.111,475],[135,0.092,476],[145,0.072,476],[153,0.057,476],[159,0.047,476],[168,0.041,476],[175,0.033,476],[184,0.028,476],[192,0.023,477],[200,0.019,477],[207,0.015,477],[217,0.013,477],[225,0.01,477],[231,0.008,477]]}
+
+    expect(received).toBeLessThan(expected)
+
+    Expected: < 230
+    Received:   231
+
+      389 |         expect(read.seenShare, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+      390 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+    > 391 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);
+          |                                                                          ^
+      392 |         expect(read.stray, `the exit follows the exit curve ${at}`).toBeLessThanOrEqual(0.12);
+      393 |     });
+      394 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:391:74
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-Dial-279d3-rve-shorter-than-it-entered-chromium-desktop/error-context.md
+
+  7) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Sheet right leaves on the exit curve, shorter than it entered 
+
+    Error: the exit follows the exit curve {"entrance":632,"exit":209,"painted":27,"seenShare":0.11,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.215,"travel":380,"travelShare":0.112,"frames":[[0,1,1056],[4,1,1056],[8,0.97,1068],[17,0.94,1079],[23,0.897,1095],[31,0.858,1111],[39,0.808,1130],[45,0.757,1149],[54,0.713,1166],[61,0.65,1190],[69,0.602,1209],[74,0.545,1231],[82,0.507,1245],[89,0.457,1264],[98,0.408,1283],[106,0.354,1304],[111,0.309,1321],[121,0.283,1332],[127,0.231,1351],[135,0.201,1363],[141,0.169,1375],[150,0.146,1384],[157,0.111,1397],[164,0.09,1405],[173,0.069,1413],[183,0.046,1422],[191,0.024,1431],[200,0.01,1436],[209,0,null]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.12
+    Received:    0.215
+
+      390 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+      391 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);
+    > 392 |         expect(read.stray, `the exit follows the exit curve ${at}`).toBeLessThanOrEqual(0.12);
+          |                                                                     ^
+      393 |     });
+      394 | }
+      395 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:392:69
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-Shee-4a00a-rve-shorter-than-it-entered-chromium-desktop/error-context.md
+
+  8) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Sheet bottom leaves on the exit curve, shorter than it entered 
+
+    Error: the exit follows the exit curve {"entrance":464,"exit":207,"painted":27,"seenShare":0.112,"curve":"cubic-bezier(0, 0, 0.2, 1)","stray":0.151,"travel":115,"travelShare":0.115,"frames":[[0,1,783],[0,1,783],[9,1,783],[15,0.97,786],[23,0.944,789],[31,0.906,794],[39,0.862,799],[44,0.811,805],[54,0.775,809],[60,0.71,817],[68,0.663,822],[74,0.606,829],[82,0.567,833],[90,0.512,840],[96,0.457,846],[106,0.414,851],[116,0.358,858],[125,0.297,865],[133,0.248,871],[142,0.209,875],[149,0.173,880],[156,0.146,883],[164,0.118,886],[172,0.093,889],[178,0.07,892],[187,0.054,894],[194,0.033,896],[202,0.02,898],[207,0.006,899]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.12
+    Received:    0.151
+
+      390 |         if (read.travelShare !== null) expect(read.travelShare, `no frame takes more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+      391 |         expect(read.exit, `the exit is shorter than the entrance ${at}`).toBeLessThan(read.entrance);
+    > 392 |         expect(read.stray, `the exit follows the exit curve ${at}`).toBeLessThanOrEqual(0.12);
+          |                                                                     ^
+      393 |     });
+      394 | }
+      395 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:392:69
+
+    Error Context: tests-visual/test-results/release-11-1-1-exit-·-Shee-72c6c-rve-shorter-than-it-entered-chromium-desktop/error-context.md
+
+  8 failed
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:98:5 › form · a dock DropdownMenu keeps its material through the exit · escape 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Select leaves on the exit curve, shorter than it entered 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · DropdownMenu leaves on the exit curve, shorter than it entered 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Popover leaves on the exit curve, shorter than it entered 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Tooltip leaves on the exit curve, shorter than it entered 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Dialog leaves on the exit curve, shorter than it entered 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Sheet right leaves on the exit curve, shorter than it entered 
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Sheet bottom leaves on the exit curve, shorter than it entered 
+  2 passed (1.5m)

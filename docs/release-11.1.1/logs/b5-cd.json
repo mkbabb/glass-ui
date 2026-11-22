@@ -1,0 +1,927 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-1-1.config.ts",
+      "--project=chromium-desktop",
+      "--workers=1",
+      "-g",
+      "reverse"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/logs/b5-cd.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "reverse · a Select closed while it opens turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2313,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T02:43:18.142Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuMywic2hhcmUiOjAuMDMsImVuZCI6MCwiZnJhbWVzIjpbWy0yLDAuM10sWzcsMC4zXSxbMTQsMC4zXSxbMjMsMC4yODddLFsyOSwwLjI3N10sWzM2LDAuMjY2XSxbNDQsMC4yNTRdLFs1MiwwLjIzOV0sWzU5LDAuMjI3XSxbNjYsMC4yMTVdLFs3MywwLjIwMl0sWzgxLDAuMTg4XSxbODgsMC4xNzZdLFs5NiwwLjE2Ml0sWzEwMywwLjE0OV0sWzExMSwwLjEzN10sWzExOSwwLjEyNF0sWzEyNiwwLjExMl0sWzEzNCwwLjEwMV0sWzE0MywwLjA4N10sWzE1MSwwLjA3Nl0sWzE2MCwwLjA2NV0sWzE2NiwwLjA1OF0sWzE3MywwLjA1XSxbMTgwLDAuMDQyXSxbMTg5LDAuMDMzXSxbMTk2LDAuMDI3XSxbMjAzLDAuMDIxXSxbMjA5LDAuMDE2XSxbMjE5LDAuMDA5XSxbMjI1LDAuMDA1XSxbMjMyLDAuMDAyXSxbMjM5LDBdLFsyNDgsMF0sWzI1NiwwXSxbMjYzLDBdLFsyNzAsMF0sWzI3NywwXSxbMjg1LDBdLFsyOTMsMF0sWzI5OSwwXSxbMzA2LDBdLFszMTMsMF0sWzMyMywwXSxbMzMwLDBdLFszMzgsMF0sWzM0NiwwXSxbMzU0LDBdLFszNjQsMF0sWzM2OSwwXSxbMzc3LDBdLFszODUsMF0sWzM5MiwwXSxbMzk5LDBdLFs0MDYsMF0sWzQxNCwwXSxbNDIyLDBdLFs0MzEsMF0sWzQzNiwwXSxbNDQ0LDBdLFs0NTEsMF0sWzQ2MCwwXSxbNDY1LDBdLFs0NzIsMF0sWzQ4MSwwXSxbNDg5LDBdLFs0OTcsMF0sWzUwMiwwXSxbNTExLDBdLFs1MTgsMF0sWzUyNiwwXSxbNTMxLDBdLFs1MzksMF0sWzU0OCwwXSxbNTU2LDBdLFs1NjMsMF0sWzU3MCwwXSxbNTc3LDBdLFs1ODUsMF0sWzU5MiwwXSxbNTk4LDBdLFs2MDcsMF0sWzYxMywwXSxbNjIzLDBdLFs2MzAsMF0sWzYzNywwXSxbNjQ0LDBdLFs2NTEsMF0sWzY2MCwwXSxbNjY1LDBdLFs2NzIsMF0sWzY4MSwwXSxbNjg5LDBdLFs2OTcsMF0sWzcwMywwXSxbNzA5LDBdLFs3MTksMF0sWzcyNSwwXSxbNzMxLDBdLFs3MzksMF0sWzc0OCwwXSxbNzU2LDBdLFs3NjQsMF0sWzc2OSwwXSxbNzc3LDBdLFs3ODUsMF0sWzc5MiwwXSxbNzk4LDBdLFs4MDYsMF0sWzgxNCwwXSxbODIyLDBdLFs4MzAsMF0sWzgzOSwwXSxbODQ3LDBdLFs4NTQsMF0sWzg2MiwwXSxbODcwLDBdLFs4NzcsMF0sWzg4NCwwXSxbODkzLDBdLFs4OTksMF0sWzkwNiwwXSxbOTE0LDBdLFs5MjIsMF0sWzkzMCwwXSxbOTM1LDBdLFs5NDQsMF0sWzk1MiwwXSxbOTU5LDBdLFs5NjQsMF0sWzk3MywwXSxbOTgxLDBdLFs5ODksMF0sWzk5NywwXSxbMTAwMywwXSxbMTAxMCwwXSxbMTAxOCwwXSxbMTAyNiwwXSxbMTAzMiwwXSxbMTA0MCwwXSxbMTA0NywwXSxbMTA1NSwwXSxbMTA2NCwwXSxbMTA2OSwwXSxbMTA3NiwwXSxbMTA4NCwwXSxbMTA5MywwXSxbMTA5OCwwXSxbMTEwNiwwXSxbMTExMywwXSxbMTEyMiwwXSxbMTEzMCwwXSxbMTEzNiwwXSxbMTE0NCwwXSxbMTE1MSwwXSxbMTE2MCwwXSxbMTE2NSwwXSxbMTE3MywwXSxbMTE4MSwwXSxbMTE4OCwwXSxbMTE5NywwXSxbMTIwMiwwXSxbMTIxMCwwXSxbMTIxOCwwXSxbMTIyNiwwXSxbMTIzMiwwXSxbMTIzOSwwXSxbMTI0NywwXSxbMTI1NSwwXSxbMTI2MiwwXSxbMTI3MCwwXSxbMTI3NywwXSxbMTI4NCwwXSxbMTI5MiwwXSxbMTI5OCwwXSxbMTMwNiwwXSxbMTMxNCwwXSxbMTMyMiwwXSxbMTMzMCwwXSxbMTMzOSwwXSxbMTM0NiwwXSxbMTM1NSwwXSxbMTM2MywwXSxbMTM2OSwwXSxbMTM3NSwwXSxbMTM4NSwwXSxbMTM5MiwwXSxbMTM5OSwwXSxbMTQwNiwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-39b1f0cb722c56875ddc",
+          "file": "release-11-1-1.spec.ts",
+          "line": 645,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Select reopened while it closes turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3025,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T02:43:20.563Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNzk2LCJzaGFyZSI6MC4xNzcsImVuZCI6MSwiZnJhbWVzIjpbWy0zLDAuNzk2XSxbNiwwLjcyNl0sWzEzLDAuNjczXSxbMTksMC43NTZdLFsyNywwLjgzMl0sWzM1LDAuOTA4XSxbNDIsMC45NzRdLFs0OCwwLjk4OV0sWzU2LDAuOTk4XSxbNjQsMV0sWzcxLDFdLFs3OCwxXSxbODUsMV0sWzkzLDFdLFsxMDEsMV0sWzEwOCwxXSxbMTE0LDFdLFsxMjIsMV0sWzEzMCwxXSxbMTM3LDFdLFsxNDYsMV0sWzE1NCwxXSxbMTYzLDFdLFsxNzEsMV0sWzE3OSwxXSxbMTg1LDFdLFsxOTMsMV0sWzIwMCwxXSxbMjEwLDFdLFsyMTcsMV0sWzIyMywxXSxbMjMxLDFdLFsyMzgsMV0sWzI0NywxXSxbMjUyLDFdLFsyNTgsMV0sWzI2NywxXSxbMjc1LDFdLFsyODMsMV0sWzI5MiwxXSxbMzAwLDFdLFszMDksMV0sWzMxNywxXSxbMzIzLDFdLFszMzAsMV0sWzMzOCwxXSxbMzQ3LDFdLFszNTIsMV0sWzM1OCwxXSxbMzY2LDFdLFszNzQsMV0sWzM4NCwxXSxbMzkwLDFdLFszOTcsMV0sWzQwNSwxXSxbNDEyLDFdLFs0MTksMV0sWzQyNiwxXSxbNDM0LDFdLFs0NDIsMV0sWzQ1MSwxXSxbNDU2LDFdLFs0NjQsMV0sWzQ3MiwxXSxbNDgwLDFdLFs0ODYsMV0sWzQ5MywxXSxbNTAwLDFdLFs1MDksMV0sWzUxNiwxXSxbNTIzLDFdLFs1MjksMV0sWzUzOSwxXSxbNTQ2LDFdLFs1NTIsMV0sWzU2MCwxXSxbNTY3LDFdLFs1NzYsMV0sWzU4NCwxXSxbNTg5LDFdLFs1OTgsMV0sWzYwNSwxXSxbNjEzLDFdLFs2MTksMV0sWzYyNiwxXSxbNjM0LDFdLFs2NDIsMV0sWzY0OSwxXSxbNjU2LDFdLFs2NjMsMV0sWzY3MiwxXSxbNjgwLDFdLFs2ODUsMV0sWzY5MywxXSxbNzAxLDFdLFs3MDcsMV0sWzcxNSwxXSxbNzIzLDFdLFs3MzEsMV0sWzczOCwxXSxbNzQ2LDFdLFs3NTIsMV0sWzc1OSwxXSxbNzY4LDFdLFs3NzUsMV0sWzc4NCwxXSxbNzkwLDFdLFs3OTYsMV0sWzgwNSwxXSxbODEzLDFdLFs4MTksMV0sWzgyNiwxXSxbODM0LDFdLFs4NDIsMV0sWzg1MCwxXSxbODU1LDFdLFs4NjQsMV0sWzg3MiwxXSxbODgwLDFdLFs4ODUsMV0sWzg5MywxXSxbOTAwLDFdLFs5MDksMV0sWzkxNywxXSxbOTIzLDFdLFs5MzAsMV0sWzkzOCwxXSxbOTQ1LDFdLFs5NTIsMV0sWzk2MCwxXSxbOTY3LDFdLFs5NzUsMV0sWzk4MiwxXSxbOTg5LDFdLFs5OTcsMV0sWzEwMDUsMV0sWzEwMTMsMV0sWzEwMTksMV0sWzEwMjYsMV0sWzEwMzQsMV0sWzEwNDIsMV0sWzEwNTAsMV0sWzEwNTYsMV0sWzEwNjQsMV0sWzEwNzIsMV0sWzEwODAsMV0sWzEwODUsMV0sWzEwOTMsMV0sWzExMDAsMV0sWzExMDksMV0sWzExMTYsMV0sWzExMjIsMV0sWzExMzEsMV0sWzExMzgsMV0sWzExNDYsMV0sWzExNTEsMV0sWzExNjAsMV0sWzExNjcsMV0sWzExNzUsMV0sWzExODQsMV0sWzExODksMV0sWzExOTYsMV0sWzEyMDUsMV0sWzEyMTMsMV0sWzEyMTksMV0sWzEyMjYsMV0sWzEyMzQsMV0sWzEyNDIsMV0sWzEyNTAsMV0sWzEyNTUsMV0sWzEyNjMsMV0sWzEyNzIsMV0sWzEyNzksMV0sWzEyODUsMV0sWzEyOTIsMV0sWzEzMDEsMV0sWzEzMDksMV0sWzEzMTcsMV0sWzEzMjMsMV0sWzEzMzAsMV0sWzEzMzcsMV0sWzEzNDcsMV0sWzEzNTIsMV0sWzEzNTgsMV0sWzEzNjcsMV0sWzEzNzUsMV0sWzEzODQsMV0sWzEzODksMV0sWzEzOTcsMV0sWzE0MDUsMV0sWzE0MTMsMV0sWzE0MTgsMV0sWzE0MjYsMV1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-54caf364a32156cf5e1a",
+          "file": "release-11-1-1.spec.ts",
+          "line": 655,
+          "column": 9
+        },
+        {
+          "title": "reverse · a DropdownMenu closed while it opens turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2116,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T02:43:23.595Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuMjg2LCJzaGFyZSI6MC4wMjUsImVuZCI6MCwiZnJhbWVzIjpbWy0yLDAuMjg2XSxbNCwwLjI4Nl0sWzEzLDAuMjg2XSxbMjIsMC4yNzddLFszMCwwLjI2N10sWzM1LDAuMjYxXSxbNDIsMC4yNTJdLFs1MSwwLjIzOF0sWzU4LDAuMjI5XSxbNjUsMC4yMTldLFs3MSwwLjIxXSxbODAsMC4xOTZdLFs4OCwwLjE4NF0sWzk2LDAuMTcxXSxbMTAxLDAuMTY0XSxbMTEwLDAuMTUxXSxbMTE3LDAuMTM5XSxbMTI1LDAuMTI3XSxbMTMxLDAuMTE5XSxbMTM4LDAuMTA4XSxbMTQ2LDAuMDk3XSxbMTU1LDAuMDg2XSxbMTYzLDAuMDc1XSxbMTY3LDAuMDY5XSxbMTc2LDAuMDU4XSxbMTg0LDAuMDQ5XSxbMTkyLDAuMDRdLFsxOTgsMC4wMzRdLFsyMDUsMC4wMjZdLFsyMTMsMC4wMThdLFsyMjEsMC4wMTFdLFsyMjksMC4wMDRdLFsyMzUsMF0sWzI0MywwXSxbMjQ5LDBdLFsyNTksMF0sWzI2NCwwXSxbMjcyLDBdLFsyODAsMF0sWzI4NiwwXSxbMjk2LDBdLFszMDEsMF0sWzMwOSwwXSxbMzE3LDBdLFszMjUsMF0sWzMzMSwwXSxbMzM3LDBdLFszNDUsMF0sWzM1NCwwXSxbMzYxLDBdLFszNjksMF0sWzM3NiwwXSxbMzg0LDBdLFszOTIsMF0sWzM5NywwXSxbNDA1LDBdLFs0MTMsMF0sWzQyMSwwXSxbNDI5LDBdLFs0MzQsMF0sWzQ0MywwXSxbNDUwLDBdLFs0NTgsMF0sWzQ2NCwwXSxbNDcyLDBdLFs0NzksMF0sWzQ4NywwXSxbNDk2LDBdLFs1MDQsMF0sWzUxMywwXSxbNTIxLDBdLFs1MjksMF0sWzUzNSwwXSxbNTQzLDBdLFs1NTAsMF0sWzU1NywwXSxbNTYzLDBdLFs1NzIsMF0sWzU4MCwwXSxbNTg3LDBdLFs1OTYsMF0sWzYwMiwwXSxbNjA5LDBdLFs2MTcsMF0sWzYyNSwwXSxbNjMxLDBdLFs2MzgsMF0sWzY0NSwwXSxbNjU1LDBdLFs2NjIsMF0sWzY2OCwwXSxbNjc2LDBdLFs2ODQsMF0sWzY5MiwwXSxbNjk3LDBdLFs3MDUsMF0sWzcxMSwwXSxbNzIxLDBdLFs3MjksMF0sWzczNSwwXSxbNzQyLDBdLFs3NTAsMF0sWzc1OCwwXSxbNzY0LDBdLFs3NzIsMF0sWzc3OSwwXSxbNzg4LDBdLFs3OTYsMF0sWzgwMSwwXSxbODA5LDBdLFs4MTcsMF0sWzgyNCwwXSxbODMwLDBdLFs4MzgsMF0sWzg0NiwwXSxbODU0LDBdLFs4NjIsMF0sWzg2OCwwXSxbODc2LDBdLFs4ODQsMF0sWzg5MiwwXSxbODk3LDBdLFs5MDQsMF0sWzkxMiwwXSxbOTE5LDBdLFs5MjksMF0sWzkzNCwwXSxbOTQzLDBdLFs5NTAsMF0sWzk1OCwwXSxbOTY0LDBdLFs5NzIsMF0sWzk3OCwwXSxbOTg3LDBdLFs5OTYsMF0sWzEwMDEsMF0sWzEwMDksMF0sWzEwMTcsMF0sWzEwMjQsMF0sWzEwMzEsMF0sWzEwMzgsMF0sWzEwNDYsMF0sWzEwNTQsMF0sWzEwNjEsMF0sWzEwNjgsMF0sWzEwNzYsMF0sWzEwODQsMF0sWzEwOTIsMF0sWzEwOTcsMF0sWzExMDUsMF0sWzExMTMsMF0sWzExMTksMF0sWzExMjksMF0sWzExMzUsMF0sWzExNDIsMF0sWzExNTAsMF0sWzExNTgsMF0sWzExNjMsMF0sWzExNzIsMF0sWzExNzksMF0sWzExODcsMF0sWzExOTQsMF0sWzEyMDIsMF0sWzEyMDgsMF0sWzEyMTcsMF0sWzEyMjUsMF0sWzEyMzEsMF0sWzEyMzgsMF0sWzEyNDYsMF0sWzEyNTQsMF0sWzEyNjIsMF0sWzEyNjgsMF0sWzEyNzUsMF0sWzEyODMsMF0sWzEyOTEsMF0sWzEyOTcsMF0sWzEzMDUsMF0sWzEzMTMsMF0sWzEzMjAsMF0sWzEzMjgsMF0sWzEzMzQsMF0sWzEzNDIsMF0sWzEzNTAsMF0sWzEzNTgsMF0sWzEzNjQsMF0sWzEzNzEsMF0sWzEzNzgsMF0sWzEzODgsMF0sWzEzOTYsMF0sWzE0MDEsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-b33df702ba55d60e21cc",
+          "file": "release-11-1-1.spec.ts",
+          "line": 645,
+          "column": 9
+        },
+        {
+          "title": "reverse · a DropdownMenu reopened while it closes turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3014,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T02:43:25.719Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuODU4LCJzaGFyZSI6MC4xMjksImVuZCI6MSwiZnJhbWVzIjpbWy0xLDAuODU4XSxbNywwLjgyNV0sWzEyLDAuNzk4XSxbMTksMC44ODhdLFsyOCwwLjk0N10sWzM2LDAuOTc3XSxbNDEsMC45OV0sWzQ4LDAuOTk5XSxbNTYsMV0sWzY1LDFdLFs3MywxXSxbNzgsMV0sWzg2LDFdLFs5NCwxXSxbMTAxLDFdLFsxMDgsMV0sWzExNSwxXSxbMTIzLDFdLFsxMzEsMV0sWzEzOSwxXSxbMTQ1LDFdLFsxNTMsMV0sWzE2MCwxXSxbMTY3LDFdLFsxNzQsMV0sWzE4MiwxXSxbMTkwLDFdLFsxOTcsMV0sWzIwNiwxXSxbMjE0LDFdLFsyMjIsMV0sWzIyOSwxXSxbMjM5LDFdLFsyNDUsMV0sWzI1MSwxXSxbMjYxLDFdLFsyNjgsMV0sWzI3NCwxXSxbMjgxLDFdLFsyOTAsMV0sWzI5NywxXSxbMzA1LDFdLFszMTMsMV0sWzMyMywxXSxbMzMxLDFdLFszMzksMV0sWzM0NSwxXSxbMzUyLDFdLFszNjAsMV0sWzM2OCwxXSxbMzc0LDFdLFszODIsMV0sWzM4OSwxXSxbMzk4LDFdLFs0MDUsMV0sWzQxNSwxXSxbNDIyLDFdLFs0MzEsMV0sWzQzOSwxXSxbNDQ1LDFdLFs0NTMsMV0sWzQ2MCwxXSxbNDY3LDFdLFs0NzQsMV0sWzQ4MiwxXSxbNDg4LDFdLFs0OTgsMV0sWzUwNSwxXSxbNTEyLDFdLFs1MTgsMV0sWzUyNywxXSxbNTM0LDFdLFs1NDEsMV0sWzU0NywxXSxbNTU3LDFdLFs1NjQsMV0sWzU3MSwxXSxbNTc5LDFdLFs1ODYsMV0sWzU5NCwxXSxbNjAxLDFdLFs2MDgsMV0sWzYxNSwxXSxbNjIzLDFdLFs2MzEsMV0sWzYzOSwxXSxbNjQ1LDFdLFs2NTMsMV0sWzY1OSwxXSxbNjY5LDFdLFs2NzQsMV0sWzY4MiwxXSxbNjg5LDFdLFs2OTgsMV0sWzcwNCwxXSxbNzExLDFdLFs3MTgsMV0sWzcyNiwxXSxbNzM0LDFdLFs3NDEsMV0sWzc0OCwxXSxbNzU1LDFdLFs3NjUsMV0sWzc3MSwxXSxbNzc4LDFdLFs3ODYsMV0sWzc5NCwxXSxbODAyLDFdLFs4MDcsMV0sWzgxNSwxXSxbODIzLDFdLFs4MzAsMV0sWzgzOSwxXSxbODQ3LDFdLFs4NTYsMV0sWzg2NCwxXSxbODcyLDFdLFs4NzgsMV0sWzg4NiwxXSxbODk0LDFdLFs5MDIsMV0sWzkwNiwxXSxbOTE1LDFdLFs5MjMsMV0sWzkzMSwxXSxbOTM5LDFdLFs5NDQsMV0sWzk1MywxXSxbOTYwLDFdLFs5NjcsMV0sWzk3NCwxXSxbOTgyLDFdLFs5OTAsMV0sWzk5OCwxXSxbMTAwNiwxXSxbMTAxMSwxXSxbMTAxOSwxXSxbMTAyNywxXSxbMTAzNSwxXSxbMTA0MSwxXSxbMTA0OCwxXSxbMTA1NiwxXSxbMTA2NCwxXSxbMTA3MiwxXSxbMTA3OCwxXSxbMTA4NiwxXSxbMTA5NCwxXSxbMTEwMiwxXSxbMTEwNywxXSxbMTExNSwxXSxbMTEyMywxXSxbMTEzMSwxXSxbMTEzOSwxXSxbMTE0NSwxXSxbMTE1MiwxXSxbMTE2MCwxXSxbMTE2OCwxXSxbMTE3NCwxXSxbMTE4MSwxXSxbMTE5MCwxXSxbMTE5OCwxXSxbMTIwNiwxXSxbMTIxMSwxXSxbMTIxOSwxXSxbMTIyNywxXSxbMTIzNCwxXSxbMTI0MSwxXSxbMTI0OCwxXSxbMTI1NiwxXSxbMTI2NCwxXSxbMTI3MiwxXSxbMTI3OCwxXSxbMTI4NiwxXSxbMTI5NCwxXSxbMTMwMiwxXSxbMTMwNywxXSxbMTMxNSwxXSxbMTMyMywxXSxbMTMyOSwxXSxbMTMzOCwxXSxbMTM0OCwxXSxbMTM1NiwxXSxbMTM2NCwxXSxbMTM3MSwxXSxbMTM3OCwxXSxbMTM4NSwxXSxbMTM5NCwxXSxbMTQwMCwxXSxbMTQwOCwxXSxbMTQxNSwxXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-6f516e71fbf84cbe2fe0",
+          "file": "release-11-1-1.spec.ts",
+          "line": 655,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Popover closed while it opens turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2114,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T02:43:28.737Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNTMsInNoYXJlIjowLjA3NiwiZW5kIjowLCJmcmFtZXMiOltbLTIsMC41M10sWzIsMC41MTddLFsxMSwwLjQ4OF0sWzE5LDAuNDYxXSxbMjcsMC40MjldLFszMiwwLjQwN10sWzQwLDAuMzc0XSxbNDgsMC4zMzddLFs1NiwwLjMwMV0sWzY0LDAuMjY0XSxbNzAsMC4yMzldLFs3NywwLjIwNF0sWzg2LDAuMTY3XSxbOTQsMC4xMzNdLFs5OSwwLjEwOV0sWzEwNywwLjA3OF0sWzExNSwwLjA0OV0sWzEyMywwLjAyMl0sWzEzMSwwXSxbMTM3LDBdLFsxNDQsMF0sWzE1MiwwXSxbMTU5LDBdLFsxNjYsMF0sWzE3MywwXSxbMTgxLDBdLFsxOTAsMF0sWzE5OCwwXSxbMjAzLDBdLFsyMTEsMF0sWzIxOSwwXSxbMjI3LDBdLFsyMzMsMF0sWzI0MCwwXSxbMjQ3LDBdLFsyNTUsMF0sWzI2NSwwXSxbMjcwLDBdLFsyNzgsMF0sWzI4NSwwXSxbMjkzLDBdLFsyOTksMF0sWzMwNiwwXSxbMzE1LDBdLFszMjIsMF0sWzMzMSwwXSxbMzM3LDBdLFszNDQsMF0sWzM1MiwwXSxbMzYwLDBdLFszNjYsMF0sWzM3MiwwXSxbMzgyLDBdLFszODgsMF0sWzM5OCwwXSxbNDAzLDBdLFs0MTEsMF0sWzQxNywwXSxbNDI3LDBdLFs0MzIsMF0sWzQ0MCwwXSxbNDQ4LDBdLFs0NTYsMF0sWzQ2NCwwXSxbNDcwLDBdLFs0NzgsMF0sWzQ4NSwwXSxbNDkzLDBdLFs0OTksMF0sWzUwNywwXSxbNTE0LDBdLFs1MjMsMF0sWzUzMSwwXSxbNTM3LDBdLFs1NDQsMF0sWzU1MiwwXSxbNTYwLDBdLFs1NjUsMF0sWzU3MywwXSxbNTgxLDBdLFs1ODksMF0sWzU5OCwwXSxbNjA2LDBdLFs2MTQsMF0sWzYyMywwXSxbNjMxLDBdLFs2MzksMF0sWzY0OCwwXSxbNjU2LDBdLFs2NjQsMF0sWzY3MCwwXSxbNjc3LDBdLFs2ODUsMF0sWzY5NCwwXSxbNjk5LDBdLFs3MDcsMF0sWzcxNCwwXSxbNzIzLDBdLFs3MzEsMF0sWzczNywwXSxbNzQ0LDBdLFs3NTIsMF0sWzc2MCwwXSxbNzY4LDBdLFs3NzcsMF0sWzc4NSwwXSxbNzkzLDBdLFs3OTksMF0sWzgwNywwXSxbODE1LDBdLFs4MjMsMF0sWzgzMSwwXSxbODM3LDBdLFs4NDQsMF0sWzg1MiwwXSxbODYwLDBdLFs4NjYsMF0sWzg3MywwXSxbODgxLDBdLFs4ODksMF0sWzg5NywwXSxbOTAzLDBdLFs5MTEsMF0sWzkxOSwwXSxbOTI2LDBdLFs5MzIsMF0sWzk0MCwwXSxbOTQ4LDBdLFs5NTYsMF0sWzk2NCwwXSxbOTcwLDBdLFs5NzgsMF0sWzk4NSwwXSxbOTk0LDBdLFs5OTksMF0sWzEwMDcsMF0sWzEwMTUsMF0sWzEwMjEsMF0sWzEwMzEsMF0sWzEwMzcsMF0sWzEwNDQsMF0sWzEwNTIsMF0sWzEwNjAsMF0sWzEwNjYsMF0sWzEwNzIsMF0sWzEwODEsMF0sWzEwODgsMF0sWzEwOTcsMF0sWzExMDMsMF0sWzExMTEsMF0sWzExMTksMF0sWzExMjcsMF0sWzExMzIsMF0sWzExNDAsMF0sWzExNDgsMF0sWzExNTYsMF0sWzExNjMsMF0sWzExNjksMF0sWzExNzcsMF0sWzExODQsMF0sWzExOTQsMF0sWzEyMDEsMF0sWzEyMDgsMF0sWzEyMTUsMF0sWzEyMjMsMF0sWzEyMzEsMF0sWzEyMzcsMF0sWzEyNDMsMF0sWzEyNTIsMF0sWzEyNTksMF0sWzEyNjksMF0sWzEyNzMsMF0sWzEyODEsMF0sWzEyODksMF0sWzEyOTcsMF0sWzEzMDMsMF0sWzEzMTEsMF0sWzEzMTgsMF0sWzEzMjcsMF0sWzEzMzUsMF0sWzEzNDEsMF0sWzEzNDgsMF0sWzEzNTYsMF0sWzEzNjQsMF0sWzEzNzAsMF0sWzEzNzcsMF0sWzEzODUsMF0sWzEzOTMsMF0sWzE0MDIsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-52eb0096f2ea41afd357",
+          "file": "release-11-1-1.spec.ts",
+          "line": 645,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Popover reopened while it closes turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2997,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T02:43:30.855Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuODc1LCJzaGFyZSI6MC4wOTEsImVuZCI6MSwiZnJhbWVzIjpbWy01LDAuODc1XSxbMSwwLjg1Ml0sWzcsMC44MjldLFsxNywwLjc5XSxbMjQsMC44NDJdLFszMCwwLjg3MV0sWzM2LDAuODk4XSxbNDUsMC45MjZdLFs1MywwLjk0NV0sWzYxLDAuOTYyXSxbNjgsMC45NzNdLFs3OCwwLjk4NV0sWzg2LDAuOTkyXSxbOTMsMC45OTZdLFsxMDAsMC45OThdLFsxMDgsMV0sWzExNSwxXSxbMTIzLDFdLFsxMzAsMV0sWzEzNywxXSxbMTQ1LDFdLFsxNTIsMV0sWzE2MiwxXSxbMTY3LDFdLFsxNzUsMV0sWzE4MywxXSxbMTkwLDFdLFsxOTYsMV0sWzIwMiwxXSxbMjEyLDFdLFsyMTksMV0sWzIyOCwxXSxbMjMzLDFdLFsyNDAsMV0sWzI0OCwxXSxbMjU4LDFdLFsyNjIsMV0sWzI3MCwxXSxbMjc4LDFdLFsyODYsMV0sWzI5NSwxXSxbMzAwLDFdLFszMDgsMV0sWzMxNiwxXSxbMzI0LDFdLFszMzAsMV0sWzMzNywxXSxbMzQ1LDFdLFszNTMsMV0sWzM2MSwxXSxbMzY3LDFdLFszNzUsMV0sWzM4MiwxXSxbMzkxLDFdLFszOTUsMV0sWzQwNCwxXSxbNDEyLDFdLFs0MjAsMV0sWzQyOCwxXSxbNDMzLDFdLFs0NDEsMV0sWzQ0OCwxXSxbNDU3LDFdLFs0NjIsMV0sWzQ2OSwxXSxbNDc4LDFdLFs0ODYsMV0sWzQ5NSwxXSxbNTAwLDFdLFs1MDcsMV0sWzUxNiwxXSxbNTI0LDFdLFs1MjksMV0sWzUzNywxXSxbNTQ0LDFdLFs1NTIsMV0sWzU2MSwxXSxbNTY5LDFdLFs1NzgsMV0sWzU4NiwxXSxbNTk1LDFdLFs1OTksMV0sWzYwOCwxXSxbNjE2LDFdLFs2MjQsMV0sWzYyOSwxXSxbNjM3LDFdLFs2NDQsMV0sWzY1MywxXSxbNjYxLDFdLFs2NjYsMV0sWzY3NCwxXSxbNjgxLDFdLFs2OTEsMV0sWzY5NiwxXSxbNzA0LDFdLFs3MTAsMV0sWzcxOCwxXSxbNzI3LDFdLFs3MzQsMV0sWzc0MSwxXSxbNzQ5LDFdLFs3NTcsMV0sWzc2MywxXSxbNzcwLDFdLFs3NzgsMV0sWzc4NSwxXSxbNzk1LDFdLFs3OTksMV0sWzgwOCwxXSxbODE2LDFdLFs4MjQsMV0sWzgyOSwxXSxbODM3LDFdLFs4NDUsMV0sWzg1MywxXSxbODYwLDFdLFs4NjYsMV0sWzg3MywxXSxbODgzLDFdLFs4OTAsMV0sWzg5NiwxXSxbOTA0LDFdLFs5MTEsMV0sWzkyMCwxXSxbOTI4LDFdLFs5MzMsMV0sWzk0MSwxXSxbOTQ4LDFdLFs5NTYsMV0sWzk2MiwxXSxbOTcwLDFdLFs5NzgsMV0sWzk4NiwxXSxbOTk1LDFdLFsxMDAwLDFdLFsxMDA3LDFdLFsxMDE1LDFdLFsxMDI0LDFdLFsxMDI5LDFdLFsxMDM3LDFdLFsxMDQ1LDFdLFsxMDUyLDFdLFsxMDYwLDFdLFsxMDcwLDFdLFsxMDc4LDFdLFsxMDg0LDFdLFsxMDk0LDFdLFsxMDk5LDFdLFsxMTA4LDFdLFsxMTE2LDFdLFsxMTIyLDFdLFsxMTI5LDFdLFsxMTM3LDFdLFsxMTQ1LDFdLFsxMTUyLDFdLFsxMTYxLDFdLFsxMTY2LDFdLFsxMTc1LDFdLFsxMTgyLDFdLFsxMTkwLDFdLFsxMTk2LDFdLFsxMjAzLDFdLFsxMjEyLDFdLFsxMjIwLDFdLFsxMjI4LDFdLFsxMjMzLDFdLFsxMjQwLDFdLFsxMjQ5LDFdLFsxMjU3LDFdLFsxMjYyLDFdLFsxMjcwLDFdLFsxMjc4LDFdLFsxMjg2LDFdLFsxMjk0LDFdLFsxMzAwLDFdLFsxMzA4LDFdLFsxMzE1LDFdLFsxMzIyLDFdLFsxMzMwLDFdLFsxMzM3LDFdLFsxMzQ1LDFdLFsxMzUzLDFdLFsxMzYxLDFdLFsxMzY3LDFdLFsxMzc0LDFdLFsxMzgyLDFdLFsxMzkwLDFdLFsxMzk1LDFdLFsxNDA0LDFdLFsxNDExLDFdLFsxNDIwLDFdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-97cadeb67762d7b2a3c1",
+          "file": "release-11-1-1.spec.ts",
+          "line": 655,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Toast closed while it opens turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2963,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T02:43:33.856Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNTQ3LCJzaGFyZSI6MC4xMzMsImVuZCI6MCwiZnJhbWVzIjpbWy00LDAuNTQ3XSxbNywwLjU4M10sWzE2LDAuNjEyXSxbMjQsMC42MzVdLFszNCwwLjY2M10sWzM5LDAuNjc3XSxbNDcsMC42OTddLFs1NSwwLjcxNl0sWzYxLDAuNzNdLFs2OCwwLjc0N10sWzc2LDAuNzYzXSxbODQsMC43NzldLFs5MiwwLjc5NF0sWzk5LDAuODA3XSxbMTA2LDAuODJdLFsxMTMsMC44MzNdLFsxMjEsMC44NDVdLFsxMjksMC44NThdLFsxMzUsMC44NjZdLFsxNDMsMC44NzddLFsxNTEsMC44ODddLFsxNTksMC44OThdLFsxNjYsMC45MDddLFsxNzIsMC45MTRdLFsxODAsMC45MjJdLFsxODgsMC45M10sWzE5NiwwLjkzN10sWzIwMywwLjk0NF0sWzIxMCwwLjk1XSxbMjE4LDAuOTU1XSxbMjI2LDAuOTYxXSxbMjMyLDAuOTY1XSxbMjM4LDAuOTddLFsyNDcsMC45NzVdLFsyNTUsMC45NzldLFsyNjMsMC45ODNdLFsyNjksMC45ODVdLFsyNzcsMC45ODhdLFsyODQsMC45OTFdLFsyOTEsMC45OTNdLFszMDAsMC45OTVdLFszMTEsMC45OTddLFszMjAsMC45OTldLFszMjksMV0sWzMzNywxXSxbMzQzLDFdLFszNTEsMV0sWzM1OSwxXSxbMzY2LDFdLFszNzIsMV0sWzM4MCwxXSxbMzg4LDFdLFszOTYsMV0sWzQwNCwxXSxbNDEwLDFdLFs0MTgsMV0sWzQyNSwxXSxbNDMzLDFdLFs0MzksMV0sWzQ0NiwxXSxbNDU0LDFdLFs0NjMsMV0sWzQ3MSwxXSxbNDc3LDFdLFs0ODMsMV0sWzQ5MSwxXSxbNTAwLDFdLFs1MDYsMV0sWzUxMywxXSxbNTIwLDFdLFs1MzAsMV0sWzUzOCwxXSxbNTQ2LDFdLFs1NTQsMV0sWzU2MSwxXSxbNTcxLDFdLFs1NzcsMV0sWzU4NCwxXSxbNTkyLDFdLFs2MDAsMV0sWzYwNiwxXSxbNjEzLDFdLFs2MjEsMV0sWzYyOSwxXSxbNjM2LDFdLFs2NDMsMV0sWzY0OSwxXSxbNjU5LDFdLFs2NjcsMV0sWzY3NCwxXSxbNjgxLDFdLFs2ODgsMV0sWzY5NiwxXSxbNzA0LDFdLFs3MDksMV0sWzcxOCwxXSxbNzI1LDFdLFs3MzMsMV0sWzc0NCwxXSxbNzUyLDFdLFs3NjEsMV0sWzc3MSwxXSxbNzc2LDFdLFs3ODQsMV0sWzc5MiwxXSxbNzk5LDFdLFs4MDYsMV0sWzgxMiwxXSxbODIwLDFdLFs4MzAsMV0sWzgzOCwwLjk1OV0sWzg0MywwLjkyNF0sWzg0OSwwLjg4M10sWzg1OSwwLjgxMV0sWzg2NywwLjc1M10sWzg3NSwwLjY5XSxbODgxLDAuNjQyXSxbODg4LDAuNTg4XSxbODk2LDAuNTE4XSxbOTA0LDAuNDZdLFs5MTAsMC40MThdLFs5MTgsMC4zNjhdLFs5MjYsMC4zMjFdLFs5MzIsMC4yOTVdLFs5NDAsMC4yNzVdLFs5NTAsMC4yNDVdLFs5NTgsMC4yMl0sWzk2NiwwLjE5NF0sWzk3MSwwLjE3N10sWzk3OSwwLjE0OF0sWzk4OCwwLjExN10sWzk5NSwwLjA5NF0sWzEwMDMsMC4wNjddLFsxMDEwLDAuMDQ1XSxbMTAxNywwLjAyNF0sWzEwMjUsMC4wMDVdLFsxMDMzLDBdLFsxMDM5LDBdLFsxMDQ2LDBdLFsxMDU0LDBdLFsxMDYzLDBdLFsxMDcxLDBdLFsxMDc2LDBdLFsxMDg0LDBdLFsxMDkyLDBdLFsxMDk5LDBdLFsxMTA1LDBdLFsxMTE0LDBdLFsxMTIxLDBdLFsxMTI5LDBdLFsxMTM4LDBdLFsxMTQzLDBdLFsxMTQ5LDBdLFsxMTU5LDBdLFsxMTY3LDBdLFsxMTc1LDBdLFsxMTgxLDBdLFsxMTg4LDBdLFsxMTk1LDBdLFsxMjA0LDBdLFsxMjEwLDBdLFsxMjE3LDBdLFsxMjI0LDBdLFsxMjMzLDBdLFsxMjQ0LDBdLFsxMjUzLDBdLFsxMjYxLDBdLFsxMjcwLDBdLFsxMjc3LDBdLFsxMjg0LDBdLFsxMjkxLDBdLFsxMzAwLDBdLFsxMzA2LDBdLFsxMzEzLDBdLFsxMzIxLDBdLFsxMzI5LDBdLFsxMzM3LDBdLFsxMzQzLDBdLFsxMzUwLDBdLFsxMzU5LDBdLFsxMzY3LDBdLFsxMzcyLDBdLFsxMzc5LDBdLFsxMzg4LDBdLFsxMzk2LDBdLFsxNDAzLDBdLFsxNDEwLDBdLFsxNDE2LDBdLFsxNDI2LDBdLFsxNDMzLDBdLFsxNDQxLDBdLFsxNDQ3LDBdLFsxNDU1LDBdLFsxNDYzLDBdLFsxNDcxLDBdLFsxNDc2LDBdLFsxNDgzLDBdLFsxNDkyLDBdLFsxNTAwLDBdLFsxNTA4LDBdLFsxNTE0LDBdLFsxNTIyLDBdLFsxNTI4LDBdLFsxNTM4LDBdLFsxNTQzLDBdLFsxNTUxLDBdLFsxNTU5LDBdLFsxNTY1LDBdLFsxNTczLDBdLFsxNTc5LDBdLFsxNTg4LDBdLFsxNTk1LDBdLFsxNjA0LDBdLFsxNjEwLDBdLFsxNjE3LDBdLFsxNjI1LDBdLFsxNjMyLDBdLFsxNjM4LDBdLFsxNjQ3LDBdLFsxNjU0LDBdLFsxNjYyLDBdLFsxNjcxLDBdLFsxNjc2LDBdLFsxNjgzLDBdLFsxNjkxLDBdLFsxNzAwLDBdLFsxNzA2LDBdLFsxNzEzLDBdLFsxNzIwLDBdLFsxNzMwLDBdLFsxNzM3LDBdLFsxNzQzLDBdLFsxNzQ5LDBdLFsxNzU5LDBdLFsxNzY3LDBdLFsxNzcyLDBdLFsxNzc4LDBdLFsxNzg4LDBdLFsxNzk2LDBdLFsxODAzLDBdLFsxODEwLDBdLFsxODE3LDBdLFsxODI1LDBdLFsxODMyLDBdLFsxODM4LDBdLFsxODQ3LDBdLFsxODUzLDBdLFsxODYxLDBdLFsxODcxLDBdLFsxODc2LDBdLFsxODgzLDBdLFsxODkyLDBdLFsxODk4LDBdLFsxOTA2LDBdLFsxOTEzLDBdLFsxOTIwLDBdLFsxOTI5LDBdLFsxOTM2LDBdLFsxOTQzLDBdLFsxOTUwLDBdLFsxOTU5LDBdLFsxOTY3LDBdLFsxOTcyLDBdLFsxOTc5LDBdLFsxOTg4LDBdLFsxOTk2LDBdLFsyMDAzLDBdLFsyMDExLDBdLFsyMDIwLDBdLFsyMDI5LDBdLFsyMDM3LDBdLFsyMDQzLDBdLFsyMDUxLDBdLFsyMDU5LDBdLFsyMDY2LDBdLFsyMDcyLDBdLFsyMDc5LDBdLFsyMDg2LDBdLFsyMDk2LDBdLFsyMTAzLDBdLFsyMTEyLDBdLFsyMTIwLDBdLFsyMTI5LDBdLFsyMTM2LDBdLFsyMTQzLDBdLFsyMTUxLDBdLFsyMTU4LDBdLFsyMTY2LDBdLFsyMTcxLDBdLFsyMTgxLDBdLFsyMTg4LDBdLFsyMTk2LDBdLFsyMjA0LDBdLFsyMjEyLDBdLFsyMjIxLDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-27a5d203a8fba7967971",
+          "file": "release-11-1-1.spec.ts",
+          "line": 645,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Tooltip reopened while it closes turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3042,
+                  "error": {
+                    "message": "Error: no frame after the turn moves more than a fifth {\"atTurn\":0.657,\"share\":0.205,\"end\":1,\"frames\":[[-2,0.657],[7,0.576],[14,0.51],[21,0.618],[30,0.726],[35,0.763],[43,0.825],[51,0.869],[59,0.904],[64,0.926],[72,0.948],[79,0.968],[88,0.983],[96,0.993],[101,0.997],[109,1],[116,1],[126,1],[131,1],[138,1],[146,1],[154,1],[162,1],[167,1],[176,1],[183,1],[192,1],[197,1],[205,1],[213,1],[221,1],[229,1],[235,1],[241,1],[249,1],[257,1],[264,1],[271,1],[279,1],[286,1],[295,1],[301,1],[309,1],[316,1],[325,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.205\u001b[39m",
+                    "stack": "Error: no frame after the turn moves more than a fifth {\"atTurn\":0.657,\"share\":0.205,\"end\":1,\"frames\":[[-2,0.657],[7,0.576],[14,0.51],[21,0.618],[30,0.726],[35,0.763],[43,0.825],[51,0.869],[59,0.904],[64,0.926],[72,0.948],[79,0.968],[88,0.983],[96,0.993],[101,0.997],[109,1],[116,1],[126,1],[131,1],[138,1],[146,1],[154,1],[162,1],[167,1],[176,1],[183,1],[192,1],[197,1],[205,1],[213,1],[221,1],[229,1],[235,1],[241,1],[249,1],[257,1],[264,1],[271,1],[279,1],[286,1],[295,1],[301,1],[309,1],[316,1],[325,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.205\u001b[39m\n    at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:599:81)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:664:13",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 81,
+                      "line": 599
+                    },
+                    "snippet": "  597 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);\n  598 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n> 599 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n      |                                                                                 ^\n  600 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n  601 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);\n  602 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 81,
+                        "line": 599
+                      },
+                      "message": "Error: no frame after the turn moves more than a fifth {\"atTurn\":0.657,\"share\":0.205,\"end\":1,\"frames\":[[-2,0.657],[7,0.576],[14,0.51],[21,0.618],[30,0.726],[35,0.763],[43,0.825],[51,0.869],[59,0.904],[64,0.926],[72,0.948],[79,0.968],[88,0.983],[96,0.993],[101,0.997],[109,1],[116,1],[126,1],[131,1],[138,1],[146,1],[154,1],[162,1],[167,1],[176,1],[183,1],[192,1],[197,1],[205,1],[213,1],[221,1],[229,1],[235,1],[241,1],[249,1],[257,1],[264,1],[271,1],[279,1],[286,1],[295,1],[301,1],[309,1],[316,1],[325,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.205\u001b[39m\n\n  597 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);\n  598 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n> 599 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n      |                                                                                 ^\n  600 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n  601 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);\n  602 | }\n    at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:599:81)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:664:13"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T02:43:36.825Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNjU3LCJzaGFyZSI6MC4yMDUsImVuZCI6MSwiZnJhbWVzIjpbWy0yLDAuNjU3XSxbNywwLjU3Nl0sWzE0LDAuNTFdLFsyMSwwLjYxOF0sWzMwLDAuNzI2XSxbMzUsMC43NjNdLFs0MywwLjgyNV0sWzUxLDAuODY5XSxbNTksMC45MDRdLFs2NCwwLjkyNl0sWzcyLDAuOTQ4XSxbNzksMC45NjhdLFs4OCwwLjk4M10sWzk2LDAuOTkzXSxbMTAxLDAuOTk3XSxbMTA5LDFdLFsxMTYsMV0sWzEyNiwxXSxbMTMxLDFdLFsxMzgsMV0sWzE0NiwxXSxbMTU0LDFdLFsxNjIsMV0sWzE2NywxXSxbMTc2LDFdLFsxODMsMV0sWzE5MiwxXSxbMTk3LDFdLFsyMDUsMV0sWzIxMywxXSxbMjIxLDFdLFsyMjksMV0sWzIzNSwxXSxbMjQxLDFdLFsyNDksMV0sWzI1NywxXSxbMjY0LDFdLFsyNzEsMV0sWzI3OSwxXSxbMjg2LDFdLFsyOTUsMV0sWzMwMSwxXSxbMzA5LDFdLFszMTYsMV0sWzMyNSwxXSxbMzMwLDFdLFszMzgsMV0sWzM0NiwxXSxbMzU0LDFdLFszNjIsMV0sWzM2OCwxXSxbMzc1LDFdLFszODIsMV0sWzM5MSwxXSxbMzk3LDFdLFs0MDQsMV0sWzQxMSwxXSxbNDIwLDFdLFs0MjksMV0sWzQzNCwxXSxbNDQyLDFdLFs0NTAsMV0sWzQ1OCwxXSxbNDYzLDFdLFs0NzIsMV0sWzQ3OSwxXSxbNDg2LDFdLFs0OTYsMV0sWzUwMSwxXSxbNTA5LDFdLFs1MTcsMV0sWzUyNSwxXSxbNTMzLDFdLFs1MzgsMV0sWzU0NiwxXSxbNTU0LDFdLFs1NjIsMV0sWzU2OCwxXSxbNTc1LDFdLFs1ODMsMV0sWzU5MSwxXSxbNjAwLDFdLFs2MDUsMV0sWzYxMywxXSxbNjIxLDFdLFs2MjksMV0sWzYzNCwxXSxbNjQyLDFdLFs2NTAsMV0sWzY1NywxXSxbNjY2LDFdLFs2NzIsMV0sWzY4MCwxXSxbNjg4LDFdLFs2OTQsMV0sWzcwMiwxXSxbNzA5LDFdLFs3MTUsMV0sWzcyNSwxXSxbNzMzLDFdLFs3MzksMV0sWzc0NiwxXSxbNzU0LDFdLFs3NjIsMV0sWzc2OCwxXSxbNzc2LDFdLFs3ODMsMV0sWzc5MCwxXSxbODAwLDFdLFs4MDUsMV0sWzgxMiwxXSxbODIxLDFdLFs4MjksMV0sWzgzNSwxXSxbODQyLDFdLFs4NDksMV0sWzg1OCwxXSxbODY2LDFdLFs4NzIsMV0sWzg4MCwxXSxbODg3LDFdLFs4OTYsMV0sWzkwMSwxXSxbOTA5LDFdLFs5MTcsMV0sWzkyNCwxXSxbOTMzLDFdLFs5MzksMV0sWzk0NiwxXSxbOTU0LDFdLFs5NjIsMV0sWzk2NywxXSxbOTc2LDFdLFs5ODMsMV0sWzk5MSwxXSxbMTAwMCwxXSxbMTAwNSwxXSxbMTAxMiwxXSxbMTAyMSwxXSxbMTAyOCwxXSxbMTAzNCwxXSxbMTA0MiwxXSxbMTA0OSwxXSxbMTA1OCwxXSxbMTA2NiwxXSxbMTA3MiwxXSxbMTA3OSwxXSxbMTA4NywxXSxbMTA5NiwxXSxbMTEwMSwxXSxbMTEwOSwxXSxbMTExNiwxXSxbMTEyMywxXSxbMTEzMywxXSxbMTEzOCwxXSxbMTE0NiwxXSxbMTE1NCwxXSxbMTE2MiwxXSxbMTE2NywxXSxbMTE3NiwxXSxbMTE4MywxXSxbMTE5MSwxXSxbMTIwMCwxXSxbMTIwNCwxXSxbMTIxMywxXSxbMTIyMSwxXSxbMTIyOSwxXSxbMTIzNCwxXSxbMTI0MiwxXSxbMTI1MCwxXSxbMTI1OCwxXSxbMTI2NiwxXSxbMTI3MiwxXSxbMTI3OSwxXSxbMTI4NywxXSxbMTI5NSwxXSxbMTMwMCwxXSxbMTMwOCwxXSxbMTMxNiwxXSxbMTMyNSwxXSxbMTMzMiwxXSxbMTMzOSwxXSxbMTM0NiwxXSxbMTM1MywxXSxbMTM2MiwxXSxbMTM2OCwxXSxbMTM3NSwxXSxbMTM4MywxXSxbMTM5MSwxXSxbMTM5OSwxXSxbMTQwNSwxXSxbMTQxMywxXSxbMTQyMCwxXV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-reverse-·-a-e5622-oses-turns-from-where-it-is-chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 81,
+                    "line": 599
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-29ffa41a317157274f75",
+          "file": "release-11-1-1.spec.ts",
+          "line": 655,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Collapsible closed while it opens turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 4019,
+                  "error": {
+                    "message": "Error: no frame after the turn moves more than a fifth {\"atTurn\":0.487,\"share\":0.389,\"end\":0,\"frames\":[[-5,0.487],[1,0.536],[10,0.606],[17,0.655],[21,1],[31,0.556],[36,0.508],[45,0.428],[52,0.38],[61,0.316],[70,0.264],[78,0.224],[85,0.193],[95,0.154],[99,0.14],[109,0.113],[115,0.099],[124,0.08],[129,0.072],[137,0.059],[145,0.049],[152,0.042],[160,0.034],[170,0.027],[178,0.004],[186,0],[194,0],[200,0],[207,0],[216,0],[222,0],[231,0],[236,0],[245,0],[253,0],[260,0],[266,0],[274,0],[281,0],[290,0],[298,0],[304,0],[312,0],[318,0],[327,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.389\u001b[39m",
+                    "stack": "Error: no frame after the turn moves more than a fifth {\"atTurn\":0.487,\"share\":0.389,\"end\":0,\"frames\":[[-5,0.487],[1,0.536],[10,0.606],[17,0.655],[21,1],[31,0.556],[36,0.508],[45,0.428],[52,0.38],[61,0.316],[70,0.264],[78,0.224],[85,0.193],[95,0.154],[99,0.14],[109,0.113],[115,0.099],[124,0.08],[129,0.072],[137,0.059],[145,0.049],[152,0.042],[160,0.034],[170,0.027],[178,0.004],[186,0],[194,0],[200,0],[207,0],[216,0],[222,0],[231,0],[236,0],[245,0],[253,0],[260,0],[266,0],[274,0],[281,0],[290,0],[298,0],[304,0],[312,0],[318,0],[327,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.389\u001b[39m\n    at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:599:81)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:651:13",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 81,
+                      "line": 599
+                    },
+                    "snippet": "  597 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);\n  598 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n> 599 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n      |                                                                                 ^\n  600 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n  601 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);\n  602 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 81,
+                        "line": 599
+                      },
+                      "message": "Error: no frame after the turn moves more than a fifth {\"atTurn\":0.487,\"share\":0.389,\"end\":0,\"frames\":[[-5,0.487],[1,0.536],[10,0.606],[17,0.655],[21,1],[31,0.556],[36,0.508],[45,0.428],[52,0.38],[61,0.316],[70,0.264],[78,0.224],[85,0.193],[95,0.154],[99,0.14],[109,0.113],[115,0.099],[124,0.08],[129,0.072],[137,0.059],[145,0.049],[152,0.042],[160,0.034],[170,0.027],[178,0.004],[186,0],[194,0],[200,0],[207,0],[216,0],[222,0],[231,0],[236,0],[245,0],[253,0],[260,0],[266,0],[274,0],[281,0],[290,0],[298,0],[304,0],[312,0],[318,0],[327,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.389\u001b[39m\n\n  597 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);\n  598 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n> 599 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n      |                                                                                 ^\n  600 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n  601 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);\n  602 | }\n    at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:599:81)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:651:13"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T02:43:40.242Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNDg3LCJzaGFyZSI6MC4zODksImVuZCI6MCwiZnJhbWVzIjpbWy01LDAuNDg3XSxbMSwwLjUzNl0sWzEwLDAuNjA2XSxbMTcsMC42NTVdLFsyMSwxXSxbMzEsMC41NTZdLFszNiwwLjUwOF0sWzQ1LDAuNDI4XSxbNTIsMC4zOF0sWzYxLDAuMzE2XSxbNzAsMC4yNjRdLFs3OCwwLjIyNF0sWzg1LDAuMTkzXSxbOTUsMC4xNTRdLFs5OSwwLjE0XSxbMTA5LDAuMTEzXSxbMTE1LDAuMDk5XSxbMTI0LDAuMDhdLFsxMjksMC4wNzJdLFsxMzcsMC4wNTldLFsxNDUsMC4wNDldLFsxNTIsMC4wNDJdLFsxNjAsMC4wMzRdLFsxNzAsMC4wMjddLFsxNzgsMC4wMDRdLFsxODYsMF0sWzE5NCwwXSxbMjAwLDBdLFsyMDcsMF0sWzIxNiwwXSxbMjIyLDBdLFsyMzEsMF0sWzIzNiwwXSxbMjQ1LDBdLFsyNTMsMF0sWzI2MCwwXSxbMjY2LDBdLFsyNzQsMF0sWzI4MSwwXSxbMjkwLDBdLFsyOTgsMF0sWzMwNCwwXSxbMzEyLDBdLFszMTgsMF0sWzMyNywwXSxbMzM4LDBdLFszNDYsMF0sWzM1NSwwXSxbMzY0LDBdLFszNzEsMF0sWzM3OCwwXSxbMzg2LDBdLFszOTQsMF0sWzQwMCwwXSxbNDA4LDBdLFs0MTUsMF0sWzQyNCwwXSxbNDMxLDBdLFs0MzcsMF0sWzQ0NSwwXSxbNDUzLDBdLFs0NjAsMF0sWzQ2NiwwXSxbNDc0LDBdLFs0ODIsMF0sWzQ5MCwwXSxbNDk3LDBdLFs1MDQsMF0sWzUxMSwwXSxbNTE4LDBdLFs1MjgsMF0sWzUzMywwXSxbNTQyLDBdLFs1NDgsMF0sWzU1NywwXSxbNTY1LDBdLFs1NzEsMF0sWzU3OCwwXSxbNTg1LDBdLFs1OTQsMF0sWzYwMCwwXSxbNjA4LDBdLFs2MTUsMF0sWzYyMywwXSxbNjMxLDBdLFs2MzcsMF0sWzY0NSwwXSxbNjUzLDBdLFs2NjEsMF0sWzY2NywwXSxbNjczLDBdLFs2ODIsMF0sWzY4OSwwXSxbNjk4LDBdLFs3MDQsMF0sWzcxMSwwXSxbNzIwLDBdLFs3MjYsMF0sWzczNCwwXSxbNzQwLDBdLFs3NDksMF0sWzc1NSwwXSxbNzY0LDBdLFs3NzEsMF0sWzc3OCwwXSxbNzg1LDBdLFs3OTQsMF0sWzc5OSwwXSxbODA2LDBdLFs4MTUsMF0sWzgyMywwXSxbODMwLDBdLFs4MzcsMF0sWzg0NCwwXSxbODUxLDBdLFs4NjAsMF0sWzg2NywwXSxbODczLDBdLFs4ODEsMF0sWzg5MCwwXSxbODk3LDBdLFs5MDMsMF0sWzkxMCwwXSxbOTE5LDBdLFs5MjgsMF0sWzkzMywwXSxbOTQxLDBdLFs5NDksMF0sWzk1NSwwXSxbOTYzLDBdLFs5NzAsMF0sWzk3NywwXSxbOTg1LDBdLFs5OTQsMF0sWzk5OSwwXSxbMTAwOCwwXSxbMTAxNCwwXSxbMTAyNCwwXSxbMTAzMSwwXSxbMTAzNywwXSxbMTA0MywwXSxbMTA1MiwwXSxbMTA1OSwwXSxbMTA2NywwXSxbMTA3NCwwXSxbMTA4MSwwXSxbMTA5MCwwXSxbMTA5OCwwXSxbMTEwMywwXSxbMTExMCwwXSxbMTEyMCwwXSxbMTEyNywwXSxbMTEzMywwXSxbMTEzOSwwXSxbMTE0OSwwXSxbMTE1NiwwXSxbMTE2MywwXSxbMTE3MSwwXSxbMTE3NiwwXSxbMTE4NiwwXSxbMTE5MiwwXSxbMTIwMCwwXSxbMTIwNiwwXSxbMTIxNSwwXSxbMTIyMSwwXSxbMTIzMCwwXSxbMTIzNiwwXSxbMTI0NCwwXSxbMTI1MSwwXSxbMTI2MSwwXSxbMTI2NiwwXSxbMTI3NCwwXSxbMTI4MSwwXSxbMTI5MCwwXSxbMTI5NywwXSxbMTMwNCwwXSxbMTMxMCwwXSxbMTMxOCwwXSxbMTMyNywwXSxbMTMzMywwXSxbMTMzOSwwXSxbMTM0OSwwXSxbMTM1NiwwXSxbMTM2NSwwXSxbMTM2OSwwXSxbMTM3OCwwXSxbMTM4NiwwXSxbMTM5MywwXSxbMTM5OCwwXSxbMTQwNywwXSxbMTQxNSwwXSxbMTQyMywwXV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-reverse-·-a-b3d24-pens-turns-from-where-it-is-chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 81,
+                    "line": 599
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-223ce48d4f3b94590e49",
+          "file": "release-11-1-1.spec.ts",
+          "line": 645,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Collapsible reopened while it closes turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 4920,
+                  "error": {
+                    "message": "Error: no frame after the turn moves more than a fifth {\"atTurn\":0.648,\"share\":0.463,\"end\":1,\"frames\":[[-8,0.648],[0,0.573],[8,0.499],[15,0.441],[21,0],[29,0.515],[37,0.586],[45,0.647],[54,0.701],[59,0.73],[67,0.772],[75,0.807],[83,0.838],[88,0.855],[96,0.879],[102,0.894],[112,0.916],[118,0.927],[126,0.939],[132,0.947],[141,0.958],[149,0.965],[155,0.969],[161,0.974],[170,1],[178,1],[186,1],[192,1],[200,1],[208,1],[216,1],[221,1],[229,1],[237,1],[245,1],[253,1],[259,1],[266,1],[274,1],[282,1],[288,1],[296,1],[303,1],[312,1],[320,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.463\u001b[39m",
+                    "stack": "Error: no frame after the turn moves more than a fifth {\"atTurn\":0.648,\"share\":0.463,\"end\":1,\"frames\":[[-8,0.648],[0,0.573],[8,0.499],[15,0.441],[21,0],[29,0.515],[37,0.586],[45,0.647],[54,0.701],[59,0.73],[67,0.772],[75,0.807],[83,0.838],[88,0.855],[96,0.879],[102,0.894],[112,0.916],[118,0.927],[126,0.939],[132,0.947],[141,0.958],[149,0.965],[155,0.969],[161,0.974],[170,1],[178,1],[186,1],[192,1],[200,1],[208,1],[216,1],[221,1],[229,1],[237,1],[245,1],[253,1],[259,1],[266,1],[274,1],[282,1],[288,1],[296,1],[303,1],[312,1],[320,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.463\u001b[39m\n    at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:599:81)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:664:13",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 81,
+                      "line": 599
+                    },
+                    "snippet": "  597 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);\n  598 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n> 599 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n      |                                                                                 ^\n  600 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n  601 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);\n  602 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 81,
+                        "line": 599
+                      },
+                      "message": "Error: no frame after the turn moves more than a fifth {\"atTurn\":0.648,\"share\":0.463,\"end\":1,\"frames\":[[-8,0.648],[0,0.573],[8,0.499],[15,0.441],[21,0],[29,0.515],[37,0.586],[45,0.647],[54,0.701],[59,0.73],[67,0.772],[75,0.807],[83,0.838],[88,0.855],[96,0.879],[102,0.894],[112,0.916],[118,0.927],[126,0.939],[132,0.947],[141,0.958],[149,0.965],[155,0.969],[161,0.974],[170,1],[178,1],[186,1],[192,1],[200,1],[208,1],[216,1],[221,1],[229,1],[237,1],[245,1],[253,1],[259,1],[266,1],[274,1],[282,1],[288,1],[296,1],[303,1],[312,1],[320,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.463\u001b[39m\n\n  597 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);\n  598 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n> 599 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n      |                                                                                 ^\n  600 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n  601 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);\n  602 | }\n    at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:599:81)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:664:13"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T02:43:44.629Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNjQ4LCJzaGFyZSI6MC40NjMsImVuZCI6MSwiZnJhbWVzIjpbWy04LDAuNjQ4XSxbMCwwLjU3M10sWzgsMC40OTldLFsxNSwwLjQ0MV0sWzIxLDBdLFsyOSwwLjUxNV0sWzM3LDAuNTg2XSxbNDUsMC42NDddLFs1NCwwLjcwMV0sWzU5LDAuNzNdLFs2NywwLjc3Ml0sWzc1LDAuODA3XSxbODMsMC44MzhdLFs4OCwwLjg1NV0sWzk2LDAuODc5XSxbMTAyLDAuODk0XSxbMTEyLDAuOTE2XSxbMTE4LDAuOTI3XSxbMTI2LDAuOTM5XSxbMTMyLDAuOTQ3XSxbMTQxLDAuOTU4XSxbMTQ5LDAuOTY1XSxbMTU1LDAuOTY5XSxbMTYxLDAuOTc0XSxbMTcwLDFdLFsxNzgsMV0sWzE4NiwxXSxbMTkyLDFdLFsyMDAsMV0sWzIwOCwxXSxbMjE2LDFdLFsyMjEsMV0sWzIyOSwxXSxbMjM3LDFdLFsyNDUsMV0sWzI1MywxXSxbMjU5LDFdLFsyNjYsMV0sWzI3NCwxXSxbMjgyLDFdLFsyODgsMV0sWzI5NiwxXSxbMzAzLDFdLFszMTIsMV0sWzMyMCwxXSxbMzI1LDFdLFszMzMsMV0sWzM0MSwxXSxbMzQ4LDFdLFszNTUsMV0sWzM2MiwxXSxbMzcwLDFdLFszNzgsMV0sWzM4NSwxXSxbMzkyLDFdLFs0MDAsMV0sWzQwNywxXSxbNDE1LDFdLFs0MjIsMV0sWzQyOSwxXSxbNDM2LDFdLFs0NDUsMV0sWzQ1MywxXSxbNDU5LDFdLFs0NjYsMV0sWzQ3NCwxXSxbNDgyLDFdLFs0ODgsMV0sWzQ5NiwxXSxbNTA0LDFdLFs1MTIsMV0sWzUyMCwxXSxbNTI2LDFdLFs1MzMsMV0sWzU0MSwxXSxbNTQ4LDFdLFs1NTUsMV0sWzU2MiwxXSxbNTcwLDFdLFs1NzgsMV0sWzU4NywxXSxbNTkyLDFdLFs2MDAsMV0sWzYwOCwxXSxbNjE2LDFdLFs2MjEsMV0sWzYyOSwxXSxbNjM2LDFdLFs2NDUsMV0sWzY1MywxXSxbNjU5LDFdLFs2NjYsMV0sWzY3NCwxXSxbNjgyLDFdLFs2ODcsMV0sWzY5NiwxXSxbNzAzLDFdLFs3MTIsMV0sWzcyMCwxXSxbNzI2LDFdLFs3MzMsMV0sWzc0MSwxXSxbNzQ5LDFdLFs3NTUsMV0sWzc2MiwxXSxbNzcwLDFdLFs3NzgsMV0sWzc4NywxXSxbNzkyLDFdLFs4MDAsMV0sWzgwOCwxXSxbODE2LDFdLFs4MjEsMV0sWzgyOSwxXSxbODM2LDFdLFs4NDUsMV0sWzg1MywxXSxbODU5LDFdLFs4NjYsMV0sWzg3NCwxXSxbODgyLDFdLFs4ODgsMV0sWzg5NiwxXSxbOTA0LDFdLFs5MTAsMV0sWzkxOSwxXSxbOTI2LDFdLFs5MzMsMV0sWzk0MSwxXSxbOTQ5LDFdLFs5NTcsMV0sWzk2NiwxXSxbOTc0LDFdLFs5ODIsMV0sWzk4OCwxXSxbOTk2LDFdLFsxMDA0LDFdLFsxMDExLDFdLFsxMDIwLDFdLFsxMDI2LDFdLFsxMDMzLDFdLFsxMDQxLDFdLFsxMDQ5LDFdLFsxMDU1LDFdLFsxMDYyLDFdLFsxMDcwLDFdLFsxMDc4LDFdLFsxMDg3LDFdLFsxMDkyLDFdLFsxMTAwLDFdLFsxMTA4LDFdLFsxMTE2LDFdLFsxMTIxLDFdLFsxMTI5LDFdLFsxMTM3LDFdLFsxMTQ1LDFdLFsxMTUzLDFdLFsxMTU4LDFdLFsxMTY3LDFdLFsxMTc0LDFdLFsxMTgyLDFdLFsxMTg4LDFdLFsxMTk2LDFdLFsxMjAzLDFdLFsxMjEyLDFdLFsxMjIwLDFdLFsxMjI2LDFdLFsxMjMzLDFdLFsxMjQxLDFdLFsxMjQ5LDFdLFsxMjU1LDFdLFsxMjYyLDFdLFsxMjcwLDFdLFsxMjc4LDFdLFsxMjg2LDFdLFsxMjkyLDFdLFsxMzAwLDFdLFsxMzA3LDFdLFsxMzE0LDFdLFsxMzIxLDFdLFsxMzI5LDFdLFsxMzM3LDFdLFsxMzQ1LDFdLFsxMzUyLDFdLFsxMzU5LDFdLFsxMzY1LDFdLFsxMzc0LDFdLFsxMzgzLDFdLFsxMzg4LDFdLFsxMzk2LDFdLFsxNDAzLDFdLFsxNDEyLDFdLFsxNDIwLDFdXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-reverse-·-a-87c79-oses-turns-from-where-it-is-chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 81,
+                    "line": 599
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-25c3bbba974d01c7b25a",
+          "file": "release-11-1-1.spec.ts",
+          "line": 655,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Accordion closed while it opens turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 4010,
+                  "error": {
+                    "message": "Error: no frame after the turn moves more than a fifth {\"atTurn\":0.494,\"share\":0.364,\"end\":0,\"frames\":[[-5,0.494],[1,0.552],[11,0.624],[19,0.679],[24,0.713],[32,1],[40,0.631],[48,0.55],[56,0.48],[62,0.426],[69,0.37],[77,0.316],[86,0.268],[91,0.238],[99,0.202],[107,0.171],[115,0.143],[123,0.119],[129,0.105],[136,0.088],[144,0.074],[152,0.061],[158,0.053],[166,0.045],[173,0.037],[182,0.03],[190,0.025],[195,0],[203,0],[211,0],[219,0],[225,0],[232,0],[240,0],[248,0],[256,0],[262,0],[270,0],[278,0],[286,0],[291,0],[297,0],[307,0],[313,0],[323,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.364\u001b[39m",
+                    "stack": "Error: no frame after the turn moves more than a fifth {\"atTurn\":0.494,\"share\":0.364,\"end\":0,\"frames\":[[-5,0.494],[1,0.552],[11,0.624],[19,0.679],[24,0.713],[32,1],[40,0.631],[48,0.55],[56,0.48],[62,0.426],[69,0.37],[77,0.316],[86,0.268],[91,0.238],[99,0.202],[107,0.171],[115,0.143],[123,0.119],[129,0.105],[136,0.088],[144,0.074],[152,0.061],[158,0.053],[166,0.045],[173,0.037],[182,0.03],[190,0.025],[195,0],[203,0],[211,0],[219,0],[225,0],[232,0],[240,0],[248,0],[256,0],[262,0],[270,0],[278,0],[286,0],[291,0],[297,0],[307,0],[313,0],[323,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.364\u001b[39m\n    at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:599:81)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:651:13",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 81,
+                      "line": 599
+                    },
+                    "snippet": "  597 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);\n  598 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n> 599 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n      |                                                                                 ^\n  600 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n  601 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);\n  602 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 81,
+                        "line": 599
+                      },
+                      "message": "Error: no frame after the turn moves more than a fifth {\"atTurn\":0.494,\"share\":0.364,\"end\":0,\"frames\":[[-5,0.494],[1,0.552],[11,0.624],[19,0.679],[24,0.713],[32,1],[40,0.631],[48,0.55],[56,0.48],[62,0.426],[69,0.37],[77,0.316],[86,0.268],[91,0.238],[99,0.202],[107,0.171],[115,0.143],[123,0.119],[129,0.105],[136,0.088],[144,0.074],[152,0.061],[158,0.053],[166,0.045],[173,0.037],[182,0.03],[190,0.025],[195,0],[203,0],[211,0],[219,0],[225,0],[232,0],[240,0],[248,0],[256,0],[262,0],[270,0],[278,0],[286,0],[291,0],[297,0],[307,0],[313,0],[323,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.364\u001b[39m\n\n  597 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);\n  598 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n> 599 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n      |                                                                                 ^\n  600 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n  601 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);\n  602 | }\n    at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:599:81)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:651:13"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T02:43:49.951Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNDk0LCJzaGFyZSI6MC4zNjQsImVuZCI6MCwiZnJhbWVzIjpbWy01LDAuNDk0XSxbMSwwLjU1Ml0sWzExLDAuNjI0XSxbMTksMC42NzldLFsyNCwwLjcxM10sWzMyLDFdLFs0MCwwLjYzMV0sWzQ4LDAuNTVdLFs1NiwwLjQ4XSxbNjIsMC40MjZdLFs2OSwwLjM3XSxbNzcsMC4zMTZdLFs4NiwwLjI2OF0sWzkxLDAuMjM4XSxbOTksMC4yMDJdLFsxMDcsMC4xNzFdLFsxMTUsMC4xNDNdLFsxMjMsMC4xMTldLFsxMjksMC4xMDVdLFsxMzYsMC4wODhdLFsxNDQsMC4wNzRdLFsxNTIsMC4wNjFdLFsxNTgsMC4wNTNdLFsxNjYsMC4wNDVdLFsxNzMsMC4wMzddLFsxODIsMC4wM10sWzE5MCwwLjAyNV0sWzE5NSwwXSxbMjAzLDBdLFsyMTEsMF0sWzIxOSwwXSxbMjI1LDBdLFsyMzIsMF0sWzI0MCwwXSxbMjQ4LDBdLFsyNTYsMF0sWzI2MiwwXSxbMjcwLDBdLFsyNzgsMF0sWzI4NiwwXSxbMjkxLDBdLFsyOTcsMF0sWzMwNywwXSxbMzEzLDBdLFszMjMsMF0sWzMyOSwwXSxbMzM2LDBdLFszNDQsMF0sWzM1MiwwXSxbMzYxLDBdLFszNjksMF0sWzM3NywwXSxbMzg1LDBdLFszOTIsMF0sWzM5OSwwXSxbNDA3LDBdLFs0MTUsMF0sWzQyMiwwXSxbNDI5LDBdLFs0MzYsMF0sWzQ0NCwwXSxbNDUyLDBdLFs0NTgsMF0sWzQ2NiwwXSxbNDcyLDBdLFs0ODEsMF0sWzQ5MCwwXSxbNDk4LDBdLFs1MDcsMF0sWzUxNSwwXSxbNTIzLDBdLFs1MjksMF0sWzUzNywwXSxbNTQ0LDBdLFs1NTMsMF0sWzU1OCwwXSxbNTY2LDBdLFs1NzMsMF0sWzU4MiwwXSxbNTkwLDBdLFs1OTYsMF0sWzYwMywwXSxbNjExLDBdLFs2MTksMF0sWzYyNSwwXSxbNjMxLDBdLFs2MzksMF0sWzY0OSwwXSxbNjU3LDBdLFs2NjIsMF0sWzY3MCwwXSxbNjc3LDBdLFs2ODYsMF0sWzY5MSwwXSxbNjk5LDBdLFs3MDcsMF0sWzcxNSwwXSxbNzIzLDBdLFs3MjgsMF0sWzczNywwXSxbNzQ0LDBdLFs3NTMsMF0sWzc1OCwwXSxbNzY2LDBdLFs3NzMsMF0sWzc4MiwwXSxbNzkwLDBdLFs3OTYsMF0sWzgwMywwXSxbODExLDBdLFs4MTksMF0sWzgyNSwwXSxbODMyLDBdLFs4NDAsMF0sWzg0OCwwXSxbODU3LDBdLFs4NjIsMF0sWzg3MCwwXSxbODc4LDBdLFs4ODYsMF0sWzg5MiwwXSxbODk5LDBdLFs5MDcsMF0sWzkxNSwwXSxbOTIzLDBdLFs5MjksMF0sWzkzNywwXSxbOTQ0LDBdLFs5NTMsMF0sWzk1NywwXSxbOTY2LDBdLFs5NzQsMF0sWzk4MiwwXSxbOTkwLDBdLFs5OTYsMF0sWzEwMDMsMF0sWzEwMTEsMF0sWzEwMTksMF0sWzEwMjUsMF0sWzEwMzIsMF0sWzEwNDAsMF0sWzEwNDgsMF0sWzEwNTcsMF0sWzEwNjIsMF0sWzEwNjksMF0sWzEwNzgsMF0sWzEwODYsMF0sWzEwOTIsMF0sWzEwOTksMF0sWzExMDcsMF0sWzExMTMsMF0sWzExMjIsMF0sWzExMjksMF0sWzExMzcsMF0sWzExNDQsMF0sWzExNTMsMF0sWzExNTgsMF0sWzExNjUsMF0sWzExNzQsMF0sWzExODIsMF0sWzExOTAsMF0sWzExOTYsMF0sWzEyMDMsMF0sWzEyMTEsMF0sWzEyMTksMF0sWzEyMjUsMF0sWzEyMzMsMF0sWzEyNDAsMF0sWzEyNDgsMF0sWzEyNTYsMF0sWzEyNjMsMF0sWzEyNzAsMF0sWzEyNzcsMF0sWzEyODYsMF0sWzEyOTEsMF0sWzEyOTksMF0sWzEzMDYsMF0sWzEzMTUsMF0sWzEzMjMsMF0sWzEzMzIsMF0sWzEzNDAsMF0sWzEzNDgsMF0sWzEzNTYsMF0sWzEzNjIsMF0sWzEzNjksMF0sWzEzNzgsMF0sWzEzODYsMF0sWzEzOTIsMF0sWzEzOTgsMF0sWzE0MDcsMF0sWzE0MTUsMF0sWzE0MjMsMF1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-reverse-·-a-5b1b6-pens-turns-from-where-it-is-chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 81,
+                    "line": 599
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-983cd8cd2fe54b367cb0",
+          "file": "release-11-1-1.spec.ts",
+          "line": 645,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Accordion reopened while it closes turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 4926,
+                  "error": {
+                    "message": "Error: no frame after the turn moves more than a fifth {\"atTurn\":0.662,\"share\":0.465,\"end\":1,\"frames\":[[-5,0.662],[3,0.582],[11,0.507],[16,0.46],[25,0],[31,0.513],[39,0.579],[49,0.65],[53,0.681],[60,0.724],[70,0.772],[76,0.803],[85,0.837],[90,0.853],[98,0.878],[106,0.898],[114,0.915],[120,0.925],[127,0.937],[135,0.948],[144,0.957],[152,0.965],[157,0.969],[165,0.974],[173,1],[181,1],[187,1],[194,1],[202,1],[209,1],[219,1],[223,1],[231,1],[240,1],[247,1],[256,1],[264,1],[272,1],[279,1],[286,1],[294,1],[302,1],[309,1],[317,1],[324,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.465\u001b[39m",
+                    "stack": "Error: no frame after the turn moves more than a fifth {\"atTurn\":0.662,\"share\":0.465,\"end\":1,\"frames\":[[-5,0.662],[3,0.582],[11,0.507],[16,0.46],[25,0],[31,0.513],[39,0.579],[49,0.65],[53,0.681],[60,0.724],[70,0.772],[76,0.803],[85,0.837],[90,0.853],[98,0.878],[106,0.898],[114,0.915],[120,0.925],[127,0.937],[135,0.948],[144,0.957],[152,0.965],[157,0.969],[165,0.974],[173,1],[181,1],[187,1],[194,1],[202,1],[209,1],[219,1],[223,1],[231,1],[240,1],[247,1],[256,1],[264,1],[272,1],[279,1],[286,1],[294,1],[302,1],[309,1],[317,1],[324,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.465\u001b[39m\n    at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:599:81)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:664:13",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                      "column": 81,
+                      "line": 599
+                    },
+                    "snippet": "  597 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);\n  598 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n> 599 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n      |                                                                                 ^\n  600 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n  601 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);\n  602 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "column": 81,
+                        "line": 599
+                      },
+                      "message": "Error: no frame after the turn moves more than a fifth {\"atTurn\":0.662,\"share\":0.465,\"end\":1,\"frames\":[[-5,0.662],[3,0.582],[11,0.507],[16,0.46],[25,0],[31,0.513],[39,0.579],[49,0.65],[53,0.681],[60,0.724],[70,0.772],[76,0.803],[85,0.837],[90,0.853],[98,0.878],[106,0.898],[114,0.915],[120,0.925],[127,0.937],[135,0.948],[144,0.957],[152,0.965],[157,0.969],[165,0.974],[173,1],[181,1],[187,1],[194,1],[202,1],[209,1],[219,1],[223,1],[231,1],[240,1],[247,1],[256,1],[264,1],[272,1],[279,1],[286,1],[294,1],[302,1],[309,1],[317,1],[324,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m0.465\u001b[39m\n\n  597 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeGreaterThan(0.04);\n  598 |     expect(read.atTurn, `the second input lands mid-motion ${at}`).toBeLessThan(0.96);\n> 599 |     expect(read.share, `no frame after the turn moves more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n      |                                                                                 ^\n  600 |     if (ends === \"gone\") expect(read.end, `it ends closed ${at}`).toBeLessThan(0.02);\n  601 |     else expect(read.end, `it ends open ${at}`).toBeGreaterThan(0.95);\n  602 | }\n    at judgeTurn (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:599:81)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:664:13"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T02:43:54.360Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNjYyLCJzaGFyZSI6MC40NjUsImVuZCI6MSwiZnJhbWVzIjpbWy01LDAuNjYyXSxbMywwLjU4Ml0sWzExLDAuNTA3XSxbMTYsMC40Nl0sWzI1LDBdLFszMSwwLjUxM10sWzM5LDAuNTc5XSxbNDksMC42NV0sWzUzLDAuNjgxXSxbNjAsMC43MjRdLFs3MCwwLjc3Ml0sWzc2LDAuODAzXSxbODUsMC44MzddLFs5MCwwLjg1M10sWzk4LDAuODc4XSxbMTA2LDAuODk4XSxbMTE0LDAuOTE1XSxbMTIwLDAuOTI1XSxbMTI3LDAuOTM3XSxbMTM1LDAuOTQ4XSxbMTQ0LDAuOTU3XSxbMTUyLDAuOTY1XSxbMTU3LDAuOTY5XSxbMTY1LDAuOTc0XSxbMTczLDFdLFsxODEsMV0sWzE4NywxXSxbMTk0LDFdLFsyMDIsMV0sWzIwOSwxXSxbMjE5LDFdLFsyMjMsMV0sWzIzMSwxXSxbMjQwLDFdLFsyNDcsMV0sWzI1NiwxXSxbMjY0LDFdLFsyNzIsMV0sWzI3OSwxXSxbMjg2LDFdLFsyOTQsMV0sWzMwMiwxXSxbMzA5LDFdLFszMTcsMV0sWzMyNCwxXSxbMzMyLDFdLFszMzksMV0sWzM0NywxXSxbMzUzLDFdLFszNjAsMV0sWzM2OSwxXSxbMzc3LDFdLFszODUsMV0sWzM5MywxXSxbNDAyLDFdLFs0MTAsMV0sWzQxOCwxXSxbNDI3LDFdLFs0MzUsMV0sWzQ0MywxXSxbNDUyLDFdLFs0NTcsMV0sWzQ2NSwxXSxbNDczLDFdLFs0ODEsMV0sWzQ5MSwxXSxbNTAwLDFdLFs1MDksMV0sWzUxOCwxXSxbNTIzLDFdLFs1MzEsMV0sWzU0MCwxXSxbNTQ4LDFdLFs1NTMsMV0sWzU2MSwxXSxbNTY4LDFdLFs1NzcsMV0sWzU4NSwxXSxbNTkzLDFdLFs2MDIsMV0sWzYxMCwxXSxbNjE4LDFdLFs2MjQsMV0sWzYzMSwxXSxbNjM5LDFdLFs2NDcsMV0sWzY1MywxXSxbNjYxLDFdLFs2NjksMV0sWzY3NywxXSxbNjg1LDFdLFs2OTEsMV0sWzY5OCwxXSxbNzA2LDFdLFs3MTQsMV0sWzcxOSwxXSxbNzI4LDFdLFs3MzUsMV0sWzc0NCwxXSxbNzUyLDFdLFs3NTcsMV0sWzc2NSwxXSxbNzczLDFdLFs3ODEsMV0sWzc4OSwxXSxbNzk3LDFdLFs4MDUsMV0sWzgxNCwxXSxbODIwLDFdLFs4MjcsMV0sWzgzNCwxXSxbODQzLDFdLFs4NTIsMV0sWzg1NywxXSxbODY0LDFdLFs4NzIsMV0sWzg4MSwxXSxbODg5LDFdLFs4OTgsMV0sWzkwNSwxXSxbOTE0LDFdLFs5MjAsMV0sWzkyNiwxXSxbOTM1LDFdLFs5NDMsMV0sWzk1MiwxXSxbOTU3LDFdLFs5NjQsMV0sWzk3MiwxXSxbOTgwLDFdLFs5ODcsMV0sWzk5NCwxXSxbMTAwMiwxXSxbMTAxMCwxXSxbMTAxOCwxXSxbMTAyNCwxXSxbMTAzMiwxXSxbMTAzOSwxXSxbMTA0NywxXSxbMTA1MywxXSxbMTA2MSwxXSxbMTA2OSwxXSxbMTA3NiwxXSxbMTA4NSwxXSxbMTA5MywxXSxbMTEwMSwxXSxbMTEwOSwxXSxbMTExNywxXSxbMTEyNCwxXSxbMTEzMSwxXSxbMTE0MCwxXSxbMTE0NywxXSxbMTE1MywxXSxbMTE2MSwxXSxbMTE2OSwxXSxbMTE3NywxXSxbMTE4NSwxXSxbMTE5MSwxXSxbMTE5OCwxXSxbMTIwNiwxXSxbMTIxNCwxXSxbMTIyMCwxXSxbMTIyNywxXSxbMTIzNSwxXSxbMTI0MywxXSxbMTI1MiwxXSxbMTI1NywxXSxbMTI2NSwxXSxbMTI3MywxXSxbMTI4MCwxXSxbMTI4NiwxXSxbMTI5NCwxXSxbMTMwMiwxXSxbMTMwOCwxXSxbMTMxOSwxXSxbMTMyMywxXSxbMTMzMSwxXSxbMTMzOSwxXSxbMTM0NywxXSxbMTM1MywxXSxbMTM2MCwxXSxbMTM2OSwxXSxbMTM3NiwxXSxbMTM4NSwxXSxbMTM5MCwxXSxbMTM5OCwxXSxbMTQwNiwxXSxbMTQxNCwxXSxbMTQyMCwxXV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/release-11-1-1-reverse-·-a-88999-oses-turns-from-where-it-is-chromium-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "column": 81,
+                    "line": 599
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-e35e56b79be6229919a5",
+          "file": "release-11-1-1.spec.ts",
+          "line": 655,
+          "column": 9
+        },
+        {
+          "title": "reverse · a press on a leaving Dialog's trigger reopens it from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3165,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T02:43:59.648Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNjg5LCJzaGFyZSI6MC4wNzUsImVuZCI6MSwiZnJhbWVzIjpbWy00LDAuNjg5XSxbNSwwLjU5Ml0sWzExLDAuNjI2XSxbMTksMC42NV0sWzI3LDAuNjhdLFszNiwwLjcxOF0sWzQxLDAuNzU0XSxbNDgsMC43NzVdLFs1NSwwLjhdLFs2NSwwLjgyNV0sWzcyLDAuODU0XSxbODAsMC44NzVdLFs5MCwwLjg5M10sWzk4LDAuOTE0XSxbMTA3LDAuOTI2XSxbMTEyLDAuOTRdLFsxMTksMC45NDddLFsxMjgsMC45NTRdLFsxMzYsMC45NjNdLFsxNDIsMC45NjldLFsxNDksMC45NzNdLFsxNTcsMC45NzddLFsxNjUsMC45ODFdLFsxNzMsMC45ODRdLFsxNzksMC45ODddLFsxODYsMC45ODldLFsxOTUsMC45OTFdLFsyMDMsMC45OTJdLFsyMDcsMC45OTRdLFsyMTYsMC45OTRdLFsyMjQsMC45OTVdLFsyMzIsMC45OTZdLFsyNDAsMC45OTddLFsyNDYsMC45OTddLFsyNTMsMC45OThdLFsyNjAsMC45OThdLFsyNjksMC45OThdLFsyNzUsMC45OTldLFsyODMsMC45OTldLFsyODksMC45OTldLFsyOTksMC45OTldLFszMDcsMC45OTldLFszMTIsMV0sWzMyMCwxXSxbMzI4LDFdLFszMzYsMV0sWzM0MSwxXSxbMzQ4LDFdLFszNTYsMV0sWzM2NSwxXSxbMzcyLDFdLFszNzgsMV0sWzM4NywxXSxbMzk0LDFdLFs0MDMsMV0sWzQwOCwxXSxbNDE1LDFdLFs0MjQsMV0sWzQzMiwxXSxbNDQwLDFdLFs0NDYsMV0sWzQ1MywxXSxbNDYxLDFdLFs0NzcsMV0sWzQ4NSwxXSxbNDkzLDFdLFs1MDEsMV0sWzUwNSwxXSxbNTE0LDFdLFs1MjEsMV0sWzUyOSwxXSxbNTM4LDFdLFs1NDYsMV0sWzU1NSwxXSxbNTY1LDFdLFs1NzQsMV0sWzU3OSwxXSxbNTg3LDFdLFs1OTMsMV0sWzYwMywxXSxbNjA4LDFdLFs2MTYsMV0sWzYyMywxXSxbNjMyLDFdLFs2NDAsMV0sWzY0NiwxXSxbNjUyLDFdLFs2NjEsMV0sWzY3MCwxXSxbNjc4LDFdLFs2ODcsMV0sWzY5NSwxXSxbNzAzLDFdLFs3MDksMV0sWzcxNiwxXSxbNzI0LDFdLFs3MzEsMV0sWzc0MSwxXSxbNzQ2LDFdLFs3NTQsMV0sWzc2MiwxXSxbNzcwLDFdLFs3NzUsMV0sWzc4MywxXSxbNzkwLDFdLFs3OTcsMV0sWzgwNywxXSxbODEzLDFdLFs4MjAsMV0sWzgyOCwxXSxbODM2LDFdLFs4NDIsMV0sWzg1MCwxXSxbODU3LDFdLFs4NjQsMV0sWzg3NCwxXSxbODgyLDFdLFs4OTAsMV0sWzg5OSwxXSxbOTA3LDFdLFs5MTMsMV0sWzkyMCwxXSxbOTI4LDFdLFs5MzYsMV0sWzk0MiwxXSxbOTUwLDFdLFs5NTcsMV0sWzk2NSwxXSxbOTc0LDFdLFs5NzksMV0sWzk4NywxXSxbOTk1LDFdLFsxMDAzLDFdLFsxMDA4LDFdLFsxMDE2LDFdLFsxMDI0LDFdLFsxMDMxLDFdLFsxMDQxLDFdLFsxMDQ2LDFdLFsxMDU0LDFdLFsxMDYxLDFdLFsxMDcwLDFdLFsxMDc1LDFdLFsxMDgzLDFdLFsxMDkwLDFdLFsxMDk3LDFdLFsxMTA2LDFdLFsxMTEzLDFdLFsxMTIwLDFdLFsxMTI4LDFdLFsxMTM2LDFdLFsxMTQxLDFdLFsxMTUwLDFdLFsxMTU3LDFdLFsxMTY1LDFdLFsxMTczLDFdLFsxMTgyLDFdLFsxMTkwLDFdLFsxMTk3LDFdLFsxMjA3LDFdLFsxMjEzLDFdLFsxMjIwLDFdLFsxMjI4LDFdLFsxMjM2LDFdLFsxMjQyLDFdLFsxMjUwLDFdLFsxMjU3LDFdLFsxMjY1LDFdLFsxMjczLDFdLFsxMjgwLDFdLFsxMjg3LDFdLFsxMjk0LDFdLFsxMzAzLDFdLFsxMzA4LDFdLFsxMzE1LDFdLFsxMzI0LDFdLFsxMzMyLDFdLFsxMzQwLDFdLFsxMzQ2LDFdLFsxMzU0LDFdLFsxMzYyLDFdLFsxMzcwLDFdLFsxMzc1LDFdLFsxMzgzLDFdLFsxMzkxLDFdLFsxMzk5LDFdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-44094203d22323863c92",
+          "file": "release-11-1-1.spec.ts",
+          "line": 675,
+          "column": 5
+        },
+        {
+          "title": "reverse · a press on a leaving Sheet's trigger reopens it from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3195,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T02:44:02.912Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuODQ2LCJzaGFyZSI6MC4wMjQsImVuZCI6MSwiZnJhbWVzIjpbWy0yLDAuODQ2XSxbNSwwLjgyMl0sWzE0LDAuODI3XSxbMjEsMC44MzNdLFsyOSwwLjg0XSxbMzUsMC44NDhdLFs0MywwLjg1NV0sWzQ5LDAuODY1XSxbNTgsMC44NzNdLFs2NCwwLjg4NF0sWzcxLDAuODkxXSxbODAsMC45XSxbODgsMC45MTJdLFs5NSwwLjkyMV0sWzEwMSwwLjkyOF0sWzExMCwwLjkzNl0sWzExNywwLjk0NF0sWzEyNCwwLjk1MV0sWzEzMSwwLjk1OF0sWzEzOCwwLjk2NF0sWzE0NiwwLjk2OV0sWzE1NCwwLjk3NV0sWzE2MywwLjk4XSxbMTY3LDAuOTg1XSxbMTc2LDAuOTg3XSxbMTgyLDAuOTkxXSxbMTkwLDAuOTk0XSxbMTk3LDAuOTk3XSxbMjA1LDAuOTk5XSxbMjEzLDFdLFsyMjEsMV0sWzIyOSwxXSxbMjM1LDFdLFsyNDIsMV0sWzI1MSwxXSxbMjU4LDFdLFsyNjMsMV0sWzI3MSwxXSxbMjc4LDFdLFsyODcsMV0sWzI5NiwxXSxbMzAxLDFdLFszMDksMV0sWzMxNywxXSxbMzI0LDFdLFszMzEsMV0sWzMzOCwxXSxbMzQ1LDFdLFszNTQsMV0sWzM2MiwxXSxbMzY4LDFdLFszNzUsMV0sWzM4MywxXSxbMzkyLDFdLFszOTcsMV0sWzQwNSwxXSxbNDEyLDFdLFs0MjEsMV0sWzQyOSwxXSxbNDM1LDFdLFs0NDIsMV0sWzQ1MCwxXSxbNDU4LDFdLFs0NjQsMV0sWzQ3MSwxXSxbNDc5LDFdLFs0ODcsMV0sWzQ5NSwxXSxbNTAyLDFdLFs1MDgsMV0sWzUxNywxXSxbNTI1LDFdLFs1MzEsMV0sWzUzOCwxXSxbNTQ2LDFdLFs1NTQsMV0sWzU2MSwxXSxbNTY4LDFdLFs1NzYsMV0sWzU4MywxXSxbNTkxLDFdLFs1OTcsMV0sWzYwMywxXSxbNjEzLDFdLFs2MjAsMV0sWzYyOCwxXSxbNjM0LDFdLFs2NDIsMV0sWzY0OSwxXSxbNjU4LDFdLFs2NjQsMV0sWzY3MCwxXSxbNjgwLDFdLFs2ODcsMV0sWzY5NSwxXSxbNzAxLDFdLFs3MDksMV0sWzcxNiwxXSxbNzIzLDFdLFs3MzEsMV0sWzczOCwxXSxbNzQ2LDFdLFs3NTMsMV0sWzc2MywxXSxbNzY4LDFdLFs3NzYsMV0sWzc4MywxXSxbNzkxLDFdLFs3OTcsMV0sWzgwNCwxXSxbODEzLDFdLFs4MjEsMV0sWzgyOSwxXSxbODM0LDFdLFs4NDIsMV0sWzg1MCwxXSxbODU4LDFdLFs4NjQsMV0sWzg3MSwxXSxbODc5LDFdLFs4ODcsMV0sWzg5NiwxXSxbOTAxLDFdLFs5MDksMV0sWzkxNywxXSxbOTI0LDFdLFs5MjksMV0sWzkzOCwxXSxbOTQ1LDFdLFs5NTQsMV0sWzk2MiwxXSxbOTY4LDFdLFs5NzUsMV0sWzk4NCwxXSxbOTkxLDFdLFs5OTcsMV0sWzEwMDQsMV0sWzEwMTMsMV0sWzEwMjAsMV0sWzEwMjksMV0sWzEwMzUsMV0sWzEwNDIsMV0sWzEwNTAsMV0sWzEwNTgsMV0sWzEwNjMsMV0sWzEwNzAsMV0sWzEwNzksMV0sWzEwODcsMV0sWzEwOTYsMV0sWzExMDAsMV0sWzExMDksMV0sWzExMTYsMV0sWzExMjQsMV0sWzExMjksMV0sWzExMzgsMV0sWzExNDUsMV0sWzExNTQsMV0sWzExNjIsMV0sWzExNjcsMV0sWzExNzUsMV0sWzExODMsMV0sWzExOTEsMV0sWzExOTcsMV0sWzEyMDQsMV0sWzEyMTIsMV0sWzEyMjEsMV0sWzEyMjgsMV0sWzEyMzUsMV0sWzEyNDIsMV0sWzEyNTAsMV0sWzEyNTgsMV0sWzEyNjMsMV0sWzEyNzEsMV0sWzEyNzksMV0sWzEyODcsMV0sWzEyOTUsMV0sWzEzMDIsMV0sWzEzMTIsMV0sWzEzMjAsMV0sWzEzMjgsMV0sWzEzMzQsMV0sWzEzNDIsMV0sWzEzNTAsMV0sWzEzNTgsMV0sWzEzNjMsMV0sWzEzNzEsMV0sWzEzNzksMV0sWzEzODcsMV0sWzEzOTUsMV0sWzE0MDQsMV1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-fbd69545b93b5e7f19e8",
+          "file": "release-11-1-1.spec.ts",
+          "line": 675,
+          "column": 5
+        },
+        {
+          "title": "reverse · a press on a leaving Select's trigger reopens it from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3183,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T02:44:06.115Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNzQ1LCJzaGFyZSI6MC4xNjQsImVuZCI6MSwiZnJhbWVzIjpbWy0zLDAuNzQ1XSxbMywwLjgyNl0sWzEwLDAuODk3XSxbMjAsMC45NzddLFsyOCwwLjk5NF0sWzM0LDAuOTk5XSxbNDIsMV0sWzQ5LDFdLFs1NywxXSxbNjMsMV0sWzcxLDFdLFs3OCwxXSxbODYsMV0sWzk0LDFdLFs5OSwxXSxbMTA4LDFdLFsxMTUsMV0sWzEyNCwxXSxbMTMxLDFdLFsxMzYsMV0sWzE0NSwxXSxbMTUyLDFdLFsxNjEsMV0sWzE2NiwxXSxbMTc0LDFdLFsxODEsMV0sWzE5MCwxXSxbMTk3LDFdLFsyMDQsMV0sWzIxMSwxXSxbMjE5LDFdLFsyMjcsMV0sWzIzOCwxXSxbMjQ3LDFdLFsyNTYsMV0sWzI2NCwxXSxbMjcxLDFdLFsyNzgsMV0sWzI4NSwxXSxbMjkzLDFdLFsyOTksMV0sWzMwOCwxXSxbMzE0LDFdLFszMjMsMV0sWzMzMSwxXSxbMzM3LDFdLFszNDUsMV0sWzM1MywxXSxbMzYwLDFdLFszNjUsMV0sWzM3MywxXSxbMzgxLDFdLFszOTAsMV0sWzM5NywxXSxbNDA0LDFdLFs0MTEsMV0sWzQxOSwxXSxbNDI3LDFdLFs0MzMsMV0sWzQ0MSwxXSxbNDQ5LDFdLFs0NTcsMV0sWzQ2NCwxXSxbNDcwLDFdLFs0NzgsMV0sWzQ4NSwxXSxbNDk0LDFdLFs0OTksMV0sWzUwNiwxXSxbNTE1LDFdLFs1MjMsMV0sWzUzMSwxXSxbNTM3LDFdLFs1NDQsMV0sWzU1MywxXSxbNTYwLDFdLFs1NjYsMV0sWzU3NCwxXSxbNTgxLDFdLFs1OTAsMV0sWzU5OCwxXSxbNjA0LDFdLFs2MTEsMV0sWzYxOSwxXSxbNjI3LDFdLFs2MzUsMV0sWzY0NCwxXSxbNjUyLDFdLFs2NjEsMV0sWzY2NiwxXSxbNjczLDFdLFs2ODIsMV0sWzY4OCwxXSxbNjk4LDFdLFs3MDQsMV0sWzcxMSwxXSxbNzE5LDFdLFs3MjcsMV0sWzczOCwxXSxbNzQ3LDFdLFs3NTYsMV0sWzc2NCwxXSxbNzczLDFdLFs3ODEsMV0sWzc5MCwxXSxbNzk3LDFdLFs4MDQsMV0sWzgxMSwxXSxbODE5LDFdLFs4MjcsMV0sWzgzMywxXSxbODQxLDFdLFs4NDgsMV0sWzg1NywxXSxbODY1LDFdLFs4NzEsMV0sWzg3OCwxXSxbODg1LDFdLFs4OTQsMV0sWzg5OSwxXSxbOTA2LDFdLFs5MTUsMV0sWzkyMywxXSxbOTMwLDFdLFs5MzcsMV0sWzk0NSwxXSxbOTUzLDFdLFs5NjAsMV0sWzk2NiwxXSxbOTc0LDFdLFs5ODIsMV0sWzk5MCwxXSxbOTk4LDFdLFsxMDA0LDFdLFsxMDExLDFdLFsxMDE5LDFdLFsxMDI2LDFdLFsxMDMzLDFdLFsxMDQxLDFdLFsxMDQ4LDFdLFsxMDU3LDFdLFsxMDY1LDFdLFsxMDcwLDFdLFsxMDc4LDFdLFsxMDg2LDFdLFsxMDk0LDFdLFsxMDk5LDFdLFsxMTA3LDFdLFsxMTE1LDFdLFsxMTIzLDFdLFsxMTMxLDFdLFsxMTM3LDFdLFsxMTQ1LDFdLFsxMTUyLDFdLFsxMTYwLDFdLFsxMTY2LDFdLFsxMTc0LDFdLFsxMTgxLDFdLFsxMTg5LDFdLFsxMTk4LDFdLFsxMjA0LDFdLFsxMjExLDFdLFsxMjE5LDFdLFsxMjI3LDFdLFsxMjMzLDFdLFsxMjQxLDFdLFsxMjQ3LDFdLFsxMjU1LDFdLFsxMjY1LDFdLFsxMjcwLDFdLFsxMjc4LDFdLFsxMjg2LDFdLFsxMjkzLDFdLFsxMjk5LDFdLFsxMzA3LDFdLFsxMzE1LDFdLFsxMzIzLDFdLFsxMzMwLDFdLFsxMzM3LDFdLFsxMzQ1LDFdLFsxMzUyLDFdLFsxMzYwLDFdLFsxMzY2LDFdLFsxMzc0LDFdLFsxMzgyLDFdLFsxMzkwLDFdLFsxMzk3LDFdLFsxNDA0LDFdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-fc096061da09ef3baa16",
+          "file": "release-11-1-1.spec.ts",
+          "line": 675,
+          "column": 5
+        },
+        {
+          "title": "reverse · a press on the page while a sheet leaves reaches the page",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2183,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T02:44:09.304Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-3aa2cd9e90ec98d24fd8",
+          "file": "release-11-1-1.spec.ts",
+          "line": 695,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-16T02:43:17.577Z",
+    "duration": 53939.397999999994,
+    "expected": 11,
+    "skipped": 0,
+    "unexpected": 5,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,138 @@
+
+Running 6 tests using 1 worker
+
+  ✘  1 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:51:5 › form · a dock Select leaves in the form it opened in · pick (2.3s)
+  ✘  2 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:91:5 › form · a dock DropdownMenu keeps its material through the exit · pick (2.3s)
+  ✘  3 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:51:5 › form · a dock Select leaves in the form it opened in · outside (2.3s)
+  ✘  4 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:91:5 › form · a dock DropdownMenu keeps its material through the exit · outside (2.3s)
+  ✘  5 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:51:5 › form · a dock Select leaves in the form it opened in · escape (2.3s)
+  ✘  6 [chromium-phone] › tests-visual/release-11-1-1.spec.ts:91:5 › form · a dock DropdownMenu keeps its material through the exit · escape (2.3s)
+
+
+  1) [chromium-phone] › tests-visual/release-11-1-1.spec.ts:51:5 › form · a dock Select leaves in the form it opened in · pick 
+
+    Error: form on every exit frame [{"t":6,"x":0,"y":615,"w":390,"op":1,"form":"sheet","bf":"none"},{"t":20,"x":16,"y":610,"w":358,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":24,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":30,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":40,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":44,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":53,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":60,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":71,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":80,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":89,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":98,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":103,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":112,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":119,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":127,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":133,"x":152.6666717529297,"y":66,"w":128.00001525878906,"op":0.332507,"form":null,"bf":"blur(20px) saturate(1.5)"}]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "sheet"
+    Received: null
+
+      72 |         let prevY = rest.y!;
+      73 |         for (const f of exit) {
+    > 74 |             expect(f.form, `form on every exit frame ${JSON.stringify(report)}`).toBe(rest.form);
+         |                                                                                  ^
+      75 |             expect(f.surface, `material attribute on every exit frame`).toBe(rest.surface);
+      76 |             expect(f.bf, `backdrop on every exit frame`).toBe(rest.bf);
+      77 |             // The anchored form follows its trigger, whose label a pick rewrites; the sheet
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:74:82
+
+    Error Context: tests-visual/test-results/release-11-1-1-form-·-a-do-bbadc-he-form-it-opened-in-·-pick-chromium-phone/error-context.md
+
+  2) [chromium-phone] › tests-visual/release-11-1-1.spec.ts:91:5 › form · a dock DropdownMenu keeps its material through the exit · pick 
+
+    Error: material attribute +18 ms
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "opaque"
+    Received: null
+
+      113 |         for (const f of exit) {
+      114 |             const at = `+${Math.round(f.t - film.mark)} ms`;
+    > 115 |             expect(f.surface, `material attribute ${at}`).toBe(rest.surface);
+          |                                                           ^
+      116 |             expect(f.bf, `backdrop ${at}`).toBe(rest.bf);
+      117 |             expect(f.bg, `fill ${at}`).toBe(rest.bg);
+      118 |         }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:115:59
+
+    Error Context: tests-visual/test-results/release-11-1-1-form-·-a-do-b92ff-ial-through-the-exit-·-pick-chromium-phone/error-context.md
+
+  3) [chromium-phone] › tests-visual/release-11-1-1.spec.ts:51:5 › form · a dock Select leaves in the form it opened in · outside 
+
+    Error: form on every exit frame [{"t":7,"x":0,"y":615,"w":390,"op":1,"form":"sheet","bf":"none"},{"t":18,"x":16,"y":610,"w":358,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":21,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":25,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":40,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":48,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":56,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":61,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":69,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":76,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":85,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":93,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":102,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":117,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":126,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":0.579574,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":133,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":0.0294723,"form":null,"bf":"blur(20px) saturate(1.5)"}]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "sheet"
+    Received: null
+
+      72 |         let prevY = rest.y!;
+      73 |         for (const f of exit) {
+    > 74 |             expect(f.form, `form on every exit frame ${JSON.stringify(report)}`).toBe(rest.form);
+         |                                                                                  ^
+      75 |             expect(f.surface, `material attribute on every exit frame`).toBe(rest.surface);
+      76 |             expect(f.bf, `backdrop on every exit frame`).toBe(rest.bf);
+      77 |             // The anchored form follows its trigger, whose label a pick rewrites; the sheet
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:74:82
+
+    Error Context: tests-visual/test-results/release-11-1-1-form-·-a-do-12479-form-it-opened-in-·-outside-chromium-phone/error-context.md
+
+  4) [chromium-phone] › tests-visual/release-11-1-1.spec.ts:91:5 › form · a dock DropdownMenu keeps its material through the exit · outside 
+
+    Error: material attribute +14 ms
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "opaque"
+    Received: null
+
+      113 |         for (const f of exit) {
+      114 |             const at = `+${Math.round(f.t - film.mark)} ms`;
+    > 115 |             expect(f.surface, `material attribute ${at}`).toBe(rest.surface);
+          |                                                           ^
+      116 |             expect(f.bf, `backdrop ${at}`).toBe(rest.bf);
+      117 |             expect(f.bg, `fill ${at}`).toBe(rest.bg);
+      118 |         }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:115:59
+
+    Error Context: tests-visual/test-results/release-11-1-1-form-·-a-do-f9776--through-the-exit-·-outside-chromium-phone/error-context.md
+
+  5) [chromium-phone] › tests-visual/release-11-1-1.spec.ts:51:5 › form · a dock Select leaves in the form it opened in · escape 
+
+    Error: form on every exit frame [{"t":0,"x":0,"y":615,"w":390,"op":1,"form":"sheet","bf":"none"},{"t":13,"x":16,"y":610,"w":358,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":16,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":22,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":29,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":37,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":45,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":56,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":65,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":74,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":82,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":89,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":98,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":105,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":112,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":118,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":127,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":0.388347,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":134,"x":161.6666717529297,"y":66,"w":128.00001525878906,"op":0.0171298,"form":null,"bf":"blur(20px) saturate(1.5)"}]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "sheet"
+    Received: null
+
+      72 |         let prevY = rest.y!;
+      73 |         for (const f of exit) {
+    > 74 |             expect(f.form, `form on every exit frame ${JSON.stringify(report)}`).toBe(rest.form);
+         |                                                                                  ^
+      75 |             expect(f.surface, `material attribute on every exit frame`).toBe(rest.surface);
+      76 |             expect(f.bf, `backdrop on every exit frame`).toBe(rest.bf);
+      77 |             // The anchored form follows its trigger, whose label a pick rewrites; the sheet
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:74:82
+
+    Error Context: tests-visual/test-results/release-11-1-1-form-·-a-do-0bcc0--form-it-opened-in-·-escape-chromium-phone/error-context.md
+
+  6) [chromium-phone] › tests-visual/release-11-1-1.spec.ts:91:5 › form · a dock DropdownMenu keeps its material through the exit · escape 
+
+    Error: material attribute +4 ms
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "opaque"
+    Received: null
+
+      113 |         for (const f of exit) {
+      114 |             const at = `+${Math.round(f.t - film.mark)} ms`;
+    > 115 |             expect(f.surface, `material attribute ${at}`).toBe(rest.surface);
+          |                                                           ^
+      116 |             expect(f.bf, `backdrop ${at}`).toBe(rest.bf);
+      117 |             expect(f.bg, `fill ${at}`).toBe(rest.bg);
+      118 |         }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:115:59
+
+    Error Context: tests-visual/test-results/release-11-1-1-form-·-a-do-0ca6a-l-through-the-exit-·-escape-chromium-phone/error-context.md
+
+  6 failed
+    [chromium-phone] › tests-visual/release-11-1-1.spec.ts:51:5 › form · a dock Select leaves in the form it opened in · pick 
+    [chromium-phone] › tests-visual/release-11-1-1.spec.ts:91:5 › form · a dock DropdownMenu keeps its material through the exit · pick 
+    [chromium-phone] › tests-visual/release-11-1-1.spec.ts:51:5 › form · a dock Select leaves in the form it opened in · outside 
+    [chromium-phone] › tests-visual/release-11-1-1.spec.ts:91:5 › form · a dock DropdownMenu keeps its material through the exit · outside 
+    [chromium-phone] › tests-visual/release-11-1-1.spec.ts:51:5 › form · a dock Select leaves in the form it opened in · escape 
+    [chromium-phone] › tests-visual/release-11-1-1.spec.ts:91:5 › form · a dock DropdownMenu keeps its material through the exit · escape 

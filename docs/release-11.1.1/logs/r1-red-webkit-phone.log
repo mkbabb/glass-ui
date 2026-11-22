@@ -1,0 +1,99 @@
+[guarded] waiting for the 'webkit' lock
+[guarded] waiting for headroom (load 39 > 36)
+
+Running 6 tests using 1 worker
+
+  ✘  1 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:51:5 › form · a dock Select leaves in the form it opened in · pick (2.9s)
+  ✘  2 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:89:5 › form · a dock DropdownMenu keeps its material through the exit · pick (2.9s)
+  -  3 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:51:5 › form · a dock Select leaves in the form it opened in · outside
+  -  4 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:89:5 › form · a dock DropdownMenu keeps its material through the exit · outside
+  ✘  5 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:51:5 › form · a dock Select leaves in the form it opened in · escape (2.5s)
+  ✘  6 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:89:5 › form · a dock DropdownMenu keeps its material through the exit · escape (2.7s)
+
+
+  1) [webkit-phone] › tests-visual/release-11-1-1.spec.ts:51:5 › form · a dock Select leaves in the form it opened in · pick 
+
+    Error: form on every exit frame [{"t":5,"x":0,"y":615,"w":390,"op":1,"form":"sheet","bf":"none"},{"t":38,"x":16,"y":610,"w":358,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":55,"x":151.3333282470703,"y":66,"w":127.99998474121094,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":61,"x":151.3333282470703,"y":66,"w":127.99998474121094,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":66,"x":151.3333282470703,"y":66,"w":127.99998474121094,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":75,"x":151.3333282470703,"y":66,"w":127.99998474121094,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":87,"x":151.3333282470703,"y":66,"w":127.99998474121094,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":94,"x":151.3333282470703,"y":66,"w":127.99998474121094,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":105,"x":151.3333282470703,"y":66,"w":127.99998474121094,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":115,"x":151.3333282470703,"y":66,"w":127.99998474121094,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":127,"x":151.3333282470703,"y":66,"w":127.99998474121094,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":137,"x":151.3333282470703,"y":66,"w":127.99998474121094,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":147,"x":151.3333282470703,"y":66,"w":127.99998474121094,"op":0.422427,"form":null,"bf":"blur(20px) saturate(1.5)"}]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "sheet"
+    Received: null
+
+      72 |         let prevY = rest.y!;
+      73 |         for (const f of exit) {
+    > 74 |             expect(f.form, `form on every exit frame ${JSON.stringify(report)}`).toBe(rest.form);
+         |                                                                                  ^
+      75 |             expect(f.surface, `material attribute on every exit frame`).toBe(rest.surface);
+      76 |             expect(f.bf, `backdrop on every exit frame`).toBe(rest.bf);
+      77 |             expect(Math.abs(f.x! - rest.x!), `x holds ${JSON.stringify(report)}`).toBeLessThanOrEqual(1);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:74:82
+
+    Error Context: tests-visual/test-results/release-11-1-1-form-·-a-do-bbadc-he-form-it-opened-in-·-pick-webkit-phone/error-context.md
+
+  2) [webkit-phone] › tests-visual/release-11-1-1.spec.ts:89:5 › form · a dock DropdownMenu keeps its material through the exit · pick 
+
+    Error: material attribute +16 ms
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "opaque"
+    Received: null
+
+      111 |         for (const f of exit) {
+      112 |             const at = `+${Math.round(f.t - film.mark)} ms`;
+    > 113 |             expect(f.surface, `material attribute ${at}`).toBe(rest.surface);
+          |                                                           ^
+      114 |             expect(f.bf, `backdrop ${at}`).toBe(rest.bf);
+      115 |             expect(f.bg, `fill ${at}`).toBe(rest.bg);
+      116 |         }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:113:59
+
+    Error Context: tests-visual/test-results/release-11-1-1-form-·-a-do-b92ff-ial-through-the-exit-·-pick-webkit-phone/error-context.md
+
+  3) [webkit-phone] › tests-visual/release-11-1-1.spec.ts:51:5 › form · a dock Select leaves in the form it opened in · escape 
+
+    Error: form on every exit frame [{"t":18,"x":16,"y":610,"w":358,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":28,"x":161.3333282470703,"y":66,"w":127.99998474121094,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":33,"x":161.3333282470703,"y":66,"w":127.99998474121094,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":43,"x":161.3333282470703,"y":66,"w":127.99998474121094,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":54,"x":161.3333282470703,"y":66,"w":127.99998474121094,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":64,"x":161.3333282470703,"y":66,"w":127.99998474121094,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":74,"x":161.3333282470703,"y":66,"w":127.99998474121094,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":84,"x":161.3333282470703,"y":66,"w":127.99998474121094,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":95,"x":161.3333282470703,"y":66,"w":127.99998474121094,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":104,"x":161.3333282470703,"y":66,"w":127.99998474121094,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":115,"x":161.3333282470703,"y":66,"w":127.99998474121094,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":125,"x":161.3333282470703,"y":66,"w":127.99998474121094,"op":1,"form":null,"bf":"blur(20px) saturate(1.5)"},{"t":136,"x":161.3333282470703,"y":66,"w":127.99998474121094,"op":0.015381,"form":null,"bf":"blur(20px) saturate(1.5)"}]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "sheet"
+    Received: null
+
+      72 |         let prevY = rest.y!;
+      73 |         for (const f of exit) {
+    > 74 |             expect(f.form, `form on every exit frame ${JSON.stringify(report)}`).toBe(rest.form);
+         |                                                                                  ^
+      75 |             expect(f.surface, `material attribute on every exit frame`).toBe(rest.surface);
+      76 |             expect(f.bf, `backdrop on every exit frame`).toBe(rest.bf);
+      77 |             expect(Math.abs(f.x! - rest.x!), `x holds ${JSON.stringify(report)}`).toBeLessThanOrEqual(1);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:74:82
+
+    Error Context: tests-visual/test-results/release-11-1-1-form-·-a-do-0bcc0--form-it-opened-in-·-escape-webkit-phone/error-context.md
+
+  4) [webkit-phone] › tests-visual/release-11-1-1.spec.ts:89:5 › form · a dock DropdownMenu keeps its material through the exit · escape 
+
+    Error: material attribute +13 ms
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "opaque"
+    Received: null
+
+      111 |         for (const f of exit) {
+      112 |             const at = `+${Math.round(f.t - film.mark)} ms`;
+    > 113 |             expect(f.surface, `material attribute ${at}`).toBe(rest.surface);
+          |                                                           ^
+      114 |             expect(f.bf, `backdrop ${at}`).toBe(rest.bf);
+      115 |             expect(f.bg, `fill ${at}`).toBe(rest.bg);
+      116 |         }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:113:59
+
+    Error Context: tests-visual/test-results/release-11-1-1-form-·-a-do-0ca6a-l-through-the-exit-·-escape-webkit-phone/error-context.md
+
+  4 failed
+    [webkit-phone] › tests-visual/release-11-1-1.spec.ts:51:5 › form · a dock Select leaves in the form it opened in · pick 
+    [webkit-phone] › tests-visual/release-11-1-1.spec.ts:89:5 › form · a dock DropdownMenu keeps its material through the exit · pick 
+    [webkit-phone] › tests-visual/release-11-1-1.spec.ts:51:5 › form · a dock Select leaves in the form it opened in · escape 
+    [webkit-phone] › tests-visual/release-11-1-1.spec.ts:89:5 › form · a dock DropdownMenu keeps its material through the exit · escape 
+  2 skipped

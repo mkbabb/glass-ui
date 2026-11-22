@@ -1,0 +1,742 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-1-1.config.ts",
+      "--project=chromium-phone",
+      "--workers=1",
+      "-g",
+      "reverse"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/logs/r5b-green-chromium-phone.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "reverse · a Select closed while it opens turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2255,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:00:06.430Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNDE5LCJzaGFyZSI6MC4xMDcsImVuZCI6MCwiZnJhbWVzIjpbWy0yLDAuNDE5XSxbOCwwLjQ4M10sWzE2LDAuNTMyXSxbMjUsMC41NTJdLFszMiwwLjU2MV0sWzQxLDAuNTYyXSxbNDgsMC41NTVdLFs1OCwwLjUzN10sWzY2LDAuNTE0XSxbNzQsMC40ODhdLFs4MywwLjQ1MV0sWzkxLDAuNDE3XSxbMTAwLDAuMzc4XSxbMTA4LDAuMzM4XSxbMTE2LDAuMjk5XSxbMTIzLDAuMjY2XSxbMTMzLDAuMjIxXSxbMTQxLDAuMTgzXSxbMTUwLDAuMTQ5XSxbMTU4LDAuMTE4XSxbMTY2LDAuMDkxXSxbMTc1LDAuMDY4XSxbMTgzLDAuMDQ5XSxbMTkxLDAuMDMzXSxbMjAwLDAuMDIxXSxbMjA4LDAuMDEyXSxbMjE2LDAuMDA2XSxbMjI1LDAuMDAyXSxbMjMzLDBdLFsyNDEsMF0sWzI0OCwwXSxbMjU4LDBdLFsyNjYsMF0sWzI3NSwwXSxbMjgzLDBdLFsyOTEsMF0sWzI5OCwwXSxbMzA4LDBdLFszMTYsMF0sWzMyNCwwXSxbMzMxLDBdLFszNDEsMF0sWzM0OSwwXSxbMzU3LDBdLFszNjUsMF0sWzM3NCwwXSxbMzgyLDBdLFszOTAsMF0sWzQwMCwwXSxbNDA4LDBdLFs0MTYsMF0sWzQyMywwXSxbNDMzLDBdLFs0NDEsMF0sWzQ1MCwwXSxbNDU4LDBdLFs0NjYsMF0sWzQ3NCwwXSxbNDgyLDBdLFs0OTEsMF0sWzUwMCwwXSxbNTA4LDBdLFs1MTYsMF0sWzUyNSwwXSxbNTMzLDBdLFs1NDEsMF0sWzU1MCwwXSxbNTU4LDBdLFs1NjYsMF0sWzU3NSwwXSxbNTgzLDBdLFs1OTEsMF0sWzYwMCwwXSxbNjA4LDBdLFs2MTYsMF0sWzYyNSwwXSxbNjMzLDBdLFs2NDEsMF0sWzY0OCwwXSxbNjU4LDBdLFs2NjYsMF0sWzY3NSwwXSxbNjgzLDBdLFs2OTAsMF0sWzcwMCwwXSxbNzA3LDBdLFs3MTYsMF0sWzcyNSwwXSxbNzMzLDBdLFs3NDEsMF0sWzc1MCwwXSxbNzU4LDBdLFs3NjYsMF0sWzc3MywwXSxbNzgyLDBdLFs3OTAsMF0sWzc5OSwwXSxbODA3LDBdLFs4MTUsMF0sWzgyNCwwXSxbODMzLDBdLFs4NDEsMF0sWzg1MCwwXSxbODU4LDBdLFs4NjYsMF0sWzg3NSwwXSxbODgzLDBdLFs4OTAsMF0sWzkwMCwwXSxbOTA2LDBdLFs5MTUsMF0sWzkyNSwwXSxbOTMyLDBdLFs5NDEsMF0sWzk0OCwwXSxbOTU3LDBdLFs5NjUsMF0sWzk3NSwwXSxbOTgzLDBdLFs5OTEsMF0sWzk5OCwwXSxbMTAwOCwwXSxbMTAxNSwwXSxbMTAyNSwwXSxbMTAzMywwXSxbMTA0MSwwXSxbMTA0OCwwXSxbMTA1OCwwXSxbMTA2NiwwXSxbMTA3NSwwXSxbMTA4MywwXSxbMTA5MSwwXSxbMTEwMCwwXSxbMTEwOCwwXSxbMTExNSwwXSxbMTEyNSwwXSxbMTEzMywwXSxbMTE0MSwwXSxbMTE1MCwwXSxbMTE1OCwwXSxbMTE2NiwwXSxbMTE3NSwwXSxbMTE4MywwXSxbMTE5MSwwXSxbMTIwMCwwXSxbMTIwOCwwXSxbMTIxNiwwXSxbMTIyNSwwXSxbMTIzMiwwXSxbMTI0MiwwXSxbMTI1MCwwXSxbMTI1OCwwXSxbMTI2NiwwXSxbMTI3NSwwXSxbMTI4MywwXSxbMTI5MSwwXSxbMTMwMCwwXSxbMTMwOCwwXSxbMTMxNiwwXSxbMTMyNSwwXSxbMTMzMywwXSxbMTM0MSwwXSxbMTM0OSwwXSxbMTM1OCwwXSxbMTM2NiwwXSxbMTM3NSwwXSxbMTM4MywwXSxbMTM5MCwwXSxbMTQwMCwwXSxbMTQwOCwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-de019b1ce5103e042ac9",
+          "file": "release-11-1-1.spec.ts",
+          "line": 642,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Select reopened while it closes turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3085,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:00:08.814Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNzE5LCJzaGFyZSI6MC4xNDgsImVuZCI6MSwiZnJhbWVzIjpbWy0xLDAuNzE5XSxbOSwwLjY0M10sWzE3LDAuNTg1XSxbMjUsMC41MjldLFszNCwwLjU3OV0sWzQyLDAuNjM4XSxbNTAsMC43MDZdLFs1OSwwLjc4XSxbNjYsMC44NDRdLFs3NSwwLjkyNV0sWzg0LDAuOTkxXSxbOTIsMV0sWzEwMCwxXSxbMTA5LDFdLFsxMTcsMV0sWzEyNSwxXSxbMTM0LDFdLFsxNDIsMV0sWzE1MCwxXSxbMTU5LDFdLFsxNjcsMV0sWzE3NCwxXSxbMTg0LDFdLFsxOTEsMV0sWzE5OSwxXSxbMjA3LDFdLFsyMTYsMV0sWzIyNCwxXSxbMjM0LDFdLFsyNDIsMV0sWzI1MCwxXSxbMjU5LDFdLFsyNjUsMV0sWzI3NCwxXSxbMjgzLDFdLFsyOTIsMV0sWzMwMCwxXSxbMzA3LDFdLFszMTcsMV0sWzMyNSwxXSxbMzMzLDFdLFszNDEsMV0sWzM1MCwxXSxbMzU3LDFdLFszNjcsMV0sWzM3NSwxXSxbMzgyLDFdLFszOTIsMV0sWzQwMCwxXSxbNDA4LDFdLFs0MTYsMV0sWzQyNCwxXSxbNDMzLDFdLFs0NDAsMV0sWzQ0OSwxXSxbNDU4LDFdLFs0NjYsMV0sWzQ3NSwxXSxbNDgyLDFdLFs0OTEsMV0sWzUwMCwxXSxbNTA5LDFdLFs1MTcsMV0sWzUyNSwxXSxbNTM0LDFdLFs1NDIsMV0sWzU0OSwxXSxbNTU5LDFdLFs1NjYsMV0sWzU3NSwxXSxbNTg0LDFdLFs1OTIsMV0sWzYwMCwxXSxbNjA5LDFdLFs2MTcsMV0sWzYyNCwxXSxbNjM0LDFdLFs2NDIsMV0sWzY1MCwxXSxbNjU5LDFdLFs2NjcsMV0sWzY3NSwxXSxbNjg0LDFdLFs2OTAsMV0sWzcwMSwxXSxbNzA4LDFdLFs3MTYsMV0sWzcyNSwxXSxbNzM0LDFdLFs3NDIsMV0sWzc0OSwxXSxbNzU3LDFdLFs3NjcsMV0sWzc3NSwxXSxbNzg0LDFdLFs3OTIsMV0sWzgwMCwxXSxbODA4LDFdLFs4MTcsMV0sWzgyNSwxXSxbODM0LDFdLFs4NDEsMV0sWzg1MCwxXSxbODU5LDFdLFs4NjcsMV0sWzg3NSwxXSxbODg0LDFdLFs4OTIsMV0sWzkwMCwxXSxbOTA5LDFdLFs5MTcsMV0sWzkyNSwxXSxbOTMzLDFdLFs5NDIsMV0sWzk1MCwxXSxbOTU5LDFdLFs5NjcsMV0sWzk3NSwxXSxbOTg0LDFdLFs5OTIsMV0sWzEwMDAsMV0sWzEwMDksMV0sWzEwMTcsMV0sWzEwMjUsMV0sWzEwMzQsMV0sWzEwNDIsMV0sWzEwNDksMV0sWzEwNTgsMV0sWzEwNjYsMV0sWzEwNzUsMV0sWzEwODQsMV0sWzEwOTIsMV0sWzExMDAsMV0sWzExMDcsMV0sWzExMTUsMV0sWzExMjYsMV0sWzExMzQsMV0sWzExNDIsMV0sWzExNTAsMV0sWzExNTcsMV0sWzExNjUsMV0sWzExNzYsMV0sWzExODMsMV0sWzExOTIsMV0sWzEyMDAsMV0sWzEyMDksMV0sWzEyMTcsMV0sWzEyMjUsMV0sWzEyMzQsMV0sWzEyNDIsMV0sWzEyNTAsMV0sWzEyNTksMV0sWzEyNjcsMV0sWzEyNzUsMV0sWzEyODQsMV0sWzEyOTEsMV0sWzEzMDEsMV0sWzEzMDgsMV0sWzEzMTcsMV0sWzEzMjUsMV0sWzEzMzQsMV0sWzEzNDIsMV0sWzEzNTAsMV0sWzEzNTksMV0sWzEzNjYsMV0sWzEzNzUsMV0sWzEzODIsMV0sWzEzOTAsMV0sWzE0MDEsMV0sWzE0MDgsMV0sWzE0MTYsMV0sWzE0MjYsMV1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-6bb6926a8c27546d4032",
+          "file": "release-11-1-1.spec.ts",
+          "line": 652,
+          "column": 9
+        },
+        {
+          "title": "reverse · a DropdownMenu closed while it opens turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2158,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:00:11.904Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuMzk0LCJzaGFyZSI6MC4wNCwiZW5kIjowLCJmcmFtZXMiOltbLTIsMC4zOTRdLFs2LDAuMzk0XSxbMTQsMC4zOTRdLFsyMiwwLjM4M10sWzMxLDAuMzcxXSxbMzksMC4zNTldLFs0NywwLjM0NV0sWzU1LDAuMzMzXSxbNjQsMC4zMTFdLFs3MiwwLjI5Ml0sWzgxLDAuMjcyXSxbODksMC4yNTJdLFs5OCwwLjIzMV0sWzEwNSwwLjIxN10sWzExNCwwLjIwMV0sWzEyMiwwLjE4NV0sWzEzMSwwLjE3XSxbMTM5LDAuMTU0XSxbMTQ3LDAuMTM5XSxbMTU2LDAuMTI0XSxbMTY0LDAuMTA5XSxbMTcyLDAuMDk0XSxbMTgxLDAuMDhdLFsxODgsMC4wNjhdLFsxOTgsMC4wNTJdLFsyMDYsMC4wNF0sWzIxNCwwLjAyOF0sWzIyMSwwLjAxOF0sWzIzMCwwLjAwN10sWzIzOSwwXSxbMjQ3LDBdLFsyNTYsMF0sWzI2MywwXSxbMjcxLDBdLFsyNzksMF0sWzI4OSwwXSxbMjk2LDBdLFszMDYsMF0sWzMxMywwXSxbMzIzLDBdLFszMjksMF0sWzMzOSwwXSxbMzQ4LDBdLFszNTUsMF0sWzM2MywwXSxbMzczLDBdLFszODEsMF0sWzM4OSwwXSxbMzk3LDBdLFs0MDYsMF0sWzQxNCwwXSxbNDIxLDBdLFs0MzEsMF0sWzQzOCwwXSxbNDQ3LDBdLFs0NTYsMF0sWzQ2NCwwXSxbNDcyLDBdLFs0ODEsMF0sWzQ4OSwwXSxbNDk3LDBdLFs1MDYsMF0sWzUxNCwwXSxbNTIxLDBdLFs1MzEsMF0sWzUzOSwwXSxbNTQ3LDBdLFs1NTYsMF0sWzU2NCwwXSxbNTcyLDBdLFs1ODAsMF0sWzU4OCwwXSxbNTk2LDBdLFs2MDYsMF0sWzYxNCwwXSxbNjIzLDBdLFs2MzEsMF0sWzYzOSwwXSxbNjQ3LDBdLFs2NTYsMF0sWzY2NCwwXSxbNjczLDBdLFs2ODEsMF0sWzY4OSwwXSxbNjk3LDBdLFs3MDUsMF0sWzcxNCwwXSxbNzIxLDBdLFs3MzAsMF0sWzczOSwwXSxbNzQ3LDBdLFs3NTYsMF0sWzc2NCwwXSxbNzcyLDBdLFs3ODEsMF0sWzc4OCwwXSxbNzk3LDBdLFs4MDYsMF0sWzgxMywwXSxbODIzLDBdLFs4MzAsMF0sWzgzOSwwXSxbODQ2LDBdLFs4NTQsMF0sWzg2NCwwXSxbODcyLDBdLFs4ODEsMF0sWzg4OSwwXSxbODk3LDBdLFs5MDYsMF0sWzkxNCwwXSxbOTIyLDBdLFs5MzEsMF0sWzkzOCwwXSxbOTQ4LDBdLFs5NTYsMF0sWzk2NCwwXSxbOTczLDBdLFs5ODAsMF0sWzk4OSwwXSxbOTk3LDBdLFsxMDA2LDBdLFsxMDE0LDBdLFsxMDIyLDBdLFsxMDI5LDBdLFsxMDM5LDBdLFsxMDQ3LDBdLFsxMDU0LDBdLFsxMDYzLDBdLFsxMDczLDBdLFsxMDgwLDBdLFsxMDg5LDBdLFsxMDk2LDBdLFsxMTA2LDBdLFsxMTEzLDBdLFsxMTIyLDBdLFsxMTMxLDBdLFsxMTM5LDBdLFsxMTQ3LDBdLFsxMTU1LDBdLFsxMTY0LDBdLFsxMTcyLDBdLFsxMTgwLDBdLFsxMTg4LDBdLFsxMTk3LDBdLFsxMjA1LDBdLFsxMjEzLDBdLFsxMjIzLDBdLFsxMjMwLDBdLFsxMjM4LDBdLFsxMjQ2LDBdLFsxMjU2LDBdLFsxMjYzLDBdLFsxMjcxLDBdLFsxMjgwLDBdLFsxMjg5LDBdLFsxMjk3LDBdLFsxMzA2LDBdLFsxMzE0LDBdLFsxMzIzLDBdLFsxMzMxLDBdLFsxMzM5LDBdLFsxMzQ3LDBdLFsxMzU2LDBdLFsxMzY0LDBdLFsxMzcyLDBdLFsxMzgxLDBdLFsxMzg5LDBdLFsxMzk3LDBdLFsxNDA2LDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-60082895354b6276eb7b",
+          "file": "release-11-1-1.spec.ts",
+          "line": 642,
+          "column": 9
+        },
+        {
+          "title": "reverse · a DropdownMenu reopened while it closes turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3061,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:00:14.068Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuODM1LCJzaGFyZSI6MC4xMjksImVuZCI6MSwiZnJhbWVzIjpbWy00LDAuODM1XSxbNCwwLjc5OV0sWzEyLDAuNzMxXSxbMjAsMC42NjRdLFsyOCwwLjY4OV0sWzM2LDAuNzM2XSxbNDYsMC44MjZdLFs1MiwwLjg2Nl0sWzYxLDAuOTA4XSxbNzEsMC45NTVdLFs3OSwwLjk4OF0sWzg2LDFdLFs5NSwxXSxbMTAzLDFdLFsxMTMsMV0sWzEyMCwxXSxbMTI5LDFdLFsxMzcsMV0sWzE0NiwxXSxbMTU0LDFdLFsxNjEsMV0sWzE3MSwxXSxbMTc5LDFdLFsxODcsMV0sWzE5NiwxXSxbMjA0LDFdLFsyMTEsMV0sWzIyMSwxXSxbMjI4LDFdLFsyMzcsMV0sWzI0NSwxXSxbMjU0LDFdLFsyNjIsMV0sWzI3MCwxXSxbMjc5LDFdLFsyODYsMV0sWzI5NCwxXSxbMzAzLDFdLFszMTIsMV0sWzMyMCwxXSxbMzI5LDFdLFszMzcsMV0sWzM0NCwxXSxbMzU0LDFdLFszNjIsMV0sWzM3MSwxXSxbMzc5LDFdLFszODcsMV0sWzM5NCwxXSxbNDA0LDFdLFs0MTIsMV0sWzQyMSwxXSxbNDI4LDFdLFs0MzcsMV0sWzQ0NSwxXSxbNDU0LDFdLFs0NjIsMV0sWzQ3MCwxXSxbNDc5LDFdLFs0ODcsMV0sWzQ5NiwxXSxbNTAyLDFdLFs1MTIsMV0sWzUxOSwxXSxbNTI3LDFdLFs1MzYsMV0sWzU0NSwxXSxbNTUzLDFdLFs1NjEsMV0sWzU3MSwxXSxbNTc3LDFdLFs1ODUsMV0sWzU5NiwxXSxbNjAzLDFdLFs2MTMsMV0sWzYyMCwxXSxbNjI4LDFdLFs2MzYsMV0sWzY0NSwxXSxbNjUyLDFdLFs2NjMsMV0sWzY3MCwxXSxbNjc5LDFdLFs2ODYsMV0sWzY5NCwxXSxbNzA0LDFdLFs3MTEsMV0sWzcyMSwxXSxbNzI5LDFdLFs3MzcsMV0sWzc0NiwxXSxbNzU0LDFdLFs3NjIsMV0sWzc3MSwxXSxbNzc4LDFdLFs3ODcsMV0sWzc5NSwxXSxbODA0LDFdLFs4MTIsMV0sWzgxOSwxXSxbODI4LDFdLFs4MzcsMV0sWzg0NSwxXSxbODU0LDFdLFs4NjIsMV0sWzg3MSwxXSxbODc5LDFdLFs4ODcsMV0sWzg5NSwxXSxbOTA0LDFdLFs5MTIsMV0sWzkyMCwxXSxbOTI3LDFdLFs5MzYsMV0sWzk0NCwxXSxbOTU0LDFdLFs5NjEsMV0sWzk3MSwxXSxbOTc5LDFdLFs5ODcsMV0sWzk5NiwxXSxbMTAwNCwxXSxbMTAxMiwxXSxbMTAyMSwxXSxbMTAyOCwxXSxbMTAzNiwxXSxbMTA0NCwxXSxbMTA1MiwxXSxbMTA2MiwxXSxbMTA3MSwxXSxbMTA3OCwxXSxbMTA4NiwxXSxbMTA5NiwxXSxbMTEwNCwxXSxbMTExMiwxXSxbMTEyMCwxXSxbMTEyOSwxXSxbMTEzNSwxXSxbMTE0NCwxXSxbMTE1NCwxXSxbMTE2MiwxXSxbMTE2OSwxXSxbMTE3OSwxXSxbMTE4NywxXSxbMTE5NCwxXSxbMTIwMywxXSxbMTIxMiwxXSxbMTIyMSwxXSxbMTIyOSwxXSxbMTIzNywxXSxbMTI0NSwxXSxbMTI1NCwxXSxbMTI2MiwxXSxbMTI3MSwxXSxbMTI3OSwxXSxbMTI4NywxXSxbMTI5NiwxXSxbMTMwNCwxXSxbMTMxMiwxXSxbMTMyMCwxXSxbMTMyOSwxXSxbMTMzNywxXSxbMTM0NCwxXSxbMTM1NCwxXSxbMTM2MSwxXSxbMTM3MSwxXSxbMTM3OSwxXSxbMTM4NywxXSxbMTM5NiwxXSxbMTQwNCwxXSxbMTQxMiwxXSxbMTQyMSwxXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-4741e92abe0a79428469",
+          "file": "release-11-1-1.spec.ts",
+          "line": 652,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Popover closed while it opens turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2141,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:00:17.134Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNTY0LCJzaGFyZSI6MC4wNzYsImVuZCI6MCwiZnJhbWVzIjpbWy01LDAuNTY0XSxbMiwwLjU0NF0sWzEyLDAuNTExXSxbMjAsMC40ODFdLFsyOSwwLjQ0NV0sWzM2LDAuNDE3XSxbNDUsMC4zNzhdLFs1MywwLjM0Ml0sWzYxLDAuMzAzXSxbNzAsMC4yNjJdLFs3OSwwLjIyMl0sWzg3LDAuMTg2XSxbOTYsMC4xNDhdLFsxMDQsMC4xMTRdLFsxMTIsMC4wOF0sWzEyMCwwLjA1XSxbMTI5LDAuMDIxXSxbMTM3LDBdLFsxNDYsMF0sWzE1NCwwXSxbMTYyLDBdLFsxNjksMF0sWzE3OSwwXSxbMTg3LDBdLFsxOTYsMF0sWzIwNCwwXSxbMjEyLDBdLFsyMjEsMF0sWzIyOSwwXSxbMjM3LDBdLFsyNDQsMF0sWzI1NCwwXSxbMjYyLDBdLFsyNzEsMF0sWzI3OCwwXSxbMjg2LDBdLFsyOTQsMF0sWzMwMywwXSxbMzExLDBdLFszMjEsMF0sWzMyOSwwXSxbMzM2LDBdLFszNDUsMF0sWzM1MywwXSxbMzYxLDBdLFszNzEsMF0sWzM3OSwwXSxbMzg3LDBdLFszOTYsMF0sWzQwNCwwXSxbNDExLDBdLFs0MTksMF0sWzQyOSwwXSxbNDM3LDBdLFs0NDYsMF0sWzQ1NCwwXSxbNDYyLDBdLFs0NzEsMF0sWzQ3OSwwXSxbNDg3LDBdLFs0OTYsMF0sWzUwMywwXSxbNTEyLDBdLFs1MjEsMF0sWzUyOSwwXSxbNTM3LDBdLFs1NDYsMF0sWzU1MiwwXSxbNTYzLDBdLFs1NzAsMF0sWzU3NywwXSxbNTg4LDBdLFs1OTQsMF0sWzYwMywwXSxbNjExLDBdLFs2MTksMF0sWzYyOSwwXSxbNjM3LDBdLFs2NDYsMF0sWzY1MiwwXSxbNjYxLDBdLFs2NjksMF0sWzY3OSwwXSxbNjg3LDBdLFs2OTYsMF0sWzcwNCwwXSxbNzExLDBdLFs3MTksMF0sWzcyOSwwXSxbNzM3LDBdLFs3NDYsMF0sWzc1NCwwXSxbNzYyLDBdLFs3NzEsMF0sWzc3OCwwXSxbNzg4LDBdLFs3OTQsMF0sWzgwMywwXSxbODEyLDBdLFs4MjEsMF0sWzgyNywwXSxbODM2LDBdLFs4NDQsMF0sWzg1MywwXSxbODYyLDBdLFs4NzAsMF0sWzg3OSwwXSxbODg3LDBdLFs4OTYsMF0sWzkwNCwwXSxbOTEyLDBdLFs5MjEsMF0sWzkyNywwXSxbOTM4LDBdLFs5NDQsMF0sWzk1MiwwXSxbOTYxLDBdLFs5NzEsMF0sWzk3OSwwXSxbOTg2LDBdLFs5OTUsMF0sWzEwMDIsMF0sWzEwMTMsMF0sWzEwMTksMF0sWzEwMjgsMF0sWzEwMzYsMF0sWzEwNDYsMF0sWzEwNTIsMF0sWzEwNjMsMF0sWzEwNzAsMF0sWzEwNzksMF0sWzEwODcsMF0sWzEwOTUsMF0sWzExMDQsMF0sWzExMTIsMF0sWzExMjEsMF0sWzExMjksMF0sWzExMzcsMF0sWzExNDYsMF0sWzExNTQsMF0sWzExNjIsMF0sWzExNzEsMF0sWzExNzksMF0sWzExODcsMF0sWzExOTUsMF0sWzEyMDQsMF0sWzEyMTIsMF0sWzEyMjEsMF0sWzEyMjksMF0sWzEyMzcsMF0sWzEyNDUsMF0sWzEyNTQsMF0sWzEyNjIsMF0sWzEyNzAsMF0sWzEyNzgsMF0sWzEyODcsMF0sWzEyOTYsMF0sWzEzMDQsMF0sWzEzMTIsMF0sWzEzMjEsMF0sWzEzMjksMF0sWzEzMzcsMF0sWzEzNDUsMF0sWzEzNTQsMF0sWzEzNjIsMF0sWzEzNjksMF0sWzEzNzksMF0sWzEzODcsMF0sWzEzOTUsMF0sWzE0MDQsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-ffe55c38a5ff0363869c",
+          "file": "release-11-1-1.spec.ts",
+          "line": 642,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Popover reopened while it closes turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3021,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:00:19.281Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuODkzLCJzaGFyZSI6MC4wOSwiZW5kIjoxLCJmcmFtZXMiOltbLTYsMC44OTNdLFszLDAuODZdLFsxMywwLjgyMV0sWzIxLDAuNzg4XSxbMjksMC43NTNdLFszOCwwLjgxMl0sWzQ2LDAuODUyXSxbNTQsMC44ODRdLFs2MiwwLjkxXSxbNzEsMC45MzRdLFs3OCwwLjk0OF0sWzg4LDAuOTY1XSxbOTYsMC45NzZdLFsxMDQsMC45ODRdLFsxMTMsMC45OTFdLFsxMjEsMC45OTZdLFsxMjksMC45OTldLFsxMzgsMV0sWzE0NiwxXSxbMTU0LDFdLFsxNjMsMV0sWzE3MSwxXSxbMTc5LDFdLFsxODgsMV0sWzE5NCwxXSxbMjA1LDFdLFsyMTIsMV0sWzIyMSwxXSxbMjI5LDFdLFsyMzgsMV0sWzI0NiwxXSxbMjU0LDFdLFsyNjMsMV0sWzI3MSwxXSxbMjc5LDFdLFsyODgsMV0sWzI5NiwxXSxbMzA0LDFdLFszMTMsMV0sWzMyMSwxXSxbMzI5LDFdLFszMzgsMV0sWzM0NiwxXSxbMzU0LDFdLFszNjMsMV0sWzM3MSwxXSxbMzc5LDFdLFszODgsMV0sWzM5NiwxXSxbNDA0LDFdLFs0MTIsMV0sWzQyMSwxXSxbNDI5LDFdLFs0MzgsMV0sWzQ0NiwxXSxbNDU0LDFdLFs0NjMsMV0sWzQ3MSwxXSxbNDc5LDFdLFs0ODgsMV0sWzQ5NiwxXSxbNTAzLDFdLFs1MTMsMV0sWzUyMSwxXSxbNTI5LDFdLFs1MzcsMV0sWzU0NiwxXSxbNTU0LDFdLFs1NjMsMV0sWzU3MSwxXSxbNTc5LDFdLFs1ODgsMV0sWzU5NiwxXSxbNjA0LDFdLFs2MTMsMV0sWzYyMCwxXSxbNjI4LDFdLFs2MzcsMV0sWzY0NiwxXSxbNjU0LDFdLFs2NjMsMV0sWzY3MSwxXSxbNjc5LDFdLFs2ODgsMV0sWzY5NiwxXSxbNzA0LDFdLFs3MTMsMV0sWzcyMSwxXSxbNzI5LDFdLFs3MzYsMV0sWzc0NiwxXSxbNzU0LDFdLFs3NjMsMV0sWzc2OSwxXSxbNzc5LDFdLFs3ODgsMV0sWzc5NiwxXSxbODA0LDFdLFs4MTMsMV0sWzgyMSwxXSxbODI5LDFdLFs4MzgsMV0sWzg0NiwxXSxbODU0LDFdLFs4NjMsMV0sWzg3MSwxXSxbODc5LDFdLFs4ODgsMV0sWzg5NiwxXSxbOTA0LDFdLFs5MTIsMV0sWzkyMSwxXSxbOTI5LDFdLFs5MzgsMV0sWzk0NiwxXSxbOTU0LDFdLFs5NjMsMV0sWzk3MSwxXSxbOTc4LDFdLFs5ODcsMV0sWzk5NiwxXSxbMTAwNCwxXSxbMTAxMywxXSxbMTAyMSwxXSxbMTAyOSwxXSxbMTAzNywxXSxbMTA0NCwxXSxbMTA1MywxXSxbMTA2MiwxXSxbMTA3MSwxXSxbMTA3OCwxXSxbMTA4NywxXSxbMTA5NiwxXSxbMTEwMywxXSxbMTExMywxXSxbMTEyMSwxXSxbMTEyOSwxXSxbMTEzNywxXSxbMTE0NCwxXSxbMTE1NCwxXSxbMTE2MywxXSxbMTE2OSwxXSxbMTE3OCwxXSxbMTE4OCwxXSxbMTE5NiwxXSxbMTIwMywxXSxbMTIxMiwxXSxbMTIyMSwxXSxbMTIyOSwxXSxbMTIzOCwxXSxbMTI0NiwxXSxbMTI1NCwxXSxbMTI2MywxXSxbMTI2OSwxXSxbMTI3OCwxXSxbMTI4NiwxXSxbMTI5NSwxXSxbMTMwNSwxXSxbMTMxMywxXSxbMTMyMSwxXSxbMTMyOSwxXSxbMTMzOCwxXSxbMTM0NSwxXSxbMTM1NCwxXSxbMTM2MywxXSxbMTM3MSwxXSxbMTM3OSwxXSxbMTM4NiwxXSxbMTM5NiwxXSxbMTQwMywxXSxbMTQxMywxXSxbMTQyMCwxXSxbMTQyOCwxXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-4df86fe69d092831c3a1",
+          "file": "release-11-1-1.spec.ts",
+          "line": 652,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Toast closed while it opens turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3016,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:00:22.307Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNTY0LCJzaGFyZSI6MC4xMzIsImVuZCI6MCwiZnJhbWVzIjpbWy00LDAuNTY0XSxbMywwLjU4Nl0sWzEyLDAuNjE0XSxbMjIsMC42NDFdLFszMCwwLjY2M10sWzM4LDAuNjg1XSxbNDUsMC43MDNdLFs1NSwwLjcyNl0sWzYzLDAuNzQ0XSxbNzEsMC43NjJdLFs4MCwwLjc3OV0sWzg2LDAuNzkyXSxbOTYsMC44MTFdLFsxMDUsMC44MjVdLFsxMTMsMC44MzldLFsxMjEsMC44NTJdLFsxMzAsMC44NjVdLFsxMzgsMC44NzddLFsxNDYsMC44ODhdLFsxNTUsMC44OThdLFsxNjMsMC45MDhdLFsxNzEsMC45MTddLFsxODAsMC45MjZdLFsxODgsMC45MzRdLFsxOTYsMC45NDJdLFsyMDQsMC45NDhdLFsyMTMsMC45NTVdLFsyMjEsMC45NjFdLFsyMzAsMC45NjddLFsyMzgsMC45NzJdLFsyNDYsMC45NzddLFsyNTUsMC45ODFdLFsyNjMsMC45ODVdLFsyNzEsMC45ODhdLFsyODAsMC45OTFdLFsyODgsMC45OTNdLFsyOTYsMC45OTVdLFszMDQsMC45OTddLFszMTMsMC45OThdLFszMjEsMC45OTldLFszMjgsMV0sWzMzNiwxXSxbMzQ2LDFdLFszNTQsMV0sWzM2MSwxXSxbMzcyLDFdLFszNzksMV0sWzM4NywxXSxbMzk1LDFdLFs0MDUsMV0sWzQxMywxXSxbNDIxLDFdLFs0MzAsMV0sWzQzOCwxXSxbNDQ1LDFdLFs0NTUsMV0sWzQ2MywxXSxbNDcxLDFdLFs0ODAsMV0sWzQ4NywxXSxbNDk2LDFdLFs1MDQsMV0sWzUxMSwxXSxbNTIwLDFdLFs1MzAsMV0sWzUzOCwxXSxbNTQ2LDFdLFs1NTUsMV0sWzU2MywxXSxbNTcxLDFdLFs1ODAsMV0sWzU4NywxXSxbNTk2LDFdLFs2MDUsMV0sWzYxMywxXSxbNjIxLDFdLFs2MjgsMV0sWzYzOCwxXSxbNjQ2LDFdLFs2NTMsMV0sWzY2MywxXSxbNjcwLDFdLFs2ODAsMV0sWzY4NiwxXSxbNjk2LDFdLFs3MDUsMV0sWzcxMywxXSxbNzIxLDFdLFs3MjgsMV0sWzczOCwxXSxbNzQ2LDFdLFs3NTUsMV0sWzc2MiwxXSxbNzcyLDFdLFs3ODAsMV0sWzc4OCwxXSxbNzk2LDFdLFs4MDQsMV0sWzgxMywxXSxbODIwLDFdLFs4MzAsMV0sWzgzOCwxXSxbODQ1LDFdLFs4NTMsMC45NTVdLFs4NjMsMC44OV0sWzg3MSwwLjgzNl0sWzg4MCwwLjc2OV0sWzg4OCwwLjcwNF0sWzg5NiwwLjYzN10sWzkwNSwwLjU3MV0sWzkxMiwwLjUxNF0sWzkyMSwwLjQ0OV0sWzkyOCwwLjM5NF0sWzkzOCwwLjMzM10sWzk0NSwwLjNdLFs5NTUsMC4yNzZdLFs5NjMsMC4yNTJdLFs5NzEsMC4yMjZdLFs5ODAsMC4xOThdLFs5ODgsMC4xNjldLFs5OTYsMC4xNF0sWzEwMDMsMC4xMTZdLFsxMDEzLDAuMDgzXSxbMTAyMCwwLjA1OV0sWzEwMjksMC4wMzRdLFsxMDM4LDAuMDA5XSxbMTA0NSwwXSxbMTA1NCwwXSxbMTA2MywwXSxbMTA3MSwwXSxbMTA4MCwwXSxbMTA4OCwwXSxbMTA5NiwwXSxbMTEwNSwwXSxbMTExMywwXSxbMTEyMSwwXSxbMTEzMCwwXSxbMTEzOCwwXSxbMTE0NiwwXSxbMTE1MywwXSxbMTE2MywwXSxbMTE3MSwwXSxbMTE4MCwwXSxbMTE4NywwXSxbMTE5NywwXSxbMTIwNCwwXSxbMTIxMywwXSxbMTIyMSwwXSxbMTIyOSwwXSxbMTIzOCwwXSxbMTI0NiwwXSxbMTI1NSwwXSxbMTI2MywwXSxbMTI3MSwwXSxbMTI4MCwwXSxbMTI4OCwwXSxbMTI5NiwwXSxbMTMwNSwwXSxbMTMxMywwXSxbMTMyMCwwXSxbMTMzMCwwXSxbMTMzOCwwXSxbMTM0NiwwXSxbMTM1NSwwXSxbMTM2MywwXSxbMTM3MSwwXSxbMTM3OSwwXSxbMTM4OCwwXSxbMTM5NSwwXSxbMTQwMywwXSxbMTQxMiwwXSxbMTQyMSwwXSxbMTQzMCwwXSxbMTQzOCwwXSxbMTQ0NiwwXSxbMTQ1MywwXSxbMTQ2MywwXSxbMTQ3MCwwXSxbMTQ3OSwwXSxbMTQ4OCwwXSxbMTQ5NiwwXSxbMTUwNSwwXSxbMTUxMywwXSxbMTUyMSwwXSxbMTUzMCwwXSxbMTUzNywwXSxbMTU0NiwwXSxbMTU1NCwwXSxbMTU2MywwXSxbMTU3MSwwXSxbMTU4MCwwXSxbMTU4OCwwXSxbMTU5NiwwXSxbMTYwMywwXSxbMTYxMiwwXSxbMTYyMSwwXSxbMTYyOSwwXSxbMTYzOCwwXSxbMTY0NSwwXSxbMTY1NSwwXSxbMTY2MywwXSxbMTY3MSwwXSxbMTY3OSwwXSxbMTY4OCwwXSxbMTY5NiwwXSxbMTcwNSwwXSxbMTcxMywwXSxbMTcyMSwwXSxbMTczMCwwXSxbMTczOCwwXSxbMTc0NiwwXSxbMTc1NCwwXSxbMTc2MywwXSxbMTc3MSwwXSxbMTc3OSwwXSxbMTc4OCwwXSxbMTc5NiwwXSxbMTgwNSwwXSxbMTgxMywwXSxbMTgyMSwwXSxbMTgyOSwwXSxbMTgzOCwwXSxbMTg0NiwwXSxbMTg1NCwwXSxbMTg2MywwXSxbMTg3MiwwXSxbMTg4MCwwXSxbMTg4OCwwXSxbMTg5NiwwXSxbMTkwNSwwXSxbMTkxMiwwXSxbMTkyMiwwXSxbMTkzMCwwXSxbMTkzOCwwXSxbMTk0NSwwXSxbMTk1NSwwXSxbMTk2MywwXSxbMTk3MCwwXSxbMTk4MCwwXSxbMTk4OCwwXSxbMTk5NSwwXSxbMjAwNSwwXSxbMjAxMywwXSxbMjAyMSwwXSxbMjAyOCwwXSxbMjAzOCwwXSxbMjA0NSwwXSxbMjA1NSwwXSxbMjA2MywwXSxbMjA3MSwwXSxbMjA4MCwwXSxbMjA4OCwwXSxbMjA5NiwwXSxbMjEwNSwwXSxbMjExMywwXSxbMjEyMSwwXSxbMjEzMCwwXSxbMjEzOCwwXSxbMjE0NiwwXSxbMjE1NCwwXSxbMjE2MywwXSxbMjE3MCwwXSxbMjE3OSwwXSxbMjE4OCwwXSxbMjE5NiwwXSxbMjIwNSwwXSxbMjIxMywwXSxbMjIyMSwwXSxbMjIyOSwwXSxbMjIzNiwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-2bb04b924abb28f996df",
+          "file": "release-11-1-1.spec.ts",
+          "line": 642,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Collapsible closed while it opens turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4050,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:00:25.330Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNDk2LCJzaGFyZSI6MC4xNjUsImVuZCI6MCwiZnJhbWVzIjpbWy0xLDAuNDk2XSxbNywwLjU2N10sWzE2LDAuNjMxXSxbMjQsMC42ODddLFszMiwwLjY4N10sWzQwLDAuNjExXSxbNDksMC41MThdLFs1NywwLjQ1NF0sWzY2LDAuMzgxXSxbNzQsMC4zMjVdLFs4MiwwLjI3NF0sWzkxLDAuMjMxXSxbOTksMC4xOTNdLFsxMDcsMC4xNjFdLFsxMTYsMC4xMzRdLFsxMjQsMC4xMTFdLFsxMzIsMC4wOTJdLFsxNDEsMC4wNzZdLFsxNDksMC4wNjNdLFsxNTcsMC4wNTJdLFsxNjYsMC4wNDJdLFsxNzIsMC4wMzZdLFsxODIsMC4wMjhdLFsxOTAsMC4wMTRdLFsxOTksMF0sWzIwNiwwXSxbMjE1LDBdLFsyMjMsMF0sWzIzMiwwXSxbMjQxLDBdLFsyNDksMF0sWzI1NiwwXSxbMjY1LDBdLFsyNzMsMF0sWzI4MiwwXSxbMjkxLDBdLFsyOTksMF0sWzMwNywwXSxbMzE2LDBdLFszMjQsMF0sWzMzMSwwXSxbMzQxLDBdLFszNDksMF0sWzM1NywwXSxbMzY0LDBdLFszNzMsMF0sWzM4MiwwXSxbMzg5LDBdLFszOTksMF0sWzQwNiwwXSxbNDE2LDBdLFs0MjQsMF0sWzQzMiwwXSxbNDQxLDBdLFs0NDgsMF0sWzQ1NywwXSxbNDY2LDBdLFs0NzQsMF0sWzQ4MSwwXSxbNDkxLDBdLFs0OTksMF0sWzUwNywwXSxbNTE2LDBdLFs1MjMsMF0sWzUzMiwwXSxbNTQxLDBdLFs1NDgsMF0sWzU1NywwXSxbNTY0LDBdLFs1NzQsMF0sWzU4MiwwXSxbNTkxLDBdLFs1OTksMF0sWzYwNywwXSxbNjE2LDBdLFs2MjQsMF0sWzYzMiwwXSxbNjQxLDBdLFs2NDcsMF0sWzY1NiwwXSxbNjY2LDBdLFs2NzQsMF0sWzY4MSwwXSxbNjkxLDBdLFs2OTksMF0sWzcwNywwXSxbNzE1LDBdLFs3MjQsMF0sWzczMiwwXSxbNzQxLDBdLFs3NDgsMF0sWzc1NywwXSxbNzY1LDBdLFs3NzQsMF0sWzc4MiwwXSxbNzkxLDBdLFs3OTgsMF0sWzgwOCwwXSxbODE1LDBdLFs4MjQsMF0sWzgzMiwwXSxbODQxLDBdLFs4NDgsMF0sWzg1NywwXSxbODY2LDBdLFs4NzQsMF0sWzg4MiwwXSxbODkxLDBdLFs4OTgsMF0sWzkwNywwXSxbOTE2LDBdLFs5MjMsMF0sWzkzMiwwXSxbOTQxLDBdLFs5NDksMF0sWzk1NiwwXSxbOTY0LDBdLFs5NzQsMF0sWzk4MiwwXSxbOTg5LDBdLFs5OTksMF0sWzEwMDcsMF0sWzEwMTYsMF0sWzEwMjQsMF0sWzEwMzIsMF0sWzEwNDEsMF0sWzEwNDksMF0sWzEwNTcsMF0sWzEwNjYsMF0sWzEwNzQsMF0sWzEwODIsMF0sWzEwOTEsMF0sWzEwOTksMF0sWzExMDcsMF0sWzExMTYsMF0sWzExMjQsMF0sWzExMzIsMF0sWzExNDEsMF0sWzExNDksMF0sWzExNTcsMF0sWzExNjYsMF0sWzExNzQsMF0sWzExODIsMF0sWzExOTEsMF0sWzExOTksMF0sWzEyMDcsMF0sWzEyMTUsMF0sWzEyMjQsMF0sWzEyMzIsMF0sWzEyNDEsMF0sWzEyNDksMF0sWzEyNTcsMF0sWzEyNjUsMF0sWzEyNzQsMF0sWzEyODIsMF0sWzEyOTEsMF0sWzEyOTksMF0sWzEzMDcsMF0sWzEzMTYsMF0sWzEzMjQsMF0sWzEzMzIsMF0sWzEzNDEsMF0sWzEzNDksMF0sWzEzNTcsMF0sWzEzNjYsMF0sWzEzNzQsMF0sWzEzODIsMF0sWzEzOTAsMF0sWzEzOTksMF0sWzE0MDcsMF0sWzE0MTYsMF0sWzE0MjQsMF0sWzE0MzIsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-5ab05ddba0a7390f4197",
+          "file": "release-11-1-1.spec.ts",
+          "line": 642,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Collapsible reopened while it closes turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4964,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:00:29.387Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNjg0LCJzaGFyZSI6MC4xNjMsImVuZCI6MSwiZnJhbWVzIjpbWy03LDAuNjg0XSxbMiwwLjU5NF0sWzEyLDAuNTAxXSxbMjAsMC40MzJdLFsyOCwwLjM2OF0sWzM3LDAuMzY4XSxbNDUsMC40NV0sWzUzLDAuNTI1XSxbNjIsMC41OTRdLFs3MCwwLjY1NF0sWzc4LDAuNzA3XSxbODYsMC43NTNdLFs5NSwwLjc5M10sWzEwMywwLjgyN10sWzExMSwwLjg1NV0sWzExOCwwLjg3Nl0sWzEyNywwLjg5OF0sWzEzNywwLjkxOF0sWzE0NSwwLjkzMl0sWzE1MywwLjk0NV0sWzE2MSwwLjk1NF0sWzE3MCwwLjk2M10sWzE3OCwwLjk2OV0sWzE4NiwwLjk3NV0sWzE5NSwxXSxbMjAyLDFdLFsyMTAsMV0sWzIxOSwxXSxbMjI3LDFdLFsyMzcsMV0sWzI0NSwxXSxbMjUzLDFdLFsyNjEsMV0sWzI3MCwxXSxbMjc4LDFdLFsyODcsMV0sWzI5NCwxXSxbMzAyLDFdLFszMTAsMV0sWzMyMCwxXSxbMzI4LDFdLFszMzcsMV0sWzM0NSwxXSxbMzUzLDFdLFszNjEsMV0sWzM3MCwxXSxbMzc4LDFdLFszODcsMV0sWzM5NSwxXSxbNDAyLDFdLFs0MTEsMV0sWzQyMCwxXSxbNDI4LDFdLFs0MzYsMV0sWzQ0NSwxXSxbNDUzLDFdLFs0NjEsMV0sWzQ3MCwxXSxbNDc3LDFdLFs0ODUsMV0sWzQ5MywxXSxbNTA0LDFdLFs1MTAsMV0sWzUxOSwxXSxbNTI3LDFdLFs1MzYsMV0sWzU0NSwxXSxbNTUyLDFdLFs1NjEsMV0sWzU3MCwxXSxbNTc4LDFdLFs1ODYsMV0sWzU5MywxXSxbNjA0LDFdLFs2MTEsMV0sWzYyMCwxXSxbNjI4LDFdLFs2MzYsMV0sWzY0MywxXSxbNjUzLDFdLFs2NjIsMV0sWzY3MCwxXSxbNjc4LDFdLFs2ODYsMV0sWzY5NSwxXSxbNzAzLDFdLFs3MTIsMV0sWzcyMCwxXSxbNzI4LDFdLFs3MzYsMV0sWzc0NSwxXSxbNzUzLDFdLFs3NjIsMV0sWzc3MCwxXSxbNzc3LDFdLFs3ODUsMV0sWzc5NSwxXSxbODAzLDFdLFs4MTAsMV0sWzgxOSwxXSxbODI4LDFdLFs4MzcsMV0sWzg0NCwxXSxbODUyLDFdLFs4NjIsMV0sWzg3MCwxXSxbODc4LDFdLFs4ODcsMV0sWzg5NSwxXSxbOTAyLDFdLFs5MTAsMV0sWzkyMCwxXSxbOTI4LDFdLFs5MzcsMV0sWzk0NSwxXSxbOTUyLDFdLFs5NjAsMV0sWzk2OSwxXSxbOTc3LDFdLFs5ODYsMV0sWzk5NCwxXSxbMTAwMywxXSxbMTAxMCwxXSxbMTAxOSwxXSxbMTAyNywxXSxbMTAzNiwxXSxbMTA0NCwxXSxbMTA1MywxXSxbMTA2MiwxXSxbMTA2OCwxXSxbMTA3OCwxXSxbMTA4NSwxXSxbMTA5NSwxXSxbMTEwMiwxXSxbMTExMSwxXSxbMTEyMCwxXSxbMTEyOCwxXSxbMTEzNSwxXSxbMTE0NSwxXSxbMTE1MywxXSxbMTE2MiwxXSxbMTE3MCwxXSxbMTE3NywxXSxbMTE4NywxXSxbMTE5NSwxXSxbMTIwMywxXSxbMTIxMiwxXSxbMTIyMCwxXSxbMTIyOCwxXSxbMTIzNiwxXSxbMTI0NSwxXSxbMTI1MywxXSxbMTI2MiwxXSxbMTI3MCwxXSxbMTI3NywxXSxbMTI4NSwxXSxbMTI5NCwxXSxbMTMwMywxXSxbMTMxMiwxXSxbMTMyMCwxXSxbMTMyNywxXSxbMTMzNSwxXSxbMTM0NSwxXSxbMTM1MywxXSxbMTM2MCwxXSxbMTM3MCwxXSxbMTM3OCwxXSxbMTM4NywxXSxbMTM5NSwxXSxbMTQwMywxXSxbMTQxMSwxXSxbMTQyMCwxXSxbMTQyOCwxXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-5f30912329e541d59f94",
+          "file": "release-11-1-1.spec.ts",
+          "line": 652,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Accordion closed while it opens turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3989,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:00:34.356Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNTEsInNoYXJlIjowLjE2NiwiZW5kIjowLCJmcmFtZXMiOltbLTEsMC41MV0sWzcsMC41NzldLFsxNSwwLjY0Ml0sWzI0LDAuNjk3XSxbMzIsMC42OTddLFs0MCwwLjYwN10sWzQ5LDAuNTI2XSxbNTYsMC40NjJdLFs2NiwwLjM4NV0sWzc0LDAuMzI5XSxbODIsMC4yNzhdLFs4OSwwLjI0Ml0sWzk4LDAuMTk3XSxbMTA3LDAuMTYzXSxbMTE1LDAuMTM2XSxbMTI0LDAuMTEzXSxbMTMxLDAuMDk1XSxbMTQwLDAuMDc3XSxbMTQ5LDAuMDYzXSxbMTU3LDAuMDUyXSxbMTY1LDAuMDQzXSxbMTc0LDAuMDM1XSxbMTgyLDAuMDI5XSxbMTkwLDAuMDE1XSxbMTk5LDBdLFsyMDcsMF0sWzIxNSwwXSxbMjIzLDBdLFsyMzEsMF0sWzI0MCwwXSxbMjQ5LDBdLFsyNTcsMF0sWzI2NSwwXSxbMjc0LDBdLFsyODIsMF0sWzI5MCwwXSxbMjk5LDBdLFszMDYsMF0sWzMxNSwwXSxbMzIzLDBdLFszMzEsMF0sWzMzOSwwXSxbMzQ4LDBdLFszNTcsMF0sWzM2NSwwXSxbMzc0LDBdLFszODEsMF0sWzM5MCwwXSxbMzk4LDBdLFs0MDUsMF0sWzQxNSwwXSxbNDIyLDBdLFs0MzIsMF0sWzQ0MCwwXSxbNDQ3LDBdLFs0NTYsMF0sWzQ2NSwwXSxbNDc0LDBdLFs0ODIsMF0sWzQ5MCwwXSxbNDk5LDBdLFs1MDcsMF0sWzUxNSwwXSxbNTIyLDBdLFs1MzIsMF0sWzU0MCwwXSxbNTQ5LDBdLFs1NTcsMF0sWzU2NSwwXSxbNTc0LDBdLFs1ODIsMF0sWzU5MCwwXSxbNTk3LDBdLFs2MDcsMF0sWzYxNSwwXSxbNjI0LDBdLFs2MzIsMF0sWzY0MCwwXSxbNjQ5LDBdLFs2NTcsMF0sWzY2NCwwXSxbNjc0LDBdLFs2ODEsMF0sWzY5MCwwXSxbNjk5LDBdLFs3MDcsMF0sWzcxNSwwXSxbNzI0LDBdLFs3MzIsMF0sWzc0MCwwXSxbNzQ5LDBdLFs3NTcsMF0sWzc2NSwwXSxbNzcyLDBdLFs3ODIsMF0sWzc5MCwwXSxbNzk3LDBdLFs4MDcsMF0sWzgxNSwwXSxbODI0LDBdLFs4MzIsMF0sWzgzOSwwXSxbODQ5LDBdLFs4NTcsMF0sWzg2NSwwXSxbODczLDBdLFs4ODIsMF0sWzg5MCwwXSxbODk5LDBdLFs5MDcsMF0sWzkxNSwwXSxbOTI0LDBdLFs5MzIsMF0sWzk0MCwwXSxbOTQ5LDBdLFs5NTUsMF0sWzk2NiwwXSxbOTczLDBdLFs5ODIsMF0sWzk4OSwwXSxbOTk4LDBdLFsxMDA2LDBdLFsxMDE0LDBdLFsxMDI0LDBdLFsxMDMyLDBdLFsxMDQwLDBdLFsxMDQ5LDBdLFsxMDU3LDBdLFsxMDY1LDBdLFsxMDc0LDBdLFsxMDgxLDBdLFsxMDkwLDBdLFsxMDk4LDBdLFsxMTA3LDBdLFsxMTE1LDBdLFsxMTIzLDBdLFsxMTMyLDBdLFsxMTQwLDBdLFsxMTQ4LDBdLFsxMTU3LDBdLFsxMTY1LDBdLFsxMTczLDBdLFsxMTgxLDBdLFsxMTkxLDBdLFsxMTk5LDBdLFsxMjA2LDBdLFsxMjE1LDBdLFsxMjI0LDBdLFsxMjMyLDBdLFsxMjQwLDBdLFsxMjQ5LDBdLFsxMjU3LDBdLFsxMjY1LDBdLFsxMjc0LDBdLFsxMjgxLDBdLFsxMjkxLDBdLFsxMjk5LDBdLFsxMzA3LDBdLFsxMzE1LDBdLFsxMzIyLDBdLFsxMzMyLDBdLFsxMzQwLDBdLFsxMzQ5LDBdLFsxMzU3LDBdLFsxMzY1LDBdLFsxMzcyLDBdLFsxMzgxLDBdLFsxMzg5LDBdLFsxMzk5LDBdLFsxNDA3LDBdLFsxNDE1LDBdLFsxNDI0LDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-38eb8d13840c085ec071",
+          "file": "release-11-1-1.spec.ts",
+          "line": 642,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Accordion reopened while it closes turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4950,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:00:38.351Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNjY3LCJzaGFyZSI6MC4xNjIsImVuZCI6MSwiZnJhbWVzIjpbWy01LDAuNjY3XSxbNCwwLjU4Ml0sWzEyLDAuNTA0XSxbMjAsMC40MzNdLFsyOSwwLjQzM10sWzM2LDAuNV0sWzQ1LDAuNTc3XSxbNTQsMC42NDRdLFs2MiwwLjY5N10sWzcwLDAuNzQ1XSxbNzcsMC43NzldLFs4NywwLjgyMV0sWzk1LDAuODVdLFsxMDQsMC44NzZdLFsxMTIsMC44OTddLFsxMTksMC45MTJdLFsxMjksMC45M10sWzEzNywwLjk0Ml0sWzE0NSwwLjk1Ml0sWzE1NCwwLjk2MV0sWzE2MiwwLjk2OF0sWzE3MCwwLjk3NF0sWzE3OSwxXSxbMTg1LDFdLFsxOTUsMV0sWzIwNCwxXSxbMjExLDFdLFsyMjEsMV0sWzIyOSwxXSxbMjM3LDFdLFsyNDUsMV0sWzI1NCwxXSxbMjYyLDFdLFsyNjksMV0sWzI3OCwxXSxbMjg3LDFdLFsyOTQsMV0sWzMwMiwxXSxbMzEyLDFdLFszMTksMV0sWzMyOSwxXSxbMzM3LDFdLFszNDUsMV0sWzM1MiwxXSxbMzYyLDFdLFszNzAsMV0sWzM3OSwxXSxbMzg3LDFdLFszOTUsMV0sWzQwMywxXSxbNDEyLDFdLFs0MTksMV0sWzQyOSwxXSxbNDM2LDFdLFs0NDQsMV0sWzQ1NCwxXSxbNDYyLDFdLFs0NjksMV0sWzQ3OCwxXSxbNDg2LDFdLFs0OTUsMV0sWzUwMiwxXSxbNTExLDFdLFs1MjAsMV0sWzUyOSwxXSxbNTM2LDFdLFs1NDYsMV0sWzU1MywxXSxbNTYxLDFdLFs1NjksMV0sWzU3OCwxXSxbNTg3LDFdLFs1OTQsMV0sWzYwNCwxXSxbNjEwLDFdLFs2MTksMV0sWzYyNywxXSxbNjM3LDFdLFs2NDQsMV0sWzY1NCwxXSxbNjYyLDFdLFs2NzAsMV0sWzY3OSwxXSxbNjg3LDFdLFs2OTUsMV0sWzcwNCwxXSxbNzEyLDFdLFs3MTksMV0sWzcyNywxXSxbNzM3LDFdLFs3NDUsMV0sWzc1NCwxXSxbNzYyLDFdLFs3NzAsMV0sWzc3OSwxXSxbNzg2LDFdLFs3OTYsMV0sWzgwNCwxXSxbODEyLDFdLFs4MjAsMV0sWzgyOSwxXSxbODM3LDFdLFs4NDQsMV0sWzg1MiwxXSxbODYyLDFdLFs4NzAsMV0sWzg3OSwxXSxbODg2LDFdLFs4OTQsMV0sWzkwNCwxXSxbOTExLDFdLFs5MjAsMV0sWzkyOSwxXSxbOTM3LDFdLFs5NDUsMV0sWzk1NCwxXSxbOTYxLDFdLFs5NzEsMV0sWzk3OSwxXSxbOTg3LDFdLFs5OTUsMV0sWzEwMDQsMV0sWzEwMTEsMV0sWzEwMTksMV0sWzEwMjksMV0sWzEwMzcsMV0sWzEwNDUsMV0sWzEwNTQsMV0sWzEwNjIsMV0sWzEwNzAsMV0sWzEwNzksMV0sWzEwODcsMV0sWzEwOTUsMV0sWzExMDIsMV0sWzExMTIsMV0sWzExMjAsMV0sWzExMjksMV0sWzExMzcsMV0sWzExNDUsMV0sWzExNTQsMV0sWzExNjIsMV0sWzExNzEsMV0sWzExNzgsMV0sWzExODYsMV0sWzExOTYsMV0sWzEyMDMsMV0sWzEyMTEsMV0sWzEyMTksMV0sWzEyMjksMV0sWzEyMzcsMV0sWzEyNDUsMV0sWzEyNTQsMV0sWzEyNjIsMV0sWzEyNjksMV0sWzEyNzksMV0sWzEyODcsMV0sWzEyOTUsMV0sWzEzMDQsMV0sWzEzMTIsMV0sWzEzMjAsMV0sWzEzMjksMV0sWzEzMzcsMV0sWzEzNDUsMV0sWzEzNTMsMV0sWzEzNjIsMV0sWzEzNzAsMV0sWzEzNzksMV0sWzEzODYsMV0sWzEzOTQsMV0sWzE0MDIsMV0sWzE0MTEsMV0sWzE0MjEsMV1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-c8f8a767df4e9238a0a5",
+          "file": "release-11-1-1.spec.ts",
+          "line": 652,
+          "column": 9
+        },
+        {
+          "title": "reverse · a press on a leaving Dialog's trigger reopens it from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3113,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:00:43.308Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNjYxLCJzaGFyZSI6MC4xNTQsImVuZCI6MSwiZnJhbWVzIjpbWy0yLDAuNjYxXSxbOCwwLjU5NV0sWzE1LDAuNTAxXSxbMjQsMC41NDJdLFszMSwwLjU4NF0sWzM5LDAuNjIyXSxbNDcsMC42NjJdLFs1NiwwLjcwNV0sWzY2LDAuNzQ2XSxbNzQsMC43ODddLFs4MiwwLjgxOF0sWzkxLDAuODQ2XSxbOTksMC44N10sWzEwNywwLjg5MV0sWzExNiwwLjkwOF0sWzEyMywwLjkyNF0sWzEzMiwwLjkzNV0sWzE0MCwwLjk0N10sWzE0OSwwLjk1Nl0sWzE1NywwLjk2NF0sWzE2NCwwLjk3XSxbMTc0LDAuOTc1XSxbMTgyLDAuOThdLFsxOTAsMC45ODRdLFsxOTksMC45ODZdLFsyMDYsMC45ODldLFsyMTYsMC45OTFdLFsyMjQsMC45OTNdLFsyMzIsMC45OTRdLFsyNDAsMC45OTVdLFsyNDksMC45OTZdLFsyNTcsMC45OTddLFsyNjYsMC45OTddLFsyNzIsMC45OThdLFsyODIsMC45OThdLFsyODksMC45OTldLFsyOTgsMC45OTldLFszMDYsMC45OTldLFszMTQsMC45OTldLFszMjQsMC45OTldLFszMzIsMV0sWzMzOSwxXSxbMzQ3LDFdLFszNTYsMV0sWzM2NiwxXSxbMzczLDFdLFszODIsMV0sWzM5MSwxXSxbMzk3LDFdLFs0MDYsMV0sWzQxNiwxXSxbNDIzLDFdLFs0MzIsMV0sWzQ0MCwxXSxbNDQ4LDFdLFs0NTYsMV0sWzQ2NiwxXSxbNDczLDFdLFs0ODMsMV0sWzQ5MSwxXSxbNDk4LDFdLFs1MDYsMV0sWzUxNiwxXSxbNTIzLDFdLFs1MzIsMV0sWzU0MSwxXSxbNTQ5LDFdLFs1NTcsMV0sWzU2NiwxXSxbNTczLDFdLFs1ODEsMV0sWzU5MCwxXSxbNTk3LDFdLFs2MDcsMV0sWzYxNSwxXSxbNjI0LDFdLFs2MzIsMV0sWzY0MSwxXSxbNjQ4LDFdLFs2NTcsMV0sWzY2NCwxXSxbNjc0LDFdLFs2ODIsMV0sWzY5MCwxXSxbNjk3LDFdLFs3MDgsMV0sWzcxNiwxXSxbNzI0LDFdLFs3MzIsMV0sWzc0MSwxXSxbNzQ5LDFdLFs3NTYsMV0sWzc2NSwxXSxbNzc0LDFdLFs3ODIsMV0sWzc5MSwxXSxbNzk5LDFdLFs4MDcsMV0sWzgxNSwxXSxbODI0LDFdLFs4MzIsMV0sWzg0MSwxXSxbODQ5LDFdLFs4NTcsMV0sWzg2NiwxXSxbODc0LDFdLFs4ODIsMV0sWzg5MSwxXSxbODk5LDFdLFs5MDcsMV0sWzkxNiwxXSxbOTI0LDFdLFs5MzIsMV0sWzk0MSwxXSxbOTQ5LDFdLFs5NTcsMV0sWzk2NiwxXSxbOTcyLDFdLFs5ODIsMV0sWzk5MSwxXSxbOTk5LDFdLFsxMDA3LDFdLFsxMDE0LDFdLFsxMDIzLDFdLFsxMDMyLDFdLFsxMDM5LDFdLFsxMDQ5LDFdLFsxMDU2LDFdLFsxMDY2LDFdLFsxMDc0LDFdLFsxMDgyLDFdLFsxMDkxLDFdLFsxMDk5LDFdLFsxMTA3LDFdLFsxMTE2LDFdLFsxMTIzLDFdLFsxMTMzLDFdLFsxMTQxLDFdLFsxMTQ5LDFdLFsxMTU3LDFdLFsxMTY2LDFdLFsxMTc0LDFdLFsxMTgyLDFdLFsxMTkxLDFdLFsxMTk5LDFdLFsxMjA3LDFdLFsxMjE0LDFdLFsxMjI0LDFdLFsxMjMyLDFdLFsxMjQxLDFdLFsxMjQ5LDFdLFsxMjU3LDFdLFsxMjY2LDFdLFsxMjc0LDFdLFsxMjgyLDFdLFsxMjkxLDFdLFsxMjk4LDFdLFsxMzA3LDFdLFsxMzE0LDFdLFsxMzI0LDFdLFsxMzMyLDFdLFsxMzM5LDFdLFsxMzQ5LDFdLFsxMzU3LDFdLFsxMzY2LDFdLFsxMzc0LDFdLFsxMzgxLDFdLFsxMzkxLDFdLFsxMzk5LDFdLFsxNDA3LDFdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-ab4d7fe8f60bbbb634d7",
+          "file": "release-11-1-1.spec.ts",
+          "line": 672,
+          "column": 5
+        },
+        {
+          "title": "reverse · a press on a leaving Sheet's trigger reopens it from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3136,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:00:46.425Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuODYxLCJzaGFyZSI6MC4wMzksImVuZCI6MSwiZnJhbWVzIjpbWy05LDAuODYxXSxbMSwwLjgzM10sWzcsMC43OTJdLFsxNywwLjc5OV0sWzI0LDAuODA3XSxbMzQsMC44MTRdLFs0MiwwLjgyN10sWzQ5LDAuODM4XSxbNTgsMC44NDhdLFs2NywwLjg2MV0sWzc1LDAuODc1XSxbODQsMC44ODddLFs5MiwwLjg5OV0sWzEwMCwwLjkxXSxbMTA3LDAuOTIxXSxbMTE3LDAuOTI5XSxbMTI1LDAuOTQxXSxbMTM0LDAuOTVdLFsxNDIsMC45NThdLFsxNDksMC45NjZdLFsxNTksMC45NzJdLFsxNjcsMC45NzldLFsxNzUsMC45ODRdLFsxODQsMC45ODhdLFsxOTEsMC45OTNdLFsxOTksMC45OTVdLFsyMDksMC45OTldLFsyMTcsMV0sWzIyNiwxXSxbMjM0LDFdLFsyNDEsMV0sWzI1MSwxXSxbMjU4LDFdLFsyNjcsMV0sWzI3NCwxXSxbMjg0LDFdLFsyOTIsMV0sWzMwMCwxXSxbMzA4LDFdLFszMTcsMV0sWzMyNSwxXSxbMzM0LDFdLFszNDIsMV0sWzM1MCwxXSxbMzU5LDFdLFszNjcsMV0sWzM3NSwxXSxbMzg0LDFdLFszOTIsMV0sWzQwMCwxXSxbNDA5LDFdLFs0MTcsMV0sWzQyNSwxXSxbNDM0LDFdLFs0NDIsMV0sWzQ1MCwxXSxbNDU5LDFdLFs0NjYsMV0sWzQ3NCwxXSxbNDg0LDFdLFs0OTIsMV0sWzUwMCwxXSxbNTA5LDFdLFs1MTYsMV0sWzUyNCwxXSxbNTM0LDFdLFs1NDEsMV0sWzU0OSwxXSxbNTU5LDFdLFs1NjcsMV0sWzU3NCwxXSxbNTg0LDFdLFs1OTEsMV0sWzYwMSwxXSxbNjA5LDFdLFs2MTcsMV0sWzYyNCwxXSxbNjMzLDFdLFs2NDIsMV0sWzY1MCwxXSxbNjU5LDFdLFs2NjcsMV0sWzY3NSwxXSxbNjg0LDFdLFs2OTIsMV0sWzY5OSwxXSxbNzA4LDFdLFs3MTYsMV0sWzcyNCwxXSxbNzM0LDFdLFs3NDIsMV0sWzc1MCwxXSxbNzU5LDFdLFs3NjUsMV0sWzc3NiwxXSxbNzg0LDFdLFs3OTIsMV0sWzc5OSwxXSxbODA5LDFdLFs4MTYsMV0sWzgyNSwxXSxbODM0LDFdLFs4NDEsMV0sWzg1MCwxXSxbODU4LDFdLFs4NjYsMV0sWzg3NSwxXSxbODg0LDFdLFs4OTIsMV0sWzkwMSwxXSxbOTA5LDFdLFs5MTcsMV0sWzkyNSwxXSxbOTM0LDFdLFs5NDEsMV0sWzk1MCwxXSxbOTU5LDFdLFs5NjcsMV0sWzk3NSwxXSxbOTg0LDFdLFs5OTEsMV0sWzEwMDAsMV0sWzEwMDksMV0sWzEwMTcsMV0sWzEwMjUsMV0sWzEwMzQsMV0sWzEwNDIsMV0sWzEwNTAsMV0sWzEwNTcsMV0sWzEwNjcsMV0sWzEwNzUsMV0sWzEwODQsMV0sWzEwOTIsMV0sWzExMDAsMV0sWzExMDksMV0sWzExMTcsMV0sWzExMjUsMV0sWzExMzQsMV0sWzExNDIsMV0sWzExNTAsMV0sWzExNTksMV0sWzExNjcsMV0sWzExNzUsMV0sWzExODQsMV0sWzExOTIsMV0sWzEyMDAsMV0sWzEyMDksMV0sWzEyMTYsMV0sWzEyMjYsMV0sWzEyMzQsMV0sWzEyNDEsMV0sWzEyNTEsMV0sWzEyNTksMV0sWzEyNjYsMV0sWzEyNzUsMV0sWzEyODIsMV0sWzEyOTIsMV0sWzEyOTksMV0sWzEzMDgsMV0sWzEzMTYsMV0sWzEzMjYsMV0sWzEzMzIsMV0sWzEzNDIsMV0sWzEzNTEsMV0sWzEzNTksMV0sWzEzNjcsMV0sWzEzNzYsMV0sWzEzODMsMV0sWzEzOTIsMV0sWzE0MDAsMV1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-24a2ef22387abdcdee63",
+          "file": "release-11-1-1.spec.ts",
+          "line": 672,
+          "column": 5
+        },
+        {
+          "title": "reverse · a press on a leaving Select's trigger reopens it from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3126,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:00:49.566Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNjQyLCJzaGFyZSI6MC4xNSwiZW5kIjoxLCJmcmFtZXMiOltbLTQsMC42NDJdLFszLDAuNTldLFsxMywwLjY1XSxbMjEsMC43MTJdLFsyOCwwLjc3Nl0sWzM4LDAuODYyXSxbNDUsMC45MjVdLFs1NSwwLjk5OV0sWzYzLDFdLFs3MSwxXSxbNzgsMV0sWzg3LDFdLFs5NiwxXSxbMTA0LDFdLFsxMTMsMV0sWzEyMSwxXSxbMTMwLDFdLFsxMzgsMV0sWzE0NiwxXSxbMTU1LDFdLFsxNjMsMV0sWzE3MCwxXSxbMTgwLDFdLFsxODcsMV0sWzE5NSwxXSxbMjA1LDFdLFsyMTMsMV0sWzIyMSwxXSxbMjI4LDFdLFsyMzgsMV0sWzI0NiwxXSxbMjU0LDFdLFsyNjMsMV0sWzI3MCwxXSxbMjgwLDFdLFsyODgsMV0sWzI5NSwxXSxbMzAzLDFdLFszMTEsMV0sWzMyMCwxXSxbMzMwLDFdLFszMzgsMV0sWzM0NiwxXSxbMzU0LDFdLFszNjIsMV0sWzM3MSwxXSxbMzc5LDFdLFszODcsMV0sWzM5NiwxXSxbNDA0LDFdLFs0MTEsMV0sWzQyMCwxXSxbNDI5LDFdLFs0MzgsMV0sWzQ0NSwxXSxbNDU0LDFdLFs0NjMsMV0sWzQ3MCwxXSxbNDgwLDFdLFs0ODgsMV0sWzQ5NiwxXSxbNTA0LDFdLFs1MTMsMV0sWzUyMSwxXSxbNTI5LDFdLFs1MzgsMV0sWzU0NiwxXSxbNTU0LDFdLFs1NjMsMV0sWzU3MSwxXSxbNTc4LDFdLFs1ODcsMV0sWzU5NiwxXSxbNjAzLDFdLFs2MTEsMV0sWzYyMSwxXSxbNjI5LDFdLFs2MzgsMV0sWzY0NSwxXSxbNjU0LDFdLFs2NjIsMV0sWzY3MSwxXSxbNjc5LDFdLFs2ODcsMV0sWzY5NCwxXSxbNzA0LDFdLFs3MTEsMV0sWzcxOSwxXSxbNzI5LDFdLFs3MzcsMV0sWzc0NSwxXSxbNzUzLDFdLFs3NjIsMV0sWzc3MCwxXSxbNzc4LDFdLFs3ODgsMV0sWzc5NiwxXSxbODA0LDFdLFs4MTMsMV0sWzgyMSwxXSxbODMwLDFdLFs4MzgsMV0sWzg0NSwxXSxbODU0LDFdLFs4NjMsMV0sWzg3MSwxXSxbODc5LDFdLFs4ODgsMV0sWzg5NiwxXSxbOTA1LDFdLFs5MTMsMV0sWzkyMSwxXSxbOTI5LDFdLFs5MzgsMV0sWzk0NiwxXSxbOTU0LDFdLFs5NjEsMV0sWzk3MSwxXSxbOTc5LDFdLFs5ODYsMV0sWzk5NiwxXSxbMTAwNCwxXSxbMTAxMywxXSxbMTAyMCwxXSxbMTAzMCwxXSxbMTAzOCwxXSxbMTA0NiwxXSxbMTA1NCwxXSxbMTA2MywxXSxbMTA3MSwxXSxbMTA3OSwxXSxbMTA4OCwxXSxbMTA5NiwxXSxbMTEwNCwxXSxbMTExMiwxXSxbMTEyMSwxXSxbMTEyOSwxXSxbMTEzOCwxXSxbMTE0NiwxXSxbMTE1NCwxXSxbMTE2MywxXSxbMTE3MSwxXSxbMTE3OSwxXSxbMTE4OCwxXSxbMTE5NiwxXSxbMTIwNCwxXSxbMTIxMywxXSxbMTIyMCwxXSxbMTIzMCwxXSxbMTIzOCwxXSxbMTI0NiwxXSxbMTI1NCwxXSxbMTI2MSwxXSxbMTI3MSwxXSxbMTI3OSwxXSxbMTI4OCwxXSxbMTI5NiwxXSxbMTMwNCwxXSxbMTMxMywxXSxbMTMyMSwxXSxbMTMyOSwxXSxbMTMzOCwxXSxbMTM0NiwxXSxbMTM1NCwxXSxbMTM2MywxXSxbMTM3MSwxXSxbMTM3OSwxXSxbMTM4NiwxXSxbMTM5NiwxXSxbMTQwNCwxXSxbMTQxMywxXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-a1c927310d44396affdf",
+          "file": "release-11-1-1.spec.ts",
+          "line": 672,
+          "column": 5
+        },
+        {
+          "title": "reverse · a press on the page while a sheet leaves reaches the page",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2178,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:00:52.696Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-53ab90cc83b97c2761a6",
+          "file": "release-11-1-1.spec.ts",
+          "line": 692,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-16T03:00:05.966Z",
+    "duration": 48935.555,
+    "expected": 15,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

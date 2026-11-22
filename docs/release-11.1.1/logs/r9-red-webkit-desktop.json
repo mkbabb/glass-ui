@@ -1,0 +1,538 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-1-1.config.ts",
+      "--project=webkit-desktop",
+      "--workers=1",
+      "-g",
+      "expand"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/logs/r9-red-webkit-desktop.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5352",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/",
+      "url": "http://localhost:5352",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "expand · an ExpandableContainer enters on a tween",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4425,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:17:04.712Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "enter",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MCwiYmV0d2VlbiI6MTIsInNoYXJlIjowLjEyMywiZW5kIjoxLCJmcmFtZXMiOltbLTExLDBdLFs2LDBdLFsyMywwXSxbMjgsMF0sWzQwLDBdLFs1NiwwLjAyOV0sWzczLDAuMTA2XSxbODksMC4yMDddLFsxMDYsMC4zMjldLFsxMjMsMC40NTVdLFsxMzksMC41NjddLFsxNTYsMC42NzNdLFsxNzMsMC43NjFdLFsxODksMC44MjldLFsyMDYsMC44ODRdLFsyMjMsMC45MjVdLFsyMzksMC45NTNdLFsyNTYsMV0sWzI3MywxXSxbMjg5LDFdLFszMDYsMV0sWzMyMywxXSxbMzM5LDFdLFszNTYsMV0sWzM3MywxXSxbMzg5LDFdLFs0MDUsMV0sWzQyMywxXSxbNDM5LDFdLFs0NTYsMV0sWzQ3MywxXSxbNDg5LDFdLFs1MDYsMV0sWzUyMywxXSxbNTM5LDFdLFs1NTYsMV0sWzU3MywxXSxbNTg5LDFdLFs2MDYsMV0sWzYyMywxXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-aaa5ad377a054961764e",
+          "file": "release-11-1-1.spec.ts",
+          "line": 840,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer leaves on a tween by exit",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5056,
+                  "error": {
+                    "message": "Error: more than two frames between whole and gone {\"top\":1,\"atTurn\":1,\"between\":0,\"share\":0.833,\"end\":0,\"frames\":[[-9,1],[8,1],[25,1],[41,1],[42,1],[48,1],[62,0],[74,0],[91,0],[108,0],[125,0],[143,0],[158,0],[176,0],[192,0],[208,0],[225,0],[242,0],[258,0],[275,0],[291,0],[308,0],[325,0],[341,0],[358,0],[375,0],[391,0],[408,0],[424,0],[441,0],[458,0],[475,0],[491,0],[508,0],[525,0],[541,0],[558,0],[575,0],[591,0],[608,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m2\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                    "stack": "Error: more than two frames between whole and gone {\"top\":1,\"atTurn\":1,\"between\":0,\"share\":0.833,\"end\":0,\"frames\":[[-9,1],[8,1],[25,1],[41,1],[42,1],[48,1],[62,0],[74,0],[91,0],[108,0],[125,0],[143,0],[158,0],[176,0],[192,0],[208,0],[225,0],[242,0],[258,0],[275,0],[291,0],[308,0],[325,0],[341,0],[358,0],[375,0],[391,0],[408,0],[424,0],[441,0],[458,0],[475,0],[491,0],[508,0],[525,0],[541,0],[558,0],[575,0],[591,0],[608,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m2\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:873:83",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 83,
+                      "line": 873
+                    },
+                    "snippet": "  871 |         const at = JSON.stringify(read);\n  872 |         expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 873 |         expect(read.between, `more than two frames between whole and gone ${at}`).toBeGreaterThan(2);\n      |                                                                                   ^\n  874 |         expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  875 |     });\n  876 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 83,
+                        "line": 873
+                      },
+                      "message": "Error: more than two frames between whole and gone {\"top\":1,\"atTurn\":1,\"between\":0,\"share\":0.833,\"end\":0,\"frames\":[[-9,1],[8,1],[25,1],[41,1],[42,1],[48,1],[62,0],[74,0],[91,0],[108,0],[125,0],[143,0],[158,0],[176,0],[192,0],[208,0],[225,0],[242,0],[258,0],[275,0],[291,0],[308,0],[325,0],[341,0],[358,0],[375,0],[391,0],[408,0],[424,0],[441,0],[458,0],[475,0],[491,0],[508,0],[525,0],[541,0],[558,0],[575,0],[591,0],[608,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m2\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  871 |         const at = JSON.stringify(read);\n  872 |         expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 873 |         expect(read.between, `more than two frames between whole and gone ${at}`).toBeGreaterThan(2);\n      |                                                                                   ^\n  874 |         expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  875 |     });\n  876 | }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:873:83"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:17:09.335Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MSwiYmV0d2VlbiI6MCwic2hhcmUiOjAuODMzLCJlbmQiOjAsImZyYW1lcyI6W1stOSwxXSxbOCwxXSxbMjUsMV0sWzQxLDFdLFs0MiwxXSxbNDgsMV0sWzYyLDBdLFs3NCwwXSxbOTEsMF0sWzEwOCwwXSxbMTI1LDBdLFsxNDMsMF0sWzE1OCwwXSxbMTc2LDBdLFsxOTIsMF0sWzIwOCwwXSxbMjI1LDBdLFsyNDIsMF0sWzI1OCwwXSxbMjc1LDBdLFsyOTEsMF0sWzMwOCwwXSxbMzI1LDBdLFszNDEsMF0sWzM1OCwwXSxbMzc1LDBdLFszOTEsMF0sWzQwOCwwXSxbNDI0LDBdLFs0NDEsMF0sWzQ1OCwwXSxbNDc1LDBdLFs0OTEsMF0sWzUwOCwwXSxbNTI1LDBdLFs1NDEsMF0sWzU1OCwwXSxbNTc1LDBdLFs1OTEsMF0sWzYwOCwwXV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-expand-·-an-73b18-r-leaves-on-a-tween-by-exit-webkit-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 83,
+                    "line": 873
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-8e017edf777272e50919",
+          "file": "release-11-1-1.spec.ts",
+          "line": 855,
+          "column": 5
+        },
+        {
+          "title": "expand · an ExpandableContainer leaves on a tween by escape",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5223,
+                  "error": {
+                    "message": "Error: more than two frames between whole and gone {\"top\":1,\"atTurn\":1,\"between\":0,\"share\":0.926,\"end\":0,\"frames\":[[-9,1],[9,0],[24,0],[41,0],[58,0],[74,0],[91,0],[108,0],[124,0],[141,0],[158,0],[175,0],[191,0],[208,0],[224,0],[240,0],[258,0],[274,0],[291,0],[308,0],[324,0],[341,0],[358,0],[374,0],[391,0],[408,0],[424,0],[441,0],[458,0],[474,0],[491,0],[508,0],[524,0],[542,0],[558,0],[574,0],[591,0],[608,0],[625,0],[641,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m2\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                    "stack": "Error: more than two frames between whole and gone {\"top\":1,\"atTurn\":1,\"between\":0,\"share\":0.926,\"end\":0,\"frames\":[[-9,1],[9,0],[24,0],[41,0],[58,0],[74,0],[91,0],[108,0],[124,0],[141,0],[158,0],[175,0],[191,0],[208,0],[224,0],[240,0],[258,0],[274,0],[291,0],[308,0],[324,0],[341,0],[358,0],[374,0],[391,0],[408,0],[424,0],[441,0],[458,0],[474,0],[491,0],[508,0],[524,0],[542,0],[558,0],[574,0],[591,0],[608,0],[625,0],[641,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m2\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:873:83",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 83,
+                      "line": 873
+                    },
+                    "snippet": "  871 |         const at = JSON.stringify(read);\n  872 |         expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 873 |         expect(read.between, `more than two frames between whole and gone ${at}`).toBeGreaterThan(2);\n      |                                                                                   ^\n  874 |         expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  875 |     });\n  876 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 83,
+                        "line": 873
+                      },
+                      "message": "Error: more than two frames between whole and gone {\"top\":1,\"atTurn\":1,\"between\":0,\"share\":0.926,\"end\":0,\"frames\":[[-9,1],[9,0],[24,0],[41,0],[58,0],[74,0],[91,0],[108,0],[124,0],[141,0],[158,0],[175,0],[191,0],[208,0],[224,0],[240,0],[258,0],[274,0],[291,0],[308,0],[324,0],[341,0],[358,0],[374,0],[391,0],[408,0],[424,0],[441,0],[458,0],[474,0],[491,0],[508,0],[524,0],[542,0],[558,0],[574,0],[591,0],[608,0],[625,0],[641,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m2\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  871 |         const at = JSON.stringify(read);\n  872 |         expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 873 |         expect(read.between, `more than two frames between whole and gone ${at}`).toBeGreaterThan(2);\n      |                                                                                   ^\n  874 |         expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  875 |     });\n  876 | }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:873:83"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:17:14.721Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MSwiYmV0d2VlbiI6MCwic2hhcmUiOjAuOTI2LCJlbmQiOjAsImZyYW1lcyI6W1stOSwxXSxbOSwwXSxbMjQsMF0sWzQxLDBdLFs1OCwwXSxbNzQsMF0sWzkxLDBdLFsxMDgsMF0sWzEyNCwwXSxbMTQxLDBdLFsxNTgsMF0sWzE3NSwwXSxbMTkxLDBdLFsyMDgsMF0sWzIyNCwwXSxbMjQwLDBdLFsyNTgsMF0sWzI3NCwwXSxbMjkxLDBdLFszMDgsMF0sWzMyNCwwXSxbMzQxLDBdLFszNTgsMF0sWzM3NCwwXSxbMzkxLDBdLFs0MDgsMF0sWzQyNCwwXSxbNDQxLDBdLFs0NTgsMF0sWzQ3NCwwXSxbNDkxLDBdLFs1MDgsMF0sWzUyNCwwXSxbNTQyLDBdLFs1NTgsMF0sWzU3NCwwXSxbNTkxLDBdLFs2MDgsMF0sWzYyNSwwXSxbNjQxLDBdXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-expand-·-an-bf114-leaves-on-a-tween-by-escape-webkit-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 83,
+                    "line": 873
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-5ac22b88b26e7404e8f1",
+          "file": "release-11-1-1.spec.ts",
+          "line": 855,
+          "column": 5
+        },
+        {
+          "title": "expand · an ExpandableContainer leaves on a tween by open",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5326,
+                  "error": {
+                    "message": "Error: more than two frames between whole and gone {\"top\":1,\"atTurn\":1,\"between\":0,\"share\":0.98,\"end\":0,\"frames\":[[-7,1],[10,0],[26,0],[43,0],[59,0],[76,0],[92,0],[109,0],[125,0],[142,0],[159,0],[176,0],[193,0],[209,0],[226,0],[242,0],[258,0],[276,0],[292,0],[310,0],[326,0],[342,0],[359,0],[376,0],[392,0],[409,0],[426,0],[442,0],[460,0],[476,0],[493,0],[509,0],[526,0],[543,0],[559,0],[576,0],[593,0],[609,0],[626,0],[643,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m2\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                    "stack": "Error: more than two frames between whole and gone {\"top\":1,\"atTurn\":1,\"between\":0,\"share\":0.98,\"end\":0,\"frames\":[[-7,1],[10,0],[26,0],[43,0],[59,0],[76,0],[92,0],[109,0],[125,0],[142,0],[159,0],[176,0],[193,0],[209,0],[226,0],[242,0],[258,0],[276,0],[292,0],[310,0],[326,0],[342,0],[359,0],[376,0],[392,0],[409,0],[426,0],[442,0],[460,0],[476,0],[493,0],[509,0],[526,0],[543,0],[559,0],[576,0],[593,0],[609,0],[626,0],[643,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m2\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:873:83",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 83,
+                      "line": 873
+                    },
+                    "snippet": "  871 |         const at = JSON.stringify(read);\n  872 |         expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 873 |         expect(read.between, `more than two frames between whole and gone ${at}`).toBeGreaterThan(2);\n      |                                                                                   ^\n  874 |         expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  875 |     });\n  876 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 83,
+                        "line": 873
+                      },
+                      "message": "Error: more than two frames between whole and gone {\"top\":1,\"atTurn\":1,\"between\":0,\"share\":0.98,\"end\":0,\"frames\":[[-7,1],[10,0],[26,0],[43,0],[59,0],[76,0],[92,0],[109,0],[125,0],[142,0],[159,0],[176,0],[193,0],[209,0],[226,0],[242,0],[258,0],[276,0],[292,0],[310,0],[326,0],[342,0],[359,0],[376,0],[392,0],[409,0],[426,0],[442,0],[460,0],[476,0],[493,0],[509,0],[526,0],[543,0],[559,0],[576,0],[593,0],[609,0],[626,0],[643,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m2\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  871 |         const at = JSON.stringify(read);\n  872 |         expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 873 |         expect(read.between, `more than two frames between whole and gone ${at}`).toBeGreaterThan(2);\n      |                                                                                   ^\n  874 |         expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  875 |     });\n  876 | }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:873:83"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:17:20.514Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MSwiYmV0d2VlbiI6MCwic2hhcmUiOjAuOTgsImVuZCI6MCwiZnJhbWVzIjpbWy03LDFdLFsxMCwwXSxbMjYsMF0sWzQzLDBdLFs1OSwwXSxbNzYsMF0sWzkyLDBdLFsxMDksMF0sWzEyNSwwXSxbMTQyLDBdLFsxNTksMF0sWzE3NiwwXSxbMTkzLDBdLFsyMDksMF0sWzIyNiwwXSxbMjQyLDBdLFsyNTgsMF0sWzI3NiwwXSxbMjkyLDBdLFszMTAsMF0sWzMyNiwwXSxbMzQyLDBdLFszNTksMF0sWzM3NiwwXSxbMzkyLDBdLFs0MDksMF0sWzQyNiwwXSxbNDQyLDBdLFs0NjAsMF0sWzQ3NiwwXSxbNDkzLDBdLFs1MDksMF0sWzUyNiwwXSxbNTQzLDBdLFs1NTksMF0sWzU3NiwwXSxbNTkzLDBdLFs2MDksMF0sWzYyNiwwXSxbNjQzLDBdXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-expand-·-an-475d1-r-leaves-on-a-tween-by-open-webkit-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 83,
+                    "line": 873
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-5c079d02a1f19c769438",
+          "file": "release-11-1-1.spec.ts",
+          "line": 855,
+          "column": 5
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4446,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:17:26.414Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC4yLCJiZXR3ZWVuIjoxLCJzaGFyZSI6MC4xNDUsImVuZCI6MCwiZnJhbWVzIjpbWy0xNSwwLjJdLFs4LDBdLFsxOCwwXSxbMzUsMF0sWzUyLDBdLFs2OCwwXSxbODUsMF0sWzEwMiwwXSxbMTE4LDBdLFsxMzUsMF0sWzE1MSwwXSxbMTY5LDBdLFsxODUsMF0sWzIwMSwwXSxbMjE5LDBdLFsyMzUsMF0sWzI1MSwwXSxbMjY4LDBdLFsyODUsMF0sWzMwMiwwXSxbMzE4LDBdLFszMzUsMF0sWzM1MiwwXSxbMzY4LDBdLFszODUsMF0sWzQwMSwwXSxbNDE4LDBdLFs0MzUsMF0sWzQ1MSwwXSxbNDY4LDBdLFs0ODYsMF0sWzUwMSwwXSxbNTE4LDBdLFs1MzUsMF0sWzU1MiwwXSxbNTY4LDBdLFs1ODUsMF0sWzYwMSwwXSxbNjE4LDBdLFs2MzUsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-de08d8fc3593b9696068",
+          "file": "release-11-1-1.spec.ts",
+          "line": 878,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer reopened while it leaves turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5103,
+                  "error": {
+                    "message": "Error: the reopen lands mid-exit {\"top\":1,\"atTurn\":0,\"between\":12,\"share\":0.121,\"end\":1,\"frames\":[[-9,0],[8,0],[24,0],[25,0],[29,0],[41,0],[58,0.032],[74,0.106],[91,0.214],[108,0.336],[124,0.455],[141,0.574],[158,0.678],[174,0.761],[191,0.832],[208,0.887],[224,0.925],[241,0.954],[258,1],[274,1],[291,1],[308,1],[324,1],[341,1],[358,1],[374,1],[390,1],[408,1],[424,1],[441,1],[458,1],[474,1],[491,1],[508,1],[524,1],[541,1],[558,1],[574,1],[591,1],[608,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.02\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                    "stack": "Error: the reopen lands mid-exit {\"top\":1,\"atTurn\":0,\"between\":12,\"share\":0.121,\"end\":1,\"frames\":[[-9,0],[8,0],[24,0],[25,0],[29,0],[41,0],[58,0.032],[74,0.106],[91,0.214],[108,0.336],[124,0.455],[141,0.574],[158,0.678],[174,0.761],[191,0.832],[208,0.887],[224,0.925],[241,0.954],[258,1],[274,1],[291,1],[308,1],[324,1],[341,1],[358,1],[374,1],[390,1],[408,1],[424,1],[441,1],[458,1],[474,1],[491,1],[508,1],[524,1],[541,1],[558,1],[574,1],[591,1],[608,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.02\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:906:60",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 60,
+                      "line": 906
+                    },
+                    "snippet": "  904 |     await info.attach(\"turn\", { body: JSON.stringify(read), contentType: \"application/json\" });\n  905 |     const at = JSON.stringify(read);\n> 906 |     expect(read.atTurn, `the reopen lands mid-exit ${at}`).toBeGreaterThan(0.02);\n      |                                                            ^\n  907 |     expect(read.end, `it ends whole ${at}`).toBeGreaterThan(0.95);\n  908 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  909 | });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 60,
+                        "line": 906
+                      },
+                      "message": "Error: the reopen lands mid-exit {\"top\":1,\"atTurn\":0,\"between\":12,\"share\":0.121,\"end\":1,\"frames\":[[-9,0],[8,0],[24,0],[25,0],[29,0],[41,0],[58,0.032],[74,0.106],[91,0.214],[108,0.336],[124,0.455],[141,0.574],[158,0.678],[174,0.761],[191,0.832],[208,0.887],[224,0.925],[241,0.954],[258,1],[274,1],[291,1],[308,1],[324,1],[341,1],[358,1],[374,1],[390,1],[408,1],[424,1],[441,1],[458,1],[474,1],[491,1],[508,1],[524,1],[541,1],[558,1],[574,1],[591,1],[608,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.02\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  904 |     await info.attach(\"turn\", { body: JSON.stringify(read), contentType: \"application/json\" });\n  905 |     const at = JSON.stringify(read);\n> 906 |     expect(read.atTurn, `the reopen lands mid-exit ${at}`).toBeGreaterThan(0.02);\n      |                                                            ^\n  907 |     expect(read.end, `it ends whole ${at}`).toBeGreaterThan(0.95);\n  908 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  909 | });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:906:60"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:17:31.048Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MCwiYmV0d2VlbiI6MTIsInNoYXJlIjowLjEyMSwiZW5kIjoxLCJmcmFtZXMiOltbLTksMF0sWzgsMF0sWzI0LDBdLFsyNSwwXSxbMjksMF0sWzQxLDBdLFs1OCwwLjAzMl0sWzc0LDAuMTA2XSxbOTEsMC4yMTRdLFsxMDgsMC4zMzZdLFsxMjQsMC40NTVdLFsxNDEsMC41NzRdLFsxNTgsMC42NzhdLFsxNzQsMC43NjFdLFsxOTEsMC44MzJdLFsyMDgsMC44ODddLFsyMjQsMC45MjVdLFsyNDEsMC45NTRdLFsyNTgsMV0sWzI3NCwxXSxbMjkxLDFdLFszMDgsMV0sWzMyNCwxXSxbMzQxLDFdLFszNTgsMV0sWzM3NCwxXSxbMzkwLDFdLFs0MDgsMV0sWzQyNCwxXSxbNDQxLDFdLFs0NTgsMV0sWzQ3NCwxXSxbNDkxLDFdLFs1MDgsMV0sWzUyNCwxXSxbNTQxLDFdLFs1NTgsMV0sWzU3NCwxXSxbNTkxLDFdLFs2MDgsMV1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-expand-·-an-29929-aves-turns-from-where-it-is-webkit-desktop/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 60,
+                    "line": 906
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-a29c83acd0aea8d8502d",
+          "file": "release-11-1-1.spec.ts",
+          "line": 895,
+          "column": 1
+        },
+        {
+          "title": "expand · Escape is live from the entrance's first frame",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-desktop",
+              "projectName": "webkit-desktop",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1973,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:17:36.494Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-bd6f9ddae177d72c09f3",
+          "file": "release-11-1-1.spec.ts",
+          "line": 911,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-16T03:17:04.322Z",
+    "duration": 34384.542,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 4,
+    "flaky": 0
+  }
+}

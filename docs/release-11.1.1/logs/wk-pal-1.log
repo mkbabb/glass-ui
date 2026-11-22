@@ -1,0 +1,37 @@
+[guarded] waiting for the 'webkit' lock
+
+Running 7 tests using 1 worker
+
+  ✓  1 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Dialog leaves on the exit curve, shorter than it entered (4.0s)
+  ✘  2 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:448:5 › routes · a CommandDialog keeps its list through its exit by pick (3.3s)
+  ✓  3 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:448:5 › routes · a CommandDialog keeps its list through its exit by escape (3.4s)
+  -  4 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:448:5 › routes · a CommandDialog keeps its list through its exit by outside
+  -  5 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:482:5 › routes · a press on an open Select's trigger closes it once
+  -  6 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:482:5 › routes · a press on an open DropdownMenu's trigger closes it once
+  -  7 [webkit-phone] › tests-visual/release-11-1-1.spec.ts:482:5 › routes · a press on an open Popover's trigger closes it once
+
+
+  1) [webkit-phone] › tests-visual/release-11-1-1.spec.ts:448:5 › routes · a CommandDialog keeps its list through its exit by pick 
+
+    Error: no frame takes more than a fifth of what is seen [[0,1,435],[1,1,435],[10,1,435],[22,1,435],[23,1,435],[31,1,435],[33,1,435],[107,1,435],[141,1,435],[164,0.888,433],[173,0.748,430],[181,0.667,428],[188,0.592,426],[195,0.525,425],[205,0.459,423],[215,0.364,421],[225,0.272,419],[235,0.185,417],[246,0.105,416],[255,0.028,414],[283,0,null]]
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.217
+
+      469 |             expect(f.h!, `the plate keeps its height ${at}`).toBeGreaterThanOrEqual(read.rest.h! * 0.9);
+      470 |         }
+    > 471 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                      ^
+      472 |     });
+      473 | }
+      474 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:471:86
+
+    Error Context: tests-visual/test-results/release-11-1-1-routes-·-a--79dcb-st-through-its-exit-by-pick-webkit-phone/error-context.md
+
+  1 failed
+    [webkit-phone] › tests-visual/release-11-1-1.spec.ts:448:5 › routes · a CommandDialog keeps its list through its exit by pick 
+  4 skipped
+  2 passed (13.1s)

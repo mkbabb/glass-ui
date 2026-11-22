@@ -1,0 +1,183 @@
+[guarded] waiting for the 'webkit' lock
+
+Running 8 tests using 1 worker
+
+  ✘  1 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:426:5 › routes · a detented Sheet leaves whole by escape (4.2s)
+  ✘  2 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:426:5 › routes · a detented Sheet leaves whole by outside (4.0s)
+  ✘  3 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:448:5 › routes · a CommandDialog keeps its list through its exit by pick (3.0s)
+  ✘  4 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:448:5 › routes · a CommandDialog keeps its list through its exit by escape (3.1s)
+  ✘  5 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:448:5 › routes · a CommandDialog keeps its list through its exit by outside (3.7s)
+  ✘  6 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:482:5 › routes · a press on an open Select's trigger closes it once (3.2s)
+  ✘  7 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:482:5 › routes · a press on an open DropdownMenu's trigger closes it once (3.1s)
+  ✘  8 [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:482:5 › routes · a press on an open Popover's trigger closes it once (3.2s)
+
+
+  1) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:426:5 › routes · a detented Sheet leaves whole by escape 
+
+    Error: no frame takes more than a fifth of what is seen [[0,1,450],[6,1,450],[15,1,438],[26,1,424],[38,1,401],[47,1,373],[56,1,350],[68,1,326],[78,1,294],[88,1,268],[99,1,243],[109,1,217],[119,1,207],[127,1,207],[139,1,207],[150,1,207],[160,1,207],[170,1,207],[179,1,207],[191,1,207],[200,1,207],[211,1,207],[221,1,207],[232,1,207],[241,1,207],[251,1,207],[260,1,207],[272,1,207],[282,1,207],[291,1,207],[303,1,207],[312,1,207],[323,1,207],[333,1,207],[343,1,207],[354,1,207],[363,1,207],[375,1,207],[384,1,207],[392,1,207],[405,1,207],[415,1,207],[425,1,207],[435,1,207],[445,1,207],[458,1,207],[466,1,207],[475,0,null]]
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    1
+
+      441 |         expect(read.goneIdx, `the sheet leaves ${at}`).toBeGreaterThan(-1);
+      442 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 443 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                      ^
+      444 |     });
+      445 | }
+      446 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:443:86
+
+    Error Context: tests-visual/test-results/release-11-1-1-routes-·-a--9057b-heet-leaves-whole-by-escape-webkit-desktop/error-context.md
+
+  2) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:426:5 › routes · a detented Sheet leaves whole by outside 
+
+    Error: no frame takes more than a fifth of what is seen [[0,1,450],[8,1,450],[17,1,438],[28,1,424],[38,1,401],[50,1,378],[60,1,347],[70,1,321],[81,1,294],[89,1,266],[101,1,245],[111,1,217],[120,1,207],[131,1,207],[141,1,207],[152,1,207],[161,1,207],[171,1,207],[183,1,207],[193,1,207],[203,1,207],[211,1,207],[223,1,207],[235,1,207],[244,1,207],[253,1,207],[264,1,207],[273,1,207],[285,1,207],[294,1,207],[303,1,207],[313,1,207],[325,1,207],[334,1,207],[344,1,207],[355,1,207],[364,1,207],[376,1,207],[388,1,207],[397,1,207],[407,1,207],[415,1,207],[426,1,207],[436,1,207],[448,1,207],[457,1,207],[467,1,207],[479,1,207],[487,0,null]]
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    1
+
+      441 |         expect(read.goneIdx, `the sheet leaves ${at}`).toBeGreaterThan(-1);
+      442 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 443 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                      ^
+      444 |     });
+      445 | }
+      446 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:443:86
+
+    Error Context: tests-visual/test-results/release-11-1-1-routes-·-a--524c4-eet-leaves-whole-by-outside-webkit-desktop/error-context.md
+
+  3) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:448:5 › routes · a CommandDialog keeps its list through its exit by pick 
+
+    Error: the list is mounted while the plate is seen [[0,1,435],[5,1,435],[15,1,435],[16,1,435],[20,1,435],[55,1,51],[66,0.917,51],[78,0.812,51],[87,0.687,50],[97,0.595,50],[106,0.501,50],[118,0.425,50],[128,0.337,49],[136,0.275,49],[148,0.233,49],[158,0.18,49],[168,0.145,49],[180,0.116,49],[188,0.088,49],[200,0.073,49],[209,0.056,49],[220,0.045,49],[230,0.035,49],[240,0.027,49],[250,0.021,49],[260,0.017,48],[271,0.013,48],[281,0.01,48]]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      466 |         for (const f of read.after.slice(0, read.goneIdx)) {
+      467 |             if (!f.present) continue;
+    > 468 |             expect(f.also, `the list is mounted while the plate is seen ${at}`).toBe(true);
+          |                                                                                 ^
+      469 |             expect(f.h!, `the plate keeps its height ${at}`).toBeGreaterThanOrEqual(read.rest.h! * 0.9);
+      470 |         }
+      471 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:468:81
+
+    Error Context: tests-visual/test-results/release-11-1-1-routes-·-a--79dcb-st-through-its-exit-by-pick-webkit-desktop/error-context.md
+
+  4) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:448:5 › routes · a CommandDialog keeps its list through its exit by escape 
+
+    Error: the list is mounted while the plate is seen [[0,1,435],[39,1,51],[54,0.917,51],[59,0.771,50],[65,0.718,50],[75,0.656,50],[86,0.556,50],[95,0.457,50],[106,0.386,49],[116,0.311,49],[127,0.253,49],[137,0.201,49],[147,0.162,49],[158,0.13,49],[167,0.101,49],[178,0.082,49],[188,0.064,49],[198,0.051,49],[208,0.04,49],[220,0.031,49],[229,0.023,49],[240,0.019,48],[249,0.014,48],[259,0.012,48],[267,0.009,48]]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      466 |         for (const f of read.after.slice(0, read.goneIdx)) {
+      467 |             if (!f.present) continue;
+    > 468 |             expect(f.also, `the list is mounted while the plate is seen ${at}`).toBe(true);
+          |                                                                                 ^
+      469 |             expect(f.h!, `the plate keeps its height ${at}`).toBeGreaterThanOrEqual(read.rest.h! * 0.9);
+      470 |         }
+      471 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:468:81
+
+    Error Context: tests-visual/test-results/release-11-1-1-routes-·-a--e6d5e--through-its-exit-by-escape-webkit-desktop/error-context.md
+
+  5) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:448:5 › routes · a CommandDialog keeps its list through its exit by outside 
+
+    Error: the list is mounted while the plate is seen [[0,1,435],[3,1,435],[47,1,51],[68,0.917,51],[73,0.708,50],[82,0.656,50],[93,0.566,50],[102,0.466,50],[113,0.393,49],[123,0.317,49],[133,0.259,49],[145,0.21,49],[154,0.162,49],[164,0.133,49],[175,0.106,49],[185,0.082,49],[195,0.065,49],[205,0.052,49],[215,0.041,49],[225,0.032,49],[236,0.025,49],[248,0.019,48],[256,0.014,48],[268,0.012,48],[278,0.009,48]]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      466 |         for (const f of read.after.slice(0, read.goneIdx)) {
+      467 |             if (!f.present) continue;
+    > 468 |             expect(f.also, `the list is mounted while the plate is seen ${at}`).toBe(true);
+          |                                                                                 ^
+      469 |             expect(f.h!, `the plate keeps its height ${at}`).toBeGreaterThanOrEqual(read.rest.h! * 0.9);
+      470 |         }
+      471 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:468:81
+
+    Error Context: tests-visual/test-results/release-11-1-1-routes-·-a--22113-through-its-exit-by-outside-webkit-desktop/error-context.md
+
+  6) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:482:5 › routes · a press on an open Select's trigger closes it once 
+
+    Error: no frame takes more than a fifth of what is seen [[0,1,230],[9,1,230],[13,1,230],[23,1,230],[35,1,230],[43,1,230],[53,1,230],[65,1,230],[73,1,230],[85,1,230],[94,1,230],[106,1,230],[114,1,230],[124,0.066,230],[135,0,null]]
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.934
+
+      502 |         expect(read.reopened, `and stays closed ${at}`).toBe(false);
+      503 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 504 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                      ^
+      505 |     });
+      506 | }
+      507 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:504:86
+
+    Error Context: tests-visual/test-results/release-11-1-1-routes-·-a--df64e-ct-s-trigger-closes-it-once-webkit-desktop/error-context.md
+
+  7) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:482:5 › routes · a press on an open DropdownMenu's trigger closes it once 
+
+    Error: no frame takes more than a fifth of what is seen [[0,1,158],[10,1,158],[18,1,158],[30,1,158],[39,1,158],[49,1,158],[59,1,158],[71,1,158],[79,1,158],[90,1,158],[102,1,158],[111,1,158],[121,0.422,158],[133,0,null]]
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.578
+
+      502 |         expect(read.reopened, `and stays closed ${at}`).toBe(false);
+      503 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 504 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                      ^
+      505 |     });
+      506 | }
+      507 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:504:86
+
+    Error Context: tests-visual/test-results/release-11-1-1-routes-·-a--2349d-nu-s-trigger-closes-it-once-webkit-desktop/error-context.md
+
+  8) [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:482:5 › routes · a press on an open Popover's trigger closes it once 
+
+    Error: no frame takes more than a fifth of what is seen [[0,1,54],[3,1,54],[13,1,54],[23,0.779,53],[33,0.623,52],[43,0.489,52],[53,0.399,51],[66,0.293,51],[74,0.238,50],[84,0.181,50],[94,0.129,50],[105,0.091,50],[115,0.06,49],[124,0.039,49],[136,0.018,49],[145,0.007,49]]
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.221
+
+      502 |         expect(read.reopened, `and stays closed ${at}`).toBe(false);
+      503 |         expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 504 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                      ^
+      505 |     });
+      506 | }
+      507 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:504:86
+
+    Error Context: tests-visual/test-results/release-11-1-1-routes-·-a--f36a5-er-s-trigger-closes-it-once-webkit-desktop/error-context.md
+
+  8 failed
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:426:5 › routes · a detented Sheet leaves whole by escape 
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:426:5 › routes · a detented Sheet leaves whole by outside 
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:448:5 › routes · a CommandDialog keeps its list through its exit by pick 
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:448:5 › routes · a CommandDialog keeps its list through its exit by escape 
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:448:5 › routes · a CommandDialog keeps its list through its exit by outside 
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:482:5 › routes · a press on an open Select's trigger closes it once 
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:482:5 › routes · a press on an open DropdownMenu's trigger closes it once 
+    [webkit-desktop] › tests-visual/release-11-1-1.spec.ts:482:5 › routes · a press on an open Popover's trigger closes it once 

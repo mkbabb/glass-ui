@@ -1,0 +1,538 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-1-1.config.ts",
+      "--project=webkit-phone",
+      "--workers=1",
+      "-g",
+      "expand"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/logs/r9-red-webkit-phone.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5352",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/",
+      "url": "http://localhost:5352",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "expand · an ExpandableContainer enters on a tween",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4621,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:15:14.356Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "enter",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MCwiYmV0d2VlbiI6MTEsInNoYXJlIjowLjEyMiwiZW5kIjoxLCJmcmFtZXMiOltbLTEyLDBdLFs1LDBdLFsyMiwwXSxbMzgsMF0sWzQwLDBdLFs0NiwwXSxbNjEsMF0sWzczLDAuMDE3XSxbODgsMC4wNzVdLFsxMDUsMC4xNzNdLFsxMjIsMC4yOTJdLFsxMzgsMC40MTFdLFsxNTUsMC41MzNdLFsxNzEsMC42MzddLFsxODgsMC43MzJdLFsyMDYsMC44MTNdLFsyMjIsMC44NjldLFsyMzgsMC45MTJdLFsyNTUsMC45NDVdLFsyNzEsMV0sWzI4OCwxXSxbMzA1LDFdLFszMjIsMV0sWzMzOCwxXSxbMzU0LDFdLFszNzIsMV0sWzM4OCwxXSxbNDA0LDFdLFs0MjEsMV0sWzQzOCwxXSxbNDU0LDFdLFs0NzEsMV0sWzQ4OCwxXSxbNTA1LDFdLFs1MjEsMV0sWzUzOCwxXSxbNTU1LDFdLFs1NzEsMV0sWzU4OCwxXSxbNjA1LDFdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-aa125461fd226f575ed4",
+          "file": "release-11-1-1.spec.ts",
+          "line": 840,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer leaves on a tween by exit",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5184,
+                  "error": {
+                    "message": "Error: more than two frames between whole and gone {\"top\":1,\"atTurn\":1,\"between\":0,\"share\":0.98,\"end\":0,\"frames\":[[-4,1],[12,1],[29,1],[30,1],[35,1],[46,0],[64,0],[78,0],[96,0],[112,0],[129,0],[146,0],[162,0],[179,0],[195,0],[213,0],[229,0],[246,0],[262,0],[279,0],[296,0],[312,0],[329,0],[346,0],[362,0],[378,0],[396,0],[412,0],[428,0],[446,0],[462,0],[479,0],[496,0],[512,0],[529,0],[545,0],[562,0],[579,0],[596,0],[612,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m2\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                    "stack": "Error: more than two frames between whole and gone {\"top\":1,\"atTurn\":1,\"between\":0,\"share\":0.98,\"end\":0,\"frames\":[[-4,1],[12,1],[29,1],[30,1],[35,1],[46,0],[64,0],[78,0],[96,0],[112,0],[129,0],[146,0],[162,0],[179,0],[195,0],[213,0],[229,0],[246,0],[262,0],[279,0],[296,0],[312,0],[329,0],[346,0],[362,0],[378,0],[396,0],[412,0],[428,0],[446,0],[462,0],[479,0],[496,0],[512,0],[529,0],[545,0],[562,0],[579,0],[596,0],[612,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m2\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:873:83",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 83,
+                      "line": 873
+                    },
+                    "snippet": "  871 |         const at = JSON.stringify(read);\n  872 |         expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 873 |         expect(read.between, `more than two frames between whole and gone ${at}`).toBeGreaterThan(2);\n      |                                                                                   ^\n  874 |         expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  875 |     });\n  876 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 83,
+                        "line": 873
+                      },
+                      "message": "Error: more than two frames between whole and gone {\"top\":1,\"atTurn\":1,\"between\":0,\"share\":0.98,\"end\":0,\"frames\":[[-4,1],[12,1],[29,1],[30,1],[35,1],[46,0],[64,0],[78,0],[96,0],[112,0],[129,0],[146,0],[162,0],[179,0],[195,0],[213,0],[229,0],[246,0],[262,0],[279,0],[296,0],[312,0],[329,0],[346,0],[362,0],[378,0],[396,0],[412,0],[428,0],[446,0],[462,0],[479,0],[496,0],[512,0],[529,0],[545,0],[562,0],[579,0],[596,0],[612,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m2\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  871 |         const at = JSON.stringify(read);\n  872 |         expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 873 |         expect(read.between, `more than two frames between whole and gone ${at}`).toBeGreaterThan(2);\n      |                                                                                   ^\n  874 |         expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  875 |     });\n  876 | }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:873:83"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:15:19.204Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MSwiYmV0d2VlbiI6MCwic2hhcmUiOjAuOTgsImVuZCI6MCwiZnJhbWVzIjpbWy00LDFdLFsxMiwxXSxbMjksMV0sWzMwLDFdLFszNSwxXSxbNDYsMF0sWzY0LDBdLFs3OCwwXSxbOTYsMF0sWzExMiwwXSxbMTI5LDBdLFsxNDYsMF0sWzE2MiwwXSxbMTc5LDBdLFsxOTUsMF0sWzIxMywwXSxbMjI5LDBdLFsyNDYsMF0sWzI2MiwwXSxbMjc5LDBdLFsyOTYsMF0sWzMxMiwwXSxbMzI5LDBdLFszNDYsMF0sWzM2MiwwXSxbMzc4LDBdLFszOTYsMF0sWzQxMiwwXSxbNDI4LDBdLFs0NDYsMF0sWzQ2MiwwXSxbNDc5LDBdLFs0OTYsMF0sWzUxMiwwXSxbNTI5LDBdLFs1NDUsMF0sWzU2MiwwXSxbNTc5LDBdLFs1OTYsMF0sWzYxMiwwXV19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-expand-·-an-73b18-r-leaves-on-a-tween-by-exit-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 83,
+                    "line": 873
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-323db2a3caf09095879e",
+          "file": "release-11-1-1.spec.ts",
+          "line": 855,
+          "column": 5
+        },
+        {
+          "title": "expand · an ExpandableContainer leaves on a tween by escape",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5307,
+                  "error": {
+                    "message": "Error: more than two frames between whole and gone {\"top\":1,\"atTurn\":1,\"between\":0,\"share\":0.98,\"end\":0,\"frames\":[[-2,1],[15,0],[31,0],[48,0],[65,0],[81,0],[98,0],[115,0],[131,0],[148,0],[165,0],[181,0],[198,0],[215,0],[231,0],[248,0],[265,0],[281,0],[298,0],[315,0],[331,0],[348,0],[364,0],[382,0],[398,0],[415,0],[431,0],[448,0],[465,0],[481,0],[498,0],[515,0],[531,0],[548,0],[565,0],[581,0],[598,0],[615,0],[631,0],[648,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m2\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                    "stack": "Error: more than two frames between whole and gone {\"top\":1,\"atTurn\":1,\"between\":0,\"share\":0.98,\"end\":0,\"frames\":[[-2,1],[15,0],[31,0],[48,0],[65,0],[81,0],[98,0],[115,0],[131,0],[148,0],[165,0],[181,0],[198,0],[215,0],[231,0],[248,0],[265,0],[281,0],[298,0],[315,0],[331,0],[348,0],[364,0],[382,0],[398,0],[415,0],[431,0],[448,0],[465,0],[481,0],[498,0],[515,0],[531,0],[548,0],[565,0],[581,0],[598,0],[615,0],[631,0],[648,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m2\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:873:83",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 83,
+                      "line": 873
+                    },
+                    "snippet": "  871 |         const at = JSON.stringify(read);\n  872 |         expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 873 |         expect(read.between, `more than two frames between whole and gone ${at}`).toBeGreaterThan(2);\n      |                                                                                   ^\n  874 |         expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  875 |     });\n  876 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 83,
+                        "line": 873
+                      },
+                      "message": "Error: more than two frames between whole and gone {\"top\":1,\"atTurn\":1,\"between\":0,\"share\":0.98,\"end\":0,\"frames\":[[-2,1],[15,0],[31,0],[48,0],[65,0],[81,0],[98,0],[115,0],[131,0],[148,0],[165,0],[181,0],[198,0],[215,0],[231,0],[248,0],[265,0],[281,0],[298,0],[315,0],[331,0],[348,0],[364,0],[382,0],[398,0],[415,0],[431,0],[448,0],[465,0],[481,0],[498,0],[515,0],[531,0],[548,0],[565,0],[581,0],[598,0],[615,0],[631,0],[648,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m2\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  871 |         const at = JSON.stringify(read);\n  872 |         expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 873 |         expect(read.between, `more than two frames between whole and gone ${at}`).toBeGreaterThan(2);\n      |                                                                                   ^\n  874 |         expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  875 |     });\n  876 | }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:873:83"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:15:24.753Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MSwiYmV0d2VlbiI6MCwic2hhcmUiOjAuOTgsImVuZCI6MCwiZnJhbWVzIjpbWy0yLDFdLFsxNSwwXSxbMzEsMF0sWzQ4LDBdLFs2NSwwXSxbODEsMF0sWzk4LDBdLFsxMTUsMF0sWzEzMSwwXSxbMTQ4LDBdLFsxNjUsMF0sWzE4MSwwXSxbMTk4LDBdLFsyMTUsMF0sWzIzMSwwXSxbMjQ4LDBdLFsyNjUsMF0sWzI4MSwwXSxbMjk4LDBdLFszMTUsMF0sWzMzMSwwXSxbMzQ4LDBdLFszNjQsMF0sWzM4MiwwXSxbMzk4LDBdLFs0MTUsMF0sWzQzMSwwXSxbNDQ4LDBdLFs0NjUsMF0sWzQ4MSwwXSxbNDk4LDBdLFs1MTUsMF0sWzUzMSwwXSxbNTQ4LDBdLFs1NjUsMF0sWzU4MSwwXSxbNTk4LDBdLFs2MTUsMF0sWzYzMSwwXSxbNjQ4LDBdXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-expand-·-an-bf114-leaves-on-a-tween-by-escape-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 83,
+                    "line": 873
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-340252a4171a45534f51",
+          "file": "release-11-1-1.spec.ts",
+          "line": 855,
+          "column": 5
+        },
+        {
+          "title": "expand · an ExpandableContainer leaves on a tween by open",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5109,
+                  "error": {
+                    "message": "Error: more than two frames between whole and gone {\"top\":1,\"atTurn\":1,\"between\":0,\"share\":0.98,\"end\":0,\"frames\":[[-7,1],[10,0],[27,0],[43,0],[60,0],[77,0],[93,0],[110,0],[127,0],[143,0],[159,0],[177,0],[193,0],[210,0],[227,0],[243,0],[260,0],[277,0],[293,0],[310,0],[327,0],[343,0],[360,0],[376,0],[393,0],[410,0],[426,0],[443,0],[460,0],[476,0],[493,0],[510,0],[526,0],[543,0],[560,0],[577,0],[593,0],[610,0],[627,0],[643,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m2\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                    "stack": "Error: more than two frames between whole and gone {\"top\":1,\"atTurn\":1,\"between\":0,\"share\":0.98,\"end\":0,\"frames\":[[-7,1],[10,0],[27,0],[43,0],[60,0],[77,0],[93,0],[110,0],[127,0],[143,0],[159,0],[177,0],[193,0],[210,0],[227,0],[243,0],[260,0],[277,0],[293,0],[310,0],[327,0],[343,0],[360,0],[376,0],[393,0],[410,0],[426,0],[443,0],[460,0],[476,0],[493,0],[510,0],[526,0],[543,0],[560,0],[577,0],[593,0],[610,0],[627,0],[643,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m2\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:873:83",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 83,
+                      "line": 873
+                    },
+                    "snippet": "  871 |         const at = JSON.stringify(read);\n  872 |         expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 873 |         expect(read.between, `more than two frames between whole and gone ${at}`).toBeGreaterThan(2);\n      |                                                                                   ^\n  874 |         expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  875 |     });\n  876 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 83,
+                        "line": 873
+                      },
+                      "message": "Error: more than two frames between whole and gone {\"top\":1,\"atTurn\":1,\"between\":0,\"share\":0.98,\"end\":0,\"frames\":[[-7,1],[10,0],[27,0],[43,0],[60,0],[77,0],[93,0],[110,0],[127,0],[143,0],[159,0],[177,0],[193,0],[210,0],[227,0],[243,0],[260,0],[277,0],[293,0],[310,0],[327,0],[343,0],[360,0],[376,0],[393,0],[410,0],[426,0],[443,0],[460,0],[476,0],[493,0],[510,0],[526,0],[543,0],[560,0],[577,0],[593,0],[610,0],[627,0],[643,0]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m2\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  871 |         const at = JSON.stringify(read);\n  872 |         expect(read.end, `it ends gone ${at}`).toBeLessThan(0.02);\n> 873 |         expect(read.between, `more than two frames between whole and gone ${at}`).toBeGreaterThan(2);\n      |                                                                                   ^\n  874 |         expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  875 |     });\n  876 | }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:873:83"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:15:30.638Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MSwiYmV0d2VlbiI6MCwic2hhcmUiOjAuOTgsImVuZCI6MCwiZnJhbWVzIjpbWy03LDFdLFsxMCwwXSxbMjcsMF0sWzQzLDBdLFs2MCwwXSxbNzcsMF0sWzkzLDBdLFsxMTAsMF0sWzEyNywwXSxbMTQzLDBdLFsxNTksMF0sWzE3NywwXSxbMTkzLDBdLFsyMTAsMF0sWzIyNywwXSxbMjQzLDBdLFsyNjAsMF0sWzI3NywwXSxbMjkzLDBdLFszMTAsMF0sWzMyNywwXSxbMzQzLDBdLFszNjAsMF0sWzM3NiwwXSxbMzkzLDBdLFs0MTAsMF0sWzQyNiwwXSxbNDQzLDBdLFs0NjAsMF0sWzQ3NiwwXSxbNDkzLDBdLFs1MTAsMF0sWzUyNiwwXSxbNTQzLDBdLFs1NjAsMF0sWzU3NywwXSxbNTkzLDBdLFs2MTAsMF0sWzYyNywwXSxbNjQzLDBdXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-expand-·-an-475d1-r-leaves-on-a-tween-by-open-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 83,
+                    "line": 873
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-3de0f464a19c340fdbce",
+          "file": "release-11-1-1.spec.ts",
+          "line": 855,
+          "column": 5
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4259,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:15:36.293Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC4yMTQsImJldHdlZW4iOjEsInNoYXJlIjowLjE3OCwiZW5kIjowLCJmcmFtZXMiOltbLTExLDAuMjE0XSxbOSwwXSxbMjIsMF0sWzM5LDBdLFs1NiwwXSxbNzIsMF0sWzg4LDBdLFsxMDYsMF0sWzEyMiwwXSxbMTM5LDBdLFsxNTYsMF0sWzE3MiwwXSxbMTg5LDBdLFsyMDYsMF0sWzIyMywwXSxbMjM5LDBdLFsyNTUsMF0sWzI3MywwXSxbMjg5LDBdLFszMDYsMF0sWzMyMywwXSxbMzQwLDBdLFszNTYsMF0sWzM3MiwwXSxbMzkwLDBdLFs0MDYsMF0sWzQyMiwwXSxbNDM5LDBdLFs0NTYsMF0sWzQ3MiwwXSxbNDg5LDBdLFs1MDYsMF0sWzUyMiwwXSxbNTM5LDBdLFs1NTYsMF0sWzU3MiwwXSxbNTg5LDBdLFs2MDYsMF0sWzYyMywwXSxbNjM5LDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-83da110c4e0921f77a46",
+          "file": "release-11-1-1.spec.ts",
+          "line": 878,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer reopened while it leaves turns from where it is",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5197,
+                  "error": {
+                    "message": "Error: the reopen lands mid-exit {\"top\":1,\"atTurn\":0,\"between\":12,\"share\":0.123,\"end\":1,\"frames\":[[-3,0],[14,0],[31,0],[32,0],[35,0],[47,0],[65,0.036],[81,0.112],[97,0.214],[114,0.336],[131,0.462],[148,0.58],[164,0.678],[181,0.766],[197,0.832],[214,0.887],[231,0.927],[247,0.954],[264,1],[280,1],[298,1],[314,1],[331,1],[347,1],[365,1],[380,1],[398,1],[414,1],[430,1],[448,1],[464,1],[481,1],[497,1],[513,1],[531,1],[547,1],[564,1],[581,1],[597,1],[614,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.02\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                    "stack": "Error: the reopen lands mid-exit {\"top\":1,\"atTurn\":0,\"between\":12,\"share\":0.123,\"end\":1,\"frames\":[[-3,0],[14,0],[31,0],[32,0],[35,0],[47,0],[65,0.036],[81,0.112],[97,0.214],[114,0.336],[131,0.462],[148,0.58],[164,0.678],[181,0.766],[197,0.832],[214,0.887],[231,0.927],[247,0.954],[264,1],[280,1],[298,1],[314,1],[331,1],[347,1],[365,1],[380,1],[398,1],[414,1],[430,1],[448,1],[464,1],[481,1],[497,1],[513,1],[531,1],[547,1],[564,1],[581,1],[597,1],[614,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.02\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:906:60",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                      "column": 60,
+                      "line": 906
+                    },
+                    "snippet": "  904 |     await info.attach(\"turn\", { body: JSON.stringify(read), contentType: \"application/json\" });\n  905 |     const at = JSON.stringify(read);\n> 906 |     expect(read.atTurn, `the reopen lands mid-exit ${at}`).toBeGreaterThan(0.02);\n      |                                                            ^\n  907 |     expect(read.end, `it ends whole ${at}`).toBeGreaterThan(0.95);\n  908 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  909 | });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                        "column": 60,
+                        "line": 906
+                      },
+                      "message": "Error: the reopen lands mid-exit {\"top\":1,\"atTurn\":0,\"between\":12,\"share\":0.123,\"end\":1,\"frames\":[[-3,0],[14,0],[31,0],[32,0],[35,0],[47,0],[65,0.036],[81,0.112],[97,0.214],[114,0.336],[131,0.462],[148,0.58],[164,0.678],[181,0.766],[197,0.832],[214,0.887],[231,0.927],[247,0.954],[264,1],[280,1],[298,1],[314,1],[331,1],[347,1],[365,1],[380,1],[398,1],[414,1],[430,1],[448,1],[464,1],[481,1],[497,1],[513,1],[531,1],[547,1],[564,1],[581,1],[597,1],[614,1]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0.02\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  904 |     await info.attach(\"turn\", { body: JSON.stringify(read), contentType: \"application/json\" });\n  905 |     const at = JSON.stringify(read);\n> 906 |     expect(read.atTurn, `the reopen lands mid-exit ${at}`).toBeGreaterThan(0.02);\n      |                                                            ^\n  907 |     expect(read.end, `it ends whole ${at}`).toBeGreaterThan(0.95);\n  908 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);\n  909 | });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:906:60"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:15:40.734Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MCwiYmV0d2VlbiI6MTIsInNoYXJlIjowLjEyMywiZW5kIjoxLCJmcmFtZXMiOltbLTMsMF0sWzE0LDBdLFszMSwwXSxbMzIsMF0sWzM1LDBdLFs0NywwXSxbNjUsMC4wMzZdLFs4MSwwLjExMl0sWzk3LDAuMjE0XSxbMTE0LDAuMzM2XSxbMTMxLDAuNDYyXSxbMTQ4LDAuNThdLFsxNjQsMC42NzhdLFsxODEsMC43NjZdLFsxOTcsMC44MzJdLFsyMTQsMC44ODddLFsyMzEsMC45MjddLFsyNDcsMC45NTRdLFsyNjQsMV0sWzI4MCwxXSxbMjk4LDFdLFszMTQsMV0sWzMzMSwxXSxbMzQ3LDFdLFszNjUsMV0sWzM4MCwxXSxbMzk4LDFdLFs0MTQsMV0sWzQzMCwxXSxbNDQ4LDFdLFs0NjQsMV0sWzQ4MSwxXSxbNDk3LDFdLFs1MTMsMV0sWzUzMSwxXSxbNTQ3LDFdLFs1NjQsMV0sWzU4MSwxXSxbNTk3LDFdLFs2MTQsMV1dfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/test-results/release-11-1-1-expand-·-an-29929-aves-turns-from-where-it-is-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts",
+                    "column": 60,
+                    "line": 906
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-22fd1b93697a9d790b8e",
+          "file": "release-11-1-1.spec.ts",
+          "line": 895,
+          "column": 1
+        },
+        {
+          "title": "expand · Escape is live from the entrance's first frame",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1901,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T03:15:46.312Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-b4a2698e689940887ef8",
+          "file": "release-11-1-1.spec.ts",
+          "line": 911,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-16T03:15:13.932Z",
+    "duration": 34524.165,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 4,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,56 @@
+
+Running 27 tests using 1 worker
+
+  ✓   1 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:58:5 › form · a dock Select leaves in the form it opened in · pick (2.4s)
+  ✓   2 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:98:5 › form · a dock DropdownMenu keeps its material through the exit · pick (2.4s)
+  ✓   3 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:58:5 › form · a dock Select leaves in the form it opened in · outside (2.4s)
+  ✓   4 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:98:5 › form · a dock DropdownMenu keeps its material through the exit · outside (2.4s)
+  ✓   5 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:58:5 › form · a dock Select leaves in the form it opened in · escape (2.4s)
+  ✓   6 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:98:5 › form · a dock DropdownMenu keeps its material through the exit · escape (2.3s)
+  -   7 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:208:9 › glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · light
+  -   8 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:208:9 › glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · dark
+  -   9 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:245:5 › glass · a phone Select is solid under reduced transparency
+  -  10 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:208:9 › glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · light
+  -  11 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:208:9 › glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · dark
+  -  12 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:245:5 › glass · a phone dock DropdownMenu is solid under reduced transparency
+  ✓  13 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Select leaves on the exit curve, shorter than it entered (3.4s)
+  ✓  14 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · DropdownMenu leaves on the exit curve, shorter than it entered (3.4s)
+  ✓  15 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Popover leaves on the exit curve, shorter than it entered (3.4s)
+  ✓  16 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Tooltip leaves on the exit curve, shorter than it entered (3.4s)
+  ✓  17 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Dialog leaves on the exit curve, shorter than it entered (3.4s)
+  ✓  18 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Sheet right leaves on the exit curve, shorter than it entered (3.4s)
+  ✓  19 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:314:5 › exit · Sheet bottom leaves on the exit curve, shorter than it entered (3.4s)
+  ✓  20 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:426:5 › routes · a detented Sheet leaves whole by escape (3.5s)
+  ✓  21 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:426:5 › routes · a detented Sheet leaves whole by outside (3.5s)
+  ✘  22 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:448:5 › routes · a CommandDialog keeps its list through its exit by pick (2.6s)
+  ✓  23 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:448:5 › routes · a CommandDialog keeps its list through its exit by escape (2.8s)
+  ✓  24 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:448:5 › routes · a CommandDialog keeps its list through its exit by outside (2.6s)
+  ✓  25 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:482:5 › routes · a press on an open Select's trigger closes it once (2.5s)
+  ✓  26 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:482:5 › routes · a press on an open DropdownMenu's trigger closes it once (2.5s)
+  ✓  27 [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:482:5 › routes · a press on an open Popover's trigger closes it once (2.4s)
+
+
+  1) [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:448:5 › routes · a CommandDialog keeps its list through its exit by pick 
+
+    Error: no frame takes more than a fifth of what is seen [[0,1,435],[4,1,435],[11,1,435],[18,1,435],[25,1,435],[34,1,435],[64,1,435],[78,0.897,433],[85,0.777,430],[94,0.716,429],[100,0.634,427],[108,0.583,426],[115,0.501,424],[122,0.435,423],[131,0.372,421],[136,0.284,419],[145,0.241,418],[151,0.161,417],[160,0.114,416],[167,0.053,414],[177,0.006,413]]
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.206
+
+      469 |             expect(f.h!, `the plate keeps its height ${at}`).toBeGreaterThanOrEqual(read.rest.h! * 0.9);
+      470 |         }
+    > 471 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+          |                                                                                      ^
+      472 |     });
+      473 | }
+      474 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:471:86
+
+    Error Context: tests-visual/test-results/release-11-1-1-routes-·-a--79dcb-st-through-its-exit-by-pick-chromium-desktop/error-context.md
+
+  1 failed
+    [chromium-desktop] › tests-visual/release-11-1-1.spec.ts:448:5 › routes · a CommandDialog keeps its list through its exit by pick 
+  6 skipped
+  20 passed (1.0m)

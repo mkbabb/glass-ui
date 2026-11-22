@@ -1,0 +1,308 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-1-1.config.ts",
+      "--project=chromium-desktop",
+      "--workers=1",
+      "-g",
+      "Collapsible|Accordion"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/logs/b5-cd2.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "reverse · a Collapsible closed while it opens turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3992,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T02:45:23.442Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNTA2LCJzaGFyZSI6MC4xNiwiZW5kIjowLCJmcmFtZXMiOltbLTYsMC41MDZdLFsxLDAuNTY0XSxbOCwwLjYxNV0sWzE2LDAuNjc1XSxbMjQsMC42NzVdLFszMSwwLjYwM10sWzM4LDAuNTM4XSxbNDYsMC40NzFdLFs1MywwLjQwNl0sWzYwLDAuMzU3XSxbNjcsMC4zMV0sWzc0LDAuMjY5XSxbODMsMC4yMjZdLFs5MSwwLjE5XSxbOTksMC4xNThdLFsxMDUsMC4xNF0sWzExMiwwLjExOV0sWzExOSwwLjEwM10sWzEyNywwLjA4NF0sWzEzNCwwLjA3M10sWzE0MSwwLjA2MV0sWzE0OCwwLjA1Ml0sWzE1NywwLjA0Ml0sWzE2NSwwLjAzNF0sWzE3MSwwLjAzXSxbMTc5LDAuMDI1XSxbMTg2LDBdLFsxOTMsMF0sWzE5OSwwXSxbMjA3LDBdLFsyMTYsMF0sWzIyNCwwXSxbMjMyLDBdLFsyMzgsMF0sWzI0NSwwXSxbMjUzLDBdLFsyNjEsMF0sWzI2NiwwXSxbMjc1LDBdLFsyODIsMF0sWzI4OSwwXSxbMjk3LDBdLFszMDMsMF0sWzMxMSwwXSxbMzIwLDBdLFszMjcsMF0sWzMzNCwwXSxbMzQxLDBdLFszNDgsMF0sWzM1NywwXSxbMzY0LDBdLFszNzEsMF0sWzM3OCwwXSxbMzg1LDBdLFszOTQsMF0sWzQwMCwwXSxbNDA3LDBdLFs0MTQsMF0sWzQyNCwwXSxbNDMyLDBdLFs0MzcsMF0sWzQ0NSwwXSxbNDUzLDBdLFs0NjEsMF0sWzQ2NywwXSxbNDc0LDBdLFs0ODIsMF0sWzQ5MCwwXSxbNDk4LDBdLFs1MDQsMF0sWzUxMiwwXSxbNTIwLDBdLFs1MjcsMF0sWzUzNCwwXSxbNTQxLDBdLFs1NDksMF0sWzU1NywwXSxbNTY0LDBdLFs1NzEsMF0sWzU3OCwwXSxbNTg1LDBdLFs1OTUsMF0sWzYwMSwwXSxbNjA5LDBdLFs2MTYsMF0sWzYyNCwwXSxbNjMyLDBdLFs2MzcsMF0sWzY0NSwwXSxbNjUzLDBdLFs2NjEsMF0sWzY2OSwwXSxbNjc0LDBdLFs2ODMsMF0sWzY5MCwwXSxbNjk5LDBdLFs3MDMsMF0sWzcxMSwwXSxbNzE4LDBdLFs3MjcsMF0sWzczNSwwXSxbNzQyLDBdLFs3NDksMF0sWzc1NywwXSxbNzY0LDBdLFs3NzEsMF0sWzc3OCwwXSxbNzg1LDBdLFs3OTUsMF0sWzgwMiwwXSxbODA4LDBdLFs4MTYsMF0sWzgyNCwwXSxbODMxLDBdLFs4MzcsMF0sWzg0NCwwXSxbODUzLDBdLFs4NjEsMF0sWzg2OSwwXSxbODc3LDBdLFs4ODYsMF0sWzg5NCwwXSxbOTAyLDBdLFs5MDgsMF0sWzkxNiwwXSxbOTI0LDBdLFs5MzEsMF0sWzkzNywwXSxbOTQ0LDBdLFs5NTMsMF0sWzk2MSwwXSxbOTY5LDBdLFs5NzUsMF0sWzk4MiwwXSxbOTkwLDBdLFs5OTgsMF0sWzEwMDQsMF0sWzEwMTAsMF0sWzEwMjAsMF0sWzEwMjcsMF0sWzEwMzYsMF0sWzEwNDEsMF0sWzEwNDksMF0sWzEwNTcsMF0sWzEwNjUsMF0sWzEwNzEsMF0sWzEwNzgsMF0sWzEwODUsMF0sWzEwOTQsMF0sWzExMDEsMF0sWzExMDgsMF0sWzExMTYsMF0sWzExMjQsMF0sWzExMzIsMF0sWzExMzcsMF0sWzExNDUsMF0sWzExNTIsMF0sWzExNjEsMF0sWzExNjksMF0sWzExNzUsMF0sWzExODIsMF0sWzExOTAsMF0sWzExOTgsMF0sWzEyMDQsMF0sWzEyMTIsMF0sWzEyMTgsMF0sWzEyMjgsMF0sWzEyMzUsMF0sWzEyNDIsMF0sWzEyNDksMF0sWzEyNTcsMF0sWzEyNjUsMF0sWzEyNzEsMF0sWzEyNzgsMF0sWzEyODYsMF0sWzEyOTQsMF0sWzEzMDMsMF0sWzEzMDgsMF0sWzEzMTYsMF0sWzEzMjIsMF0sWzEzMzIsMF0sWzEzMzcsMF0sWzEzNDUsMF0sWzEzNTMsMF0sWzEzNjAsMF0sWzEzNjksMF0sWzEzNzQsMF0sWzEzODEsMF0sWzEzODksMF0sWzEzOTcsMF0sWzE0MDQsMF0sWzE0MTEsMF0sWzE0MTksMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-223ce48d4f3b94590e49",
+          "file": "release-11-1-1.spec.ts",
+          "line": 642,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Collapsible reopened while it closes turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4890,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T02:45:27.541Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNjUxLCJzaGFyZSI6MC4xNTIsImVuZCI6MSwiZnJhbWVzIjpbWy03LDAuNjUxXSxbMiwwLjU1Nl0sWzksMC40OTRdLFsxOSwwLjQxMV0sWzI3LDAuNDExXSxbMzUsMC40OV0sWzQxLDAuNTQxXSxbNTAsMC42MV0sWzU3LDAuNjU5XSxbNjQsMC43MDhdLFs3MCwwLjc0Ml0sWzc5LDAuNzg1XSxbODYsMC44MTRdLFs5MywwLjgzOV0sWzEwMiwwLjg3XSxbMTA5LDAuODg4XSxbMTE4LDAuOTFdLFsxMjQsMC45Ml0sWzEzMiwwLjkzNF0sWzEzNywwLjk0Ml0sWzE0NiwwLjk1Ml0sWzE1MiwwLjk1OV0sWzE2MCwwLjk2Nl0sWzE2OCwwLjk3Ml0sWzE3NSwwLjk4NF0sWzE4MiwxXSxbMTg5LDFdLFsxOTgsMV0sWzIwNiwxXSxbMjEyLDFdLFsyMTksMV0sWzIyNywxXSxbMjM0LDFdLFsyNDMsMV0sWzI0OCwxXSxbMjU3LDFdLFsyNjQsMV0sWzI3MCwxXSxbMjc5LDFdLFsyODUsMV0sWzI5MiwxXSxbMzAxLDFdLFszMTAsMV0sWzMxNSwxXSxbMzIzLDFdLFszMzEsMV0sWzMzNiwxXSxbMzQ0LDFdLFszNTIsMV0sWzM2MCwxXSxbMzY4LDFdLFszNzYsMV0sWzM4MiwxXSxbMzg5LDFdLFszOTYsMV0sWzQwNCwxXSxbNDEwLDFdLFs0MTgsMV0sWzQyNiwxXSxbNDM0LDFdLFs0NDMsMV0sWzQ0OCwxXSxbNDU1LDFdLFs0NjQsMV0sWzQ3MiwxXSxbNDgwLDFdLFs0ODYsMV0sWzQ5NCwxXSxbNTAxLDFdLFs1MTAsMV0sWzUxNywxXSxbNTI3LDFdLFs1MzQsMV0sWzU0MiwxXSxbNTUzLDFdLFs1NjIsMV0sWzU3MSwxXSxbNTc3LDFdLFs1ODUsMV0sWzU5MywxXSxbNjAxLDFdLFs2MDksMV0sWzYxNCwxXSxbNjIyLDFdLFs2MzAsMV0sWzYzOSwxXSxbNjQ0LDFdLFs2NTIsMV0sWzY2MSwxXSxbNjY3LDFdLFs2NzYsMV0sWzY4MiwxXSxbNjg5LDFdLFs2OTcsMV0sWzcwNiwxXSxbNzExLDFdLFs3MTgsMV0sWzcyNiwxXSxbNzM1LDFdLFs3NDIsMV0sWzc0OSwxXSxbNzU1LDFdLFs3NjMsMV0sWzc3MiwxXSxbNzc4LDFdLFs3ODUsMV0sWzc5MywxXSxbODAxLDFdLFs4MDgsMV0sWzgxNSwxXSxbODIyLDFdLFs4MzEsMV0sWzgzOCwxXSxbODQ2LDFdLFs4NTMsMV0sWzg1OSwxXSxbODY4LDFdLFs4NzYsMV0sWzg4NCwxXSxbODg5LDFdLFs4OTgsMV0sWzkwMywxXSxbOTEyLDFdLFs5MTgsMV0sWzkyNiwxXSxbOTM0LDFdLFs5NDMsMV0sWzk0OCwxXSxbOTU1LDFdLFs5NjQsMV0sWzk3MiwxXSxbOTc3LDFdLFs5ODUsMV0sWzk5MywxXSxbMTAwMSwxXSxbMTAwOSwxXSxbMTAxNSwxXSxbMTAyMiwxXSxbMTAzMCwxXSxbMTAzOSwxXSxbMTA0MywxXSxbMTA1MiwxXSxbMTA1OSwxXSxbMTA2OCwxXSxbMTA3NiwxXSxbMTA4MiwxXSxbMTA4OSwxXSxbMTA5NywxXSxbMTEwNSwxXSxbMTExMSwxXSxbMTExNywxXSxbMTEyNiwxXSxbMTEzMywxXSxbMTE0MywxXSxbMTE0OCwxXSxbMTE1NiwxXSxbMTE2MywxXSxbMTE3MiwxXSxbMTE3NiwxXSxbMTE4NCwxXSxbMTE5MywxXSxbMTIwMCwxXSxbMTIwOSwxXSxbMTIxNSwxXSxbMTIyMiwxXSxbMTIyOSwxXSxbMTIzOSwxXSxbMTI0NCwxXSxbMTI1MiwxXSxbMTI2MCwxXSxbMTI2NywxXSxbMTI3NiwxXSxbMTI4MiwxXSxbMTI4OSwxXSxbMTI5NywxXSxbMTMwNSwxXSxbMTMxMSwxXSxbMTMxNywxXSxbMTMyNiwxXSxbMTMzNCwxXSxbMTM0MiwxXSxbMTM0OCwxXSxbMTM1NiwxXSxbMTM2NCwxXSxbMTM3MSwxXSxbMTM3NywxXSxbMTM4NCwxXSxbMTM5MiwxXSxbMTQwMCwxXSxbMTQxNiwxXSxbMTQyMywxXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-25c3bbba974d01c7b25a",
+          "file": "release-11-1-1.spec.ts",
+          "line": 652,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Accordion closed while it opens turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3976,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T02:45:32.437Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNTA0LCJzaGFyZSI6MC4xNjEsImVuZCI6MCwiZnJhbWVzIjpbWy04LDAuNTA0XSxbMSwwLjU3NV0sWzgsMC42MjddLFsxNSwwLjY3N10sWzI0LDAuNjc3XSxbMjgsMC42MzFdLFszNywwLjU0Nl0sWzQ0LDAuNDc4XSxbNTIsMC40MTJdLFs1OSwwLjM2XSxbNjYsMC4zMTRdLFs3NCwwLjI2OV0sWzgwLDAuMjM1XSxbODgsMC4xOThdLFs5NiwwLjE2OV0sWzEwMywwLjE0NF0sWzExMSwwLjEyMV0sWzExOSwwLjFdLFsxMjcsMC4wODNdLFsxMzMsMC4wNzNdLFsxNDEsMC4wNjFdLFsxNDksMC4wNTFdLFsxNTYsMC4wNDJdLFsxNjIsMC4wMzddLFsxNjksMC4wMzFdLFsxNzgsMC4wMjVdLFsxODYsMF0sWzE5NCwwXSxbMjAwLDBdLFsyMDcsMF0sWzIxNSwwXSxbMjIzLDBdLFsyMjgsMF0sWzIzNiwwXSxbMjQ1LDBdLFsyNTIsMF0sWzI2MCwwXSxbMjY2LDBdLFsyNzQsMF0sWzI4MiwwXSxbMjg5LDBdLFsyOTUsMF0sWzMwMywwXSxbMzExLDBdLFszMTksMF0sWzMyNiwwXSxbMzMzLDBdLFszNDAsMF0sWzM0OCwwXSxbMzU2LDBdLFszNjIsMF0sWzM3MCwwXSxbMzc4LDBdLFszODYsMF0sWzM5MywwXSxbNDAwLDBdLFs0MDYsMF0sWzQxNCwwXSxbNDIzLDBdLFs0MjksMF0sWzQzNiwwXSxbNDQzLDBdLFs0NTIsMF0sWzQ2MSwwXSxbNDY2LDBdLFs0NzMsMF0sWzQ4MCwwXSxbNDg5LDBdLFs0OTYsMF0sWzUwMywwXSxbNTEwLDBdLFs1MTksMF0sWzUyNywwXSxbNTMzLDBdLFs1MzksMF0sWzU0OCwwXSxbNTU3LDBdLFs1NjIsMF0sWzU3MCwwXSxbNTc2LDBdLFs1ODYsMF0sWzU5NCwwXSxbNTk5LDBdLFs2MDcsMF0sWzYxNSwwXSxbNjIyLDBdLFs2MjksMF0sWzYzNSwwXSxbNjQzLDBdLFs2NTEsMF0sWzY1OSwwXSxbNjY2LDBdLFs2NzQsMF0sWzY4MiwwXSxbNjg5LDBdLFs2OTQsMF0sWzcwMiwwXSxbNzExLDBdLFs3MTksMF0sWzcyNywwXSxbNzMzLDBdLFs3NDAsMF0sWzc0OCwwXSxbNzU2LDBdLFs3NjIsMF0sWzc2OCwwXSxbNzc4LDBdLFs3ODQsMF0sWzc5MywwXSxbNzk5LDBdLFs4MDcsMF0sWzgxNSwwXSxbODIzLDBdLFs4MjcsMF0sWzgzNiwwXSxbODQ0LDBdLFs4NTEsMF0sWzg2MSwwXSxbODY3LDBdLFs4NzcsMF0sWzg4NSwwXSxbODk0LDBdLFs4OTksMF0sWzkwNiwwXSxbOTE1LDBdLFs5MjMsMF0sWzkyOCwwXSxbOTM2LDBdLFs5NDMsMF0sWzk1MiwwXSxbOTYwLDBdLFs5NjYsMF0sWzk3MywwXSxbOTgxLDBdLFs5ODksMF0sWzk5NSwwXSxbMTAwMiwwXSxbMTAxMSwwXSxbMTAxOCwwXSxbMTAyNywwXSxbMTAzMiwwXSxbMTA0MCwwXSxbMTA0OCwwXSxbMTA1NiwwXSxbMTA2MiwwXSxbMTA2OCwwXSxbMTA3NywwXSxbMTA4NSwwXSxbMTA5MywwXSxbMTA5OCwwXSxbMTEwNiwwXSxbMTExNSwwXSxbMTEyMywwXSxbMTEyNywwXSxbMTEzNiwwXSxbMTE0MywwXSxbMTE1MSwwXSxbMTE2MCwwXSxbMTE2NiwwXSxbMTE3NCwwXSxbMTE4MSwwXSxbMTE4OSwwXSxbMTE5NSwwXSxbMTIwMiwwXSxbMTIxMSwwXSxbMTIxOCwwXSxbMTIyNiwwXSxbMTIzMiwwXSxbMTI0MCwwXSxbMTI0NywwXSxbMTI1NiwwXSxbMTI2MSwwXSxbMTI2OCwwXSxbMTI3NywwXSxbMTI4NCwwXSxbMTI5MywwXSxbMTI5OSwwXSxbMTMwNiwwXSxbMTMxNCwwXSxbMTMyMiwwXSxbMTMyOCwwXSxbMTMzNiwwXSxbMTM0NCwwXSxbMTM1MSwwXSxbMTM2MCwwXSxbMTM2NSwwXSxbMTM3MywwXSxbMTM4MSwwXSxbMTM4OSwwXSxbMTM5NSwwXSxbMTQwMiwwXSxbMTQxMCwwXSxbMTQxOSwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-983cd8cd2fe54b367cb0",
+          "file": "release-11-1-1.spec.ts",
+          "line": 642,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Accordion reopened while it closes turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-desktop",
+              "projectName": "chromium-desktop",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4883,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T02:45:36.417Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNjIzLCJzaGFyZSI6MC4xNTMsImVuZCI6MSwiZnJhbWVzIjpbWy03LDAuNjIzXSxbMCwwLjU1OF0sWzgsMC40ODFdLFsxNCwwLjQzNV0sWzIyLDAuNDM1XSxbMjgsMC40OV0sWzM3LDAuNTY2XSxbNDUsMC42MjldLFs1MSwwLjY2Nl0sWzU3LDAuNzA4XSxbNjYsMC43NTddLFs3NCwwLjc5NF0sWzgwLDAuODJdLFs4OCwwLjg0OV0sWzk0LDAuODY3XSxbMTA0LDAuODkzXSxbMTEyLDAuOTFdLFsxMTksMC45MjVdLFsxMjUsMC45MzVdLFsxMzIsMC45NDRdLFsxNDEsMC45NTVdLFsxNDksMC45NjNdLFsxNTQsMC45NjddLFsxNjIsMC45NzNdLFsxNjksMC45OTFdLFsxNzgsMV0sWzE4NCwxXSxbMTkxLDFdLFsxOTksMV0sWzIwNywxXSxbMjE2LDFdLFsyMjEsMV0sWzIyOCwxXSxbMjM3LDFdLFsyNDUsMV0sWzI1MywxXSxbMjYxLDFdLFsyNzAsMV0sWzI3NywxXSxbMjg0LDFdLFsyOTEsMV0sWzI5OCwxXSxbMzA4LDFdLFszMTQsMV0sWzMyNCwxXSxbMzMxLDFdLFszMzksMV0sWzM0OSwxXSxbMzU0LDFdLFszNjIsMV0sWzM3MCwxXSxbMzc4LDFdLFszODgsMV0sWzM5NywxXSxbNDA3LDFdLFs0MTUsMV0sWzQyMSwxXSxbNDI5LDFdLFs0MzcsMV0sWzQ0NSwxXSxbNDUwLDFdLFs0NTgsMV0sWzQ2NiwxXSxbNDc0LDFdLFs0ODIsMV0sWzQ4OCwxXSxbNDk1LDFdLFs1MDMsMV0sWzUxMCwxXSxbNTE3LDFdLFs1MjUsMV0sWzUzMywxXSxbNTQxLDFdLFs1NDksMV0sWzU1NSwxXSxbNTYyLDFdLFs1NjksMV0sWzU3NywxXSxbNTg0LDFdLFs1OTAsMV0sWzU5OSwxXSxbNjA3LDFdLFs2MTQsMV0sWzYyMiwxXSxbNjI5LDFdLFs2MzcsMV0sWzY0NCwxXSxbNjUwLDFdLFs2NTcsMV0sWzY2NiwxXSxbNjc0LDFdLFs2ODEsMV0sWzY4OCwxXSxbNjk1LDFdLFs3MDMsMV0sWzcxMSwxXSxbNzE3LDFdLFs3MjUsMV0sWzczMiwxXSxbNzQxLDFdLFs3NDksMV0sWzc1NCwxXSxbNzYyLDFdLFs3NjksMV0sWzc3OCwxXSxbNzgzLDFdLFs3OTEsMV0sWzc5OSwxXSxbODA2LDFdLFs4MTYsMV0sWzgyMSwxXSxbODI3LDFdLFs4MzcsMV0sWzg0NSwxXSxbODUwLDFdLFs4NTcsMV0sWzg2NSwxXSxbODc0LDFdLFs4ODIsMV0sWzg4NywxXSxbODk2LDFdLFs5MDMsMV0sWzkxMSwxXSxbOTE3LDFdLFs5MjQsMV0sWzkzMiwxXSxbOTQxLDFdLFs5NDksMV0sWzk1NCwxXSxbOTYyLDFdLFs5NjksMV0sWzk3OCwxXSxbOTgzLDFdLFs5OTEsMV0sWzk5OCwxXSxbMTAwNywxXSxbMTAxNSwxXSxbMTAyMSwxXSxbMTAyOSwxXSxbMTAzNiwxXSxbMTA0MywxXSxbMTA1MCwxXSxbMTA1OCwxXSxbMTA2NiwxXSxbMTA3NCwxXSxbMTA4MSwxXSxbMTA4OCwxXSxbMTA5NSwxXSxbMTEwMywxXSxbMTExMSwxXSxbMTExNywxXSxbMTEyNCwxXSxbMTEzMSwxXSxbMTE0MSwxXSxbMTE0OCwxXSxbMTE1NCwxXSxbMTE2MiwxXSxbMTE3MCwxXSxbMTE3OCwxXSxbMTE4NSwxXSxbMTE5NSwxXSxbMTIwMiwxXSxbMTIxMSwxXSxbMTIxOSwxXSxbMTIyOCwxXSxbMTIzNiwxXSxbMTI0NCwxXSxbMTI1MCwxXSxbMTI1OCwxXSxbMTI2NSwxXSxbMTI3NCwxXSxbMTI4MiwxXSxbMTI4OCwxXSxbMTI5NSwxXSxbMTMwMywxXSxbMTMxMSwxXSxbMTMxNywxXSxbMTMyNCwxXSxbMTMzMiwxXSxbMTM0MCwxXSxbMTM0OSwxXSxbMTM1NCwxXSxbMTM2MiwxXSxbMTM3MCwxXSxbMTM3NywxXSxbMTM4MywxXSxbMTM5MSwxXSxbMTM5OSwxXSxbMTQwNywxXSxbMTQxNSwxXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-e35e56b79be6229919a5",
+          "file": "release-11-1-1.spec.ts",
+          "line": 652,
+          "column": 9
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-16T02:45:23.071Z",
+    "duration": 18261.49,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

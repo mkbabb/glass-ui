@@ -1,0 +1,742 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/release-11-1-1.config.ts",
+      "--project=webkit-phone",
+      "--workers=1",
+      "-g",
+      "reverse"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/logs/r5-green-webkit-phone.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "reverse · a Select closed while it opens turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2814,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T02:55:34.577Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuMzMsInNoYXJlIjowLjExMSwiZW5kIjowLCJmcmFtZXMiOltbLTYsMC4zM10sWzExLDAuNDQzXSxbMTgsMC40NjRdLFsyNiwwLjQ4NF0sWzM2LDAuNDkzXSxbNDYsMC40OTZdLFs1NywwLjQ4MV0sWzY3LDAuNDU3XSxbNzcsMC40Ml0sWzg3LDAuMzgzXSxbOTcsMC4zNDJdLFsxMDcsMC4yOTldLFsxMTgsMC4yNTRdLFsxMjgsMC4yMTJdLFsxMzgsMC4xN10sWzE0OCwwLjEzMV0sWzE1OCwwLjA5N10sWzE2OCwwLjA2OV0sWzE3OSwwLjA0Nl0sWzE4OCwwLjAyOV0sWzE5OSwwLjAxNV0sWzIwOSwwLjAwNl0sWzIxOSwwLjAwMl0sWzIzMCwwXSxbMjQwLDBdLFsyNjEsMF0sWzI3MSwwXSxbMjgxLDBdLFsyOTIsMF0sWzMwMSwwXSxbMzEyLDBdLFszMjIsMF0sWzMzMiwwXSxbMzQyLDBdLFszNTIsMF0sWzM2MywwXSxbMzczLDBdLFszODMsMF0sWzM5MywwXSxbNDAzLDBdLFs0MTQsMF0sWzQyMywwXSxbNDM0LDBdLFs0NDQsMF0sWzQ1NCwwXSxbNDY1LDBdLFs0NzUsMF0sWzQ4NCwwXSxbNDk2LDBdLFs1MDUsMF0sWzUxNiwwXSxbNTI2LDBdLFs1MzYsMF0sWzU0NiwwXSxbNTU2LDBdLFs1NjcsMF0sWzU3NiwwXSxbNTg3LDBdLFs1OTcsMF0sWzYwNywwXSxbNjE3LDBdLFs2MjgsMF0sWzYzOCwwXSxbNjQ4LDBdLFs2NjAsMF0sWzY2OSwwXSxbNjc4LDBdLFs2ODksMF0sWzY5OSwwXSxbNzA5LDBdLFs3MTksMF0sWzczMCwwXSxbNzQwLDBdLFs3NTEsMF0sWzc2MCwwXSxbNzcwLDBdLFs3ODEsMF0sWzc5MCwwXSxbODAxLDBdLFs4MTEsMF0sWzgyMiwwXSxbODMxLDBdLFs4NDIsMF0sWzg1MiwwXSxbODYzLDBdLFs4NzMsMF0sWzg4MywwXSxbODkzLDBdLFs5MDMsMF0sWzkxNCwwXSxbOTIzLDBdLFs5MzQsMF0sWzk0NCwwXSxbOTU0LDBdLFs5NjQsMF0sWzk3NSwwXSxbOTg1LDBdLFs5OTUsMF0sWzEwMDYsMF0sWzEwMTUsMF0sWzEwMjYsMF0sWzEwMzYsMF0sWzEwNDYsMF0sWzEwNTYsMF0sWzEwNjYsMF0sWzEwNzYsMF0sWzEwODcsMF0sWzEwOTcsMF0sWzExMDgsMF0sWzExMTcsMF0sWzExMjgsMF0sWzExMzgsMF0sWzExNDgsMF0sWzExNTksMF0sWzExNjksMF0sWzExNzgsMF0sWzExODksMF0sWzExOTksMF0sWzEyMTAsMF0sWzEyMjAsMF0sWzEyMzEsMF0sWzEyNDAsMF0sWzEyNTAsMF0sWzEyNjEsMF0sWzEyNzIsMF0sWzEyODEsMF0sWzEyOTAsMF0sWzEzMDEsMF0sWzEzMTIsMF0sWzEzMjEsMF0sWzEzMzEsMF0sWzEzNDIsMF0sWzEzNTEsMF0sWzEzNjMsMF0sWzEzNzMsMF0sWzEzODIsMF0sWzEzOTMsMF0sWzE0MDQsMF0sWzE0MTQsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-5517915e1cb906c4014b",
+          "file": "release-11-1-1.spec.ts",
+          "line": 642,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Select reopened while it closes turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3269,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T02:55:37.696Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNzEyLCJzaGFyZSI6MC4xNTEsImVuZCI6MSwiZnJhbWVzIjpbWy0zLDAuNzEyXSxbNywwLjYzOF0sWzE3LDAuNTY1XSxbMTksMC41NThdLFsyMywwLjUyMl0sWzMxLDAuNTI5XSxbMzcsMC41Nl0sWzQ4LDAuNjM1XSxbNTksMC43MzVdLFs2OCwwLjgxNl0sWzc5LDAuOTA1XSxbODksMC45ODddLFs5OSwxXSxbMTA5LDFdLFsxMTksMV0sWzEyOSwxXSxbMTQwLDFdLFsxNTAsMV0sWzE2MCwxXSxbMTcwLDFdLFsxODEsMV0sWzE5MSwxXSxbMjAxLDFdLFsyMTAsMV0sWzIyMSwxXSxbMjMyLDFdLFsyNDMsMV0sWzI1MSwxXSxbMjYyLDFdLFsyNzMsMV0sWzI4MywxXSxbMjkzLDFdLFszMDMsMV0sWzMxMywxXSxbMzI0LDFdLFszMzQsMV0sWzM0NCwxXSxbMzU0LDFdLFszNjQsMV0sWzM3NSwxXSxbMzg1LDFdLFszOTQsMV0sWzQwNSwxXSxbNDE1LDFdLFs0MjUsMV0sWzQzNiwxXSxbNDQ2LDFdLFs0NTYsMV0sWzQ2NiwxXSxbNDc2LDFdLFs0ODcsMV0sWzQ5NiwxXSxbNTA3LDFdLFs1MTcsMV0sWzUyOCwxXSxbNTM4LDFdLFs1NDgsMV0sWzU1OCwxXSxbNTY3LDFdLFs1NzksMV0sWzU4OSwxXSxbNTk5LDFdLFs2MTAsMV0sWzYxOSwxXSxbNjI5LDFdLFs2NDAsMV0sWzY1MCwxXSxbNjYwLDFdLFs2NzAsMV0sWzY4MCwxXSxbNjkxLDFdLFs3MDIsMV0sWzcxMSwxXSxbNzIyLDFdLFs3MzIsMV0sWzc0MiwxXSxbNzUxLDFdLFs3NjMsMV0sWzc3MiwxXSxbNzgzLDFdLFs3OTMsMV0sWzgwMiwxXSxbODEzLDFdLFs4MjQsMV0sWzgzNCwxXSxbODQzLDFdLFs4NTMsMV0sWzg2NCwxXSxbODc0LDFdLFs4ODQsMV0sWzg5NSwxXSxbOTA1LDFdLFs5MTUsMV0sWzkyNiwxXSxbOTM2LDFdLFs5NDUsMV0sWzk1NiwxXSxbOTY3LDFdLFs5NzcsMV0sWzk4NywxXSxbOTk3LDFdLFsxMDA3LDFdLFsxMDE4LDFdLFsxMDI4LDFdLFsxMDM4LDFdLFsxMDQ4LDFdLFsxMDU5LDFdLFsxMDY5LDFdLFsxMDc5LDFdLFsxMDg5LDFdLFsxMTAwLDFdLFsxMTA5LDFdLFsxMTIwLDFdLFsxMTMwLDFdLFsxMTQwLDFdLFsxMTUwLDFdLFsxMTYwLDFdLFsxMTcxLDFdLFsxMTgxLDFdLFsxMTkxLDFdLFsxMjAxLDFdLFsxMjExLDFdLFsxMjIyLDFdLFsxMjMyLDFdLFsxMjQxLDFdLFsxMjUyLDFdLFsxMjYyLDFdLFsxMjczLDFdLFsxMjgzLDFdLFsxMjkzLDFdLFsxMzAyLDFdLFsxMzE0LDFdLFsxMzI0LDFdLFsxMzM0LDFdLFsxMzQ0LDFdLFsxMzU0LDFdLFsxMzY1LDFdLFsxMzc1LDFdLFsxMzg2LDFdLFsxMzk1LDFdLFsxNDA1LDFdLFsxNDE2LDFdLFsxNDI2LDFdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-013034b5df0b275dd77b",
+          "file": "release-11-1-1.spec.ts",
+          "line": 652,
+          "column": 9
+        },
+        {
+          "title": "reverse · a DropdownMenu closed while it opens turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2363,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T02:55:40.970Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuMzQxLCJzaGFyZSI6MC4wMzMsImVuZCI6MCwiZnJhbWVzIjpbWy00LDAuMzQxXSxbNywwLjM0MV0sWzE3LDAuMzI2XSxbMjcsMC4zMDldLFszNywwLjI4OV0sWzQ3LDAuMjddLFs1OCwwLjI1XSxbNjgsMC4yMjldLFs3OSwwLjIwOV0sWzg4LDAuMTldLFs5OSwwLjE3MV0sWzEwOSwwLjE1Ml0sWzExOSwwLjEzM10sWzEyOCwwLjExN10sWzEzOSwwLjFdLFsxNDksMC4wODRdLFsxNjAsMC4wNjhdLFsxNzAsMC4wNTVdLFsxODAsMC4wNDNdLFsxOTAsMC4wMzJdLFsyMDEsMC4wMjJdLFsyMTEsMC4wMTNdLFsyMjEsMC4wMDVdLFsyMzEsMF0sWzI0MSwwXSxbMjUyLDBdLFsyNjIsMF0sWzI3MSwwXSxbMjgyLDBdLFsyOTIsMF0sWzMwNCwwXSxbMzEzLDBdLFszMjIsMF0sWzMzNCwwXSxbMzQzLDBdLFszNTMsMF0sWzM2NCwwXSxbMzc0LDBdLFszODQsMF0sWzM5NCwwXSxbNDA1LDBdLFs0MTUsMF0sWzQyNSwwXSxbNDM1LDBdLFs0NDUsMF0sWzQ1NiwwXSxbNDY2LDBdLFs0NzYsMF0sWzQ4NiwwXSxbNDk3LDBdLFs1MDcsMF0sWzUxNywwXSxbNTI4LDBdLFs1MzcsMF0sWzU0OCwwXSxbNTU4LDBdLFs1NjgsMF0sWzU3OCwwXSxbNTg3LDBdLFs1OTksMF0sWzYwOSwwXSxbNjE4LDBdLFs2MzAsMF0sWzYzOSwwXSxbNjUwLDBdLFs2NTksMF0sWzY3MCwwXSxbNjgwLDBdLFs2OTAsMF0sWzcwMSwwXSxbNzEwLDBdLFs3MjEsMF0sWzczMSwwXSxbNzQxLDBdLFs3NTIsMF0sWzc2MiwwXSxbNzcyLDBdLFs3ODMsMF0sWzc5MywwXSxbODAzLDBdLFs4MTMsMF0sWzgyMywwXSxbODMzLDBdLFs4NDMsMF0sWzg1NSwwXSxbODY0LDBdLFs4NzQsMF0sWzg4NCwwXSxbODk1LDBdLFs5MDUsMF0sWzkxNSwwXSxbOTI1LDBdLFs5MzUsMF0sWzk0NiwwXSxbOTU2LDBdLFs5NjYsMF0sWzk3NiwwXSxbOTg2LDBdLFs5OTcsMF0sWzEwMDYsMF0sWzEwMTcsMF0sWzEwMjcsMF0sWzEwMzcsMF0sWzEwNDgsMF0sWzEwNTcsMF0sWzEwNjgsMF0sWzEwNzgsMF0sWzEwODgsMF0sWzEwOTgsMF0sWzExMDgsMF0sWzExMTksMF0sWzExMjksMF0sWzExNDAsMF0sWzExNTAsMF0sWzExNjAsMF0sWzExNzAsMF0sWzExODAsMF0sWzExOTEsMF0sWzEyMDEsMF0sWzEyMTEsMF0sWzEyMjEsMF0sWzEyMzEsMF0sWzEyNDEsMF0sWzEyNTIsMF0sWzEyNjIsMF0sWzEyNzIsMF0sWzEyODIsMF0sWzEyOTMsMF0sWzEzMDMsMF0sWzEzMTMsMF0sWzEzMjMsMF0sWzEzMzMsMF0sWzEzNDMsMF0sWzEzNTQsMF0sWzEzNjQsMF0sWzEzNzQsMF0sWzEzODQsMF0sWzEzOTUsMF0sWzE0MDUsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-a7e3ae2d055667c9533f",
+          "file": "release-11-1-1.spec.ts",
+          "line": 642,
+          "column": 9
+        },
+        {
+          "title": "reverse · a DropdownMenu reopened while it closes turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3254,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T02:55:43.338Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuODQsInNoYXJlIjowLjExMSwiZW5kIjoxLCJmcmFtZXMiOltbLTIsMC44NF0sWzgsMC43OTRdLFsxOSwwLjcwOV0sWzIwLDAuNzAxXSxbMjMsMC42NzJdLFsyOSwwLjY3N10sWzM5LDAuNzM0XSxbNTAsMC44MTddLFs2MCwwLjg2OF0sWzcwLDAuOTE4XSxbODAsMC45NjVdLFs5MCwxXSxbMTAwLDFdLFsxMTAsMV0sWzEyMCwxXSxbMTMxLDFdLFsxNDEsMV0sWzE1MiwxXSxbMTYyLDFdLFsxNzEsMV0sWzE4MSwxXSxbMTkyLDFdLFsyMDEsMV0sWzIxMywxXSxbMjIzLDFdLFsyMzMsMV0sWzI0MywxXSxbMjUyLDFdLFsyNjQsMV0sWzI3NCwxXSxbMjg0LDFdLFsyOTQsMV0sWzMwNCwxXSxbMzE0LDFdLFszMjUsMV0sWzMzNSwxXSxbMzQ2LDFdLFszNTUsMV0sWzM2NiwxXSxbMzc2LDFdLFszODUsMV0sWzM5NiwxXSxbNDA2LDFdLFs0MTYsMV0sWzQyNywxXSxbNDM4LDFdLFs0NDcsMV0sWzQ1NywxXSxbNDY4LDFdLFs0NzgsMV0sWzQ4OCwxXSxbNDk4LDFdLFs1MDgsMV0sWzUxOSwxXSxbNTI5LDFdLFs1MzksMV0sWzU0OSwxXSxbNTYwLDFdLFs1NzAsMV0sWzU4MCwxXSxbNTkwLDFdLFs1OTksMV0sWzYxMSwxXSxbNjIwLDFdLFs2MzEsMV0sWzY0MSwxXSxbNjUxLDFdLFs2NjIsMV0sWzY3MiwxXSxbNjgyLDFdLFs2OTIsMV0sWzcwMiwxXSxbNzEzLDFdLFs3MjMsMV0sWzczMywxXSxbNzQzLDFdLFs3NTMsMV0sWzc2NCwxXSxbNzc1LDFdLFs3ODQsMV0sWzc5NCwxXSxbODA1LDFdLFs4MTQsMV0sWzgyNSwxXSxbODM1LDFdLFs4NDYsMV0sWzg1NiwxXSxbODY1LDFdLFs4NzUsMV0sWzg4NSwxXSxbODk2LDFdLFs5MDcsMV0sWzkxNywxXSxbOTI2LDFdLFs5MzgsMV0sWzk0NywxXSxbOTU4LDFdLFs5NjgsMV0sWzk3OCwxXSxbOTg4LDFdLFs5OTgsMV0sWzEwMDksMV0sWzEwMTgsMV0sWzEwMjksMV0sWzEwMzksMV0sWzEwNDksMV0sWzEwNjAsMV0sWzEwNzAsMV0sWzEwODAsMV0sWzEwOTAsMV0sWzExMDAsMV0sWzExMTEsMV0sWzExMjEsMV0sWzExMzEsMV0sWzExNDIsMV0sWzExNTEsMV0sWzExNjIsMV0sWzExNzIsMV0sWzExODMsMV0sWzExOTIsMV0sWzEyMDIsMV0sWzEyMTMsMV0sWzEyMjMsMV0sWzEyMzMsMV0sWzEyNDMsMV0sWzEyNTQsMV0sWzEyNjQsMV0sWzEyNzQsMV0sWzEyODQsMV0sWzEyOTQsMV0sWzEzMDUsMV0sWzEzMTUsMV0sWzEzMjUsMV0sWzEzMzUsMV0sWzEzNDYsMV0sWzEzNTYsMV0sWzEzNjYsMV0sWzEzNzYsMV0sWzEzODYsMV0sWzEzOTYsMV0sWzE0MDcsMV0sWzE0MTcsMV0sWzE0MjcsMV1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-4a03752526c68fac1f47",
+          "file": "release-11-1-1.spec.ts",
+          "line": 652,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Popover closed while it opens turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2347,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T02:55:46.596Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNTY5LCJzaGFyZSI6MC4wNzksImVuZCI6MCwiZnJhbWVzIjpbWy0yLDAuNTY5XSxbOCwwLjU2OV0sWzE4LDAuNTM2XSxbMjgsMC41MDVdLFszOSwwLjQ1OF0sWzQ5LDAuNDJdLFs1OSwwLjM3Nl0sWzY5LDAuMzI3XSxbNzksMC4yODFdLFs5MCwwLjIzNV0sWzEwMCwwLjE5XSxbMTEwLDAuMTQzXSxbMTIwLDAuMTAxXSxbMTMwLDAuMDYyXSxbMTQwLDAuMDI4XSxbMTUyLDBdLFsxNjEsMF0sWzE3MCwwXSxbMTgxLDBdLFsxOTIsMF0sWzIwMiwwXSxbMjEyLDBdLFsyMjIsMF0sWzIzMiwwXSxbMjQyLDBdLFsyNTMsMF0sWzI2MywwXSxbMjczLDBdLFsyODQsMF0sWzI5NCwwXSxbMzA0LDBdLFszMTQsMF0sWzMyNCwwXSxbMzM0LDBdLFszNDQsMF0sWzM1NSwwXSxbMzY1LDBdLFszNzUsMF0sWzM4NiwwXSxbMzk2LDBdLFs0MDYsMF0sWzQxNSwwXSxbNDI2LDBdLFs0MzcsMF0sWzQ0NywwXSxbNDU3LDBdLFs0NjcsMF0sWzQ3NywwXSxbNDg4LDBdLFs0OTgsMF0sWzUwNywwXSxbNTE4LDBdLFs1MjksMF0sWzUzOSwwXSxbNTQ4LDBdLFs1NTksMF0sWzU2OSwwXSxbNTc5LDBdLFs1OTAsMF0sWzYwMCwwXSxbNjEwLDBdLFs2MjAsMF0sWzYzMCwwXSxbNjQyLDBdLFs2NTEsMF0sWzY2MSwwXSxbNjcxLDBdLFs2ODEsMF0sWzY5MiwwXSxbNzAyLDBdLFs3MTIsMF0sWzcyMywwXSxbNzMzLDBdLFs3NDMsMF0sWzc1MiwwXSxbNzYzLDBdLFs3NzMsMF0sWzc4MywwXSxbNzk0LDBdLFs4MDQsMF0sWzgxNCwwXSxbODI0LDBdLFs4MzUsMF0sWzg0NSwwXSxbODU1LDBdLFs4NjUsMF0sWzg3NSwwXSxbODg2LDBdLFs4OTYsMF0sWzkwNiwwXSxbOTE2LDBdLFs5MjYsMF0sWzkzNywwXSxbOTQ3LDBdLFs5NTYsMF0sWzk2OCwwXSxbOTc3LDBdLFs5ODgsMF0sWzk5OCwwXSxbMTAwOSwwXSxbMTAxOCwwXSxbMTAyOCwwXSxbMTAzOSwwXSxbMTA0OCwwXSxbMTA1OSwwXSxbMTA2OSwwXSxbMTA4MCwwXSxbMTA5MCwwXSxbMTEwMCwwXSxbMTExMCwwXSxbMTEyMSwwXSxbMTEzMSwwXSxbMTE0MCwwXSxbMTE1MSwwXSxbMTE2MSwwXSxbMTE3MSwwXSxbMTE4MiwwXSxbMTE5MiwwXSxbMTIwMiwwXSxbMTIxMiwwXSxbMTIyMiwwXSxbMTIzMiwwXSxbMTI0MywwXSxbMTI1MywwXSxbMTI2MywwXSxbMTI3MywwXSxbMTI4NCwwXSxbMTI5NCwwXSxbMTMwNSwwXSxbMTMxNCwwXSxbMTMyNCwwXSxbMTMzNSwwXSxbMTM0NiwwXSxbMTM1NSwwXSxbMTM2NSwwXSxbMTM3NiwwXSxbMTM4NiwwXSxbMTM5NiwwXSxbMTQwNiwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-955cee158bc49685994f",
+          "file": "release-11-1-1.spec.ts",
+          "line": 642,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Popover reopened while it closes turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3220,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T02:55:48.947Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuOTAxLCJzaGFyZSI6MC4wOTMsImVuZCI6MSwiZnJhbWVzIjpbWy04LDAuOTAxXSxbMiwwLjg2NF0sWzEzLDAuODI1XSxbMjQsMC43NzZdLFsyNSwwLjc3Nl0sWzI4LDAuNzU5XSxbMzMsMC43NjNdLFs0MywwLjgzMl0sWzU0LDAuODhdLFs2MywwLjkxXSxbNzUsMC45NDFdLFs4MywwLjk1Nl0sWzk1LDAuOTc0XSxbMTA0LDAuOTg0XSxbMTE2LDAuOTkzXSxbMTI1LDAuOTk4XSxbMTM1LDFdLFsxNDYsMV0sWzE1NiwxXSxbMTY2LDFdLFsxNzUsMV0sWzE4NiwxXSxbMTk2LDFdLFsyMDYsMV0sWzIxNywxXSxbMjI3LDFdLFsyMzcsMV0sWzI0OCwxXSxbMjU4LDFdLFsyNjgsMV0sWzI3OCwxXSxbMjg3LDFdLFsyOTksMV0sWzMwOSwxXSxbMzE5LDFdLFszMjksMV0sWzMzOSwxXSxbMzUwLDFdLFszNjAsMV0sWzM3MCwxXSxbMzgwLDFdLFszOTEsMV0sWzQwMCwxXSxbNDExLDFdLFs0MjEsMV0sWzQzMSwxXSxbNDQxLDFdLFs0NTIsMV0sWzQ2MiwxXSxbNDcyLDFdLFs0ODIsMV0sWzQ5MiwxXSxbNTAzLDFdLFs1MTMsMV0sWzUyMywxXSxbNTMzLDFdLFs1NDQsMV0sWzU1MywxXSxbNTY0LDFdLFs1NzQsMV0sWzU4NCwxXSxbNTk1LDFdLFs2MDUsMV0sWzYxNSwxXSxbNjI1LDFdLFs2MzUsMV0sWzY0NSwxXSxbNjU2LDFdLFs2NjYsMV0sWzY3NiwxXSxbNjg3LDFdLFs2OTcsMV0sWzcwNywxXSxbNzE3LDFdLFs3MjcsMV0sWzczNywxXSxbNzQ4LDFdLFs3NTgsMV0sWzc2OCwxXSxbNzc4LDFdLFs3ODgsMV0sWzc5OSwxXSxbODA4LDFdLFs4MTksMV0sWzgyOSwxXSxbODM5LDFdLFs4NTAsMV0sWzg2MCwxXSxbODcwLDFdLFs4ODAsMV0sWzg5MSwxXSxbOTAwLDFdLFs5MTAsMV0sWzkyMSwxXSxbOTMxLDFdLFs5NDIsMV0sWzk1MiwxXSxbOTYyLDFdLFs5NzIsMV0sWzk4MiwxXSxbOTkzLDFdLFsxMDAzLDFdLFsxMDEzLDFdLFsxMDIzLDFdLFsxMDMzLDFdLFsxMDQ0LDFdLFsxMDU0LDFdLFsxMDYzLDFdLFsxMDc0LDFdLFsxMDg0LDFdLFsxMDk1LDFdLFsxMTA1LDFdLFsxMTE1LDFdLFsxMTI1LDFdLFsxMTM2LDFdLFsxMTQ2LDFdLFsxMTU2LDFdLFsxMTY2LDFdLFsxMTc2LDFdLFsxMTg2LDFdLFsxMTk2LDFdLFsxMjA2LDFdLFsxMjE3LDFdLFsxMjI3LDFdLFsxMjM4LDFdLFsxMjQ4LDFdLFsxMjU5LDFdLFsxMjY4LDFdLFsxMjc4LDFdLFsxMjkwLDFdLFsxMjk5LDFdLFsxMzA4LDFdLFsxMzE5LDFdLFsxMzI5LDFdLFsxMzM5LDFdLFsxMzQ5LDFdLFsxMzYwLDFdLFsxMzcwLDFdLFsxMzc5LDFdLFsxMzkxLDFdLFsxNDAwLDFdLFsxNDExLDFdLFsxNDIxLDFdLFsxNDMxLDFdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-657847c4583e7e70d90b",
+          "file": "release-11-1-1.spec.ts",
+          "line": 652,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Toast closed while it opens turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3228,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T02:55:52.172Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNTYzLCJzaGFyZSI6MC4xMzcsImVuZCI6MCwiZnJhbWVzIjpbWy00LDAuNTYzXSxbNiwwLjU5NV0sWzE3LDAuNjI4XSxbMjcsMC42NTZdLFszNywwLjY4M10sWzQ2LDAuNzA1XSxbNTgsMC43MzNdLFs2NywwLjc1M10sWzc3LDAuNzc0XSxbODgsMC43OTVdLFs5OCwwLjgxNF0sWzEwOSwwLjgzM10sWzExOSwwLjg0OV0sWzEyOSwwLjg2NF0sWzEzOSwwLjg3OF0sWzE1MCwwLjg5Ml0sWzE2MCwwLjkwNF0sWzE3MCwwLjkxNl0sWzE4MCwwLjkyNl0sWzE5MCwwLjkzNl0sWzIwMSwwLjk0Nl0sWzIxMSwwLjk1NF0sWzIyMSwwLjk2MV0sWzIzMiwwLjk2OF0sWzI0MSwwLjk3NF0sWzI1MiwwLjk4XSxbMjYyLDAuOTg0XSxbMjcxLDAuOTg4XSxbMjgyLDAuOTkyXSxbMjkyLDAuOTk0XSxbMzAzLDAuOTk3XSxbMzEzLDAuOTk4XSxbMzIzLDAuOTk5XSxbMzMzLDFdLFszNDMsMV0sWzM1MywxXSxbMzY1LDFdLFszNzQsMV0sWzM4NCwxXSxbMzk1LDFdLFs0MDQsMV0sWzQxNSwxXSxbNDI2LDFdLFs0MzUsMV0sWzQ0NSwxXSxbNDU2LDFdLFs0NjYsMV0sWzQ3NiwxXSxbNDg2LDFdLFs0OTYsMV0sWzUwNywxXSxbNTE2LDFdLFs1MjYsMV0sWzUzNywxXSxbNTQ4LDFdLFs1NTgsMV0sWzU2OCwxXSxbNTc4LDFdLFs1ODgsMV0sWzU5OSwxXSxbNjA5LDFdLFs2MTksMV0sWzYyOSwxXSxbNjM5LDFdLFs2NTAsMV0sWzY2MCwxXSxbNjcwLDFdLFs2ODAsMV0sWzY5MCwxXSxbNzAxLDFdLFs3MTEsMV0sWzcyMSwxXSxbNzMxLDFdLFs3NDEsMV0sWzc1MiwxXSxbNzYyLDFdLFs3NzIsMV0sWzc4MiwxXSxbNzkyLDFdLFs4MDMsMV0sWzgxMywxXSxbODIzLDFdLFs4MzMsMV0sWzgzNCwxXSxbODM3LDFdLFs4NDQsMV0sWzg1MywwLjk0Nl0sWzg2NSwwLjg3M10sWzg3NCwwLjhdLFs4ODMsMC43M10sWzg5NSwwLjY0Ml0sWzkwNSwwLjU2Ml0sWzkxNSwwLjQ3OF0sWzkyNSwwLjQwNl0sWzkzNSwwLjM0Ml0sWzk0NiwwLjI5Nl0sWzk1NiwwLjI3MV0sWzk2NiwwLjIzOF0sWzk3NiwwLjIwNV0sWzk4NiwwLjE3XSxbOTk3LDAuMTM1XSxbMTAwNywwLjEwMV0sWzEwMTcsMC4wNjRdLFsxMDI3LDAuMDM0XSxbMTAzNywwLjAwOF0sWzEwNDgsMF0sWzEwNTgsMF0sWzEwNjcsMF0sWzEwNzgsMF0sWzEwODgsMF0sWzEwOTksMF0sWzExMDgsMF0sWzExMjAsMF0sWzExMjksMF0sWzExNDAsMF0sWzExNTAsMF0sWzExNTksMF0sWzExNzAsMF0sWzExODAsMF0sWzExOTEsMF0sWzEyMDAsMF0sWzEyMTEsMF0sWzEyMjEsMF0sWzEyMzAsMF0sWzEyNDEsMF0sWzEyNTEsMF0sWzEyNjEsMF0sWzEyNzEsMF0sWzEyODEsMF0sWzEyOTIsMF0sWzEzMDMsMF0sWzEzMTMsMF0sWzEzMjQsMF0sWzEzMzMsMF0sWzEzNDQsMF0sWzEzNTQsMF0sWzEzNjQsMF0sWzEzNzUsMF0sWzEzODQsMF0sWzEzOTQsMF0sWzE0MDYsMF0sWzE0MTQsMF0sWzE0MjUsMF0sWzE0MzUsMF0sWzE0NDUsMF0sWzE0NTcsMF0sWzE0NjYsMF0sWzE0NzYsMF0sWzE0ODcsMF0sWzE0OTYsMF0sWzE1MDcsMF0sWzE1MTcsMF0sWzE1MjcsMF0sWzE1MzgsMF0sWzE1NDcsMF0sWzE1NTgsMF0sWzE1NjgsMF0sWzE1NzgsMF0sWzE1ODksMF0sWzE1OTgsMF0sWzE2MDksMF0sWzE2MTksMF0sWzE2MjksMF0sWzE2NDAsMF0sWzE2NTAsMF0sWzE2NjAsMF0sWzE2NjksMF0sWzE2ODEsMF0sWzE2OTAsMF0sWzE3MDAsMF0sWzE3MTEsMF0sWzE3MjAsMF0sWzE3MzEsMF0sWzE3NDIsMF0sWzE3NTIsMF0sWzE3NjEsMF0sWzE3NzEsMF0sWzE3ODMsMF0sWzE3OTIsMF0sWzE4MDMsMF0sWzE4MTMsMF0sWzE4MjMsMF0sWzE4MzMsMF0sWzE4NDQsMF0sWzE4NTMsMF0sWzE4NjUsMF0sWzE4NzQsMF0sWzE4ODUsMF0sWzE4OTQsMF0sWzE5MDYsMF0sWzE5MTUsMF0sWzE5MjUsMF0sWzE5MzYsMF0sWzE5NDYsMF0sWzE5NTYsMF0sWzE5NjYsMF0sWzE5NzYsMF0sWzE5ODYsMF0sWzE5OTcsMF0sWzIwMDYsMF0sWzIwMTcsMF0sWzIwMjcsMF0sWzIwMzgsMF0sWzIwNDgsMF0sWzIwNTgsMF0sWzIwNjgsMF0sWzIwNzcsMF0sWzIwODksMF0sWzIwOTgsMF0sWzIxMDksMF0sWzIxMTksMF0sWzIxMjksMF0sWzIxMzksMF0sWzIxNDksMF0sWzIxNTksMF0sWzIxNzAsMF0sWzIxODEsMF0sWzIxOTIsMF0sWzIyMDEsMF0sWzIyMTEsMF0sWzIyMjEsMF0sWzIyMzEsMF0sWzIyNDIsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-1f90820a4901d80d9ae5",
+          "file": "release-11-1-1.spec.ts",
+          "line": 642,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Collapsible closed while it opens turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4198,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T02:55:55.406Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNDI3LCJzaGFyZSI6MC4xNjUsImVuZCI6MCwiZnJhbWVzIjpbWy05LDAuNDI3XSxbMSwwLjUyXSxbMTEsMC42MDFdLFsyMiwwLjY3OV0sWzIzLDAuNjg1XSxbMjYsMC43MDNdLFszNCwwLjcwNF0sWzQyLDAuNjIxXSxbNTMsMC41MTVdLFs2MywwLjQyOV0sWzczLDAuMzU0XSxbODMsMC4yOV0sWzk0LDAuMjMxXSxbMTA0LDAuMTg3XSxbMTE0LDAuMTVdLFsxMjQsMC4xMl0sWzEzNCwwLjA5Nl0sWzE0NCwwLjA3Nl0sWzE1NSwwLjA1OV0sWzE2NSwwLjA0N10sWzE3NSwwLjAzN10sWzE4NCwwLjAzXSxbMTk2LDBdLFsyMDYsMF0sWzIxNiwwXSxbMjI2LDBdLFsyMzYsMF0sWzI0NiwwXSxbMjU3LDBdLFsyNjcsMF0sWzI3NiwwXSxbMjg3LDBdLFsyOTcsMF0sWzMwNywwXSxbMzE4LDBdLFszMjcsMF0sWzMzOSwwXSxbMzQ5LDBdLFszNTksMF0sWzM2OSwwXSxbMzc5LDBdLFszODksMF0sWzQwMCwwXSxbNDEwLDBdLFs0MjAsMF0sWzQzMSwwXSxbNDQwLDBdLFs0NTEsMF0sWzQ2MSwwXSxbNDcxLDBdLFs0ODEsMF0sWzQ5MiwwXSxbNTAxLDBdLFs1MTMsMF0sWzUyMiwwXSxbNTMyLDBdLFs1NDIsMF0sWzU1MywwXSxbNTYzLDBdLFs1NzMsMF0sWzU4MywwXSxbNTk0LDBdLFs2MDMsMF0sWzYxNCwwXSxbNjI0LDBdLFs2MzQsMF0sWzY0NCwwXSxbNjU1LDBdLFs2NjUsMF0sWzY3NSwwXSxbNjg1LDBdLFs2OTYsMF0sWzcwNiwwXSxbNzE2LDBdLFs3MjYsMF0sWzczNiwwXSxbNzQ3LDBdLFs3NTcsMF0sWzc2NywwXSxbNzc3LDBdLFs3ODcsMF0sWzc5OCwwXSxbODA4LDBdLFs4MTgsMF0sWzgyOCwwXSxbODM4LDBdLFs4NDksMF0sWzg1OSwwXSxbODY5LDBdLFs4NzksMF0sWzg5MCwwXSxbOTAwLDBdLFs5MTAsMF0sWzkyMCwwXSxbOTMwLDBdLFs5NDAsMF0sWzk1MiwwXSxbOTYwLDBdLFs5NzIsMF0sWzk4MSwwXSxbOTkxLDBdLFsxMDAyLDBdLFsxMDEyLDBdLFsxMDIxLDBdLFsxMDMyLDBdLFsxMDQyLDBdLFsxMDUzLDBdLFsxMDYzLDBdLFsxMDczLDBdLFsxMDgzLDBdLFsxMDk0LDBdLFsxMTA0LDBdLFsxMTE0LDBdLFsxMTI1LDBdLFsxMTM0LDBdLFsxMTQ0LDBdLFsxMTU1LDBdLFsxMTY1LDBdLFsxMTc1LDBdLFsxMTg2LDBdLFsxMTk1LDBdLFsxMjA2LDBdLFsxMjE2LDBdLFsxMjI2LDBdLFsxMjM2LDBdLFsxMjQ2LDBdLFsxMjU2LDBdLFsxMjY3LDBdLFsxMjc3LDBdLFsxMjg3LDBdLFsxMjk4LDBdLFsxMzA4LDBdLFsxMzE4LDBdLFsxMzI4LDBdLFsxMzM4LDBdLFsxMzQ5LDBdLFsxMzYwLDBdLFsxMzY5LDBdLFsxMzgwLDBdLFsxMzkwLDBdLFsxNDAwLDBdLFsxNDEwLDBdLFsxNDIwLDBdLFsxNDMwLDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-ac35f49589362a0fa676",
+          "file": "release-11-1-1.spec.ts",
+          "line": 642,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Collapsible reopened while it closes turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5184,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T02:55:59.608Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNjczLCJzaGFyZSI6MC4xNiwiZW5kIjoxLCJmcmFtZXMiOltbLTksMC42NzNdLFswLDAuNTgyXSxbMTIsMC40NzJdLFsyMSwwLjM5OV0sWzIyLDAuMzkxXSxbMjYsMC4zNjJdLFszMSwwLjM2Ml0sWzQxLDAuNDZdLFs1MiwwLjU1N10sWzYyLDAuNjM0XSxbNzMsMC43MDZdLFs4MiwwLjc1Nl0sWzkzLDAuODA3XSxbMTAzLDAuODQ0XSxbMTEzLDAuODc1XSxbMTIzLDAuOV0sWzEzNCwwLjkyM10sWzE0MywwLjkzN10sWzE1NSwwLjk1M10sWzE2NCwwLjk2Ml0sWzE3NCwwLjk3XSxbMTg1LDAuOTldLFsxOTQsMV0sWzIwNSwxXSxbMjE1LDFdLFsyMjUsMV0sWzIzNiwxXSxbMjQ2LDFdLFsyNTYsMV0sWzI2NSwxXSxbMjc3LDFdLFsyODYsMV0sWzI5NywxXSxbMzA3LDFdLFszMTcsMV0sWzMyNywxXSxbMzM4LDFdLFszNDgsMV0sWzM1OCwxXSxbMzY4LDFdLFszNzgsMV0sWzM4OSwxXSxbMzk5LDFdLFs0MDksMV0sWzQxOSwxXSxbNDI5LDFdLFs0NDAsMV0sWzQ1MCwxXSxbNDYwLDFdLFs0NzAsMV0sWzQ4MCwxXSxbNDkxLDFdLFs1MDAsMV0sWzUxMSwxXSxbNTIxLDFdLFs1MzIsMV0sWzU0MiwxXSxbNTUyLDFdLFs1NjIsMV0sWzU3MiwxXSxbNTgyLDFdLFs1OTMsMV0sWzYwMywxXSxbNjEzLDFdLFs2MjMsMV0sWzYzNCwxXSxbNjQ0LDFdLFs2NTQsMV0sWzY2NCwxXSxbNjc0LDFdLFs2ODUsMV0sWzY5NSwxXSxbNzA0LDFdLFs3MTQsMV0sWzcyNSwxXSxbNzM2LDFdLFs3NDYsMV0sWzc1NiwxXSxbNzY2LDFdLFs3NzcsMV0sWzc4NywxXSxbNzk2LDFdLFs4MDcsMV0sWzgxNywxXSxbODI3LDFdLFs4MzgsMV0sWzg0OCwxXSxbODU4LDFdLFs4NjgsMV0sWzg3OSwxXSxbODg5LDFdLFs4OTksMV0sWzkxMCwxXSxbOTE5LDFdLFs5MzAsMV0sWzk0MCwxXSxbOTUwLDFdLFs5NjAsMV0sWzk3MCwxXSxbOTgxLDFdLFs5OTAsMV0sWzEwMDIsMV0sWzEwMTAsMV0sWzEwMjEsMV0sWzEwMzYsMV0sWzEwNDEsMV0sWzEwNTIsMV0sWzEwNjMsMV0sWzEwNzIsMV0sWzEwODIsMV0sWzEwOTMsMV0sWzExMDIsMV0sWzExMTQsMV0sWzExMjMsMV0sWzExMzQsMV0sWzExNDQsMV0sWzExNTUsMV0sWzExNjQsMV0sWzExNzQsMV0sWzExODUsMV0sWzExOTQsMV0sWzEyMDYsMV0sWzEyMTUsMV0sWzEyMjYsMV0sWzEyMzYsMV0sWzEyNDYsMV0sWzEyNTYsMV0sWzEyNjYsMV0sWzEyNzcsMV0sWzEyODYsMV0sWzEyOTcsMV0sWzEzMDcsMV0sWzEzMTgsMV0sWzEzMjgsMV0sWzEzMzcsMV0sWzEzNDgsMV0sWzEzNTgsMV0sWzEzNjgsMV0sWzEzNzksMV0sWzEzODksMV0sWzEzOTksMV0sWzE0MDksMV0sWzE0MTksMV0sWzE0MzAsMV1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-d4ec55117508839c5ebc",
+          "file": "release-11-1-1.spec.ts",
+          "line": 652,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Accordion closed while it opens turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4235,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T02:56:04.798Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNDI3LCJzaGFyZSI6MC4xNjQsImVuZCI6MCwiZnJhbWVzIjpbWy04LDAuNDI3XSxbMiwwLjUyXSxbMTIsMC42MDFdLFsyMiwwLjY3Ml0sWzIzLDAuNjc5XSxbMjcsMC43MDNdLFszMywwLjcwM10sWzQzLDAuNjAxXSxbNTMsMC41MDZdLFs2NSwwLjQwNl0sWzc0LDAuMzQxXSxbODQsMC4yNzhdLFs5NCwwLjIyNl0sWzEwNiwwLjE3NV0sWzExNSwwLjE0NF0sWzEyNSwwLjExNV0sWzEzNSwwLjA5Ml0sWzE0NSwwLjA3M10sWzE1NSwwLjA1OF0sWzE2NiwwLjA0NF0sWzE3NiwwLjAzNV0sWzE4NiwwLjAyOF0sWzE5NiwwXSxbMjA2LDBdLFsyMTcsMF0sWzIyNywwXSxbMjM3LDBdLFsyNDcsMF0sWzI1OCwwXSxbMjY4LDBdLFsyNzgsMF0sWzI4OCwwXSxbMjk5LDBdLFszMDksMF0sWzMxOSwwXSxbMzMwLDBdLFszMzksMF0sWzM0OSwwXSxbMzYwLDBdLFszNzAsMF0sWzM4MCwwXSxbMzkwLDBdLFs0MDAsMF0sWzQxMCwwXSxbNDIxLDBdLFs0MzAsMF0sWzQ0MSwwXSxbNDUyLDBdLFs0NjIsMF0sWzQ3MSwwXSxbNDgxLDBdLFs0OTMsMF0sWzUwMywwXSxbNTEzLDBdLFs1MjMsMF0sWzUzMywwXSxbNTQzLDBdLFs1NTQsMF0sWzU2MywwXSxbNTc0LDBdLFs1ODMsMF0sWzU5NCwwXSxbNjA1LDBdLFs2MTUsMF0sWzYyNSwwXSxbNjM0LDBdLFs2NDYsMF0sWzY1NiwwXSxbNjY2LDBdLFs2NzYsMF0sWzY4NiwwXSxbNjk2LDBdLFs3MDcsMF0sWzcxNywwXSxbNzI3LDBdLFs3MzgsMF0sWzc0OCwwXSxbNzU3LDBdLFs3NjksMF0sWzc3OCwwXSxbNzg4LDBdLFs3OTksMF0sWzgwOCwwXSxbODE5LDBdLFs4MjksMF0sWzg0MCwwXSxbODUwLDBdLFs4NTksMF0sWzg3MCwwXSxbODgwLDBdLFs4OTEsMF0sWzkwMSwwXSxbOTExLDBdLFs5MjEsMF0sWzkzMSwwXSxbOTQxLDBdLFs5NTEsMF0sWzk2MiwwXSxbOTcyLDBdLFs5ODMsMF0sWzk5MiwwXSxbMTAwMywwXSxbMTAxMywwXSxbMTAyMiwwXSxbMTAzMywwXSxbMTA0MywwXSxbMTA1NCwwXSxbMTA2NCwwXSxbMTA3NCwwXSxbMTA4NCwwXSxbMTA5NSwwXSxbMTEwNSwwXSxbMTExNSwwXSxbMTEyNSwwXSxbMTEzNSwwXSxbMTE0NiwwXSxbMTE1NiwwXSxbMTE2NiwwXSxbMTE3NywwXSxbMTE4NiwwXSxbMTE5NiwwXSxbMTIwNywwXSxbMTIxNywwXSxbMTIyNywwXSxbMTIzNywwXSxbMTI0NywwXSxbMTI1NywwXSxbMTI2OCwwXSxbMTI3OCwwXSxbMTI4OCwwXSxbMTI5OSwwXSxbMTMwOSwwXSxbMTMxOCwwXSxbMTMyOSwwXSxbMTMzOSwwXSxbMTM1MCwwXSxbMTM2MCwwXSxbMTM3MCwwXSxbMTM4MSwwXSxbMTM5MSwwXSxbMTQwMSwwXSxbMTQxMCwwXSxbMTQyMSwwXSxbMTQzMSwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-253f37dbef4d1abcb07d",
+          "file": "release-11-1-1.spec.ts",
+          "line": 642,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Accordion reopened while it closes turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5233,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T02:56:09.039Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNjczLCJzaGFyZSI6MC4xNjEsImVuZCI6MSwiZnJhbWVzIjpbWy05LDAuNjczXSxbMCwwLjU4Ml0sWzExLDAuNDhdLFsyMSwwLjM5OV0sWzIyLDAuMzkxXSxbMjUsMC4zNjldLFszMSwwLjM2OV0sWzQyLDAuNDc2XSxbNTIsMC41NjNdLFs2MiwwLjYzOV0sWzcyLDAuNzA0XSxbODIsMC43NTldLFs5MywwLjgwOV0sWzEwMiwwLjg0M10sWzExMywwLjg3N10sWzEyMywwLjkwMl0sWzEzMywwLjkyMl0sWzE0NSwwLjk0MV0sWzE1NCwwLjk1Ml0sWzE2MywwLjk2MV0sWzE3NSwwLjk3MV0sWzE4NSwwLjk5NV0sWzE5NSwxXSxbMjA0LDFdLFsyMTYsMV0sWzIyNSwxXSxbMjM2LDFdLFsyNDYsMV0sWzI1NiwxXSxbMjY2LDFdLFsyNzYsMV0sWzI4NywxXSxbMjk3LDFdLFszMDcsMV0sWzMxNywxXSxbMzI3LDFdLFszMzgsMV0sWzM0OCwxXSxbMzU4LDFdLFszNjcsMV0sWzM3OSwxXSxbMzg5LDFdLFszOTksMV0sWzQwOSwxXSxbNDE5LDFdLFs0MjksMV0sWzQ0MCwxXSxbNDUwLDFdLFs0NjAsMV0sWzQ3MCwxXSxbNDgwLDFdLFs0OTEsMV0sWzUwMSwxXSxbNTExLDFdLFs1MjEsMV0sWzUzMiwxXSxbNTQyLDFdLFs1NTEsMV0sWzU2MiwxXSxbNTcyLDFdLFs1ODMsMV0sWzU5MiwxXSxbNjA0LDFdLFs2MTIsMV0sWzYyMywxXSxbNjM0LDFdLFs2NDQsMV0sWzY1NCwxXSxbNjY1LDFdLFs2NzQsMV0sWzY4NCwxXSxbNjk1LDFdLFs3MDUsMV0sWzcxNSwxXSxbNzI1LDFdLFs3MzYsMV0sWzc0NiwxXSxbNzU2LDFdLFs3NjYsMV0sWzc3NiwxXSxbNzg3LDFdLFs3OTcsMV0sWzgwOCwxXSxbODE3LDFdLFs4MjcsMV0sWzgzOCwxXSxbODQ4LDFdLFs4NTgsMV0sWzg2OCwxXSxbODc5LDFdLFs4ODksMV0sWzkwMCwxXSxbOTA5LDFdLFs5MTgsMV0sWzkyOSwxXSxbOTM5LDFdLFs5NDksMV0sWzk2MCwxXSxbOTcwLDFdLFs5ODEsMV0sWzk5MSwxXSxbMTAwMCwxXSxbMTAxMSwxXSxbMTAyMSwxXSxbMTAzMSwxXSxbMTA0MywxXSxbMTA1NCwxXSxbMTA2MiwxXSxbMTA3MiwxXSxbMTA4MiwxXSxbMTA5MywxXSxbMTEwMywxXSxbMTExNCwxXSxbMTEyNCwxXSxbMTEzNCwxXSxbMTE0NCwxXSxbMTE1NSwxXSxbMTE2NCwxXSxbMTE3NiwxXSxbMTE4NCwxXSxbMTE5NSwxXSxbMTIwNSwxXSxbMTIxNSwxXSxbMTIyNiwxXSxbMTIzNiwxXSxbMTI0NiwxXSxbMTI1NiwxXSxbMTI2NiwxXSxbMTI3NiwxXSxbMTI4NywxXSxbMTI5NywxXSxbMTMwNywxXSxbMTMxNywxXSxbMTMyNywxXSxbMTMzNywxXSxbMTM0OSwxXSxbMTM1OCwxXSxbMTM2OSwxXSxbMTM3OCwxXSxbMTM4OSwxXSxbMTM5OSwxXSxbMTQwOSwxXSxbMTQxOSwxXSxbMTQzMCwxXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-d29601b751c4d1070d7f",
+          "file": "release-11-1-1.spec.ts",
+          "line": 652,
+          "column": 9
+        },
+        {
+          "title": "reverse · a press on a leaving Dialog's trigger reopens it from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3365,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T02:56:14.277Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNzY5LCJzaGFyZSI6MC4wNTUsImVuZCI6MSwiZnJhbWVzIjpbWy04LDAuNzY5XSxbNCwwLjY3OV0sWzEyLDAuNzA2XSxbMjIsMC43MjldLFszMywwLjc2M10sWzQzLDAuNzk5XSxbNTQsMC44M10sWzY0LDAuODYxXSxbNzQsMC44ODVdLFs4NCwwLjkwNl0sWzk0LDAuOTI0XSxbMTA1LDAuOTM4XSxbMTE1LDAuOTUxXSxbMTI1LDAuOTYxXSxbMTM1LDAuOTY5XSxbMTQ1LDAuOTc1XSxbMTU2LDAuOThdLFsxNjYsMC45ODVdLFsxNzYsMC45ODhdLFsxODUsMC45OTFdLFsxOTcsMC45OTJdLFsyMDYsMC45OTRdLFsyMTYsMC45OTVdLFsyMjYsMC45OTZdLFsyMzgsMC45OTddLFsyNDcsMC45OThdLFsyNTgsMC45OThdLFsyNjgsMC45OTldLFsyNzgsMC45OTldLFsyODgsMC45OTldLFsyOTksMC45OTldLFszMDgsMV0sWzMxOSwxXSxbMzI4LDFdLFszMzksMV0sWzM0OSwxXSxbMzYwLDFdLFszNzAsMV0sWzM4MCwxXSxbMzkwLDFdLFs0MDEsMV0sWzQxMSwxXSxbNDIxLDFdLFs0MzIsMV0sWzQ0MSwxXSxbNDUyLDFdLFs0NjIsMV0sWzQ3MiwxXSxbNDgyLDFdLFs0OTIsMV0sWzUwMywxXSxbNTEyLDFdLFs1MjMsMV0sWzUzMywxXSxbNTQzLDFdLFs1NTMsMV0sWzU2NCwxXSxbNTc0LDFdLFs1ODQsMV0sWzU5NCwxXSxbNjA0LDFdLFs2MTUsMV0sWzYyNSwxXSxbNjM1LDFdLFs2NDUsMV0sWzY1NiwxXSxbNjY2LDFdLFs2NzYsMV0sWzY4NiwxXSxbNjk3LDFdLFs3MDcsMV0sWzcxNywxXSxbNzI3LDFdLFs3MzcsMV0sWzc0OCwxXSxbNzU4LDFdLFs3NjgsMV0sWzc3OCwxXSxbNzg4LDFdLFs3OTksMV0sWzgwOSwxXSxbODE5LDFdLFs4MjksMV0sWzgzOSwxXSxbODUwLDFdLFs4NjAsMV0sWzg3MCwxXSxbODgxLDFdLFs4OTAsMV0sWzkwMSwxXSxbOTExLDFdLFs5MjAsMV0sWzkzMSwxXSxbOTQxLDFdLFs5NTIsMV0sWzk2MiwxXSxbOTcxLDFdLFs5ODIsMV0sWzk5MiwxXSxbMTAwMywxXSxbMTAxMywxXSxbMTAyMywxXSxbMTAzMywxXSxbMTA0NCwxXSxbMTA1MywxXSxbMTA2NCwxXSxbMTA3NCwxXSxbMTA4NCwxXSxbMTA5NSwxXSxbMTEwNSwxXSxbMTExNSwxXSxbMTEyNSwxXSxbMTEzNSwxXSxbMTE0NSwxXSxbMTE1NywxXSxbMTE2NiwxXSxbMTE3NywxXSxbMTE4NiwxXSxbMTE5NiwxXSxbMTIwNywxXSxbMTIxNywxXSxbMTIyNywxXSxbMTIzNywxXSxbMTI0OCwxXSxbMTI1OCwxXSxbMTI2OCwxXSxbMTI3OCwxXSxbMTI4OCwxXSxbMTI5OSwxXSxbMTMwOSwxXSxbMTMxOSwxXSxbMTMyOSwxXSxbMTM0MCwxXSxbMTM1MCwxXSxbMTM2MCwxXSxbMTM3MCwxXSxbMTM4MCwxXSxbMTM5MSwxXSxbMTQwMSwxXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-0fca2e7f9e0189b05c1c",
+          "file": "release-11-1-1.spec.ts",
+          "line": 672,
+          "column": 5
+        },
+        {
+          "title": "reverse · a press on a leaving Sheet's trigger reopens it from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3365,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T02:56:17.646Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuODc1LCJzaGFyZSI6MC4wMjgsImVuZCI6MSwiZnJhbWVzIjpbWy0zLDAuODc1XSxbMTIsMC44MzNdLFsxOSwwLjgzOF0sWzI3LDAuODQyXSxbMzcsMC44NDldLFs0OCwwLjg1OV0sWzU3LDAuODcxXSxbNjksMC44ODFdLFs3OCwwLjg5Nl0sWzg4LDAuOTA2XSxbOTksMC45MThdLFsxMDksMC45M10sWzExOSwwLjk0XSxbMTI5LDAuOTVdLFsxMzksMC45NTldLFsxNTAsMC45NjddLFsxNjAsMC45NzRdLFsxNzAsMC45ODFdLFsxODAsMC45ODZdLFsxOTAsMC45OTFdLFsyMDEsMC45OTRdLFsyMTEsMC45OThdLFsyMjEsMV0sWzIzMSwxXSxbMjQyLDFdLFsyNTIsMV0sWzI2MiwxXSxbMjcxLDFdLFsyODIsMV0sWzI5MywxXSxbMzAzLDFdLFszMTMsMV0sWzMyMywxXSxbMzMzLDFdLFszNDQsMV0sWzM1NCwxXSxbMzY0LDFdLFszNzMsMV0sWzM4NSwxXSxbMzk1LDFdLFs0MDUsMV0sWzQxNiwxXSxbNDI1LDFdLFs0MzUsMV0sWzQ0NiwxXSxbNDU2LDFdLFs0NjYsMV0sWzQ3NiwxXSxbNDg2LDFdLFs0OTcsMV0sWzUwNywxXSxbNTE3LDFdLFs1MjcsMV0sWzUzNywxXSxbNTQ5LDFdLFs1NTgsMV0sWzU2OCwxXSxbNTc4LDFdLFs1ODksMV0sWzU5OSwxXSxbNjA5LDFdLFs2MTksMV0sWzYyOSwxXSxbNjQwLDFdLFs2NDksMV0sWzY2MCwxXSxbNjcwLDFdLFs2ODAsMV0sWzY5MCwxXSxbNzAxLDFdLFs3MTEsMV0sWzcyMSwxXSxbNzMyLDFdLFs3NDIsMV0sWzc1MiwxXSxbNzYyLDFdLFs3NzIsMV0sWzc4MiwxXSxbNzkzLDFdLFs4MDIsMV0sWzgxMywxXSxbODIzLDFdLFs4MzMsMV0sWzg0MywxXSxbODU1LDFdLFs4NjMsMV0sWzg3NCwxXSxbODg1LDFdLFs4OTUsMV0sWzkwNSwxXSxbOTE1LDFdLFs5MjUsMV0sWzkzNSwxXSxbOTQ2LDFdLFs5NTYsMV0sWzk2NiwxXSxbOTc3LDFdLFs5ODcsMV0sWzk5NywxXSxbMTAwNywxXSxbMTAxOCwxXSxbMTAyNywxXSxbMTAzOCwxXSxbMTA0OCwxXSxbMTA1NywxXSxbMTA2OCwxXSxbMTA3OCwxXSxbMTA4OSwxXSxbMTA5OSwxXSxbMTExMCwxXSxbMTExOSwxXSxbMTEzMCwxXSxbMTE0MCwxXSxbMTE1MCwxXSxbMTE2MCwxXSxbMTE3MCwxXSxbMTE4MCwxXSxbMTE5MSwxXSxbMTIwMSwxXSxbMTIxMSwxXSxbMTIyMSwxXSxbMTIzMiwxXSxbMTI0MiwxXSxbMTI1MiwxXSxbMTI2MiwxXSxbMTI3MiwxXSxbMTI4MywxXSxbMTI5MywxXSxbMTMwMywxXSxbMTMxMywxXSxbMTMyMywxXSxbMTMzNCwxXSxbMTM0NCwxXSxbMTM1NCwxXSxbMTM2NCwxXSxbMTM3NCwxXSxbMTM4NSwxXSxbMTM5NSwxXSxbMTQwNSwxXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-1291496db8e3cbc12537",
+          "file": "release-11-1-1.spec.ts",
+          "line": 672,
+          "column": 5
+        },
+        {
+          "title": "reverse · a press on a leaving Select's trigger reopens it from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3435,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T02:56:21.016Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNjUzLCJzaGFyZSI6MC4xNTcsImVuZCI6MSwiZnJhbWVzIjpbWy01LDAuNjUzXSxbNiwwLjY2XSxbMTUsMC43MTldLFsyNSwwLjgwNV0sWzM2LDAuOTE2XSxbNDUsMC45ODNdLFs1NiwxXSxbNjYsMV0sWzc2LDFdLFs4NiwxXSxbOTcsMV0sWzEwNywxXSxbMTE2LDFdLFsxMjgsMV0sWzEzOCwxXSxbMTQ4LDFdLFsxNTcsMV0sWzE2OSwxXSxbMTc5LDFdLFsxODksMV0sWzE5OSwxXSxbMjA5LDFdLFsyMjAsMV0sWzIzMCwxXSxbMjQwLDFdLFsyNTAsMV0sWzI2MCwxXSxbMjcwLDFdLFsyODEsMV0sWzI5MSwxXSxbMzAyLDFdLFszMTEsMV0sWzMyMSwxXSxbMzMyLDFdLFszNDIsMV0sWzM1MywxXSxbMzYyLDFdLFszNzIsMV0sWzM4MiwxXSxbMzkzLDFdLFs0MDMsMV0sWzQxMywxXSxbNDIzLDFdLFs0MzQsMV0sWzQ0NCwxXSxbNDUzLDFdLFs0NjQsMV0sWzQ3NSwxXSxbNDg0LDFdLFs0OTYsMV0sWzUwNSwxXSxbNTE1LDFdLFs1MjcsMV0sWzUzNiwxXSxbNTQ2LDFdLFs1NTYsMV0sWzU2NiwxXSxbNTc3LDFdLFs1ODcsMV0sWzU5OCwxXSxbNjA4LDFdLFs2MTcsMV0sWzYyOCwxXSxbNjM4LDFdLFs2NDgsMV0sWzY1OCwxXSxbNjY4LDFdLFs2NzksMV0sWzY4OSwxXSxbNjk5LDFdLFs3MDksMV0sWzcxOSwxXSxbNzMwLDFdLFs3NDAsMV0sWzc1MCwxXSxbNzYwLDFdLFs3NzAsMV0sWzc4MSwxXSxbNzkxLDFdLFs4MDIsMV0sWzgxMSwxXSxbODIxLDFdLFs4MzEsMV0sWzg0MywxXSxbODUxLDFdLFs4NjIsMV0sWzg3MywxXSxbODgyLDFdLFs4OTMsMV0sWzkwMywxXSxbOTEzLDFdLFs5MjQsMV0sWzkzNCwxXSxbOTQ0LDFdLFs5NTQsMV0sWzk2NCwxXSxbOTc0LDFdLFs5ODUsMV0sWzk5NSwxXSxbMTAwNSwxXSxbMTAxNSwxXSxbMTAyNiwxXSxbMTAzNSwxXSxbMTA0NiwxXSxbMTA1NiwxXSxbMTA2NiwxXSxbMTA3NywxXSxbMTA4NywxXSxbMTA5NywxXSxbMTEwOCwxXSxbMTExNywxXSxbMTEyOCwxXSxbMTEzOSwxXSxbMTE0OCwxXSxbMTE1OCwxXSxbMTE2OSwxXSxbMTE3OSwxXSxbMTE4OSwxXSxbMTE5OSwxXSxbMTIwOSwxXSxbMTIxOSwxXSxbMTIzMCwxXSxbMTI0MCwxXSxbMTI1MCwxXSxbMTI2MCwxXSxbMTI3MSwxXSxbMTI4MCwxXSxbMTI5MSwxXSxbMTMwMSwxXSxbMTMxMSwxXSxbMTMyMywxXSxbMTMzMSwxXSxbMTM0MywxXSxbMTM1MiwxXSxbMTM2MiwxXSxbMTM3MywxXSxbMTM4MywxXSxbMTM5MywxXSxbMTQwMywxXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-b5142036c729ee597d39",
+          "file": "release-11-1-1.spec.ts",
+          "line": 672,
+          "column": 5
+        },
+        {
+          "title": "reverse · a press on the page while a sheet leaves reaches the page",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2449,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-16T02:56:24.455Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-adcf8f36d338da800a7f",
+          "file": "release-11-1-1.spec.ts",
+          "line": 692,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-16T02:55:34.193Z",
+    "duration": 52748.499,
+    "expected": 15,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
