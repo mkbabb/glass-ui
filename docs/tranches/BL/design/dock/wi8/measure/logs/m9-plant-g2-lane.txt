@@ -1,0 +1,20 @@
+== g2-lane 2026-11-22 07:59:31 (load { 9.73 9.88 9.74 })
+applied g2-lane - G-2 (inside the plate): every lane corner rounded, as before (CSS scales them down)
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+plant-g2-lane w-persist light chromium: 28 frames, t 1.0000 0.9503 0.8378 0.7014 0.5645 0.4395 0.3323 0.2443 0.1747 0.1213 0.0815 0.0526 ...
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+plant-g2-lane w-persist light webkit: 28 frames, t 1.0000 0.9503 0.8378 0.7014 0.5645 0.4395 0.3323 0.2443 0.1747 0.1213 0.0815 0.0526 ...
+cmd rc=0
+reverted g2-lane
+tree clean: 677 src files equal HEAD
+== done g2-lane 2026-11-22 07:59:57
+== g2-lane 2026-11-22 08:03:57 (load { 8.71 9.41 9.58 })
+applied g2-lane - G-2 (inside the plate): every lane corner rounded, as before (CSS scales them down)
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"cell":"1440-fine-light","rows":"p9-persist-fine.wi8.chromium.1440-fine-light.rows.json","strips":[],"frames":232,"firstChange":241.5,"lastChange":1403.2,"screencast":null,"consoleErrors":0}
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+{"cell":"1440-fine-light","rows":"p9-persist-fine.wi8.webkit.1440-fine-light.rows.json","strips":[],"frames":200,"firstChange":234,"lastChange":1613,"screencast":null,"consoleErrors":0}
+cmd rc=0
+reverted g2-lane
+tree clean: 677 src files equal HEAD
+== done g2-lane 2026-11-22 08:04:16
