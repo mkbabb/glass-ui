@@ -1,0 +1,235 @@
+# RU-86's table at its refs
+#   daraksha origin/master 24a6dbdc4
+#   fourier origin/master 266bd6728
+#   atlas-rc HEAD 88bde3b35
+#   lt-integ HEAD 3421be357
+#   glass HEAD 575084358
+
+## ControlsDock
+  daraksha src/shell/ControlsSeat.vue:98-113  at its ref
+      98| onBeforeUnmount(() => holding && dock.value?.release());
+      99| </script>
+     100| 
+     101| <template>
+     102|     <div
+     103|         class="controls-seat"
+     104|         :style="HER"
+     105|         :data-corner="corner"
+     106|         :data-within="within"
+     107|         :data-page="String(route.name ?? '')"
+     108|         :data-column="column || undefined"
+     109|         :data-named="touch || undefined"
+     110|         data-aside
+     111|         data-controls-seat
+     112|     >
+     113|         <GlassDock ref="dock" :orientation="column ? 'vertical' : 'horizontal'" :collapsed-label="label" :aria-label="label">
+  daraksha src/shell/ControlsSeat.vue:6-7  NOT AT ITS REF (no /GlassDock|ControlsDock|REPLACE THIS FILE|11\.2\.0|named piece|gives way/ on these lines)
+       6|  * floating glass dock of icon seats, folded at rest to a quiet ⋯ (a glyph that names no action) and opened on glass's
+       7|  * own dock motion at glass's own size (its seat and glyph rungs: 20 px glyphs in 40 px seats on a desk, 22 in 44 on a
+    nearest lines carrying it: 5, 8, 13, 14, 16, 19, 39, 52
+  fourier web/src/components/shared/StageDock.vue:88-110  at its ref
+      88|         <GlassDock v-if="!fold" ref="dock" class="stage-dock-plate" :collapse="false" fit-content :aria-label="label">
+      89|             <slot :hold="hold" :column="column" />
+      90|         </GlassDock>
+      91|         <GlassDock
+      92|             v-else
+      93|             ref="dock"
+      94|             class="stage-dock-plate"
+      95|             collapse="closed"
+      96|             expand-on="press"
+      97|             fit-content
+      98|             :orientation="column ? 'vertical' : 'horizontal'"
+      99|             :collapsed-label="label"
+     100|             :aria-label="label"
+     101|         >
+     102|             <template #collapsed>
+     103|                 <slot name="collapsed" />
+     104|             </template>
+     105|             <slot :hold="hold" :column="column" />
+     106|             <!-- A seat that must outlive the fold (the workspace's Edit contour,
+     107|                  the editor's one door in and out): glass's never-inert region. -->
+     108|             <template v-if="$slots['persistent-end']" #persistent-end>
+     109|                 <slot name="persistent-end" :column="column" />
+     110|             </template>
+  fourier web/src/components/shared/StageDock.vue:17-18  at its ref
+      17|  * seat that opened it is still there when it closes. When glass ships this
+      18|  * composition as a named piece, this file gives way to it.
+  fourier web/src/components/visualization/EditorControlsDock.vue:88  NOT AT ITS REF (no /GlassDock|ControlsDock|REPLACE THIS FILE|11\.2\.0|named piece|gives way/ on these lines)
+      88| const isSm = useMediaQuery("(min-width: 640px)");
+    nearest lines carrying it: 5, 92, 227, 234, 300
+
+## label
+  daraksha src/shell/ControlsSeat.vue:46  NOT AT ITS REF (no /label/i on these lines)
+      46|     within = "viewport",
+    nearest lines carrying it: 14, 44, 49, 113
+  daraksha src/pages/ColourPage.vue:213  NOT AT ITS REF (no /label/i on these lines)
+     213| // The URL's state on the client's first frame (the prerender holds the page at rest); then this
+    nearest lines carrying it: 31, 37, 178, 180, 181, 195, 210, 235
+  daraksha src/pages/MotionPage.vue:116  NOT AT ITS REF (no /label/i on these lines)
+     116|                         <span v-if="look" class="kf-rest" aria-hidden="true"></span>
+    nearest lines carrying it: 113
+  daraksha src/pages/NamePage.vue:45  NOT AT ITS REF (no /label/i on these lines)
+      45|         </div>
+    nearest lines carrying it: none in the file
+  daraksha src/pages/PortraitsPage.vue:508  NOT AT ITS REF (no /label/i on these lines)
+     508|     <main class="portraits golden-stage card-stage">
+    nearest lines carrying it: 154, 515, 559, 580, 581, 582, 584
+  daraksha src/scripture/ReaderDock.vue:145  NOT AT ITS REF (no /label/i on these lines)
+     145|                     class="surah-button"
+    nearest lines carrying it: 22, 52, 55, 56, 57, 58, 135, 146
+  fourier web/src/components/shared/StageDock.vue:25  at its ref
+      25|     label: string;
+  fourier web/src/components/shared/StageDock.vue:98-99  at its ref
+      98|             :orientation="column ? 'vertical' : 'horizontal'"
+      99|             :collapsed-label="label"
+
+## corner
+  daraksha src/shell/ControlsSeat.vue:126-128  NOT AT ITS REF (no /top|right|inset|corner/i on these lines)
+     126|         </GlassDock>
+     127|     </div>
+     128| </template>
+    nearest lines carrying it: 3, 15, 31, 32, 33, 45, 50, 105
+  fourier web/src/components/shared/StageDock.vue:115-117  at its ref
+     115| <style scoped>
+     116| /* The box only: the host places it at its stage's top-right corner; the dock
+     117|    holds to the box's end edge, so it grows leftward (a row) or downward (a
+
+## within
+  daraksha src/shell/ControlsSeat.vue:126-128  NOT AT ITS REF (no /fixed|absolute|position|parent|stage|float|inset/i on these lines)
+     126|         </GlassDock>
+     127|     </div>
+     128| </template>
+    nearest lines carrying it: 5, 6, 9, 15, 22, 32, 33, 40
+  fourier web/src/components/shared/StageDock.vue:115-117  at its ref
+     115| <style scoped>
+     116| /* The box only: the host places it at its stage's top-right corner; the dock
+     117|    holds to the box's end edge, so it grows leftward (a row) or downward (a
+  fourier web/src/components/equation/PlotToolsDock.vue:43-46  at its ref
+      43| 
+      44| <template>
+      45|     <!-- A fixed seat the size of the folded dock: the dock floats from its
+      46|          top-right corner, so the open row (or a phone's column) overlays the
+
+## #default (ControlsDock)
+  fourier web/src/components/shared/StageDock.vue:89  at its ref
+      89|             <slot :hold="hold" :column="column" />
+  fourier web/src/components/shared/StageDock.vue:104  NOT AT ITS REF (no /slot|<template|GlassDock|Dock/ on these lines)
+     104|             </template>
+    nearest lines carrying it: 6, 8, 16, 21, 42, 86, 88, 89
+
+## #collapsed (ControlsDock)
+  daraksha src/shell/ControlsSeat.vue:109  NOT AT ITS REF (no /collapsed/ on these lines)
+     109|         :data-named="touch || undefined"
+    nearest lines carrying it: 16, 113, 117, 118
+  fourier web/src/components/shared/StageDock.vue:101-103  at its ref
+     101|         >
+     102|             <template #collapsed>
+     103|                 <slot name="collapsed" />
+  fourier CanvasControlsDock.vue:63-68  NOT FOUND at origin/master
+  fourier web/src/components/equation/PlotToolsDock.vue:48-53  at its ref
+      48|     <div class="plot-tools-seat">
+      49|     <StageDock label="Plot tools">
+      50|         <template #collapsed>
+      51|             <span class="summary-glyph-wrap">
+      52|                 <Ellipsis class="dock-summary-glyph" aria-hidden="true" />
+      53|                 <StatusDot v-if="!showOriginal || !showHarmonics" class="view-dot" state="active" size="sm" motion="off" />
+  fourier web/src/components/visualization/EditorControlsDock.vue:157  NOT AT ITS REF (no /collapsed/ on these lines)
+     157|                             <DropdownMenuItem class="tool-row is-neutral" @select="emit('reset')">
+    nearest lines carrying it: none in the file
+  atlas-rc src/charts/frame/PlateDock.vue:171  at its ref
+     171|             <template #collapsed>
+  lt-integ src/charts/frame/PlateDock.vue:359  NOT AT ITS REF (no /collapsed/ on these lines)
+     359|                 </ControlTip>
+    nearest lines carrying it: 94, 258, 322, 375, 505, 508, 510, 512
+
+## #persistent (ControlsDock)
+  fourier web/src/components/visualization/EditorControlsDock.vue:124  NOT AT ITS REF (no /persistent/ on these lines)
+     124|                             :model-value="magnetRadius"
+    nearest lines carrying it: none in the file
+  atlas-rc src/charts/frame/PlateDock.vue:157  at its ref
+     157|             <template v-if="view" #persistent>
+  lt-integ src/charts/frame/PlateDock.vue:312  NOT AT ITS REF (no /persistent/ on these lines)
+     312|         @pointerdown.capture="onPressInside"
+    nearest lines carrying it: 174, 176, 177, 180, 200, 204, 328, 337
+
+## #persistent-end (ControlsDock)
+  fourier web/src/components/shared/StageDock.vue:107-109  at its ref
+     107|                  the editor's one door in and out): glass's never-inert region. -->
+     108|             <template v-if="$slots['persistent-end']" #persistent-end>
+     109|                 <slot name="persistent-end" :column="column" />
+  fourier CanvasControlsDock.vue:104-114  NOT FOUND at origin/master
+
+## DockOutlet
+  daraksha src/name/NameDock.vue:67  NOT AT ITS REF (no /Teleport|dock-page|dock-persistent|id=/ on these lines)
+      67| const route = useRoute();
+    nearest lines carrying it: 103, 130
+  daraksha src/portraits/PortraitsDock.vue:61  at its ref
+      61|     <Teleport defer to="#dock-page">
+  daraksha src/scripture/ReaderDock.vue:117  NOT AT ITS REF (no /Teleport|dock-page|dock-persistent|id=/ on these lines)
+     117| const Contents = defineAsyncComponent({ loader: loadContents, onError: (_e, retry, fail, n) => (n <= 3 ? setTimeout(retry, 233 * n) : fail()) });
+    nearest lines carrying it: 132, 149, 169, 173, 174
+  daraksha src/pages/MotionPage.vue:95  NOT AT ITS REF (no /Teleport|dock-page|dock-persistent|id=/ on these lines)
+      95|                     slice="cube"
+    nearest lines carrying it: 18, 104, 124
+  daraksha src/shell/SiteDock.vue:233  NOT AT ITS REF (no /Teleport|dock-page|dock-persistent|id=/ on these lines)
+     233|     <div ref="root" class="site-dock" :class="{ 'carries-end': page.name === 'motion' }" dir="ltr" :style="HER" :data-holds="held?.holds || undefined"
+    nearest lines carrying it: 6, 238, 244, 265, 275, 285, 425, 452
+  daraksha src/shell/SiteDock.vue:270  NOT AT ITS REF (no /Teleport|dock-page|dock-persistent|id=/ on these lines)
+     270|                                 </DockControl>
+    nearest lines carrying it: 6, 238, 244, 265, 275, 285, 425, 452
+
+## to
+  daraksha src/name/NameDock.vue:67  NOT AT ITS REF (no /\bto=|dockRegistry\.set/ on these lines)
+      67| const route = useRoute();
+    nearest lines carrying it: 103
+  daraksha src/portraits/PortraitsDock.vue:61  at its ref
+      61|     <Teleport defer to="#dock-page">
+  daraksha src/scripture/ReaderDock.vue:117  NOT AT ITS REF (no /\bto=|dockRegistry\.set/ on these lines)
+     117| const Contents = defineAsyncComponent({ loader: loadContents, onError: (_e, retry, fail, n) => (n <= 3 ? setTimeout(retry, 233 * n) : fail()) });
+    nearest lines carrying it: 132
+  daraksha src/pages/MotionPage.vue:95  NOT AT ITS REF (no /\bto=|dockRegistry\.set/ on these lines)
+      95|                     slice="cube"
+    nearest lines carrying it: 104
+  glass src/components/dock/GlassDock.vue:222  NOT AT ITS REF (no /\bto=|dockRegistry\.set/ on these lines)
+     222|         const leave = open ? summaryEl.value : fullEl.value;
+    nearest lines carrying it: 177
+
+## region
+  daraksha src/pages/MotionPage.vue:95  NOT AT ITS REF (no /persistent-end/ on these lines)
+      95|                     slice="cube"
+    nearest lines carrying it: 18, 104
+
+## #default (DockOutlet)
+  daraksha src/name/NameDock.vue:67  NOT AT ITS REF (no /Teleport/ on these lines)
+      67| const route = useRoute();
+    nearest lines carrying it: 103, 130
+  daraksha src/portraits/PortraitsDock.vue:61  at its ref
+      61|     <Teleport defer to="#dock-page">
+  daraksha src/scripture/ReaderDock.vue:117  NOT AT ITS REF (no /Teleport/ on these lines)
+     117| const Contents = defineAsyncComponent({ loader: loadContents, onError: (_e, retry, fail, n) => (n <= 3 ? setTimeout(retry, 233 * n) : fail()) });
+    nearest lines carrying it: 132, 169
+  daraksha src/pages/MotionPage.vue:95  NOT AT ITS REF (no /Teleport/ on these lines)
+      95|                     slice="cube"
+    nearest lines carrying it: 104, 124
+
+## run
+  lt-integ src/charts/frame/PlateDock.vue:298  NOT AT ITS REF (no /run=/ on these lines)
+     298| }
+    nearest lines carrying it: 320
+
+## #rim
+  fourier web/src/components/layout/AppDock.vue:371-373  NOT AT ITS REF (no /Rim|Teleport|rim/ on these lines)
+     371| function openRepo() {
+     372|     window.open(REPO_URL, "_blank", "noopener,noreferrer");
+     373| }
+    nearest lines carrying it: 61, 307, 374, 376, 528, 529, 530
+
+## controlCount (exposed)
+  glass src/components/dock/ControlsDock.vue:53  NOT AT ITS REF (no /controlCount/ on these lines)
+      53|         if (n > 6) console.warn(`[glass-ui] ControlsDock "${props.label}" holds ${n} controls; it holds six. Group the rest behind one seat's menu.`);
+    nearest lines carrying it: 33, 36, 52, 58
+  glass src/components/dock/ControlsDock.vue:59  NOT AT ITS REF (no /controlCount/ on these lines)
+      59|     const count = mounted !== undefined && mounted > 0 ? mounted : authored(slots.default?.() ?? []);
+    nearest lines carrying it: 33, 36, 52, 58
+
+# 35 cited line(s) not at their ref
