@@ -1,0 +1,251 @@
+steps | engine | cells | failing | unsettled | marks (fails, min) | hover reads (fails, min) | min word | min glyph | loose fails
+h5-c10 | chromium | 64 | 16 | 16 | 48 (17, 1.03) | 32 (12, 1.013) | 4.24 | 4.14 | 0
+h5-c10 | webkit | 32 | 8 | 8 | 24 (20, 1.132) | 16 (11, 1.098) | 4.97 | 4.76 | 0
+h5-c12 | chromium | 64 | 18 | 16 | 48 (9, 1.09) | 32 (13, 1.133) | 4.07 | 4.14 | 0
+h5-c12 | webkit | 32 | 8 | 8 | 24 (10, 1.211) | 16 (11, 1.152) | 4.63 | 4.76 | 0
+h5-c14 | chromium | 64 | 18 | 16 | 48 (5, 1.134) | 32 (13, 1.178) | 3.87 | 4.14 | 0
+h5-c14 | webkit | 32 | 8 | 8 | 24 (4, 1.281) | 16 (11, 1.198) | 4.38 | 4.76 | 0
+h6.5-c10 | chromium | 64 | 16 | 16 | 48 (17, 1.03) | 32 (8, 1) | 4.24 | 4.14 | 0
+h6.5-c10 | webkit | 32 | 8 | 8 | 24 (20, 1.131) | 16 (7, 1.062) | 4.97 | 4.76 | 0
+h8-c10 | chromium | 64 | 16 | 16 | 48 (17, 1.029) | 32 (8, 1.002) | 4.24 | 4.14 | 0
+h8-c10 | webkit | 32 | 8 | 8 | 24 (20, 1.131) | 16 (7, 1.03) | 4.97 | 4.76 | 0
+
+RU-68's readings (RU-105), at hover 5 % and current 10 %:
+  held press, chromium nav field dark: {"current": {"seat": "Reports", "hovered": {"fill": [135, 98, 87], "ground": [121, 80, 68], "againstGround": 1.291, "scale": "1"}, "held": {"fill": [137, 101, 90], "ground": [121, 80, 68], "againstGround": 1.34, "scale": "0.96"}, "heldAgainstHovered": 1.04}, "rest": {"seat": "Home", "hovered": {"fil
+  held press, chromium nav field light: {"current": {"seat": "Reports", "hovered": {"fill": [203, 160, 147], "ground": [226, 178, 163], "againstGround": 1.237, "scale": "1"}, "held": {"fill": [199, 157, 144], "ground": [226, 178, 164], "againstGround": 1.286, "scale": "0.96"}, "heldAgainstHovered": 1.039}, "rest": {"seat": "Home", "hovere
+  segmented hover, chromium dials field dark: {"segment": "1Y", "background": "rgba(0, 0, 0, 0)", "dockHoverToken": "oklab(0.999994 0.0000455678 0.0000200868 / 0.05)", "takesToken": false, "backgroundImage": "none"}
+  held press, chromium dials field dark: {"current": {"seat": "5Y", "hovered": {"fill": [124, 74, 58], "ground": [123, 60, 42], "againstGround": 1.152, "scale": "none"}, "held": {"fill": [130, 82, 67], "ground": [123, 60, 42], "againstGround": 1.288, "scale": "none"}, "heldAgainstHovered": 1.117}, "rest": {"seat": "", "hovered": {"fill": [
+  segmented hover, chromium dials field light: {"segment": "1Y", "background": "rgba(0, 0, 0, 0)", "dockHoverToken": "oklab(0 0 0 / 0.05)", "takesToken": false, "backgroundImage": "none"}
+  held press, chromium dials field light: {"current": {"seat": "5Y", "hovered": {"fill": [189, 125, 103], "ground": [229, 149, 126], "againstGround": 1.424, "scale": "none"}, "held": {"fill": [182, 120, 100], "ground": [229, 149, 126], "againstGround": 1.525, "scale": "none"}, "heldAgainstHovered": 1.074}, "rest": {"seat": "", "hovered": {"
+  held press, webkit nav field dark: {"current": {"seat": "Reports", "hovered": {"fill": [117, 91, 82], "ground": [103, 74, 64], "againstGround": 1.286, "scale": "1"}, "held": {"fill": [120, 94, 85], "ground": [103, 74, 64], "againstGround": 1.344, "scale": "0.96"}, "heldAgainstHovered": 1.046}, "rest": {"seat": "Home", "hovered": {"fi
+  held press, webkit nav field light: {"current": {"seat": "Reports", "hovered": {"fill": [198, 162, 150], "ground": [221, 180, 167], "againstGround": 1.236, "scale": "1"}, "held": {"fill": [194, 159, 147], "ground": [221, 180, 167], "againstGround": 1.29, "scale": "0.96"}, "heldAgainstHovered": 1.039}, "rest": {"seat": "Home", "hovered
+  segmented hover, webkit dials field dark: {"segment": "1Y", "background": "rgba(0, 0, 0, 0)", "dockHoverToken": "oklab(1 0 0 / 0.05)", "takesToken": false, "backgroundImage": "none"}
+  held press, webkit dials field dark: {"current": {"seat": "5Y", "hovered": {"fill": [107, 81, 70], "ground": [91, 62, 50], "againstGround": 1.338, "scale": "none"}, "held": {"fill": [107, 81, 71], "ground": [91, 61, 50], "againstGround": 1.343, "scale": "none"}, "heldAgainstHovered": 1.001}, "rest": {"seat": "", "hovered": {"fill": [10
+  segmented hover, webkit dials field light: {"segment": "1Y", "background": "rgba(0, 0, 0, 0)", "dockHoverToken": "oklab(0 0 0 / 0.05)", "takesToken": false, "backgroundImage": "none"}
+  held press, webkit dials field light: {"current": {"seat": "5Y", "hovered": {"fill": [181, 145, 130], "ground": [201, 162, 147], "againstGround": 1.233, "scale": "none"}, "held": {"fill": [181, 145, 130], "ground": [201, 161, 147], "againstGround": 1.227, "scale": "none"}, "heldAgainstHovered": 1}, "rest": {"seat": "", "hovered": {"fill
+
+failing lines by cell:
+  h5-c10 chromium nav field dark rest (no dock folds): {'dock': 'Site', 'kind': 'text', 'text': 'Reports', 'cr': 4.24, 'need': 4.5, 'pass': False, 'op': 1, 'bg': [136, 99, 90]; {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 4.14, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [122, 81, 71], 'u
+  h5-c10 chromium nav field dark open: {'dock': 'Site', 'kind': 'text', 'text': 'Reports', 'cr': 4.31, 'need': 4.5, 'pass': False, 'op': 1, 'bg': [135, 98, 87]; {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 4.2, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [121, 80, 70], 'un
+  h5-c10 chromium nav field light rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 6.06, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [226, 179, 167], 
+  h5-c10 chromium nav field light open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 6.03, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [226, 178, 165], ; mark Reports 1.237 < v11.0.2 1.369; hover Home against its ground 1.115 < v11.0.2 1.263
+  h5-c10 chromium nav flat dark rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.65, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [26, 20, 16], 'un
+  h5-c10 chromium nav flat dark open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.65, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [26, 20, 16], 'un; mark Reports 1.325 < v11.0.2 1.365; hover Home against its ground 1.135 < v11.0.2 1.163
+  h5-c10 chromium nav flat light rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7.53, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [223, 220, 216], 
+  h5-c10 chromium nav flat light open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7.53, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [223, 220, 216], ; mark Reports 1.247 < v11.0.2 1.394; hover Home against its ground 1.111 < v11.0.2 1.303
+  h5-c10 chromium nav grid dark rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.38, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [30, 24, 19], 'un
+  h5-c10 chromium nav grid dark open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.38, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [30, 24, 19], 'un
+  h5-c10 chromium nav grid light rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [212, 209, 206], 'un
+  h5-c10 chromium nav grid light open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [212, 209, 206], 'un
+  h5-c10 chromium nav daraksha dark rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.22, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [30, 27, 20], 'un
+  h5-c10 chromium nav daraksha dark open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.22, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [30, 27, 20], 'un
+  h5-c10 chromium nav daraksha light rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7.19, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [214, 214, 206], 
+  h5-c10 chromium nav daraksha light open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7.2, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [214, 214, 207], '
+  h5-c10 chromium action-row field dark open: mark Format 1.353 < v11.0.2 1.391; hover Copy against its ground 1.157 < v11.0.2 1.219
+  h5-c10 chromium action-row field light open: mark Format 1.2 < v11.0.2 1.28; hover Copy against its ground 1.096 < v11.0.2 1.227
+  h5-c10 chromium action-row flat dark open: mark Format 1.321 < v11.0.2 1.365; hover Copy against its ground 1.142 < v11.0.2 1.163
+  h5-c10 chromium action-row flat light open: mark Format 1.229 < v11.0.2 1.333; hover Copy against its ground 1.107 < v11.0.2 1.267
+  h5-c10 chromium canvas-tools field light open: mark Grid 1.209 < v11.0.2 1.329; mark Draw 1.204 < v11.0.2 1.334; hover Layers against its ground 1.101 < v11.0.2 1.272
+  h5-c10 chromium canvas-tools flat dark open: mark Grid 1.332 < v11.0.2 1.373; mark Draw 1.335 < v11.0.2 1.372; hover Layers against its ground 1.137 < v11.0.2 1.162
+  h5-c10 chromium canvas-tools flat light open: mark Grid 1.241 < v11.0.2 1.41; mark Draw 1.256 < v11.0.2 1.408; hover Layers against its ground 1.098 < v11.0.2 1.304
+  h5-c10 chromium dials field dark open: mark 5Y 1.146 < 1.2 (the polarity flipped: v11.0.2 106,56,31 on 152,74,45, now 123,78,57 on 122,65,40); mark Lin 1.03 < 1.2 (the polarity flipped: v11.0.2 107,56,29 on 150,91,68, now 123,78,57 on 120,76,60)
+  h5-c10 chromium dials flat light open: mark 5Y 1.462 < v11.0.2 1.512; mark Lin 1.456 < v11.0.2 1.817
+  h5-c10 chromium dials grid dark open: hover 1Y against its ground 1.007 < 1.1
+  h5-c10 chromium dials daraksha dark open: hover 1Y against its ground 1.016 < 1.1
+  h5-c10 webkit nav field dark rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 4.76, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [104, 74, 66], 'u
+  h5-c10 webkit nav field dark open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 4.79, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [103, 74, 64], 'u; mark Reports 1.287 < v11.0.2 1.32; hover Home against its ground 1.145 < v11.0.2 1.17
+  h5-c10 webkit nav field light rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 6.07, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [222, 181, 170], 
+  h5-c10 webkit nav field light open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 6.02, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [221, 180, 167], ; mark Reports 1.236 < v11.0.2 1.363; hover Home against its ground 1.105 < v11.0.2 1.284
+  h5-c10 webkit nav flat dark rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.67, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [25, 20, 15], 'un
+  h5-c10 webkit nav flat dark open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.67, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [25, 20, 15], 'un; mark Reports 1.301 < v11.0.2 1.358
+  h5-c10 webkit nav flat light rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7.53, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [223, 220, 216], 
+  h5-c10 webkit nav flat light open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7.53, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [223, 220, 216], ; mark Reports 1.246 < v11.0.2 1.396; hover Home against its ground 1.11 < v11.0.2 1.301
+  h5-c10 webkit action-row field dark open: mark Format 1.332 < v11.0.2 1.373; hover Copy against its ground 1.166 < v11.0.2 1.213
+  h5-c10 webkit action-row field light open: mark Format 1.219 < v11.0.2 1.34; hover Copy against its ground 1.106 < v11.0.2 1.251
+  h5-c10 webkit action-row flat dark open: mark Format 1.302 < v11.0.2 1.361; hover Copy against its ground 1.124 < v11.0.2 1.161
+  h5-c10 webkit action-row flat light open: mark Format 1.237 < v11.0.2 1.371; hover Copy against its ground 1.109 < v11.0.2 1.281
+  h5-c10 webkit canvas-tools field dark open: mark Grid 1.299 < v11.0.2 1.321; mark Draw 1.304 < v11.0.2 1.328; hover Layers against its ground 1.15 < v11.0.2 1.178
+  h5-c10 webkit canvas-tools field light open: mark Grid 1.235 < v11.0.2 1.364; mark Draw 1.232 < v11.0.2 1.365; hover Layers against its ground 1.068 < v11.0.2 1.269
+  h5-c10 webkit canvas-tools flat dark open: mark Grid 1.298 < v11.0.2 1.357; mark Draw 1.298 < v11.0.2 1.357
+  h5-c10 webkit canvas-tools flat light open: mark Grid 1.242 < v11.0.2 1.4; mark Draw 1.244 < v11.0.2 1.401; hover Layers against its ground 1.101 < v11.0.2 1.298
+  h5-c10 webkit dials field dark open: mark 5Y 1.138 < 1.2 (the polarity flipped: v11.0.2 90,60,42 on 108,72,56, now 107,81,70 on 102,72,59); mark Lin 1.132 < 1.2 (the polarity flipped: v11.0.2 90,61,41 on 121,85,66, now 107,82,69 on 102,73,58); hover 1Y against its ground 1.147 < v11.0.2 1.201
+  h5-c10 webkit dials flat light open: mark 5Y 1.238 < v11.0.2 1.323; mark Lin 1.494 < v11.0.2 1.586
+  h5-c12 chromium nav field dark rest (no dock folds): {'dock': 'Site', 'kind': 'text', 'text': 'Reports', 'cr': 4.07, 'need': 4.5, 'pass': False, 'op': 1, 'bg': [138, 102, 93; {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 4.14, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [122, 81, 71], 'u
+  h5-c12 chromium nav field dark open: {'dock': 'Site', 'kind': 'text', 'text': 'Reports', 'cr': 4.14, 'need': 4.5, 'pass': False, 'op': 1, 'bg': [137, 101, 91; {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 4.2, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [121, 80, 70], 'un
+  h5-c12 chromium nav field light rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 6.06, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [226, 179, 167], 
+  h5-c12 chromium nav field light open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 6.03, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [226, 178, 165], ; mark Reports 1.297 < v11.0.2 1.369; hover Home against its ground 1.115 < v11.0.2 1.263
+  h5-c12 chromium nav flat dark rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.65, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [26, 20, 16], 'un
+  h5-c12 chromium nav flat dark open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.65, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [26, 20, 16], 'un; hover Home against its ground 1.135 < v11.0.2 1.163
+  h5-c12 chromium nav flat light rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7.53, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [223, 220, 216], 
+  h5-c12 chromium nav flat light open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7.53, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [223, 220, 216], ; mark Reports 1.31 < v11.0.2 1.394; hover Home against its ground 1.111 < v11.0.2 1.303
+  h5-c12 chromium nav grid dark rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.38, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [30, 24, 19], 'un
+  h5-c12 chromium nav grid dark open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.38, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [30, 24, 19], 'un
+  h5-c12 chromium nav grid light rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [212, 209, 206], 'un
+  h5-c12 chromium nav grid light open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [212, 209, 206], 'un
+  h5-c12 chromium nav daraksha dark rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.22, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [30, 27, 20], 'un
+  h5-c12 chromium nav daraksha dark open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.22, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [30, 27, 20], 'un
+  h5-c12 chromium nav daraksha light rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7.19, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [214, 214, 206], 
+  h5-c12 chromium nav daraksha light open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7.2, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [214, 214, 207], '
+  h5-c12 chromium action-row field dark open: hover Copy against its ground 1.153 < v11.0.2 1.219
+  h5-c12 chromium action-row field light rest (no dock folds): {'dock': 'Stylesheet actions', 'kind': 'text', 'text': 'Format', 'cr': 4.44, 'need': 4.5, 'pass': False, 'op': 1, 'bg': 
+  h5-c12 chromium action-row field light open: {'dock': 'Stylesheet actions', 'kind': 'text', 'text': 'Format', 'cr': 4.4, 'need': 4.5, 'pass': False, 'op': 1, 'bg': [; hover Copy against its ground 1.095 < v11.0.2 1.227
+  h5-c12 chromium action-row flat dark open: hover Copy against its ground 1.142 < v11.0.2 1.163
+  h5-c12 chromium action-row flat light open: mark Format 1.295 < v11.0.2 1.333; hover Copy against its ground 1.107 < v11.0.2 1.267
+  h5-c12 chromium canvas-tools field light open: mark Grid 1.258 < v11.0.2 1.329; mark Draw 1.258 < v11.0.2 1.334; hover Layers against its ground 1.101 < v11.0.2 1.272
+  h5-c12 chromium canvas-tools flat dark open: hover Layers against its ground 1.137 < v11.0.2 1.162
+  h5-c12 chromium canvas-tools flat light open: mark Grid 1.304 < v11.0.2 1.41; mark Draw 1.318 < v11.0.2 1.408; hover Layers against its ground 1.098 < v11.0.2 1.304
+  h5-c12 chromium dials field dark open: mark Lin 1.09 < 1.2 (the polarity flipped: v11.0.2 107,56,29 on 150,91,68, now 126,82,61 on 120,76,60); hover 1Y against its ground 1.107 < v11.0.2 1.133
+  h5-c12 chromium dials flat light open: mark Lin 1.525 < v11.0.2 1.817
+  h5-c12 chromium dials grid dark open: hover 1Y against its ground 1.007 < 1.1
+  h5-c12 chromium dials daraksha dark open: hover 1Y against its ground 1.016 < 1.1
+  h5-c12 webkit nav field dark rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 4.76, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [104, 74, 66], 'u
+  h5-c12 webkit nav field dark open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 4.79, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [103, 74, 64], 'u; hover Home against its ground 1.145 < v11.0.2 1.17
+  h5-c12 webkit nav field light rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 6.07, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [222, 181, 170], 
+  h5-c12 webkit nav field light open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 6.03, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [221, 180, 168], ; mark Reports 1.298 < v11.0.2 1.363; hover Home against its ground 1.106 < v11.0.2 1.284
+  h5-c12 webkit nav flat dark rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.67, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [25, 20, 15], 'un
+  h5-c12 webkit nav flat dark open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.67, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [25, 20, 15], 'un
+  h5-c12 webkit nav flat light rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7.53, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [223, 220, 216], 
+  h5-c12 webkit nav flat light open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7.53, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [223, 220, 216], ; mark Reports 1.309 < v11.0.2 1.396; hover Home against its ground 1.11 < v11.0.2 1.301
+  h5-c12 webkit action-row field dark open: hover Copy against its ground 1.166 < v11.0.2 1.213
+  h5-c12 webkit action-row field light open: mark Format 1.282 < v11.0.2 1.34; hover Copy against its ground 1.106 < v11.0.2 1.251
+  h5-c12 webkit action-row flat dark open: hover Copy against its ground 1.124 < v11.0.2 1.161
+  h5-c12 webkit action-row flat light open: mark Format 1.3 < v11.0.2 1.371; hover Copy against its ground 1.109 < v11.0.2 1.281
+  h5-c12 webkit canvas-tools field dark open: hover Layers against its ground 1.15 < v11.0.2 1.178
+  h5-c12 webkit canvas-tools field light open: mark Grid 1.272 < v11.0.2 1.364; mark Draw 1.299 < v11.0.2 1.365; hover Layers against its ground 1.067 < v11.0.2 1.269
+  h5-c12 webkit canvas-tools flat light open: mark Grid 1.306 < v11.0.2 1.4; mark Draw 1.307 < v11.0.2 1.401; hover Layers against its ground 1.101 < v11.0.2 1.298
+  h5-c12 webkit dials field dark open: hover 1Y against its ground 1.148 < v11.0.2 1.201
+  h5-c12 webkit dials flat light open: mark 5Y 1.294 < v11.0.2 1.323; mark Lin 1.562 < v11.0.2 1.586
+  h5-c14 chromium nav field dark rest (no dock folds): {'dock': 'Site', 'kind': 'text', 'text': 'Reports', 'cr': 3.87, 'need': 4.5, 'pass': False, 'op': 1, 'bg': [141, 106, 97; {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 4.14, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [122, 81, 71], 'u
+  h5-c14 chromium nav field dark open: {'dock': 'Site', 'kind': 'text', 'text': 'Reports', 'cr': 3.92, 'need': 4.5, 'pass': False, 'op': 1, 'bg': [140, 105, 94; {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 4.2, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [121, 80, 70], 'un
+  h5-c14 chromium nav field light rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 6.06, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [226, 179, 167], 
+  h5-c14 chromium nav field light open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 6.03, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [226, 178, 165], ; hover Home against its ground 1.115 < v11.0.2 1.263
+  h5-c14 chromium nav flat dark rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.65, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [26, 20, 16], 'un
+  h5-c14 chromium nav flat dark open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.65, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [26, 20, 16], 'un; hover Home against its ground 1.135 < v11.0.2 1.163
+  h5-c14 chromium nav flat light rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7.53, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [223, 220, 216], 
+  h5-c14 chromium nav flat light open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7.53, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [223, 220, 216], ; mark Reports 1.366 < v11.0.2 1.394; hover Home against its ground 1.111 < v11.0.2 1.303
+  h5-c14 chromium nav grid dark rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.38, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [30, 24, 19], 'un
+  h5-c14 chromium nav grid dark open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.38, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [30, 24, 19], 'un
+  h5-c14 chromium nav grid light rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [212, 209, 206], 'un
+  h5-c14 chromium nav grid light open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [212, 209, 206], 'un
+  h5-c14 chromium nav daraksha dark rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.22, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [30, 27, 20], 'un
+  h5-c14 chromium nav daraksha dark open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.22, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [30, 27, 20], 'un
+  h5-c14 chromium nav daraksha light rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7.19, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [214, 214, 206], 
+  h5-c14 chromium nav daraksha light open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7.2, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [214, 214, 207], '
+  h5-c14 chromium action-row field dark open: hover Copy against its ground 1.154 < v11.0.2 1.219
+  h5-c14 chromium action-row field light rest (no dock folds): {'dock': 'Stylesheet actions', 'kind': 'text', 'text': 'Format', 'cr': 4.28, 'need': 4.5, 'pass': False, 'op': 1, 'bg': 
+  h5-c14 chromium action-row field light open: {'dock': 'Stylesheet actions', 'kind': 'text', 'text': 'Format', 'cr': 4.25, 'need': 4.5, 'pass': False, 'op': 1, 'bg': ; hover Copy against its ground 1.097 < v11.0.2 1.227
+  h5-c14 chromium action-row flat dark open: hover Copy against its ground 1.142 < v11.0.2 1.163
+  h5-c14 chromium action-row flat light open: hover Copy against its ground 1.107 < v11.0.2 1.267
+  h5-c14 chromium canvas-tools field light open: hover Layers against its ground 1.101 < v11.0.2 1.272
+  h5-c14 chromium canvas-tools flat dark open: hover Layers against its ground 1.137 < v11.0.2 1.162
+  h5-c14 chromium canvas-tools flat light open: mark Grid 1.365 < v11.0.2 1.41; mark Draw 1.376 < v11.0.2 1.408; hover Layers against its ground 1.098 < v11.0.2 1.304
+  h5-c14 chromium dials field dark open: mark Lin 1.134 < 1.2 (the polarity flipped: v11.0.2 107,56,29 on 150,91,68, now 129,84,66 on 120,76,60); hover 1Y against its ground 1.109 < v11.0.2 1.133
+  h5-c14 chromium dials flat light open: mark Lin 1.599 < v11.0.2 1.817
+  h5-c14 chromium dials grid dark open: hover 1Y against its ground 1.007 < 1.1
+  h5-c14 chromium dials daraksha dark open: hover 1Y against its ground 1.015 < 1.1
+  h5-c14 webkit nav field dark rest (no dock folds): {'dock': 'Site', 'kind': 'text', 'text': 'Reports', 'cr': 4.38, 'need': 4.5, 'pass': False, 'op': 1, 'bg': [125, 100, 93; {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 4.76, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [104, 74, 66], 'u
+  h5-c14 webkit nav field dark open: {'dock': 'Site', 'kind': 'text', 'text': 'Reports', 'cr': 4.42, 'need': 4.5, 'pass': False, 'op': 1, 'bg': [124, 100, 90; {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 4.79, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [103, 74, 64], 'u; hover Home against its ground 1.145 < v11.0.2 1.17
+  h5-c14 webkit nav field light rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 6.07, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [222, 181, 170], 
+  h5-c14 webkit nav field light open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 6.03, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [221, 180, 168], ; hover Home against its ground 1.104 < v11.0.2 1.284
+  h5-c14 webkit nav flat dark rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.67, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [25, 20, 15], 'un
+  h5-c14 webkit nav flat dark open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.67, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [25, 20, 15], 'un
+  h5-c14 webkit nav flat light rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7.53, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [223, 220, 216], 
+  h5-c14 webkit nav flat light open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7.53, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [223, 220, 216], ; mark Reports 1.365 < v11.0.2 1.396; hover Home against its ground 1.11 < v11.0.2 1.301
+  h5-c14 webkit action-row field dark open: hover Copy against its ground 1.166 < v11.0.2 1.213
+  h5-c14 webkit action-row field light open: hover Copy against its ground 1.106 < v11.0.2 1.251
+  h5-c14 webkit action-row flat dark open: hover Copy against its ground 1.124 < v11.0.2 1.161
+  h5-c14 webkit action-row flat light open: hover Copy against its ground 1.109 < v11.0.2 1.281
+  h5-c14 webkit canvas-tools field dark open: hover Layers against its ground 1.151 < v11.0.2 1.178
+  h5-c14 webkit canvas-tools field light open: mark Grid 1.342 < v11.0.2 1.364; hover Layers against its ground 1.067 < v11.0.2 1.269
+  h5-c14 webkit canvas-tools flat light open: mark Grid 1.363 < v11.0.2 1.4; mark Draw 1.365 < v11.0.2 1.401; hover Layers against its ground 1.102 < v11.0.2 1.298
+  h5-c14 webkit dials field dark open: hover 1Y against its ground 1.148 < v11.0.2 1.201
+  h6.5-c10 chromium nav field dark rest (no dock folds): {'dock': 'Site', 'kind': 'text', 'text': 'Reports', 'cr': 4.24, 'need': 4.5, 'pass': False, 'op': 1, 'bg': [136, 99, 90]; {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 4.14, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [122, 81, 71], 'u
+  h6.5-c10 chromium nav field dark open: {'dock': 'Site', 'kind': 'text', 'text': 'Reports', 'cr': 4.31, 'need': 4.5, 'pass': False, 'op': 1, 'bg': [135, 98, 87]; {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 4.2, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [121, 80, 70], 'un
+  h6.5-c10 chromium nav field light rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 6.06, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [226, 179, 167], 
+  h6.5-c10 chromium nav field light open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 6.03, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [226, 178, 165], ; mark Reports 1.237 < v11.0.2 1.369; hover Home against its ground 1.151 < v11.0.2 1.263
+  h6.5-c10 chromium nav flat dark rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.65, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [26, 20, 16], 'un
+  h6.5-c10 chromium nav flat dark open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.65, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [26, 20, 16], 'un; mark Reports 1.325 < v11.0.2 1.365
+  h6.5-c10 chromium nav flat light rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7.53, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [223, 220, 216], 
+  h6.5-c10 chromium nav flat light open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7.53, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [223, 220, 216], ; mark Reports 1.247 < v11.0.2 1.394; hover Home against its ground 1.155 < v11.0.2 1.303
+  h6.5-c10 chromium nav grid dark rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.38, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [30, 24, 19], 'un
+  h6.5-c10 chromium nav grid dark open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.38, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [30, 24, 19], 'un
+  h6.5-c10 chromium nav grid light rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [212, 209, 206], 'un
+  h6.5-c10 chromium nav grid light open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [212, 209, 206], 'un
+  h6.5-c10 chromium nav daraksha dark rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.22, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [30, 27, 20], 'un
+  h6.5-c10 chromium nav daraksha dark open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.22, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [30, 27, 20], 'un
+  h6.5-c10 chromium nav daraksha light rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7.19, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [214, 214, 206], 
+  h6.5-c10 chromium nav daraksha light open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7.2, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [214, 214, 207], '
+  h6.5-c10 chromium action-row field dark open: mark Format 1.353 < v11.0.2 1.391
+  h6.5-c10 chromium action-row field light open: mark Format 1.2 < v11.0.2 1.28; hover Copy against its ground 1.143 < v11.0.2 1.227
+  h6.5-c10 chromium action-row flat dark open: mark Format 1.321 < v11.0.2 1.365
+  h6.5-c10 chromium action-row flat light open: mark Format 1.229 < v11.0.2 1.333; hover Copy against its ground 1.153 < v11.0.2 1.267
+  h6.5-c10 chromium canvas-tools field light open: mark Grid 1.209 < v11.0.2 1.329; mark Draw 1.204 < v11.0.2 1.334; hover Layers against its ground 1.147 < v11.0.2 1.272
+  h6.5-c10 chromium canvas-tools flat dark open: mark Grid 1.332 < v11.0.2 1.373; mark Draw 1.335 < v11.0.2 1.372
+  h6.5-c10 chromium canvas-tools flat light open: mark Grid 1.241 < v11.0.2 1.41; mark Draw 1.256 < v11.0.2 1.408; hover Layers against its ground 1.139 < v11.0.2 1.304
+  h6.5-c10 chromium dials field dark open: mark 5Y 1.143 < 1.2 (the polarity flipped: v11.0.2 106,56,31 on 152,74,45, now 123,78,57 on 122,65,40); mark Lin 1.03 < 1.2 (the polarity flipped: v11.0.2 107,56,29 on 150,91,68, now 123,78,57 on 120,76,59)
+  h6.5-c10 chromium dials flat light open: mark 5Y 1.462 < v11.0.2 1.512; mark Lin 1.456 < v11.0.2 1.817
+  h6.5-c10 chromium dials grid dark open: hover 1Y against its ground 1.007 < 1.1
+  h6.5-c10 chromium dials daraksha dark open: hover 1Y against its ground 1.015 < 1.1
+  h6.5-c10 webkit nav field dark rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 4.76, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [104, 74, 66], 'u
+  h6.5-c10 webkit nav field dark open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 4.79, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [103, 74, 64], 'u; mark Reports 1.287 < v11.0.2 1.32
+  h6.5-c10 webkit nav field light rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 6.07, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [222, 181, 170], 
+  h6.5-c10 webkit nav field light open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 6.02, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [221, 180, 167], ; mark Reports 1.236 < v11.0.2 1.363; hover Home against its ground 1.148 < v11.0.2 1.284
+  h6.5-c10 webkit nav flat dark rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.67, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [25, 20, 15], 'un
+  h6.5-c10 webkit nav flat dark open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.67, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [25, 20, 15], 'un; mark Reports 1.301 < v11.0.2 1.358
+  h6.5-c10 webkit nav flat light rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7.53, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [223, 220, 216], 
+  h6.5-c10 webkit nav flat light open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7.53, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [223, 220, 216], ; mark Reports 1.246 < v11.0.2 1.396; hover Home against its ground 1.153 < v11.0.2 1.301
+  h6.5-c10 webkit action-row field dark open: mark Format 1.332 < v11.0.2 1.373
+  h6.5-c10 webkit action-row field light open: mark Format 1.219 < v11.0.2 1.34; hover Copy against its ground 1.143 < v11.0.2 1.251
+  h6.5-c10 webkit action-row flat dark open: mark Format 1.302 < v11.0.2 1.361
+  h6.5-c10 webkit action-row flat light open: mark Format 1.237 < v11.0.2 1.371; hover Copy against its ground 1.152 < v11.0.2 1.281
+  h6.5-c10 webkit canvas-tools field dark open: mark Grid 1.3 < v11.0.2 1.321; mark Draw 1.305 < v11.0.2 1.328
+  h6.5-c10 webkit canvas-tools field light open: mark Grid 1.236 < v11.0.2 1.364; mark Draw 1.257 < v11.0.2 1.365; hover Layers against its ground 1.139 < v11.0.2 1.269
+  h6.5-c10 webkit canvas-tools flat dark open: mark Grid 1.298 < v11.0.2 1.357; mark Draw 1.298 < v11.0.2 1.357
+  h6.5-c10 webkit canvas-tools flat light open: mark Grid 1.242 < v11.0.2 1.4; mark Draw 1.244 < v11.0.2 1.401; hover Layers against its ground 1.146 < v11.0.2 1.298
+  h6.5-c10 webkit dials field dark open: mark 5Y 1.139 < 1.2 (the polarity flipped: v11.0.2 90,60,42 on 108,72,56, now 107,81,70 on 102,72,59); mark Lin 1.131 < 1.2 (the polarity flipped: v11.0.2 90,61,41 on 121,85,66, now 107,82,69 on 102,73,58); hover 1Y against its ground 1.147 < v11.0.2 1.201
+  h6.5-c10 webkit dials flat light open: mark 5Y 1.238 < v11.0.2 1.323; mark Lin 1.494 < v11.0.2 1.586
+  h8-c10 chromium nav field dark rest (no dock folds): {'dock': 'Site', 'kind': 'text', 'text': 'Reports', 'cr': 4.24, 'need': 4.5, 'pass': False, 'op': 1, 'bg': [136, 99, 90]; {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 4.14, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [122, 81, 71], 'u
+  h8-c10 chromium nav field dark open: {'dock': 'Site', 'kind': 'text', 'text': 'Reports', 'cr': 4.31, 'need': 4.5, 'pass': False, 'op': 1, 'bg': [135, 98, 87]; {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 4.2, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [121, 80, 70], 'un
+  h8-c10 chromium nav field light rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 6.06, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [226, 179, 167], 
+  h8-c10 chromium nav field light open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 6.03, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [226, 178, 165], ; mark Reports 1.237 < v11.0.2 1.369; hover Home against its ground 1.18 < v11.0.2 1.263
+  h8-c10 chromium nav flat dark rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.65, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [26, 20, 16], 'un
+  h8-c10 chromium nav flat dark open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.65, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [26, 20, 16], 'un; mark Reports 1.325 < v11.0.2 1.365
+  h8-c10 chromium nav flat light rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7.53, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [223, 220, 216], 
+  h8-c10 chromium nav flat light open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7.53, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [223, 220, 216], ; mark Reports 1.247 < v11.0.2 1.394; hover Home against its ground 1.184 < v11.0.2 1.303
+  h8-c10 chromium nav grid dark rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.38, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [30, 24, 19], 'un
+  h8-c10 chromium nav grid dark open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.38, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [30, 24, 19], 'un
+  h8-c10 chromium nav grid light rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [212, 209, 206], 'un
+  h8-c10 chromium nav grid light open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [212, 209, 206], 'un
+  h8-c10 chromium nav daraksha dark rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.22, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [30, 27, 20], 'un
+  h8-c10 chromium nav daraksha dark open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.22, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [30, 27, 20], 'un
+  h8-c10 chromium nav daraksha light rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7.19, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [214, 214, 206], 
+  h8-c10 chromium nav daraksha light open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7.2, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [214, 214, 207], '
+  h8-c10 chromium action-row field dark open: mark Format 1.353 < v11.0.2 1.391
+  h8-c10 chromium action-row field light open: mark Format 1.201 < v11.0.2 1.28; hover Copy against its ground 1.167 < v11.0.2 1.227
+  h8-c10 chromium action-row flat dark open: mark Format 1.321 < v11.0.2 1.365
+  h8-c10 chromium action-row flat light open: mark Format 1.229 < v11.0.2 1.333; hover Copy against its ground 1.178 < v11.0.2 1.267
+  h8-c10 chromium canvas-tools field light open: mark Grid 1.209 < v11.0.2 1.329; mark Draw 1.204 < v11.0.2 1.334; hover Layers against its ground 1.178 < v11.0.2 1.272
+  h8-c10 chromium canvas-tools flat dark open: mark Grid 1.332 < v11.0.2 1.373; mark Draw 1.335 < v11.0.2 1.372
+  h8-c10 chromium canvas-tools flat light open: mark Grid 1.241 < v11.0.2 1.41; mark Draw 1.256 < v11.0.2 1.408; hover Layers against its ground 1.171 < v11.0.2 1.304
+  h8-c10 chromium dials field dark open: mark 5Y 1.144 < 1.2 (the polarity flipped: v11.0.2 106,56,31 on 152,74,45, now 123,78,57 on 122,65,40); mark Lin 1.029 < 1.2 (the polarity flipped: v11.0.2 107,56,29 on 150,91,68, now 123,78,57 on 120,76,60)
+  h8-c10 chromium dials flat light open: mark 5Y 1.462 < v11.0.2 1.512; mark Lin 1.456 < v11.0.2 1.817
+  h8-c10 chromium dials grid dark open: hover 1Y against its ground 1.007 < 1.1
+  h8-c10 chromium dials daraksha dark open: hover 1Y against its ground 1.016 < 1.1
+  h8-c10 webkit nav field dark rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 4.76, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [104, 74, 66], 'u
+  h8-c10 webkit nav field dark open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 4.78, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [103, 74, 64], 'u; mark Reports 1.287 < v11.0.2 1.32
+  h8-c10 webkit nav field light rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 6.07, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [222, 181, 170], 
+  h8-c10 webkit nav field light open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 6.03, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [221, 180, 168], ; mark Reports 1.234 < v11.0.2 1.363; hover Home against its ground 1.175 < v11.0.2 1.284
+  h8-c10 webkit nav flat dark rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.67, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [25, 20, 15], 'un
+  h8-c10 webkit nav flat dark open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 9.67, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [25, 20, 15], 'un; mark Reports 1.301 < v11.0.2 1.358
+  h8-c10 webkit nav flat light rest (no dock folds): {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7.53, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [223, 220, 216], 
+  h8-c10 webkit nav flat light open: {'dock': 'Site', 'kind': 'icon', 'text': 'svg', 'cr': 7.53, 'need': 3, 'pass': False, 'op': 0.8, 'bg': [223, 220, 216], ; mark Reports 1.246 < v11.0.2 1.396; hover Home against its ground 1.182 < v11.0.2 1.301
+  h8-c10 webkit action-row field dark open: mark Format 1.332 < v11.0.2 1.373
+  h8-c10 webkit action-row field light open: mark Format 1.219 < v11.0.2 1.34; hover Copy against its ground 1.167 < v11.0.2 1.251
+  h8-c10 webkit action-row flat dark open: mark Format 1.302 < v11.0.2 1.361
+  h8-c10 webkit action-row flat light open: mark Format 1.237 < v11.0.2 1.371; hover Copy against its ground 1.181 < v11.0.2 1.281
+  h8-c10 webkit canvas-tools field dark open: mark Grid 1.3 < v11.0.2 1.321; mark Draw 1.305 < v11.0.2 1.328
+  h8-c10 webkit canvas-tools field light open: mark Grid 1.237 < v11.0.2 1.364; mark Draw 1.26 < v11.0.2 1.365; hover Layers against its ground 1.159 < v11.0.2 1.269
+  h8-c10 webkit canvas-tools flat dark open: mark Grid 1.298 < v11.0.2 1.357; mark Draw 1.298 < v11.0.2 1.357
+  h8-c10 webkit canvas-tools flat light open: mark Grid 1.242 < v11.0.2 1.4; mark Draw 1.244 < v11.0.2 1.401; hover Layers against its ground 1.174 < v11.0.2 1.298
+  h8-c10 webkit dials field dark open: mark 5Y 1.138 < 1.2 (the polarity flipped: v11.0.2 90,60,42 on 108,72,56, now 107,81,70 on 102,72,59); mark Lin 1.131 < 1.2 (the polarity flipped: v11.0.2 90,61,41 on 121,85,66, now 107,82,69 on 102,73,58); hover 1Y against its ground 1.146 < v11.0.2 1.201
+  h8-c10 webkit dials flat light open: mark 5Y 1.238 < v11.0.2 1.323; mark Lin 1.494 < v11.0.2 1.586
