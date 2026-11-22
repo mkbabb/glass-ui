@@ -54,7 +54,11 @@ the existing Reka-backed menu, select, or popover families.
 
 `ControlsDock` is the corner preset for a few action seats: with one control it is that
 control and never folds; with two or more it folds at every width. A row of controls
-that must never fold stays a `GlassDock` with `:collapse="false"`.
+that must never fold stays a `GlassDock` with `:collapse="false"`. Its `corner` names the
+corner it sits in, and `within` what that corner belongs to: `"viewport"` (the default)
+is fixed to the window and never moves with a scroll, which is what a page's top-right
+bar takes; `"parent"` sits in the corner of its containing block and moves with it, for a
+figure's or a pane's own controls.
 
 A collapsible dock folds after one idle window, `DOCK_COLLAPSE_DELAY_MS` (6000 ms),
 once the pointer and focus have left it. A dock mounted `"open"` arms that window at
@@ -73,6 +77,11 @@ hold it at an edge, put it in a wrapper sized to its content (a `display: flex` 
 the end of a row, say). `collapsedLabel` names the collapsed summary, e.g. "Tools for
 Fund balance by year". A dock whose collapsed face is its persistent seats (below) has
 no summary to name.
+
+While the dock travels (a fold, an open, a change of its seats) its root carries
+`data-morphing`, and the attribute goes when it lands. That is the public signal for a
+page that waits on the dock's motion; the classes `collapsed` and `expanded` name the
+posture it is going to.
 
 A run that exceeds its size cap scrolls natively, and the plate's end caps show which
 way more seats lie. `backdropMode="static"` paints an opaque plate from the dock's
