@@ -1,0 +1,2022 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "release-11-1-1.config.ts",
+      "--project=webkit-phone",
+      "--workers=1",
+      "-g",
+      "(form|glass|exit|routes|round|weight|lift|sheet) · "
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-12/logs/tip-webkit-phone-0.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1-controls.spec.ts",
+      "file": "release-11-1-1-controls.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "round · a compact SegmentedTabs strip is round-ended on touch",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 957,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:42:27.143Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "corners",
+                      "contentType": "application/json",
+                      "body": "W3sid2hhdCI6InN0cmlwIiwiaCI6NTAsInIiOjI1fSx7IndoYXQiOiJwbGF0ZSIsImgiOjQ0LCJyIjoyMn0seyJ3aGF0IjoidGFiIDAiLCJoIjo0NCwiciI6MjJ9LHsid2hhdCI6InRhYiAxIiwiaCI6NDQsInIiOjIyfSx7IndoYXQiOiJ0YWIgMiIsImgiOjQ0LCJyIjoyMn1d"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cb8d16cc229feb6ea1bb-f1543816e9a7e6c1228a",
+          "file": "release-11-1-1-controls.spec.ts",
+          "line": 22,
+          "column": 5
+        },
+        {
+          "title": "round · a wide SegmentedTabs strip is round-ended on touch",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 796,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:42:28.237Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "corners",
+                      "contentType": "application/json",
+                      "body": "W3sid2hhdCI6InN0cmlwIiwiaCI6NTAsInIiOjI1fSx7IndoYXQiOiJwbGF0ZSIsImgiOjQ0LCJyIjoyMn0seyJ3aGF0IjoidGFiIDAiLCJoIjo0NCwiciI6MjJ9LHsid2hhdCI6InRhYiAxIiwiaCI6NDQsInIiOjIyfSx7IndoYXQiOiJ0YWIgMiIsImgiOjQ0LCJyIjoyMn1d"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cb8d16cc229feb6ea1bb-142791c371e1728c2b8d",
+          "file": "release-11-1-1-controls.spec.ts",
+          "line": 22,
+          "column": 5
+        },
+        {
+          "title": "weight · selecting a word-labelled ToggleGroupItem moves no item box",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1640,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:42:29.038Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "boxes",
+                      "contentType": "application/json",
+                      "body": "eyJyZXN0IjpbWzEyLDk3LjddLFsxMTMuNyw2MF0sWzE3Ny43LDEyNy41XV0sIm9uIjpbWzEyLDk3LjddLFsxMTMuNyw2MF0sWzE3Ny43LDEyNy41XV0sIm9mZiI6W1sxMiw5Ny43XSxbMTEzLjcsNjBdLFsxNzcuNywxMjcuNV1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cb8d16cc229feb6ea1bb-7681da6222172b6264f2",
+          "file": "release-11-1-1-controls.spec.ts",
+          "line": 46,
+          "column": 1
+        },
+        {
+          "title": "lift · a scale-on-hover element returns to rest after a tap",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1627,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:42:30.685Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "cb8d16cc229feb6ea1bb-5368a3ba4aeccd277bb2",
+          "file": "release-11-1-1-controls.spec.ts",
+          "line": 69,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "form · a dock Select leaves in the form it opened in · pick",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2550,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:42:32.341Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6MTEsIngiOjAsInkiOjYxNSwidyI6MzkwLCJvcCI6MSwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC45MTAzMjcgMC44NzQwMjQgMC44MzY3MSAvIDAuNzI3KSJ9LHsidCI6MjEsIngiOjAsInkiOjYxNSwidyI6MzkwLCJvcCI6MSwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC45MTAzMjcgMC44NzQwMjQgMC44MzY3MSAvIDAuNzI3KSJ9LHsidCI6MjIsIngiOjAsInkiOjYxNSwidyI6MzkwLCJvcCI6MSwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC45MTAzMjcgMC44NzQwMjQgMC44MzY3MSAvIDAuNzI3KSJ9LHsidCI6MjUsIngiOjAsInkiOjYxNSwidyI6MzkwLCJvcCI6MSwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC45MTAzMjcgMC44NzQwMjQgMC44MzY3MSAvIDAuNzI3KSJ9LHsidCI6MzUsIngiOjAsInkiOjYxNSwidyI6MzkwLCJvcCI6MSwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC45MTAzMjcgMC44NzQwMjQgMC44MzY3MSAvIDAuNzI3KSJ9LHsidCI6NDQsIngiOjAsInkiOjYyMi40MTQ0ODk3NDYwOTM4LCJ3IjozOTAsIm9wIjowLjk2NzYyMiwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC45MTAzMjcgMC44NzQwMjQgMC44MzY3MSAvIDAuNzI3KSJ9LHsidCI6NTIsIngiOjAsInkiOjYyOS4wMzU4ODg2NzE4NzUsInciOjM5MCwib3AiOjAuOTM4NzA4LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjkxMDMyNyAwLjg3NDAyNCAwLjgzNjcxIC8gMC43MjcpIn0seyJ0Ijo2MiwieCI6MCwieSI6NjM4LjAzMzkzNTU0Njg3NSwidyI6MzkwLCJvcCI6MC44OTk0MTUsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuOTEwMzI3IDAuODc0MDI0IDAuODM2NzEgLyAwLjcyNykifSx7InQiOjcyLCJ4IjowLCJ5Ijo2NDcuNzAzNjc0MzE2NDA2MiwidyI6MzkwLCJvcCI6MC44NTcxODksImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuOTEwMzI3IDAuODc0MDI0IDAuODM2NzEgLyAwLjcyNykifSx7InQiOjgzLCJ4IjowLCJ5Ijo2NTguOTc2MTk2Mjg5MDYyNSwidyI6MzkwLCJvcCI6MC44MDc5NjQsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuOTEwMzI3IDAuODc0MDI0IDAuODM2NzEgLyAwLjcyNykifSx7InQiOjkzLCJ4IjowLCJ5Ijo2NjguNjA0MTI1OTc2NTYyNSwidyI6MzkwLCJvcCI6MC43NjU5MjEsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuOTEwMzI3IDAuODc0MDI0IDAuODM2NzEgLyAwLjcyNykifSx7InQiOjEwMiwieCI6MCwieSI6Njc5LjY0NTQ0Njc3NzM0MzgsInciOjM5MCwib3AiOjAuNzE3NzA2LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjkxMDMyNyAwLjg3NDAyNCAwLjgzNjcxIC8gMC43MjcpIn0seyJ0IjoxMTEsIngiOjAsInkiOjY4OS44Mjg3MzUzNTE1NjI1LCJ3IjozOTAsIm9wIjowLjY3MzIzNywiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC45MTAzMjcgMC44NzQwMjQgMC44MzY3MSAvIDAuNzI3KSJ9LHsidCI6MTIxLCJ4IjowLCJ5Ijo3MDEuMzUwMjgwNzYxNzE4OCwidyI6MzkwLCJvcCI6MC42MjI5MjUsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuOTEwMzI3IDAuODc0MDI0IDAuODM2NzEgLyAwLjcyNykifSx7InQiOjEzMywieCI6MCwieSI6NzE1LjM3MTE1NDc4NTE1NjIsInciOjM5MCwib3AiOjAuNTYxNjk4LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjkxMDMyNyAwLjg3NDAyNCAwLjgzNjcxIC8gMC43MjcpIn0seyJ0IjoxNDQsIngiOjAsInkiOjcyNy4xNDIyNzI5NDkyMTg4LCJ3IjozOTAsIm9wIjowLjUxMDI5NiwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC45MTAzMjcgMC44NzQwMjQgMC44MzY3MSAvIDAuNzI3KSJ9LHsidCI6MTU0LCJ4IjowLCJ5Ijo3NDAuMTAyNDc4MDI3MzQzOCwidyI6MzkwLCJvcCI6MC40NTM3MDEsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuOTEwMzI3IDAuODc0MDI0IDAuODM2NzEgLyAwLjcyNykifSx7InQiOjE2NCwieCI6MCwieSI6NzUwLjY1OTYwNjkzMzU5MzgsInciOjM5MCwib3AiOjAuNDA3NiwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC45MTAzMjcgMC44NzQwMjQgMC44MzY3MSAvIDAuNzI3KSJ9LHsidCI6MTc0LCJ4IjowLCJ5Ijo3NjMuNDMzNjU0Nzg1MTU2MiwidyI6MzkwLCJvcCI6MC4zNTE4MTgsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuOTEwMzI3IDAuODc0MDI0IDAuODM2NzEgLyAwLjcyNykifSx7InQiOjE4NCwieCI6MCwieSI6Nzc0Ljg1Mzk0Mjg3MTA5MzgsInciOjM5MCwib3AiOjAuMzAxOTQ4LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjkxMDMyNyAwLjg3NDAyNCAwLjgzNjcxIC8gMC43MjcpIn0seyJ0IjoxOTQsIngiOjAsInkiOjc4NC45MTU2NDk0MTQwNjI1LCJ3IjozOTAsIm9wIjowLjI1ODAxLCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjkxMDMyNyAwLjg3NDAyNCAwLjgzNjcxIC8gMC43MjcpIn0seyJ0IjoyMDMsIngiOjAsInkiOjc5NS43ODUwOTUyMTQ4NDM4LCJ3IjozOTAsIm9wIjowLjIxMDU0NSwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC45MTAzMjcgMC44NzQwMjQgMC44MzY3MSAvIDAuNzI3KSJ9LHsidCI6MjE1LCJ4IjowLCJ5Ijo4MDguMjgyNTMxNzM4MjgxMiwidyI6MzkwLCJvcCI6MC4xNTU5NzIsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuOTEwMzI3IDAuODc0MDI0IDAuODM2NzEgLyAwLjcyNykifSx7InQiOjIyNSwieCI6MCwieSI6ODE4LjEyOTk0Mzg0NzY1NjIsInciOjM5MCwib3AiOjAuMTEyOTcsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuOTEwMzI3IDAuODc0MDI0IDAuODM2NzEgLyAwLjcyNykifSx7InQiOjIzNiwieCI6MCwieSI6ODI3LjM0MzA3ODYxMzI4MTIsInciOjM5MCwib3AiOjAuMDcyNzM4LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjkxMDMyNyAwLjg3NDAyNCAwLjgzNjcxIC8gMC43MjcpIn0seyJ0IjoyNDYsIngiOjAsInkiOjgzNS43ODkwNjI1LCJ3IjozOTAsIm9wIjowLjAzNTg1NiwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC45MTAzMjcgMC44NzQwMjQgMC44MzY3MSAvIDAuNzI3KSJ9XQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-e037fc119ad6fd17f846",
+          "file": "release-11-1-1.spec.ts",
+          "line": 68,
+          "column": 5
+        },
+        {
+          "title": "form · a dock DropdownMenu keeps its material through the exit · pick",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2456,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:42:34.897Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6Niwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNSwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxOCwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyNSwib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjozNywib3AiOjAuOTU3MDY4LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6NDcsIm9wIjowLjkxOTQ2NCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjU2LCJvcCI6MC44ODcwMywic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjY4LCJvcCI6MC44MzUxNCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjc4LCJvcCI6MC43ODk0NTUsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo4OCwib3AiOjAuNzM3MTYsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo5OCwib3AiOjAuNjg4MTU3LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTA4LCJvcCI6MC42MzgxMDEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMTksIm9wIjowLjU4NzI5NCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjEyOCwib3AiOjAuNTM2MDIxLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTM5LCJvcCI6MC40Nzk0MTEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNDksIm9wIjowLjQyODA1Miwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE1OSwib3AiOjAuMzc3MDc1LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTY5LCJvcCI6MC4zMzE3NTYsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxODAsIm9wIjowLjI3NzQxMSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE5MSwib3AiOjAuMjE5OTA4LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MjAwLCJvcCI6MC4xODI4OTUsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyMTEsIm9wIjowLjEzNDE1Nywic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjIyMSwib3AiOjAuMDkyNDc0LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MjMxLCJvcCI6MC4wNTAxNjUsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyNDAsIm9wIjowLjAyMjE5NCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifV0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-80365eff6bfcad829b05",
+          "file": "release-11-1-1.spec.ts",
+          "line": 101,
+          "column": 5
+        },
+        {
+          "title": "form · a dock Select leaves in the form it opened in · outside",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener, and a Select's trigger is outside its content; the route is read at 1440",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 70,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 201,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:42:37.358Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener, and a Select's trigger is outside its content; the route is read at 1440",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 70,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-c7851f09a93967929814",
+          "file": "release-11-1-1.spec.ts",
+          "line": 68,
+          "column": 5
+        },
+        {
+          "title": "form · a dock DropdownMenu keeps its material through the exit · outside",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener; the route is read at 1440",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 104,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 199,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:42:37.565Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener; the route is read at 1440",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 104,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-e88e666c9d7fb8f23632",
+          "file": "release-11-1-1.spec.ts",
+          "line": 101,
+          "column": 5
+        },
+        {
+          "title": "form · a dock Select leaves in the form it opened in · escape",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2461,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:42:37.769Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6MTMsIngiOjAsInkiOjYxNSwidyI6MzkwLCJvcCI6MSwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC45MTAzMjcgMC44NzQwMjQgMC44MzY3MSAvIDAuNzI3KSJ9LHsidCI6MjUsIngiOjAsInkiOjYyNC4wMTY3MjM2MzI4MTI1LCJ3IjozOTAsIm9wIjowLjk2MDYyNiwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC45MTAzMjcgMC44NzQwMjQgMC44MzY3MSAvIDAuNzI3KSJ9LHsidCI6MzQsIngiOjAsInkiOjYzMS42NTY5MjEzODY3MTg4LCJ3IjozOTAsIm9wIjowLjkyNzI2MiwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC45MTAzMjcgMC44NzQwMjQgMC44MzY3MSAvIDAuNzI3KSJ9LHsidCI6NDQsIngiOjAsInkiOjY0MS44MjgyNDcwNzAzMTI1LCJ3IjozOTAsIm9wIjowLjg4Mjg0NiwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC45MTAzMjcgMC44NzQwMjQgMC44MzY3MSAvIDAuNzI3KSJ9LHsidCI6NTQsIngiOjAsInkiOjY1MS43MzI2NjYwMTU2MjUsInciOjM5MCwib3AiOjAuODM5NTk1LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjkxMDMyNyAwLjg3NDAyNCAwLjgzNjcxIC8gMC43MjcpIn0seyJ0Ijo2NCwieCI6MCwieSI6NjYyLjE0ODkyNTc4MTI1LCJ3IjozOTAsIm9wIjowLjc5NDExLCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjkxMDMyNyAwLjg3NDAyNCAwLjgzNjcxIC8gMC43MjcpIn0seyJ0Ijo3MywieCI6MCwieSI6NjcxLjg4MjAxOTA0Mjk2ODgsInciOjM5MCwib3AiOjAuNzUxNjA3LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjkxMDMyNyAwLjg3NDAyNCAwLjgzNjcxIC8gMC43MjcpIn0seyJ0Ijo4NiwieCI6MCwieSI6Njg1LjI3Nzc3MDk5NjA5MzgsInciOjM5MCwib3AiOjAuNjkzMTEsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuOTEwMzI3IDAuODc0MDI0IDAuODM2NzEgLyAwLjcyNykifSx7InQiOjk1LCJ4IjowLCJ5Ijo2OTYuNzE5NjY1NTI3MzQzOCwidyI6MzkwLCJvcCI6MC42NDMxNDYsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuOTEwMzI3IDAuODc0MDI0IDAuODM2NzEgLyAwLjcyNykifSx7InQiOjEwNSwieCI6MCwieSI6NzA4LjM0MDM5MzA2NjQwNjIsInciOjM5MCwib3AiOjAuNTkyNCwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC45MTAzMjcgMC44NzQwMjQgMC44MzY3MSAvIDAuNzI3KSJ9LHsidCI6MTE1LCJ4IjowLCJ5Ijo3MjAuMDc0MTU3NzE0ODQzOCwidyI6MzkwLCJvcCI6MC41NDExNjEsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuOTEwMzI3IDAuODc0MDI0IDAuODM2NzEgLyAwLjcyNykifSx7InQiOjEyNiwieCI6MCwieSI6NzMxLjg1NzcyNzA1MDc4MTIsInciOjM5MCwib3AiOjAuNDg5NzA0LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjkxMDMyNyAwLjg3NDAyNCAwLjgzNjcxIC8gMC43MjcpIn0seyJ0IjoxMzYsIngiOjAsInkiOjc0NC44MDI4NTY0NDUzMTI1LCJ3IjozOTAsIm9wIjowLjQzMzE3NSwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC45MTAzMjcgMC44NzQwMjQgMC44MzY3MSAvIDAuNzI3KSJ9LHsidCI6MTQ1LCJ4IjowLCJ5Ijo3NTQuMTYwNjQ0NTMxMjUsInciOjM5MCwib3AiOjAuMzkyMzEyLCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjkxMDMyNyAwLjg3NDAyNCAwLjgzNjcxIC8gMC43MjcpIn0seyJ0IjoxNTcsIngiOjAsInkiOjc2OS4xNzEyNjQ2NDg0Mzc1LCJ3IjozOTAsIm9wIjowLjMyNjc2MywiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC45MTAzMjcgMC44NzQwMjQgMC44MzY3MSAvIDAuNzI3KSJ9LHsidCI6MTY2LCJ4IjowLCJ5Ijo3NzkuMzU0NTUzMjIyNjU2MiwidyI6MzkwLCJvcCI6MC4yODIyOTQsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuOTEwMzI3IDAuODc0MDI0IDAuODM2NzEgLyAwLjcyNykifSx7InQiOjE3NywieCI6MCwieSI6NzkwLjM5NTg3NDAyMzQzNzUsInciOjM5MCwib3AiOjAuMjM0MDc5LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjkxMDMyNyAwLjg3NDAyNCAwLjgzNjcxIC8gMC43MjcpIn0seyJ0IjoxODcsIngiOjAsInkiOjgwMS4wNzI2MzE4MzU5Mzc1LCJ3IjozOTAsIm9wIjowLjE4NzQ1NiwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC45MTAzMjcgMC44NzQwMjQgMC44MzY3MSAvIDAuNzI3KSJ9LHsidCI6MTk3LCJ4IjowLCJ5Ijo4MTIuMjkwMDM5MDYyNSwidyI6MzkwLCJvcCI6MC4xMzg0NzEsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuOTEwMzI3IDAuODc0MDI0IDAuODM2NzEgLyAwLjcyNykifSx7InQiOjIwNywieCI6MCwieSI6ODIxLjg5ODE5MzM1OTM3NSwidyI6MzkwLCJvcCI6MC4wOTY1MTQsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuOTEwMzI3IDAuODc0MDI0IDAuODM2NzEgLyAwLjcyNykifSx7InQiOjIxOSwieCI6MCwieSI6ODMyLjUxMjI2ODA2NjQwNjIsInciOjM5MCwib3AiOjAuMDUwMTY1LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjkxMDMyNyAwLjg3NDAyNCAwLjgzNjcxIC8gMC43MjcpIn0seyJ0IjoyMjgsIngiOjAsInkiOjgzOC45MTc2NjM1NzQyMTg4LCJ3IjozOTAsIm9wIjowLjAyMjE5NCwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC45MTAzMjcgMC44NzQwMjQgMC44MzY3MSAvIDAuNzI3KSJ9XQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-b2fde761cb5e798b5065",
+          "file": "release-11-1-1.spec.ts",
+          "line": 68,
+          "column": 5
+        },
+        {
+          "title": "form · a dock DropdownMenu keeps its material through the exit · escape",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2457,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:42:40.234Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6MTAsIm9wIjoxLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTksIm9wIjowLjk3MTA1OSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjMwLCJvcCI6MC45MjcyNjIsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjozOSwib3AiOjAuODk1MzE1LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6NTAsIm9wIjowLjg0NDAyOCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjYxLCJvcCI6MC43OTg3NDYsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo3MSwib3AiOjAuNzUxNjA3LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6ODEsIm9wIjowLjcwMjk4Mywic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjkxLCJvcCI6MC42NDgxODIsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMDEsIm9wIjowLjU5NzUwMSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjExMiwib3AiOjAuNTQxMTYxLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTIwLCJvcCI6MC41LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTMxLCJvcCI6MC40NDg1NjUsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNDIsIm9wIjowLjM4NzIyNywic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE1Miwib3AiOjAuMzM2NzU4LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTYxLCJvcCI6MC4yOTIwOTgsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNzIsIm9wIjowLjIzODgzNSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE4NCwib3AiOjAuMTgyODk1LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTkzLCJvcCI6MC4xNDI4MTEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyMDMsIm9wIjowLjEwNDY4NSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjIxNCwib3AiOjAuMDYxMjkyLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MjI0LCJvcCI6MC4wMjU1NDYsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn1d"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-aa636f52f40cb9681981",
+          "file": "release-11-1-1.spec.ts",
+          "line": 101,
+          "column": 5
+        },
+        {
+          "title": "form · a dock Select leaves in the form it opened in · trigger",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener, and a Select's trigger is outside its content; the route is read at 1440",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 70,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 201,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:42:42.696Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener, and a Select's trigger is outside its content; the route is read at 1440",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 70,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-fec489e45d41b56bab2e",
+          "file": "release-11-1-1.spec.ts",
+          "line": 68,
+          "column": 5
+        },
+        {
+          "title": "form · a dock DropdownMenu keeps its material through the exit · trigger",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2416,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:42:42.901Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6Nywib3AiOjEsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxOSwib3AiOjAuOTU3MDY4LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MjgsIm9wIjowLjkyMzM3OSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjQwLCJvcCI6MC44NzQzOTcsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo0OSwib3AiOjAuODM1MTQsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo1OSwib3AiOjAuNzg5NDU1LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6NjgsIm9wIjowLjc1MTYwNywic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjgwLCJvcCI6MC42ODgxNTcsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0Ijo5MCwib3AiOjAuNjM4MTAxLCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTAwLCJvcCI6MC41ODcyOTQsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxMTAsIm9wIjowLjUzNjAyMSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjEyMiwib3AiOjAuNDc0MjY2LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTMxLCJvcCI6MC40MjgwNTIsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNDAsIm9wIjowLjM4MjE0OCwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE1Miwib3AiOjAuMzIxNzgsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxNjEsIm9wIjowLjI3NzQxMSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjE3Miwib3AiOjAuMjI5MzM5LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MTgxLCJvcCI6MC4xODI4OTUsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoxOTIsIm9wIjowLjEzNDE1Nywic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifSx7InQiOjIwMiwib3AiOjAuMDkyNDc0LCJzdXJmYWNlIjpudWxsLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSJ9LHsidCI6MjEzLCJvcCI6MC4wNTM4MzcsInN1cmZhY2UiOm51bGwsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIn0seyJ0IjoyMjMsIm9wIjowLjAxODg4NSwic3VyZmFjZSI6bnVsbCwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkifV0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-18b551e62091bf3fba89",
+          "file": "release-11-1-1.spec.ts",
+          "line": 101,
+          "column": 5
+        },
+        {
+          "title": "form · a dock Select leaves in the form it opened in · current",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2501,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:42:45.320Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "film",
+                      "contentType": "application/json",
+                      "body": "W3sidCI6OCwieCI6MCwieSI6NjE1LCJ3IjozOTAsIm9wIjoxLCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjkxMDMyNyAwLjg3NDAyNCAwLjgzNjcxIC8gMC43MjcpIn0seyJ0IjoxOCwieCI6MCwieSI6NjE1LCJ3IjozOTAsIm9wIjoxLCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjkxMDMyNyAwLjg3NDAyNCAwLjgzNjcxIC8gMC43MjcpIn0seyJ0IjoxOSwieCI6MCwieSI6NjE1LCJ3IjozOTAsIm9wIjoxLCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjkxMDMyNyAwLjg3NDAyNCAwLjgzNjcxIC8gMC43MjcpIn0seyJ0IjoyMiwieCI6MCwieSI6NjE1LCJ3IjozOTAsIm9wIjoxLCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjkxMDMyNyAwLjg3NDAyNCAwLjgzNjcxIC8gMC43MjcpIn0seyJ0IjozMiwieCI6MCwieSI6NjE1LCJ3IjozOTAsIm9wIjoxLCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjkxMDMyNyAwLjg3NDAyNCAwLjgzNjcxIC8gMC43MjcpIn0seyJ0IjozOCwieCI6MCwieSI6NjIwLjA4MjMzNjQyNTc4MTIsInciOjM5MCwib3AiOjAuOTc3ODA2LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjkxMDMyNyAwLjg3NDAyNCAwLjgzNjcxIC8gMC43MjcpIn0seyJ0Ijo0NywieCI6MCwieSI6NjI3LjMyODczNTM1MTU2MjUsInciOjM5MCwib3AiOjAuOTQ2MTYzLCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjkxMDMyNyAwLjg3NDAyNCAwLjgzNjcxIC8gMC43MjcpIn0seyJ0Ijo1OSwieCI6MCwieSI6NjM4LjAzMzkzNTU0Njg3NSwidyI6MzkwLCJvcCI6MC44OTk0MTUsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuOTEwMzI3IDAuODc0MDI0IDAuODM2NzEgLyAwLjcyNykifSx7InQiOjY5LCJ4IjowLCJ5Ijo2NDcuNzAzNjc0MzE2NDA2MiwidyI6MzkwLCJvcCI6MC44NTcxODksImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuOTEwMzI3IDAuODc0MDI0IDAuODM2NzEgLyAwLjcyNykifSx7InQiOjc5LCJ4IjowLCJ5Ijo2NTcuOTI3MzY4MTY0MDYyNSwidyI6MzkwLCJvcCI6MC44MTI1NDQsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuOTEwMzI3IDAuODc0MDI0IDAuODM2NzEgLyAwLjcyNykifSx7InQiOjg5LCJ4IjowLCJ5Ijo2NjguNjA0MTI1OTc2NTYyNSwidyI6MzkwLCJvcCI6MC43NjU5MjEsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuOTEwMzI3IDAuODc0MDI0IDAuODM2NzEgLyAwLjcyNykifSx7InQiOjEwMCwieCI6MCwieSI6NjgwLjc2NjQ3OTQ5MjE4NzUsInciOjM5MCwib3AiOjAuNzEyODEsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuOTEwMzI3IDAuODc0MDI0IDAuODM2NzEgLyAwLjcyNykifSx7InQiOjExMCwieCI6MCwieSI6NjkyLjExNzY3NTc4MTI1LCJ3IjozOTAsIm9wIjowLjY2MzI0MiwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC45MTAzMjcgMC44NzQwMjQgMC44MzY3MSAvIDAuNzI3KSJ9LHsidCI6MTIwLCJ4IjowLCJ5Ijo3MDMuNjc0OTI2NzU3ODEyNSwidyI6MzkwLCJvcCI6MC42MTI3NzMsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuOTEwMzI3IDAuODc0MDI0IDAuODM2NzEgLyAwLjcyNykifSx7InQiOjEzMCwieCI6MCwieSI6NzE1LjM3MTE1NDc4NTE1NjIsInciOjM5MCwib3AiOjAuNTYxNjk4LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjkxMDMyNyAwLjg3NDAyNCAwLjgzNjcxIC8gMC43MjcpIn0seyJ0IjoxMzksIngiOjAsInkiOjcyNC43ODUwOTUyMTQ4NDM4LCJ3IjozOTAsIm9wIjowLjUyMDU4OSwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC45MTAzMjcgMC44NzQwMjQgMC44MzY3MSAvIDAuNzI3KSJ9LHsidCI6MTUxLCJ4IjowLCJ5Ijo3NDAuMTAyNDc4MDI3MzQzOCwidyI6MzkwLCJvcCI6MC40NTM3MDEsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuOTEwMzI3IDAuODc0MDI0IDAuODM2NzEgLyAwLjcyNykifSx7InQiOjE2MSwieCI6MCwieSI6NzUxLjgyNzgxOTgyNDIxODgsInciOjM5MCwib3AiOjAuNDAyNDk5LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjkxMDMyNyAwLjg3NDAyNCAwLjgzNjcxIC8gMC43MjcpIn0seyJ0IjoxNzEsIngiOjAsInkiOjc2My40MzM2NTQ3ODUxNTYyLCJ3IjozOTAsIm9wIjowLjM1MTgxOCwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC45MTAzMjcgMC44NzQwMjQgMC44MzY3MSAvIDAuNzI3KSJ9LHsidCI6MTgxLCJ4IjowLCJ5Ijo3NzQuODUzOTQyODcxMDkzOCwidyI6MzkwLCJvcCI6MC4zMDE5NDgsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuOTEwMzI3IDAuODc0MDI0IDAuODM2NzEgLyAwLjcyNykifSx7InQiOjE5MSwieCI6MCwieSI6Nzg2LjAxODQ5MzY1MjM0MzgsInciOjM5MCwib3AiOjAuMjUzMTk0LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjkxMDMyNyAwLjg3NDAyNCAwLjgzNjcxIC8gMC43MjcpIn0seyJ0IjoyMDEsIngiOjAsInkiOjc5Ni44NTEwNzQyMTg3NSwidyI6MzkwLCJvcCI6MC4yMDU4OSwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC45MTAzMjcgMC44NzQwMjQgMC44MzY3MSAvIDAuNzI3KSJ9LHsidCI6MjExLCJ4IjowLCJ5Ijo4MDYuMjQ3MDcwMzEyNSwidyI6MzkwLCJvcCI6MC4xNjQ4NiwiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC45MTAzMjcgMC44NzQwMjQgMC44MzY3MSAvIDAuNzI3KSJ9LHsidCI6MjIzLCJ4IjowLCJ5Ijo4MTkuMDgxNzg3MTA5Mzc1LCJ3IjozOTAsIm9wIjowLjEwODgxMywiZm9ybSI6InNoZWV0IiwiYmYiOiJibHVyKDIycHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC45MTAzMjcgMC44NzQwMjQgMC44MzY3MSAvIDAuNzI3KSJ9LHsidCI6MjMyLCJ4IjowLCJ5Ijo4MjcuMzQzMDc4NjEzMjgxMiwidyI6MzkwLCJvcCI6MC4wNzI3MzgsImZvcm0iOiJzaGVldCIsImJmIjoiYmx1cigyMnB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuOTEwMzI3IDAuODc0MDI0IDAuODM2NzEgLyAwLjcyNykifSx7InQiOjI0MywieCI6MCwieSI6ODM1Ljc4OTA2MjUsInciOjM5MCwib3AiOjAuMDM1ODU2LCJmb3JtIjoic2hlZXQiLCJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjkxMDMyNyAwLjg3NDAyNCAwLjgzNjcxIC8gMC43MjcpIn1d"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-73646cfb1a973d117a19",
+          "file": "release-11-1-1.spec.ts",
+          "line": 68,
+          "column": 5
+        },
+        {
+          "title": "form · a dock DropdownMenu keeps its material through the exit · current",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a menu has no chosen item",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 103,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 212,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:42:47.826Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a menu has no chosen item",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 103,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-625263b039841989e811",
+          "file": "release-11-1-1.spec.ts",
+          "line": 101,
+          "column": 5
+        },
+        {
+          "title": "glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · light",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2102,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:42:48.043Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "glass",
+                      "contentType": "application/json",
+                      "body": "eyJwbGF0ZSI6eyJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImFscGhhIjowLjcyNTQ5MDE5NjA3ODQzMTMsIm5lc3RlZCI6W119LCJyZWFkcyI6W3siaWQiOiJ4LW9wdC1QYWxldHRlcyIsImhpIjp0cnVlLCJyYXRpbyI6Ni40Mjk0NjM4MTQ1Nzg1MTUsImluayI6WzI4LDI1LDIzLDI1NV19LHsiaWQiOiJ4LW9wdC1QaWNrZXIiLCJoaSI6ZmFsc2UsInJhdGlvIjo3LjUyNTc2ODcwMDY1NzM3NiwiaW5rIjpbMjgsMjUsMjMsMjU1XX1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-21d3476f3fc4f0d5580c",
+          "file": "release-11-1-1.spec.ts",
+          "line": 204,
+          "column": 9
+        },
+        {
+          "title": "glass · a phone Select is glass with its rows at 4.5:1 over a busy ground · dark",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2076,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:42:50.151Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "glass",
+                      "contentType": "application/json",
+                      "body": "eyJwbGF0ZSI6eyJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImFscGhhIjowLjc0MTE3NjQ3MDU4ODIzNTMsIm5lc3RlZCI6W119LCJyZWFkcyI6W3siaWQiOiJ4LW9wdC1QYWxldHRlcyIsImhpIjp0cnVlLCJyYXRpbyI6Ni4yMzQ2MDE0Mjc4ODg2NjEsImluayI6WzIzMywyMzAsMjI2LDI1NV19LHsiaWQiOiJ4LW9wdC1QaWNrZXIiLCJoaSI6ZmFsc2UsInJhdGlvIjo1LjIzNzIwNDM5NDEyNDY2OCwiaW5rIjpbMjMzLDIzMCwyMjYsMjU1XX1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-ecab3a5d17b8e3f78715",
+          "file": "release-11-1-1.spec.ts",
+          "line": 204,
+          "column": 9
+        },
+        {
+          "title": "glass · a phone Select is solid under reduced transparency",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "reduced transparency is emulated through Chromium's CDP",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 243,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 207,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:42:52.231Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "reduced transparency is emulated through Chromium's CDP",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 243,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-c1df7e6f93e3ba472019",
+          "file": "release-11-1-1.spec.ts",
+          "line": 241,
+          "column": 5
+        },
+        {
+          "title": "glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · light",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2044,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:42:52.443Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "glass",
+                      "contentType": "application/json",
+                      "body": "eyJwbGF0ZSI6eyJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImFscGhhIjowLjcyNTQ5MDE5NjA3ODQzMTMsIm5lc3RlZCI6W119LCJyZWFkcyI6W3siaWQiOiJ4LWl0ZW0tQ29weSIsImhpIjp0cnVlLCJyYXRpbyI6NS45MjcwNjE5NzU1NTMwNzUsImluayI6WzI4LDI1LDIzLDI1NV19LHsiaWQiOiJ4LWl0ZW0tU2hhcmUiLCJoaSI6ZmFsc2UsInJhdGlvIjo1LjMzMDEyNDY0NjEwMTU3LCJpbmsiOlsyOCwyNSwyMywyNTVdfV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-5e4ccce5ee243428a0bc",
+          "file": "release-11-1-1.spec.ts",
+          "line": 204,
+          "column": 9
+        },
+        {
+          "title": "glass · a phone dock DropdownMenu is glass with its rows at 4.5:1 over a busy ground · dark",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2022,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:42:54.493Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "glass",
+                      "contentType": "application/json",
+                      "body": "eyJwbGF0ZSI6eyJiZiI6ImJsdXIoMjJweCkgc2F0dXJhdGUoMS41KSIsImFscGhhIjowLjc0MTE3NjQ3MDU4ODIzNTMsIm5lc3RlZCI6W119LCJyZWFkcyI6W3siaWQiOiJ4LWl0ZW0tQ29weSIsImhpIjp0cnVlLCJyYXRpbyI6NS45NzA0MTE1MDg2NDg3LCJpbmsiOlsyMzMsMjMwLDIyNiwyNTVdfSx7ImlkIjoieC1pdGVtLVNoYXJlIiwiaGkiOmZhbHNlLCJyYXRpbyI6My42NDUzMDA0MzY0NDY4NjM3LCJpbmsiOlsyMzMsMjMwLDIyNiwyNTVdfV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-fc69765c11e93cb89f6b",
+          "file": "release-11-1-1.spec.ts",
+          "line": 204,
+          "column": 9
+        },
+        {
+          "title": "glass · a phone dock DropdownMenu is solid under reduced transparency",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "reduced transparency is emulated through Chromium's CDP",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 243,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 191,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:42:56.521Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "reduced transparency is emulated through Chromium's CDP",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 243,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-6ca9c5b2b89387ec189b",
+          "file": "release-11-1-1.spec.ts",
+          "line": 241,
+          "column": 5
+        },
+        {
+          "title": "exit · Select leaves on the exit curve, shorter than it entered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3464,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:42:56.716Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6NDA3LCJleGl0IjoxOTUsInBhaW50ZWQiOjE5LCJzZWVuU2hhcmUiOjAuMTI2LCJjdXJ2ZSI6ImN1YmljLWJlemllcigwLjMsIDAuMiwgMC43LCAwLjgpIiwic3RyYXkiOjAuMDk3LCJ0cmF2ZWwiOjE5OCwidHJhdmVsU2hhcmUiOjAuMTAzLCJmcmFtZXMiOltbMCwxLDYxNV0sWzEsMSw2MTVdLFsxMywwLjkyMyw2MjRdLFsyNCwwLjgzOCw2MzRdLFszMiwwLjc3OSw2NDJdLFs0NSwwLjY5LDY1NF0sWzUzLDAuNjIzLDY2M10sWzY0LDAuNTUxLDY3NF0sWzc0LDAuNDc0LDY4Nl0sWzg0LDAuNDA3LDY5OF0sWzk0LDAuMzQ1LDcxMF0sWzEwNCwwLjI4Nyw3MjFdLFsxMTUsMC4yMzIsNzMzXSxbMTI1LDAuMTgzLDc0Nl0sWzEzNSwwLjE0Miw3NThdLFsxNDUsMC4xMDcsNzY5XSxbMTU0LDAuMDgsNzc5XSxbMTY2LDAuMDUsNzkzXSxbMTc0LDAuMDM1LDgwMV0sWzE4NiwwLjAxOCw4MTNdLFsxOTUsMC4wMDksODIyXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-107e687be3010fc4ed89",
+          "file": "release-11-1-1.spec.ts",
+          "line": 310,
+          "column": 5
+        },
+        {
+          "title": "exit · DropdownMenu leaves on the exit curve, shorter than it entered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3422,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:43:00.183Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6Mzk0LCJleGl0IjoyMzQsInBhaW50ZWQiOjIyLCJzZWVuU2hhcmUiOjAuMDksImN1cnZlIjoiY3ViaWMtYmV6aWVyKDAuMywgMC4yLCAwLjcsIDAuOCkiLCJzdHJheSI6MC4wMTYsInRyYXZlbCI6MCwidHJhdmVsU2hhcmUiOm51bGwsImZyYW1lcyI6W1swLDEsMTU1XSxbOCwxLDE1NV0sWzIwLDAuOTYxLDE1NV0sWzI4LDAuOTI3LDE1NV0sWzQwLDAuODc5LDE1NV0sWzUwLDAuODM1LDE1NV0sWzYxLDAuNzg5LDE1NV0sWzcxLDAuNzQyLDE1NV0sWzgxLDAuNjg4LDE1NV0sWzkxLDAuNjM4LDE1NV0sWzEwMSwwLjU4NywxNTVdLFsxMTIsMC41MzYsMTU1XSxbMTIyLDAuNDg1LDE1NV0sWzEzNCwwLjQyMywxNTVdLFsxNDIsMC4zNzcsMTU1XSxbMTUyLDAuMzI3LDE1NV0sWzE2MywwLjI3NywxNTVdLFsxNzEsMC4yMzQsMTU1XSxbMTgzLDAuMTc4LDE1NV0sWzE5MywwLjEzNCwxNTVdLFsyMDIsMC4xMDEsMTU1XSxbMjE0LDAuMDU0LDE1NV0sWzIyNCwwLjAxNiwxNTVdLFsyMzQsMCxudWxsXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-9fe10ddae5be38ec3393",
+          "file": "release-11-1-1.spec.ts",
+          "line": 310,
+          "column": 5
+        },
+        {
+          "title": "exit · Popover leaves on the exit curve, shorter than it entered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3444,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:43:03.609Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6NDc5LCJleGl0IjoyNjIsInBhaW50ZWQiOjI1LCJzZWVuU2hhcmUiOjAuMDgsImN1cnZlIjoiY3ViaWMtYmV6aWVyKDAuMywgMC4yLCAwLjcsIDAuOCkiLCJzdHJheSI6MC4wMTIsInRyYXZlbCI6OCwidHJhdmVsU2hhcmUiOm51bGwsImZyYW1lcyI6W1swLDEsMTQwXSxbOSwxLDE0MF0sWzE5LDAuOTcxLDE0MF0sWzI5LDAuOTM2LDEzOV0sWzM5LDAuOTAxLDEzOV0sWzQ5LDAuODY4LDEzOV0sWzYxLDAuODIxLDEzOV0sWzcwLDAuNzg0LDEzOF0sWzgwLDAuNzM3LDEzOF0sWzkwLDAuNjk0LDEzOF0sWzEwMSwwLjY1LDEzN10sWzExMSwwLjYwNSwxMzddLFsxMjEsMC41NTksMTM2XSxbMTMxLDAuNTE0LDEzNl0sWzE0MSwwLjQ2MywxMzZdLFsxNTIsMC40MTgsMTM1XSxbMTYwLDAuMzc3LDEzNV0sWzE3MywwLjMyNCwxMzVdLFsxODIsMC4yODQsMTM0XSxbMTkyLDAuMjM3LDEzNF0sWzIwMywwLjE5NSwxMzRdLFsyMTMsMC4xNTUsMTMzXSxbMjIyLDAuMTIxLDEzM10sWzIzNCwwLjA3NywxMzNdLFsyNDMsMC4wNDQsMTMyXSxbMjU0LDAuMDE0LDEzMl0sWzI2MiwwLG51bGxdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-20d7bc869ba029b6326d",
+          "file": "release-11-1-1.spec.ts",
+          "line": 310,
+          "column": 5
+        },
+        {
+          "title": "exit · Tooltip leaves on the exit curve, shorter than it entered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a Tooltip does not open on touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 312,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 189,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:43:07.057Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a Tooltip does not open on touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 312,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-bf9809180e65c8edd75c",
+          "file": "release-11-1-1.spec.ts",
+          "line": 310,
+          "column": 5
+        },
+        {
+          "title": "exit · Dialog leaves on the exit curve, shorter than it entered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3443,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:43:07.250Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6MjUxLCJleGl0IjoyMDAsInBhaW50ZWQiOjE5LCJzZWVuU2hhcmUiOjAuMTE1LCJjdXJ2ZSI6ImN1YmljLWJlemllcigwLjMsIDAuMiwgMC43LCAwLjgpIiwic3RyYXkiOjAuMDI5LCJ0cmF2ZWwiOjksInRyYXZlbFNoYXJlIjpudWxsLCJmcmFtZXMiOltbMCwxLDIwXSxbNiwxLDIwXSxbMTgsMSwyMF0sWzI3LDAuOTUxLDIwXSxbMzcsMC45MDgsMjFdLFs0NiwwLjg1NiwyMV0sWzU3LDAuODA2LDIyXSxbNjcsMC43NDIsMjJdLFs3OCwwLjY4MiwyM10sWzg4LDAuNjE0LDIzXSxbOTcsMC41NTEsMjRdLFsxMDcsMC40OTQsMjRdLFsxMTgsMC40MywyNV0sWzEzMCwwLjM2MSwyNl0sWzEzOSwwLjI4OCwyNl0sWzE1MSwwLjIzNCwyN10sWzE1OCwwLjE2NiwyN10sWzE2OSwwLjEyOCwyOF0sWzE4MSwwLjA3MywyOF0sWzE5MCwwLjAxOSwyOV0sWzIwMCwwLG51bGxdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-125c17ce2707d69e6b81",
+          "file": "release-11-1-1.spec.ts",
+          "line": 310,
+          "column": 5
+        },
+        {
+          "title": "exit · Sheet right leaves on the exit curve, shorter than it entered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3432,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:43:10.699Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6NjAyLCJleGl0IjoyNzMsInBhaW50ZWQiOjI1LCJzZWVuU2hhcmUiOjAuMDg1LCJjdXJ2ZSI6ImN1YmljLWJlemllcigwLjMsIDAuMiwgMC43LCAwLjgpIiwic3RyYXkiOjAuMDE3LCJ0cmF2ZWwiOjI4NywidHJhdmVsU2hhcmUiOjAuMDg3LCJmcmFtZXMiOltbMCwxLDk4XSxbOSwxLDk4XSxbMjgsMSw5OF0sWzQwLDAuOTUxLDExMl0sWzQ5LDAuOTEsMTI0XSxbNjEsMC44NzcsMTM0XSxbNzEsMC44MywxNDddLFs4MSwwLjc4OSwxNTldLFs4OSwwLjc0NywxNzFdLFsxMDIsMC43MTMsMTgyXSxbMTEyLDAuNjU1LDE5OF0sWzEyMiwwLjYxMSwyMTFdLFsxMzIsMC41NjUsMjI1XSxbMTQxLDAuNTIsMjM4XSxbMTUzLDAuNDc4LDI1MF0sWzE2MywwLjQyNCwyNjZdLFsxNzMsMC4zNzgsMjc5XSxbMTgxLDAuMzM0LDI5Ml0sWzE5NCwwLjI5OCwzMDNdLFsyMDMsMC4yNDIsMzE5XSxbMjEzLDAuMjA1LDMzMF0sWzIyNCwwLjE2NCwzNDJdLFsyMzMsMC4xMjIsMzU0XSxbMjQ1LDAuMDg5LDM2NF0sWzI1NCwwLjA0OCwzNzZdLFsyNjUsMC4wMiwzODRdLFsyNzMsMCxudWxsXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-074cb084d4dbe3963931",
+          "file": "release-11-1-1.spec.ts",
+          "line": 310,
+          "column": 5
+        },
+        {
+          "title": "exit · Sheet bottom leaves on the exit curve, shorter than it entered",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3479,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:43:14.135Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "exit",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6NDcyLCJleGl0IjoyNjQsInBhaW50ZWQiOjI1LCJzZWVuU2hhcmUiOjAuMDg0LCJjdXJ2ZSI6ImN1YmljLWJlemllcigwLjMsIDAuMiwgMC43LCAwLjgpIiwic3RyYXkiOjAuMDIyLCJ0cmF2ZWwiOjg0LCJ0cmF2ZWxTaGFyZSI6MC4wODgsImZyYW1lcyI6W1swLDEsNzU1XSxbOSwxLDc1NV0sWzE5LDEsNzU1XSxbMjgsMC45NzEsNzU4XSxbNDAsMC45NDMsNzYxXSxbNTAsMC45MDEsNzY0XSxbNTksMC44NjQsNzY4XSxbNzAsMC44MjksNzcxXSxbNzksMC43ODQsNzc1XSxbODksMC43NDYsNzc4XSxbMTAxLDAuNzAyLDc4Ml0sWzExMSwwLjY0OSw3ODddLFsxMjEsMC42MDQsNzkxXSxbMTMwLDAuNTU5LDc5NV0sWzE0MiwwLjUxNyw3OThdLFsxNTIsMC40NjMsODAzXSxbMTYyLDAuNDE3LDgwN10sWzE3MiwwLjM3Miw4MTFdLFsxODIsMC4zMjcsODE1XSxbMTkxLDAuMjgzLDgxOV0sWzIwNCwwLjI0NCw4MjJdLFsyMTIsMC4xOSw4MjddLFsyMjQsMC4xNTgsODMwXSxbMjMzLDAuMTEyLDgzNF0sWzI0MywwLjA3OSw4MzddLFsyNTYsMC4wNDYsODQwXSxbMjY0LDAuMDA2LDg0M11dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-20fcbffddc8981723efe",
+          "file": "release-11-1-1.spec.ts",
+          "line": 310,
+          "column": 5
+        },
+        {
+          "title": "exit · a Popover enters and leaves on opacity and its slide alone",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2547,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:43:17.618Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "style",
+                      "contentType": "application/json",
+                      "body": "eyJlbnRyYW5jZSI6W3sidCI6MzYsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6NDEsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6NTMsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6NjMsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6NzMsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6ODUsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6OTQsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MTA0LCJzY2FsZSI6IjEiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjExMiwic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjoxMjQsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MTM0LCJzY2FsZSI6IjEiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjE0NCwic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjoxNTQsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MTY2LCJzY2FsZSI6IjEiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjE3NSwic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjoxODUsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MTk2LCJzY2FsZSI6IjEiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjIwNiwic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjoyMTYsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MjI2LCJzY2FsZSI6IjEiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjIzNywic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjoyNDcsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MjU3LCJzY2FsZSI6IjEiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjI2Nywic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjoyNzcsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6Mjg3LCJzY2FsZSI6IjEiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjI5OCwic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjozMDcsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MzE4LCJzY2FsZSI6IjEiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjMyOCwic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjozMzgsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MzQ5LCJzY2FsZSI6IjEiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjM1OSwic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjozNjksInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MzgxLCJzY2FsZSI6IjEiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjM4OCwic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0Ijo0MDAsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6NDEwLCJzY2FsZSI6IjEiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjQxOCwic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0Ijo0MzAsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6NDQwLCJzY2FsZSI6IjEiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjQ1MSwic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0Ijo0NjEsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6NDcxLCJzY2FsZSI6IjEiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjQ4MSwic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0Ijo0OTIsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6NTAyLCJzY2FsZSI6IjEiLCJmaWx0ZXIiOiJibHVyKDBweCkifV0sImV4aXQiOlt7InQiOjIsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MTAsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MjIsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MzIsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6NDIsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6NTIsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6NjIsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6NzIsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6ODMsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6OTIsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MTAxLCJzY2FsZSI6IjEiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjExMywic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjoxMjMsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MTM1LCJzY2FsZSI6IjEiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjE0NCwic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjoxNTIsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MTY0LCJzY2FsZSI6IjEiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjE3NSwic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjoxODUsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MTkzLCJzY2FsZSI6IjEiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjIwNSwic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjoyMTUsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9LHsidCI6MjI2LCJzY2FsZSI6IjEiLCJmaWx0ZXIiOiJibHVyKDBweCkifSx7InQiOjIzNiwic2NhbGUiOiIxIiwiZmlsdGVyIjoiYmx1cigwcHgpIn0seyJ0IjoyNDYsInNjYWxlIjoiMSIsImZpbHRlciI6ImJsdXIoMHB4KSJ9XX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-b428ac8ec6fb018c0cc6",
+          "file": "release-11-1-1.spec.ts",
+          "line": 439,
+          "column": 5
+        },
+        {
+          "title": "exit · a Tooltip leaves on opacity and its slide alone",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a Tooltip does not open on touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 441,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 201,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:43:20.169Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a Tooltip does not open on touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 441,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-cbca81ff56c13da78372",
+          "file": "release-11-1-1.spec.ts",
+          "line": 439,
+          "column": 5
+        },
+        {
+          "title": "routes · a detented Sheet leaves whole by escape",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3649,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:43:20.374Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "routes",
+                      "contentType": "application/json",
+                      "body": "eyJyZXN0Ijp7InQiOjAsInByZXNlbnQiOnRydWUsIngiOjAsInkiOjQyMi4wMTU2MjUsInciOjM5MCwiaCI6NDIxLjk4NDM3NSwib3AiOjEsInN0YXRlIjoib3BlbiIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjIpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSwiYWZ0ZXIiOlt7InQiOjgsInByZXNlbnQiOnRydWUsIngiOjAsInkiOjQyMi4wMTU2MjUsInciOjM5MCwiaCI6NDIxLjk4NDM3NSwib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMikiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6Im5vbmUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSJ9LHsidCI6MjAsInByZXNlbnQiOnRydWUsIngiOjAsInkiOjQzMy4zMTI2MjIwNzAzMTI1LCJ3IjozOTAsImgiOjQxMC42ODc1LCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTk5OTY5KSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjMwLCJwcmVzZW50Ijp0cnVlLCJ4IjowLCJ5Ijo0NTIuMDQ2ODc1LCJ3IjozOTAsImgiOjM5MS45NTMxMjUsIm9wIjoxLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJva2xhYigwLjI4IDAuMDExOTcxIDAuMDMyODg5IC8gMC4xOTk5MTEpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6Im5vbmUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSJ9LHsidCI6NDAsInByZXNlbnQiOnRydWUsIngiOjAsInkiOjQ3Mi4wNDY4NzUsInciOjM5MCwiaCI6MzcxLjk1MzEyNSwib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6Im9rbGFiKDAuMjggMC4wMTE5NzEgMC4wMzI4ODkgLyAwLjE5OTgxNSkiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoibm9uZSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIn0seyJ0Ijo0OSwicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6NDk0LjYwOTQ5NzA3MDMxMjUsInciOjM5MCwiaCI6MzQ5LjM5MDYyNSwib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6Im9rbGFiKDAuMjggMC4wMTE5NzEgMC4wMzI4ODkgLyAwLjE5OTcwMikiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoibm9uZSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIn0seyJ0Ijo2MiwicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6NTE2LjIxODc1LCJ3IjozOTAsImgiOjMyNy43ODEyNSwib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6Im9rbGFiKDAuMjggMC4wMTE5NzEgMC4wMzI4ODkgLyAwLjE5OTQyMikiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoibm9uZSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIn0seyJ0Ijo3MSwicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6NTQ4LjQwNjI1LCJ3IjozOTAsImgiOjI5NS41OTM3NSwib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6Im9rbGFiKDAuMjggMC4wMTE5NzEgMC4wMzI4ODkgLyAwLjE5OTIzNCkiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoibm9uZSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIn0seyJ0Ijo4MSwicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6NTcwLjcwMzEyNSwidyI6MzkwLCJoIjoyNzMuMjk2ODc1LCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTk4OTcxKSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjkxLCJwcmVzZW50Ijp0cnVlLCJ4IjowLCJ5Ijo1OTQuOTg0Mzc1LCJ3IjozOTAsImgiOjI0OS4wMTU2MjUsIm9wIjoxLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJva2xhYigwLjI4IDAuMDExOTcxIDAuMDMyODg5IC8gMC4xOTg2NzEpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6Im5vbmUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSJ9LHsidCI6MTAyLCJwcmVzZW50Ijp0cnVlLCJ4IjowLCJ5Ijo2MTguNDA2MjUsInciOjM5MCwiaCI6MjI1LjU5Mzc1LCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTk4MjczKSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjExMiwicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6NjQyLjg5MTA1MjI0NjA5MzgsInciOjM5MCwiaCI6MjAxLjEwOTM3NSwib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6Im9rbGFiKDAuMjggMC4wMTE5NzEgMC4wMzI4ODkgLyAwLjE5NzkwNykiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoibm9uZSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIn0seyJ0IjoxMjEsInByZXNlbnQiOnRydWUsIngiOjAsInkiOjY2My43ODEyNSwidyI6MzkwLCJoIjoxODAuMjE4NzUsIm9wIjoxLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJva2xhYigwLjI4IDAuMDExOTcxIDAuMDMyODg5IC8gMC4xOTc1ODIpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6Im5vbmUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSJ9LHsidCI6MTMyLCJwcmVzZW50Ijp0cnVlLCJ4IjowLCJ5Ijo2ODEuMzczMDQ2ODc1LCJ3IjozOTAsImgiOjE3MSwib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6Im9rbGFiKDAuMjggMC4wMTE5NzEgMC4wMzI4ODkgLyAwLjE5NzA4OCkiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoibm9uZSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIn0seyJ0IjoxNDEsInByZXNlbnQiOnRydWUsIngiOjAsInkiOjcwMS4yOTMwOTA4MjAzMTI1LCJ3IjozOTAsImgiOjE3MSwib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6Im9rbGFiKDAuMjggMC4wMTE5NzEgMC4wMzI4ODkgLyAwLjE5NjcyOSkiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoibm9uZSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIn0seyJ0IjoxNTMsInByZXNlbnQiOnRydWUsIngiOjAsInkiOjcxNi4yNzQ5NjMzNzg5MDYyLCJ3IjozOTAsImgiOjE3MSwib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6Im9rbGFiKDAuMjggMC4wMTE5NzEgMC4wMzI4ODkgLyAwLjE5NjEwOCkiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoibm9uZSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIn0seyJ0IjoxNjMsInByZXNlbnQiOnRydWUsIngiOjAsInkiOjczNC40MzI3MzkyNTc4MTI1LCJ3IjozOTAsImgiOjE3MSwib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6Im9rbGFiKDAuMjggMC4wMTE5NzEgMC4wMzI4ODkgLyAwLjE5NTY1MikiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoibm9uZSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIn0seyJ0IjoxNzMsInByZXNlbnQiOnRydWUsIngiOjAsInkiOjc0OC4wMjg3NDc1NTg1OTM4LCJ3IjozOTAsImgiOjE3MSwib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6Im9rbGFiKDAuMjggMC4wMTE5NzEgMC4wMzI4ODkgLyAwLjE5NTE4OCkiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoibm9uZSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIn0seyJ0IjoxODIsInByZXNlbnQiOnRydWUsIngiOjAsInkiOjc2MC4yOTQ2MTY2OTkyMTg4LCJ3IjozOTAsImgiOjE3MSwib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6Im9rbGFiKDAuMjggMC4wMTE5NzEgMC4wMzI4ODkgLyAwLjE5NDc5OCkiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoibm9uZSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIn0seyJ0IjoxOTQsInByZXNlbnQiOnRydWUsIngiOjAsInkiOjc3MC4yNTcyMDIxNDg0Mzc1LCJ3IjozOTAsImgiOjE3MSwib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6Im9rbGFiKDAuMjggMC4wMTE5NzEgMC4wMzI4ODkgLyAwLjE5NDE0KSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjIwNCwicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6NzgyLjA1OTY5MjM4MjgxMjUsInciOjM5MCwiaCI6MTcxLCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTkzNjcyKSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjIxMiwicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6NzkwLjY5ODg1MjUzOTA2MjUsInciOjM5MCwiaCI6MTcxLCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTkzMzYpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6Im5vbmUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSJ9LHsidCI6MjI0LCJwcmVzZW50Ijp0cnVlLCJ4IjowLCJ5Ijo3OTYuODg5NTg3NDAyMzQzOCwidyI6MzkwLCJoIjoxNzEsIm9wIjoxLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJva2xhYigwLjI4IDAuMDExOTcxIDAuMDMyODg5IC8gMC4xOTI3MTMpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6Im5vbmUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSJ9LHsidCI6MjM0LCJwcmVzZW50Ijp0cnVlLCJ4IjowLCJ5Ijo4MDUuMDc2NDE2MDE1NjI1LCJ3IjozOTAsImgiOjE3MSwib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6Im9rbGFiKDAuMjggMC4wMTE5NzEgMC4wMzI4ODkgLyAwLjE5MjI1OCkiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoibm9uZSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIn0seyJ0IjoyNDQsInByZXNlbnQiOnRydWUsIngiOjAsInkiOjgxMC45ODI3MjcwNTA3ODEyLCJ3IjozOTAsImgiOjE3MSwib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6Im9rbGFiKDAuMjggMC4wMTE5NzEgMC4wMzI4ODkgLyAwLjE5MTgxMSkiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoibm9uZSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIn0seyJ0IjoyNTUsInByZXNlbnQiOnRydWUsIngiOjAsInkiOjgxNi4xNDAzODA4NTkzNzUsInciOjM5MCwiaCI6MTcxLCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTkxMjg3KSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjI2NSwicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6ODIxLjA0MTUwMzkwNjI1LCJ3IjozOTAsImgiOjE3MSwib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6Im9rbGFiKDAuMjggMC4wMTE5NzEgMC4wMzI4ODkgLyAwLjE5MDg2KSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjI3NCwicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6ODI0Ljg2OTg3MzA0Njg3NSwidyI6MzkwLCJoIjoxNzEsIm9wIjoxLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJva2xhYigwLjI4IDAuMDExOTcxIDAuMDMyODg5IC8gMC4xOTA1MTUpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6Im5vbmUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSJ9LHsidCI6Mjg0LCJwcmVzZW50Ijp0cnVlLCJ4IjowLCJ5Ijo4MjcuODYxMDIyOTQ5MjE4OCwidyI6MzkwLCJoIjoxNzEsIm9wIjoxLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJva2xhYigwLjI4IDAuMDExOTcxIDAuMDMyODg5IC8gMC4xOTAxMDcpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6Im5vbmUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSJ9LHsidCI6Mjk1LCJwcmVzZW50Ijp0cnVlLCJ4IjowLCJ5Ijo4MzAuNzM2NTcyMjY1NjI1LCJ3IjozOTAsImgiOjE3MSwib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6Im9rbGFiKDAuMjggMC4wMTE5NzEgMC4wMzI4ODkgLyAwLjE4OTYzMykiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoibm9uZSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIn0seyJ0IjozMDQsInByZXNlbnQiOnRydWUsIngiOjAsInkiOjgzMy40MTYyNTk3NjU2MjUsInciOjM5MCwiaCI6MTcxLCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTg5MzE2KSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjMxNiwicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6ODM1LjI3OTc4NTE1NjI1LCJ3IjozOTAsImgiOjE3MSwib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6Im9rbGFiKDAuMjggMC4wMTE5NzEgMC4wMzI4ODkgLyAwLjE4ODc5OCkiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoibm9uZSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIn0seyJ0IjozMjgsInByZXNlbnQiOnRydWUsIngiOjAsInkiOjgzNy4zNjM2NDc0NjA5Mzc1LCJ3IjozOTAsImgiOjE3MSwib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6Im9rbGFiKDAuMjggMC4wMTE5NzEgMC4wMzI4ODkgLyAwLjE4ODMwNSkiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoibm9uZSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIn0seyJ0IjozMzYsInByZXNlbnQiOnRydWUsIngiOjAsInkiOjgzOS4wNTQxMzgxODM1OTM4LCJ3IjozOTAsImgiOjE3MSwib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6Im9rbGFiKDAuMjggMC4wMTE5NzEgMC4wMzI4ODkgLyAwLjE4ODA3OSkiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoibm9uZSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIn0seyJ0IjozNDYsInByZXNlbnQiOnRydWUsIngiOjAsInkiOjgzOS45OTQzODQ3NjU2MjUsInciOjM5MCwiaCI6MTcxLCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTg3NzQ5KSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjM1NywicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6ODQwLjk4NjkzODQ3NjU2MjUsInciOjM5MCwiaCI6MTcxLCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTg3MzY5KSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjM2NywicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6ODQxLjg3NzMxOTMzNTkzNzUsInciOjM5MCwiaCI6MTcxLCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTg3MDY1KSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjM3NywicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6ODQyLjUzMTQzMzEwNTQ2ODgsInciOjM5MCwiaCI6MTcxLCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTg2NzcyKSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjM4NywicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6ODQzLjA1OTgxNDQ1MzEyNSwidyI6MzkwLCJoIjoxNzEsIm9wIjoxLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJva2xhYigwLjI4IDAuMDExOTcxIDAuMDMyODg5IC8gMC4xODY0OTEpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6Im5vbmUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSJ9LHsidCI6Mzk2LCJwcmVzZW50Ijp0cnVlLCJ4IjowLCJ5Ijo4NDMuNDgxODExNTIzNDM3NSwidyI6MzkwLCJoIjoxNzEsIm9wIjoxLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJva2xhYigwLjI4IDAuMDExOTcxIDAuMDMyODg5IC8gMC4xODYyNjYpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6Im5vbmUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSJ9LHsidCI6NDA4LCJwcmVzZW50Ijp0cnVlLCJ4IjowLCJ5Ijo4NDMuNzg0NzkwMDM5MDYyNSwidyI6MzkwLCJoIjoxNzEsIm9wIjoxLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJva2xhYigwLjI4IDAuMDExOTcxIDAuMDMyODg5IC8gMC4xODU5MDMpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6Im5vbmUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSJ9LHsidCI6NDE4LCJwcmVzZW50Ijp0cnVlLCJ4IjowLCJ5Ijo4NDQsInciOjM5MCwiaCI6MTcxLCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTg1NjU2KSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjQyOCwicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6ODQ0LCJ3IjozOTAsImgiOjE3MSwib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6Im9rbGFiKDAuMjggMC4wMTE5NzEgMC4wMzI4ODkgLyAwLjE4NTA3MikiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoibm9uZSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIn0seyJ0Ijo0MzgsInByZXNlbnQiOnRydWUsIngiOjAsInkiOjg0NCwidyI6MzkwLCJoIjoxNzEsIm9wIjoxLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJva2xhYigwLjI4IDAuMDExOTcxIDAuMDMyODg5IC8gMC4xODQzMjkpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6Im5vbmUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSJ9LHsidCI6NDQ3LCJwcmVzZW50Ijp0cnVlLCJ4IjowLCJ5Ijo4NDQsInciOjM5MCwiaCI6MTcxLCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoib2tsYWIoMC4yOCAwLjAxMTk3MSAwLjAzMjg4OSAvIDAuMTgzNjI0KSIsImFuaW0iOnRydWUsImNsaXAiOiJub25lIiwic2NhbGUiOiJub25lIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUifSx7InQiOjQ1OSwicHJlc2VudCI6dHJ1ZSwieCI6MCwieSI6ODQ0LCJ3IjozOTAsImgiOjE3MSwib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6Im9rbGFiKDAuMjggMC4wMTE5NzEgMC4wMzI4ODkgLyAwLjE4MjcyOSkiLCJhbmltIjp0cnVlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoibm9uZSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIn0seyJ0Ijo0NjksInByZXNlbnQiOnRydWUsIngiOjAsInkiOjg0NCwidyI6MzkwLCJoIjoxNzEsIm9wIjoxLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJva2xhYigwLjI4IDAuMDExOTcxIDAuMDMyODg5IC8gMC4xODIwNzEpIiwiYW5pbSI6dHJ1ZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6Im5vbmUiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSJ9LHsidCI6NDc5LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo0ODksInByZXNlbnQiOmZhbHNlfSx7InQiOjUwMCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NTA4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo1MjAsInByZXNlbnQiOmZhbHNlfSx7InQiOjUzMCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NTQwLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo1NTEsInByZXNlbnQiOmZhbHNlfSx7InQiOjU2MSwicHJlc2VudCI6ZmFsc2V9LHsidCI6NTcxLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo1NzksInByZXNlbnQiOmZhbHNlfSx7InQiOjU5MSwicHJlc2VudCI6ZmFsc2V9LHsidCI6NjAyLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo2MTIsInByZXNlbnQiOmZhbHNlfSx7InQiOjYyMiwicHJlc2VudCI6ZmFsc2V9LHsidCI6NjMyLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo2NDEsInByZXNlbnQiOmZhbHNlfSx7InQiOjY1MiwicHJlc2VudCI6ZmFsc2V9LHsidCI6NjY0LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo2NzMsInByZXNlbnQiOmZhbHNlfSx7InQiOjY4MywicHJlc2VudCI6ZmFsc2V9LHsidCI6NjkzLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo3MDIsInByZXNlbnQiOmZhbHNlfSx7InQiOjcxNCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NzI0LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo3MzQsInByZXNlbnQiOmZhbHNlfSx7InQiOjc0NSwicHJlc2VudCI6ZmFsc2V9LHsidCI6NzU1LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo3NjUsInByZXNlbnQiOmZhbHNlfSx7InQiOjc3NSwicHJlc2VudCI6ZmFsc2V9LHsidCI6Nzg0LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo3OTQsInByZXNlbnQiOmZhbHNlfSx7InQiOjgwNiwicHJlc2VudCI6ZmFsc2V9LHsidCI6ODE2LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo4MjYsInByZXNlbnQiOmZhbHNlfSx7InQiOjgzNiwicHJlc2VudCI6ZmFsc2V9LHsidCI6ODQ1LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo4NTcsInByZXNlbnQiOmZhbHNlfSx7InQiOjg2NywicHJlc2VudCI6ZmFsc2V9LHsidCI6ODc3LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo4ODcsInByZXNlbnQiOmZhbHNlfSx7InQiOjg5OSwicHJlc2VudCI6ZmFsc2V9LHsidCI6OTA4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo5MTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjkyOCwicHJlc2VudCI6ZmFsc2V9LHsidCI6OTM4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo5NDksInByZXNlbnQiOmZhbHNlfSx7InQiOjk1OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6OTcwLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo5NzksInByZXNlbnQiOmZhbHNlfSx7InQiOjk4OSwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTAwMCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTAxMCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTAyMCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTAyOCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTA0MCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTA1MCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTA2MCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTA3MSwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTA4MSwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTA5MiwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTEwMiwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTExMiwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTEyMywicHJlc2VudCI6ZmFsc2V9LHsidCI6MTEzMiwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTE0MSwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTE1MywicHJlc2VudCI6ZmFsc2V9LHsidCI6MTE2MywicHJlc2VudCI6ZmFsc2V9LHsidCI6MTE3MSwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTE4MywicHJlc2VudCI6ZmFsc2V9LHsidCI6MTE5NCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTIwNCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTIxNCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTIyMywicHJlc2VudCI6ZmFsc2V9LHsidCI6MTIzNSwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTI0NSwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTI1NSwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTI2NSwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTI3NSwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTI4NSwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTI5NiwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTMwNiwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTMxNiwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTMyNCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTMzNiwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTM0NywicHJlc2VudCI6ZmFsc2V9LHsidCI6MTM1NywicHJlc2VudCI6ZmFsc2V9LHsidCI6MTM2NywicHJlc2VudCI6ZmFsc2V9LHsidCI6MTM3NywicHJlc2VudCI6ZmFsc2V9LHsidCI6MTM4OSwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTM5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTQwOCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTQxOCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTQyOCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTQzNywicHJlc2VudCI6ZmFsc2V9LHsidCI6MTQ0NywicHJlc2VudCI6ZmFsc2V9LHsidCI6MTQ1OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTQ3MCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTQ3OSwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTQ5MCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTUwMCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTUwOCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTUyMCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTUzMCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTU0MSwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTU1MSwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTU2MSwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTU3MSwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTU4MywicHJlc2VudCI6ZmFsc2V9LHsidCI6MTU5MSwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTYwMywicHJlc2VudCI6ZmFsc2V9XSwiZ29uZUlkeCI6MzMsInBhaW50ZWQiOjMzLCJyZW9wZW5lZCI6ZmFsc2UsInNoYXJlIjowLjExMywiZnJhbWVzIjpbWzAsMSw0MjJdLFs2LDEsNDIyXSxbMTgsMC45NzMsNDExXSxbMjgsMC45MjksMzkyXSxbMzgsMC44ODEsMzcyXSxbNDcsMC44MjgsMzQ5XSxbNjAsMC43NzcsMzI4XSxbNjksMC43LDI5Nl0sWzc5LDAuNjQ4LDI3M10sWzg5LDAuNTksMjQ5XSxbMTAwLDAuNTM1LDIyNl0sWzExMCwwLjQ3NywyMDFdLFsxMTksMC40MjcsMTgwXSxbMTMwLDAuMzg1LDE3MV0sWzEzOSwwLjMzOCwxNzFdLFsxNTEsMC4zMDMsMTcxXSxbMTYxLDAuMjYsMTcxXSxbMTcxLDAuMjI3LDE3MV0sWzE4MCwwLjE5OCwxNzFdLFsxOTIsMC4xNzUsMTcxXSxbMjAyLDAuMTQ3LDE3MV0sWzIxMCwwLjEyNiwxNzFdLFsyMjIsMC4xMTIsMTcxXSxbMjMyLDAuMDkyLDE3MV0sWzI0MiwwLjA3OCwxNzFdLFsyNTMsMC4wNjYsMTcxXSxbMjYzLDAuMDU0LDE3MV0sWzI3MiwwLjA0NSwxNzFdLFsyODIsMC4wMzgsMTcxXSxbMjkzLDAuMDMxLDE3MV0sWzMwMiwwLjAyNSwxNzFdLFszMTQsMC4wMjEsMTcxXSxbMzI2LDAuMDE2LDE3MV0sWzMzNCwwLjAxMiwxNzFdLFszNDQsMC4wMDksMTcxXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-0388e0dd48f165c5a0da",
+          "file": "release-11-1-1.spec.ts",
+          "line": 497,
+          "column": 5
+        },
+        {
+          "title": "routes · a detented Sheet leaves whole by outside",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 499,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 200,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:43:24.028Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 499,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-1f9b4bf68d78227da871",
+          "file": "release-11-1-1.spec.ts",
+          "line": 497,
+          "column": 5
+        },
+        {
+          "title": "routes · a detented Sheet dragged off leaves from where the drag left it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen can tap but not drag",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 525,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 188,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:43:24.231Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen can tap but not drag",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 525,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-52013c90c75b066a56ef",
+          "file": "release-11-1-1.spec.ts",
+          "line": 523,
+          "column": 1
+        },
+        {
+          "title": "routes · a CommandDialog keeps its list through its exit by pick",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2912,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:43:24.423Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "routes",
+                      "contentType": "application/json",
+                      "body": "eyJyZXN0Ijp7InQiOjEsInByZXNlbnQiOnRydWUsIngiOjIwLCJ5IjoyMDQuNSwidyI6MzUwLCJoIjo0MzUsIm9wIjoxLCJzdGF0ZSI6Im9wZW4iLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjEiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOnRydWUsImFsc29PcCI6MX0sImFmdGVyIjpbeyJ0IjoxMCwicHJlc2VudCI6dHJ1ZSwieCI6MjAsInkiOjIwNC41LCJ3IjozNTAsImgiOjQzNSwib3AiOjEsInN0YXRlIjoib3BlbiIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6dHJ1ZSwiYWxzb09wIjoxfSx7InQiOjIyLCJwcmVzZW50Ijp0cnVlLCJ4IjoyMCwieSI6MjA0LjUsInciOjM1MCwiaCI6NDM1LCJvcCI6MSwic3RhdGUiOiJvcGVuIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjF9LHsidCI6MjMsInByZXNlbnQiOnRydWUsIngiOjIwLCJ5IjoyMDQuNSwidyI6MzUwLCJoIjo0MzUsIm9wIjoxLCJzdGF0ZSI6Im9wZW4iLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjEiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOnRydWUsImFsc29PcCI6MX0seyJ0IjoyNiwicHJlc2VudCI6dHJ1ZSwieCI6MjAsInkiOjIwNC41LCJ3IjozNTAsImgiOjQzNSwib3AiOjEsInN0YXRlIjoib3BlbiIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6dHJ1ZSwiYWxzb09wIjoxfSx7InQiOjY1LCJwcmVzZW50Ijp0cnVlLCJ4IjoyMCwieSI6MjA0LjUsInciOjM1MCwiaCI6NDM1LCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjEiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOnRydWUsImFsc29PcCI6MX0seyJ0Ijo4MywicHJlc2VudCI6dHJ1ZSwieCI6MjAsInkiOjIwNC41LCJ3IjozNTAsImgiOjQzNSwib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjF9LHsidCI6OTUsInByZXNlbnQiOnRydWUsIngiOjIwLjYyMTQ0ODUxNjg0NTcwMywieSI6MjA1LjI3MjM2OTM4NDc2NTYyLCJ3IjozNDguNzU3MDgwMDc4MTI1LCJoIjo0MzMuNDU1MjMwNzEyODkwNiwib3AiOjAuOTI4OTc3LCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMC45OTY0NDkiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOnRydWUsImFsc29PcCI6MC45Mjg5Nzd9LHsidCI6MTAwLCJwcmVzZW50Ijp0cnVlLCJ4IjoyMS4xNDk2NTgyMDMxMjUsInkiOjIwNS45Mjg4NjM1MjUzOTA2MiwidyI6MzQ3LjcwMDY4MzU5Mzc1LCJoIjo0MzIuMTQyMzAzNDY2Nzk2OSwib3AiOjAuODY4NjExLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMC45OTM0MzEiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOnRydWUsImFsc29PcCI6MC44Njg2MTF9LHsidCI6MTA0LCJwcmVzZW50Ijp0cnVlLCJ4IjoyMS4zODQ5ODMwNjI3NDQxNCwieSI6MjA2LjIyMTMyODczNTM1MTU2LCJ3IjozNDcuMjMwMDQxNTAzOTA2MjUsImgiOjQzMS41NTczNzMwNDY4NzUsIm9wIjowLjg0MTcxNiwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjAuOTkyMDg2IiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjAuODQxNzE2fSx7InQiOjExNCwicHJlc2VudCI6dHJ1ZSwieCI6MjEuNTc4NjgzODUzMTQ5NDE0LCJ5IjoyMDYuNDYyMDgxOTA5MTc5NywidyI6MzQ2Ljg0MjY1MTM2NzE4NzUsImgiOjQzMS4wNzU4MDU2NjQwNjI1LCJvcCI6MC44MTk1NzksInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk5MDk3OSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6dHJ1ZSwiYWxzb09wIjowLjgxOTU3OX0seyJ0IjoxMjMsInByZXNlbnQiOnRydWUsIngiOjIyLjA4MTAwODkxMTEzMjgxMiwieSI6MjA3LjA4NjM5NTI2MzY3MTg4LCJ3IjozNDUuODM3OTUxNjYwMTU2MjUsImgiOjQyOS44MjcxNzg5NTUwNzgxLCJvcCI6MC43NjIxNywic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjAuOTg4MTA5IiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjAuNzYyMTd9LHsidCI6MTM0LCJwcmVzZW50Ijp0cnVlLCJ4IjoyMi41NTEwNzY4ODkwMzgwODYsInkiOjIwNy42NzA2MjM3NzkyOTY4OCwidyI6MzQ0Ljg5NzgyNzE0ODQzNzUsImgiOjQyOC42NTg3MjE5MjM4MjgxLCJvcCI6MC43MDg0NDgsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk4NTQyMiIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6dHJ1ZSwiYWxzb09wIjowLjcwODQ0OH0seyJ0IjoxNDQsInByZXNlbnQiOnRydWUsIngiOjIzLjE0MjU3NjIxNzY1MTM2NywieSI6MjA4LjQwNTc3Njk3NzUzOTA2LCJ3IjozNDMuNzE0ODQzNzUsImgiOjQyNy4xODg0NzY1NjI1LCJvcCI6MC42NDA4NDksInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk4MjA0MiIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6dHJ1ZSwiYWxzb09wIjowLjY0MDg0OX0seyJ0IjoxNTUsInByZXNlbnQiOnRydWUsIngiOjIzLjY5MTIwNzg4NTc0MjE4OCwieSI6MjA5LjA4NzY0NjQ4NDM3NSwidyI6MzQyLjYxNzYxNDc0NjA5Mzc1LCJoIjo0MjUuODI0NzA3MDMxMjUsIm9wIjowLjU3ODE0OCwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjAuOTc4OTA3IiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjAuNTc4MTQ4fSx7InQiOjE2NSwicHJlc2VudCI6dHJ1ZSwieCI6MjQuMzAwOTI4MTE1ODQ0NzI3LCJ5IjoyMDkuODQ1NDQzNzI1NTg1OTQsInciOjM0MS4zOTgxMzIzMjQyMTg3NSwiaCI6NDI0LjMwOTA4MjAzMTI1LCJvcCI6MC41MDg0NjUsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk3NTQyMyIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6dHJ1ZSwiYWxzb09wIjowLjUwODQ2NX0seyJ0IjoxNzUsInByZXNlbnQiOnRydWUsIngiOjI0Ljg1NTk5ODk5MjkxOTkyMiwieSI6MjEwLjUzNTMwODgzNzg5MDYyLCJ3IjozNDAuMjg4MDI0OTAyMzQzNzUsImgiOjQyMi45MjkzNTE4MDY2NDA2LCJvcCI6MC40NDUwMjksInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk3MjI1MSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6dHJ1ZSwiYWxzb09wIjowLjQ0NTAyOX0seyJ0IjoxODUsInByZXNlbnQiOnRydWUsIngiOjI1LjQwNzE5MjIzMDIyNDYxLCJ5IjoyMTEuMjIwMzY3NDMxNjQwNjIsInciOjMzOS4xODU2MDc5MTAxNTYyNSwiaCI6NDIxLjU1OTIzNDYxOTE0MDYsIm9wIjowLjM4MjAzNSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjAuOTY5MTAyIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjAuMzgyMDM1fSx7InQiOjE5NSwicHJlc2VudCI6dHJ1ZSwieCI6MjUuOTQ5OTEzMDI0OTAyMzQ0LCJ5IjoyMTEuODk0ODk3NDYwOTM3NSwidyI6MzM4LjEwMDE1ODY5MTQwNjI1LCJoIjo0MjAuMjEwMjA1MDc4MTI1LCJvcCI6MC4zMjAwMSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjAuOTY2MDAxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjAuMzIwMDF9LHsidCI6MjA3LCJwcmVzZW50Ijp0cnVlLCJ4IjoyNi40NzkyNzQ3NDk3NTU4NiwieSI6MjEyLjU1MjgxMDY2ODk0NTMsInciOjMzNy4wNDE0NDI4NzEwOTM3NSwiaCI6NDE4Ljg5NDQwOTE3OTY4NzUsIm9wIjowLjI1OTUxMSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjAuOTYyOTc2IiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjAuMjU5NTExfSx7InQiOjIxNSwicHJlc2VudCI6dHJ1ZSwieCI6MjcuMDg5MzAwMTU1NjM5NjUsInkiOjIxMy4zMTA5ODkzNzk4ODI4LCJ3IjozMzUuODIxNDExMTMyODEyNSwiaCI6NDE3LjM3ODA1MTc1NzgxMjUsIm9wIjowLjE4OTc5NCwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjAuOTU5NDkiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOnRydWUsImFsc29PcCI6MC4xODk3OTR9LHsidCI6MjI3LCJwcmVzZW50Ijp0cnVlLCJ4IjoyNy40NzU4MjQzNTYwNzkxLCJ5IjoyMTMuNzkxMzgxODM1OTM3NSwidyI6MzM1LjA0ODMzOTg0Mzc1LCJoIjo0MTYuNDE3MjM2MzI4MTI1LCJvcCI6MC4xNDU2Miwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjAuOTU3MjgxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjAuMTQ1NjJ9LHsidCI6MjM2LCJwcmVzZW50Ijp0cnVlLCJ4IjoyOC4wMTYxNTcxNTAyNjg1NTUsInkiOjIxNC40NjI5MzY0MDEzNjcyLCJ3IjozMzMuOTY3NzEyNDAyMzQzNzUsImgiOjQxNS4wNzQwOTY2Nzk2ODc1LCJvcCI6MC4wODM4NjgsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk1NDE5MyIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6dHJ1ZSwiYWxzb09wIjowLjA4Mzg2OH0seyJ0IjoyNDYsInByZXNlbnQiOnRydWUsIngiOjI4LjM4MjMyOTk0MDc5NTksInkiOjIxNC45MTgwNDUwNDM5NDUzLCJ3IjozMzMuMjM1MzUxNTYyNSwiaCI6NDE0LjE2Mzk0MDQyOTY4NzUsIm9wIjowLjA0MjAxOSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjAuOTUyMTAxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjAuMDQyMDE5fSx7InQiOjI1NiwicHJlc2VudCI6dHJ1ZSwieCI6MjguNzM5MTYwNTM3NzE5NzI3LCJ5IjoyMTUuMzYxNTI2NDg5MjU3OCwidyI6MzMyLjUyMTY2NzQ4MDQ2ODc1LCJoIjo0MTMuMjc2OTc3NTM5MDYyNSwib3AiOjAuMDAxMjM5LCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMC45NTAwNjIiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOnRydWUsImFsc29PcCI6MC4wMDEyMzl9LHsidCI6MjY3LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoyNzksInByZXNlbnQiOmZhbHNlfSx7InQiOjI4NiwicHJlc2VudCI6ZmFsc2V9LHsidCI6Mjk4LCJwcmVzZW50IjpmYWxzZX0seyJ0IjozMDYsInByZXNlbnQiOmZhbHNlfSx7InQiOjMxNywicHJlc2VudCI6ZmFsc2V9LHsidCI6MzI5LCJwcmVzZW50IjpmYWxzZX0seyJ0IjozMzgsInByZXNlbnQiOmZhbHNlfSx7InQiOjM0OSwicHJlc2VudCI6ZmFsc2V9LHsidCI6MzU5LCJwcmVzZW50IjpmYWxzZX0seyJ0IjozNjksInByZXNlbnQiOmZhbHNlfSx7InQiOjM3OSwicHJlc2VudCI6ZmFsc2V9LHsidCI6Mzg5LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo0MDAsInByZXNlbnQiOmZhbHNlfSx7InQiOjQxMCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NDIwLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo0MzAsInByZXNlbnQiOmZhbHNlfSx7InQiOjQ0MCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NDUxLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo0NjEsInByZXNlbnQiOmZhbHNlfSx7InQiOjQ3MSwicHJlc2VudCI6ZmFsc2V9LHsidCI6NDgxLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo0OTMsInByZXNlbnQiOmZhbHNlfSx7InQiOjUwMiwicHJlc2VudCI6ZmFsc2V9LHsidCI6NTExLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo1MjIsInByZXNlbnQiOmZhbHNlfSx7InQiOjUzMiwicHJlc2VudCI6ZmFsc2V9LHsidCI6NTQyLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo1NTEsInByZXNlbnQiOmZhbHNlfSx7InQiOjU2MywicHJlc2VudCI6ZmFsc2V9LHsidCI6NTczLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo1ODMsInByZXNlbnQiOmZhbHNlfSx7InQiOjU5NCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NjA0LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo2MTMsInByZXNlbnQiOmZhbHNlfSx7InQiOjYyNCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NjM0LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo2NDQsInByZXNlbnQiOmZhbHNlfSx7InQiOjY1NiwicHJlc2VudCI6ZmFsc2V9LHsidCI6NjY1LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo2NzUsInByZXNlbnQiOmZhbHNlfSx7InQiOjY4NSwicHJlc2VudCI6ZmFsc2V9LHsidCI6Njk2LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo3MDYsInByZXNlbnQiOmZhbHNlfSx7InQiOjcxNSwicHJlc2VudCI6ZmFsc2V9LHsidCI6NzI3LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo3MzYsInByZXNlbnQiOmZhbHNlfSx7InQiOjc0NywicHJlc2VudCI6ZmFsc2V9LHsidCI6NzU3LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo3NjcsInByZXNlbnQiOmZhbHNlfSx7InQiOjc3NywicHJlc2VudCI6ZmFsc2V9LHsidCI6Nzg3LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo3OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjgwOCwicHJlc2VudCI6ZmFsc2V9LHsidCI6ODE4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo4MjgsInByZXNlbnQiOmZhbHNlfSx7InQiOjgzNywicHJlc2VudCI6ZmFsc2V9LHsidCI6ODQ5LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo4NTksInByZXNlbnQiOmZhbHNlfSx7InQiOjg2OSwicHJlc2VudCI6ZmFsc2V9LHsidCI6ODc5LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo4ODksInByZXNlbnQiOmZhbHNlfSx7InQiOjkwMCwicHJlc2VudCI6ZmFsc2V9LHsidCI6OTEwLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo5MjAsInByZXNlbnQiOmZhbHNlfSx7InQiOjkzMCwicHJlc2VudCI6ZmFsc2V9LHsidCI6OTQxLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo5NTEsInByZXNlbnQiOmZhbHNlfSx7InQiOjk2MSwicHJlc2VudCI6ZmFsc2V9LHsidCI6OTcxLCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo5ODMsInByZXNlbnQiOmZhbHNlfSx7InQiOjk5MiwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTAwMCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTAxMiwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTAyMiwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTAzMiwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTA0MywicHJlc2VudCI6ZmFsc2V9LHsidCI6MTA1MywicHJlc2VudCI6ZmFsc2V9LHsidCI6MTA2MywicHJlc2VudCI6ZmFsc2V9XSwiZ29uZUlkeCI6MjMsInBhaW50ZWQiOjIzLCJyZW9wZW5lZCI6ZmFsc2UsInNoYXJlIjowLjE0LCJmcmFtZXMiOltbMCwxLDQzNV0sWzcsMSw0MzVdLFsxOSwxLDQzNV0sWzIwLDEsNDM1XSxbMjMsMSw0MzVdLFs2MiwxLDQzNV0sWzgwLDEsNDM1XSxbOTIsMC45MjIsNDMzXSxbOTcsMC44NTcsNDMyXSxbMTAxLDAuODI4LDQzMl0sWzExMSwwLjgwNSw0MzFdLFsxMjAsMC43NDQsNDMwXSxbMTMxLDAuNjg4LDQyOV0sWzE0MSwwLjYxOCw0MjddLFsxNTIsMC41NTQsNDI2XSxbMTYyLDAuNDg0LDQyNF0sWzE3MiwwLjQyMSw0MjNdLFsxODIsMC4zNTksNDIyXSxbMTkyLDAuMjk5LDQyMF0sWzIwNCwwLjI0MSw0MTldLFsyMTIsMC4xNzUsNDE3XSxbMjI0LDAuMTMzLDQxNl0sWzIzMywwLjA3Niw0MTVdLFsyNDMsMC4wMzgsNDE0XSxbMjUzLDAuMDAxLDQxM11dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-5f8c2c7e701578ad4794",
+          "file": "release-11-1-1.spec.ts",
+          "line": 587,
+          "column": 5
+        },
+        {
+          "title": "routes · a CommandDialog keeps its list through its exit by escape",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2658,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:43:27.339Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "routes",
+                      "contentType": "application/json",
+                      "body": "eyJyZXN0Ijp7InQiOjMuOTk5OTk5OTk5OTk5NzcyNiwicHJlc2VudCI6dHJ1ZSwieCI6MjAsInkiOjIwNC41LCJ3IjozNTAsImgiOjQzNSwib3AiOjEsInN0YXRlIjoib3BlbiIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6dHJ1ZSwiYWxzb09wIjoxfSwiYWZ0ZXIiOlt7InQiOjM0Ljk5OTk5OTk5OTk5OTc3LCJwcmVzZW50Ijp0cnVlLCJ4IjoyMCwieSI6MjA0LjUsInciOjM1MCwiaCI6NDM1LCJvcCI6MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjEiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOnRydWUsImFsc29PcCI6MX0seyJ0Ijo1MC45OTk5OTk5OTk5OTk3NywicHJlc2VudCI6dHJ1ZSwieCI6MjAsInkiOjIwNC41LCJ3IjozNTAsImgiOjQzNSwib3AiOjEsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIxIiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjF9LHsidCI6NTguOTk5OTk5OTk5OTk5NzcsInByZXNlbnQiOnRydWUsIngiOjIwLjU5MzgzOTY0NTM4NTc0MiwieSI6MjA1LjIzODA1MjM2ODE2NDA2LCJ3IjozNDguODEyMzE2ODk0NTMxMjUsImgiOjQzMy41MjM5MjU3ODEyNSwib3AiOjAuOTMyMTMzLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMC45OTY2MDciLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOnRydWUsImFsc29PcCI6MC45MzIxMzN9LHsidCI6NjUuOTk5OTk5OTk5OTk5NzcsInByZXNlbnQiOnRydWUsIngiOjIwLjkzNzYzNTQyMTc1MjkzLCJ5IjoyMDUuNjY1MzQ0MjM4MjgxMjUsInciOjM0OC4xMjQ3NTU4NTkzNzUsImgiOjQzMi42NjkzMTE1MjM0Mzc1LCJvcCI6MC44OTI4NDIsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk5NDY0MiIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6dHJ1ZSwiYWxzb09wIjowLjg5Mjg0Mn0seyJ0Ijo3NS45OTk5OTk5OTk5OTk3NywicHJlc2VudCI6dHJ1ZSwieCI6MjEuMjU4NDgzODg2NzE4NzUsInkiOjIwNi4wNjQxMTc0MzE2NDA2MiwidyI6MzQ3LjQ4MzAzMjIyNjU2MjUsImgiOjQzMS44NzE3OTU2NTQyOTY5LCJvcCI6MC44NTYxNzMsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk5MjgwOSIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6dHJ1ZSwiYWxzb09wIjowLjg1NjE3M30seyJ0Ijo4NS45OTk5OTk5OTk5OTk3NywicHJlc2VudCI6dHJ1ZSwieCI6MjEuNzQzNDM2ODEzMzU0NDkyLCJ5IjoyMDYuNjY2ODM5NTk5NjA5MzgsInciOjM0Ni41MTMxMjI1NTg1OTM3NSwiaCI6NDMwLjY2NjI5MDI4MzIwMzEsIm9wIjowLjgwMDc1LCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMC45OTAwMzciLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOnRydWUsImFsc29PcCI6MC44MDA3NX0seyJ0Ijo5OC45OTk5OTk5OTk5OTk3NywicHJlc2VudCI6dHJ1ZSwieCI6MjIuMjUzMzcwMjg1MDM0MTgsInkiOjIwNy4zMDA2MTM0MDMzMjAzLCJ3IjozNDUuNDkzMjg2MTMyODEyNSwiaCI6NDI5LjM5ODgwMzcxMDkzNzUsIm9wIjowLjc0MjQ3Miwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjAuOTg3MTI0IiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjAuNzQyNDcyfSx7InQiOjEwNC45OTk5OTk5OTk5OTk3NywicHJlc2VudCI6dHJ1ZSwieCI6MjIuOTQzNzE2MDQ5MTk0MzM2LCJ5IjoyMDguMTU4NjE1MTEyMzA0NywidyI6MzQ0LjExMjU0ODgyODEyNSwiaCI6NDI3LjY4MjczOTI1NzgxMjUsIm9wIjowLjY2MzU3NSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjAuOTgzMTc5IiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjAuNjYzNTc1fSx7InQiOjExNi45OTk5OTk5OTk5OTk3NywicHJlc2VudCI6dHJ1ZSwieCI6MjMuMjY5ODUxNjg0NTcwMzEyLCJ5IjoyMDguNTYzOTY0ODQzNzUsInciOjM0My40NjAyNjYxMTMyODEyNSwiaCI6NDI2Ljg3MjA3MDMxMjUsIm9wIjowLjYyNjMwMywic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjAuOTgxMzE1IiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjAuNjI2MzAzfSx7InQiOjEyNS45OTk5OTk5OTk5OTk3NywicHJlc2VudCI6dHJ1ZSwieCI6MjMuOTMwOTM0OTA2MDA1ODYsInkiOjIwOS4zODU1ODk1OTk2MDkzOCwidyI6MzQyLjEzODEyMjU1ODU5Mzc1LCJoIjo0MjUuMjI4NzkwMjgzMjAzMSwib3AiOjAuNTUwNzUsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk3NzUzOCIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6dHJ1ZSwiYWxzb09wIjowLjU1MDc1fSx7InQiOjEzNi45OTk5OTk5OTk5OTk3NywicHJlc2VudCI6dHJ1ZSwieCI6MjQuNDMwNTU1MzQzNjI3OTMsInkiOjIxMC4wMDY1NDYwMjA1MDc4LCJ3IjozNDEuMTM4OTE2MDE1NjI1LCJoIjo0MjMuOTg2OTM4NDc2NTYyNSwib3AiOjAuNDkzNjUxLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMC45NzQ2ODMiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOnRydWUsImFsc29PcCI6MC40OTM2NTF9LHsidCI6MTQ2Ljk5OTk5OTk5OTk5OTc3LCJwcmVzZW50Ijp0cnVlLCJ4IjoyNS4wNDAzODQyOTI2MDI1NCwieSI6MjEwLjc2NDQ4MDU5MDgyMDMsInciOjMzOS45MTkyNTA0ODgyODEyNSwiaCI6NDIyLjQ3MTA2OTMzNTkzNzUsIm9wIjowLjQyMzk1Niwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjAuOTcxMTk4IiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjAuNDIzOTU2fSx7InQiOjE1Ni45OTk5OTk5OTk5OTk3NywicHJlc2VudCI6dHJ1ZSwieCI6MjUuNTg5Mjc1MzYwMTA3NDIyLCJ5IjoyMTEuNDQ2NjcwNTMyMjI2NTYsInciOjMzOC44MjE0NzIxNjc5Njg3NSwiaCI6NDIxLjEwNjY4OTQ1MzEyNSwib3AiOjAuMzYxMjI2LCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMC45NjgwNjEiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOnRydWUsImFsc29PcCI6MC4zNjEyMjZ9LHsidCI6MTY3Ljk5OTk5OTk5OTk5OTc3LCJwcmVzZW50Ijp0cnVlLCJ4IjoyNi4xMjgxMDMyNTYyMjU1ODYsInkiOjIxMi4xMTYzNjM1MjUzOTA2MiwidyI6MzM3Ljc0Mzc3NDQxNDA2MjUsImgiOjQxOS43NjczMDM0NjY3OTY5LCJvcCI6MC4yOTk2NDUsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk2NDk4MiIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6dHJ1ZSwiYWxzb09wIjowLjI5OTY0NX0seyJ0IjoxNzcuOTk5OTk5OTk5OTk5NzcsInByZXNlbnQiOnRydWUsIngiOjI2LjcwMzE5MTc1NzIwMjE1LCJ5IjoyMTIuODMxMTE1NzIyNjU2MjUsInciOjMzNi41OTM2Mjc5Mjk2ODc1LCJoIjo0MTguMzM3NzY4NTU0Njg3NSwib3AiOjAuMjMzOTIxLCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMC45NjE2OTYiLCJ0cmFuc2Zvcm0iOiJub25lIiwiZmlsdGVyIjoibm9uZSIsImFsc28iOnRydWUsImFsc29PcCI6MC4yMzM5MjF9LHsidCI6MTg3Ljk5OTk5OTk5OTk5OTc3LCJwcmVzZW50Ijp0cnVlLCJ4IjoyNy4yMDM5MTI3MzQ5ODUzNSwieSI6MjEzLjQ1MzQzMDE3NTc4MTI1LCJ3IjozMzUuNTkyMTYzMDg1OTM3NSwiaCI6NDE3LjA5MzEzOTY0ODQzNzUsIm9wIjowLjE3NjY5Niwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjAuOTU4ODM1IiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjAuMTc2Njk2fSx7InQiOjE5Ny45OTk5OTk5OTk5OTk3NywicHJlc2VudCI6dHJ1ZSwieCI6MjcuNjc2OTU0MjY5NDA5MTgsInkiOjIxNC4wNDEzNTEzMTgzNTkzOCwidyI6MzM0LjY0NjExODE2NDA2MjUsImgiOjQxNS45MTcyNjY4NDU3MDMxLCJvcCI6MC4xMjI2MzQsInN0YXRlIjoiY2xvc2VkIiwiZm9ybSI6bnVsbCwic3VyZmFjZSI6ImdsYXNzIiwiYmYiOiJibHVyKDIwcHgpIHNhdHVyYXRlKDEuNSkiLCJiZyI6ImNvbG9yKHNyZ2IgMC4yMDM5OTMgMC4xNDgyNTIgMC4wODI5NiAvIDAuMTgpIiwiYW5pbSI6ZmFsc2UsImNsaXAiOiJub25lIiwic2NhbGUiOiIwLjk1NjEzMiIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6dHJ1ZSwiYWxzb09wIjowLjEyMjYzNH0seyJ0IjoyMDcuOTk5OTk5OTk5OTk5NzcsInByZXNlbnQiOnRydWUsIngiOjI4LjExNDY3MzYxNDUwMTk1MywieSI6MjE0LjU4NTM3MjkyNDgwNDcsInciOjMzMy43NzA2Mjk4ODI4MTI1LCJoIjo0MTQuODI5MjIzNjMyODEyNSwib3AiOjAuMDcyNjA5LCJzdGF0ZSI6ImNsb3NlZCIsImZvcm0iOm51bGwsInN1cmZhY2UiOiJnbGFzcyIsImJmIjoiYmx1cigyMHB4KSBzYXR1cmF0ZSgxLjUpIiwiYmciOiJjb2xvcihzcmdiIDAuMjAzOTkzIDAuMTQ4MjUyIDAuMDgyOTYgLyAwLjE4KSIsImFuaW0iOmZhbHNlLCJjbGlwIjoibm9uZSIsInNjYWxlIjoiMC45NTM2MyIsInRyYW5zZm9ybSI6Im5vbmUiLCJmaWx0ZXIiOiJub25lIiwiYWxzbyI6dHJ1ZSwiYWxzb09wIjowLjA3MjYwOX0seyJ0IjoyMTYuOTk5OTk5OTk5OTk5NzcsInByZXNlbnQiOnRydWUsIngiOjI4LjUwNzcwMzc4MTEyNzkzLCJ5IjoyMTUuMDczODY3Nzk3ODUxNTYsInciOjMzMi45ODQ2MTkxNDA2MjUsImgiOjQxMy44NTIyOTQ5MjE4NzUsIm9wIjowLjAyNzY5MSwic3RhdGUiOiJjbG9zZWQiLCJmb3JtIjpudWxsLCJzdXJmYWNlIjoiZ2xhc3MiLCJiZiI6ImJsdXIoMjBweCkgc2F0dXJhdGUoMS41KSIsImJnIjoiY29sb3Ioc3JnYiAwLjIwMzk5MyAwLjE0ODI1MiAwLjA4Mjk2IC8gMC4xOCkiLCJhbmltIjpmYWxzZSwiY2xpcCI6Im5vbmUiLCJzY2FsZSI6IjAuOTUxMzg1IiwidHJhbnNmb3JtIjoibm9uZSIsImZpbHRlciI6Im5vbmUiLCJhbHNvIjp0cnVlLCJhbHNvT3AiOjAuMDI3NjkxfSx7InQiOjIyOC45OTk5OTk5OTk5OTk3NywicHJlc2VudCI6ZmFsc2V9LHsidCI6MjM2Ljk5OTk5OTk5OTk5OTc3LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoyNDguOTk5OTk5OTk5OTk5NzcsInByZXNlbnQiOmZhbHNlfSx7InQiOjI1OC45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoyNjcuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6Mjc5Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjI4OS45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoyOTguOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MzEwLjk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjMyMC45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0IjozMzAuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MzQwLjk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjM1MC45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0IjozNjEuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MzcxLjk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjM4MS45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0IjozOTEuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NDAxLjk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjQxMi45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo0MjMuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NDMyLjk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjQ0Mi45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo0NTIuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NDYzLjk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjQ3My45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo0ODMuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NDk0Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjUwMy45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo1MTQuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NTI0Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjUzNC45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo1NDQuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NTU0Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjU2NS45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo1NzUuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NTg1Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjU5NC45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo2MDYuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NjE2Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjYyNS45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo2MzYuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NjQ2Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjY1NS45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo2NjcuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6Njc1Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjY4Ny45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo2OTYuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NzA3Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjcxOS45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo3MjguOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NzM3Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjc0OC45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo3NTcuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6NzY5Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjc3OS45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo3ODkuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6Nzk5Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjgxMC45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo4MjAuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6ODMwLjk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjg0MC45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo4NTIuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6ODYxLjk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjg3MS45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo4ODAuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6ODkxLjk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjkwMy45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo5MTIuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6OTIyLjk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjkzMi45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo5NDIuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6OTUzLjk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjk2MS45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0Ijo5NzMuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6OTgzLjk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjk5My45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMDA0Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfSx7InQiOjEwMTQuOTk5OTk5OTk5OTk5OCwicHJlc2VudCI6ZmFsc2V9LHsidCI6MTAyNC45OTk5OTk5OTk5OTk4LCJwcmVzZW50IjpmYWxzZX0seyJ0IjoxMDM0Ljk5OTk5OTk5OTk5OTgsInByZXNlbnQiOmZhbHNlfV0sImdvbmVJZHgiOjE5LCJwYWludGVkIjoxOSwicmVvcGVuZWQiOmZhbHNlLCJzaGFyZSI6MC4xMjYsImZyYW1lcyI6W1swLDEsNDM1XSxbMjksMSw0MzVdLFs0NSwxLDQzNV0sWzUzLDAuOTI2LDQzNF0sWzYwLDAuODgzLDQzM10sWzcwLDAuODQ0LDQzMl0sWzgwLDAuNzg1LDQzMV0sWzkzLDAuNzIzLDQyOV0sWzk5LDAuNjQxLDQyOF0sWzExMSwwLjYwMyw0MjddLFsxMjAsMC41MjYsNDI1XSxbMTMxLDAuNDY5LDQyNF0sWzE0MSwwLjQsNDIyXSxbMTUxLDAuMzM5LDQyMV0sWzE2MiwwLjI3OSw0MjBdLFsxNzIsMC4yMTYsNDE4XSxbMTgyLDAuMTYyLDQxN10sWzE5MiwwLjExMiw0MTZdLFsyMDIsMC4wNjYsNDE1XSxbMjExLDAuMDI1LDQxNF0sWzIyMywwLG51bGxdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-066d319438e75f96d423",
+          "file": "release-11-1-1.spec.ts",
+          "line": 587,
+          "column": 5
+        },
+        {
+          "title": "routes · a CommandDialog keeps its list through its exit by outside",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 589,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 207,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:43:30.001Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen.tap reaches no outside-press listener",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 589,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-7f4e4099fb9a6c2548e1",
+          "file": "release-11-1-1.spec.ts",
+          "line": 587,
+          "column": 5
+        },
+        {
+          "title": "routes · a press on an open Select's trigger closes it once",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a touch press closes these surfaces through the outside-press listener, which Playwright WebKit's touchscreen.tap does not reach",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 623,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 193,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:43:30.212Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a touch press closes these surfaces through the outside-press listener, which Playwright WebKit's touchscreen.tap does not reach",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 623,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-1b2925b2d5a2d7e99a70",
+          "file": "release-11-1-1.spec.ts",
+          "line": 621,
+          "column": 5
+        },
+        {
+          "title": "routes · a press on an open DropdownMenu's trigger closes it once",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a touch press closes these surfaces through the outside-press listener, which Playwright WebKit's touchscreen.tap does not reach",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 623,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 193,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:43:30.408Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a touch press closes these surfaces through the outside-press listener, which Playwright WebKit's touchscreen.tap does not reach",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 623,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-91e319c9070b9a6e4300",
+          "file": "release-11-1-1.spec.ts",
+          "line": 621,
+          "column": 5
+        },
+        {
+          "title": "routes · a press on an open Popover's trigger closes it once",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a touch press closes these surfaces through the outside-press listener, which Playwright WebKit's touchscreen.tap does not reach",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 623,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 206,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:43:30.605Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a touch press closes these surfaces through the outside-press listener, which Playwright WebKit's touchscreen.tap does not reach",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 623,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-f5377948a5532c15c9b4",
+          "file": "release-11-1-1.spec.ts",
+          "line": 621,
+          "column": 5
+        },
+        {
+          "title": "sheet · a detented Sheet rises into place at its rung's size",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 112385,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:43:30.814Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "sheet",
+                      "contentType": "application/json",
+                      "body": "eyJyaXNlIjp7ImhlaWdodFNwcmVhZCI6MCwiZmlyc3RIZWFkIjo5ODksInJlc3RIZWFkIjoxNTAsInNoYXJlIjowLjExNSwiZnJhbWVzIjpbWzAsOTMyLG51bGxdLFsxNyw5ODksODM5XSxbMjgsOTY3LDgzOV0sWzM3LDkzMyw4MzldLFs0NSw4OTgsODM5XSxbNTMsODYzLDgzOV0sWzYwLDgyNiw4MzldLFs3MCw3OTIsODM5XSxbODIsNzQzLDgzOV0sWzkwLDY4NCw4MzldLFsxMDEsNjQ1LDgzOV0sWzEwOSw1OTQsODM5XSxbMTIwLDU1OSw4MzldLFsxMzEsNTEyLDgzOV0sWzE0MSw0NzAsODM5XSxbMTUzLDQzNCw4MzldLFsxNjIsMzk1LDgzOV0sWzE3MSwzNjgsODM5XSxbMTgzLDM0NCw4MzldLFsxOTIsMzE0LDgzOV0sWzIwNCwyOTUsODM5XSxbMjEzLDI3Miw4MzldLFsyMjMsMjU2LDgzOV0sWzIzMywyNDEsODM5XSxbMjQ0LDIyOCw4MzldLFsyNTMsMjE1LDgzOV0sWzI2NCwyMDYsODM5XSxbMjc0LDE5Niw4MzldLFsyODQsMTg4LDgzOV0sWzI5NSwxODIsODM5XSxbMzA1LDE3Niw4MzldLFszMTUsMTcxLDgzOV0sWzMyNSwxNjcsODM5XSxbMzM1LDE2Myw4MzldLFszNDYsMTYxLDgzOV0sWzM1NSwxNTgsODM5XSxbMzY2LDE1Niw4MzldLFszNzUsMTU0LDgzOV0sWzM4NywxNTMsODM5XSxbMzk3LDE1Miw4MzldLFs0MDcsMTUxLDgzOV0sWzQxNywxNTEsODM5XV19LCJ0YXBzIjpbeyJhZnRlciI6MTIwLCJhaW1lZCI6dHJ1ZSwiYXQiOjEzNCwiZHkiOjI3My41LCJldmVudHMiOiJwb2ludGVyZG93bjoxMTpmMDowcHggY2xpY2s6MTE6ZjA6MHB4IiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjEyMCwiYWltZWQiOnRydWUsImF0IjoxMzMsImR5IjoyNzAuMSwiZXZlbnRzIjoicG9pbnRlcmRvd246MTE6ZjA6MHB4IGNsaWNrOjExOmYwOjBweCIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjoxMjAsImFpbWVkIjp0cnVlLCJhdCI6MTI0LCJkeSI6MzAxLjIsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MTIwLCJhaW1lZCI6dHJ1ZSwiYXQiOjEzMCwiZHkiOjI4My43LCJldmVudHMiOiJwb2ludGVyZG93bjoxMTpmMDowcHggY2xpY2s6MTE6ZjA6MHB4IiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjEyMCwiYWltZWQiOnRydWUsImF0IjoxMjIsImR5IjozMTIuMSwiZXZlbnRzIjoicG9pbnRlcmRvd246MTE6ZjA6MHB4IGNsaWNrOjExOmYwOjBweCIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjoxMjAsImFpbWVkIjp0cnVlLCJhdCI6MTIzLCJkeSI6MzA0LjgsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MTIwLCJhaW1lZCI6dHJ1ZSwiYXQiOjEyNiwiZHkiOjI5Ny42LCJldmVudHMiOiJwb2ludGVyZG93bjoxMTpmMDowcHggY2xpY2s6MTE6ZjA6MHB4IiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjEyMCwiYWltZWQiOnRydWUsImF0IjoxMzEsImR5IjoyODAuMiwiZXZlbnRzIjoicG9pbnRlcmRvd246MTE6ZjA6MHB4IGNsaWNrOjExOmYwOjBweCIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjoxMjAsImFpbWVkIjp0cnVlLCJhdCI6MTI0LCJkeSI6MzAxLjIsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MTIwLCJhaW1lZCI6dHJ1ZSwiYXQiOjEzNCwiZHkiOjI3MC4xLCJldmVudHMiOiJwb2ludGVyZG93bjoxMTpmMDowcHggY2xpY2s6MTE6ZjA6MHB4IiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjEyMCwiYWltZWQiOnRydWUsImF0IjoxMjQsImR5IjozMDEuMiwiZXZlbnRzIjoicG9pbnRlcmRvd246MTE6ZjA6MHB4IGNsaWNrOjExOmYwOjBweCIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjoxMjAsImFpbWVkIjp0cnVlLCJhdCI6MTI1LCJkeSI6MzAxLjIsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MTIwLCJhaW1lZCI6dHJ1ZSwiYXQiOjEyNCwiZHkiOjMwNC44LCJldmVudHMiOiJwb2ludGVyZG93bjoxMTpmMDowcHggY2xpY2s6MTE6ZjA6MHB4IiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjEyMCwiYWltZWQiOnRydWUsImF0IjoxMjUsImR5IjoyOTcuNiwiZXZlbnRzIjoicG9pbnRlcmRvd246MTE6ZjA6MHB4IGNsaWNrOjExOmYwOjBweCIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjoxMjAsImFpbWVkIjp0cnVlLCJhdCI6MTI4LCJkeSI6Mjg3LjEsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYxOjBweCBjbGljazoxMTpmMTowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MTIwLCJhaW1lZCI6dHJ1ZSwiYXQiOjEyNywiZHkiOjI5MC42LCJldmVudHMiOiJwb2ludGVyZG93bjoxMTpmMTowcHggY2xpY2s6MTE6ZjE6MHB4IiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjEyMCwiYWltZWQiOnRydWUsImF0IjoxMjQsImR5IjozMDEuMiwiZXZlbnRzIjoicG9pbnRlcmRvd246MTE6ZjA6MHB4IGNsaWNrOjExOmYwOjBweCIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjoxMjAsImFpbWVkIjp0cnVlLCJhdCI6MTMyLCJkeSI6Mjc2LjgsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MTIwLCJhaW1lZCI6dHJ1ZSwiYXQiOjEzMSwiZHkiOjI3Ni44LCJldmVudHMiOiJwb2ludGVyZG93bjoxMTpmMDowcHggY2xpY2s6MTE6ZjA6MHB4IiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjEyMCwiYWltZWQiOnRydWUsImF0IjoxMzMsImR5IjoyNzAuMSwiZXZlbnRzIjoicG9pbnRlcmRvd246MTE6ZjA6MHB4IGNsaWNrOjExOmYwOjBweCIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjoxOTAsImFpbWVkIjp0cnVlLCJhdCI6MTk2LCJkeSI6MTE0LjMsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MTkwLCJhaW1lZCI6dHJ1ZSwiYXQiOjE5NSwiZHkiOjExNiwiZXZlbnRzIjoicG9pbnRlcmRvd246MTE6ZjA6MHB4IGNsaWNrOjExOmYwOjBweCIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjoxOTAsImFpbWVkIjp0cnVlLCJhdCI6MTk3LCJkeSI6MTEyLjYsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MTkwLCJhaW1lZCI6dHJ1ZSwiYXQiOjE5NywiZHkiOjExMi42LCJldmVudHMiOiJwb2ludGVyZG93bjoxMTpmMDowcHggY2xpY2s6MTE6ZjA6MHB4IiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjE5MCwiYWltZWQiOnRydWUsImF0IjoxOTQsImR5IjoxMTkuNSwiZXZlbnRzIjoicG9pbnRlcmRvd246MTE6ZjA6MHB4IGNsaWNrOjExOmYwOjBweCIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjoxOTAsImFpbWVkIjp0cnVlLCJhdCI6MTk0LCJkeSI6MTE3LjcsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MTkwLCJhaW1lZCI6dHJ1ZSwiYXQiOjE5NSwiZHkiOjExNy43LCJldmVudHMiOiJwb2ludGVyZG93bjoxMTpmMDowcHggY2xpY2s6MTE6ZjA6MHB4IiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjE5MCwiYWltZWQiOnRydWUsImF0IjoxOTksImR5IjoxMDkuMiwiZXZlbnRzIjoicG9pbnRlcmRvd246MTE6ZjA6MHB4IGNsaWNrOjExOmYwOjBweCIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjoxOTAsImFpbWVkIjp0cnVlLCJhdCI6MTk3LCJkeSI6MTEyLjYsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MTkwLCJhaW1lZCI6dHJ1ZSwiYXQiOjE5OCwiZHkiOjExMC45LCJldmVudHMiOiJwb2ludGVyZG93bjoxMTpmMDowcHggY2xpY2s6MTE6ZjA6MHB4IiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjE5MCwiYWltZWQiOnRydWUsImF0IjoxOTgsImR5IjoxMTAuOSwiZXZlbnRzIjoicG9pbnRlcmRvd246MTE6ZjA6MHB4IGNsaWNrOjExOmYwOjBweCIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjoxOTAsImFpbWVkIjp0cnVlLCJhdCI6MTk0LCJkeSI6MTE3LjcsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MTkwLCJhaW1lZCI6dHJ1ZSwiYXQiOjE5NCwiZHkiOjExNy43LCJldmVudHMiOiJwb2ludGVyZG93bjoxMTpmMDowcHggY2xpY2s6MTE6ZjA6MHB4IiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjE5MCwiYWltZWQiOnRydWUsImF0IjoxOTgsImR5IjoxMTAuOSwiZXZlbnRzIjoicG9pbnRlcmRvd246MTE6ZjA6MHB4IGNsaWNrOjExOmYwOjBweCIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjoxOTAsImFpbWVkIjp0cnVlLCJhdCI6MTk0LCJkeSI6MTE5LjUsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MTkwLCJhaW1lZCI6dHJ1ZSwiYXQiOjE5NSwiZHkiOjExNy43LCJldmVudHMiOiJwb2ludGVyZG93bjoxMTpmMDowcHggY2xpY2s6MTE6ZjA6MHB4IiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjE5MCwiYWltZWQiOnRydWUsImF0IjoxOTQsImR5IjoxMTcuNywiZXZlbnRzIjoicG9pbnRlcmRvd246MTE6ZjA6MHB4IGNsaWNrOjExOmYwOjBweCIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjoxOTAsImFpbWVkIjp0cnVlLCJhdCI6MTk0LCJkeSI6MTE3LjcsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MTkwLCJhaW1lZCI6dHJ1ZSwiYXQiOjIwMCwiZHkiOjEwOS4yLCJldmVudHMiOiJwb2ludGVyZG93bjoxMTpmMTowcHggY2xpY2s6MTE6ZjE6MHB4IiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjE5MCwiYWltZWQiOnRydWUsImF0IjoxOTUsImR5IjoxMTYsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MjUwLCJhaW1lZCI6dHJ1ZSwiYXQiOjI1NSwiZHkiOjQzLjIsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MjUwLCJhaW1lZCI6dHJ1ZSwiYXQiOjI2MCwiZHkiOjQwLjIsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MjUwLCJhaW1lZCI6dHJ1ZSwiYXQiOjI1NiwiZHkiOjQyLjUsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MjUwLCJhaW1lZCI6dHJ1ZSwiYXQiOjI1NSwiZHkiOjQ0LCJldmVudHMiOiJwb2ludGVyZG93bjoxMTpmMDowcHggY2xpY2s6MTE6ZjA6MHB4IiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjI1MCwiYWltZWQiOnRydWUsImF0IjoyNjEsImR5IjozOS41LCJldmVudHMiOiJwb2ludGVyZG93bjoxMTpmMDowcHggY2xpY2s6MTE6ZjA6MHB4IiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjI1MCwiYWltZWQiOnRydWUsImF0IjoyNTUsImR5Ijo0Mi41LCJldmVudHMiOiJwb2ludGVyZG93bjoxMTpmMDowcHggY2xpY2s6MTE6ZjA6MHB4IiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWV9LHsiYWZ0ZXIiOjI1MCwiYWltZWQiOnRydWUsImF0IjoyNTUsImR5Ijo0NCwiZXZlbnRzIjoicG9pbnRlcmRvd246MTE6ZjA6MHB4IGNsaWNrOjExOmYwOjBweCIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjoyNTAsImFpbWVkIjp0cnVlLCJhdCI6MjU2LCJkeSI6NDIuNSwiZXZlbnRzIjoicG9pbnRlcmRvd246MTE6ZjA6MHB4IGNsaWNrOjExOmYwOjBweCIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjoyNTAsImFpbWVkIjp0cnVlLCJhdCI6MjU2LCJkeSI6NDIuNSwiZXZlbnRzIjoicG9pbnRlcmRvd246MTE6ZjA6MHB4IGNsaWNrOjExOmYwOjBweCIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjoyNTAsImFpbWVkIjp0cnVlLCJhdCI6MjU2LCJkeSI6NDMuMiwiZXZlbnRzIjoicG9pbnRlcmRvd246MTE6ZjA6MHB4IGNsaWNrOjExOmYwOjBweCIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlfSx7ImFmdGVyIjoyNTAsImFpbWVkIjp0cnVlLCJhdCI6MjU0LCJkeSI6NDQsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MjUwLCJhaW1lZCI6dHJ1ZSwiYXQiOjI1OCwiZHkiOjQxLjcsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MjUwLCJhaW1lZCI6dHJ1ZSwiYXQiOjI1OCwiZHkiOjQxLjcsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MjUwLCJhaW1lZCI6dHJ1ZSwiYXQiOjI1NiwiZHkiOjQyLjUsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MjUwLCJhaW1lZCI6dHJ1ZSwiYXQiOjI1NiwiZHkiOjQyLjUsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MjUwLCJhaW1lZCI6dHJ1ZSwiYXQiOjI1NywiZHkiOjQxLjcsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MjUwLCJhaW1lZCI6dHJ1ZSwiYXQiOjI1NiwiZHkiOjQyLjUsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MjUwLCJhaW1lZCI6dHJ1ZSwiYXQiOjI1NywiZHkiOjQxLjcsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MjUwLCJhaW1lZCI6dHJ1ZSwiYXQiOjI1NSwiZHkiOjQzLjIsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6MjUwLCJhaW1lZCI6dHJ1ZSwiYXQiOjI1NiwiZHkiOjQyLjUsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6NDAwLCJhaW1lZCI6dHJ1ZSwiYXQiOjQxNCwiZHkiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6NDAwLCJhaW1lZCI6dHJ1ZSwiYXQiOjQxMCwiZHkiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6NDAwLCJhaW1lZCI6dHJ1ZSwiYXQiOjQxMCwiZHkiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6NDAwLCJhaW1lZCI6dHJ1ZSwiYXQiOjQwOCwiZHkiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6NDAwLCJhaW1lZCI6dHJ1ZSwiYXQiOjQwOSwiZHkiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6NDAwLCJhaW1lZCI6dHJ1ZSwiYXQiOjQwOSwiZHkiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6NDAwLCJhaW1lZCI6dHJ1ZSwiYXQiOjQxMCwiZHkiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6NDAwLCJhaW1lZCI6dHJ1ZSwiYXQiOjQwNywiZHkiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6NDAwLCJhaW1lZCI6dHJ1ZSwiYXQiOjQwOSwiZHkiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6NDAwLCJhaW1lZCI6dHJ1ZSwiYXQiOjQwOSwiZHkiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6NDAwLCJhaW1lZCI6dHJ1ZSwiYXQiOjQwMywiZHkiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYxOjBweCBjbGljazoxMTpmMTowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6NDAwLCJhaW1lZCI6dHJ1ZSwiYXQiOjQwNiwiZHkiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6NDAwLCJhaW1lZCI6dHJ1ZSwiYXQiOjQwOSwiZHkiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6NDAwLCJhaW1lZCI6dHJ1ZSwiYXQiOjQxNSwiZHkiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6NDAwLCJhaW1lZCI6dHJ1ZSwiYXQiOjQxMSwiZHkiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6NDAwLCJhaW1lZCI6dHJ1ZSwiYXQiOjQxMywiZHkiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6NDAwLCJhaW1lZCI6dHJ1ZSwiYXQiOjQxMCwiZHkiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6NDAwLCJhaW1lZCI6dHJ1ZSwiYXQiOjQwNywiZHkiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6NDAwLCJhaW1lZCI6dHJ1ZSwiYXQiOjQwOSwiZHkiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX0seyJhZnRlciI6NDAwLCJhaW1lZCI6dHJ1ZSwiYXQiOjQwOSwiZHkiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOmYwOjBweCBjbGljazoxMTpmMDowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZX1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-b1755d39645e8c414061",
+          "file": "release-11-1-1.spec.ts",
+          "line": 726,
+          "column": 1
+        },
+        {
+          "title": "sheet · a detented Sheet dragged up and let go at speed springs on from where the finger left it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen can tap but not drag",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 912,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 274,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:45:23.204Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen can tap but not drag",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 912,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-2894e4c150eb48f37c30",
+          "file": "release-11-1-1.spec.ts",
+          "line": 909,
+          "column": 5
+        },
+        {
+          "title": "sheet · a detented Sheet dragged up and let go at rest springs on from where the finger left it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen can tap but not drag",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 912,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 230,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T12:45:23.482Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen can tap but not drag",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 912,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-df0f4bb1e08034f6ce6d",
+          "file": "release-11-1-1.spec.ts",
+          "line": 909,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-22T12:42:25.558Z",
+    "duration": 178205.597,
+    "expected": 25,
+    "skipped": 16,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

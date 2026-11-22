@@ -1,0 +1,53 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 2 tests using 1 worker
+
+[WebServer] 9:37:21 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  1 [webkit-phone] › critic12-rowb/rowb.probe.ts:42:5 › rowb · a detented Sheet dragged up by the mouse and let go at speed (5.4s)
+[WebServer] 9:37:27 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  2 [webkit-phone] › critic12-rowb/rowb.probe.ts:42:5 › rowb · a detented Sheet dragged up by the mouse and let go at rest (5.5s)
+
+
+  1) [webkit-phone] › critic12-rowb/rowb.probe.ts:42:5 › rowb · a detented Sheet dragged up by the mouse and let go at speed 
+
+    Error: no frame over a fifth of the travel left {"half":0.5,"from":242,"end":84,"fromRung":0.713,"endRung":0.9,"share":1.036,"frames":[[-4,242],[7,242],[19,405],[28,379],[40,356],[48,322],[57,300],[69,275],[79,244],[89,220],[99,199],[109,180],[119,164],[129,149],[140,137],[150,126],[161,117],[171,109],[182,104],[191,98],[202,95],[213,92],[223,89],[232,88],[244,86],[254,85],[262,85],[273,84],[285,84],[296,84],[302,83],[314,83],[324,83],[334,83],[344,84],[352,84],[365,84],[375,84],[385,84],[395,84]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    1.036
+
+      69 |         expect(read.fromRung, `past the midpoint ${at}`).toBeGreaterThan(0.7);
+      70 |         expect(read.fromRung, `short of 0.9 ${at}`).toBeLessThan(0.88);
+    > 71 |         expect(read.share, `no frame over a fifth of the travel left ${at}`).toBeLessThanOrEqual(0.2);
+         |                                                                              ^
+      72 |         expect(Math.abs(read.endRung - 0.9), `settles on 0.9 ${at}`).toBeLessThanOrEqual(0.01);
+      73 |     });
+      74 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic12-v11.1.0/tree/tests-visual/critic12-rowb/rowb.probe.ts:71:78
+
+    Error Context: test-results/rowb.probe.ts-rowb-·-a-det-9242c-e-mouse-and-let-go-at-speed-webkit-phone/error-context.md
+
+  2) [webkit-phone] › critic12-rowb/rowb.probe.ts:42:5 › rowb · a detented Sheet dragged up by the mouse and let go at rest 
+
+    Error: no frame over a fifth of the travel left {"half":0.5,"from":242,"end":84,"fromRung":0.713,"endRung":0.9,"share":1.036,"frames":[[-6,242],[5,242],[15,405],[25,384],[34,358],[46,333],[54,300],[66,278],[76,247],[85,223],[96,203],[105,182],[117,167],[127,149],[137,137],[147,127],[159,118],[168,109],[178,104],[187,99],[199,96],[208,92],[219,90],[229,88],[239,87],[249,85],[262,85],[272,84],[281,84],[291,84],[300,83],[311,83],[321,83],[329,83],[340,84],[352,84],[364,84],[372,84],[384,84],[392,84]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    1.036
+
+      69 |         expect(read.fromRung, `past the midpoint ${at}`).toBeGreaterThan(0.7);
+      70 |         expect(read.fromRung, `short of 0.9 ${at}`).toBeLessThan(0.88);
+    > 71 |         expect(read.share, `no frame over a fifth of the travel left ${at}`).toBeLessThanOrEqual(0.2);
+         |                                                                              ^
+      72 |         expect(Math.abs(read.endRung - 0.9), `settles on 0.9 ${at}`).toBeLessThanOrEqual(0.01);
+      73 |     });
+      74 | }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic12-v11.1.0/tree/tests-visual/critic12-rowb/rowb.probe.ts:71:78
+
+    Error Context: test-results/rowb.probe.ts-rowb-·-a-det-0f74a-he-mouse-and-let-go-at-rest-webkit-phone/error-context.md
+
+  2 failed
+    [webkit-phone] › critic12-rowb/rowb.probe.ts:42:5 › rowb · a detented Sheet dragged up by the mouse and let go at speed 
+    [webkit-phone] › critic12-rowb/rowb.probe.ts:42:5 › rowb · a detented Sheet dragged up by the mouse and let go at rest 

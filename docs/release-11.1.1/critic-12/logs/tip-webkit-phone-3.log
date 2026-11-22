@@ -1,0 +1,30 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for the 'webkit' lock
+
+Running 18 tests using 1 worker
+
+  ✓   1 [webkit-phone] › release-11-1-1-reduce.spec.ts:132:1 › site · a site's own opacity fade keeps its clock under reduced motion (1.6s)
+  ✓   2 [webkit-phone] › release-11-1-1-reduce.spec.ts:199:5 › fade · a Popover appears and leaves on a fade (3.0s)
+  ✓   3 [webkit-phone] › release-11-1-1-reduce.spec.ts:199:5 › fade · a DropdownMenu appears and leaves on a fade (2.8s)
+  ✓   4 [webkit-phone] › release-11-1-1-reduce.spec.ts:199:5 › fade · a dock Select appears and leaves on a fade (2.8s)
+  ✓   5 [webkit-phone] › release-11-1-1-reduce.spec.ts:199:5 › fade · a plain Select appears and leaves on a fade (2.9s)
+  -   6 [webkit-phone] › release-11-1-1-reduce.spec.ts:199:5 › fade · a Tooltip appears and leaves on a fade
+[WebServer] 7:50:09 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓   7 [webkit-phone] › release-11-1-1-reduce.spec.ts:199:5 › fade · a Dialog appears and leaves on a fade (2.8s)
+[WebServer] 7:50:12 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓   8 [webkit-phone] › release-11-1-1-reduce.spec.ts:199:5 › fade · a Sheet right appears and leaves on a fade (2.8s)
+[WebServer] 7:50:15 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓   9 [webkit-phone] › release-11-1-1-reduce.spec.ts:199:5 › fade · a Sheet bottom appears and leaves on a fade (2.8s)
+[WebServer] 7:50:18 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  10 [webkit-phone] › release-11-1-1-reduce.spec.ts:199:5 › fade · a detented Sheet appears and leaves on a fade (2.8s)
+  ✓  11 [webkit-phone] › release-11-1-1-reduce.spec.ts:199:5 › fade · a Toast appears and leaves on a fade (2.8s)
+  ✓  12 [webkit-phone] › release-11-1-1-reduce.spec.ts:199:5 › fade · a Collapsible appears and leaves on a fade (2.9s)
+  ✓  13 [webkit-phone] › release-11-1-1-reduce.spec.ts:199:5 › fade · a Accordion appears and leaves on a fade (2.8s)
+  ✓  14 [webkit-phone] › release-11-1-1-reduce.spec.ts:199:5 › fade · a ExpandableContainer appears and leaves on a fade (2.9s)
+  ✓  15 [webkit-phone] › release-11-1-1-reduce.spec.ts:285:1 › fold · a dock unfolds and folds by cross-fading its faces, its box landing at once (2.8s)
+  ✓  16 [webkit-phone] › release-11-1-1-reduce.spec.ts:304:1 › mark · a run's selected plate moves to a new seat by a cross-fade (1.9s)
+  -  17 [webkit-phone] › release-11-1-1-reduce.spec.ts:442:1 › press · a pressed control shows its press by colour, not by size, under reduced motion
+  ✓  18 [webkit-phone] › release-11-1-1-reduce.spec.ts:481:1 › still · a Slider holds still under reduced motion (802ms)
+
+  2 skipped
+  16 passed (43.6s)

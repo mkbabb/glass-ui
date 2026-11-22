@@ -1,0 +1,226 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "critic12-rowb/probe.config.ts",
+      "--project=webkit-phone",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic12-rowb/probe.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic12-rowb",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic12-rowb",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic12-rowb",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic12-rowb",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/critic12-rowb",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-12/logs/rowb-tip-wp.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5355",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5355",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "rowb.probe.ts",
+      "file": "rowb.probe.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "rowb · a detented Sheet dragged up by the mouse and let go at speed",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5312,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T14:37:03.185Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "sheet",
+                      "contentType": "application/json",
+                      "body": "eyJoYWxmIjowLjUsImZyb20iOjI0MiwiZW5kIjo4NCwiZnJvbVJ1bmciOjAuNzEzLCJlbmRSdW5nIjowLjksInNoYXJlIjowLjE2LCJmcmFtZXMiOltbLTQsMjQyXSxbNiwyNDJdLFsxNywyMjVdLFsyNywyMTBdLFszNywxOTddLFs0NywxODNdLFs1OCwxNzBdLFs2OCwxNTddLFs3OCwxNDZdLFs4OCwxMzZdLFsxMDAsMTI3XSxbMTEyLDExOF0sWzEyMiwxMTFdLFsxMzQsMTA2XSxbMTM5LDEwMV0sWzE1MSw5OV0sWzE2MCw5NV0sWzE3MCw5M10sWzE4MCw5MV0sWzE5MCw4OV0sWzIwMSw4OF0sWzIxMSw4Nl0sWzIyMSw4Nl0sWzIzMSw4NV0sWzI0MSw4NV0sWzI1Myw4NF0sWzI2Miw4NF0sWzI3Miw4NF0sWzI4Miw4NF0sWzI5Miw4NF0sWzMwMyw4NF0sWzMxMyw4NF0sWzMyMyw4NF0sWzMzMiw4NF0sWzM0Miw4NF0sWzM1NCw4NF0sWzM2NCw4NF0sWzM3NCw4NF0sWzM4Miw4NF0sWzM5NCw4NF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "759f4366d2a3bb0c31c4-7dee2b5f277ba746521a",
+          "file": "rowb.probe.ts",
+          "line": 42,
+          "column": 5
+        },
+        {
+          "title": "rowb · a detented Sheet dragged up by the mouse and let go at rest",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5298,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T14:37:08.635Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "sheet",
+                      "contentType": "application/json",
+                      "body": "eyJoYWxmIjowLjUsImZyb20iOjI0MiwiZW5kIjo4NCwiZnJvbVJ1bmciOjAuNzEzLCJlbmRSdW5nIjowLjksInNoYXJlIjowLjEzOSwiZnJhbWVzIjpbWy00LDI0Ml0sWzYsMjQyXSxbMTYsMjM0XSxbMjcsMjI0XSxbMzcsMjExXSxbNDcsMTk4XSxbNTcsMTg1XSxbNjcsMTcyXSxbNzcsMTYwXSxbODksMTQ5XSxbOTksMTM3XSxbMTExLDEyOF0sWzEyMiwxMTldLFsxMjgsMTEyXSxbMTQwLDEwOV0sWzE0NywxMDNdLFsxNTgsMTAwXSxbMTcwLDk3XSxbMTgwLDkzXSxbMTkwLDkxXSxbMjAwLDg5XSxbMjEyLDg4XSxbMjIzLDg3XSxbMjMzLDg2XSxbMjQyLDg1XSxbMjUxLDg1XSxbMjYxLDg1XSxbMjcwLDg0XSxbMjgxLDg0XSxbMjkyLDg0XSxbMzAzLDg0XSxbMzEzLDg0XSxbMzIzLDg0XSxbMzMyLDg0XSxbMzQzLDg0XSxbMzUzLDg0XSxbMzYzLDg0XSxbMzczLDg0XSxbMzg0LDg0XSxbMzk0LDg0XV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "759f4366d2a3bb0c31c4-97cd1a92acaa381fae53",
+          "file": "rowb.probe.ts",
+          "line": 42,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-22T14:37:01.582Z",
+    "duration": 12399.996000000001,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

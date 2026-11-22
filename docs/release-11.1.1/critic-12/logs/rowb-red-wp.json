@@ -1,0 +1,284 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic12-v11.1.0/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "critic12-rowb/probe.config.ts",
+      "--project=webkit-phone",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic12-v11.1.0/tree/tests-visual/critic12-rowb/probe.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic12-v11.1.0/tree/tests-visual/critic12-rowb",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic12-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic12-v11.1.0/tree/tests-visual/critic12-rowb",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic12-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic12-v11.1.0/tree/tests-visual/critic12-rowb",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic12-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic12-v11.1.0/tree/tests-visual/critic12-rowb",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic12-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic12-v11.1.0/tree/tests-visual/critic12-rowb",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-12/logs/rowb-red-wp.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5356",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic12-v11.1.0/tree/",
+      "url": "http://localhost:5356",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "rowb.probe.ts",
+      "file": "rowb.probe.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "rowb · a detented Sheet dragged up by the mouse and let go at speed",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5361,
+                  "error": {
+                    "message": "Error: no frame over a fifth of the travel left {\"half\":0.5,\"from\":242,\"end\":84,\"fromRung\":0.713,\"endRung\":0.9,\"share\":1.036,\"frames\":[[-4,242],[7,242],[19,405],[28,379],[40,356],[48,322],[57,300],[69,275],[79,244],[89,220],[99,199],[109,180],[119,164],[129,149],[140,137],[150,126],[161,117],[171,109],[182,104],[191,98],[202,95],[213,92],[223,89],[232,88],[244,86],[254,85],[262,85],[273,84],[285,84],[296,84],[302,83],[314,83],[324,83],[334,83],[344,84],[352,84],[365,84],[375,84],[385,84],[395,84]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m1.036\u001b[39m",
+                    "stack": "Error: no frame over a fifth of the travel left {\"half\":0.5,\"from\":242,\"end\":84,\"fromRung\":0.713,\"endRung\":0.9,\"share\":1.036,\"frames\":[[-4,242],[7,242],[19,405],[28,379],[40,356],[48,322],[57,300],[69,275],[79,244],[89,220],[99,199],[109,180],[119,164],[129,149],[140,137],[150,126],[161,117],[171,109],[182,104],[191,98],[202,95],[213,92],[223,89],[232,88],[244,86],[254,85],[262,85],[273,84],[285,84],[296,84],[302,83],[314,83],[324,83],[334,83],[344,84],[352,84],[365,84],[375,84],[385,84],[395,84]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m1.036\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic12-v11.1.0/tree/tests-visual/critic12-rowb/rowb.probe.ts:71:78",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic12-v11.1.0/tree/tests-visual/critic12-rowb/rowb.probe.ts",
+                      "column": 78,
+                      "line": 71
+                    },
+                    "snippet": "  69 |         expect(read.fromRung, `past the midpoint ${at}`).toBeGreaterThan(0.7);\n  70 |         expect(read.fromRung, `short of 0.9 ${at}`).toBeLessThan(0.88);\n> 71 |         expect(read.share, `no frame over a fifth of the travel left ${at}`).toBeLessThanOrEqual(0.2);\n     |                                                                              ^\n  72 |         expect(Math.abs(read.endRung - 0.9), `settles on 0.9 ${at}`).toBeLessThanOrEqual(0.01);\n  73 |     });\n  74 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic12-v11.1.0/tree/tests-visual/critic12-rowb/rowb.probe.ts",
+                        "column": 78,
+                        "line": 71
+                      },
+                      "message": "Error: no frame over a fifth of the travel left {\"half\":0.5,\"from\":242,\"end\":84,\"fromRung\":0.713,\"endRung\":0.9,\"share\":1.036,\"frames\":[[-4,242],[7,242],[19,405],[28,379],[40,356],[48,322],[57,300],[69,275],[79,244],[89,220],[99,199],[109,180],[119,164],[129,149],[140,137],[150,126],[161,117],[171,109],[182,104],[191,98],[202,95],[213,92],[223,89],[232,88],[244,86],[254,85],[262,85],[273,84],[285,84],[296,84],[302,83],[314,83],[324,83],[334,83],[344,84],[352,84],[365,84],[375,84],[385,84],[395,84]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m1.036\u001b[39m\n\n  69 |         expect(read.fromRung, `past the midpoint ${at}`).toBeGreaterThan(0.7);\n  70 |         expect(read.fromRung, `short of 0.9 ${at}`).toBeLessThan(0.88);\n> 71 |         expect(read.share, `no frame over a fifth of the travel left ${at}`).toBeLessThanOrEqual(0.2);\n     |                                                                              ^\n  72 |         expect(Math.abs(read.endRung - 0.9), `settles on 0.9 ${at}`).toBeLessThanOrEqual(0.01);\n  73 |     });\n  74 | }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic12-v11.1.0/tree/tests-visual/critic12-rowb/rowb.probe.ts:71:78"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T14:37:20.671Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "sheet",
+                      "contentType": "application/json",
+                      "body": "eyJoYWxmIjowLjUsImZyb20iOjI0MiwiZW5kIjo4NCwiZnJvbVJ1bmciOjAuNzEzLCJlbmRSdW5nIjowLjksInNoYXJlIjoxLjAzNiwiZnJhbWVzIjpbWy00LDI0Ml0sWzcsMjQyXSxbMTksNDA1XSxbMjgsMzc5XSxbNDAsMzU2XSxbNDgsMzIyXSxbNTcsMzAwXSxbNjksMjc1XSxbNzksMjQ0XSxbODksMjIwXSxbOTksMTk5XSxbMTA5LDE4MF0sWzExOSwxNjRdLFsxMjksMTQ5XSxbMTQwLDEzN10sWzE1MCwxMjZdLFsxNjEsMTE3XSxbMTcxLDEwOV0sWzE4MiwxMDRdLFsxOTEsOThdLFsyMDIsOTVdLFsyMTMsOTJdLFsyMjMsODldLFsyMzIsODhdLFsyNDQsODZdLFsyNTQsODVdLFsyNjIsODVdLFsyNzMsODRdLFsyODUsODRdLFsyOTYsODRdLFszMDIsODNdLFszMTQsODNdLFszMjQsODNdLFszMzQsODNdLFszNDQsODRdLFszNTIsODRdLFszNjUsODRdLFszNzUsODRdLFszODUsODRdLFszOTUsODRdXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic12-v11.1.0/tree/tests-visual/test-results/rowb.probe.ts-rowb-·-a-det-9242c-e-mouse-and-let-go-at-speed-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic12-v11.1.0/tree/tests-visual/critic12-rowb/rowb.probe.ts",
+                    "column": 78,
+                    "line": 71
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "759f4366d2a3bb0c31c4-7dee2b5f277ba746521a",
+          "file": "rowb.probe.ts",
+          "line": 42,
+          "column": 5
+        },
+        {
+          "title": "rowb · a detented Sheet dragged up by the mouse and let go at rest",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5490,
+                  "error": {
+                    "message": "Error: no frame over a fifth of the travel left {\"half\":0.5,\"from\":242,\"end\":84,\"fromRung\":0.713,\"endRung\":0.9,\"share\":1.036,\"frames\":[[-6,242],[5,242],[15,405],[25,384],[34,358],[46,333],[54,300],[66,278],[76,247],[85,223],[96,203],[105,182],[117,167],[127,149],[137,137],[147,127],[159,118],[168,109],[178,104],[187,99],[199,96],[208,92],[219,90],[229,88],[239,87],[249,85],[262,85],[272,84],[281,84],[291,84],[300,83],[311,83],[321,83],[329,83],[340,84],[352,84],[364,84],[372,84],[384,84],[392,84]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m1.036\u001b[39m",
+                    "stack": "Error: no frame over a fifth of the travel left {\"half\":0.5,\"from\":242,\"end\":84,\"fromRung\":0.713,\"endRung\":0.9,\"share\":1.036,\"frames\":[[-6,242],[5,242],[15,405],[25,384],[34,358],[46,333],[54,300],[66,278],[76,247],[85,223],[96,203],[105,182],[117,167],[127,149],[137,137],[147,127],[159,118],[168,109],[178,104],[187,99],[199,96],[208,92],[219,90],[229,88],[239,87],[249,85],[262,85],[272,84],[281,84],[291,84],[300,83],[311,83],[321,83],[329,83],[340,84],[352,84],[364,84],[372,84],[384,84],[392,84]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m1.036\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic12-v11.1.0/tree/tests-visual/critic12-rowb/rowb.probe.ts:71:78",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic12-v11.1.0/tree/tests-visual/critic12-rowb/rowb.probe.ts",
+                      "column": 78,
+                      "line": 71
+                    },
+                    "snippet": "  69 |         expect(read.fromRung, `past the midpoint ${at}`).toBeGreaterThan(0.7);\n  70 |         expect(read.fromRung, `short of 0.9 ${at}`).toBeLessThan(0.88);\n> 71 |         expect(read.share, `no frame over a fifth of the travel left ${at}`).toBeLessThanOrEqual(0.2);\n     |                                                                              ^\n  72 |         expect(Math.abs(read.endRung - 0.9), `settles on 0.9 ${at}`).toBeLessThanOrEqual(0.01);\n  73 |     });\n  74 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic12-v11.1.0/tree/tests-visual/critic12-rowb/rowb.probe.ts",
+                        "column": 78,
+                        "line": 71
+                      },
+                      "message": "Error: no frame over a fifth of the travel left {\"half\":0.5,\"from\":242,\"end\":84,\"fromRung\":0.713,\"endRung\":0.9,\"share\":1.036,\"frames\":[[-6,242],[5,242],[15,405],[25,384],[34,358],[46,333],[54,300],[66,278],[76,247],[85,223],[96,203],[105,182],[117,167],[127,149],[137,137],[147,127],[159,118],[168,109],[178,104],[187,99],[199,96],[208,92],[219,90],[229,88],[239,87],[249,85],[262,85],[272,84],[281,84],[291,84],[300,83],[311,83],[321,83],[329,83],[340,84],[352,84],[364,84],[372,84],[384,84],[392,84]]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.2\u001b[39m\nReceived:    \u001b[31m1.036\u001b[39m\n\n  69 |         expect(read.fromRung, `past the midpoint ${at}`).toBeGreaterThan(0.7);\n  70 |         expect(read.fromRung, `short of 0.9 ${at}`).toBeLessThan(0.88);\n> 71 |         expect(read.share, `no frame over a fifth of the travel left ${at}`).toBeLessThanOrEqual(0.2);\n     |                                                                              ^\n  72 |         expect(Math.abs(read.endRung - 0.9), `settles on 0.9 ${at}`).toBeLessThanOrEqual(0.01);\n  73 |     });\n  74 | }\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic12-v11.1.0/tree/tests-visual/critic12-rowb/rowb.probe.ts:71:78"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T14:37:26.407Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "sheet",
+                      "contentType": "application/json",
+                      "body": "eyJoYWxmIjowLjUsImZyb20iOjI0MiwiZW5kIjo4NCwiZnJvbVJ1bmciOjAuNzEzLCJlbmRSdW5nIjowLjksInNoYXJlIjoxLjAzNiwiZnJhbWVzIjpbWy02LDI0Ml0sWzUsMjQyXSxbMTUsNDA1XSxbMjUsMzg0XSxbMzQsMzU4XSxbNDYsMzMzXSxbNTQsMzAwXSxbNjYsMjc4XSxbNzYsMjQ3XSxbODUsMjIzXSxbOTYsMjAzXSxbMTA1LDE4Ml0sWzExNywxNjddLFsxMjcsMTQ5XSxbMTM3LDEzN10sWzE0NywxMjddLFsxNTksMTE4XSxbMTY4LDEwOV0sWzE3OCwxMDRdLFsxODcsOTldLFsxOTksOTZdLFsyMDgsOTJdLFsyMTksOTBdLFsyMjksODhdLFsyMzksODddLFsyNDksODVdLFsyNjIsODVdLFsyNzIsODRdLFsyODEsODRdLFsyOTEsODRdLFszMDAsODNdLFszMTEsODNdLFszMjEsODNdLFszMjksODNdLFszNDAsODRdLFszNTIsODRdLFszNjQsODRdLFszNzIsODRdLFszODQsODRdLFszOTIsODRdXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic12-v11.1.0/tree/tests-visual/test-results/rowb.probe.ts-rowb-·-a-det-0f74a-he-mouse-and-let-go-at-rest-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic12-v11.1.0/tree/tests-visual/critic12-rowb/rowb.probe.ts",
+                    "column": 78,
+                    "line": 71
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "759f4366d2a3bb0c31c4-97cd1a92acaa381fae53",
+          "file": "rowb.probe.ts",
+          "line": 42,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-22T14:37:19.687Z",
+    "duration": 12392.86,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}
