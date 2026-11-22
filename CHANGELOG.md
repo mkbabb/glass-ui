@@ -25,9 +25,10 @@ A patch on 11.1.0 about how surfaces leave. Nothing is removed or renamed.
   its first frame and was gone in about 70 ms. Every floating surface now fades across
   its whole exit on one even curve, and no single frame takes more than a fifth of it.
   Menus and selects take about 220 ms to leave, popovers 250 ms and tooltips 120 ms,
-  each shorter than its entrance. `Dialog` and `Sheet` close on the same curve, faster
-  than they open (a dialog in about 180 ms, a sheet in 250 ms), where a dialog used to
-  take as long to close as to open and a sheet front-loaded its slide. The
+  each shorter than its entrance. `Dialog` and a `Sheet` without detents close on the
+  same curve, faster than they open (a dialog in about 180 ms, a sheet in 250 ms), where
+  a dialog used to take as long to close as to open and a sheet front-loaded its slide.
+  A `Sheet` with detents slides off on its own spring, in about 400 ms. The
   `--exit-curve` token carries the new curve: it was `var(--ease-out)`, that is
   `cubic-bezier(0, 0, 0.2, 1)`, and is now `cubic-bezier(0.3, 0.2, 0.7, 0.8)`.
 
