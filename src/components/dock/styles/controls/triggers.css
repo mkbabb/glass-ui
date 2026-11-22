@@ -63,13 +63,15 @@
             opacity var(--dock-motion-fast);
     }
 
-    /* W-I.8 step 7 (the trigger's seat): a trigger in a run is a seat of the run, so by default it
-       takes the run's seat height (Home Assistant's GlassTabs, LF-11: a 148 by 31 trigger beside
-       44 px seats). A site's `--dock-trigger-min-height` still outranks it. Its padding stays the
-       density's `--dock-trigger-padding-*`, which every dock sets, so no default can sit under a
-       site's value there. */
-    .glass-dock .dock-run :is(.dock-trigger, .dock-select-trigger, .dock-dropdown-trigger) {
+    /* W-I.8 step 7 (the trigger's seat): RU-99, a trigger anywhere in a dock, in the run or either
+       persistent region, is at least one seat in both axes (Home Assistant's GlassTabs, LF-11: a
+       148 by 31 trigger beside 44 px seats; fourier's stage triggers, 38 px in a 44 px cell). A
+       site's `--dock-trigger-min-height` still outranks the height. Its padding stays the density's
+       `--dock-trigger-padding-*`, which every dock sets, so no default can sit under a site's value
+       there. */
+    .glass-dock :is(.dock-run, .dock-persistent) :is(.dock-trigger, .dock-select-trigger, .dock-dropdown-trigger) {
         min-height: var(--dock-trigger-min-height, var(--dock-control-size));
+        min-inline-size: var(--dock-control-size);
     }
     /* trigger seat end */
 

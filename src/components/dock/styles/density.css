@@ -113,7 +113,8 @@
             var(--dock-density-comfortable-tab-padding-inline, 0.75rem) *
                 var(--dock-scale)
         );
-        --dock-tab-h: calc(38px * var(--dock-scale));
+        /* RU-98: a tab seat is the control's height (RU-55: every seat in a run is). */
+        --dock-tab-h: var(--dock-control-size);
     }
 
     /* ── The `cockpit` geometry PRESET ─────────────────────
@@ -282,6 +283,8 @@
         --dock-linger: 3s;
         --dock-control-size: 2.75rem;
         --dock-layer-height: 2.75rem;
+        /* RU-100: the top-right bar's glyph is the normal size, half its seat (IDIOM-TOPBAR rule 4). */
+        --dock-icon-glyph-ratio: 0.5;
         --dock-padding-block: 0.25rem;
         --dock-padding-inline: 0.25rem;
         --dock-corner-inset: 1rem;

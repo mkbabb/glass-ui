@@ -1,0 +1,27 @@
+== s5 chromium start 2026-11-22 12:55:44 (load { 9.45 8.64 8.21 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+trig chromium rc=0
+applied s5-tab38 - RU-98 plant: the comfortable tab height back to 38 px
+reverted s5-tab38
+applied s5-trigrun - RU-99 plant: the trigger's seat cut back to the run
+reverted s5-trigrun
+applied g13-trigseat - step 7: a DockTrigger in a run no longer takes the run's seat height and padding
+reverted g13-trigseat
+applied s5-ctlglyph - RU-100 plant: the controls preset's glyph line removed
+reverted s5-ctlglyph
+s5 chromium done
+== s5 chromium rc=0 end 2026-11-22 12:57:16 (load { 7.53 8.16 8.06 })
+== s5 webkit start 2026-11-22 12:57:16 (load { 7.53 8.16 8.06 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+trig webkit rc=0
+applied s5-tab38 - RU-98 plant: the comfortable tab height back to 38 px
+reverted s5-tab38
+applied s5-trigrun - RU-99 plant: the trigger's seat cut back to the run
+reverted s5-trigrun
+applied g13-trigseat - step 7: a DockTrigger in a run no longer takes the run's seat height and padding
+reverted g13-trigseat
+applied s5-ctlglyph - RU-100 plant: the controls preset's glyph line removed
+reverted s5-ctlglyph
+s5 webkit done
+== s5 webkit rc=0 end 2026-11-22 12:58:55 (load { 7.61 8.17 8.08 })
+== s5 ALL DONE 2026-11-22 12:58:55

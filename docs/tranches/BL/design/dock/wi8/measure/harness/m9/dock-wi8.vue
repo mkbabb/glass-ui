@@ -792,6 +792,46 @@ const stageStyle = computed(() =>
                 <DockControl aria-label="Library"><Library /></DockControl>
             </GlassDock>
         </template>
+        <!-- S5 (RU-99): w-trigr, a trigger in every region and both axes (s9/addcell9.py). -->
+        <template v-if="cell === 'w-trigr'">
+            <GlassDock data-testid="w-trigr-h" aria-label="row" :collapse="false">
+                <template #persistent>
+                    <Select v-model="wordsA">
+                        <DockTrigger for="select" aria-label="Range" data-testid="w-trigr-h-start"><SelectValue /></DockTrigger>
+                        <SelectContent><SelectItem value="day">Day</SelectItem><SelectItem value="week">Week</SelectItem></SelectContent>
+                    </Select>
+                </template>
+                <DockControl aria-label="Home"><Home /></DockControl>
+                <DropdownMenu>
+                    <DockTrigger for="dropdown" aria-label="More" data-testid="w-trigr-h-run"><Layers class="size-4" /></DockTrigger>
+                    <DropdownMenuContent><DropdownMenuItem>One</DropdownMenuItem></DropdownMenuContent>
+                </DropdownMenu>
+                <DockControl aria-label="Library"><Library /></DockControl>
+                <template #persistent-end>
+                    <Select v-model="wordsB">
+                        <DockTrigger for="select" aria-label="Width" data-testid="w-trigr-h-end"><SelectValue /></DockTrigger>
+                        <SelectContent><SelectItem value="bw">BW</SelectItem><SelectItem value="c">C</SelectItem></SelectContent>
+                    </Select>
+                </template>
+            </GlassDock>
+            <GlassDock data-testid="w-trigr-v" aria-label="column" orientation="vertical" :collapse="false" style="position: fixed; inset-inline-start: 24px; inset-block-start: 120px">
+                <template #persistent>
+                    <DropdownMenu>
+                        <DockTrigger for="dropdown" aria-label="Menu" data-testid="w-trigr-v-start"><Layers class="size-4" /></DockTrigger>
+                        <DropdownMenuContent><DropdownMenuItem>One</DropdownMenuItem></DropdownMenuContent>
+                    </DropdownMenu>
+                </template>
+                <DockControl aria-label="Home"><Home /></DockControl>
+                <Select v-model="wordsA">
+                    <DockTrigger for="select" aria-label="Range" data-testid="w-trigr-v-run"><SelectValue /></DockTrigger>
+                    <SelectContent><SelectItem value="day">Day</SelectItem><SelectItem value="week">Week</SelectItem></SelectContent>
+                </Select>
+                <DropdownMenu>
+                    <DockTrigger for="dropdown" aria-label="Pick" data-testid="w-trigr-v-run2"><Layers class="size-4" /></DockTrigger>
+                    <DropdownMenuContent><DropdownMenuItem>One</DropdownMenuItem></DropdownMenuContent>
+                </DropdownMenu>
+            </GlassDock>
+        </template>
         <template v-if="cell === 'w-group'">
             <GlassDock data-testid="w-group" aria-label="pages" :collapse="false" style="max-inline-size: 220px">
                 <div role="group" aria-label="Jump to a section" data-testid="w-group-frame" style="display: flex; gap: var(--dock-run-gap, 0.5rem)">
