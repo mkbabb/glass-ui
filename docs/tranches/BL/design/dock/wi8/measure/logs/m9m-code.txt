@@ -1,0 +1,51 @@
+# MEASURE-9 part M: the code lines on the measure's tree (a5a4fe546; src equal to f3a28b292, S10), RU-113 and ORCH-LINES-8 line 2
+# Counter: s8/codelines.mjs (a line is code unless blank or comment-led). Per file: logs/m9m-codelines-files.txt.
+
+the bound (v11.1.0)                 4,741 code (11,081 wc -l, 44 files)
+part H's tree (575084358)           5,246
+the tip (a5a4fe546)                 5,180 (10,267 wc -l, 43 files)   439 over: NOT READY (line 2)
+
+## H12's count on the tip
+
+useDockBody.ts 1,045 code (part H 1,094: -49; S1 took the curve inset, S2 the pose block, S6 and S7 added the
+carrier's cures and the mount in a frame). useDockState.ts 573 (part H 587: S2 took the dwell linger).
+The rest moved by at most 18 lines (dock.css +18, S4's fills and segments; controls.css -10, S4's catch-light).
+
+## Line 2's list on the tip: what could still go, useDockBody.ts first (H12 section 4, the rows S took struck)
+
+| file | block | code | source | the behaviour that goes |
+| useDockBody.ts | the shorter forms (H12 section 1) | about 33 | none needed | none |
+| useDockBody.ts | the trace marks left (MARKS, :27, :655, :671, :771) | 4 | G-11's trace reads them | G-11's witness |
+| useDockBody.ts | the window resize seat | 14 | a design ruling (R-1) | a window resize lands with no travel |
+| useDockBody.ts | the host's change of room | 9 | a design ruling (RU-36) | a room change followed at layout |
+| useDockBody.ts | the closed narrow lane | 8 | a design ruling (RU-31) | a lane narrower than its corner closed |
+| useDockBody.ts | the observer guard | 16 | a cost ruling (RU-38) | no layout read for a resize already synced |
+| useDockBody.ts | RU-54's fit memory | 21 | a cost ruling (RU-54, RU-80) | the fit decided once per room |
+| useDockBody.ts | right to left | 6 | no published commit located | lanes and entering side flipped under dir=rtl |
+| useDockBody.ts | RU-35's outputs | 16 | daraksha SiteDock.vue:104-106 @24a6dbd | daraksha's fission seat |
+| useDockBody.ts | the return mid-exchange | 30 | the tween law | a face returned to jumps |
+| useDockBody.ts | the in-flow dock's margin | 21 | the tween law | content below an in-flow dock jumps |
+| useDockBody.ts | the removed control held | 54 | the tween law | a removed control vanishes |
+| useDockBody.ts | the run's scroll offset | 51 | the tween law | the open seat jumps into a scrolling run |
+| useDockState.ts | the enter sequence repeated | about 4 | none needed | none |
+| useDockState.ts | 11.1.0's long press | 60 | published 11.1.0 (persistent-face.test.ts) | a long press opens a folded dock under a finger |
+| (taken) useDockBody.ts | the curve inset, 62 | | S1 (83083efa4) | |
+| (taken) useDockState.ts | the dwell linger, 18 | | S2 (b1067866b) | |
+| (taken) useDockBody.ts | the pose block and marks but G-11's three | | S2 | |
+
+listed and left: useDockBody.ts about 283, useDockState.ts about 64, about 347 in all.
+Every row removed leaves about 92 over (5,180 - 347 = 4,833). The other files' growth against v11.1.0 (useDockRun +60,
+ControlsDock +57, GlassDock +47, density.css +47, dock.css +40, DockOutlet +36, DockCrossfade +25, dockRegistry +18) was
+scanned for repeats only (H12 section 2), not read line by line for a shorter form: no reading here says where the last
+92 would come from.
+
+## The re-sourced ledger (R8-4)
+
+H12 section 3 holds on the tip for every block left in the list above (the sources are unchanged). The rows S took are struck.
+
+## The apps' count (RU-113), at their current refs
+
+425 code lines (fourier-analysis 100 @ origin/master 266bd67, unchanged; daraksha 322 @ origin/master 24a6dbd, unchanged;
+Home Assistant 3: the LF-11 rule, now frontend/src/styles/scale.css:157 @ apx/ui-r13 325e74a5, 2026-11-22, still there),
+and 151 listed apart (not ruled). Per site: logs/m9-apps.txt. The dock's growth against v11.1.0 is 439; with the apps'
+deletions counted against it (question 22's third option) the net is +14.
