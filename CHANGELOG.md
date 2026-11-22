@@ -39,8 +39,10 @@ A patch on 11.1.0 about how surfaces leave. Nothing is removed or renamed.
   does an element of your own that wears `.glass-reveal` with no `data-reveal` value or
   with `data-reveal="overlay"`. `--enter-overlay-scale` and `--enter-overlay-blur` are
   still defined, but they no longer shape these entrances; a site that tuned them for a
-  popover or a toast should know they no longer apply there. A tooltip no longer
-  shrinks as it leaves; it still grows slightly as it arrives.
+  popover or a toast should know they no longer apply there. A tooltip now fades in and
+  out with no change of size; it used to shrink and squash as it left.
+  `--enter-tooltip-scale` and `--enter-tooltip-blur` are still defined, but they no
+  longer shape a tooltip.
 
 - **A closing surface leaves the same way however you close it.** A `Sheet` with detents
   stopped shrinking at its smallest honest height and then vanished with half of it
