@@ -7,12 +7,21 @@ and films. The list is critique 11's two defects, and the orchestrator's line th
 entrance takes the ruling after critique 1 (the scale and the blur go from both legs of a register;
 that ruling allows no scale, so the hint is whole from its first frame). No tag, no push, no publish.
 
-**Stopped by the guard. measured=false.** At 06:34:42 `guarded` refused every heavy and browser run
-(rc 75, DISK-LOW: 33 GB free, the flag set below 40 GB and cleared only above 60 GB). The two
-comparison trees this seat built at 06:31 to 06:32 (about 13.9 GB, see below) pushed free space
-under 40 GB. I deleted them and logged both in `~/.dev-logs/disk-reclaim/DELETED.tsv`. Free space
-rose to 44 to 46 GB, the flag still stands and the guard still refuses. What ran before the refusal
-is recorded here. What it stopped is under "Owed".
+**Measured, in two sittings.**
+- **The first sitting stopped on the guard.** At 06:34:42 `guarded` refused every heavy and browser
+  run (rc 75, DISK-LOW: 33 GB free; the flag is set below 40 GB and cleared above 60 GB). The two
+  comparison trees this seat built at 06:31 to 06:32 (about 13.9 GB, see "Disk") had pushed free
+  space under 40 GB. I deleted them and logged both in `~/.dev-logs/disk-reclaim/DELETED.tsv`.
+- **The orchestrator then freed 43 GB** from finished seats' trees in `.cache`, and the flag cleared.
+- **The second sitting** began at 06:46 with 90 GB free. It kept every commit and cell the first had
+  banked and ran what the guard had refused:
+  - the committed tree's tooltip cells, three times in each of the other three projects;
+  - the ratchet rebind;
+  - the five gates;
+  - the exits gate whole.
+
+  Everything it ran passed, from 06:46 to 07:20 at a 1-minute load of 8 to 15. The guard printed
+  its zone warning and refused nothing.
 
 ## Commits
 
@@ -20,8 +29,7 @@ is recorded here. What it stopped is under "Owed".
 |---|---|---|
 | 1 (the tooltip's squish) | 10c8e23c9 | `reveal.css`: the tooltip register sets `--glass-reveal-enter-scale: 1`, `--lq-stretch-x: 1`, `--lq-stretch-y: 1` and `--glass-reveal-blur: 0px`, as the overlay and menu registers do, and keeps its slide token. Three comments now describe the code. The film records each frame's computed `scale`, `transform` and `filter`. A new cell, plus a size read added to the three existing tooltip cells. |
 | 2 (the CHANGELOG sentence) | 56af37693 | "A tooltip now fades in and out with no change of size; it used to shrink and squash as it left. `--enter-tooltip-scale` and `--enter-tooltip-blur` are still defined, but they no longer shape a tooltip." This replaces "A tooltip no longer shrinks as it leaves; it still grows slightly as it arrives." |
-
-The ratchet is not rebound. Rebinding needs a build, and the guard refused it (see "Owed").
+| the ratchet | 7b653a25d | `.bundle-ratchet` from 3056513 to 3056459 (−54 B), from a build of the committed tree, once, after 10c8e23c9, the last source commit (see "The ratchet and the sizes") |
 
 ## 1. The tooltip arrived with a squish
 
@@ -66,10 +74,15 @@ neutral, as on the overlay and menu registers. `--glass-reveal-slide` still read
 - `release-11-1-1/film.ts` records `scale`, `transform` and `filter` on every frame.
 
 **Runs.** Each run is one guarded call, on ports 5351 to 5353, with WebKit under
-`--exclusive webkit`. The guard printed its zone warning and nothing else until 06:34:42.
-- Tools: `fix-12/part.sh`, `fix-12/chain.sh` and `fix-12/trees.sh`.
-- Readers: `fix-12/tools_size.py`, writing to `logs/size-pre-fix.txt` and `logs/size-trees.txt`.
-- Run lines: `logs/runs.out`. The 1-minute load was 9 to 14.
+`--exclusive webkit`. The guard printed its zone warning and nothing else until 06:34:42, and
+nothing but that warning in the second sitting.
+- Tools: `fix-12/part.sh`, `fix-12/chain.sh` and `fix-12/trees.sh`. In the second sitting,
+  `fix-12/chain2.sh` (the repeats, then `sizes.sh`) and `fix-12/chain3.sh` (`gates.sh`, then the
+  exits gate).
+- Readers: `fix-12/tools_size.py`, writing to `logs/size-pre-fix.txt` and `logs/size-trees.txt`
+  (it reads the second sitting's reports, `logs/tt-tip-{cp,wd,wp}.json`, the same way).
+- Run lines: `logs/runs.out`. The 1-minute load was 9 to 14 in the first sitting and 8 to 15 in
+  the second.
 
 **The trees.**
 - **ce5** is a `git archive ce5f320b7`.
@@ -102,7 +115,9 @@ The first entrance frame below is written as [ms after the input, opacity, scale
 | worktree after the cure | WebKit 1440 | **GREEN**, 4 of 4 | [31, 0, `1`, 55.2 × 36.7] | scale 1, box 0 |
 | worktree after the cure | WebKit 390 | **GREEN** | [13, 0, `1`, 49.5 × 33.8] | scale 1, box 0 |
 | committed 10c8e23c9, `--repeat-each=3` | Chromium 1440 | **GREEN**, 12 of 12 | [24 to 32, 0, `1`, 55.8 × 36.7] | scale 1, box 0 |
-| committed 10c8e23c9, `--repeat-each=3` | the other three | **refused by the guard** (rc 75) | — | — |
+| committed 022701fe8, `--repeat-each=3` (second sitting) | Chromium 390 | **GREEN**, 3 of 3 (9 desktop-only runs skipped) | [4 to 6, 0, `1`, 50 × 33.8] | scale 1, box 0 |
+| committed 022701fe8, `--repeat-each=3` | WebKit 1440 | **GREEN**, 12 of 12 | [31 to 33, 0, `1`, 55.2 × 36.7] | scale 1, box 0 |
+| committed 022701fe8, `--repeat-each=3` | WebKit 390 | **GREEN**, 3 of 3 (9 skipped) | [14 to 19, 0, `1`, 49.5 × 33.8] | scale 1, box 0 |
 
 - **On the tip as it stood** (the worktree before the cure, and ce5) the cells fail on clause 3,
   "its scale and transform scale nothing on every frame". The scale is 0.0834 off 1, and the box is
@@ -118,8 +133,13 @@ The first entrance frame below is written as [ms after the input, opacity, scale
   the box at its resting size and no filter. The entrance starts at opacity 0 and has 19 to 26
   frames between gone and whole.
 - The committed 10c8e23c9 is the same bytes as the cured worktree that read GREEN in four projects:
-  no file was edited between those runs and the commit. Only Chromium 1440's three repeats ran on
-  the committed tree before the refusal.
+  no file was edited between those runs and the commit.
+- The committed tree read GREEN three times in each of the four projects:
+  - Chromium 1440 at 10c8e23c9, in the first sitting;
+  - the other three at 022701fe8, in the second.
+
+  No file under `src`, `demo` or `tests-visual` differs between 10c8e23c9 and 7b653a25d. The
+  commits after the cure touch only the CHANGELOG, `.bundle-ratchet` and this record.
 
 ## 2. The CHANGELOG sentence
 
@@ -131,21 +151,62 @@ tooltip tokens as no longer shaping a tooltip, as the paragraph does for the ove
 - No internal id.
 - `README.md` and `MIGRATION.md` name neither token.
 
-## Owed (stopped by the guard's refusal)
+## The ratchet and the sizes
 
-1. **The ratchet rebind.** `verify:package` binds `.bundle-ratchet` by exact equality, and
-   10c8e23c9 changes `reveal.css`, which ships in `dist`'s CSS. So at 56af37693 `verify:package`
-   is expected to fail on the ratchet until it is rebound from a build of the committed tree. The
-   new value is not measured.
-   - `fix-12/sizes.sh` is ready. It builds, packs, unpacks, prints the byte total and runs critic 6's
-     `sizes.py`.
-2. **The size lines.** The change is CSS only, and `sizes.py` measures JS import closures, so no
-   entry's line is expected to move. This is not measured.
-3. **The committed tree's tooltip cells three times** in Chromium 390, WebKit 1440 and WebKit 390
-   (the last three steps of `fix-12/chain.sh`).
-4. **The five gates** (`fix-12/gates.sh`) and **the exits gate whole** as `scripts/release.sh` runs
-   it. With the new cell, part B is expected to count one more cell in each project: 33 + 10
-   skipped at 390 and 43 + 1 skipped at 1440. This is not measured.
+`verify:package` binds `.bundle-ratchet` by exact equality, and 10c8e23c9 changes `reveal.css`,
+which ships in `dist`'s CSS.
+- **The build.** `fix-12/sizes.sh` built the committed tree 022701fe8 at 06:47 (guarded, exit 0),
+  packed it as npm packs it and unpacked it into `.cache/fix12-pub`. Logs: `logs/sizes-build.log`,
+  `logs/pack-tip.json`, `logs/sizes.txt`.
+- **The unpacked content** is 3,056,459 bytes in 904 files, against the ratchet's 3,056,513: 54
+  bytes fewer.
+  - The tooltip register ships once, in `dist/styles/glass/reveal.css`, with its comments
+    stripped.
+  - Its four values are 54 bytes shorter: `var(--enter-tooltip-scale)` to `1` (25),
+    `var(--enter-tooltip-blur)` to `0px` (22), `1.06` to `1` (3) and `0.945` to `1` (4).
+- **The rebind.** 7b653a25d sets `.bundle-ratchet` to 3056459. `verify:package` reads it equal on
+  the committed tree (below).
+- **The size lines.** Each entry's gzipped import closure reads as the CHANGELOG's "Sizes" lines
+  state it:
+  - the dock entry at 40,533 (38,673 in 11.0.2, 40,541 in 11.1.0);
+  - the twelve other entries those lines name, at the values they give.
+
+  The change is CSS only and no JS closure moved, so no line changes.
+- `.cache/fix12-pub` (6.4 MB) is deleted now that its numbers are recorded, and the deletion is
+  logged in `DELETED.tsv`.
+
+## The five gates
+
+`fix-12/gates.sh` ran on 7b653a25d, one guarded run each, from 06:48 to 06:50 at a 1-minute load of
+10 to 15 (`logs/gates.out`). The only tracked files dirty were this seat's four logs under
+`fix-12/logs`. All five exited 0:
+- typecheck;
+- build;
+- `verify:package`: terminal `CLEAN`, 197 claims, the ratchet `PRESENT` and equal at 3,056,459;
+- `demo:dist:build`;
+- vitest `--maxWorkers=2`: 285 files, 2,600 passed, 10 expected to fail, 1 skipped.
+
+## The exits gate whole
+
+The gate ran as `scripts/release.sh` runs it: `npm -w tests-visual run gate:exits`, with
+`GLASS_UI_DEMO_PORT=5355`, on 7b653a25d (`fix-12/chain3.sh`, log `logs/gate.log`). It ran from
+06:50:30 to 07:20:37 at a 1-minute load of 8 to 15 and **exited 0, all sixteen parts green**:
+
+| project | A | B | standing | D |
+|---|---|---|---|---|
+| Chromium 390 | 38 + 3 skipped | 33 + 11 skipped | 41 + 3 skipped | 17 + 1 skipped |
+| Chromium 1440 | 28 + 13 skipped | 43 + 1 skipped | 44 | 18 |
+| WebKit 390 | 25 + 16 skipped | 33 + 11 skipped | 27 + 17 skipped | 16 + 2 skipped |
+| WebKit 1440 | 28 + 13 skipped | 43 + 1 skipped | 44 | 18 |
+
+- Part B counts one more passing cell in each project than fix 11's run: the new tooltip cell.
+  Every other count equals fix 11's.
+- The first sitting expected 10 skipped at 390. That was wrong: the three desktop-only tooltip
+  cells were already among the 11, so the count stays 11.
+- WebKit 1440's standing part logged three "ResizeObserver loop completed with undelivered
+  notifications" errors at 07:17, with every cell passing. Critiques 9 and 10 and fix 11 recorded
+  the same three on both trees (critique 10's open gap B).
+- The guard printed its zone warning (armed, a warning only) and refused nothing.
 
 ## Disk
 
@@ -159,8 +220,11 @@ tooltip tokens as no longer shaping a tooltip, as the paragraph does for the ove
   - `critic9-plant` and `critic10-plant`, 6.5 GB each;
   - `fix11-v11.1.0`, 6.4 GB.
 
-  They are not this seat's, so under the disk rules (rule 7) I did not delete them. Clearing them
-  would lift free space above 60 GB and clear the flag. That is the orchestrator's call.
+  They are not this seat's, so under the disk rules (rule 7) I did not delete them. Between the
+  sittings the orchestrator cleared the finished seats' trees (43 GB) and kept `critic11-v11.1.0`
+  for reuse.
+- **The second sitting** needed no v11.1.0 or ce5 tree, since their cells were banked. It made
+  only `.cache/fix12-pub`, deleted as above.
 
 Nothing of this seat is left running. Ports 5351 to 5356 are free.
 
