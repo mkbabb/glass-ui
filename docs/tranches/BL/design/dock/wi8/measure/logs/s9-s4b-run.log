@@ -1,0 +1,31 @@
+== s4b chromium start 2026-11-22 12:34:49 (load { 7.41 7.65 7.69 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+ink chromium rc=0
+seg chromium rc=0
+pw s4-fills chromium rc=0
+applied s4-press2 - RU-92 plant: a press is 2 % over a bare seat (no hover step under a finger)
+pw s4-press2 chromium rc=1
+reverted s4-press2
+applied s4-hover8 - RU-92 (C8-M16) plant: the hover step at 8 %
+pw s4-hover8 chromium rc=1
+reverted s4-hover8
+applied s4-cureqhover - RU-94 plant: the current step equal to the hover
+reverted s4-cureqhover
+applied s4-channel - RU-95 plant: the channel restored inside the dock (fill, rim, shadow and lens)
+reverted s4-channel
+applied s4-toggle08 - RU-96 (R8-8) plant: the toggle's 0.8 restored
+reverted s4-toggle08
+s4 chromium done
+== s4b chromium rc=0 end 2026-11-22 12:47:20 (load { 7.11 8.02 7.95 })
+== s4b webkit start 2026-11-22 12:47:20 (load { 7.11 8.02 7.95 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+ink webkit rc=0
+seg webkit rc=0
+pw s4-fills webkit rc=0
+applied s4-channel - RU-95 plant: the channel restored inside the dock (fill, rim, shadow and lens)
+reverted s4-channel
+applied s4-toggle08 - RU-96 (R8-8) plant: the toggle's 0.8 restored
+reverted s4-toggle08
+s4 webkit done
+== s4b webkit rc=0 end 2026-11-22 12:53:39 (load { 10.54 8.67 8.17 })
+== s4b ALL DONE 2026-11-22 12:53:39

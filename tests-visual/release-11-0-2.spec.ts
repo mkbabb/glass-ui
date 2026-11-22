@@ -670,9 +670,9 @@ for (const mode of ["static", "live"]) {
 // W-I.8 RU-92 (RU-94): the guard that O-269's dark change left 11.0.2's light fills alone,
 // restated to the ruled light fills. RU-56 and RU-68 made a seat's fills the dock's own ink:
 // the hovered seat's computed fill is the dock's computed ink at the hover step, and the
-// selected tab's at the current step, each mixed here from the literal ink (5 % and 10 % in
-// light, RU-94 as folded). Any drift from the ruled steps fails it, the force it had.
-const LIGHT_HOVER_STEP = 5;
+// selected tab's at the current step, each mixed here from the literal ink (6.5 % and 10 % in
+// light, S4's steps by RU-94 as folded). Any drift from the ruled steps fails it, the force it had.
+const LIGHT_HOVER_STEP = 6.5;
 const LIGHT_CURRENT_STEP = 10;
 test("fill · the light scheme's seat fills are the dock's ink at the ruled steps", async ({ page }, info) => {
     test.skip(COARSE.has(info.project.name), "hover is a fine-pointer read");

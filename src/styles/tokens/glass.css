@@ -137,6 +137,9 @@
        hides about as much of a busy page as the light one. `.glass-dock` and a plate that matches
        the dock read it, and the a11y brackets set it (glass/a11y-fallback.css). */
     --glass-level-dock: 1;
+    /* The dock's hover step, % of its ink (W-I.8 RU-94): the weaker of 5 and 6.5 % whose hover
+       reads 1.1 against the dock, per scheme (question 18's default). */
+    --dock-hover-step: 6.5%;
     --glass-veil-crown:   calc(var(--glass-veil-base) + 1 * var(--glass-veil-step));
     --glass-veil-dialog:  calc(var(--glass-veil-base) + 1 * var(--glass-veil-step));
     --glass-veil-sheet:   calc(var(--glass-veil-base) + 2 * var(--glass-veil-step));
@@ -269,6 +272,7 @@
 
 .dark {
     --glass-level-dock: 0.7;
+    --dock-hover-step: 5%;
 }
 
 /* The typed per-instance axes — @property no-op floors. Registered here beside the §8

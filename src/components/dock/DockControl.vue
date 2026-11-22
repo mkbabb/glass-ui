@@ -7,7 +7,6 @@ import {
 } from "vue";
 import { Primitive } from "reka-ui";
 import { cn } from "../_shared/class-names";
-import { vSpecular } from "../../composables/glass";
 import { useLiquidPress } from "../../composables/motion/spring/useLiquidPress";
 import { springPreset } from "../../composables/motion/spring/springPresets";
 import { DOCK_SEAT_ATTR } from "./constants";
@@ -80,15 +79,14 @@ const props = withDefaults(
 
 const isTab = computed(() => props.shape === "tab");
 
-// The icon shape composes the full glass-capsule register (hover-lift + press +
-// the selected `.glass-capsule` seat); the tab shape reads its own de-red'd glass
-// hover register (`.dock-tab-button`, dock-controls/tab-button.css). Both carry
-// `glass-specular-track` for the moving `::before` catch-light the directive feeds.
+// The icon shape's selected seat composes `.glass-capsule`; the tab shape reads its own
+// hover register (`.dock-tab-button`, controls/tab-button.css). No dock control carries a
+// catch-light (W-I.8 RU-94 as amended for R8-9): the hover is one fill.
 const classes = computed(() =>
     isTab.value
-        ? cn("dock-tab-button glass-specular-track", props.class)
+        ? cn("dock-tab-button", props.class)
         : cn(
-              "dock-icon-button glass-specular-track glass-capsule-hover",
+              "dock-icon-button",
               { "glass-capsule": props.active },
               { "dock-icon-button--compact": props.compact },
               props.class,
@@ -155,7 +153,6 @@ function blockDisabledActivation(event: MouseEvent): void {
 
 <template>
     <Primitive
-        v-specular
         as="button"
         v-bind="{ ...hostAttrs, ...stateAttrs }"
         :class="classes"

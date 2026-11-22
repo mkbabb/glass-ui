@@ -1,0 +1,50 @@
+
+Running 2 tests using 1 worker
+
+  ✘  1 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:634:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (static) (2.2s)
+  ✘  2 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:634:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (live) (2.0s)
+
+
+  1) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:634:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (static) 
+
+    Error: press
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0.006
+    Received:   0.003624914620708977
+
+      662 |         expect(Math.abs(r.restingTab - r.plate), "a resting tab is the plate").toBeLessThan(0.002);
+      663 |         if (!touch) expect(r.hover - r.plate, "hover").toBeGreaterThan(lift);
+    > 664 |         expect(r.press - r.plate, "press").toBeGreaterThan(lift);
+          |                                            ^
+      665 |         expect(r.selected - r.plate, "selected").toBeGreaterThan(lift);
+      666 |         expect(r.selectedTab - r.plate, "selected tab").toBeGreaterThan(lift);
+      667 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-11-0-2.spec.ts:664:44
+
+    Error Context: tests-visual/test-results/release-11-0-2-fill-·-in-d-b5af1-eat-lifts-the-plate-static--coarse-touch/error-context.md
+
+  2) [coarse-touch] › tests-visual/release-11-0-2.spec.ts:634:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (live) 
+
+    Error: press
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0.006
+    Received:   0.004599865106117682
+
+      662 |         expect(Math.abs(r.restingTab - r.plate), "a resting tab is the plate").toBeLessThan(0.002);
+      663 |         if (!touch) expect(r.hover - r.plate, "hover").toBeGreaterThan(lift);
+    > 664 |         expect(r.press - r.plate, "press").toBeGreaterThan(lift);
+          |                                            ^
+      665 |         expect(r.selected - r.plate, "selected").toBeGreaterThan(lift);
+      666 |         expect(r.selectedTab - r.plate, "selected tab").toBeGreaterThan(lift);
+      667 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-11-0-2.spec.ts:664:44
+
+    Error Context: tests-visual/test-results/release-11-0-2-fill-·-in-d-c0870--seat-lifts-the-plate-live--coarse-touch/error-context.md
+
+  2 failed
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:634:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (static) 
+    [coarse-touch] › tests-visual/release-11-0-2.spec.ts:634:5 › fill · in dark a hovered, pressed or selected seat lifts the plate (live) 

@@ -37,35 +37,3 @@
 @import "./controls/tab-button.css";
 @import "./controls/triggers.css";
 @import "./controls/touch-floor.css";
-
-@layer components {
-    /* Momentum-gated dock-control press spring. The `:active` squish
-       toward `--scale-press-dock` settles on a NO-OVERSHOOT spring (Apple,
-       "Designing Fluid Interfaces": default 100% damping — no bounce — for a tap;
-       reserve bounce for surfaces driven by gesture MOMENTUM). The dock controls
-       are tap surfaces (no momentum).
-
-       The per-surface re-point of `--dock-press-spring` is DELETED here: the ROOT
-       token (`tokens.css`) IS the doctrine register, so the re-point was a dead
-       byte-identical redeclaration — the exact per-surface fork the doctrine claims
-       to have killed. The dock controls inherit the press register straight from the
-       ROOT token; this `:where()` group keeps ONLY the small-tile specular sizing
-       below. */
-    :where(
-        .dock-icon-button,
-        .dock-tab-button,
-        .dock-select-trigger,
-        .dock-dropdown-trigger
-    ) {
-        /* The small-tile specular sizing. The dock controls are
-           ~40px tiles, a fraction of a card's plate, so the global 36% specular
-           radius blooms a tile-filling disc (the finding). The family re-points
-           `--glass-specular-size` to the tighter `--dock-control-specular-size` (22%,
-           tokens.css), so the SHARED material-group `::before` catch-light recipe
-           (glass.css) paints a restrained EDGE-catch on the small tile WITHOUT
-           forking the recipe — the gleam wakes on hover/active (the cohort's 0.1/0.16
-           rungs), sized for the tile. The rest intensity stays 0 (the default-off
-           discipline) so the resting tile carries NO bloom. */
-        --glass-specular-size: var(--dock-control-specular-size, 22%);
-    }
-}

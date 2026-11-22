@@ -220,11 +220,6 @@
     --dock-control-hover-bg: var(--glass-plate-resting);
     --dock-control-active-bg: var(--glass-plate-floating);
 
-    /* A 40px dock tile is a fraction of a card's plate, so the global 36% specular
-       blooms a tile-filling disc on it. 22% wakes as a restrained edge-catch instead;
-       the global card/panel size is untouched. */
-    --dock-control-specular-size: 22%;
-
     /* The layer switcher is a HAIRLINE register, not a fused tinted gutter: the
        switcher box paints no fill, and `--dock-hairline` is the only visible switcher
        edge. The hover/active affordance stays a translucent GLASS tint — the accent

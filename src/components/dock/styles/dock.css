@@ -257,26 +257,49 @@
         --glass-level: var(--glass-level-dock);
     }
 
-    /* W-I.8 RU-56: inside a dock the current seat's fill, a hovered seat's fill and a segmented
-       control's selected mark are the dock's own ink over whatever the plate is, so they keep
-       their distance from the plate at any level and in both schemes. Two steps in rising
-       strength, hover and current, one pair for both schemes (RU-68: the current step is the
-       strongest the current and pressed seats' words allow, and no step of 12 % or more keeps
-       them at 4.5:1; the hover is P0a's 8 %). The `:root` lines (tokens/sizing.css) stay for a
-       DockControl outside any dock. */
+    /* W-I.8 RU-56: (RU-94) inside a dock the current seat's fill, a hovered seat's fill and a
+       segmented control's selected mark are the dock's own ink over whatever the plate is, so they
+       keep their distance from the plate at any level and in both schemes. The current step is the
+       weakest of 10, 12 and 14 % whose current and pressed seats' words read 4.5 and whose marks read
+       1.2; the hover step is the scheme's (tokens/glass.css). The `:root` lines (tokens/sizing.css)
+       stay for a DockControl outside any dock. */
     .glass-dock {
-        --dock-control-hover-bg: color-mix(in oklab, var(--dock-fg-on-aurora, var(--foreground)) 8%, transparent);
+        --dock-control-hover-bg: color-mix(in oklab, var(--dock-fg-on-aurora, var(--foreground)) var(--dock-hover-step), transparent);
         --dock-control-active-bg: color-mix(in oklab, var(--dock-fg-on-aurora, var(--foreground)) 10%, transparent);
         --glass-capsule-fill: var(--dock-control-active-bg);
     }
 
-    /* R7-6 (RU-68): inside a dock a press is the seat's press scale over its own fill and 2 %
-       of the ink, not a step of its own; the seats' `:active` fills are for a seat outside. */
+    /* R7-6, RU-92: inside a dock a press is the seat's press scale and 2 % of the ink over its own
+       fill, and a seat that is not current is pressed over the hover step at every pointer, so a
+       press under a finger looks like one under a mouse. */
     .glass-dock :is(.dock-icon-button, .dock-tab-button, .dock-trigger):active:not(:disabled):not([aria-disabled="true"]) {
         background-image: linear-gradient(
             color-mix(in oklab, var(--dock-fg-on-aurora, var(--foreground)) 2%, transparent),
             color-mix(in oklab, var(--dock-fg-on-aurora, var(--foreground)) 2%, transparent)
         );
+    }
+    .glass-dock :is(.dock-icon-button, .dock-tab-button, .dock-trigger):active:not(:disabled):not([aria-disabled="true"]):not(.is-active, .active, [aria-current="page"], [aria-pressed="true"], [aria-expanded="true"], [data-active]) {
+        background-color: var(--dock-control-hover-bg);
+    }
+
+    /* RU-95: inside a dock a segmented control has no channel of its own: the plate is its track
+       and each segment a seat, at the seat's height, its selected mark the current step and its
+       hover the hover step. Neither the track nor the indicator draws a shadow (its lens goes in
+       adaptive-legibility.css). */
+    .glass-dock .glass-capsule-track {
+        background: none;
+        box-shadow: none;
+    }
+    .glass-dock .segmented-tabs:not(.segmented-tabs--underline) .segmented-indicator {
+        box-shadow: none;
+    }
+    .glass-dock .segmented-tab {
+        min-block-size: var(--dock-control-size);
+    }
+    @media (hover: hover) {
+        .glass-dock .segmented-tabs:not(.segmented-tabs--underline) .segmented-tab:not([data-active]):hover {
+            background-color: var(--dock-control-hover-bg);
+        }
     }
     /* RU-56 end */
 
