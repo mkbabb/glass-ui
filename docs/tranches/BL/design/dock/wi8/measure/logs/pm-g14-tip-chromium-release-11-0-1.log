@@ -1,0 +1,491 @@
+
+Running 18 tests using 1 worker
+
+o1 focus hover {"radii":["20px","20px","20px","20px"],"w":87,"h":40}
+  ✓   1 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:73:5 › o1 the wide label seat › o1 the hover plate of a compact 'Focus' label seat is a capsule, never an ellipse (1.2s)
+o1 name rest {"radii":["20px","20px","20px","20px"],"w":98,"h":40} hover {"radii":["20px","20px","20px","20px"],"w":98,"h":40}
+  ✓   2 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:85:5 › o1 the wide label seat › o1 the active 'Name ›' seat's plate, at rest and under hover, is a capsule (880ms)
+o2 open house tokens plate {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":264,"h":56} root {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":264,"h":56}
+  ✘   3 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round (553ms)
+o2 collapsed house tokens plate {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":102,"h":56} root {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":102,"h":56}
+  ✘   4 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round (573ms)
+o2 narrow house tokens plate {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":164,"h":56} root {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":164,"h":56} run {"scroll":0}
+  ✘   5 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round (570ms)
+o2 open radius-dock 1.875rem plate {"radii":["28px","28px","28px","28px"],"w":264,"h":56} root {"radii":["28px","28px","28px","28px"],"w":264,"h":56}
+  ✓   6 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open at rest, the plate and the box are round (569ms)
+o2 collapsed radius-dock 1.875rem plate {"radii":["28px","28px","28px","28px"],"w":102,"h":56} root {"radii":["28px","28px","28px","28px"],"w":102,"h":56}
+  ✓   7 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: collapsed with a persistent seat beside the summary, the plate and the box are round (548ms)
+o2 narrow radius-dock 1.875rem plate {"radii":["28px","28px","28px","28px"],"w":164,"h":56} root {"radii":["28px","28px","28px","28px"],"w":164,"h":56} run {"scroll":0}
+  ✓   8 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round (543ms)
+o3 expand {"frames":189,"morphing":52,"bad":["0ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28","9ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28","16ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28","409ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28","419ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28","424ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28"]}
+o3 collapse {"frames":186,"morphing":50,"bad":["385ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28","395ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28","402ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28","411ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28","415ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28","423ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28"]}
+  ✘   9 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:142:1 › o3 every frame of the expand and of the collapse paints a round end (3.4s)
+o1 focus hover {"radii":["22px","22px","22px","22px"],"w":79,"h":44}
+  ✓  10 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:73:5 › o1 the wide label seat › o1 the hover plate of a compact 'Focus' label seat is a capsule, never an ellipse (903ms)
+o1 name rest {"radii":["22px","22px","22px","22px"],"w":88,"h":44} hover {"radii":["22px","22px","22px","22px"],"w":88,"h":44}
+  ✓  11 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:85:5 › o1 the wide label seat › o1 the active 'Name ›' seat's plate, at rest and under hover, is a capsule (855ms)
+o2 open house tokens plate {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":266,"h":60} root {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":266,"h":60}
+  ✘  12 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round (547ms)
+o2 collapsed house tokens plate {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":110,"h":60} root {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":110,"h":60}
+  ✘  13 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round (565ms)
+o2 narrow house tokens plate {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":176,"h":60} root {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":176,"h":60} run {"scroll":0}
+  ✘  14 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round (565ms)
+o2 open radius-dock 1.875rem plate {"radii":["30px","30px","30px","30px"],"w":266,"h":60} root {"radii":["30px","30px","30px","30px"],"w":266,"h":60}
+  ✓  15 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open at rest, the plate and the box are round (562ms)
+o2 collapsed radius-dock 1.875rem plate {"radii":["30px","30px","30px","30px"],"w":110,"h":60} root {"radii":["30px","30px","30px","30px"],"w":110,"h":60}
+  ✓  16 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: collapsed with a persistent seat beside the summary, the plate and the box are round (540ms)
+o2 narrow radius-dock 1.875rem plate {"radii":["30px","30px","30px","30px"],"w":176,"h":60} root {"radii":["30px","30px","30px","30px"],"w":176,"h":60} run {"scroll":0}
+  ✓  17 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round (538ms)
+o3 expand {"frames":186,"morphing":50,"bad":["1ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30","10ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30","20ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30","407ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30","412ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30","421ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30"]}
+o3 collapse {"frames":187,"morphing":50,"bad":["382ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30","392ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30","398ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30","406ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30","415ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30","419ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30"]}
+  ✘  18 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:142:1 › o3 every frame of the expand and of the collapse paints a round end (3.4s)
+
+
+  1) [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round 
+
+    Error: {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":264,"h":56}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      109 |             await shoot(page, page.locator(ROOT), `o2-open-${radius ? "rd" : "house"}-${info.project.name}`);
+      110 |             console.log(`o2 open ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)}`);
+    > 111 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      112 |             expect(root.radii).toEqual(plate.radii);
+      113 |         });
+      114 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-11-0-1.spec.ts:111:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-5effe-plate-and-the-box-are-round-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round 
+
+    Error: {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":102,"h":56}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      120 |             await shoot(page, page.locator(ROOT), `o2-collapsed-${radius ? "rd" : "house"}-${info.project.name}`);
+      121 |             console.log(`o2 collapsed ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)}`);
+    > 122 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      123 |             expect(root.radii).toEqual(plate.radii);
+      124 |         });
+      125 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-11-0-1.spec.ts:122:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-b7623-plate-and-the-box-are-round-chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round 
+
+    Error: {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":164,"h":56}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      134 |             await shoot(page, page.locator(ROOT), `o2-narrow-${radius ? "rd" : "house"}-${info.project.name}`);
+      135 |             console.log(`o2 narrow ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)} run ${JSON.stringify(run)}`);
+    > 136 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      137 |             expect(root.radii).toEqual(plate.radii);
+      138 |         });
+      139 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-11-0-1.spec.ts:136:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-b862f-end-seat-the-plate-is-round-chromium-headless-new/error-context.md
+
+  4) [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:142:1 › o3 every frame of the expand and of the collapse paints a round end 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 139
+
+    - Array []
+    + Array [
+    +   "0ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "9ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "16ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "409ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "419ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "424ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "431ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "439ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "448ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "453ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "460ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "469ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "477ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "485ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "489ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "499ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "506ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "514ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "519ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "526ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "535ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "544ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "551ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "557ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "565ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "573ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "581ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "585ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "595ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "602ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "610ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "619ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "624ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "630ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "639ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "647ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "653ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "660ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "668ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "677ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "685ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "690ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "697ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "706ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "714ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "719ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "726ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "735ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "744ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "752ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "757ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "763ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "771ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "781ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "786ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "793ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "801ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "810ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "819ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "823ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "831ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "839ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "848ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "853ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "861ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "869ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "877ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "885ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "890ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "898ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "906ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "915ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "920ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "927ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "935ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "943ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "951ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "956ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "964ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "973ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "981ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "986ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "993ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1002ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1009ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1019ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1024ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1031ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1040ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1047ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1053ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1060ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1067ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1076ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1085ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1090ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1097ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1106ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1114ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1120ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1127ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1135ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1143ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1150ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1160ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1167ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1175ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1185ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1190ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1198ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1206ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1214ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1219ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1226ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1234ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1244ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1250ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1259ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1267ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1275ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1285ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1290ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1298ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1306ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1314ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1319ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1326ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1336ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1343ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1351ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1359ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1368ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1375ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1384ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1394ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1398ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1406ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    + ]
+
+      187 |     expect(expand.morphing, "the expand morphed").toBeGreaterThan(2);
+      188 |     expect(collapse.morphing, "the collapse morphed").toBeGreaterThan(2);
+    > 189 |     expect(expand.bad).toEqual([]);
+          |                        ^
+      190 |     expect(collapse.bad).toEqual([]);
+      191 | });
+      192 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-11-0-1.spec.ts:189:24
+
+    Error Context: tests-visual/test-results/release-11-0-1-o3-every-fr-1c7bf-collapse-paints-a-round-end-chromium-headless-new/error-context.md
+
+  5) [coarse-touch] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round 
+
+    Error: {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":266,"h":60}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      109 |             await shoot(page, page.locator(ROOT), `o2-open-${radius ? "rd" : "house"}-${info.project.name}`);
+      110 |             console.log(`o2 open ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)}`);
+    > 111 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      112 |             expect(root.radii).toEqual(plate.radii);
+      113 |         });
+      114 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-11-0-1.spec.ts:111:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-5effe-plate-and-the-box-are-round-coarse-touch/error-context.md
+
+  6) [coarse-touch] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round 
+
+    Error: {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":110,"h":60}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      120 |             await shoot(page, page.locator(ROOT), `o2-collapsed-${radius ? "rd" : "house"}-${info.project.name}`);
+      121 |             console.log(`o2 collapsed ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)}`);
+    > 122 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      123 |             expect(root.radii).toEqual(plate.radii);
+      124 |         });
+      125 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-11-0-1.spec.ts:122:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-b7623-plate-and-the-box-are-round-coarse-touch/error-context.md
+
+  7) [coarse-touch] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round 
+
+    Error: {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":176,"h":60}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      134 |             await shoot(page, page.locator(ROOT), `o2-narrow-${radius ? "rd" : "house"}-${info.project.name}`);
+      135 |             console.log(`o2 narrow ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)} run ${JSON.stringify(run)}`);
+    > 136 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      137 |             expect(root.radii).toEqual(plate.radii);
+      138 |         });
+      139 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-11-0-1.spec.ts:136:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-b862f-end-seat-the-plate-is-round-coarse-touch/error-context.md
+
+  8) [coarse-touch] › tests-visual/release-11-0-1.spec.ts:142:1 › o3 every frame of the expand and of the collapse paints a round end 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 138
+
+    - Array []
+    + Array [
+    +   "1ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "10ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "20ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "407ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "412ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "421ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "427ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "437ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "442ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "450ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "458ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "466ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "474ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "479ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "487ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "495ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "503ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "510ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "518ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "526ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "534ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "542ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "549ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "556ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "566ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "575ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "584ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "589ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "596ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "604ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "613ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "617ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "624ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "634ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "641ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "650ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "655ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "662ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "671ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "679ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "687ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "695ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "704ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "713ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "718ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "725ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "734ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "741ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "750ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "754ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "763ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "771ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "779ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "785ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "793ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "800ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "807ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "817ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "822ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "829ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "838ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "846ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "851ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "859ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "866ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "874ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "883ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "891ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "899ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "909ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "917ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "921ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "929ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "937ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "946ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "954ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "959ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "967ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "975ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "983ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "991ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1000ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1007ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1017ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1022ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1029ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1038ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1045ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1054ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1059ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1067ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1075ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1083ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1087ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1097ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1104ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1113ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1120ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1126ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1134ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1141ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1150ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1155ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1162ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1171ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1179ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1188ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1193ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1201ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1209ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1215ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1222ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1229ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1238ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1246ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1253ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1260ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1267ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1275ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1283ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1288ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1296ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1304ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1313ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1320ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1326ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1334ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1342ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1350ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1355ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1362ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1371ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1380ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1388ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1393ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1400ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    + ]
+
+      187 |     expect(expand.morphing, "the expand morphed").toBeGreaterThan(2);
+      188 |     expect(collapse.morphing, "the collapse morphed").toBeGreaterThan(2);
+    > 189 |     expect(expand.bad).toEqual([]);
+          |                        ^
+      190 |     expect(collapse.bad).toEqual([]);
+      191 | });
+      192 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/tests-visual/release-11-0-1.spec.ts:189:24
+
+    Error Context: tests-visual/test-results/release-11-0-1-o3-every-fr-1c7bf-collapse-paints-a-round-end-coarse-touch/error-context.md
+
+  8 failed
+    [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round 
+    [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round 
+    [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round 
+    [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:142:1 › o3 every frame of the expand and of the collapse paints a round end 
+    [coarse-touch] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round 
+    [coarse-touch] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round 
+    [coarse-touch] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round 
+    [coarse-touch] › tests-visual/release-11-0-1.spec.ts:142:1 › o3 every frame of the expand and of the collapse paints a round end 
+  10 passed (21.3s)
+rc=1

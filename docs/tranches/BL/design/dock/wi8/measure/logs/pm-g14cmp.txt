@@ -1,0 +1,185 @@
+pm-g14-master-chromium-release-10-1-1.log: rc=0  50 passed (28.4s)
+pm-g14-master-chromium-release-10-1-2.log: rc=0  104 passed (1.7m)
+pm-g14-master-chromium-release-10-1-3.log: rc=1  2 failed; 118 passed (4.3m)
+pm-g14-master-chromium-release-10-1-4.log: rc=0  46 passed (30.4s)
+pm-g14-master-chromium-release-10-1-5.log: rc=0  214 passed (25.9m)
+pm-g14-master-chromium-release-11-0-1.log: rc=0  18 passed (19.0s)
+pm-g14-master-chromium-release-11-0-2.log: rc=0  17 skipped; 91 passed (7.8m)
+pm-g14-master-chromium-ro-loop.log: rc=0  8 passed (55.8s)
+pm-g14-master-webkit-release-10-1-1.log: rc=0  25 passed (21.2s)
+pm-g14-master-webkit-release-10-1-2.log: rc=0  52 passed (1.1m)
+pm-g14-master-webkit-release-10-1-3.log: rc=0  2 skipped; 58 passed (2.2m)
+pm-g14-master-webkit-release-10-1-4.log: rc=0  8 skipped; 15 passed (20.3s)
+pm-g14-master-webkit-release-10-1-5.log: rc=0  107 passed (13.5m)
+pm-g14-master-webkit-release-11-0-1.log: rc=0  9 passed (14.1s)
+pm-g14-master-webkit-release-11-0-2.log: rc=0  3 skipped; 51 passed (5.6m)
+pm-g14-master-webkit-ro-loop.log: rc=0  4 passed (29.8s)
+pm-g14-tip-chromium-release-10-1-1.log: rc=0  50 passed (33.4s)
+pm-g14-tip-chromium-release-10-1-2.log: rc=0  108 passed (1.7m)
+pm-g14-tip-chromium-release-10-1-3.log: rc=0  120 passed (4.4m)
+pm-g14-tip-chromium-release-10-1-4.log: rc=0  46 passed (31.4s)
+pm-g14-tip-chromium-release-10-1-5.log: rc=1  103 failed; 115 passed (25.6m)
+pm-g14-tip-chromium-release-11-0-1.log: rc=1  8 failed; 10 passed (21.3s)
+pm-g14-tip-chromium-release-11-0-2.log: rc=1  17 failed; 17 skipped; 74 passed (7.7m)
+pm-g14-tip-chromium-ro-loop.log: rc=0  8 passed (56.0s)
+pm-g14-tip-webkit-release-10-1-1.log: rc=0  25 passed (21.8s)
+pm-g14-tip-webkit-release-10-1-2.log: rc=0  54 passed (1.1m)
+pm-g14-tip-webkit-release-10-1-3.log: rc=1  1 failed; 2 skipped; 57 passed (2.3m)
+pm-g14-tip-webkit-release-10-1-4.log: rc=0  8 skipped; 15 passed (20.5s)
+pm-g14-tip-webkit-release-10-1-5.log: rc=0  109 passed (13.6m)
+pm-g14-tip-webkit-release-11-0-1.log: rc=0  9 passed (12.5s)
+pm-g14-tip-webkit-release-11-0-2.log: rc=1  7 failed; 3 skipped; 44 passed (5.5m)
+pm-g14-tip-webkit-ro-loop.log: rc=0  4 passed (29.1s)
+
+chromium-headless-new: 338 tests on the tip (334 on master); new failures 63, failing on both 0, passing only on the tip 0, flaky on the tip 0, not on master 4
+    NEW  release-10-1-5.spec.ts:217  coarse phone › g1 rest dock at 390: one corner = half its height, nothing to scroll, pointer off and on the trailing seat
+    NEW  release-10-1-5.spec.ts:217  coarse phone › g1 rest dock at 844: one corner = half its height, nothing to scroll, pointer off and on the trailing seat
+    NEW  release-10-1-5.spec.ts:647  critique 2, coarse phone › e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner
+    NEW  release-10-1-5.spec.ts:647  critique 2, coarse phone › e1 at 844: a label-wide tab under the pointer gives the run no reach and cuts no corner
+    NEW  release-10-1-5.spec.ts:732  critique 2, coarse phone › e4 at 390: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring
+    NEW  release-10-1-5.spec.ts:1228  critique 5, coarse phone › k3 at 320: a capped dock whose seats all show holds the fit law and rests round
+    NEW  release-10-1-5.spec.ts:1319  critique 6, coarse phone › l1 a cap lifted under a run scrolled to its end rests round (icon,icon,icon,icon,icon,icon)
+    NEW  release-10-1-5.spec.ts:1319  critique 6, coarse phone › l1 a cap lifted under a run scrolled to its end rests round (tab:Home,icon,icon,icon,tab:Settings)
+    NEW  release-10-1-5.spec.ts:1319  critique 6, coarse phone › l1 a cap lifted under a run scrolled to its mid rests round (icon,icon,icon,icon,icon,icon)
+    NEW  release-10-1-5.spec.ts:1319  critique 6, coarse phone › l1 a cap lifted under a run scrolled to its mid rests round (tab:Home,icon,icon,icon,tab:Settings)
+    NEW  release-10-1-5.spec.ts:1352  critique 6, coarse phone › l1 a vertical run's stage grown under a run scrolled to its end rests round
+    NEW  release-10-1-5.spec.ts:1336  critique 6, coarse phone › l1 a viewport resize 390 → 844 under a run scrolled to its end rests round
+    NEW  release-10-1-5.spec.ts:1424  critique 7, coarse phone › m1 at 1440: a collapse from a run scrolled to its end seals round
+    NEW  release-10-1-5.spec.ts:1424  critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its end seals round
+    NEW  release-10-1-5.spec.ts:1424  critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its mid seals round
+    NEW  release-10-1-5.spec.ts:1453  critique 7, coarse phone › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge
+    NEW  release-10-1-5.spec.ts:1549  critique 7, coarse phone › m3 O-162 the folded summary's ring follows the pill after Escape
+    NEW  release-10-1-5.spec.ts:1474  critique 7, coarse phone › m4 at 1440: a layered overflowing run rests at its start, the leading corner round
+    NEW  release-10-1-5.spec.ts:1474  critique 7, coarse phone › m4 at 390: a layered overflowing run rests at its start, the leading corner round
+    NEW  release-10-1-5.spec.ts:647  e1 at 1440: a label-wide tab under the pointer gives the run no reach and cuts no corner
+    NEW  release-10-1-5.spec.ts:647  e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner
+    NEW  release-10-1-5.spec.ts:732  e4 at 1440: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring
+    NEW  release-10-1-5.spec.ts:2275  fix 11, coarse phone › s1 O-205 at 390: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run
+    NEW  release-10-1-5.spec.ts:2384  fix 11, coarse phone › s2 O-201 at 390: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing 
+    NEW  release-10-1-5.spec.ts:2424  fix 12, coarse phone › t1 O-201 vertical: through the fit edge the end seats keep their whole ring, bounded in the yield band
+    NEW  release-10-1-5.spec.ts:2424  fix 12, desktop › t1 O-201 vertical: through the fit edge the end seats keep their whole ring, bounded in the yield band
+    NEW  release-10-1-5.spec.ts:294  g1 an overflowing run at scroll 0: the leading cap rests at half the block extent, a length; the trailing cap is cut
+    NEW  release-10-1-5.spec.ts:217  g1 rest dock at 1280: one corner = half its height, nothing to scroll, pointer off and on the trailing seat
+    NEW  release-10-1-5.spec.ts:318  g2 collapsed: the plate is a circle, half its extent on both axes
+    NEW  release-10-1-5.spec.ts:336  g2 expanded (collapsible), each layer and input mode hold g1
+    NEW  release-10-1-5.spec.ts:849  h1 at 2x › h1 cockpit at 390: a seat cut by the trailing clip paints nothing past the plate's corner arc
+    NEW  release-10-1-5.spec.ts:849  h1 at 2x › h1 house at 390: a seat cut by the trailing clip paints nothing past the plate's corner arc
+    NEW  release-10-1-5.spec.ts:999  h4 with no ResizeObserver the plate rests at half its block extent
+    NEW  release-10-1-5.spec.ts:1228  k3 at 320: a capped dock whose seats all show holds the fit law and rests round
+    NEW  release-10-1-5.spec.ts:1319  l1 a cap lifted under a run scrolled to its end rests round (icon,icon,icon,icon,icon,icon)
+    NEW  release-10-1-5.spec.ts:1319  l1 a cap lifted under a run scrolled to its end rests round (tab:Home,icon,icon,icon,tab:Settings)
+    NEW  release-10-1-5.spec.ts:1319  l1 a cap lifted under a run scrolled to its mid rests round (icon,icon,icon,icon,icon,icon)
+    NEW  release-10-1-5.spec.ts:1319  l1 a cap lifted under a run scrolled to its mid rests round (tab:Home,icon,icon,icon,tab:Settings)
+    NEW  release-10-1-5.spec.ts:1352  l1 a vertical run's stage grown under a run scrolled to its end rests round
+    NEW  release-10-1-5.spec.ts:1336  l1 a viewport resize 390 → 844 under a run scrolled to its end rests round
+    NEW  release-10-1-5.spec.ts:1424  m1 at 1440: a collapse from a run scrolled to its end seals round
+    NEW  release-10-1-5.spec.ts:1424  m1 at 390: a collapse from a run scrolled to its end seals round
+    NEW  release-10-1-5.spec.ts:1424  m1 at 390: a collapse from a run scrolled to its mid seals round
+    NEW  release-10-1-5.spec.ts:1453  m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge
+    NEW  release-10-1-5.spec.ts:1549  m3 O-162 the folded summary's ring follows the pill after Escape
+    NEW  release-10-1-5.spec.ts:1474  m4 at 1440: a layered overflowing run rests at its start, the leading corner round
+    NEW  release-10-1-5.spec.ts:1474  m4 at 390: a layered overflowing run rests at its start, the leading corner round
+    NEW  release-10-1-5.spec.ts:2081  q1 O-186 at 1440: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage
+    NEW  release-10-1-5.spec.ts:2081  q1 O-186 at 390: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage
+    NEW  release-10-1-5.spec.ts:2275  s1 O-205 at 1440: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run
+    NEW  release-10-1-5.spec.ts:2384  s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round
+    NEW  release-11-0-1.spec.ts:115  o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round
+    NEW  release-11-0-1.spec.ts:105  o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round
+    NEW  release-11-0-1.spec.ts:126  o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round
+    NEW  release-11-0-1.spec.ts:142  o3 every frame of the expand and of the collapse paints a round end
+    NEW  release-11-0-2.spec.ts:667  fill · the light scheme's seat fills are the plate rungs
+    NEW  release-11-0-2.spec.ts:1501  fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 1440
+    NEW  release-11-0-2.spec.ts:1501  fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 390
+    NEW  release-11-0-2.spec.ts:1501  fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 1440
+    NEW  release-11-0-2.spec.ts:1501  fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 390
+    NEW  release-11-0-2.spec.ts:702  fold · an idle fold lays out once per morph frame on a scrolling page
+    NEW  release-11-0-2.spec.ts:1126  rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate
+    NEW  release-11-0-2.spec.ts:1407  transition · a control slotted into a dock's run keeps its own transition
+    tip-only pass release-10-1-2.spec.ts:502  RU-35 · horizontal · the outputs read the root's extents after an unfold and after a fold
+    tip-only pass release-10-1-2.spec.ts:502  RU-35 · vertical · the outputs read the root's extents after an unfold and after a fold
+    tip-only pass release-10-1-5.spec.ts:1228  critique 5, coarse phone › k3 at 306, unsized tab glyphs: a capped dock whose seats all show holds the fit law and rests
+    tip-only fail release-10-1-5.spec.ts:1228  k3 at 306, unsized tab glyphs: a capped dock whose seats all show holds the fit law and rests round
+coarse-touch: 338 tests on the tip (334 on master); new failures 64, failing on both 0, passing only on the tip 2, flaky on the tip 0, not on master 4
+    NEW  release-10-1-5.spec.ts:217  coarse phone › g1 rest dock at 390: one corner = half its height, nothing to scroll, pointer off and on the trailing seat
+    NEW  release-10-1-5.spec.ts:217  coarse phone › g1 rest dock at 844: one corner = half its height, nothing to scroll, pointer off and on the trailing seat
+    NEW  release-10-1-5.spec.ts:647  critique 2, coarse phone › e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner
+    NEW  release-10-1-5.spec.ts:647  critique 2, coarse phone › e1 at 844: a label-wide tab under the pointer gives the run no reach and cuts no corner
+    NEW  release-10-1-5.spec.ts:732  critique 2, coarse phone › e4 at 390: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring
+    NEW  release-10-1-5.spec.ts:1228  critique 5, coarse phone › k3 at 320: a capped dock whose seats all show holds the fit law and rests round
+    NEW  release-10-1-5.spec.ts:1319  critique 6, coarse phone › l1 a cap lifted under a run scrolled to its end rests round (icon,icon,icon,icon,icon,icon)
+    NEW  release-10-1-5.spec.ts:1319  critique 6, coarse phone › l1 a cap lifted under a run scrolled to its end rests round (tab:Home,icon,icon,icon,tab:Settings)
+    NEW  release-10-1-5.spec.ts:1319  critique 6, coarse phone › l1 a cap lifted under a run scrolled to its mid rests round (icon,icon,icon,icon,icon,icon)
+    NEW  release-10-1-5.spec.ts:1319  critique 6, coarse phone › l1 a cap lifted under a run scrolled to its mid rests round (tab:Home,icon,icon,icon,tab:Settings)
+    NEW  release-10-1-5.spec.ts:1352  critique 6, coarse phone › l1 a vertical run's stage grown under a run scrolled to its end rests round
+    NEW  release-10-1-5.spec.ts:1336  critique 6, coarse phone › l1 a viewport resize 390 → 844 under a run scrolled to its end rests round
+    NEW  release-10-1-5.spec.ts:1424  critique 7, coarse phone › m1 at 1440: a collapse from a run scrolled to its end seals round
+    NEW  release-10-1-5.spec.ts:1424  critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its end seals round
+    NEW  release-10-1-5.spec.ts:1424  critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its mid seals round
+    NEW  release-10-1-5.spec.ts:1453  critique 7, coarse phone › m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge
+    NEW  release-10-1-5.spec.ts:1549  critique 7, coarse phone › m3 O-162 the folded summary's ring follows the pill after Escape
+    NEW  release-10-1-5.spec.ts:1474  critique 7, coarse phone › m4 at 1440: a layered overflowing run rests at its start, the leading corner round
+    NEW  release-10-1-5.spec.ts:1474  critique 7, coarse phone › m4 at 390: a layered overflowing run rests at its start, the leading corner round
+    NEW  release-10-1-5.spec.ts:647  e1 at 1440: a label-wide tab under the pointer gives the run no reach and cuts no corner
+    NEW  release-10-1-5.spec.ts:647  e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner
+    NEW  release-10-1-5.spec.ts:732  e4 at 1440: a run whose seats all show, capped under its reserve, holds the fit law and keeps the end seat's ring
+    NEW  release-10-1-5.spec.ts:2275  fix 11, coarse phone › s1 O-205 at 390: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run
+    NEW  release-10-1-5.spec.ts:2384  fix 11, coarse phone › s2 O-201 at 390: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing 
+    NEW  release-10-1-5.spec.ts:2424  fix 12, coarse phone › t1 O-201 vertical: through the fit edge the end seats keep their whole ring, bounded in the yield band
+    NEW  release-10-1-5.spec.ts:2424  fix 12, desktop › t1 O-201 vertical: through the fit edge the end seats keep their whole ring, bounded in the yield band
+    NEW  release-10-1-5.spec.ts:294  g1 an overflowing run at scroll 0: the leading cap rests at half the block extent, a length; the trailing cap is cut
+    NEW  release-10-1-5.spec.ts:217  g1 rest dock at 1280: one corner = half its height, nothing to scroll, pointer off and on the trailing seat
+    NEW  release-10-1-5.spec.ts:318  g2 collapsed: the plate is a circle, half its extent on both axes
+    NEW  release-10-1-5.spec.ts:336  g2 expanded (collapsible), each layer and input mode hold g1
+    NEW  release-10-1-5.spec.ts:849  h1 at 2x › h1 cockpit at 390: a seat cut by the trailing clip paints nothing past the plate's corner arc
+    NEW  release-10-1-5.spec.ts:849  h1 at 2x › h1 house at 390: a seat cut by the trailing clip paints nothing past the plate's corner arc
+    NEW  release-10-1-5.spec.ts:999  h4 with no ResizeObserver the plate rests at half its block extent
+    NEW  release-10-1-5.spec.ts:1228  k3 at 320: a capped dock whose seats all show holds the fit law and rests round
+    NEW  release-10-1-5.spec.ts:1319  l1 a cap lifted under a run scrolled to its end rests round (icon,icon,icon,icon,icon,icon)
+    NEW  release-10-1-5.spec.ts:1319  l1 a cap lifted under a run scrolled to its end rests round (tab:Home,icon,icon,icon,tab:Settings)
+    NEW  release-10-1-5.spec.ts:1319  l1 a cap lifted under a run scrolled to its mid rests round (icon,icon,icon,icon,icon,icon)
+    NEW  release-10-1-5.spec.ts:1319  l1 a cap lifted under a run scrolled to its mid rests round (tab:Home,icon,icon,icon,tab:Settings)
+    NEW  release-10-1-5.spec.ts:1352  l1 a vertical run's stage grown under a run scrolled to its end rests round
+    NEW  release-10-1-5.spec.ts:1336  l1 a viewport resize 390 → 844 under a run scrolled to its end rests round
+    NEW  release-10-1-5.spec.ts:1424  m1 at 1440: a collapse from a run scrolled to its end seals round
+    NEW  release-10-1-5.spec.ts:1424  m1 at 390: a collapse from a run scrolled to its end seals round
+    NEW  release-10-1-5.spec.ts:1424  m1 at 390: a collapse from a run scrolled to its mid seals round
+    NEW  release-10-1-5.spec.ts:1453  m2 a vertical run whose seats fit scrolls at most the ring floor's shortfall, across the fit edge
+    NEW  release-10-1-5.spec.ts:1549  m3 O-162 the folded summary's ring follows the pill after Escape
+    NEW  release-10-1-5.spec.ts:1474  m4 at 1440: a layered overflowing run rests at its start, the leading corner round
+    NEW  release-10-1-5.spec.ts:1474  m4 at 390: a layered overflowing run rests at its start, the leading corner round
+    NEW  release-10-1-5.spec.ts:2081  q1 O-186 at 1440: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage
+    NEW  release-10-1-5.spec.ts:2081  q1 O-186 at 390: a fit-content static dock under hover on every control keeps one rest corner, half its cross extent, no percentage
+    NEW  release-10-1-5.spec.ts:2275  s1 O-205 at 1440: no collapsed dock has a scrolling run, and a hidden wider face adds nothing to a fitting run
+    NEW  release-10-1-5.spec.ts:2384  s2 O-201 at 1440: at every cap through the fit edge the first and end seats keep their whole ring, and a run that hides nothing rests round
+    NEW  release-11-0-1.spec.ts:115  o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round
+    NEW  release-11-0-1.spec.ts:105  o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round
+    NEW  release-11-0-1.spec.ts:126  o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round
+    NEW  release-11-0-1.spec.ts:142  o3 every frame of the expand and of the collapse paints a round end
+    NEW  release-11-0-2.spec.ts:631  fill · in dark a hovered, pressed or selected seat lifts the plate (live)
+    NEW  release-11-0-2.spec.ts:631  fill · in dark a hovered, pressed or selected seat lifts the plate (static)
+    NEW  release-11-0-2.spec.ts:1501  fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 1440
+    NEW  release-11-0-2.spec.ts:1501  fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 390
+    NEW  release-11-0-2.spec.ts:1501  fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 1440
+    NEW  release-11-0-2.spec.ts:1501  fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 390
+    NEW  release-11-0-2.spec.ts:702  fold · an idle fold lays out once per morph frame on a scrolling page
+    NEW  release-11-0-2.spec.ts:1100  rail · a start-anchored rail's close holds its top edge and crest, and ends on the disc
+    NEW  release-11-0-2.spec.ts:1126  rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate
+    tip-only pass release-10-1-2.spec.ts:502  RU-35 · horizontal · the outputs read the root's extents after an unfold and after a fold
+    tip-only pass release-10-1-2.spec.ts:502  RU-35 · vertical · the outputs read the root's extents after an unfold and after a fold
+    tip-only pass release-10-1-5.spec.ts:1228  critique 5, coarse phone › k3 at 306, unsized tab glyphs: a capped dock whose seats all show holds the fit law and rests
+    tip-only pass release-10-1-5.spec.ts:1228  k3 at 306, unsized tab glyphs: a capped dock whose seats all show holds the fit law and rests round
+webkit: 338 tests on the tip (334 on master); new failures 8, failing on both 0, passing only on the tip 0, flaky on the tip 0, not on master 4
+    NEW  release-10-1-3.spec.ts:390  10.1.3 · 390 · bottom-anchored reversal › D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate
+    NEW  release-11-0-2.spec.ts:667  fill · the light scheme's seat fills are the plate rungs
+    NEW  release-11-0-2.spec.ts:1501  fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 1440
+    NEW  release-11-0-2.spec.ts:1501  fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 390
+    NEW  release-11-0-2.spec.ts:1501  fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 1440
+    NEW  release-11-0-2.spec.ts:1501  fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 390
+    NEW  release-11-0-2.spec.ts:1126  rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate
+    NEW  release-11-0-2.spec.ts:1407  transition · a control slotted into a dock's run keeps its own transition
+    tip-only pass release-10-1-2.spec.ts:502  RU-35 · horizontal · the outputs read the root's extents after an unfold and after a fold
+    tip-only pass release-10-1-2.spec.ts:502  RU-35 · vertical · the outputs read the root's extents after an unfold and after a fold
+    tip-only pass release-10-1-5.spec.ts:1228  critique 5, coarse phone › k3 at 306, unsized tab glyphs: a capped dock whose seats all show holds the fit law and rests
+    tip-only pass release-10-1-5.spec.ts:1228  k3 at 306, unsized tab glyphs: a capped dock whose seats all show holds the fit law and rests round
+pm-g14-master-runmark.log Test Files  1 passed (1) | Tests  9 passed (9) | rc=0
+pm-units.log ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯ | Test Files  5 failed | 84 passed | 4 skipped (93) | Tests  6 failed | 879 passed | 3 expected fail | 14 skipped (902) | rc=1
