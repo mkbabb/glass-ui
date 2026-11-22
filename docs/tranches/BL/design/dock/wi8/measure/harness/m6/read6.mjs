@@ -119,7 +119,10 @@ for (const file of files) {
     res.curve = +over.toFixed(2);
     if (over > 0.5) res.viol.push(`content ${over.toFixed(2)} px outside the plate's curve (${overAt})`);
     // held: W-I.8 "From rest": in the first row of a window (the row [data-morphing] appears),
-    // every unit above 0.1 in that row and the row before moves no more than 0.5 px.
+    // every unit above 0.1 in that row and the row before moves no more than 0.5 px. RU-101 as
+    // amended for C8-M2: the clause reads the seat's visible extent (`vb`, its box cut by every
+    // clip) where the row has it, so a seat cut to the extent it painted is read where it paints.
+    const ext = (e) => (Array.isArray(e.vb) ? e.vb : [e.x, e.y, e.x + e.w, e.y + e.h]);
     {
         let worst = 0, at = "";
         for (let i = 1; i < rows.length; i++) {
@@ -132,7 +135,8 @@ for (const file of files) {
                 const a = rows[i - 1].el[k], b = rows[i].el[k];
                 if (!a || !b || a.vis === 0 || b.vis === 0 || a.vb === 0 || b.vb === 0 || !a.w || !b.w) continue;
                 if (!(num(a.eop) > 0.1) || !(num(b.eop) > 0.1)) continue;
-                const m = Math.max(Math.abs(b.x - a.x), Math.abs(b.y - a.y), Math.abs(b.x + b.w - a.x - a.w), Math.abs(b.y + b.h - a.y - a.h));
+                const [A, B] = [ext(a), ext(b)];
+                const m = Math.max(Math.abs(B[0] - A[0]), Math.abs(B[1] - A[1]), Math.abs(B[2] - A[2]), Math.abs(B[3] - A[3]));
                 if (m > worst) { worst = m; at = `${k} row ${i}`; }
             }
         }

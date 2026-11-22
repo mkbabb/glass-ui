@@ -50,6 +50,9 @@ try {
             const reasons = {}; const misses = [];
             for (const row of r) for (const m of row.marks) { if (m.startsWith("dock:read")) { const k = m.slice(10); reasons[k] = (reasons[k] ?? 0) + 1; } if (m.startsWith("dock:ro-miss") && misses.length < 12) misses.push(m.slice(13, 400)); }
             out.fine = { frames: r.length, morphFrames: r.filter((x) => x.morph).length, plateFrames: r.filter((x) => x.plate).length, layerFrames: r.filter((x) => x.layers).length, writeMarks: r.reduce((s, x) => s + x.marks.filter((m) => m === "dock:write").length, 0), layouts: count, reasons, misses, sample: r.filter((x) => x.plate).slice(0, 6).map((x) => ({ t: x.t, morph: x.morph, cls: x.cls, marks: x.marks.slice(0, 4), was: x.plateWas?.slice(0, 300), now: x.plateNow?.slice(0, 300) })), late: r.filter((x) => x.plate && !x.morph).slice(-4).map((x) => ({ t: x.t, cls: x.cls, marks: x.marks.slice(0, 4), was: x.plateWas?.slice(0, 300), now: x.plateNow?.slice(0, 300) })) };
+            // The frames whose plate moved without the morph scalar (the travel's settle): each one's inset.
+            out.fine.tail = r.filter((x) => x.plate && !x.morph).map((x) => ({ t: x.t, now: (x.plateNow ?? "").replace(/border-radius:[^;]*;?/, "").trim() }));
+            console.log("tail", out.fine.tail.length, JSON.stringify(out.fine.tail.map((x) => x.now.replace(/inset: /, ""))).slice(0, 1500));
             console.log(JSON.stringify({ frames: out.fine.frames, morphFrames: out.fine.morphFrames, plateFrames: out.fine.plateFrames, layerFrames: out.fine.layerFrames, writeMarks: out.fine.writeMarks, layouts: count, reasons }));
             console.log("misses", JSON.stringify(misses.slice(0, 6)));
             console.log("late", JSON.stringify(out.fine.late).slice(0, 2500));

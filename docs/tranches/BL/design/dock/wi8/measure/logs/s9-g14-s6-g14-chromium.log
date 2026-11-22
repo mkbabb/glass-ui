@@ -1,0 +1,33 @@
+
+Running 6 tests using 1 worker
+
+  ✘  1 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:727:1 › fold · an idle fold lays out once per morph frame on a scrolling page (8.1s)
+  ✓  2 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1128:1 › rail · a start-anchored rail's close holds its top edge and crest, and ends on the disc (2.5s)
+  ✓  3 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1157:1 › rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate (1.5s)
+  -  4 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:727:1 › fold · an idle fold lays out once per morph frame on a scrolling page
+  -  5 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1128:1 › rail · a start-anchored rail's close holds its top edge and crest, and ends on the disc
+  -  6 [coarse-touch] › tests-visual/release-11-0-2.spec.ts:1157:1 › rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate
+
+
+  1) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:727:1 › fold · an idle fold lays out once per morph frame on a scrolling page 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 49
+    Received:    50
+
+      764 |     expect(r.morphFrames).toBeGreaterThan(10);
+      765 |     // One layout per morph frame, and a few for the fold's arm and settle.
+    > 766 |     expect(count).toBeLessThanOrEqual(r.morphFrames + 12);
+          |                   ^
+      767 | });
+      768 |
+      769 | // A click Popover with `keep-dock-open`, rendered in the dock's own slot content: opened
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-11-0-2.spec.ts:766:19
+
+    Error Context: tests-visual/test-results/release-11-0-2-fold-·-an-i-ccd3a-h-frame-on-a-scrolling-page-chromium-headless-new/error-context.md
+
+  1 failed
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:727:1 › fold · an idle fold lays out once per morph frame on a scrolling page 
+  3 skipped
+  2 passed (13.3s)

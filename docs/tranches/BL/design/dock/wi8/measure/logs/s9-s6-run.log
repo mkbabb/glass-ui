@@ -1,0 +1,34 @@
+== s6 chromium start 2026-11-22 13:00:39 (load { 7.72 8.16 8.09 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+probes chromium done
+h1 chromium rc=0
+idle chromium rc=0
+pw s6-g14 chromium rc=1
+applied s6-words - RU-101 plant: the grown seat's width glide removed (no cut)
+reverted s6-words
+applied s6-empty - RU-90 (O-262) plant: an empty region carried from its empty box
+pw s6-empty chromium rc=1
+reverted s6-empty
+applied s6-nogate - RU-89 plant: the press gate removed from the persistent seat's fold
+reverted s6-nogate
+applied s6-afterseat - RU-89 plant: the persistent seat's branch removed (the leave lingers)
+reverted s6-afterseat
+s6 chromium done
+== s6 chromium rc=0 end 2026-11-22 13:02:46 (load { 6.83 7.63 7.88 })
+== s6 webkit start 2026-11-22 13:02:46 (load { 6.83 7.63 7.88 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+probes webkit done
+h1 webkit rc=0
+pw s6-g14 webkit rc=0
+applied s6-words - RU-101 plant: the grown seat's width glide removed (no cut)
+reverted s6-words
+applied s6-empty - RU-90 (O-262) plant: an empty region carried from its empty box
+pw s6-empty webkit rc=1
+reverted s6-empty
+applied s6-nogate - RU-89 plant: the press gate removed from the persistent seat's fold
+reverted s6-nogate
+applied s6-afterseat - RU-89 plant: the persistent seat's branch removed (the leave lingers)
+reverted s6-afterseat
+s6 webkit done
+== s6 webkit rc=0 end 2026-11-22 13:04:37 (load { 7.57 7.85 7.94 })
+== s6 ALL DONE 2026-11-22 13:04:37

@@ -726,6 +726,9 @@ test("fill · the light scheme's seat fills are the dock's ink at the ruled step
 // layouts (CDP `LayoutCount`); WebKit has no counter.
 test("fold · an idle fold lays out once per morph frame on a scrolling page", async ({ page }, info) => {
     test.skip(info.project.name.startsWith("webkit"), "layouts are counted over CDP");
+    // W-I.8 RU-90 (MEASURE-9 H9): the page's dock has no #collapsed and no persistent seat, so under a pointer that
+    // cannot hover it rests open (R-2, RU-43) and no idle fold exists to count.
+    test.skip(COARSE.has(info.project.name), "a coarse pointer's dock with nothing to tap rests open");
     await page.setViewportSize({ width: 1440, height: 900 });
     const cdp = await page.context().newCDPSession(page);
     await cdp.send("Performance.enable");

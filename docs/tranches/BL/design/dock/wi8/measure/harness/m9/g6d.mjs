@@ -12,7 +12,11 @@ for (const f of process.argv.slice(2)) {
     const marks = d.marks ?? [];
     const presses = marks.filter((m) => m.name.startsWith("press-"));
     const t0 = presses[0]?.t ?? 0;
-    const tEnd = marks.find((m) => m.name === "lift-home")?.t ?? Infinity;
+    // RU-89: the cell reads the press "to the lift", the last press's pointerup (the sampler's arm time plus the
+    // event's offset), not the lift mark a few ms after it: a fold that starts after the lift is (k2)'s.
+    const last = presses[presses.length - 1];
+    const up = last && last.ev && Number.isFinite(last.ev.pointerup) && Number.isFinite(last.sentAgo) ? last.t - last.sentAgo + last.ev.pointerup : null;
+    const tEnd = up ?? marks.find((m) => m.name === "lift-home")?.t ?? Infinity;
     const rows = d.rows.filter((r) => r.t >= t0 && r.t <= tEnd);
     const at = (t) => d.rows.find((r) => r.t >= t) ?? d.rows[d.rows.length - 1];
     const folded = (r) => /collapsed/.test(r?.el.dock?.["a:class"] ?? "");

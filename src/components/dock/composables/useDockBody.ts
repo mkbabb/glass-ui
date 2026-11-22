@@ -155,6 +155,11 @@ export interface UseDockBodyOptions {
 /** The dock's effective CSS zoom (an ancestor's `zoom`): boxes are read in the viewport's
  *  px and written in the dock's own, so every read is divided by it (10.1.3 critique-7). */
 let Z = 1;
+/** O-268 (RU-90): the page's scroll, which a dock in a fixed layer does not move with: its boxes are read in the
+ *  viewport's coordinates, so a page scrolling under it is no change of its place. Set with Z at each sync. */
+let FIXED = false;
+const pageX = () => (FIXED ? 0 : scrollX / Z);
+const pageY = () => (FIXED ? 0 : scrollY / Z);
 function bcr(el: Element): { left: number; top: number; right: number; bottom: number; width: number; height: number } {
     const r = el.getBoundingClientRect();
     if (Z === 1) return r;
@@ -162,8 +167,8 @@ function bcr(el: Element): { left: number; top: number; right: number; bottom: n
 }
 function rectOf(el: Element): Box {
     const r = bcr(el);
-    const sx = scrollX / Z;
-    const sy = scrollY / Z;
+    const sx = pageX();
+    const sy = pageY();
     return { l: r.left + sx, t: r.top + sy, r: r.right + sx, b: r.bottom + sy };
 }
 function pxOf(v: string, basis: number): number {
@@ -189,7 +194,9 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
     // changes carries a translate from where it painted to 0.
     // Each seat's layout box relative to the run's border box at scroll (sx, sy), so a
     // seat the host removes can be held where it painted (R-3, a control that leaves).
-    const seats = new Map<HTMLElement, { lx: number; ly: number; x: Q; y: Q; rx: number; ry: number; sx: number; sy: number; w: number; h: number; ox: number; oy: number }>();
+    // RU-101: `lw` is the seat's layout extent on the dock's axis and `cw` its painted minus layout extent, held
+    // under 0 while a seat that grew is cut to the extent it painted.
+    const seats = new Map<HTMLElement, { lx: number; ly: number; x: Q; y: Q; rx: number; ry: number; sx: number; sy: number; w: number; h: number; ox: number; oy: number; lw: number; cw: Q }>();
     // Controls the host removed from the open run, held by glass until the landing.
     const ghosts = new Set<HTMLElement>();
     let faces: FaceTrack[] = [];
@@ -212,6 +219,15 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
     let scrollRest: number | null = null;
     let savedScroll: number | null = null;
     let closedFace: HTMLElement | null = null;
+    // O-268: whether the root or an ancestor is `position: fixed`, read once and again on a resize.
+    let fixedLayer: boolean | null = null;
+    function readLayer(el: HTMLElement, again: boolean): void {
+        if (fixedLayer === null || again) {
+            fixedLayer = false;
+            for (let a: Element | null = el; a && !fixedLayer; a = a.parentElement) fixedLayer = getComputedStyle(a).position === "fixed";
+        }
+        FIXED = fixedLayer;
+    }
     // Loop state.
     let raf: number | null = null;
     let last: number | null = null;
@@ -269,6 +285,8 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         place = true,
     ): void {
         const g = regions.get(region);
+        const host = root();
+        if (host) readLayer(host, false);
         if (leave && place) {
             const r = rectOf(leave);
             const gr = g ? { cx: g.cx + g.tx, cy: g.cy + g.ty } : { cx: (r.l + r.r) / 2, cy: (r.t + r.b) / 2 };
@@ -420,8 +438,19 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
                 if (anchorX) sx = anchorX;
                 if (anchorY) sy = anchorY;
             }
-            t.x.d = t.cx + t.x.d + (sx * t.w) / 2 - (lcx + (sx * nw) / 2);
-            t.y.d = t.cy + t.y.d + (sy * t.h) / 2 - (lcy + (sy * nh) / 2);
+            if (t.w === 0 && t.h === 0 && layout) {
+                // O-262 (RU-90): a region with no box when the travel starts (a foot its host shows only
+                // open) painted nowhere to be carried from: it rides the root's anchored point, laid out
+                // where it rests, and the plate's moving edge uncovers it.
+                const at = (a: number, s: Q, e: Q) => (a < 0 ? s : a > 0 ? e : { d: (s.d + e.d) / 2, v: (s.v + e.v) / 2 });
+                const ax = at(anchorX, edge.l, edge.r);
+                const ay = at(anchorY, edge.t, edge.b);
+                (t.x.d = ax.d), (t.x.v = ax.v);
+                (t.y.d = ay.d), (t.y.v = ay.v);
+            } else {
+                t.x.d = t.cx + t.x.d + (sx * t.w) / 2 - (lcx + (sx * nw) / 2);
+                t.y.d = t.cy + t.y.d + (sy * t.h) / 2 - (lcy + (sy * nh) / 2);
+            }
             t.cx = lcx;
             t.cy = lcy;
             t.w = nw;
@@ -440,8 +469,8 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         const rr = bcr(run);
         // The run's origin without its region's written translate: where it is laid out.
         const lane = regions.get("layers");
-        const ox = rr.left + scrollX / Z - (lane ? lane.tx : 0);
-        const oy = rr.top + scrollY / Z - (lane ? lane.ty : 0);
+        const ox = rr.left + pageX() - (lane ? lane.tx : 0);
+        const oy = rr.top + pageY() - (lane ? lane.ty : 0);
         // A seat's place is in its region, not in the run: RU-27's whole-seat window centres
         // the run in the region, so when the flag comes or goes the run's own box moves and
         // every seat with it; that move is carried like any other change of place.
@@ -453,6 +482,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             seen.add(child);
             const lx = child.offsetLeft + inX;
             const ly = child.offsetTop + inY;
+            const lw = o.vertical() ? child.offsetHeight : child.offsetWidth;
             // The box without the translate the loop wrote, relative to the run.
             const cr = bcr(child);
             const tr = seats.get(child);
@@ -468,7 +498,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             };
             const t = tr;
             if (!t) {
-                seats.set(child, { lx, ly, x: { d: 0, v: 0 }, y: { d: 0, v: 0 }, ...rel });
+                seats.set(child, { lx, ly, x: { d: 0, v: 0 }, y: { d: 0, v: 0 }, ...rel, lw, cw: { d: 0, v: 0 } });
                 ro?.observe(child);
                 continue;
             }
@@ -479,12 +509,21 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
                 t.y.d += t.ly - ly;
                 movedAny = true;
             }
+            // RU-101: a seat that grows is cut to the extent it painted, which glides to its new one with
+            // its neighbour's carried edge; a seat that shrinks has nothing painted past its box to hold.
+            if (carry && Math.abs(t.lw - lw) > 0.01) {
+                t.cw.d = Math.min(0, t.cw.d + t.lw - lw);
+                if (t.cw.d === 0) t.cw.v = 0;
+                movedAny = true;
+            }
             t.lx = lx;
             t.ly = ly;
+            t.lw = lw;
         }
         for (const [el, t] of seats) {
             if (seen.has(el)) continue;
             el.style.removeProperty("translate");
+            el.style.removeProperty("clip-path");
             seats.delete(el);
             void t;
         }
@@ -608,6 +647,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         const el = root();
         if (!el || !el.isConnected) return;
         Z = (el as HTMLElement & { currentCSSZoom?: number }).currentCSSZoom ?? 1;
+        readLayer(el, reason === "resize");
         const reduce = o.reducedMotion();
         const prevPainted = painted();
         // RU-29: the trigger frame reads the new layout once. The flags that change layout
@@ -896,7 +936,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
     function isLive(): boolean {
         for (const q of Object.values(edge)) if (q.d !== 0) return true;
         for (const t of regions.values()) if (t.x.d !== 0 || t.y.d !== 0) return true;
-        for (const t of seats.values()) if (t.x.d !== 0 || t.y.d !== 0) return true;
+        for (const t of seats.values()) if (t.x.d !== 0 || t.y.d !== 0 || t.cw.d !== 0) return true;
         if (scrollQ.d !== 0 || eq.d !== 0) return true;
         for (const f of faces) if (f.q && (f.q.x.d !== 0 || f.q.y.d !== 0)) return true;
         // The exchange coordinate moves only a face that is not a posture face in a
@@ -924,6 +964,10 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
                 if (Math.abs(t.x.d) < SNAP_PX && Math.abs(t.x.v) < SNAP_V) (t.x.d = 0), (t.x.v = 0);
                 if (Math.abs(t.y.d) < SNAP_PX && Math.abs(t.y.v) < SNAP_V) (t.y.d = 0), (t.y.v = 0);
             }
+            for (const t of seats.values()) {
+                [t.cw.d, t.cw.v] = step(t.cw.d, t.cw.v, dt);
+                if (t.cw.d >= 0 || (Math.abs(t.cw.d) < SNAP_PX && Math.abs(t.cw.v) < SNAP_V)) (t.cw.d = 0), (t.cw.v = 0);
+            }
             for (const f of faces) {
                 if (!f.q) continue;
                 [f.q.x.d, f.q.x.v] = step(f.q.x.d, f.q.x.v, dt);
@@ -936,6 +980,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
                 // geometric quantity is at its rest in this frame.
                 for (const q of Object.values(edge)) (q.d = 0), (q.v = 0);
                 for (const t of [...regions.values(), ...seats.values()]) (t.x.d = t.y.d = t.x.v = t.y.v = 0);
+                for (const t of seats.values()) t.cw.d = t.cw.v = 0;
                 scrollQ.d = scrollQ.v = 0;
                 // R-11: the coordinate runs as a linear clock, whole at 100 ms.
                 eq.d = Math.sign(eq.d) * Math.max(0, Math.abs(eq.d) - dt / 0.1);
@@ -1047,6 +1092,9 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             const y = t.y.d + fy;
             if (x !== 0 || y !== 0) el.style.translate = `${x.toFixed(3)}px ${y.toFixed(3)}px`;
             else if (el.style.translate) el.style.removeProperty("translate");
+            const cut = -t.cw.d;
+            if (cut > 0) el.style.clipPath = o.vertical() ? `inset(0 0 ${cut.toFixed(3)}px 0)` : flip ? `inset(0 0 0 ${cut.toFixed(3)}px)` : `inset(0 ${cut.toFixed(3)}px 0 0)`;
+            else if (el.style.clipPath) el.style.removeProperty("clip-path");
         }
         for (const t of order) {
             t.tx = t.x.d;
@@ -1135,7 +1183,11 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             plate.style.removeProperty("inset");
             plate.style.removeProperty("border-radius");
         }
-        for (const el of seats.keys()) el.style.removeProperty("translate");
+        for (const [el, t] of seats) {
+            el.style.removeProperty("translate");
+            el.style.removeProperty("clip-path");
+            t.cw.d = t.cw.v = 0;
+        }
         const rr = runEl();
         if (rr && scrollRest !== null) writeScroll(rr, scrollRest);
         scrollRest = null;

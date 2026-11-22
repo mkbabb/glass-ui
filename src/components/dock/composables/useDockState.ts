@@ -218,6 +218,8 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
        keyboard focus, with no press holding, expands at once. */
     let press: "down" | "tap" | "compat" | null = null;
     let expandOnPressEnd: "focus" | "hover" | null = null;
+    // RU-89: a leave after a persistent seat's press while the pointer is down folds at the lift.
+    let foldOnPressEnd = false;
     let pressEndTimer: ReturnType<typeof setTimeout> | null = null;
 
     /* A PRESS ON A PERSISTENT SEAT IS THE SEAT'S. The `#persistent` /
@@ -324,6 +326,10 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         cancelLongPress();
         const deferred = seatAct ? null : expandOnPressEnd;
         expandOnPressEnd = null;
+        if (foldOnPressEnd) {
+            foldOnPressEnd = false;
+            if (!pointerInside && state.value === "hover" && keepOpenCount.value === 0) collapse();
+        }
         if (deferred && !isQuiet() && state.value === "collapsed") {
             clearTimer();
             state.value = "hover";
@@ -339,6 +345,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
     /** A press that never resolved is superseded; what it deferred lapses. */
     function dropPress() {
         expandOnPressEnd = null;
+        foldOnPressEnd = false;
         endPress();
     }
 
@@ -641,7 +648,10 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
                     return;
                 if (isTeleportedTarget(e.relatedTarget, dockId)) return;
             }
-            if (afterSeat) collapse();
+            // RU-89: 11.1.0's fold at once after a persistent seat's press, never while a pointer is down
+            // (RU-43): then it waits for the lift.
+            if (afterSeat && pressHolds()) foldOnPressEnd = true;
+            else if (afterSeat) collapse();
             else scheduleCollapse();
         }
         // If pinned, no-op (stays pinned)

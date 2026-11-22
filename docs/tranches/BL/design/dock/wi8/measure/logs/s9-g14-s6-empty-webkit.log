@@ -1,0 +1,30 @@
+
+Running 2 tests using 1 worker
+
+  ✓  1 [webkit] › tests-visual/release-11-0-2.spec.ts:1128:1 › rail · a start-anchored rail's close holds its top edge and crest, and ends on the disc (2.8s)
+  ✘  2 [webkit] › tests-visual/release-11-0-2.spec.ts:1157:1 › rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate (1.7s)
+
+
+  1) [webkit] › tests-visual/release-11-0-2.spec.ts:1157:1 › rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate 
+
+    Error: foot never left of the plate
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 18.5
+    Received:    -72
+
+      1172 |         expect(f.crest[1], "crest never above the plate").toBeGreaterThanOrEqual(f.root[1] - 1.5);
+      1173 |         if (f.foot) {
+    > 1174 |             expect(f.foot[0], "foot never left of the plate").toBeGreaterThanOrEqual(f.root[0] - 1.5);
+           |                                                               ^
+      1175 |             expect(f.foot[1], "foot never above the plate").toBeGreaterThanOrEqual(f.root[1] - 1.5);
+      1176 |         }
+      1177 |     }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-11-0-2.spec.ts:1174:63
+
+    Error Context: tests-visual/test-results/release-11-0-2-rail-·-a-st-96ce3-e-the-foot-inside-the-plate-webkit/error-context.md
+
+  1 failed
+    [webkit] › tests-visual/release-11-0-2.spec.ts:1157:1 › rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate 
+  1 passed (4.9s)
