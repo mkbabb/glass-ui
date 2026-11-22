@@ -1,0 +1,59 @@
+== tip-chromium-phone-0.json 3
+    2 exit      a Tooltip does not open on touch
+    1 form      a menu has no chosen item
+== tip-chromium-phone-1.json 11
+    2 leave     a ContextMenu opens on a long press, which Playwright's touchscreen cannot hold
+    2 leave     a Tooltip does not open on touch
+    1 leave     a dismissed toast is not reopened
+    1 leave     a hover card does not open on touch
+    2 reverse   it does not open on touch
+    3 tooltip   a Tooltip does not open on touch
+== tip-chromium-phone-2.json 3
+    3 standing  a Tooltip does not open on touch
+== tip-chromium-phone-3.json 1
+    1 fade      a Tooltip does not open on touch
+== tip-chromium-desktop-0.json 13
+    1 form      a menu has no chosen item
+    2 glass     reduced transparency is emulated through Chromium's CDP
+    4 glass     the firm plate is the phone form's
+    1 lift      a tap is a touch claim
+    2 round     the touch floor and its shape are a coarse-pointer claim
+    3 sheet     the phone form's, by touch
+== tip-chromium-desktop-1.json 1
+    1 leave     a dismissed toast is not reopened
+== tip-chromium-desktop-2.json 0
+== tip-chromium-desktop-3.json 0
+== tip-webkit-phone-0.json 16
+    2 exit      a Tooltip does not open on touch
+    2 form      Playwright WebKit's touchscreen.tap reaches no outside-press listener, and a Select's trigger is outside its content; the route is read at 1440
+    1 form      Playwright WebKit's touchscreen.tap reaches no outside-press listener; the route is read at 1440
+    1 form      a menu has no chosen item
+    2 glass     reduced transparency is emulated through Chromium's CDP
+    1 routes    Playwright WebKit's touchscreen can tap but not drag
+    2 routes    Playwright WebKit's touchscreen.tap reaches no outside-press listener
+    3 routes    a touch press closes these surfaces through the outside-press listener, which Playwright WebKit's touchscreen.tap does not reach
+    2 sheet     Playwright WebKit's touchscreen can tap but not drag
+== tip-webkit-phone-1.json 11
+    2 leave     a ContextMenu opens on a long press, which Playwright's touchscreen cannot hold
+    2 leave     a Tooltip does not open on touch
+    1 leave     a dismissed toast is not reopened
+    1 leave     a hover card does not open on touch
+    2 reverse   it does not open on touch
+    3 tooltip   a Tooltip does not open on touch
+== tip-webkit-phone-2.json 17
+   14 standing  Playwright WebKit's touchscreen.tap reaches no outside-press listener
+    3 standing  a Tooltip does not open on touch
+== tip-webkit-phone-3.json 2
+    1 fade      a Tooltip does not open on touch
+    1 press     Playwright WebKit's touchscreen taps but cannot hold a press; the press is read at 1440
+== tip-webkit-desktop-0.json 13
+    1 form      a menu has no chosen item
+    2 glass     reduced transparency is emulated through Chromium's CDP
+    4 glass     the firm plate is the phone form's
+    1 lift      a tap is a touch claim
+    2 round     the touch floor and its shape are a coarse-pointer claim
+    3 sheet     the phone form's, by touch
+== tip-webkit-desktop-1.json 1
+    1 leave     a dismissed toast is not reopened
+== tip-webkit-desktop-2.json 0
+== tip-webkit-desktop-3.json 0

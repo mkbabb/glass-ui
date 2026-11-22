@@ -1,0 +1,1339 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "release-11-1-1.config.ts",
+      "--project=webkit-phone",
+      "--workers=1",
+      "-g",
+      "(site|fade|fold|mark|press|still) · "
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/critic-11/logs/red-webkit-phone-3.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5352",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/",
+      "url": "http://localhost:5352",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1-reduce.spec.ts",
+      "file": "release-11-1-1-reduce.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "site · a site's own opacity fade keeps its clock under reduced motion",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1700,
+                  "error": {
+                    "message": "Error: its computed clock {\"duration\":\"0s\",\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"0\u001b[7m.144\u001b[27ms\"\u001b[39m\nReceived: \u001b[31m\"0s\"\u001b[39m",
+                    "stack": "Error: its computed clock {\"duration\":\"0s\",\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"0\u001b[7m.144\u001b[27ms\"\u001b[39m\nReceived: \u001b[31m\"0s\"\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:143:50",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                      "column": 50,
+                      "line": 143
+                    },
+                    "snippet": "  141 |     const at = JSON.stringify({ duration, ...leg });\n  142 |     await info.attach(\"site\", { body: at, contentType: \"application/json\" });\n> 143 |     expect(duration, `its computed clock ${at}`).toBe(\"0.144s\");\n      |                                                  ^\n  144 |     expect(leg.fading, `it fades over more than two frames ${at}`).toBeGreaterThan(2);\n  145 | });\n  146 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                        "column": 50,
+                        "line": 143
+                      },
+                      "message": "Error: its computed clock {\"duration\":\"0s\",\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"0\u001b[7m.144\u001b[27ms\"\u001b[39m\nReceived: \u001b[31m\"0s\"\u001b[39m\n\n  141 |     const at = JSON.stringify({ duration, ...leg });\n  142 |     await info.attach(\"site\", { body: at, contentType: \"application/json\" });\n> 143 |     expect(duration, `its computed clock ${at}`).toBe(\"0.144s\");\n      |                                                  ^\n  144 |     expect(leg.fading, `it fades over more than two frames ${at}`).toBeGreaterThan(2);\n  145 | });\n  146 |\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:143:50"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T09:49:17.668Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "site",
+                      "contentType": "application/json",
+                      "body": "eyJkdXJhdGlvbiI6IjBzIiwiZmFkaW5nIjowLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjAsImJveFN0ZXBzIjowLCJzdGVwcGVkIjpbXSwiZnJvbSI6MSwidG8iOjB9"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/test-results/release-11-1-1-reduce-site-74a9e--clock-under-reduced-motion-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                    "column": 50,
+                    "line": 143
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-04a6e0be209767301f1e",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 132,
+          "column": 1
+        },
+        {
+          "title": "fade · a Popover appears and leaves on a fade",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3056,
+                  "error": {
+                    "message": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":1,\"stepped\":[[14,1,16,132,224,50]],\"from\":1,\"to\":0},\"leave\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m",
+                    "stack": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":1,\"stepped\":[[14,1,16,132,224,50]],\"from\":1,\"to\":0},\"leave\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n    at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:103:76)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:228:9",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                      "column": 76,
+                      "line": 103
+                    },
+                    "snippet": "  101 |\n  102 | function expectFade(leg: Leg, dir: \"in\" | \"out\", at: string): void {\n> 103 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);\n      |                                                                            ^\n  104 |     expect(dir === \"in\" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);\n  105 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);\n  106 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                        "column": 76,
+                        "line": 103
+                      },
+                      "message": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":1,\"stepped\":[[14,1,16,132,224,50]],\"from\":1,\"to\":0},\"leave\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  101 |\n  102 | function expectFade(leg: Leg, dir: \"in\" | \"out\", at: string): void {\n> 103 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);\n      |                                                                            ^\n  104 |     expect(dir === \"in\" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);\n  105 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);\n  106 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);\n    at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:103:76)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:228:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T09:49:19.876Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjAsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjAsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MCwiYm94U3RlcHMiOjEsInN0ZXBwZWQiOltbMTQsMSwxNiwxMzIsMjI0LDUwXV0sImZyb20iOjEsInRvIjowfSwibGVhdmUiOltdfQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/test-results/release-11-1-1-reduce-fade-b4bf7-ppears-and-leaves-on-a-fade-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                    "column": 76,
+                    "line": 103
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-4b9d99a6c3582959840e",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 199,
+          "column": 5
+        },
+        {
+          "title": "fade · a DropdownMenu appears and leaves on a fade",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3032,
+                  "error": {
+                    "message": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m",
+                    "stack": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n    at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:103:76)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:228:9",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                      "column": 76,
+                      "line": 103
+                    },
+                    "snippet": "  101 |\n  102 | function expectFade(leg: Leg, dir: \"in\" | \"out\", at: string): void {\n> 103 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);\n      |                                                                            ^\n  104 |     expect(dir === \"in\" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);\n  105 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);\n  106 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                        "column": 76,
+                        "line": 103
+                      },
+                      "message": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  101 |\n  102 | function expectFade(leg: Leg, dir: \"in\" | \"out\", at: string): void {\n> 103 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);\n      |                                                                            ^\n  104 |     expect(dir === \"in\" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);\n  105 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);\n  106 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);\n    at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:103:76)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:228:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T09:49:23.382Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjAsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjAsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/test-results/release-11-1-1-reduce-fade-fe50b-ppears-and-leaves-on-a-fade-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                    "column": 76,
+                    "line": 103
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-199e598b6c174bb8fb5b",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 199,
+          "column": 5
+        },
+        {
+          "title": "fade · a dock Select appears and leaves on a fade",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3025,
+                  "error": {
+                    "message": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m",
+                    "stack": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n    at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:103:76)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:228:9",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                      "column": 76,
+                      "line": 103
+                    },
+                    "snippet": "  101 |\n  102 | function expectFade(leg: Leg, dir: \"in\" | \"out\", at: string): void {\n> 103 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);\n      |                                                                            ^\n  104 |     expect(dir === \"in\" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);\n  105 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);\n  106 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                        "column": 76,
+                        "line": 103
+                      },
+                      "message": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  101 |\n  102 | function expectFade(leg: Leg, dir: \"in\" | \"out\", at: string): void {\n> 103 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);\n      |                                                                            ^\n  104 |     expect(dir === \"in\" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);\n  105 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);\n  106 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);\n    at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:103:76)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:228:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T09:49:26.815Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjAsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjAsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/test-results/release-11-1-1-reduce-fade-e4108-ppears-and-leaves-on-a-fade-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                    "column": 76,
+                    "line": 103
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-db87ca368e9c7169041f",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 199,
+          "column": 5
+        },
+        {
+          "title": "fade · a plain Select appears and leaves on a fade",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3049,
+                  "error": {
+                    "message": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m",
+                    "stack": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n    at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:103:76)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:228:9",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                      "column": 76,
+                      "line": 103
+                    },
+                    "snippet": "  101 |\n  102 | function expectFade(leg: Leg, dir: \"in\" | \"out\", at: string): void {\n> 103 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);\n      |                                                                            ^\n  104 |     expect(dir === \"in\" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);\n  105 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);\n  106 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                        "column": 76,
+                        "line": 103
+                      },
+                      "message": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  101 |\n  102 | function expectFade(leg: Leg, dir: \"in\" | \"out\", at: string): void {\n> 103 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);\n      |                                                                            ^\n  104 |     expect(dir === \"in\" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);\n  105 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);\n  106 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);\n    at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:103:76)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:228:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T09:49:30.305Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjAsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjAsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/test-results/release-11-1-1-reduce-fade-8715a-ppears-and-leaves-on-a-fade-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                    "column": 76,
+                    "line": 103
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-dd7814d6b5408f9a103f",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 199,
+          "column": 5
+        },
+        {
+          "title": "fade · a Tooltip appears and leaves on a fade",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a Tooltip does not open on touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                    "line": 201,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 273,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T09:49:33.816Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a Tooltip does not open on touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                        "line": 201,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-6b5e88849af14f52c525",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 199,
+          "column": 5
+        },
+        {
+          "title": "fade · a Dialog appears and leaves on a fade",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2903,
+                  "error": {
+                    "message": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m",
+                    "stack": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n    at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:103:76)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:228:9",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                      "column": 76,
+                      "line": 103
+                    },
+                    "snippet": "  101 |\n  102 | function expectFade(leg: Leg, dir: \"in\" | \"out\", at: string): void {\n> 103 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);\n      |                                                                            ^\n  104 |     expect(dir === \"in\" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);\n  105 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);\n  106 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                        "column": 76,
+                        "line": 103
+                      },
+                      "message": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  101 |\n  102 | function expectFade(leg: Leg, dir: \"in\" | \"out\", at: string): void {\n> 103 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);\n      |                                                                            ^\n  104 |     expect(dir === \"in\" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);\n  105 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);\n  106 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);\n    at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:103:76)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:228:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T09:49:34.248Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjAsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjAsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/test-results/release-11-1-1-reduce-fade-ed693-ppears-and-leaves-on-a-fade-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                    "column": 76,
+                    "line": 103
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-dfe489bb12125c2195aa",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 199,
+          "column": 5
+        },
+        {
+          "title": "fade · a Sheet right appears and leaves on a fade",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2970,
+                  "error": {
+                    "message": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[],\"frost\":{\"in\":{\"frames\":70,\"bare\":0,\"gap\":0,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":0,\"bare\":0,\"gap\":0,\"first\":null,\"last\":null,\"plateLast\":null,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m",
+                    "stack": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[],\"frost\":{\"in\":{\"frames\":70,\"bare\":0,\"gap\":0,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":0,\"bare\":0,\"gap\":0,\"first\":null,\"last\":null,\"plateLast\":null,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n    at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:103:76)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:228:9",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                      "column": 76,
+                      "line": 103
+                    },
+                    "snippet": "  101 |\n  102 | function expectFade(leg: Leg, dir: \"in\" | \"out\", at: string): void {\n> 103 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);\n      |                                                                            ^\n  104 |     expect(dir === \"in\" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);\n  105 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);\n  106 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                        "column": 76,
+                        "line": 103
+                      },
+                      "message": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[],\"frost\":{\"in\":{\"frames\":70,\"bare\":0,\"gap\":0,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":0,\"bare\":0,\"gap\":0,\"first\":null,\"last\":null,\"plateLast\":null,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  101 |\n  102 | function expectFade(leg: Leg, dir: \"in\" | \"out\", at: string): void {\n> 103 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);\n      |                                                                            ^\n  104 |     expect(dir === \"in\" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);\n  105 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);\n  106 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);\n    at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:103:76)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:228:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T09:49:37.434Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjAsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjAsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbXSwiZnJvc3QiOnsiaW4iOnsiZnJhbWVzIjo3MCwiYmFyZSI6MCwiZ2FwIjowLCJmaXJzdCI6MSwibGFzdCI6MSwicGxhdGVMYXN0IjoxLCJsZWciOnsiZmFkaW5nIjowLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjAsImJveFN0ZXBzIjowLCJzdGVwcGVkIjpbXSwiZnJvbSI6MCwidG8iOjF9fSwib3V0Ijp7ImZyYW1lcyI6MCwiYmFyZSI6MCwiZ2FwIjowLCJmaXJzdCI6bnVsbCwibGFzdCI6bnVsbCwicGxhdGVMYXN0IjpudWxsLCJsZWciOnsiZmFkaW5nIjowLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjAsImJveFN0ZXBzIjowLCJzdGVwcGVkIjpbXSwiZnJvbSI6MSwidG8iOjB9fX19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/test-results/release-11-1-1-reduce-fade-cfeca-ppears-and-leaves-on-a-fade-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                    "column": 76,
+                    "line": 103
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-28a795ef8d1d0fcb390d",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 199,
+          "column": 5
+        },
+        {
+          "title": "fade · a Sheet bottom appears and leaves on a fade",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3010,
+                  "error": {
+                    "message": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[],\"frost\":{\"in\":{\"frames\":70,\"bare\":0,\"gap\":0,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":0,\"bare\":0,\"gap\":0,\"first\":null,\"last\":null,\"plateLast\":null,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m",
+                    "stack": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[],\"frost\":{\"in\":{\"frames\":70,\"bare\":0,\"gap\":0,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":0,\"bare\":0,\"gap\":0,\"first\":null,\"last\":null,\"plateLast\":null,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n    at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:103:76)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:228:9",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                      "column": 76,
+                      "line": 103
+                    },
+                    "snippet": "  101 |\n  102 | function expectFade(leg: Leg, dir: \"in\" | \"out\", at: string): void {\n> 103 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);\n      |                                                                            ^\n  104 |     expect(dir === \"in\" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);\n  105 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);\n  106 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                        "column": 76,
+                        "line": 103
+                      },
+                      "message": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[],\"frost\":{\"in\":{\"frames\":70,\"bare\":0,\"gap\":0,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":0,\"bare\":0,\"gap\":0,\"first\":null,\"last\":null,\"plateLast\":null,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  101 |\n  102 | function expectFade(leg: Leg, dir: \"in\" | \"out\", at: string): void {\n> 103 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);\n      |                                                                            ^\n  104 |     expect(dir === \"in\" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);\n  105 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);\n  106 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);\n    at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:103:76)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:228:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T09:49:40.815Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjAsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjAsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbXSwiZnJvc3QiOnsiaW4iOnsiZnJhbWVzIjo3MCwiYmFyZSI6MCwiZ2FwIjowLCJmaXJzdCI6MSwibGFzdCI6MSwicGxhdGVMYXN0IjoxLCJsZWciOnsiZmFkaW5nIjowLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjAsImJveFN0ZXBzIjowLCJzdGVwcGVkIjpbXSwiZnJvbSI6MCwidG8iOjF9fSwib3V0Ijp7ImZyYW1lcyI6MCwiYmFyZSI6MCwiZ2FwIjowLCJmaXJzdCI6bnVsbCwibGFzdCI6bnVsbCwicGxhdGVMYXN0IjpudWxsLCJsZWciOnsiZmFkaW5nIjowLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjAsImJveFN0ZXBzIjowLCJzdGVwcGVkIjpbXSwiZnJvbSI6MSwidG8iOjB9fX19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/test-results/release-11-1-1-reduce-fade-1f21c-ppears-and-leaves-on-a-fade-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                    "column": 76,
+                    "line": 103
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-6d6ac25fbc7eb9ae2348",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 199,
+          "column": 5
+        },
+        {
+          "title": "fade · a detented Sheet appears and leaves on a fade",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3017,
+                  "error": {
+                    "message": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[],\"frost\":{\"in\":{\"frames\":70,\"bare\":0,\"gap\":0,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":0,\"bare\":0,\"gap\":0,\"first\":null,\"last\":null,\"plateLast\":null,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m",
+                    "stack": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[],\"frost\":{\"in\":{\"frames\":70,\"bare\":0,\"gap\":0,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":0,\"bare\":0,\"gap\":0,\"first\":null,\"last\":null,\"plateLast\":null,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n    at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:103:76)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:228:9",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                      "column": 76,
+                      "line": 103
+                    },
+                    "snippet": "  101 |\n  102 | function expectFade(leg: Leg, dir: \"in\" | \"out\", at: string): void {\n> 103 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);\n      |                                                                            ^\n  104 |     expect(dir === \"in\" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);\n  105 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);\n  106 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                        "column": 76,
+                        "line": 103
+                      },
+                      "message": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[],\"frost\":{\"in\":{\"frames\":70,\"bare\":0,\"gap\":0,\"first\":1,\"last\":1,\"plateLast\":1,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1}},\"out\":{\"frames\":0,\"bare\":0,\"gap\":0,\"first\":null,\"last\":null,\"plateLast\":null,\"leg\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  101 |\n  102 | function expectFade(leg: Leg, dir: \"in\" | \"out\", at: string): void {\n> 103 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);\n      |                                                                            ^\n  104 |     expect(dir === \"in\" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);\n  105 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);\n  106 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);\n    at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:103:76)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:228:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T09:49:44.232Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjAsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjAsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbXSwiZnJvc3QiOnsiaW4iOnsiZnJhbWVzIjo3MCwiYmFyZSI6MCwiZ2FwIjowLCJmaXJzdCI6MSwibGFzdCI6MSwicGxhdGVMYXN0IjoxLCJsZWciOnsiZmFkaW5nIjowLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjAsImJveFN0ZXBzIjowLCJzdGVwcGVkIjpbXSwiZnJvbSI6MCwidG8iOjF9fSwib3V0Ijp7ImZyYW1lcyI6MCwiYmFyZSI6MCwiZ2FwIjowLCJmaXJzdCI6bnVsbCwibGFzdCI6bnVsbCwicGxhdGVMYXN0IjpudWxsLCJsZWciOnsiZmFkaW5nIjowLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjAsImJveFN0ZXBzIjowLCJzdGVwcGVkIjpbXSwiZnJvbSI6MSwidG8iOjB9fX19"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/test-results/release-11-1-1-reduce-fade-ccbe5-ppears-and-leaves-on-a-fade-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                    "column": 76,
+                    "line": 103
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-363a973c44e113a99367",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 199,
+          "column": 5
+        },
+        {
+          "title": "fade · a Toast appears and leaves on a fade",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3020,
+                  "error": {
+                    "message": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":16,\"rises\":true,\"falls\":true,\"span\":173,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m",
+                    "stack": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":16,\"rises\":true,\"falls\":true,\"span\":173,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n    at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:103:76)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:228:9",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                      "column": 76,
+                      "line": 103
+                    },
+                    "snippet": "  101 |\n  102 | function expectFade(leg: Leg, dir: \"in\" | \"out\", at: string): void {\n> 103 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);\n      |                                                                            ^\n  104 |     expect(dir === \"in\" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);\n  105 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);\n  106 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                        "column": 76,
+                        "line": 103
+                      },
+                      "message": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":16,\"rises\":true,\"falls\":true,\"span\":173,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  101 |\n  102 | function expectFade(leg: Leg, dir: \"in\" | \"out\", at: string): void {\n> 103 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);\n      |                                                                            ^\n  104 |     expect(dir === \"in\" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);\n  105 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);\n  106 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);\n    at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:103:76)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:228:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T09:49:47.697Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjAsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjE2LCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjE3MywiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/test-results/release-11-1-1-reduce-fade-f1e84-ppears-and-leaves-on-a-fade-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                    "column": 76,
+                    "line": 103
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-8da7658912aa5d8990d5",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 199,
+          "column": 5
+        },
+        {
+          "title": "fade · a Collapsible appears and leaves on a fade",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 10,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3027,
+                  "error": {
+                    "message": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":1,\"stepped\":[[37,1,37,421,317,0]],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m",
+                    "stack": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":1,\"stepped\":[[37,1,37,421,317,0]],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n    at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:103:76)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:228:9",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                      "column": 76,
+                      "line": 103
+                    },
+                    "snippet": "  101 |\n  102 | function expectFade(leg: Leg, dir: \"in\" | \"out\", at: string): void {\n> 103 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);\n      |                                                                            ^\n  104 |     expect(dir === \"in\" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);\n  105 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);\n  106 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                        "column": 76,
+                        "line": 103
+                      },
+                      "message": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":1,\"stepped\":[[37,1,37,421,317,0]],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  101 |\n  102 | function expectFade(leg: Leg, dir: \"in\" | \"out\", at: string): void {\n> 103 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);\n      |                                                                            ^\n  104 |     expect(dir === \"in\" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);\n  105 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);\n  106 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);\n    at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:103:76)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:228:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T09:49:51.123Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjAsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MCwiYm94U3RlcHMiOjEsInN0ZXBwZWQiOltbMzcsMSwzNyw0MjEsMzE3LDBdXSwiZnJvbSI6MCwidG8iOjF9LCJvdXQiOnsiZmFkaW5nIjowLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjAsImJveFN0ZXBzIjowLCJzdGVwcGVkIjpbXSwiZnJvbSI6MSwidG8iOjB9LCJsZWF2ZSI6W119"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/test-results/release-11-1-1-reduce-fade-bd195-ppears-and-leaves-on-a-fade-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                    "column": 76,
+                    "line": 103
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-19f7a98a4301447ac50d",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 199,
+          "column": 5
+        },
+        {
+          "title": "fade · a Accordion appears and leaves on a fade",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 11,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3054,
+                  "error": {
+                    "message": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":1,\"stepped\":[[27,1,37,477,317,0]],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m",
+                    "stack": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":1,\"stepped\":[[27,1,37,477,317,0]],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n    at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:103:76)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:228:9",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                      "column": 76,
+                      "line": 103
+                    },
+                    "snippet": "  101 |\n  102 | function expectFade(leg: Leg, dir: \"in\" | \"out\", at: string): void {\n> 103 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);\n      |                                                                            ^\n  104 |     expect(dir === \"in\" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);\n  105 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);\n  106 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                        "column": 76,
+                        "line": 103
+                      },
+                      "message": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":1,\"stepped\":[[27,1,37,477,317,0]],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  101 |\n  102 | function expectFade(leg: Leg, dir: \"in\" | \"out\", at: string): void {\n> 103 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);\n      |                                                                            ^\n  104 |     expect(dir === \"in\" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);\n  105 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);\n  106 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);\n    at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:103:76)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:228:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T09:49:54.611Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjAsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MCwiYm94U3RlcHMiOjEsInN0ZXBwZWQiOltbMjcsMSwzNyw0NzcsMzE3LDBdXSwiZnJvbSI6MCwidG8iOjF9LCJvdXQiOnsiZmFkaW5nIjowLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjAsImJveFN0ZXBzIjowLCJzdGVwcGVkIjpbXSwiZnJvbSI6MSwidG8iOjB9LCJsZWF2ZSI6W119"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/test-results/release-11-1-1-reduce-fade-e7f5a-ppears-and-leaves-on-a-fade-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                    "column": 76,
+                    "line": 103
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-da538168b4651de6c7f5",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 199,
+          "column": 5
+        },
+        {
+          "title": "fade · a ExpandableContainer appears and leaves on a fade",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 12,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 3021,
+                  "error": {
+                    "message": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m",
+                    "stack": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n    at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:103:76)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:228:9",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                      "column": 76,
+                      "line": 103
+                    },
+                    "snippet": "  101 |\n  102 | function expectFade(leg: Leg, dir: \"in\" | \"out\", at: string): void {\n> 103 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);\n      |                                                                            ^\n  104 |     expect(dir === \"in\" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);\n  105 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);\n  106 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                        "column": 76,
+                        "line": 103
+                      },
+                      "message": "Error: in: the fade spans at least two frames {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0},\"leave\":[]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  101 |\n  102 | function expectFade(leg: Leg, dir: \"in\" | \"out\", at: string): void {\n> 103 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);\n      |                                                                            ^\n  104 |     expect(dir === \"in\" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);\n  105 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);\n  106 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);\n    at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:103:76)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:228:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T09:49:58.060Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fade",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjAsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjAsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH0sImxlYXZlIjpbXX0="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/test-results/release-11-1-1-reduce-fade-34110-ppears-and-leaves-on-a-fade-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                    "column": 76,
+                    "line": 103
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-eda491cc512ef5b088aa",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 199,
+          "column": 5
+        },
+        {
+          "title": "fold · a dock unfolds and folds by cross-fading its faces, its box landing at once",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 13,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2936,
+                  "error": {
+                    "message": "Error: in: the fade spans at least two frames unfold {\"unfold\":{\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}},\"fold\":{\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m",
+                    "stack": "Error: in: the fade spans at least two frames unfold {\"unfold\":{\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}},\"fold\":{\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n    at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:103:76)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:299:9",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                      "column": 76,
+                      "line": 103
+                    },
+                    "snippet": "  101 |\n  102 | function expectFade(leg: Leg, dir: \"in\" | \"out\", at: string): void {\n> 103 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);\n      |                                                                            ^\n  104 |     expect(dir === \"in\" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);\n  105 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);\n  106 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                        "column": 76,
+                        "line": 103
+                      },
+                      "message": "Error: in: the fade spans at least two frames unfold {\"unfold\":{\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}},\"fold\":{\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":1},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":1,\"to\":0}}}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m2\u001b[39m\nReceived:    \u001b[31m0\u001b[39m\n\n  101 |\n  102 | function expectFade(leg: Leg, dir: \"in\" | \"out\", at: string): void {\n> 103 |     expect(leg.fading, `${dir}: the fade spans at least two frames ${at}`).toBeGreaterThanOrEqual(2);\n      |                                                                            ^\n  104 |     expect(dir === \"in\" ? leg.rises : leg.falls, `${dir}: its opacity is monotone ${at}`).toBe(true);\n  105 |     expect(leg.boxSteps, `${dir}: no painted frame holds a box between its two ends ${at}`).toBe(0);\n  106 |     expect(leg.span, `${dir}: the fade is over within ${CLOCK} ms ${at}`).toBeLessThanOrEqual(CLOCK + SLACK);\n    at expectFade (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:103:76)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:299:9"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T09:50:01.515Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "fold",
+                      "contentType": "application/json",
+                      "body": "eyJ1bmZvbGQiOnsiaW4iOnsiZmFkaW5nIjowLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjAsImJveFN0ZXBzIjowLCJzdGVwcGVkIjpbXSwiZnJvbSI6MCwidG8iOjF9LCJvdXQiOnsiZmFkaW5nIjowLCJyaXNlcyI6dHJ1ZSwiZmFsbHMiOnRydWUsInNwYW4iOjAsImJveFN0ZXBzIjowLCJzdGVwcGVkIjpbXSwiZnJvbSI6MSwidG8iOjB9fSwiZm9sZCI6eyJpbiI6eyJmYWRpbmciOjAsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MX0sIm91dCI6eyJmYWRpbmciOjAsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjoxLCJ0byI6MH19fQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/test-results/release-11-1-1-reduce-fold-28509-ces-its-box-landing-at-once-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                    "column": 76,
+                    "line": 103
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-39da4e5ab9caa59d2f89",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 285,
+          "column": 1
+        },
+        {
+          "title": "mark · a run's selected plate moves to a new seat by a cross-fade",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 14,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 2106,
+                  "error": {
+                    "message": "Error: no painted plate travels {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":0},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":0},\"travel\":156}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m156\u001b[39m",
+                    "stack": "Error: no painted plate travels {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":0},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":0},\"travel\":156}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m156\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:362:59",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                      "column": 59,
+                      "line": 362
+                    },
+                    "snippet": "  360 |     const at = JSON.stringify(legs);\n  361 |     await info.attach(\"mark\", { body: at, contentType: \"application/json\" });\n> 362 |     expect(legs.travel, `no painted plate travels ${at}`).toBe(0);\n      |                                                           ^\n  363 |     expectFade(legs.in, \"in\", `new seat ${at}`);\n  364 |     expectFade(legs.out, \"out\", `old seat ${at}`);\n  365 | });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                        "column": 59,
+                        "line": 362
+                      },
+                      "message": "Error: no painted plate travels {\"in\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":0},\"out\":{\"fading\":0,\"rises\":true,\"falls\":true,\"span\":0,\"boxSteps\":0,\"stepped\":[],\"from\":0,\"to\":0},\"travel\":156}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m156\u001b[39m\n\n  360 |     const at = JSON.stringify(legs);\n  361 |     await info.attach(\"mark\", { body: at, contentType: \"application/json\" });\n> 362 |     expect(legs.travel, `no painted plate travels ${at}`).toBe(0);\n      |                                                           ^\n  363 |     expectFade(legs.in, \"in\", `new seat ${at}`);\n  364 |     expectFade(legs.out, \"out\", `old seat ${at}`);\n  365 | });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts:362:59"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T09:50:04.836Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "mark",
+                      "contentType": "application/json",
+                      "body": "eyJpbiI6eyJmYWRpbmciOjAsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MH0sIm91dCI6eyJmYWRpbmciOjAsInJpc2VzIjp0cnVlLCJmYWxscyI6dHJ1ZSwic3BhbiI6MCwiYm94U3RlcHMiOjAsInN0ZXBwZWQiOltdLCJmcm9tIjowLCJ0byI6MH0sInRyYXZlbCI6MTU2fQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/test-results/release-11-1-1-reduce-mark-1e12c--a-new-seat-by-a-cross-fade-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                    "column": 59,
+                    "line": 362
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-195860b05314f06eb215",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 304,
+          "column": 1
+        },
+        {
+          "title": "press · a pressed control shows its press by colour, not by size, under reduced motion",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "Playwright WebKit's touchscreen taps but cannot hold a press; the press is read at 1440",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                    "line": 444,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 15,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 350,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T09:50:07.347Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "Playwright WebKit's touchscreen taps but cannot hold a press; the press is read at 1440",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic11-v11.1.0/tree/tests-visual/release-11-1-1-reduce.spec.ts",
+                        "line": 444,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-28f4df2912e8b9e4036f",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 442,
+          "column": 1
+        },
+        {
+          "title": "still · a Slider holds still under reduced motion",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 15,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 860,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T09:50:07.854Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "still",
+                      "contentType": "application/json",
+                      "body": "eyJjbG9ja3MiOnsicm9vdCI6IjBzIiwidHJhY2siOiIwcyIsImZpbGwiOiIwcyIsInRodW1iIjoiMHMifSwicnVucyI6bnVsbH0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "bbff1f60af46f4e6e427-82296f151bcb63748f85",
+          "file": "release-11-1-1-reduce.spec.ts",
+          "line": 481,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-22T09:49:16.019Z",
+    "duration": 52737.488,
+    "expected": 1,
+    "skipped": 2,
+    "unexpected": 15,
+    "flaky": 0
+  }
+}
