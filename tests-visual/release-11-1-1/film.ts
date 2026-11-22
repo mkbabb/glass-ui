@@ -1,6 +1,7 @@
 // A per-frame film of one surface. Every animation frame records whether the surface
 // is mounted, its box, its effective opacity (the product up the ancestor chain), its
-// state attributes and its material, from just before an action until `ms` after it.
+// scale, transform and filter, its state attributes and its material, from just before an
+// action until `ms` after it.
 import type { Page } from "@playwright/test";
 
 export type Frame = {
@@ -19,6 +20,10 @@ export type Frame = {
     /** A CSS animation or transition is running on the surface. */
     anim?: boolean;
     clip?: string;
+    /** Computed `scale`, `transform` and `filter`. */
+    scale?: string;
+    transform?: string;
+    filter?: string;
     /** The companion selector is mounted. */
     also?: boolean;
     /** The companion's effective opacity, on every frame it is mounted, the surface's or not. */
@@ -108,6 +113,9 @@ export async function startFilm(page: Page, selector: string, also = ""): Promis
                     bg: cs.backgroundColor,
                     anim: el.getAnimations().some((a) => a.playState === "running"),
                     clip: cs.clipPath,
+                    scale: cs.scale,
+                    transform: cs.transform,
+                    filter: cs.filter,
                     also: also ? !!companion : undefined,
                     alsoOp,
                 });

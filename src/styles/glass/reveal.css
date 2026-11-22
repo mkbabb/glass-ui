@@ -13,7 +13,8 @@
  *
  * The overlay register (a Popover's panel, a hover card, a Toast) moves on opacity
  * and its side's slide alone, in and out: its scale and blur knobs are neutral. The
- * tooltip register keeps a slight scale on the way in. The recipe's channels:
+ * tooltip register's are neutral too and its slide is 0 by default, so a hint comes and
+ * goes by its fade. The recipe's channels:
  *
  *   (a) SCALE (the bloom — SPATIAL) rides the register's `--enter-*-spring` + its
  *       paired `--enter-*-clock` (the dedicated per-spring clock, NOT the
@@ -74,8 +75,8 @@
            entrance rides it on the `scale:` LONGHAND (vol-preserving sx·sy ≈ 1),
            settling to `1 1` at open; the bloom-from-small grace is the coupled
            scale-down (--glass-reveal-enter-scale) × this squish, never a separate
-           transform: shorthand (which would clobber a centering transform). The
-           overlay register holds it at `1 1`; the tooltip register sets its own. */
+           transform: shorthand (which would clobber a centering transform). Every
+           register holds it at `1 1`. */
         --lq-stretch-x: 1;
         --lq-stretch-y: 1;
         transform-origin: var(--reka-popper-transform-origin, center);
@@ -133,15 +134,15 @@
            it borrows the anchored-entrance row's exit reader, which is the shortest
            the table ships and stays inside the hint's own arrival. */
         --reveal-exit-clock: var(--spring-present-exit-duration);
-        /* A hint is all fade: it comes in on the exit's own even curve, so no frame of
-           its short clock carries more than a tenth of its light, and a hint turned back
-           mid-way retraces at the same pace. */
+        /* A hint is all fade: it keeps its size and its focus both ways, and it comes in
+           on the exit's own even curve, so no frame of its short clock carries more than
+           a tenth of its light, and a hint turned back mid-way retraces at the same pace. */
         --reveal-fade: var(--exit-curve);
-        --glass-reveal-enter-scale: var(--enter-tooltip-scale);
-        --glass-reveal-blur: var(--enter-tooltip-blur);
+        --glass-reveal-enter-scale: 1;
+        --lq-stretch-x: 1;
+        --lq-stretch-y: 1;
+        --glass-reveal-blur: 0px;
         --glass-reveal-slide: var(--enter-tooltip-slide);
-        --lq-stretch-x: 1.06;
-        --lq-stretch-y: 0.945;
     }
 
     /* OPEN — the settled, bloomed-in state, keyed on every open state reka writes

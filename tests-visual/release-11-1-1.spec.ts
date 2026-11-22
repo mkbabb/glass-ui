@@ -1290,7 +1290,12 @@ test("reverse · a press on the page while a sheet leaves reaches the page", asy
 //            gone and whole, no frame carrying more than a fifth of it), and when the
 //            pointer moves to a neighbour's trigger the outgoing hint fades out and the
 //            incoming one fades in, neither appearing or vanishing in one frame. Reka's
-//            Tooltip does not open on touch, so these are the desktop form's.
+//            Tooltip does not open on touch, so these are the desktop form's; the one
+//            cell that also runs on the phone form opens a hint by keyboard focus and
+//            closes it by Escape there. On every frame of either leg a hint keeps its
+//            resting size: its computed scale and transform scale nothing, its filter
+//            blurs nothing and its box is its resting box, so it comes and goes by its
+//            fade alone.
 
 function judgeTween(film: Film, vw: { width: number; height: number }, from: number) {
     const seen = seenChannel(vw);
@@ -1304,6 +1309,83 @@ function judgeTween(film: Film, vw: { width: number; height: number }, from: num
     };
 }
 
+/** The scale a frame's computed `scale` and `transform` apply, per axis. */
+function scaleOf(f: Frame): [number, number] {
+    let [x, y] = [1, 1];
+    if (f.scale && f.scale !== "none") {
+        const v = f.scale.trim().split(/\s+/).map(Number);
+        x *= v[0];
+        y *= v[1] ?? v[0];
+    }
+    const m = f.transform?.match(/^matrix(3d)?\((.*)\)$/);
+    if (m) {
+        const v = m[2].split(",").map(Number);
+        const [a, b, c, d] = m[1] ? [v[0], v[1], v[4], v[5]] : v;
+        x *= Math.hypot(a, b);
+        y *= Math.hypot(c, d);
+    }
+    return [x, y];
+}
+
+/** A hint's size on every mounted frame from `from`: how far its scale strays from 1 on
+ *  either axis, how far its box strays from its resting box (the last mounted frame before
+ *  the mark, or the film's last when it was not mounted before), and any filter it
+ *  wears. */
+function judgeSize(film: Film, from: number) {
+    const mounted = film.frames.filter((f) => f.present);
+    const rest = mounted.filter((f) => f.t < film.mark).pop() ?? mounted[mounted.length - 1];
+    const legs = mounted.filter((f) => f.t >= from);
+    const filters = [...new Set(legs.map((f) => f.filter ?? "none"))].filter((v) => v !== "none" && !/^blur\(0(px)?\)$/.test(v));
+    return {
+        frames: legs.length,
+        scale: +Math.max(0, ...legs.map((f) => Math.max(...scaleOf(f).map((v) => Math.abs(v - 1))))).toFixed(4),
+        box: rest ? +Math.max(0, ...legs.map((f) => Math.max(Math.abs(f.w! - rest.w!), Math.abs(f.h! - rest.h!)))).toFixed(2) : -1,
+        filters,
+        first: legs.slice(0, 6).map((f) => [Math.round(f.t - from), +(f.op ?? 0).toFixed(3), f.scale, f.transform, +f.w!.toFixed(1), +f.h!.toFixed(1)]),
+    };
+}
+
+function expectWhole(size: ReturnType<typeof judgeSize>, leg: string): void {
+    const at = JSON.stringify(size);
+    expect(size.frames, `${leg}: the hint is filmed ${at}`).toBeGreaterThan(0);
+    expect(size.scale, `${leg}: its scale and transform scale nothing on every frame ${at}`).toBeLessThanOrEqual(0.001);
+    expect(size.box, `${leg}: its box is its resting box on every frame ${at}`).toBeLessThanOrEqual(0.25);
+    expect(size.filters, `${leg}: its filter blurs nothing on every frame ${at}`).toEqual([]);
+}
+
+test("tooltip · a hint keeps its size as it comes and goes", async ({ page }, info) => {
+    const phone = isPhone(info.project.name);
+    const trigger = page.locator('[data-testid="x-tooltip"]');
+    await openHarness(page);
+    await trigger.scrollIntoViewIfNeeded();
+    await startFilm(page, '[data-testid="x-tooltip-content"]');
+    await markFilm(page);
+    // A Tooltip does not open on touch: on the phone form it opens by keyboard focus.
+    if (phone) await trigger.focus();
+    else await trigger.hover();
+    const enter = await stopFilm(page, 900);
+    await startFilm(page, '[data-testid="x-tooltip-content"]');
+    await markFilm(page);
+    if (phone) await page.keyboard.press("Escape");
+    else await page.mouse.move(5, 5);
+    const exit = await stopFilm(page, 600);
+    const shown = enter.frames.filter((f) => f.t >= enter.mark && f.present);
+    const read = {
+        enter: judgeSize(enter, enter.mark),
+        exit: judgeSize(exit, exit.mark),
+        firstOp: +(shown[0]?.op ?? -1).toFixed(3),
+        between: shown.filter((f) => (f.op ?? 0) > 0.02 && (f.op ?? 0) < 0.98).length,
+        gone: !exit.frames[exit.frames.length - 1].present,
+    };
+    await info.attach("size", { body: JSON.stringify(read), contentType: "application/json" });
+    const at = JSON.stringify(read);
+    expect(read.firstOp, `it arrives from gone: its first frame is a fade's first ${at}`).toBeLessThanOrEqual(0.1);
+    expect(read.between, `more than two frames between gone and whole ${at}`).toBeGreaterThan(2);
+    expectWhole(read.enter, "in");
+    expect(read.gone, `it is gone ${at}`).toBe(true);
+    expectWhole(read.exit, "out");
+});
+
 test("tooltip · a Tooltip enters on a tween", async ({ page }, info) => {
     test.skip(isPhone(info.project.name), "a Tooltip does not open on touch");
     await openHarness(page);
@@ -1316,6 +1398,7 @@ test("tooltip · a Tooltip enters on a tween", async ({ page }, info) => {
     expect(read.end, `it ends whole ${JSON.stringify(read)}`).toBeGreaterThan(0.95);
     expect(read.between, `more than two frames between gone and whole ${JSON.stringify(read)}`).toBeGreaterThan(2);
     expect(read.share, `no frame carries more than a fifth ${JSON.stringify(read)}`).toBeLessThanOrEqual(0.2);
+    expectWhole(judgeSize(film, film.mark), "in");
 });
 
 for (const dir of ["incoming", "outgoing"] as const) {
@@ -1344,6 +1427,7 @@ for (const dir of ["incoming", "outgoing"] as const) {
         else expect(read.end, `the hint ends gone ${at}`).toBeLessThan(0.02);
         expect(read.between, `more than two frames between gone and whole ${at}`).toBeGreaterThan(2);
         expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+        expectWhole(judgeSize(film, film.mark), dir === "incoming" ? "in" : "out");
     });
 }
 
