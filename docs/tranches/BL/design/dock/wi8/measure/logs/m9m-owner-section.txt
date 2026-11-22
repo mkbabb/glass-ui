@@ -1,0 +1,72 @@
+## Added 2026-11-22, after the ninth build was measured
+
+The ninth build is the eighth with this round's rulings built in. It was measured on one build, in Chromium first, since that's where the glass's blur can be judged. The other browser we can run here, Playwright WebKit 2287, draws the glass without its blur and is not what Safari shows, so your own look in Safari settles that. This measure stopped partway: the Mac's kernel memory reached the point where our test runs have to wait for a restart, so the WebKit frames, the older releases' last three test sets, the word-contrast cells and the faults we plant to show each test can fail were not run this time. It isn't ready to become 11.2.0. These stand in the way:
+
+- **The dock's code is 439 lines over its budget**: 5,180 lines against 11.1.0's 4,741. Nothing has been cut. Even with every block on the list removed, behaviours included, it would still be about 90 lines over; the list and what each block does are in `MEASURE-9.md`. Your apps could delete 425 lines of their own once 11.2.0 lands (question 22).
+- **A page that uses the dock loads 299 bytes more than on 11.1.0** (104,596 bytes compressed against 104,297), where the budget is no more than 11.1.0. Against 11.0.2 it is 1,965 bytes more (102,631).
+- **Opening a dock still costs a few more layout passes than allowed** in 10 of 32 first frames, and three times a figure dock forces one more in the frames after. Landing a fold or an open costs nothing extra, and a page of 18 docks forces one layout in its first frame, within its bound.
+- **Two of the older releases' tests that 11.1.0 passes fail here**, of the five sets read: a cockpit dock at phone width paints a sliver of a button past its round end while its row scrolls, and a dock whose input layer is taller than one row rests with a corner 5 px short of round.
+- **Some buttons still jump instead of gliding.** When a word button's label gets shorter, the button beside it jumps about 106 px in one frame. When a button is added or removed, two buttons overlap by about 3.5 px while the row makes room (16 px with reduced motion), and in one change of the dock's regions a button jumps 15 px.
+- **A few docks are not quite round at the ends**: a crossfading dock's corner is 13 px short of a capsule, a dock with one tall row 4 px short, and a vertical dock folds 3 px off a circle.
+- **atlas's figure dock in the head row** works as atlas asked when the folded dock shows its icon directly: none of the title is covered, and nothing moves when it opens. With a 44 px handle around the icon, as atlas's figure docks have today, it folds 74 px wide instead of 52 and covers part of the title.
+
+On the eighth build two things read badly, and this build answers both. Dials's selected range was hard to pick out, 1.07 to 1 off the dock, because a segmented control drew a second, darker channel inside the dock; that channel is gone, and the selected choice is drawn like any selected dock button (1.25 to 1 off the dock in light, 1.37 in dark). A hovered Home looked like a second current page; the hover is now fainter than the current page's highlight in both themes.
+
+Your questions with strips from this build. Each has a default, and the work goes on with it unless you say otherwise.
+
+3. **How long a dock stays after you leave.** 6 s for a site's dock whatever the length of the visit (6,004 to 6,012 ms read), and 3 s for a controls dock (3,026 ms). The pause that grew with the visit is gone.
+
+    Default: the fixed pauses.
+
+5. **A folded card or rounded dock.** Both fold to a circle, 56 px across with a 28 px corner, and keep their corners open (24 px for the card, 16 for the rounded dock). Nothing is scaled while they move, so the corner is one shape in every frame.
+
+    ![a folded card and rounded dock](fold/strip-q5-9m.chromium.png)
+
+    Default: a circle for a folded card or rounded dock; 11.1.0's corners on a dock taller than one row.
+
+10. **A firmer dock.** In dark the dock takes the third of five steps. On the warm figure page it now stands 1.44 to 1 off the page, where today's barely stands off it (1.01), and the page still shows through. On the near-black grid page about as much of the grid shows through it as through the light dock on the white grid. At that step the dark dock blurs 11.2 px, where the light dock and every card blur 16. Light takes the first step: 1.30 to 1 off the warm page (today's 1.20), and 1.31 on daraksha's ground (today's 1.21). The rule that would pick the dark step from the readings meets no step on every dock: at the third, the round dock lets a little more of the dark grid through than the light dock lets of the white one (0.124 folded and 0.147 open, against 0.122).
+
+    ![a firmer dock, on the grid page](fold/strip-q10-grid-9m.chromium.png)
+
+    Also `fold/strip-q10-field-9m.chromium.png` and `fold/strip-q10-daraksha-9m.chromium.png`.
+    Default: the third of five in dark, with its blur; the first in light.
+
+12. **Delete what no site uses, now.** 78 names a site can use against 11.1.0's 80: 15 added and 17 deleted, the dock's search helper among them.
+
+    ![the names](fold/strip-q12-names-9m.png)
+
+    Default: delete them in 11.2.0.
+
+14. **A dock that sits in a row with other things.** On this build atlas's figure dock pushes its legend 36 px when it opens and covers none of it. The overlay that would keep the row still is not built; on the eighth build it moved the legend 27 px and covered 1,872 px² of it, its link included. Atlas has since chosen the head row for its figure docks, where the open dock covers none of the legend, its link or the plot, and nothing moves.
+
+    ![a dock in a row](fold/strip-q14-9m.chromium.png)
+
+    Default: no change in 11.2.0.
+
+18. **How a hovered icon differs from the current page's.** The current page's highlight is 10 % of the dock's text colour. The hover is 6.5 % in light and 5 % in dark: in light it stands 1.08 to 1 from the current highlight and 1.15 off the dock; in dark 1.14 and 1.13. In light 5 % would stand 1.11 from both, but on one dock it stood under 1.1 off the dock, so light takes 6.5 %. The strip shows 5, 6.5, 8 and 10 % in both themes.
+
+    ![hover strengths](fold/strip-q18-9m.chromium.png)
+
+    Default: as built; the separation is yours to judge.
+
+19. **A dialog opened from the dock.** A press on the dimmed page closes the dialog, and the dock stays open for its usual pause, folding and landing 6.4 s later. A press outside a menu closes the menu and the dock together.
+
+    ![a dialog and a menu](fold/strip-q19-9m.chromium.png)
+
+    Default: yes.
+
+20. **The controls dock on a desktop.** With four controls it rests folded at 1440 and at 390, opens under the pointer, and folds again 3.1 s after the pointer leaves. With one control it is that control.
+
+    ![the controls dock](fold/strip-q20-9m.chromium.png)
+
+    Default: yes, with icons at half the button.
+
+21. **The selected tab in dark.** On the warm figure page the selected Reports reads 4.26 to 1 on its highlight, under the 4.5 floor for words but above today's 3.26; dials's selected 5Y reads 4.49 (today's 7.69). On the dark grid page Reports reads 10.33 (today's 9.62). The highlights stand 1.29 to 1.37 off the dock.
+
+    ![the selected tab in dark](fold/strip-q21-9m.chromium.png)
+
+    Default: keep the dock glass and every name readable; where a selected name still can't reach the floor at the third step, as here on the warm page, the highlight is the faintest that still reads as selected, and those docks are named.
+
+22. **The dock's code.** It is 5,180 lines against 11.1.0's 4,741, 439 more. The list of what could still go is in `MEASURE-9.md`: about 33 lines rewritten shorter with nothing you'd see, and the rest each a behaviour a ruling or a site asked for (nothing changing in a single frame, daraksha's fission seat, 11.1.0's long press, and others). With all of it removed the dock would still be about 92 lines over. Your apps could delete 425 lines of their own with 11.2.0 (their holds, folds and the controls seat), which would leave the two together 14 lines over 11.1.0.
+
+    Default: keep every behaviour. The release waits until the count is met, or until you name what to drop, or let the apps' deletions count against the dock's growth.
