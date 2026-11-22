@@ -1,0 +1,26 @@
+repo @ ref | file | lines | span | code | block | 11.2.0 as ruled
+fourier-analysis @ 266bd67 | web/src/components/shared/StageDock.vue | all | 133 | 84 | the stage dock: two GlassDocks and their hold, given way to one ControlsDock (the file's header says so) | yes: ControlsDock with corner, within, expand-on, #collapsed, #persistent-end
+fourier-analysis @ 266bd67 | web/src/components/auth/UserSlugBar.vue | 7,27-31 | 6 | 6 | the account menu's dock hold (and the removed useOptionalDockContext import) | yes if G-8's menu hold covers a DropdownMenu in GlassDock's run (read on w-ctlm, H1)
+fourier-analysis @ 266bd67 | web/src/components/layout/AppDock.vue | 328-331 | 4 | 4 | the Sections menu's dock hold | as above
+fourier-analysis @ 266bd67 | web/src/components/visualization/AnimationControls.vue | 116-119 | 4 | 4 | the animation menus' dock hold | as above
+fourier-analysis @ 266bd67 | web/src/components/layout/AppDock.vue | 564 | 1 | 1 | --dock-trigger-min-height: the default now | yes (RU-99)
+fourier-analysis @ 266bd67 | web/src/components/shared/StageDock.vue | 130 | 1 | 0 | (inside StageDock, already counted) | yes
+fourier-analysis @ 266bd67 | web/src/components/visualization/AnimationControls.vue | 437 | 1 | 1 | --dock-trigger-min-height: the default now | yes (RU-99)
+daraksha @ 24a6dbd | src/shell/dockHold.ts | all | 102 | 75 | the app's one dock hold (glass's interim recipe) | yes: the outlet carries teleported seats and their holds
+daraksha @ 24a6dbd | src/App.vue | 9,28 | 2 | 2 | the hold's provide | yes
+daraksha @ 24a6dbd | src/name/NameDock.vue | 31,49,53 | 3 | 3 | the slider's held press (REMOVE AT GLASS 11.2.0) | yes: G-1 (f), a held finger folds nothing
+daraksha @ 24a6dbd | src/portraits/PortraitsDock.vue | 18,24,26 | 3 | 3 | the slider's held press (REMOVE AT GLASS 11.2.0) | yes: as above
+daraksha @ 24a6dbd | src/shell/ControlsSeat.vue | all | 227 | 159 | the controls seat, whose body becomes <ControlsDock> (its header); the site's place and palette lines in it are not split out | yes, less the site's place, palette and seat-name lines it keeps
+daraksha @ 24a6dbd | src/shell/SiteDock.vue | 69-135 | 67 | 42 | the khatam's fission seat, script (REMOVE AT GLASS 11.2.0) | not ruled: the tip has no fission seat (src/components/dock/index.ts:72-78, definition-absent); the app's mark expects one
+daraksha @ 24a6dbd | src/shell/SiteDock.vue | 41,137-223 | 88 | 67 | the 6 s linger, its hold and the outside press (REMOVE AT GLASS 11.2.0) | yes: the linger is glass's (--dock-linger), the outside press is glass's
+daraksha @ 24a6dbd | src/shell/SiteDock.vue | 279-290 | 12 | 7 | the fission seat and its neck, template (REMOVE AT GLASS 11.2.0) | not ruled: as the fission script
+daraksha @ 24a6dbd | src/shell/SiteDock.vue | 467-583 | 117 | 82 | the .fission styles (REMOVE AT GLASS 11.2.0) | not ruled: as the fission script
+daraksha @ 24a6dbd | src/pages/ScripturePage.vue | 245-258 | 14 | 13 | the reader dock's View Transition (REMOVE AT GLASS 11.2.0: O-222) | yes: the carrier carries the layer's re-fit (G-4)
+daraksha @ 24a6dbd | src/shell/heldDialog.ts | all | 28 | 20 | a page-owned dialog holding the dock (ControlsSeat's interim `held`) | not ruled: no cell reads a page-owned dialog held by ControlsDock; listed apart
+hassio-config-worktrees/apx-ui-r11 @ ce9eddf6 | frontend/src/styles/scale.css | 156-158 | 3 | 3 | LF-11: the floor trigger a full seat | yes (RU-99)
+
+total deletable code lines by app: {"fourier-analysis": 100, "daraksha": 322, "hassio-config-worktrees": 3}; all apps 425; listed apart (not ruled): 151
+changed, not counted:
+  fourier AppDock.vue:409, AnimationControls.vue:236, :249, :305, :390 and UserSlugBar.vue:186: the DropdownMenus' @update:open (or its call) to the hold, dropped from a line that stays
+  daraksha ScripturePage.vue:227 and :838: dockChange(go) becomes go(); SiteDock.vue:233-234, :291: the .fission wrapper and its handlers
+  daraksha ColourPage.vue:27, :66: useHeldDialog (with heldDialog.ts, listed apart)
