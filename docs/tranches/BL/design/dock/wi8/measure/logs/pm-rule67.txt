@@ -1,0 +1,26 @@
+## chromium
+left out of the show-through (no grid under the plate with the docks hidden): action-row Stylesheet actions, corner-controls Page controls, dials Fund balance filters, figure-tools Churn tools, figure-tools Headcount tools, figure-tools Revenue tools, rail Sections
+show-through on the grid, the median over the docks and postures read at every rung, today's included [min to max] (n):
+  dark: today: 0.130 [0.001 to 0.216] (10); 1: 0.131 [0.000 to 0.242] (10); 0.85: 0.124 [0.002 to 0.230] (10); 0.7: 0.090 [0.007 to 0.213] (10); 0.55: 0.036 [0.000 to 0.088] (10); 0.4: 0.036 [0.000 to 0.048] (10)
+  light: today: 0.098 [0.000 to 0.366] (12); 1: 0.106 [0.000 to 0.165] (12); 0.85: 0.103 [0.000 to 0.151] (12); 0.7: 0.066 [0.004 to 0.156] (12); 0.55: 0.029 [0.000 to 0.125] (12); 0.4: 0.027 [0.000 to 0.141] (12)
+plate against the warm field in dark, each dock's median of three; the largest over every dock [the median] (n):
+  today: 1.419 (figure-tools Churn tools open) [1.067] (23); 1: 1.550 (figure-tools Churn tools open) [1.056] (20); 0.85: 1.639 (figure-tools Churn tools open) [1.219] (20); 0.7: 1.755 (figure-tools Churn tools folded) [1.440] (20); 0.55: 1.881 (figure-tools Churn tools open) [1.680] (20); 0.4: 1.956 (nav Site open) [1.920] (20)
+spread of three reads: plate against field up to 0.033 (median 0.000); show-through up to 0.000 (median 0.000)
+## webkit
+left out of the show-through (no grid under the plate with the docks hidden): rail Sections
+show-through on the grid, the median over the docks and postures read at every rung, today's included [min to max] (n):
+  dark: today: 0.781 [0.585 to 0.824] (19); 1: 0.726 [0.539 to 0.726] (19); 0.85: 0.674 [0.500 to 0.674] (19); 0.7: 0.580 [0.439 to 0.580] (19); 0.55: 0.477 [0.380 to 0.477] (19); 0.4: 0.389 [0.311 to 0.389] (19)
+  light: today: 0.802 [0.582 to 0.886] (19); 1: 0.729 [0.534 to 0.729] (19); 0.85: 0.657 [0.501 to 0.657] (19); 0.7: 0.568 [0.441 to 0.568] (19); 0.55: 0.457 [0.365 to 0.457] (19); 0.4: 0.369 [0.292 to 0.407] (19)
+plate against the warm field in dark, each dock's median of three; the largest over every dock [the median] (n):
+  today: 1.222 (nav Site open) [1.194] (23); 1: 1.318 (pager Pages open) [1.289] (20); 0.85: 1.484 (pill Pill folded) [1.434] (20); 0.7: 1.684 (pill Pill folded) [1.616] (20); 0.55: 1.910 (pill Pill folded) [1.800] (20); 0.4: 2.138 (pager Pages open) [1.994] (20)
+spread of three reads: plate against field up to 0.034 (median 0.000); show-through up to 0.000 (median 0.000)
+
+## RU-67's rule
+light default (level 1) on the light grid: chromium 0.106, webkit 0.729
+  today: dark show-through chromium 0.130, webkit 0.781 -> clause 1 not met; plate against the warm field (largest) chromium 1.419, webkit 1.222 -> clause 2 met
+  1: dark show-through chromium 0.131, webkit 0.726 -> clause 1 not met; plate against the warm field (largest) chromium 1.550, webkit 1.318 -> clause 2 met
+  0.85: dark show-through chromium 0.124, webkit 0.674 -> clause 1 not met; plate against the warm field (largest) chromium 1.639, webkit 1.484 -> clause 2 met
+  0.7: dark show-through chromium 0.090, webkit 0.580 -> clause 1 met; plate against the warm field (largest) chromium 1.755, webkit 1.684 -> clause 2 not met
+  0.55: dark show-through chromium 0.036, webkit 0.477 -> clause 1 met; plate against the warm field (largest) chromium 1.881, webkit 1.910 -> clause 2 not met
+  0.4: dark show-through chromium 0.036, webkit 0.389 -> clause 1 met; plate against the warm field (largest) chromium 1.956, webkit 2.138 -> clause 2 not met
+RESULT: no rung meets both clauses; the firmest rung under 1.70 in both engines is 0.85; question 10 says so

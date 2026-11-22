@@ -1,0 +1,1 @@
+none light 20 ../logs/pm-gates8-webkit.txt for E in chromium webkit; do pm/analyse.sh $E pm pm >> ../logs/pm-pass.log 2>&1; done; node m6/r30.mjs ../rows/pm-r30 > ../logs/pm-r30.txt 2>&1

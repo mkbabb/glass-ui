@@ -1,0 +1,163 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip
+
+ ❯ tests/gates/overfit-structure.test.ts (15 tests | 2 failed) 51ms
+     × every runtime export is reachable — no export leaks (zero external site AND unpublished) 8ms
+     × zero `void`-kept dead arrays 6ms
+(node:60074) ExperimentalWarning: localStorage is not available because --localstorage-file was not provided.
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ❯ tests/styles/layout-canon.test.ts (24 tests | 2 failed) 144ms
+     × kill #10: no width-keyed `matchMedia` survives in the demo 17ms
+     × kill #15: no raw `vh` envelope survives in the demo 15ms
+ ❯ tests/styles/dissolve.test.ts (22 tests | 1 failed) 144ms
+     × owns the root's OWN reduced-motion exit — the material release and the fade survive 5ms
+ ❯ tests/styles/backdrop-prefix-normalization.test.ts (4 tests | 1 failed) 15ms
+     × ships every backdrop-filter as an adjacent -webkit-/standard pair 5ms
+ ❯ tests/design/drive-tokens.test.ts (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/design/drive-tokens.test.ts [ tests/design/drive-tokens.test.ts ]
+Error: ENOENT: no such file or directory, open '/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/docs/design/tunable-anim.md'
+ ❯ read tests/design/drive-tokens.test.ts:30:39
+     28| // ───────────────────────────────────────────────────────────────────…
+     29|
+     30| const read = (rel: string): string => readFileSync(join(process.cwd(),…
+       |                                       ^
+     31|
+     32| /** The `| drive | token | … |` rows between `## Kind 5` and the next …
+ ❯ tests/design/drive-tokens.test.ts:67:31
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/7]⎯
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/gates/overfit-structure.test.ts > gate:G-OVERFIT — EXPORT-REACH arm (the TS twin of orphan-css-partial) > every runtime export is reachable — no export leaks (zero external site AND unpublished)
+AssertionError: 2 runtime export(s) are referenced nowhere outside their own module AND ship on no published subpath. An unreachable export is not API — make it module-private or delete it:
+  src/components/dock/composables/dockRegistry.ts :: dockOutletWants
+  src/components/dock/composables/useDockBody.ts :: DOCK_BODY_KEY: expected [ …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "src/components/dock/composables/dockRegistry.ts :: dockOutletWants",
++   "src/components/dock/composables/useDockBody.ts :: DOCK_BODY_KEY",
++ ]
+
+ ❯ tests/gates/overfit-structure.test.ts:237:11
+    235|             `${offenders.length} runtime export(s) are referenced nowh…
+    236|                 `An unreachable export is not API — make it module-pri…
+    237|         ).toEqual([]);
+       |           ^
+    238|     });
+    239|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/7]⎯
+
+ FAIL  tests/gates/overfit-structure.test.ts > gate:G-OVERFIT — NO-SHIM arm (the no-legacy edict, enforced) > zero `void`-kept dead arrays
+AssertionError: `void x;` reads as a USE to both the unused check and the bundler's DCE, so it converts dead code into shipped bytes:
+  src/components/dock/composables/useDockBody.ts :: void t;: expected [ Array(1) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "src/components/dock/composables/useDockBody.ts :: void t;",
++ ]
+
+ ❯ tests/gates/overfit-structure.test.ts:386:11
+    384|             `\`void x;\` reads as a USE to both the unused check and t…
+    385|                 `into shipped bytes:\n  ${offenders.join("\n  ")}`,
+    386|         ).toEqual([]);
+       |           ^
+    387|     });
+    388|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/7]⎯
+
+ FAIL  tests/styles/backdrop-prefix-normalization.test.ts > G-GLASS-HAS-FROST arm (b) — the shipped dist bytes > ships every backdrop-filter as an adjacent -webkit-/standard pair
+AssertionError: dist/ is absent — run `npm run build` first; the dist arm is load-bearing and a skipped run is not a pass: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/styles/backdrop-prefix-normalization.test.ts:152:34
+    150|     const buildHint = "dist/ is absent — run `npm run build` first; th…
+    151|     it("ships every backdrop-filter as an adjacent -webkit-/standard p…
+    152|         expect(built, buildHint).toBe(true);
+       |                                  ^
+    153|         const files = distCssFiles(DIST);
+    154|         expect(files.length).toBeGreaterThan(0);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/7]⎯
+
+ FAIL  tests/styles/dissolve.test.ts > the vaporize — composition with the reveal it does not replace > owns the root's OWN reduced-motion exit — the material release and the fade survive
+Error: ENOENT: no such file or directory, open '/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.pm-tip/docs/tranches/BJ/waves/BAND-FEEDBACK-MOTION.md'
+ ❯ read tests/styles/dissolve.test.ts:47:39
+     45|
+     46| const REPO_ROOT = process.cwd();
+     47| const read = (rel: string): string => readFileSync(join(REPO_ROOT, rel…
+       |                                       ^
+     48| const readStyle = (rel: string): string => read(join("src/styles", rel…
+     49|
+ ❯ tests/styles/dissolve.test.ts:501:21
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/7]⎯
+
+ FAIL  tests/styles/layout-canon.test.ts > BK #59 kills — the routed residue, now held > kill #10: no width-keyed `matchMedia` survives in the demo
+AssertionError: expected [ 'demo/__anim/mounts/dock-wi8.vue' ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "demo/__anim/mounts/dock-wi8.vue",
++ ]
+
+ ❯ tests/styles/layout-canon.test.ts:357:27
+    355|             /matchMedia\(\s*["'`]\([^"'`]*width/.test(strip(read(f))),
+    356|         );
+    357|         expect(offenders).toEqual([]);
+       |                           ^
+    358|     });
+    359|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/7]⎯
+
+ FAIL  tests/styles/layout-canon.test.ts > BK #59 kills — the routed residue, now held > kill #15: no raw `vh` envelope survives in the demo
+AssertionError: expected [ 'demo/__anim/anim.css', …(1) ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "demo/__anim/anim.css",
++   "demo/__anim/mounts/dock-comp.vue",
++ ]
+
+ ❯ tests/styles/layout-canon.test.ts:362:27
+    360|     it("kill #15: no raw `vh` envelope survives in the demo", () => {
+    361|         const offenders = DEMO_FILES.filter((f) => /\d+vh\b/.test(stri…
+    362|         expect(offenders).toEqual([]);
+       |                           ^
+    363|     });
+    364| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/7]⎯
+
+
+ Test Files  5 failed | 84 passed | 4 skipped (93)
+      Tests  6 failed | 879 passed | 3 expected fail | 14 skipped (902)
+   Start at  23:07:41
+   Duration  51.93s (transform 2.97s, setup 5.28s, import 24.14s, tests 30.55s, environment 24.81s)
+
+rc=1
