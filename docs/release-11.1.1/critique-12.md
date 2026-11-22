@@ -357,7 +357,10 @@ J. **README's "A surface reopened during its exit turns back from where it is"**
 
 K. **The release-10-1-5 critic and fix specs** (582 WebKit tests in 32 files): this seat ran
    the first seven, all green, and stopped (item 3). They want a run split by file, each in
-   its own guarded call, on both trees.
+   its own guarded call, on both trees. They write their readings into tracked files: the
+   seven tests rewrote `docs/release-10.1.5/critic-1/webkit/*.json` (seven files), which I
+   restored from HEAD after this record's first commit, so a run of them on a tree under
+   review must restore those files after it.
 
 L. **"its smallest honest height"** in the detented Sheet sentence is the source's word for
    the floor (carried).
