@@ -1,0 +1,4 @@
+472c472
+<             v-if="haloPresent"
+---
+>             v-if="haloPresent && !(fade !== null && !dialogRoot.open.value && fade < 0.5)"

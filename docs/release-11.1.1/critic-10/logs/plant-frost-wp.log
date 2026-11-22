@@ -1,0 +1,145 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 6 tests using 1 worker
+
+[WebServer] 12:55:32 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  1 [webkit-phone] › release-11-1-1-reduce.spec.ts:199:5 › fade · a Sheet right appears and leaves on a fade (3.2s)
+[WebServer] 12:55:36 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  2 [webkit-phone] › release-11-1-1-reduce.spec.ts:199:5 › fade · a Sheet bottom appears and leaves on a fade (3.1s)
+[WebServer] 12:55:39 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  3 [webkit-phone] › release-11-1-1-reduce.spec.ts:199:5 › fade · a detented Sheet appears and leaves on a fade (3.0s)
+[WebServer] 12:55:43 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  4 [webkit-phone] › release-11-1-1-reduce.spec.ts:199:5 › fade · a Sheet right appears and leaves on a fade (3.0s)
+[WebServer] 12:55:46 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  5 [webkit-phone] › release-11-1-1-reduce.spec.ts:199:5 › fade · a Sheet bottom appears and leaves on a fade (3.0s)
+[WebServer] 12:55:50 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✘  6 [webkit-phone] › release-11-1-1-reduce.spec.ts:199:5 › fade · a detented Sheet appears and leaves on a fade (3.0s)
+
+
+  1) [webkit-phone] › release-11-1-1-reduce.spec.ts:199:5 › fade · a Sheet right appears and leaves on a fade 
+
+    Error: out: the frost layer is mounted on every frame its plate is, so it leaves at the plate's last painted value {"in":{"fading":19,"rises":true,"falls":true,"span":204,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"fading":19,"rises":true,"falls":true,"span":194,"boxSteps":0,"stepped":[],"from":1,"to":0},"leave":[2],"frost":{"in":{"frames":70,"bare":0,"gap":0,"first":0,"last":1,"plateLast":1,"leg":{"fading":19,"rises":true,"falls":true,"span":204,"boxSteps":0,"stepped":[],"from":0,"to":1}},"out":{"frames":11,"bare":10,"gap":0,"first":1,"last":0.563,"plateLast":0.032,"leg":{"fading":9,"rises":true,"falls":true,"span":92,"boxSteps":0,"stepped":[],"from":1,"to":0}}}}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 10
+
+      235 |             }
+      236 |             expect(frost.in.first, `in: the frost layer enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);
+    > 237 |             expect(frost.out.bare, `out: the frost layer is mounted on every frame its plate is, so it leaves at the plate's last painted value ${at}`).toBe(0);
+          |                                                                                                                                                         ^
+      238 |         }
+      239 |         if (s.says) {
+      240 |             expect(leave.length, `one leave-finished event ${at}`).toBe(1);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic10-plant/tree/tests-visual/release-11-1-1-reduce.spec.ts:237:153
+
+    Error Context: test-results/release-11-1-1-reduce-fade-cfeca-ppears-and-leaves-on-a-fade-webkit-phone/error-context.md
+
+  2) [webkit-phone] › release-11-1-1-reduce.spec.ts:199:5 › fade · a Sheet bottom appears and leaves on a fade 
+
+    Error: out: the frost layer is mounted on every frame its plate is, so it leaves at the plate's last painted value {"in":{"fading":20,"rises":true,"falls":true,"span":203,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"fading":19,"rises":true,"falls":true,"span":193,"boxSteps":0,"stepped":[],"from":1,"to":0},"leave":[2],"frost":{"in":{"frames":70,"bare":0,"gap":0,"first":0,"last":1,"plateLast":1,"leg":{"fading":20,"rises":true,"falls":true,"span":203,"boxSteps":0,"stepped":[],"from":0,"to":1}},"out":{"frames":11,"bare":10,"gap":0,"first":1,"last":0.546,"plateLast":0.029,"leg":{"fading":9,"rises":true,"falls":true,"span":91,"boxSteps":0,"stepped":[],"from":1,"to":0}}}}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 10
+
+      235 |             }
+      236 |             expect(frost.in.first, `in: the frost layer enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);
+    > 237 |             expect(frost.out.bare, `out: the frost layer is mounted on every frame its plate is, so it leaves at the plate's last painted value ${at}`).toBe(0);
+          |                                                                                                                                                         ^
+      238 |         }
+      239 |         if (s.says) {
+      240 |             expect(leave.length, `one leave-finished event ${at}`).toBe(1);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic10-plant/tree/tests-visual/release-11-1-1-reduce.spec.ts:237:153
+
+    Error Context: test-results/release-11-1-1-reduce-fade-1f21c-ppears-and-leaves-on-a-fade-webkit-phone/error-context.md
+
+  3) [webkit-phone] › release-11-1-1-reduce.spec.ts:199:5 › fade · a detented Sheet appears and leaves on a fade 
+
+    Error: out: the frost layer is mounted on every frame its plate is, so it leaves at the plate's last painted value {"in":{"fading":19,"rises":true,"falls":true,"span":205,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"fading":19,"rises":true,"falls":true,"span":193,"boxSteps":0,"stepped":[],"from":1,"to":0},"leave":[3],"frost":{"in":{"frames":70,"bare":0,"gap":0,"first":0,"last":1,"plateLast":1,"leg":{"fading":19,"rises":true,"falls":true,"span":205,"boxSteps":0,"stepped":[],"from":0,"to":1}},"out":{"frames":11,"bare":10,"gap":0,"first":1,"last":0.54,"plateLast":0.021,"leg":{"fading":9,"rises":true,"falls":true,"span":92,"boxSteps":0,"stepped":[],"from":1,"to":0}}}}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 10
+
+      235 |             }
+      236 |             expect(frost.in.first, `in: the frost layer enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);
+    > 237 |             expect(frost.out.bare, `out: the frost layer is mounted on every frame its plate is, so it leaves at the plate's last painted value ${at}`).toBe(0);
+          |                                                                                                                                                         ^
+      238 |         }
+      239 |         if (s.says) {
+      240 |             expect(leave.length, `one leave-finished event ${at}`).toBe(1);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic10-plant/tree/tests-visual/release-11-1-1-reduce.spec.ts:237:153
+
+    Error Context: test-results/release-11-1-1-reduce-fade-ccbe5-ppears-and-leaves-on-a-fade-webkit-phone/error-context.md
+
+  4) [webkit-phone] › release-11-1-1-reduce.spec.ts:199:5 › fade · a Sheet right appears and leaves on a fade 
+
+    Error: out: the frost layer is mounted on every frame its plate is, so it leaves at the plate's last painted value {"in":{"fading":19,"rises":true,"falls":true,"span":204,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"fading":19,"rises":true,"falls":true,"span":195,"boxSteps":0,"stepped":[],"from":1,"to":0},"leave":[2],"frost":{"in":{"frames":70,"bare":0,"gap":0,"first":0,"last":1,"plateLast":1,"leg":{"fading":19,"rises":true,"falls":true,"span":204,"boxSteps":0,"stepped":[],"from":0,"to":1}},"out":{"frames":11,"bare":10,"gap":0,"first":1,"last":0.546,"plateLast":0.021,"leg":{"fading":9,"rises":true,"falls":true,"span":91,"boxSteps":0,"stepped":[],"from":1,"to":0}}}}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 10
+
+      235 |             }
+      236 |             expect(frost.in.first, `in: the frost layer enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);
+    > 237 |             expect(frost.out.bare, `out: the frost layer is mounted on every frame its plate is, so it leaves at the plate's last painted value ${at}`).toBe(0);
+          |                                                                                                                                                         ^
+      238 |         }
+      239 |         if (s.says) {
+      240 |             expect(leave.length, `one leave-finished event ${at}`).toBe(1);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic10-plant/tree/tests-visual/release-11-1-1-reduce.spec.ts:237:153
+
+    Error Context: test-results/release-11-1-1-reduce-fade-cfeca-ppears-and-leaves-on-a-fade-webkit-phone-repeat1/error-context.md
+
+  5) [webkit-phone] › release-11-1-1-reduce.spec.ts:199:5 › fade · a Sheet bottom appears and leaves on a fade 
+
+    Error: out: the frost layer is mounted on every frame its plate is, so it leaves at the plate's last painted value {"in":{"fading":19,"rises":true,"falls":true,"span":206,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"fading":19,"rises":true,"falls":true,"span":194,"boxSteps":0,"stepped":[],"from":1,"to":0},"leave":[3],"frost":{"in":{"frames":70,"bare":0,"gap":0,"first":0,"last":1,"plateLast":1,"leg":{"fading":19,"rises":true,"falls":true,"span":206,"boxSteps":0,"stepped":[],"from":0,"to":1}},"out":{"frames":12,"bare":9,"gap":0,"first":1,"last":0.506,"plateLast":0.036,"leg":{"fading":10,"rises":true,"falls":true,"span":102,"boxSteps":0,"stepped":[],"from":1,"to":0}}}}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 9
+
+      235 |             }
+      236 |             expect(frost.in.first, `in: the frost layer enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);
+    > 237 |             expect(frost.out.bare, `out: the frost layer is mounted on every frame its plate is, so it leaves at the plate's last painted value ${at}`).toBe(0);
+          |                                                                                                                                                         ^
+      238 |         }
+      239 |         if (s.says) {
+      240 |             expect(leave.length, `one leave-finished event ${at}`).toBe(1);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic10-plant/tree/tests-visual/release-11-1-1-reduce.spec.ts:237:153
+
+    Error Context: test-results/release-11-1-1-reduce-fade-1f21c-ppears-and-leaves-on-a-fade-webkit-phone-repeat1/error-context.md
+
+  6) [webkit-phone] › release-11-1-1-reduce.spec.ts:199:5 › fade · a detented Sheet appears and leaves on a fade 
+
+    Error: out: the frost layer is mounted on every frame its plate is, so it leaves at the plate's last painted value {"in":{"fading":20,"rises":true,"falls":true,"span":203,"boxSteps":0,"stepped":[],"from":0,"to":1},"out":{"fading":19,"rises":true,"falls":true,"span":196,"boxSteps":0,"stepped":[],"from":1,"to":0},"leave":[3],"frost":{"in":{"frames":70,"bare":0,"gap":0,"first":0,"last":1,"plateLast":1,"leg":{"fading":20,"rises":true,"falls":true,"span":203,"boxSteps":0,"stepped":[],"from":0,"to":1}},"out":{"frames":11,"bare":10,"gap":0,"first":1,"last":0.546,"plateLast":0.021,"leg":{"fading":9,"rises":true,"falls":true,"span":93,"boxSteps":0,"stepped":[],"from":1,"to":0}}}}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 10
+
+      235 |             }
+      236 |             expect(frost.in.first, `in: the frost layer enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);
+    > 237 |             expect(frost.out.bare, `out: the frost layer is mounted on every frame its plate is, so it leaves at the plate's last painted value ${at}`).toBe(0);
+          |                                                                                                                                                         ^
+      238 |         }
+      239 |         if (s.says) {
+      240 |             expect(leave.length, `one leave-finished event ${at}`).toBe(1);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/critic10-plant/tree/tests-visual/release-11-1-1-reduce.spec.ts:237:153
+
+    Error Context: test-results/release-11-1-1-reduce-fade-ccbe5-ppears-and-leaves-on-a-fade-webkit-phone-repeat1/error-context.md
+
+  6 failed
+    [webkit-phone] › release-11-1-1-reduce.spec.ts:199:5 › fade · a Sheet right appears and leaves on a fade 
+    [webkit-phone] › release-11-1-1-reduce.spec.ts:199:5 › fade · a Sheet bottom appears and leaves on a fade 
+    [webkit-phone] › release-11-1-1-reduce.spec.ts:199:5 › fade · a detented Sheet appears and leaves on a fade 
+    [webkit-phone] › release-11-1-1-reduce.spec.ts:199:5 › fade · a Sheet right appears and leaves on a fade 
+    [webkit-phone] › release-11-1-1-reduce.spec.ts:199:5 › fade · a Sheet bottom appears and leaves on a fade 
+    [webkit-phone] › release-11-1-1-reduce.spec.ts:199:5 › fade · a detented Sheet appears and leaves on a fade 
