@@ -43,3 +43,12 @@ Dock pass 8 `wf_e0aa83eb-d6e` is finished and no longer needs a resume. The ruli
 **Owner question added (2026-11-22):** the code font is fetched at app start on routes whose first screen shows code, so it is in hand at first paint and never swaps; on a slow network that paints those routes 30 to 34 ms after P16 (out of about 8.5 s at 400 ms RTT). The other choice starts the font after first paint, so those first screens show code in the fallback face for the rest of the visit. Default: keep the fetch at app start.
 
 **Dock pass 9 and the step-10 check (2026-11-22).** `docs/tranches/BL/driver/dock-pass-9.js` (no args, run `wf_a9e4dc13-149`) and `dock-step10-8.js` (no args, run `wf_f88e423e-667`). If either stops, resume it with `resumeFromRunId` and its run id; a seat that returned not measured gets an `args.resume[label]` note (labels harness-9, source-9, measure-9, verify-9).
+
+## The kernel zone stop (2026-11-22 15:47) and how to resume after the reboot
+
+The guard refuses heavy and browser runs: data.kalloc.1024 at 13.07M and rising about 200 a second (panic near 20.8M). The owner was asked to reboot (terminal notification 15:5x). After the reboot, in order:
+
+1. **11.1.1.** The close (in `wf_7b4b4753-433`) returned NOT READY: the master merge broke two of release.sh's own gates, and restating one showed a picked palette dropping its rows mid-exit. The ruling is committed on release/11.1.1 as `docs/release-11.1.1/orchestrator-note-after-close.md` (a5452a1a3). Launch the continuation fresh: `Workflow({scriptPath: "/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/driver/glass-11.1.1-after-merge.js"})` (no args; rounds 13 to 16, then the close again). Once launched, its run id goes here.
+2. **Dock pass 9** (`wf_a9e4dc13-149`). If measure-9 returned refused, resume with `resumeFromRunId: "wf_a9e4dc13-149"` and `args.resume["measure-9"]` naming what its MEASURE-9 part M says ran.
+3. **BM part 1** (`wf_2265c21a-25a`) needs no heavy run (the union, its critics and the fold); if a seat was cut by the reboot, resume it with its run id. Part 2 (the ten design passes) is written from the folded union.
+
