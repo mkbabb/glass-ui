@@ -1,7 +1,8 @@
 # glass.babb.dev's Cloudflare Pages headers. The build writes this file to
 # dist-demo/_headers (demo/vite.demo-dist.config.ts, pagesHeaders()), filling the
 # script-src placeholder with the sha256 of each inline <script> in the built
-# index.html (the dark-mode stamp), so the CSP never drifts from the bytes it guards.
+# index.html (the text face's load and the dark-mode stamp), so the CSP never drifts
+# from the bytes it guards.
 #
 # Every response but a 404 carries `no-transform`: the edge may not rewrite the HTML,
 # so no analytics beacon is injected. scripts/check-live.mjs proves it after each

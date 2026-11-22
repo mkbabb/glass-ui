@@ -13,6 +13,13 @@ export interface RouteRow {
      * section's first page, on `/`.
      */
     canvas?: "page" | "card";
+    /**
+     * The page's first screen sets figures or code in the code face, so a navigation to
+     * it starts the face's load with its chunks and the face is in hand by its first
+     * text layout. A section page whose card for this page shows it does the same, and
+     * so does `/` for a section's first page. Elsewhere the face loads when code appears.
+     */
+    codeFace?: true;
 }
 
 /** A section: its landing's title and lede (at most 12 words), its icon, its pages. */

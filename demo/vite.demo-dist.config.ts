@@ -45,9 +45,10 @@ function normalizeDemoCssAssets(): Plugin {
 }
 
 // Cloudflare Pages reads `_headers` from the deployed directory. The template is
-// `demo/_headers`; its CSP allows inline scripts by hash only, and the one inline
-// script (the dark-mode stamp) is known only once the HTML is written, so the hash
-// is computed here from the built index.html rather than pasted by hand.
+// `demo/_headers`; its CSP allows inline scripts by hash only, and the inline
+// scripts (the text face's load, the dark-mode stamp) are known only once the HTML is
+// written, so their hashes are computed here from the built index.html rather than
+// pasted by hand.
 function pagesHeaders(): Plugin {
     let outDir = "";
     return {
