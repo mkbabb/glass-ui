@@ -1,0 +1,1089 @@
+
+Running 44 tests using 1 worker
+
+  ✘   1 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 390: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (1.8s)
+  ✘   2 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 844: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (1.8s)
+  ✘   3 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:217:5 › g1 rest dock at 1280: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (1.8s)
+  ✘   4 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:647:5 › critique 2, coarse phone › e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner (1.8s)
+  ✘   5 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:647:5 › critique 2, coarse phone › e1 at 844: a label-wide tab under the pointer gives the run no reach and cuts no corner (1.8s)
+  ✘   6 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:647:5 › e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner (1.8s)
+  ✘   7 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:647:5 › e1 at 1440: a label-wide tab under the pointer gives the run no reach and cuts no corner (1.8s)
+  ✘   8 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its mid seals round (4.5s)
+  ✘   9 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its end seals round (4.5s)
+  ✘  10 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 1440: a collapse from a run scrolled to its end seals round (4.4s)
+  ✘  11 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 390: a collapse from a run scrolled to its mid seals round (4.5s)
+  ✘  12 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 390: a collapse from a run scrolled to its end seals round (4.5s)
+  ✘  13 [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 1440: a collapse from a run scrolled to its end seals round (4.5s)
+o1 focus hover {"radii":["20px","20px","20px","20px"],"w":87,"h":40}
+  ✓  14 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:73:5 › o1 the wide label seat › o1 the hover plate of a compact 'Focus' label seat is a capsule, never an ellipse (885ms)
+o1 name rest {"radii":["20px","20px","20px","20px"],"w":98,"h":40} hover {"radii":["20px","20px","20px","20px"],"w":98,"h":40}
+  ✓  15 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:85:5 › o1 the wide label seat › o1 the active 'Name ›' seat's plate, at rest and under hover, is a capsule (891ms)
+o2 open house tokens plate {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":264,"h":56} root {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":264,"h":56}
+  ✘  16 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round (573ms)
+o2 collapsed house tokens plate {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":102,"h":56} root {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":102,"h":56}
+  ✘  17 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round (589ms)
+o2 narrow house tokens plate {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":164,"h":56} root {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":164,"h":56} run {"scroll":0}
+  ✘  18 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round (579ms)
+o2 open radius-dock 1.875rem plate {"radii":["28px","28px","28px","28px"],"w":264,"h":56} root {"radii":["28px","28px","28px","28px"],"w":264,"h":56}
+  ✓  19 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open at rest, the plate and the box are round (574ms)
+o2 collapsed radius-dock 1.875rem plate {"radii":["28px","28px","28px","28px"],"w":102,"h":56} root {"radii":["28px","28px","28px","28px"],"w":102,"h":56}
+  ✓  20 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: collapsed with a persistent seat beside the summary, the plate and the box are round (567ms)
+o2 narrow radius-dock 1.875rem plate {"radii":["28px","28px","28px","28px"],"w":164,"h":56} root {"radii":["28px","28px","28px","28px"],"w":164,"h":56} run {"scroll":0}
+  ✓  21 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round (571ms)
+o3 expand {"frames":187,"morphing":50,"bad":["0ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28","12ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28","23ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28","403ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28","412ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28","421ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28"]}
+o3 collapse {"frames":186,"morphing":50,"bad":["387ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28","396ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28","403ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28","410ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28","420ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28","426ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28"]}
+  ✘  22 [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:142:1 › o3 every frame of the expand and of the collapse paints a round end (3.4s)
+  ✘  23 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 390: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (1.8s)
+  ✘  24 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 844: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (1.8s)
+  ✘  25 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:217:5 › g1 rest dock at 1280: one corner = half its height, nothing to scroll, pointer off and on the trailing seat (1.8s)
+  ✘  26 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:647:5 › critique 2, coarse phone › e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner (1.8s)
+  ✘  27 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:647:5 › critique 2, coarse phone › e1 at 844: a label-wide tab under the pointer gives the run no reach and cuts no corner (1.8s)
+  ✘  28 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:647:5 › e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner (1.8s)
+  ✘  29 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:647:5 › e1 at 1440: a label-wide tab under the pointer gives the run no reach and cuts no corner (1.8s)
+  ✘  30 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its mid seals round (4.5s)
+  ✘  31 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its end seals round (4.5s)
+  ✘  32 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 1440: a collapse from a run scrolled to its end seals round (4.4s)
+  ✘  33 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 390: a collapse from a run scrolled to its mid seals round (4.5s)
+  ✘  34 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 390: a collapse from a run scrolled to its end seals round (4.5s)
+  ✘  35 [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 1440: a collapse from a run scrolled to its end seals round (4.5s)
+o1 focus hover {"radii":["22px","22px","22px","22px"],"w":79,"h":44}
+  ✓  36 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:73:5 › o1 the wide label seat › o1 the hover plate of a compact 'Focus' label seat is a capsule, never an ellipse (898ms)
+o1 name rest {"radii":["22px","22px","22px","22px"],"w":88,"h":44} hover {"radii":["22px","22px","22px","22px"],"w":88,"h":44}
+  ✓  37 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:85:5 › o1 the wide label seat › o1 the active 'Name ›' seat's plate, at rest and under hover, is a capsule (858ms)
+o2 open house tokens plate {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":266,"h":60} root {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":266,"h":60}
+  ✘  38 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round (543ms)
+o2 collapsed house tokens plate {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":110,"h":60} root {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":110,"h":60}
+  ✘  39 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round (574ms)
+o2 narrow house tokens plate {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":176,"h":60} root {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":176,"h":60} run {"scroll":0}
+  ✘  40 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round (551ms)
+o2 open radius-dock 1.875rem plate {"radii":["30px","30px","30px","30px"],"w":266,"h":60} root {"radii":["30px","30px","30px","30px"],"w":266,"h":60}
+  ✓  41 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open at rest, the plate and the box are round (576ms)
+o2 collapsed radius-dock 1.875rem plate {"radii":["30px","30px","30px","30px"],"w":110,"h":60} root {"radii":["30px","30px","30px","30px"],"w":110,"h":60}
+  ✓  42 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: collapsed with a persistent seat beside the summary, the plate and the box are round (546ms)
+o2 narrow radius-dock 1.875rem plate {"radii":["30px","30px","30px","30px"],"w":176,"h":60} root {"radii":["30px","30px","30px","30px"],"w":176,"h":60} run {"scroll":0}
+  ✓  43 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, radius-dock 1.875rem › o2 radius-dock 1.875rem: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round (543ms)
+o3 expand {"frames":187,"morphing":50,"bad":["0ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30","13ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30","23ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30","405ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30","412ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30","418ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30"]}
+o3 collapse {"frames":188,"morphing":50,"bad":["382ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30","392ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30","398ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30","406ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30","413ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30","422ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30"]}
+  ✘  44 [coarse-touch] › tests-visual/release-11-0-1.spec.ts:142:1 › o3 every frame of the expand and of the collapse paints a round end (3.4s)
+
+
+  1) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 390: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+
+    Error: 390 rest: corner 3.35544e+07px is one length ({"cls":"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded","w":287,"h":60,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"runs":[{"sw":271,"cw":271,"sh":52,"ch":52,"active":true}]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^-?[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      136 |     const half = read.h / 2;
+      137 |     for (const r of read.radii) {
+    > 138 |         expect(r, `${cell}: corner ${r} is one length (${JSON.stringify(read)})`).toMatch(
+          |                                                                                   ^
+      139 |             /^-?[\d.]+px$/,
+      140 |         );
+      141 |         expect(
+        at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:138:83)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:233:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-coarse-phon-a994e-ff-and-on-the-trailing-seat-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 844: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+
+    Error: 844 rest: corner 3.35544e+07px is one length ({"cls":"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded","w":289.640625,"h":60,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"runs":[{"sw":274,"cw":274,"sh":52,"ch":52,"active":true}]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^-?[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      136 |     const half = read.h / 2;
+      137 |     for (const r of read.radii) {
+    > 138 |         expect(r, `${cell}: corner ${r} is one length (${JSON.stringify(read)})`).toMatch(
+          |                                                                                   ^
+      139 |             /^-?[\d.]+px$/,
+      140 |         );
+      141 |         expect(
+        at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:138:83)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:233:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-coarse-phon-2730d-ff-and-on-the-trailing-seat-chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:217:5 › g1 rest dock at 1280: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+
+    Error: 1280 rest: corner 3.35544e+07px is one length ({"cls":"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded","w":280.734375,"h":56,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"runs":[{"sw":265,"cw":265,"sh":48,"ch":48,"active":true}]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^-?[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      136 |     const half = read.h / 2;
+      137 |     for (const r of read.radii) {
+    > 138 |         expect(r, `${cell}: corner ${r} is one length (${JSON.stringify(read)})`).toMatch(
+          |                                                                                   ^
+      139 |             /^-?[\d.]+px$/,
+      140 |         );
+      141 |         expect(
+        at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:138:83)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:233:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-g1-rest-doc-dccb9-ff-and-on-the-trailing-seat-chromium-headless-new/error-context.md
+
+  4) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:647:5 › critique 2, coarse phone › e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner 
+
+    Error: 390 rest: corner 3.35544e+07px is one length ({"cls":"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded","w":250.03125,"h":60,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"runs":[{"sw":234,"cw":234,"sh":52,"ch":52,"active":true}]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^-?[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      136 |     const half = read.h / 2;
+      137 |     for (const r of read.radii) {
+    > 138 |         expect(r, `${cell}: corner ${r} is one length (${JSON.stringify(read)})`).toMatch(
+          |                                                                                   ^
+      139 |             /^-?[\d.]+px$/,
+      140 |         );
+      141 |         expect(
+        at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:138:83)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:664:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-2--52919-no-reach-and-cuts-no-corner-chromium-headless-new/error-context.md
+
+  5) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:647:5 › critique 2, coarse phone › e1 at 844: a label-wide tab under the pointer gives the run no reach and cuts no corner 
+
+    Error: 844 rest: corner 3.35544e+07px is one length ({"cls":"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded","w":259.828125,"h":60,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"runs":[{"sw":244,"cw":244,"sh":52,"ch":52,"active":true}]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^-?[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      136 |     const half = read.h / 2;
+      137 |     for (const r of read.radii) {
+    > 138 |         expect(r, `${cell}: corner ${r} is one length (${JSON.stringify(read)})`).toMatch(
+          |                                                                                   ^
+      139 |             /^-?[\d.]+px$/,
+      140 |         );
+      141 |         expect(
+        at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:138:83)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:664:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-2--c4b00-no-reach-and-cuts-no-corner-chromium-headless-new/error-context.md
+
+  6) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:647:5 › e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner 
+
+    Error: 390 rest: corner 3.35544e+07px is one length ({"cls":"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded","w":246.03125,"h":56,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"runs":[{"sw":230,"cw":230,"sh":48,"ch":48,"active":true}]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^-?[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      136 |     const half = read.h / 2;
+      137 |     for (const r of read.radii) {
+    > 138 |         expect(r, `${cell}: corner ${r} is one length (${JSON.stringify(read)})`).toMatch(
+          |                                                                                   ^
+      139 |             /^-?[\d.]+px$/,
+      140 |         );
+      141 |         expect(
+        at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:138:83)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:664:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-e1-at-390-a-46d87-no-reach-and-cuts-no-corner-chromium-headless-new/error-context.md
+
+  7) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:647:5 › e1 at 1440: a label-wide tab under the pointer gives the run no reach and cuts no corner 
+
+    Error: 1440 rest: corner 3.35544e+07px is one length ({"cls":"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded","w":271.765625,"h":56,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"runs":[{"sw":256,"cw":256,"sh":48,"ch":48,"active":true}]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^-?[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      136 |     const half = read.h / 2;
+      137 |     for (const r of read.radii) {
+    > 138 |         expect(r, `${cell}: corner ${r} is one length (${JSON.stringify(read)})`).toMatch(
+          |                                                                                   ^
+      139 |             /^-?[\d.]+px$/,
+      140 |         );
+      141 |         expect(
+        at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:138:83)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:664:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-e1-at-1440--81d45-no-reach-and-cuts-no-corner-chromium-headless-new/error-context.md
+
+  8) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its mid seals round 
+
+    Error: last 20% of the collapse, frame 0: corner 3.35544e+07px is one length ({"w":60,"h":60,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      1415 |     const half = Math.min(f.w, f.h) / 2;
+      1416 |     for (const r of f.radii) {
+    > 1417 |         expect(r, `${at}: corner ${r} is one length (${JSON.stringify(f)})`).toMatch(/^[\d.]+px$/);
+           |                                                                              ^
+      1418 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the extent ${half} (${JSON.stringify(f)})`).toBeLessThanOrEqual(0.5);
+      1419 |     }
+      1420 | }
+        at expectCircleFrame (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:1417:78)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:1436:82
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-7--bdcfd-lled-to-its-mid-seals-round-chromium-headless-new/error-context.md
+
+  9) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its end seals round 
+
+    Error: last 20% of the collapse, frame 0: corner 3.35544e+07px is one length ({"w":60,"h":60,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      1415 |     const half = Math.min(f.w, f.h) / 2;
+      1416 |     for (const r of f.radii) {
+    > 1417 |         expect(r, `${at}: corner ${r} is one length (${JSON.stringify(f)})`).toMatch(/^[\d.]+px$/);
+           |                                                                              ^
+      1418 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the extent ${half} (${JSON.stringify(f)})`).toBeLessThanOrEqual(0.5);
+      1419 |     }
+      1420 | }
+        at expectCircleFrame (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:1417:78)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:1436:82
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-7--c718c-lled-to-its-end-seals-round-chromium-headless-new/error-context.md
+
+  10) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 1440: a collapse from a run scrolled to its end seals round 
+
+    Error: last 20% of the collapse, frame 0: corner 3.35544e+07px is one length ({"w":60,"h":60,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      1415 |     const half = Math.min(f.w, f.h) / 2;
+      1416 |     for (const r of f.radii) {
+    > 1417 |         expect(r, `${at}: corner ${r} is one length (${JSON.stringify(f)})`).toMatch(/^[\d.]+px$/);
+           |                                                                              ^
+      1418 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the extent ${half} (${JSON.stringify(f)})`).toBeLessThanOrEqual(0.5);
+      1419 |     }
+      1420 | }
+        at expectCircleFrame (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:1417:78)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:1436:82
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-7--b9986-lled-to-its-end-seals-round-chromium-headless-new/error-context.md
+
+  11) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 390: a collapse from a run scrolled to its mid seals round 
+
+    Error: last 20% of the collapse, frame 0: corner 3.35544e+07px is one length ({"w":56,"h":56,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      1415 |     const half = Math.min(f.w, f.h) / 2;
+      1416 |     for (const r of f.radii) {
+    > 1417 |         expect(r, `${at}: corner ${r} is one length (${JSON.stringify(f)})`).toMatch(/^[\d.]+px$/);
+           |                                                                              ^
+      1418 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the extent ${half} (${JSON.stringify(f)})`).toBeLessThanOrEqual(0.5);
+      1419 |     }
+      1420 | }
+        at expectCircleFrame (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:1417:78)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:1436:82
+
+    Error Context: tests-visual/test-results/release-10-1-5-m1-at-390-a-279dc-lled-to-its-mid-seals-round-chromium-headless-new/error-context.md
+
+  12) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 390: a collapse from a run scrolled to its end seals round 
+
+    Error: last 20% of the collapse, frame 0: corner 3.35544e+07px is one length ({"w":56,"h":56,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      1415 |     const half = Math.min(f.w, f.h) / 2;
+      1416 |     for (const r of f.radii) {
+    > 1417 |         expect(r, `${at}: corner ${r} is one length (${JSON.stringify(f)})`).toMatch(/^[\d.]+px$/);
+           |                                                                              ^
+      1418 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the extent ${half} (${JSON.stringify(f)})`).toBeLessThanOrEqual(0.5);
+      1419 |     }
+      1420 | }
+        at expectCircleFrame (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:1417:78)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:1436:82
+
+    Error Context: tests-visual/test-results/release-10-1-5-m1-at-390-a-8d656-lled-to-its-end-seals-round-chromium-headless-new/error-context.md
+
+  13) [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 1440: a collapse from a run scrolled to its end seals round 
+
+    Error: last 20% of the collapse, frame 0: corner 3.35544e+07px is one length ({"w":56,"h":56,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      1415 |     const half = Math.min(f.w, f.h) / 2;
+      1416 |     for (const r of f.radii) {
+    > 1417 |         expect(r, `${at}: corner ${r} is one length (${JSON.stringify(f)})`).toMatch(/^[\d.]+px$/);
+           |                                                                              ^
+      1418 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the extent ${half} (${JSON.stringify(f)})`).toBeLessThanOrEqual(0.5);
+      1419 |     }
+      1420 | }
+        at expectCircleFrame (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:1417:78)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:1436:82
+
+    Error Context: tests-visual/test-results/release-10-1-5-m1-at-1440--7328f-lled-to-its-end-seals-round-chromium-headless-new/error-context.md
+
+  14) [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round 
+
+    Error: {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":264,"h":56}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      109 |             await shoot(page, page.locator(ROOT), `o2-open-${radius ? "rd" : "house"}-${info.project.name}`);
+      110 |             console.log(`o2 open ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)}`);
+    > 111 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      112 |             expect(root.radii).toEqual(plate.radii);
+      113 |         });
+      114 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-11-0-1.spec.ts:111:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-5effe-plate-and-the-box-are-round-chromium-headless-new/error-context.md
+
+  15) [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round 
+
+    Error: {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":102,"h":56}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      120 |             await shoot(page, page.locator(ROOT), `o2-collapsed-${radius ? "rd" : "house"}-${info.project.name}`);
+      121 |             console.log(`o2 collapsed ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)}`);
+    > 122 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      123 |             expect(root.radii).toEqual(plate.radii);
+      124 |         });
+      125 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-11-0-1.spec.ts:122:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-b7623-plate-and-the-box-are-round-chromium-headless-new/error-context.md
+
+  16) [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round 
+
+    Error: {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":164,"h":56}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      134 |             await shoot(page, page.locator(ROOT), `o2-narrow-${radius ? "rd" : "house"}-${info.project.name}`);
+      135 |             console.log(`o2 narrow ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)} run ${JSON.stringify(run)}`);
+    > 136 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      137 |             expect(root.radii).toEqual(plate.radii);
+      138 |         });
+      139 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-11-0-1.spec.ts:136:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-b862f-end-seat-the-plate-is-round-chromium-headless-new/error-context.md
+
+  17) [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:142:1 › o3 every frame of the expand and of the collapse paints a round end 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 139
+
+    - Array []
+    + Array [
+    +   "0ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "12ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "23ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "403ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "412ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "421ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "428ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "433ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "440ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "450ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "456ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "465ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "472ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "478ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "486ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "494ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "500ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "507ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "515ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "523ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "532ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "538ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "544ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "555ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "561ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "566ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "573ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "584ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "589ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "598ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "603ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "612ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "619ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "629ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "638ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "647ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "656ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "665ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "671ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "678ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "686ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "694ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "701ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "707ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "717ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "724ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "730ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "736ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "745ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "753ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "761ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "767ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "773ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "784ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "789ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "798ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "802ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "811ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "819ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "826ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "833ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "840ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "847ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "857ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "865ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "870ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "879ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "887ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "894ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "900ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "908ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "915ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "923ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "933ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "938ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "944ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "953ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "961ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "967ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "973ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "982ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "990ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "998ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1004ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1011ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1019ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1027ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1033ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1041ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1047ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1055ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1065ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1071ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1078ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1086ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1094ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1099ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1106ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1115ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1123ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1132ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1136ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1144ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1153ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1161ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1167ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1173ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1183ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1190ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1198ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1204ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1212ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1219ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1228ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1237ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1248ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1256ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1265ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1269ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1277ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1286ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1294ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1302ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1311ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1319ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1326ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1333ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1341ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1348ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1355ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1365ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1370ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1377ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1385ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1394ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1400ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    +   "1406ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=28",
+    + ]
+
+      187 |     expect(expand.morphing, "the expand morphed").toBeGreaterThan(2);
+      188 |     expect(collapse.morphing, "the collapse morphed").toBeGreaterThan(2);
+    > 189 |     expect(expand.bad).toEqual([]);
+          |                        ^
+      190 |     expect(collapse.bad).toEqual([]);
+      191 | });
+      192 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-11-0-1.spec.ts:189:24
+
+    Error Context: tests-visual/test-results/release-11-0-1-o3-every-fr-1c7bf-collapse-paints-a-round-end-chromium-headless-new/error-context.md
+
+  18) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 390: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+
+    Error: 390 rest: corner 3.35544e+07px is one length ({"cls":"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded","w":287,"h":60,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"runs":[{"sw":271,"cw":271,"sh":52,"ch":52,"active":true}]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^-?[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      136 |     const half = read.h / 2;
+      137 |     for (const r of read.radii) {
+    > 138 |         expect(r, `${cell}: corner ${r} is one length (${JSON.stringify(read)})`).toMatch(
+          |                                                                                   ^
+      139 |             /^-?[\d.]+px$/,
+      140 |         );
+      141 |         expect(
+        at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:138:83)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:233:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-coarse-phon-a994e-ff-and-on-the-trailing-seat-coarse-touch/error-context.md
+
+  19) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 844: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+
+    Error: 844 rest: corner 3.35544e+07px is one length ({"cls":"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded","w":289.640625,"h":60,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"runs":[{"sw":274,"cw":274,"sh":52,"ch":52,"active":true}]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^-?[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      136 |     const half = read.h / 2;
+      137 |     for (const r of read.radii) {
+    > 138 |         expect(r, `${cell}: corner ${r} is one length (${JSON.stringify(read)})`).toMatch(
+          |                                                                                   ^
+      139 |             /^-?[\d.]+px$/,
+      140 |         );
+      141 |         expect(
+        at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:138:83)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:233:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-coarse-phon-2730d-ff-and-on-the-trailing-seat-coarse-touch/error-context.md
+
+  20) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:217:5 › g1 rest dock at 1280: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+
+    Error: 1280 rest: corner 3.35544e+07px is one length ({"cls":"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded","w":292.734375,"h":60,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"runs":[{"sw":277,"cw":277,"sh":52,"ch":52,"active":true}]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^-?[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      136 |     const half = read.h / 2;
+      137 |     for (const r of read.radii) {
+    > 138 |         expect(r, `${cell}: corner ${r} is one length (${JSON.stringify(read)})`).toMatch(
+          |                                                                                   ^
+      139 |             /^-?[\d.]+px$/,
+      140 |         );
+      141 |         expect(
+        at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:138:83)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:233:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-g1-rest-doc-dccb9-ff-and-on-the-trailing-seat-coarse-touch/error-context.md
+
+  21) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:647:5 › critique 2, coarse phone › e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner 
+
+    Error: 390 rest: corner 3.35544e+07px is one length ({"cls":"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded","w":250.03125,"h":60,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"runs":[{"sw":234,"cw":234,"sh":52,"ch":52,"active":true}]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^-?[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      136 |     const half = read.h / 2;
+      137 |     for (const r of read.radii) {
+    > 138 |         expect(r, `${cell}: corner ${r} is one length (${JSON.stringify(read)})`).toMatch(
+          |                                                                                   ^
+      139 |             /^-?[\d.]+px$/,
+      140 |         );
+      141 |         expect(
+        at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:138:83)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:664:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-2--52919-no-reach-and-cuts-no-corner-coarse-touch/error-context.md
+
+  22) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:647:5 › critique 2, coarse phone › e1 at 844: a label-wide tab under the pointer gives the run no reach and cuts no corner 
+
+    Error: 844 rest: corner 3.35544e+07px is one length ({"cls":"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded","w":259.828125,"h":60,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"runs":[{"sw":244,"cw":244,"sh":52,"ch":52,"active":true}]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^-?[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      136 |     const half = read.h / 2;
+      137 |     for (const r of read.radii) {
+    > 138 |         expect(r, `${cell}: corner ${r} is one length (${JSON.stringify(read)})`).toMatch(
+          |                                                                                   ^
+      139 |             /^-?[\d.]+px$/,
+      140 |         );
+      141 |         expect(
+        at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:138:83)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:664:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-2--c4b00-no-reach-and-cuts-no-corner-coarse-touch/error-context.md
+
+  23) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:647:5 › e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner 
+
+    Error: 390 rest: corner 3.35544e+07px is one length ({"cls":"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded","w":250.03125,"h":60,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"runs":[{"sw":234,"cw":234,"sh":52,"ch":52,"active":true}]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^-?[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      136 |     const half = read.h / 2;
+      137 |     for (const r of read.radii) {
+    > 138 |         expect(r, `${cell}: corner ${r} is one length (${JSON.stringify(read)})`).toMatch(
+          |                                                                                   ^
+      139 |             /^-?[\d.]+px$/,
+      140 |         );
+      141 |         expect(
+        at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:138:83)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:664:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-e1-at-390-a-46d87-no-reach-and-cuts-no-corner-coarse-touch/error-context.md
+
+  24) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:647:5 › e1 at 1440: a label-wide tab under the pointer gives the run no reach and cuts no corner 
+
+    Error: 1440 rest: corner 3.35544e+07px is one length ({"cls":"glass-dock horizontal shape-pill expanded pinned fit-content always-expanded","w":275.765625,"h":60,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"runs":[{"sw":260,"cw":260,"sh":52,"ch":52,"active":true}]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^-?[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      136 |     const half = read.h / 2;
+      137 |     for (const r of read.radii) {
+    > 138 |         expect(r, `${cell}: corner ${r} is one length (${JSON.stringify(read)})`).toMatch(
+          |                                                                                   ^
+      139 |             /^-?[\d.]+px$/,
+      140 |         );
+      141 |         expect(
+        at expectRestCorner (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:138:83)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:664:9
+
+    Error Context: tests-visual/test-results/release-10-1-5-e1-at-1440--81d45-no-reach-and-cuts-no-corner-coarse-touch/error-context.md
+
+  25) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its mid seals round 
+
+    Error: last 20% of the collapse, frame 0: corner 3.35544e+07px is one length ({"w":60,"h":60,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      1415 |     const half = Math.min(f.w, f.h) / 2;
+      1416 |     for (const r of f.radii) {
+    > 1417 |         expect(r, `${at}: corner ${r} is one length (${JSON.stringify(f)})`).toMatch(/^[\d.]+px$/);
+           |                                                                              ^
+      1418 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the extent ${half} (${JSON.stringify(f)})`).toBeLessThanOrEqual(0.5);
+      1419 |     }
+      1420 | }
+        at expectCircleFrame (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:1417:78)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:1436:82
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-7--bdcfd-lled-to-its-mid-seals-round-coarse-touch/error-context.md
+
+  26) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its end seals round 
+
+    Error: last 20% of the collapse, frame 0: corner 3.35544e+07px is one length ({"w":60,"h":60,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      1415 |     const half = Math.min(f.w, f.h) / 2;
+      1416 |     for (const r of f.radii) {
+    > 1417 |         expect(r, `${at}: corner ${r} is one length (${JSON.stringify(f)})`).toMatch(/^[\d.]+px$/);
+           |                                                                              ^
+      1418 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the extent ${half} (${JSON.stringify(f)})`).toBeLessThanOrEqual(0.5);
+      1419 |     }
+      1420 | }
+        at expectCircleFrame (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:1417:78)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:1436:82
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-7--c718c-lled-to-its-end-seals-round-coarse-touch/error-context.md
+
+  27) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 1440: a collapse from a run scrolled to its end seals round 
+
+    Error: last 20% of the collapse, frame 0: corner 3.35544e+07px is one length ({"w":60,"h":60,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      1415 |     const half = Math.min(f.w, f.h) / 2;
+      1416 |     for (const r of f.radii) {
+    > 1417 |         expect(r, `${at}: corner ${r} is one length (${JSON.stringify(f)})`).toMatch(/^[\d.]+px$/);
+           |                                                                              ^
+      1418 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the extent ${half} (${JSON.stringify(f)})`).toBeLessThanOrEqual(0.5);
+      1419 |     }
+      1420 | }
+        at expectCircleFrame (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:1417:78)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:1436:82
+
+    Error Context: tests-visual/test-results/release-10-1-5-critique-7--b9986-lled-to-its-end-seals-round-coarse-touch/error-context.md
+
+  28) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 390: a collapse from a run scrolled to its mid seals round 
+
+    Error: last 20% of the collapse, frame 0: corner 3.35544e+07px is one length ({"w":60,"h":60,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      1415 |     const half = Math.min(f.w, f.h) / 2;
+      1416 |     for (const r of f.radii) {
+    > 1417 |         expect(r, `${at}: corner ${r} is one length (${JSON.stringify(f)})`).toMatch(/^[\d.]+px$/);
+           |                                                                              ^
+      1418 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the extent ${half} (${JSON.stringify(f)})`).toBeLessThanOrEqual(0.5);
+      1419 |     }
+      1420 | }
+        at expectCircleFrame (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:1417:78)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:1436:82
+
+    Error Context: tests-visual/test-results/release-10-1-5-m1-at-390-a-279dc-lled-to-its-mid-seals-round-coarse-touch/error-context.md
+
+  29) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 390: a collapse from a run scrolled to its end seals round 
+
+    Error: last 20% of the collapse, frame 0: corner 3.35544e+07px is one length ({"w":60,"h":60,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      1415 |     const half = Math.min(f.w, f.h) / 2;
+      1416 |     for (const r of f.radii) {
+    > 1417 |         expect(r, `${at}: corner ${r} is one length (${JSON.stringify(f)})`).toMatch(/^[\d.]+px$/);
+           |                                                                              ^
+      1418 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the extent ${half} (${JSON.stringify(f)})`).toBeLessThanOrEqual(0.5);
+      1419 |     }
+      1420 | }
+        at expectCircleFrame (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:1417:78)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:1436:82
+
+    Error Context: tests-visual/test-results/release-10-1-5-m1-at-390-a-8d656-lled-to-its-end-seals-round-coarse-touch/error-context.md
+
+  30) [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 1440: a collapse from a run scrolled to its end seals round 
+
+    Error: last 20% of the collapse, frame 0: corner 3.35544e+07px is one length ({"w":60,"h":60,"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"]})
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^[\d.]+px$/
+    Received string:  "3.35544e+07px"
+
+      1415 |     const half = Math.min(f.w, f.h) / 2;
+      1416 |     for (const r of f.radii) {
+    > 1417 |         expect(r, `${at}: corner ${r} is one length (${JSON.stringify(f)})`).toMatch(/^[\d.]+px$/);
+           |                                                                              ^
+      1418 |         expect(Math.abs(Number.parseFloat(r) - half), `${at}: corner ${r} = half the extent ${half} (${JSON.stringify(f)})`).toBeLessThanOrEqual(0.5);
+      1419 |     }
+      1420 | }
+        at expectCircleFrame (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:1417:78)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-10-1-5.spec.ts:1436:82
+
+    Error Context: tests-visual/test-results/release-10-1-5-m1-at-1440--7328f-lled-to-its-end-seals-round-coarse-touch/error-context.md
+
+  31) [coarse-touch] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round 
+
+    Error: {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":266,"h":60}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      109 |             await shoot(page, page.locator(ROOT), `o2-open-${radius ? "rd" : "house"}-${info.project.name}`);
+      110 |             console.log(`o2 open ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)}`);
+    > 111 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      112 |             expect(root.radii).toEqual(plate.radii);
+      113 |         });
+      114 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-11-0-1.spec.ts:111:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-5effe-plate-and-the-box-are-round-coarse-touch/error-context.md
+
+  32) [coarse-touch] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round 
+
+    Error: {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":110,"h":60}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      120 |             await shoot(page, page.locator(ROOT), `o2-collapsed-${radius ? "rd" : "house"}-${info.project.name}`);
+      121 |             console.log(`o2 collapsed ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)}`);
+    > 122 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      123 |             expect(root.radii).toEqual(plate.radii);
+      124 |         });
+      125 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-11-0-1.spec.ts:122:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-b7623-plate-and-the-box-are-round-coarse-touch/error-context.md
+
+  33) [coarse-touch] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round 
+
+    Error: {"radii":["3.35544e+07px","3.35544e+07px","3.35544e+07px","3.35544e+07px"],"w":176,"h":60}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      134 |             await shoot(page, page.locator(ROOT), `o2-narrow-${radius ? "rd" : "house"}-${info.project.name}`);
+      135 |             console.log(`o2 narrow ${tag} plate ${JSON.stringify(plate)} root ${JSON.stringify(root)} run ${JSON.stringify(run)}`);
+    > 136 |             expect(round(plate), JSON.stringify(plate)).toBe(true);
+          |                                                         ^
+      137 |             expect(root.radii).toEqual(plate.radii);
+      138 |         });
+      139 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-11-0-1.spec.ts:136:57
+
+    Error Context: tests-visual/test-results/release-11-0-1-o2-the-dock-b862f-end-seat-the-plate-is-round-coarse-touch/error-context.md
+
+  34) [coarse-touch] › tests-visual/release-11-0-1.spec.ts:142:1 › o3 every frame of the expand and of the collapse paints a round end 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -   1
+    + Received  + 139
+
+    - Array []
+    + Array [
+    +   "0ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "13ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "23ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "405ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "412ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "418ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "425ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "433ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "442ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "449ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "458ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "466ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "473ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "483ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "491ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "499ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "505ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "511ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "520ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "526ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "534ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "541ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "548ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "557ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "564ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "571ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "580ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "586ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "596ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "605ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "611ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "620ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "628ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "634ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "644ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "651ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "659ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "665ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "673ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "680ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "689ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "695ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "702ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "710ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "716ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "726ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "733ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "740ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "746ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "756ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "761ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "770ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "777ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "784ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "793ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "798ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "806ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "814ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "821ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "832ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "840ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "850ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "858ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "868ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "872ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "881ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "886ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "895ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "901ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "908ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "916ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "926ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "933ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "942ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "947ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "955ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "960ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "970ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "976ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "985ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "993ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "999ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1006ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1013ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1022ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1027ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1034ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1041ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1051ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1058ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1066ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1073ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1080ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1089ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1093ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1103ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1108ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1118ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1125ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1133ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1139ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1146ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1154ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1163ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1166ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1176ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1183ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1192ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1199ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1204ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1214ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1220ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1229ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1235ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1243ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1249ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1256ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1266ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1272ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1281ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1289ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1295ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1302ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1309ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1316ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1326ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1333ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1339ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1347ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1355ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1362ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1367ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1376ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1383ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1391ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1399ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    +   "1406ms 3.35544e+07px 3.35544e+07px 3.35544e+07px 3.35544e+07px painted NaNxNaN NaNxNaN NaNxNaN NaNxNaN half=30",
+    + ]
+
+      187 |     expect(expand.morphing, "the expand morphed").toBeGreaterThan(2);
+      188 |     expect(collapse.morphing, "the collapse morphed").toBeGreaterThan(2);
+    > 189 |     expect(expand.bad).toEqual([]);
+          |                        ^
+      190 |     expect(collapse.bad).toEqual([]);
+      191 | });
+      192 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.s9-cand/tests-visual/release-11-0-1.spec.ts:189:24
+
+    Error Context: tests-visual/test-results/release-11-0-1-o3-every-fr-1c7bf-collapse-paints-a-round-end-coarse-touch/error-context.md
+
+  34 failed
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 390: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 844: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:217:5 › g1 rest dock at 1280: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:647:5 › critique 2, coarse phone › e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:647:5 › critique 2, coarse phone › e1 at 844: a label-wide tab under the pointer gives the run no reach and cuts no corner 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:647:5 › e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:647:5 › e1 at 1440: a label-wide tab under the pointer gives the run no reach and cuts no corner 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its mid seals round 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its end seals round 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 1440: a collapse from a run scrolled to its end seals round 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 390: a collapse from a run scrolled to its mid seals round 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 390: a collapse from a run scrolled to its end seals round 
+    [chromium-headless-new] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 1440: a collapse from a run scrolled to its end seals round 
+    [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round 
+    [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round 
+    [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round 
+    [chromium-headless-new] › tests-visual/release-11-0-1.spec.ts:142:1 › o3 every frame of the expand and of the collapse paints a round end 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 390: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:217:5 › coarse phone › g1 rest dock at 844: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:217:5 › g1 rest dock at 1280: one corner = half its height, nothing to scroll, pointer off and on the trailing seat 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:647:5 › critique 2, coarse phone › e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:647:5 › critique 2, coarse phone › e1 at 844: a label-wide tab under the pointer gives the run no reach and cuts no corner 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:647:5 › e1 at 390: a label-wide tab under the pointer gives the run no reach and cuts no corner 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:647:5 › e1 at 1440: a label-wide tab under the pointer gives the run no reach and cuts no corner 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its mid seals round 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 390: a collapse from a run scrolled to its end seals round 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › critique 7, coarse phone › m1 at 1440: a collapse from a run scrolled to its end seals round 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 390: a collapse from a run scrolled to its mid seals round 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 390: a collapse from a run scrolled to its end seals round 
+    [coarse-touch] › tests-visual/release-10-1-5.spec.ts:1424:9 › m1 at 1440: a collapse from a run scrolled to its end seals round 
+    [coarse-touch] › tests-visual/release-11-0-1.spec.ts:105:9 › o2 the dock's end, house tokens › o2 house tokens: open at rest, the plate and the box are round 
+    [coarse-touch] › tests-visual/release-11-0-1.spec.ts:115:9 › o2 the dock's end, house tokens › o2 house tokens: collapsed with a persistent seat beside the summary, the plate and the box are round 
+    [coarse-touch] › tests-visual/release-11-0-1.spec.ts:126:9 › o2 the dock's end, house tokens › o2 house tokens: open on the narrow face beside a wider one, with a #persistent-end seat, the plate is round 
+    [coarse-touch] › tests-visual/release-11-0-1.spec.ts:142:1 › o3 every frame of the expand and of the collapse paints a round end 
+  10 passed (1.8m)

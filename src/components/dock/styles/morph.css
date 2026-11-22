@@ -68,10 +68,8 @@
            axis is pinned so the outer height never changes → 0px container reflow. */
         padding-block: var(--dock-padding-block, 0.375rem);
         /* W-I.8 R-1 (RU-9): rest geometry is keyed on the posture class, never on a
-           scalar; the carrier reads the new rest after the class changes. A pill taller
-           than one row is padded in from its ends so its content lies inside the curve
-           (C2-6): the carrier writes `--dock-curve-inset` from the rest it reads. */
-        padding-inline: max(var(--dock-padding-inline, 0.5rem), var(--dock-curve-inset, 0px));
+           scalar; the carrier reads the new rest after the class changes. */
+        padding-inline: var(--dock-padding-inline, 0.5rem);
     }
 
     .glass-dock:not(.vertical).collapsed {
@@ -99,7 +97,7 @@
         /* inline padding is INVARIANT — the cross axis, pinned both states so the
            outer inline-size never changes → 0px horizontal sibling reflow. */
         padding-inline: var(--dock-padding-inline, 0.5rem);
-        padding-block: max(var(--dock-padding-block, 0.375rem), var(--dock-curve-inset, 0px));
+        padding-block: var(--dock-padding-block, 0.375rem);
     }
 
     .glass-dock.vertical.collapsed {
@@ -151,9 +149,10 @@
        sits centred on both axes.
        W-I.8 (C2-1): a folded face that holds words is a stadium as wide as its words.
        The face is as wide as its content with a floor of its own height (the forced
-       1:1 cut a worded face to a 44 px circle), and the inline padding keeps the words
-       clear of the caps. A glyph of 24 px or less still
-       fits inside the floor with the padding, so its face stays a circle. */
+       1:1 cut a worded face to a 44 px circle). Its inline padding is the room the floor
+       leaves a glyph at the icon share, so one glyph is a square face and the folded
+       pill a circle (W-I.8 RU-112); words keep their clearance through the plate's own
+       inline padding. */
     .glass-dock .dock-layer--summary {
         min-width: auto;
         min-block-size: var(
@@ -175,7 +174,7 @@
            with a definite block size a box's max-content width is the ratio's. */
         inline-size: max-content;
         min-inline-size: var(--dock-layer-height, 2.5rem);
-        padding-inline: 0.5rem;
+        padding-inline: calc((var(--dock-layer-height, 2.5rem) - var(--dock-control-glyph-size)) / 2);
         white-space: nowrap;
         justify-content: center;
         /* The folded face is the pill's own shape: its corner is the plate's rest corner

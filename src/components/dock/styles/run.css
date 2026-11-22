@@ -749,29 +749,6 @@
         animation-name: gl-dock-clip-block-start, gl-dock-clip-block-end;
     }
 
-    /* The stadium's resting corner is the same length the cap keyframes rest at, on
-       the box and so on the plate, which inherits it: a run with nothing to scroll, a
-       run flush at both ends, a collapsed dock (a circle when it is one cell, a capsule
-       when a persistent seat sits beside the summary) and every frame of a morph paint
-       one corner, half the cross extent, and the box's inset rim follows the plate's
-       arc. The finite shapes keep the corner the shell gives them. */
-    /* W-I.8 R-1 (RU-13): a pill rests at half its cross extent whatever its height, a
-       two-row open dock as a one-seat circle; the used value of an oversized radius is
-       exactly that, and with the cap off the plate no keyframe interpolates it.
-       `--radius-dock` is the stadium (theme/radius.css), and a host that sets it (atlas's
-       open home dock) bounds the pill's corner at rest and through every travel (6dc977fe2). */
-    .glass-dock.shape-pill {
-        border-radius: var(--radius-dock);
-    }
-
-    /* MID-MORPH THE CORNER IS COUNTER-SCALED ON THE MORPH AXIS. The morph scales the
-       whole box on that axis by `--dock-size-scale` (shape.css), and a corner scales
-       with it: 28px under a scale of 0.47 paints 13x28, a flat-ended barrel. The
-       corner's morph-axis radius is the rest corner divided by the same factor (the
-       floor the layers' counter-scale uses), so the scale paints it back to a circle of
-       the rest corner on every frame, and the settle, which drops the scale and this
-       rule together, changes nothing in paint. */
-
     /* Each edge's whole transition is confined to ONE PITCH of travel via
        `animation-range`, so the cap reports "there is more that way" at the granularity
        the lattice moves in, rather than easing across the entire scroll length where it

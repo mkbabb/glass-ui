@@ -5,10 +5,12 @@
  * @import-ed by dock.css in cascade order, in the SAME `@layer components`. */
 
 @layer components {
-    /* The shell's one resting-radius declaration (shell.css carries none). The plate's
-       corner is written by the carrier and, on a run that hides seats, cut by run.css. */
+    /* The shell's one resting-radius declaration (shell.css carries none): every shape rests
+       at `--dock-cap-rest` (run.css), so a one-row pill is a capsule and a taller one a rounded
+       rectangle whose corners are the capsule's ends (W-I.8 RU-91). The plate's corner is
+       written by the carrier and, on a run that hides seats, cut by run.css. */
     .glass-dock {
-        border-radius: var(--radius-dock);
+        border-radius: var(--dock-cap-rest);
     }
 
     /* The dock pins `--motion-weight: 1` on its own scope, so the descendant control motion

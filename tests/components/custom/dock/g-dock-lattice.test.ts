@@ -592,11 +592,11 @@ describe("G-DOCK-MORPH — a morph never starts against an unmeasured target", (
     /** The source half: the posture is the DOM's at the read, and no flip is captured. */
     it("the measure reads the posture from the DOM and chrome only at rest", () => {
         const body = read(`${DOCK}/composables/useDockBody.ts`);
-        // W-I.8 RU-29, restated: the fit and the curve are read from one layout, written
-        // together, and the root's new layout is read after them, in sync.
-        // RU-54: the fit is decided once per room inside fitRun, which writes its own inset on the deciding frame.
-        expect(body).toMatch(/const fit = run \? fitRun\(el, run, open\) : null;/);
-        expect(body).toMatch(/if \(!fits && insetFit\) \{[\s\S]*?const bare = v \? run\.clientHeight : run\.clientWidth;/);
+        // W-I.8 RU-29, restated: the fit is read from one layout and written, and the root's new
+        // layout is read after it, in sync. RU-54: the fit is decided once per room inside fitRun.
+        // W-I.8 RU-91: the curve inset and its second read without it are gone.
+        expect(body).toMatch(/const plan = run \? fitRun\(el, run, open\) : null;/);
+        expect(body).not.toMatch(/--dock-curve-inset|fitCurve/);
         // MEASURE-7 (RU-53): the hold build's `dock:rect` mark names the root's read; it writes nothing.
         expect(body).toMatch(/performance\.mark\("dock:reread"[\s\S]*?\}\s*(?:\/\/[^\n]*\n\s*)?(?:if \(POSE\) performance\.mark\("dock:rect"\);\s*)?const next = rectOf\(el\);/);
         expect(body).not.toMatch(/watch\(expanded/);
@@ -814,9 +814,10 @@ describe("G-DOCK-MATERIAL — the focus ring composes instead of competing", () 
         const resurrected = bandCss().filter(({ css }) => /--dock-shape-/.test(css));
         expect(resurrected.map(({ file }) => file)).toEqual([]);
 
-        // 2. The shell's resting corner is one static token read, not a calc().
+        // 2. The shell's resting corner is one static token read, not a calc(). W-I.8 RU-91:
+        //    the token is the rest corner, `--dock-cap-rest`, for every shape (run.css).
         expect(declarations(`${STYLES}/shape.css`)).toMatch(
-            /\.glass-dock \{\s*border-radius:\s*var\(--radius-dock\);\s*\}/,
+            /\.glass-dock \{\s*border-radius:\s*var\(--dock-cap-rest\);\s*\}/,
         );
 
         // 3. The band's ONLY keyframed radii are the cut cap's: the plate's, and the

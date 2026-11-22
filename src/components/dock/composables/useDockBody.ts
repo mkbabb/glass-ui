@@ -256,7 +256,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         };
     }
 
-    // The root's own corner (a pill's is `--radius-dock`, the stadium unless a host sets it).
+    // The root's own corner (a pill's is `--dock-cap-rest`, half one row's cross extent, run.css).
     let cap = Infinity;
     function restRadius(el: HTMLElement, w: number, h: number): number {
         const r = getComputedStyle(el).borderTopLeftRadius;
@@ -501,14 +501,11 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
      *  room is three numbers read in the trigger frame's first layout: the seats' span, their
      *  count, and the root's extent on the dock's axis with the extents of its other regions
      *  (a `#persistent` seat that widens takes room from the run in a root at its cap). While
-     *  they hold, the flag, the whole-seat cap and the stadium inset stand and nothing more is
-     *  read. When one changes, the inset is written as for a run that fits, the cap is lifted
-     *  and the client box is read once; a run that does not fit is read once more with the
-     *  inset removed, and the inset goes back unless a seat is hidden without it (RU-30,
-     *  narrowed). That is the one named flag frame. */
+     *  they hold, the flag and the whole-seat cap stand and nothing more is read. When one
+     *  changes, the cap is lifted and the client box is read once. */
     let fitKey: { run: HTMLElement; span: number; n: number; ext: number; sibs: string } | null = null;
-    /** The decision the key holds: the plan's flags and the inset it left ("" for none). */
-    let fitHeld: { fits: boolean; whole: boolean; room: string; inset: string } | null = null;
+    /** The decision the key holds: the plan's flags. */
+    let fitHeld: { fits: boolean; whole: boolean; room: string } | null = null;
     /** Set on a deciding frame, so the key's extents are taken again from the layout the decision left. */
     let fitFresh = false;
     function roomOf(el: HTMLElement): { ext: number; sibs: string } {
@@ -517,7 +514,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         for (const { key, el: r } of o.regions()) if (key !== "layers" && r && r.isConnected) sibs += `${key}:${v ? r.offsetHeight : r.offsetWidth} `;
         return { ext: v ? el.offsetHeight : el.offsetWidth, sibs };
     }
-    function fitRun(el: HTMLElement, run: HTMLElement, open: boolean): { plan: FitPlan; inset: string | null; reread?: boolean } | null {
+    function fitRun(el: HTMLElement, run: HTMLElement, open: boolean): FitPlan | null {
         // The fit is the open run's. A face with no box (RU-17), or a run leaving on a fold (its
         // region already laid out at the folded size), keeps the reading it had when it was
         // laid out open.
@@ -541,38 +538,22 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         }
         const span = last > first ? last - first : 0;
         const { ext, sibs } = roomOf(el);
-        const had = el.style.getPropertyValue("--dock-curve-inset");
         if (fitKey && fitHeld && fitKey.run === run && fitKey.span === span && fitKey.n === n && fitKey.ext === ext && fitKey.sibs === sibs) {
-            return { plan: { run, fits: fitHeld.fits, whole: fitHeld.whole, room: fitHeld.room, span, n }, inset: had === fitHeld.inset ? null : fitHeld.inset };
+            return { run, fits: fitHeld.fits, whole: fitHeld.whole, room: fitHeld.room, span, n };
         }
-        // The deciding frame. The inset for a run that fits, from the rest just read.
-        const want = o.pill() ? fitCurve(el, run) : "";
-        const insetFit = want === null ? had : want;
-        const setInset = (x: string) => (x ? el.style.setProperty("--dock-curve-inset", x) : el.style.removeProperty("--dock-curve-inset"));
-        if (insetFit !== had) setInset(insetFit);
+        // The deciding frame. The port is the shipped one, the run's client box, uncapped.
         run.removeAttribute("data-run-whole");
-        // The port is the shipped one, the run's client box, uncapped.
         const port = v ? run.clientHeight : run.clientWidth;
         const fits = span > 0 && span <= port;
-        let inset = insetFit;
-        if (!fits && insetFit) {
-            // RU-54 (C6-M1): read once more without the inset; it leaves only if a seat is hidden then.
-            setInset("");
-            const bare = v ? run.clientHeight : run.clientWidth;
-            if (span > bare) inset = "";
-            else setInset(insetFit);
-        }
         // RU-27: the seats do not fit, so the run scrolls and its window is a whole number of
         // seats (run.css); the carrier sets only the flag. Not on a plain run, a run of
         // seats of more than one size, or a vertical run (12.0.0).
         const whole = !v && !fits && same && n >= 2 && root()?.getAttribute("data-run") !== "plain";
         const room = v && fits ? `${Math.floor(((port - span) / 2) * 100) / 100}px` : "";
         fitKey = { run, span, n, ext, sibs };
-        fitHeld = { fits, whole, room, inset };
+        fitHeld = { fits, whole, room };
         fitFresh = true;
-        // The inset is already written; the sync writes nothing more for it. The frame read the run's
-        // layout again only if the inset moved or the second read ran (RU-74).
-        return { plan: { run, fits, whole, room, span, n }, inset: null, reread: insetFit !== had || (!fits && !!insetFit) };
+        return { run, fits, whole, room, span, n };
     }
 
     /** The fit law (10.1.5 e4, k3, p2): `data-run-fits` says the seats' span is no longer
@@ -600,69 +581,6 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         else el.style.removeProperty("--dock-run-room-block");
         el.toggleAttribute("data-run-fits", plan.fits);
         return true;
-    }
-
-    /** R-1 (C2-6): a pill taller than one row is still a stadium, so the open face's content
-     *  is padded in from the ends until it lies inside the curve. Each child of the run is
-     *  read as the rounded shape it is (its own corner), so a row of round seats needs
-     *  nothing more than the padding it has; a box whose corner is r − √(r² − (r − b)²) short
-     *  of the curve gets that much more inline padding on each side. Read in layout boxes
-     *  (no translate the loop wrote), written once from the rest just read; the read after
-     *  it takes the new width. */
-    function fitCurve(el: HTMLElement, run: HTMLElement): string | null {
-        const had = el.style.getPropertyValue("--dock-curve-inset") !== "";
-        // RU-30, RU-54: the curve inset is for a run whose content all shows; it is asked only on
-        // fitRun's deciding frame, for the open run, as for a run that fits (fitRun takes it away
-        // when a seat is hidden without it). Read once per room, it cannot cycle as the inset
-        // read on every pass did (five insets in WebKit, two in Chromium, a sync every frame).
-        const v = o.vertical();
-        const R0 = bcr(el);
-        const rad = (v ? R0.width : R0.height) / 2;
-        const g = regions.get("layers");
-        // The run's own carry (a face the loop moves, a return mid-fold) is a translate on
-        // the run, not layout: it is taken out with the region's, or a carried run reads
-        // its seats that far outside the curve (O-101a: a 200 px inset on a one-row dock).
-        const [fx = 0, fy = 0] = (run.style.translate || "0 0").split(/\s+/).map((v) => Number.parseFloat(v) || 0);
-        const gx = (g ? g.tx : 0) + fx;
-        const gy = (g ? g.ty : 0) + fy;
-        // The run's port clips its content, so a child is read only as far as the port.
-        const rp = bcr(run);
-        const port = { l: rp.left - gx, t: rp.top - gy, r: rp.right - gx, b: rp.bottom - gy };
-        // In the cross-axis frame: `a` runs along the dock, `c` across it; the caps' centres
-        // sit at a0 + rad and a1 − rad, on the cross centre line.
-        const a0 = v ? R0.top : R0.left;
-        const a1 = v ? R0.bottom : R0.right;
-        const cMid = v ? R0.left + R0.width / 2 : R0.top + R0.height / 2;
-        let short = -Infinity;
-        for (const c of run.children) {
-            if (!(c instanceof HTMLElement) || ghosts.has(c) || c.offsetParent === null || !isRunSeat(c)) continue;
-            const q = bcr(c);
-            if (q.width <= 0 || q.height <= 0) continue;
-            const t = seats.get(c);
-            const l = Math.max(port.l, q.left - gx - (t ? t.x.d : 0));
-            const tp = Math.max(port.t, q.top - gy - (t ? t.y.d : 0));
-            const r = Math.min(port.r, q.right - gx - (t ? t.x.d : 0));
-            const b = Math.min(port.b, q.bottom - gy - (t ? t.y.d : 0));
-            if (r - l <= 0 || b - tp <= 0) continue;
-            const rho = Math.min(Number.parseFloat(getComputedStyle(c).borderTopLeftRadius) || 0, (r - l) / 2, (b - tp) / 2);
-            const lim = rad - rho;
-            if (lim <= 0) continue;
-            const along = v ? [tp + rho, b - rho] : [l + rho, r - rho];
-            const across = v ? [l + rho, r - rho] : [tp + rho, b - rho];
-            for (const cc of across) {
-                const dc = Math.abs(cc - cMid);
-                if (dc > lim) continue;
-                const reach = Math.sqrt(lim * lim - dc * dc);
-                short = Math.max(short, a0 + rad - reach - along[0], along[1] - (a1 - rad + reach));
-            }
-        }
-        if (short === -Infinity) return null;
-        const cs = getComputedStyle(el);
-        const pad = Number.parseFloat(v ? cs.paddingTop : cs.paddingLeft) || 0;
-        if (!had && short <= 0.25) return null;
-        const want = Math.ceil((pad + short) * 4) / 4;
-        const now = Number.parseFloat(el.style.getPropertyValue("--dock-curve-inset")) || 0;
-        return !had || Math.abs(now - want) > 0.25 ? `${want}px` : null;
     }
 
     /** RU-35: master's names, kept as outputs through 11.2.0 (deleted in 12.0.0): the root's
@@ -696,18 +614,14 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         const reduce = o.reducedMotion();
         const prevPainted = painted();
         // RU-29: the trigger frame reads the new layout once. The flags that change layout
-        // (the fit law, RU-27's whole-seat window, the curve inset) are decided from that one
-        // read and written together; only when one changed is the layout read once more.
+        // (the fit law, RU-27's whole-seat window) are decided from that one read and written
+        // together; only when one changed is the layout read once more.
         if (POSE) performance.mark("dock:read", { detail: { reason } });
         syncedSinceRo = true;
         {
             const open = o.expanded();
             const run = runEl();
-            const fit = run ? fitRun(el, run, open) : null;
-            const plan = fit ? fit.plan : null;
-            // A dock that is not a pill carries no inset; a folded one keeps the inset its open
-            // run decided (the folded padding rules do not read it, morph.css).
-            const inset = fit ? fit.inset : !o.pill() && el.style.getPropertyValue("--dock-curve-inset") ? "" : null;
+            const plan = run ? fitRun(el, run, open) : null;
             if (POSE) performance.mark("dock:flags");
             // RU-36: a change of room made by the host: the observer's reading, the seats as they
             // were, and the run not fitting before or after. Read before the fit is written.
@@ -717,13 +631,9 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
                 lastSeats = { span: plan.span, n: plan.n };
             } else roomChange = false;
             const fitMoved = plan ? writeFit(plan) : false;
-            if (inset !== null) {
-                if (inset === "") el.style.removeProperty("--dock-curve-inset");
-                else el.style.setProperty("--dock-curve-inset", inset);
-            }
-            // RU-74: the named flag frame (RU-53's bound of four) is a frame whose flag moved or that read the run
-            // again (RU-54's second read); a deciding frame that changed nothing is a plain trigger frame.
-            if (POSE && (fitMoved || inset !== null || fit?.reread)) performance.mark("dock:reread", { detail: { fit: fitMoved, decided: fitFresh, reread: !!fit?.reread, inset: fitFresh ? fitHeld?.inset : inset, fits: plan?.fits ?? null, whole: plan?.whole ?? null } });
+            // RU-74: the named flag frame (RU-53's bound of four) is a frame whose flag moved; a deciding frame
+            // that changed nothing is a plain trigger frame.
+            if (POSE && fitMoved) performance.mark("dock:reread", { detail: { decided: fitFresh, fits: plan?.fits ?? null, whole: plan?.whole ?? null } });
         }
         // RU-53: the carrier's read of the root, named, so a fold frame's first forced layout is told from a flag's.
         if (POSE) performance.mark("dock:rect");
