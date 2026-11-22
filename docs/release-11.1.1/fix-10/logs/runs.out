@@ -1,0 +1,34 @@
+STAGE-1-START 21:24:31 head 8d59c4175 load { 9.62 8.44 8.78 }
+21:24:49 lost-before-cp probe film@15ca90647 chromium-phone exit 1 18s load=9.37 8.44 8.78  1 failed 
+21:25:08 lost-branch-cp probe film@branch chromium-phone exit 0 19s load=10.17 8.69 8.86  1 passed (12.2s) 
+21:25:35 plant-frost-cp plant chromium-phone [fade · a (Sheet right|Sheet bottom|detented Sheet) ] exit 1 27s load=9.17 8.58 8.82  6 failed 
+21:26:04 plant-frost-wp plant webkit-phone [fade · a (Sheet right|Sheet bottom|detented Sheet) ] exit 1 29s load=8.88 8.56 8.80  6 failed 
+21:26:20 red-frost-cp red chromium-phone [fade · a (Sheet right|Sheet bottom|detented Sheet) ] exit 1 16s load=9.09 8.62 8.81  3 failed 
+21:26:36 red-frost-cd red chromium-desktop [fade · a (Sheet right|Sheet bottom|detented Sheet) ] exit 1 16s load=8.86 8.59 8.80  3 failed 
+21:26:55 red-frost-wp red webkit-phone [fade · a (Sheet right|Sheet bottom|detented Sheet) ] exit 1 19s load=9.78 8.84 8.88  3 failed 
+21:27:14 red-frost-wd red webkit-desktop [fade · a (Sheet right|Sheet bottom|detented Sheet) ] exit 1 19s load=8.91 8.69 8.83  3 failed 
+21:27:46 frost-cp branch chromium-phone [fade · a (Sheet right|Sheet bottom|detented Sheet) ] exit 0 32s load=9.17 8.79 8.86  9 passed (26.4s) 
+21:28:20 frost-cd branch chromium-desktop [fade · a (Sheet right|Sheet bottom|detented Sheet) ] exit 0 34s load=11.58 9.43 9.09  9 passed (27.8s) 
+21:30:00 frost-wp branch webkit-phone [fade · a (Sheet right|Sheet bottom|detented Sheet) ] exit 0 100s load=12.43 10.31 9.47  9 passed (33.7s) 
+21:30:38 frost-wd branch webkit-desktop [fade · a (Sheet right|Sheet bottom|detented Sheet) ] exit 0 38s load=12.66 10.61 9.61  9 passed (31.8s) 
+STAGE-1-DONE 21:30:38 load { 12.66 10.61 9.61 }
+STAGE-2-START 21:30:53 head 8d59c4175 load { 11.05 10.36 9.54 }
+21:31:16 red-expand-cp red chromium-phone [expand · an ExpandableContainer reopened while it leaves] exit 1 22s load=10.59 10.32 9.55  3 failed 
+21:33:02 partB-cp-1 branch chromium-phone [(reverse|tooltip|expand|leave) · ] exit 0 106s load=10.91 10.54 9.73  11 skipped  32 passed (1.6m) 
+21:34:49 partB-cp-2 branch chromium-phone [(reverse|tooltip|expand|leave) · ] exit 0 107s load=18.58 13.14 10.82  11 skipped  32 passed (1.7m) 
+21:36:38 partB-cp-3 branch chromium-phone [(reverse|tooltip|expand|leave) · ] exit 0 109s load=15.30 14.07 11.50  11 skipped  32 passed (1.7m) 
+21:38:50 partB-cd-1 branch chromium-desktop [(reverse|tooltip|expand|leave) · ] exit 0 132s load=21.07 15.75 12.48  1 skipped  42 passed (2.1m) 
+21:41:02 partB-cd-2 branch chromium-desktop [(reverse|tooltip|expand|leave) · ] exit 0 132s load=13.71 15.96 13.15  1 skipped  42 passed (2.1m) 
+21:43:11 partB-cd-3 branch chromium-desktop [(reverse|tooltip|expand|leave) · ] exit 0 129s load=15.87 16.08 13.59  1 skipped  42 passed (2.1m) 
+21:56:51 partB-wp-1 branch webkit-phone [(reverse|tooltip|expand|leave) · ] exit 0 820s load=8.33 9.59 10.97  11 skipped  32 passed (1.8m) 
+22:06:11 partB-wp-2 branch webkit-phone [(reverse|tooltip|expand|leave) · ] exit 0 560s load=5.94 6.66 8.69  11 skipped  32 passed (1.8m) 
+22:12:37 partB-wp-3 branch webkit-phone [(reverse|tooltip|expand|leave) · ] exit 0 386s load=10.81 7.69 8.33  11 skipped  32 passed (1.8m) 
+22:20:25 partB-wd-1 branch webkit-desktop [(reverse|tooltip|expand|leave) · ] exit 0 468s load=5.92 6.76 7.67  1 skipped  42 passed (2.2m) 
+22:25:45 partB-wd-2 branch webkit-desktop [(reverse|tooltip|expand|leave) · ] exit 0 320s load=8.82 7.57 7.76  1 skipped  42 passed (2.2m) 
+22:29:53 partB-wd-3 branch webkit-desktop [(reverse|tooltip|expand|leave) · ] exit 0 248s load=9.28 8.73 8.23  1 skipped  42 passed (2.2m) 
+STAGE-2-DONE 22:29:53 load { 9.28 8.73 8.23 }
+STAGE-3-START 22:30:04 head 8d59c4175 load { 9.59 8.82 8.27 }
+22:33:42 gate:exits exit 0 218s load={ 18.30 12.24 9.74 }
+STAGE-3-DONE 22:37:24 load { 26.00 19.56 13.53 }
+GATE-START 22:37:43 gate-2 head 8d59c4175 load { 21.67 19.00 13.47 }
+23:18:34 gate-2 gate:exits exit 0 2451s load={ 17.59 17.74 17.54 }

@@ -1,0 +1,73 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 3 tests using 1 worker
+
+  ✘  1 [chromium-phone] › release-11-1-1.spec.ts:1468:1 › expand · an ExpandableContainer reopened while it leaves turns from where it is (5.0s)
+  ✘  2 [chromium-phone] › release-11-1-1.spec.ts:1468:1 › expand · an ExpandableContainer reopened while it leaves turns from where it is (4.7s)
+  ✘  3 [chromium-phone] › release-11-1-1.spec.ts:1468:1 › expand · an ExpandableContainer reopened while it leaves turns from where it is (4.7s)
+
+
+  1) [chromium-phone] › release-11-1-1.spec.ts:1468:1 › expand · an ExpandableContainer reopened while it leaves turns from where it is 
+
+    Error: the reopen lands mid-exit {"top":1,"atTurn":0,"between":25,"share":0.123,"end":1,"frames":[[-4,0],[13,0],[20,0],[30,0],[37,0],[45,0.008],[53,0.029],[61,0.062],[66,0.085],[74,0.132],[82,0.18],[90,0.237],[98,0.297],[104,0.336],[111,0.393],[119,0.451],[127,0.51],[132,0.544],[140,0.598],[148,0.647],[156,0.694],[165,0.737],[170,0.763],[178,0.797],[186,0.829],[199,0.875],[209,0.901],[216,0.918],[226,0.937],[234,0.95],[237,0.955],[246,0.991],[252,1],[261,1],[278,1],[287,1],[294,1],[298,1],[307,1],[311,1]]}
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0.02
+    Received:   0
+
+      1477 |     await info.attach("turn", { body: JSON.stringify(read), contentType: "application/json" });
+      1478 |     const at = JSON.stringify(read);
+    > 1479 |     expect(read.atTurn, `the reopen lands mid-exit ${at}`).toBeGreaterThan(0.02);
+           |                                                            ^
+      1480 |     expect(read.end, `it ends whole ${at}`).toBeGreaterThan(0.95);
+      1481 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+      1482 | });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1479:60
+
+    Error Context: test-results/release-11-1-1-expand-·-an-29929-aves-turns-from-where-it-is-chromium-phone/error-context.md
+
+  2) [chromium-phone] › release-11-1-1.spec.ts:1468:1 › expand · an ExpandableContainer reopened while it leaves turns from where it is 
+
+    Error: the reopen lands mid-exit {"top":1,"atTurn":0,"between":25,"share":0.123,"end":1,"frames":[[-9,0],[4,0],[15,0],[22,0],[30,0],[35,0.004],[44,0.024],[50,0.044],[58,0.081],[68,0.138],[79,0.206],[87,0.266],[96,0.33],[102,0.371],[111,0.439],[117,0.486],[125,0.542],[131,0.578],[140,0.635],[146,0.67],[153,0.711],[162,0.755],[168,0.784],[176,0.818],[183,0.844],[191,0.87],[202,0.9],[211,0.92],[220,0.939],[229,0.952],[235,0.96],[244,1],[251,1],[259,1],[264,1],[271,1],[279,1],[288,1],[295,1],[305,1]]}
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0.02
+    Received:   0
+
+      1477 |     await info.attach("turn", { body: JSON.stringify(read), contentType: "application/json" });
+      1478 |     const at = JSON.stringify(read);
+    > 1479 |     expect(read.atTurn, `the reopen lands mid-exit ${at}`).toBeGreaterThan(0.02);
+           |                                                            ^
+      1480 |     expect(read.end, `it ends whole ${at}`).toBeGreaterThan(0.95);
+      1481 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+      1482 | });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1479:60
+
+    Error Context: test-results/release-11-1-1-expand-·-an-29929-aves-turns-from-where-it-is-chromium-phone-repeat1/error-context.md
+
+  3) [chromium-phone] › release-11-1-1.spec.ts:1468:1 › expand · an ExpandableContainer reopened while it leaves turns from where it is 
+
+    Error: the reopen lands mid-exit {"top":1,"atTurn":0,"between":25,"share":0.123,"end":1,"frames":[[-5,0],[4,0],[11,0],[21,0],[29,0],[38,0],[44,0.004],[51,0.019],[60,0.049],[64,0.069],[74,0.118],[80,0.156],[88,0.209],[96,0.264],[102,0.308],[109,0.361],[117,0.42],[124,0.473],[133,0.535],[144,0.609],[153,0.666],[162,0.712],[170,0.754],[176,0.783],[184,0.814],[192,0.844],[197,0.86],[206,0.888],[212,0.904],[220,0.922],[229,0.939],[237,0.951],[243,0.96],[250,1],[258,1],[264,1],[272,1],[279,1],[287,1],[296,1]]}
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0.02
+    Received:   0
+
+      1477 |     await info.attach("turn", { body: JSON.stringify(read), contentType: "application/json" });
+      1478 |     const at = JSON.stringify(read);
+    > 1479 |     expect(read.atTurn, `the reopen lands mid-exit ${at}`).toBeGreaterThan(0.02);
+           |                                                            ^
+      1480 |     expect(read.end, `it ends whole ${at}`).toBeGreaterThan(0.95);
+      1481 |     expect(read.share, `no frame carries more than a fifth ${at}`).toBeLessThanOrEqual(0.2);
+      1482 | });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/red-v11.1.0/tree/tests-visual/release-11-1-1.spec.ts:1479:60
+
+    Error Context: test-results/release-11-1-1-expand-·-an-29929-aves-turns-from-where-it-is-chromium-phone-repeat2/error-context.md
+
+  3 failed
+    [chromium-phone] › release-11-1-1.spec.ts:1468:1 › expand · an ExpandableContainer reopened while it leaves turns from where it is 
+    [chromium-phone] › release-11-1-1.spec.ts:1468:1 › expand · an ExpandableContainer reopened while it leaves turns from where it is 
+    [chromium-phone] › release-11-1-1.spec.ts:1468:1 › expand · an ExpandableContainer reopened while it leaves turns from where it is 

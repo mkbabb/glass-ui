@@ -1,0 +1,31 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium-phone] › fix10-probe/lost.probe.ts:18:1 › lost · a film the page loses mid-way fails by name (10.4s)
+
+
+  1) [chromium-phone] › fix10-probe/lost.probe.ts:18:1 › lost · a film the page loses mid-way fails by name 
+
+    Error: the lost film fails by name and names the reload [{"reloaded":1,"error":"page.evaluate: TypeError: Cannot set properties of undefined (setting 'stop')"},{"reloaded":1,"error":"page.evaluate: TypeError: Cannot set properties of undefined (setting 'stop')"},{"reloaded":1,"error":"page.evaluate: TypeError: Cannot set properties of undefined (setting 'stop')"},{"reloaded":1,"error":"page.evaluate: TypeError: Cannot set properties of undefined (setting 'stop')"},{"reloaded":1,"error":"page.evaluate: TypeError: Cannot set properties of undefined (setting 'stop')"}]
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /^the page lost its film: it navigated or reloaded .*"navigations":\["\+\d+ ms http:\/\/localhost:\d+\/tests-visual\/release-11-1-1\/exits-harness\.html"/
+    Received string:  "page.evaluate: TypeError: Cannot set properties of undefined (setting 'stop')"
+
+      42 |     for (const r of rounds) {
+      43 |         expect(r.reloaded, `the write reloaded the page ${at}`).toBeGreaterThan(0);
+    > 44 |         expect(r.error, `the lost film fails by name and names the reload ${at}`).toMatch(
+         |                                                                                   ^
+      45 |             /^the page lost its film: it navigated or reloaded .*"navigations":\["\+\d+ ms http:\/\/localhost:\d+\/tests-visual\/release-11-1-1\/exits-harness\.html"/,
+      46 |         );
+      47 |     }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/fix10-probe/lost.probe.ts:44:83
+
+    Error Context: test-results/lost.probe.ts-lost-·-a-fil-5c933-loses-mid-way-fails-by-name-chromium-phone/error-context.md
+
+    Error Context: test-results/lost.probe.ts-lost-·-a-fil-5c933-loses-mid-way-fails-by-name-chromium-phone/error-context.md
+
+  1 failed
+    [chromium-phone] › fix10-probe/lost.probe.ts:18:1 › lost · a film the page loses mid-way fails by name 

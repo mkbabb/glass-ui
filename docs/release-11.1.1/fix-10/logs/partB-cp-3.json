@@ -1,0 +1,1988 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "release-11-1-1.config.ts",
+      "--project=chromium-phone",
+      "--workers=1",
+      "-g",
+      "(reverse|tooltip|expand|leave) · "
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "release-11-1-1.spec.ts",
+          "release-11-1-1-controls.spec.ts",
+          "release-11-1-1-reduce.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-10/logs/partB-cp-3.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5351",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5351",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "release-11-1-1.spec.ts",
+      "file": "release-11-1-1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "reverse · a Select closed while it opens turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2595,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:34:53.253Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNTI0LCJ0dXJuZWRBdCI6MC42MzUsInNoYXJlIjowLjA5OSwiZW5kIjowLCJob2xlIjoxOCwiZnJhbWVzIjpbWzAsMC41MjRdLFs4LDAuNTc0XSxbMTcsMC42MjNdLFsyNiwwLjYzNV0sWzM2LDAuNjMzXSxbNDYsMC42MTddLFs1NSwwLjU5Nl0sWzYyLDAuNTcxXSxbNjksMC41NDRdLFs3NSwwLjUxOF0sWzg1LDAuNDc0XSxbOTIsMC40NF0sWzk4LDAuNDA4XSxbMTA1LDAuMzY5XSxbMTE0LDAuMzI0XSxbMTIwLDAuMjldLFsxMjksMC4yNDVdLFsxMzcsMC4yMDRdLFsxNDYsMC4xNjddLFsxNTQsMC4xMzRdLFsxNTksMC4xMTVdLFsxNjgsMC4wODhdLFsxNzUsMC4wNjldLFsxODMsMC4wNDldLFsxOTMsMC4wMzFdLFsyMDMsMC4wMTddLFsyMTMsMC4wMDldLFsyMjAsMC4wMDRdLFsyMjksMC4wMDFdLFsyMzUsMF0sWzI0NCwwXSxbMjUxLDBdLFsyNTYsMF0sWzI2NSwwXSxbMjcxLDBdLFsyNzgsMF0sWzI4OCwwXSxbMjk2LDBdLFszMDQsMF0sWzMxMywwXSxbMzE5LDBdLFszMjcsMF0sWzMzNCwwXSxbMzQxLDBdLFszNTAsMF0sWzM1OSwwXSxbMzYzLDBdLFszNzMsMF0sWzM4MCwwXSxbMzg2LDBdLFszOTQsMF0sWzQwMSwwXSxbNDA4LDBdLFs0MTcsMF0sWzQyMiwwXSxbNDMyLDBdLFs0MzgsMF0sWzQ0NiwwXSxbNDUyLDBdLFs0NjAsMF0sWzQ2NywwXSxbNDc1LDBdLFs0ODMsMF0sWzQ5MiwwXSxbNTAwLDBdLFs1MDgsMF0sWzUxNywwXSxbNTIyLDBdLFs1MzEsMF0sWzUzNywwXSxbNTQ2LDBdLFs1NTEsMF0sWzU1OSwwXSxbNTY4LDBdLFs1NzQsMF0sWzU4NCwwXSxbNTkyLDBdLFs1OTcsMF0sWzYwNiwwXSxbNjEzLDBdLFs2MjEsMF0sWzYzMCwwXSxbNjM3LDBdLFs2NDYsMF0sWzY1MiwwXSxbNjU5LDBdLFs2NjgsMF0sWzY3NSwwXSxbNjgzLDBdLFs2OTIsMF0sWzY5NywwXSxbNzA2LDBdLFs3MTMsMF0sWzcxOSwwXSxbNzI4LDBdLFs3MzQsMF0sWzc0MiwwXSxbNzUwLDBdLFs3NTcsMF0sWzc2NCwwXSxbNzcxLDBdLFs3ODAsMF0sWzc4NiwwXSxbNzk1LDBdLFs4MDQsMF0sWzgxMiwwXSxbODIxLDBdLFs4MjYsMF0sWzgzNSwwXSxbODQyLDBdLFs4NDksMF0sWzg1NywwXSxbODY0LDBdLFs4NzIsMF0sWzg3OSwwXSxbODg1LDBdLFs4OTQsMF0sWzkwMSwwXSxbOTA4LDBdLFs5MTcsMF0sWzkyNSwwXSxbOTMxLDBdLFs5NDAsMF0sWzk0NiwwXSxbOTU0LDBdLFs5NjAsMF0sWzk2OCwwXSxbOTc1LDBdLFs5ODMsMF0sWzk5MiwwXSxbMTAwMCwwXSxbMTAwOCwwXSxbMTAxNywwXSxbMTAyNiwwXSxbMTAzNywwXSxbMTA0NSwwXSxbMTA1MiwwXSxbMTA2MCwwXSxbMTA2OCwwXSxbMTA3NSwwXSxbMTA4NCwwXSxbMTA4OSwwXSxbMTA5OCwwXSxbMTEwNSwwXSxbMTExMSwwXSxbMTEyMSwwXSxbMTEyOSwwXSxbMTEzNiwwXSxbMTE0NiwwXSxbMTE1NCwwXSxbMTE2NCwwXSxbMTE3MywwXSxbMTE4MywwXSxbMTE5MCwwXSxbMTE5OCwwXSxbMTIwNCwwXSxbMTIxMywwXSxbMTIyMywwXSxbMTIzMywwXSxbMTI0MSwwXSxbMTI1MCwwXSxbMTI1NywwXSxbMTI2NiwwXSxbMTI3MiwwXSxbMTI4MCwwXSxbMTI4OCwwXSxbMTI5NCwwXSxbMTMwMSwwXSxbMTMwOSwwXSxbMTMxNywwXSxbMTMyNiwwXSxbMTMzNiwwXSxbMTM0NSwwXSxbMTM1NCwwXSxbMTM2MiwwXSxbMTM3MCwwXSxbMTM3NiwwXSxbMTM4NCwwXSxbMTM4OSwwXSxbMTM5OSwwXSxbMTQwNCwwXSxbMTQxMiwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-de019b1ce5103e042ac9",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1174,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Select reopened while it closes turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3149,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:34:56.030Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuMzUyLCJ0dXJuZWRBdCI6MC4zNTIsInNoYXJlIjowLjE0MywiZW5kIjoxLCJob2xlIjoxNywiZnJhbWVzIjpbWzAsMC4zNTJdLFs4LDAuMzgzXSxbMTUsMC40MjNdLFsyMywwLjQ3MV0sWzI5LDAuNTFdLFszOCwwLjU3M10sWzQ0LDAuNjI3XSxbNTEsMC42ODJdLFs2MSwwLjc2Nl0sWzY2LDAuODA5XSxbNzQsMC44NzddLFs4MiwwLjkzOV0sWzg5LDAuOTk0XSxbOTUsMV0sWzEwMywxXSxbMTExLDFdLFsxMTgsMV0sWzEyNywxXSxbMTM3LDFdLFsxNDcsMV0sWzE1NiwxXSxbMTY0LDFdLFsxNzAsMV0sWzE3OCwxXSxbMTg2LDFdLFsxOTEsMV0sWzIwMCwxXSxbMjA2LDFdLFsyMTQsMV0sWzIyMywxXSxbMjMwLDFdLFsyNDAsMV0sWzI1MCwxXSxbMjU5LDFdLFsyNjUsMV0sWzI3MywxXSxbMjgxLDFdLFsyODksMV0sWzI5NywxXSxbMzAzLDFdLFszMTEsMV0sWzMxOCwxXSxbMzI1LDFdLFszMzIsMV0sWzMzOSwxXSxbMzQ4LDFdLFszNTYsMV0sWzM2MiwxXSxbMzcwLDFdLFszNzcsMV0sWzM4NCwxXSxbMzkyLDFdLFszOTgsMV0sWzQwNiwxXSxbNDE0LDFdLFs0MjEsMV0sWzQyOSwxXSxbNDM1LDFdLFs0NDQsMV0sWzQ1MiwxXSxbNDYwLDFdLFs0NjgsMV0sWzQ3NiwxXSxbNDg1LDFdLFs0OTEsMV0sWzQ5OSwxXSxbNTA1LDFdLFs1MTMsMV0sWzUyMywxXSxbNTMwLDFdLFs1MzYsMV0sWzU0NCwxXSxbNTUxLDFdLFs1NTksMV0sWzU2OSwxXSxbNTc5LDFdLFs1ODgsMV0sWzU5NywxXSxbNjAyLDFdLFs2MDksMV0sWzYxOSwxXSxbNjI2LDFdLFs2MzUsMV0sWzYzOSwxXSxbNjQ4LDFdLFs2NTQsMV0sWzY2NCwxXSxbNjcyLDFdLFs2NzksMV0sWzY4OCwxXSxbNjk3LDFdLFs3MDIsMV0sWzcxMSwxXSxbNzE4LDFdLFs3MjYsMV0sWzczNywxXSxbNzQ2LDFdLFs3NTQsMV0sWzc2MywxXSxbNzY5LDFdLFs3NzYsMV0sWzc4NCwxXSxbNzkzLDFdLFs4MDEsMV0sWzgxMCwxXSxbODE3LDFdLFs4MjYsMV0sWzgzMiwxXSxbODQwLDFdLFs4NDcsMV0sWzg1NiwxXSxbODY0LDFdLFs4NjksMV0sWzg3NiwxXSxbODg1LDFdLFs4OTIsMV0sWzkwMCwxXSxbOTEyLDFdLFs5MjEsMV0sWzkyOSwxXSxbOTM2LDFdLFs5NDMsMV0sWzk1MiwxXSxbOTYwLDFdLFs5NjgsMV0sWzk3NSwxXSxbOTgzLDFdLFs5OTMsMV0sWzk5OSwxXSxbMTAwNiwxXSxbMTAxNSwxXSxbMTAyMiwxXSxbMTAzMCwxXSxbMTAzNiwxXSxbMTA0MywxXSxbMTA1MiwxXSxbMTA1OSwxXSxbMTA2NSwxXSxbMTA3MywxXSxbMTA4MSwxXSxbMTA4OSwxXSxbMTA5NiwxXSxbMTEwMiwxXSxbMTEwOSwxXSxbMTExNywxXSxbMTEyNywxXSxbMTEzMiwxXSxbMTE0MSwxXSxbMTE0NiwxXSxbMTE1NiwxXSxbMTE2MywxXSxbMTE3MSwxXSxbMTE4MSwxXSxbMTE4OCwxXSxbMTE5NiwxXSxbMTIwMywxXSxbMTIwOSwxXSxbMTIxOSwxXSxbMTIyNiwxXSxbMTIzNCwxXSxbMTI0NSwxXSxbMTI1NCwxXSxbMTI2MywxXSxbMTI2OSwxXSxbMTI3NywxXSxbMTI4NCwxXSxbMTI5MywxXSxbMTMwMSwxXSxbMTMxMCwxXSxbMTMxOCwxXSxbMTMyNiwxXSxbMTMzMiwxXSxbMTMzOSwxXSxbMTM0NywxXSxbMTM1NiwxXSxbMTM2NCwxXSxbMTM3MiwxXSxbMTM3OCwxXSxbMTM4NCwxXSxbMTM5MywxXSxbMTM5OCwxXSxbMTQwNywxXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-6bb6926a8c27546d4032",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1186,
+          "column": 9
+        },
+        {
+          "title": "reverse · a DropdownMenu closed while it opens turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2279,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:34:59.186Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuMzgzLCJ0dXJuZWRBdCI6MC4zODMsInNoYXJlIjowLjAzOSwiZW5kIjowLCJob2xlIjoxNSwiZnJhbWVzIjpbWzAsMC4zODNdLFs5LDAuMzgzXSxbMTYsMC4zODNdLFsyNCwwLjM3M10sWzMxLDAuMzY0XSxbMzcsMC4zNTVdLFs0NSwwLjM0M10sWzUzLDAuMzNdLFs1OSwwLjMxOV0sWzY5LDAuMjk3XSxbNzcsMC4yOF0sWzg0LDAuMjYyXSxbOTMsMC4yNDNdLFsxMDgsMC4yMDhdLFsxMTYsMC4xOTNdLFsxMjUsMC4xNzhdLFsxMjksMC4xN10sWzEzNywwLjE1NV0sWzE0NSwwLjE0Ml0sWzE1MiwwLjEyOF0sWzE2MiwwLjExMV0sWzE3MCwwLjA5N10sWzE3NSwwLjA5XSxbMTgyLDAuMDc4XSxbMTkxLDAuMDY0XSxbMTk5LDAuMDUxXSxbMjA3LDAuMDM5XSxbMjE0LDAuMDI5XSxbMjI0LDAuMDE2XSxbMjMxLDAuMDA3XSxbMjQwLDBdLFsyNTIsMF0sWzI2MiwwXSxbMjY5LDBdLFsyNzksMF0sWzI4NSwwXSxbMjkyLDBdLFsyOTcsMF0sWzMwNywwXSxbMzEyLDBdLFszMjEsMF0sWzMyOCwwXSxbMzM0LDBdLFszNDMsMF0sWzM1MCwwXSxbMzU4LDBdLFszNjMsMF0sWzM3MSwwXSxbMzc4LDBdLFszODcsMF0sWzM5NCwwXSxbNDAyLDBdLFs0MDksMF0sWzQxNiwwXSxbNDI0LDBdLFs0MzAsMF0sWzQzOCwwXSxbNDQ1LDBdLFs0NTMsMF0sWzQ2MSwwXSxbNDY3LDBdLFs0NzYsMF0sWzQ4MywwXSxbNDkwLDBdLFs0OTgsMF0sWzUwOSwwXSxbNTE4LDBdLFs1MjgsMF0sWzUzNCwwXSxbNTQyLDBdLFs1NDksMF0sWzU1NiwwXSxbNTY2LDBdLFs1NzUsMF0sWzU4NiwwXSxbNTk0LDBdLFs2MDIsMF0sWzYwOSwwXSxbNjE2LDBdLFs2MjQsMF0sWzYzMCwwXSxbNjM4LDBdLFs2NDUsMF0sWzY1MywwXSxbNjYyLDBdLFs2NjcsMF0sWzY3NSwwXSxbNjgyLDBdLFs2ODksMF0sWzY5OSwwXSxbNzA0LDBdLFs3MTEsMF0sWzcxOSwwXSxbNzI3LDBdLFs3MzUsMF0sWzc0MiwwXSxbNzQ4LDBdLFs3NTcsMF0sWzc2NCwwXSxbNzcxLDBdLFs3NzksMF0sWzc4NywwXSxbNzk1LDBdLFs4MDEsMF0sWzgwOCwwXSxbODE1LDBdLFs4MjQsMF0sWzgzMiwwXSxbODQwLDBdLFs4NDYsMF0sWzg1MiwwXSxbODYwLDBdLFs4NzAsMF0sWzg3NSwwXSxbODgzLDBdLFs4OTEsMF0sWzg5NywwXSxbOTA1LDBdLFs5MTIsMF0sWzkyMCwwXSxbOTI4LDBdLFs5MzYsMF0sWzk0MiwwXSxbOTQ5LDBdLFs5NTcsMF0sWzk2MiwwXSxbOTcxLDBdLFs5NzgsMF0sWzk4NSwwXSxbOTkzLDBdLFsxMDAzLDBdLFsxMDA4LDBdLFsxMDE2LDBdLFsxMDI0LDBdLFsxMDI5LDBdLFsxMDM5LDBdLFsxMDQ1LDBdLFsxMDUyLDBdLFsxMDYxLDBdLFsxMDY4LDBdLFsxMDc0LDBdLFsxMDgzLDBdLFsxMDg5LDBdLFsxMDk3LDBdLFsxMTA5LDBdLFsxMTE4LDBdLFsxMTI3LDBdLFsxMTM2LDBdLFsxMTQxLDBdLFsxMTQ5LDBdLFsxMTU3LDBdLFsxMTY4LDBdLFsxMTc2LDBdLFsxMTg1LDBdLFsxMTk0LDBdLFsxMjAyLDBdLFsxMjA5LDBdLFsxMjE1LDBdLFsxMjI0LDBdLFsxMjMzLDBdLFsxMjQzLDBdLFsxMjUyLDBdLFsxMjYxLDBdLFsxMjY5LDBdLFsxMjc1LDBdLFsxMjgzLDBdLFsxMjkxLDBdLFsxMjk1LDBdLFsxMzA1LDBdLFsxMzEyLDBdLFsxMzE4LDBdLFsxMzI4LDBdLFsxMzM2LDBdLFsxMzQyLDBdLFsxMzU0LDBdLFsxMzY0LDBdLFsxMzcwLDBdLFsxMzc4LDBdLFsxMzg2LDBdLFsxMzk1LDBdLFsxNDAzLDBdLFsxNDA4LDBdLFsxNDE2LDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-60082895354b6276eb7b",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1174,
+          "column": 9
+        },
+        {
+          "title": "reverse · a DropdownMenu reopened while it closes turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3168,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:35:01.475Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNDUsInR1cm5lZEF0IjowLjQ1LCJzaGFyZSI6MC4xNTEsImVuZCI6MSwiaG9sZSI6MTgsImZyYW1lcyI6W1swLDAuNDVdLFsxMCwwLjQ3OV0sWzE5LDAuNTE2XSxbMjUsMC41NTldLFszNSwwLjY0XSxbNDMsMC43MDZdLFs1MiwwLjc4OV0sWzU4LDAuODQ1XSxbNjUsMC44OF0sWzc0LDAuOTIzXSxbODAsMC45NTFdLFs4OCwwLjk4MV0sWzkzLDAuOTk4XSxbMTAyLDFdLFsxMDgsMV0sWzExNywxXSxbMTI0LDFdLFsxMzIsMV0sWzEzOSwxXSxbMTQ2LDFdLFsxNTMsMV0sWzE2MiwxXSxbMTY5LDFdLFsxNzksMV0sWzE4NiwxXSxbMTk0LDFdLFsyMDEsMV0sWzIwOCwxXSxbMjE2LDFdLFsyMjQsMV0sWzIzNSwxXSxbMjQ0LDFdLFsyNTMsMV0sWzI2MiwxXSxbMjY3LDFdLFsyNzUsMV0sWzI4MywxXSxbMjkwLDFdLFsyOTcsMV0sWzMwNSwxXSxbMzEzLDFdLFszMjAsMV0sWzMyOCwxXSxbMzM1LDFdLFszNDUsMV0sWzM1MywxXSxbMzU5LDFdLFszNjgsMV0sWzM3NCwxXSxbMzgzLDFdLFszOTEsMV0sWzM5NiwxXSxbNDA2LDFdLFs0MTIsMV0sWzQyMCwxXSxbNDI1LDFdLFs0MzQsMV0sWzQ0MSwxXSxbNDUwLDFdLFs0NTcsMV0sWzQ2MywxXSxbNDcxLDFdLFs0NzgsMV0sWzQ4NiwxXSxbNDk1LDFdLFs1MDQsMV0sWzUxNCwxXSxbNTI0LDFdLFs1MzIsMV0sWzU0MCwxXSxbNTQ5LDFdLFs1NTcsMV0sWzU2MywxXSxbNTcxLDFdLFs1NzksMV0sWzU4NiwxXSxbNTk3LDFdLFs2MDYsMV0sWzYxNSwxXSxbNjIzLDFdLFs2MzIsMV0sWzYzOCwxXSxbNjQ2LDFdLFs2NTIsMV0sWzY2MSwxXSxbNjY5LDFdLFs2NzcsMV0sWzY4NiwxXSxbNjk1LDFdLFs3MDQsMV0sWzcxNSwxXSxbNzIzLDFdLFs3MzIsMV0sWzczOCwxXSxbNzQ0LDFdLFs3NTQsMV0sWzc1OSwxXSxbNzY4LDFdLFs3NzUsMV0sWzc4MywxXSxbNzkwLDFdLFs3OTksMV0sWzgwNSwxXSxbODEyLDFdLFs4MjAsMV0sWzgyOCwxXSxbODM3LDFdLFs4NDQsMV0sWzg1NCwxXSxbODYxLDFdLFs4NjksMV0sWzg4MSwxXSxbODkwLDFdLFs4OTcsMV0sWzkwNSwxXSxbOTEyLDFdLFs5MjAsMV0sWzkyOCwxXSxbOTM3LDFdLFs5NDIsMV0sWzk1MCwxXSxbOTU3LDFdLFs5NjcsMV0sWzk3NywxXSxbOTg2LDFdLFs5OTQsMV0sWzEwMDMsMV0sWzEwMDksMV0sWzEwMTYsMV0sWzEwMjQsMV0sWzEwMzMsMV0sWzEwNDEsMV0sWzEwNDksMV0sWzEwNTgsMV0sWzEwNjMsMV0sWzEwNzEsMV0sWzEwNzksMV0sWzEwODYsMV0sWzEwOTUsMV0sWzExMDAsMV0sWzExMTAsMV0sWzExMTYsMV0sWzExMjQsMV0sWzExMzQsMV0sWzExNDQsMV0sWzExNTEsMV0sWzExNjIsMV0sWzExNzAsMV0sWzExNzYsMV0sWzExODUsMV0sWzExOTEsMV0sWzExOTcsMV0sWzEyMDUsMV0sWzEyMTMsMV0sWzEyMjAsMV0sWzEyMjgsMV0sWzEyMzYsMV0sWzEyNDQsMV0sWzEyNTIsMV0sWzEyNjEsMV0sWzEyNzAsMV0sWzEyNzYsMV0sWzEyODQsMV0sWzEyOTEsMV0sWzEyOTcsMV0sWzEzMDYsMV0sWzEzMTIsMV0sWzEzMTksMV0sWzEzMjksMV0sWzEzMzQsMV0sWzEzNDMsMV0sWzEzNDksMV0sWzEzNTgsMV0sWzEzNjYsMV0sWzEzNzQsMV0sWzEzODIsMV0sWzEzOTAsMV0sWzEzOTgsMV0sWzE0MTAsMV1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-4741e92abe0a79428469",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1186,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Popover closed while it opens turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2262,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:35:04.651Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNTg2LCJ0dXJuZWRBdCI6MC41ODYsInNoYXJlIjowLjA3NiwiZW5kIjowLCJob2xlIjoxNiwiZnJhbWVzIjpbWzAsMC41ODZdLFs4LDAuNTY0XSxbMTYsMC41MzZdLFsyNCwwLjUwOF0sWzI5LDAuNDg1XSxbMzcsMC40NTNdLFs0NSwwLjQyXSxbNTMsMC4zODVdLFs2NCwwLjMzNV0sWzczLDAuMjkyXSxbODIsMC4yNTFdLFs5MCwwLjIxNV0sWzk3LDAuMTg2XSxbMTAzLDAuMTZdLFsxMTIsMC4xMl0sWzExOSwwLjA5NF0sWzEyOCwwLjA1OF0sWzEzOSwwLjAyMl0sWzE0OCwwXSxbMTU2LDBdLFsxNjIsMF0sWzE3MSwwXSxbMTc5LDBdLFsxODUsMF0sWzE5MywwXSxbMTk5LDBdLFsyMDgsMF0sWzIxNSwwXSxbMjI0LDBdLFsyMzAsMF0sWzIzNiwwXSxbMjQ2LDBdLFsyNTIsMF0sWzI2MiwwXSxbMjY3LDBdLFsyNzYsMF0sWzI4MywwXSxbMjkxLDBdLFsyOTcsMF0sWzMwNCwwXSxbMzEyLDBdLFszMjMsMF0sWzMzMSwwXSxbMzQxLDBdLFszNDksMF0sWzM1NywwXSxbMzYzLDBdLFszNjksMF0sWzM3OCwwXSxbMzg2LDBdLFszOTIsMF0sWzM5OSwwXSxbNDA3LDBdLFs0MTYsMF0sWzQyMywwXSxbNDMzLDBdLFs0MzgsMF0sWzQ0NiwwXSxbNDUxLDBdLFs0NjAsMF0sWzQ2NywwXSxbNDc1LDBdLFs0ODMsMF0sWzQ5MiwwXSxbNTAzLDBdLFs1MTEsMF0sWzUyMCwwXSxbNTI1LDBdLFs1MzMsMF0sWzU0MSwwXSxbNTQ5LDBdLFs1NTUsMF0sWzU2NCwwXSxbNTcwLDBdLFs1NzksMF0sWzU4NCwwXSxbNTkzLDBdLFs2MDAsMF0sWzYwOCwwXSxbNjE2LDBdLFs2MjQsMF0sWzYzMCwwXSxbNjM3LDBdLFs2NDYsMF0sWzY1MSwwXSxbNjYwLDBdLFs2NjcsMF0sWzY3NSwwXSxbNjgzLDBdLFs2OTAsMF0sWzY5NiwwXSxbNzA0LDBdLFs3MTIsMF0sWzcxNywwXSxbNzI1LDBdLFs3MzMsMF0sWzc0MSwwXSxbNzQ4LDBdLFs3NTYsMF0sWzc2MywwXSxbNzcwLDBdLFs3NzksMF0sWzc4NCwwXSxbNzkyLDBdLFs4MDAsMF0sWzgwNywwXSxbODE1LDBdLFs4MjMsMF0sWzgzMiwwXSxbODQxLDBdLFs4NDgsMF0sWzg1NywwXSxbODY3LDBdLFs4NzcsMF0sWzg4NiwwXSxbODk0LDBdLFs5MDIsMF0sWzkxMiwwXSxbOTIwLDBdLFs5MjgsMF0sWzkzOSwwXSxbOTQ4LDBdLFs5NTYsMF0sWzk2NCwwXSxbOTczLDBdLFs5ODMsMF0sWzk5MCwwXSxbOTk3LDBdLFsxMDA0LDBdLFsxMDEyLDBdLFsxMDE4LDBdLFsxMDI1LDBdLFsxMDM0LDBdLFsxMDQwLDBdLFsxMDUwLDBdLFsxMDU3LDBdLFsxMDY1LDBdLFsxMDc1LDBdLFsxMDgxLDBdLFsxMDkxLDBdLFsxMDk1LDBdLFsxMTAzLDBdLFsxMTExLDBdLFsxMTIwLDBdLFsxMTI2LDBdLFsxMTMzLDBdLFsxMTQwLDBdLFsxMTQ4LDBdLFsxMTU4LDBdLFsxMTYzLDBdLFsxMTcyLDBdLFsxMTc5LDBdLFsxMTg0LDBdLFsxMTkyLDBdLFsxMjAwLDBdLFsxMjA3LDBdLFsxMjE2LDBdLFsxMjI0LDBdLFsxMjMyLDBdLFsxMjM4LDBdLFsxMjQ2LDBdLFsxMjU2LDBdLFsxMjY1LDBdLFsxMjczLDBdLFsxMjgzLDBdLFsxMjkxLDBdLFsxMjk2LDBdLFsxMzA0LDBdLFsxMzEyLDBdLFsxMzIyLDBdLFsxMzMyLDBdLFsxMzQwLDBdLFsxMzQ5LDBdLFsxMzU4LDBdLFsxMzYyLDBdLFsxMzcxLDBdLFsxMzc5LDBdLFsxMzg2LDBdLFsxMzk1LDBdLFsxNDAzLDBdLFsxNDEyLDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-ffe55c38a5ff0363869c",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1174,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Popover reopened while it closes turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3126,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:35:06.920Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNzUzLCJ0dXJuZWRBdCI6MC43NTMsInNoYXJlIjowLjA5MiwiZW5kIjoxLCJob2xlIjoxOCwiZnJhbWVzIjpbWzAsMC43NTNdLFs3LDAuODA0XSxbMTUsMC44NDddLFsyMywwLjg3OF0sWzM0LDAuOTE1XSxbNDQsMC45MzldLFs1MSwwLjk1M10sWzU4LDAuOTY1XSxbNjYsMC45NzVdLFs3NCwwLjk4NF0sWzgyLDAuOTkxXSxbOTAsMC45OTVdLFs5NSwwLjk5N10sWzEwMywwLjk5OV0sWzExMiwxXSxbMTE5LDFdLFsxMjQsMV0sWzEzMywxXSxbMTM5LDFdLFsxNDgsMV0sWzE1NiwxXSxbMTY0LDFdLFsxNzEsMV0sWzE3OSwxXSxbMTkwLDFdLFsxOTgsMV0sWzIwMywxXSxbMjExLDFdLFsyMTgsMV0sWzIyOCwxXSxbMjM2LDFdLFsyNDUsMV0sWzI1NCwxXSxbMjYzLDFdLFsyNjksMV0sWzI3NiwxXSxbMjg0LDFdLFsyOTIsMV0sWzI5OCwxXSxbMzA2LDFdLFszMTMsMV0sWzMyMywxXSxbMzMxLDFdLFszMzgsMV0sWzM0NiwxXSxbMzU2LDFdLFszNjQsMV0sWzM2OSwxXSxbMzc3LDFdLFszODUsMV0sWzM5NCwxXSxbNDA1LDFdLFs0MTQsMV0sWzQyMiwxXSxbNDMxLDFdLFs0MzksMV0sWzQ0NywxXSxbNDU1LDFdLFs0NjQsMV0sWzQ3MCwxXSxbNDc3LDFdLFs0ODYsMV0sWzQ5MSwxXSxbNDk5LDFdLFs1MDYsMV0sWzUxNCwxXSxbNTIzLDFdLFs1MzEsMV0sWzUzOSwxXSxbNTQ3LDFdLFs1NTYsMV0sWzU2MiwxXSxbNTcwLDFdLFs1NzcsMV0sWzU4NCwxXSxbNTk0LDFdLFs1OTksMV0sWzYwNywxXSxbNjE0LDFdLFs2MjIsMV0sWzYyOCwxXSxbNjM1LDFdLFs2NDQsMV0sWzY1MiwxXSxbNjYyLDFdLFs2NzIsMV0sWzY3OSwxXSxbNjg5LDFdLFs2OTcsMV0sWzcwMywxXSxbNzEyLDFdLFs3MTgsMV0sWzcyOCwxXSxbNzMyLDFdLFs3NDEsMV0sWzc0OCwxXSxbNzU2LDFdLFs3NjcsMV0sWzc3NCwxXSxbNzg1LDFdLFs3OTIsMV0sWzgwMSwxXSxbODA3LDFdLFs4MTQsMV0sWzgyMywxXSxbODI4LDFdLFs4MzYsMV0sWzg0NCwxXSxbODUyLDFdLFs4NTcsMV0sWzg2NSwxXSxbODcyLDFdLFs4ODAsMV0sWzg4OSwxXSxbODk3LDFdLFs5MDMsMV0sWzkxMiwxXSxbOTE3LDFdLFs5MjgsMV0sWzkzNywxXSxbOTQ2LDFdLFs5NTUsMV0sWzk2MiwxXSxbOTcwLDFdLFs5NzcsMV0sWzk4NSwxXSxbOTkxLDFdLFsxMDAwLDFdLFsxMDA2LDFdLFsxMDE0LDFdLFsxMDIzLDFdLFsxMDMxLDFdLFsxMDM2LDFdLFsxMDQ1LDFdLFsxMDUxLDFdLFsxMDU5LDFdLFsxMDcwLDFdLFsxMDgwLDFdLFsxMDg3LDFdLFsxMDk3LDFdLFsxMTAzLDFdLFsxMTEwLDFdLFsxMTE5LDFdLFsxMTI0LDFdLFsxMTMyLDFdLFsxMTM5LDFdLFsxMTQ4LDFdLFsxMTU2LDFdLFsxMTYyLDFdLFsxMTcwLDFdLFsxMTc3LDFdLFsxMTg1LDFdLFsxMTk1LDFdLFsxMjA0LDFdLFsxMjEyLDFdLFsxMjIyLDFdLFsxMjMwLDFdLFsxMjM2LDFdLFsxMjQzLDFdLFsxMjUzLDFdLFsxMjU4LDFdLFsxMjY2LDFdLFsxMjczLDFdLFsxMjgxLDFdLFsxMjg5LDFdLFsxMjk1LDFdLFsxMzAzLDFdLFsxMzExLDFdLFsxMzE4LDFdLFsxMzI5LDFdLFsxMzM4LDFdLFsxMzQ3LDFdLFsxMzU1LDFdLFsxMzYxLDFdLFsxMzY5LDFdLFsxMzc2LDFdLFsxMzg1LDFdLFsxMzkxLDFdLFsxNDAwLDFdLFsxNDA2LDFdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-4df86fe69d092831c3a1",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1186,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Toast closed while it opens turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2180,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:35:10.053Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuMjcsInR1cm5lZEF0IjowLjM2OCwic2hhcmUiOjAuMDY5LCJlbmQiOjAsImhvbGUiOjEwLCJmcmFtZXMiOltbMCwwLjI3XSxbMTAsMC4zMjJdLFsxOCwwLjM0Nl0sWzI3LDAuMzYxXSxbMzIsMC4zNjZdLFs0MSwwLjM2OF0sWzQ4LDAuMzYzXSxbNTYsMC4zNTJdLFs2MSwwLjM0M10sWzcwLDAuMzIzXSxbNzcsMC4zMDNdLFs4NSwwLjI4XSxbOTIsMC4yNTddLFsxMDAsMC4yMzFdLFsxMTAsMC4yMDZdLFsxMTgsMC4xOThdLFsxMjYsMC4xODZdLFsxMzIsMC4xNzddLFsxMzksMC4xNjNdLFsxNDgsMC4xNDVdLFsxNTYsMC4xMjddLFsxNjEsMC4xMTNdLFsxNjksMC4wOTNdLFsxNzYsMC4wNzNdLFsxODUsMC4wNTJdLFsxOTIsMC4wMzNdLFsyMDEsMC4wMTNdLFsyMDYsMC4wMDJdLFsyMTQsMF0sWzIyMiwwXSxbMjMzLDBdLFsyNDEsMF0sWzI1MSwwXSxbMjU4LDBdLFsyNjcsMF0sWzI3NCwwXSxbMjgwLDBdLFsyODcsMF0sWzI5NiwwXSxbMzA3LDBdLFszMTYsMF0sWzMyNSwwXSxbMzM0LDBdLFszMzksMF0sWzM0OCwwXSxbMzU0LDBdLFszNjQsMF0sWzM2OSwwXSxbMzc2LDBdLFszODUsMF0sWzM5MiwwXSxbNDAxLDBdLFs0MDcsMF0sWzQxNSwwXSxbNDIyLDBdLFs0MjgsMF0sWzQzNywwXSxbNDQzLDBdLFs0NTEsMF0sWzQ1OSwwXSxbNDY4LDBdLFs0NzMsMF0sWzQ4MSwwXSxbNDg4LDBdLFs0OTcsMF0sWzUwMywwXSxbNTEwLDBdLFs1MTcsMF0sWzUyNiwwXSxbNTM0LDBdLFs1NDIsMF0sWzU0OCwwXSxbNTU2LDBdLFs1NjEsMF0sWzU3MCwwXSxbNTc2LDBdLFs1ODUsMF0sWzU5MywwXSxbNjAxLDBdLFs2MDksMF0sWzYxOCwwXSxbNjI2LDBdLFs2MzMsMF0sWzY0MCwwXSxbNjQ3LDBdLFs2NTUsMF0sWzY2NCwwXSxbNjc0LDBdLFs2ODIsMF0sWzY5MiwwXSxbNzAxLDBdLFs3MDYsMF0sWzcxNCwwXSxbNzIyLDBdLFs3MjksMF0sWzczNywwXSxbNzQ2LDBdLFs3NTUsMF0sWzc2MywwXSxbNzY5LDBdLFs3NzcsMF0sWzc4NSwwXSxbNzkyLDBdLFs4MDAsMF0sWzgwNiwwXSxbODE0LDBdLFs4MjIsMF0sWzgzMCwwXSxbODM2LDBdLFs4NDMsMF0sWzg1MiwwXSxbODU5LDBdLFs4NjcsMF0sWzg3NywwXSxbODg3LDBdLFs4OTYsMF0sWzkwNCwwXSxbOTEzLDBdLFs5MjIsMF0sWzkzMCwwXSxbOTQwLDBdLFs5NDgsMF0sWzk1NywwXSxbOTY4LDBdLFs5NzMsMF0sWzk4MCwwXSxbOTg4LDBdLFs5OTYsMF0sWzEwMDYsMF0sWzEwMTcsMF0sWzEwMjUsMF0sWzEwMzMsMF0sWzEwMzksMF0sWzEwNDgsMF0sWzEwNTQsMF0sWzEwNjIsMF0sWzEwNjgsMF0sWzEwNzcsMF0sWzEwODQsMF0sWzEwOTMsMF0sWzExMDAsMF0sWzExMDksMF0sWzExMTcsMF0sWzExMjYsMF0sWzExMzQsMF0sWzExNDIsMF0sWzExNTMsMF0sWzExNjEsMF0sWzExNzIsMF0sWzExODMsMF0sWzExOTEsMF0sWzEyMDAsMF0sWzEyMDYsMF0sWzEyMTUsMF0sWzEyMjIsMF0sWzEyMzAsMF0sWzEyMzgsMF0sWzEyNDcsMF0sWzEyNTUsMF0sWzEyNjAsMF0sWzEyNzAsMF0sWzEyNzYsMF0sWzEyODQsMF0sWzEyOTIsMF0sWzEzMDEsMF0sWzEzMDcsMF0sWzEzMTQsMF0sWzEzMjIsMF0sWzEzMzMsMF0sWzEzNDIsMF0sWzEzNTAsMF0sWzEzNjAsMF0sWzEzNjgsMF0sWzEzNzYsMF0sWzEzODIsMF0sWzEzODksMF0sWzEzOTcsMF0sWzE0MDUsMF1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-2bb04b924abb28f996df",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1174,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Tooltip closed while it opens turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "it does not open on touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1176,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 67,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:35:12.240Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "it does not open on touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1176,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-02f999a50a7e0c419f20",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1174,
+          "column": 9
+        },
+        {
+          "title": "reverse · a Tooltip reopened while it closes turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "it does not open on touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1188,
+                    "column": 18
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 67,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:35:12.315Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "it does not open on touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1188,
+                        "column": 18
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-2a4b0f5a7efbe64cb861",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1186,
+          "column": 9
+        },
+        {
+          "title": "reverse · a disclosure reopened while it closes finishes its reopen",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5135,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:35:12.391Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "reopen",
+                      "contentType": "application/json",
+                      "body": "eyJob2xlIjoxMSwiZW5kIjoxLCJzdGF0ZSI6Im9wZW4iLCJmcmFtZXMiOltbMCwxXSxbOCwxXSxbMTYsMV0sWzIwLDFdLFsyOCwxXSxbMzcsMV0sWzQ2LDFdLFs1MCwwLjk5Ml0sWzU4LDAuOTQ5XSxbNjUsMC44OThdLFs3NSwwLjc5OF0sWzgyLDAuNzE5XSxbOTIsMC42MjFdLFsxMDAsMC41NDVdLFsxMDksMC40NjNdLFsxMjAsMC4zNzddLFsxMjgsMC4zMl0sWzEzOCwwLjI2MV0sWzE0NywwXSxbMTUyLDAuMDExXSxbMTYyLDAuMDY3XSxbMTY4LDAuMTIzXSxbMTc2LDAuMjAyXSxbMTgyLDAuMjU4XSxbMTkxLDAuMzUyXSxbMTk3LDAuNDE4XSxbMjA0LDAuNDg1XSxbMjEzLDAuNTYzXSxbMjE5LDAuNjA0XSxbMjI3LDAuNjY2XSxbMjM0LDAuNzA5XSxbMjQyLDAuNzU0XSxbMjQ4LDAuNzhdLFsyNTUsMC44MTNdLFsyNjMsMC44NDRdLFsyNzAsMC44NjRdLFsyNzgsMC44ODZdLFsyODgsMC45MDldLFsyOTQsMC45MjJdLFszMDQsMC45MzddLFszMTEsMC45NDddLFszMjAsMC45NTddLFszMzEsMC45NjddLFszMzksMC45NzNdLFszNDksMV0sWzM1OCwxXSxbMzY2LDFdLFszNzUsMV0sWzM4MCwxXSxbMzg5LDFdLFszOTYsMV0sWzQwMywxXSxbNDEyLDFdLFs0MjEsMV0sWzQyOSwxXSxbNDM3LDFdLFs0NDYsMV0sWzQ1MiwxXSxbNDYwLDFdLFs0NjcsMV0sWzQ3NSwxXSxbNDgxLDFdLFs0ODksMV0sWzQ5NiwxXSxbNTA0LDFdLFs1MTEsMV0sWzUyMCwxXSxbNTI5LDFdLFs1MzcsMV0sWzU0NSwxXSxbNTUxLDFdLFs1NjAsMV0sWzU2NiwxXSxbNTc1LDFdLFs1ODMsMV0sWzU5MSwxXSxbNTk3LDFdLFs2MDUsMV0sWzYxMywxXSxbNjIzLDFdLFs2MzIsMV0sWzY0MSwxXSxbNjUwLDFdLFs2NTYsMV0sWzY2NCwxXSxbNjcxLDFdLFs2NzksMV0sWzY4NCwxXSxbNjkyLDFdLFs3MDAsMV0sWzcwOSwxXSxbNzE2LDFdLFs3MjQsMV0sWzczNSwxXSxbNzQzLDFdLFs3NTMsMV0sWzc1OSwxXSxbNzY2LDFdLFs3NzQsMV0sWzc4MywxXSxbNzkxLDFdLFs3OTcsMV0sWzgwNiwxXSxbODEzLDFdLFs4MTgsMV0sWzgyNywxXSxbODM0LDFdLFs4NDIsMV0sWzg1MCwxXSxbODU4LDFdLFs4NjQsMV0sWzg3MywxXSxbODc5LDFdLFs4ODUsMV0sWzg5NCwxXSxbOTAxLDFdLFs5MDksMV0sWzkxNSwxXSxbOTIzLDFdLFs5MzEsMV0sWzkzOCwxXSxbOTQ1LDFdLFs5NTQsMV0sWzk1OSwxXSxbOTY5LDFdLFs5NzQsMV0sWzk4MywxXSxbOTkwLDFdLFsxMDAwLDFdLFsxMDA3LDFdLFsxMDE3LDFdLFsxMDI1LDFdLFsxMDM0LDFdLFsxMDQ1LDFdLFsxMDUzLDFdLFsxMDYwLDFdLFsxMDY2LDFdLFsxMDc0LDFdLFsxMDgyLDFdLFsxMDkyLDFdLFsxMDk3LDFdLFsxMTA0LDFdLFsxMTEzLDFdLFsxMTE5LDFdLFsxMTI5LDFdLFsxMTM3LDFdLFsxMTQ0LDFdLFsxMTUyLDFdLFsxMTY0LDFdLFsxMTczLDFdLFsxMTgzLDFdLFsxMTkxLDFdLFsxMTk2LDFdLFsxMjA2LDFdLFsxMjEyLDFdLFsxMjIxLDFdLFsxMjI2LDFdLFsxMjM1LDFdLFsxMjQyLDFdLFsxMjQ5LDFdLFsxMjU3LDFdLFsxMjYzLDFdLFsxMjcxLDFdLFsxMjc4LDFdLFsxMjg2LDFdLFsxMjk2LDFdLFsxMzAyLDFdLFsxMzEyLDFdLFsxMzIwLDFdLFsxMzI3LDFdLFsxMzM1LDFdLFsxMzQxLDFdLFsxMzQ4LDFdLFsxMzU3LDFdLFsxMzYzLDFdLFsxMzcxLDFdLFsxMzc4LDFdLFsxMzg2LDFdLFsxMzkyLDFdLFsxNDAxLDFdLFsxNDA3LDFdLFsxNDE1LDFdLFsxNDIzLDFdLFsxNDMwLDFdLFsxNDM3LDFdLFsxNDQ0LDFdLFsxNDUzLDFdLFsxNDY0LDFdLFsxNDczLDFdLFsxNDgxLDFdLFsxNDkwLDFdLFsxNDk5LDFdLFsxNTA4LDFdLFsxNTE2LDFdLFsxNTI0LDFdLFsxNTM1LDFdLFsxNTQzLDFdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-9deb9ba47f8dea00f2e2",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1206,
+          "column": 1
+        },
+        {
+          "title": "reverse · a press on a leaving Dialog's trigger reopens it from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3157,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:35:17.539Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNzMsInR1cm5lZEF0IjowLjYyOCwic2hhcmUiOjAuMTAyLCJlbmQiOjEsImhvbGUiOjE3LCJmcmFtZXMiOltbMCwwLjczXSxbMTAsMC42MjhdLFsxNiwwLjY1OV0sWzIwLDAuNjc5XSxbMjksMC42OTRdLFszMywwLjcyOV0sWzQwLDAuNzQ1XSxbNDcsMC43NzRdLFs1NCwwLjc5OV0sWzYxLDAuODIxXSxbNjcsMC44NDNdLFs3NiwwLjg2MV0sWzgzLDAuODgyXSxbOTAsMC44OTldLFs5OCwwLjkxMl0sWzEwNywwLjkyNV0sWzExNSwwLjk0XSxbMTIzLDAuOTQ5XSxbMTMxLDAuOTU3XSxbMTM5LDAuOTY0XSxbMTQ4LDAuOTddLFsxNTUsMC45NzZdLFsxNjMsMC45OF0sWzE3MCwwLjk4M10sWzE3OSwwLjk4Nl0sWzE4NiwwLjk4OF0sWzE5MywwLjk5XSxbMTk5LDAuOTkyXSxbMjA4LDAuOTkzXSxbMjE1LDAuOTk0XSxbMjIyLDAuOTk1XSxbMjMwLDAuOTk2XSxbMjM2LDAuOTk3XSxbMjQ0LDAuOTk3XSxbMjUzLDAuOTk4XSxbMjYwLDAuOTk4XSxbMjY3LDAuOTk4XSxbMjc1LDAuOTk5XSxbMjgzLDAuOTk5XSxbMjg4LDAuOTk5XSxbMjk2LDAuOTk5XSxbMzA0LDAuOTk5XSxbMzExLDAuOTk5XSxbMzE5LDFdLFszMjUsMV0sWzMzNCwxXSxbMzQxLDFdLFszNTAsMV0sWzM1NCwxXSxbMzYzLDFdLFszNzAsMV0sWzM3OCwxXSxbMzg2LDFdLFszOTIsMV0sWzQwMCwxXSxbNDA4LDFdLFs0MTUsMV0sWzQyMSwxXSxbNDI5LDFdLFs0MzcsMV0sWzQ0NSwxXSxbNDUzLDFdLFs0NjAsMV0sWzQ2NywxXSxbNDczLDFdLFs0ODMsMV0sWzQ4NywxXSxbNDk2LDFdLFs1MDQsMV0sWzUxMiwxXSxbNTIwLDFdLFs1MjYsMV0sWzUzNCwxXSxbNTQyLDFdLFs1NTAsMV0sWzU1NSwxXSxbNTYzLDFdLFs1NzAsMV0sWzU3OSwxXSxbNTg3LDFdLFs1OTMsMV0sWzYwMCwxXSxbNjA4LDFdLFs2MTYsMV0sWzYyNCwxXSxbNjMzLDFdLFs2NDEsMV0sWzY0OSwxXSxbNjU1LDFdLFs2NjMsMV0sWzY3MSwxXSxbNjc5LDFdLFs2ODcsMV0sWzY5MiwxXSxbNzAxLDFdLFs3MDgsMV0sWzcxNiwxXSxbNzIyLDFdLFs3MjksMV0sWzczNywxXSxbNzQ2LDFdLFs3NTMsMV0sWzc1OSwxXSxbNzY3LDFdLFs3NzUsMV0sWzc4MiwxXSxbNzg5LDFdLFs3OTYsMV0sWzgwNCwxXSxbODEyLDFdLFs4MjAsMV0sWzgyOSwxXSxbODM1LDFdLFs4NDYsMV0sWzg1MywxXSxbODU5LDFdLFs4NjcsMV0sWzg3NSwxXSxbODgzLDFdLFs4ODksMV0sWzg5NiwxXSxbOTA0LDFdLFs5MTIsMV0sWzkyMCwxXSxbOTI2LDFdLFs5MzQsMV0sWzk0MSwxXSxbOTQ5LDFdLFs5NTgsMV0sWzk2NiwxXSxbOTczLDFdLFs5ODMsMV0sWzk4OSwxXSxbOTk2LDFdLFsxMDA0LDFdLFsxMDEyLDFdLFsxMDIwLDFdLFsxMDI2LDFdLFsxMDM0LDFdLFsxMDQxLDFdLFsxMDUwLDFdLFsxMDU1LDFdLFsxMDYzLDFdLFsxMDcxLDFdLFsxMDc5LDFdLFsxMDg2LDFdLFsxMDkzLDFdLFsxMDk5LDFdLFsxMTA3LDFdLFsxMTE2LDFdLFsxMTI0LDFdLFsxMTMzLDFdLFsxMTQxLDFdLFsxMTU3LDFdLFsxMTY1LDFdLFsxMTczLDFdLFsxMTgwLDFdLFsxMTkwLDFdLFsxMTkzLDFdLFsxMjAwLDFdLFsxMjEwLDFdLFsxMjE5LDFdLFsxMjI3LDFdLFsxMjM4LDFdLFsxMjQ2LDFdLFsxMjU1LDFdLFsxMjYxLDFdLFsxMjY4LDFdLFsxMjc2LDFdLFsxMjgxLDFdLFsxMjkwLDFdLFsxMjk2LDFdLFsxMzA1LDFdLFsxMzEzLDFdLFsxMzIyLDFdLFsxMzMwLDFdLFsxMzM4LDFdLFsxMzQ3LDFdLFsxMzU1LDFdLFsxMzYxLDFdLFsxMzY4LDFdLFsxMzc2LDFdLFsxMzg3LDFdLFsxMzk2LDFdLFsxNDA1LDFdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-ab4d7fe8f60bbbb634d7",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1242,
+          "column": 5
+        },
+        {
+          "title": "reverse · a press on a leaving Sheet's trigger reopens it from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3152,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:35:20.704Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuODQxLCJ0dXJuZWRBdCI6MC44MTQsInNoYXJlIjowLjAyNywiZW5kIjoxLCJob2xlIjoxOSwiZnJhbWVzIjpbWzAsMC44NDFdLFs5LDAuODE0XSxbMTcsMC44Ml0sWzI0LDAuODI2XSxbMzYsMC44MzJdLFs0NiwwLjg0Nl0sWzU1LDAuODU4XSxbNjEsMC44N10sWzcwLDAuODc3XSxbNzUsMC44ODldLFs4NCwwLjg5Nl0sWzkyLDAuOTA4XSxbOTcsMC45MThdLFsxMDcsMC45MjRdLFsxMTMsMC45MzVdLFsxMjEsMC45NDJdLFsxMjcsMC45NV0sWzEzNCwwLjk1NV0sWzE0MiwwLjk2Ml0sWzE0OCwwLjk2OF0sWzE1OCwwLjk3M10sWzE2NiwwLjk3OV0sWzE3MywwLjk4NF0sWzE4MCwwLjk4OF0sWzE4NywwLjk5MV0sWzE5MywwLjk5NF0sWzIwMSwwLjk5Nl0sWzIwOCwwLjk5OV0sWzIxNSwxXSxbMjI1LDFdLFsyMzIsMV0sWzIzOCwxXSxbMjQ2LDFdLFsyNTQsMV0sWzI1OSwxXSxbMjY4LDFdLFsyNzQsMV0sWzI4MywxXSxbMjkxLDFdLFsyOTcsMV0sWzMwNCwxXSxbMzEzLDFdLFszMjAsMV0sWzMzMSwxXSxbMzM4LDFdLFszNDcsMV0sWzM1NiwxXSxbMzY0LDFdLFszNzEsMV0sWzM3OCwxXSxbMzg1LDFdLFszOTUsMV0sWzQwNCwxXSxbNDE0LDFdLFs0MjIsMV0sWzQzMywxXSxbNDM4LDFdLFs0NDUsMV0sWzQ1NCwxXSxbNDU5LDFdLFs0NjgsMV0sWzQ3NSwxXSxbNDgzLDFdLFs0OTEsMV0sWzQ5NywxXSxbNTA1LDFdLFs1MTIsMV0sWzUyMCwxXSxbNTI5LDFdLFs1MzksMV0sWzU0OCwxXSxbNTU3LDFdLFs1NjYsMV0sWzU3MSwxXSxbNTc4LDFdLFs1ODYsMV0sWzU5NSwxXSxbNjA1LDFdLFs2MTQsMV0sWzYyMiwxXSxbNjMyLDFdLFs2MzgsMV0sWzY0NiwxXSxbNjUyLDFdLFs2NjIsMV0sWzY2NywxXSxbNjc2LDFdLFs2ODIsMV0sWzY5MSwxXSxbNjk5LDFdLFs3MDYsMV0sWzcxMywxXSxbNzE5LDFdLFs3MjksMV0sWzczNCwxXSxbNzQyLDFdLFs3NDgsMV0sWzc1OCwxXSxbNzY0LDFdLFs3NzQsMV0sWzc4MCwxXSxbNzg3LDFdLFs3OTYsMV0sWzgwNCwxXSxbODE0LDFdLFs4MjIsMV0sWzgzMSwxXSxbODM4LDFdLFs4NDYsMV0sWzg1MiwxXSxbODYyLDFdLFs4NjcsMV0sWzg3NiwxXSxbODgzLDFdLFs4OTEsMV0sWzg5OSwxXSxbOTA0LDFdLFs5MTIsMV0sWzkyMCwxXSxbOTI1LDFdLFs5MzUsMV0sWzk0MSwxXSxbOTQ5LDFdLFs5NTgsMV0sWzk2NywxXSxbOTc2LDFdLFs5ODYsMV0sWzk5NCwxXSxbMTAwMSwxXSxbMTAwOCwxXSxbMTAxNSwxXSxbMTAyNCwxXSxbMTAzMiwxXSxbMTA0MSwxXSxbMTA1MywxXSxbMTA2MSwxXSxbMTA2NywxXSxbMTA3NSwxXSxbMTA4MywxXSxbMTA5MSwxXSxbMTA5OCwxXSxbMTEwNSwxXSxbMTExMiwxXSxbMTEyMCwxXSxbMTEyNiwxXSxbMTEzMywxXSxbMTE0MSwxXSxbMTE1MCwxXSxbMTE1OCwxXSxbMTE2MywxXSxbMTE3MiwxXSxbMTE3OCwxXSxbMTE4NywxXSxbMTE5NCwxXSxbMTIwMywxXSxbMTIwOCwxXSxbMTIxOCwxXSxbMTIyNCwxXSxbMTIzMywxXSxbMTIzOCwxXSxbMTI0NywxXSxbMTI1NCwxXSxbMTI2MCwxXSxbMTI2OCwxXSxbMTI3NCwxXSxbMTI4MywxXSxbMTI5MSwxXSxbMTI5NiwxXSxbMTMwNCwxXSxbMTMxMywxXSxbMTMyMCwxXSxbMTMyNywxXSxbMTMzNCwxXSxbMTM0MSwxXSxbMTM0OSwxXSxbMTM1NywxXSxbMTM2NSwxXSxbMTM3NCwxXSxbMTM4MSwxXSxbMTM4OSwxXSxbMTM5OSwxXSxbMTQwNSwxXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-24a2ef22387abdcdee63",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1242,
+          "column": 5
+        },
+        {
+          "title": "reverse · a press on a leaving Select's trigger reopens it from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3167,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:35:23.860Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJhdFR1cm4iOjAuNTczLCJ0dXJuZWRBdCI6MC41NzMsInNoYXJlIjowLjE1MSwiZW5kIjoxLCJob2xlIjoxNSwiZnJhbWVzIjpbWzAsMC41NzNdLFs1LDAuNTk5XSxbMTQsMC42NTddLFsyMSwwLjcxNV0sWzMxLDAuODA4XSxbMzgsMC44NzFdLFs0OCwwLjk1OF0sWzU1LDFdLFs2MywxXSxbNzIsMV0sWzg0LDFdLFs5NCwxXSxbMTAzLDFdLFsxMDgsMV0sWzExOCwxXSxbMTI0LDFdLFsxMzIsMV0sWzEzOCwxXSxbMTQ3LDFdLFsxNTMsMV0sWzE2MSwxXSxbMTY4LDFdLFsxNzYsMV0sWzE4NiwxXSxbMTk0LDFdLFsyMDMsMV0sWzIxNCwxXSxbMjIyLDFdLFsyMzAsMV0sWzIzOSwxXSxbMjQ2LDFdLFsyNTQsMV0sWzI2MCwxXSxbMjcxLDFdLFsyODEsMV0sWzI4OCwxXSxbMjk5LDFdLFszMDcsMV0sWzMxMywxXSxbMzIxLDFdLFszMjksMV0sWzMzMywxXSxbMzQxLDFdLFszNDksMV0sWzM1OCwxXSxbMzY1LDFdLFszNzEsMV0sWzM4MCwxXSxbMzg3LDFdLFszOTQsMV0sWzQwMCwxXSxbNDA5LDFdLFs0MTUsMV0sWzQyNCwxXSxbNDMxLDFdLFs0MzgsMV0sWzQ0NywxXSxbNDUzLDFdLFs0NjIsMV0sWzQ3MiwxXSxbNDgxLDFdLFs0OTAsMV0sWzQ5NywxXSxbNTA0LDFdLFs1MTMsMV0sWzUyMCwxXSxbNTI4LDFdLFs1MzMsMV0sWzU0MywxXSxbNTQ5LDFdLFs1NTYsMV0sWzU2NiwxXSxbNTcwLDFdLFs1ODAsMV0sWzU4NywxXSxbNTk1LDFdLFs2MDAsMV0sWzYwOSwxXSxbNjE2LDFdLFs2MjIsMV0sWzYzMiwxXSxbNjM3LDFdLFs2NDYsMV0sWzY1NCwxXSxbNjYxLDFdLFs2NzAsMV0sWzY4MSwxXSxbNjg4LDFdLFs2OTgsMV0sWzcwNiwxXSxbNzEyLDFdLFs3MjEsMV0sWzcyOCwxXSxbNzM0LDFdLFs3NDMsMV0sWzc0OSwxXSxbNzU3LDFdLFs3NjUsMV0sWzc3MSwxXSxbNzgwLDFdLFs3ODcsMV0sWzc5MywxXSxbODAwLDFdLFs4MDksMV0sWzgxNiwxXSxbODIyLDFdLFs4MzIsMV0sWzgzNywxXSxbODQ2LDFdLFs4NTMsMV0sWzg2MSwxXSxbODY3LDFdLFs4NzYsMV0sWzg4MSwxXSxbODg5LDFdLFs4OTksMV0sWzkwOSwxXSxbOTE4LDFdLFs5MjcsMV0sWzkzMywxXSxbOTQxLDFdLFs5NDgsMV0sWzk1NSwxXSxbOTY0LDFdLFs5NzEsMV0sWzk3OSwxXSxbOTg1LDFdLFs5OTUsMV0sWzEwMDAsMV0sWzEwMDgsMV0sWzEwMTYsMV0sWzEwMjIsMV0sWzEwMzAsMV0sWzEwMzksMV0sWzEwNDYsMV0sWzEwNTMsMV0sWzEwNjEsMV0sWzEwNjYsMV0sWzEwNzYsMV0sWzEwODIsMV0sWzEwODksMV0sWzEwOTgsMV0sWzExMDQsMV0sWzExMTIsMV0sWzExMTksMV0sWzExMjgsMV0sWzExMzgsMV0sWzExNDcsMV0sWzExNTYsMV0sWzExNjQsMV0sWzExNzEsMV0sWzExNzgsMV0sWzExODYsMV0sWzExOTQsMV0sWzEyMDQsMV0sWzEyMTMsMV0sWzEyMjMsMV0sWzEyMzEsMV0sWzEyMzYsMV0sWzEyNDUsMV0sWzEyNTIsMV0sWzEyNjAsMV0sWzEyNjYsMV0sWzEyNzYsMV0sWzEyODEsMV0sWzEyODksMV0sWzEyOTgsMV0sWzEzMDQsMV0sWzEzMTIsMV0sWzEzMTgsMV0sWzEzMjcsMV0sWzEzMzgsMV0sWzEzNDYsMV0sWzEzNTYsMV0sWzEzNjQsMV0sWzEzNzAsMV0sWzEzNzksMV0sWzEzODYsMV0sWzEzOTUsMV0sWzEzOTksMV0sWzE0MDksMV1dfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-a1c927310d44396affdf",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1242,
+          "column": 5
+        },
+        {
+          "title": "reverse · a press on the page while a sheet leaves reaches the page",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2324,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:35:27.034Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-53ab90cc83b97c2761a6",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1266,
+          "column": 1
+        },
+        {
+          "title": "tooltip · a Tooltip enters on a tween",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a Tooltip does not open on touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1306,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 55,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:35:29.365Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a Tooltip does not open on touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1306,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-d712c15245ac03aadf27",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1305,
+          "column": 1
+        },
+        {
+          "title": "tooltip · a hint handed to its neighbour fades, incoming",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a Tooltip does not open on touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1321,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 57,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:35:29.428Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a Tooltip does not open on touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1321,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-14f038ab071aeb006722",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1320,
+          "column": 5
+        },
+        {
+          "title": "tooltip · a hint handed to its neighbour fades, outgoing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a Tooltip does not open on touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1321,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 59,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:35:29.490Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a Tooltip does not open on touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1321,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-4c8814b3f05fa23e495f",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1320,
+          "column": 5
+        },
+        {
+          "title": "expand · an ExpandableContainer enters on a tween",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3741,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:35:29.556Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "enter",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MCwiYmV0d2VlbiI6MjUsInNoYXJlIjowLjE1NCwiZW5kIjoxLCJmcmFtZXMiOltbLTYsMF0sWzIsMF0sWzExLDBdLFsxOCwwXSxbMjcsMF0sWzM2LDBdLFs0MCwwXSxbNDgsMC4wODhdLFs1NiwwLjE1MV0sWzYwLDAuMTg2XSxbNjgsMC4yNDZdLFs3NSwwLjI5OF0sWzg0LDAuMzZdLFs5MywwLjQyNF0sWzEwMiwwLjQ4MV0sWzEwNywwLjUxN10sWzExNSwwLjU2Nl0sWzEyMywwLjYxNV0sWzEzNCwwLjY3Nl0sWzE0MywwLjcyM10sWzE1MiwwLjc2N10sWzE2MCwwLjgwMV0sWzE2OCwwLjgzMV0sWzE3NSwwLjg1N10sWzE4MiwwLjg4XSxbMTkwLDAuOTAzXSxbMTk1LDAuOTE2XSxbMjA1LDAuOTM3XSxbMjExLDAuOTVdLFsyMTgsMC45NjFdLFsyMjcsMC45NzNdLFsyMzMsMC45NzldLFsyNDAsMC45ODVdLFsyNDksMC45OTddLFsyNTYsMV0sWzI2MiwxXSxbMjcwLDFdLFsyNzcsMV0sWzI4NSwxXSxbMjkzLDFdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-3b5563a1aaa6b3bdaf02",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1413,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer leaves on a tween by exit",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4674,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:35:33.303Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MSwiYmV0d2VlbiI6MTUsInNoYXJlIjowLjE2OSwiZW5kIjowLCJmcmFtZXMiOltbLTMsMV0sWzksMV0sWzE2LDFdLFsyNCwxXSxbMzQsMV0sWzQ4LDAuODgyXSxbNTcsMC43OTRdLFs2NCwwLjcyMl0sWzczLDAuNjMxXSxbNzYsMC41OThdLFs4MywwLjUyNl0sWzkxLDAuNDQ3XSxbOTksMC4zNzhdLFsxMDYsMC4zMTldLFsxMTMsMC4yNTldLFsxMjEsMC4yMDZdLFsxMjgsMC4xNTddLFsxMzUsMC4xMTFdLFsxNDUsMC4wNTldLFsxNTAsMC4wMzddLFsxNTcsMC4wMV0sWzE2NiwwXSxbMTc0LDBdLFsxODEsMF0sWzE4NywwXSxbMTk1LDBdLFsyMDMsMF0sWzIxMCwwXSxbMjE4LDBdLFsyMjYsMF0sWzIzNCwwXSxbMjQ1LDBdLFsyNTAsMF0sWzI1NywwXSxbMjY1LDBdLFsyNzMsMF0sWzI4MiwwXSxbMjkyLDBdLFszMDIsMF0sWzMxMCwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-811c9bdef4acba090454",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1428,
+          "column": 5
+        },
+        {
+          "title": "expand · an ExpandableContainer leaves on a tween by escape",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4615,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:35:37.981Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MSwiYmV0d2VlbiI6MTQsInNoYXJlIjowLjE2OSwiZW5kIjowLCJmcmFtZXMiOltbLTYsMV0sWzUsMV0sWzE0LDAuOTI4XSxbMjIsMC44NTFdLFszMSwwLjc2N10sWzM1LDAuNzI1XSxbNDIsMC42NTJdLFs1MSwwLjU2M10sWzU5LDAuNDgyXSxbNzQsMC4zNDZdLFs4MywwLjI3M10sWzkxLDAuMjE1XSxbOTksMC4xNjFdLFsxMDYsMC4xMTZdLFsxMTQsMC4wNzFdLFsxMjEsMC4wMzddLFsxMzEsMF0sWzEzNiwwXSxbMTQ2LDBdLFsxNTIsMF0sWzE2MCwwXSxbMTcxLDBdLFsxODAsMF0sWzE4OSwwXSxbMTk3LDBdLFsyMDcsMF0sWzIxMiwwXSxbMjIxLDBdLFsyMjYsMF0sWzIzMywwXSxbMjQxLDBdLFsyNDksMF0sWzI1NiwwXSxbMjY0LDBdLFsyNjksMF0sWzI3OSwwXSxbMjg1LDBdLFsyOTIsMF0sWzMwMiwwXSxbMzA3LDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-462a7bf7b113b36c3ef1",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1428,
+          "column": 5
+        },
+        {
+          "title": "expand · an ExpandableContainer leaves on a tween by open",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4580,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:35:42.601Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MSwiYmV0d2VlbiI6MTUsInNoYXJlIjowLjE2OSwiZW5kIjowLCJmcmFtZXMiOltbLTEwLDFdLFs0LDFdLFsxMywwLjkyNV0sWzE3LDAuODg4XSxbMjUsMC44MDZdLFszMiwwLjczM10sWzQxLDAuNjQ0XSxbNDksMC41NjZdLFs1NywwLjQ4M10sWzYxLDAuNDQ2XSxbNzAsMC4zNzFdLFs3OCwwLjMwM10sWzkyLDAuMTkzXSxbMTAwLDAuMTQyXSxbMTA5LDAuMDkzXSxbMTE2LDAuMDU3XSxbMTI0LDAuMDIyXSxbMTI5LDAuMDA0XSxbMTM2LDBdLFsxNDUsMF0sWzE1MywwXSxbMTYyLDBdLFsxNzEsMF0sWzE3OSwwXSxbMTg1LDBdLFsxOTQsMF0sWzIwMCwwXSxbMjA5LDBdLFsyMTYsMF0sWzIyNCwwXSxbMjMyLDBdLFsyNDIsMF0sWzI1MCwwXSxbMjU1LDBdLFsyNjQsMF0sWzI3MSwwXSxbMjc4LDBdLFsyODcsMF0sWzI5OCwwXSxbMzA3LDBdXX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-ea9786e77f835c9595da",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1428,
+          "column": 5
+        },
+        {
+          "title": "expand · an ExpandableContainer closed while it enters turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3781,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:35:47.188Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC41MSwiYmV0d2VlbiI6MTEsInNoYXJlIjowLjEyNCwiZW5kIjowLCJmcmFtZXMiOltbLTEsMC41MV0sWzYsMC40NjldLFsxMywwLjQxOV0sWzIwLDAuMzY1XSxbMjcsMC4zMTJdLFszNywwLjI0NV0sWzQ1LDAuMTkxXSxbNTAsMC4xNTddLFs1OCwwLjExNV0sWzY1LDAuMDc1XSxbNzMsMC4wNF0sWzc5LDAuMDE2XSxbODcsMF0sWzk0LDBdLFsxMDMsMF0sWzExMCwwXSxbMTE3LDBdLFsxMjMsMF0sWzEzMSwwXSxbMTQwLDBdLFsxNDUsMF0sWzE1MywwXSxbMTYwLDBdLFsxNjksMF0sWzE3NywwXSxbMTgzLDBdLFsxOTAsMF0sWzE5OCwwXSxbMjA2LDBdLFsyMTQsMF0sWzIyMywwXSxbMjMxLDBdLFsyMzksMF0sWzI0NSwwXSxbMjUzLDBdLFsyNjAsMF0sWzI2OSwwXSxbMjc3LDBdLFsyODMsMF0sWzI5MCwwXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-c6d20a4d59c9d4a96fcd",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1451,
+          "column": 1
+        },
+        {
+          "title": "expand · an ExpandableContainer reopened while it leaves turns from where it is",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4667,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:35:50.973Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "turn",
+                      "contentType": "application/json",
+                      "body": "eyJ0b3AiOjEsImF0VHVybiI6MC41MjQsImJldHdlZW4iOjIwLCJzaGFyZSI6MC4xNzUsImVuZCI6MSwiZnJhbWVzIjpbWy02LDAuNTI0XSxbMiwwLjQ0N10sWzksMC4zODJdLFsxOSwwLjMwMl0sWzI3LDAuMjM2XSxbMzMsMC4zMDldLFs0MiwwLjM5OV0sWzQ5LDAuNDYzXSxbNTcsMC41MzJdLFs2MiwwLjU3Nl0sWzY5LDAuNjNdLFs3OCwwLjY5M10sWzg2LDAuNzQyXSxbOTMsMC43ODRdLFsxMDIsMC44MzNdLFsxMTMsMC44ODNdLFsxMjIsMC45MTVdLFsxMzIsMC45NDNdLFsxMzcsMC45NTRdLFsxNDYsMC45NzJdLFsxNTQsMC45ODJdLFsxNjEsMC45ODldLFsxNjcsMC45OTRdLFsxNzQsMV0sWzE4MiwxXSxbMTkwLDFdLFsxOTYsMV0sWzIwNSwxXSxbMjExLDFdLFsyMTksMV0sWzIyNywxXSxbMjM2LDFdLFsyNDYsMV0sWzI1NiwxXSxbMjY0LDFdLFsyNzAsMV0sWzI3OSwxXSxbMjg1LDFdLFsyOTUsMV0sWzMwMCwxXV19"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-88442f8a482e04520655",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1468,
+          "column": 1
+        },
+        {
+          "title": "expand · Escape is live from the entrance's first frame",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1358,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:35:55.644Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-8c561ecccba119b12505",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1484,
+          "column": 1
+        },
+        {
+          "title": "leave · a Dialog says once that its leave has finished, after its last seen frame",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2701,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:35:57.008Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJldmVudHMiOlt7ImF0IjoxOTAsImtpbmQiOiJkaWFsb2ciLCJidWJibGVzIjp0cnVlLCJjb21wb3NlZCI6dHJ1ZX1dLCJsYXN0U2VlbiI6MTg5LCJlbWl0dGVkIjoxfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-08fdea3cd709a20d9390",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1543,
+          "column": 5
+        },
+        {
+          "title": "leave · a Dialog closed and reopened mid-exit says nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2500,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:35:59.712Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-65e5303877643569eea6",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1572,
+          "column": 5
+        },
+        {
+          "title": "leave · a Sheet says once that its leave has finished, after its last seen frame",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2735,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:36:02.217Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJldmVudHMiOlt7ImF0IjoyNTcsImtpbmQiOiJzaGVldCIsImJ1YmJsZXMiOnRydWUsImNvbXBvc2VkIjp0cnVlfV0sImxhc3RTZWVuIjoyNTUsImVtaXR0ZWQiOjF9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-af269dbbf02ae3a9b39c",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1543,
+          "column": 5
+        },
+        {
+          "title": "leave · a Sheet closed and reopened mid-exit says nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2542,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:36:04.958Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-6bee7cb7e7f9dc2f2e9f",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1572,
+          "column": 5
+        },
+        {
+          "title": "leave · a Popover says once that its leave has finished, after its last seen frame",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2728,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:36:07.508Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJldmVudHMiOlt7ImF0IjoyNjAsImtpbmQiOiJwb3BvdmVyIiwiYnViYmxlcyI6dHJ1ZSwiY29tcG9zZWQiOnRydWV9XSwibGFzdFNlZW4iOjI1MSwiZW1pdHRlZCI6MX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-328f713f635f9b4a5bb0",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1543,
+          "column": 5
+        },
+        {
+          "title": "leave · a Popover closed and reopened mid-exit says nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2525,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:36:10.241Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-1caa02645cb15e7078df",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1572,
+          "column": 5
+        },
+        {
+          "title": "leave · a DropdownMenu says once that its leave has finished, after its last seen frame",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2761,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:36:12.772Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJldmVudHMiOlt7ImF0IjoyMjksImtpbmQiOiJtZW51IiwiYnViYmxlcyI6dHJ1ZSwiY29tcG9zZWQiOnRydWV9XSwibGFzdFNlZW4iOjIxOCwiZW1pdHRlZCI6MX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-ff51ef502d8770e359f1",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1543,
+          "column": 5
+        },
+        {
+          "title": "leave · a DropdownMenu closed and reopened mid-exit says nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2511,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:36:15.538Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-f81b96a610c4a012998c",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1572,
+          "column": 5
+        },
+        {
+          "title": "leave · a Select says once that its leave has finished, after its last seen frame",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2763,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:36:18.054Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJldmVudHMiOlt7ImF0IjoyMzIsImtpbmQiOiJzZWxlY3QiLCJidWJibGVzIjp0cnVlLCJjb21wb3NlZCI6dHJ1ZX1dLCJsYXN0U2VlbiI6MjE3LCJlbWl0dGVkIjoxfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-2f703bf08cfb2fe92d2b",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1543,
+          "column": 5
+        },
+        {
+          "title": "leave · a Select closed and reopened mid-exit says nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2543,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:36:20.823Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-9765f5f81c784502d9c1",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1572,
+          "column": 5
+        },
+        {
+          "title": "leave · a Tooltip says once that its leave has finished, after its last seen frame",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a Tooltip does not open on touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1545,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 54,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:36:23.371Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a Tooltip does not open on touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1545,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-56e6780f434cb40c692e",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1543,
+          "column": 5
+        },
+        {
+          "title": "leave · a Tooltip closed and reopened mid-exit says nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a Tooltip does not open on touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1574,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 52,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:36:23.431Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a Tooltip does not open on touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1574,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-182339b4da046eccdd7a",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1572,
+          "column": 5
+        },
+        {
+          "title": "leave · a Toast says once that its leave has finished, after its last seen frame",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2775,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:36:23.489Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJldmVudHMiOlt7ImF0IjoyODksImtpbmQiOiJ0b2FzdCIsImJ1YmJsZXMiOnRydWUsImNvbXBvc2VkIjp0cnVlfV0sImxhc3RTZWVuIjoyODAsImVtaXR0ZWQiOm51bGx9"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-6a8f9a6d6c4b7665a206",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1543,
+          "column": 5
+        },
+        {
+          "title": "leave · a Toast closed and reopened mid-exit says nothing",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a dismissed toast is not reopened",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1575,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 53,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:36:26.269Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a dismissed toast is not reopened",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1575,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-910d680e329adfdf385b",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1572,
+          "column": 5
+        },
+        {
+          "title": "leave · a Popover inside a shadow root says so to its host",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3412,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:36:26.327Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJ3aW5kb3ciOlt7ImF0IjoyNDExLjI5OTk5OTk4MjExODYsImtpbmQiOiJwb3BvdmVyIiwiYnViYmxlcyI6dHJ1ZSwiY29tcG9zZWQiOnRydWV9XSwiaG9zdCI6W3siYXQiOjI0MTEuMjk5OTk5OTgyMTE4Niwia2luZCI6InBvcG92ZXIiLCJidWJibGVzIjp0cnVlLCJjb21wb3NlZCI6dHJ1ZX1dLCJlbWl0cyI6eyJsLXNoYWRvdyI6MX0sInNlZW5BdCI6MjQwNS40LCJtb3VudGVkIjpmYWxzZX0="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-0b83f2e43d7ece818a26",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1647,
+          "column": 1
+        },
+        {
+          "title": "leave · a ContextMenu says once that its leave has finished, by escape",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a ContextMenu opens on a long press, which Playwright's touchscreen cannot hold",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1672,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 49,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:36:29.745Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a ContextMenu opens on a long press, which Playwright's touchscreen cannot hold",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1672,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-bd8ae2a4e7def88d9c3f",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1671,
+          "column": 5
+        },
+        {
+          "title": "leave · a ContextMenu says once that its leave has finished, by pick",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a ContextMenu opens on a long press, which Playwright's touchscreen cannot hold",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1672,
+                    "column": 14
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 51,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:36:29.798Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a ContextMenu opens on a long press, which Playwright's touchscreen cannot hold",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1672,
+                        "column": 14
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-5ca4f9e038937f71ac4a",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1671,
+          "column": 5
+        },
+        {
+          "title": "leave · a hover card says once that its leave has finished",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "a hover card does not open on touch",
+                  "location": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                    "line": 1690,
+                    "column": 10
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 54,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:36:29.854Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "a hover card does not open on touch",
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts",
+                        "line": 1690,
+                        "column": 10
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-85f5704a48212ce214cd",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1689,
+          "column": 1
+        },
+        {
+          "title": "leave · a Dialog unmounted mid-exit says so once, at the unmount",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-phone",
+              "projectName": "chromium-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3098,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T02:36:29.915Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "leave",
+                      "contentType": "application/json",
+                      "body": "eyJ3aW5kb3ciOlt7ImF0IjoyMjMzLjE5OTk5OTk4ODA3OSwia2luZCI6ImRpYWxvZyIsImJ1YmJsZXMiOnRydWUsImNvbXBvc2VkIjp0cnVlfV0sImhvc3QiOltdLCJlbWl0cyI6eyJkaWFsb2ciOjF9LCJjdXQiOjIyMzIuMzAwMDAwMDExOTIxfQ=="
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1d3d840c24fb11c10aa1-d8957e886c852c843566",
+          "file": "release-11-1-1.spec.ts",
+          "line": 1707,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-22T02:34:50.509Z",
+    "duration": 102575.629,
+    "expected": 32,
+    "skipped": 11,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
