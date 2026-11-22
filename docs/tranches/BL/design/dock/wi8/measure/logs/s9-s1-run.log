@@ -1,0 +1,26 @@
+== s1 chromium start 2026-11-22 11:25:02 (load { 7.07 7.80 7.65 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+probes chromium done
+corner chromium done
+face chromium done
+pw s1-corner chromium rc=1
+applied s1-stadium - RU-91 plant: --radius-dock back on the root
+pw s1-corner-stadium chromium rc=1
+reverted s1-stadium
+applied s1-facepad - RU-112 plant: the folded face's inline padding 0.5rem
+reverted s1-facepad
+s1 chromium done
+== s1 chromium rc=0 end 2026-11-22 11:56:43 (load { 5.12 5.92 6.59 })
+== s1 webkit start 2026-11-22 11:56:43 (load { 5.12 5.92 6.59 })
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+probes webkit done
+corner webkit done
+face webkit done
+pw s1-corner webkit rc=0
+applied s1-stadium - RU-91 plant: --radius-dock back on the root
+reverted s1-stadium
+applied s1-facepad - RU-112 plant: the folded face's inline padding 0.5rem
+reverted s1-facepad
+s1 webkit done
+== s1 webkit rc=0 end 2026-11-22 12:14:24 (load { 6.32 6.23 6.43 })
+== s1 ALL DONE 2026-11-22 12:14:24
