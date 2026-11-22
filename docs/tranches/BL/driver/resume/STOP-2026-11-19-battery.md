@@ -31,3 +31,7 @@ The owner: "The battery is invariant. Communicate to all sessions." The battery 
 ## The weekly limit, 2026-11-20 13:00 to 2026-11-21 15:07
 
 At 13:01 on 11-20 every seat hit the weekly usage limit ("You've hit your weekly limit"). The four runs stayed listed as running with no live seat and no journal write for 26 hours. On 11-21 the owner relayed "resume work. The limit has been reset" (via value-js-f3). The orchestrator stopped the four hung tasks, saved the cut seats' uncommitted work (the dock's as `measure/harness/s8/wip-at-limit-1121.patch`, the demo's as `.p17/close/wip-at-limit-1121.patch`), updated the RESUME notes, and resumed all four: 11.1.1 (critic 8), dock pass 8 (source-8), the P17 close (its fix seat, after c06026d5d), and the keyframes triage `wf_026dccf8-16c` (its tokens and tooltip placement cached).
+
+## 2026-11-21 evening: the P17 close done, a cure round before the merge
+
+The P17 close returned (bl/demo at 15863894f; verify: merge, with three items worse than P16). The merge is held for `driver/demo-p17-cure.js` (run `wf_9f2b3f06-0fa`, seats `p17-cure-fix` then `p17-cure-verify`; no args). If it stops, resume it with `Workflow({scriptPath: ".../demo-p17-cure.js", resumeFromRunId: "wf_9f2b3f06-0fa"})`. The P17 close run `wf_dac9f195-7ba` is finished and no longer needs a resume.
