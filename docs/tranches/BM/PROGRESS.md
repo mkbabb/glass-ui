@@ -1,0 +1,3 @@
+# BM — progress (dated, newest last)
+
+- 2026-11-22 15:22 — Opened from the owner's brief (CHARTER.md). Fetched rida.dev's post and its 74 chunks (untracked). Asked atlas, value.js (with daraksha, fourier, keyframes), gaggle and Home Assistant for input; all four answered (study/INBOUND.md). Launched part 1 of the study, `bm-read-union` (run `wf_2265c21a-25a`, all Opus): four reads (rida input and render, rida UI, glass-ui inventory, iOS 27 and the web platform), the union, two critics (completeness, restraint and production), a fold. Part 2 (the ten design passes) is written from the folded union; part 3 forms the tranche, the precepts and the implementation messages.
