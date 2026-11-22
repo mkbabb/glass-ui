@@ -1,0 +1,284 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "fix11-probe/probe.config.ts",
+      "--project=webkit-phone",
+      "--workers=1"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/fix11-probe/probe.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/fix11-probe",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-phone",
+        "name": "chromium-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/fix11-probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/fix11-probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-phone",
+        "name": "webkit-phone",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/fix11-probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/fix11-probe",
+        "testIgnore": [],
+        "testMatch": [
+          "*.probe.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/fix-11/logs/boundary-wp.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5354",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5354",
+      "reuseExistingServer": false,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "boundary.probe.ts",
+      "file": "boundary.probe.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "boundary · the rule before (aed2570f8): Math.round(off) === 0 takes a press outside the button as late",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 43103,
+                  "error": {
+                    "message": "Error: some press lands outside the box by less than half a pixel [{\"side\":\"below\",\"d\":0,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.1,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.2,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.3,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.4,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.45,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.7,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":1,\"off\":0.7969,\"events\":\"pointerdown:00:1px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":false,\"aimedMiss\":false},{\"side\":\"below\",\"d\":3,\"off\":2.7969,\"events\":\"pointerdown:00:3px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":false,\"aimedMiss\":false},{\"side\":\"right\",\"d\":0.1,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":0.2,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":0.3,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":0.4,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":0.45,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":0.7,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":1,\"off\":1,\"events\":\"pointerdown:00:1px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":false,\"aimedMiss\":false},{\"side\":\"right\",\"d\":3,\"off\":3,\"events\":\"pointerdown:00:3px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":false,\"aimedMiss\":false}]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                    "stack": "Error: some press lands outside the box by less than half a pixel [{\"side\":\"below\",\"d\":0,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.1,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.2,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.3,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.4,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.45,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.7,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":1,\"off\":0.7969,\"events\":\"pointerdown:00:1px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":false,\"aimedMiss\":false},{\"side\":\"below\",\"d\":3,\"off\":2.7969,\"events\":\"pointerdown:00:3px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":false,\"aimedMiss\":false},{\"side\":\"right\",\"d\":0.1,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":0.2,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":0.3,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":0.4,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":0.45,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":0.7,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":1,\"off\":1,\"events\":\"pointerdown:00:1px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":false,\"aimedMiss\":false},{\"side\":\"right\",\"d\":3,\"off\":3,\"events\":\"pointerdown:00:3px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":false,\"aimedMiss\":false}]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/fix11-probe/boundary.probe.ts:112:11",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/fix11-probe/boundary.probe.ts",
+                      "column": 11,
+                      "line": 112
+                    },
+                    "snippet": "  110 |             read.filter((r) => r.off !== null && r.off > 0 && r.off < 0.5).length,\n  111 |             `some press lands outside the box by less than half a pixel ${at}`,\n> 112 |         ).toBeGreaterThan(0);\n      |           ^\n  113 |         expect(\n  114 |             read.filter((r) => r.aimedMiss).length,\n  115 |             `no press the rule calls on time misses the button ${at}`,"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/fix11-probe/boundary.probe.ts",
+                        "column": 11,
+                        "line": 112
+                      },
+                      "message": "Error: some press lands outside the box by less than half a pixel [{\"side\":\"below\",\"d\":0,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.1,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.2,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.3,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.4,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.45,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.7,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":1,\"off\":0.7969,\"events\":\"pointerdown:00:1px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":false,\"aimedMiss\":false},{\"side\":\"below\",\"d\":3,\"off\":2.7969,\"events\":\"pointerdown:00:3px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":false,\"aimedMiss\":false},{\"side\":\"right\",\"d\":0.1,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":0.2,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":0.3,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":0.4,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":0.45,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":0.7,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":1,\"off\":1,\"events\":\"pointerdown:00:1px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":false,\"aimedMiss\":false},{\"side\":\"right\",\"d\":3,\"off\":3,\"events\":\"pointerdown:00:3px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":false,\"aimedMiss\":false}]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  110 |             read.filter((r) => r.off !== null && r.off > 0 && r.off < 0.5).length,\n  111 |             `some press lands outside the box by less than half a pixel ${at}`,\n> 112 |         ).toBeGreaterThan(0);\n      |           ^\n  113 |         expect(\n  114 |             read.filter((r) => r.aimedMiss).length,\n  115 |             `no press the rule calls on time misses the button ${at}`,\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/fix11-probe/boundary.probe.ts:112:11"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T07:32:09.276Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "presses",
+                      "contentType": "application/json",
+                      "body": "W3sic2lkZSI6ImJlbG93IiwiZCI6MCwib2ZmIjowLCJldmVudHMiOiJwb2ludGVyZG93bjoxMTowcHggY2xpY2s6MTE6MHB4IiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWUsIm9uVGltZSI6dHJ1ZSwiYWltZWRNaXNzIjpmYWxzZX0seyJzaWRlIjoiYmVsb3ciLCJkIjowLjEsIm9mZiI6MCwiZXZlbnRzIjoicG9pbnRlcmRvd246MTE6MHB4IGNsaWNrOjExOjBweCIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlLCJvblRpbWUiOnRydWUsImFpbWVkTWlzcyI6ZmFsc2V9LHsic2lkZSI6ImJlbG93IiwiZCI6MC4yLCJvZmYiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOjBweCBjbGljazoxMTowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZSwib25UaW1lIjp0cnVlLCJhaW1lZE1pc3MiOmZhbHNlfSx7InNpZGUiOiJiZWxvdyIsImQiOjAuMywib2ZmIjowLCJldmVudHMiOiJwb2ludGVyZG93bjoxMTowcHggY2xpY2s6MTE6MHB4IiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWUsIm9uVGltZSI6dHJ1ZSwiYWltZWRNaXNzIjpmYWxzZX0seyJzaWRlIjoiYmVsb3ciLCJkIjowLjQsIm9mZiI6MCwiZXZlbnRzIjoicG9pbnRlcmRvd246MTE6MHB4IGNsaWNrOjExOjBweCIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlLCJvblRpbWUiOnRydWUsImFpbWVkTWlzcyI6ZmFsc2V9LHsic2lkZSI6ImJlbG93IiwiZCI6MC40NSwib2ZmIjowLCJldmVudHMiOiJwb2ludGVyZG93bjoxMTowcHggY2xpY2s6MTE6MHB4IiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWUsIm9uVGltZSI6dHJ1ZSwiYWltZWRNaXNzIjpmYWxzZX0seyJzaWRlIjoiYmVsb3ciLCJkIjowLjcsIm9mZiI6MCwiZXZlbnRzIjoicG9pbnRlcmRvd246MTE6MHB4IGNsaWNrOjExOjBweCIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlLCJvblRpbWUiOnRydWUsImFpbWVkTWlzcyI6ZmFsc2V9LHsic2lkZSI6ImJlbG93IiwiZCI6MSwib2ZmIjowLjc5NjksImV2ZW50cyI6InBvaW50ZXJkb3duOjAwOjFweCBjbGljazoxMTowcHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOnRydWUsIm9uVGltZSI6ZmFsc2UsImFpbWVkTWlzcyI6ZmFsc2V9LHsic2lkZSI6ImJlbG93IiwiZCI6Mywib2ZmIjoyLjc5NjksImV2ZW50cyI6InBvaW50ZXJkb3duOjAwOjNweCBjbGljazoxMTowcHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOnRydWUsIm9uVGltZSI6ZmFsc2UsImFpbWVkTWlzcyI6ZmFsc2V9LHsic2lkZSI6InJpZ2h0IiwiZCI6MC4xLCJvZmYiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjAwOjBweCBjbGljazoxMTowcHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOnRydWUsIm9uVGltZSI6dHJ1ZSwiYWltZWRNaXNzIjp0cnVlfSx7InNpZGUiOiJyaWdodCIsImQiOjAuMiwib2ZmIjowLCJldmVudHMiOiJwb2ludGVyZG93bjowMDowcHggY2xpY2s6MTE6MHB4IiwiaGl0IjpmYWxzZSwiY2xvc2VkIjp0cnVlLCJvblRpbWUiOnRydWUsImFpbWVkTWlzcyI6dHJ1ZX0seyJzaWRlIjoicmlnaHQiLCJkIjowLjMsIm9mZiI6MCwiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6MHB4IGNsaWNrOjExOjBweCIsImhpdCI6ZmFsc2UsImNsb3NlZCI6dHJ1ZSwib25UaW1lIjp0cnVlLCJhaW1lZE1pc3MiOnRydWV9LHsic2lkZSI6InJpZ2h0IiwiZCI6MC40LCJvZmYiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjAwOjBweCBjbGljazoxMTowcHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOnRydWUsIm9uVGltZSI6dHJ1ZSwiYWltZWRNaXNzIjp0cnVlfSx7InNpZGUiOiJyaWdodCIsImQiOjAuNDUsIm9mZiI6MCwiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6MHB4IGNsaWNrOjExOjBweCIsImhpdCI6ZmFsc2UsImNsb3NlZCI6dHJ1ZSwib25UaW1lIjp0cnVlLCJhaW1lZE1pc3MiOnRydWV9LHsic2lkZSI6InJpZ2h0IiwiZCI6MC43LCJvZmYiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjAwOjBweCBjbGljazoxMTowcHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOnRydWUsIm9uVGltZSI6dHJ1ZSwiYWltZWRNaXNzIjp0cnVlfSx7InNpZGUiOiJyaWdodCIsImQiOjEsIm9mZiI6MSwiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6MXB4IGNsaWNrOjExOjBweCIsImhpdCI6ZmFsc2UsImNsb3NlZCI6dHJ1ZSwib25UaW1lIjpmYWxzZSwiYWltZWRNaXNzIjpmYWxzZX0seyJzaWRlIjoicmlnaHQiLCJkIjozLCJvZmYiOjMsImV2ZW50cyI6InBvaW50ZXJkb3duOjAwOjNweCBjbGljazoxMTowcHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOnRydWUsIm9uVGltZSI6ZmFsc2UsImFpbWVkTWlzcyI6ZmFsc2V9XQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/boundary.probe.ts-boundary-929c5--outside-the-button-as-late-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/fix11-probe/boundary.probe.ts",
+                    "column": 11,
+                    "line": 112
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "31cd0d0957a7ed70ad70-d1c253f98d52783d73dc",
+          "file": "boundary.probe.ts",
+          "line": 101,
+          "column": 5
+        },
+        {
+          "title": "boundary · the rule branch (72e14afe8): !(off > 0) takes a press outside the button as late",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "webkit-phone",
+              "projectName": "webkit-phone",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 43053,
+                  "error": {
+                    "message": "Error: some press lands outside the box by less than half a pixel [{\"side\":\"below\",\"d\":0,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.1,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.2,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.3,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.4,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.45,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.7,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":1,\"off\":0.7969,\"events\":\"pointerdown:00:1px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":false,\"aimedMiss\":false},{\"side\":\"below\",\"d\":3,\"off\":2.7969,\"events\":\"pointerdown:00:3px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":false,\"aimedMiss\":false},{\"side\":\"right\",\"d\":0.1,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":0.2,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":0.3,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":0.4,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":0.45,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":0.7,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":1,\"off\":1,\"events\":\"pointerdown:00:1px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":false,\"aimedMiss\":false},{\"side\":\"right\",\"d\":3,\"off\":3,\"events\":\"pointerdown:00:3px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":false,\"aimedMiss\":false}]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m",
+                    "stack": "Error: some press lands outside the box by less than half a pixel [{\"side\":\"below\",\"d\":0,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.1,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.2,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.3,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.4,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.45,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.7,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":1,\"off\":0.7969,\"events\":\"pointerdown:00:1px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":false,\"aimedMiss\":false},{\"side\":\"below\",\"d\":3,\"off\":2.7969,\"events\":\"pointerdown:00:3px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":false,\"aimedMiss\":false},{\"side\":\"right\",\"d\":0.1,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":0.2,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":0.3,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":0.4,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":0.45,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":0.7,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":1,\"off\":1,\"events\":\"pointerdown:00:1px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":false,\"aimedMiss\":false},{\"side\":\"right\",\"d\":3,\"off\":3,\"events\":\"pointerdown:00:3px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":false,\"aimedMiss\":false}]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/fix11-probe/boundary.probe.ts:112:11",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/fix11-probe/boundary.probe.ts",
+                      "column": 11,
+                      "line": 112
+                    },
+                    "snippet": "  110 |             read.filter((r) => r.off !== null && r.off > 0 && r.off < 0.5).length,\n  111 |             `some press lands outside the box by less than half a pixel ${at}`,\n> 112 |         ).toBeGreaterThan(0);\n      |           ^\n  113 |         expect(\n  114 |             read.filter((r) => r.aimedMiss).length,\n  115 |             `no press the rule calls on time misses the button ${at}`,"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/fix11-probe/boundary.probe.ts",
+                        "column": 11,
+                        "line": 112
+                      },
+                      "message": "Error: some press lands outside the box by less than half a pixel [{\"side\":\"below\",\"d\":0,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.1,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.2,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.3,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.4,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.45,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":0.7,\"off\":0,\"events\":\"pointerdown:11:0px click:11:0px\",\"hit\":true,\"closed\":true,\"onTime\":true,\"aimedMiss\":false},{\"side\":\"below\",\"d\":1,\"off\":0.7969,\"events\":\"pointerdown:00:1px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":false,\"aimedMiss\":false},{\"side\":\"below\",\"d\":3,\"off\":2.7969,\"events\":\"pointerdown:00:3px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":false,\"aimedMiss\":false},{\"side\":\"right\",\"d\":0.1,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":0.2,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":0.3,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":0.4,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":0.45,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":0.7,\"off\":0,\"events\":\"pointerdown:00:0px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":true,\"aimedMiss\":true},{\"side\":\"right\",\"d\":1,\"off\":1,\"events\":\"pointerdown:00:1px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":false,\"aimedMiss\":false},{\"side\":\"right\",\"d\":3,\"off\":3,\"events\":\"pointerdown:00:3px click:11:0px\",\"hit\":false,\"closed\":true,\"onTime\":false,\"aimedMiss\":false}]\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31m0\u001b[39m\n\n  110 |             read.filter((r) => r.off !== null && r.off > 0 && r.off < 0.5).length,\n  111 |             `some press lands outside the box by less than half a pixel ${at}`,\n> 112 |         ).toBeGreaterThan(0);\n      |           ^\n  113 |         expect(\n  114 |             read.filter((r) => r.aimedMiss).length,\n  115 |             `no press the rule calls on time misses the button ${at}`,\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/fix11-probe/boundary.probe.ts:112:11"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T07:32:52.846Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "presses",
+                      "contentType": "application/json",
+                      "body": "W3sic2lkZSI6ImJlbG93IiwiZCI6MCwib2ZmIjowLCJldmVudHMiOiJwb2ludGVyZG93bjoxMTowcHggY2xpY2s6MTE6MHB4IiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWUsIm9uVGltZSI6dHJ1ZSwiYWltZWRNaXNzIjpmYWxzZX0seyJzaWRlIjoiYmVsb3ciLCJkIjowLjEsIm9mZiI6MCwiZXZlbnRzIjoicG9pbnRlcmRvd246MTE6MHB4IGNsaWNrOjExOjBweCIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlLCJvblRpbWUiOnRydWUsImFpbWVkTWlzcyI6ZmFsc2V9LHsic2lkZSI6ImJlbG93IiwiZCI6MC4yLCJvZmYiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjExOjBweCBjbGljazoxMTowcHgiLCJoaXQiOnRydWUsImNsb3NlZCI6dHJ1ZSwib25UaW1lIjp0cnVlLCJhaW1lZE1pc3MiOmZhbHNlfSx7InNpZGUiOiJiZWxvdyIsImQiOjAuMywib2ZmIjowLCJldmVudHMiOiJwb2ludGVyZG93bjoxMTowcHggY2xpY2s6MTE6MHB4IiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWUsIm9uVGltZSI6dHJ1ZSwiYWltZWRNaXNzIjpmYWxzZX0seyJzaWRlIjoiYmVsb3ciLCJkIjowLjQsIm9mZiI6MCwiZXZlbnRzIjoicG9pbnRlcmRvd246MTE6MHB4IGNsaWNrOjExOjBweCIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlLCJvblRpbWUiOnRydWUsImFpbWVkTWlzcyI6ZmFsc2V9LHsic2lkZSI6ImJlbG93IiwiZCI6MC40NSwib2ZmIjowLCJldmVudHMiOiJwb2ludGVyZG93bjoxMTowcHggY2xpY2s6MTE6MHB4IiwiaGl0Ijp0cnVlLCJjbG9zZWQiOnRydWUsIm9uVGltZSI6dHJ1ZSwiYWltZWRNaXNzIjpmYWxzZX0seyJzaWRlIjoiYmVsb3ciLCJkIjowLjcsIm9mZiI6MCwiZXZlbnRzIjoicG9pbnRlcmRvd246MTE6MHB4IGNsaWNrOjExOjBweCIsImhpdCI6dHJ1ZSwiY2xvc2VkIjp0cnVlLCJvblRpbWUiOnRydWUsImFpbWVkTWlzcyI6ZmFsc2V9LHsic2lkZSI6ImJlbG93IiwiZCI6MSwib2ZmIjowLjc5NjksImV2ZW50cyI6InBvaW50ZXJkb3duOjAwOjFweCBjbGljazoxMTowcHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOnRydWUsIm9uVGltZSI6ZmFsc2UsImFpbWVkTWlzcyI6ZmFsc2V9LHsic2lkZSI6ImJlbG93IiwiZCI6Mywib2ZmIjoyLjc5NjksImV2ZW50cyI6InBvaW50ZXJkb3duOjAwOjNweCBjbGljazoxMTowcHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOnRydWUsIm9uVGltZSI6ZmFsc2UsImFpbWVkTWlzcyI6ZmFsc2V9LHsic2lkZSI6InJpZ2h0IiwiZCI6MC4xLCJvZmYiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjAwOjBweCBjbGljazoxMTowcHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOnRydWUsIm9uVGltZSI6dHJ1ZSwiYWltZWRNaXNzIjp0cnVlfSx7InNpZGUiOiJyaWdodCIsImQiOjAuMiwib2ZmIjowLCJldmVudHMiOiJwb2ludGVyZG93bjowMDowcHggY2xpY2s6MTE6MHB4IiwiaGl0IjpmYWxzZSwiY2xvc2VkIjp0cnVlLCJvblRpbWUiOnRydWUsImFpbWVkTWlzcyI6dHJ1ZX0seyJzaWRlIjoicmlnaHQiLCJkIjowLjMsIm9mZiI6MCwiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6MHB4IGNsaWNrOjExOjBweCIsImhpdCI6ZmFsc2UsImNsb3NlZCI6dHJ1ZSwib25UaW1lIjp0cnVlLCJhaW1lZE1pc3MiOnRydWV9LHsic2lkZSI6InJpZ2h0IiwiZCI6MC40LCJvZmYiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjAwOjBweCBjbGljazoxMTowcHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOnRydWUsIm9uVGltZSI6dHJ1ZSwiYWltZWRNaXNzIjp0cnVlfSx7InNpZGUiOiJyaWdodCIsImQiOjAuNDUsIm9mZiI6MCwiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6MHB4IGNsaWNrOjExOjBweCIsImhpdCI6ZmFsc2UsImNsb3NlZCI6dHJ1ZSwib25UaW1lIjp0cnVlLCJhaW1lZE1pc3MiOnRydWV9LHsic2lkZSI6InJpZ2h0IiwiZCI6MC43LCJvZmYiOjAsImV2ZW50cyI6InBvaW50ZXJkb3duOjAwOjBweCBjbGljazoxMTowcHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOnRydWUsIm9uVGltZSI6dHJ1ZSwiYWltZWRNaXNzIjp0cnVlfSx7InNpZGUiOiJyaWdodCIsImQiOjEsIm9mZiI6MSwiZXZlbnRzIjoicG9pbnRlcmRvd246MDA6MXB4IGNsaWNrOjExOjBweCIsImhpdCI6ZmFsc2UsImNsb3NlZCI6dHJ1ZSwib25UaW1lIjpmYWxzZSwiYWltZWRNaXNzIjpmYWxzZX0seyJzaWRlIjoicmlnaHQiLCJkIjozLCJvZmYiOjMsImV2ZW50cyI6InBvaW50ZXJkb3duOjAwOjNweCBjbGljazoxMTowcHgiLCJoaXQiOmZhbHNlLCJjbG9zZWQiOnRydWUsIm9uVGltZSI6ZmFsc2UsImFpbWVkTWlzcyI6ZmFsc2V9XQ=="
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/boundary.probe.ts-boundary-d998e--outside-the-button-as-late-webkit-phone/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/fix11-probe/boundary.probe.ts",
+                    "column": 11,
+                    "line": 112
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "31cd0d0957a7ed70ad70-2f15957e0cf6984bb808",
+          "file": "boundary.probe.ts",
+          "line": 101,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-22T07:32:07.677Z",
+    "duration": 88481.62599999999,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,10 @@
+02:23:50 boundary-cp probe chromium-phone exit 1 85s load-at-start={ 11.22 10.53 9.80 } load-end={ 8.64 10.00 9.67 }  1 failed  1 passed (1.3m) 
+02:33:39 boundary-wp probe webkit-phone exit 1 578s load-at-start={ 8.69 9.96 9.67 } load-end={ 6.78 7.18 8.22 }  2 failed 
+CHAIN-START 02:36:27 head 72e14afe8 load { 7.33 7.25 8.06 }
+02:46:52 rowa-tip-cp tip chromium-phone exit 0 625s load-at-start={ 7.33 7.25 8.06 } load-end={ 9.02 8.89 8.42 }  5 passed (10.3m) 
+02:52:39 rowa-tip-wp tip webkit-phone exit 0 347s load-at-start={ 9.02 8.89 8.42 } load-end={ 6.99 8.15 8.25 }  3 passed (5.7m) 
+02:54:43 rowa-red-cp red chromium-phone exit 1 124s load-at-start={ 6.99 8.15 8.25 } load-end={ 7.15 7.69 8.04 }  1 failed 
+02:56:43 rowa-red-wp red webkit-phone exit 1 120s load-at-start={ 7.15 7.69 8.04 } load-end={ 6.04 7.10 7.76 }  1 failed 
+GATE-START 02:59:03 load { 12.02 8.86 8.35 }
+GATE-END 03:35:36 exit 0 2193s load { 8.45 8.90 9.82 }
+CHAIN-DONE 03:35:36
