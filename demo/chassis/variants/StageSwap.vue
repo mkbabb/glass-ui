@@ -15,10 +15,10 @@ import { nextTick, ref, watch } from "vue";
 
 const props = defineProps<{ swapKey: string }>();
 
-// The leave starts and stops at rest: at 60 frames a second no frame lands more than
-// a fifth of the fade. An ease-out leave this short lands two fifths in its first.
-const LEAVE = { duration: 120, easing: "cubic-bezier(0.25, 0, 0.75, 1)" };
-const ENTER_MS = 200;
+// Both fades start and stop at rest: at 60 frames a second no frame lands more than a
+// fifth of either (the leave 0.185 of its 120 ms, the enter 0.111 of its 200 ms). An
+// ease-out fade this short lands a quarter or more in its first frame.
+const EASE = "cubic-bezier(0.25, 0, 0.75, 1)";
 
 const box = ref<HTMLElement | null>(null);
 const travelling = ref(false);
@@ -40,21 +40,21 @@ const layer = (pane: Element): Element => (pane.childElementCount === 1 ? pane.f
 // A leave fades the layer from where it stands (mid-fade if a switch lands during one)
 // to 0 and holds there until the pane is removed; an enter fades from 0 to what the
 // layer would show without it, so its own entrance runs inside the fade.
-function fade(pane: Element, to: "out" | "in", timing: { duration: number; easing: string }): Promise<unknown> {
+function fade(pane: Element, out: boolean): Promise<unknown> {
     const el = layer(pane);
     const now = parseFloat(getComputedStyle(el).opacity);
     fading.get(el)?.cancel();
-    const frames = to === "out" ? [{ opacity: now }, { opacity: 0 }] : [{ offset: 0, opacity: 0 }];
-    const run = el.animate(frames, { ...timing, fill: to === "out" ? "forwards" : "none", id: "stage-swap-fade" });
+    const frames = out ? [{ opacity: now }, { opacity: 0 }] : [{ offset: 0, opacity: 0 }];
+    const run = el.animate(frames, { duration: out ? 120 : 200, easing: EASE, fill: out ? "forwards" : "none", id: "stage-swap-fade" });
     fading.set(el, run);
-    if (to === "in") afterPaint(run);
+    afterPaint(run);
     return run.finished.catch(() => undefined);
 }
 
-// The frames that first style, lay out and paint a new pane can run long on its first
-// visit, and an animation started before them lands their share in one step. So the
-// enter's fade and travel hold at their start until two frames have begun since the
-// pane went in, and play from there.
+// The frames after a press, and those that first style, lay out and paint a new pane,
+// can run long on a first switch, and an animation started before them lands their
+// share in one step. So the leave, and the enter's fade and travel, hold at their start
+// until two frames have begun since they were asked for, and play from there.
 function afterPaint(run: Animation): void {
     run.pause();
     requestAnimationFrame(() =>
@@ -65,12 +65,11 @@ function afterPaint(run: Animation): void {
 }
 
 function onLeave(el: Element, done: () => void): void {
-    void fade(el, "out", LEAVE).then(done);
+    void fade(el, true).then(done);
 }
 
 function onEnter(el: Element, done: () => void): void {
-    const easing = getComputedStyle(el).getPropertyValue("--ease-out").trim() || "ease-out";
-    void fade(el, "in", { duration: ENTER_MS, easing }).then(done);
+    void fade(el, false).then(done);
     void travelTo();
 }
 
