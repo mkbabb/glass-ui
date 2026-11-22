@@ -131,7 +131,7 @@ export interface DockBody {
     readonly moving: Ref<boolean>;
 }
 
-export const DOCK_BODY_KEY: InjectionKey<DockBody> = Symbol("glass-dock-body");
+const DOCK_BODY_KEY: InjectionKey<DockBody> = Symbol("glass-dock-body");
 export function useOptionalDockBody(): DockBody | undefined {
     return inject(DOCK_BODY_KEY, undefined);
 }
@@ -520,12 +520,11 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             t.ly = ly;
             t.lw = lw;
         }
-        for (const [el, t] of seats) {
+        for (const el of seats.keys()) {
             if (seen.has(el)) continue;
             el.style.removeProperty("translate");
             el.style.removeProperty("clip-path");
             seats.delete(el);
-            void t;
         }
         return movedAny;
     }

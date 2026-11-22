@@ -16,7 +16,7 @@ export interface DockRegistryEntry {
 export const dockRegistry = shallowReactive(new Map<string, DockRegistryEntry>());
 
 /** How many outlets ask for each region of each dock (so a region renders unauthored). */
-export const dockOutletWants = reactive(new Map<string, Record<DockOutletRegion, number>>());
+const dockOutletWants = reactive(new Map<string, Record<DockOutletRegion, number>>());
 
 export function wantRegion(id: string, region: DockOutletRegion, delta: 1 | -1): void {
     const row = dockOutletWants.get(id) ?? { run: 0, persistent: 0, "persistent-end": 0 };

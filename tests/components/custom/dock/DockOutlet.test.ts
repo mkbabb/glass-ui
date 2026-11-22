@@ -61,7 +61,7 @@ describe("W-I.8 G-7: DockOutlet", () => {
     it("renders as direct children of the run, after the authored seats, with that dock's context", async () => {
         const { w } = host({ two: true });
         await settle();
-        const run = w.element.querySelector<HTMLElement>("#d1 .dock-run")!;
+        const run = w.element.querySelector("#d1 .dock-run") as HTMLElement;
         const names = [...run.children].map((c) => c.getAttribute("data-name"));
         expect(names).toEqual(["authored", "first", "second"]);
         const ctxId = run.querySelector("[data-name=first]")!.getAttribute("data-ctx");
