@@ -176,7 +176,6 @@
         --dock-tab-padding-inline: calc(
             var(--dock-density-compact-tab-padding-inline, 0.625rem) * var(--dock-scale)
         );
-        --dock-tab-h: calc(32px * var(--dock-scale));
         /* The cockpit-tight label ratio — the label reads EVEN tighter relative to
            its control than the `:root` default (the A-9 close). The `dock-label`
            font-size is `calc(--dock-control-size * --dock-label-ratio)`; the cockpit
@@ -281,7 +280,6 @@
     .glass-dock[data-preset="controls"] {
         --dock-intent: 120ms;
         --dock-linger: 3s;
-        --dock-linger-max: 6s;
         --dock-control-size: 2.75rem;
         --dock-layer-height: 2.75rem;
         --dock-padding-block: 0.25rem;

@@ -468,27 +468,12 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         if (!Number.isFinite(n)) return fallback;
         return raw.endsWith("ms") ? n : raw.endsWith("s") ? n * 1000 : n;
     }
-    /* Dwell: time the pointer or focus has spent inside since the dock opened. */
-    let dwellMs = 0;
-    let insideSince: number | null = null;
     let pointerInside = false;
     /* W-I.8 R-2 (C2-13): a dismissal (Escape, `collapse()`) made while the pointer was
        inside is not undone by that pointer's next move. It opens the dock again only
        after it leaves and returns, or presses, or focus arrives. A fold the linger
        started is not a dismissal, and a return reverses it at once (RU-6). */
     let dismissedUnderPointer = false;
-    function enterInside(): void {
-        insideSince ??= performance.now();
-    }
-    function leaveInside(): void {
-        if (insideSince !== null) dwellMs += performance.now() - insideSince;
-        insideSince = null;
-    }
-    function lingerMs(): number {
-        const base = tokenMs("--dock-linger", collapseDelay);
-        const max = Math.max(base, tokenMs("--dock-linger-max", base));
-        return Math.min(max, base + dwellMs / 2);
-    }
     /* What holds the dock open when the linger runs out: an overlay (the keep-open
        count), keyboard focus inside, a pointer down inside. */
     function holdsOpen(): boolean {
@@ -510,7 +495,7 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
             }
             state.value = "collapsed";
             syncDerived();
-        }, lingerMs());
+        }, tokenMs("--dock-linger", collapseDelay));
     }
 
     /* `scheduleCollapse`/`collapse` must NOT fire a synthetic
@@ -583,7 +568,6 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
             clearHoverIntent();
             clearTimer();
             pointerInside = true;
-            enterInside();
             state.value = "hover";
             syncDerived();
             return;
@@ -606,7 +590,6 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         // arms nothing (RU-3): the intent and a reversal start from a real move.
         clearTimer();
         pointerInside = true;
-        enterInside();
     }
     function startIntent() {
         if (state.value === "collapsed") {
@@ -627,7 +610,6 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
                         return;
                     }
                     state.value = "hover";
-                    dwellMs = 0;
                     syncDerived();
                 }
             }, tokenMs("--dock-intent", HOVER_INTENT_MS));
@@ -639,7 +621,6 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         if (isQuiet() || pressOnly()) return;
         pointerInside = false;
         dismissedUnderPointer = false;
-        leaveInside();
         // A leave cancels any pending hover-intent dwell: a
         // sweeping-edge enter immediately chased by a leave never commits the expand.
         clearHoverIntent();
@@ -679,7 +660,6 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
             !pointerInside &&
             !(e?.target instanceof Element && e.target.matches(":focus-visible"));
         if (!quietReturn) clearTimer();
-        enterInside();
         if (state.value === "collapsed") {
             if (pressHolds()) {
                 expandOnPressEnd = "focus";
@@ -709,7 +689,6 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         if (state.value !== "hover") return;
         if (keepOpenCount.value > 0) return;
         if (stays) return;
-        if (!pointerInside) leaveInside();
         scheduleCollapse();
     }
 
@@ -723,7 +702,6 @@ export function useDockState(options: UseDockStateOptions): UseDockStateReturn {
         if (lastPointerType === "touch") {
             // A tap opens by the clock and lingers from the lift (R-2, touch).
             state.value = "hover";
-            dwellMs = 0;
             syncDerived();
             scheduleCollapse();
             return;

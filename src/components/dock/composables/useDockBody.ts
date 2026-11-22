@@ -21,9 +21,10 @@ const OMEGA = (2 * Math.PI) / DOCK_SPRING.response;
 const ZETA = DOCK_SPRING.dampingFraction;
 const WD = OMEGA * Math.sqrt(Math.max(1e-6, 1 - ZETA * ZETA));
 const MAX_DT = 0.033;
-/** The test-only pose (`__dockPose`): a build constant, so every branch that reads it is
- *  dropped from the published bundle, and G-12 scans the built script for the name. */
-const POSE = import.meta.env.VITE_DOCK_HOLD === "1";
+/** The hold build's trace marks (`dock:read`, `dock:reread`, `dock:write`), the frames G-11's trace
+ *  reads (W-I.8 RU-103): a build constant, so every mark is dropped from the published bundle, and
+ *  G-12 scans the built script for them. */
+const MARKS = import.meta.env.VITE_DOCK_HOLD === "1";
 /** R-3's one window: 1 at 0, 0 from 0.55 on (RU-2). Content of two sizes goes out, then
  *  in (P0a rule 4): at the middle each face reads 0.09. 0.7 was built and read (C2-5): it
  *  closes the dip (each face 0.29 at the middle) and prints the two faces over each
@@ -127,9 +128,6 @@ export interface DockBody {
     sync(reason: string): void;
     /** Subscribes to the end of the current travel (or now, at rest). */
     onSettle(cb: () => void): void;
-    /** Test-only, present only in a build with VITE_DOCK_HOLD=1: pose the open dock at a
-     *  posture coordinate e (null releases). */
-    __dockPose?: (e: number | null) => void;
     readonly moving: Ref<boolean>;
 }
 
@@ -214,7 +212,6 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
     let scrollRest: number | null = null;
     let savedScroll: number | null = null;
     let closedFace: HTMLElement | null = null;
-    let held: number | null = null;
     // Loop state.
     let raf: number | null = null;
     let last: number | null = null;
@@ -616,13 +613,12 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         // RU-29: the trigger frame reads the new layout once. The flags that change layout
         // (the fit law, RU-27's whole-seat window) are decided from that one read and written
         // together; only when one changed is the layout read once more.
-        if (POSE) performance.mark("dock:read", { detail: { reason } });
+        if (MARKS) performance.mark("dock:read", { detail: { reason } });
         syncedSinceRo = true;
         {
             const open = o.expanded();
             const run = runEl();
             const plan = run ? fitRun(el, run, open) : null;
-            if (POSE) performance.mark("dock:flags");
             // RU-36: a change of room made by the host: the observer's reading, the seats as they
             // were, and the run not fitting before or after. Read before the fit is written.
             if (plan) {
@@ -633,10 +629,8 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             const fitMoved = plan ? writeFit(plan) : false;
             // RU-74: the named flag frame (RU-53's bound of four) is a frame whose flag moved; a deciding frame
             // that changed nothing is a plain trigger frame.
-            if (POSE && fitMoved) performance.mark("dock:reread", { detail: { decided: fitFresh, fits: plan?.fits ?? null, whole: plan?.whole ?? null } });
+            if (MARKS && fitMoved) performance.mark("dock:reread", { detail: { decided: fitFresh, fits: plan?.fits ?? null, whole: plan?.whole ?? null } });
         }
-        // RU-53: the carrier's read of the root, named, so a fold frame's first forced layout is told from a flag's.
-        if (POSE) performance.mark("dock:rect");
         const next = rectOf(el);
         // RU-54: the key's extents as the decision left them, read in the layout rectOf just took.
         if (fitFresh && fitKey) {
@@ -735,7 +729,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
                 }
             }
             const leaves = readLeaves();
-            if (POSE) performance.mark("dock:write");
+            if (MARKS) performance.mark("dock:write");
             placeLeaves(leaves);
             // R-3: a face returned to is carried from where it painted to its place in the
             // new layout: painted minus what the layout and its region's carry would paint,
@@ -800,7 +794,6 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
             el.setAttribute("data-morphing", "");
             o.moving.value = true;
             start(reason === "ro");
-            if (POSE) performance.mark("dock:end");
         }
     }
 
@@ -869,7 +862,7 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         // bounded by its own corner, so a host's `--radius-dock` holds through a travel.
         if (o.pill()) return Math.min(pw / 2, ph / 2, cap);
         // A rounded or card dock: the lerp of its two rests on e in a posture travel.
-        if (postureTravel || (POSE && held !== null)) return restR[0] + (restR[1] - restR[0]) * clamp01(e);
+        if (postureTravel) return restR[0] + (restR[1] - restR[0]) * clamp01(e);
         const f = 1 - u;
         return rFrom + (rTo - rFrom) * clamp01(f);
     }
@@ -979,7 +972,6 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         const f = clamp01(1 - u);
         // The posture coordinate: its own quantity, never read from the plate's extent.
         e = clamp01((lastPosture ? 1 : 0) + eq.d);
-        if (POSE && held !== null) e = held;
         writeExpandT();
         // `--dock-morph-t` keeps master's meaning through 11.2.0 (R-10): the progress of the
         // current posture travel, 0 to 1, so a reversal reads 1 − t where it turns.
@@ -1090,11 +1082,10 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         // coordinate is a linear 100 ms clock and each face fades across the whole of it.
         const reduce = o.reducedMotion();
         const win = reduce ? (x: number) => clamp01(1 - x) : w;
-        const posing = postureTravel || (POSE && held !== null);
         for (const face of faces) {
             let op: number;
-            if (face.el === openFace && posing) op = win(1 - e);
-            else if (face.el === closedFace && posing) op = win(e);
+            if (face.el === openFace && postureTravel) op = win(1 - e);
+            else if (face.el === closedFace && postureTravel) op = win(e);
             else if (face.role === "leave") op = face.from * win(f);
             else {
                 // The entering window; an early face reads the same window from the start
@@ -1172,16 +1163,6 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         else settleCbs.push(cb);
     }
 
-    function __dockPose(pose: number | null): void {
-        held = pose;
-        if (pose !== null) {
-            root()?.setAttribute("data-morphing", "");
-            write();
-        } else {
-            rest();
-        }
-    }
-
     /** RU-38: an observer delivery after a sync has already read this layout (the posture watch syncs
      *  before the flush, the class change resizes the root, and the delivery lands in that frame) compares
      *  each entry's own border-box size, which the entry carries, with the box that sync holds, and
@@ -1203,17 +1184,6 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
         const synced = syncedSinceRo;
         syncedSinceRo = false;
         if (synced && entries.every(heldSize)) return;
-        // RU-53: the hold build names each entry that fails the guard in a frame already synced.
-        if (POSE && synced) {
-            const miss = entries.filter((en) => !heldSize(en)).map((en) => {
-                const t = en.target as HTMLElement;
-                const b = en.borderBoxSize?.[0];
-                const held = heldOf(t);
-                const who = t === root() ? "root" : [...regions.values()].find((r) => r.el === t)?.key ?? (seats.has(t) ? "seat" : t.className?.toString?.().slice(0, 40) || t.tagName);
-                return { who, box: b ? [+b.inlineSize.toFixed(2), +b.blockSize.toFixed(2)] : null, held: held ? [+held.w.toFixed(2), +held.h.toFixed(2)] : null };
-            });
-            performance.mark("dock:ro-miss", { detail: { miss } });
-        }
         sync("ro");
     }
     let resized = false;
@@ -1332,7 +1302,6 @@ export function useDockBody(o: UseDockBodyOptions): DockBody {
     }
 
     const body: DockBody = { postureFaces, exchange, sync, onSettle, moving: o.moving };
-    if (POSE) body.__dockPose = __dockPose;
     provide(DOCK_BODY_KEY, body);
     return body;
 }
