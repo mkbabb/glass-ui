@@ -10,9 +10,10 @@
 //            frame of slack for the sampling); a surface that says when its leave has
 //            finished says so once, at or after the fade's last seen frame; a glass
 //            Sheet's frost layer fades with its plate: it appears and leaves on a fade
-//            as the plate does, it enters from 0.02 or less, and on every frame it is
-//            mounted its opacity is within 0.02 of the plate's, so it leaves at the
-//            plate's last value (the fade's last painted step) and never outlasts it
+//            as the plate does, it enters from 0.02 or less, on every frame it is
+//            mounted its opacity is within 0.02 of the plate's, and on the way out it
+//            is mounted on every frame the plate is, so it leaves at the plate's last
+//            painted value, neither before the plate nor after it
 //   fold     a collapsible dock unfolds and folds by cross-fading its two faces, the
 //            box landing at once
 //   mark     a navigation run's selected plate moves to a new seat by a cross-fade:
@@ -109,15 +110,17 @@ const opacity = (f: Frame) => (f.present ? (f.op ?? 0) : 0);
 const boxOf = (f: Frame) => (f.present && f.x !== undefined ? [f.x!, f.y!, f.w!, f.h!] : null);
 
 /** A Sheet's frost layer over one leg from the film's mark, read against its plate: the
- *  frames it is mounted, the most its opacity differs from the plate's on any of them (the
- *  plate read as 0 on a frame it is gone), its first and last opacity, the plate's last
- *  opacity, and the frost layer's own fade. */
+ *  frames it is mounted, the frames that hold the plate without it, the most its opacity
+ *  differs from the plate's on any frame it is mounted (the plate read as 0 on a frame it
+ *  is gone), its first and last opacity, the plate's last opacity, and the frost layer's
+ *  own fade. */
 function judgeFrost(film: Film, dir: "in" | "out") {
     const after = film.frames.filter((f) => f.t >= film.mark);
     const seen = after.filter((f) => f.alsoOp !== undefined);
     const plate = after.filter((f) => f.present);
     return {
         frames: seen.length,
+        bare: plate.filter((f) => f.alsoOp === undefined).length,
         gap: +Math.max(0, ...seen.map((f) => Math.abs(f.alsoOp! - opacity(f)))).toFixed(3),
         first: seen.length ? +seen[0].alsoOp!.toFixed(3) : null,
         last: seen.length ? +seen[seen.length - 1].alsoOp!.toFixed(3) : null,
@@ -231,6 +234,7 @@ for (const s of surfaces) {
                 expectFade(frost[dir].leg, dir, `frost layer ${at}`);
             }
             expect(frost.in.first, `in: the frost layer enters from 0.02 or less ${at}`).toBeLessThanOrEqual(0.02);
+            expect(frost.out.bare, `out: the frost layer is mounted on every frame its plate is, so it leaves at the plate's last painted value ${at}`).toBe(0);
         }
         if (s.says) {
             expect(leave.length, `one leave-finished event ${at}`).toBe(1);
