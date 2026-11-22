@@ -1,0 +1,1 @@
+H6: items 0600 and 0601 (m8/plate8.mjs on the grid, both engines) were not run. Part M read the same source (575084358, unchanged on bl/dock/wi8) on its build at the same rungs (logs/m8-plate-pm-q10grid.<engine>.json), and RU-67 per dock is read from those logs by m9/rule67dock.py.
