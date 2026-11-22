@@ -1074,7 +1074,12 @@ const stageStyle = computed(() =>
                             two controls (so it folds below 40rem), the More handle in #collapsed. Its parent is PlateDock's
                             own seat (position: relative), which stays in the tools slot; &parent=plate puts it in the figure
                             plate itself (position: relative) and takes the tools slot out of the head row (RU-86: "a move
-                            to the preset takes it out of that row") -->
+                            to the preset takes it out of that row")
+                            &reserve=1 (MEASURE-9 part M, ORCH-LINES-8's head-row placement): with &parent=plate, the title takes a
+                            reservation of the folded box (the preset's corner inset 1rem plus its folded extent 3.25rem, less the
+                            plate's 24 px padding, plus 8 px) as a margin at the title's inline end, literals a site writes since no glass
+                            token carries them, and a 98-character title that wraps before it; &face=glyph folds to the ellipsis itself
+                            in place of atlas's handle span -->
         <template v-if="cell === 'w-fourier-app'">
             <header class="wi8-fourier-header">
                 <GlassDock ref="fourierDock" data-testid="w-fourier-app" class="app-dock" orientation="horizontal" shape="pill" collapse="closed" aria-label="App">
@@ -1136,7 +1141,7 @@ const stageStyle = computed(() =>
         <template v-if="ControlsDock && cell === 'w-atlas-preset'">
             <article class="wi8-plate" data-testid="w-atlas-plate">
                 <header class="wi8-plate-header">
-                    <div class="wi8-plate-title" data-testid="w-atlas-preset-title">Wages by region, 2019 to 2025</div>
+                    <div class="wi8-plate-title" data-testid="w-atlas-preset-title" :style="q.get('reserve') ? { marginInlineEnd: 'calc(1rem + 3.25rem - 24px + 0.5rem)' } : undefined">{{ q.get('reserve') ? "Share of households with fixed broadband at 100/20 Mbps or faster, by county and year, 2019 to 2025" : "Wages by region, 2019 to 2025" }}</div>
                     <div class="wi8-plate-controls" data-figure-dock-seat data-tools-seat="end">
                         <div class="wi8-plate-view">
                             <div class="wi8-plate-key" data-testid="w-atlas-preset-legend">
@@ -1166,7 +1171,8 @@ const stageStyle = computed(() =>
                     <DockControl aria-label="Table of Wages by region" data-testid="w-atlas-preset-table"><Table2 aria-hidden="true" /></DockControl>
                     <DockControl aria-label="Filters for Wages by region" data-testid="w-atlas-preset-filters"><SlidersHorizontal aria-hidden="true" /></DockControl>
                     <template #collapsed>
-                        <span class="wi8-plate-handle" data-testid="w-atlas-preset-handle"><Ellipsis aria-hidden="true" /></span>
+                        <Ellipsis v-if="q.get('face') === 'glyph'" aria-hidden="true" data-testid="w-atlas-preset-handle" />
+                        <span v-else class="wi8-plate-handle" data-testid="w-atlas-preset-handle"><Ellipsis aria-hidden="true" /></span>
                     </template>
                 </component>
             </article>

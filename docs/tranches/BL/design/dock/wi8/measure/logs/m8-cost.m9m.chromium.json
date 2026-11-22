@@ -1,0 +1,3036 @@
+{
+ "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5 Max, Unspecified Version)",
+ "w-pill@1x": {
+  "nodesFolded": 27,
+  "nodesOpen": 27,
+  "framesWithRaf": 107,
+  "layoutsPerFrameMax": 2,
+  "layoutsPerFrameMedian": 1,
+  "dirtyPerLayoutMax": 32,
+  "layoutMsMax": 0.126,
+  "layoutCount": 81,
+  "layoutMsSum": 3.246,
+  "rafMsMedian": 0.137,
+  "rafMsMax": 0.468,
+  "elementsStyledUnfold": 5,
+  "elementsStyledFold": [
+   "dock-layer dock-layer--summary is-active:29",
+   "dock-layer dock-layer--full dock-run:60",
+   "glass-dock horizontal shape-pill collaps:72",
+   "dock-plate:42",
+   "dock-layers:76"
+  ],
+  "rest": {
+   "rafCalls": 0,
+   "mutations": 0,
+   "runningAnimations": 0,
+   "animTargets": []
+  },
+  "seatChangeElementsStyled": null,
+  "layoutsBy": {
+   "(frame, not forced)": 78,
+   "be@GlassDock-CUpH22q3.js:1": 2,
+   "ue@GlassDock-CUpH22q3.js:1": 1
+  },
+  "framesOver1Layout": 1,
+  "triggerFrames": [
+   {
+    "layouts": 5,
+    "bound": 3,
+    "over": true,
+    "rereadNoFlag": true,
+    "layoutMs": 0.329,
+    "named": [
+     "read:0.153",
+     "reread:0.035",
+     "write:0.074",
+     "frame:0.03",
+     "frame:0.037"
+    ],
+    "stacks": [
+     "read: ue@GlassDock-CUpH22q3.js:1:16614 < $@GlassDock-CUpH22q3.js:1:18240 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 < B@runtime-core.esm-bundler-BKdLzFmX.js:1:22660 [no phase mark before it]",
+     "reread: be@GlassDock-CUpH22q3.js:1:10966 < xe@GlassDock-CUpH22q3.js:1:11122 < $@GlassDock-CUpH22q3.js:1:18480 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 [no phase mark before it]",
+     "write: (no stack) [no phase mark before it]",
+     "frame: (no stack) [after a rAF callback]",
+     "frame: (no stack) [after a rAF callback]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 3,
+      "forced": 0,
+      "own": 3,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 0,
+    "afterOver": false
+   },
+   {
+    "layouts": 3,
+    "bound": 3,
+    "over": false,
+    "rereadNoFlag": false,
+    "layoutMs": 0.168,
+    "named": [
+     "read:0.093",
+     "write:0.033",
+     "frame:0.042"
+    ],
+    "stacks": [
+     "read: be@GlassDock-CUpH22q3.js:1:10966 < xe@GlassDock-CUpH22q3.js:1:11122 < $@GlassDock-CUpH22q3.js:1:18480 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 [after a rAF callback]",
+     "write: (no stack) [after a rAF callback]",
+     "frame: (no stack) [after a rAF callback]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 3,
+      "forced": 0,
+      "own": 3,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 0,
+    "afterOver": false
+   }
+  ],
+  "landings": [
+   {
+    "frames": [
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   },
+   {
+    "frames": [
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   }
+  ],
+  "landingForced": 0,
+  "longestLayoutMs": 0.153,
+  "medianLayoutAfterTriggerMs": 0.036,
+  "traceEventKinds": {
+   "Layout": 81,
+   "FireAnimationFrame": 108,
+   "UpdateLayoutTree": 96
+  }
+ },
+ "w-pill@4x": {
+  "nodesFolded": 27,
+  "nodesOpen": 27,
+  "framesWithRaf": 105,
+  "layoutsPerFrameMax": 2,
+  "layoutsPerFrameMedian": 1,
+  "dirtyPerLayoutMax": 32,
+  "layoutMsMax": 0.988,
+  "layoutCount": 79,
+  "layoutMsSum": 15.015,
+  "rafMsMedian": 0.327,
+  "rafMsMax": 1.907,
+  "elementsStyledUnfold": 5,
+  "elementsStyledFold": [
+   "dock-layer dock-layer--summary is-active:29",
+   "dock-layer dock-layer--full dock-run:63",
+   "glass-dock horizontal shape-pill collaps:74",
+   "dock-plate:43",
+   "dock-layers:78"
+  ],
+  "rest": {
+   "rafCalls": 0,
+   "mutations": 0,
+   "runningAnimations": 0,
+   "animTargets": []
+  },
+  "seatChangeElementsStyled": null,
+  "layoutsBy": {
+   "(frame, not forced)": 76,
+   "be@GlassDock-CUpH22q3.js:1": 2,
+   "ue@GlassDock-CUpH22q3.js:1": 1
+  },
+  "framesOver1Layout": 1,
+  "triggerFrames": [
+   {
+    "layouts": 3,
+    "bound": 3,
+    "over": false,
+    "rereadNoFlag": true,
+    "layoutMs": 1.093,
+    "named": [
+     "read:0.967",
+     "reread:0.049",
+     "write:0.077"
+    ],
+    "stacks": [
+     "read: ue@GlassDock-CUpH22q3.js:1:16614 < $@GlassDock-CUpH22q3.js:1:18240 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 < B@runtime-core.esm-bundler-BKdLzFmX.js:1:22660 [no phase mark before it]",
+     "reread: be@GlassDock-CUpH22q3.js:1:10966 < xe@GlassDock-CUpH22q3.js:1:11122 < $@GlassDock-CUpH22q3.js:1:18480 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 [no phase mark before it]",
+     "write: (no stack) [no phase mark before it]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 1,
+      "forced": 0,
+      "own": 1,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 3,
+      "forced": 0,
+      "own": 3,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 0,
+    "afterOver": false
+   },
+   {
+    "layouts": 3,
+    "bound": 3,
+    "over": false,
+    "rereadNoFlag": false,
+    "layoutMs": 0.192,
+    "named": [
+     "read:0.109",
+     "write:0.045",
+     "frame:0.038"
+    ],
+    "stacks": [
+     "read: be@GlassDock-CUpH22q3.js:1:10966 < xe@GlassDock-CUpH22q3.js:1:11122 < $@GlassDock-CUpH22q3.js:1:18480 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 [after a rAF callback]",
+     "write: (no stack) [after a rAF callback]",
+     "frame: (no stack) [after a rAF callback]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 3,
+      "forced": 0,
+      "own": 3,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 0,
+    "afterOver": false
+   }
+  ],
+  "landings": [
+   {
+    "frames": [
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   },
+   {
+    "frames": [
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   }
+  ],
+  "landingForced": 0,
+  "longestLayoutMs": 0.988,
+  "medianLayoutAfterTriggerMs": 0.04,
+  "traceEventKinds": {
+   "Layout": 79,
+   "FireAnimationFrame": 106,
+   "UpdateLayoutTree": 93
+  }
+ },
+ "w-pill@4x#1": {
+  "nodesFolded": 27,
+  "nodesOpen": 27,
+  "framesWithRaf": 99,
+  "layoutsPerFrameMax": 2,
+  "layoutsPerFrameMedian": 1,
+  "dirtyPerLayoutMax": 32,
+  "layoutMsMax": 1.16,
+  "layoutCount": 75,
+  "layoutMsSum": 13.46,
+  "rafMsMedian": 0.49,
+  "rafMsMax": 1.752,
+  "elementsStyledUnfold": 5,
+  "elementsStyledFold": [
+   "dock-layer dock-layer--summary is-active:27",
+   "dock-layer dock-layer--full dock-run:58",
+   "glass-dock horizontal shape-pill collaps:68",
+   "dock-plate:40",
+   "dock-layers:71"
+  ],
+  "rest": {
+   "rafCalls": 0,
+   "mutations": 0,
+   "runningAnimations": 0,
+   "animTargets": []
+  },
+  "seatChangeElementsStyled": null,
+  "layoutsBy": {
+   "(frame, not forced)": 72,
+   "be@GlassDock-CUpH22q3.js:1": 2,
+   "ue@GlassDock-CUpH22q3.js:1": 1
+  },
+  "framesOver1Layout": 1,
+  "triggerFrames": [
+   {
+    "layouts": 3,
+    "bound": 3,
+    "over": false,
+    "rereadNoFlag": true,
+    "layoutMs": 1.089,
+    "named": [
+     "read:0.952",
+     "reread:0.063",
+     "write:0.074"
+    ],
+    "stacks": [
+     "read: ue@GlassDock-CUpH22q3.js:1:16614 < $@GlassDock-CUpH22q3.js:1:18240 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 < B@runtime-core.esm-bundler-BKdLzFmX.js:1:22660 [no phase mark before it]",
+     "reread: be@GlassDock-CUpH22q3.js:1:10966 < xe@GlassDock-CUpH22q3.js:1:11122 < $@GlassDock-CUpH22q3.js:1:18480 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 [no phase mark before it]",
+     "write: (no stack) [no phase mark before it]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 0,
+    "afterOver": false
+   },
+   {
+    "layouts": 4,
+    "bound": 3,
+    "over": true,
+    "rereadNoFlag": false,
+    "layoutMs": 1.239,
+    "named": [
+     "read:0.1",
+     "write:1.06",
+     "frame:0.04",
+     "frame:0.039"
+    ],
+    "stacks": [
+     "read: be@GlassDock-CUpH22q3.js:1:10966 < xe@GlassDock-CUpH22q3.js:1:11122 < $@GlassDock-CUpH22q3.js:1:18480 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 [after a rAF callback]",
+     "write: (no stack) [after a rAF callback]",
+     "frame: (no stack) [after a rAF callback]",
+     "frame: (no stack) [after a rAF callback]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 1,
+      "forced": 0,
+      "own": 1,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 0,
+    "afterOver": false
+   }
+  ],
+  "landings": [
+   {
+    "frames": [
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   },
+   {
+    "frames": [
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   }
+  ],
+  "landingForced": 0,
+  "longestLayoutMs": 1.06,
+  "medianLayoutAfterTriggerMs": 0.039,
+  "traceEventKinds": {
+   "Layout": 75,
+   "FireAnimationFrame": 100,
+   "UpdateLayoutTree": 89
+  }
+ },
+ "w-pill@4x#2": {
+  "nodesFolded": 27,
+  "nodesOpen": 27,
+  "framesWithRaf": 107,
+  "layoutsPerFrameMax": 2,
+  "layoutsPerFrameMedian": 1,
+  "dirtyPerLayoutMax": 32,
+  "layoutMsMax": 0.897,
+  "layoutCount": 80,
+  "layoutMsSum": 15.862,
+  "rafMsMedian": 0.155,
+  "rafMsMax": 1.913,
+  "elementsStyledUnfold": 5,
+  "elementsStyledFold": [
+   "dock-layer dock-layer--summary is-active:29",
+   "dock-layer dock-layer--full dock-run:62",
+   "glass-dock horizontal shape-pill collaps:74",
+   "dock-plate:43",
+   "dock-layers:78"
+  ],
+  "rest": {
+   "rafCalls": 0,
+   "mutations": 0,
+   "runningAnimations": 0,
+   "animTargets": []
+  },
+  "seatChangeElementsStyled": null,
+  "layoutsBy": {
+   "(frame, not forced)": 77,
+   "be@GlassDock-CUpH22q3.js:1": 2,
+   "ue@GlassDock-CUpH22q3.js:1": 1
+  },
+  "framesOver1Layout": 1,
+  "triggerFrames": [
+   {
+    "layouts": 3,
+    "bound": 3,
+    "over": false,
+    "rereadNoFlag": true,
+    "layoutMs": 2.242,
+    "named": [
+     "read:1.094",
+     "reread:0.588",
+     "write:0.56"
+    ],
+    "stacks": [
+     "read: ue@GlassDock-CUpH22q3.js:1:16614 < $@GlassDock-CUpH22q3.js:1:18240 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 < B@runtime-core.esm-bundler-BKdLzFmX.js:1:22660 [no phase mark before it]",
+     "reread: be@GlassDock-CUpH22q3.js:1:10966 < xe@GlassDock-CUpH22q3.js:1:11122 < $@GlassDock-CUpH22q3.js:1:18480 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 [no phase mark before it]",
+     "write: (no stack) [no phase mark before it]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 0,
+    "afterOver": false
+   },
+   {
+    "layouts": 3,
+    "bound": 3,
+    "over": false,
+    "rereadNoFlag": false,
+    "layoutMs": 0.205,
+    "named": [
+     "read:0.116",
+     "write:0.048",
+     "frame:0.041"
+    ],
+    "stacks": [
+     "read: be@GlassDock-CUpH22q3.js:1:10966 < xe@GlassDock-CUpH22q3.js:1:11122 < $@GlassDock-CUpH22q3.js:1:18480 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 [after a rAF callback]",
+     "write: (no stack) [after a rAF callback]",
+     "frame: (no stack) [after a rAF callback]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 3,
+      "forced": 0,
+      "own": 3,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 0,
+    "afterOver": false
+   }
+  ],
+  "landings": [
+   {
+    "frames": [
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   },
+   {
+    "frames": [
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   }
+  ],
+  "landingForced": 0,
+  "longestLayoutMs": 1.094,
+  "medianLayoutAfterTriggerMs": 0.039,
+  "traceEventKinds": {
+   "Layout": 80,
+   "FireAnimationFrame": 108,
+   "UpdateLayoutTree": 94
+  }
+ },
+ "w-flow@1x": {
+  "nodesFolded": 55,
+  "nodesOpen": 55,
+  "framesWithRaf": 110,
+  "layoutsPerFrameMax": 2,
+  "layoutsPerFrameMedian": 1,
+  "dirtyPerLayoutMax": 64,
+  "layoutMsMax": 0.151,
+  "layoutCount": 81,
+  "layoutMsSum": 5.264,
+  "rafMsMedian": 0.124,
+  "rafMsMax": 0.803,
+  "elementsStyledUnfold": 6,
+  "elementsStyledFold": [
+   "dock-layer dock-layer--summary is-active:30",
+   "dock-layer dock-layer--full dock-run:60",
+   "glass-dock horizontal shape-pill collaps:112",
+   "dock-plate:40",
+   "dock-layers:75",
+   "dock-layer-tab-indicator:3"
+  ],
+  "rest": {
+   "rafCalls": 0,
+   "mutations": 0,
+   "runningAnimations": 0,
+   "animTargets": []
+  },
+  "seatChangeElementsStyled": null,
+  "layoutsBy": {
+   "(frame, not forced)": 77,
+   "be@GlassDock-CUpH22q3.js:1": 2,
+   "ue@GlassDock-CUpH22q3.js:1": 1,
+   "E@DockLayer-ZtVUR0Ty.js:1": 1
+  },
+  "framesOver1Layout": 1,
+  "triggerFrames": [
+   {
+    "layouts": 6,
+    "bound": 3,
+    "over": true,
+    "rereadNoFlag": true,
+    "layoutMs": 0.947,
+    "named": [
+     "read:0.698",
+     "reread:0.041",
+     "write:0.055",
+     "frame:0.037",
+     "frame:0.064",
+     "frame:0.052"
+    ],
+    "stacks": [
+     "read: ue@GlassDock-CUpH22q3.js:1:16614 < $@GlassDock-CUpH22q3.js:1:18240 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 < B@runtime-core.esm-bundler-BKdLzFmX.js:1:22660 [no phase mark before it]",
+     "reread: be@GlassDock-CUpH22q3.js:1:10966 < xe@GlassDock-CUpH22q3.js:1:11122 < $@GlassDock-CUpH22q3.js:1:18480 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 [no phase mark before it]",
+     "write: (no stack) [no phase mark before it]",
+     "frame: (no stack) [after a delivery's writes (the dock's)]",
+     "frame: E@DockLayer-ZtVUR0Ty.js:1:1272 < (anon)@DockLayer-ZtVUR0Ty.js:1:1427 < h@useResizeObserver-C71BNQ0c.js:1:233 < (anon)@:4:127 [inside a rAF callback]",
+     "frame: (no stack) [after a rAF callback]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 3,
+      "forced": 0,
+      "own": 3,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 0,
+    "afterOver": false
+   },
+   {
+    "layouts": 3,
+    "bound": 3,
+    "over": false,
+    "rereadNoFlag": false,
+    "layoutMs": 0.22,
+    "named": [
+     "read:0.108",
+     "write:0.043",
+     "frame:0.069"
+    ],
+    "stacks": [
+     "read: be@GlassDock-CUpH22q3.js:1:10966 < xe@GlassDock-CUpH22q3.js:1:11122 < $@GlassDock-CUpH22q3.js:1:18480 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 [after a rAF callback]",
+     "write: (no stack) [after a rAF callback]",
+     "frame: (no stack) [after a rAF callback]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 0,
+    "afterOver": false
+   }
+  ],
+  "landings": [
+   {
+    "frames": [
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   },
+   {
+    "frames": [
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   }
+  ],
+  "landingForced": 0,
+  "longestLayoutMs": 0.698,
+  "medianLayoutAfterTriggerMs": 0.058,
+  "traceEventKinds": {
+   "Layout": 81,
+   "FireAnimationFrame": 111,
+   "UpdateLayoutTree": 84
+  }
+ },
+ "w-flow@4x": {
+  "nodesFolded": 55,
+  "nodesOpen": 55,
+  "framesWithRaf": 103,
+  "layoutsPerFrameMax": 2,
+  "layoutsPerFrameMedian": 1,
+  "dirtyPerLayoutMax": 64,
+  "layoutMsMax": 0.998,
+  "layoutCount": 75,
+  "layoutMsSum": 20.819,
+  "rafMsMedian": 0.126,
+  "rafMsMax": 2.424,
+  "elementsStyledUnfold": 6,
+  "elementsStyledFold": [
+   "dock-layer dock-layer--summary is-active:28",
+   "dock-layer dock-layer--full dock-run:59",
+   "glass-dock horizontal shape-pill collaps:109",
+   "dock-plate:39",
+   "dock-layers:73",
+   "dock-layer-tab-indicator:3"
+  ],
+  "rest": {
+   "rafCalls": 0,
+   "mutations": 0,
+   "runningAnimations": 0,
+   "animTargets": []
+  },
+  "seatChangeElementsStyled": null,
+  "layoutsBy": {
+   "(frame, not forced)": 71,
+   "be@GlassDock-CUpH22q3.js:1": 2,
+   "ue@GlassDock-CUpH22q3.js:1": 1,
+   "E@DockLayer-ZtVUR0Ty.js:1": 1
+  },
+  "framesOver1Layout": 1,
+  "triggerFrames": [
+   {
+    "layouts": 3,
+    "bound": 3,
+    "over": false,
+    "rereadNoFlag": true,
+    "layoutMs": 3.266,
+    "named": [
+     "read:2.756",
+     "reread:0.043",
+     "write:0.467"
+    ],
+    "stacks": [
+     "read: ue@GlassDock-CUpH22q3.js:1:16614 < $@GlassDock-CUpH22q3.js:1:18240 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 < B@runtime-core.esm-bundler-BKdLzFmX.js:1:22660 [no phase mark before it]",
+     "reread: be@GlassDock-CUpH22q3.js:1:10966 < xe@GlassDock-CUpH22q3.js:1:11122 < $@GlassDock-CUpH22q3.js:1:18480 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 [no phase mark before it]",
+     "write: (no stack) [no phase mark before it]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 3,
+      "forced": 1,
+      "own": 2,
+      "forcedStacks": [
+       "E@DockLayer-ZtVUR0Ty.js:1:1272 < (anon)@DockLayer-ZtVUR0Ty.js:1:1427 < h@useResizeObserver-C71BNQ0c.js:1:233 < (anon)@:4:127"
+      ],
+      "phases": [
+       "own: after a delivery's writes (the dock's)",
+       "forced: inside a rAF callback",
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 1,
+    "afterOver": true
+   },
+   {
+    "layouts": 4,
+    "bound": 3,
+    "over": true,
+    "rereadNoFlag": false,
+    "layoutMs": 0.293,
+    "named": [
+     "read:0.103",
+     "write:0.08",
+     "frame:0.067",
+     "frame:0.043"
+    ],
+    "stacks": [
+     "read: be@GlassDock-CUpH22q3.js:1:10966 < xe@GlassDock-CUpH22q3.js:1:11122 < $@GlassDock-CUpH22q3.js:1:18480 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 [after a rAF callback]",
+     "write: (no stack) [after a rAF callback]",
+     "frame: (no stack) [after a rAF callback]",
+     "frame: (no stack) [after a rAF callback]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 0,
+    "afterOver": false
+   }
+  ],
+  "landings": [
+   {
+    "frames": [
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   },
+   {
+    "frames": [
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   }
+  ],
+  "landingForced": 0,
+  "longestLayoutMs": 2.756,
+  "medianLayoutAfterTriggerMs": 0.061,
+  "traceEventKinds": {
+   "Layout": 75,
+   "FireAnimationFrame": 104,
+   "UpdateLayoutTree": 78
+  }
+ },
+ "w-flow@4x#1": {
+  "nodesFolded": 55,
+  "nodesOpen": 55,
+  "framesWithRaf": 106,
+  "layoutsPerFrameMax": 2,
+  "layoutsPerFrameMedian": 1,
+  "dirtyPerLayoutMax": 64,
+  "layoutMsMax": 1.07,
+  "layoutCount": 77,
+  "layoutMsSum": 20.537,
+  "rafMsMedian": 0.219,
+  "rafMsMax": 3.434,
+  "elementsStyledUnfold": 6,
+  "elementsStyledFold": [
+   "dock-layer dock-layer--summary is-active:30",
+   "dock-layer dock-layer--full dock-run:60",
+   "glass-dock horizontal shape-pill collaps:112",
+   "dock-plate:40",
+   "dock-layers:75",
+   "dock-layer-tab-indicator:3"
+  ],
+  "rest": {
+   "rafCalls": 0,
+   "mutations": 0,
+   "runningAnimations": 0,
+   "animTargets": []
+  },
+  "seatChangeElementsStyled": null,
+  "layoutsBy": {
+   "(frame, not forced)": 73,
+   "be@GlassDock-CUpH22q3.js:1": 2,
+   "ue@GlassDock-CUpH22q3.js:1": 1,
+   "E@DockLayer-ZtVUR0Ty.js:1": 1
+  },
+  "framesOver1Layout": 1,
+  "triggerFrames": [
+   {
+    "layouts": 3,
+    "bound": 3,
+    "over": false,
+    "rereadNoFlag": true,
+    "layoutMs": 3.521,
+    "named": [
+     "read:3.381",
+     "reread:0.061",
+     "write:0.079"
+    ],
+    "stacks": [
+     "read: ue@GlassDock-CUpH22q3.js:1:16614 < $@GlassDock-CUpH22q3.js:1:18240 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 < B@runtime-core.esm-bundler-BKdLzFmX.js:1:22660 [no phase mark before it]",
+     "reread: be@GlassDock-CUpH22q3.js:1:10966 < xe@GlassDock-CUpH22q3.js:1:11122 < $@GlassDock-CUpH22q3.js:1:18480 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 [no phase mark before it]",
+     "write: (no stack) [no phase mark before it]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 3,
+      "forced": 1,
+      "own": 2,
+      "forcedStacks": [
+       "E@DockLayer-ZtVUR0Ty.js:1:1272 < (anon)@DockLayer-ZtVUR0Ty.js:1:1427 < h@useResizeObserver-C71BNQ0c.js:1:233 < (anon)@:4:127"
+      ],
+      "phases": [
+       "own: after a delivery's writes (the dock's)",
+       "forced: inside a rAF callback",
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 1,
+    "afterOver": true
+   },
+   {
+    "layouts": 4,
+    "bound": 3,
+    "over": true,
+    "rereadNoFlag": false,
+    "layoutMs": 1.489,
+    "named": [
+     "read:0.496",
+     "write:0.075",
+     "frame:0.048",
+     "frame:0.87"
+    ],
+    "stacks": [
+     "read: be@GlassDock-CUpH22q3.js:1:10966 < xe@GlassDock-CUpH22q3.js:1:11122 < $@GlassDock-CUpH22q3.js:1:18480 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 [after a rAF callback]",
+     "write: (no stack) [after a rAF callback]",
+     "frame: (no stack) [after a rAF callback]",
+     "frame: (no stack) [after a rAF callback]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "own": 1,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 0,
+    "afterOver": false
+   }
+  ],
+  "landings": [
+   {
+    "frames": [
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   },
+   {
+    "frames": [
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   }
+  ],
+  "landingForced": 0,
+  "longestLayoutMs": 3.381,
+  "medianLayoutAfterTriggerMs": 0.059,
+  "traceEventKinds": {
+   "Layout": 77,
+   "FireAnimationFrame": 107,
+   "UpdateLayoutTree": 80
+  }
+ },
+ "w-flow@4x#2": {
+  "nodesFolded": 55,
+  "nodesOpen": 55,
+  "framesWithRaf": 108,
+  "layoutsPerFrameMax": 2,
+  "layoutsPerFrameMedian": 1,
+  "dirtyPerLayoutMax": 64,
+  "layoutMsMax": 0.946,
+  "layoutCount": 79,
+  "layoutMsSum": 19.041,
+  "rafMsMedian": 0.123,
+  "rafMsMax": 3.334,
+  "elementsStyledUnfold": 6,
+  "elementsStyledFold": [
+   "dock-layer dock-layer--summary is-active:28",
+   "dock-layer dock-layer--full dock-run:60",
+   "glass-dock horizontal shape-pill collaps:109",
+   "dock-plate:39",
+   "dock-layers:73",
+   "dock-layer-tab-indicator:3"
+  ],
+  "rest": {
+   "rafCalls": 0,
+   "mutations": 0,
+   "runningAnimations": 0,
+   "animTargets": []
+  },
+  "seatChangeElementsStyled": null,
+  "layoutsBy": {
+   "(frame, not forced)": 75,
+   "be@GlassDock-CUpH22q3.js:1": 2,
+   "ue@GlassDock-CUpH22q3.js:1": 1,
+   "E@DockLayer-ZtVUR0Ty.js:1": 1
+  },
+  "framesOver1Layout": 1,
+  "triggerFrames": [
+   {
+    "layouts": 3,
+    "bound": 3,
+    "over": false,
+    "rereadNoFlag": true,
+    "layoutMs": 3.201,
+    "named": [
+     "read:3.073",
+     "reread:0.04",
+     "write:0.088"
+    ],
+    "stacks": [
+     "read: ue@GlassDock-CUpH22q3.js:1:16614 < $@GlassDock-CUpH22q3.js:1:18240 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 < B@runtime-core.esm-bundler-BKdLzFmX.js:1:22660 [no phase mark before it]",
+     "reread: be@GlassDock-CUpH22q3.js:1:10966 < xe@GlassDock-CUpH22q3.js:1:11122 < $@GlassDock-CUpH22q3.js:1:18480 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 [no phase mark before it]",
+     "write: (no stack) [no phase mark before it]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 3,
+      "forced": 1,
+      "own": 2,
+      "forcedStacks": [
+       "E@DockLayer-ZtVUR0Ty.js:1:1272 < (anon)@DockLayer-ZtVUR0Ty.js:1:1427 < h@useResizeObserver-C71BNQ0c.js:1:233 < (anon)@:4:127"
+      ],
+      "phases": [
+       "own: after a delivery's writes (the dock's)",
+       "forced: inside a rAF callback",
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 1,
+    "afterOver": true
+   },
+   {
+    "layouts": 3,
+    "bound": 3,
+    "over": false,
+    "rereadNoFlag": false,
+    "layoutMs": 0.424,
+    "named": [
+     "read:0.155",
+     "write:0.106",
+     "frame:0.163"
+    ],
+    "stacks": [
+     "read: be@GlassDock-CUpH22q3.js:1:10966 < xe@GlassDock-CUpH22q3.js:1:11122 < $@GlassDock-CUpH22q3.js:1:18480 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 [after a rAF callback]",
+     "write: (no stack) [after a rAF callback]",
+     "frame: (no stack) [after a rAF callback]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 3,
+      "forced": 0,
+      "own": 3,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 0,
+    "afterOver": false
+   }
+  ],
+  "landings": [
+   {
+    "frames": [
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   },
+   {
+    "frames": [
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   }
+  ],
+  "landingForced": 0,
+  "longestLayoutMs": 3.073,
+  "medianLayoutAfterTriggerMs": 0.063,
+  "traceEventKinds": {
+   "Layout": 79,
+   "FireAnimationFrame": 109,
+   "UpdateLayoutTree": 82
+  }
+ },
+ "w-ctl&corner=bottom-end@1x": {
+  "nodesFolded": 34,
+  "nodesOpen": 34,
+  "framesWithRaf": 106,
+  "layoutsPerFrameMax": 2,
+  "layoutsPerFrameMedian": 1,
+  "dirtyPerLayoutMax": 27,
+  "layoutMsMax": 0.134,
+  "layoutCount": 103,
+  "layoutMsSum": 3.595,
+  "rafMsMedian": 0.133,
+  "rafMsMax": 0.724,
+  "elementsStyledUnfold": 5,
+  "elementsStyledFold": [
+   "dock-layer dock-layer--summary is-active:31",
+   "dock-layer dock-layer--full dock-run:24",
+   "controls-dock glass-dock horizontal shap:70",
+   "dock-plate:70",
+   "dock-layers:54"
+  ],
+  "rest": {
+   "rafCalls": 0,
+   "mutations": 0,
+   "runningAnimations": 0,
+   "animTargets": []
+  },
+  "seatChangeElementsStyled": null,
+  "layoutsBy": {
+   "(frame, not forced)": 100,
+   "be@GlassDock-CUpH22q3.js:1": 2,
+   "ue@GlassDock-CUpH22q3.js:1": 1
+  },
+  "framesOver1Layout": 1,
+  "triggerFrames": [
+   {
+    "layouts": 5,
+    "bound": 3,
+    "over": true,
+    "rereadNoFlag": true,
+    "layoutMs": 0.329,
+    "named": [
+     "read:0.16",
+     "reread:0.045",
+     "write:0.064",
+     "frame:0.021",
+     "frame:0.039"
+    ],
+    "stacks": [
+     "read: ue@GlassDock-CUpH22q3.js:1:16614 < $@GlassDock-CUpH22q3.js:1:18240 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 < B@runtime-core.esm-bundler-BKdLzFmX.js:1:22660 [no phase mark before it]",
+     "reread: be@GlassDock-CUpH22q3.js:1:10966 < xe@GlassDock-CUpH22q3.js:1:11122 < $@GlassDock-CUpH22q3.js:1:18480 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 [no phase mark before it]",
+     "write: (no stack) [no phase mark before it]",
+     "frame: (no stack) [after a rAF callback]",
+     "frame: (no stack) [after a rAF callback]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 0,
+    "afterOver": false
+   },
+   {
+    "layouts": 3,
+    "bound": 3,
+    "over": false,
+    "rereadNoFlag": false,
+    "layoutMs": 0.171,
+    "named": [
+     "read:0.09",
+     "write:0.044",
+     "frame:0.037"
+    ],
+    "stacks": [
+     "read: be@GlassDock-CUpH22q3.js:1:10966 < xe@GlassDock-CUpH22q3.js:1:11122 < $@GlassDock-CUpH22q3.js:1:18480 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 [after a rAF callback]",
+     "write: (no stack) [after a rAF callback]",
+     "frame: (no stack) [after a rAF callback]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 0,
+    "afterOver": false
+   }
+  ],
+  "landings": [
+   {
+    "frames": [
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   },
+   {
+    "frames": [
+     {
+      "layouts": 2,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   }
+  ],
+  "landingForced": 0,
+  "longestLayoutMs": 0.16,
+  "medianLayoutAfterTriggerMs": 0.032,
+  "traceEventKinds": {
+   "Layout": 103,
+   "FireAnimationFrame": 107,
+   "UpdateLayoutTree": 106
+  }
+ },
+ "w-ctl&corner=bottom-end@4x": {
+  "nodesFolded": 34,
+  "nodesOpen": 34,
+  "framesWithRaf": 108,
+  "layoutsPerFrameMax": 2,
+  "layoutsPerFrameMedian": 1,
+  "dirtyPerLayoutMax": 27,
+  "layoutMsMax": 1.026,
+  "layoutCount": 105,
+  "layoutMsSum": 19.319,
+  "rafMsMedian": 0.584,
+  "rafMsMax": 5.516,
+  "elementsStyledUnfold": 5,
+  "elementsStyledFold": [
+   "dock-layer dock-layer--summary is-active:30",
+   "dock-layer dock-layer--full dock-run:23",
+   "controls-dock glass-dock horizontal shap:70",
+   "dock-plate:69",
+   "dock-layers:53"
+  ],
+  "rest": {
+   "rafCalls": 0,
+   "mutations": 0,
+   "runningAnimations": 0,
+   "animTargets": []
+  },
+  "seatChangeElementsStyled": null,
+  "layoutsBy": {
+   "(frame, not forced)": 102,
+   "be@GlassDock-CUpH22q3.js:1": 2,
+   "ue@GlassDock-CUpH22q3.js:1": 1
+  },
+  "framesOver1Layout": 1,
+  "triggerFrames": [
+   {
+    "layouts": 2,
+    "bound": 3,
+    "over": false,
+    "rereadNoFlag": true,
+    "layoutMs": 0.968,
+    "named": [
+     "read:0.679",
+     "reread:0.289"
+    ],
+    "stacks": [
+     "read: ue@GlassDock-CUpH22q3.js:1:16614 < $@GlassDock-CUpH22q3.js:1:18240 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 < B@runtime-core.esm-bundler-BKdLzFmX.js:1:22660 [no phase mark before it]",
+     "reread: be@GlassDock-CUpH22q3.js:1:10966 < xe@GlassDock-CUpH22q3.js:1:11122 < $@GlassDock-CUpH22q3.js:1:18480 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 [no phase mark before it]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 1,
+      "forced": 0,
+      "own": 1,
+      "forcedStacks": [],
+      "phases": [
+       "own: no phase mark before it"
+      ]
+     },
+     {
+      "layouts": 3,
+      "forced": 0,
+      "own": 3,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 0,
+    "afterOver": false
+   },
+   {
+    "layouts": 3,
+    "bound": 3,
+    "over": false,
+    "rereadNoFlag": false,
+    "layoutMs": 0.561,
+    "named": [
+     "read:0.451",
+     "write:0.079",
+     "frame:0.031"
+    ],
+    "stacks": [
+     "read: be@GlassDock-CUpH22q3.js:1:10966 < xe@GlassDock-CUpH22q3.js:1:11122 < $@GlassDock-CUpH22q3.js:1:18480 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 [after a rAF callback]",
+     "write: (no stack) [after a rAF callback]",
+     "frame: (no stack) [after a rAF callback]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 0,
+    "afterOver": false
+   }
+  ],
+  "landings": [
+   {
+    "frames": [
+     {
+      "layouts": 2,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   },
+   {
+    "frames": [
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   }
+  ],
+  "landingForced": 0,
+  "longestLayoutMs": 1.026,
+  "medianLayoutAfterTriggerMs": 0.038,
+  "traceEventKinds": {
+   "Layout": 105,
+   "FireAnimationFrame": 109,
+   "UpdateLayoutTree": 109
+  }
+ },
+ "w-ctl&corner=bottom-end@4x#1": {
+  "nodesFolded": 34,
+  "nodesOpen": 34,
+  "framesWithRaf": 107,
+  "layoutsPerFrameMax": 2,
+  "layoutsPerFrameMedian": 1,
+  "dirtyPerLayoutMax": 27,
+  "layoutMsMax": 1.112,
+  "layoutCount": 103,
+  "layoutMsSum": 20.064,
+  "rafMsMedian": 0.546,
+  "rafMsMax": 4.686,
+  "elementsStyledUnfold": 5,
+  "elementsStyledFold": [
+   "dock-layer dock-layer--summary is-active:28",
+   "dock-layer dock-layer--full dock-run:24",
+   "controls-dock glass-dock horizontal shap:68",
+   "dock-plate:66",
+   "dock-layers:51"
+  ],
+  "rest": {
+   "rafCalls": 0,
+   "mutations": 0,
+   "runningAnimations": 0,
+   "animTargets": []
+  },
+  "seatChangeElementsStyled": null,
+  "layoutsBy": {
+   "(frame, not forced)": 100,
+   "be@GlassDock-CUpH22q3.js:1": 2,
+   "ue@GlassDock-CUpH22q3.js:1": 1
+  },
+  "framesOver1Layout": 1,
+  "triggerFrames": [
+   {
+    "layouts": 2,
+    "bound": 3,
+    "over": false,
+    "rereadNoFlag": true,
+    "layoutMs": 1.893,
+    "named": [
+     "read:0.909",
+     "reread:0.984"
+    ],
+    "stacks": [
+     "read: ue@GlassDock-CUpH22q3.js:1:16614 < $@GlassDock-CUpH22q3.js:1:18240 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 < B@runtime-core.esm-bundler-BKdLzFmX.js:1:22660 [no phase mark before it]",
+     "reread: be@GlassDock-CUpH22q3.js:1:10966 < xe@GlassDock-CUpH22q3.js:1:11122 < $@GlassDock-CUpH22q3.js:1:18480 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 [no phase mark before it]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: no phase mark before it",
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 3,
+      "forced": 0,
+      "own": 3,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 0,
+    "afterOver": false
+   },
+   {
+    "layouts": 3,
+    "bound": 3,
+    "over": false,
+    "rereadNoFlag": false,
+    "layoutMs": 0.209,
+    "named": [
+     "read:0.106",
+     "write:0.065",
+     "frame:0.038"
+    ],
+    "stacks": [
+     "read: be@GlassDock-CUpH22q3.js:1:10966 < xe@GlassDock-CUpH22q3.js:1:11122 < $@GlassDock-CUpH22q3.js:1:18480 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 [after a rAF callback]",
+     "write: (no stack) [after a rAF callback]",
+     "frame: (no stack) [after a rAF callback]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "own": 0,
+      "forcedStacks": [],
+      "phases": []
+     }
+    ],
+    "afterForced": 0,
+    "afterOver": false
+   }
+  ],
+  "landings": [
+   {
+    "frames": [
+     {
+      "layouts": 2,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   },
+   {
+    "frames": [
+     {
+      "layouts": 2,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   }
+  ],
+  "landingForced": 0,
+  "longestLayoutMs": 1.112,
+  "medianLayoutAfterTriggerMs": 0.038,
+  "traceEventKinds": {
+   "Layout": 103,
+   "FireAnimationFrame": 108,
+   "UpdateLayoutTree": 107
+  }
+ },
+ "w-ctl&corner=bottom-end@4x#2": {
+  "nodesFolded": 34,
+  "nodesOpen": 34,
+  "framesWithRaf": 100,
+  "layoutsPerFrameMax": 2,
+  "layoutsPerFrameMedian": 1,
+  "dirtyPerLayoutMax": 27,
+  "layoutMsMax": 1.397,
+  "layoutCount": 97,
+  "layoutMsSum": 21.816,
+  "rafMsMedian": 0.545,
+  "rafMsMax": 5.962,
+  "elementsStyledUnfold": 5,
+  "elementsStyledFold": [
+   "dock-layer dock-layer--summary is-active:26",
+   "dock-layer dock-layer--full dock-run:25",
+   "controls-dock glass-dock horizontal shap:66",
+   "dock-plate:63",
+   "dock-layers:49"
+  ],
+  "rest": {
+   "rafCalls": 0,
+   "mutations": 0,
+   "runningAnimations": 0,
+   "animTargets": []
+  },
+  "seatChangeElementsStyled": null,
+  "layoutsBy": {
+   "(frame, not forced)": 94,
+   "be@GlassDock-CUpH22q3.js:1": 2,
+   "ue@GlassDock-CUpH22q3.js:1": 1
+  },
+  "framesOver1Layout": 1,
+  "triggerFrames": [
+   {
+    "layouts": 3,
+    "bound": 3,
+    "over": false,
+    "rereadNoFlag": true,
+    "layoutMs": 2.473,
+    "named": [
+     "read:0.806",
+     "reread:0.783",
+     "write:0.884"
+    ],
+    "stacks": [
+     "read: ue@GlassDock-CUpH22q3.js:1:16614 < $@GlassDock-CUpH22q3.js:1:18240 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 < B@runtime-core.esm-bundler-BKdLzFmX.js:1:22660 [no phase mark before it]",
+     "reread: be@GlassDock-CUpH22q3.js:1:10966 < xe@GlassDock-CUpH22q3.js:1:11122 < $@GlassDock-CUpH22q3.js:1:18480 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 [no phase mark before it]",
+     "write: (no stack) [no phase mark before it]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 1,
+      "forced": 0,
+      "own": 1,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 0,
+    "afterOver": false
+   },
+   {
+    "layouts": 2,
+    "bound": 3,
+    "over": false,
+    "rereadNoFlag": false,
+    "layoutMs": 1.397,
+    "named": [
+     "read:1.316",
+     "write:0.081"
+    ],
+    "stacks": [
+     "read: be@GlassDock-CUpH22q3.js:1:10966 < xe@GlassDock-CUpH22q3.js:1:11122 < $@GlassDock-CUpH22q3.js:1:18480 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 [after a rAF callback]",
+     "write: (no stack) [after a rAF callback]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 3,
+      "forced": 0,
+      "own": 3,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 0,
+    "afterOver": false
+   }
+  ],
+  "landings": [
+   {
+    "frames": [
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   },
+   {
+    "frames": [
+     {
+      "layouts": 2,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   }
+  ],
+  "landingForced": 0,
+  "longestLayoutMs": 1.316,
+  "medianLayoutAfterTriggerMs": 0.038,
+  "traceEventKinds": {
+   "Layout": 97,
+   "FireAnimationFrame": 101,
+   "UpdateLayoutTree": 101
+  }
+ },
+ "w-seat@1x": {
+  "nodesFolded": 37,
+  "nodesOpen": 37,
+  "framesWithRaf": 169,
+  "layoutsPerFrameMax": 3,
+  "layoutsPerFrameMedian": 1,
+  "dirtyPerLayoutMax": 40,
+  "layoutMsMax": 0.245,
+  "layoutCount": 158,
+  "layoutMsSum": 6.775,
+  "rafMsMedian": 0.145,
+  "rafMsMax": 1.598,
+  "elementsStyledUnfold": 6,
+  "elementsStyledFold": [
+   "dock-layer dock-layer--summary is-active:26",
+   "dock-layer dock-layer--full dock-run:57",
+   "glass-dock horizontal shape-pill collaps:64",
+   "dock-plate:38",
+   "dock-persistent dock-persistent-start:72",
+   "dock-layers:72"
+  ],
+  "rest": {
+   "rafCalls": 0,
+   "mutations": 0,
+   "runningAnimations": 0,
+   "animTargets": []
+  },
+  "seatChangeElementsStyled": 1,
+  "layoutsBy": {
+   "(frame, not forced)": 152,
+   "be@GlassDock-CUpH22q3.js:1": 2,
+   "ue@GlassDock-CUpH22q3.js:1": 1,
+   "(anon)@GlassDock-CUpH22q3.js:1": 1,
+   "H@GlassDock-CUpH22q3.js:1": 1,
+   "ce@GlassDock-CUpH22q3.js:1": 1
+  },
+  "framesOver1Layout": 1,
+  "triggerFrames": [
+   {
+    "layouts": 6,
+    "bound": 3,
+    "over": true,
+    "rereadNoFlag": true,
+    "layoutMs": 0.347,
+    "named": [
+     "read:0.165",
+     "reread:0.042",
+     "write:0.068",
+     "frame:0.022",
+     "frame:0.014",
+     "frame:0.036"
+    ],
+    "stacks": [
+     "read: ue@GlassDock-CUpH22q3.js:1:16614 < $@GlassDock-CUpH22q3.js:1:18240 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 < B@runtime-core.esm-bundler-BKdLzFmX.js:1:22660 [no phase mark before it]",
+     "reread: be@GlassDock-CUpH22q3.js:1:10966 < xe@GlassDock-CUpH22q3.js:1:11122 < $@GlassDock-CUpH22q3.js:1:18480 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 [no phase mark before it]",
+     "write: (no stack) [no phase mark before it]",
+     "frame: (no stack) [after a rAF callback]",
+     "frame: (no stack) [after a rAF callback]",
+     "frame: (no stack) [after a rAF callback]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "own": 1,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 0,
+    "afterOver": false
+   },
+   {
+    "layouts": 4,
+    "bound": 3,
+    "over": true,
+    "rereadNoFlag": false,
+    "layoutMs": 0.229,
+    "named": [
+     "read:0.102",
+     "write:0.045",
+     "frame:0.041",
+     "frame:0.041"
+    ],
+    "stacks": [
+     "read: be@GlassDock-CUpH22q3.js:1:10966 < xe@GlassDock-CUpH22q3.js:1:11122 < $@GlassDock-CUpH22q3.js:1:18480 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 [after a rAF callback]",
+     "write: (no stack) [after a rAF callback]",
+     "frame: (no stack) [after a rAF callback]",
+     "frame: (no stack) [after a rAF callback]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 0,
+    "afterOver": false
+   }
+  ],
+  "landings": [
+   {
+    "frames": [
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   },
+   {
+    "frames": [
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   }
+  ],
+  "landingForced": 0,
+  "longestLayoutMs": 0.165,
+  "medianLayoutAfterTriggerMs": 0.04,
+  "traceEventKinds": {
+   "Layout": 158,
+   "FireAnimationFrame": 170,
+   "UpdateLayoutTree": 174
+  }
+ },
+ "w-seat@4x": {
+  "nodesFolded": 37,
+  "nodesOpen": 37,
+  "framesWithRaf": 166,
+  "layoutsPerFrameMax": 3,
+  "layoutsPerFrameMedian": 1,
+  "dirtyPerLayoutMax": 40,
+  "layoutMsMax": 1.51,
+  "layoutCount": 164,
+  "layoutMsSum": 36.984,
+  "rafMsMedian": 0.471,
+  "rafMsMax": 9.793,
+  "elementsStyledUnfold": 6,
+  "elementsStyledFold": [
+   "dock-layer dock-layer--summary is-active:27",
+   "dock-layer dock-layer--full dock-run:58",
+   "glass-dock horizontal shape-pill collaps:66",
+   "dock-plate:48",
+   "dock-persistent dock-persistent-start:83",
+   "dock-layers:82"
+  ],
+  "rest": {
+   "rafCalls": 0,
+   "mutations": 0,
+   "runningAnimations": 0,
+   "animTargets": []
+  },
+  "seatChangeElementsStyled": 1,
+  "layoutsBy": {
+   "(frame, not forced)": 158,
+   "be@GlassDock-CUpH22q3.js:1": 2,
+   "ue@GlassDock-CUpH22q3.js:1": 1,
+   "(anon)@GlassDock-CUpH22q3.js:1": 1,
+   "H@GlassDock-CUpH22q3.js:1": 1,
+   "ce@GlassDock-CUpH22q3.js:1": 1
+  },
+  "framesOver1Layout": 1,
+  "triggerFrames": [
+   {
+    "layouts": 3,
+    "bound": 3,
+    "over": false,
+    "rereadNoFlag": true,
+    "layoutMs": 0.877,
+    "named": [
+     "read:0.722",
+     "reread:0.071",
+     "write:0.084"
+    ],
+    "stacks": [
+     "read: ue@GlassDock-CUpH22q3.js:1:16614 < $@GlassDock-CUpH22q3.js:1:18240 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 < B@runtime-core.esm-bundler-BKdLzFmX.js:1:22660 [no phase mark before it]",
+     "reread: be@GlassDock-CUpH22q3.js:1:10966 < xe@GlassDock-CUpH22q3.js:1:11122 < $@GlassDock-CUpH22q3.js:1:18480 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 [no phase mark before it]",
+     "write: (no stack) [no phase mark before it]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 3,
+      "forced": 0,
+      "own": 3,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 0,
+    "afterOver": false
+   },
+   {
+    "layouts": 4,
+    "bound": 3,
+    "over": true,
+    "rereadNoFlag": false,
+    "layoutMs": 1.731,
+    "named": [
+     "read:0.545",
+     "write:0.376",
+     "frame:0.782",
+     "frame:0.028"
+    ],
+    "stacks": [
+     "read: be@GlassDock-CUpH22q3.js:1:10966 < xe@GlassDock-CUpH22q3.js:1:11122 < $@GlassDock-CUpH22q3.js:1:18480 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 [after a rAF callback]",
+     "write: (no stack) [after a rAF callback]",
+     "frame: (no stack) [after a rAF callback]",
+     "frame: (no stack) [after a rAF callback]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 1,
+      "forced": 0,
+      "own": 1,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "own": 1,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 0,
+    "afterOver": false
+   }
+  ],
+  "landings": [
+   {
+    "frames": [
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   },
+   {
+    "frames": [
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   }
+  ],
+  "landingForced": 0,
+  "longestLayoutMs": 1.05,
+  "medianLayoutAfterTriggerMs": 0.042,
+  "traceEventKinds": {
+   "Layout": 164,
+   "FireAnimationFrame": 167,
+   "UpdateLayoutTree": 177
+  }
+ },
+ "w-seat@4x#1": {
+  "nodesFolded": 37,
+  "nodesOpen": 37,
+  "framesWithRaf": 161,
+  "layoutsPerFrameMax": 3,
+  "layoutsPerFrameMedian": 1,
+  "dirtyPerLayoutMax": 40,
+  "layoutMsMax": 1.496,
+  "layoutCount": 140,
+  "layoutMsSum": 24.392,
+  "rafMsMedian": 0.169,
+  "rafMsMax": 7.774,
+  "elementsStyledUnfold": 6,
+  "elementsStyledFold": [
+   "dock-layer dock-layer--summary is-active:27",
+   "dock-layer dock-layer--full dock-run:57",
+   "glass-dock horizontal shape-pill collaps:66",
+   "dock-plate:38",
+   "dock-persistent dock-persistent-start:72",
+   "dock-layers:72"
+  ],
+  "rest": {
+   "rafCalls": 0,
+   "mutations": 0,
+   "runningAnimations": 0,
+   "animTargets": []
+  },
+  "seatChangeElementsStyled": 1,
+  "layoutsBy": {
+   "(frame, not forced)": 134,
+   "be@GlassDock-CUpH22q3.js:1": 2,
+   "ue@GlassDock-CUpH22q3.js:1": 1,
+   "(anon)@GlassDock-CUpH22q3.js:1": 1,
+   "H@GlassDock-CUpH22q3.js:1": 1,
+   "ce@GlassDock-CUpH22q3.js:1": 1
+  },
+  "framesOver1Layout": 1,
+  "triggerFrames": [
+   {
+    "layouts": 3,
+    "bound": 3,
+    "over": false,
+    "rereadNoFlag": true,
+    "layoutMs": 2.04,
+    "named": [
+     "read:0.876",
+     "reread:0.076",
+     "write:1.088"
+    ],
+    "stacks": [
+     "read: ue@GlassDock-CUpH22q3.js:1:16614 < $@GlassDock-CUpH22q3.js:1:18240 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 < B@runtime-core.esm-bundler-BKdLzFmX.js:1:22660 [no phase mark before it]",
+     "reread: be@GlassDock-CUpH22q3.js:1:10966 < xe@GlassDock-CUpH22q3.js:1:11122 < $@GlassDock-CUpH22q3.js:1:18480 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 [no phase mark before it]",
+     "write: (no stack) [no phase mark before it]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 1,
+      "forced": 0,
+      "own": 1,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 0,
+    "afterOver": false
+   },
+   {
+    "layouts": 4,
+    "bound": 3,
+    "over": true,
+    "rereadNoFlag": false,
+    "layoutMs": 0.374,
+    "named": [
+     "read:0.125",
+     "write:0.187",
+     "frame:0.034",
+     "frame:0.028"
+    ],
+    "stacks": [
+     "read: be@GlassDock-CUpH22q3.js:1:10966 < xe@GlassDock-CUpH22q3.js:1:11122 < $@GlassDock-CUpH22q3.js:1:18480 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 [after a rAF callback]",
+     "write: (no stack) [after a rAF callback]",
+     "frame: (no stack) [after a rAF callback]",
+     "frame: (no stack) [after a rAF callback]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 1,
+      "forced": 0,
+      "own": 1,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 0,
+    "afterOver": false
+   }
+  ],
+  "landings": [
+   {
+    "frames": [
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   },
+   {
+    "frames": [
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   }
+  ],
+  "landingForced": 0,
+  "longestLayoutMs": 1.184,
+  "medianLayoutAfterTriggerMs": 0.04,
+  "traceEventKinds": {
+   "Layout": 140,
+   "FireAnimationFrame": 162,
+   "UpdateLayoutTree": 160
+  }
+ },
+ "w-seat@4x#2": {
+  "nodesFolded": 37,
+  "nodesOpen": 37,
+  "framesWithRaf": 169,
+  "layoutsPerFrameMax": 3,
+  "layoutsPerFrameMedian": 1,
+  "dirtyPerLayoutMax": 40,
+  "layoutMsMax": 2.04,
+  "layoutCount": 157,
+  "layoutMsSum": 26.475,
+  "rafMsMedian": 0.498,
+  "rafMsMax": 9.004,
+  "elementsStyledUnfold": 6,
+  "elementsStyledFold": [
+   "dock-layer dock-layer--summary is-active:28",
+   "dock-layer dock-layer--full dock-run:62",
+   "glass-dock horizontal shape-pill collaps:72",
+   "dock-plate:41",
+   "dock-persistent dock-persistent-start:78",
+   "dock-layers:78"
+  ],
+  "rest": {
+   "rafCalls": 0,
+   "mutations": 0,
+   "runningAnimations": 0,
+   "animTargets": []
+  },
+  "seatChangeElementsStyled": 1,
+  "layoutsBy": {
+   "(frame, not forced)": 151,
+   "be@GlassDock-CUpH22q3.js:1": 2,
+   "ue@GlassDock-CUpH22q3.js:1": 1,
+   "(anon)@GlassDock-CUpH22q3.js:1": 1,
+   "H@GlassDock-CUpH22q3.js:1": 1,
+   "ce@GlassDock-CUpH22q3.js:1": 1
+  },
+  "framesOver1Layout": 1,
+  "triggerFrames": [
+   {
+    "layouts": 2,
+    "bound": 3,
+    "over": false,
+    "rereadNoFlag": true,
+    "layoutMs": 0.308,
+    "named": [
+     "read:0.239",
+     "reread:0.069"
+    ],
+    "stacks": [
+     "read: ue@GlassDock-CUpH22q3.js:1:16614 < $@GlassDock-CUpH22q3.js:1:18240 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 < B@runtime-core.esm-bundler-BKdLzFmX.js:1:22660 [no phase mark before it]",
+     "reread: be@GlassDock-CUpH22q3.js:1:10966 < xe@GlassDock-CUpH22q3.js:1:11122 < $@GlassDock-CUpH22q3.js:1:18480 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 [no phase mark before it]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: no phase mark before it",
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 0,
+    "afterOver": false
+   },
+   {
+    "layouts": 2,
+    "bound": 3,
+    "over": false,
+    "rereadNoFlag": false,
+    "layoutMs": 1.441,
+    "named": [
+     "read:0.844",
+     "write:0.597"
+    ],
+    "stacks": [
+     "read: be@GlassDock-CUpH22q3.js:1:10966 < xe@GlassDock-CUpH22q3.js:1:11122 < $@GlassDock-CUpH22q3.js:1:18480 < t.flush@GlassDock-CUpH22q3.js:1:39299 < Nn@runtime-core.esm-bundler-BKdLzFmX.js:1:22593 [after a rAF callback]",
+     "write: (no stack) [after a rAF callback]"
+    ],
+    "reasons": [
+     "posture"
+    ],
+    "roMiss": [],
+    "after": [
+     {
+      "layouts": 2,
+      "forced": 0,
+      "own": 2,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     },
+     {
+      "layouts": 3,
+      "forced": 0,
+      "own": 3,
+      "forcedStacks": [],
+      "phases": [
+       "own: after a rAF callback",
+       "own: after a rAF callback",
+       "own: after a rAF callback"
+      ]
+     }
+    ],
+    "afterForced": 0,
+    "afterOver": false
+   }
+  ],
+  "landings": [
+   {
+    "frames": [
+     {
+      "layouts": 2,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   },
+   {
+    "frames": [
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 1,
+      "forced": 0,
+      "forcedStacks": []
+     },
+     {
+      "layouts": 0,
+      "forced": 0,
+      "forcedStacks": []
+     }
+    ],
+    "forced": 0
+   }
+  ],
+  "landingForced": 0,
+  "longestLayoutMs": 1.039,
+  "medianLayoutAfterTriggerMs": 0.038,
+  "traceEventKinds": {
+   "Layout": 157,
+   "FireAnimationFrame": 170,
+   "UpdateLayoutTree": 169
+  }
+ },
+ "summary": {
+  "w-pill": {
+   "longest4x": [
+    0.988,
+    1.06,
+    1.094
+   ],
+   "medianOfLongest4x": 1.06,
+   "medianLayoutAfterTrigger4x": 0.039
+  },
+  "w-flow": {
+   "longest4x": [
+    2.756,
+    3.073,
+    3.381
+   ],
+   "medianOfLongest4x": 3.073,
+   "medianLayoutAfterTrigger4x": 0.061
+  },
+  "w-ctl": {
+   "longest4x": [
+    1.026,
+    1.112,
+    1.316
+   ],
+   "medianOfLongest4x": 1.112,
+   "medianLayoutAfterTrigger4x": 0.038
+  },
+  "w-seat": {
+   "longest4x": [
+    1.039,
+    1.05,
+    1.184
+   ],
+   "medianOfLongest4x": 1.05,
+   "medianLayoutAfterTrigger4x": 0.04
+  }
+ },
+ "g11": {
+  "triggerFrames": 32,
+  "over": [
+   "w-pill@1x: 5 > 3 [read:0.153, reread:0.035, write:0.074, frame:0.03, frame:0.037]",
+   "w-pill@4x#1: 4 > 3 [read:0.1, write:1.06, frame:0.04, frame:0.039]",
+   "w-flow@1x: 6 > 3 [read:0.698, reread:0.041, write:0.055, frame:0.037, frame:0.064, frame:0.052]",
+   "w-flow@4x: 4 > 3 [read:0.103, write:0.08, frame:0.067, frame:0.043]",
+   "w-flow@4x#1: 4 > 3 [read:0.496, write:0.075, frame:0.048, frame:0.87]",
+   "w-ctl&corner=bottom-end@1x: 5 > 3 [read:0.16, reread:0.045, write:0.064, frame:0.021, frame:0.039]",
+   "w-seat@1x: 6 > 3 [read:0.165, reread:0.042, write:0.068, frame:0.022, frame:0.014, frame:0.036]",
+   "w-seat@1x: 4 > 3 [read:0.102, write:0.045, frame:0.041, frame:0.041]",
+   "w-seat@4x: 4 > 3 [read:0.545, write:0.376, frame:0.782, frame:0.028]",
+   "w-seat@4x#1: 4 > 3 [read:0.125, write:0.187, frame:0.034, frame:0.028]"
+  ],
+  "afterOver": [
+   "w-flow@4x: 1 forced in the two frames after [E@DockLayer-ZtVUR0Ty.js:1:1272 < (anon)@DockLayer-ZtVUR0Ty.js:1:1427 < h@useResizeObserver-C71BNQ0c.js:1:233 < (anon)@:4:127 ; ]",
+   "w-flow@4x#1: 1 forced in the two frames after [E@DockLayer-ZtVUR0Ty.js:1:1272 < (anon)@DockLayer-ZtVUR0Ty.js:1:1427 < h@useResizeObserver-C71BNQ0c.js:1:233 < (anon)@:4:127 ; ]",
+   "w-flow@4x#2: 1 forced in the two frames after [E@DockLayer-ZtVUR0Ty.js:1:1272 < (anon)@DockLayer-ZtVUR0Ty.js:1:1427 < h@useResizeObserver-C71BNQ0c.js:1:233 < (anon)@:4:127 ; ]"
+  ],
+  "byCount": {
+   "2": 5,
+   "3": 17,
+   "4": 6,
+   "5": 2,
+   "6": 2
+  },
+  "rest": {
+   "w-pill@1x": {
+    "rafCalls": 0,
+    "mutations": 0,
+    "runningAnimations": 0,
+    "animTargets": []
+   },
+   "w-pill@4x": {
+    "rafCalls": 0,
+    "mutations": 0,
+    "runningAnimations": 0,
+    "animTargets": []
+   },
+   "w-pill@4x#1": {
+    "rafCalls": 0,
+    "mutations": 0,
+    "runningAnimations": 0,
+    "animTargets": []
+   },
+   "w-pill@4x#2": {
+    "rafCalls": 0,
+    "mutations": 0,
+    "runningAnimations": 0,
+    "animTargets": []
+   },
+   "w-flow@1x": {
+    "rafCalls": 0,
+    "mutations": 0,
+    "runningAnimations": 0,
+    "animTargets": []
+   },
+   "w-flow@4x": {
+    "rafCalls": 0,
+    "mutations": 0,
+    "runningAnimations": 0,
+    "animTargets": []
+   },
+   "w-flow@4x#1": {
+    "rafCalls": 0,
+    "mutations": 0,
+    "runningAnimations": 0,
+    "animTargets": []
+   },
+   "w-flow@4x#2": {
+    "rafCalls": 0,
+    "mutations": 0,
+    "runningAnimations": 0,
+    "animTargets": []
+   },
+   "w-ctl&corner=bottom-end@1x": {
+    "rafCalls": 0,
+    "mutations": 0,
+    "runningAnimations": 0,
+    "animTargets": []
+   },
+   "w-ctl&corner=bottom-end@4x": {
+    "rafCalls": 0,
+    "mutations": 0,
+    "runningAnimations": 0,
+    "animTargets": []
+   },
+   "w-ctl&corner=bottom-end@4x#1": {
+    "rafCalls": 0,
+    "mutations": 0,
+    "runningAnimations": 0,
+    "animTargets": []
+   },
+   "w-ctl&corner=bottom-end@4x#2": {
+    "rafCalls": 0,
+    "mutations": 0,
+    "runningAnimations": 0,
+    "animTargets": []
+   },
+   "w-seat@1x": {
+    "rafCalls": 0,
+    "mutations": 0,
+    "runningAnimations": 0,
+    "animTargets": []
+   },
+   "w-seat@4x": {
+    "rafCalls": 0,
+    "mutations": 0,
+    "runningAnimations": 0,
+    "animTargets": []
+   },
+   "w-seat@4x#1": {
+    "rafCalls": 0,
+    "mutations": 0,
+    "runningAnimations": 0,
+    "animTargets": []
+   },
+   "w-seat@4x#2": {
+    "rafCalls": 0,
+    "mutations": 0,
+    "runningAnimations": 0,
+    "animTargets": []
+   }
+  }
+ }
+}

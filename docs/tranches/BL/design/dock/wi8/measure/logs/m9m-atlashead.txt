@@ -1,0 +1,17 @@
+# MEASURE-9 part M: w-atlas-preset in the head-row placement with the title's reservation of the folded box (m9m/atlashead.mjs)
+# 98-character title; reservation: margin-inline-end calc(1rem + 3.25rem - 24px + 0.5rem) = 52 px on the title
+# face: handle = atlas's span.plate-dock__handle form (a 44 px span around the ellipsis); glyph = the ellipsis itself
+chromium handle: 10 cells (375 and 390 fine and coarse, 1440 fine; light and dark); folded box [(74, 52)] (promised [52]); title lines [('1440', 2), ('375', 4), ('390', 4)]; folded over the title box max 616 px2, over its words max 547.4 px2; open (['open']) over legend/link/plot max 0 px2; lingering (['open']) max 0 px2; largest neighbour shift at rest 0 px, every frame while opening 0 px
+chromium glyph: 10 cells (375 and 390 fine and coarse, 1440 fine; light and dark); folded box [(52, 52)] (promised [52]); title lines [('1440', 2), ('375', 4), ('390', 4)]; folded over the title box max 0 px2, over its words max 0 px2; open (['open']) over legend/link/plot max 0 px2; lingering (['open']) max 0 px2; largest neighbour shift at rest 0 px, every frame while opening 0 px
+webkit handle: 10 cells (375 and 390 fine and coarse, 1440 fine; light and dark); folded box [(74, 52)] (promised [52]); title lines [('1440', 2), ('375', 4), ('390', 4)]; folded over the title box max 616 px2, over its words max 550.1 px2; open (['open']) over legend/link/plot max 0 px2; lingering (['open']) max 0 px2; largest neighbour shift at rest 0 px, every frame while opening 0 px
+webkit glyph: 10 cells (375 and 390 fine and coarse, 1440 fine; light and dark); folded box [(52, 52)] (promised [52]); title lines [('1440', 2), ('375', 4), ('390', 4)]; folded over the title box max 0 px2, over its words max 0 px2; open (['open']) over legend/link/plot max 0 px2; lingering (['open']) max 0 px2; largest neighbour shift at rest 0 px, every frame while opening 0 px
+# The title: atlas's tree (u/o18-atlas 62405c0) carries no figure titles of its own (they come from the contract a site
+# passes); the longest title prop found in its consumer's dashboards (sci-report u/o18-sci 86a16831, git grep, read-only)
+# is 37 characters ("Population density (people per sq mi)"). The cell's 98-character title is longer than any found and
+# wraps at every width (4 lines at 375 and 390, 2 at 1440).
+# The token: the reservation writes 1rem + 3.25rem as literals. Glass declares the three values it adds up
+# (--dock-corner-inset 1rem, --dock-control-size 2.75rem, --dock-padding-inline 0.25rem) on .glass-dock[data-preset="controls"]
+# only (styles/density.css), so the head row, which is not inside the dock, cannot read them; no token names the folded box.
+# The folded box is one control square plus the plate's edge (52 by 52, both engines) only when the folded face is a glyph:
+# a 44 px span around the glyph (atlas's .plate-dock__handle form) takes the face's 11 px inline padding on each side, 66 wide,
+# and folds to 74 by 52, which covers 616 px2 of the reserved title box (547 to 550 px2 of its words at 375, 333 to 335 at 390).
