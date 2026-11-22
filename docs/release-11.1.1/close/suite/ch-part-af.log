@@ -1,0 +1,1141 @@
+
+Running 52 tests using 1 worker
+
+  ✘   1 [chromium-headless-new] › tests-visual/dock-morph-family.spec.ts:43:1 › (a)/(b) — the morph composites a transform over a reserved footprint (no per-frame relayout) (1.7s)
+  ✘   2 [chromium-headless-new] › tests-visual/dock-morph-family.spec.ts:83:1 › (c) — under PRM the dock seats synchronously (every control inside the box, no sliver) (2.0s)
+  ✘   3 [chromium-headless-new] › tests-visual/dock-morph-family.spec.ts:139:1 › (e) — a --dock-local-scale override on a dock scope paints a larger box (the @property thread) (1.5s)
+  ✓   4 [chromium-headless-new] › tests-visual/dock-morph-family.spec.ts:176:1 › (f) — the vertical dock morphs plate chrome continuously with its block-size (no snap, inline invariant) (1.4s)
+  ✘   5 [chromium-headless-new] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (light) (1.7s)
+  ✘   6 [chromium-headless-new] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (dark) (1.7s)
+  ✘   7 [chromium-headless-new] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (light) (1.0m)
+  ✘   8 [chromium-headless-new] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (dark) (1.0m)
+  ✘   9 [chromium-headless-new] › tests-visual/dock-sections.spec.ts:88:1 › BA.W-DOCK-SECTIONS — the seam-anchored rail + dual overrun + flush fan-out on BOTH shell docks (2.1s)
+  ✘  10 [chromium-headless-new] › tests-visual/dock-sections.spec.ts:204:1 › BA.W-DOCK-SECTIONS — G5: the dock box is INVIOLATE (the rail feeds no size) (1.6s)
+  ✘  11 [chromium-headless-new] › tests-visual/drag-morph.spec.ts:70:1 › (a) drag frame-series — follow ~1:1, velocity-squish, fling to nearest (1.4s)
+  ✘  12 [chromium-headless-new] › tests-visual/drag-morph.spec.ts:146:1 › (b) flick past midpoint snaps forward; slow short-of-midpoint snaps back (7.3s)
+  ✘  13 [chromium-headless-new] › tests-visual/drag-morph.spec.ts:183:1 › (c) PRM — drag functions, snap commits, NO squish frames (6.2s)
+  ✘  14 [chromium-headless-new] › tests-visual/drag-morph.spec.ts:226:1 › (d) keyboard roving — one tabstop, arrow/Home/End move focus + activate (6.7s)
+  ✘  15 [chromium-headless-new] › tests-visual/drag-morph.spec.ts:286:1 › (e) liquid-tab reachability — grab lands on the indicator, drag starts, click un-regressed (6.7s)
+[WebServer] 12:40:02 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/motion/curve-gallery" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  16 [chromium-headless-new] › tests-visual/easing-primitive.spec.ts:69:5 › BK #85 W-EASING — the published curve family (π) › P1 — the bezier stroke plots the real CubicBezier twin (5.8s)
+[WebServer] 12:40:08 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/motion/curve-gallery" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  17 [chromium-headless-new] › tests-visual/easing-primitive.spec.ts:102:5 › BK #85 W-EASING — the published curve family (π) › P2 — the steps stroke is constructed, not sampled (1.0m)
+[WebServer] 12:41:09 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/motion/curve-gallery" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  18 [chromium-headless-new] › tests-visual/easing-primitive.spec.ts:143:9 › BK #85 W-EASING — the published curve family (π) › P3 — the curve strokes the violet --motion-accent twin (light) (6.0s)
+[WebServer] 12:41:15 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/motion/curve-gallery" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  19 [chromium-headless-new] › tests-visual/easing-primitive.spec.ts:143:9 › BK #85 W-EASING — the published curve family (π) › P3 — the curve strokes the violet --motion-accent twin (dark) (6.0s)
+[WebServer] 12:41:21 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/motion/curve-gallery" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  20 [chromium-headless-new] › tests-visual/easing-primitive.spec.ts:172:5 › BK #85 W-EASING — the published curve family (π) › P4 — the readout is the re-parseable literal in both modes (1.0m)
+[WebServer] 12:42:22 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/motion/curve-gallery" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  21 [chromium-headless-new] › tests-visual/easing-primitive.spec.ts:190:5 › BK #85 W-EASING — the published curve family (π) › P5 — the frame is constant and the plot is square (letterbox zero) (1.0m)
+[WebServer] 12:43:22 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/motion/curve-gallery" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  22 [chromium-headless-new] › tests-visual/easing-primitive.spec.ts:238:5 › BK #85 W-EASING — the published curve family (π) › P11 — the draw-on sweeps over frames, and lands on one under reduce (5.8s)
+  ✘  23 [chromium-headless-new] › tests-visual/emission.spec.ts:53:5 › BA.W-EMISSION — the Select collision-bound ships + bounds in-viewport › the opened Select content computes a real maxHeight, bottoms in-viewport, grows from the anchor (1.0m)
+  ✘  24 [chromium-headless-new] › tests-visual/emission.spec.ts:112:5 › BA.W-EMISSION — the Slider size axis ships as real geometry › a standard size=md slider measures a real ≈1.25rem track (not 6px); the spectrum thumb is slim (1.0m)
+[emission] destructive contrast (light): null
+  ✘  25 [chromium-headless-new] › tests-visual/emission.spec.ts:217:9 › BI.W-DEMO-SOURCE-SCAN — the destructive Button label clears AA (the CVA-foreground emission fix) › light mode — the destructive label ink resolves over bg-destructive at ≥4.5:1 (1.0s)
+[emission] destructive contrast (dark): null
+  ✘  26 [chromium-headless-new] › tests-visual/emission.spec.ts:217:9 › BI.W-DEMO-SOURCE-SCAN — the destructive Button label clears AA (the CVA-foreground emission fix) › dark mode — the destructive label ink resolves over bg-destructive at ≥4.5:1 (1.0s)
+  ✘  27 [chromium-headless-new] › tests-visual/esc-stack.spec.ts:72:5 › (a) Escape stack — inner pops first, then outer [light] (1.0m)
+  ✘  28 [chromium-headless-new] › tests-visual/esc-stack.spec.ts:113:5 › (b) focus model — move-in / trap / inert / restore [light] (1.0m)
+  ✘  29 [chromium-headless-new] › tests-visual/esc-stack.spec.ts:72:5 › (a) Escape stack — inner pops first, then outer [dark] (1.0m)
+  ✘  30 [chromium-headless-new] › tests-visual/esc-stack.spec.ts:113:5 › (b) focus model — move-in / trap / inert / restore [dark] (1.0m)
+  ✘  31 [chromium-headless-new] › tests-visual/expandable-container.spec.ts:82:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (a) inline renders real canvas + NO body-teleport @ mobile light (6.0s)
+  ✘  32 [chromium-headless-new] › tests-visual/expandable-container.spec.ts:111:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (b) fullscreen teleports + frosts over content (alpha < 1) @ mobile light (1.2s)
+  ✘  33 [chromium-headless-new] › tests-visual/expandable-container.spec.ts:82:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (a) inline renders real canvas + NO body-teleport @ mobile dark (6.0s)
+  ✘  34 [chromium-headless-new] › tests-visual/expandable-container.spec.ts:111:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (b) fullscreen teleports + frosts over content (alpha < 1) @ mobile dark (1.2s)
+  ✘  35 [chromium-headless-new] › tests-visual/expandable-container.spec.ts:82:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (a) inline renders real canvas + NO body-teleport @ desktop light (6.0s)
+  ✘  36 [chromium-headless-new] › tests-visual/expandable-container.spec.ts:111:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (b) fullscreen teleports + frosts over content (alpha < 1) @ desktop light (1.3s)
+  ✘  37 [chromium-headless-new] › tests-visual/expandable-container.spec.ts:82:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (a) inline renders real canvas + NO body-teleport @ desktop dark (6.0s)
+  ✘  38 [chromium-headless-new] › tests-visual/expandable-container.spec.ts:111:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (b) fullscreen teleports + frosts over content (alpha < 1) @ desktop dark (1.2s)
+[WebServer] 12:50:04 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/metric-badge" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  39 [chromium-headless-new] › tests-visual/eyebrow-union.spec.ts:81:9 › eyebrow-union (π — the ONE mono-caption eyebrow voice, fail-CLOSED) › one eyebrow voice — light (915ms)
+[WebServer] 12:50:05 PM [vite] (client) [console.warn] [Vue warn]: Runtime directive used on component with non-element root node. The directives will not function as intended. 
+[WebServer]   at <PrimitiveSlot data-slot="button" data-emphasis="secondary" data-tone="neutral"  ... > 
+[WebServer]   at <Primitive ref=fn<captureHost> as="button" as-child=true  ... > 
+[WebServer]   at <Button as-child="" > 
+[WebServer]   at <CardFooter class="justify-center" > 
+[WebServer]   at <Primitive data-slot="card" data-shadow=true data-size="md"  ... > 
+[WebServer]   at <Surface data-slot="card" tier="floating" surface=undefined  ... > 
+[WebServer]   at <Card tier="floating" class="w-full max-w-(--measure-cel) text-center" > 
+[WebServer]   at <NotFound onVnodeUnmounted=fn<onVnodeUnmounted> ref=Ref< undefined > key="/display/metric-badge" > 
+[WebServer]   at <RouterView> 
+[WebServer]   at <AppShell> 
+[WebServer]   at <App>
+  ✘  40 [chromium-headless-new] › tests-visual/eyebrow-union.spec.ts:81:9 › eyebrow-union (π — the ONE mono-caption eyebrow voice, fail-CLOSED) › one eyebrow voice — dark (893ms)
+  ✓  41 [chromium-headless-new] › tests-visual/fading-scroll.spec.ts:54:5 › mechanism — .fading-scroll--x at-rest start SHARP, scrolled end SHARP, fits NEITHER (935ms)
+  ✓  42 [chromium-headless-new] › tests-visual/fading-scroll.spec.ts:54:5 › mechanism — .fading-scroll--y at-rest start SHARP, scrolled end SHARP, fits NEITHER (838ms)
+  ✓  43 [chromium-headless-new] › tests-visual/fading-scroll.spec.ts:153:1 › live — aurora controls column + preset row read --fade-start: 0px at rest (1.2s)
+  -  44 [chromium-headless-new] › tests-visual/fading-scroll.spec.ts:184:1 › live — blob mood row start edge SHARP at rest (post W-GOO-REDRESS wrap)
+  ✓  45 [chromium-headless-new] › tests-visual/fading-scroll.spec.ts:216:9 › DELTA capture — blob mood row [light] @ mobile (1.3s)
+  ✓  46 [chromium-headless-new] › tests-visual/fading-scroll.spec.ts:228:9 › DELTA capture — aurora controls column [light] @ mobile (1.3s)
+  ✓  47 [chromium-headless-new] › tests-visual/fading-scroll.spec.ts:216:9 › DELTA capture — blob mood row [dark] @ mobile (1.3s)
+  ✓  48 [chromium-headless-new] › tests-visual/fading-scroll.spec.ts:228:9 › DELTA capture — aurora controls column [dark] @ mobile (1.3s)
+  ✓  49 [chromium-headless-new] › tests-visual/fading-scroll.spec.ts:216:9 › DELTA capture — blob mood row [light] @ desktop (1.3s)
+  ✓  50 [chromium-headless-new] › tests-visual/fading-scroll.spec.ts:228:9 › DELTA capture — aurora controls column [light] @ desktop (1.4s)
+  ✓  51 [chromium-headless-new] › tests-visual/fading-scroll.spec.ts:216:9 › DELTA capture — blob mood row [dark] @ desktop (1.3s)
+  ✓  52 [chromium-headless-new] › tests-visual/fading-scroll.spec.ts:228:9 › DELTA capture — aurora controls column [dark] @ desktop (1.4s)
+
+
+  1) [chromium-headless-new] › tests-visual/dock-morph-family.spec.ts:43:1 › (a)/(b) — the morph composites a transform over a reserved footprint (no per-frame relayout) 
+
+    Error: the morph-axis box composites a transform mid-morph (got none)
+
+    expect(received).toBeTruthy()
+
+    Received: false
+
+      73 |         read.transform && read.transform !== "none" && read.transform !== "matrix(1, 0, 0, 1, 0, 0)",
+      74 |         `the morph-axis box composites a transform mid-morph (got ${read.transform})`,
+    > 75 |     ).toBeTruthy();
+         |       ^
+      76 |     // The reserved footprint is the SETTLED `to` (~240px), not the live-scalar interp
+      77 |     // (~150px at t=0.5). A reserved 240px box with a 0.625 scale reads as ~150px.
+      78 |     const reserved = Number.parseFloat(read.reservedInline ?? "0");
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/dock-morph-family.spec.ts:75:7
+
+    Error Context: tests-visual/test-results/dock-morph-family--a-b-—-t-4df0f-rint-no-per-frame-relayout--chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › tests-visual/dock-morph-family.spec.ts:83:1 › (c) — under PRM the dock seats synchronously (every control inside the box, no sliver) 
+
+    Error: every dock control seats INSIDE the box under PRM (2/13 outside)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      132 |         seat.allInside,
+      133 |         `every dock control seats INSIDE the box under PRM (${seat.outsideCount}/${seat.controlCount} outside)`,
+    > 134 |     ).toBe(true);
+          |       ^
+      135 |     await page.emulateMedia({ reducedMotion: null });
+      136 | });
+      137 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/dock-morph-family.spec.ts:134:7
+
+    Error Context: tests-visual/test-results/dock-morph-family--c-—-und-4dba9-l-inside-the-box-no-sliver--chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › tests-visual/dock-morph-family.spec.ts:139:1 › (e) — a --dock-local-scale override on a dock scope paints a larger box (the @property thread) 
+
+    Error: --dock-local-scale: 1.4 on the dock scope re-evaluates --dock-scale (base 1 → threaded 1)
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 1.3
+    Received:   1
+
+      166 |         thread.threadedScale,
+      167 |         `--dock-local-scale: 1.4 on the dock scope re-evaluates --dock-scale (base ${thread.baseScale} → threaded ${thread.threadedScale})`,
+    > 168 |     ).toBeGreaterThan(thread.baseScale * 1.3);
+          |       ^
+      169 | });
+      170 |
+      171 | // ── (f) — the VERTICAL collapse→expand morphs its chrome continuously ────────────
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/dock-morph-family.spec.ts:168:7
+
+    Error Context: tests-visual/test-results/dock-morph-family--e-—-a---1db31-er-box-the-property-thread--chromium-headless-new/error-context.md
+
+  4) [chromium-headless-new] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (light) 
+
+    Error: sidebar-vertical/light/.dock-icon-button/hover: painted-plate slack inside the clip cell must be ≥1px on every axis (min -5px) — slack {"top":-5,"bottom":605,"left":8,"right":8} clip=dock-layer dock-layer--full dock-run is-active
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 1
+    Received:    -5
+
+      198 |                         hoverRead.minSlack,
+      199 |                         `${key}: painted-plate slack inside the clip cell must be ≥1px on every axis (min ${hoverRead.minSlack}px) — slack ${JSON.stringify(hoverRead.slack)} clip=${hoverRead.clipAncestorClass}`,
+    > 200 |                     ).toBeGreaterThanOrEqual(1);
+          |                       ^
+      201 |
+      202 |                     // G2 — the cross-axis clip ancestor computes `visible` on at
+      203 |                     // least one axis (the fit-content shell does not clip both).
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/dock-plate-clearance.spec.ts:200:23
+
+    Error Context: tests-visual/test-results/dock-plate-clearance-plate-e898a-e-—-sidebar-vertical-light--chromium-headless-new/error-context.md
+
+    Error Context: tests-visual/test-results/dock-plate-clearance-plate-e898a-e-—-sidebar-vertical-light--chromium-headless-new/error-context.md
+
+  5) [chromium-headless-new] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (dark) 
+
+    Error: sidebar-vertical/dark/.dock-icon-button/hover: painted-plate slack inside the clip cell must be ≥1px on every axis (min -5px) — slack {"top":-5,"bottom":605,"left":8,"right":8} clip=dock-layer dock-layer--full dock-run is-active
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 1
+    Received:    -5
+
+      198 |                         hoverRead.minSlack,
+      199 |                         `${key}: painted-plate slack inside the clip cell must be ≥1px on every axis (min ${hoverRead.minSlack}px) — slack ${JSON.stringify(hoverRead.slack)} clip=${hoverRead.clipAncestorClass}`,
+    > 200 |                     ).toBeGreaterThanOrEqual(1);
+          |                       ^
+      201 |
+      202 |                     // G2 — the cross-axis clip ancestor computes `visible` on at
+      203 |                     // least one axis (the fit-content shell does not clip both).
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/dock-plate-clearance.spec.ts:200:23
+
+    Error Context: tests-visual/test-results/dock-plate-clearance-plate-a45e2-ce-—-sidebar-vertical-dark--chromium-headless-new/error-context.md
+
+    Error Context: tests-visual/test-results/dock-plate-clearance-plate-a45e2-ce-—-sidebar-vertical-dark--chromium-headless-new/error-context.md
+
+  6) [chromium-headless-new] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (light) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.hover: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('.demo-bottom-dock__shell').first().locator('.dock-icon-button').first()
+        - locator resolved to <button type="button" data-v-2274dfab="" data-press-armed="" data-state="closed" aria-expanded="false" aria-haspopup="dialog" data-glass-dock-seat="" data-grace-area-trigger="" aria-label="Open category navigation" class="dock-icon-button glass-specular-track glass-capsule-hover demo-bottom-dock__menu">…</button>
+      - attempting hover action
+        2 × waiting for element to be visible and stable
+          - element is not visible
+        - retrying hover action
+        - waiting 20ms
+        2 × waiting for element to be visible and stable
+          - element is not visible
+        - retrying hover action
+          - waiting 100ms
+        114 × waiting for element to be visible and stable
+            - element is not visible
+          - retrying hover action
+            - waiting 500ms
+
+
+      186 |                 // HOVER state — drive the real pointer so CSS :hover engages (the
+      187 |                 // hover scale needs it; a synthetic event never sets :hover).
+    > 188 |                 await ctrl.hover();
+          |                            ^
+      189 |                 await page.waitForTimeout(220); // settle the scale spring
+      190 |                 const hoverRead = await readControl(page, shell.dock, ctrlSel);
+      191 |                 const key = `${shell.name}/${mode}/${ctrlSel}/hover`;
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/dock-plate-clearance.spec.ts:188:28
+
+    Error Context: tests-visual/test-results/dock-plate-clearance-plate-0270e--—-bottom-horizontal-light--chromium-headless-new/error-context.md
+
+    Error Context: tests-visual/test-results/dock-plate-clearance-plate-0270e--—-bottom-horizontal-light--chromium-headless-new/error-context.md
+
+  7) [chromium-headless-new] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (dark) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.hover: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('.demo-bottom-dock__shell').first().locator('.dock-icon-button').first()
+        - locator resolved to <button type="button" data-v-2274dfab="" data-press-armed="" data-state="closed" aria-expanded="false" aria-haspopup="dialog" data-glass-dock-seat="" data-grace-area-trigger="" aria-label="Open category navigation" class="dock-icon-button glass-specular-track glass-capsule-hover demo-bottom-dock__menu">…</button>
+      - attempting hover action
+        2 × waiting for element to be visible and stable
+          - element is not visible
+        - retrying hover action
+        - waiting 20ms
+        2 × waiting for element to be visible and stable
+          - element is not visible
+        - retrying hover action
+          - waiting 100ms
+        114 × waiting for element to be visible and stable
+            - element is not visible
+          - retrying hover action
+            - waiting 500ms
+
+
+      186 |                 // HOVER state — drive the real pointer so CSS :hover engages (the
+      187 |                 // hover scale needs it; a synthetic event never sets :hover).
+    > 188 |                 await ctrl.hover();
+          |                            ^
+      189 |                 await page.waitForTimeout(220); // settle the scale spring
+      190 |                 const hoverRead = await readControl(page, shell.dock, ctrlSel);
+      191 |                 const key = `${shell.name}/${mode}/${ctrlSel}/hover`;
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/dock-plate-clearance.spec.ts:188:28
+
+    Error Context: tests-visual/test-results/dock-plate-clearance-plate-0ad3d-e-—-bottom-horizontal-dark--chromium-headless-new/error-context.md
+
+    Error Context: tests-visual/test-results/dock-plate-clearance-plate-0ad3d-e-—-bottom-horizontal-dark--chromium-headless-new/error-context.md
+
+  8) [chromium-headless-new] › tests-visual/dock-sections.spec.ts:88:1 › BA.W-DOCK-SECTIONS — the seam-anchored rail + dual overrun + flush fan-out on BOTH shell docks 
+
+    Error: a rail strip mounts on a faceted route (light)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      129 |         // The faceted route must mount at least one rail (the per-orientation seat).
+      130 |         const anyRail = [sidebar, bottom].some((d) => d && d.slot && d.strip);
+    > 131 |         expect(anyRail, `a rail strip mounts on a faceted route (${mode})`).toBe(true);
+          |                                                                             ^
+      132 |
+      133 |         for (const [name, d] of [
+      134 |             ["sidebar", sidebar],
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/dock-sections.spec.ts:131:77
+
+    Error Context: tests-visual/test-results/dock-sections-BA-W-DOCK-SE-3b362-fan-out-on-BOTH-shell-docks-chromium-headless-new/error-context.md
+
+  9) [chromium-headless-new] › tests-visual/dock-sections.spec.ts:204:1 › BA.W-DOCK-SECTIONS — G5: the dock box is INVIOLATE (the rail feeds no size) 
+
+    Error: the bottom dock + rail present
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      236 |     );
+      237 |
+    > 238 |     expect(delta, "the bottom dock + rail present").not.toBeNull();
+          |                                                         ^
+      239 |     if (delta) {
+      240 |         expect(delta.dw, `G5: the dock width is inviolate with the rail (Δw=${delta.dw})`).toBeLessThanOrEqual(2);
+      241 |         expect(delta.dh, `G5: the dock height is inviolate with the rail (Δh=${delta.dh})`).toBeLessThanOrEqual(2);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/dock-sections.spec.ts:238:57
+
+    Error Context: tests-visual/test-results/dock-sections-BA-W-DOCK-SE-615ba-ATE-the-rail-feeds-no-size--chromium-headless-new/error-context.md
+
+  10) [chromium-headless-new] › tests-visual/drag-morph.spec.ts:70:1 › (a) drag frame-series — follow ~1:1, velocity-squish, fling to nearest 
+
+    Error: expect(received).toBeGreaterThan(expected)
+
+    Expected: > 1
+    Received:   1
+
+      122 |     expect(followError).toBeLessThan(40);
+      123 |     // VELOCITY-SQUISH — a fast pull swells the plate above 1, capped ≤ 1.08.
+    > 124 |     expect(maxStretch).toBeGreaterThan(1);
+          |                        ^
+      125 |     expect(maxStretch).toBeLessThanOrEqual(1.085);
+      126 |
+      127 |     // Release — the fling snaps to the nearest tab + the model commits.
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/drag-morph.spec.ts:124:24
+
+    Error Context: tests-visual/test-results/drag-morph--a-drag-frame-s-04af1-ity-squish-fling-to-nearest-chromium-headless-new/error-context.md
+
+  11) [chromium-headless-new] › tests-visual/drag-morph.spec.ts:146:1 › (b) flick past midpoint snaps forward; slow short-of-midpoint snaps back 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('.segmented-tabs:not(.segmented-tabs--underline):not(.segmented-tabs--vertical)').first().locator('.segmented-tab').first()
+    Expected: "true"
+    Received: ""
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for locator('.segmented-tabs:not(.segmented-tabs--underline):not(.segmented-tabs--vertical)').first().locator('.segmented-tab').first()
+        3 × locator resolved to <button role="tab" tabindex="0" type="button" data-active="" aria-selected="true" class="segmented-tab">Grid</button>
+          - unexpected value "null"
+        11 × locator resolved to <button role="tab" type="button" tabindex="-1" class="segmented-tab" aria-selected="false">Grid</button>
+           - unexpected value "null"
+
+
+      177 |     await page.mouse.up();
+      178 |     await page.waitForTimeout(500);
+    > 179 |     await expect(tabs.nth(0)).toHaveAttribute("aria-pressed", "true");
+          |                               ^
+      180 | });
+      181 |
+      182 | // ── (c) PRM — no squish, instant snap, gesture still functions ───────────────────
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/drag-morph.spec.ts:179:31
+
+    Error Context: tests-visual/test-results/drag-morph--b-flick-past-m-f114d-hort-of-midpoint-snaps-back-chromium-headless-new/error-context.md
+
+  12) [chromium-headless-new] › tests-visual/drag-morph.spec.ts:183:1 › (c) PRM — drag functions, snap commits, NO squish frames 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('.segmented-tabs:not(.segmented-tabs--underline):not(.segmented-tabs--vertical)').first().locator('.segmented-indicator.glass-drag-grabbable')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('.segmented-tabs:not(.segmented-tabs--underline):not(.segmented-tabs--vertical)').first().locator('.segmented-indicator.glass-drag-grabbable')
+
+
+      190 |     const indicator = strip.locator(".segmented-indicator.glass-drag-grabbable");
+      191 |     const tabs = strip.locator(".segmented-tab");
+    > 192 |     await expect(indicator).toBeVisible();
+          |                             ^
+      193 |
+      194 |     await selectTab(tabs, 0);
+      195 |     await page.waitForTimeout(300);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/drag-morph.spec.ts:192:29
+
+    Error Context: tests-visual/test-results/drag-morph--c-PRM-—-drag-f-da388-ap-commits-NO-squish-frames-chromium-headless-new/error-context.md
+
+  13) [chromium-headless-new] › tests-visual/drag-morph.spec.ts:226:1 › (d) keyboard roving — one tabstop, arrow/Home/End move focus + activate 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('.segmented-tabs:not(.segmented-tabs--underline):not(.segmented-tabs--vertical)').first().locator('.segmented-tab').nth(1)
+    Expected: "true"
+    Received: ""
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for locator('.segmented-tabs:not(.segmented-tabs--underline):not(.segmented-tabs--vertical)').first().locator('.segmented-tab').nth(1)
+        14 × locator resolved to <button role="tab" tabindex="0" type="button" data-active="" aria-selected="true" class="segmented-tab">List</button>
+           - unexpected value "null"
+
+
+      248 |     await page.waitForTimeout(200);
+      249 |     await expect(hTabs.nth(1)).toBeFocused();
+    > 250 |     await expect(hTabs.nth(1)).toHaveAttribute("aria-pressed", "true");
+          |                                ^
+      251 |
+      252 |     // End jumps to the last enabled tab.
+      253 |     await page.keyboard.press("End");
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/drag-morph.spec.ts:250:32
+
+    Error Context: tests-visual/test-results/drag-morph--d-keyboard-rov-16284-ome-End-move-focus-activate-chromium-headless-new/error-context.md
+
+  14) [chromium-headless-new] › tests-visual/drag-morph.spec.ts:286:1 › (e) liquid-tab reachability — grab lands on the indicator, drag starts, click un-regressed 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('.segmented-tabs:not(.segmented-tabs--underline):not(.segmented-tabs--vertical)').first().locator('.segmented-tab').nth(1)
+    Expected: "true"
+    Received: ""
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for locator('.segmented-tabs:not(.segmented-tabs--underline):not(.segmented-tabs--vertical)').first().locator('.segmented-tab').nth(1)
+        14 × locator resolved to <button role="tab" tabindex="0" type="button" data-active="" aria-selected="true" class="segmented-tab">List</button>
+           - unexpected value "null"
+
+
+      301 |     await tabs.nth(1).click();
+      302 |     await page.waitForTimeout(400);
+    > 303 |     await expect(tabs.nth(1)).toHaveAttribute("aria-pressed", "true");
+          |                               ^
+      304 |
+      305 |     const box = await indicator.boundingBox();
+      306 |     if (!box) return;
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/drag-morph.spec.ts:303:31
+
+    Error Context: tests-visual/test-results/drag-morph--e-liquid-tab-r-96882-g-starts-click-un-regressed-chromium-headless-new/error-context.md
+
+  15) [chromium-headless-new] › tests-visual/easing-primitive.spec.ts:69:5 › BK #85 W-EASING — the published curve family (π) › P1 — the bezier stroke plots the real CubicBezier twin 
+
+    Error: the editor mounts in bezier mode
+
+    expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-slot="easing-picker"][data-mode="bezier"]')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - the editor mounts in bezier mode with timeout 5000ms
+      - waiting for locator('[data-slot="easing-picker"][data-mode="bezier"]')
+
+
+      72 |
+      73 |         const picker = page.locator(`${PICKER}[data-mode="bezier"]`);
+    > 74 |         await expect(picker, "the editor mounts in bezier mode").toBeVisible();
+         |                                                                  ^
+      75 |
+      76 |         const probe = await picker.evaluate((root, ink) => {
+      77 |             const code = root.querySelector("code");
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/easing-primitive.spec.ts:74:66
+
+    Error Context: tests-visual/test-results/easing-primitive-BK-85-W-E-7596a-s-the-real-CubicBezier-twin-chromium-headless-new/error-context.md
+
+  16) [chromium-headless-new] › tests-visual/easing-primitive.spec.ts:102:5 › BK #85 W-EASING — the published curve family (π) › P2 — the steps stroke is constructed, not sampled 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Steps', exact: true })
+
+
+      103 |         await page.setViewportSize({ width: 1280, height: 900 });
+      104 |         await page.goto(ROUTE, { waitUntil: "networkidle" });
+    > 105 |         await page.getByRole("button", { name: "Steps", exact: true }).click();
+          |                                                                        ^
+      106 |
+      107 |         const picker = page.locator(`${PICKER}[data-mode="steps"]`);
+      108 |         await expect(picker, "the editor switches to steps mode").toBeVisible();
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/easing-primitive.spec.ts:105:72
+
+    Error Context: tests-visual/test-results/easing-primitive-BK-85-W-E-97b42--is-constructed-not-sampled-chromium-headless-new/error-context.md
+
+  17) [chromium-headless-new] › tests-visual/easing-primitive.spec.ts:143:9 › BK #85 W-EASING — the published curve family (π) › P3 — the curve strokes the violet --motion-accent twin (light) 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-slot="easing-picker"][data-mode="bezier"]')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('[data-slot="easing-picker"][data-mode="bezier"]')
+
+
+      152 |
+      153 |             const picker = page.locator(`${PICKER}[data-mode="bezier"]`);
+    > 154 |             await expect(picker).toBeVisible();
+          |                                  ^
+      155 |             const strokeRgb = await picker.evaluate((root, ink) => {
+      156 |                 const path = root.querySelector(ink) as SVGPathElement | null;
+      157 |                 return path ? getComputedStyle(path).stroke : null;
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/easing-primitive.spec.ts:154:34
+
+    Error Context: tests-visual/test-results/easing-primitive-BK-85-W-E-40a79---motion-accent-twin-light--chromium-headless-new/error-context.md
+
+  18) [chromium-headless-new] › tests-visual/easing-primitive.spec.ts:143:9 › BK #85 W-EASING — the published curve family (π) › P3 — the curve strokes the violet --motion-accent twin (dark) 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-slot="easing-picker"][data-mode="bezier"]')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('[data-slot="easing-picker"][data-mode="bezier"]')
+
+
+      152 |
+      153 |             const picker = page.locator(`${PICKER}[data-mode="bezier"]`);
+    > 154 |             await expect(picker).toBeVisible();
+          |                                  ^
+      155 |             const strokeRgb = await picker.evaluate((root, ink) => {
+      156 |                 const path = root.querySelector(ink) as SVGPathElement | null;
+      157 |                 return path ? getComputedStyle(path).stroke : null;
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/easing-primitive.spec.ts:154:34
+
+    Error Context: tests-visual/test-results/easing-primitive-BK-85-W-E-db3e0----motion-accent-twin-dark--chromium-headless-new/error-context.md
+
+  19) [chromium-headless-new] › tests-visual/easing-primitive.spec.ts:172:5 › BK #85 W-EASING — the published curve family (π) › P4 — the readout is the re-parseable literal in both modes 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.textContent: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('[data-slot="easing-picker"][data-mode="bezier"] code').first()
+
+
+      177 |             .locator(`${PICKER}[data-mode="bezier"] code`)
+      178 |             .first()
+    > 179 |             .textContent();
+          |              ^
+      180 |         expect(bezierLiteral?.trim()).toMatch(/^cubic-bezier\(/);
+      181 |
+      182 |         await page.getByRole("button", { name: "Steps", exact: true }).click();
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/easing-primitive.spec.ts:179:14
+
+    Error Context: tests-visual/test-results/easing-primitive-BK-85-W-E-a3324-eable-literal-in-both-modes-chromium-headless-new/error-context.md
+
+  20) [chromium-headless-new] › tests-visual/easing-primitive.spec.ts:190:5 › BK #85 W-EASING — the published curve family (π) › P5 — the frame is constant and the plot is square (letterbox zero) 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.getAttribute: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('[data-slot="easing-curve"] svg').first()
+
+
+      195 |
+      196 |         const svg = page.locator(`${CURVE} svg`).first();
+    > 197 |         const before = await svg.getAttribute("viewBox");
+          |                                  ^
+      198 |         expect(before, "the shipped constant frame").toBe("-0.1 -0.1 1.2 1.2");
+      199 |
+      200 |         const box = await svg.boundingBox();
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/easing-primitive.spec.ts:197:34
+
+    Error Context: tests-visual/test-results/easing-primitive-BK-85-W-E-96355-t-is-square-letterbox-zero--chromium-headless-new/error-context.md
+
+  21) [chromium-headless-new] › tests-visual/easing-primitive.spec.ts:238:5 › BK #85 W-EASING — the published curve family (π) › P11 — the draw-on sweeps over frames, and lands on one under reduce 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('[data-slot="easing-picker"]')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('[data-slot="easing-picker"]')
+
+
+      241 |         await page.setViewportSize({ width: 1280, height: 900 });
+      242 |         await page.goto(ROUTE, { waitUntil: "networkidle" });
+    > 243 |         await expect(page.locator(PICKER)).toBeVisible();
+          |                                            ^
+      244 |
+      245 |         const swept = await sampleSweep(page);
+      246 |         const between = swept.filter((v) => v > 1 && v < 103);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/easing-primitive.spec.ts:243:44
+
+    Error Context: tests-visual/test-results/easing-primitive-BK-85-W-E-690df-d-lands-on-one-under-reduce-chromium-headless-new/error-context.md
+
+  22) [chromium-headless-new] › tests-visual/emission.spec.ts:53:5 › BA.W-EMISSION — the Select collision-bound ships + bounds in-viewport › the opened Select content computes a real maxHeight, bottoms in-viewport, grows from the anchor 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.scrollIntoViewIfNeeded: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('[id="sel-font"]')
+
+
+      58 |         // Open the first Select (the font-family trigger).
+      59 |         const trigger = page.locator('[id="sel-font"]');
+    > 60 |         await trigger.scrollIntoViewIfNeeded();
+         |                       ^
+      61 |         await trigger.click();
+      62 |
+      63 |         const content = page.locator('[data-slot="select-content"]').first();
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/emission.spec.ts:60:23
+
+    Error Context: tests-visual/test-results/emission-BA-W-EMISSION-—-t-727e1-wport-grows-from-the-anchor-chromium-headless-new/error-context.md
+
+  23) [chromium-headless-new] › tests-visual/emission.spec.ts:112:5 › BA.W-EMISSION — the Slider size axis ships as real geometry › a standard size=md slider measures a real ≈1.25rem track (not 6px); the spectrum thumb is slim 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.scrollIntoViewIfNeeded: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('[aria-label="standard md"]').first()
+
+
+      117 |         // The variant×size matrix renders aria-label="standard md" etc.
+      118 |         const stdMd = page.locator('[aria-label="standard md"]').first();
+    > 119 |         await stdMd.scrollIntoViewIfNeeded();
+          |                     ^
+      120 |         await stdMd.waitFor({ state: "visible" });
+      121 |
+      122 |         const trackH = await stdMd.evaluate((root) => {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/emission.spec.ts:119:21
+
+    Error Context: tests-visual/test-results/emission-BA-W-EMISSION-—-t-b3233--the-spectrum-thumb-is-slim-chromium-headless-new/error-context.md
+
+  24) [chromium-headless-new] › tests-visual/emission.spec.ts:217:9 › BI.W-DEMO-SOURCE-SCAN — the destructive Button label clears AA (the CVA-foreground emission fix) › light mode — the destructive label ink resolves over bg-destructive at ≥4.5:1 
+
+    Error: the destructive Button must be present
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      227 |             const readback = await labelContrast(page);
+      228 |             console.log(`[emission] destructive contrast (${mode}):`, JSON.stringify(readback));
+    > 229 |             expect(readback, "the destructive Button must be present").not.toBeNull();
+          |                                                                            ^
+      230 |             expect(
+      231 |                 readback!.ratio,
+      232 |                 "the destructive label/fill contrast must be measurable",
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/emission.spec.ts:229:76
+
+    Error Context: tests-visual/test-results/emission-BI-W-DEMO-SOURCE--01c6f-er-bg-destructive-at-≥4-5-1-chromium-headless-new/error-context.md
+
+  25) [chromium-headless-new] › tests-visual/emission.spec.ts:217:9 › BI.W-DEMO-SOURCE-SCAN — the destructive Button label clears AA (the CVA-foreground emission fix) › dark mode — the destructive label ink resolves over bg-destructive at ≥4.5:1 
+
+    Error: the destructive Button must be present
+
+    expect(received).not.toBeNull()
+
+    Received: null
+
+      227 |             const readback = await labelContrast(page);
+      228 |             console.log(`[emission] destructive contrast (${mode}):`, JSON.stringify(readback));
+    > 229 |             expect(readback, "the destructive Button must be present").not.toBeNull();
+          |                                                                            ^
+      230 |             expect(
+      231 |                 readback!.ratio,
+      232 |                 "the destructive label/fill contrast must be measurable",
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/emission.spec.ts:229:76
+
+    Error Context: tests-visual/test-results/emission-BI-W-DEMO-SOURCE--6feaf-er-bg-destructive-at-≥4-5-1-chromium-headless-new/error-context.md
+
+  26) [chromium-headless-new] › tests-visual/esc-stack.spec.ts:72:5 › (a) Escape stack — inner pops first, then outer [light] 
+
+    Test timeout of 60000ms exceeded while running "beforeEach" hook.
+
+      57 | }
+      58 |
+    > 59 | test.beforeEach(async ({ page }) => {
+         |      ^
+      60 |     await page.goto("/containers/expandable-container", { waitUntil: "networkidle" });
+      61 |     await page.waitForTimeout(300);
+      62 |     await page
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/esc-stack.spec.ts:59:6
+
+    Error: locator.scrollIntoViewIfNeeded: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('.esc-stack-outer [data-part="trigger"][data-mode="expand"]').first()
+
+
+      63 |         .locator(`${OUTER} ${EXPAND}`)
+      64 |         .first()
+    > 65 |         .scrollIntoViewIfNeeded();
+         |          ^
+      66 | });
+      67 |
+      68 | for (const dark of [false, true]) {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/esc-stack.spec.ts:65:10
+
+    Error Context: tests-visual/test-results/esc-stack--a-Escape-stack--4f418-ops-first-then-outer-light--chromium-headless-new/error-context.md
+
+    Error Context: tests-visual/test-results/esc-stack--a-Escape-stack--4f418-ops-first-then-outer-light--chromium-headless-new/error-context.md
+
+  27) [chromium-headless-new] › tests-visual/esc-stack.spec.ts:113:5 › (b) focus model — move-in / trap / inert / restore [light] 
+
+    Test timeout of 60000ms exceeded while running "beforeEach" hook.
+
+      57 | }
+      58 |
+    > 59 | test.beforeEach(async ({ page }) => {
+         |      ^
+      60 |     await page.goto("/containers/expandable-container", { waitUntil: "networkidle" });
+      61 |     await page.waitForTimeout(300);
+      62 |     await page
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/esc-stack.spec.ts:59:6
+
+    Error: locator.scrollIntoViewIfNeeded: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('.esc-stack-outer [data-part="trigger"][data-mode="expand"]').first()
+
+
+      63 |         .locator(`${OUTER} ${EXPAND}`)
+      64 |         .first()
+    > 65 |         .scrollIntoViewIfNeeded();
+         |          ^
+      66 | });
+      67 |
+      68 | for (const dark of [false, true]) {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/esc-stack.spec.ts:65:10
+
+    Error Context: tests-visual/test-results/esc-stack--b-focus-model-—-move-in-trap-inert-restore-light--chromium-headless-new/error-context.md
+
+    Error Context: tests-visual/test-results/esc-stack--b-focus-model-—-move-in-trap-inert-restore-light--chromium-headless-new/error-context.md
+
+  28) [chromium-headless-new] › tests-visual/esc-stack.spec.ts:72:5 › (a) Escape stack — inner pops first, then outer [dark] 
+
+    Test timeout of 60000ms exceeded while running "beforeEach" hook.
+
+      57 | }
+      58 |
+    > 59 | test.beforeEach(async ({ page }) => {
+         |      ^
+      60 |     await page.goto("/containers/expandable-container", { waitUntil: "networkidle" });
+      61 |     await page.waitForTimeout(300);
+      62 |     await page
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/esc-stack.spec.ts:59:6
+
+    Error: locator.scrollIntoViewIfNeeded: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('.esc-stack-outer [data-part="trigger"][data-mode="expand"]').first()
+
+
+      63 |         .locator(`${OUTER} ${EXPAND}`)
+      64 |         .first()
+    > 65 |         .scrollIntoViewIfNeeded();
+         |          ^
+      66 | });
+      67 |
+      68 | for (const dark of [false, true]) {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/esc-stack.spec.ts:65:10
+
+    Error Context: tests-visual/test-results/esc-stack--a-Escape-stack--226c1-pops-first-then-outer-dark--chromium-headless-new/error-context.md
+
+    Error Context: tests-visual/test-results/esc-stack--a-Escape-stack--226c1-pops-first-then-outer-dark--chromium-headless-new/error-context.md
+
+  29) [chromium-headless-new] › tests-visual/esc-stack.spec.ts:113:5 › (b) focus model — move-in / trap / inert / restore [dark] 
+
+    Test timeout of 60000ms exceeded while running "beforeEach" hook.
+
+      57 | }
+      58 |
+    > 59 | test.beforeEach(async ({ page }) => {
+         |      ^
+      60 |     await page.goto("/containers/expandable-container", { waitUntil: "networkidle" });
+      61 |     await page.waitForTimeout(300);
+      62 |     await page
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/esc-stack.spec.ts:59:6
+
+    Error: locator.scrollIntoViewIfNeeded: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for locator('.esc-stack-outer [data-part="trigger"][data-mode="expand"]').first()
+
+
+      63 |         .locator(`${OUTER} ${EXPAND}`)
+      64 |         .first()
+    > 65 |         .scrollIntoViewIfNeeded();
+         |          ^
+      66 | });
+      67 |
+      68 | for (const dark of [false, true]) {
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/esc-stack.spec.ts:65:10
+
+    Error Context: tests-visual/test-results/esc-stack--b-focus-model-—-move-in-trap-inert-restore-dark--chromium-headless-new/error-context.md
+
+    Error Context: tests-visual/test-results/esc-stack--b-focus-model-—-move-in-trap-inert-restore-dark--chromium-headless-new/error-context.md
+
+  30) [chromium-headless-new] › tests-visual/expandable-container.spec.ts:82:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (a) inline renders real canvas + NO body-teleport @ mobile light 
+
+    Error: the inline slotted canvas must render
+
+    expect(locator).toBeVisible() failed
+
+    Locator: locator('code.fira-code').first()
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - the inline slotted canvas must render with timeout 5000ms
+      - waiting for locator('code.fira-code').first()
+
+
+      89 |                 // `bg-card` panel) is in flow — REAL, non-blank content.
+      90 |                 const canvas = page.locator("code.fira-code").first();
+    > 91 |                 await expect(canvas, "the inline slotted canvas must render").toBeVisible();
+         |                                                                               ^
+      92 |                 const box = await canvas.boundingBox();
+      93 |                 expect(box, "the inline canvas must have a non-zero painted box").not.toBeNull();
+      94 |                 expect(box!.width, "inline canvas width > 0").toBeGreaterThan(0);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/expandable-container.spec.ts:91:79
+
+    Error Context: tests-visual/test-results/expandable-container-expan-30ebc--body-teleport-mobile-light-chromium-headless-new/error-context.md
+
+  31) [chromium-headless-new] › tests-visual/expandable-container.spec.ts:111:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (b) fullscreen teleports + frosts over content (alpha < 1) @ mobile light 
+
+    Error: the fullscreen state teleports exactly ONE .glass-overlay onto document.body
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      127 |                     overlays,
+      128 |                     "the fullscreen state teleports exactly ONE .glass-overlay onto document.body",
+    > 129 |                 ).toBe(1);
+          |                   ^
+      130 |
+      131 |                 // It frosts over content — the glass-overlay tier resolves a TRANSLUCENT
+      132 |                 // background (alpha < 1, the un-walled frosted-over-content plate), NOT a
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/expandable-container.spec.ts:129:19
+
+    Error Context: tests-visual/test-results/expandable-container-expan-04fcf-ontent-alpha-1-mobile-light-chromium-headless-new/error-context.md
+
+  32) [chromium-headless-new] › tests-visual/expandable-container.spec.ts:82:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (a) inline renders real canvas + NO body-teleport @ mobile dark 
+
+    Error: the inline slotted canvas must render
+
+    expect(locator).toBeVisible() failed
+
+    Locator: locator('code.fira-code').first()
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - the inline slotted canvas must render with timeout 5000ms
+      - waiting for locator('code.fira-code').first()
+
+
+      89 |                 // `bg-card` panel) is in flow — REAL, non-blank content.
+      90 |                 const canvas = page.locator("code.fira-code").first();
+    > 91 |                 await expect(canvas, "the inline slotted canvas must render").toBeVisible();
+         |                                                                               ^
+      92 |                 const box = await canvas.boundingBox();
+      93 |                 expect(box, "the inline canvas must have a non-zero painted box").not.toBeNull();
+      94 |                 expect(box!.width, "inline canvas width > 0").toBeGreaterThan(0);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/expandable-container.spec.ts:91:79
+
+    Error Context: tests-visual/test-results/expandable-container-expan-59c32-O-body-teleport-mobile-dark-chromium-headless-new/error-context.md
+
+  33) [chromium-headless-new] › tests-visual/expandable-container.spec.ts:111:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (b) fullscreen teleports + frosts over content (alpha < 1) @ mobile dark 
+
+    Error: the fullscreen state teleports exactly ONE .glass-overlay onto document.body
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      127 |                     overlays,
+      128 |                     "the fullscreen state teleports exactly ONE .glass-overlay onto document.body",
+    > 129 |                 ).toBe(1);
+          |                   ^
+      130 |
+      131 |                 // It frosts over content — the glass-overlay tier resolves a TRANSLUCENT
+      132 |                 // background (alpha < 1, the un-walled frosted-over-content plate), NOT a
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/expandable-container.spec.ts:129:19
+
+    Error Context: tests-visual/test-results/expandable-container-expan-a6b78-content-alpha-1-mobile-dark-chromium-headless-new/error-context.md
+
+  34) [chromium-headless-new] › tests-visual/expandable-container.spec.ts:82:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (a) inline renders real canvas + NO body-teleport @ desktop light 
+
+    Error: the inline slotted canvas must render
+
+    expect(locator).toBeVisible() failed
+
+    Locator: locator('code.fira-code').first()
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - the inline slotted canvas must render with timeout 5000ms
+      - waiting for locator('code.fira-code').first()
+
+
+      89 |                 // `bg-card` panel) is in flow — REAL, non-blank content.
+      90 |                 const canvas = page.locator("code.fira-code").first();
+    > 91 |                 await expect(canvas, "the inline slotted canvas must render").toBeVisible();
+         |                                                                               ^
+      92 |                 const box = await canvas.boundingBox();
+      93 |                 expect(box, "the inline canvas must have a non-zero painted box").not.toBeNull();
+      94 |                 expect(box!.width, "inline canvas width > 0").toBeGreaterThan(0);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/expandable-container.spec.ts:91:79
+
+    Error Context: tests-visual/test-results/expandable-container-expan-1e2cd-body-teleport-desktop-light-chromium-headless-new/error-context.md
+
+  35) [chromium-headless-new] › tests-visual/expandable-container.spec.ts:111:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (b) fullscreen teleports + frosts over content (alpha < 1) @ desktop light 
+
+    Error: the fullscreen state teleports exactly ONE .glass-overlay onto document.body
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      127 |                     overlays,
+      128 |                     "the fullscreen state teleports exactly ONE .glass-overlay onto document.body",
+    > 129 |                 ).toBe(1);
+          |                   ^
+      130 |
+      131 |                 // It frosts over content — the glass-overlay tier resolves a TRANSLUCENT
+      132 |                 // background (alpha < 1, the un-walled frosted-over-content plate), NOT a
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/expandable-container.spec.ts:129:19
+
+    Error Context: tests-visual/test-results/expandable-container-expan-91b1c-ntent-alpha-1-desktop-light-chromium-headless-new/error-context.md
+
+  36) [chromium-headless-new] › tests-visual/expandable-container.spec.ts:82:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (a) inline renders real canvas + NO body-teleport @ desktop dark 
+
+    Error: the inline slotted canvas must render
+
+    expect(locator).toBeVisible() failed
+
+    Locator: locator('code.fira-code').first()
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - the inline slotted canvas must render with timeout 5000ms
+      - waiting for locator('code.fira-code').first()
+
+
+      89 |                 // `bg-card` panel) is in flow — REAL, non-blank content.
+      90 |                 const canvas = page.locator("code.fira-code").first();
+    > 91 |                 await expect(canvas, "the inline slotted canvas must render").toBeVisible();
+         |                                                                               ^
+      92 |                 const box = await canvas.boundingBox();
+      93 |                 expect(box, "the inline canvas must have a non-zero painted box").not.toBeNull();
+      94 |                 expect(box!.width, "inline canvas width > 0").toBeGreaterThan(0);
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/expandable-container.spec.ts:91:79
+
+    Error Context: tests-visual/test-results/expandable-container-expan-4ecd1--body-teleport-desktop-dark-chromium-headless-new/error-context.md
+
+  37) [chromium-headless-new] › tests-visual/expandable-container.spec.ts:111:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (b) fullscreen teleports + frosts over content (alpha < 1) @ desktop dark 
+
+    Error: the fullscreen state teleports exactly ONE .glass-overlay onto document.body
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      127 |                     overlays,
+      128 |                     "the fullscreen state teleports exactly ONE .glass-overlay onto document.body",
+    > 129 |                 ).toBe(1);
+          |                   ^
+      130 |
+      131 |                 // It frosts over content — the glass-overlay tier resolves a TRANSLUCENT
+      132 |                 // background (alpha < 1, the un-walled frosted-over-content plate), NOT a
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/expandable-container.spec.ts:129:19
+
+    Error Context: tests-visual/test-results/expandable-container-expan-2fc39-ontent-alpha-1-desktop-dark-chromium-headless-new/error-context.md
+
+  38) [chromium-headless-new] › tests-visual/eyebrow-union.spec.ts:81:9 › eyebrow-union (π — the ONE mono-caption eyebrow voice, fail-CLOSED) › one eyebrow voice — light 
+
+    Error: no .section-label / .text-mono-caption eyebrow on the route
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      90 |                 eyebrows.length,
+      91 |                 "no .section-label / .text-mono-caption eyebrow on the route",
+    > 92 |             ).toBeGreaterThan(0);
+         |               ^
+      93 |
+      94 |             for (const e of eyebrows) {
+      95 |                 // (a) ONE FAMILY — mono.
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/eyebrow-union.spec.ts:92:15
+
+    Error Context: tests-visual/test-results/eyebrow-union-eyebrow-unio-0ee62-D-one-eyebrow-voice-—-light-chromium-headless-new/error-context.md
+
+  39) [chromium-headless-new] › tests-visual/eyebrow-union.spec.ts:81:9 › eyebrow-union (π — the ONE mono-caption eyebrow voice, fail-CLOSED) › one eyebrow voice — dark 
+
+    Error: no .section-label / .text-mono-caption eyebrow on the route
+
+    expect(received).toBeGreaterThan(expected)
+
+    Expected: > 0
+    Received:   0
+
+      90 |                 eyebrows.length,
+      91 |                 "no .section-label / .text-mono-caption eyebrow on the route",
+    > 92 |             ).toBeGreaterThan(0);
+         |               ^
+      93 |
+      94 |             for (const e of eyebrows) {
+      95 |                 // (a) ONE FAMILY — mono.
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/eyebrow-union.spec.ts:92:15
+
+    Error Context: tests-visual/test-results/eyebrow-union-eyebrow-unio-9edd2-ED-one-eyebrow-voice-—-dark-chromium-headless-new/error-context.md
+
+  39 failed
+    [chromium-headless-new] › tests-visual/dock-morph-family.spec.ts:43:1 › (a)/(b) — the morph composites a transform over a reserved footprint (no per-frame relayout) 
+    [chromium-headless-new] › tests-visual/dock-morph-family.spec.ts:83:1 › (c) — under PRM the dock seats synchronously (every control inside the box, no sliver) 
+    [chromium-headless-new] › tests-visual/dock-morph-family.spec.ts:139:1 › (e) — a --dock-local-scale override on a dock scope paints a larger box (the @property thread) 
+    [chromium-headless-new] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (light) 
+    [chromium-headless-new] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — sidebar-vertical (dark) 
+    [chromium-headless-new] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (light) 
+    [chromium-headless-new] › tests-visual/dock-plate-clearance.spec.ts:174:9 › plate clearance — bottom-horizontal (dark) 
+    [chromium-headless-new] › tests-visual/dock-sections.spec.ts:88:1 › BA.W-DOCK-SECTIONS — the seam-anchored rail + dual overrun + flush fan-out on BOTH shell docks 
+    [chromium-headless-new] › tests-visual/dock-sections.spec.ts:204:1 › BA.W-DOCK-SECTIONS — G5: the dock box is INVIOLATE (the rail feeds no size) 
+    [chromium-headless-new] › tests-visual/drag-morph.spec.ts:70:1 › (a) drag frame-series — follow ~1:1, velocity-squish, fling to nearest 
+    [chromium-headless-new] › tests-visual/drag-morph.spec.ts:146:1 › (b) flick past midpoint snaps forward; slow short-of-midpoint snaps back 
+    [chromium-headless-new] › tests-visual/drag-morph.spec.ts:183:1 › (c) PRM — drag functions, snap commits, NO squish frames 
+    [chromium-headless-new] › tests-visual/drag-morph.spec.ts:226:1 › (d) keyboard roving — one tabstop, arrow/Home/End move focus + activate 
+    [chromium-headless-new] › tests-visual/drag-morph.spec.ts:286:1 › (e) liquid-tab reachability — grab lands on the indicator, drag starts, click un-regressed 
+    [chromium-headless-new] › tests-visual/easing-primitive.spec.ts:69:5 › BK #85 W-EASING — the published curve family (π) › P1 — the bezier stroke plots the real CubicBezier twin 
+    [chromium-headless-new] › tests-visual/easing-primitive.spec.ts:102:5 › BK #85 W-EASING — the published curve family (π) › P2 — the steps stroke is constructed, not sampled 
+    [chromium-headless-new] › tests-visual/easing-primitive.spec.ts:143:9 › BK #85 W-EASING — the published curve family (π) › P3 — the curve strokes the violet --motion-accent twin (light) 
+    [chromium-headless-new] › tests-visual/easing-primitive.spec.ts:143:9 › BK #85 W-EASING — the published curve family (π) › P3 — the curve strokes the violet --motion-accent twin (dark) 
+    [chromium-headless-new] › tests-visual/easing-primitive.spec.ts:172:5 › BK #85 W-EASING — the published curve family (π) › P4 — the readout is the re-parseable literal in both modes 
+    [chromium-headless-new] › tests-visual/easing-primitive.spec.ts:190:5 › BK #85 W-EASING — the published curve family (π) › P5 — the frame is constant and the plot is square (letterbox zero) 
+    [chromium-headless-new] › tests-visual/easing-primitive.spec.ts:238:5 › BK #85 W-EASING — the published curve family (π) › P11 — the draw-on sweeps over frames, and lands on one under reduce 
+    [chromium-headless-new] › tests-visual/emission.spec.ts:53:5 › BA.W-EMISSION — the Select collision-bound ships + bounds in-viewport › the opened Select content computes a real maxHeight, bottoms in-viewport, grows from the anchor 
+    [chromium-headless-new] › tests-visual/emission.spec.ts:112:5 › BA.W-EMISSION — the Slider size axis ships as real geometry › a standard size=md slider measures a real ≈1.25rem track (not 6px); the spectrum thumb is slim 
+    [chromium-headless-new] › tests-visual/emission.spec.ts:217:9 › BI.W-DEMO-SOURCE-SCAN — the destructive Button label clears AA (the CVA-foreground emission fix) › light mode — the destructive label ink resolves over bg-destructive at ≥4.5:1 
+    [chromium-headless-new] › tests-visual/emission.spec.ts:217:9 › BI.W-DEMO-SOURCE-SCAN — the destructive Button label clears AA (the CVA-foreground emission fix) › dark mode — the destructive label ink resolves over bg-destructive at ≥4.5:1 
+    [chromium-headless-new] › tests-visual/esc-stack.spec.ts:72:5 › (a) Escape stack — inner pops first, then outer [light] 
+    [chromium-headless-new] › tests-visual/esc-stack.spec.ts:113:5 › (b) focus model — move-in / trap / inert / restore [light] 
+    [chromium-headless-new] › tests-visual/esc-stack.spec.ts:72:5 › (a) Escape stack — inner pops first, then outer [dark] 
+    [chromium-headless-new] › tests-visual/esc-stack.spec.ts:113:5 › (b) focus model — move-in / trap / inert / restore [dark] 
+    [chromium-headless-new] › tests-visual/expandable-container.spec.ts:82:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (a) inline renders real canvas + NO body-teleport @ mobile light 
+    [chromium-headless-new] › tests-visual/expandable-container.spec.ts:111:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (b) fullscreen teleports + frosts over content (alpha < 1) @ mobile light 
+    [chromium-headless-new] › tests-visual/expandable-container.spec.ts:82:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (a) inline renders real canvas + NO body-teleport @ mobile dark 
+    [chromium-headless-new] › tests-visual/expandable-container.spec.ts:111:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (b) fullscreen teleports + frosts over content (alpha < 1) @ mobile dark 
+    [chromium-headless-new] › tests-visual/expandable-container.spec.ts:82:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (a) inline renders real canvas + NO body-teleport @ desktop light 
+    [chromium-headless-new] › tests-visual/expandable-container.spec.ts:111:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (b) fullscreen teleports + frosts over content (alpha < 1) @ desktop light 
+    [chromium-headless-new] › tests-visual/expandable-container.spec.ts:82:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (a) inline renders real canvas + NO body-teleport @ desktop dark 
+    [chromium-headless-new] › tests-visual/expandable-container.spec.ts:111:13 › expandable-container (π — the always-teleport redress, fail-CLOSED) › (b) fullscreen teleports + frosts over content (alpha < 1) @ desktop dark 
+    [chromium-headless-new] › tests-visual/eyebrow-union.spec.ts:81:9 › eyebrow-union (π — the ONE mono-caption eyebrow voice, fail-CLOSED) › one eyebrow voice — light 
+    [chromium-headless-new] › tests-visual/eyebrow-union.spec.ts:81:9 › eyebrow-union (π — the ONE mono-caption eyebrow voice, fail-CLOSED) › one eyebrow voice — dark 
+  1 skipped
+  12 passed (13.1m)

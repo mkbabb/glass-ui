@@ -1,0 +1,1940 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/playwright.config.ts",
+      "--project=chromium-headless-new",
+      "--workers=1",
+      "tests-visual/aurora-mediums-substrate.spec.ts",
+      "tests-visual/aurora-painterly-statistics.spec.ts",
+      "tests-visual/aurora-swraster.spec.ts",
+      "tests-visual/aurora-vibrancy.spec.ts",
+      "tests-visual/auth-shell-bg.spec.ts",
+      "tests-visual/ba-animate.spec.ts",
+      "tests-visual/blob-mood-live.spec.ts",
+      "tests-visual/blob-page.spec.ts",
+      "tests-visual/blob-painted-component.spec.ts",
+      "tests-visual/blob-render.spec.ts",
+      "tests-visual/blob-studio.spec.ts",
+      "tests-visual/blob-warm-default.spec.ts"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-5.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/close/suite/ch-part-ac.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5353",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5353",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "aurora-mediums-substrate.spec.ts",
+      "file": "aurora-mediums-substrate.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "aurora-mediums-substrate (π lane — oil-medium neutrality + organic grain)",
+          "file": "aurora-mediums-substrate.spec.ts",
+          "line": 115,
+          "column": 6,
+          "specs": [
+            {
+              "title": "the OIL medium bakes a structured organic field @ mobile (375×667)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 10570,
+                      "error": {
+                        "message": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-aurora-atoms-surface]') to be visible\u001b[22m\n",
+                        "stack": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-aurora-atoms-surface]') to be visible\u001b[22m\n\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/aurora-mediums-substrate.spec.ts:129:32",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/aurora-mediums-substrate.spec.ts",
+                          "column": 32,
+                          "line": 129
+                        },
+                        "snippet": "  127 |\n  128 |             const atomsSurface = page.locator(\"[data-aurora-atoms-surface]\");\n> 129 |             await atomsSurface.waitFor({ state: \"visible\", timeout: 10_000 });\n      |                                ^\n  130 |\n  131 |             // Select the OIL medium (the existing medium the substrate change must not\n  132 |             // regress) via the atoms `medium` control."
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/aurora-mediums-substrate.spec.ts",
+                            "column": 32,
+                            "line": 129
+                          },
+                          "message": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-aurora-atoms-surface]') to be visible\u001b[22m\n\n\n  127 |\n  128 |             const atomsSurface = page.locator(\"[data-aurora-atoms-surface]\");\n> 129 |             await atomsSurface.waitFor({ state: \"visible\", timeout: 10_000 });\n      |                                ^\n  130 |\n  131 |             // Select the OIL medium (the existing medium the substrate change must not\n  132 |             // regress) via the atoms `medium` control.\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/aurora-mediums-substrate.spec.ts:129:32"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-22T17:22:13.247Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/aurora-mediums-substrate-a-542a3-ganic-field-mobile-375×667--chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/aurora-mediums-substrate.spec.ts",
+                        "column": 32,
+                        "line": 129
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "f0b189948c8decca70bd-61894cc56d6b066a818c",
+              "file": "aurora-mediums-substrate.spec.ts",
+              "line": 117,
+              "column": 9
+            },
+            {
+              "title": "the OIL medium bakes a structured organic field @ tablet (1280×800)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 10374,
+                      "error": {
+                        "message": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-aurora-atoms-surface]') to be visible\u001b[22m\n",
+                        "stack": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-aurora-atoms-surface]') to be visible\u001b[22m\n\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/aurora-mediums-substrate.spec.ts:129:32",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/aurora-mediums-substrate.spec.ts",
+                          "column": 32,
+                          "line": 129
+                        },
+                        "snippet": "  127 |\n  128 |             const atomsSurface = page.locator(\"[data-aurora-atoms-surface]\");\n> 129 |             await atomsSurface.waitFor({ state: \"visible\", timeout: 10_000 });\n      |                                ^\n  130 |\n  131 |             // Select the OIL medium (the existing medium the substrate change must not\n  132 |             // regress) via the atoms `medium` control."
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/aurora-mediums-substrate.spec.ts",
+                            "column": 32,
+                            "line": 129
+                          },
+                          "message": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-aurora-atoms-surface]') to be visible\u001b[22m\n\n\n  127 |\n  128 |             const atomsSurface = page.locator(\"[data-aurora-atoms-surface]\");\n> 129 |             await atomsSurface.waitFor({ state: \"visible\", timeout: 10_000 });\n      |                                ^\n  130 |\n  131 |             // Select the OIL medium (the existing medium the substrate change must not\n  132 |             // regress) via the atoms `medium` control.\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/aurora-mediums-substrate.spec.ts:129:32"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-22T17:22:24.267Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/aurora-mediums-substrate-a-1ca66-anic-field-tablet-1280×800--chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/aurora-mediums-substrate.spec.ts",
+                        "column": 32,
+                        "line": 129
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "f0b189948c8decca70bd-b25bbcb79fed8c410df4",
+              "file": "aurora-mediums-substrate.spec.ts",
+              "line": 117,
+              "column": 9
+            },
+            {
+              "title": "the OIL medium bakes a structured organic field @ desktop (1440×900)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 240000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 10399,
+                      "error": {
+                        "message": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-aurora-atoms-surface]') to be visible\u001b[22m\n",
+                        "stack": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-aurora-atoms-surface]') to be visible\u001b[22m\n\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/aurora-mediums-substrate.spec.ts:129:32",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/aurora-mediums-substrate.spec.ts",
+                          "column": 32,
+                          "line": 129
+                        },
+                        "snippet": "  127 |\n  128 |             const atomsSurface = page.locator(\"[data-aurora-atoms-surface]\");\n> 129 |             await atomsSurface.waitFor({ state: \"visible\", timeout: 10_000 });\n      |                                ^\n  130 |\n  131 |             // Select the OIL medium (the existing medium the substrate change must not\n  132 |             // regress) via the atoms `medium` control."
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/aurora-mediums-substrate.spec.ts",
+                            "column": 32,
+                            "line": 129
+                          },
+                          "message": "TimeoutError: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-aurora-atoms-surface]') to be visible\u001b[22m\n\n\n  127 |\n  128 |             const atomsSurface = page.locator(\"[data-aurora-atoms-surface]\");\n> 129 |             await atomsSurface.waitFor({ state: \"visible\", timeout: 10_000 });\n      |                                ^\n  130 |\n  131 |             // Select the OIL medium (the existing medium the substrate change must not\n  132 |             // regress) via the atoms `medium` control.\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/aurora-mediums-substrate.spec.ts:129:32"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-22T17:22:35.126Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/aurora-mediums-substrate-a-a2011-nic-field-desktop-1440×900--chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/aurora-mediums-substrate.spec.ts",
+                        "column": 32,
+                        "line": 129
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "f0b189948c8decca70bd-3a4c39e65946d503edd7",
+              "file": "aurora-mediums-substrate.spec.ts",
+              "line": 117,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "aurora-painterly-statistics.spec.ts",
+      "file": "aurora-painterly-statistics.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "aurora-painterly-statistics (π lane — the operationalized 'stunning' bar)",
+          "file": "aurora-painterly-statistics.spec.ts",
+          "line": 142,
+          "column": 6,
+          "specs": [
+            {
+              "title": "van-Gogh + oil-pastel + crayon + oil read pigment-true and distinct @ tablet",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 15232,
+                      "error": {
+                        "message": "Error: served-app sentinel FAILED (fail-closed, NOT a device skip): the page at http://localhost:5353/substrates/aurora is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] marker is absent (served title: \"glass-ui Feature Demo\", expected \"glass-ui Feature Demo\"). A FOREIGN app is holding the demo port. Point GLASS_UI_DEMO_URL/PORT at the real glass-ui demo server before re-running. (The device-absence SKIP is reserved for the demo BEING served but the canvas not painting on a GPU-less runner — this is a different failure.)",
+                        "stack": "Error: served-app sentinel FAILED (fail-closed, NOT a device skip): the page at http://localhost:5353/substrates/aurora is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] marker is absent (served title: \"glass-ui Feature Demo\", expected \"glass-ui Feature Demo\"). A FOREIGN app is holding the demo port. Point GLASS_UI_DEMO_URL/PORT at the real glass-ui demo server before re-running. (The device-absence SKIP is reserved for the demo BEING served but the canvas not painting on a GPU-less runner — this is a different failure.)\n    at assertServedDemoAurora (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts:39:15)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/aurora-painterly-statistics.spec.ts:155:13",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts",
+                          "column": 15,
+                          "line": 39
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39mserved-app-sentinel.ts:39\n\n  37 |     } catch {\n  38 |         const title = await page.title().catch(() => \"<unreadable>\");\n> 39 |         throw new Error(\n     |               ^\n  40 |             `served-app sentinel FAILED (fail-closed, NOT a device skip): the page at ${page.url()} ` +\n  41 |                 `is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] ` +\n  42 |                 `marker is absent (served title: \"${title}\", expected \"${DEMO_TITLE}\"). A FOREIGN app ` +"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts",
+                            "column": 15,
+                            "line": 39
+                          },
+                          "message": "Error: served-app sentinel FAILED (fail-closed, NOT a device skip): the page at http://localhost:5353/substrates/aurora is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] marker is absent (served title: \"glass-ui Feature Demo\", expected \"glass-ui Feature Demo\"). A FOREIGN app is holding the demo port. Point GLASS_UI_DEMO_URL/PORT at the real glass-ui demo server before re-running. (The device-absence SKIP is reserved for the demo BEING served but the canvas not painting on a GPU-less runner — this is a different failure.)\n\n   at served-app-sentinel.ts:39\n\n  37 |     } catch {\n  38 |         const title = await page.title().catch(() => \"<unreadable>\");\n> 39 |         throw new Error(\n     |               ^\n  40 |             `served-app sentinel FAILED (fail-closed, NOT a device skip): the page at ${page.url()} ` +\n  41 |                 `is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] ` +\n  42 |                 `marker is absent (served title: \"${title}\", expected \"${DEMO_TITLE}\"). A FOREIGN app ` +\n    at assertServedDemoAurora (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts:39:15)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/aurora-painterly-statistics.spec.ts:155:13"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-22T17:22:45.985Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/aurora-painterly-statistic-0b3cf-nt-true-and-distinct-tablet-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts",
+                        "column": 15,
+                        "line": 39
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "fb9ace25d9636b93a7c3-d23441fcf644d17262a0",
+              "file": "aurora-painterly-statistics.spec.ts",
+              "line": 144,
+              "column": 9
+            },
+            {
+              "title": "van-Gogh + oil-pastel + crayon + oil read pigment-true and distinct @ desktop",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 15216,
+                      "error": {
+                        "message": "Error: served-app sentinel FAILED (fail-closed, NOT a device skip): the page at http://localhost:5353/substrates/aurora is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] marker is absent (served title: \"glass-ui Feature Demo\", expected \"glass-ui Feature Demo\"). A FOREIGN app is holding the demo port. Point GLASS_UI_DEMO_URL/PORT at the real glass-ui demo server before re-running. (The device-absence SKIP is reserved for the demo BEING served but the canvas not painting on a GPU-less runner — this is a different failure.)",
+                        "stack": "Error: served-app sentinel FAILED (fail-closed, NOT a device skip): the page at http://localhost:5353/substrates/aurora is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] marker is absent (served title: \"glass-ui Feature Demo\", expected \"glass-ui Feature Demo\"). A FOREIGN app is holding the demo port. Point GLASS_UI_DEMO_URL/PORT at the real glass-ui demo server before re-running. (The device-absence SKIP is reserved for the demo BEING served but the canvas not painting on a GPU-less runner — this is a different failure.)\n    at assertServedDemoAurora (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts:39:15)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/aurora-painterly-statistics.spec.ts:155:13",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts",
+                          "column": 15,
+                          "line": 39
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39mserved-app-sentinel.ts:39\n\n  37 |     } catch {\n  38 |         const title = await page.title().catch(() => \"<unreadable>\");\n> 39 |         throw new Error(\n     |               ^\n  40 |             `served-app sentinel FAILED (fail-closed, NOT a device skip): the page at ${page.url()} ` +\n  41 |                 `is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] ` +\n  42 |                 `marker is absent (served title: \"${title}\", expected \"${DEMO_TITLE}\"). A FOREIGN app ` +"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts",
+                            "column": 15,
+                            "line": 39
+                          },
+                          "message": "Error: served-app sentinel FAILED (fail-closed, NOT a device skip): the page at http://localhost:5353/substrates/aurora is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] marker is absent (served title: \"glass-ui Feature Demo\", expected \"glass-ui Feature Demo\"). A FOREIGN app is holding the demo port. Point GLASS_UI_DEMO_URL/PORT at the real glass-ui demo server before re-running. (The device-absence SKIP is reserved for the demo BEING served but the canvas not painting on a GPU-less runner — this is a different failure.)\n\n   at served-app-sentinel.ts:39\n\n  37 |     } catch {\n  38 |         const title = await page.title().catch(() => \"<unreadable>\");\n> 39 |         throw new Error(\n     |               ^\n  40 |             `served-app sentinel FAILED (fail-closed, NOT a device skip): the page at ${page.url()} ` +\n  41 |                 `is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] ` +\n  42 |                 `marker is absent (served title: \"${title}\", expected \"${DEMO_TITLE}\"). A FOREIGN app ` +\n    at assertServedDemoAurora (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts:39:15)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/aurora-painterly-statistics.spec.ts:155:13"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-22T17:23:01.682Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/aurora-painterly-statistic-b258a-t-true-and-distinct-desktop-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts",
+                        "column": 15,
+                        "line": 39
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "fb9ace25d9636b93a7c3-069a2eb0113e2442097c",
+              "file": "aurora-painterly-statistics.spec.ts",
+              "line": 144,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "aurora-swraster.spec.ts",
+      "file": "aurora-swraster.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "BB.W-AURORA-SWRASTER — headless luminance-faithful fallback",
+          "file": "aurora-swraster.spec.ts",
+          "line": 89,
+          "column": 6,
+          "specs": [
+            {
+              "title": "fallback ground matches the composite reference within the certify band (light)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 15211,
+                      "error": {
+                        "message": "Error: served-app sentinel FAILED (fail-closed, NOT a device skip): the page at http://localhost:5353/substrates/aurora is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] marker is absent (served title: \"glass-ui Feature Demo\", expected \"glass-ui Feature Demo\"). A FOREIGN app is holding the demo port. Point GLASS_UI_DEMO_URL/PORT at the real glass-ui demo server before re-running. (The device-absence SKIP is reserved for the demo BEING served but the canvas not painting on a GPU-less runner — this is a different failure.)",
+                        "stack": "Error: served-app sentinel FAILED (fail-closed, NOT a device skip): the page at http://localhost:5353/substrates/aurora is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] marker is absent (served title: \"glass-ui Feature Demo\", expected \"glass-ui Feature Demo\"). A FOREIGN app is holding the demo port. Point GLASS_UI_DEMO_URL/PORT at the real glass-ui demo server before re-running. (The device-absence SKIP is reserved for the demo BEING served but the canvas not painting on a GPU-less runner — this is a different failure.)\n    at assertServedDemoAurora (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts:39:15)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/aurora-swraster.spec.ts:97:13",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts",
+                          "column": 15,
+                          "line": 39
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39mserved-app-sentinel.ts:39\n\n  37 |     } catch {\n  38 |         const title = await page.title().catch(() => \"<unreadable>\");\n> 39 |         throw new Error(\n     |               ^\n  40 |             `served-app sentinel FAILED (fail-closed, NOT a device skip): the page at ${page.url()} ` +\n  41 |                 `is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] ` +\n  42 |                 `marker is absent (served title: \"${title}\", expected \"${DEMO_TITLE}\"). A FOREIGN app ` +"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts",
+                            "column": 15,
+                            "line": 39
+                          },
+                          "message": "Error: served-app sentinel FAILED (fail-closed, NOT a device skip): the page at http://localhost:5353/substrates/aurora is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] marker is absent (served title: \"glass-ui Feature Demo\", expected \"glass-ui Feature Demo\"). A FOREIGN app is holding the demo port. Point GLASS_UI_DEMO_URL/PORT at the real glass-ui demo server before re-running. (The device-absence SKIP is reserved for the demo BEING served but the canvas not painting on a GPU-less runner — this is a different failure.)\n\n   at served-app-sentinel.ts:39\n\n  37 |     } catch {\n  38 |         const title = await page.title().catch(() => \"<unreadable>\");\n> 39 |         throw new Error(\n     |               ^\n  40 |             `served-app sentinel FAILED (fail-closed, NOT a device skip): the page at ${page.url()} ` +\n  41 |                 `is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] ` +\n  42 |                 `marker is absent (served title: \"${title}\", expected \"${DEMO_TITLE}\"). A FOREIGN app ` +\n    at assertServedDemoAurora (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts:39:15)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/aurora-swraster.spec.ts:97:13"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-22T17:23:17.240Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/aurora-swraster-BB-W-AUROR-aaa49-hin-the-certify-band-light--chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts",
+                        "column": 15,
+                        "line": 39
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "04948b8c155915ba40c8-4b65149c7f2d72464a65",
+              "file": "aurora-swraster.spec.ts",
+              "line": 91,
+              "column": 9
+            },
+            {
+              "title": "fallback ground matches the composite reference within the certify band (dark)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 15199,
+                      "error": {
+                        "message": "Error: served-app sentinel FAILED (fail-closed, NOT a device skip): the page at http://localhost:5353/substrates/aurora is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] marker is absent (served title: \"glass-ui Feature Demo\", expected \"glass-ui Feature Demo\"). A FOREIGN app is holding the demo port. Point GLASS_UI_DEMO_URL/PORT at the real glass-ui demo server before re-running. (The device-absence SKIP is reserved for the demo BEING served but the canvas not painting on a GPU-less runner — this is a different failure.)",
+                        "stack": "Error: served-app sentinel FAILED (fail-closed, NOT a device skip): the page at http://localhost:5353/substrates/aurora is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] marker is absent (served title: \"glass-ui Feature Demo\", expected \"glass-ui Feature Demo\"). A FOREIGN app is holding the demo port. Point GLASS_UI_DEMO_URL/PORT at the real glass-ui demo server before re-running. (The device-absence SKIP is reserved for the demo BEING served but the canvas not painting on a GPU-less runner — this is a different failure.)\n    at assertServedDemoAurora (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts:39:15)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/aurora-swraster.spec.ts:97:13",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts",
+                          "column": 15,
+                          "line": 39
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39mserved-app-sentinel.ts:39\n\n  37 |     } catch {\n  38 |         const title = await page.title().catch(() => \"<unreadable>\");\n> 39 |         throw new Error(\n     |               ^\n  40 |             `served-app sentinel FAILED (fail-closed, NOT a device skip): the page at ${page.url()} ` +\n  41 |                 `is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] ` +\n  42 |                 `marker is absent (served title: \"${title}\", expected \"${DEMO_TITLE}\"). A FOREIGN app ` +"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts",
+                            "column": 15,
+                            "line": 39
+                          },
+                          "message": "Error: served-app sentinel FAILED (fail-closed, NOT a device skip): the page at http://localhost:5353/substrates/aurora is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] marker is absent (served title: \"glass-ui Feature Demo\", expected \"glass-ui Feature Demo\"). A FOREIGN app is holding the demo port. Point GLASS_UI_DEMO_URL/PORT at the real glass-ui demo server before re-running. (The device-absence SKIP is reserved for the demo BEING served but the canvas not painting on a GPU-less runner — this is a different failure.)\n\n   at served-app-sentinel.ts:39\n\n  37 |     } catch {\n  38 |         const title = await page.title().catch(() => \"<unreadable>\");\n> 39 |         throw new Error(\n     |               ^\n  40 |             `served-app sentinel FAILED (fail-closed, NOT a device skip): the page at ${page.url()} ` +\n  41 |                 `is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] ` +\n  42 |                 `marker is absent (served title: \"${title}\", expected \"${DEMO_TITLE}\"). A FOREIGN app ` +\n    at assertServedDemoAurora (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts:39:15)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/aurora-swraster.spec.ts:97:13"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-22T17:23:32.813Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/aurora-swraster-BB-W-AUROR-6b1f0-thin-the-certify-band-dark--chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts",
+                        "column": 15,
+                        "line": 39
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "04948b8c155915ba40c8-04429dd85a266c52d3ae",
+              "file": "aurora-swraster.spec.ts",
+              "line": 91,
+              "column": 9
+            },
+            {
+              "title": "a forced mode:capture mount under software raster does NOT hang the page",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 15213,
+                      "error": {
+                        "message": "Error: served-app sentinel FAILED (fail-closed, NOT a device skip): the page at http://localhost:5353/substrates/aurora is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] marker is absent (served title: \"glass-ui Feature Demo\", expected \"glass-ui Feature Demo\"). A FOREIGN app is holding the demo port. Point GLASS_UI_DEMO_URL/PORT at the real glass-ui demo server before re-running. (The device-absence SKIP is reserved for the demo BEING served but the canvas not painting on a GPU-less runner — this is a different failure.)",
+                        "stack": "Error: served-app sentinel FAILED (fail-closed, NOT a device skip): the page at http://localhost:5353/substrates/aurora is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] marker is absent (served title: \"glass-ui Feature Demo\", expected \"glass-ui Feature Demo\"). A FOREIGN app is holding the demo port. Point GLASS_UI_DEMO_URL/PORT at the real glass-ui demo server before re-running. (The device-absence SKIP is reserved for the demo BEING served but the canvas not painting on a GPU-less runner — this is a different failure.)\n    at assertServedDemoAurora (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts:39:15)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/aurora-swraster.spec.ts:233:9",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts",
+                          "column": 15,
+                          "line": 39
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39mserved-app-sentinel.ts:39\n\n  37 |     } catch {\n  38 |         const title = await page.title().catch(() => \"<unreadable>\");\n> 39 |         throw new Error(\n     |               ^\n  40 |             `served-app sentinel FAILED (fail-closed, NOT a device skip): the page at ${page.url()} ` +\n  41 |                 `is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] ` +\n  42 |                 `marker is absent (served title: \"${title}\", expected \"${DEMO_TITLE}\"). A FOREIGN app ` +"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts",
+                            "column": 15,
+                            "line": 39
+                          },
+                          "message": "Error: served-app sentinel FAILED (fail-closed, NOT a device skip): the page at http://localhost:5353/substrates/aurora is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] marker is absent (served title: \"glass-ui Feature Demo\", expected \"glass-ui Feature Demo\"). A FOREIGN app is holding the demo port. Point GLASS_UI_DEMO_URL/PORT at the real glass-ui demo server before re-running. (The device-absence SKIP is reserved for the demo BEING served but the canvas not painting on a GPU-less runner — this is a different failure.)\n\n   at served-app-sentinel.ts:39\n\n  37 |     } catch {\n  38 |         const title = await page.title().catch(() => \"<unreadable>\");\n> 39 |         throw new Error(\n     |               ^\n  40 |             `served-app sentinel FAILED (fail-closed, NOT a device skip): the page at ${page.url()} ` +\n  41 |                 `is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] ` +\n  42 |                 `marker is absent (served title: \"${title}\", expected \"${DEMO_TITLE}\"). A FOREIGN app ` +\n    at assertServedDemoAurora (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts:39:15)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/aurora-swraster.spec.ts:233:9"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-22T17:23:48.403Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/aurora-swraster-BB-W-AUROR-acf95-ster-does-NOT-hang-the-page-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts",
+                        "column": 15,
+                        "line": 39
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "04948b8c155915ba40c8-f557ea222d857f005330",
+              "file": "aurora-swraster.spec.ts",
+              "line": 231,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "aurora-vibrancy.spec.ts",
+      "file": "aurora-vibrancy.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "BI.W-AURORA-VIBRANCY — vibrant warm-sun field + the setting-sun pink note",
+          "file": "aurora-vibrancy.spec.ts",
+          "line": 68,
+          "column": 6,
+          "specs": [
+            {
+              "title": "each setting-sun candidate composites to a warm-sun-with-pink field (light)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 15199,
+                      "error": {
+                        "message": "Error: served-app sentinel FAILED (fail-closed, NOT a device skip): the page at http://localhost:5353/substrates/aurora is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] marker is absent (served title: \"glass-ui Feature Demo\", expected \"glass-ui Feature Demo\"). A FOREIGN app is holding the demo port. Point GLASS_UI_DEMO_URL/PORT at the real glass-ui demo server before re-running. (The device-absence SKIP is reserved for the demo BEING served but the canvas not painting on a GPU-less runner — this is a different failure.)",
+                        "stack": "Error: served-app sentinel FAILED (fail-closed, NOT a device skip): the page at http://localhost:5353/substrates/aurora is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] marker is absent (served title: \"glass-ui Feature Demo\", expected \"glass-ui Feature Demo\"). A FOREIGN app is holding the demo port. Point GLASS_UI_DEMO_URL/PORT at the real glass-ui demo server before re-running. (The device-absence SKIP is reserved for the demo BEING served but the canvas not painting on a GPU-less runner — this is a different failure.)\n    at assertServedDemoAurora (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts:39:15)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/aurora-vibrancy.spec.ts:73:13",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts",
+                          "column": 15,
+                          "line": 39
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39mserved-app-sentinel.ts:39\n\n  37 |     } catch {\n  38 |         const title = await page.title().catch(() => \"<unreadable>\");\n> 39 |         throw new Error(\n     |               ^\n  40 |             `served-app sentinel FAILED (fail-closed, NOT a device skip): the page at ${page.url()} ` +\n  41 |                 `is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] ` +\n  42 |                 `marker is absent (served title: \"${title}\", expected \"${DEMO_TITLE}\"). A FOREIGN app ` +"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts",
+                            "column": 15,
+                            "line": 39
+                          },
+                          "message": "Error: served-app sentinel FAILED (fail-closed, NOT a device skip): the page at http://localhost:5353/substrates/aurora is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] marker is absent (served title: \"glass-ui Feature Demo\", expected \"glass-ui Feature Demo\"). A FOREIGN app is holding the demo port. Point GLASS_UI_DEMO_URL/PORT at the real glass-ui demo server before re-running. (The device-absence SKIP is reserved for the demo BEING served but the canvas not painting on a GPU-less runner — this is a different failure.)\n\n   at served-app-sentinel.ts:39\n\n  37 |     } catch {\n  38 |         const title = await page.title().catch(() => \"<unreadable>\");\n> 39 |         throw new Error(\n     |               ^\n  40 |             `served-app sentinel FAILED (fail-closed, NOT a device skip): the page at ${page.url()} ` +\n  41 |                 `is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] ` +\n  42 |                 `marker is absent (served title: \"${title}\", expected \"${DEMO_TITLE}\"). A FOREIGN app ` +\n    at assertServedDemoAurora (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts:39:15)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/aurora-vibrancy.spec.ts:73:13"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-22T17:24:04.080Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/aurora-vibrancy-BI-W-AUROR-dfe80--sun-with-pink-field-light--chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts",
+                        "column": 15,
+                        "line": 39
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0081b58587671e00eda1-caff4308d8fd86b4ca08",
+              "file": "aurora-vibrancy.spec.ts",
+              "line": 70,
+              "column": 9
+            },
+            {
+              "title": "each setting-sun candidate composites to a warm-sun-with-pink field (dark)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 15212,
+                      "error": {
+                        "message": "Error: served-app sentinel FAILED (fail-closed, NOT a device skip): the page at http://localhost:5353/substrates/aurora is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] marker is absent (served title: \"glass-ui Feature Demo\", expected \"glass-ui Feature Demo\"). A FOREIGN app is holding the demo port. Point GLASS_UI_DEMO_URL/PORT at the real glass-ui demo server before re-running. (The device-absence SKIP is reserved for the demo BEING served but the canvas not painting on a GPU-less runner — this is a different failure.)",
+                        "stack": "Error: served-app sentinel FAILED (fail-closed, NOT a device skip): the page at http://localhost:5353/substrates/aurora is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] marker is absent (served title: \"glass-ui Feature Demo\", expected \"glass-ui Feature Demo\"). A FOREIGN app is holding the demo port. Point GLASS_UI_DEMO_URL/PORT at the real glass-ui demo server before re-running. (The device-absence SKIP is reserved for the demo BEING served but the canvas not painting on a GPU-less runner — this is a different failure.)\n    at assertServedDemoAurora (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts:39:15)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/aurora-vibrancy.spec.ts:73:13",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts",
+                          "column": 15,
+                          "line": 39
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39mserved-app-sentinel.ts:39\n\n  37 |     } catch {\n  38 |         const title = await page.title().catch(() => \"<unreadable>\");\n> 39 |         throw new Error(\n     |               ^\n  40 |             `served-app sentinel FAILED (fail-closed, NOT a device skip): the page at ${page.url()} ` +\n  41 |                 `is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] ` +\n  42 |                 `marker is absent (served title: \"${title}\", expected \"${DEMO_TITLE}\"). A FOREIGN app ` +"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts",
+                            "column": 15,
+                            "line": 39
+                          },
+                          "message": "Error: served-app sentinel FAILED (fail-closed, NOT a device skip): the page at http://localhost:5353/substrates/aurora is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] marker is absent (served title: \"glass-ui Feature Demo\", expected \"glass-ui Feature Demo\"). A FOREIGN app is holding the demo port. Point GLASS_UI_DEMO_URL/PORT at the real glass-ui demo server before re-running. (The device-absence SKIP is reserved for the demo BEING served but the canvas not painting on a GPU-less runner — this is a different failure.)\n\n   at served-app-sentinel.ts:39\n\n  37 |     } catch {\n  38 |         const title = await page.title().catch(() => \"<unreadable>\");\n> 39 |         throw new Error(\n     |               ^\n  40 |             `served-app sentinel FAILED (fail-closed, NOT a device skip): the page at ${page.url()} ` +\n  41 |                 `is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] ` +\n  42 |                 `marker is absent (served title: \"${title}\", expected \"${DEMO_TITLE}\"). A FOREIGN app ` +\n    at assertServedDemoAurora (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts:39:15)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/aurora-vibrancy.spec.ts:73:13"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-22T17:24:19.716Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/aurora-vibrancy-BI-W-AUROR-a07d4-m-sun-with-pink-field-dark--chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts",
+                        "column": 15,
+                        "line": 39
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0081b58587671e00eda1-013d99f8107ced20030a",
+              "file": "aurora-vibrancy.spec.ts",
+              "line": 70,
+              "column": 9
+            },
+            {
+              "title": "the pink note reads on the sun-core (candidate A) without over-rotating the field",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 15183,
+                      "error": {
+                        "message": "Error: served-app sentinel FAILED (fail-closed, NOT a device skip): the page at http://localhost:5353/substrates/aurora is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] marker is absent (served title: \"glass-ui Feature Demo\", expected \"glass-ui Feature Demo\"). A FOREIGN app is holding the demo port. Point GLASS_UI_DEMO_URL/PORT at the real glass-ui demo server before re-running. (The device-absence SKIP is reserved for the demo BEING served but the canvas not painting on a GPU-less runner — this is a different failure.)",
+                        "stack": "Error: served-app sentinel FAILED (fail-closed, NOT a device skip): the page at http://localhost:5353/substrates/aurora is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] marker is absent (served title: \"glass-ui Feature Demo\", expected \"glass-ui Feature Demo\"). A FOREIGN app is holding the demo port. Point GLASS_UI_DEMO_URL/PORT at the real glass-ui demo server before re-running. (The device-absence SKIP is reserved for the demo BEING served but the canvas not painting on a GPU-less runner — this is a different failure.)\n    at assertServedDemoAurora (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts:39:15)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/aurora-vibrancy.spec.ts:157:9",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts",
+                          "column": 15,
+                          "line": 39
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39mserved-app-sentinel.ts:39\n\n  37 |     } catch {\n  38 |         const title = await page.title().catch(() => \"<unreadable>\");\n> 39 |         throw new Error(\n     |               ^\n  40 |             `served-app sentinel FAILED (fail-closed, NOT a device skip): the page at ${page.url()} ` +\n  41 |                 `is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] ` +\n  42 |                 `marker is absent (served title: \"${title}\", expected \"${DEMO_TITLE}\"). A FOREIGN app ` +"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts",
+                            "column": 15,
+                            "line": 39
+                          },
+                          "message": "Error: served-app sentinel FAILED (fail-closed, NOT a device skip): the page at http://localhost:5353/substrates/aurora is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] marker is absent (served title: \"glass-ui Feature Demo\", expected \"glass-ui Feature Demo\"). A FOREIGN app is holding the demo port. Point GLASS_UI_DEMO_URL/PORT at the real glass-ui demo server before re-running. (The device-absence SKIP is reserved for the demo BEING served but the canvas not painting on a GPU-less runner — this is a different failure.)\n\n   at served-app-sentinel.ts:39\n\n  37 |     } catch {\n  38 |         const title = await page.title().catch(() => \"<unreadable>\");\n> 39 |         throw new Error(\n     |               ^\n  40 |             `served-app sentinel FAILED (fail-closed, NOT a device skip): the page at ${page.url()} ` +\n  41 |                 `is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] ` +\n  42 |                 `marker is absent (served title: \"${title}\", expected \"${DEMO_TITLE}\"). A FOREIGN app ` +\n    at assertServedDemoAurora (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts:39:15)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/aurora-vibrancy.spec.ts:157:9"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-22T17:24:35.308Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/aurora-vibrancy-BI-W-AUROR-45cfa-out-over-rotating-the-field-chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts",
+                        "column": 15,
+                        "line": 39
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0081b58587671e00eda1-7fba7c8ae34da19b12f8",
+              "file": "aurora-vibrancy.spec.ts",
+              "line": 155,
+              "column": 5
+            },
+            {
+              "title": "a caption over the setting-sun field behind warm glass clears AA (light)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 11,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 15179,
+                      "error": {
+                        "message": "Error: served-app sentinel FAILED (fail-closed, NOT a device skip): the page at http://localhost:5353/substrates/aurora is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] marker is absent (served title: \"glass-ui Feature Demo\", expected \"glass-ui Feature Demo\"). A FOREIGN app is holding the demo port. Point GLASS_UI_DEMO_URL/PORT at the real glass-ui demo server before re-running. (The device-absence SKIP is reserved for the demo BEING served but the canvas not painting on a GPU-less runner — this is a different failure.)",
+                        "stack": "Error: served-app sentinel FAILED (fail-closed, NOT a device skip): the page at http://localhost:5353/substrates/aurora is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] marker is absent (served title: \"glass-ui Feature Demo\", expected \"glass-ui Feature Demo\"). A FOREIGN app is holding the demo port. Point GLASS_UI_DEMO_URL/PORT at the real glass-ui demo server before re-running. (The device-absence SKIP is reserved for the demo BEING served but the canvas not painting on a GPU-less runner — this is a different failure.)\n    at assertServedDemoAurora (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts:39:15)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/aurora-vibrancy.spec.ts:203:13",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts",
+                          "column": 15,
+                          "line": 39
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39mserved-app-sentinel.ts:39\n\n  37 |     } catch {\n  38 |         const title = await page.title().catch(() => \"<unreadable>\");\n> 39 |         throw new Error(\n     |               ^\n  40 |             `served-app sentinel FAILED (fail-closed, NOT a device skip): the page at ${page.url()} ` +\n  41 |                 `is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] ` +\n  42 |                 `marker is absent (served title: \"${title}\", expected \"${DEMO_TITLE}\"). A FOREIGN app ` +"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts",
+                            "column": 15,
+                            "line": 39
+                          },
+                          "message": "Error: served-app sentinel FAILED (fail-closed, NOT a device skip): the page at http://localhost:5353/substrates/aurora is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] marker is absent (served title: \"glass-ui Feature Demo\", expected \"glass-ui Feature Demo\"). A FOREIGN app is holding the demo port. Point GLASS_UI_DEMO_URL/PORT at the real glass-ui demo server before re-running. (The device-absence SKIP is reserved for the demo BEING served but the canvas not painting on a GPU-less runner — this is a different failure.)\n\n   at served-app-sentinel.ts:39\n\n  37 |     } catch {\n  38 |         const title = await page.title().catch(() => \"<unreadable>\");\n> 39 |         throw new Error(\n     |               ^\n  40 |             `served-app sentinel FAILED (fail-closed, NOT a device skip): the page at ${page.url()} ` +\n  41 |                 `is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] ` +\n  42 |                 `marker is absent (served title: \"${title}\", expected \"${DEMO_TITLE}\"). A FOREIGN app ` +\n    at assertServedDemoAurora (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts:39:15)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/aurora-vibrancy.spec.ts:203:13"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-22T17:24:50.807Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/aurora-vibrancy-BI-W-AUROR-f9aab-warm-glass-clears-AA-light--chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts",
+                        "column": 15,
+                        "line": 39
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0081b58587671e00eda1-a5013127bdfbb2021a4d",
+              "file": "aurora-vibrancy.spec.ts",
+              "line": 200,
+              "column": 9
+            },
+            {
+              "title": "a caption over the setting-sun field behind warm glass clears AA (dark)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 12,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 15180,
+                      "error": {
+                        "message": "Error: served-app sentinel FAILED (fail-closed, NOT a device skip): the page at http://localhost:5353/substrates/aurora is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] marker is absent (served title: \"glass-ui Feature Demo\", expected \"glass-ui Feature Demo\"). A FOREIGN app is holding the demo port. Point GLASS_UI_DEMO_URL/PORT at the real glass-ui demo server before re-running. (The device-absence SKIP is reserved for the demo BEING served but the canvas not painting on a GPU-less runner — this is a different failure.)",
+                        "stack": "Error: served-app sentinel FAILED (fail-closed, NOT a device skip): the page at http://localhost:5353/substrates/aurora is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] marker is absent (served title: \"glass-ui Feature Demo\", expected \"glass-ui Feature Demo\"). A FOREIGN app is holding the demo port. Point GLASS_UI_DEMO_URL/PORT at the real glass-ui demo server before re-running. (The device-absence SKIP is reserved for the demo BEING served but the canvas not painting on a GPU-less runner — this is a different failure.)\n    at assertServedDemoAurora (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts:39:15)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/aurora-vibrancy.spec.ts:203:13",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts",
+                          "column": 15,
+                          "line": 39
+                        },
+                        "snippet": "\u001b[90m   at \u001b[39mserved-app-sentinel.ts:39\n\n  37 |     } catch {\n  38 |         const title = await page.title().catch(() => \"<unreadable>\");\n> 39 |         throw new Error(\n     |               ^\n  40 |             `served-app sentinel FAILED (fail-closed, NOT a device skip): the page at ${page.url()} ` +\n  41 |                 `is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] ` +\n  42 |                 `marker is absent (served title: \"${title}\", expected \"${DEMO_TITLE}\"). A FOREIGN app ` +"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts",
+                            "column": 15,
+                            "line": 39
+                          },
+                          "message": "Error: served-app sentinel FAILED (fail-closed, NOT a device skip): the page at http://localhost:5353/substrates/aurora is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] marker is absent (served title: \"glass-ui Feature Demo\", expected \"glass-ui Feature Demo\"). A FOREIGN app is holding the demo port. Point GLASS_UI_DEMO_URL/PORT at the real glass-ui demo server before re-running. (The device-absence SKIP is reserved for the demo BEING served but the canvas not painting on a GPU-less runner — this is a different failure.)\n\n   at served-app-sentinel.ts:39\n\n  37 |     } catch {\n  38 |         const title = await page.title().catch(() => \"<unreadable>\");\n> 39 |         throw new Error(\n     |               ^\n  40 |             `served-app sentinel FAILED (fail-closed, NOT a device skip): the page at ${page.url()} ` +\n  41 |                 `is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] ` +\n  42 |                 `marker is absent (served title: \"${title}\", expected \"${DEMO_TITLE}\"). A FOREIGN app ` +\n    at assertServedDemoAurora (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts:39:15)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/aurora-vibrancy.spec.ts:203:13"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-22T17:25:06.417Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/aurora-vibrancy-BI-W-AUROR-89f68--warm-glass-clears-AA-dark--chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/served-app-sentinel.ts",
+                        "column": 15,
+                        "line": 39
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "0081b58587671e00eda1-10ba8d97ac54b9a0c60d",
+              "file": "aurora-vibrancy.spec.ts",
+              "line": 200,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "auth-shell-bg.spec.ts",
+      "file": "auth-shell-bg.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "auth-shell-bg (π lane — one-GL budget, light)",
+          "file": "auth-shell-bg.spec.ts",
+          "line": 111,
+          "column": 10,
+          "specs": [
+            {
+              "title": "ONE-GL + NO-FOURIER + FORM-CLEAN (light)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 11360,
+                      "error": {
+                        "message": "Error: the email input is present\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                        "stack": "Error: the email input is present\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/auth-shell-bg.spec.ts:132:67",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/auth-shell-bg.spec.ts",
+                          "column": 67,
+                          "line": 132
+                        },
+                        "snippet": "  130 |\n  131 |             // 3. FORM-CLEAN — the auth form reads clean over the calm backdrop.\n> 132 |             expect(census.hasEmail, \"the email input is present\").toBe(true);\n      |                                                                   ^\n  133 |             expect(census.hasPassword, \"the password input is present\").toBe(true);\n  134 |             expect(census.hasSignIn, \"the sign-in button is present\").toBe(true);\n  135 |         });"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/auth-shell-bg.spec.ts",
+                            "column": 67,
+                            "line": 132
+                          },
+                          "message": "Error: the email input is present\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  130 |\n  131 |             // 3. FORM-CLEAN — the auth form reads clean over the calm backdrop.\n> 132 |             expect(census.hasEmail, \"the email input is present\").toBe(true);\n      |                                                                   ^\n  133 |             expect(census.hasPassword, \"the password input is present\").toBe(true);\n  134 |             expect(census.hasSignIn, \"the sign-in button is present\").toBe(true);\n  135 |         });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/auth-shell-bg.spec.ts:132:67"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "[auth-shell-bg light] census {\"liveGl\":1,\"canvasCount\":1,\"fullBleedGl\":0,\"hasEmail\":false,\"hasPassword\":false,\"hasSignIn\":true}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-22T17:25:22.004Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/auth-shell-bg-auth-shell-b-0557d-O-FOURIER-FORM-CLEAN-light--chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/auth-shell-bg.spec.ts",
+                        "column": 67,
+                        "line": 132
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "44c12cda4362b4bc728a-221e0f615d68f7413b79",
+              "file": "auth-shell-bg.spec.ts",
+              "line": 112,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "auth-shell-bg (π lane — one-GL budget, dark)",
+          "file": "auth-shell-bg.spec.ts",
+          "line": 111,
+          "column": 10,
+          "specs": [
+            {
+              "title": "ONE-GL + NO-FOURIER + FORM-CLEAN (dark)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 14,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 11385,
+                      "error": {
+                        "message": "Error: the email input is present\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                        "stack": "Error: the email input is present\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/auth-shell-bg.spec.ts:132:67",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/auth-shell-bg.spec.ts",
+                          "column": 67,
+                          "line": 132
+                        },
+                        "snippet": "  130 |\n  131 |             // 3. FORM-CLEAN — the auth form reads clean over the calm backdrop.\n> 132 |             expect(census.hasEmail, \"the email input is present\").toBe(true);\n      |                                                                   ^\n  133 |             expect(census.hasPassword, \"the password input is present\").toBe(true);\n  134 |             expect(census.hasSignIn, \"the sign-in button is present\").toBe(true);\n  135 |         });"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/auth-shell-bg.spec.ts",
+                            "column": 67,
+                            "line": 132
+                          },
+                          "message": "Error: the email input is present\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  130 |\n  131 |             // 3. FORM-CLEAN — the auth form reads clean over the calm backdrop.\n> 132 |             expect(census.hasEmail, \"the email input is present\").toBe(true);\n      |                                                                   ^\n  133 |             expect(census.hasPassword, \"the password input is present\").toBe(true);\n  134 |             expect(census.hasSignIn, \"the sign-in button is present\").toBe(true);\n  135 |         });\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/auth-shell-bg.spec.ts:132:67"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "[auth-shell-bg dark] census {\"liveGl\":1,\"canvasCount\":1,\"fullBleedGl\":0,\"hasEmail\":false,\"hasPassword\":false,\"hasSignIn\":true}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-22T17:25:33.674Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/auth-shell-bg-auth-shell-b-21db9-NO-FOURIER-FORM-CLEAN-dark--chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/auth-shell-bg.spec.ts",
+                        "column": 67,
+                        "line": 132
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "44c12cda4362b4bc728a-7be76405a446b49d788d",
+              "file": "auth-shell-bg.spec.ts",
+              "line": 112,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "ba-animate.spec.ts",
+      "file": "ba-animate.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "(b) the dock scroll-progress ring tracks the route scroller; the standalone bar is gone",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 15,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1168,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/ba-animate.spec.ts:61:21",
+                    "location": {
+                      "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/ba-animate.spec.ts",
+                      "column": 21,
+                      "line": 61
+                    },
+                    "snippet": "  59 |         };\n  60 |     });\n> 61 |     expect(reg).not.toBeNull();\n     |                     ^\n  62 |     // The standalone route-scroller bar is RETIRED (clean break, no alias).\n  63 |     expect(reg!.barSurvives).toBe(false);\n  64 |     // The vertical rail wears the inline-end-edge coverage (the scrollbar"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/ba-animate.spec.ts",
+                        "column": 21,
+                        "line": 61
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mnot\u001b[2m.\u001b[22mtoBeNull\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mnull\u001b[39m\n\n  59 |         };\n  60 |     });\n> 61 |     expect(reg).not.toBeNull();\n     |                     ^\n  62 |     // The standalone route-scroller bar is RETIRED (clean break, no alias).\n  63 |     expect(reg!.barSurvives).toBe(false);\n  64 |     // The vertical rail wears the inline-end-edge coverage (the scrollbar\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/ba-animate.spec.ts:61:21"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T17:25:45.399Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/ba-animate--b-the-dock-scr-c7dd9--the-standalone-bar-is-gone-chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/ba-animate.spec.ts",
+                    "column": 21,
+                    "line": 61
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a7d89e5d32df5669330d-4fb53a84238f0859efd9",
+          "file": "ba-animate.spec.ts",
+          "line": 40,
+          "column": 1
+        },
+        {
+          "title": "(d) the hero <h1> fade-rises on entrance with no overshoot past 0",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 860,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T17:25:46.894Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a7d89e5d32df5669330d-56bedce75b1d32f27f61",
+          "file": "ba-animate.spec.ts",
+          "line": 98,
+          "column": 1
+        },
+        {
+          "title": "captures — / in both modes",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 16,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2893,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T17:25:47.826Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a7d89e5d32df5669330d-d2a4aecfada697fe9490",
+          "file": "ba-animate.spec.ts",
+          "line": 130,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "blob-mood-live.spec.ts",
+      "file": "blob-mood-live.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "blob-mood-live (π lane — the manual-mood DELTA + PERSISTENCE)",
+          "file": "blob-mood-live.spec.ts",
+          "line": 107,
+          "column": 6,
+          "specs": [
+            {
+              "title": "a manual setMood drives a VISIBLE mood-derived render delta that PERSISTS (D7 — the auto-mood clobber is fixed)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 16,
+                      "parallelIndex": 0,
+                      "status": "timedOut",
+                      "duration": 180014,
+                      "error": {
+                        "message": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m",
+                        "stack": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m"
+                      },
+                      "errors": [
+                        {
+                          "message": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m"
+                        },
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/blob-mood-live.spec.ts",
+                            "column": 64,
+                            "line": 104
+                          },
+                          "message": "Error: locator.click: Test timeout of 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('tab', { name: 'Shy' }).first()\u001b[22m\n\n\n  102 | async function clickMood(page: Page, mood: string): Promise<void> {\n  103 |     const presetLabel = MOOD_PRESET[mood] ?? mood;\n> 104 |     await page.getByRole(\"tab\", { name: presetLabel }).first().click();\n      |                                                                ^\n  105 | }\n  106 |\n  107 | test.describe(\"blob-mood-live (π lane — the manual-mood DELTA + PERSISTENCE)\", () => {\n    at clickMood (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/blob-mood-live.spec.ts:104:64)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/blob-mood-live.spec.ts:121:15"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-22T17:25:50.736Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/blob-mood-live-blob-mood-l-bc0a4-auto-mood-clobber-is-fixed--chromium-headless-new/error-context.md"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "19a081c47eb79650a360-17dc8d6254d58743fe90",
+              "file": "blob-mood-live.spec.ts",
+              "line": 108,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "blob-page.spec.ts",
+      "file": "blob-page.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "blob-page (π lane — the TRUE blob-page defect, fail-CLOSED)",
+          "file": "blob-page.spec.ts",
+          "line": 180,
+          "column": 6,
+          "specs": [],
+          "suites": [
+            {
+              "title": "",
+              "file": "blob-page.spec.ts",
+              "line": 189,
+              "column": 10,
+              "specs": [
+                {
+                  "title": "SATELLITES-SEPARATE — the orbit show reads on the page-default bead (CV ≫ baseline OR a separated component), contained",
+                  "ok": false,
+                  "tags": [],
+                  "tests": [
+                    {
+                      "timeout": 180000,
+                      "annotations": [],
+                      "expectedStatus": "passed",
+                      "projectId": "chromium-headless-new",
+                      "projectName": "chromium-headless-new",
+                      "results": [
+                        {
+                          "workerIndex": 17,
+                          "parallelIndex": 0,
+                          "status": "failed",
+                          "duration": 20561,
+                          "error": {
+                            "message": "Error: could not parse the page's orbitRadius override from blob.vue — the source-witness cannot confirm orbitRadius > bodyRadius\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31mNaN\u001b[39m",
+                            "stack": "Error: could not parse the page's orbitRadius override from blob.vue — the source-witness cannot confirm orbitRadius > bodyRadius\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31mNaN\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/blob-page.spec.ts:235:15",
+                            "location": {
+                              "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/blob-page.spec.ts",
+                              "column": 15,
+                              "line": 235
+                            },
+                            "snippet": "  233 |                 orbit,\n  234 |                 `could not parse the page's orbitRadius override from blob.vue — the source-witness cannot confirm orbitRadius > bodyRadius`,\n> 235 |             ).toBeGreaterThan(0);\n      |               ^\n  236 |             expect(\n  237 |                 orbit,\n  238 |                 `the page's effective orbitRadius ${orbit} is NOT greater than bodyRadius ${body} — the satellites still orbit INSIDE the body skin (the C6-3 geometry: orbit 0.17 < body 0.22). The source MUST lift orbitRadius past bodyRadius.`,"
+                          },
+                          "errors": [
+                            {
+                              "location": {
+                                "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/blob-page.spec.ts",
+                                "column": 15,
+                                "line": 235
+                              },
+                              "message": "Error: could not parse the page's orbitRadius override from blob.vue — the source-witness cannot confirm orbitRadius > bodyRadius\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: > \u001b[32m0\u001b[39m\nReceived:   \u001b[31mNaN\u001b[39m\n\n  233 |                 orbit,\n  234 |                 `could not parse the page's orbitRadius override from blob.vue — the source-witness cannot confirm orbitRadius > bodyRadius`,\n> 235 |             ).toBeGreaterThan(0);\n      |               ^\n  236 |             expect(\n  237 |                 orbit,\n  238 |                 `the page's effective orbitRadius ${orbit} is NOT greater than bodyRadius ${body} — the satellites still orbit INSIDE the body skin (the C6-3 geometry: orbit 0.17 < body 0.22). The source MUST lift orbitRadius past bodyRadius.`,\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/blob-page.spec.ts:235:15"
+                            }
+                          ],
+                          "stdout": [],
+                          "stderr": [],
+                          "retry": 0,
+                          "startTime": "2026-11-22T17:28:51.056Z",
+                          "annotations": [],
+                          "attachments": [
+                            {
+                              "name": "error-context",
+                              "contentType": "text/markdown",
+                              "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/blob-page-blob-page-π-lane-630c0-parated-component-contained-chromium-headless-new/error-context.md"
+                            }
+                          ],
+                          "errorLocation": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/blob-page.spec.ts",
+                            "column": 15,
+                            "line": 235
+                          }
+                        }
+                      ],
+                      "status": "unexpected"
+                    }
+                  ],
+                  "id": "f1de0e6e635e535bb259-ae818744deabcc1587bd",
+                  "file": "blob-page.spec.ts",
+                  "line": 191,
+                  "column": 9
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "blob-painted-component.spec.ts",
+      "file": "blob-painted-component.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "P047 reads the origin component from both renderer buffers at DPR 1 and 2",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-headless-new",
+              "projectName": "chromium-headless-new",
+              "results": [
+                {
+                  "workerIndex": 18,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 289,
+                  "error": {
+                    "message": "Error: page.evaluate: TypeError: renderer.resolveBlobSettledFrame is not a function\n    at eval (eval at evaluate (:303:30), <anonymous>:76:39)\n    at async <anonymous>:329:30",
+                    "stack": "Error: page.evaluate: TypeError: renderer.resolveBlobSettledFrame is not a function\n    at eval (eval at evaluate (:303:30), <anonymous>:76:39)\n    at async <anonymous>:329:30\n    at eval (eval at evaluate (:303:30), <anonymous>:76:39)\n    at async <anonymous>:329:30\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/blob-painted-component.spec.ts:46:37",
+                    "location": {
+                      "file": "eval at evaluate (:303:30), <anonymous>",
+                      "column": 39,
+                      "line": 76
+                    }
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "eval at evaluate (:303:30), <anonymous>",
+                        "column": 39,
+                        "line": 76
+                      },
+                      "message": "Error: page.evaluate: TypeError: renderer.resolveBlobSettledFrame is not a function\n    at eval (eval at evaluate (:303:30), <anonymous>:76:39)\n    at async <anonymous>:329:30\n    at eval (eval at evaluate (:303:30), <anonymous>:76:39)\n    at async <anonymous>:329:30\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/blob-painted-component.spec.ts:46:37"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T17:29:11.958Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/blob-painted-component-P04-e94f4-erer-buffers-at-DPR-1-and-2-chromium-headless-new/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "eval at evaluate (:303:30), <anonymous>",
+                    "column": 39,
+                    "line": 76
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "a6e2194cc2706b9644cc-62d5d3741552a6f9f953",
+          "file": "blob-painted-component.spec.ts",
+          "line": 30,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "blob-render.spec.ts",
+      "file": "blob-render.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "blob-render (π lane — fail-CLOSED, the blob's CLOSING gate)",
+          "file": "blob-render.spec.ts",
+          "line": 525,
+          "column": 6,
+          "specs": [
+            {
+              "title": "blob renders a CONTAINED LIT LIVING droplet on BLOB_CONFIG_DEFAULTS (four-side containment + dome variance + silhouette + field)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 19,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3525,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-22T17:29:12.588Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1238e1c6916d493c0e7e-b3db9497467a94a5f303",
+              "file": "blob-render.spec.ts",
+              "line": 526,
+              "column": 5
+            },
+            {
+              "title": "blob LEANS toward a synthetic hover-flick (the wired interaction is legible within the footprint)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 19,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2295,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-22T17:29:16.184Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1238e1c6916d493c0e7e-edab4b8f82ed4b618980",
+              "file": "blob-render.spec.ts",
+              "line": 660,
+              "column": 5
+            },
+            {
+              "title": "EVERY grid blob paints visibly against the page background in BOTH light and dark (the var(--primary)-dark-wash guard)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 19,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2718,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-22T17:29:18.484Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1238e1c6916d493c0e7e-882e265d4690891bf29b",
+              "file": "blob-render.spec.ts",
+              "line": 707,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "blob-studio.spec.ts",
+      "file": "blob-studio.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "W-BLOB-STUDIO capture — light",
+          "file": "blob-studio.spec.ts",
+          "line": 187,
+          "column": 10,
+          "specs": [
+            {
+              "title": "studio refinement reads (light)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 19,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1437,
+                      "error": {
+                        "message": "Error: the orbitRadius slider dialed to its 0.42 max (the live knob)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                        "stack": "Error: the orbitRadius slider dialed to its 0.42 max (the live knob)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/blob-studio.spec.ts:242:93",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/blob-studio.spec.ts",
+                          "column": 93,
+                          "line": 242
+                        },
+                        "snippet": "  240 |             // ── §3.3 SATELLITE-SEPARATION — dial orbitRadius to MAX, sample a cycle ──\n  241 |             const dialed = await dialOrbitToMax(page);\n> 242 |             expect(dialed, \"the orbitRadius slider dialed to its 0.42 max (the live knob)\").toBe(true);\n      |                                                                                             ^\n  243 |             await page.waitForTimeout(600);\n  244 |             let peakComponents = 1;\n  245 |             for (let f = 0; f < SAT_FRAMES; f++) {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/blob-studio.spec.ts",
+                            "column": 93,
+                            "line": 242
+                          },
+                          "message": "Error: the orbitRadius slider dialed to its 0.42 max (the live knob)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  240 |             // ── §3.3 SATELLITE-SEPARATION — dial orbitRadius to MAX, sample a cycle ──\n  241 |             const dialed = await dialOrbitToMax(page);\n> 242 |             expect(dialed, \"the orbitRadius slider dialed to its 0.42 max (the live knob)\").toBe(true);\n      |                                                                                             ^\n  243 |             await page.waitForTimeout(600);\n  244 |             let peakComponents = 1;\n  245 |             for (let f = 0; f < SAT_FRAMES; f++) {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/blob-studio.spec.ts:242:93"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-22T17:29:21.215Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/blob-studio-W-BLOB-STUDIO--ae1bb-dio-refinement-reads-light--chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/blob-studio.spec.ts",
+                        "column": 93,
+                        "line": 242
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "18896e36976b3d8fae5a-87ebef78b336d290d3f6",
+              "file": "blob-studio.spec.ts",
+              "line": 190,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "W-BLOB-STUDIO capture — dark",
+          "file": "blob-studio.spec.ts",
+          "line": 187,
+          "column": 10,
+          "specs": [
+            {
+              "title": "studio refinement reads (dark)",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 20,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 1517,
+                      "error": {
+                        "message": "Error: the orbitRadius slider dialed to its 0.42 max (the live knob)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                        "stack": "Error: the orbitRadius slider dialed to its 0.42 max (the live knob)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/blob-studio.spec.ts:242:93",
+                        "location": {
+                          "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/blob-studio.spec.ts",
+                          "column": 93,
+                          "line": 242
+                        },
+                        "snippet": "  240 |             // ── §3.3 SATELLITE-SEPARATION — dial orbitRadius to MAX, sample a cycle ──\n  241 |             const dialed = await dialOrbitToMax(page);\n> 242 |             expect(dialed, \"the orbitRadius slider dialed to its 0.42 max (the live knob)\").toBe(true);\n      |                                                                                             ^\n  243 |             await page.waitForTimeout(600);\n  244 |             let peakComponents = 1;\n  245 |             for (let f = 0; f < SAT_FRAMES; f++) {"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/blob-studio.spec.ts",
+                            "column": 93,
+                            "line": 242
+                          },
+                          "message": "Error: the orbitRadius slider dialed to its 0.42 max (the live knob)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  240 |             // ── §3.3 SATELLITE-SEPARATION — dial orbitRadius to MAX, sample a cycle ──\n  241 |             const dialed = await dialOrbitToMax(page);\n> 242 |             expect(dialed, \"the orbitRadius slider dialed to its 0.42 max (the live knob)\").toBe(true);\n      |                                                                                             ^\n  243 |             await page.waitForTimeout(600);\n  244 |             let peakComponents = 1;\n  245 |             for (let f = 0; f < SAT_FRAMES; f++) {\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/blob-studio.spec.ts:242:93"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-22T17:29:22.911Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results/blob-studio-W-BLOB-STUDIO--24c2a-udio-refinement-reads-dark--chromium-headless-new/error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/blob-studio.spec.ts",
+                        "column": 93,
+                        "line": 242
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "18896e36976b3d8fae5a-774a12131dd2ba41349c",
+              "file": "blob-studio.spec.ts",
+              "line": 190,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "blob-warm-default.spec.ts",
+      "file": "blob-warm-default.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "blob-warm-default (π lane — fail-CLOSED, light)",
+          "file": "blob-warm-default.spec.ts",
+          "line": 183,
+          "column": 10,
+          "specs": [
+            {
+              "title": "the DEFAULT <Blob> body reads as a WARM-CREAM bead in light mode (resting body mean OKLCh-L >= 0.62)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 21,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3500,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-22T17:29:24.788Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "76c6ea1c1168a20b6e1a-18ef2754ad635ecac5a6",
+              "file": "blob-warm-default.spec.ts",
+              "line": 185,
+              "column": 9
+            }
+          ]
+        },
+        {
+          "title": "blob-warm-default (π lane — fail-CLOSED, dark)",
+          "file": "blob-warm-default.spec.ts",
+          "line": 183,
+          "column": 10,
+          "specs": [
+            {
+              "title": "the DEFAULT <Blob> body reads as a WARM-CREAM bead in dark mode (resting body mean OKLCh-L >= 0.62)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium-headless-new",
+                  "projectName": "chromium-headless-new",
+                  "results": [
+                    {
+                      "workerIndex": 21,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3455,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-11-22T17:29:28.373Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "76c6ea1c1168a20b6e1a-38cd184b8e2ede0c0e83",
+              "file": "blob-warm-default.spec.ts",
+              "line": 185,
+              "column": 9
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-22T17:22:11.279Z",
+    "duration": 440593.919,
+    "expected": 7,
+    "skipped": 0,
+    "unexpected": 21,
+    "flaky": 0
+  }
+}

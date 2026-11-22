@@ -1,0 +1,141 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/node_modules/.bin/playwright",
+      "test",
+      "-c",
+      "tests-visual/playwright.config.ts",
+      "--project=chromium-headless-new",
+      "--workers=1",
+      "tests-visual/blob3-interaction-capture.spec.ts",
+      "tests-visual/button-glass.spec.ts",
+      "tests-visual/card-composite.spec.ts",
+      "tests-visual/card-padding.spec.ts",
+      "tests-visual/carousel-rebuild.spec.ts",
+      "tests-visual/code-blocks.spec.ts",
+      "tests-visual/coherence-congruence.spec.ts",
+      "tests-visual/config-chassis.spec.ts",
+      "tests-visual/config-in-sheet.spec.ts",
+      "tests-visual/config-right.spec.ts",
+      "tests-visual/constellation.spec.ts"
+    ],
+    "configFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/playwright.config.ts",
+    "rootDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {},
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "chromium-headless-new",
+        "name": "chromium-headless-new",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "coarse-touch",
+        "name": "coarse-touch",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual",
+        "testIgnore": [],
+        "testMatch": [
+          "safari-webgl.spec.ts",
+          "aurora-swraster.spec.ts",
+          "release-10-1-1.spec.ts",
+          "release-10-1-2.spec.ts",
+          "release-10-1-3.spec.ts",
+          "release-10-1-4.spec.ts",
+          "release-10-1-5.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/release-11.1.1/close/suite/ch-part-ad.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npm run dev -- --host localhost --port 5353",
+      "cwd": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/",
+      "url": "http://localhost:5353",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "BROWSER": "none"
+      }
+    }
+  },
+  "suites": [],
+  "errors": [
+    {
+      "message": "Error: ENOENT: no such file or directory, open '/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/tranches/BG/audit/reflect/bg-page-audit-roster.md'",
+      "stack": "Error: ENOENT: no such file or directory, open '/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/tranches/BG/audit/reflect/bg-page-audit-roster.md'\n    at parseRoster (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/coherence-congruence.spec.ts:44:17)\n    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/coherence-congruence.spec.ts:105:14",
+      "location": {
+        "file": "/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/coherence-congruence.spec.ts",
+        "column": 17,
+        "line": 44
+      },
+      "snippet": "\u001b[90m   at \u001b[39mcoherence-congruence.spec.ts:44\n\n  42 | /** Parse the cross-page audit roster into route rows (the same rows the gate reads). */\n  43 | function parseRoster(): AuditRow[] {\n> 44 |     const src = readFileSync(ROSTER, \"utf8\").replace(/<!--[\\s\\S]*?-->/g, \"\");\n     |                 ^\n  45 |     const rows: AuditRow[] = [];\n  46 |     for (const raw of src.split(\"\\n\")) {\n  47 |         const line = raw.trim();"
+    }
+  ],
+  "stats": {
+    "startTime": "2026-11-22T17:29:38.585Z",
+    "duration": 1566.316,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

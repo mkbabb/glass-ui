@@ -1,0 +1,59 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 44 tests using 1 worker
+
+  ✓   1 [webkit-desktop] › release-11-1-1.spec.ts:1176:9 › reverse · a Select closed while it opens turns from where it is (2.5s)
+  ✓   2 [webkit-desktop] › release-11-1-1.spec.ts:1188:9 › reverse · a Select reopened while it closes turns from where it is (3.2s)
+  ✓   3 [webkit-desktop] › release-11-1-1.spec.ts:1176:9 › reverse · a DropdownMenu closed while it opens turns from where it is (2.3s)
+  ✓   4 [webkit-desktop] › release-11-1-1.spec.ts:1188:9 › reverse · a DropdownMenu reopened while it closes turns from where it is (3.2s)
+  ✓   5 [webkit-desktop] › release-11-1-1.spec.ts:1176:9 › reverse · a Popover closed while it opens turns from where it is (2.3s)
+  ✓   6 [webkit-desktop] › release-11-1-1.spec.ts:1188:9 › reverse · a Popover reopened while it closes turns from where it is (3.2s)
+  ✓   7 [webkit-desktop] › release-11-1-1.spec.ts:1176:9 › reverse · a Toast closed while it opens turns from where it is (2.2s)
+  ✓   8 [webkit-desktop] › release-11-1-1.spec.ts:1176:9 › reverse · a Tooltip closed while it opens turns from where it is (2.2s)
+  ✓   9 [webkit-desktop] › release-11-1-1.spec.ts:1188:9 › reverse · a Tooltip reopened while it closes turns from where it is (3.1s)
+  ✓  10 [webkit-desktop] › release-11-1-1.spec.ts:1208:1 › reverse · a disclosure reopened while it closes finishes its reopen (5.0s)
+[WebServer] 10:55:48 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  11 [webkit-desktop] › release-11-1-1.spec.ts:1244:5 › reverse · a press on a leaving Dialog's trigger reopens it from where it is (3.2s)
+[WebServer] 10:55:51 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  12 [webkit-desktop] › release-11-1-1.spec.ts:1244:5 › reverse · a press on a leaving Sheet's trigger reopens it from where it is (3.3s)
+  ✓  13 [webkit-desktop] › release-11-1-1.spec.ts:1244:5 › reverse · a press on a leaving Select's trigger reopens it from where it is (3.3s)
+[WebServer] 10:55:58 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  14 [webkit-desktop] › release-11-1-1.spec.ts:1268:1 › reverse · a press on the page while a sheet leaves reaches the page (2.6s)
+  ✓  15 [webkit-desktop] › release-11-1-1.spec.ts:1356:1 › tooltip · a hint keeps its size as it comes and goes (2.4s)
+  ✓  16 [webkit-desktop] › release-11-1-1.spec.ts:1389:1 › tooltip · a Tooltip enters on a tween (1.7s)
+  ✓  17 [webkit-desktop] › release-11-1-1.spec.ts:1405:5 › tooltip · a hint handed to its neighbour fades, incoming (2.3s)
+  ✓  18 [webkit-desktop] › release-11-1-1.spec.ts:1405:5 › tooltip · a hint handed to its neighbour fades, outgoing (2.3s)
+  ✓  19 [webkit-desktop] › release-11-1-1.spec.ts:1499:1 › expand · an ExpandableContainer enters on a tween (3.9s)
+  ✓  20 [webkit-desktop] › release-11-1-1.spec.ts:1514:5 › expand · an ExpandableContainer leaves on a tween by exit (4.8s)
+  ✓  21 [webkit-desktop] › release-11-1-1.spec.ts:1514:5 › expand · an ExpandableContainer leaves on a tween by escape (4.8s)
+  ✓  22 [webkit-desktop] › release-11-1-1.spec.ts:1514:5 › expand · an ExpandableContainer leaves on a tween by open (4.7s)
+  ✓  23 [webkit-desktop] › release-11-1-1.spec.ts:1537:1 › expand · an ExpandableContainer closed while it enters turns from where it is (3.9s)
+  ✓  24 [webkit-desktop] › release-11-1-1.spec.ts:1554:1 › expand · an ExpandableContainer reopened while it leaves turns from where it is (4.9s)
+  ✓  25 [webkit-desktop] › release-11-1-1.spec.ts:1570:1 › expand · Escape is live from the entrance's first frame (1.6s)
+[WebServer] 10:56:38 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  26 [webkit-desktop] › release-11-1-1.spec.ts:1629:5 › leave · a Dialog says once that its leave has finished, after its last seen frame (2.9s)
+[WebServer] 10:56:41 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  27 [webkit-desktop] › release-11-1-1.spec.ts:1658:5 › leave · a Dialog closed and reopened mid-exit says nothing (2.6s)
+[WebServer] 10:56:43 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  28 [webkit-desktop] › release-11-1-1.spec.ts:1629:5 › leave · a Sheet says once that its leave has finished, after its last seen frame (2.9s)
+[WebServer] 10:56:46 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  29 [webkit-desktop] › release-11-1-1.spec.ts:1658:5 › leave · a Sheet closed and reopened mid-exit says nothing (2.6s)
+  ✓  30 [webkit-desktop] › release-11-1-1.spec.ts:1629:5 › leave · a Popover says once that its leave has finished, after its last seen frame (2.9s)
+  ✓  31 [webkit-desktop] › release-11-1-1.spec.ts:1658:5 › leave · a Popover closed and reopened mid-exit says nothing (2.6s)
+  ✓  32 [webkit-desktop] › release-11-1-1.spec.ts:1629:5 › leave · a DropdownMenu says once that its leave has finished, after its last seen frame (2.9s)
+  ✓  33 [webkit-desktop] › release-11-1-1.spec.ts:1658:5 › leave · a DropdownMenu closed and reopened mid-exit says nothing (2.7s)
+  ✓  34 [webkit-desktop] › release-11-1-1.spec.ts:1629:5 › leave · a Select says once that its leave has finished, after its last seen frame (2.9s)
+  ✓  35 [webkit-desktop] › release-11-1-1.spec.ts:1658:5 › leave · a Select closed and reopened mid-exit says nothing (2.7s)
+  ✓  36 [webkit-desktop] › release-11-1-1.spec.ts:1629:5 › leave · a Tooltip says once that its leave has finished, after its last seen frame (2.9s)
+  ✓  37 [webkit-desktop] › release-11-1-1.spec.ts:1658:5 › leave · a Tooltip closed and reopened mid-exit says nothing (2.6s)
+  ✓  38 [webkit-desktop] › release-11-1-1.spec.ts:1629:5 › leave · a Toast says once that its leave has finished, after its last seen frame (2.9s)
+  -  39 [webkit-desktop] › release-11-1-1.spec.ts:1658:5 › leave · a Toast closed and reopened mid-exit says nothing
+  ✓  40 [webkit-desktop] › release-11-1-1.spec.ts:1733:1 › leave · a Popover inside a shadow root says so to its host (3.6s)
+  ✓  41 [webkit-desktop] › release-11-1-1.spec.ts:1757:5 › leave · a ContextMenu says once that its leave has finished, by escape (3.2s)
+  ✓  42 [webkit-desktop] › release-11-1-1.spec.ts:1757:5 › leave · a ContextMenu says once that its leave has finished, by pick (3.3s)
+  ✓  43 [webkit-desktop] › release-11-1-1.spec.ts:1775:1 › leave · a hover card says once that its leave has finished (3.5s)
+[WebServer] 10:57:28 AM [vite] (client) [console.warn] Warning: Missing `Description` or `aria-describedby="undefined"` for DialogContent.
+  ✓  44 [webkit-desktop] › release-11-1-1.spec.ts:1793:1 › leave · a Dialog unmounted mid-exit says so once, at the unmount (3.2s)
+
+  1 skipped
+  43 passed (2.2m)

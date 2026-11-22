@@ -1,0 +1,56 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 6 tests using 1 worker
+
+  ✘  1 [chromium-desktop] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by pick (3.4s)
+  ✓  2 [chromium-desktop] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by escape (3.2s)
+  ✓  3 [chromium-desktop] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by outside (3.0s)
+  ✘  4 [chromium-desktop] › release-11-1-1.spec.ts:1954:9 › standing · CommandDialog by pick: no exit in under two frames, no frame over a fifth (3.6s)
+  ✓  5 [chromium-desktop] › release-11-1-1.spec.ts:1954:9 › standing · CommandDialog by outside: no exit in under two frames, no frame over a fifth (3.7s)
+  ✓  6 [chromium-desktop] › release-11-1-1.spec.ts:1954:9 › standing · CommandDialog by escape: no exit in under two frames, no frame over a fifth (3.6s)
+
+
+  1) [chromium-desktop] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by pick 
+
+    Error: the plate keeps its height [[0,1,435],[8,1,435],[16,1,435],[21,0.274,119],[31,0.274,119],[36,0.262,119],[46,0.254,119],[51,0.24,118],[59,0.233,118],[67,0.219,118],[75,0.206,118],[81,0.193,117],[88,0.183,117],[96,0.17,117],[103,0.156,117],[111,0.144,116],[121,0.13,116],[130,0.112,116],[139,0.097,115],[148,0.083,115],[154,0.068,115],[162,0.059,114],[171,0.048,114],[178,0.035,114],[187,0.025,114],[196,0.014,113],[207,0.005,113]]
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 391.5
+    Received:    119
+
+      615 |             if (!f.present) continue;
+      616 |             expect(f.also, `the list is mounted while the plate is seen ${at}`).toBe(true);
+    > 617 |             expect(f.h!, `the plate keeps its height ${at}`).toBeGreaterThanOrEqual(read.rest.h! * 0.9);
+          |                                                              ^
+      618 |         }
+      619 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+      620 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:617:62
+
+    Error Context: test-results/release-11-1-1-routes-·-a--79dcb-st-through-its-exit-by-pick-chromium-desktop/error-context.md
+
+  2) [chromium-desktop] › release-11-1-1.spec.ts:1954:9 › standing · CommandDialog by pick: no exit in under two frames, no frame over a fifth 
+
+    Error: no frame carries more than a fifth of what is seen {"painted":25,"share":0.726,"travel":161,"travelShare":0.982,"gone":true,"frames":[[-2,1],[7,1],[16,1],[21,0.274],[27,0.274],[35,0.266],[44,0.256],[51,0.243],[58,0.233],[66,0.222],[74,0.208],[80,0.195],[89,0.185],[95,0.17],[103,0.159],[112,0.145],[122,0.13],[130,0.112],[140,0.098],[149,0.081],[155,0.068],[162,0.059],[169,0.047],[178,0.038],[188,0.025],[197,0.014],[206,0.004]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.726
+
+      1997 |             expect(read.gone, `it leaves ${at}`).toBe(true);
+      1998 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 1999 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+           |                                                                                            ^
+      2000 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+      2001 |         });
+      2002 |     }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1999:92
+
+    Error Context: test-results/release-11-1-1-standing-·--1afdc-rames-no-frame-over-a-fifth-chromium-desktop/error-context.md
+
+  2 failed
+    [chromium-desktop] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by pick 
+    [chromium-desktop] › release-11-1-1.spec.ts:1954:9 › standing · CommandDialog by pick: no exit in under two frames, no frame over a fifth 
+  4 passed (23.0s)

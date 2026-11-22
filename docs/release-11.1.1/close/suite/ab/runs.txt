@@ -1,0 +1,8 @@
+2026-11-22 10:25:31 pf-premerge (540e1e79e 540e1e79e) start proj=chromium-headless-new files=1 extra= load={ 8.04 8.52 8.16 }
+2026-11-22 10:26:07 pf-premerge rc=0  3 passed (35.4s) 
+2026-11-22 10:26:15 pf-premerge guard-rc=0 [guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+2026-11-22 10:26:15 pf-premerge verify rc=0 pixel-floor gate: GREEN — 3 floors ran on the live paint path and passed.
+2026-11-22 10:26:18 pf-master (48bebb122 48bebb122) start proj=chromium-headless-new files=1 extra= load={ 6.81 8.10 8.02 }
+2026-11-22 10:27:53 pf-master rc=1  3 failed 
+2026-11-22 10:28:01 pf-master guard-rc=0 [guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+2026-11-22 10:28:01 pf-master verify rc=0 pixel-floor gate: RED (--expect=green)

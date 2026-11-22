@@ -1,0 +1,41 @@
+diff --git a/tests-visual/release-11-1-1.spec.ts b/tests-visual/release-11-1-1.spec.ts
+index c8fde2524..9ad772f8d 100644
+--- a/tests-visual/release-11-1-1.spec.ts
++++ b/tests-visual/release-11-1-1.spec.ts
+@@ -29,6 +29,15 @@ async function openHarness(page: Page, query = ""): Promise<void> {
+     await page.waitForTimeout(300);
+ }
+ 
++// The demo's Command page shows its palette inline; its "Shown" control sets it in a
++// dialog, which a button then opens. The wait lets the stage's swap to that button end.
++async function openPalette(page: Page, project: string): Promise<void> {
++    await pressOn(page, project, "button:has-text('In a dialog')");
++    await page.locator("button:has-text('Search commands')").waitFor();
++    await page.waitForTimeout(600);
++    await pressOn(page, project, "button:has-text('Search commands')");
++}
++
+ // A pick is a tap on another item; "current" a tap on the item already chosen.
+ type Route = "pick" | "outside" | "escape" | "trigger" | "current";
+ 
+@@ -587,9 +596,9 @@ for (const route of ["pick", "escape", "outside"] as const) {
+     test(`routes · a CommandDialog keeps its list through its exit by ${route}`, async ({ page }, info) => {
+         const project = info.project.name;
+         test.skip(project === "webkit-phone" && route === "outside", "Playwright WebKit's touchscreen.tap reaches no outside-press listener");
+-        // The demo's own palette story: its list of groups is the case that cut.
++        // The demo's own palette: a list in a dialog is the case that cut.
+         await gotoReady(page, "/containers/command");
+-        await pressOn(page, project, "button:has-text('Open palette')");
++        await openPalette(page, project);
+         await page.locator('.command-dialog__content[data-state="open"]').waitFor();
+         await page.waitForTimeout(900);
+         await startFilm(page, ".command-dialog__content", ".command-dialog__content [data-slot=command-list]");
+@@ -1931,7 +1940,7 @@ const standing: StandingCase[] = [
+         name: "CommandDialog",
+         content: ".command-dialog__content",
+         path: "/containers/command",
+-        open: tap("button:has-text('Open palette')"),
++        open: openPalette,
+         routes: {
+             pick: tap(".command-dialog__content [data-slot=command-item]:not([data-disabled])"),
+             outside: (page, project) => press(page, project, 10, 10),

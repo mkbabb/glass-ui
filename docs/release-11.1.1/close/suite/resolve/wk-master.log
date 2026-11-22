@@ -1,0 +1,49 @@
+
+Running 4 tests using 1 worker
+
+  ✘  1 [webkit] › tests-visual/aurora-swraster.spec.ts:91:9 › BB.W-AURORA-SWRASTER — headless luminance-faithful fallback › fallback ground matches the composite reference within the certify band (light) (17.3s)
+  ✘  2 [webkit] › tests-visual/aurora-swraster.spec.ts:91:9 › BB.W-AURORA-SWRASTER — headless luminance-faithful fallback › fallback ground matches the composite reference within the certify band (dark) (17.0s)
+  ✓  3 [webkit] › tests-visual/release-10-1-5.spec.ts:2371:5 › fix 12, desktop › t1 O-201 vertical: through the fit edge the end seats keep their whole ring, bounded in the yield band (50.2s)
+  ✓  4 [webkit] › tests-visual/release-10-1-5.spec.ts:2371:5 › fix 12, coarse phone › t1 O-201 vertical: through the fit edge the end seats keep their whole ring, bounded in the yield band (48.8s)
+
+
+  1) [webkit] › tests-visual/aurora-swraster.spec.ts:91:9 › BB.W-AURORA-SWRASTER — headless luminance-faithful fallback › fallback ground matches the composite reference within the certify band (light) 
+
+    Error: served-app sentinel FAILED (fail-closed, NOT a device skip): the page at http://localhost:5355/substrates/aurora is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] marker is absent (served title: "glass-ui Feature Demo", expected "glass-ui Feature Demo"). A FOREIGN app is holding the demo port. Point GLASS_UI_DEMO_URL/PORT at the real glass-ui demo server before re-running. (The device-absence SKIP is reserved for the demo BEING served but the canvas not painting on a GPU-less runner — this is a different failure.)
+
+       at served-app-sentinel.ts:39
+
+      37 |     } catch {
+      38 |         const title = await page.title().catch(() => "<unreadable>");
+    > 39 |         throw new Error(
+         |               ^
+      40 |             `served-app sentinel FAILED (fail-closed, NOT a device skip): the page at ${page.url()} ` +
+      41 |                 `is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] ` +
+      42 |                 `marker is absent (served title: "${title}", expected "${DEMO_TITLE}"). A FOREIGN app ` +
+        at assertServedDemoAurora (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/master/tree/tests-visual/served-app-sentinel.ts:39:15)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/master/tree/tests-visual/aurora-swraster.spec.ts:97:13
+
+    Error Context: tests-visual/test-results/aurora-swraster-BB-W-AUROR-aaa49-hin-the-certify-band-light--webkit/error-context.md
+
+  2) [webkit] › tests-visual/aurora-swraster.spec.ts:91:9 › BB.W-AURORA-SWRASTER — headless luminance-faithful fallback › fallback ground matches the composite reference within the certify band (dark) 
+
+    Error: served-app sentinel FAILED (fail-closed, NOT a device skip): the page at http://localhost:5355/substrates/aurora is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] marker is absent (served title: "glass-ui Feature Demo", expected "glass-ui Feature Demo"). A FOREIGN app is holding the demo port. Point GLASS_UI_DEMO_URL/PORT at the real glass-ui demo server before re-running. (The device-absence SKIP is reserved for the demo BEING served but the canvas not painting on a GPU-less runner — this is a different failure.)
+
+       at served-app-sentinel.ts:39
+
+      37 |     } catch {
+      38 |         const title = await page.title().catch(() => "<unreadable>");
+    > 39 |         throw new Error(
+         |               ^
+      40 |             `served-app sentinel FAILED (fail-closed, NOT a device skip): the page at ${page.url()} ` +
+      41 |                 `is NOT the glass-ui demo aurora surface — the unique [data-aurora-atoms-surface] ` +
+      42 |                 `marker is absent (served title: "${title}", expected "${DEMO_TITLE}"). A FOREIGN app ` +
+        at assertServedDemoAurora (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/master/tree/tests-visual/served-app-sentinel.ts:39:15)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/.cache/close-full/master/tree/tests-visual/aurora-swraster.spec.ts:97:13
+
+    Error Context: tests-visual/test-results/aurora-swraster-BB-W-AUROR-6b1f0-thin-the-certify-band-dark--webkit/error-context.md
+
+  2 failed
+    [webkit] › tests-visual/aurora-swraster.spec.ts:91:9 › BB.W-AURORA-SWRASTER — headless luminance-faithful fallback › fallback ground matches the composite reference within the certify band (light) 
+    [webkit] › tests-visual/aurora-swraster.spec.ts:91:9 › BB.W-AURORA-SWRASTER — headless luminance-faithful fallback › fallback ground matches the composite reference within the certify band (dark) 
+  2 passed (2.5m)

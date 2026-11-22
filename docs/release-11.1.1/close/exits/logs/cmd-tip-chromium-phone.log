@@ -1,0 +1,56 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+
+Running 6 tests using 1 worker
+
+  ✘  1 [chromium-phone] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by pick (3.4s)
+  ✓  2 [chromium-phone] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by escape (3.2s)
+  ✓  3 [chromium-phone] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by outside (3.2s)
+  ✘  4 [chromium-phone] › release-11-1-1.spec.ts:1954:9 › standing · CommandDialog by pick: no exit in under two frames, no frame over a fifth (3.7s)
+  ✓  5 [chromium-phone] › release-11-1-1.spec.ts:1954:9 › standing · CommandDialog by outside: no exit in under two frames, no frame over a fifth (3.7s)
+  ✓  6 [chromium-phone] › release-11-1-1.spec.ts:1954:9 › standing · CommandDialog by escape: no exit in under two frames, no frame over a fifth (3.7s)
+
+
+  1) [chromium-phone] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by pick 
+
+    Error: the plate keeps its height [[0,1,435],[9,1,435],[16,1,435],[24,1,435],[32,1,435],[39,0.274,119],[47,0.274,119],[57,0.264,119],[66,0.25,119],[75,0.237,118],[84,0.224,118],[90,0.209,118],[97,0.199,117],[105,0.186,117],[113,0.173,117],[119,0.158,117],[128,0.147,116],[135,0.133,116],[142,0.119,116],[151,0.108,116],[163,0.093,115],[172,0.074,115],[181,0.06,114],[190,0.047,114],[201,0.034,114],[209,0.02,114],[218,0.01,113],[224,0.001,113]]
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 391.5
+    Received:    119
+
+      615 |             if (!f.present) continue;
+      616 |             expect(f.also, `the list is mounted while the plate is seen ${at}`).toBe(true);
+    > 617 |             expect(f.h!, `the plate keeps its height ${at}`).toBeGreaterThanOrEqual(read.rest.h! * 0.9);
+          |                                                              ^
+      618 |         }
+      619 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+      620 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:617:62
+
+    Error Context: test-results/release-11-1-1-routes-·-a--79dcb-st-through-its-exit-by-pick-chromium-phone/error-context.md
+
+  2) [chromium-phone] › release-11-1-1.spec.ts:1954:9 › standing · CommandDialog by pick: no exit in under two frames, no frame over a fifth 
+
+    Error: no frame carries more than a fifth of what is seen {"painted":26,"share":0.726,"travel":161,"travelShare":0.982,"gone":true,"frames":[[-1,1],[9,1],[18,1],[23,1],[33,1],[39,1],[47,0.274],[56,0.274],[63,0.263],[71,0.254],[81,0.241],[91,0.227],[100,0.21],[109,0.194],[118,0.179],[127,0.164],[137,0.148],[147,0.131],[152,0.113],[161,0.104],[169,0.089],[177,0.077],[185,0.065],[195,0.052],[205,0.038],[212,0.025],[224,0.016],[233,0.003]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.726
+
+      1997 |             expect(read.gone, `it leaves ${at}`).toBe(true);
+      1998 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 1999 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+           |                                                                                            ^
+      2000 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+      2001 |         });
+      2002 |     }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1999:92
+
+    Error Context: test-results/release-11-1-1-standing-·--1afdc-rames-no-frame-over-a-fifth-chromium-phone/error-context.md
+
+  2 failed
+    [chromium-phone] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by pick 
+    [chromium-phone] › release-11-1-1.spec.ts:1954:9 › standing · CommandDialog by pick: no exit in under two frames, no frame over a fifth 
+  4 passed (23.7s)

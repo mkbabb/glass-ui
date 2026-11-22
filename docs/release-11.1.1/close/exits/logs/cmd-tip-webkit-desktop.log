@@ -1,0 +1,57 @@
+[guarded] WARNING: the kernel zone leak is ARMED (armed 1795244661 slope=22.7/s inuse=213952 net=- kext=nfs); see ~/.claude/guard/ZONE-ARMED. A warning only (owner, 2026-11-09): carry on, long runs included; only a REFUSED line stops a run.
+[guarded] waiting for the 'webkit' lock
+
+Running 6 tests using 1 worker
+
+  ✘  1 [webkit-desktop] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by pick (3.8s)
+  ✓  2 [webkit-desktop] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by escape (3.6s)
+  ✓  3 [webkit-desktop] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by outside (3.5s)
+  ✘  4 [webkit-desktop] › release-11-1-1.spec.ts:1954:9 › standing · CommandDialog by pick: no exit in under two frames, no frame over a fifth (4.0s)
+  ✓  5 [webkit-desktop] › release-11-1-1.spec.ts:1954:9 › standing · CommandDialog by outside: no exit in under two frames, no frame over a fifth (4.1s)
+  ✓  6 [webkit-desktop] › release-11-1-1.spec.ts:1954:9 › standing · CommandDialog by escape: no exit in under two frames, no frame over a fifth (3.9s)
+
+
+  1) [webkit-desktop] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by pick 
+
+    Error: the plate keeps its height [[0,1,435],[10,1,435],[19,1,435],[20,1,435],[24,1,435],[35,0.274,119],[42,0.274,119],[51,0.265,119],[60,0.253,119],[70,0.24,118],[80,0.224,118],[92,0.208,118],[101,0.188,117],[111,0.172,117],[123,0.154,117],[131,0.134,116],[143,0.12,116],[151,0.099,115],[163,0.086,115],[174,0.067,115],[182,0.05,114],[192,0.039,114],[203,0.025,114],[213,0.012,113],[224,0.002,113]]
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 391.5
+    Received:    119
+
+      615 |             if (!f.present) continue;
+      616 |             expect(f.also, `the list is mounted while the plate is seen ${at}`).toBe(true);
+    > 617 |             expect(f.h!, `the plate keeps its height ${at}`).toBeGreaterThanOrEqual(read.rest.h! * 0.9);
+          |                                                              ^
+      618 |         }
+      619 |         expect(read.share, `no frame takes more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+      620 |     });
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:617:62
+
+    Error Context: test-results/release-11-1-1-routes-·-a--79dcb-st-through-its-exit-by-pick-webkit-desktop/error-context.md
+
+  2) [webkit-desktop] › release-11-1-1.spec.ts:1954:9 › standing · CommandDialog by pick: no exit in under two frames, no frame over a fifth 
+
+    Error: no frame carries more than a fifth of what is seen {"painted":23,"share":0.726,"travel":161,"travelShare":0.982,"gone":true,"frames":[[-2,1],[7,1],[17,1],[18,1],[22,1],[36,0.274],[43,0.274],[49,0.265],[58,0.257],[70,0.245],[79,0.226],[88,0.211],[100,0.196],[109,0.175],[118,0.16],[131,0.144],[141,0.121],[149,0.104],[159,0.091],[171,0.075],[181,0.056],[190,0.042],[202,0.029],[211,0.015],[222,0.005]]}
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.2
+    Received:    0.726
+
+      1997 |             expect(read.gone, `it leaves ${at}`).toBe(true);
+      1998 |             expect(read.painted, `painted for more than two frames ${at}`).toBeGreaterThan(2);
+    > 1999 |             expect(read.share, `no frame carries more than a fifth of what is seen ${at}`).toBeLessThanOrEqual(0.2);
+           |                                                                                            ^
+      2000 |             if (read.travelShare !== null) expect(read.travelShare, `no frame carries more than a fifth of the travel ${at}`).toBeLessThanOrEqual(0.2);
+      2001 |         });
+      2002 |     }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/release-11-1-1.spec.ts:1999:92
+
+    Error Context: test-results/release-11-1-1-standing-·--1afdc-rames-no-frame-over-a-fifth-webkit-desktop/error-context.md
+
+  2 failed
+    [webkit-desktop] › release-11-1-1.spec.ts:596:5 › routes · a CommandDialog keeps its list through its exit by pick 
+    [webkit-desktop] › release-11-1-1.spec.ts:1954:9 › standing · CommandDialog by pick: no exit in under two frames, no frame over a fifth 
+  4 passed (25.1s)

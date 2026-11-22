@@ -1,0 +1,114 @@
+
+> @mkbabb/glass-ui-tests-visual@0.0.0 gate:pixel-floor
+> rm -f .cache/pi-report-green.json; PI_REPORT=.cache/pi-report-green.json playwright test substrate-paints-color.spec.ts --project=chromium-headless-new; node pi-gate-verify.mjs --expect=green --report=./.cache/pi-report-green.json
+
+
+Running 3 tests using 1 worker
+
+  ✘  1 [chromium-headless-new] › substrate-paints-color.spec.ts:575:5 › substrate-paints-color (π lane — fail-CLOSED) › aurora paints a non-black interior on DEFAULT + every preset at t=1 (30.5s)
+  ✘  2 [chromium-headless-new] › substrate-paints-color.spec.ts:758:5 › substrate-paints-color (π lane — fail-CLOSED) › blob paints a non-blank droplet on BLOB_CONFIG_DEFAULTS (30.3s)
+  ✘  3 [chromium-headless-new] › substrate-paints-color.spec.ts:766:5 › substrate-paints-color (π lane — fail-CLOSED) › blob keeps a transparent margin (non-flood ceiling) on BLOB_CONFIG_DEFAULTS (30.3s)
+
+
+  1) [chromium-headless-new] › substrate-paints-color.spec.ts:575:5 › substrate-paints-color (π lane — fail-CLOSED) › aurora paints a non-black interior on DEFAULT + every preset at t=1 
+
+    Error: the aurora renderer badge never reached data-state="ready" — the backend did not arm. RED, never a skip.
+
+    expect(locator).toHaveAttribute(expected) failed
+
+    Locator: locator('output.renderer-status[data-renderer]').first()
+    Expected: "ready"
+    Timeout: 30000ms
+    Error: element(s) not found
+
+    Call log:
+      - the aurora renderer badge never reached data-state="ready" — the backend did not arm. RED, never a skip. with timeout 30000ms
+      - waiting for locator('output.renderer-status[data-renderer]').first()
+
+
+      437 |         badge,
+      438 |         `the aurora renderer badge never reached data-state="ready" — the backend did not arm. RED, never a skip.`,
+    > 439 |     ).toHaveAttribute("data-state", "ready", { timeout: 30_000 });
+          |       ^
+      440 |     const engine = await badge.getAttribute("data-renderer");
+      441 |     expect(
+      442 |         engine,
+        at assertLiveWebGLPath (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/substrate-paints-color.spec.ts:439:7)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/substrate-paints-color.spec.ts:583:9
+
+    Error Context: test-results/substrate-paints-color-sub-c617b-DEFAULT-every-preset-at-t-1-chromium-headless-new/error-context.md
+
+  2) [chromium-headless-new] › substrate-paints-color.spec.ts:758:5 › substrate-paints-color (π lane — fail-CLOSED) › blob paints a non-blank droplet on BLOB_CONFIG_DEFAULTS 
+
+    Error: the blob renderer badge never reached data-state="ready" — the backend did not arm. RED, never a skip.
+
+    expect(locator).toHaveAttribute(expected) failed
+
+    Locator: locator('output.renderer-status[data-renderer]').first()
+    Expected: "ready"
+    Timeout: 30000ms
+    Error: element(s) not found
+
+    Call log:
+      - the blob renderer badge never reached data-state="ready" — the backend did not arm. RED, never a skip. with timeout 30000ms
+      - waiting for locator('output.renderer-status[data-renderer]').first()
+
+
+      685 |             blobBadge,
+      686 |             `the blob renderer badge never reached data-state="ready" — the backend did not arm. RED, never a skip.`,
+    > 687 |         ).toHaveAttribute("data-state", "ready", { timeout: 30_000 });
+          |           ^
+      688 |         expect(
+      689 |             await blobBadge.getAttribute("data-renderer"),
+      690 |             `blob armed a non-webgl2 engine — this gate reads back ONLY the deterministic WebGL2 path (WebGPU-on-SwiftShader is the fragile arm this wave does not gate on). RED, never a skip.`,
+        at readBlobBounds (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/substrate-paints-color.spec.ts:687:11)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/substrate-paints-color.spec.ts:759:30
+
+    Error Context: test-results/substrate-paints-color-sub-c99ff-let-on-BLOB-CONFIG-DEFAULTS-chromium-headless-new/error-context.md
+
+  3) [chromium-headless-new] › substrate-paints-color.spec.ts:766:5 › substrate-paints-color (π lane — fail-CLOSED) › blob keeps a transparent margin (non-flood ceiling) on BLOB_CONFIG_DEFAULTS 
+
+    Error: the blob renderer badge never reached data-state="ready" — the backend did not arm. RED, never a skip.
+
+    expect(locator).toHaveAttribute(expected) failed
+
+    Locator: locator('output.renderer-status[data-renderer]').first()
+    Expected: "ready"
+    Timeout: 30000ms
+    Error: element(s) not found
+
+    Call log:
+      - the blob renderer badge never reached data-state="ready" — the backend did not arm. RED, never a skip. with timeout 30000ms
+      - waiting for locator('output.renderer-status[data-renderer]').first()
+
+
+      685 |             blobBadge,
+      686 |             `the blob renderer badge never reached data-state="ready" — the backend did not arm. RED, never a skip.`,
+    > 687 |         ).toHaveAttribute("data-state", "ready", { timeout: 30_000 });
+          |           ^
+      688 |         expect(
+      689 |             await blobBadge.getAttribute("data-renderer"),
+      690 |             `blob armed a non-webgl2 engine — this gate reads back ONLY the deterministic WebGL2 path (WebGPU-on-SwiftShader is the fragile arm this wave does not gate on). RED, never a skip.`,
+        at readBlobBounds (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/substrate-paints-color.spec.ts:687:11)
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/substrate-paints-color.spec.ts:769:50
+
+    Error Context: test-results/substrate-paints-color-sub-0899d-ing-on-BLOB-CONFIG-DEFAULTS-chromium-headless-new/error-context.md
+
+  3 failed
+    [chromium-headless-new] › substrate-paints-color.spec.ts:575:5 › substrate-paints-color (π lane — fail-CLOSED) › aurora paints a non-black interior on DEFAULT + every preset at t=1 
+    [chromium-headless-new] › substrate-paints-color.spec.ts:758:5 › substrate-paints-color (π lane — fail-CLOSED) › blob paints a non-blank droplet on BLOB_CONFIG_DEFAULTS 
+    [chromium-headless-new] › substrate-paints-color.spec.ts:766:5 › substrate-paints-color (π lane — fail-CLOSED) › blob keeps a transparent margin (non-flood ceiling) on BLOB_CONFIG_DEFAULTS 
+
+pixel-floor gate: RED (--expect=green)
+
+  · required floor "aurora paints a non-black interior on DEFAULT + every preset at t=1" did not pass on the real render (failed) — Error: the aurora renderer badge never reached data-state="ready" — the backend did not arm. RED, never a skip.
+  · required floor "blob paints a non-blank droplet on BLOB_CONFIG_DEFAULTS" did not pass on the real render (failed) — Error: the blob renderer badge never reached data-state="ready" — the backend did not arm. RED, never a skip.
+  · required floor "blob keeps a transparent margin (non-flood ceiling) on BLOB_CONFIG_DEFAULTS" did not pass on the real render (failed) — Error: the blob renderer badge never reached data-state="ready" — the backend did not arm. RED, never a skip.
+
+npm error Lifecycle script `gate:pixel-floor` failed with error:
+npm error code 1
+npm error path /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual
+npm error workspace @mkbabb/glass-ui-tests-visual@0.0.0
+npm error location /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual
+npm error command failed
+npm error command sh -c rm -f .cache/pi-report-green.json; PI_REPORT=.cache/pi-report-green.json playwright test substrate-paints-color.spec.ts --project=chromium-headless-new; node pi-gate-verify.mjs --expect=green --report=./.cache/pi-report-green.json

@@ -1,0 +1,14 @@
+Error: ENOENT: no such file or directory, open '/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/docs/tranches/BG/audit/reflect/bg-page-audit-roster.md'
+
+   at coherence-congruence.spec.ts:44
+
+  42 | /** Parse the cross-page audit roster into route rows (the same rows the gate reads). */
+  43 | function parseRoster(): AuditRow[] {
+> 44 |     const src = readFileSync(ROSTER, "utf8").replace(/<!--[\s\S]*?-->/g, "");
+     |                 ^
+  45 |     const rows: AuditRow[] = [];
+  46 |     for (const raw of src.split("\n")) {
+  47 |         const line = raw.trim();
+    at parseRoster (/Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/coherence-congruence.spec.ts:44:17)
+    at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/release-11.1.1/tests-visual/coherence-congruence.spec.ts:105:14
+
