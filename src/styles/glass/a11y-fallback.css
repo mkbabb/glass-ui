@@ -18,10 +18,15 @@
    to list; the level term works for every surface that reads the rim, which is all of
    them. */
 @media (prefers-reduced-transparency: reduce) {
-    :root,
-    :root .glass-dock {
+    :root {
         --glass-level: 0;
         --glass-grain-opacity: 0;
+    }
+    /* The dock's level reaches the dock and a matching plate through its token, on every
+       element its dark line sets it (tokens/glass.css). */
+    :root,
+    .dark {
+        --glass-level-dock: 0;
     }
 }
 
@@ -37,7 +42,10 @@
    second writer pushing the same plate the same direction. */
 @media (prefers-contrast: more) {
     :root,
-    :root .glass-dock {
+    .dark {
+        --glass-level-dock: 0.3;
+    }
+    :root {
         --glass-level: 0.3;
         /* Definition is the MID rung of the SAME
            a11y ladder `--glass-level: 0.3` rides: an explicit "more contrast" request

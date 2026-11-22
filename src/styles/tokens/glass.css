@@ -133,6 +133,10 @@
          sheet    +2  content-bearing over a busy grid; radius pairs at overlay's 22px */
     --glass-veil-chassis: calc(var(--glass-veil-base) - 2 * var(--glass-veil-step));
     --glass-veil-dock:    var(--glass-veil-base); /* RU-44: the dock rides the base rung */
+    /* The dock's glass level (W-I.8 RU-93): 1 in light, 0.7 under `.dark` (below), so the dark dock
+       hides about as much of a busy page as the light one. `.glass-dock` and a plate that matches
+       the dock read it, and the a11y brackets set it (glass/a11y-fallback.css). */
+    --glass-level-dock: 1;
     --glass-veil-crown:   calc(var(--glass-veil-base) + 1 * var(--glass-veil-step));
     --glass-veil-dialog:  calc(var(--glass-veil-base) + 1 * var(--glass-veil-step));
     --glass-veil-sheet:   calc(var(--glass-veil-base) + 2 * var(--glass-veil-step));
@@ -261,6 +265,10 @@
     --control-surface-border:    var(--glass-border-floating);
     --control-surface-blur:      var(--glass-blur-quiet);
     --control-surface-bg-hover:  color-mix(in oklab, var(--glass-plate-quiet), var(--glass-plate-resting) 35%);
+}
+
+.dark {
+    --glass-level-dock: 0.7;
 }
 
 /* The typed per-instance axes — @property no-op floors. Registered here beside the §8

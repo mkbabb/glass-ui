@@ -81,8 +81,9 @@ backdrop by default).
 
 A plate outside a dock that should read as the dock's, such as a neck between two docks
 or a bare plate, applies the `glass-plate` utility with
-`--glass-veil-tier: var(--glass-veil-dock)`. It sets no `--glass-level`: the level is 1
-outside a dock, and 1 is the dock's level in both schemes.
+`--glass-veil-tier: var(--glass-veil-dock)` and `--glass-level: var(--glass-level-dock)`.
+The dock's level is 1 in light and 0.7 in dark, and it falls to 0 under reduced
+transparency and 0.3 under more contrast, so the plate follows the dock in each.
 
 ## Slots
 

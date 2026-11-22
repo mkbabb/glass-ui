@@ -251,11 +251,10 @@
         pointer-events: none;
     }
 
-    /* RU-67: the plate's level is 1 in both schemes. Dark takes the level at which the dark
-       dock hides as much of a grid page as the light dock does at its own (MEASURE-8 H6),
-       which is 1, so one rule serves both. The a11y brackets and the static arm still win. */
+    /* RU-93: the plate's level is the dock's token, 1 in light and 0.7 in dark (tokens/glass.css),
+       which the a11y brackets set; the static arm still wins. */
     .glass-dock {
-        --glass-level: 1;
+        --glass-level: var(--glass-level-dock);
     }
 
     /* W-I.8 RU-56: inside a dock the current seat's fill, a hovered seat's fill and a segmented
