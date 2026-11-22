@@ -1,0 +1,121 @@
+# MEASURE-9 H12: the code reading (RU-109 as amended for R8-4, C8-M11, C8-M12; RU-113)
+
+Tree: the tip's src (575084358, unchanged on bl/dock/wi8 since part M). Counter: ORCH line 2's rule
+(s8/codelines.mjs; pm/rangecode.py for ranges). Readers: m9/unlisted9.py (useDockBody.ts's lines outside M4's table),
+m9/dup9.py (repeated lines, logs/m9-dup.txt), m9/cover9.mjs (V8 block coverage over every cell, logs/m9-cover-tip.json).
+
+## 1. useDockBody.ts: 1,094 code lines; M4's table holds 344; 750 unlisted, every one read
+
+Shorter forms with no change in behaviour (each one statement or one loop the file already writes elsewhere; formatting
+alone is not counted):
+
+| lines (tip) | code now | shorter form | code after | saved |
+|---|---|---|---|---|
+| frame 1012-1030, 1034-1036; sync 876-880; isLive 994-998 | 32 | one generator of every positional quantity (the four edges, the scroll, each region's and seat's x and y, each returning face's x and y), stepped and snapped in one loop, zeroed in one loop, and read in one `some` | about 12 | about 20 |
+| readRegions 396-402 | 5 | the track created with its centre and size in its literal | 1 | 4 |
+| readSeats 472, 492 | 2 | the alias `const t = tr` and `void t` (the loop over `seats.keys()`) | 0 | 2 |
+| placeLeaves 941-946 | 6 | one `Object.assign(el.style, {...})` | 2 | 4 |
+| sync 870-875 | 6 | `eq.v = 0; if (seated) eq.d = u = uv = 0;` | 3 | 3 |
+| total | | | | **about 33** |
+
+Also read, not counted as a shorter form: readSeats 439-440 repeats `runEl()` (237-240) in place (0 lines); `o.reducedMotion()` is
+read in sync, frame and write (write runs inside frame; 0 lines); the type declarations (56-118, 899-906: about 70 lines)
+would be fewer lines only by formatting.
+
+The curve inset is larger than M4's row: besides `fitCurve` (605-666, 45 lines), fitRun 544, 549-552, 557-564 and sync 710,
+720-723 write or read `--dock-curve-inset`: **17 more code lines** go with RU-91's removal (62 in all), and fitRun's
+`reread` then reads the fit alone.
+
+## 2. The other files' growth
+
+- `useDockState.ts` (+115 by M4; 149 added code lines against v11.1.0 by `git diff -U0`, every one read): the dwell linger
+  (`dwellMs`, `insideSince`, `enterInside`, `leaveInside`, `lingerMs`'s max and their calls; about 18, RU-109's removal);
+  one shorter form: `onPointerMoveInside`'s transitioning branch repeats the enter sequence of the hover path (about 4).
+  11.1.0's long press (`DOCK_LONG_PRESS_MS`, the swallow and its release: 239-241, 249-309, 354-357, 412) is 60 code lines;
+  whether the press hold covers it under both witnesses is the reconciliation's reading (S2), not counted here.
+- The other files (useDockRun, ControlsDock, density.css, GlassDock, DockOutlet, DockCrossfade, dock.css, dockRegistry,
+  DockTrigger and six more): scanned by m9/dup9.py only (177 repeated lines, 254 repeats; nearly all CSS declarations and
+  Vue boilerplate), not read line by line for a shorter form.
+
+## 3. The ledger, re-sourced (R8-4: a canon id with its quote, a published cure's commit, or a consumer's file and line)
+
+| block (M4) | code | source |
+|---|---|---|
+| the pose and trace marks | 27 | none of the three: it goes, except `dock:reread` and `dock:read`/`dock:rect`, which G-11's trace reads (RU-103) |
+| RU-35's outputs (`--dock-expanded-px`, `--dock-collapsed-px`, `--dock-plate-cross-px`) | 16 | consumer: daraksha `src/shell/SiteDock.vue:104-106` @24a6dbd reads the first two (its fission seat) |
+| the removed control held where it painted | 54 | canon: the tween law (2026-11-12, "Growing instantly in height or other states is not acceptable ever") |
+| the run's scroll offset in the loop | 51 | canon: the tween law |
+| the curve inset | 45 (+17, above) | none: RU-91 removes it |
+| the return mid-exchange | 30 | canon: the tween law ("the turn mid-fold", R8-4) |
+| the in-flow dock's margin | 21 | canon: the tween law (content below the dock follows its painted edge) |
+| RU-54's fit memory and its key | 21 | none of the three: a cost ruling (RU-54, RU-80), read by G-11 |
+| the observer guard | 16 | none of the three: a cost ruling (RU-38), read by G-11 |
+| the edge-anchored dock (O-110) | 14 | published: `5afae24e9` (v11.0.2, "an edge-anchored dock's morph holds its anchored edge") |
+| the window resize seat | 14 | none of the three: a design ruling (R-1) |
+| the host's change of room | 9 | none of the three: a design ruling (RU-36) |
+| the closed narrow lane | 8 | none of the three: a design ruling (RU-31) |
+| zoom | 7 | published: `7777c312d` (v10.1.3), witness `5cb3f2020`; `02d13a4c7` (v11.1.0) |
+| right to left | 6 | no published commit located (`git log -G 'rtl'` over v10.0.0..v11.1.0 in the directory finds none); M4 cited the 10.1.x specs |
+| `--dock-morph-t` | 5 | published (11.0.x's progress) and consumer: daraksha `src/shell/SiteDock.vue:101` @24a6dbd |
+| the 750 unlisted lines | 750 | the carrier itself: canon C-97 ("why are these docks not rounded, and why are they not animated and have collapse states") and the tween law |
+
+## 4. Line 2's list: the code that could still go, `useDockBody.ts` first
+
+Each row removes the behaviour beside it, except the first two, which a page does not see.
+
+| file | block | code | ledger source | the behaviour that goes |
+|---|---|---|---|---|
+| useDockBody.ts | the shorter forms (section 1) | about 33 | (none needed: no behaviour) | none |
+| useDockBody.ts | the pose and trace marks, less G-11's | up to 27 | none | none a page sees |
+| useDockBody.ts | the curve inset, whole | 62 | none | (RU-91 removes it) |
+| useDockBody.ts | the window resize seat | 14 | a design ruling | a window resize lands with no travel |
+| useDockBody.ts | the host's change of room | 9 | a design ruling | a room change followed at layout |
+| useDockBody.ts | the closed narrow lane | 8 | a design ruling | a lane narrower than its corner closed |
+| useDockBody.ts | the observer guard | 16 | a cost ruling | no layout read for a resize already synced (cost) |
+| useDockBody.ts | RU-54's fit memory | 21 | a cost ruling | the fit decided once per room (cost) |
+| useDockBody.ts | right to left | 6 | not located | lanes and entering side flipped under dir=rtl |
+| useDockBody.ts | RU-35's outputs | 16 | daraksha SiteDock.vue:104-106 | daraksha's fission seat breaks (12.0.0's, by RU-35) |
+| useDockBody.ts | the return mid-exchange | 30 | the tween law | a face returned to jumps |
+| useDockBody.ts | the in-flow dock's margin | 21 | the tween law | content below an in-flow dock jumps |
+| useDockBody.ts | the removed control held | 54 | the tween law | a removed control vanishes |
+| useDockBody.ts | the run's scroll offset | 51 | the tween law | the open seat jumps into a scrolling run |
+| useDockState.ts | the dwell linger | 18 | none (RU-109 removes it) | a linger that grows with the dwell |
+| useDockState.ts | the enter sequence repeated | about 4 | (none needed) | none |
+| useDockState.ts | 11.1.0's long press | 60 | published 11.1.0 | a long press pins the dock (if the press hold covers it: S2's reading) |
+
+## 5. The cures, projected (code lines in the directory; *estimate* unless read)
+
+| cure | code | read from |
+|---|---|---|
+| RU-91: the corner on `--dock-cap-rest`, the pill rule out, the curve inset out | -65 (62 inset, 3 rule) | this reading |
+| RU-91's tall row (w-tallrow names a cure: a one-row dock's corner half its painted cross) | about +3 | H3 |
+| RU-89: the press gate | 0 (one condition on an existing line, cand-pressgate) | H1 |
+| RU-112: the face's padding | 0 (one value, cand-face) | H7 |
+| RU-106: the preset's inline size under `within="parent"` | about +4 (one CSS rule) | H8 |
+| RU-101: the changed seat's width gliding | about +10 to +20 (a clip per changed seat on the carrier's clock) | H10 |
+| RU-103: the sampler's gate and landing sample, DockLayer's read from the entry, the mount in a frame | about +4 in the directory; the sampler's outside | H9 |
+| the idle-fold writer | named by H9 | H9 |
+| study G16's Escape fold | not read in part H | |
+
+## 6. Coverage: the code no cell reaches (m9/cover9.mjs, logs/m9-cover-tip.json)
+
+172 contexts in Chromium on the tip's dev server (54 cells of the measure page, 14 dock-comp pages, 18 harness pages, each
+at 1440 fine and 390 coarse), each loaded and driven alike (hover or tap open, the first run seat pressed, Tab and the
+arrows, Escape, a press outside, a scroll, a resize and back); no context failed. Of 3,736 script code lines in
+src/components/dock (CSS not covered; a .vue file's template lines are counted as code but carry no script mapping),
+3,248 carry a mapping, 2,958 ran, **290 never ran**:
+
+| file | never / mapped | what the never-run lines are |
+|---|---|---|
+| useDockState.ts | 103 / 556 | 11.1.0's long press (onLongPressMove, onLongPressRelease, fireLongPress: 258-301), the imperative `expand()` (550-560: no cell calls it), the pin paths (731-732, 849-851), holdsOpen (494-498), the focus-out fold (706-708), the press keep-alive's 120 ms re-arm (504-512), and nine guard branches |
+| DockCrossfade.vue | 63 / 170 | the swap: unregister, writeT/clearT, the peak's reserve, the enter/leave hosts, settle, the inherited velocity and focus transfer (66-272): the drive opens no crossfade swap |
+| useDockClickIntegrity.ts | 44 / 151 | the re-aimed press (132-138), the press keep-alive and its inert branch walk (146-179), pointercancel (237-241), the same-control test (250-256), two stops |
+| useDockBody.ts | 31 / 1013 | zoom's division (163), another group's faces mid-exchange (326-342), the curve inset's narrow branch (563, 721-723), reduced motion's zeroing (1034-1040), the run's scroll offset written (1136-1142), the pose hook (1265-1273) |
+| DockLayer.vue | 11 / 55 | the active-layer watcher's change branch (45-55) |
+| useDockHold.ts | 10 / 54 | the hold's host branch (154-163) |
+| useDockRun.ts, GlassDock.vue, useDockSpring.ts, DockTrigger.vue, DockControl.vue, useDockRunMark.ts | 7, 6, 6, 5, 2, 2 | the authored tabindex restored, the role removed, the wheel at a run's end, the disclosure summary's preventDefault, spring edge cases, the trigger's edge cases |
+
+A line no context of this drive reached is not dead code: the drive does not zoom, set reduced motion, hold a long
+press, scroll a run mid-travel or swap a crossfade, and m9/trace9.mjs reached DockCrossfade.vue:88 (measurePeak) on
+w-tall, a line this drive did not. The table says which behaviours no cell of this pass reads; the 11.0.2 spec reads
+zoom and reduced motion (G-14). None of the 290 is counted as removable here.

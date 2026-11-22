@@ -1,0 +1,2 @@
+set -u
+m9/g.sh node 10 'cd /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9-tip && node_modules/.bin/vitest run tests/components/custom/dock/dock-hover-corner.test.ts tests/components/custom/dock/collapsed-face-content-sized.test.ts --maxWorkers=2 --reporter=verbose > /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/docs/tranches/BL/design/dock/wi8/measure/harness/../logs/m9-h4-units-cand-face.log 2>&1'

@@ -1,0 +1,3 @@
+set -u
+m9/g.sh chromium 30 'node m9/frames9.mjs 5444 tip-dev --engine chromium --cell w-tiers --scheme light ; node m9/frames9.mjs 5444 tip-dev --engine chromium --cell w-tiers --scheme dark ; node m9/frames9.mjs 5444 tip-dev --engine chromium --cell w-pill --scheme light ; node m9/frames9.mjs 5444 tip-dev --engine chromium --cell w-persist --scheme light'
+m9/g.sh webkit 30 'node m9/frames9.mjs 5444 tip-dev --engine webkit --cell w-tiers --scheme light ; node m9/frames9.mjs 5444 tip-dev --engine webkit --cell w-tiers --scheme dark ; node m9/frames9.mjs 5444 tip-dev --engine webkit --cell w-pill --scheme light ; node m9/frames9.mjs 5444 tip-dev --engine webkit --cell w-persist --scheme light'

@@ -1,0 +1,355 @@
+# repeated code lines in src/components/dock at HEAD: 177 lines repeated, 254 repeats
+10x  const run = runEl.value;
+      composables/useDockRun.ts:258, composables/useDockRun.ts:291, composables/useDockRun.ts:386, composables/useDockRun.ts:423, composables/useDockRun.ts:490, composables/useDockRun.ts:508, composables/useDockRun.ts:534, composables/useDockRun.ts:562, composables/useDockRunMark.ts:194, composables/useDockRunMark.ts:242
+9x  <script setup lang="ts">
+      ControlsDock.vue:1, DockControl.vue:1, DockCrossfade.vue:1, DockLayer.vue:1, DockLayerGroup.vue:1, DockOutlet.vue:1, DockSeparator.vue:1, DockTrigger.vue:1, GlassDock.vue:1
+6x  @media (prefers-reduced-motion: reduce) {
+      styles/crossfade.css:135, styles/cta-seat.css:82, styles/dock.css:349, styles/layers.css:46, styles/run.css:796, styles/shape.css:21
+6x  const props = withDefaults(
+      ControlsDock.vue:13, DockControl.vue:40, DockCrossfade.vue:33, DockLayerGroup.vue:39, DockOutlet.vue:8, DockTrigger.vue:44
+6x  const root = rootEl.value;
+      composables/useDockClickIntegrity.ts:210, composables/useDockClickIntegrity.ts:217, composables/useDockState.ts:244, composables/useDockState.ts:463, composables/useDockState.ts:654, composables/useDockState.ts:792
+5x  color: var(--foreground);
+      styles/controls/tab-button.css:76, styles/controls/tab-button.css:93, styles/controls/tab-button.css:116, styles/controls/touch-floor.css:86, styles/controls/triggers.css:145
+5x  justify-content: center;
+      styles/controls/icon-button.css:29, styles/controls/triggers.css:26, styles/layer-group.css:134, styles/morph.css:118, styles/morph.css:180
+4x  (root, _, onCleanup) => {
+      composables/useDockClickIntegrity.ts:123, composables/useDockState.ts:418, composables/useDockState.ts:596, composables/useDockState.ts:749
+4x  background-color var(--dock-motion-fast),
+      styles/controls/icon-button.css:68, styles/controls/tab-button.css:61, styles/controls/triggers.css:59, styles/controls/triggers.css:115
+4x  background: transparent;
+      styles/controls/icon-button.css:47, styles/controls/tab-button.css:28, styles/controls/triggers.css:37, styles/layer-group.css:145
+4x  border-radius: var(--radius-pill);
+      styles/controls/touch-floor.css:114, styles/morph.css:140, styles/shell.css:347, styles/shell.css:373
+4x  color var(--dock-motion-fast),
+      styles/controls/icon-button.css:69, styles/controls/tab-button.css:62, styles/controls/triggers.css:60, styles/controls/triggers.css:116
+4x  scrollQ.d = scrollQ.v = 0;
+      composables/useDockBody.ts:850, composables/useDockBody.ts:880, composables/useDockBody.ts:1036, composables/useDockBody.ts:1241
+4x  var(--dock-control-floor, 0px)
+      styles/density.css:87, styles/density.css:93, styles/density.css:144, styles/density.css:148
+4x  { immediate: true, flush: "sync" },
+      composables/useDockClickIntegrity.ts:128, composables/useDockState.ts:428, composables/useDockState.ts:601, composables/useDockState.ts:758
+3x  --dock-collapsed-summary-min-size,
+      styles/morph.css:160, styles/morph.css:164, styles/morph.css:168
+3x  --dock-control-glyph-size: var(--dock-icon-glyph);
+      styles/density.css:199, styles/density.css:235, styles/density.css:266
+3x  :where(.glass-dock, .dock-layer-group) .dock-layer {
+      styles/layers.css:39, styles/layers.css:47, styles/layers.css:116
+3x  background: var(--dock-control-active-bg);
+      styles/controls/tab-button.css:92, styles/controls/triggers.css:144, styles/run.css:566
+3x  calc(var(--dock-control-size, var(--size-icon-btn)) / 2)
+      styles/controls/icon-button.css:54, styles/controls/tab-button.css:44, styles/controls/triggers.css:52
+3x  color: var(--dock-fg-on-aurora, var(--foreground));
+      styles/controls/icon-button.css:220, styles/controls/triggers.css:56, styles/layer-group.css:187
+3x  const dock = useOptionalDockContext();
+      DockLayerGroup.vue:50, DockSeparator.vue:31, composables/useDockHold.ts:90
+3x  const reduce = o.reducedMotion();
+      composables/useDockBody.ts:696, composables/useDockBody.ts:1009, composables/useDockBody.ts:1181
+3x  defineOptions({ inheritAttrs: false });
+      ControlsDock.vue:11, DockTrigger.vue:42, GlassDock.vue:36
+3x  for (const f of faces) {
+      composables/useDockBody.ts:333, composables/useDockBody.ts:833, composables/useDockBody.ts:1024
+3x  gap: var(--dock-layer-gap, 0.375rem);
+      styles/crossfade.css:97, styles/layers.css:120, styles/shell-regions.css:33
+3x  if (getAlwaysExpanded()) {
+      composables/useDockState.ts:433, composables/useDockState.ts:535, composables/useDockState.ts:551
+3x  if (isQuiet() || pressOnly()) return;
+      composables/useDockState.ts:604, composables/useDockState.ts:639, composables/useDockState.ts:672
+3x  if (keepOpenCount.value > 0) return;
+      composables/useDockState.ts:501, composables/useDockState.ts:651, composables/useDockState.ts:710
+3x  if (seats.length === 0) return;
+      composables/useDockRun.ts:378, composables/useDockRun.ts:398, composables/useDockRun.ts:430
+3x  if (state.value === "collapsed") {
+      composables/useDockState.ts:612, composables/useDockState.ts:624, composables/useDockState.ts:683
+3x  inline-size: max-content;
+      styles/crossfade.css:60, styles/dock.css:331, styles/morph.css:176
+3x  outline-offset: var(--dock-ring-offset);
+      styles/index.css:236, styles/layer-group.css:215, styles/morph.css:190
+3x  outline: var(--dock-ring-width) solid var(--dock-ring-color);
+      styles/index.css:235, styles/layer-group.css:214, styles/morph.css:189
+3x  removeClickAwayListener();
+      composables/useDockState.ts:804, composables/useDockState.ts:827, composables/useDockState.ts:863
+3x  scale: var(--scale-press-dock);
+      styles/controls/icon-button.css:151, styles/controls/tab-button.css:82, styles/controls/triggers.css:95
+3x  scroll-snap-align: start;
+      styles/run.css:461, styles/run.css:476, styles/run.css:487
+3x  v-bind="{ ...$attrs, ...seat }"
+      DockTrigger.vue:110, DockTrigger.vue:129, DockTrigger.vue:140
+3x  var(--dock-icon-glyph-floor)
+      styles/density.css:197, styles/density.css:225, styles/density.css:264
+3x  var(--dock-layer-height, 2.5rem)
+      styles/morph.css:161, styles/morph.css:165, styles/morph.css:169
+3x  window.removeEventListener("blur", onWindowRelease);
+      composables/useDockHold.ts:123, composables/useDockHold.ts:133, composables/useDockHold.ts:161
+3x  window.removeEventListener("pointercancel", onWindowRelease);
+      composables/useDockHold.ts:122, composables/useDockHold.ts:132, composables/useDockHold.ts:160
+3x  window.removeEventListener("pointerup", onWindowRelease);
+      composables/useDockHold.ts:121, composables/useDockHold.ts:131, composables/useDockHold.ts:159
+2x  &:active:not(:disabled):not([aria-disabled="true"]):where(:not(.glass-dock *)) {
+      styles/controls/icon-button.css:146, styles/controls/tab-button.css:84
+2x  &:hover:not(:disabled):not([aria-disabled="true"]) {
+      styles/controls/icon-button.css:135, styles/controls/tab-button.css:74
+2x  (child) => !child.matches(DOCK_SEPARATOR) && !child.matches(FORM_SELECT),
+      composables/useDockRun.ts:155, composables/useDockRun.ts:161
+2x  --_dock-edge-expanded-ink: var(--glass-border-floating);
+      styles/adaptive-legibility.css:99, styles/morph.css:310
+2x  --_dock-edge-lerp: var(--glass-border-floating);
+      styles/adaptive-legibility.css:100, styles/morph.css:311
+2x  --dock-control-safe-inset: calc(var(--dock-control-size) * 0.1);
+      styles/density.css:96, styles/density.css:164
+2x  --dock-control-size: max(
+      styles/density.css:83, styles/density.css:142
+2x  --dock-layer-height: max(
+      styles/density.css:89, styles/density.css:146
+2x  --dock-pad-collapsed: max(
+      styles/morph.css:62, styles/morph.css:95
+2x  --dock-padding-block: calc(
+      styles/density.css:77, styles/density.css:153
+2x  --dock-padding-inline: calc(
+      styles/density.css:80, styles/density.css:156
+2x  --dock-run-cross-half: calc(
+      styles/run.css:720, styles/run.css:727
+2x  --dock-tab-padding-block: calc(
+      styles/density.css:108, styles/density.css:173
+2x  --dock-tab-padding-inline: calc(
+      styles/density.css:112, styles/density.css:176
+2x  --dock-trigger-padding-block: calc(
+      styles/density.css:100, styles/density.css:165
+2x  --dock-trigger-padding-inline: calc(
+      styles/density.css:104, styles/density.css:169
+2x  --glass-blur-resting: blur(
+      styles/shell.css:54, styles/shell.css:172
+2x  -webkit-backdrop-filter: none;
+      styles/adaptive-legibility.css:102, styles/adaptive-legibility.css:111
+2x  .dock-crossfade > .dock-face {
+      styles/crossfade.css:30, styles/crossfade.css:136
+2x  .dock-dropdown-trigger:focus-visible {
+      styles/controls/triggers.css:113, styles/index.css:234
+2x  .dock-select-trigger:focus-visible,
+      styles/controls/triggers.css:112, styles/index.css:233
+2x  .glass-dock > .dock-controls > .dock-persistent {
+      styles/dock.css:289, styles/run.css:226
+2x  .glass-dock.always-expanded {
+      styles/layers.css:197, styles/morph.css:18
+2x  .glass-dock:not(.vertical) :where(.dock-layers) > .dock-run:has(> :not(.dock-run-mark))::after {
+      styles/run.css:418, styles/run.css:429
+2x  .glass-dock:not(.vertical).shape-card {
+      styles/shell.css:368, styles/shell.css:388
+2x  .glass-dock[data-preset="controls"] {
+      styles/density.css:281, styles/density.css:302
+2x  .glass-dock[data-preset="controls"][data-within="viewport"] {
+      styles/density.css:293, styles/density.css:308
+2x  : run.scrollWidth - run.clientWidth;
+      composables/useDockRun.ts:197, composables/useDockRun.ts:516
+2x  :where(.glass-dock, .dock-layer-group) .dock-layer-switcher {
+      styles/layer-group.css:90, styles/layer-group.css:126
+2x  :where(.glass-dock, .dock-layer-group) .dock-layer.is-active {
+      styles/layers.css:58, styles/layers.css:139
+2x  :where(.glass-dock, .dock-layer-group).vertical
+      styles/crossfade.css:102, styles/crossfade.css:111
+2x  <SeatHost><slot /></SeatHost>
+      DockTrigger.vue:134, DockTrigger.vue:144
+2x  > .dock-layers:has(+ .dock-persistent-end) {
+      styles/run.css:183, styles/run.css:208
+2x  ? run.scrollHeight - run.clientHeight
+      composables/useDockRun.ts:196, composables/useDockRun.ts:515
+2x  @media (pointer: coarse) {
+      styles/controls/touch-floor.css:24, styles/density.css:254
+2x  [data-cta-pending] > * {
+      styles/cta-seat.css:72, styles/cta-seat.css:84
+2x  background-clip: content-box;
+      styles/controls/tab-button.css:36, styles/controls/triggers.css:44
+2x  background: var(--dock-control-hover-bg);
+      styles/controls/tab-button.css:75, styles/controls/triggers.css:88
+2x  background: var(--dock-control-press-bg);
+      styles/controls/tab-button.css:85, styles/controls/triggers.css:98
+2x  border-end-end-radius: 0;
+      styles/run.css:898, styles/run.css:928
+2x  border-end-end-radius: calc(var(--dock-run-edge-end) * var(--dock-run-corner-rest)) var(--dock-run-cross-half);
+      styles/run.css:802, styles/run.css:902
+2x  border-end-end-radius: var(--dock-run-cross-half) calc(var(--dock-run-edge-end) * var(--dock-run-corner-rest));
+      styles/run.css:809, styles/run.css:932
+2x  border-end-start-radius: 0;
+      styles/run.css:883, styles/run.css:927
+2x  border-end-start-radius: calc(var(--dock-run-edge-start) * var(--dock-run-corner-rest)) var(--dock-run-cross-half);
+      styles/run.css:800, styles/run.css:887
+2x  border-end-start-radius: var(--dock-run-cross-half) calc(var(--dock-run-edge-end) * var(--dock-run-corner-rest));
+      styles/run.css:808, styles/run.css:931
+2x  border-radius: var(--dock-card-radius);
+      styles/shell.css:341, styles/shell.css:369
+2x  border-radius: var(--dock-layer-tab-radius, var(--radius-sm));
+      styles/layer-group.css:144, styles/layer-group.css:240
+2x  border-radius: var(--radius-card);
+      styles/shell.css:329, styles/shell.css:357
+2x  border-radius: var(--radius-dock);
+      styles/run.css:764, styles/shape.css:11
+2x  border-start-end-radius: 0;
+      styles/run.css:897, styles/run.css:913
+2x  border-start-end-radius: calc(var(--dock-run-edge-end) * var(--dock-run-corner-rest)) var(--dock-run-cross-half);
+      styles/run.css:801, styles/run.css:901
+2x  border-start-end-radius: var(--dock-run-cross-half) calc(var(--dock-run-edge-start) * var(--dock-run-corner-rest));
+      styles/run.css:807, styles/run.css:917
+2x  border-start-start-radius: 0;
+      styles/run.css:882, styles/run.css:912
+2x  border-start-start-radius: calc(var(--dock-run-edge-start) * var(--dock-run-corner-rest)) var(--dock-run-cross-half);
+      styles/run.css:799, styles/run.css:886
+2x  border-start-start-radius: var(--dock-run-cross-half) calc(var(--dock-run-edge-start) * var(--dock-run-corner-rest));
+      styles/run.css:806, styles/run.css:916
+2x  box-shadow var(--dock-motion-fast);
+      styles/controls/icon-button.css:78, styles/controls/triggers.css:119
+2x  calc(2.75rem * var(--dock-scale)),
+      styles/density.css:143, styles/density.css:147
+2x  calc(var(--glass-blur-resting-radius) * var(--glass-level))
+      styles/shell.css:55, styles/shell.css:173
+2x  class?: HTMLAttributes["class"];
+      DockControl.vue:67, DockTrigger.vue:48
+2x  color: var(--btn-hover-color, var(--foreground));
+      styles/controls/icon-button.css:137, styles/controls/triggers.css:89
+2x  const attrs = useAttrs();
+      ControlsDock.vue:27, GlassDock.vue:62
+2x  const b = en.borderBoxSize?.[0];
+      composables/useDockBody.ts:1287, composables/useDockBody.ts:1300
+2x  const enterHost = faceEl(next);
+      DockCrossfade.vue:145, DockCrossfade.vue:196
+2x  const focusedIdx = seats.findIndex((seat) => seat.contains(document.activeElement));
+      composables/useDockRun.ts:380, composables/useDockRun.ts:402
+2x  const lane = regions.get("layers");
+      composables/useDockBody.ts:445, composables/useDockBody.ts:1376
+2x  const leaveHost = faceEl(prev);
+      DockCrossfade.vue:146, DockCrossfade.vue:197
+2x  const next = new Map(registry.value);
+      DockCrossfade.vue:60, DockCrossfade.vue:68
+2x  const openIdx = openIndexOf(seats);
+      composables/useDockRun.ts:379, composables/useDockRun.ts:399
+2x  const plate = o.plate.value;
+      composables/useDockBody.ts:1066, composables/useDockBody.ts:1225
+2x  const port = vertical() ? run.clientHeight : run.clientWidth;
+      composables/useDockRun.ts:245, composables/useDockRun.ts:266
+2x  const reserve = reserveOf(run);
+      composables/useDockRun.ts:246, composables/useDockRun.ts:267
+2x  const run = o.run?.value;
+      composables/useDockBody.ts:439, composables/useDockBody.ts:1341
+2x  const seats = declaredSeatsOf(row);
+      composables/useDockRun.ts:369, composables/useDockRun.ts:429
+2x  const seats = declaredSeatsOf(run);
+      composables/useDockRun.ts:263, composables/useDockRun.ts:397
+2x  const stop = focusedIdx >= 0 ? focusedIdx : openIdx >= 0 ? openIdx : 0;
+      composables/useDockRun.ts:381, composables/useDockRun.ts:403
+2x  const style = getComputedStyle(run);
+      composables/useDockRun.ts:220, composables/useDockRun.ts:226
+2x  dampingFraction: DOCK_SPRING.dampingFraction,
+      DockCrossfade.vue:118, composables/useDockRun.ts:178
+2x  dismissedUnderPointer = false;
+      composables/useDockState.ts:641, composables/useDockState.ts:673
+2x  event.stopImmediatePropagation();
+      DockControl.vue:146, DockTrigger.vue:62
+2x  event.stopPropagation();
+      GlassDock.vue:290, composables/useDockClickIntegrity.ts:301
+2x  expandOnPressEnd = null;
+      composables/useDockState.ts:326, composables/useDockState.ts:341
+2x  for (const [el, t] of seats) {
+      composables/useDockBody.ts:488, composables/useDockBody.ts:1143
+2x  for (const [type, listener] of pressListeners) {
+      composables/useDockState.ts:321, composables/useDockState.ts:401
+2x  for (const c of run.children) {
+      composables/useDockBody.ts:532, composables/useDockBody.ts:637
+2x  for (const q of Object.values(edge)) (q.d = 0), (q.v = 0);
+      composables/useDockBody.ts:876, composables/useDockBody.ts:1034
+2x  function blockDisabledActivation(event: MouseEvent): void {
+      DockControl.vue:143, DockTrigger.vue:60
+2x  height: var(--dock-layer-tab-size, var(--dock-control-size, 1.75rem));
+      styles/layer-group.css:142, styles/layer-group.css:259
+2x  hoverIntentTimer = null;
+      composables/useDockState.ts:188, composables/useDockState.ts:622
+2x  icon?: Component | string;
+      DockLayer.vue:23, composables/dockCrossfadeContext.ts:25
+2x  if (!(c instanceof HTMLElement) || ghosts.has(c) || c.offsetParent === null || !isRunSeat(c)) continue;
+      composables/useDockBody.ts:533, composables/useDockBody.ts:638
+2x  if (next === prev) return;
+      DockCrossfade.vue:144, DockCrossfade.vue:185
+2x  if (place) for (const p of ["inset", "inset-inline-start", "left", "top", "width", "height", "translate"]) enter.style.removeProperty(p);
+      composables/useDockBody.ts:320, composables/useDockBody.ts:349
+2x  if (r && o.runScroll && !runFits) {
+      composables/useDockBody.ts:819, composables/useDockBody.ts:848
+2x  if (raf !== null) cancelAnimationFrame(raf);
+      composables/useDockBody.ts:979, composables/useDockBody.ts:1355
+2x  if (resizeFrame !== null) cancelAnimationFrame(resizeFrame);
+      composables/useDockBody.ts:1314, composables/useDockBody.ts:1352
+2x  if (state.value !== "hover") return;
+      composables/useDockState.ts:505, composables/useDockState.ts:709
+2x  if (state.value === "hover") scheduleCollapse();
+      composables/useDockState.ts:743, composables/useDockState.ts:857
+2x  if (typeof document === "undefined") return;
+      DockCrossfade.vue:174, composables/useDockState.ts:803
+2x  if (typeof window === "undefined") return;
+      composables/useDockHold.ts:120, composables/useDockHold.ts:128
+2x  installClickAwayFrame = null;
+      composables/useDockState.ts:452, composables/useDockState.ts:810
+2x  keepOpen: (kind?: DockHoldKind) => void;
+      composables/dockContext.ts:50, composables/useDockState.ts:75
+2x  let mo: MutationObserver | null = null;
+      composables/useDockBody.ts:225, composables/useDockRun.ts:521
+2x  margin-block-start: var(--dock-layer-gap, 0.375rem);
+      styles/morph.css:245, styles/run.css:195
+2x  margin-inline-start: var(--dock-layer-gap, 0.375rem);
+      styles/morph.css:240, styles/run.css:170
+2x  n.style.transition = "none";
+      composables/useDockBody.ts:1389, composables/useDockBody.ts:1405
+2x  opacity var(--dock-motion-fast),
+      styles/controls/icon-button.css:73, styles/controls/triggers.css:118
+2x  opacity: var(--cta-seat-ghost-opacity, 0.35);
+      styles/cta-seat.css:58, styles/cta-seat.css:73
+2x  orientation: ComputedRef<"horizontal" | "vertical">;
+      composables/useDockRun.ts:38, composables/useDockShellProps.ts:137
+2x  pointerAt = { x: event.clientX, y: event.clientY };
+      composables/useDockClickIntegrity.ts:118, composables/useDockClickIntegrity.ts:224
+2x  pressedDuringMorph = false;
+      composables/useDockClickIntegrity.ts:240, composables/useDockClickIntegrity.ts:263
+2x  provideDockCrossfadeContext,
+      DockCrossfade.vue:9, composables/index.ts:21
+2x  raf = requestAnimationFrame(frame);
+      composables/useDockBody.ts:986, composables/useDockBody.ts:1052
+2x  release: (kind?: DockHoldKind) => void;
+      composables/dockContext.ts:52, composables/useDockState.ts:77
+2x  resizeFrame = requestAnimationFrame(() => {
+      composables/useDockBody.ts:1315, composables/useDockBody.ts:1320
+2x  response: DOCK_SPRING.response,
+      DockCrossfade.vue:117, composables/useDockRun.ts:177
+2x  restR[posture ? 1 : 0] = rNext;
+      composables/useDockBody.ts:767, composables/useDockBody.ts:804
+2x  return () => slots.default?.();
+      DockOutlet.vue:31, composables/dockContext.ts:106
+2x  rootEl: Ref<HTMLElement | null>;
+      composables/useDockClickIntegrity.ts:79, composables/useDockState.ts:18
+2x  runEl: Ref<HTMLElement | null>;
+      composables/useDockRun.ts:34, composables/useDockRunMark.ts:50
+2x  scale var(--dock-press-spring),
+      styles/controls/icon-button.css:72, styles/controls/triggers.css:117
+2x  scroll-snap-align: none;
+      styles/run.css:472, styles/run.css:483
+2x  state.value = "collapsed";
+      composables/useDockState.ts:511, composables/useDockState.ts:545
+2x  type DockFaceDescriptor,
+      DockCrossfade.vue:10, composables/index.ts:24
+2x  type DockFaceRegistration,
+      DockCrossfade.vue:11, composables/index.ts:25
+2x  var(--_dock-edge-expanded-ink) calc(var(--dock-expand-t) * 100%),
+      styles/dock.css:154, styles/dock.css:164
+2x  var(--cta-seat-reveal-duration, var(--spring-present-duration))
+      styles/cta-seat.css:65, styles/cta-seat.css:75
+2x  var(--dock-collapsed-padding, 0px)
+      styles/morph.css:64, styles/morph.css:97
+2x  var(--dock-fg-on-aurora, var(--foreground))
+      styles/controls/icon-button.css:62, styles/layer-group.css:203
+2x  var(--dock-icon-glyph-ratio)
+      styles/density.css:223, styles/density.css:262
+2x  var(--dock-layer-height, calc(2.5rem * var(--dock-scale))) *
+      styles/density.css:222, styles/density.css:261
+2x  void transferFocusOnDissolve(prev, next);
+      DockCrossfade.vue:187, DockCrossfade.vue:226
+2x  width: var(--dock-layer-tab-size, var(--dock-control-size, 1.75rem));
+      styles/layer-group.css:141, styles/layer-group.css:238
+2x  writeOutputs(el, next, posture);
+      composables/useDockBody.ts:772, composables/useDockBody.ts:889
+2x  ~ .dock-persistent-end {
+      styles/morph.css:239, styles/morph.css:244
