@@ -798,7 +798,7 @@ test("sheet · a detented Sheet rises into place at its rung's size", async ({ p
                             target: onButton(e.target),
                             point: onButton(document.elementFromPoint(clientX, clientY)),
                             frames: tap.frames,
-                            off: Math.round(off),
+                            off,
                         });
                     };
                     for (const type of ["pointerdown", "click"]) addEventListener(type, on, { capture: true });
@@ -843,7 +843,8 @@ test("sheet · a detented Sheet rises into place at its rung's size", async ({ p
             });
             const hit = drawn.shown && heard.some((e) => e.type === "click") && heard.every((e) => e.target);
             const down = heard.find((e) => e.type === "pointerdown");
-            const onTime = hit || !down || down.off === 0;
+            // A missed press is late when its point lands outside the box by any distance.
+            const onTime = hit || !down || !(down.off > 0);
             if (onTime) aimed++;
             else late++;
             // A press that lands on the head catches the moving sheet and settles it on the
@@ -858,8 +859,9 @@ test("sheet · a detented Sheet rises into place at its rung's size", async ({ p
                 at: drawn.at,
                 dy: +(drawn.y - rest.y).toFixed(1),
                 // Each event: its type, the button its target and at its point (1 or 0),
-                // the frames drawn since the read, the point's distance from the button.
-                events: heard.map((e) => `${e.type}:${+e.target}${+e.point}:f${e.frames}:${e.off}px`).join(" "),
+                // the frames drawn since the read, the point's distance from the button
+                // rounded to the pixel.
+                events: heard.map((e) => `${e.type}:${+e.target}${+e.point}:f${e.frames}:${Math.round(e.off)}px`).join(" "),
                 hit,
                 closed,
             });
