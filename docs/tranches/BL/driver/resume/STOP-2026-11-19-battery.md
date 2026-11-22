@@ -35,3 +35,7 @@ At 13:01 on 11-20 every seat hit the weekly usage limit ("You've hit your weekly
 ## 2026-11-21 evening: the P17 close done, a cure round before the merge
 
 The P17 close returned (bl/demo at 15863894f; verify: merge, with three items worse than P16). The merge is held for `driver/demo-p17-cure.js` (run `wf_9f2b3f06-0fa`, seats `p17-cure-fix` then `p17-cure-verify`; no args). If it stops, resume it with `Workflow({scriptPath: ".../demo-p17-cure.js", resumeFromRunId: "wf_9f2b3f06-0fa"})`. The P17 close run `wf_dac9f195-7ba` is finished and no longer needs a resume.
+
+## 2026-11-22: dock pass 8 done (NOT READY); its ruling round
+
+Dock pass 8 `wf_e0aa83eb-d6e` is finished and no longer needs a resume. The ruling round `driver/dock-rulings-8.js` (no args) writes RULINGS-8.md; if it stops, resume it with its run id from the Workflow result (recorded in the cursor). The P17 close and cure runs are finished; the font fix `wf_5a0fa209-03c` (no args) is live.
