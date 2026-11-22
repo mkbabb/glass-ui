@@ -7,13 +7,13 @@
 import base from "./playwright.config";
 import wk from "./webkit-2287.config";
 
-const resolved = base.projects!.find((p) => p.name === "webkit")!;
+const resolved = base.projects!.find((p) => (p.name === "webkit" || p.name === "webkit-touch"))!;
 
 export default {
     ...wk,
     projects: [
         ...wk.projects!.map((p) =>
-            p.name === "webkit"
+            (p.name === "webkit" || p.name === "webkit-touch")
                 ? { ...p, testMatch: ["release-11-0-2.spec.ts", "release-10-1-2.spec.ts", "release-10-1-5.spec.ts", "slider-forced-colors.spec.ts"] }
                 : p,
         ),

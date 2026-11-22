@@ -62,6 +62,9 @@
 //          light and dark
 import { expect, test, type Page } from "@playwright/test";
 
+// W-I.8 RU-104: the coarse projects, Chromium's and WebKit 2287's (webkit-2287.config.ts).
+const COARSE = new Set(["coarse-touch", "webkit-touch"]);
+
 type DarkHandle = { stamped: boolean; isDark: () => boolean; toggle: () => void };
 
 async function openDark(page: Page, query: string): Promise<void> {
@@ -156,7 +159,7 @@ async function openPressDock(page: Page, width: number, touch: boolean): Promise
 
 for (const width of [1440, 390]) {
     test(`press · a quick press on Again lands under reduced motion at ${width}`, async ({ page }, info) => {
-        const touch = info.project.name === "coarse-touch";
+        const touch = COARSE.has(info.project.name);
         await openPressDock(page, width, touch);
         const rest = await page.evaluate(() => (window as unknown as { __press: PressHandle }).__press.scroller());
         const seat = page.locator('[aria-label="Again"]');
@@ -323,7 +326,7 @@ test("edge · a GlassDock page opens and stays alive", async ({ page }, info) =>
     await page.locator(".press-dock .dock-plate").waitFor();
     await page.waitForTimeout(600);
     const summary = page.locator('[aria-label$="open the dock"]').first();
-    if (info.project.name === "coarse-touch") await summary.tap();
+    if (COARSE.has(info.project.name)) await summary.tap();
     else await summary.hover();
     await page.waitForTimeout(1200);
     const border = await page.evaluate(
@@ -579,7 +582,7 @@ const filtered = (page: Page, label: string) =>
 
 for (const theme of ["light", "dark"]) {
     test(`static · a static dock's controls draw no backdrop-filter (${theme})`, async ({ page }, info) => {
-        const touch = info.project.name === "coarse-touch";
+        const touch = COARSE.has(info.project.name);
         await page.goto(`/tests-visual/release-11-0-2/static-harness.html?theme=${theme}`);
         await page.locator("body[data-ready='1'] .static-dock").waitFor();
         await page.waitForTimeout(900);
@@ -629,7 +632,7 @@ async function meanLum(page: Page, png: Buffer): Promise<number> {
 // under its top edge, clear of the glyph; the plate is the same band of Search at rest.
 for (const mode of ["static", "live"]) {
     test(`fill · in dark a hovered, pressed or selected seat lifts the plate (${mode})`, async ({ page }, info) => {
-        const touch = info.project.name === "coarse-touch";
+        const touch = COARSE.has(info.project.name);
         await page.goto(`/tests-visual/release-11-0-2/static-harness.html?theme=dark&mode=${mode}&ground=plain`);
         await page.locator("body[data-ready='1'] .static-dock").waitFor();
         await page.mouse.move(2, 2);
@@ -664,35 +667,57 @@ for (const mode of ["static", "live"]) {
     });
 }
 
-test("fill · the light scheme's seat fills are the plate rungs", async ({ page }, info) => {
-    test.skip(info.project.name === "coarse-touch", "hover is a fine-pointer read");
+// W-I.8 RU-92 (RU-94): the guard that O-269's dark change left 11.0.2's light fills alone,
+// restated to the ruled light fills. RU-56 and RU-68 made a seat's fills the dock's own ink:
+// the hovered seat's computed fill is the dock's computed ink at the hover step, and the
+// selected tab's at the current step, each mixed here from the literal ink (5 % and 10 % in
+// light, RU-94 as folded). Any drift from the ruled steps fails it, the force it had.
+const LIGHT_HOVER_STEP = 5;
+const LIGHT_CURRENT_STEP = 10;
+test("fill · the light scheme's seat fills are the dock's ink at the ruled steps", async ({ page }, info) => {
+    test.skip(COARSE.has(info.project.name), "hover is a fine-pointer read");
     await page.goto("/tests-visual/release-11-0-2/static-harness.html?theme=light");
     await page.locator("body[data-ready='1'] .static-dock").waitFor();
     await page.waitForTimeout(900);
     const b = (await page.locator('.static-dock [aria-label="Search"]').boundingBox())!;
     await page.mouse.move(b.x + b.width / 2, b.y + b.height / 2);
-    await page.waitForTimeout(400);
-    const r = await page.evaluate(() => {
-        const dock = document.querySelector<HTMLElement>(".static-dock")!;
-        const ref = (value: string) => {
-            const span = document.createElement("span");
-            span.style.background = value;
-            dock.append(span);
-            const c = getComputedStyle(span).backgroundColor;
-            span.remove();
-            return c;
-        };
-        const bg = (label: string) => getComputedStyle(dock.querySelector(`[aria-label="${label}"]`)!).backgroundColor;
-        return {
-            hover: bg("Search"),
-            resting: ref("var(--glass-plate-resting)"),
-            selectedTab: bg("Day"),
-            floating: ref("var(--glass-plate-floating)"),
-        };
-    });
+    await page.waitForTimeout(600);
+    const r = await page.evaluate(
+        ({ hover, current }) => {
+            const dock = document.querySelector<HTMLElement>(".static-dock")!;
+            const seat = (label: string) => dock.querySelector<HTMLElement>(`[aria-label="${label}"]`)!;
+            // The ink as the seat inherits it, a literal colour, mixed in a span inside the dock.
+            const ink = (el: HTMLElement) => {
+                const cs = getComputedStyle(el);
+                return cs.getPropertyValue("--dock-fg-on-aurora").trim() || cs.getPropertyValue("--foreground").trim();
+            };
+            const mixed = (el: HTMLElement, pct: number) => {
+                const span = document.createElement("span");
+                span.style.background = `color-mix(in oklab, ${ink(el)} ${pct}%, transparent)`;
+                el.parentElement!.append(span);
+                const c = getComputedStyle(span).backgroundColor;
+                span.remove();
+                return c;
+            };
+            return {
+                ink: ink(seat("Search")),
+                hover: getComputedStyle(seat("Search")).backgroundColor,
+                hoverRuled: mixed(seat("Search"), hover),
+                selectedTab: getComputedStyle(seat("Day")).backgroundColor,
+                currentRuled: mixed(seat("Day"), current),
+            };
+        },
+        { hover: LIGHT_HOVER_STEP, current: LIGHT_CURRENT_STEP },
+    );
     info.annotations.push({ type: "fill", description: JSON.stringify(r) });
-    expect(r.hover).toBe(r.resting);
-    expect(r.selectedTab).toBe(r.floating);
+    // Each channel and the alpha within 0.005 of the ruled mix (a colour string's rounding).
+    const near = (a: string, b: string) => {
+        const n = (c: string) => (c.match(/-?[\d.]+(e-?\d+)?/g) ?? []).map(Number);
+        const [x, y] = [n(a), n(b)];
+        return x.length === y.length && x.every((v, i) => Math.abs(v - y[i]!) <= 0.005);
+    };
+    expect(near(r.hover, r.hoverRuled), `hover ${r.hover}, the ink at ${LIGHT_HOVER_STEP} % ${r.hoverRuled}`).toBe(true);
+    expect(near(r.selectedTab, r.currentRuled), `selected tab ${r.selectedTab}, the ink at ${LIGHT_CURRENT_STEP} % ${r.currentRuled}`).toBe(true);
 });
 
 // The layouts the page runs from 5.4 s to 7.9 s after mount, across the idle fold of an
@@ -743,7 +768,7 @@ test("fold · an idle fold lays out once per morph frame on a scrolling page", a
 // both, and it closes when the dock is collapsed.
 test("hold · a keep-dock-open Popover in the dock's slot holds it past the idle window and closes with it", async ({ page }, info) => {
     test.setTimeout(60_000);
-    const touch = info.project.name === "coarse-touch";
+    const touch = COARSE.has(info.project.name);
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto("/tests-visual/release-11-0-2/popover-harness.html");
     await page.locator("body[data-ready='1'] .pop-dock .dock-plate").waitFor();
@@ -907,7 +932,7 @@ test("blob · from 100 ms after a sweep and release the body stays a bead, not a
 
 for (const width of [1440, 390]) {
     test(`cutcap · the open narrow face with an end seat has four equal plate corners at ${width}`, async ({ page }, info) => {
-        const touch = info.project.name === "coarse-touch";
+        const touch = COARSE.has(info.project.name);
         await page.setViewportSize({ width, height: 900 });
         await page.goto("/tests-visual/release-11-0-2/cutcap-harness.html?radius-dock=1.875rem&active=page&end=1");
         await page.locator(".repro-dock .dock-plate").waitFor();
@@ -1025,7 +1050,7 @@ test("pager · on the default token a hop of 1, 3 or 7 paints a neck no wider th
 });
 
 test("wheel · a vertical wheel over a horizontal dock's run scrolls the page", async ({ page }, info) => {
-    test.skip(info.project.name === "coarse-touch", "a wheel is a fine-pointer gesture");
+    test.skip(COARSE.has(info.project.name), "a wheel is a fine-pointer gesture");
     await page.goto("/tests-visual/release-11-0-2/wheel-harness.html");
     const run = page.locator("body[data-ready='1'] [data-witness='dock'] .dock-run");
     await run.waitFor();
@@ -1098,6 +1123,9 @@ function railFrames(page: Page, act: "__expand" | "__collapse", ms: number): Pro
 }
 
 test("rail · a start-anchored rail's close holds its top edge and crest, and ends on the disc", async ({ page }, info) => {
+    // W-I.8 RU-104: under a coarse pointer the rail rests open (hover: none and no folded face), so it has no close or
+    // open to read (MEASURE-9 H4, the rail harness read under coarse touch in both engines).
+    test.skip(COARSE.has(info.project.name), "a coarse pointer's rail rests open");
     await openRail(page);
     await page.evaluate(() => (window as unknown as Record<string, () => void>).__expand());
     await page.waitForTimeout(900);
@@ -1124,6 +1152,9 @@ test("rail · a start-anchored rail's close holds its top edge and crest, and en
 });
 
 test("rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate", async ({ page }, info) => {
+    // W-I.8 RU-104: under a coarse pointer the rail rests open (hover: none and no folded face), so it has no close or
+    // open to read (MEASURE-9 H4, the rail harness read under coarse touch in both engines).
+    test.skip(COARSE.has(info.project.name), "a coarse pointer's rail rests open");
     await openRail(page);
     const disc = await page.evaluate(() => {
         const r = document.querySelector('[data-witness="crest"]')!.getBoundingClientRect();
@@ -1218,7 +1249,7 @@ for (const orientation of ["horizontal", "vertical"]) {
     for (const shape of ["pill", "rounded", "card"]) {
         for (const posture of ["expanded", "collapsed"]) {
             test(`hover · a ${orientation} ${shape} dock, ${posture}, keeps its box to 0 px through every seat's hover`, async ({ page }, info) => {
-                test.skip(info.project.name === "coarse-touch", "hover is a fine-pointer state");
+                test.skip(COARSE.has(info.project.name), "hover is a fine-pointer state");
                 await hoverHolds(page, info, `orientation=${orientation}&shape=${shape}&posture=${posture}`);
             });
         }
@@ -1226,7 +1257,7 @@ for (const orientation of ["horizontal", "vertical"]) {
 }
 
 test("hover · daraksha's pair of fit-content docks keep their boxes to 0 px through every seat's hover", async ({ page }, info) => {
-    test.skip(info.project.name === "coarse-touch", "hover is a fine-pointer state");
+    test.skip(COARSE.has(info.project.name), "hover is a fine-pointer state");
     await hoverHolds(page, info, "site=daraksha");
 });
 
@@ -1296,7 +1327,7 @@ async function plateCorners(page: Page, seat: ReturnType<Page["locator"]>, groun
 
 for (const width of [1440, 390]) {
     test(`radius · every dock seat's corner is half its block size, at ${width}`, async ({ page }, info) => {
-        const touch = info.project.name === "coarse-touch";
+        const touch = COARSE.has(info.project.name);
         await page.setViewportSize({ width, height: 800 });
         await page.goto("/tests-visual/release-11-0-2/radius-harness.html");
         await page.locator("body[data-ready='1'] .radius-dock .dock-plate").waitFor();
@@ -1402,10 +1433,11 @@ for (const theme of ["light", "dark"]) {
 // A control slotted directly into a dock's run keeps the transition it declares: the run's
 // seat rule is a default under it, not an override. The same button inside the open dock
 // and outside it computes the same transition, and a hover tween is part-way through
-// 120 ms into its 400 ms. The dock's own icon control keeps its hover legs too, beside
-// the extent the seat exchange runs on.
+// 120 ms into its 400 ms. The dock's own icon control keeps its hover legs too.
+// W-I.8 RU-90: restated. The extent leg was for the seat exchange (the widened current seat)
+// that RU-28 deleted; the icon control's list holds its fill and needs no extent leg.
 test("transition · a control slotted into a dock's run keeps its own transition", async ({ page }, info) => {
-    test.skip(info.project.name === "coarse-touch", "hover is a fine-pointer state");
+    test.skip(COARSE.has(info.project.name), "hover is a fine-pointer state");
     await page.goto("/tests-visual/release-11-0-2/fold-content-harness.html");
     await page.locator(".fc-dock .dock-plate").waitFor();
     await page.evaluate(() => (window as unknown as { __expand: () => void }).__expand());
@@ -1431,7 +1463,6 @@ test("transition · a control slotted into a dock's run keeps its own transition
     info.annotations.push({ type: "transition", description: JSON.stringify({ ...r, tween }) });
     expect(r.inside).toEqual(r.outside);
     expect(r.icon.property).toContain("background-color");
-    expect(r.icon.property).toMatch(/inline-size|width/);
     // Part-way between rest rgb(40, 120, 220) and hover rgb(220, 60, 40).
     for (const c of [tween.inside, tween.outside]) {
         expect(c).not.toBe("rgb(40, 120, 220)");
@@ -1441,7 +1472,9 @@ test("transition · a control slotted into a dock's run keeps its own transition
 
 // Every frame of an unfold and a fold of a dock that holds a 240 px Slider and a row of
 // seats: each content item's box, cut by the dock's own clip and the run's scroll port
-// where those clip, against the plate's painted box; and each item's effective opacity
+// where those clip, and (W-I.8 RU-90) by the `clip-path` inset of the item and of every
+// ancestor up to the dock, the extent that paints (the redesign's regions paint through
+// their lane clips, RU-25), against the plate's painted box; and each item's effective opacity
 // (the product of its own and its ancestors'). No visible item stands outside the plate,
 // and between two frames no item's opacity moves faster than the morph itself: by more
 // than the reveal ramp's slope (one over the dock's `--dock-stagger-window-size`) times
@@ -1478,6 +1511,20 @@ async function foldFrames(page: Page, dir: "expand" | "collapse") {
                     const rb = run.getBoundingClientRect();
                     if (rs.overflowX !== "visible") [l, rr] = [Math.max(l, rb.left), Math.min(rr, rb.right)];
                     if (rs.overflowY !== "visible") [t, b] = [Math.max(t, rb.top), Math.min(b, rb.bottom)];
+                }
+                // W-I.8 RU-90: each `inset()` clip from the item up to the dock cuts the box
+                // (its rounded corners ignored, so the cut is never tighter than the paint).
+                for (let e: HTMLElement | null = el; e; e = e === dock ? null : e.parentElement) {
+                    const m = getComputedStyle(e).clipPath.match(/^inset\(([^)]*?)(?:\s+round\s[^)]*)?\)$/);
+                    if (!m) continue;
+                    const eb = e.getBoundingClientRect();
+                    const v = m[1]!.trim().split(/\s+/);
+                    const side = [v[0]!, v[1] ?? v[0]!, v[2] ?? v[0]!, v[3] ?? v[1] ?? v[0]!];
+                    const at = (k: number, along: number) =>
+                        side[k]!.endsWith("%") ? (parseFloat(side[k]!) / 100) * along : parseFloat(side[k]!);
+                    const [ct, cr, cb, cl] = [at(0, eb.height), at(1, eb.width), at(2, eb.height), at(3, eb.width)];
+                    [l, rr] = [Math.max(l, eb.left + cl), Math.min(rr, eb.right - cr)];
+                    [t, b] = [Math.max(t, eb.top + ct), Math.min(b, eb.bottom - cb)];
                 }
                 const out = rr > l && b > t ? Math.max(p.left - l, rr - p.right, p.top - t, b - p.bottom, 0) : 0;
                 f.items.push({ id: el.getAttribute("aria-label") ?? el.className, o, out });

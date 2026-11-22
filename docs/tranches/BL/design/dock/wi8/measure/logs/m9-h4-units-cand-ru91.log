@@ -1,0 +1,61 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9-tip
+
+ ✓ tests/components/custom/dock/collapsed-face-content-sized.test.ts > the collapsed face > is as wide as its content, never narrower than it is tall 2ms
+ × tests/components/custom/dock/collapsed-face-content-sized.test.ts > the collapsed face > pads its glyph by the room its floor leaves it, so one glyph is square 3ms
+   → expected '\n        min-width: auto;\n        m…' to match /padding-inline:\s*calc\(\s*…/\s*2\s*\);
+ ✓ tests/components/custom/dock/dock-hover-corner.test.ts > U/B8r I-2: no dock control scales on hover > no dock style rule scales under :hover 11ms
+ ✓ tests/components/custom/dock/dock-hover-corner.test.ts > U/B8r I-2: no dock control scales on hover > the dock hover-scale token is deleted, with no reader left 19ms
+ ✓ tests/components/custom/dock/dock-hover-corner.test.ts > U/B8r I-3: the two-cell collapsed dock is not drawn as a circle > the circle stays for the square collapsed dock of a finite shape 0ms
+ ✓ tests/components/custom/dock/dock-hover-corner.test.ts > U/B8r I-3: the two-cell collapsed dock is not drawn as a circle > a finite-shape collapsed dock with a persistent control beside a summary keeps the bar corner 0ms
+ ✓ tests/components/custom/dock/dock-hover-corner.test.ts > U/B8r I-3: the two-cell collapsed dock is not drawn as a circle > the stadium's corner is half its cross extent in every posture: a circle on one cell, a capsule on two 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/custom/dock/collapsed-face-content-sized.test.ts > the collapsed face > pads its glyph by the room its floor leaves it, so one glyph is square
+AssertionError: expected '\n        min-width: auto;\n        m…' to match /padding-inline:\s*calc\(\s*…/\s*2\s*\);
+
+- Expected:
+/padding-inline:\s*calc\(\s*\(\s*var\(--dock-layer-height,\s*2\.5rem\)\s*-\s*var\(--dock-control-glyph-size\)\s*\)\s*\/\s*2\s*\);/
+
++ Received:
+"
+        min-width: auto;
+        min-block-size: var(
+            --dock-collapsed-summary-min-size,
+            var(--dock-layer-height, 2.5rem)
+        );
+        block-size: var(
+            --dock-collapsed-summary-min-size,
+            var(--dock-layer-height, 2.5rem)
+        );
+        height: var(
+            --dock-collapsed-summary-min-size,
+            var(--dock-layer-height, 2.5rem)
+        );
+        
+        inline-size: max-content;
+        min-inline-size: var(--dock-layer-height, 2.5rem);
+        padding-inline: 0.5rem;
+        white-space: nowrap;
+        justify-content: center;
+        
+        border-radius: var(--dock-cap-rest);
+    "
+
+ ❯ tests/components/custom/dock/collapsed-face-content-sized.test.ts:31:22
+     29|     // never a fixed length (`0.5rem` made a 52 px face in a 40 px lay…
+     30|     it("pads its glyph by the room its floor leaves it, so one glyph i…
+     31|         expect(rule).toMatch(
+       |                      ^
+     32|             /padding-inline:\s*calc\(\s*\(\s*var\(--dock-layer-height,…
+     33|         );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 6 passed (7)
+   Start at  08:41:33
+   Duration  400ms (transform 45ms, setup 98ms, import 20ms, tests 38ms, environment 324ms)
+

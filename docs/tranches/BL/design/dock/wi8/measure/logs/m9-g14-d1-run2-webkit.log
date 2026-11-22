@@ -1,0 +1,31 @@
+
+Running 3 tests using 1 worker
+
+  ✓  1 [webkit] › tests-visual/release-10-1-3.spec.ts:390:9 › 10.1.3 · 390 · right-anchored reversal › D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate (3.2s)
+  ✓  2 [webkit] › tests-visual/release-10-1-3.spec.ts:390:9 › 10.1.3 · 390 · left-anchored reversal › D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate (3.1s)
+  ✘  3 [webkit] › tests-visual/release-10-1-3.spec.ts:390:9 › 10.1.3 · 390 · bottom-anchored reversal › D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate (3.1s)
+
+
+  1) [webkit] › tests-visual/release-10-1-3.spec.ts:390:9 › 10.1.3 · 390 · bottom-anchored reversal › D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate 
+
+    Error: frames whose summary glyph paints outside the plate
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 1
+
+      433 |                 description: JSON.stringify(outside.map((f) => ({ frame: after.indexOf(f), of: after.length, summary: f.summary, dock: f.dock }))),
+      434 |             });
+    > 435 |             expect(outside.length, "frames whose summary glyph paints outside the plate").toBe(0);
+          |                                                                                           ^
+      436 |             expect(
+      437 |                 boxDistance(after.at(-1)!.summary, settled),
+      438 |                 "the summary glyph's last morph frame is its rest",
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9-tip/tests-visual/release-10-1-3.spec.ts:435:91
+
+    Error Context: tests-visual/test-results/release-10-1-3-10-1-3-·-39-6b616-mary-glyph-inside-the-plate-webkit/error-context.md
+
+  1 failed
+    [webkit] › tests-visual/release-10-1-3.spec.ts:390:9 › 10.1.3 · 390 · bottom-anchored reversal › D-1 (critique-3) · a collapse() mid-expand keeps the summary glyph inside the plate 
+  2 passed (9.9s)

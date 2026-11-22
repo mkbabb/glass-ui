@@ -1,0 +1,28 @@
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:677:1 › fill · the light scheme's seat fills are the dock's ink at the ruled steps (1.7s)
+
+
+  1) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:677:1 › fill · the light scheme's seat fills are the dock's ink at the ruled steps 
+
+    Error: hover oklab(0 0 0 / 0.08), the ink at 5 % oklab(0 0 0 / 0.05)
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      717 |         return x.length === y.length && x.every((v, i) => Math.abs(v - y[i]!) <= 0.005);
+      718 |     };
+    > 719 |     expect(near(r.hover, r.hoverRuled), `hover ${r.hover}, the ink at ${LIGHT_HOVER_STEP} % ${r.hoverRuled}`).toBe(true);
+          |                                                                                                               ^
+      720 |     expect(near(r.selectedTab, r.currentRuled), `selected tab ${r.selectedTab}, the ink at ${LIGHT_CURRENT_STEP} % ${r.currentRuled}`).toBe(true);
+      721 | });
+      722 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9-tip/tests-visual/release-11-0-2.spec.ts:719:111
+
+    Error Context: tests-visual/test-results/release-11-0-2-fill-·-the--b5c21-ck-s-ink-at-the-ruled-steps-chromium-headless-new/error-context.md
+
+  1 failed
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:677:1 › fill · the light scheme's seat fills are the dock's ink at the ruled steps 

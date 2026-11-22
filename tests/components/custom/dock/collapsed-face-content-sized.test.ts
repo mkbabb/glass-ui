@@ -22,4 +22,16 @@ describe("the collapsed face", () => {
         expect(rule).toMatch(/block-size:\s*var\(\s*--dock-collapsed-summary-min-size/);
         expect(rule).not.toMatch(/aspect-ratio/);
     });
+
+    // W-I.8 RU-112: master's second case ("carries no padding or box model of its own", so the
+    // 1:1 square held) in the redesign's form. A one-glyph face at or under the icon share is its
+    // floor, and square: its inline padding is the room the floor leaves the glyph at the share,
+    // never a fixed length (`0.5rem` made a 52 px face in a 40 px layer).
+    it("pads its glyph by the room its floor leaves it, so one glyph is square", () => {
+        expect(rule).toMatch(
+            /padding-inline:\s*calc\(\s*\(\s*var\(--dock-layer-height,\s*2\.5rem\)\s*-\s*var\(--dock-control-glyph-size\)\s*\)\s*\/\s*2\s*\);/,
+        );
+        expect(rule).not.toMatch(/padding-inline:\s*[\d.]+(rem|px|em);/);
+        expect(rule).not.toMatch(/box-sizing/);
+    });
 });

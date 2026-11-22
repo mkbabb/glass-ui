@@ -338,10 +338,39 @@ interface Frame {
     morphing: boolean;
     expanded: boolean;
     changed: boolean;
-    reserved: number;
     size: number;
+    /** W-I.8 RU-112: the plate's painted extent on the dock's axis in this frame. */
+    plate: number;
     scroll: number;
     client: number;
+}
+
+/**
+ * W-I.8 RU-112: the stale-endpoint clause on the painted plate. Under the carrier the root's
+ * box is the new rest from a travel's first row (RU-22 (a)), so a read of the root can fail
+ * only on a held root; the fault these cells were written for is a box that travels to the
+ * old endpoint after the pane or host changes, and under the carrier that box is the plate.
+ * After the change, the plate's painted extent on each sampled frame never steps by more than
+ * the travel's own largest step, and it lands on the root's rest within 0.5 px. A stale
+ * target shows as the snap at the landing (O-101a's round-1 cure: 586 px).
+ */
+function plateLanding(seq: Frame[]): { travel: number; landing: number; plate: number; size: number } {
+    const rest = seq[seq.length - 1]!;
+    const after = seq.slice(Math.max(0, seq.findIndex((f) => f.changed)));
+    let travel = 0;
+    let landing = 0;
+    for (let i = 1; i < after.length; i++) {
+        const step = Math.abs(after[i]!.plate - after[i - 1]!.plate);
+        if (after[i - 1]!.morphing && after[i]!.morphing) travel = Math.max(travel, step);
+        else if (after[i - 1]!.morphing) landing = Math.max(landing, step);
+    }
+    return { travel, landing, plate: rest.plate, size: rest.size };
+}
+
+function expectPlateLanding(seq: Frame[]): void {
+    const r = plateLanding(seq);
+    expect.soft(r.landing, `the plate lands by a step of ${r.landing.toFixed(1)} px, the travel's largest ${r.travel.toFixed(1)} px`).toBeLessThanOrEqual(r.travel + 0.5);
+    expect.soft(Math.abs(r.plate - r.size), `the plate rests at ${r.plate} px, the root at ${r.size} px`).toBeLessThanOrEqual(0.5);
 }
 
 type Axis = "horizontal" | "vertical";
@@ -401,15 +430,16 @@ async function driveStaleEndpoint(
                 if (innerWidth !== e.data) return;
                 const el = document.querySelector<HTMLElement>(".glass-dock")!;
                 const root = document.documentElement;
+                const pb = el.querySelector(".dock-plate")!.getBoundingClientRect();
                 w.__frames.push({
                     morphing: el.hasAttribute("data-morphing"),
                     expanded: el.classList.contains("expanded"),
                     changed: e.data === to,
-                    // W-I.8 (RU-22 (a)): the reservation was `--dock-expanded-px`; under the
-                    // carrier the root's layout box is the new rest from the first row of a
-                    // travel, and the plate's target is that box.
-                    reserved: vertical ? el.offsetHeight : el.offsetWidth,
+                    // W-I.8 (RU-22 (a), RU-112): the reservation was `--dock-expanded-px`; under
+                    // the carrier the root's layout box is the new rest from the first row of a
+                    // travel, and the box that travels is the plate.
                     size: vertical ? el.offsetHeight : el.offsetWidth,
+                    plate: vertical ? pb.height : pb.width,
                     scroll: vertical ? root.scrollHeight : root.scrollWidth,
                     client: vertical ? root.clientHeight : root.clientWidth,
                 });
@@ -461,25 +491,14 @@ for (const axis of ["horizontal", "vertical"] as const) {
                 const seq = await driveStaleEndpoint(page, axis, from, to, sequence);
                 const rest = seq[seq.length - 1];
                 expect(rest.morphing).toBe(false);
-                if (sequence === "pinned" || sequence === "collapsed") {
-                    const start = seq.find((f) => f.morphing)!;
-                    expect.soft(
-                        Math.abs(start.reserved - rest.size),
-                        `reserved ${start.reserved}px at morph start, settled at ${rest.size}px`,
-                    ).toBeLessThanOrEqual(1);
-                } else {
+                if (sequence === "reversal" || sequence === "mid-expand") {
                     expect(
                         seq.some((f) => f.morphing && f.changed),
                         "the pane changed while the morph ran",
                     ).toBe(true);
-                    const stale = seq.filter(
-                        (f) => f.morphing && f.changed && !(Math.abs(f.reserved - rest.size) <= 1),
-                    );
-                    expect.soft(
-                        stale.length,
-                        `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
-                    ).toBe(0);
                 }
+                // W-I.8 RU-112: the reservation read (the root's box) is restated to the plate.
+                expectPlateLanding(seq);
                 const over = seq.filter((f) => f.scroll > f.client);
                 expect
                     .soft(
@@ -546,21 +565,8 @@ for (const [from, to] of [
             const seq = await driveStaleEndpoint(page, "horizontal", from, to, sequence, "overflow");
             const rest = seq[seq.length - 1];
             expect(rest.morphing).toBe(false);
-            const stale = seq.filter(
-                (f) =>
-                    f.morphing &&
-                    f.changed &&
-                    // W-I.8 (RU-22 (a)): the root's layout is the expanded endpoint only in the
-                    // expanded posture; a frame still folding before the expand lands reserves
-                    // nothing expanded.
-                    f.expanded &&
-                    (sequence !== "collapsed" || f === seq.find((g) => g.morphing)) &&
-                    !(Math.abs(f.reserved - rest.size) <= 1),
-            );
-            expect.soft(
-                stale.length,
-                `morphing frames after the change reserving other than the settled ${rest.size}px (${[...new Set(stale.map((f) => f.reserved))].join(", ")})`,
-            ).toBe(0);
+            // W-I.8 RU-112: the reservation read (the root's box) is restated to the plate.
+            expectPlateLanding(seq);
             const over = seq.filter((f) => f.scroll > f.client);
             expect
                 .soft(

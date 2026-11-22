@@ -1,0 +1,107 @@
+
+Running 24 tests using 1 worker
+
+  ✓   1 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · pinned · the expanded endpoint follows the pane (1440->390) (2.0s)
+  ✓   2 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · collapsed · the expanded endpoint follows the pane (1440->390) (2.2s)
+  ✘   3 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390) (1.5s)
+  ✘   4 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (1440->390) (894ms)
+  ✓   5 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · pinned · the expanded endpoint follows the pane (390->1440) (1.9s)
+  ✓   6 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · collapsed · the expanded endpoint follows the pane (390->1440) (2.1s)
+  ✓   7 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (390->1440) (1.5s)
+  ✓   8 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (390->1440) (875ms)
+  ✓   9 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · pinned · the expanded endpoint follows the pane (1440->390) (2.1s)
+  ✓  10 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · collapsed · the expanded endpoint follows the pane (1440->390) (2.2s)
+  ✘  11 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (1440->390) (1.5s)
+  ✘  12 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (1440->390) (938ms)
+  ✓  13 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · pinned · the expanded endpoint follows the pane (390->1440) (1.9s)
+  ✓  14 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · collapsed · the expanded endpoint follows the pane (390->1440) (2.2s)
+  ✓  15 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (390->1440) (1.4s)
+  ✓  16 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (390->1440) (895ms)
+  ✓  17 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · collapsed (1440->390) (2.3s)
+  ✓  18 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · reversal (1440->390) (1.5s)
+  ✓  19 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · mid-expand (1440->390) (881ms)
+  ✓  20 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · collapsed (390->1440) (2.2s)
+  ✓  21 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · reversal (390->1440) (1.5s)
+  ✓  22 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:564:9 › O-101a · a host change during the morph · mid-expand (390->1440) (853ms)
+  ✓  23 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:591:5 › O-101 · a capture keeps a scrolled run's scroll position (390) (1.6s)
+  ✓  24 [coarse-touch] › tests-visual/release-10-1-2.spec.ts:591:5 › O-101 · a capture keeps a scrolled run's scroll position (1440) (1.6s)
+
+
+  1) [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390) 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      491 |                 const seq = await driveStaleEndpoint(page, axis, from, to, sequence);
+      492 |                 const rest = seq[seq.length - 1];
+    > 493 |                 expect(rest.morphing).toBe(false);
+          |                                       ^
+      494 |                 if (sequence === "reversal" || sequence === "mid-expand") {
+      495 |                     expect(
+      496 |                         seq.some((f) => f.morphing && f.changed),
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9-tip/tests-visual/release-10-1-2.spec.ts:493:39
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101-·-hor-45391-follows-the-pane-1440--390--coarse-touch/error-context.md
+
+  2) [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (1440->390) 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      491 |                 const seq = await driveStaleEndpoint(page, axis, from, to, sequence);
+      492 |                 const rest = seq[seq.length - 1];
+    > 493 |                 expect(rest.morphing).toBe(false);
+          |                                       ^
+      494 |                 if (sequence === "reversal" || sequence === "mid-expand") {
+      495 |                     expect(
+      496 |                         seq.some((f) => f.morphing && f.changed),
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9-tip/tests-visual/release-10-1-2.spec.ts:493:39
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101-·-hor-5598b-follows-the-pane-1440--390--coarse-touch/error-context.md
+
+  3) [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (1440->390) 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      491 |                 const seq = await driveStaleEndpoint(page, axis, from, to, sequence);
+      492 |                 const rest = seq[seq.length - 1];
+    > 493 |                 expect(rest.morphing).toBe(false);
+          |                                       ^
+      494 |                 if (sequence === "reversal" || sequence === "mid-expand") {
+      495 |                     expect(
+      496 |                         seq.some((f) => f.morphing && f.changed),
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9-tip/tests-visual/release-10-1-2.spec.ts:493:39
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101-·-ver-cc1e1-follows-the-pane-1440--390--coarse-touch/error-context.md
+
+  4) [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (1440->390) 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      491 |                 const seq = await driveStaleEndpoint(page, axis, from, to, sequence);
+      492 |                 const rest = seq[seq.length - 1];
+    > 493 |                 expect(rest.morphing).toBe(false);
+          |                                       ^
+      494 |                 if (sequence === "reversal" || sequence === "mid-expand") {
+      495 |                     expect(
+      496 |                         seq.some((f) => f.morphing && f.changed),
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9-tip/tests-visual/release-10-1-2.spec.ts:493:39
+
+    Error Context: tests-visual/test-results/release-10-1-2-O-101-·-ver-cedb8-follows-the-pane-1440--390--coarse-touch/error-context.md
+
+  4 failed
+    [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · reversal · the expanded endpoint follows the pane (1440->390) 
+    [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · horizontal · mid-expand · the expanded endpoint follows the pane (1440->390) 
+    [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · reversal · the expanded endpoint follows the pane (1440->390) 
+    [coarse-touch] › tests-visual/release-10-1-2.spec.ts:488:13 › O-101 · vertical · mid-expand · the expanded endpoint follows the pane (1440->390) 
+  20 passed (40.7s)

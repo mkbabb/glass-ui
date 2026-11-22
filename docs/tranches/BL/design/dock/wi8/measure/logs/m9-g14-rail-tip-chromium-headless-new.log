@@ -1,0 +1,30 @@
+
+Running 2 tests using 1 worker
+
+  ✓  1 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1125:1 › rail · a start-anchored rail's close holds its top edge and crest, and ends on the disc (2.7s)
+  ✘  2 [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1154:1 › rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate (1.5s)
+
+
+  1) [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1154:1 › rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate 
+
+    Error: foot never left of the plate
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 18.5
+    Received:    -72
+
+      1169 |         expect(f.crest[1], "crest never above the plate").toBeGreaterThanOrEqual(f.root[1] - 1.5);
+      1170 |         if (f.foot) {
+    > 1171 |             expect(f.foot[0], "foot never left of the plate").toBeGreaterThanOrEqual(f.root[0] - 1.5);
+           |                                                               ^
+      1172 |             expect(f.foot[1], "foot never above the plate").toBeGreaterThanOrEqual(f.root[1] - 1.5);
+      1173 |         }
+      1174 |     }
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9-tip/tests-visual/release-11-0-2.spec.ts:1171:63
+
+    Error Context: tests-visual/test-results/release-11-0-2-rail-·-a-st-96ce3-e-the-foot-inside-the-plate-chromium-headless-new/error-context.md
+
+  1 failed
+    [chromium-headless-new] › tests-visual/release-11-0-2.spec.ts:1154:1 › rail · a start-anchored rail's open holds the crest from its first frame, the foot inside the plate 
+  1 passed (4.8s)

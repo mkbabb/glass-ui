@@ -427,6 +427,11 @@ for (const anchor of ["right", "left", "bottom"] as const) {
                     f.summary.top < f.dock.top - 1 ||
                     f.summary.bottom > f.dock.bottom + 1,
             );
+            // W-I.8 RU-110: a failing frame is kept with its numbers, the witness of its fault.
+            test.info().annotations.push({
+                type: "outside",
+                description: JSON.stringify(outside.map((f) => ({ frame: after.indexOf(f), of: after.length, summary: f.summary, dock: f.dock }))),
+            });
             expect(outside.length, "frames whose summary glyph paints outside the plate").toBe(0);
             expect(
                 boxDistance(after.at(-1)!.summary, settled),

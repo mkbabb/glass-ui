@@ -13,7 +13,8 @@ A plant bites in an engine when a clause its gate reads passes on the tip and fa
   facerule       s8-face-pm-facerule.<e>.json against s8-face-pm.<e>.json
   g13-trigseat, g4-groupframe  m7-adds-pm-<p>.<e>.json against m7-adds-pm.<e>.json (its bad lines)
   g14-fitmemory, g14-fitsibs  m7-fit-pm-<p>.<e>.json against m7-fit-pm.<e>.json (its bad lines)
-  g15-baked, g15-onestep  m8-ink-pm-<p>.<e>.json against m8-ink-pm.<e>.json on the plant's pages
+  (the ink plants, g15-baked and g15-onestep, are not read here: their bites are pm-inkbite.txt's, by M3's reader;
+   MEASURE-9 H4, RU-104: this reader's ink lines contradicted it and the tip's own marks)
   dark, fold, mark  s8-level-pm-dark, s8-fold-pm-fold, s8-mark-pm-mark against the tip's
 Usage: bitesides.py <logs-dir> [plant ...]"""
 import json, os, sys
@@ -171,7 +172,6 @@ R = {
     "g4-groupframe": lambda p: badlist(p, "m7-adds-pm.{e}.json", "m7-adds-pm-g4-groupframe.{e}.json"),
     "g14-fitmemory": lambda p: badlist(p, "m7-fit-pm.{e}.json", "m7-fit-pm-g14-fitmemory.{e}.json"),
     "g14-fitsibs": lambda p: badlist(p, "m7-fit-pm.{e}.json", "m7-fit-pm-g14-fitsibs.{e}.json"),
-    "g15-baked": ink, "g15-onestep": ink,
     "dark": lambda p: badlist(p, "s8-level-pm.{e}.json", "s8-level-pm-dark.{e}.json", "fail"),
     "fold": lambda p: badlist(p, "s8-fold-pm.{e}.json", "s8-fold-pm-fold.{e}.json", "wrong"),
     "mark": lambda p: leafplant(p, "s8-mark-pm.{e}.json", "s8-mark-pm-mark.{e}.json"),

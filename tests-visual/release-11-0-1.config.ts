@@ -6,7 +6,7 @@ import wk from "./webkit-2287.config";
 export default {
     ...wk,
     projects: wk.projects!.map((p) =>
-        p.name === "webkit"
+        (p.name === "webkit" || p.name === "webkit-touch")
             ? { ...p, testMatch: ["release-11-0-1.spec.ts", "release-11-0-1-daraksha.spec.ts", "release-10-1-5.spec.ts", "release-10-1-4.spec.ts", "release-10-1-3.spec.ts"] }
             : p,
     ),

@@ -5,5 +5,5 @@ import wk from "./webkit-2287.config";
 
 export default {
     ...wk,
-    projects: wk.projects!.map((p) => (p.name === "webkit" ? { ...p, testMatch: ["ro-loop.spec.ts"] } : p)),
+    projects: wk.projects!.map((p) => ((p.name === "webkit" || p.name === "webkit-touch") ? { ...p, testMatch: ["ro-loop.spec.ts"] } : p)),
 };

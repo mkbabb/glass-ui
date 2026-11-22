@@ -1,0 +1,430 @@
+
+Running 4 tests using 1 worker
+
+  ✘  1 [webkit] › tests-visual/release-11-0-2.spec.ts:1542:9 › fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 1440 (11.4s)
+  ✘  2 [webkit] › tests-visual/release-11-0-2.spec.ts:1542:9 › fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 390 (11.4s)
+  ✘  3 [webkit] › tests-visual/release-11-0-2.spec.ts:1542:9 › fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 1440 (11.5s)
+  ✘  4 [webkit] › tests-visual/release-11-0-2.spec.ts:1542:9 › fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 390 (11.4s)
+
+
+  1) [webkit] › tests-visual/release-11-0-2.spec.ts:1542:9 › fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 1440 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 86
+
+    - Array []
+    + Array [
+    +   "light expand frame 10: Volume 96.0 px outside at opacity 0.06",
+    +   "light expand frame 10: Inside 144.0 px outside at opacity 0.06",
+    +   "light expand frame 10: Settings 192.0 px outside at opacity 0.06",
+    +   "light expand frame 11: Volume 61.4 px outside at opacity 0.22",
+    +   "light expand frame 11: Inside 109.4 px outside at opacity 0.22",
+    +   "light expand frame 11: Settings 157.4 px outside at opacity 0.22",
+    +   "light expand frame 12: Volume 35.5 px outside at opacity 0.34",
+    +   "light expand frame 12: Inside 83.5 px outside at opacity 0.34",
+    +   "light expand frame 12: Settings 131.5 px outside at opacity 0.34",
+    +   "light expand frame 13: Volume 12.3 px outside at opacity 0.45",
+    +   "light expand frame 13: Inside 60.3 px outside at opacity 0.45",
+    +   "light expand frame 13: Settings 108.3 px outside at opacity 0.45",
+    +   "light expand frame 14: Inside 36.1 px outside at opacity 0.56",
+    +   "light expand frame 14: Settings 84.1 px outside at opacity 0.56",
+    +   "light expand frame 15: Inside 20.5 px outside at opacity 0.63",
+    +   "light expand frame 15: Settings 68.5 px outside at opacity 0.63",
+    +   "light expand frame 16: Inside 8.2 px outside at opacity 0.69",
+    +   "light expand frame 16: Settings 56.2 px outside at opacity 0.69",
+    +   "light expand frame 17: Settings 40.6 px outside at opacity 0.76",
+    +   "light expand frame 18: Settings 29.8 px outside at opacity 0.81",
+    +   "light expand frame 19: Settings 20.0 px outside at opacity 0.85",
+    +   "light expand frame 20: Settings 12.7 px outside at opacity 0.89",
+    +   "light expand frame 21: Settings 6.8 px outside at opacity 0.91",
+    +   "light expand frame 22: Settings 1.6 px outside at opacity 0.94",
+    +   "light collapse frame 4: Home 3.0 px outside at opacity 0.86",
+    +   "light collapse frame 4: Settings 3.0 px outside at opacity 0.86",
+    +   "light collapse frame 5: Home 16.9 px outside at opacity 0.74",
+    +   "light collapse frame 5: Settings 16.9 px outside at opacity 0.74",
+    +   "light collapse frame 6: Home 32.7 px outside at opacity 0.59",
+    +   "light collapse frame 6: Settings 32.7 px outside at opacity 0.59",
+    +   "light collapse frame 7: Home 49.4 px outside at opacity 0.44",
+    +   "light collapse frame 7: Search 1.4 px outside at opacity 0.44",
+    +   "light collapse frame 7: Inside 1.4 px outside at opacity 0.44",
+    +   "light collapse frame 7: Settings 49.4 px outside at opacity 0.44",
+    +   "light collapse frame 8: Home 69.2 px outside at opacity 0.26",
+    +   "light collapse frame 8: Search 21.2 px outside at opacity 0.26",
+    +   "light collapse frame 8: Inside 21.2 px outside at opacity 0.26",
+    +   "light collapse frame 8: Settings 69.2 px outside at opacity 0.26",
+    +   "light collapse frame 9: Home 83.5 px outside at opacity 0.13",
+    +   "light collapse frame 9: Search 35.5 px outside at opacity 0.13",
+    +   "light collapse frame 9: Inside 35.5 px outside at opacity 0.13",
+    +   "light collapse frame 9: Settings 83.5 px outside at opacity 0.13",
+    +   "dark expand frame 9: Volume 99.0 px outside at opacity 0.05",
+    +   "dark expand frame 9: Inside 147.0 px outside at opacity 0.05",
+    +   "dark expand frame 9: Settings 195.0 px outside at opacity 0.05",
+    +   "dark expand frame 10: Volume 75.4 px outside at opacity 0.16",
+    +   "dark expand frame 10: Inside 123.4 px outside at opacity 0.16",
+    +   "dark expand frame 10: Settings 171.4 px outside at opacity 0.16",
+    +   "dark expand frame 11: Volume 40.5 px outside at opacity 0.32",
+    +   "dark expand frame 11: Inside 88.5 px outside at opacity 0.32",
+    +   "dark expand frame 11: Settings 136.5 px outside at opacity 0.32",
+    +   "dark expand frame 12: Volume 19.0 px outside at opacity 0.42",
+    +   "dark expand frame 12: Inside 67.0 px outside at opacity 0.42",
+    +   "dark expand frame 12: Settings 115.0 px outside at opacity 0.42",
+    +   "dark expand frame 13: Inside 45.7 px outside at opacity 0.51",
+    +   "dark expand frame 13: Settings 93.7 px outside at opacity 0.51",
+    +   "dark expand frame 14: Inside 28.9 px outside at opacity 0.59",
+    +   "dark expand frame 14: Settings 76.9 px outside at opacity 0.59",
+    +   "dark expand frame 15: Inside 11.1 px outside at opacity 0.67",
+    +   "dark expand frame 15: Settings 59.1 px outside at opacity 0.67",
+    +   "dark expand frame 16: Settings 45.5 px outside at opacity 0.74",
+    +   "dark expand frame 17: Settings 34.9 px outside at opacity 0.78",
+    +   "dark expand frame 18: Settings 23.3 px outside at opacity 0.84",
+    +   "dark expand frame 19: Settings 15.5 px outside at opacity 0.87",
+    +   "dark expand frame 20: Settings 9.6 px outside at opacity 0.90",
+    +   "dark expand frame 21: Settings 4.3 px outside at opacity 0.93",
+    +   "dark collapse frame 4: Home 0.5 px outside at opacity 0.89",
+    +   "dark collapse frame 4: Settings 0.5 px outside at opacity 0.89",
+    +   "dark collapse frame 5: Home 16.9 px outside at opacity 0.74",
+    +   "dark collapse frame 5: Settings 16.9 px outside at opacity 0.74",
+    +   "dark collapse frame 6: Home 32.7 px outside at opacity 0.59",
+    +   "dark collapse frame 6: Settings 32.7 px outside at opacity 0.59",
+    +   "dark collapse frame 7: Home 49.4 px outside at opacity 0.44",
+    +   "dark collapse frame 7: Search 1.4 px outside at opacity 0.44",
+    +   "dark collapse frame 7: Inside 1.4 px outside at opacity 0.44",
+    +   "dark collapse frame 7: Settings 49.4 px outside at opacity 0.44",
+    +   "dark collapse frame 8: Home 69.2 px outside at opacity 0.26",
+    +   "dark collapse frame 8: Search 21.2 px outside at opacity 0.26",
+    +   "dark collapse frame 8: Inside 21.2 px outside at opacity 0.26",
+    +   "dark collapse frame 8: Settings 69.2 px outside at opacity 0.26",
+    +   "dark collapse frame 9: Home 83.5 px outside at opacity 0.13",
+    +   "dark collapse frame 9: Search 35.5 px outside at opacity 0.13",
+    +   "dark collapse frame 9: Inside 35.5 px outside at opacity 0.13",
+    +   "dark collapse frame 9: Settings 83.5 px outside at opacity 0.13",
+    + ]
+
+      1565 |             }
+      1566 |             info.annotations.push({ type: "fold", description: JSON.stringify({ worst, fails: fails.slice(0, 20) }) });
+    > 1567 |             expect(fails).toEqual([]);
+           |                           ^
+      1568 |         });
+      1569 |     }
+      1570 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9-tip/tests-visual/release-11-0-2.spec.ts:1567:27
+
+    Error Context: tests-visual/test-results/release-11-0-2-fold-·-a-ho-0d7ee-the-fold-and-unfold-at-1440-webkit/error-context.md
+
+  2) [webkit] › tests-visual/release-11-0-2.spec.ts:1542:9 › fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 390 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 75
+
+    - Array []
+    + Array [
+    +   "light expand frame 10: Volume 125.5 px outside at opacity 0.08",
+    +   "light expand frame 10: Inside 155.5 px outside at opacity 0.08",
+    +   "light expand frame 11: Volume 101.5 px outside at opacity 0.21",
+    +   "light expand frame 11: Inside 131.5 px outside at opacity 0.21",
+    +   "light expand frame 12: Volume 79.7 px outside at opacity 0.33",
+    +   "light expand frame 12: Inside 109.7 px outside at opacity 0.33",
+    +   "light expand frame 13: Volume 61.9 px outside at opacity 0.43",
+    +   "light expand frame 13: Inside 91.9 px outside at opacity 0.43",
+    +   "light expand frame 14: Volume 42.8 px outside at opacity 0.53",
+    +   "light expand frame 14: Inside 72.8 px outside at opacity 0.53",
+    +   "light expand frame 15: Volume 25.0 px outside at opacity 0.63",
+    +   "light expand frame 15: Inside 55.0 px outside at opacity 0.63",
+    +   "light expand frame 16: Volume 13.7 px outside at opacity 0.69",
+    +   "light expand frame 16: Inside 43.7 px outside at opacity 0.69",
+    +   "light expand frame 17: Volume 0.8 px outside at opacity 0.76",
+    +   "light expand frame 17: Inside 30.8 px outside at opacity 0.76",
+    +   "light expand frame 18: Inside 22.8 px outside at opacity 0.81",
+    +   "light expand frame 19: Inside 15.3 px outside at opacity 0.85",
+    +   "light expand frame 20: Inside 9.7 px outside at opacity 0.88",
+    +   "light expand frame 21: Inside 4.6 px outside at opacity 0.91",
+    +   "light collapse frame 4: Home 0.5 px outside at opacity 0.86",
+    +   "light collapse frame 5: Home 9.6 px outside at opacity 0.76",
+    +   "light collapse frame 5: Inside 9.6 px outside at opacity 0.76",
+    +   "light collapse frame 6: Home 25.4 px outside at opacity 0.59",
+    +   "light collapse frame 6: Inside 25.4 px outside at opacity 0.59",
+    +   "light collapse frame 7: Home 40.7 px outside at opacity 0.43",
+    +   "light collapse frame 7: Volume 10.7 px outside at opacity 0.43",
+    +   "light collapse frame 7: Inside 40.7 px outside at opacity 0.43",
+    +   "light collapse frame 8: Home 54.5 px outside at opacity 0.28",
+    +   "light collapse frame 8: Search 6.5 px outside at opacity 0.28",
+    +   "light collapse frame 8: Volume 24.5 px outside at opacity 0.28",
+    +   "light collapse frame 8: Inside 54.5 px outside at opacity 0.28",
+    +   "light collapse frame 9: Home 67.7 px outside at opacity 0.13",
+    +   "light collapse frame 9: Search 19.7 px outside at opacity 0.13",
+    +   "light collapse frame 9: Volume 37.7 px outside at opacity 0.13",
+    +   "light collapse frame 9: Inside 67.7 px outside at opacity 0.13",
+    +   "dark expand frame 9: Volume 133.0 px outside at opacity 0.04",
+    +   "dark expand frame 9: Inside 163.0 px outside at opacity 0.04",
+    +   "dark expand frame 10: Volume 108.5 px outside at opacity 0.17",
+    +   "dark expand frame 10: Inside 138.5 px outside at opacity 0.17",
+    +   "dark expand frame 11: Volume 81.7 px outside at opacity 0.32",
+    +   "dark expand frame 11: Inside 111.7 px outside at opacity 0.32",
+    +   "dark expand frame 12: Volume 63.8 px outside at opacity 0.42",
+    +   "dark expand frame 12: Inside 93.8 px outside at opacity 0.42",
+    +   "dark expand frame 13: Volume 42.8 px outside at opacity 0.53",
+    +   "dark expand frame 13: Inside 72.8 px outside at opacity 0.53",
+    +   "dark expand frame 14: Volume 29.2 px outside at opacity 0.61",
+    +   "dark expand frame 14: Inside 59.2 px outside at opacity 0.61",
+    +   "dark expand frame 15: Volume 16.1 px outside at opacity 0.68",
+    +   "dark expand frame 15: Inside 46.1 px outside at opacity 0.68",
+    +   "dark expand frame 16: Volume 4.8 px outside at opacity 0.74",
+    +   "dark expand frame 16: Inside 34.8 px outside at opacity 0.74",
+    +   "dark expand frame 17: Inside 25.4 px outside at opacity 0.79",
+    +   "dark expand frame 18: Inside 17.4 px outside at opacity 0.84",
+    +   "dark expand frame 19: Inside 10.3 px outside at opacity 0.88",
+    +   "dark expand frame 20: Inside 6.0 px outside at opacity 0.90",
+    +   "dark expand frame 21: Inside 0.8 px outside at opacity 0.93",
+    +   "dark collapse frame 4: Home 0.5 px outside at opacity 0.86",
+    +   "dark collapse frame 5: Home 12.1 px outside at opacity 0.74",
+    +   "dark collapse frame 5: Inside 12.1 px outside at opacity 0.74",
+    +   "dark collapse frame 6: Home 26.7 px outside at opacity 0.58",
+    +   "dark collapse frame 6: Inside 26.7 px outside at opacity 0.58",
+    +   "dark collapse frame 7: Home 40.7 px outside at opacity 0.43",
+    +   "dark collapse frame 7: Volume 10.7 px outside at opacity 0.43",
+    +   "dark collapse frame 7: Inside 40.7 px outside at opacity 0.43",
+    +   "dark collapse frame 8: Home 54.5 px outside at opacity 0.28",
+    +   "dark collapse frame 8: Search 6.5 px outside at opacity 0.28",
+    +   "dark collapse frame 8: Volume 24.5 px outside at opacity 0.28",
+    +   "dark collapse frame 8: Inside 54.5 px outside at opacity 0.28",
+    +   "dark collapse frame 9: Home 67.7 px outside at opacity 0.13",
+    +   "dark collapse frame 9: Search 19.7 px outside at opacity 0.13",
+    +   "dark collapse frame 9: Volume 37.7 px outside at opacity 0.13",
+    +   "dark collapse frame 9: Inside 67.7 px outside at opacity 0.13",
+    + ]
+
+      1565 |             }
+      1566 |             info.annotations.push({ type: "fold", description: JSON.stringify({ worst, fails: fails.slice(0, 20) }) });
+    > 1567 |             expect(fails).toEqual([]);
+           |                           ^
+      1568 |         });
+      1569 |     }
+      1570 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9-tip/tests-visual/release-11-0-2.spec.ts:1567:27
+
+    Error Context: tests-visual/test-results/release-11-0-2-fold-·-a-ho-7d265--the-fold-and-unfold-at-390-webkit/error-context.md
+
+  3) [webkit] › tests-visual/release-11-0-2.spec.ts:1542:9 › fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 1440 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 86
+
+    - Array []
+    + Array [
+    +   "light expand frame 10: Volume 95.9 px outside at opacity 0.08",
+    +   "light expand frame 10: Inside 143.9 px outside at opacity 0.08",
+    +   "light expand frame 10: Settings 191.9 px outside at opacity 0.08",
+    +   "light expand frame 11: Volume 67.3 px outside at opacity 0.21",
+    +   "light expand frame 11: Inside 115.3 px outside at opacity 0.21",
+    +   "light expand frame 11: Settings 163.3 px outside at opacity 0.21",
+    +   "light expand frame 12: Volume 38.8 px outside at opacity 0.34",
+    +   "light expand frame 12: Inside 86.8 px outside at opacity 0.34",
+    +   "light expand frame 12: Settings 134.8 px outside at opacity 0.34",
+    +   "light expand frame 13: Volume 15.7 px outside at opacity 0.45",
+    +   "light expand frame 13: Inside 63.7 px outside at opacity 0.45",
+    +   "light expand frame 13: Settings 111.7 px outside at opacity 0.45",
+    +   "light expand frame 14: Inside 47.2 px outside at opacity 0.52",
+    +   "light expand frame 14: Settings 95.2 px outside at opacity 0.52",
+    +   "light expand frame 15: Inside 25.7 px outside at opacity 0.62",
+    +   "light expand frame 15: Settings 73.7 px outside at opacity 0.62",
+    +   "light expand frame 16: Inside 9.1 px outside at opacity 0.70",
+    +   "light expand frame 16: Settings 57.1 px outside at opacity 0.70",
+    +   "light expand frame 17: Settings 44.3 px outside at opacity 0.76",
+    +   "light expand frame 18: Settings 33.6 px outside at opacity 0.81",
+    +   "light expand frame 19: Settings 24.6 px outside at opacity 0.85",
+    +   "light expand frame 20: Settings 17.9 px outside at opacity 0.88",
+    +   "light expand frame 21: Settings 10.7 px outside at opacity 0.91",
+    +   "light expand frame 22: Settings 5.9 px outside at opacity 0.94",
+    +   "light expand frame 23: Settings 2.1 px outside at opacity 0.95",
+    +   "light collapse frame 4: Home 5.4 px outside at opacity 0.88",
+    +   "light collapse frame 4: Settings 5.4 px outside at opacity 0.88",
+    +   "light collapse frame 5: Home 23.1 px outside at opacity 0.71",
+    +   "light collapse frame 5: Settings 23.1 px outside at opacity 0.71",
+    +   "light collapse frame 6: Home 34.0 px outside at opacity 0.61",
+    +   "light collapse frame 6: Settings 34.0 px outside at opacity 0.61",
+    +   "light collapse frame 7: Home 53.5 px outside at opacity 0.43",
+    +   "light collapse frame 7: Search 5.5 px outside at opacity 0.43",
+    +   "light collapse frame 7: Inside 5.5 px outside at opacity 0.43",
+    +   "light collapse frame 7: Settings 53.5 px outside at opacity 0.43",
+    +   "light collapse frame 8: Home 68.0 px outside at opacity 0.29",
+    +   "light collapse frame 8: Search 20.0 px outside at opacity 0.29",
+    +   "light collapse frame 8: Inside 20.0 px outside at opacity 0.29",
+    +   "light collapse frame 8: Settings 68.0 px outside at opacity 0.29",
+    +   "light collapse frame 9: Home 85.1 px outside at opacity 0.13",
+    +   "light collapse frame 9: Search 37.1 px outside at opacity 0.13",
+    +   "light collapse frame 9: Inside 37.1 px outside at opacity 0.13",
+    +   "light collapse frame 9: Settings 85.1 px outside at opacity 0.13",
+    +   "dark expand frame 10: Volume 75.6 px outside at opacity 0.17",
+    +   "dark expand frame 10: Inside 123.6 px outside at opacity 0.17",
+    +   "dark expand frame 10: Settings 171.6 px outside at opacity 0.17",
+    +   "dark expand frame 11: Volume 53.9 px outside at opacity 0.27",
+    +   "dark expand frame 11: Inside 101.9 px outside at opacity 0.27",
+    +   "dark expand frame 11: Settings 149.9 px outside at opacity 0.27",
+    +   "dark expand frame 12: Volume 26.9 px outside at opacity 0.40",
+    +   "dark expand frame 12: Inside 74.9 px outside at opacity 0.40",
+    +   "dark expand frame 12: Settings 122.9 px outside at opacity 0.40",
+    +   "dark expand frame 13: Inside 47.2 px outside at opacity 0.52",
+    +   "dark expand frame 13: Settings 95.2 px outside at opacity 0.52",
+    +   "dark expand frame 14: Inside 34.2 px outside at opacity 0.58",
+    +   "dark expand frame 14: Settings 82.2 px outside at opacity 0.58",
+    +   "dark expand frame 15: Inside 16.3 px outside at opacity 0.67",
+    +   "dark expand frame 15: Settings 64.3 px outside at opacity 0.67",
+    +   "dark expand frame 16: Inside 2.4 px outside at opacity 0.73",
+    +   "dark expand frame 16: Settings 50.4 px outside at opacity 0.73",
+    +   "dark expand frame 17: Settings 37.7 px outside at opacity 0.79",
+    +   "dark expand frame 18: Settings 28.0 px outside at opacity 0.83",
+    +   "dark expand frame 19: Settings 20.0 px outside at opacity 0.87",
+    +   "dark expand frame 20: Settings 12.3 px outside at opacity 0.91",
+    +   "dark expand frame 21: Settings 7.7 px outside at opacity 0.93",
+    +   "dark expand frame 22: Settings 3.5 px outside at opacity 0.95",
+    +   "dark collapse frame 4: Home 7.8 px outside at opacity 0.85",
+    +   "dark collapse frame 4: Settings 7.8 px outside at opacity 0.85",
+    +   "dark collapse frame 5: Home 20.1 px outside at opacity 0.74",
+    +   "dark collapse frame 5: Settings 20.1 px outside at opacity 0.74",
+    +   "dark collapse frame 6: Home 38.8 px outside at opacity 0.56",
+    +   "dark collapse frame 6: Settings 38.8 px outside at opacity 0.56",
+    +   "dark collapse frame 7: Home 51.9 px outside at opacity 0.44",
+    +   "dark collapse frame 7: Search 3.9 px outside at opacity 0.44",
+    +   "dark collapse frame 7: Inside 3.9 px outside at opacity 0.44",
+    +   "dark collapse frame 7: Settings 51.9 px outside at opacity 0.44",
+    +   "dark collapse frame 8: Home 71.2 px outside at opacity 0.26",
+    +   "dark collapse frame 8: Search 23.2 px outside at opacity 0.26",
+    +   "dark collapse frame 8: Inside 23.2 px outside at opacity 0.26",
+    +   "dark collapse frame 8: Settings 71.2 px outside at opacity 0.26",
+    +   "dark collapse frame 9: Home 82.0 px outside at opacity 0.16",
+    +   "dark collapse frame 9: Search 34.0 px outside at opacity 0.16",
+    +   "dark collapse frame 9: Inside 34.0 px outside at opacity 0.16",
+    +   "dark collapse frame 9: Settings 82.0 px outside at opacity 0.16",
+    + ]
+
+      1565 |             }
+      1566 |             info.annotations.push({ type: "fold", description: JSON.stringify({ worst, fails: fails.slice(0, 20) }) });
+    > 1567 |             expect(fails).toEqual([]);
+           |                           ^
+      1568 |         });
+      1569 |     }
+      1570 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9-tip/tests-visual/release-11-0-2.spec.ts:1567:27
+
+    Error Context: tests-visual/test-results/release-11-0-2-fold-·-a-ve-ac079-the-fold-and-unfold-at-1440-webkit/error-context.md
+
+  4) [webkit] › tests-visual/release-11-0-2.spec.ts:1542:9 › fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 390 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 89
+
+    - Array []
+    + Array [
+    +   "light expand frame 10: Volume 90.0 px outside at opacity 0.10",
+    +   "light expand frame 10: Inside 138.0 px outside at opacity 0.10",
+    +   "light expand frame 10: Settings 186.0 px outside at opacity 0.10",
+    +   "light expand frame 11: Volume 56.6 px outside at opacity 0.26",
+    +   "light expand frame 11: Inside 104.6 px outside at opacity 0.26",
+    +   "light expand frame 11: Settings 152.6 px outside at opacity 0.26",
+    +   "light expand frame 12: Volume 31.6 px outside at opacity 0.37",
+    +   "light expand frame 12: Inside 79.6 px outside at opacity 0.37",
+    +   "light expand frame 12: Settings 127.6 px outside at opacity 0.37",
+    +   "light expand frame 13: Volume 9.3 px outside at opacity 0.48",
+    +   "light expand frame 13: Inside 57.3 px outside at opacity 0.48",
+    +   "light expand frame 13: Settings 105.3 px outside at opacity 0.48",
+    +   "light expand frame 14: Inside 37.8 px outside at opacity 0.57",
+    +   "light expand frame 14: Settings 85.8 px outside at opacity 0.57",
+    +   "light expand frame 15: Inside 19.3 px outside at opacity 0.65",
+    +   "light expand frame 15: Settings 67.3 px outside at opacity 0.65",
+    +   "light expand frame 16: Inside 5.0 px outside at opacity 0.72",
+    +   "light expand frame 16: Settings 53.0 px outside at opacity 0.72",
+    +   "light expand frame 17: Settings 40.9 px outside at opacity 0.77",
+    +   "light expand frame 18: Settings 30.7 px outside at opacity 0.82",
+    +   "light expand frame 19: Settings 22.3 px outside at opacity 0.86",
+    +   "light expand frame 20: Settings 14.7 px outside at opacity 0.90",
+    +   "light expand frame 21: Settings 9.2 px outside at opacity 0.92",
+    +   "light expand frame 22: Settings 4.3 px outside at opacity 0.94",
+    +   "light expand frame 23: Settings 1.1 px outside at opacity 0.96",
+    +   "light collapse frame 4: Home 6.6 px outside at opacity 0.86",
+    +   "light collapse frame 4: Settings 6.6 px outside at opacity 0.86",
+    +   "light collapse frame 5: Home 20.1 px outside at opacity 0.74",
+    +   "light collapse frame 5: Settings 20.1 px outside at opacity 0.74",
+    +   "light collapse frame 6: Home 35.6 px outside at opacity 0.59",
+    +   "light collapse frame 6: Settings 35.6 px outside at opacity 0.59",
+    +   "light collapse frame 7: Home 55.1 px outside at opacity 0.41",
+    +   "light collapse frame 7: Search 7.1 px outside at opacity 0.41",
+    +   "light collapse frame 7: Inside 7.1 px outside at opacity 0.41",
+    +   "light collapse frame 7: Settings 55.1 px outside at opacity 0.41",
+    +   "light collapse frame 8: Home 68.0 px outside at opacity 0.29",
+    +   "light collapse frame 8: Search 20.0 px outside at opacity 0.29",
+    +   "light collapse frame 8: Inside 20.0 px outside at opacity 0.29",
+    +   "light collapse frame 8: Settings 68.0 px outside at opacity 0.29",
+    +   "light collapse frame 9: Home 86.6 px outside at opacity 0.12",
+    +   "light collapse frame 9: Search 38.6 px outside at opacity 0.12",
+    +   "light collapse frame 9: Inside 38.6 px outside at opacity 0.12",
+    +   "light collapse frame 9: Settings 86.6 px outside at opacity 0.12",
+    +   "dark expand frame 9: Volume 105.0 px outside at opacity 0.04",
+    +   "dark expand frame 9: Inside 153.0 px outside at opacity 0.04",
+    +   "dark expand frame 9: Settings 201.0 px outside at opacity 0.04",
+    +   "dark expand frame 10: Volume 75.6 px outside at opacity 0.17",
+    +   "dark expand frame 10: Inside 123.6 px outside at opacity 0.17",
+    +   "dark expand frame 10: Settings 171.6 px outside at opacity 0.17",
+    +   "dark expand frame 11: Volume 46.2 px outside at opacity 0.31",
+    +   "dark expand frame 11: Inside 94.2 px outside at opacity 0.31",
+    +   "dark expand frame 11: Settings 142.2 px outside at opacity 0.31",
+    +   "dark expand frame 12: Volume 22.3 px outside at opacity 0.42",
+    +   "dark expand frame 12: Inside 70.3 px outside at opacity 0.42",
+    +   "dark expand frame 12: Settings 118.3 px outside at opacity 0.42",
+    +   "dark expand frame 13: Volume 1.2 px outside at opacity 0.51",
+    +   "dark expand frame 13: Inside 49.2 px outside at opacity 0.51",
+    +   "dark expand frame 13: Settings 97.2 px outside at opacity 0.51",
+    +   "dark expand frame 14: Inside 30.7 px outside at opacity 0.60",
+    +   "dark expand frame 14: Settings 78.7 px outside at opacity 0.60",
+    +   "dark expand frame 15: Inside 14.8 px outside at opacity 0.67",
+    +   "dark expand frame 15: Settings 62.8 px outside at opacity 0.67",
+    +   "dark expand frame 16: Settings 47.9 px outside at opacity 0.74",
+    +   "dark expand frame 17: Settings 37.7 px outside at opacity 0.79",
+    +   "dark expand frame 18: Settings 26.3 px outside at opacity 0.84",
+    +   "dark expand frame 19: Settings 19.3 px outside at opacity 0.87",
+    +   "dark expand frame 20: Settings 12.9 px outside at opacity 0.90",
+    +   "dark expand frame 21: Settings 7.3 px outside at opacity 0.93",
+    +   "dark expand frame 22: Settings 3.2 px outside at opacity 0.95",
+    +   "dark collapse frame 4: Home 6.6 px outside at opacity 0.86",
+    +   "dark collapse frame 4: Settings 6.6 px outside at opacity 0.86",
+    +   "dark collapse frame 5: Home 18.7 px outside at opacity 0.75",
+    +   "dark collapse frame 5: Settings 18.7 px outside at opacity 0.75",
+    +   "dark collapse frame 6: Home 37.2 px outside at opacity 0.58",
+    +   "dark collapse frame 6: Settings 37.2 px outside at opacity 0.58",
+    +   "dark collapse frame 7: Home 53.5 px outside at opacity 0.43",
+    +   "dark collapse frame 7: Search 5.5 px outside at opacity 0.43",
+    +   "dark collapse frame 7: Inside 5.5 px outside at opacity 0.43",
+    +   "dark collapse frame 7: Settings 53.5 px outside at opacity 0.43",
+    +   "dark collapse frame 8: Home 69.6 px outside at opacity 0.28",
+    +   "dark collapse frame 8: Search 21.6 px outside at opacity 0.28",
+    +   "dark collapse frame 8: Inside 21.6 px outside at opacity 0.28",
+    +   "dark collapse frame 8: Settings 69.6 px outside at opacity 0.28",
+    +   "dark collapse frame 9: Home 85.1 px outside at opacity 0.13",
+    +   "dark collapse frame 9: Search 37.1 px outside at opacity 0.13",
+    +   "dark collapse frame 9: Inside 37.1 px outside at opacity 0.13",
+    +   "dark collapse frame 9: Settings 85.1 px outside at opacity 0.13",
+    + ]
+
+      1565 |             }
+      1566 |             info.annotations.push({ type: "fold", description: JSON.stringify({ worst, fails: fails.slice(0, 20) }) });
+    > 1567 |             expect(fails).toEqual([]);
+           |                           ^
+      1568 |         });
+      1569 |     }
+      1570 |
+        at /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9-tip/tests-visual/release-11-0-2.spec.ts:1567:27
+
+    Error Context: tests-visual/test-results/release-11-0-2-fold-·-a-ve-9814d--the-fold-and-unfold-at-390-webkit/error-context.md
+
+  4 failed
+    [webkit] › tests-visual/release-11-0-2.spec.ts:1542:9 › fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 1440 
+    [webkit] › tests-visual/release-11-0-2.spec.ts:1542:9 › fold · a horizontal dock's content stays inside the plate and fades by steps through the fold and unfold at 390 
+    [webkit] › tests-visual/release-11-0-2.spec.ts:1542:9 › fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 1440 
+    [webkit] › tests-visual/release-11-0-2.spec.ts:1542:9 › fold · a vertical dock's content stays inside the plate and fades by steps through the fold and unfold at 390 

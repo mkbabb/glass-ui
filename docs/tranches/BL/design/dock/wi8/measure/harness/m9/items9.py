@@ -102,6 +102,8 @@ def pw(name, cfg, spec, grep, project):
     rep = f"{H}/{L}/m9-g14-{name}-{project}"
     return (f"cd {T} && GLASS_UI_DEMO_PORT=5444 GLASS_UI_DEMO_URL=http://127.0.0.1:5444 PI_REPORT={rep}.json "
             f"npx playwright test -c tests-visual/{cfg} {spec} -g \"{grep}\" --project={project} --workers=1 --reporter=list > {rep}.log 2>&1")
+# D-1's five runs (0421-0425) were edited in place before they ran to add `--reporter=list,json` with
+# PLAYWRIGHT_JSON_OUTPUT_NAME/FILE = the PI_REPORT path, so the test's `outside` annotation is kept
 
 def g14(n, plants, name, spec, grep, projects, cfgwk="release-11-0-2.config.ts"):
     lines = []
@@ -136,6 +138,30 @@ def h4():
     for n, pl in enumerate(("none", "cand-ru91", "cand-face", "cand-ru91+cand-face")):
         f = runfile(440 + n, f"h4-units-{pl}", [("node", 10, f"cd {T} && node_modules/.bin/vitest run {U} --maxWorkers=2 --reporter=verbose > {H}/{L}/m9-h4-units-{pl}.log 2>&1")])
         item(440 + n, f"h4-units-{pl}", f"plant raw 0 {L}/m9-h4-units-{pl}.log m9/withplant.sh {pl} {L}/m9-plant-{pl}.txt 'sh {f}'")
+
+@phase
+def h4c():
+    # the rail reading (m9/rail9.mjs: a coarse pointer's rail rests always-expanded, never folds) put :1100 and :1126's
+    # coarse skip in the spec; the two tests run again in the four projects
+    item(418, "h4-sync2", f"none light 5 {L}/m9-h4-sync2.txt m9/synctests.sh {T} > {L}/m9-h4-sync2.txt 2>&1")
+    g14(419, "none", "rail-tip", "tests-visual/release-11-0-2.spec.ts", "rail · a start-anchored rail", ["chromium-headless-new", "coarse-touch", "webkit", "webkit-touch"])
+
+@phase
+def h4b():
+    # RU-121: the units on a tree with docs/, a dist/ built from that tree and no measure page in demo/__anim, the tip's
+    # and master's alike; then the types (tsconfig.src.json and tsconfig.test.json) on both trees
+    tests = ("tests/components/custom/dock tests/components/dock tests/components/dialog tests/components/sheet tests/components/select "
+             "tests/components/custom/menu tests/components/popover.contract.test.ts tests/components/select.contract.test.ts "
+             "tests/components/custom/scroll-progress-rim tests/components/ui/slider tests/components/a11y/native-title.test.ts "
+             "tests/demo/sidebar-nav-landmark.a11y.test.ts tests/design/drive-tokens.test.ts tests/gates/overfit-structure.test.ts tests/styles")
+    for n, (ref, tag) in enumerate((("HEAD", "tip"), ("master", "master"))):
+        U = f"{W}/.m9-units-{tag}"
+        f = runfile(450 + n, f"h4-units-{tag}", [
+            ("light", 10, f"m9/tree9.sh {ref} {U} units > {L}/m9-units-{tag}-tree.txt 2>&1"),
+            ("node", 25, f"cd {U} && node node_modules/vite/bin/vite.js build --emptyOutDir > {H}/{L}/m9-units-{tag}-build.log 2>&1; echo rc=$? >> {H}/{L}/m9-units-{tag}-build.log"),
+            ("node", 40, f"cd {U} && node_modules/.bin/vitest run {tests} --maxWorkers=2 > {H}/{L}/m9-units-{tag}.log 2>&1; echo rc=$? >> {H}/{L}/m9-units-{tag}.log"),
+            ("light", 20, f"cd {U} && {{ node_modules/.bin/vue-tsc --noEmit -p tsconfig.src.json; echo src rc=$?; node_modules/.bin/vue-tsc --noEmit -p tsconfig.test.json; echo test rc=$?; }} > {H}/{L}/m9-types-{tag}.log 2>&1")])
+        item(450 + n, f"h4-units-{tag}", f"none raw 0 {L}/m9-types-{tag}.log sh {f}")
 
 @phase
 def h5():

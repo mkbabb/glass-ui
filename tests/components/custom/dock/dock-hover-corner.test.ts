@@ -70,10 +70,14 @@ describe("U/B8r I-3: the two-cell collapsed dock is not drawn as a circle", () =
     });
 
     it("the stadium's corner is half its cross extent in every posture: a circle on one cell, a capsule on two", () => {
-        // W-I.8 R-1 (RU-13), restated: a pill rests at half its cross extent at any height, at
-        // the dock's radius token, the stadium by default; a host's `--radius-dock: 1rem` is
-        // the bar corner in every posture (6dc977fe2), and the carrier bounds a travel by it.
-        expect(run).toMatch(/\.glass-dock\.shape-pill\s*\{\s*border-radius:\s*var\(--radius-dock\);/);
+        // W-I.8 RU-91 (RU-112): master's assertion in RU-91's place. The root's corner is the
+        // rest corner for every shape (shape.css), bounded by the dock's radius token, the
+        // stadium by default: a one-row dock is a capsule, a taller one a rounded rectangle
+        // whose corners are the capsule's ends. No rule puts the stadium token on the pill.
+        const shape = decomment(read("src/components/dock/styles/shape.css"));
+        expect(shape).toMatch(/\.glass-dock\s*\{\s*border-radius:\s*var\(--dock-cap-rest\);/);
+        expect(shape).not.toMatch(/border-radius:\s*var\(--radius-dock\)/);
+        expect(run).not.toMatch(/\.glass-dock\.shape-pill\s*\{\s*border-radius:\s*var\(--radius-dock\);/);
         expect(run).toMatch(/--dock-cap-rest:\s*min\(var\(--radius-dock\), calc\(var\(--dock-cross\) \/ 2\)\)/);
         // W-I.8 RU-35, restated: the cross extent is the density tokens' (the first paint is
         // already a stadium); `--dock-plate-cross-px` is an output the carrier writes on the
@@ -82,7 +86,7 @@ describe("U/B8r I-3: the two-cell collapsed dock is not drawn as a circle", () =
         expect(run).toMatch(/\.glass-dock\.vertical\s*\{\s*--dock-cross:\s*calc\(var\(--dock-control-size\) \+ 2 \* var\(--dock-padding-inline\)\);/);
         expect(run).not.toMatch(/var\(\s*--dock-plate-cross-px/);
         // W-I.8 R-1 (RU-13), restated: mid-travel nothing is scaled, so no counter-scaled
-        // corner exists; the carrier writes half the plate's painted cross extent.
+        // corner exists; the carrier writes the plate's corner, bounded by the root's.
         expect(run).not.toMatch(/--dock-size-scale/);
     });
 });

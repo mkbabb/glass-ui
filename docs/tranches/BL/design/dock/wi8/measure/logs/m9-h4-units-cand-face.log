@@ -1,0 +1,58 @@
+
+ RUN  v4.1.10 /Users/mkbabb/Programming/glass-ui/.claude/worktrees/bl/dock/wi8/.m9-tip
+
+ ✓ tests/components/custom/dock/collapsed-face-content-sized.test.ts > the collapsed face > is as wide as its content, never narrower than it is tall 1ms
+ ✓ tests/components/custom/dock/collapsed-face-content-sized.test.ts > the collapsed face > pads its glyph by the room its floor leaves it, so one glyph is square 0ms
+ ✓ tests/components/custom/dock/dock-hover-corner.test.ts > U/B8r I-2: no dock control scales on hover > no dock style rule scales under :hover 10ms
+ ✓ tests/components/custom/dock/dock-hover-corner.test.ts > U/B8r I-2: no dock control scales on hover > the dock hover-scale token is deleted, with no reader left 18ms
+ ✓ tests/components/custom/dock/dock-hover-corner.test.ts > U/B8r I-3: the two-cell collapsed dock is not drawn as a circle > the circle stays for the square collapsed dock of a finite shape 0ms
+ ✓ tests/components/custom/dock/dock-hover-corner.test.ts > U/B8r I-3: the two-cell collapsed dock is not drawn as a circle > a finite-shape collapsed dock with a persistent control beside a summary keeps the bar corner 0ms
+ × tests/components/custom/dock/dock-hover-corner.test.ts > U/B8r I-3: the two-cell collapsed dock is not drawn as a circle > the stadium's corner is half its cross extent in every posture: a circle on one cell, a capsule on two 3ms
+   → expected '\n\n@layer components {\n    \n    .g…' to match /\.glass-dock\s*\{\s*border-radius:\s*…/
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/components/custom/dock/dock-hover-corner.test.ts > U/B8r I-3: the two-cell collapsed dock is not drawn as a circle > the stadium's corner is half its cross extent in every posture: a circle on one cell, a capsule on two
+AssertionError: expected '\n\n@layer components {\n    \n    .g…' to match /\.glass-dock\s*\{\s*border-radius:\s*…/
+
+- Expected:
+/\.glass-dock\s*\{\s*border-radius:\s*var\(--dock-cap-rest\);/
+
++ Received:
+"
+
+@layer components {
+    
+    .glass-dock {
+        border-radius: var(--radius-dock);
+    }
+
+    
+    .glass-dock {
+        --motion-weight: 1;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .glass-dock {
+            --motion-weight: 0;
+        }
+    }
+}
+"
+
+ ❯ tests/components/custom/dock/dock-hover-corner.test.ts:78:23
+     76|         // whose corners are the capsule's ends. No rule puts the stad…
+     77|         const shape = decomment(read("src/components/dock/styles/shape…
+     78|         expect(shape).toMatch(/\.glass-dock\s*\{\s*border-radius:\s*va…
+       |                       ^
+     79|         expect(shape).not.toMatch(/border-radius:\s*var\(--radius-dock…
+     80|         expect(run).not.toMatch(/\.glass-dock\.shape-pill\s*\{\s*borde…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 6 passed (7)
+   Start at  08:41:42
+   Duration  358ms (transform 42ms, setup 85ms, import 22ms, tests 35ms, environment 285ms)
+
