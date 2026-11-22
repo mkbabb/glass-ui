@@ -1,0 +1,145 @@
+#### atlas
+
+Hi,
+
+I'm writing ahead of glass-ui 11.2.0 so nothing in it surprises you in the docks atlas mounts. Here's what changes, and the one placement I'd like your view on.
+
+- **The plate.** A dock still rests as a fully rounded capsule. Your docks are static, so each plate stays an opaque card in both themes, and the firmer dark plate the other sites get doesn't reach them.
+- **Button fills.** A hovered button and the current one are now light steps of the dock's own text colour: 8 % for hover and 10 % for the current button, and a press shrinks the button with 2 % more of that colour over its own fill. If you set `--dock-control-hover-bg` or `--dock-control-active-bg` on a dock, could you check it still lands? Inside a dock those defaults now sit on `.glass-dock`, so an override set higher up the page won't reach it.
+- **Icons.** An icon you haven't sized fills nine tenths of its button, and so does a folded face's icon when it's the face's own child. Anything you sized with a class keeps your size, which means PlateDock's folded sliders icon stays small beside the Table icon until its size class comes off.
+- **Button heights and ink.** Icon buttons and the triggers beside them are the control's height, 40 px on desktop and 44 on touch, and a trigger's label and chevron are drawn at full strength instead of dimmed. Tab buttons keep the height they have today, about 38.6 px on desktop and 38 on touch.
+- **The controls preset** folds at every width once it holds two or more controls, about 3.8 s after the pointer leaves; with one control it's just that control. We tried PlateDock on it inside one of your figure plates, 375 px wide, in both themes and with mouse and touch. Where PlateDock sits today, the folded button covers about 300 px² of the legend, its link included, and when it opens its two buttons reach 31 px past the plate's right edge. In the head row instead, it covers part of the title: 1,500 px² of the title's box folded and 2,400 px² open. Nothing beside it moves in either place. The preset always sits at a corner, fixed to the window or absolute in its parent, so a PlateDock on it would leave the head row it stands in today. Which placement would you want before we suggest the move? That would also cover the figure docks sci-report shows.
+- **Overlays.** Menus, popovers, dialogs and sheets opened from a dock button hold the dock open with nothing to wire. A press on a dialog's or a sheet's dimmed backdrop closes it, and the dock then stays open for its usual pause.
+- **In-flow docks.** The overlay that would let an in-flow dock open without pushing its row covers part of a figure's legend, its link included, while the dock lingers, so it's waiting on a decision. Until then an in-flow dock still pushes its row (36 px in your figure header) and `anchor` still does nothing, so please keep your own layout hold. I'll tell you before the release if that changes.
+- **Progress rims.** The dock's new `#rim` slot takes a progress rim and follows the plate's outline in every frame, so the `DockProgressRim` in the rail's and the phone bar's `#persistent` could move into it.
+- **Unchanged for you.** `run="plain"` stays as you use it. The `:hover-intent` that PlateDock passes isn't a dock prop and does nothing; the pause before a hover opens the dock is the `--dock-intent` token. The scroll fold moved to 11.3.0, so your own scroll rule stays for now.
+
+Thanks,
+Mike
+
+#### fourier
+
+Hi,
+
+Here's a short list of what 11.2.0 lets fourier delete, and what to keep.
+
+- The scroll fold moved to 11.3.0, so please keep folding the app dock on scroll in your own code for this release.
+- `--dock-trigger-min-height: var(--dock-control-size)` in `AppDock.vue` can go, since a trigger in a dock's row now takes the button height by itself (40 px on desktop, 44 on touch).
+- The `keepOpen()` and `release()` calls around your menus can go too. A menu, popover, dialog or sheet opened from a dock button holds the dock on its own, and a press on a dialog's dimmed backdrop closes the dialog while the dock stays open for its pause.
+- `StageDock.vue` can give way to the controls preset, as its header says it will. One `ControlsDock` with `corner="top-end"` and `within="parent"`, passing `expand-on="press"` through, replaces its two `GlassDock`s; the folded icon stays in `#collapsed` and Edit contour in `#persistent-end`. Its `fold` prop goes, since the preset is the one control when it holds one and folds at every width once it holds two or more. The counted hold (a `keepOpen()` for each open menu) and the collapse after an outside press within 600 ms (lines 45 to 76) go as well, because the dock now holds for an open menu and folds on an outside press by itself. The phone column stays yours, as an `orientation` you pass. The preset takes no `collapse` prop.
+- `EditorControlsDock` can move to the preset as well, with the point count and Save in `#persistent`.
+- The `ScrollProgressRim` you teleport into the app dock can sit in the dock's new `#rim` slot and follow the plate's outline in every frame.
+- Of the eighteen reds booked for this release, the 4 to 8 px row overflow is the one 11.2.0's fit rule is measured to cure. On a phone, a tap on the dock no longer pins it open: it folds 6 s after the tap, and 6 s after a tap on one of its buttons.
+- In dark the plate is a step firmer than in light, so it hides a little more of the page behind it than today's does. Light takes one more step of ink. Button fills are steps of the dock's own text colour (8 % on hover, 10 % for the current button), and an unsized icon fills nine tenths of its button.
+
+Thanks,
+Mike
+
+#### Home Assistant
+
+Hi,
+
+Three changes in 11.2.0 touch the Home Assistant tabs directly, and one has moved to a later release.
+
+- **The worded tab's icon.** A tab button now sizes the `svg` that's its direct child at one and a half times the word, and your tab icons are svgs (`tabIcon` in `frontend/src/tiles/tabs.ts`), so there's nothing to mark. Your kit's icon base in `tiles/css/marks.css` is unlayered and still wins over the library's layered rule, as your note in `tiles/css/tabs.css` says of the icon buttons, so a worded tab's icon stays at the kit's size unless `.shell-dock .dock-tab-button > .glyph` takes `1.5em` beside that line. The floor icons in the floor menu sit in menu rows, which the dock doesn't size.
+- **The trigger beside icon buttons** now matches their height, 40 px on desktop and 44 on touch, so the short wide trigger is gone. Its inline padding stays at 8 px; set `--dock-trigger-padding-inline` if you'd like it to match the tabs' 12 px. Your own tab height still wins for the tabs.
+- **The active fill.** The current button's fill is now 10 % of the dock's own text colour, so your `--dock-control-active-bg` override can be deleted.
+- **One base size set in px** moved to 12.0.0, so please keep your own scaling until then.
+
+In dark the plate is a step firmer than in light, so it hides a little more of the page behind it than today. In light it takes one more step of ink and stays glass.
+
+Thanks,
+Mike
+
+#### speedtest
+
+Hi,
+
+Not much changes for speedtest in 11.2.0, but two things are worth a look in both themes.
+
+- You set `--dock-fg-on-aurora` on `.glass-dock`, and the hovered, current and pressed fills inside a dock now follow that colour (8 %, 10 % and 2 % of it).
+- Your plate keeps `--material-bg-dock` in both themes. `design/register.css` sets the plate's veil itself, so the firmer dark plate the other sites get doesn't reach it.
+
+`--dock-scale` keeps working; one base size set in px moved to 12.0.0. `DockBackgroundToggle` is deleted in 11.2.0, which you'd already dropped (only comments still name it). Your `--dock-trigger-padding-*` values still win over the new trigger default.
+
+Thanks,
+Mike
+
+#### gregg
+
+Hi,
+
+A few deletions open up in gregg with 11.2.0, plus one thing that didn't make it.
+
+- **The gliding mark stays.** The mark under PageDock's and HeroPlate's current control keeps gliding between buttons as 11.1.0 shipped it, now painted in the dock's new current fill.
+- **The fills.** You set `--dock-fg-on-aurora` on `.glass-dock`, so hovered, current and pressed fills now follow your ink. The current fill is 10 % of the ink in both themes, against the 24 % your `style.css` sets; whether to keep your override is your call.
+- **PageDock's row.** A `role="group"` child of the dock's row is now a frame whose buttons are the snap targets, so your `scroll-snap-align` rules can go. The `--dock-open-seat: max-content` line no longer does anything, since 11.2.0 has no widened current tab.
+- **Tab heights.** The tab buttons in PageDock and HeroPlate keep their height, about 38.6 px on desktop and 38 on touch.
+- **The plate.** Your docks are static, so their plates stay an opaque card in both themes, and your pair docks' wash tier is untouched.
+- **The progress rim** already rides the plate's border, so nothing there changes; the dock's new `#rim` slot is there if you ever want the rim inside the dock.
+- **Not built.** Trailing persistent buttons that give way on a narrow screen: persistent buttons never yield, and the row takes the room that's left. `dockFold.ts`'s pin stays as it is.
+
+Thanks,
+Mike
+
+#### value.js
+
+Hi,
+
+Three notes for value.js: colour, the plate, and bytes.
+
+- Inside a dock, the hovered, current and pressed fills now follow your `--dock-fg-on-aurora` (8 %, 10 % and 2 % of it). A `DockControl` outside any dock keeps today's fills, including 11.0.2's dark-mode lift. `type="submit"` on `DockControl` stays.
+- **The plate in dark.** Your docks take the firmer dark plate, so the band your colour session measures off `.dock-plate` will read differently in dark; light takes one more step of ink. We're also checking that `--glass-veil-dock` still reaches the plate in 11.2.0, and if it doesn't, I'll tell you which token does before the release.
+- **First-load size.** We built a small page that imports the dock parts you use and the menus they hold, on 11.0.2 and on 11.2.0. On the current build it's 105,249 bytes compressed against 102,631 on 11.0.2, 2,618 bytes (2.6 %) more. Our aim is no growth, so that should come down before the release, and I'll send you the final figure with it. If you'd rather run your own budget, I can send you a tarball of 11.2.0 first. There's no separate chunk for the morph.
+
+Thanks,
+Mike
+
+#### daraksha (through value.js)
+
+Hi,
+
+Could you pass these along to daraksha?
+
+- Tab buttons now size a direct `img` or `picture` at one and a half times the word, as they already did an `svg`, so daraksha's own size rules for tab pictures can go. Icon buttons already size pictures at nine tenths of the button. An icon inside a wrapper, such as Motion's Again inside `.kf-turn`, is reached only as the tab's direct child.
+- The two `--glass-veil-dock: var(--glass-veil-base)` lines, in `SiteDock.vue` and `ControlsSeat.vue`, now equal the default and can go.
+- In dark the dock's plate is a step firmer than in light. The neck between the site dock and the theme dock is a `glass-plate` outside both docks, so in dark it would keep the clearer level and read a little thinner than the two plates it joins. The README's recipe for a plate that matches the dock (`--glass-veil-tier: var(--glass-veil-dock)`) gives it the dock's veil; I'll send the line that gives it the dark level too before the release. The same lines suit `Star.vue` and `Clasp.vue`.
+- The controls seat can become the controls preset. It folds at every width once it holds two or more controls, `dockHold.ts` can go, and `DockOutlet` carries the teleported docks.
+- `dockTip.ts` should stay for now, since page names on a press and hold come with the tooltip work after this release.
+- We put a copy of daraksha's ornamented ground into our test page and read the dock on it in both themes. In dark the firmer plate still stands only about 1.04 to 1 off that ground (today's about 1.02), so it stays close to the ground there; in light it stands about 1.31 to 1 (today's 1.21). If that doesn't match what you see, a frame of the dock on the real page would help.
+
+Thanks,
+Mike
+
+#### slides
+
+Hi,
+
+There's one visual change for slides in 11.2.0. In dark the dock's plate is a step firmer than in light and hides a little more of the slide behind it, and that includes the deck dock on a dark slide in a light deck, since it carries `.dark` itself and now takes the dark blur too. The firmer level also mixes the tier `decks/parkway-lab/theme.css` sets on the dock toward the card colour. Light takes one more step of ink. Button fills are now steps of the dock's own text colour (8 % on hover, 10 % for the current button), unsized icons fill nine tenths of their button, and menus or dialogs opened from a dock button hold the dock with nothing to wire. Would you mind opening a deck in dark mode once 11.2.0 is out? A quick look would settle it.
+
+Thanks,
+Mike
+
+#### keyframes
+
+Hi,
+
+Four things for keyframes in 11.2.0.
+
+- `graspHeld` stays exposed through 11.2.0 and is removed in 12.0.0, so the dock-context test can keep reading it for now.
+- The transport's Play button still slides when the dock opens, because the in-flow overlay is waiting on a decision. If it lands, setting `anchor="start"` keeps Play within 4 px of the pointer, and I'll say so before the release.
+- The `keepOpen()` and `release()` calls around your menus can go. The code pane's RibbonBar stays a `GlassDock` with `:collapse="false"`, since the controls preset always folds once it holds two or more controls and that row shouldn't.
+- In dark the ChromeDock, TransportDock and RibbonBar plates are a step firmer than in light and hide a little more of the aurora behind them; light takes one more step of ink. The Apply CSS tab keeps its height.
+
+Thanks,
+Mike
+
+#### gaggle
+
+Hi,
+
+Three small changes reach gaggle's docks in 11.2.0. An unsized icon beside a word in a tab is now one and a half times the word: 21 px at a 14 px word, where lucide's default made it 24. If the tabs should stay at 24, a size class on those icons keeps them there. The view tabs keep their height. In dark the site dock's and KitDock's plates are a step firmer than in light; the report dock is static and keeps its opaque card. The `keepOpen()` and `release()` calls around your menus can go, since a menu opened from a dock button now holds the dock on its own. The dock's search slot is gone, which changes nothing for you since your search lives in its own slot.
+
+Thanks,
+Mike
+

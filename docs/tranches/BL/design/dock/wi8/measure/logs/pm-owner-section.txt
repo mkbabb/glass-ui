@@ -1,0 +1,57 @@
+## Added 2026-11-22, after the eighth build was measured
+
+The eighth build carries 11.1.0's dock inside the redesign. It was measured whole on one build, in Chromium and in Safari's engine (Playwright WebKit; real Safari is still unread): every page and every travel, the older releases' tests, and a fault planted under each test to show the test can fail (`MEASURE-8.md`, part M). The folds, the layer changes, going back mid-change, reduced motion, the overlays and the controls dock pass in both engines. It isn't ready to become 11.2.0. These are what stand in the way:
+
+- **A press on one of the dock's always-shown buttons, then a move off the dock, closes it at once.** 11.1.0 does this on purpose, and the merge brought it in. The redesign's own tests expect the dock to stay for its usual pause, as it does after a press on any other button. One of the two has to give.
+- **Some of the older releases' tests fail where 11.1.0 passes them.** Most read the round end's corner as a number, and Chromium writes that number in a form the tests don't accept; the corner on screen is the same. The others are 11.0.2's tests of the old button fills, of the content's box during a fold, of the rail's opening, and of how many layouts an idle fold costs.
+- **The dock's code is 505 lines over its budget**: 5,246 lines against 11.1.0's 4,741. Nothing has been cut; `MEASURE-8.md` lists what each block buys.
+- **A page that uses the dock loads 2.6 % more** than on 11.0.2 (105,249 bytes compressed against 102,631), where the budget is no growth.
+- **In dark, the selected page's name is under the readable floor** on the warm figure page (3.3 to 1 in Chromium and 4.0 in Safari's engine, against 4.5). On a few docks the current and hovered highlights read fainter than today's (questions 18 and 21).
+- **Tab buttons are 38.6 px tall** where every other button in a dock is 40 (38 against 44 on a phone).
+- **Opening a dock costs a few more layout passes than allowed** on its first frame, and the backdrop's colour sample forces more in the frames after.
+- **The dark firmness.** The rule that picks it chooses the second of five steps on this build, and the build carries the first. Neither keeps the selected page's name readable on the warm page in dark (question 10).
+
+Seven of your questions have strips from this build. Each has a default, and the work goes on with it unless you say otherwise.
+
+10. **A firmer dock.** On this build no step of firmness both hides as much of the dark grid page as the light dock hides of the white one and stays clear of the near-solid slab. So the default for dark is the firmest step that stays glass: the second of five. Light keeps the first. The strips show today's dock and the five firmnesses, dark then light, a page dock open and a round dock folded and open, on the dark grid page, the warm figure page and daraksha's ground. Beside each frame: how far the dock stands off the page, and how much of the grid shows through it.
+
+    ![a firmer dock, on the grid page](fold/strip-q10-grid-8m.chromium.png)
+
+    Also `fold/strip-q10-field-8m.chromium.png` and `fold/strip-q10-daraksha-8m.chromium.png`, and each in Safari's engine (`.webkit.png`).
+    Default: the second of five in dark, the first in light.
+
+12. **Delete what no site uses, now.** Counted on this build, the dock has 78 names a site can use against 11.1.0's 80: 15 added (the controls dock, the outlet, the rim slot and the plain run among them) and the 17 that no site of yours uses deleted.
+
+    ![the names](fold/strip-q12-names-8m.png)
+
+    Default: delete them in 11.2.0.
+
+14. **A dock that sits in a row with other things.** On this build atlas's figure dock pushes its legend 36 px when it opens and covers none of it. The overlay that would let it open over its row (not built) moves the legend 27 px and covers 1,872 px² of it, its link included, for as long as the dock stays open. Beside a legend in a plain row it moves nothing and covers 2,938 px².
+
+    ![a dock in a row](fold/strip-q14-8m.chromium.png)
+
+    Default: no change in 11.2.0.
+
+18. **How a hovered icon differs from the current page's.** The current page's highlight is 10 % of the dock's text colour. At 5, 6.5 and 8 % the hover stands 1.11, 1.08 and 1.05 to 1 from that highlight in light, and 1.11, 1.15 and 1.18 to 1 from the dock behind it. Today's dock (11.0.2) stands its hover 1.26 to 1 off the same dock. The previous build's 10 % is beside them, and it matches the current highlight exactly.
+
+    ![hover strengths](fold/strip-q18-8m.chromium.png)
+
+    Default: the faintest of the three that shows at least as clearly as today's hover. None of the three does, so the build keeps the strongest, 8 %.
+
+19. **A dialog opened from the dock.** A press on the dimmed page closes the dialog, and the dock stays open for its usual pause, folding about 6.7 s later. A press outside a menu closes the menu and the dock together.
+
+    ![a dialog and a menu](fold/strip-q19-8m.chromium.png)
+
+    Default: yes.
+
+20. **The controls dock on a desktop.** With four controls it rests folded at 1440 and at 390, opens under the pointer, and folds again 3.8 s after the pointer leaves. With one control it is that control.
+
+    ![the controls dock](fold/strip-q20-8m.chromium.png)
+
+    Default: yes.
+
+21. **The selected tab in dark.** On the warm figure page the selected Reports reads 3.27 to 1 on its highlight in Chromium and 4.02 in Safari's engine, against the 4.5 floor for words; today's dock reads 3.26 and 3.88 there. On the dark grid page it reads 9.4 and 12.7. Dials's selected 5Y reads 4.6 and 4.9 (today's 7.7 and 8.0).
+
+    ![the selected tab in dark](fold/strip-q21-8m.chromium.png)
+
+    Default: keep the dock glass, keep the words readable, and let the highlight be fainter than today's on the docks that need it. On this build that's nav, where the selected Reports fails on the warm figure page. On the same page in Chromium, chrome's File (3.85) and dials's labels (4.18 to 4.42) fail the same floor without being selected.
