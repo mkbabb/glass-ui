@@ -49,6 +49,6 @@ Dock pass 8 `wf_e0aa83eb-d6e` is finished and no longer needs a resume. The ruli
 The guard refuses heavy and browser runs: data.kalloc.1024 at 13.07M and rising about 200 a second (panic near 20.8M). The owner was asked to reboot (terminal notification 15:5x). After the reboot, in order:
 
 1. **11.1.1.** The close (in `wf_7b4b4753-433`) returned NOT READY: the master merge broke two of release.sh's own gates, and restating one showed a picked palette dropping its rows mid-exit. The ruling is committed on release/11.1.1 as `docs/release-11.1.1/orchestrator-note-after-close.md` (a5452a1a3). Launch the continuation fresh: `Workflow({scriptPath: "/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/driver/glass-11.1.1-after-merge.js"})` (no args; rounds 13 to 16, then the close again). Once launched, its run id goes here.
-2. **Dock pass 9** (`wf_a9e4dc13-149`). If measure-9 returned refused, resume with `resumeFromRunId: "wf_a9e4dc13-149"` and `args.resume["measure-9"]` naming what its MEASURE-9 part M says ran.
+2. **Dock pass 9** (`wf_a9e4dc13-149`). measure-9 returned refused at 15:45 with its unrun items spooled. Resume: `Workflow({scriptPath: "/Users/mkbabb/Programming/glass-ui/docs/tranches/BL/driver/dock-pass-9.js", resumeFromRunId: "wf_a9e4dc13-149", args: <docs/tranches/BL/driver/resume/dock-pass-9-after-zone.json>})`.
 3. **BM part 1** (`wf_2265c21a-25a`) needs no heavy run (the union, its critics and the fold); if a seat was cut by the reboot, resume it with its run id. Part 2 (the ten design passes) is written from the folded union.
 
